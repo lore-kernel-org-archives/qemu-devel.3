@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77CA9C56201
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92CA6C56206
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtS7s-0005rY-7G; Fri, 20 Feb 2026 10:09:04 -0500
+	id 1vtS7u-0005sC-6Z; Fri, 20 Feb 2026 10:09:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vtS2F-0008EZ-Gn; Fri, 20 Feb 2026 10:03:17 -0500
+ id 1vtS26-00087z-5T; Fri, 20 Feb 2026 10:03:07 -0500
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vtS2D-0002MO-FL; Fri, 20 Feb 2026 10:03:14 -0500
-DKIM-Signature: a=rsa-sha256; bh=ly5RtxzJn0F2WP0BkUcyjhxWSvK+uULsMgUEDOP8Xb0=; 
+ id 1vtS24-0002J4-8g; Fri, 20 Feb 2026 10:03:05 -0500
+DKIM-Signature: a=rsa-sha256; bh=fYomp+aGUznWhaP+Te2FfkZ0k+Rqrbj8Q85aJKAFHgk=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1771599790; v=1;
- b=RxsXJdy+BJ8bSbC2/bjwxjL3mbZSSSKqveBgOouLkAp55UoX9WY9tHsq3Fv7wRmi6MH65foD
- e6feFAFLuaZxVkgR+zWyfoIZNhHPU5oug3cdAvqq6mq7F5zV4ADejLEU2JI6f4/Hno65oskAZ1D
- DuLZPmZGM68TP+avC74xPy9dH9JcU9+AgVajaT8+/uQVn3hAGQiLBs2KM7aQKNszK+amdpnhXrm
- bWEaHGXxc0jeNTHgJAKDpO7uzhzbKaKzlh+/GNLQ+Jbai6dSkvKqKI6A/hlvb1M/tn01H9kxcE2
- LFRmdJGTBivD4SMtaZytaRdiuV15IDfS9axqsqBbhzdlA==
+ t=1771599781; v=1;
+ b=NpZDTX4LEImvhDeBXxNMpLX5P105CsVfnwjFbuTQmK1ypI47wCAGfBDnMW0eg6QweOMpl4Qq
+ dMph0k6cL2tkIu+VkT9BijBd7p4GREyQgswAM0KMgWMcAsvrYNfhXPDbLwit4CmbgQYLF9MQpcn
+ rOdCqHrKqSygfdEEXWG6vySKyumPGejlyxzouQLb00+SmbPUV1YnxAH0G34yC4jhYFgREj5jPym
+ jXKDNU5BLAILgG5s9wMtnH4Oz3PiKvC9MegOQbCi5IaDzf7nH3XxEUG6okSU6l5ki89RIy0ZqVK
+ xqIMUysITOjjtZea9pJ7sgrYR0Na4jAC6+GM/7al6x77Q==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 6A6D025021;
- Fri, 20 Feb 2026 15:03:10 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id BF9B725018;
+ Fri, 20 Feb 2026 15:03:01 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Fri, 17 Feb 2023 16:10:15 +0100
-Subject: [PATCH qemu 09/11] [ot] hw/opentitan: add OpenTitan shadow register
- helpers
-MIME-Version: 1.0
-Message-ID: <177159976712.8279.7732381632410882915-9@git.sr.ht>
+Date: Mon, 30 Jan 2023 13:14:50 +0100
+Subject: [PATCH qemu 02/11] [ot] hw/char, hw/timer,
+ hw/ssi: fix device definitions
+Message-ID: <177159976712.8279.7732381632410882915-2@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177159976712.8279.7732381632410882915-0@git.sr.ht>
 To: qemu-devel@nongnu.org
@@ -54,6 +53,7 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Amit Kumar-Hermosillo <amitkh@google.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
  helo=mail-a.sr.ht
 X-Spam_score_int: 17
@@ -80,118 +80,130 @@ Reply-To: ~lexbaileylowrisc <lex.bailey@lowrisc.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Lo=C3=AFc Lefort <loic@rivosinc.com>
+From: Emmanuel Blot <eblot@rivosinc.com>
 
-Signed-off-by: Lo=C3=AFc Lefort <loic@rivosinc.com>
+Use a separate Kconfig symbols for Ibex UART, Timer, and SPI devices:
+having an Ibex CPU does not imply usage of these specific implementations.
+
+Signed-off-by: Emmanuel Blot <eblot@rivosinc.com>
 ---
- include/hw/opentitan/ot_common.h | 93 ++++++++++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
- create mode 100644 include/hw/opentitan/ot_common.h
+ hw/char/Kconfig       | 3 +++
+ hw/char/meson.build   | 2 +-
+ hw/riscv/Kconfig      | 3 +++
+ hw/ssi/Kconfig        | 4 ++++
+ hw/ssi/meson.build    | 2 +-
+ hw/timer/Kconfig      | 3 +++
+ hw/timer/ibex_timer.c | 2 +-
+ hw/timer/meson.build  | 2 +-
+ 8 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/opentitan/ot_common.h b/include/hw/opentitan/ot_commo=
-n.h
-new file mode 100644
-index 0000000000..546a7d88a8
---- /dev/null
-+++ b/include/hw/opentitan/ot_common.h
-@@ -0,0 +1,93 @@
-+/*
-+ * QEMU RISC-V Helpers for OpenTitan EarlGrey
-+ *
-+ * Copyright (c) 2023 Rivos, Inc.
-+ *
-+ * Author(s):
-+ *  Emmanuel Blot <eblot@rivosinc.com>
-+ *  Lo=C3=AFc Lefort <loic@rivosinc.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 020c0a84bb..0cbbaedb2f 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -95,3 +95,6 @@ config IP_OCTAL_232
+     bool
+     default y
+     depends on IPACK
 +
-+#ifndef HW_RISCV_OT_COMMON_H
-+#define HW_RISCV_OT_COMMON_H
++config IBEX_UART
++    bool
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index a9e1dc26c0..f47fa11bbe 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -2,7 +2,7 @@ system_ss.add(when: 'CONFIG_CADENCE', if_true: files('cadence=
+_uart.c'))
+ system_ss.add(when: 'CONFIG_CMSDK_APB_UART', if_true: files('cmsdk-apb-uart.=
+c'))
+ system_ss.add(when: 'CONFIG_ESCC', if_true: files('escc.c'))
+ system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_apbuart.c'))
+-system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_uart.c'))
++system_ss.add(when: 'CONFIG_IBEX_UART', if_true: files('ibex_uart.c'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_serial.c'))
+ system_ss.add(when: 'CONFIG_IP_OCTAL_232', if_true: files('ipoctal232.c'))
+ system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('parallel-isa.c'))
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 0222c93f87..e6aa32ee8f 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -38,6 +38,9 @@ config OPENTITAN
+     default y
+     depends on RISCV32
+     select IBEX
++    select IBEX_SPI_HOST
++    select IBEX_TIMER
++    select IBEX_UART
+     select SIFIVE_PLIC
+     select UNIMP
+=20
+diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
+index 1bd56463c1..c8d573eeb9 100644
+--- a/hw/ssi/Kconfig
++++ b/hw/ssi/Kconfig
+@@ -32,3 +32,7 @@ config PNV_SPI
+ config ALLWINNER_A10_SPI
+     bool
+     select SSI
 +
-+#include "qemu/osdep.h"
++config IBEX_SPI_HOST
++    bool
++    select SSI
+diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
+index 6afb1ea200..a3ba319280 100644
+--- a/hw/ssi/meson.build
++++ b/hw/ssi/meson.build
+@@ -10,6 +10,6 @@ system_ss.add(when: 'CONFIG_XILINX_SPI', if_true: files('xi=
+linx_spi.c'))
+ system_ss.add(when: 'CONFIG_XILINX_SPIPS', if_true: files('xilinx_spips.c'))
+ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-ospi.c=
+'))
+ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
+-system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
++system_ss.add(when: 'CONFIG_IBEX_SPI_HOST', if_true: files('ibex_spi_host.c'=
+))
+ system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
+ system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index b3d823ce2c..2fdefd0d1f 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -65,3 +65,6 @@ config STELLARIS_GPTM
+=20
+ config AVR_TIMER16
+     bool
 +
-+/* ------------------------------------------------------------------------ =
-*/
-+/* Shadow Registers */
-+/* ------------------------------------------------------------------------ =
-*/
-+
-+/*
-+ * Shadow register, concept documented at:
-+ * https://docs.opentitan.org/doc/rm/register_tool/#shadow-registers
-+ */
-+typedef struct OtShadowReg {
-+    /* committed register value */
-+    uint32_t committed;
-+    /* staged register value */
-+    uint32_t staged;
-+    /* true if 'staged' holds a value */
-+    bool staged_p;
-+} OtShadowReg;
-+
-+enum {
-+    OT_SHADOW_REG_ERROR =3D -1,
-+    OT_SHADOW_REG_COMMITTED =3D 0,
-+    OT_SHADOW_REG_STAGED =3D 1,
-+};
-+
-+/**
-+ * Initialize a shadow register with a committed value and no staged value
-+ */
-+static inline void ot_shadow_reg_init(OtShadowReg *sreg, uint32_t value)
-+{
-+    sreg->committed =3D value;
-+    sreg->staged_p =3D false;
-+}
-+
-+/**
-+ * Write a new value to a shadow register.
-+ * If no value was previously staged, the new value is only staged for next
-+ * write and the function returns OT_SHADOW_REG_STAGED.
-+ * If a value was previously staged and the new value is different, the func=
-tion
-+ * returns OT_SHADOW_REG_ERROR and the new value is ignored. Otherwise the v=
-alue
-+ * is committed, the staged value is discarded and the function returns
-+ * OT_SHADOW_REG_COMMITTED.
-+ */
-+static inline int ot_shadow_reg_write(OtShadowReg *sreg, uint32_t value)
-+{
-+    if (sreg->staged_p) {
-+        if (value !=3D sreg->staged) {
-+            /* second write is different, return error status */
-+            return OT_SHADOW_REG_ERROR;
-+        }
-+        sreg->committed =3D value;
-+        sreg->staged_p =3D false;
-+        return OT_SHADOW_REG_COMMITTED;
-+    } else {
-+        sreg->staged =3D value;
-+        sreg->staged_p =3D true;
-+        return OT_SHADOW_REG_STAGED;
-+    }
-+}
-+
-+/**
-+ * Return the current committed register value
-+ */
-+static inline uint32_t ot_shadow_reg_peek(const OtShadowReg *sreg)
-+{
-+    return sreg->committed;
-+}
-+
-+/**
-+ * Discard the staged value and return the current committed register value
-+ */
-+static inline uint32_t ot_shadow_reg_read(OtShadowReg *sreg)
-+{
-+    sreg->staged_p =3D false;
-+    return sreg->committed;
-+}
-+
-+#endif /* HW_RISCV_OT_COMMON_H */
++config IBEX_TIMER
++    bool
+diff --git a/hw/timer/ibex_timer.c b/hw/timer/ibex_timer.c
+index ee18652189..858e1a67de 100644
+--- a/hw/timer/ibex_timer.c
++++ b/hw/timer/ibex_timer.c
+@@ -31,7 +31,7 @@
+ #include "hw/timer/ibex_timer.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "target/riscv/cpu.h"
++#include "hw/core/registerfields.h"
+ #include "migration/vmstate.h"
+=20
+ REG32(ALERT_TEST, 0x00)
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 178321c029..cc02aa0dda 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -30,7 +30,7 @@ system_ss.add(when: 'CONFIG_SSE_TIMER', if_true: files('sse=
+-timer.c'))
+ system_ss.add(when: 'CONFIG_STELLARIS_GPTM', if_true: files('stellaris-gptm.=
+c'))
+ system_ss.add(when: 'CONFIG_STM32F2XX_TIMER', if_true: files('stm32f2xx_time=
+r.c'))
+ system_ss.add(when: 'CONFIG_XILINX', if_true: files('xilinx_timer.c'))
+-specific_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_timer.c'))
++system_ss.add(when: 'CONFIG_IBEX_TIMER', if_true: files('ibex_timer.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
+=20
+ specific_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
 --=20
 2.49.1
 
