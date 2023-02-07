@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92CA6C56206
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C2AC56201
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtS7u-0005sC-6Z; Fri, 20 Feb 2026 10:09:06 -0500
+	id 1vtS7s-0005rf-O1; Fri, 20 Feb 2026 10:09:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vtS26-00087z-5T; Fri, 20 Feb 2026 10:03:07 -0500
+ id 1vtS2B-0008CR-1t; Fri, 20 Feb 2026 10:03:12 -0500
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vtS24-0002J4-8g; Fri, 20 Feb 2026 10:03:05 -0500
-DKIM-Signature: a=rsa-sha256; bh=fYomp+aGUznWhaP+Te2FfkZ0k+Rqrbj8Q85aJKAFHgk=; 
+ id 1vtS29-0002Kp-C0; Fri, 20 Feb 2026 10:03:10 -0500
+DKIM-Signature: a=rsa-sha256; bh=y3mnVFRBz48Yw2IzjiSIHXssFaZ5U7MLuEMtGzsSPsc=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1771599781; v=1;
- b=NpZDTX4LEImvhDeBXxNMpLX5P105CsVfnwjFbuTQmK1ypI47wCAGfBDnMW0eg6QweOMpl4Qq
- dMph0k6cL2tkIu+VkT9BijBd7p4GREyQgswAM0KMgWMcAsvrYNfhXPDbLwit4CmbgQYLF9MQpcn
- rOdCqHrKqSygfdEEXWG6vySKyumPGejlyxzouQLb00+SmbPUV1YnxAH0G34yC4jhYFgREj5jPym
- jXKDNU5BLAILgG5s9wMtnH4Oz3PiKvC9MegOQbCi5IaDzf7nH3XxEUG6okSU6l5ki89RIy0ZqVK
- xqIMUysITOjjtZea9pJ7sgrYR0Na4jAC6+GM/7al6x77Q==
+ t=1771599788; v=1;
+ b=oWxUtkgku9BWFCUpjeFwgablpsBkq6mt2Sx0G5UnGB2BJ/xwWv9J3+f2Ua4lkfOH06rwl0Af
+ lL3kV8nD9fTVjxOjvvnMvKJDsq5exY+bWaIImzmKS/kOY//u3x+yR/NI/nDt26muVvaRGmV46hy
+ Zmjnncqr/ridAYFG8ndMyQhGllMsZiDJhLFP0h/+LTdluh4z2CZkNr+yYM80GGV86Dc4KHJwjjP
+ vlwfWuhRj5Dlw0dGOcyTr/u84PgjptogtrPtrqnFWczAyHbtipDc9tWMyuFM9XF9ZI7iW6tlwXR
+ KwkLXqFaMDsG4THRE3U0UepObfbBn519ephrf7YX2SsDg==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id BF9B725018;
- Fri, 20 Feb 2026 15:03:01 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id EA4552501C;
+ Fri, 20 Feb 2026 15:03:07 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Mon, 30 Jan 2023 13:14:50 +0100
-Subject: [PATCH qemu 02/11] [ot] hw/char, hw/timer,
- hw/ssi: fix device definitions
-Message-ID: <177159976712.8279.7732381632410882915-2@git.sr.ht>
+Date: Tue, 07 Feb 2023 16:59:35 +0100
+Subject: [PATCH qemu 04/11] [ot] target/riscv: implement custom LowRisc Ibex
+ CSRs
+Message-ID: <177159976712.8279.7732381632410882915-4@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177159976712.8279.7732381632410882915-0@git.sr.ht>
 To: qemu-devel@nongnu.org
@@ -82,128 +82,161 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Emmanuel Blot <eblot@rivosinc.com>
 
-Use a separate Kconfig symbols for Ibex UART, Timer, and SPI devices:
-having an Ibex CPU does not imply usage of these specific implementations.
-
 Signed-off-by: Emmanuel Blot <eblot@rivosinc.com>
----
- hw/char/Kconfig       | 3 +++
- hw/char/meson.build   | 2 +-
- hw/riscv/Kconfig      | 3 +++
- hw/ssi/Kconfig        | 4 ++++
- hw/ssi/meson.build    | 2 +-
- hw/timer/Kconfig      | 3 +++
- hw/timer/ibex_timer.c | 2 +-
- hw/timer/meson.build  | 2 +-
- 8 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 020c0a84bb..0cbbaedb2f 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -95,3 +95,6 @@ config IP_OCTAL_232
-     bool
-     default y
-     depends on IPACK
+Includes existing MIT licenced code (already published elsewhere)
+---
+ target/riscv/cpu.c       |  2 +-
+ target/riscv/cpu.h       |  7 ++++
+ target/riscv/ibex_csr.c  | 85 ++++++++++++++++++++++++++++++++++++++++
+ target/riscv/meson.build |  1 +
+ 4 files changed, 94 insertions(+), 1 deletion(-)
+ create mode 100644 target/riscv/ibex_csr.c
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 24a4c2fd3f..dd30b21dd2 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3056,7 +3056,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+         .cfg.ext_zba =3D true,
+         .cfg.ext_zbb =3D true,
+         .cfg.ext_zbc =3D true,
+-        .cfg.ext_zbs =3D true
++        .cfg.ext_zbs =3D true,
+     ),
+=20
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 35d1f6362c..faf55e8b5e 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -481,6 +481,10 @@ struct CPUArchState {
+     uint64_t hstateen[SMSTATEEN_MAX_COUNT];
+     uint64_t sstateen[SMSTATEEN_MAX_COUNT];
+     uint64_t henvcfg;
 +
-+config IBEX_UART
-+    bool
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index a9e1dc26c0..f47fa11bbe 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -2,7 +2,7 @@ system_ss.add(when: 'CONFIG_CADENCE', if_true: files('cadence=
-_uart.c'))
- system_ss.add(when: 'CONFIG_CMSDK_APB_UART', if_true: files('cmsdk-apb-uart.=
-c'))
- system_ss.add(when: 'CONFIG_ESCC', if_true: files('escc.c'))
- system_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_apbuart.c'))
--system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_uart.c'))
-+system_ss.add(when: 'CONFIG_IBEX_UART', if_true: files('ibex_uart.c'))
- system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_serial.c'))
- system_ss.add(when: 'CONFIG_IP_OCTAL_232', if_true: files('ipoctal232.c'))
- system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('parallel-isa.c'))
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 0222c93f87..e6aa32ee8f 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -38,6 +38,9 @@ config OPENTITAN
-     default y
-     depends on RISCV32
-     select IBEX
-+    select IBEX_SPI_HOST
-+    select IBEX_TIMER
-+    select IBEX_UART
-     select SIFIVE_PLIC
-     select UNIMP
++    /* Ibex custom CSRs */
++    target_ulong cpuctrlsts;
++    target_ulong secureseed;
+ #endif
 =20
-diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
-index 1bd56463c1..c8d573eeb9 100644
---- a/hw/ssi/Kconfig
-+++ b/hw/ssi/Kconfig
-@@ -32,3 +32,7 @@ config PNV_SPI
- config ALLWINNER_A10_SPI
-     bool
-     select SSI
+     /* Fields from here on are preserved across CPU reset. */
+@@ -988,5 +992,8 @@ extern const RISCVCSR th_csr_list[];
+ /* Implemented in mips_csr.c */
+ extern const RISCVCSR mips_csr_list[];
+=20
++/* Implemented in ibex_csr.c */
++extern const RISCVCSR ibex_csr_list[];
 +
-+config IBEX_SPI_HOST
-+    bool
-+    select SSI
-diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-index 6afb1ea200..a3ba319280 100644
---- a/hw/ssi/meson.build
-+++ b/hw/ssi/meson.build
-@@ -10,6 +10,6 @@ system_ss.add(when: 'CONFIG_XILINX_SPI', if_true: files('xi=
-linx_spi.c'))
- system_ss.add(when: 'CONFIG_XILINX_SPIPS', if_true: files('xilinx_spips.c'))
- system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-ospi.c=
-'))
- system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
--system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
-+system_ss.add(when: 'CONFIG_IBEX_SPI_HOST', if_true: files('ibex_spi_host.c'=
-))
- system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
- system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
-diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
-index b3d823ce2c..2fdefd0d1f 100644
---- a/hw/timer/Kconfig
-+++ b/hw/timer/Kconfig
-@@ -65,3 +65,6 @@ config STELLARIS_GPTM
-=20
- config AVR_TIMER16
-     bool
+ const char *priv_spec_to_str(int priv_version);
+ #endif /* RISCV_CPU_H */
+diff --git a/target/riscv/ibex_csr.c b/target/riscv/ibex_csr.c
+new file mode 100644
+index 0000000000..d62638bbfb
+--- /dev/null
++++ b/target/riscv/ibex_csr.c
+@@ -0,0 +1,85 @@
++/*
++ * QEMU LowRisc Ibex core features
++ *
++ * Copyright (c) 2023 Rivos, Inc.
++ *
++ * SPDX-License-Identifier: MIT
++ *
++ */
 +
-+config IBEX_TIMER
-+    bool
-diff --git a/hw/timer/ibex_timer.c b/hw/timer/ibex_timer.c
-index ee18652189..858e1a67de 100644
---- a/hw/timer/ibex_timer.c
-+++ b/hw/timer/ibex_timer.c
-@@ -31,7 +31,7 @@
- #include "hw/timer/ibex_timer.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
--#include "target/riscv/cpu.h"
-+#include "hw/core/registerfields.h"
- #include "migration/vmstate.h"
-=20
- REG32(ALERT_TEST, 0x00)
-diff --git a/hw/timer/meson.build b/hw/timer/meson.build
-index 178321c029..cc02aa0dda 100644
---- a/hw/timer/meson.build
-+++ b/hw/timer/meson.build
-@@ -30,7 +30,7 @@ system_ss.add(when: 'CONFIG_SSE_TIMER', if_true: files('sse=
--timer.c'))
- system_ss.add(when: 'CONFIG_STELLARIS_GPTM', if_true: files('stellaris-gptm.=
-c'))
- system_ss.add(when: 'CONFIG_STM32F2XX_TIMER', if_true: files('stm32f2xx_time=
-r.c'))
- system_ss.add(when: 'CONFIG_XILINX', if_true: files('xilinx_timer.c'))
--specific_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_timer.c'))
-+system_ss.add(when: 'CONFIG_IBEX_TIMER', if_true: files('ibex_timer.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
-=20
- specific_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "cpu.h"
++
++/* Custom CSRs */
++#define CSR_CPUCTRLSTS 0x7c0
++#define CSR_SECURESEED 0x7c1
++
++#define CPUCTRLSTS_ICACHE_ENABLE     0x000
++#define CPUCTRLSTS_DATA_IND_TIMING   0x001
++#define CPUCTRLSTS_DUMMY_INSTR_EN    0x002
++#define CPUCTRLSTS_DUMMY_INSTR_MASK  0x038
++#define CPUCTRLSTS_SYNC_EXC_SEEN     0x040
++#define CPUCTRLSTS_DOUBLE_FAULT_SEEN 0x080
++#define CPUCTRLSTS_IC_SCR_KEY_VALID  0x100
++
++#if !defined(CONFIG_USER_ONLY)
++
++static RISCVException read_cpuctrlsts(CPURISCVState *env, int csrno,
++                                      target_ulong *val)
++{
++    *val =3D CPUCTRLSTS_IC_SCR_KEY_VALID | env->cpuctrlsts;
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_cpuctrlsts(CPURISCVState *env, int csrno,
++                                       target_ulong val, uintptr_t a)
++{
++    /* b7 can only be cleared */
++    env->cpuctrlsts &=3D ~0xbf;
++    /* b6 should be cleared on mret */
++    env->cpuctrlsts |=3D val & 0x3f;
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException read_secureseed(CPURISCVState *env, int csrno,
++                                      target_ulong *val)
++{
++    /*
++     * "Seed values are not actually stored in a register and so reads to th=
+is
++     * register will always return zero."
++     */
++    *val =3D 0;
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_secureseed(CPURISCVState *env, int csrno,
++                                       target_ulong val, uintptr_t a)
++{
++    (void)val;
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException any(CPURISCVState *env, int csrno)
++{
++    /*
++     *  unfortunately, this predicate is not public, so duplicate the standa=
+rd
++     *  implementation
++     */
++    return RISCV_EXCP_NONE;
++}
++
++const RISCVCSR ibex_csr_list[] =3D {
++    {
++        .csrno =3D CSR_CPUCTRLSTS,
++        .csr_ops =3D { "cpuctrlsts", any, &read_cpuctrlsts, &write_cpuctrlst=
+s },
++    },
++    {
++        .csrno =3D CSR_SECURESEED,
++        .csr_ops =3D { "secureseed", any, &read_secureseed, &write_securesee=
+d },
++    },
++    {}
++};
++
++#endif /* !defined(CONFIG_USER_ONLY) */
++
+diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+index 3842c7c1a8..5a174a6feb 100644
+--- a/target/riscv/meson.build
++++ b/target/riscv/meson.build
+@@ -17,6 +17,7 @@ riscv_ss.add(files(
+   'cpu.c',
+   'cpu_helper.c',
+   'csr.c',
++  'ibex_csr.c',
+   'fpu_helper.c',
+   'gdbstub.c',
+   'op_helper.c',
 --=20
 2.49.1
 
