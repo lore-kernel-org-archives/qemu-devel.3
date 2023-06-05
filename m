@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BFD4C56206
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 425A2C56201
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Feb 2026 15:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vtS7s-0005rg-Ux; Fri, 20 Feb 2026 10:09:04 -0500
+	id 1vtS7t-0005ri-72; Fri, 20 Feb 2026 10:09:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vtS2b-0008Su-LC; Fri, 20 Feb 2026 10:03:37 -0500
+ id 1vtS2C-0008Cn-1p; Fri, 20 Feb 2026 10:03:13 -0500
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vtS2X-0002MY-NM; Fri, 20 Feb 2026 10:03:36 -0500
-DKIM-Signature: a=rsa-sha256; bh=rBS2TnP2vkOrMgY4ViNjdaynesZqm+FvW1XBTRD4iP8=; 
+ id 1vtS29-0002Kl-7Y; Fri, 20 Feb 2026 10:03:11 -0500
+DKIM-Signature: a=rsa-sha256; bh=WWZhY35LLWHeJdCFFOr+e8kJW4fpE0wdAgDqorcI8cE=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1771599792; v=1;
- b=oHlR8Dpfn5QNDn8gFtZinQQoBDvBgcmkTVj14/cC6oRIbFilDxFg+8pjSFOxGdg1zg/bGAXw
- bD60U26bvzrDRsa+X0gzVw5icKo6n6eioIZ+KX/4YaC2h4iTH7DIDW4J667baCTXG3zp5XOD3A5
- 4PwqO4WTsIR7Y3k4Dz43oXAXzad+DAL9qyGauBfoaaZ46IbXz/v49F/NX8JfVcT3CNnBSkzh18u
- 1o5EuriFxUFcJly7Kwd7n9wwOpHAkLOGnSClpDNFe+Yx8iZilFKWXAC+eSiklzOrCM83KonDk33
- uKo0SUF0dHwmVq6VKX5sd1fQBddtl7SU0teWkLo6E5AXw==
+ t=1771599782; v=1;
+ b=E1ZCIiDdZvF6fSlCx5QSPrkzDlCGfCY1B6tSMNvOVGqUg8qhUEUlnSAKY9v/kLqJMxJ7l2SU
+ Q0sORnKRzPEgHDlPSmGiC+a//H6noMza/UbugRBoUbxaAqv7fNyUXZookNlKeOYUxXY1mvUPq83
+ IopqKbcCEHdOzZwn3LH57xqU9O6AiYNJU55z/M1xvEDiysi98C/lfOkUyvLrZmsQqbnAZHHtOfi
+ LseEjFSSHPPCh55PtPryf+LlnvY+qZTnXGkxsgarf5SHLYs0MQKSwBF8/ikRx9/1/CI5T8MGExw
+ A+er3bW6tnvGLf8DZ7nfIYUzos724NlwonRRjuX2hmtiQ==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 4A9AF25026;
- Fri, 20 Feb 2026 15:03:12 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id D306625019;
+ Fri, 20 Feb 2026 15:03:02 +0000 (UTC)
 From: ~lexbaileylowrisc <lexbaileylowrisc@git.sr.ht>
-Date: Thu, 16 Feb 2023 17:11:22 +0100
-Subject: [PATCH qemu 11/11] [ot] hw/riscv, hw/opentitan: add Opentitan Alert
- handler device
-Message-ID: <177159976712.8279.7732381632410882915-11@git.sr.ht>
+Date: Mon, 05 Jun 2023 12:24:08 +0200
+Subject: [PATCH qemu 03/11] [ot] hw/riscv: add helper for Ibex platforms
+Message-ID: <177159976712.8279.7732381632410882915-3@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <177159976712.8279.7732381632410882915-0@git.sr.ht>
 To: qemu-devel@nongnu.org
@@ -61,8 +60,8 @@ X-Spam_score: 1.7
 X-Spam_bar: +
 X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
  DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 20 Feb 2026 10:09:01 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,836 +82,761 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Emmanuel Blot <eblot@rivosinc.com>
 
 Signed-off-by: Lex Bailey <lex.bailey@lowrisc.org>
-
-Includes existing MIT licenced code (already published elsewhere)
 ---
- hw/opentitan/Kconfig            |   2 +
- hw/opentitan/meson.build        |   1 +
- hw/opentitan/ot_alert.c         | 668 ++++++++++++++++++++++++++++++++
- hw/opentitan/trace-events       |   5 +
- hw/riscv/Kconfig                |   1 +
- hw/riscv/ibex_common.c          |   2 +-
- hw/riscv/ot_earlgrey.c          |  11 +-
- include/hw/opentitan/ot_alert.h |  23 ++
- include/hw/riscv/ibex_irq.h     |   6 +-
- 9 files changed, 712 insertions(+), 7 deletions(-)
- create mode 100644 hw/opentitan/ot_alert.c
- create mode 100644 include/hw/opentitan/ot_alert.h
+ MAINTAINERS                    |  14 +-
+ hmp-commands-info.hx           |  12 ++
+ hw/riscv/Kconfig               |   3 +
+ hw/riscv/ibex_common.c         | 316 ++++++++++++++++++++++++++++++++
+ hw/riscv/meson.build           |   1 +
+ include/hw/riscv/ibex_common.h | 322 +++++++++++++++++++++++++++++++++
+ 6 files changed, 666 insertions(+), 2 deletions(-)
+ create mode 100644 hw/riscv/ibex_common.c
+ create mode 100644 include/hw/riscv/ibex_common.h
 
-diff --git a/hw/opentitan/Kconfig b/hw/opentitan/Kconfig
-index 6bd1855a84..6e9aa833b4 100644
---- a/hw/opentitan/Kconfig
-+++ b/hw/opentitan/Kconfig
-@@ -1,2 +1,4 @@
- # OpenTitan devices
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e0c481e212..8b8bb7b554 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1716,9 +1716,13 @@ M: Alistair Francis <Alistair.Francis@wdc.com>
+ L: qemu-riscv@nongnu.org
+ S: Supported
+ F: hw/riscv/opentitan.c
+-F: hw/*/ibex_*.c
++F: hw/ssi/ibex_spi_host.c
++F: hw/timer/ibex_timer.c
++F: hw/char/ibex_uart.c
+ F: include/hw/riscv/opentitan.h
+-F: include/hw/*/ibex_*.h
++F: include/hw/ssi/ibex_spi_host.h
++F: include/hw/timer/ibex_timer.h
++F: include/hw/char/ibex_uart.h
 =20
-+config OT_ALERT
-+    bool
-diff --git a/hw/opentitan/meson.build b/hw/opentitan/meson.build
-index 6bd1855a84..d24aae88fd 100644
---- a/hw/opentitan/meson.build
-+++ b/hw/opentitan/meson.build
-@@ -1,2 +1,3 @@
- # OpenTitan devices
+ Microchip PolarFire SoC Icicle Kit
+ L: qemu-riscv@nongnu.org
+@@ -4450,6 +4454,12 @@ F: docs/devel/ebpf_rss.rst
+ F: ebpf/*
+ F: tools/ebpf/*
 =20
-+system_ss.add(when: 'CONFIG_OT_ALERT', if_true: files('ot_alert.c'))
-diff --git a/hw/opentitan/ot_alert.c b/hw/opentitan/ot_alert.c
-new file mode 100644
-index 0000000000..b864fda0fa
---- /dev/null
-+++ b/hw/opentitan/ot_alert.c
-@@ -0,0 +1,668 @@
-+/*
-+ * QEMU OpenTitan Alert handler device
-+ *
-+ * Copyright (c) 2023-2025 Rivos, Inc.
-+ *
-+ * Author(s):
-+ *  Emmanuel Blot <eblot@rivosinc.com>
-+ *
-+ * SPDX-License-Identifier: MIT
-+ *
-+ */
++Ibex
++M: lowRISC <qemu-maintainers@lowrisc.org>
++S: Supported
++F: hw/riscv/ibex_common.c
++F: include/hw/riscv/ibex_common.h
++F: include/hw/riscv/ibex_irq.h
+ Build and test automation
+ -------------------------
+ Build and test automation, general continuous integration
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 74c741f80e..90f05f7599 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -1010,3 +1010,15 @@ SRST
+   ``info firmware-log``
+     Show the firmware (ovmf) debug log.
+ ERST
 +
-+#include "qemu/osdep.h"
-+#include "qemu/guest-random.h"
-+#include "qemu/log.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/timer.h"
-+#include "qemu/typedefs.h"
-+#include "qapi/error.h"
-+#include "hw/opentitan/ot_alert.h"
-+#include "hw/core/qdev-properties-system.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/registerfields.h"
-+#include "hw/riscv/ibex_common.h"
-+#include "hw/riscv/ibex_irq.h"
-+#include "hw/core/sysbus.h"
-+#include "trace.h"
++    {
++        .name       =3D "ibex",
++        .args_type  =3D "",
++        .params     =3D "",
++        .help       =3D "Show Ibex vCPU info",
++    },
 +
-+#define PARAM_N_ALERTS    65u
-+#define PARAM_N_LPG       24u
-+#define PARAM_N_LPG_WIDTH 5u
-+#define PARAM_ESC_CNT_DW  32u
-+#define PARAM_ACCU_CNT_DW 16u
-+#define PARAM_N_CLASSES   4u
-+#define PARAM_N_ESC_SEV   4u
-+#define PARAM_N_PHASES    4u
-+#define PARAM_N_LOC_ALERT 7u
-+#define PARAM_PING_CNT_DW 16u
-+#define PARAM_PHASE_DW    2u
-+#define PARAM_CLASS_DW    2u
-+
-+/* clang-format off */
-+REG32(INTR_STATE, 0x0u)
-+    SHARED_FIELD(INTR_STATE_CLASSA, 0u, 1u)
-+    SHARED_FIELD(INTR_STATE_CLASSB, 1u, 1u)
-+    SHARED_FIELD(INTR_STATE_CLASSC, 2u, 1u)
-+    SHARED_FIELD(INTR_STATE_CLASSD, 3u, 1u)
-+REG32(INTR_ENABLE, 0x4u)
-+REG32(INTR_TEST, 0x8u)
-+REG32(PING_TIMER_REGWEN, 0xcu)
-+    FIELD(PING_TIMER_REGWEN, EN, 0u, 1u)
-+REG32(PING_TIMEOUT_CYC_SHADOWED, 0x10u)
-+    FIELD(PING_TIMEOUT_CYC_SHADOWED, VAL, 0u, 16u)
-+REG32(PING_TIMER_EN_SHADOWED, 0x14u)
-+    FIELD(PING_TIMER_EN_SHADOWED, EN, 0u, 1u)
-+REG32(ALERT_REGWEN, 0x18u)
-+    SHARED_FIELD(ALERT_REGWEN_EN, 0u, 1u)
-+REG32(ALERT_EN_SHADOWED, 0x11cu)
-+    SHARED_FIELD(ALERT_EN_SHADOWED_EN, 0u, 1u)
-+REG32(ALERT_CLASS_SHADOWED, 0x220u)
-+    SHARED_FIELD(ALERT_CLASS_SHADOWED_EN, 0u, 2u)
-+REG32(ALERT_CAUSE, 0x324u)
-+    SHARED_FIELD(ALERT_CAUSE_EN, 0u, 1u)
-+REG32(LOC_ALERT_REGWEN, 0x428u)
-+    SHARED_FIELD(LOC_ALERT_REGWEN_EN, 0u, 1u)
-+REG32(LOC_ALERT_EN_SHADOWED, 0x444u)
-+    SHARED_FIELD(LOC_ALERT_EN_SHADOWED_EN, 0u, 1u)
-+REG32(LOC_ALERT_CLASS_SHADOWED, 0x460u)
-+    SHARED_FIELD(LOC_ALERT_CLASS_SHADOWED_EN, 0u, 2u)
-+REG32(LOC_ALERT_CAUSE, 0x47cu)
-+    SHARED_FIELD(LOC_ALERT_CAUSE_EN, 0u, 1u)
-+REG32(CLASS_REGWEN, 0x498u)
-+    FIELD(CLASS_REGWEN, EN, 0u, 1u)
-+REG32(CLASS_CTRL_SHADOWED, 0x49cu)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_EN, 0u, 1u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_LOCK, 1u, 1u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_EN_E0, 2u, 1u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_EN_E1, 3u, 1u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_EN_E2, 4u, 1u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_EN_E3, 5u, 1u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_MAP_E0, 6u, 2u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_MAP_E1, 8u, 2u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_MAP_E2, 10u, 2u)
-+    SHARED_FIELD(CLASS_CTRL_SHADOWED_MAP_E3, 12u, 2u)
-+REG32(CLASS_CLR_REGWEN, 0x4a0u)
-+    SHARED_FIELD(CLASS_CLR_REGWEN_EN, 0u, 1u)
-+REG32(CLASS_CLR_SHADOWED, 0x4a4u)
-+    SHARED_FIELD(CLASS_CLR_SHADOWED_EN, 0u, 1u)
-+REG32(CLASS_ACCUM_CNT, 0x4a8u)
-+    SHARED_FIELD(CLASS_ACCUM_CNT, 0u, 16u)
-+REG32(CLASS_ACCUM_THRESH_SHADOWED, 0x4acu)
-+    SHARED_FIELD(CLASS_ACCUM_THRESH_SHADOWED, 0u, 16u)
-+REG32(CLASS_TIMEOUT_CYC_SHADOWED, 0x4b0u)
-+REG32(CLASS_CRASHDUMP_TRIGGER_SHADOWED, 0x4b4u)
-+    SHARED_FIELD(CLASS_CRASHDUMP_TRIGGER_SHADOWED, 0u, 2u)
-+REG32(CLASS_PHASE0_CYC_SHADOWED, 0x4b8u)
-+REG32(CLASS_PHASE1_CYC_SHADOWED, 0x4bcu)
-+REG32(CLASS_PHASE2_CYC_SHADOWED, 0x4c0u)
-+REG32(CLASS_PHASE3_CYC_SHADOWED, 0x4c4u)
-+REG32(CLASS_ESC_CNT, 0x4c8u)
-+REG32(CLASS_STATE, 0x4ccu)
-+    FIELD(CLASS_STATE, VAL, 0u, 3u)
-+/* clang-format on */
-+
-+enum {
-+    ALERT_ID_ALERT_PINGFAIL,
-+    ALERT_ID_ESC_PINGFAIL,
-+    ALERT_ID_ALERT_INTEGFAIL,
-+    ALERT_ID_ESC_INTEGFAIL,
-+    ALERT_ID_BUS_INTEGFAIL,
-+    ALERT_ID_SHADOW_REG_UPDATE_ERROR,
-+    ALERT_ID_SHADOW_REG_STORAGE_ERROR,
-+};
-+
-+enum {
-+    ALERT_CLASSA,
-+    ALERT_CLASSB,
-+    ALERT_CLASSC,
-+    ALERT_CLASSD,
-+};
-+
-+enum {
-+    STATE_IDLE,
-+    STATE_TIMEOUT,
-+    STATE_FSMERROR,
-+    STATE_TERMINAL,
-+    STATE_PHASE0,
-+    STATE_PHASE1,
-+    STATE_PHASE2,
-+    STATE_PHASE3,
-+};
-+
-+#define INTR_MASK ((1u << PARAM_N_CLASSES) - 1u)
-+#define CLASS_CTRL_SHADOWED_MASK \
-+    (CLASS_CTRL_SHADOWED_EN_MASK | CLASS_CTRL_SHADOWED_LOCK_MASK | \
-+     CLASS_CTRL_SHADOWED_EN_E0_MASK | CLASS_CTRL_SHADOWED_EN_E1_MASK | \
-+     CLASS_CTRL_SHADOWED_EN_E2_MASK | CLASS_CTRL_SHADOWED_EN_E3_MASK | \
-+     CLASS_CTRL_SHADOWED_MAP_E0_MASK | CLASS_CTRL_SHADOWED_MAP_E1_MASK | \
-+     CLASS_CTRL_SHADOWED_MAP_E2_MASK | CLASS_CTRL_SHADOWED_MAP_E3_MASK)
-+
-+#define R32_OFF(_r_) ((_r_) / sizeof(uint32_t))
-+
-+#define R_LAST_REG R32_OFF(0x574u)
-+#define REGS_COUNT (R_LAST_REG + 1u)
-+#define REGS_SIZE  (REGS_COUNT * sizeof(uint32_t))
-+
-+#define ALERT_SLOT_SIZE           R32_OFF(sizeof(struct alerts))
-+#define LOC_ALERT_SLOT_SIZE       R32_OFF(sizeof(struct loc_alerts))
-+#define CLASS_SLOT_SIZE           R32_OFF(sizeof(struct classes))
-+#define CASE_RANGE(_reg_, _cnt_)  (_reg_)...((_reg_) + (_cnt_) - (1u))
-+#define CASE_STRIDE(_reg_, _cls_) ((_reg_) + (_cls_) * (CLASS_SLOT_SIZE))
-+#define SLOT_OFFSET(_reg_, _base_, _kind_) \
-+    (((_reg_) - (_base_)) / _kind_##_SLOT_SIZE)
-+#define ALERT_SLOT(_reg_)     SLOT_OFFSET(_reg_, R_ALERT_REGWEN, ALERT)
-+#define LOC_ALERT_SLOT(_reg_) SLOT_OFFSET(_reg_, R_LOC_ALERT_REGWEN, LOC_ALE=
-RT)
-+#define CLASS_SLOT(_reg_)     SLOT_OFFSET(_reg_, R_CLASS_REGWEN, CLASS)
-+
-+#define CHECK_REGWEN(_reg_, _cond_) \
-+    ot_alert_check_regwen(__func__, (_reg_), (_cond_))
-+
-+struct intr {
-+    uint32_t state;
-+    uint32_t enable;
-+    uint32_t test;
-+};
-+
-+struct ping {
-+    uint32_t timer_regwen;
-+    uint32_t timeout_cyc_shadowed;
-+    uint32_t timer_en_shadowed;
-+};
-+
-+struct alerts {
-+    uint32_t regwen;
-+    uint32_t en_shadowed;
-+    uint32_t class_shadowed;
-+    uint32_t cause;
-+};
-+
-+struct loc_alerts {
-+    uint32_t regwen;
-+    uint32_t en_shadowed;
-+    uint32_t class_shadowed;
-+    uint32_t cause;
-+};
-+
-+struct classes {
-+    uint32_t regwen;
-+    uint32_t ctrl_shadowed;
-+    uint32_t clr_regwen;
-+    uint32_t clr_shadowed;
-+    uint32_t accum_cnt;
-+    uint32_t accum_thresh_shadowed;
-+    uint32_t timeout_cyc_shadowed;
-+    uint32_t crashdump_trigger_shadowed;
-+    uint32_t phase0_cyc_shadowed;
-+    uint32_t phase1_cyc_shadowed;
-+    uint32_t phase2_cyc_shadowed;
-+    uint32_t phase3_cyc_shadowed;
-+    uint32_t esc_cnt;
-+    uint32_t state;
-+};
-+
-+typedef struct OtAlertRegs {
-+    struct intr intr;
-+    struct ping ping;
-+    struct alerts alerts[PARAM_N_ALERTS];
-+    struct loc_alerts loc_alerts[PARAM_N_LOC_ALERT];
-+    struct classes classes[PARAM_N_CLASSES];
-+} OtAlertRegs;
-+
-+struct OtAlertState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    IbexIRQ irqs[PARAM_N_CLASSES];
-+
-+    OtAlertRegs *regs;
-+};
-+
-+struct OtAlertClass {
-+    SysBusDeviceClass parent_class;
-+    ResettablePhases parent_phases;
-+};
-+
-+static inline bool
-+ot_alert_check_regwen(const char *func, unsigned reg, bool cond)
-+{
-+    if (!cond) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: reg 0x%04x is write-protected\n",
-+                      func, (unsigned)(reg * sizeof(uint32_t)));
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static void ot_alert_update_irqs(OtAlertState *s)
-+{
-+    uint32_t level =3D s->regs->intr.state & s->regs->intr.enable;
-+
-+    for (unsigned ix =3D 0; ix < ARRAY_SIZE(s->irqs); ix++) {
-+        ibex_irq_set(&s->irqs[ix], (int)((level >> ix) & 0x1));
-+    }
-+}
-+
-+static uint64_t ot_alert_regs_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    OtAlertState *s =3D opaque;
-+    OtAlertRegs *regs =3D s->regs;
-+    uint32_t val32;
-+
-+    hwaddr reg =3D R32_OFF(addr);
-+
-+    switch (reg) {
-+    case R_INTR_STATE:
-+        val32 =3D regs->intr.state;
-+        break;
-+    case R_INTR_ENABLE:
-+        val32 =3D regs->intr.enable;
-+        break;
-+    case R_PING_TIMER_REGWEN:
-+        val32 =3D regs->ping.timer_regwen;
-+        break;
-+    case R_PING_TIMEOUT_CYC_SHADOWED:
-+        val32 =3D regs->ping.timeout_cyc_shadowed;
-+        break;
-+    case R_PING_TIMER_EN_SHADOWED:
-+        val32 =3D regs->ping.timer_en_shadowed;
-+        break;
-+    case R_INTR_TEST:
-+        qemu_log_mask(LOG_GUEST_ERROR, "W/O register 0x02%" HWADDR_PRIx "\n",
-+                      addr);
-+        val32 =3D 0;
-+        break;
-+    case CASE_RANGE(R_ALERT_REGWEN, PARAM_N_ALERTS):
-+        val32 =3D regs->alerts[ALERT_SLOT(reg)].regwen;
-+        break;
-+    case CASE_RANGE(R_ALERT_EN_SHADOWED, PARAM_N_ALERTS):
-+        val32 =3D regs->alerts[ALERT_SLOT(reg)].en_shadowed;
-+        break;
-+    case CASE_RANGE(R_ALERT_CLASS_SHADOWED, PARAM_N_ALERTS):
-+        val32 =3D regs->alerts[ALERT_SLOT(reg)].class_shadowed;
-+        break;
-+    case CASE_RANGE(R_ALERT_CAUSE, PARAM_N_ALERTS):
-+        val32 =3D regs->alerts[ALERT_SLOT(reg)].cause;
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_REGWEN, PARAM_N_LOC_ALERT):
-+        val32 =3D regs->loc_alerts[LOC_ALERT_SLOT(reg)].regwen;
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_EN_SHADOWED, PARAM_N_LOC_ALERT):
-+        val32 =3D regs->loc_alerts[LOC_ALERT_SLOT(reg)].en_shadowed;
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_CLASS_SHADOWED, PARAM_N_LOC_ALERT):
-+        val32 =3D regs->loc_alerts[LOC_ALERT_SLOT(reg)].class_shadowed;
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_CAUSE, PARAM_N_LOC_ALERT):
-+        val32 =3D regs->loc_alerts[LOC_ALERT_SLOT(reg)].cause;
-+        break;
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].regwen;
-+        break;
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].ctrl_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].clr_regwen;
-+        break;
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].clr_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].accum_cnt;
-+        break;
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].accum_thresh_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].timeout_cyc_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].crashdump_trigger_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].phase0_cyc_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].phase1_cyc_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].phase2_cyc_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].phase3_cyc_shadowed;
-+        break;
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSD):
-+        val32 =3D regs->classes[CLASS_SLOT(reg)].esc_cnt;
-+        break;
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSD):
-+        val32 =3D
-+            regs->classes[reg - CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSA)].st=
-ate;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        val32 =3D 0;
-+        break;
-+    }
-+
-+    uint64_t pc =3D ibex_get_current_pc();
-+    trace_ot_alert_io_read_out((unsigned)addr, (uint64_t)val32, pc);
-+
-+    return (uint64_t)val32;
-+};
-+
-+static void ot_alert_regs_write(void *opaque, hwaddr addr, uint64_t val64,
-+                                unsigned size)
-+{
-+    OtAlertState *s =3D opaque;
-+    OtAlertRegs *regs =3D s->regs;
-+    uint32_t val32 =3D (uint32_t)val64;
-+
-+    hwaddr reg =3D R32_OFF(addr);
-+
-+    uint64_t pc =3D ibex_get_current_pc();
-+    trace_ot_alert_io_write((unsigned)addr, val64, pc);
-+
-+    switch (reg) {
-+    case R_INTR_STATE:
-+        val32 &=3D INTR_MASK;
-+        regs->intr.state &=3D ~val32; /* RW1C */
-+        ot_alert_update_irqs(s);
-+        break;
-+    case R_INTR_ENABLE:
-+        val32 &=3D INTR_MASK;
-+        regs->intr.enable =3D val32;
-+        ot_alert_update_irqs(s);
-+        break;
-+    case R_INTR_TEST:
-+        val32 &=3D INTR_MASK;
-+        regs->intr.state |=3D val32;
-+        ot_alert_update_irqs(s);
-+        break;
-+    case R_PING_TIMER_REGWEN:
-+        val32 &=3D R_PING_TIMER_REGWEN_EN_MASK;
-+        regs->ping.timer_regwen &=3D ~val32; /* RW1C */
-+        break;
-+    case R_PING_TIMEOUT_CYC_SHADOWED:
-+        val32 &=3D R_PING_TIMEOUT_CYC_SHADOWED_VAL_MASK;
-+        regs->ping.timeout_cyc_shadowed =3D val32;
-+        break;
-+    case R_PING_TIMER_EN_SHADOWED:
-+        val32 =3D R_PING_TIMER_EN_SHADOWED_EN_MASK; /* RW1S */
-+        regs->ping.timer_en_shadowed |=3D val32;
-+        break;
-+    case CASE_RANGE(R_ALERT_REGWEN, PARAM_N_ALERTS):
-+        val32 &=3D ALERT_REGWEN_EN_MASK;
-+        regs->alerts[ALERT_SLOT(reg)].regwen &=3D val32; /* RW0C */
-+        break;
-+    case CASE_RANGE(R_ALERT_EN_SHADOWED, PARAM_N_ALERTS):
-+        if (CHECK_REGWEN(reg, regs->alerts[reg - R_ALERT_EN_SHADOWED].regwen=
-)) {
-+            val32 &=3D ALERT_EN_SHADOWED_EN_MASK;
-+            regs->alerts[ALERT_SLOT(reg)].en_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_RANGE(R_ALERT_CLASS_SHADOWED, PARAM_N_ALERTS):
-+        if (CHECK_REGWEN(reg,
-+                         regs->alerts[reg - R_ALERT_CLASS_SHADOWED].regwen))=
- {
-+            val32 &=3D ALERT_CLASS_SHADOWED_EN_MASK;
-+            regs->alerts[ALERT_SLOT(reg)].en_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_RANGE(R_ALERT_CAUSE, PARAM_N_ALERTS):
-+        val32 =3D ALERT_CAUSE_EN_MASK;
-+        regs->alerts[ALERT_SLOT(reg)].cause &=3D ~val32; /* RW1C */
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_REGWEN, PARAM_N_LOC_ALERT):
-+        val32 &=3D LOC_ALERT_REGWEN_EN_MASK;
-+        regs->loc_alerts[LOC_ALERT_SLOT(reg)].regwen &=3D val32; /* RW0C */
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_EN_SHADOWED, PARAM_N_LOC_ALERT):
-+        if (CHECK_REGWEN(reg, regs->loc_alerts[LOC_ALERT_SLOT(reg)].regwen))=
- {
-+            val32 &=3D LOC_ALERT_EN_SHADOWED_EN_MASK;
-+            regs->loc_alerts[LOC_ALERT_SLOT(reg)].en_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_CLASS_SHADOWED, PARAM_N_LOC_ALERT):
-+        if (CHECK_REGWEN(reg, regs->loc_alerts[LOC_ALERT_SLOT(reg)].regwen))=
- {
-+            val32 &=3D LOC_ALERT_CLASS_SHADOWED_EN_MASK;
-+            regs->loc_alerts[LOC_ALERT_SLOT(reg)].en_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_RANGE(R_LOC_ALERT_CAUSE, PARAM_N_LOC_ALERT):
-+        val32 =3D LOC_ALERT_CAUSE_EN_MASK;
-+        regs->loc_alerts[LOC_ALERT_SLOT(reg)].cause &=3D ~val32; /* RW1C */
-+        break;
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_REGWEN, ALERT_CLASSD):
-+        val32 =3D R_CLASS_REGWEN_EN_MASK;
-+        regs->classes[CLASS_SLOT(reg)].regwen &=3D val32; /* RW0C */
-+        break;
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CTRL_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            val32 &=3D CLASS_CTRL_SHADOWED_MASK;
-+            regs->classes[CLASS_SLOT(reg)].ctrl_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CLR_REGWEN, ALERT_CLASSD):
-+        val32 &=3D CLASS_CLR_REGWEN_EN_MASK;
-+        regs->classes[CLASS_SLOT(reg)].clr_regwen &=3D val32; /* RW0C */
-+        break;
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CLR_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].clr_regwen)) {
-+            val32 &=3D CLASS_CLR_SHADOWED_EN_MASK;
-+            regs->classes[CLASS_SLOT(reg)].clr_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_ACCUM_THRESH_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            val32 &=3D CLASS_ACCUM_THRESH_SHADOWED_MASK;
-+            regs->classes[CLASS_SLOT(reg)].accum_thresh_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_TIMEOUT_CYC_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            regs->classes[CLASS_SLOT(reg)].timeout_cyc_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_CRASHDUMP_TRIGGER_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            val32 &=3D CLASS_CRASHDUMP_TRIGGER_SHADOWED_MASK;
-+            regs->classes[CLASS_SLOT(reg)].crashdump_trigger_shadowed =3D va=
-l32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE0_CYC_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            regs->classes[CLASS_SLOT(reg)].phase0_cyc_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE1_CYC_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            regs->classes[CLASS_SLOT(reg)].phase1_cyc_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE2_CYC_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            regs->classes[CLASS_SLOT(reg)].phase2_cyc_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_PHASE3_CYC_SHADOWED, ALERT_CLASSD):
-+        if (CHECK_REGWEN(reg, regs->classes[CLASS_SLOT(reg)].regwen)) {
-+            regs->classes[CLASS_SLOT(reg)].phase3_cyc_shadowed =3D val32;
-+        }
-+        break;
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_ACCUM_CNT, ALERT_CLASSD):
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_ESC_CNT, ALERT_CLASSD):
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSA):
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSB):
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSC):
-+    case CASE_STRIDE(R_CLASS_STATE, ALERT_CLASSD):
-+        qemu_log_mask(LOG_GUEST_ERROR, "R/O register 0x02%" HWADDR_PRIx "\n",
-+                      addr);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        break;
-+    }
-+};
-+
-+static const MemoryRegionOps ot_alert_regs_ops =3D {
-+    .read =3D &ot_alert_regs_read,
-+    .write =3D &ot_alert_regs_write,
-+    .endianness =3D DEVICE_LITTLE_ENDIAN,
-+    .impl.min_access_size =3D 4u,
-+    .impl.max_access_size =3D 4u,
-+};
-+
-+static void ot_alert_reset_enter(Object *obj, ResetType type)
-+{
-+    OtAlertClass *c =3D OT_ALERT_GET_CLASS(obj);
-+    OtAlertState *s =3D OT_ALERT(obj);
-+
-+    if (c->parent_phases.enter) {
-+        c->parent_phases.enter(obj, type);
-+    }
-+
-+    OtAlertRegs *regs =3D s->regs;
-+    memset(regs, 0, sizeof(*regs));
-+
-+    regs->ping.timer_regwen =3D 0x1u;
-+    regs->ping.timeout_cyc_shadowed =3D 0x100u;
-+    for (unsigned ix =3D 0; ix < PARAM_N_ALERTS; ix++) {
-+        regs->alerts[ix].regwen =3D 0x1u;
-+    }
-+    for (unsigned ix =3D 0; ix < PARAM_N_LOC_ALERT; ix++) {
-+        regs->loc_alerts[ix].regwen =3D 0x1u;
-+    }
-+    for (unsigned ix =3D 0; ix < PARAM_N_CLASSES; ix++) {
-+        regs->classes[ix].regwen =3D 0x1u;
-+        regs->classes[ix].ctrl_shadowed =3D 0x393cu;
-+        regs->classes[ix].clr_regwen =3D 0x1u;
-+    }
-+
-+    ot_alert_update_irqs(s);
-+}
-+
-+static void ot_alert_init(Object *obj)
-+{
-+    OtAlertState *s =3D OT_ALERT(obj);
-+
-+    memory_region_init_io(&s->mmio, obj, &ot_alert_regs_ops, s, TYPE_OT_ALER=
-T,
-+                          REGS_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->mmio);
-+
-+    s->regs =3D g_new0(OtAlertRegs, 1);
-+
-+    for (unsigned ix =3D 0; ix < ARRAY_SIZE(s->irqs); ix++) {
-+        ibex_sysbus_init_irq(obj, &s->irqs[ix]);
-+    }
-+}
-+
-+static void ot_alert_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc =3D DEVICE_CLASS(klass);
-+
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+
-+    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
-+    OtAlertClass *ac =3D OT_ALERT_CLASS(klass);
-+    resettable_class_set_parent_phases(rc, &ot_alert_reset_enter, NULL, NULL,
-+                                       &ac->parent_phases);
-+}
-+
-+static const TypeInfo ot_alert_info =3D {
-+    .name =3D TYPE_OT_ALERT,
-+    .parent =3D TYPE_SYS_BUS_DEVICE,
-+    .instance_size =3D sizeof(OtAlertState),
-+    .instance_init =3D &ot_alert_init,
-+    .class_size =3D sizeof(OtAlertClass),
-+    .class_init =3D &ot_alert_class_init,
-+};
-+
-+static void ot_alert_register_types(void)
-+{
-+    type_register_static(&ot_alert_info);
-+}
-+
-+type_init(ot_alert_register_types)
-diff --git a/hw/opentitan/trace-events b/hw/opentitan/trace-events
-index 695debd380..39dea92d2b 100644
---- a/hw/opentitan/trace-events
-+++ b/hw/opentitan/trace-events
-@@ -1 +1,6 @@
- # OpenTitan EarlGrey Trace Events
-+
-+# ot_alert.c
-+
-+ot_alert_io_read_out(unsigned int addr, uint64_t val, uint64_t pc) "addr=3D0=
-x%02x, val=3D0x%" PRIx64 ", pc=3D0x%" PRIx64
-+ot_alert_io_write(unsigned int addr, uint64_t val, uint64_t pc) "addr=3D0x%0=
-2x, val=3D0x%" PRIx64 ", pc=3D0x%" PRIx64
++SRST
++  ``info ibex``
++    Show Ibex vCPU information.
++ERST
 diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 76588c43ae..8fdb048ea7 100644
+index e6aa32ee8f..7877f0615c 100644
 --- a/hw/riscv/Kconfig
 +++ b/hw/riscv/Kconfig
-@@ -17,6 +17,7 @@ config OT_EARLGREY
-     default y
-     select IBEX
-     select IBEX_COMMON
-+    select OT_ALERT
-     select SIFIVE_PLIC
+@@ -7,6 +7,9 @@ config RISCV_NUMA
+ config IBEX
+     bool
+=20
++config IBEX_COMMON
++    bool
++
+ # RISC-V machines in alphabetical order
 =20
  config MICROCHIP_PFSOC
 diff --git a/hw/riscv/ibex_common.c b/hw/riscv/ibex_common.c
-index 6b53662a5b..dc0ae79777 100644
---- a/hw/riscv/ibex_common.c
-+++ b/hw/riscv/ibex_common.c
-@@ -1,5 +1,5 @@
- /*
-- * QEMU RISC-V Helpers for LowRISC Ibex Demo System & OpenTitan EarlGrey
-+ * QEMU RISC-V Helpers for LowRISC OpenTitan EarlGrey and related systems
-  *
-  * Copyright (c) 2022-2023 Rivos, Inc.
-  *
-diff --git a/hw/riscv/ot_earlgrey.c b/hw/riscv/ot_earlgrey.c
-index 77fb1b207c..ccb9ad0e7e 100644
---- a/hw/riscv/ot_earlgrey.c
-+++ b/hw/riscv/ot_earlgrey.c
-@@ -24,6 +24,7 @@
- #include "hw/core/boards.h"
- #include "hw/intc/sifive_plic.h"
- #include "hw/misc/unimp.h"
-+#include "hw/opentitan/ot_alert.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/riscv/ibex_common.h"
- #include "hw/riscv/ot_earlgrey.h"
-@@ -261,12 +262,16 @@ static const IbexDeviceDef ot_earlgrey_soc_devices[] =
-=3D {
-         ),
-     },
-     [OT_EARLGREY_SOC_DEV_ALERT_HANDLER] =3D {
--        .type =3D TYPE_UNIMPLEMENTED_DEVICE,
--        .name =3D "ot-alert_handler",
--        .cfg =3D &ibex_unimp_configure,
-+        .type =3D TYPE_OT_ALERT,
-         .memmap =3D MEMMAPENTRIES(
-             { 0x40150000u, 0x800u }
-         ),
-+        .gpio =3D IBEXGPIOCONNDEFS(
-+            OT_EARLGREY_SOC_GPIO_SYSBUS_IRQ(0, PLIC, 127),
-+            OT_EARLGREY_SOC_GPIO_SYSBUS_IRQ(0, PLIC, 128),
-+            OT_EARLGREY_SOC_GPIO_SYSBUS_IRQ(0, PLIC, 129),
-+            OT_EARLGREY_SOC_GPIO_SYSBUS_IRQ(1, PLIC, 130)
-+        ),
-     },
-     [OT_EARLGREY_SOC_DEV_SPI_HOST0] =3D {
-         .type =3D TYPE_UNIMPLEMENTED_DEVICE,
-diff --git a/include/hw/opentitan/ot_alert.h b/include/hw/opentitan/ot_alert.h
 new file mode 100644
-index 0000000000..d68f4c9e6e
+index 0000000000..c6056767c7
 --- /dev/null
-+++ b/include/hw/opentitan/ot_alert.h
-@@ -0,0 +1,23 @@
++++ b/hw/riscv/ibex_common.c
+@@ -0,0 +1,316 @@
 +/*
-+ * QEMU OpenTitan Alert handler device
++ * QEMU RISC-V Helpers for LowRISC Ibex Demo System & OpenTitan EarlGrey
 + *
-+ * Copyright (c) 2022-2025 Rivos, Inc.
++ * Copyright (c) 2022-2023 Rivos, Inc.
 + *
 + * Author(s):
 + *  Emmanuel Blot <eblot@rivosinc.com>
 + *  Lo=C3=AFc Lefort <loic@rivosinc.com>
 + *
-+ * SPDX-License-Identifier: MIT
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_OPENTITAN_OT_ALERT
-+#define HW_OPENTITAN_OT_ALERT
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qemu/log.h"
++#include "cpu.h"
++#include "disas/disas.h"
++#include "elf.h"
++#include "exec/hwaddr.h"
++#include "hw/boards.h"
++#include "hw/loader.h"
++#include "hw/misc/unimp.h"
++#include "hw/qdev-core.h"
++#include "hw/qdev-properties.h"
++#include "hw/riscv/ibex_common.h"
++#include "hw/sysbus.h"
++#include "monitor/monitor.h"
 +
++
++static void ibex_mmio_map_device(SysBusDevice *dev, MemoryRegion *mr,
++                                 unsigned nr, hwaddr addr)
++{
++    assert(nr < dev->num_mmio);
++    assert(dev->mmio[nr].addr =3D=3D (hwaddr)-1);
++    dev->mmio[nr].addr =3D addr;
++    memory_region_add_subregion(mr, addr, dev->mmio[nr].memory);
++}
++
++DeviceState **ibex_create_devices(const IbexDeviceDef *defs, unsigned count,
++                                  DeviceState *parent)
++{
++    DeviceState **devices =3D g_new0(DeviceState *, count);
++    unsigned unimp_count =3D 0;
++    for (unsigned idx =3D 0; idx < count; idx++) {
++        const IbexDeviceDef *def =3D &defs[idx];
++        assert(def->type);
++        devices[idx] =3D qdev_new(def->type);
++
++        char *name;
++        if (!strcmp(def->type, TYPE_UNIMPLEMENTED_DEVICE)) {
++            if (def->name) {
++                name =3D g_strdup_printf("%s[%u]", def->name, def->instance);
++            } else {
++                name =3D g_strdup_printf(TYPE_UNIMPLEMENTED_DEVICE "[%u]",
++                                       unimp_count);
++            }
++            unimp_count +=3D 1u;
++        } else {
++            name =3D g_strdup_printf("%s[%u]", def->type, def->instance);
++        }
++        object_property_add_child(OBJECT(parent), name, OBJECT(devices[idx])=
+);
++        g_free(name);
++    }
++    return devices;
++}
++
++void ibex_link_devices(DeviceState **devices, const IbexDeviceDef *defs,
++                       unsigned count)
++{
++    /* Link devices */
++    for (unsigned idx =3D 0; idx < count; idx++) {
++        DeviceState *dev =3D devices[idx];
++        const IbexDeviceLinkDef *link =3D defs[idx].link;
++        if (link) {
++            while (link->propname) {
++                DeviceState *target =3D devices[link->index];
++                (void)object_property_set_link(OBJECT(dev), link->propname,
++                                               OBJECT(target), &error_fatal);
++                link++;
++            }
++        }
++    }
++}
++
++void ibex_define_device_props(DeviceState **devices, const IbexDeviceDef *de=
+fs,
++                              unsigned count)
++{
++    for (unsigned idx =3D 0; idx < count; idx++) {
++        DeviceState *dev =3D devices[idx];
++        const IbexDevicePropDef *prop =3D defs[idx].prop;
++        if (prop) {
++            while (prop->propname) {
++                switch (prop->type) {
++                case IBEX_PROP_TYPE_BOOL:
++                    object_property_set_bool(OBJECT(dev), prop->propname,
++                                             prop->b, &error_fatal);
++                    break;
++                case IBEX_PROP_TYPE_INT:
++                    object_property_set_int(OBJECT(dev), prop->propname,
++                                            prop->i, &error_fatal);
++                    break;
++                case IBEX_PROP_TYPE_UINT:
++                    object_property_set_int(OBJECT(dev), prop->propname,
++                                            prop->u, &error_fatal);
++                    break;
++                case IBEX_PROP_TYPE_STR:
++                    object_property_set_str(OBJECT(dev), prop->propname,
++                                            prop->s, &error_fatal);
++                    break;
++                default:
++                    g_assert_not_reached();
++                    break;
++                }
++                prop++;
++            }
++        }
++    }
++}
++
++void ibex_realize_system_devices(DeviceState **devices,
++                                 const IbexDeviceDef *defs, unsigned count)
++{
++    BusState *bus =3D sysbus_get_default();
++
++    ibex_realize_devices(devices, bus, defs, count);
++
++    MemoryRegion *mrs[] =3D { get_system_memory(), NULL, NULL, NULL };
++
++    ibex_map_devices(devices, mrs, defs, count);
++}
++
++void ibex_realize_devices(DeviceState **devices, BusState *bus,
++                          const IbexDeviceDef *defs, unsigned count)
++{
++    /* Realize devices */
++    for (unsigned idx =3D 0; idx < count; idx++) {
++        DeviceState *dev =3D devices[idx];
++        const IbexDeviceDef *def =3D &defs[idx];
++
++        if (def->cfg) {
++            def->cfg(dev, def, DEVICE(OBJECT(dev)->parent));
++        }
++
++        if (def->memmap) {
++            SysBusDevice *busdev =3D
++                (SysBusDevice *)object_dynamic_cast(OBJECT(dev),
++                                                    TYPE_SYS_BUS_DEVICE);
++            if (!busdev) {
++                /* non-sysbus devices are not supported for now */
++                g_assert_not_reached();
++            }
++
++            qdev_realize_and_unref(DEVICE(busdev), bus, &error_fatal);
++        } else {
++            /* device is not connected to a bus */
++            qdev_realize_and_unref(dev, NULL, &error_fatal);
++        }
++    }
++}
++
++void ibex_map_devices(DeviceState **devices, MemoryRegion **mrs,
++                      const IbexDeviceDef *defs, unsigned count)
++{
++    for (unsigned idx =3D 0; idx < count; idx++) {
++        DeviceState *dev =3D devices[idx];
++        const IbexDeviceDef *def =3D &defs[idx];
++
++        if (def->memmap) {
++            SysBusDevice *busdev =3D
++                (SysBusDevice *)object_dynamic_cast(OBJECT(dev),
++                                                    TYPE_SYS_BUS_DEVICE);
++            if (busdev) {
++                const MemMapEntry *memmap =3D def->memmap;
++                unsigned mem =3D 0;
++                while (memmap->size) {
++                    unsigned region =3D IBEX_MEMMAP_GET_REGIDX(memmap->base);
++                    MemoryRegion *mr =3D mrs[region];
++                    if (mr) {
++                        ibex_mmio_map_device(busdev, mr, mem,
++                                             IBEX_MEMMAP_GET_ADDRESS(
++                                                 memmap->base));
++                    }
++                    mem++;
++                    memmap++;
++                }
++            }
++        }
++    }
++}
++
++void ibex_connect_devices(DeviceState **devices, const IbexDeviceDef *defs,
++                          unsigned count)
++{
++    /* Connect GPIOs (in particular, IRQs) */
++    for (unsigned idx =3D 0; idx < count; idx++) {
++        DeviceState *dev =3D devices[idx];
++        const IbexDeviceDef *def =3D &defs[idx];
++
++        if (def->gpio) {
++            const IbexGpioConnDef *conn =3D def->gpio;
++            while (conn->out.num >=3D 0 && conn->in.num >=3D 0) {
++                qemu_irq in_gpio =3D
++                    qdev_get_gpio_in_named(devices[conn->in.index],
++                                           conn->in.name, conn->in.num);
++
++                qdev_connect_gpio_out_named(dev, conn->out.name, conn->out.n=
+um,
++                                            in_gpio);
++                conn++;
++            }
++        }
++    }
++}
++
++void ibex_configure_devices(DeviceState **devices, BusState *bus,
++                            const IbexDeviceDef *defs, unsigned count)
++{
++    ibex_link_devices(devices, defs, count);
++    ibex_define_device_props(devices, defs, count);
++    ibex_realize_devices(devices, bus, defs, count);
++    ibex_connect_devices(devices, defs, count);
++}
++
++void ibex_unimp_configure(DeviceState *dev, const IbexDeviceDef *def,
++                          DeviceState *parent)
++{
++    if (def->name) {
++        qdev_prop_set_string(dev, "name", def->name);
++    }
++    assert(def->memmap !=3D NULL);
++    assert(def->memmap->size !=3D 0);
++    qdev_prop_set_uint64(dev, "size", def->memmap->size);
++}
++
++void ibex_load_kernel(AddressSpace *as)
++{
++    MachineState *ms =3D MACHINE(qdev_get_machine());
++
++    /* load kernel if provided */
++    if (ms->kernel_filename) {
++        uint64_t kernel_entry;
++        if (load_elf_ram_sym(ms->kernel_filename, NULL, NULL, NULL,
++                             &kernel_entry, NULL, NULL, NULL, 0, EM_RISCV, 1=
+, 0,
++                             as, true, NULL) <=3D 0) {
++            error_report("Cannot load ELF kernel %s", ms->kernel_filename);
++            exit(EXIT_FAILURE);
++        }
++
++        CPUState *cpu;
++        CPU_FOREACH(cpu) {
++            if (!as || cpu->as =3D=3D as) {
++                CPURISCVState *env =3D &RISCV_CPU(cpu)->env;
++                env->resetvec =3D (target_ulong)kernel_entry;
++            }
++        }
++    }
++}
++
++uint64_t ibex_get_current_pc(void)
++{
++    CPUState *cs =3D current_cpu;
++
++    return cs && cs->cc->get_pc ? cs->cc->get_pc(cs) : 0u;
++}
++
++/* x0 is replaced with PC */
++static const char ibex_ireg_names[32u][4u] =3D {
++    "pc", "ra", "sp", "gp", "tp",  "t0",  "t1", "t2", "s0", "s1", "a0",
++    "a1", "a2", "a3", "a4", "a5",  "a6",  "a7", "s2", "s3", "s4", "s5",
++    "s6", "s7", "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6",
++};
++
++void ibex_log_vcpu_registers(uint64_t regbm)
++{
++    CPURISCVState *env =3D &RISCV_CPU(current_cpu)->env;
++    qemu_log_mask(CPU_LOG_TB_IN_ASM, "\n....\n");
++    if (regbm & 0x1u) {
++        qemu_log_mask(CPU_LOG_TB_IN_ASM, "%4s: 0x" TARGET_FMT_lx "\n",
++                      ibex_ireg_names[0], env->pc);
++    }
++    for (unsigned gix =3D 1u; gix < 32u; gix++) {
++        uint64_t mask =3D 1u << gix;
++        if (regbm & mask) {
++            qemu_log_mask(CPU_LOG_TB_IN_ASM, "%4s: 0x" TARGET_FMT_lx "\n",
++                          ibex_ireg_names[gix], env->gpr[gix]);
++        }
++    }
++}
++
++/*
++ * Note: this is not specific to Ibex, and might apply to any vCPU.
++ */
++static void hmp_info_ibex(Monitor *mon, const QDict *qdict)
++{
++    CPUState *cpu;
++
++    CPU_FOREACH(cpu) {
++        vaddr pc;
++        const char *symbol;
++        if (cpu->cc->get_pc) {
++            pc =3D cpu->cc->get_pc(cpu);
++            symbol =3D lookup_symbol(pc);
++        } else {
++            pc =3D -1;
++            symbol =3D "?";
++        }
++        monitor_printf(mon, "* CPU #%d: 0x%" PRIx64 " in '%s'\n",
++                       cpu->cpu_index, (uint64_t)pc, symbol);
++    }
++}
++
++static void ibex_register_types(void)
++{
++    monitor_register_hmp("ibex", true, &hmp_info_ibex);
++}
++
++type_init(ibex_register_types)
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 533472e22a..70d63f56b5 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -3,6 +3,7 @@ riscv_ss.add(files('boot.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+ riscv_ss.add(files('riscv_hart.c'))
+ riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
++riscv_ss.add(when: 'CONFIG_IBEX_COMMON', if_true: files('ibex_common.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+ riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+ riscv_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
+diff --git a/include/hw/riscv/ibex_common.h b/include/hw/riscv/ibex_common.h
+new file mode 100644
+index 0000000000..6c7dae5cbe
+--- /dev/null
++++ b/include/hw/riscv/ibex_common.h
+@@ -0,0 +1,322 @@
++/*
++ * QEMU RISC-V Helpers for LowRISC OpenTitan EarlGrey and related systems
++ *
++ * Copyright (c) 2022-2023 Rivos, Inc.
++ *
++ * Author(s):
++ *  Emmanuel Blot <eblot@rivosinc.com>
++ *  Lo=C3=AFc Lefort <loic@rivosinc.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_RISCV_IBEX_COMMON_H
++#define HW_RISCV_IBEX_COMMON_H
++
++#include "qemu/osdep.h"
 +#include "qom/object.h"
++#include "exec/hwaddr.h"
++#include "hw/qdev-core.h"
 +
-+#define OPENTITAN_DEVICE_ALERT "ot-alert"
 +
-+#define TYPE_OT_ALERT "ot-alert"
-+OBJECT_DECLARE_TYPE(OtAlertState, OtAlertClass, OT_ALERT)
++/* ------------------------------------------------------------------------ =
+*/
++/* Devices & GPIOs */
++/* ------------------------------------------------------------------------ =
+*/
 +
-+#endif /* HW_OPENTITAN_OT_ALERT */
-diff --git a/include/hw/riscv/ibex_irq.h b/include/hw/riscv/ibex_irq.h
-index 22ccff6d5e..c1e11e20f6 100644
---- a/include/hw/riscv/ibex_irq.h
-+++ b/include/hw/riscv/ibex_irq.h
-@@ -12,9 +12,9 @@
-=20
- #include "qemu/osdep.h"
- #include "qom/object.h"
--#include "hw/irq.h"
--#include "hw/qdev-core.h"
--#include "hw/sysbus.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/qdev.h"
-+#include "hw/core/sysbus.h"
-=20
-=20
- /** Simple IRQ wrapper to limit propagation of no-change calls */
++#define IBEX_MAX_MMIO_ENTRIES 4u
++#define IBEX_MAX_GPIO_ENTRIES 16u
++
++typedef struct IbexDeviceDef IbexDeviceDef;
++
++typedef void (*ibex_dev_cfg_fn)(DeviceState *dev, const IbexDeviceDef *def,
++                                DeviceState *parent);
++
++/**
++ * Structure defining a GPIO connection (in particular, IRQs) from the curre=
+nt
++ * device to a target device
++ */
++typedef struct {
++    /** Source GPIO */
++    struct {
++        /** Name of source GPIO array or NULL for unnamed */
++        const char *name;
++        /** Index of source output GPIO */
++        int num;
++    } out;
++
++    /** Target GPIO */
++    struct {
++        /** Target device index */
++        int index;
++        /** Name of target input GPIO array or NULL for unnamed */
++        const char *name;
++        /** Index of target input GPIO */
++        int num;
++    } in;
++} IbexGpioConnDef;
++
++typedef struct {
++    /** Name of the property to assign the linked device to */
++    const char *propname;
++    /** Linked device index */
++    int index;
++} IbexDeviceLinkDef;
++
++/** Type of device property */
++typedef enum {
++    IBEX_PROP_TYPE_BOOL,
++    IBEX_PROP_TYPE_INT,
++    IBEX_PROP_TYPE_UINT,
++    IBEX_PROP_TYPE_STR,
++} IbexPropertyType;
++
++typedef struct {
++    /** Name of the property */
++    const char *propname;
++    /** Type of property */
++    IbexPropertyType type;
++    /** Value */
++    union {
++        bool b;
++        int64_t i;
++        uint64_t u;
++        const char *s;
++    };
++} IbexDevicePropDef;
++
++struct IbexDeviceDef {
++    /** Registered type of the device */
++    const char *type;
++    /** Optional name, may be NULL */
++    const char *name;
++    /** Instance number, default to 0 */
++    int instance;
++    /** Optional configuration function */
++    ibex_dev_cfg_fn cfg;
++    /** Array of memory map */
++    const MemMapEntry *memmap;
++    /** Array of GPIO connections */
++    const IbexGpioConnDef *gpio;
++    /** Array of linked devices */
++    const IbexDeviceLinkDef *link;
++    /** Array of properties */
++    const IbexDevicePropDef *prop;
++};
++
++/*
++ * Special memory address marked to flag a special MemMapEntry.
++ * Flagged MemMapEntry are used to select a memory region while mem mapping
++ * devices. There could be up to 4 different regions.
++ */
++#define IBEX_MEMMAP_REGIDX_COUNT 4u
++#define IBEX_MEMMAP_REGIDX_MASK \
++    ((IBEX_MEMMAP_REGIDX_COUNT) - 1u) /* address are always word-aligned */
++#define IBEX_MEMMAP_MAKE_REG(_addr_, _flag_) \
++    ((_addr_) | ((_flag_) & IBEX_MEMMAP_REGIDX_MASK))
++#define IBEX_MEMMAP_GET_REGIDX(_addr_) ((_addr_) & IBEX_MEMMAP_REGIDX_MASK)
++#define IBEX_MEMMAP_GET_ADDRESS(_addr_) ((_addr_) & ~IBEX_MEMMAP_REGIDX_MASK)
++
++/**
++ * Create memory map entries, each arg is MemMapEntry definition
++ */
++#define MEMMAPENTRIES(...) \
++    (const MemMapEntry[]) \
++    { \
++        __VA_ARGS__, \
++        { \
++            .size =3D 0u \
++        } \
++    }
++
++/**
++ * Create GPIO connection entries, each arg is IbexGpioConnDef definition
++ */
++#define IBEXGPIOCONNDEFS(...) \
++    (const IbexGpioConnDef[]) \
++    { \
++        __VA_ARGS__, \
++        { \
++            .out =3D {.num =3D -1 } \
++        } \
++    }
++
++/**
++ * Create device link entries, each arg is IbexDeviceLinkDef definition
++ */
++#define IBEXDEVICELINKDEFS(...) \
++    (const IbexDeviceLinkDef[]) \
++    { \
++        __VA_ARGS__, \
++        { \
++            .propname =3D NULL \
++        } \
++    }
++
++/**
++ * Create device property entries, each arg is IbexDevicePropDef definition
++ */
++#define IBEXDEVICEPROPDEFS(...) \
++    (const IbexDevicePropDef[]) \
++    { \
++        __VA_ARGS__, \
++        { \
++            .propname =3D NULL \
++        } \
++    }
++
++/**
++ * Create a IbexGpioConnDef to connect two unnamed GPIOs
++ */
++#define IBEX_GPIO(_irq_, _in_idx_, _num_) \
++    { \
++        .out =3D { \
++            .num =3D (_irq_), \
++        }, \
++        .in =3D { \
++            .index =3D (_in_idx_), \
++            .num =3D (_num_), \
++        } \
++    }
++
++/**
++ * Create a IbexGpioConnDef to connect a SysBus IRQ to an unnamed GPIO
++ */
++#define IBEX_GPIO_SYSBUS_IRQ(_irq_, _in_idx_, _num_) \
++    { \
++        .out =3D { \
++            .name =3D SYSBUS_DEVICE_GPIO_IRQ, \
++            .num =3D (_irq_), \
++        }, \
++        .in =3D { \
++            .index =3D (_in_idx_), \
++            .num =3D (_num_), \
++        } \
++    }
++
++/**
++ * Create a IbexLinkDeviceDef to link one device to another
++ */
++#define IBEX_DEVLINK(_pname_, _idx_) \
++    { \
++        .propname =3D (_pname_), .index =3D (_idx_), \
++    }
++
++/**
++ * Create a boolean device property
++ */
++#define IBEX_DEV_BOOL_PROP(_pname_, _b_) \
++    { \
++        .propname =3D (_pname_), .type =3D IBEX_PROP_TYPE_BOOL, .b =3D (_b_)=
+, \
++    }
++
++/**
++ * Create a signed integer device property
++ */
++#define IBEX_DEV_INT_PROP(_pname_, _i_) \
++    { \
++        .propname =3D (_pname_), .type =3D IBEX_PROP_TYPE_INT, .i =3D (_i_),=
+ \
++    }
++
++/**
++ * Create an unsigned integer device property
++ */
++#define IBEX_DEV_UINT_PROP(_pname_, _u_) \
++    { \
++        .propname =3D (_pname_), .type =3D IBEX_PROP_TYPE_UINT, .u =3D (_u_)=
+, \
++    }
++
++/**
++ * Create a string device property
++ */
++#define IBEX_DEV_STRING_PROP(_pname_, _s_) \
++    { \
++        .propname =3D (_pname_), .type =3D IBEX_PROP_TYPE_STR, .s =3D (_s_),=
+ \
++    }
++
++DeviceState **ibex_create_devices(const IbexDeviceDef *defs, unsigned count,
++                                  DeviceState *parent);
++void ibex_link_devices(DeviceState **devices, const IbexDeviceDef *defs,
++                       unsigned count);
++void ibex_define_device_props(DeviceState **devices, const IbexDeviceDef *de=
+fs,
++                              unsigned count);
++void ibex_realize_system_devices(DeviceState **devices,
++                                 const IbexDeviceDef *defs, unsigned count);
++void ibex_realize_devices(DeviceState **devices, BusState *bus,
++                          const IbexDeviceDef *defs, unsigned count);
++void ibex_connect_devices(DeviceState **devices, const IbexDeviceDef *defs,
++                          unsigned count);
++void ibex_map_devices(DeviceState **devices, MemoryRegion **mrs,
++                      const IbexDeviceDef *defs, unsigned count);
++void ibex_configure_devices(DeviceState **devices, BusState *bus,
++                            const IbexDeviceDef *defs, unsigned count);
++
++/**
++ * Utility function to configure unimplemented device.
++ * The Ibex device definition should have one defined memory entry, and an
++ * optional name.
++ */
++void ibex_unimp_configure(DeviceState *dev, const IbexDeviceDef *def,
++                          DeviceState *parent);
++
++/* ------------------------------------------------------------------------ =
+*/
++/* CPU */
++/* ------------------------------------------------------------------------ =
+*/
++
++/**
++ * Load an ELF application into a CPU address space.
++ * @as the address space to load the application into, maybe NULL to use the
++ * default address space
++ */
++void ibex_load_kernel(AddressSpace *as);
++
++/**
++ * Helper for device debugging: report the current guest PC, if any.
++ *
++ * If a HW access is performed from another device but the CPU, reported PC
++ * is 0.
++ */
++uint64_t ibex_get_current_pc(void);
++
++enum {
++    RV_GPR_PC =3D (1u << 0u),
++    RV_GPR_RA =3D (1u << 1u),
++    RV_GPR_SP =3D (1u << 2u),
++    RV_GPR_GP =3D (1u << 3u),
++    RV_GPR_TP =3D (1u << 4u),
++    RV_GPR_T0 =3D (1u << 5u),
++    RV_GPR_T1 =3D (1u << 6u),
++    RV_GPR_T2 =3D (1u << 7u),
++    RV_GPR_S0 =3D (1u << 8u),
++    RV_GPR_S1 =3D (1u << 9u),
++    RV_GPR_A0 =3D (1u << 10u),
++    RV_GPR_A1 =3D (1u << 11u),
++    RV_GPR_A2 =3D (1u << 12u),
++    RV_GPR_A3 =3D (1u << 13u),
++    RV_GPR_A4 =3D (1u << 14u),
++    RV_GPR_A5 =3D (1u << 15u),
++    RV_GPR_A6 =3D (1u << 16u),
++    RV_GPR_A7 =3D (1u << 17u),
++    RV_GPR_S2 =3D (1u << 18u),
++    RV_GPR_S3 =3D (1u << 19u),
++    RV_GPR_S4 =3D (1u << 20u),
++    RV_GPR_S5 =3D (1u << 21u),
++    RV_GPR_S6 =3D (1u << 22u),
++    RV_GPR_S7 =3D (1u << 23u),
++    RV_GPR_S8 =3D (1u << 24u),
++    RV_GPR_S9 =3D (1u << 25u),
++    RV_GPR_S10 =3D (1u << 26u),
++    RV_GPR_S11 =3D (1u << 27u),
++    RV_GPR_T3 =3D (1u << 28u),
++    RV_GPR_T4 =3D (1u << 29u),
++    RV_GPR_T5 =3D (1u << 30u),
++    RV_GPR_T6 =3D (1u << 31u),
++};
++
++/**
++ * Log current vCPU registers.
++ *
++ * @regbm is a bitmap of registers to be dumped [x1..t6], pc replace x0
++ */
++void ibex_log_vcpu_registers(uint64_t regbm);
++
++#endif /* HW_RISCV_IBEX_COMMON_H */
 --=20
 2.49.1
+
 
