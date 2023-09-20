@@ -4,70 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCD51C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 02:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A70FBC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 02:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSSYz-0004f1-LQ; Tue, 23 Jan 2024 21:00:25 -0500
+	id 1rSSun-0001jS-91; Tue, 23 Jan 2024 21:22:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rSSYv-0004el-Fl
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:00:21 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rSSYr-00082t-Mx
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:00:21 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxefAkb7BlT4IEAA--.18564S3;
- Wed, 24 Jan 2024 10:00:05 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxdMwkb7BlyMoVAA--.48561S3; 
- Wed, 24 Jan 2024 10:00:04 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: Set cpuid CSR register only once with
- kvm mode
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240115085121.180524-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <19d3e2aa-d018-9bcd-323d-17f2ddeb2428@loongson.cn>
-Date: Wed, 24 Jan 2024 10:00:04 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1rSSuk-0001jJ-Ue
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:22:55 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1rSSui-00033H-O8
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:22:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706062973; x=1737598973;
+ h=from:to:subject:date:message-id:in-reply-to:references:
+ mime-version:content-transfer-encoding;
+ bh=qAvw6hTolCzx2sHTXWzuyxxYR6MONniX9EjUwRMKQ1w=;
+ b=biip+8dmX1Fg8p7PxnCYTkQu8GM2nHGWakuhRTbsO15GaoeeRzi5jeNA
+ v6fR+rDEGG/9m+9sJHOEqKi+9LgexCVAhkdbmD3drjMaWfb/Z9FW3a+xV
+ DLDceQMIodYt9RdmN8j/PPsjWQ13OAPWYxQkZEXl2K8kqrgu6LnVHzMwn
+ ZnGEmTj6geAg4HUyRRaABAzASLOolSP18uiiWmWHn7QeHlxdPNWRITamo
+ L81423auK+/xuF33BVgNR+9gNOYXUgqoTzEqVSU0lru8Lcdq5W/fg0o1S
+ s48S6GkPXVxtyHlocuRzLDwzlfCi9bGqh/ZAX97nR6xd0V/mLwRmfInmt g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="1603205"
+X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; 
+   d="scan'208";a="1603205"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jan 2024 18:22:48 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; d="scan'208";a="28234906"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by fmviesa001.fm.intel.com with ESMTP; 23 Jan 2024 18:22:47 -0800
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH v3 1/2] ui/gtk: flush display pipeline before saving vmstate
+ when blob=true
+Date: Wed, 20 Sep 2023 16:24:26 -0700
+Message-Id: <20230920232426.5950-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231204183718.16777-1-dongwon.kim@intel.com>
+References: <20231204183718.16777-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <20240115085121.180524-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8DxdMwkb7BlyMoVAA--.48561S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Zw1fWr17uF18WrWftr1UurX_yoW8AFW8pr
- ZrCFZ0gF1rJaykAa4DZ3sY9r15J3yIga1xuFy2ka4Ikrn8X3s8XF48K3srtFy3G3s5AF40
- vF4fAr15ua18J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.17, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=dongwon.kim@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIMWL_WL_HIGH=-1.327, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,57 +78,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-‘⁄ 2024/1/15 œ¬ŒÁ4:51, Bibo Mao –¥µ¿:
-> CSR cpuid register is used for routing irq to different vcpus, its
-> value is kept unchanged since poweron. So it is not necessary to
-> set CSR cpuid register after system resets, and it is only set at
-> vm creation stage.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/kvm/kvm.c | 9 ++++++---
->   1 file changed, 6 insertions(+), 3 deletions(-)
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+If the guest state is paused before it gets a response for the current
+scanout frame submission (resource-flush), it won't flush new frames
+after being restored as it still waits for the old response, which is
+accepted as a scanout render done signal. So it's needed to unblock
+the current scanout render pipeline before the run state is changed
+to make sure the guest receives the response for the current frame
+submission.
 
-Thanks.
-Song Gao
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index 84bcdf5f86..2230f029d0 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -250,7 +250,7 @@ static int kvm_loongarch_get_csr(CPUState *cs)
->       return ret;
->   }
->   
-> -static int kvm_loongarch_put_csr(CPUState *cs)
-> +static int kvm_loongarch_put_csr(CPUState *cs, int level)
->   {
->       int ret = 0;
->       LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> @@ -322,8 +322,11 @@ static int kvm_loongarch_put_csr(CPUState *cs)
->       ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_RVACFG),
->                              &env->CSR_RVACFG);
->   
-> -    ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
-> +    /* CPUID is constant after poweron, it should be set only once */
-> +    if (level >= KVM_PUT_FULL_STATE) {
-> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
->                              &env->CSR_CPUID);
-> +    }
->   
->       ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG1),
->                              &env->CSR_PRCFG1);
-> @@ -598,7 +601,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
->           return ret;
->       }
->   
-> -    ret = kvm_loongarch_put_csr(cs);
-> +    ret = kvm_loongarch_put_csr(cs, level);
->       if (ret) {
->           return ret;
->       }
->
-> base-commit: 977542ded7e6b28d2bc077bcda24568c716e393c
+v2: Giving some time for the fence to be signaled before flushing
+    the pipeline
+
+v3: Prevent redundant call of gd_hw_gl_flushed by checking dmabuf
+    and fence_fd >= 0 in it (e.g. during and after eglClientWaitSync
+    in gd_change_runstate).
+
+    Destroy sync object later in gd_hw_fl_flushed since it is needed
+    by eglClientWaitSync.
+
+Cc: Marc-Andr√© Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ ui/egl-helpers.c |  2 --
+ ui/gtk.c         | 31 +++++++++++++++++++++++++++----
+ 2 files changed, 27 insertions(+), 6 deletions(-)
+
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index 3d19dbe382..a77f9e57d9 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -385,8 +385,6 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
+     if (dmabuf->sync) {
+         dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
+                                                       dmabuf->sync);
+-        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
+-        dmabuf->sync = NULL;
+     }
+ }
+ 
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 810d7fc796..eaca890cba 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -597,10 +597,14 @@ void gd_hw_gl_flushed(void *vcon)
+     VirtualConsole *vc = vcon;
+     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+ 
+-    qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
+-    close(dmabuf->fence_fd);
+-    dmabuf->fence_fd = -1;
+-    graphic_hw_gl_block(vc->gfx.dcl.con, false);
++    if (dmabuf && dmabuf->fence_fd >= 0) {
++        qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
++        close(dmabuf->fence_fd);
++        dmabuf->fence_fd = -1;
++        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
++        dmabuf->sync = NULL;
++        graphic_hw_gl_block(vc->gfx.dcl.con, false);
++    }
+ }
+ 
+ /** DisplayState Callbacks (opengl version) **/
+@@ -678,6 +682,25 @@ static const DisplayGLCtxOps egl_ctx_ops = {
+ static void gd_change_runstate(void *opaque, bool running, RunState state)
+ {
+     GtkDisplayState *s = opaque;
++    int i;
++
++    if (state == RUN_STATE_SAVE_VM) {
++        for (i = 0; i < s->nb_vcs; i++) {
++            VirtualConsole *vc = &s->vc[i];
++
++            if (vc->gfx.guest_fb.dmabuf &&
++                vc->gfx.guest_fb.dmabuf->fence_fd >= 0) {
++                eglClientWaitSync(qemu_egl_display,
++                                  vc->gfx.guest_fb.dmabuf->sync,
++                                  EGL_SYNC_FLUSH_COMMANDS_BIT_KHR,
++                                  100000000);
++
++                /* force flushing current scanout blob rendering process
++                 * just in case the fence is still not signaled */
++                gd_hw_gl_flushed(vc);
++            }
++        }
++    }
+ 
+     gd_update_caption(s);
+ }
+-- 
+2.34.1
 
 
