@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD89C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 21:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDA6C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 21:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSNsb-0002g9-El; Tue, 23 Jan 2024 16:00:21 -0500
+	id 1rSOFW-0008V4-PN; Tue, 23 Jan 2024 16:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rSNsZ-0002fW-2i
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 16:00:19 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSOFO-0008UO-30
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 16:23:55 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rSNsW-00031T-03
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 16:00:18 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a2dc7827a97so529867966b.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 13:00:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSOFI-0006hn-AG
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 16:23:53 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2cf1fd1cc5bso76191fa.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 13:23:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1706043613; x=1706648413; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3TGOJsXOA91jiaT7uFt8hT/Kv4pjl6sQmG3/HHVAns4=;
- b=Lz8SUrNy8amaHIGdjqWlmQdgMnjYz3FBkNaaDWHvnJfHfdKYNlA3kGUZvin4E282eS
- uJjsk043aAX97+Yi+TCCdHkIbFTYcEJGq47t3EVuFVwhJg0dzBbZogC0kt6MBlCmEzoW
- 40494VWv+JVNF51Bx+/nGpExoGYrfWSZSEfGsL71I2M52YRHfA0iDI8QRIWN6W93TacF
- roGdtTJwRjKfEio/lzdHEG+y/ufroRvlnyeUUU+/9GzVQ9GfYYaqSQIONMgGBr8Ea3UE
- FhK7M22ZAU9wXmLCYWEA/hMTWFtO3tFDR1ASuRZ1Izqre6GKlLRf4tZOhVu3jFEx0O+s
- Uk5A==
+ d=linaro.org; s=google; t=1706045026; x=1706649826; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TyxkbOp2hplD3Yn6XW8pzAsdTTFoZaSbz6e9yJIbJYQ=;
+ b=ldjytA38B5opebtROa0jswWRkqwkJNSF++UOi7o7uGuATSiqcmaWB7An6JUDNK4NPk
+ AVkqWSv3s7PQPMJwwUP0soakHlFJdMX4gCqxUUB+ZPwbehNj0sbUzZi/eg/nFVvuU3z/
+ 3Gx0LoFGJ/LdgOlc7xtF1aP23JmjFOIYfkhpkLIEhyrtC7fj2VQRmkEcrv6G4niLGqd7
+ WeHMmqC+addKxG6LQVyps/aKO6yxyKeXSys/f8BC/D7xt2z2xCOZJZ1iw7YdpkXxikIh
+ vs8rzedHkQ1KwcVUAL8ylVbdKofy2dET692+XdcMV19yc7om8kNRzfHbe732tObJFQ6a
+ mbJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706043613; x=1706648413;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3TGOJsXOA91jiaT7uFt8hT/Kv4pjl6sQmG3/HHVAns4=;
- b=Sd6QmzS9mu/vzF8t8XKQvEXKIOC78Cq8AYtwQC/mLDuiubTW0bk7/UgUNGV+293n4B
- jziYXN5olvgCIFoyhT2sTujCusoZK2HHWVABu/PO4C3pKUUcQ4mT+byTpgIfMTodxjEq
- iUj/MIN2IQQw3pf6AUOHv3GAAmi63bW95bz7DGtkOcEpb/Fk1BAwk8zd56QrQj3tvUau
- wySqSAQgzoM0D5sNba3dyoI7pFSbCRltcARCzmUT8yfZTZejScGrYFndFm77ysDLrdKb
- dnCoRNrx+y92gkwa6JAL6Bo0NlkITyRwB3oLxXdIqIvH8+AAOOrd0arXS0n2cP0gWt4v
- RHbA==
-X-Gm-Message-State: AOJu0YxNC9K+DNCsw1nPrytt8nX+q45z89aFSqZ9SDEiNFkENyRH1K8R
- wcZ4dIjU+zImBDX78DoOlHPndvvvu3hLcyGzzL6yHUtdbswJvCML//aInbey0pQU62EI6Y/jeju
- xiAeUS1pznAIkH6oUa8PJCHto40y7JLYPaOGNYQ==
-X-Google-Smtp-Source: AGHT+IEOpdq2g8BZUn6wIQrN8uU84X0teu3KVYor2QPVE53Z8295WEP54ngSQUKPOYgb3COB6N1fN1+79BzkpDKnSvw=
-X-Received: by 2002:a17:906:3888:b0:a27:7c2e:420a with SMTP id
- q8-20020a170906388800b00a277c2e420amr274687ejd.8.1706043612978; Tue, 23 Jan
- 2024 13:00:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706045026; x=1706649826;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TyxkbOp2hplD3Yn6XW8pzAsdTTFoZaSbz6e9yJIbJYQ=;
+ b=PIoXtK+ArdjPvZbs2APPcuoKpjzaMHbGx2R1butuboM0Ywi3mgdPUTY+ejG8KPV0T8
+ gwn0w68tjyOPPoEuq03Vab1QlSwJW5CH7XCPZ9iF+sKXv4WXjaoj0rtpMGmlLt0sDGyO
+ 52nY6MTyZOGMCAlXZT3vY4DbFCfY0+cGRpWHzXaOpqTxJmryfwl/8FQS70M4uIXU3xTO
+ wGtNt/WKNEwX7z9g5VlaU8CmBc2igAxmmjnbQhkTRZM8d1AZuPJnTwm1nMexoTE5lTPp
+ rqjRKTSAgAffHdQRPHjiV72M9/bwrhtDC1qpvLTMlLzIMdQXJDrmmlHj6xsqLheF3JmR
+ c9/Q==
+X-Gm-Message-State: AOJu0YzKE7cz20zO5cj43RY2vnnTuQs6Qdz8HsEdoIk71CIMtMv7YO/C
+ 6mRoIWsckM/5WH067K6pTySbQt/z5QMsiOV/g8LIevF0Y/YDZg9B8XEfyn5/YnfbaaVCv9XfszP
+ zFIJ4ih9ZAP9i3RiHeRGHyILyoXp5+0sBGuy5RQ==
+X-Google-Smtp-Source: AGHT+IFk66upI90/RT9r0MLvKcEyQc/qKuFAR7rLpn0nxbOqHZYI8DqMtR+FtJTX/mKJopY+wZ+aS1NAhhjDRMkSvEU=
+X-Received: by 2002:a2e:8199:0:b0:2cd:d7eb:4fce with SMTP id
+ e25-20020a2e8199000000b002cdd7eb4fcemr255645ljg.80.1706045026325; Tue, 23 Jan
+ 2024 13:23:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20240104004452.324068-1-hao.xiang@bytedance.com>
- <20240104004452.324068-2-hao.xiang@bytedance.com>
- <22969801-AEDE-46EB-86E8-0E6F26E23397@nutanix.com>
- <CAAYibXjw42iB=5YgKsXy4erj6RsGuqDqFnhuOZxkfBit7S5TtA@mail.gmail.com>
- <8734uof5kw.fsf@suse.de>
-In-Reply-To: <8734uof5kw.fsf@suse.de>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Tue, 23 Jan 2024 13:00:01 -0800
-Message-ID: <CAAYibXjq2uRQkAAxecogUyxv9fKr785cAx_kN5KKeXttmx7jaw@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v3 01/20] multifd: Add capability to
- enable/disable zero_page
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Shivam Kumar <shivam.kumar1@nutanix.com>, 
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "peterx@redhat.com" <peterx@redhat.com>, 
- "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>, 
- "bryan.zhang@bytedance.com" <bryan.zhang@bytedance.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <20231215070357.10888-1-thuth@redhat.com>
+ <db19cdd7-4049-4b9a-9108-c1f05f992d89@tls.msk.ru>
+ <2a8e7077-0603-4455-8b4c-69a4200dd280@redhat.com>
+ <6d279ebd-fa9f-4839-97ca-7921679392f5@tls.msk.ru>
+In-Reply-To: <6d279ebd-fa9f-4839-97ca-7921679392f5@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 23 Jan 2024 21:23:15 +0000
+Message-ID: <CAFEAcA98EEpavYbZmy8WgJ2-Aq5uyhft626qNk8Jt17BM+7Z7g@mail.gmail.com>
+Subject: Re: [PATCH v3 00/16] tests: enable meson test timeouts to improve
+ debuggability
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,153 +94,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 23, 2024 at 7:11=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
-te:
+On Tue, 23 Jan 2024 at 20:52, Michael Tokarev <mjt@tls.msk.ru> wrote:
 >
-> Hao Xiang <hao.xiang@bytedance.com> writes:
+> 23.01.2024 20:47, Thomas Huth:
+> > On 23/01/2024 17.50, Michael Tokarev wrote:
+> ..
 >
-> > On Sun, Jan 14, 2024 at 10:02=E2=80=AFPM Shivam Kumar <shivam.kumar1@nu=
-tanix.com> wrote:
-> >>
-> >>
-> >>
-> >> > On 04-Jan-2024, at 6:14 AM, Hao Xiang <hao.xiang@bytedance.com> wrot=
-e:
-> >> >
-> >> > From: Juan Quintela <quintela@redhat.com>
-> >> >
-> >> > We have to enable it by default until we introduce the new code.
-> >> >
-> >> > Signed-off-by: Juan Quintela <quintela@redhat.com>
-> >> > ---
-> >> > migration/options.c | 15 +++++++++++++++
-> >> > migration/options.h |  1 +
-> >> > qapi/migration.json |  8 +++++++-
-> >> > 3 files changed, 23 insertions(+), 1 deletion(-)
-> >> >
-> >> > diff --git a/migration/options.c b/migration/options.c
-> >> > index 8d8ec73ad9..0f6bd78b9f 100644
-> >> > --- a/migration/options.c
-> >> > +++ b/migration/options.c
-> >> > @@ -204,6 +204,8 @@ Property migration_properties[] =3D {
-> >> >     DEFINE_PROP_MIG_CAP("x-switchover-ack",
-> >> >                         MIGRATION_CAPABILITY_SWITCHOVER_ACK),
-> >> >     DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_=
-LIMIT),
-> >> > +    DEFINE_PROP_MIG_CAP("main-zero-page",
-> >> > +            MIGRATION_CAPABILITY_MAIN_ZERO_PAGE),
-> >> >     DEFINE_PROP_END_OF_LIST(),
-> >> > };
-> >> >
-> >> > @@ -284,6 +286,19 @@ bool migrate_multifd(void)
-> >> >     return s->capabilities[MIGRATION_CAPABILITY_MULTIFD];
-> >> > }
-> >> >
-> >> > +bool migrate_use_main_zero_page(void)
-> >> > +{
-> >> > +    /* MigrationState *s; */
-> >> > +
-> >> > +    /* s =3D migrate_get_current(); */
-> >> > +
-> >> > +    /*
-> >> > +     * We will enable this when we add the right code.
-> >> > +     * return s->enabled_capabilities[MIGRATION_CAPABILITY_MAIN_ZER=
-O_PAGE];
-> >> > +     */
-> >> > +    return true;
-> >> > +}
-> >> > +
-> >> > bool migrate_pause_before_switchover(void)
-> >> > {
-> >> >     MigrationState *s =3D migrate_get_current();
-> >> > diff --git a/migration/options.h b/migration/options.h
-> >> > index 246c160aee..c901eb57c6 100644
-> >> > --- a/migration/options.h
-> >> > +++ b/migration/options.h
-> >> > @@ -88,6 +88,7 @@ int migrate_multifd_channels(void);
-> >> > MultiFDCompression migrate_multifd_compression(void);
-> >> > int migrate_multifd_zlib_level(void);
-> >> > int migrate_multifd_zstd_level(void);
-> >> > +bool migrate_use_main_zero_page(void);
-> >> > uint8_t migrate_throttle_trigger_threshold(void);
-> >> > const char *migrate_tls_authz(void);
-> >> > const char *migrate_tls_creds(void);
-> >> > diff --git a/qapi/migration.json b/qapi/migration.json
-> >> > index eb2f883513..80c4b13516 100644
-> >> > --- a/qapi/migration.json
-> >> > +++ b/qapi/migration.json
-> >> > @@ -531,6 +531,12 @@
-> >> > #     and can result in more stable read performance.  Requires KVM
-> >> > #     with accelerator property "dirty-ring-size" set.  (Since 8.1)
-> >> > #
-> >> > +#
-> >> > +# @main-zero-page: If enabled, the detection of zero pages will be
-> >> > +#                  done on the main thread.  Otherwise it is done o=
-n
-> >> > +#                  the multifd threads.
-> >> > +#                  (since 8.2)
-> >> > +#
-> >> Should the capability name be something like "zero-page-detection" or =
-just =E2=80=9Czero-page=E2=80=9D?
-> >> CC: Fabiano Rosas
+> >> I'm picking this up for stable branches too, since there we have the same
+> >> problems in CI environment. In particular, bios-tables-test almost always
+> >> times out, even hitting retry doesn't help.  Let's see how it goes..
 > >
-> > I think the same concern was brought up last time Juan sent out the
-> > original patchset. Right now, the zero page detection is done in the
-> > main migration thread and it is always "ON". This change added a
-> > functionality to move the zero page detection from the main thread to
-> > the multifd sender threads. Now "main-zero-page" is turned "OFF" by
-> > default, and zero page checking is done in the multifd sender thread
-> > (much better performance). If user wants to run the zero page
-> > detection in the main thread (keep current behavior), user can change
-> > "main-zero-page" to "ON".
-> >
-> > Renaming it to "zero-page-detection" or just =E2=80=9Czero-page=E2=80=
-=9D can not
-> > differentiate the old behavior and the new behavior.
+> > Uh, wait, that does not make too much sense ... if bios-tables-test already times out *without* the additional meson-based timeouts, then adding the
+> > meson timeouts won't help. bios-tables-test uses the manually coded timeout from boot_sector_test() that is currently set to 600 seconds. If you hit
+> > that timeout, that likely means that something is really broken in your branch - or is it sometimes still succeeding?
 >
-> Yes, the main point here is what happens when we try to migrate from
-> different QEMU versions that have/don't have this code. We need some way
-> to maintain the compatibility. In this case Juan chose to keep this
-> capability with the semantics of "old behavior" so that we can enable it
-> on the new QEMU to match with the old binary that doesn't expect to see
-> zero pages on the packet/stream.
->
-> > Here are the options:
-> > 1) Keep the current behavior. "main-zero-page" is OFF by default and
-> > zero page detection runs on the multifd thread by default. User can
-> > turn the switch to "ON" if they want old behavior.
-> > 2) Make "main-zero-page" switch ON as default. This would keep the
-> > current behavior by default. User can set it to "OFF" for better
-> > performance.
->
-> 3) Make multifd-zero-page ON by default. User can set it to OFF to get
-> the old behavior. There was some consideration about how libvirt works
-> that would make this one unusable, but I don't understand what's that
-> about.
->
-> I would make this a default ON parameter instead of a capability.
+> I mistyped the test name as I was dealing with bios-tables-test at that
+> time in another context (unrelated).  Actual failing test in this case,
+> among others, is avocado acpi_smbios_bits, eg
+>   https://gitlab.com/qemu-project/qemu/-/jobs/5991505589#L231 which timed
+> out on multiple attempts.  In this example it took a bit less than 65s.
 
-Sounds good to me.
+The fix for that flakiness is commit 7ef4c41e91d59
+("acpi/tests/avocado/bits: wait for 200 seconds for SHUTDOWN event
+from bits VM").
 
->
-> >> > # Features:
-> >> > #
-> >> > # @deprecated: Member @block is deprecated.  Use blockdev-mirror wit=
-h
-> >> > @@ -555,7 +561,7 @@
-> >> >            { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] }=
-,
-> >> >            'validate-uuid', 'background-snapshot',
-> >> >            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
-> >> > -           'dirty-limit'] }
-> >> > +           'dirty-limit', 'main-zero-page'] }
-> >> >
-> >> > ##
-> >> > # @MigrationCapabilityStatus:
-> >> > --
-> >> > 2.30.2
-> >> >
-> >> >
-> >> >
-> >>
+thanks
+-- PMM
 
