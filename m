@@ -4,75 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63DEC47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 20:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD89C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 21:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSNkc-00018m-6P; Tue, 23 Jan 2024 15:52:06 -0500
+	id 1rSNsb-0002g9-El; Tue, 23 Jan 2024 16:00:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rSNka-00018b-Em
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 15:52:04 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rSNkY-0001ji-J7
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 15:52:04 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 23F9846A38;
- Tue, 23 Jan 2024 23:52:39 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CEFF86A02B;
- Tue, 23 Jan 2024 23:51:57 +0300 (MSK)
-Message-ID: <6d279ebd-fa9f-4839-97ca-7921679392f5@tls.msk.ru>
-Date: Tue, 23 Jan 2024 23:51:57 +0300
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rSNsZ-0002fW-2i
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 16:00:19 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rSNsW-00031T-03
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 16:00:18 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a2dc7827a97so529867966b.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 13:00:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1706043613; x=1706648413; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3TGOJsXOA91jiaT7uFt8hT/Kv4pjl6sQmG3/HHVAns4=;
+ b=Lz8SUrNy8amaHIGdjqWlmQdgMnjYz3FBkNaaDWHvnJfHfdKYNlA3kGUZvin4E282eS
+ uJjsk043aAX97+Yi+TCCdHkIbFTYcEJGq47t3EVuFVwhJg0dzBbZogC0kt6MBlCmEzoW
+ 40494VWv+JVNF51Bx+/nGpExoGYrfWSZSEfGsL71I2M52YRHfA0iDI8QRIWN6W93TacF
+ roGdtTJwRjKfEio/lzdHEG+y/ufroRvlnyeUUU+/9GzVQ9GfYYaqSQIONMgGBr8Ea3UE
+ FhK7M22ZAU9wXmLCYWEA/hMTWFtO3tFDR1ASuRZ1Izqre6GKlLRf4tZOhVu3jFEx0O+s
+ Uk5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706043613; x=1706648413;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3TGOJsXOA91jiaT7uFt8hT/Kv4pjl6sQmG3/HHVAns4=;
+ b=Sd6QmzS9mu/vzF8t8XKQvEXKIOC78Cq8AYtwQC/mLDuiubTW0bk7/UgUNGV+293n4B
+ jziYXN5olvgCIFoyhT2sTujCusoZK2HHWVABu/PO4C3pKUUcQ4mT+byTpgIfMTodxjEq
+ iUj/MIN2IQQw3pf6AUOHv3GAAmi63bW95bz7DGtkOcEpb/Fk1BAwk8zd56QrQj3tvUau
+ wySqSAQgzoM0D5sNba3dyoI7pFSbCRltcARCzmUT8yfZTZejScGrYFndFm77ysDLrdKb
+ dnCoRNrx+y92gkwa6JAL6Bo0NlkITyRwB3oLxXdIqIvH8+AAOOrd0arXS0n2cP0gWt4v
+ RHbA==
+X-Gm-Message-State: AOJu0YxNC9K+DNCsw1nPrytt8nX+q45z89aFSqZ9SDEiNFkENyRH1K8R
+ wcZ4dIjU+zImBDX78DoOlHPndvvvu3hLcyGzzL6yHUtdbswJvCML//aInbey0pQU62EI6Y/jeju
+ xiAeUS1pznAIkH6oUa8PJCHto40y7JLYPaOGNYQ==
+X-Google-Smtp-Source: AGHT+IEOpdq2g8BZUn6wIQrN8uU84X0teu3KVYor2QPVE53Z8295WEP54ngSQUKPOYgb3COB6N1fN1+79BzkpDKnSvw=
+X-Received: by 2002:a17:906:3888:b0:a27:7c2e:420a with SMTP id
+ q8-20020a170906388800b00a277c2e420amr274687ejd.8.1706043612978; Tue, 23 Jan
+ 2024 13:00:12 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/16] tests: enable meson test timeouts to improve
- debuggability
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20231215070357.10888-1-thuth@redhat.com>
- <db19cdd7-4049-4b9a-9108-c1f05f992d89@tls.msk.ru>
- <2a8e7077-0603-4455-8b4c-69a4200dd280@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <2a8e7077-0603-4455-8b4c-69a4200dd280@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240104004452.324068-1-hao.xiang@bytedance.com>
+ <20240104004452.324068-2-hao.xiang@bytedance.com>
+ <22969801-AEDE-46EB-86E8-0E6F26E23397@nutanix.com>
+ <CAAYibXjw42iB=5YgKsXy4erj6RsGuqDqFnhuOZxkfBit7S5TtA@mail.gmail.com>
+ <8734uof5kw.fsf@suse.de>
+In-Reply-To: <8734uof5kw.fsf@suse.de>
+From: Hao Xiang <hao.xiang@bytedance.com>
+Date: Tue, 23 Jan 2024 13:00:01 -0800
+Message-ID: <CAAYibXjq2uRQkAAxecogUyxv9fKr785cAx_kN5KKeXttmx7jaw@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v3 01/20] multifd: Add capability to
+ enable/disable zero_page
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Shivam Kumar <shivam.kumar1@nutanix.com>, 
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "peterx@redhat.com" <peterx@redhat.com>, 
+ "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>, 
+ "bryan.zhang@bytedance.com" <bryan.zhang@bytedance.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,34 +99,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.01.2024 20:47, Thomas Huth:
-> On 23/01/2024 17.50, Michael Tokarev wrote:
-..
+On Tue, Jan 23, 2024 at 7:11=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
+te:
+>
+> Hao Xiang <hao.xiang@bytedance.com> writes:
+>
+> > On Sun, Jan 14, 2024 at 10:02=E2=80=AFPM Shivam Kumar <shivam.kumar1@nu=
+tanix.com> wrote:
+> >>
+> >>
+> >>
+> >> > On 04-Jan-2024, at 6:14 AM, Hao Xiang <hao.xiang@bytedance.com> wrot=
+e:
+> >> >
+> >> > From: Juan Quintela <quintela@redhat.com>
+> >> >
+> >> > We have to enable it by default until we introduce the new code.
+> >> >
+> >> > Signed-off-by: Juan Quintela <quintela@redhat.com>
+> >> > ---
+> >> > migration/options.c | 15 +++++++++++++++
+> >> > migration/options.h |  1 +
+> >> > qapi/migration.json |  8 +++++++-
+> >> > 3 files changed, 23 insertions(+), 1 deletion(-)
+> >> >
+> >> > diff --git a/migration/options.c b/migration/options.c
+> >> > index 8d8ec73ad9..0f6bd78b9f 100644
+> >> > --- a/migration/options.c
+> >> > +++ b/migration/options.c
+> >> > @@ -204,6 +204,8 @@ Property migration_properties[] =3D {
+> >> >     DEFINE_PROP_MIG_CAP("x-switchover-ack",
+> >> >                         MIGRATION_CAPABILITY_SWITCHOVER_ACK),
+> >> >     DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_=
+LIMIT),
+> >> > +    DEFINE_PROP_MIG_CAP("main-zero-page",
+> >> > +            MIGRATION_CAPABILITY_MAIN_ZERO_PAGE),
+> >> >     DEFINE_PROP_END_OF_LIST(),
+> >> > };
+> >> >
+> >> > @@ -284,6 +286,19 @@ bool migrate_multifd(void)
+> >> >     return s->capabilities[MIGRATION_CAPABILITY_MULTIFD];
+> >> > }
+> >> >
+> >> > +bool migrate_use_main_zero_page(void)
+> >> > +{
+> >> > +    /* MigrationState *s; */
+> >> > +
+> >> > +    /* s =3D migrate_get_current(); */
+> >> > +
+> >> > +    /*
+> >> > +     * We will enable this when we add the right code.
+> >> > +     * return s->enabled_capabilities[MIGRATION_CAPABILITY_MAIN_ZER=
+O_PAGE];
+> >> > +     */
+> >> > +    return true;
+> >> > +}
+> >> > +
+> >> > bool migrate_pause_before_switchover(void)
+> >> > {
+> >> >     MigrationState *s =3D migrate_get_current();
+> >> > diff --git a/migration/options.h b/migration/options.h
+> >> > index 246c160aee..c901eb57c6 100644
+> >> > --- a/migration/options.h
+> >> > +++ b/migration/options.h
+> >> > @@ -88,6 +88,7 @@ int migrate_multifd_channels(void);
+> >> > MultiFDCompression migrate_multifd_compression(void);
+> >> > int migrate_multifd_zlib_level(void);
+> >> > int migrate_multifd_zstd_level(void);
+> >> > +bool migrate_use_main_zero_page(void);
+> >> > uint8_t migrate_throttle_trigger_threshold(void);
+> >> > const char *migrate_tls_authz(void);
+> >> > const char *migrate_tls_creds(void);
+> >> > diff --git a/qapi/migration.json b/qapi/migration.json
+> >> > index eb2f883513..80c4b13516 100644
+> >> > --- a/qapi/migration.json
+> >> > +++ b/qapi/migration.json
+> >> > @@ -531,6 +531,12 @@
+> >> > #     and can result in more stable read performance.  Requires KVM
+> >> > #     with accelerator property "dirty-ring-size" set.  (Since 8.1)
+> >> > #
+> >> > +#
+> >> > +# @main-zero-page: If enabled, the detection of zero pages will be
+> >> > +#                  done on the main thread.  Otherwise it is done o=
+n
+> >> > +#                  the multifd threads.
+> >> > +#                  (since 8.2)
+> >> > +#
+> >> Should the capability name be something like "zero-page-detection" or =
+just =E2=80=9Czero-page=E2=80=9D?
+> >> CC: Fabiano Rosas
+> >
+> > I think the same concern was brought up last time Juan sent out the
+> > original patchset. Right now, the zero page detection is done in the
+> > main migration thread and it is always "ON". This change added a
+> > functionality to move the zero page detection from the main thread to
+> > the multifd sender threads. Now "main-zero-page" is turned "OFF" by
+> > default, and zero page checking is done in the multifd sender thread
+> > (much better performance). If user wants to run the zero page
+> > detection in the main thread (keep current behavior), user can change
+> > "main-zero-page" to "ON".
+> >
+> > Renaming it to "zero-page-detection" or just =E2=80=9Czero-page=E2=80=
+=9D can not
+> > differentiate the old behavior and the new behavior.
+>
+> Yes, the main point here is what happens when we try to migrate from
+> different QEMU versions that have/don't have this code. We need some way
+> to maintain the compatibility. In this case Juan chose to keep this
+> capability with the semantics of "old behavior" so that we can enable it
+> on the new QEMU to match with the old binary that doesn't expect to see
+> zero pages on the packet/stream.
+>
+> > Here are the options:
+> > 1) Keep the current behavior. "main-zero-page" is OFF by default and
+> > zero page detection runs on the multifd thread by default. User can
+> > turn the switch to "ON" if they want old behavior.
+> > 2) Make "main-zero-page" switch ON as default. This would keep the
+> > current behavior by default. User can set it to "OFF" for better
+> > performance.
+>
+> 3) Make multifd-zero-page ON by default. User can set it to OFF to get
+> the old behavior. There was some consideration about how libvirt works
+> that would make this one unusable, but I don't understand what's that
+> about.
+>
+> I would make this a default ON parameter instead of a capability.
 
->> I'm picking this up for stable branches too, since there we have the same
->> problems in CI environment. In particular, bios-tables-test almost always
->> times out, even hitting retry doesn't help.  Let's see how it goes..
-> 
-> Uh, wait, that does not make too much sense ... if bios-tables-test already times out *without* the additional meson-based timeouts, then adding the 
-> meson timeouts won't help. bios-tables-test uses the manually coded timeout from boot_sector_test() that is currently set to 600 seconds. If you hit 
-> that timeout, that likely means that something is really broken in your branch - or is it sometimes still succeeding?
+Sounds good to me.
 
-I mistyped the test name as I was dealing with bios-tables-test at that
-time in another context (unrelated).  Actual failing test in this case,
-among others, is avocado acpi_smbios_bits, eg
-  https://gitlab.com/qemu-project/qemu/-/jobs/5991505589#L231 which timed
-out on multiple attempts.  In this example it took a bit less than 65s.
-Subsequent retry succeeded in 51s:
-  https://gitlab.com/qemu-project/qemu/-/jobs/5995055845#L212
-but this run was at much later time, apparently when gitlab was had less
-load, - as whole run was significantly faster.
-
-So this particular failure has nothing to do with this patchset, and
-the patchset does not do anything to it.
-
-(I was in a bit distracted mode whole day today due to $ork issues).
-
-Thanks,
-
-/mjt
+>
+> >> > # Features:
+> >> > #
+> >> > # @deprecated: Member @block is deprecated.  Use blockdev-mirror wit=
+h
+> >> > @@ -555,7 +561,7 @@
+> >> >            { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] }=
+,
+> >> >            'validate-uuid', 'background-snapshot',
+> >> >            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+> >> > -           'dirty-limit'] }
+> >> > +           'dirty-limit', 'main-zero-page'] }
+> >> >
+> >> > ##
+> >> > # @MigrationCapabilityStatus:
+> >> > --
+> >> > 2.30.2
+> >> >
+> >> >
+> >> >
+> >>
 
