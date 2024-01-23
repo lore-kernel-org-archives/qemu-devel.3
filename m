@@ -4,59 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6543C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 17:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DD5C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 17:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSKRM-0002zD-SK; Tue, 23 Jan 2024 12:20:01 -0500
+	id 1rSKT3-0003rz-Ry; Tue, 23 Jan 2024 12:21:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rSKRK-0002yZ-3Z
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:19:58 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSKSt-0003qr-6o
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:21:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rSKRG-000399-Ee
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:19:57 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSKSn-0003gH-Jf
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:21:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706030392;
+ s=mimecast20190719; t=1706030486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u7hvPek1raSD7sO49CsvivAir8mmbU4BfW3hsGgkRWg=;
- b=MALUOAiBZXDBUhHSvdRbRDsyPl2sY+8KnaeoomIJW70yEsJL5REhMqmsK1k2e8WQsCOVj2
- q1tp/dvlJFeNheqfNBzm5BhG63agr3DpiROp/SSv5tt8HNuJhyoPY63fdsuzBLHLqgmRzp
- nbl5NLWoZoejbgC7gaRgRd7ZmoN42IA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OhvvBinHEUtrc7/DQaqhpNPPKz+Mi8pw4sn6QqGIZO4=;
+ b=PnveBkmAf4UOlIxKNlHYipOukS2fJBLGP85CD5o4+AlgST3jqp+OUk7TPE4kYZimFUSfgd
+ 9IlnyTy/iO9ceUKMf7hmIeGn22IQFWGKeXIXBoG/oaxf+XHyFwEE1340wOgAY4qGCFRTOK
+ vIspDIKqM1KBXmjBtsiGcPcucToq0zU=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-_TyjZprAMWeboh-NKK6P5A-1; Tue, 23 Jan 2024 12:19:45 -0500
-X-MC-Unique: _TyjZprAMWeboh-NKK6P5A-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D382588D068;
- Tue, 23 Jan 2024 17:19:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.232])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id E44B240C106C;
- Tue, 23 Jan 2024 17:19:30 +0000 (UTC)
-Date: Tue, 23 Jan 2024 18:19:29 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Manolo de Medici <manolodemedici@gmail.com>, qemu-devel@nongnu.org,
- bug-hurd@gnu.org, Qemu-block <qemu-block@nongnu.org>
-Subject: Re: [PATCH v2 2/4] Avoid conflicting types for 'copy_file_range'
-Message-ID: <Za_1ISw879Aw5bFj@redhat.com>
-References: <CAHP40mnyxgmwY39jKMHsZCrCXdozNwFO+RDTYMPUhfkGu_pfFQ@mail.gmail.com>
- <CAFEAcA-9LS2hP=Ju6K_wWdhFWVrwhYinSaq6P0s5xmcE6pDtKw@mail.gmail.com>
+ us-mta-646-_gGndE1ANEakDA_sKsV36A-1; Tue, 23 Jan 2024 12:21:25 -0500
+X-MC-Unique: _gGndE1ANEakDA_sKsV36A-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6800aa45af1so66664416d6.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 09:21:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706030483; x=1706635283;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OhvvBinHEUtrc7/DQaqhpNPPKz+Mi8pw4sn6QqGIZO4=;
+ b=SvriadbBTvh0spTaB/l2t0J5tPTgb84xiiz+imlWTEPNhywZI6FNcFn3INKj9uO7DD
+ Fz53glZx/1uAM8Md55XwoZT89MTM/v8YzQLEDtO5x/t+1roMT8c9xtzNabpGnQg4hEoo
+ Z1n408DhKSo8acZSDyokFWPlNaRDAsECDQO3EanppaCGluNaJOCV+MDVM1LZaRVWJ5EZ
+ H1jEJEk+WHfYGb7gsjjEFdUXfCNiI2IlXzs1IBnPtmhUYI/UpVhddLe9hrLX06gAbOns
+ 3KG9Dop2OP/t4h8Epxm4juk1J649GwQ6g40aaGsUG8BeZ8E6jBkAeP1G7aBRWhQA4Obf
+ 0HwQ==
+X-Gm-Message-State: AOJu0YzK3WafFVa+ujcUF1lBEG5fo5ZU4GlsZ8xKqEA2zMYcSLI3YDzF
+ b3688mo3To9SjEYGK55AdT9xgRSTfluQ9q42Ev/9Kn+gtmwAqjWdw/gW+LN9Vw/nkRjf0+3jhf+
+ 1jeyVtjRd3iVmtm+po+lCey7jerSx2Lq9FnIwnj5LvynO1aFkDQRkkLGGy2um
+X-Received: by 2002:a05:6214:21ef:b0:686:2659:a244 with SMTP id
+ p15-20020a05621421ef00b006862659a244mr1290489qvj.70.1706030483679; 
+ Tue, 23 Jan 2024 09:21:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGqz2GgvMYUEVv3BliVjVnh7o5cWTtTC9fJGcS1B0Y0ayZb/CB65s89XmYSLBDkk6A970sJ8Q==
+X-Received: by 2002:a05:6214:21ef:b0:686:2659:a244 with SMTP id
+ p15-20020a05621421ef00b006862659a244mr1290475qvj.70.1706030483312; 
+ Tue, 23 Jan 2024 09:21:23 -0800 (PST)
+Received: from ?IPV6:2003:cf:d73b:4143:2bf6:228a:1b7a:e384?
+ (p200300cfd73b41432bf6228a1b7ae384.dip0.t-ipconnect.de.
+ [2003:cf:d73b:4143:2bf6:228a:1b7a:e384])
+ by smtp.gmail.com with ESMTPSA id
+ lb25-20020a056214319900b00685ba831e4bsm3375000qvb.118.2024.01.23.09.21.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jan 2024 09:21:22 -0800 (PST)
+Message-ID: <8f0d1bf4-c4d1-411f-ad8b-b9dfa7dd6e74@redhat.com>
+Date: Tue, 23 Jan 2024 18:21:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-9LS2hP=Ju6K_wWdhFWVrwhYinSaq6P0s5xmcE6pDtKw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
+ thread
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: stefanha@redhat.com, qemu-devel@nongnu.org
+References: <20231221212339.164439-1-kwolf@redhat.com>
+ <20231221212339.164439-12-kwolf@redhat.com>
+ <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
+In-Reply-To: <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -65,7 +90,7 @@ X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,88 +106,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 22.01.2024 um 18:04 hat Peter Maydell geschrieben:
-> (Cc'ing the block folks)
-> 
-> On Thu, 18 Jan 2024 at 16:03, Manolo de Medici <manolodemedici@gmail.com> wrote:
-> >
-> > Compilation fails on systems where copy_file_range is already defined as a
-> > stub.
-> 
-> What do you mean by "stub" here ? If the system headers define
-> a prototype for the function, I would have expected the
-> meson check to set HAVE_COPY_FILE_RANGE, and then this
-> function doesn't get defined at all. That is, the prototype
-> mismatch shouldn't matter because if the prototype exists we
-> use the libc function, and if it doesn't then we use our version.
-> 
-> > The prototype of copy_file_range in glibc returns an ssize_t, not an off_t.
-> >
-> > The function currently only exists on linux and freebsd, and in both cases
-> > the return type is ssize_t
-> >
-> > Signed-off-by: Manolo de Medici <manolo.demedici@gmail.com>
-> > ---
-> >  block/file-posix.c | 9 +++++----
-> >  1 file changed, 5 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/block/file-posix.c b/block/file-posix.c
-> > index 35684f7e21..f744b35642 100644
-> > --- a/block/file-posix.c
-> > +++ b/block/file-posix.c
-> > @@ -2000,12 +2000,13 @@ static int handle_aiocb_write_zeroes_unmap(void *opaque)
-> >  }
-> >
-> >  #ifndef HAVE_COPY_FILE_RANGE
-> > -static off_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
-> > -                             off_t *out_off, size_t len, unsigned int flags)
-> > +ssize_t copy_file_range (int infd, off_t *pinoff,
-> > +                         int outfd, off_t *poutoff,
-> > +                         size_t length, unsigned int flags)
-> 
-> No space after "copy_file_range". No need to rename all the
-> arguments either.
-> 
-> >  {
-> >  #ifdef __NR_copy_file_range
-> > -    return syscall(__NR_copy_file_range, in_fd, in_off, out_fd,
-> > -                   out_off, len, flags);
-> > +    return (ssize_t)syscall(__NR_copy_file_range, infd, pinoff, outfd,
-> > +                            poutoff, length, flags);
-> 
-> Don't need a cast here, because returning the value will
-> automatically cast it to the right thing.
-> 
-> >  #else
-> >      errno = ENOSYS;
-> >      return -1;
-> 
-> These changes aren't wrong, but as noted above I'm surprised that
-> the Hurd gets into this code at all.
+On 23.01.24 17:40, Hanna Czenczek wrote:
+> On 21.12.23 22:23, Kevin Wolf wrote:
+>> From: Stefan Hajnoczi<stefanha@redhat.com>
+>>
+>> Stop depending on the AioContext lock and instead access
+>> SCSIDevice->requests from only one thread at a time:
+>> - When the VM is running only the BlockBackend's AioContext may access
+>>    the requests list.
+>> - When the VM is stopped only the main loop may access the requests
+>>    list.
+>>
+>> These constraints protect the requests list without the need for locking
+>> in the I/O code path.
+>>
+>> Note that multiple IOThreads are not supported yet because the code
+>> assumes all SCSIRequests are executed from a single AioContext. Leave
+>> that as future work.
+>>
+>> Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
+>> Reviewed-by: Eric Blake<eblake@redhat.com>
+>> Message-ID:<20231204164259.1515217-2-stefanha@redhat.com>
+>> Signed-off-by: Kevin Wolf<kwolf@redhat.com>
+>> ---
+>>   include/hw/scsi/scsi.h |   7 +-
+>>   hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
+>>   2 files changed, 131 insertions(+), 57 deletions(-)
+[...]
 
-Yes, I think we didn't expect that HAVE_COPY_FILE_RANGE would not be
-defined in some cases even if copy_file_range() exists in the libc.
+> I don’t know anything about the problem yet, but as usual, I like 
+> speculation and discovering how wrong I was later on, so one thing I 
+> came across that’s funny about virtio-scsi is that requests can happen 
+> even while a disk is being attached or detached.  That is, Linux seems 
+> to probe all LUNs when a new virtio-scsi device is being attached, and 
+> it won’t stop just because a disk is being attached or removed.  So 
+> maybe that’s part of the problem, that we get a request while the BB 
+> is being detached, and temporarily in an inconsistent state (BDS 
+> context differs from BB context).
+>
+> I’ll look more into it.
 
-> Note for Kevin: shouldn't this direct use of syscall() have
-> some sort of OS-specific guard on it? There's nothing that
-> says that a non-Linux host OS has to have the same set of
-> arguments to an __NR_copy_file_range syscall. If this
-> fallback is a Linux-ism we should guard it appropriately.
+What I think happens is that scsi_device_purge_requests() runs (perhaps 
+through virtio_scsi_hotunplug() -> qdev_simple_device_unplug_cb() -> 
+scsi_qdev_unrealize()?), which schedules 
+scsi_device_for_each_req_async_bh() to run, but doesn’t await it.  We go 
+on, begin to move the BB and its BDS back to the main context (via 
+blk_set_aio_context() in virtio_scsi_hotunplug()), but 
+scsi_device_for_each_req_async_bh() still runs in the I/O thread, it 
+calls blk_get_aio_context() while the contexts are inconsistent, and we 
+get the crash.
 
-Yes, I think this should be #if defined(__linux__) &&
-defined(__NR_copy_file_range).
+There is a comment above blk_get_aio_context() in 
+scsi_device_for_each_req_async_bh() about the BB potentially being moved 
+to a different context prior to the BH running, but it doesn’t consider 
+the possibility that that move may occur *concurrently*.
 
-> For that matter, at what point can we just remove the fallback
-> entirely? copy_file_range() went into Linux in 4.5, apparently,
-> which is now nearly 8 years old. Maybe all our supported
-> hosts now have a new enough kernel and we can drop this
-> somewhat ugly syscall() wrapper...
+I don’t know how to fix this, though.  The whole idea of anything 
+happening to a BB while it is being moved to a different context seems 
+so wrong to me that I’d want to slap a big lock on it, but I have the 
+feeling that that isn’t what we want.
 
-The kernel doesn't really matter here, but the libc. Apparently
-copy_file_range() was added in glibc 2.27 in 2018. If we want to remove
-the wrapper, we'd have to check if all currently supported distributions
-have a new enough glibc.
-
-Kevin
+Hanna
 
 
