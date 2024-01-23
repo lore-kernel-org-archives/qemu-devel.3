@@ -4,78 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F9CC47DDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780E3C47DDB
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSJm0-0006eb-6d; Tue, 23 Jan 2024 11:37:16 -0500
+	id 1rSJmU-00075B-W7; Tue, 23 Jan 2024 11:37:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rSJlw-0006dr-AE
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:37:14 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSJmE-0006yN-GJ
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:37:32 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rSJlu-0002Z1-9q
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:37:11 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1d6ff29293dso29084545ad.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:37:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSJmB-0002a3-4m
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:37:28 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-559f92bf7b6so8158047a12.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:37:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706027829; x=1706632629; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2zg5s9867QUffmRR+tZvS4ta7Mlc0s02/jJEDnvLZeE=;
- b=kVR9xM/8k6aT1D7V1WovDDvVtaEqUuIgXgso1R5jHzR/p45zLVwtEGwTWXHO8WOqmB
- ESJbrMwVx2XI2h5qrtnhC35DCGFBlHtbPdZpFzS5LGKsfCEO0kS2Eote3qPJrSsZV0ta
- pKiPHwuKSc2voNJhJzZw2eGG/rB1ucuIQIWdzObU8uQUN02BzT/RO1UqNJVo76AQ5pVi
- LMKs41+H9c2pdFJNfkVQ6ZAj61Ifg3IJIQkhInn8yrU2tP9DwjVZRzHGdlhAZwqE/fdq
- kXZW3pJmBwlqCFf5YNsIbisbg0n4/TaT9GQ82ObI6YCZrjTzEoSRju7DGZMOh3hkU+SE
- zHEg==
+ d=linaro.org; s=google; t=1706027845; x=1706632645; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=usY41eUzvkiHlTGvN4HbTI5QCF83cM1nTnbncS+87js=;
+ b=T4xtt1V8EpiNWYebGIJ6zb/6gQtf2n2Le8QmDIX48y85r9XDb9f6f0AjjLwMXMjvWu
+ IBOU8gkXFEJzAW+N/PBtquR40oBjSRCsAv7U7UqplM93imvjTifVoy0SL76UgntY+URd
+ 2MgUTAxSjdoVwBkPQ30pionCiXZfNGByoeSCpq03U48eUre4HaIdvIz5/GFLZqUzO0Zk
+ vRYn4iawQa33Gr2LHItIAHCffQf7ua6M7T/bEPu/wPaIKAr9IuME6iq074/Y2RMn2xyd
+ UG5LwTbXC5w7HFs/dCySlzWirq1+NPJRaLSCK6lTb8wWyNuOhuGe7QduSWI5GEVFcHd5
+ Bx+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706027829; x=1706632629;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2zg5s9867QUffmRR+tZvS4ta7Mlc0s02/jJEDnvLZeE=;
- b=ivf34FpbH+TlOOM0Bk5KcdPJngLiqo4Gn7fKITp4MlnlzQZ/xb5uq8F6EWRX/DhLIL
- XLP8f+pyWGhO66uBveVXpLL2Rwru2T2PW7CoW5LbiTZisSSoiGlrr68kzJvP5JSf3M49
- hR/h+KvCFyQPxz8VvIyd0EF6zEZBFXdqeC9B4KUmIxskve0Cb4B8f905AdnDFrMkPKIK
- sccGBVbgzWRdSBOdSxsyZdmkVA5VIrAIqH4sCxK5H8jocWSHjLLdi2np3W8HyxQyma0K
- 2o64wqOH4li15iNWrkSnQ6OusD2dErnuF9llh/GKrtcMIbXWJm+wuBlg84Rmd1GuRaOb
- q7nA==
-X-Gm-Message-State: AOJu0Yyg8fjOhiuoN5zBRKRAyArxsaXcTJ08wCzGvzHhSqUcMJKsSeA4
- abLQs/KgJXFR8RI4jJY03N/LT/ZhRdAbUyjSKrraAGIwuRCYVYnlTJQDOmft+Rc=
-X-Google-Smtp-Source: AGHT+IHOnUVa0a1iuWsEsA+4Ds6+BIq4a9nep2vax6+Tz8Avac3BoVlabsa2suUJZAcI4hZ1cU0Hgg==
-X-Received: by 2002:a17:902:c402:b0:1d7:2b7e:cbd with SMTP id
- k2-20020a170902c40200b001d72b7e0cbdmr3391633plk.129.1706027828857; 
- Tue, 23 Jan 2024 08:37:08 -0800 (PST)
-Received: from [192.168.68.110] ([152.234.127.94])
- by smtp.gmail.com with ESMTPSA id
- u19-20020a170903305300b001d714a6eff7sm8031626pla.80.2024.01.23.08.37.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 08:37:08 -0800 (PST)
-Message-ID: <8c76c139-5f97-48d6-967a-7a65ea89391d@ventanamicro.com>
-Date: Tue, 23 Jan 2024 13:37:06 -0300
+ d=1e100.net; s=20230601; t=1706027845; x=1706632645;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=usY41eUzvkiHlTGvN4HbTI5QCF83cM1nTnbncS+87js=;
+ b=MMDagJrvQOMxzS9vZ63r15rdZSrRVO9BzmI/zDFR3fb/qLGOI5xnS9FEfzc8SZzT5O
+ BNCiQcHDXoNccaqWsJ5wc4JhSFE4YaOyTCYTx2WFV6dcSB9VAUz5kL/j8kUqe9QDP/jJ
+ KuIlBcSZTl4x/ngQ6lFD0y3/SG15IHDgOEWY+KKlJZYdajCW29wqfjYUKa2DkIRIf15o
+ nmZlzsB4OASRQENm/12TjZ2vAcQhTtwDmQQPxFWWXbmSkPaPCN6DRlnBaD0AcUMFHBmm
+ zNSDMy7UXyg85Iru/X4PkzZJABw7IK0Mire2spbEgf6zEYBobwvlvT2xazdXiSoaDCsR
+ vk/g==
+X-Gm-Message-State: AOJu0YzrPgwg1V4ekv3i/PvKNU5i8CxGSAy+WSEZsVdcketZwNJmU+OP
+ JSuHNyjUuWKEk+T1rdZ9Cu2REICZOPh8LF70sI/SyUisCYs74/ODjMx0qq1e5z/upXs2IPqxTw3
+ Dh4DoTexQCnW9HMm3w22FAlNkRZh0hCWB80+3kA==
+X-Google-Smtp-Source: AGHT+IHENleDekqy37Cb71Bw/jLXERZ0hSghGMZnJiaWaGfwKnjjfzgfnQu/Lx6C7Gz8P1p4TUbDMvX2WjE9hUZ7UxM=
+X-Received: by 2002:aa7:de0c:0:b0:55c:8d17:1bea with SMTP id
+ h12-20020aa7de0c000000b0055c8d171beamr1140754edv.17.1706027845209; Tue, 23
+ Jan 2024 08:37:25 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] target/riscv: Expose Zaamo and Zalrsc extensions
-Content-Language: en-US
-To: Rob Bradford <rbradford@rivosinc.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, atishp@rivosinc.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com
-References: <20240123111030.15074-1-rbradford@rivosinc.com>
- <20240123111030.15074-4-rbradford@rivosinc.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240123111030.15074-4-rbradford@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
+References: <20240122063501.782041-1-bcain@quicinc.com>
+In-Reply-To: <20240122063501.782041-1-bcain@quicinc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 23 Jan 2024 16:37:14 +0000
+Message-ID: <CAFEAcA8zUMvRjKZqUKNYTG7OKzRBi-yb60f3=JEY=Gep0KeYWA@mail.gmail.com>
+Subject: Re: [PULL 00/15] target-hexagon queue, hexagon docker
+To: Brian Cain <bcain@quicinc.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, richard.henderson@linaro.org, 
+ philmd@linaro.org, quic_mathbern@quicinc.com, stefanha@redhat.com, ale@rev.ng, 
+ anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,42 +89,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 22 Jan 2024 at 06:35, Brian Cain <bcain@quicinc.com> wrote:
+>
+> The following changes since commit 3f2a357b95845ea0bf7463eff6661e43b97d1afc:
+>
+>   Merge tag 'hw-cpus-20240119' of https://github.com/philmd/qemu into staging (2024-01-19 11:39:38 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/quic/qemu tags/pull-hex-20240121
+>
+> for you to fetch changes up to bbe4209c8b4300d722f47791f9151e1a69cb0135:
+>
+>   target/hexagon: reduce scope of def_regnum, remove dead assignment (2024-01-21 22:02:48 -0800)
+>
+> ----------------------------------------------------------------
+> Coverity fix, cross toolchain update, switch to decodetree
+>
+> ----------------------------------------------------------------
+> Brian Cain (2):
+>       tests/docker: Hexagon toolchain update
+>       target/hexagon: reduce scope of def_regnum, remove dead assignment
+>
+> Taylor Simpson (13):
+>       Hexagon (target/hexagon) Fix shadow variable when idef-parser is off
+>       Hexagon (target/hexagon) Clean up handling of modifier registers
+>       Hexagon (target/hexagon) Make generators object oriented - gen_tcg_funcs
+>       Hexagon (target/hexagon) Make generators object oriented - gen_helper_protos
+>       Hexagon (target/hexagon) Make generators object oriented - gen_helper_funcs
+>       Hexagon (target/hexagon) Make generators object oriented - gen_idef_parser_funcs
+>       Hexagon (target/hexagon) Make generators object oriented - gen_op_regs
+>       Hexagon (target/hexagon) Make generators object oriented - gen_analyze_funcs
+>       Hexagon (target/hexagon) Remove unused WRITES_PRED_REG attribute
+>       Hexagon (target/hexagon) Remove dead functions from hex_common.py
+>       Hexagon (target/hexagon) Use QEMU decodetree (32-bit instructions)
+>       Hexagon (target/hexagon) Use QEMU decodetree (16-bit instructions)
+>       Hexagon (target/hexagon) Remove old dectree.py
 
 
-On 1/23/24 08:10, Rob Bradford wrote:
-> Expose the newly added extensions to the guest and allow their control
-> through the CPU properties.
-> 
-> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
-> ---
+Applied, thanks.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
->   target/riscv/cpu.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 8d3ec74a1c..604baf53c8 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -103,7 +103,9 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
->       ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
->       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
-> +    ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
->       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
-> +    ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
->       ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
->       ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
->       ISA_EXT_DATA_ENTRY(zfbfmin, PRIV_VERSION_1_12_0, ext_zfbfmin),
-> @@ -1491,6 +1493,9 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
->       MULTI_EXT_CFG_BOOL("x-smaia", ext_smaia, false),
->       MULTI_EXT_CFG_BOOL("x-ssaia", ext_ssaia, false),
->   
-> +    MULTI_EXT_CFG_BOOL("x-zaamo", ext_zaamo, false),
-> +    MULTI_EXT_CFG_BOOL("x-zalrsc", ext_zalrsc, false),
-> +
->       MULTI_EXT_CFG_BOOL("x-zvfh", ext_zvfh, false),
->       MULTI_EXT_CFG_BOOL("x-zvfhmin", ext_zvfhmin, false),
->   
+-- PMM
 
