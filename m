@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B4DC47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 22:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C1BC47DDB
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 22:34:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSPHA-0001YD-Al; Tue, 23 Jan 2024 17:29:48 -0500
+	id 1rSPKp-0002W6-CO; Tue, 23 Jan 2024 17:33:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSPH8-0001XY-ST
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:29:47 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1rSPKo-0002Vx-3E
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:33:34 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSPH6-0001X8-P8
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:29:45 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1d75ea3a9b6so19743515ad.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 14:29:44 -0800 (PST)
+ id 1rSPKm-00023u-Bb
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:33:33 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1d41bb4da91so28105815ad.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 14:33:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706048983; x=1706653783; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706049211; x=1706654011; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XKLK09p76OFrlEMEdT0CRSC/S1YG67lzO9BeYJfSxP4=;
- b=cITSfz7oAqFfPDtZL4HZKCuuOgN7LcDP1yrLwhgQqDqDU5qPE5LEWztiZuPJn7cluW
- Qmiqf73WjlgR3CQmQqYIyn6G2MvdcZS5E/Zz0TtjDtAoiaN+4rNZ8jzuTRwQpEXEdQKK
- P1tUSBgJQ21j16bx8aPP2PYsyB0h0mfgBN/Qiu7axiRTjBzQxpf3fdtTKR1A1ygBvZUT
- XGSd/BfHC3gHRV2tyb0jV/aNo0zVguhtigtyp+M9h3nGei2q6SpFGF6ErkIKncvAU402
- rFlc/hzF5q/9PreUo6dG83hCTfE5NRUcnFIfCFZrvUveB5dgJ92wSTwAZTRKqPEHW6BO
- AsEw==
+ bh=zpKAFAZlHZYAs7Z1Z94s6N0555vzpR3MIlWpWFPkhew=;
+ b=b/6gIyNoj5vAFUQWto9kAD0NbQ9RVcszYb3I8aUfPOFoRn/kju1jRGaqTKimxuouZB
+ L6ReZUqxZPCUdgQ+mpC7Lo1xjkwCyu4aws7Y6aGK9jtgGK3Q7Xm7ZgsKQlFPpt1sNEc4
+ 0U0sbWByNQp5fjYBX3wBmRj0gMIqJqDI6cHbxMiSr5hvUDNi3K3m+isC/rOLMWYqnXhK
+ hXAEz0QElIaBNadLjNaUR96FfFJTcliwPN7VAYxXEWIC6qWP0KvZGbMJOY061dlEd8oj
+ iQ7Qe209oQbgypeOrIpa+swJE6xa9E5sZDTpj+G+VkHK9waaTVGmftfKP8Yxr4ZSA7Hr
+ g72w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706048983; x=1706653783;
+ d=1e100.net; s=20230601; t=1706049211; x=1706654011;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XKLK09p76OFrlEMEdT0CRSC/S1YG67lzO9BeYJfSxP4=;
- b=BDrr3sZk70O7CENgF2E1pn9ocyjWwbCZ/kkL8KPYDd6W48Z5x6AbjXqwyUPBXCFQT+
- B9QT9n6JdkaT6H67rchsyW0hT/CcSKuoFJlr9o301VI209YQuHdGP4sZpKfjxc+3KJXc
- ppu/7syPJmqLevy6fu1rmpIIt/UvWDddBiz7YsBGcCuX1kOcXMIrbVT/29zqaMDVNeud
- jS8DgdikgPXsH3MtpDAVHEt93snQdgpfs1W6Q9NDv+Sb/101TewEm349EP5LMvedXbNY
- hMDzR4WxEIgQ1AF6h414NWLeapNrvwaqLXSjeYCZ0q4zyhcQxo+eH8N5JPWabF4H+iV7
- tiwg==
-X-Gm-Message-State: AOJu0YxxRyOhVEollKC9aAh01q+lPlJk6qVNuG8hD4HPHXeboMtEAQi1
- tmOy9hMxKd5eVQHeESC8o1ikE0wPXcOShJhnYj+11qMfzkf9tXKasVTotYrOEXo=
-X-Google-Smtp-Source: AGHT+IFZEUXkypx7WRHm/qoWLS+CvvvwcxwyRNfRoi0tOp8EbRu0oaUrabmyYDilTvpmnppfM94Dfw==
-X-Received: by 2002:a17:903:2305:b0:1d7:17e6:44e1 with SMTP id
- d5-20020a170903230500b001d717e644e1mr8656109plh.73.1706048983242; 
- Tue, 23 Jan 2024 14:29:43 -0800 (PST)
+ bh=zpKAFAZlHZYAs7Z1Z94s6N0555vzpR3MIlWpWFPkhew=;
+ b=NKs09bmEkxtsQAeeWR6iYS4PPWFTPNYnNPtjGH6YDvL3Dx253AymZ/W+AaBVhgKDju
+ AJE3HNlkQqTQuwkM68t/YGweGd71UvHlAlPtVAA3kpeWdFaxcMlCf82kZ+rNSE/ochpH
+ dT/xdiYWrkBDTRwifswE4DgqI2gkcQiKG4icqEhck35cqkLwssIKIvsPyOtZ+pRRe1Yb
+ mgTxw40pAFnj2UQld7DQ31B6VeP91wJWhZ1ogPPlqp8xYwRXYw43DA2LQsMI/LqyY4pe
+ BUrUDygAEpuWWyCl/aGJL1oLaoqWJTPV6pakVAiReNLbdeeBsei+WHgxSv8HJUCBu1j6
+ knQw==
+X-Gm-Message-State: AOJu0Yzfgi5ttJ29RjWir7Zpl+chqBXMZ1SkfJB7AJv040BiXvaUOok6
+ 30EzxCBzM7CRX1YwRohYrwuklF9J2dEHtok29eRHAhuI7RhrBxcFKur2NG6lENo=
+X-Google-Smtp-Source: AGHT+IEItXDOTy7IasgaDnrFJfZug7TuPqTRCnKOpn9IOCJ7e2i3dYapgm5w69MtWbbguL7EEUtLHw==
+X-Received: by 2002:a17:902:c195:b0:1d4:3e0e:5d04 with SMTP id
+ d21-20020a170902c19500b001d43e0e5d04mr3352238pld.98.1706049210955; 
+ Tue, 23 Jan 2024 14:33:30 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
  (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
  by smtp.gmail.com with ESMTPSA id
- v7-20020a170903238700b001d73702e0b7sm5357798plh.212.2024.01.23.14.29.40
+ bc1-20020a170902930100b001d6f33c6541sm9297177plb.285.2024.01.23.14.33.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 14:29:42 -0800 (PST)
-Message-ID: <d7493d88-45ab-4bd8-b8e3-89e096ba862c@linaro.org>
-Date: Wed, 24 Jan 2024 08:29:37 +1000
+ Tue, 23 Jan 2024 14:33:29 -0800 (PST)
+Message-ID: <6dccfc4c-1bfb-4355-ace7-b3f53957adc5@linaro.org>
+Date: Wed, 24 Jan 2024 08:33:24 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 05/34] target/tricore: [VADDR] Use target_ulong for EA
+Subject: Re: [RFC PATCH 06/34] exec: [VADDR] Move vaddr defines to separate
+ file
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, philmd@linaro.org
 References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-6-anjo@rev.ng>
+ <20240119144024.14289-7-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-6-anjo@rev.ng>
+In-Reply-To: <20240119144024.14289-7-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,17 +100,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/20/24 00:39, Anton Johansson wrote:
-> Prepares target for typedef'ing abi_ptr to vaddr.  Fixes sign extension
-> bug that would result from abi_ptr being unsigned in the future.
-> 
-> Necessary to make memory access function signatures target agnostic.
-> 
-> Signed-off-by: Anton Johansson<anjo@rev.ng>
-> ---
->   target/tricore/op_helper.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+> +++ b/include/exec/vaddr.h
+> @@ -0,0 +1,18 @@
+> +/* Define vaddr if it exists.  */
+
+s/if it exists//
+
+Need a license line here.  Otherwise.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
