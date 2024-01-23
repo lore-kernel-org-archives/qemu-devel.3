@@ -4,74 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A093C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 17:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E28C47DDB
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 17:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSKms-0002uN-NP; Tue, 23 Jan 2024 12:42:14 -0500
+	id 1rSKpZ-0004QI-Bf; Tue, 23 Jan 2024 12:45:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1rSKmq-0002u9-Cv
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:42:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1rSKmk-0007Tv-PZ
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:42:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706031725;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jkvSIp7rkNdT2cki/AZkk4CDku7EWSTyyKLOivN71QM=;
- b=DVbwmboHFy/2qpih3xAWkEpzGg0hNKhPYnXGcwk5E2H52RRxsfVknOIBNeBuxsuxKqTRy/
- EVmwj5Om2f9FcSzEtOJSdszZW/bJfn/j32qB3LgKpQHSgckEEe/0HILQINAMbsbogMQGvu
- fYf9XbIEQ8lgboywvsie21zMFTTLACg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-_bVpLGBHMRqLa8tqhRkvrA-1; Tue, 23 Jan 2024 12:42:01 -0500
-X-MC-Unique: _bVpLGBHMRqLa8tqhRkvrA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E03AF83B82D;
- Tue, 23 Jan 2024 17:42:00 +0000 (UTC)
-Received: from tpad.localdomain (unknown [10.96.133.5])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BF5642026F95;
- Tue, 23 Jan 2024 17:41:59 +0000 (UTC)
-Received: by tpad.localdomain (Postfix, from userid 1000)
- id 0F1D7405151AE; Tue, 23 Jan 2024 12:39:13 -0300 (-03)
-Date: Tue, 23 Jan 2024 12:39:13 -0300
-From: Marcelo Tosatti <mtosatti@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Lei Wang <lei4.wang@intel.com>
-Subject: Re: Why invtsc (CPUID_APM_INVTSC) is unmigratable?
-Message-ID: <Za/doRj6sEibC64y@tpad>
-References: <825f29d7-9112-45a2-b4a3-7d3b54c3c0a2@intel.com>
- <Zaqf839r8TXvkIAf@tpad>
- <b6950a34-0ef6-4945-9e50-5a47e86490e1@intel.com>
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1rSKpT-0004Px-RR
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:44:55 -0500
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1rSKpS-0007ov-3T
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:44:55 -0500
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-dc261316b0dso3432792276.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 09:44:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1706031892; x=1706636692;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cY+sbWdyrY3TPUbLY7/g3QAsx2vYqWtXyWuZMFZGBSM=;
+ b=DNrHdCjcSNkTSIBT4QA4PYcsvws6uUilD/CZyGxy+rE6Md+B2TPcrnFA7R8ldWtk5T
+ rCX+xqOibAXc7IGZ2Hpb8R5b8alDJcq20Tkl25xwv75PVQHUbNrgpOjP2rwD5AVQ76Of
+ AedNNFEO6lKONVtHyeDBklDYfC1bBACnZ9aqYoXBW6iR+I1A/3r1/EyOuUKM8RQdD1cY
+ //Z7CymDz0L2K6FqR8HRxWv8nO9s2z8V9SpmnwVOSIo6MLO7Mz1hDRc/zqRv++gvl/at
+ rkenm9ovi5SoiWHS7BdTrUZ7dLzD8eeonG4Sm15TWEamj3uRBzJM6QGoh1zBFU3+uMOx
+ jDNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706031892; x=1706636692;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cY+sbWdyrY3TPUbLY7/g3QAsx2vYqWtXyWuZMFZGBSM=;
+ b=SskrX/FubSIC8xmfc6sU0OrxxJSmPsKmPKBKdU28uMUQAZCiKzuWD4LK7O0NVIfT64
+ 5A8a8HB7iitVbRQguZX0omZT/3BshJs8UcDk98tvT1B0PiCK/QzeSHHWSprNP1mvGcEE
+ 8zfD9Z3U4laR9exPmFDOw7iPm7AjxVtxGD4xQcn4MULeSic4rUTASNKb3r+Jx0iEPFXV
+ ETdsOGt3AI0tkI8IJGtHuS3KfrkohonedNLOmhILR73Z/CDtTsqscRwIF8JFXLIUdfE2
+ RlVtOTq3cfPfBZYVv2BXEIzcHnnIGL8rweCEeUEgvUjdIDlbtMXs17FUONMhdYpfxeRL
+ a9LQ==
+X-Gm-Message-State: AOJu0YxGEaPqgGlTzjDozVZEi7qr+nw69VEXzfhViOgCEGzp+8oMB4bA
+ +u0LC1QcEZo/aHFPR1MoiIB+zjd0nzFKQ1yJi98P7aKA15gjssIL/OW3lBcF5fITyYXkRBu2jGr
+ 2QmPVwVPbKj/wvJWiaiojUnWyvKsmmHnBvXHozg==
+X-Google-Smtp-Source: AGHT+IHrvbB8Z4AgljPrAziLFzaZXeq2n1A/jS2UZT6t2stQe5/1WjAKFQHfnCB2ItqIfRZET3vTDvT6QQOTe2zbRp0=
+X-Received: by 2002:a5b:1ca:0:b0:dbc:e3ba:2f55 with SMTP id
+ f10-20020a5b01ca000000b00dbce3ba2f55mr3658430ybp.112.1706031892514; Tue, 23
+ Jan 2024 09:44:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b6950a34-0ef6-4945-9e50-5a47e86490e1@intel.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mtosatti@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240109102930.405323-1-me@deliversmonkey.space>
+ <20240109102930.405323-4-me@deliversmonkey.space>
+ <CAKC1njSLR614zQk0_DAgYN1jjdg=0eUa7N1AEwwXZVNN6BwjmA@mail.gmail.com>
+ <3cb918ca-27cd-4f1e-8738-306dc5280f42@linaro.org>
+ <CAKC1njRXPi1Roch=T+NwQk-TOzN=gSjmPh2KCVsemKdex9CamA@mail.gmail.com>
+ <5b6571d3-f654-488d-9dc5-0d18ba542e05@linaro.org>
+ <CAFukJ-Cf51kS17BOCkuPpxGXS+h4-MENKqBH5EW7Bj0mz+KPRQ@mail.gmail.com>
+In-Reply-To: <CAFukJ-Cf51kS17BOCkuPpxGXS+h4-MENKqBH5EW7Bj0mz+KPRQ@mail.gmail.com>
+From: Deepak Gupta <debug@rivosinc.com>
+Date: Tue, 23 Jan 2024 09:44:41 -0800
+Message-ID: <CAKC1njTJMWOoBoXeAk6ScCW0Y7CR4=qiErdTxVzf6qn_+XFL3g@mail.gmail.com>
+Subject: Re: [PATCH v4 3/6] target/riscv: Add helper functions to calculate
+ current number of masked bits for pointer masking
+To: Alexey Baturo <baturo.alexey@gmail.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ zhiwei_liu@linux.alibaba.com, 
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=debug@rivosinc.com; helo=mail-yb1-xb34.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,93 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 20, 2024 at 05:44:07PM +0800, Xiaoyao Li wrote:
-> On 1/20/2024 12:14 AM, Marcelo Tosatti wrote:
-> > On Fri, Jan 19, 2024 at 02:46:22PM +0800, Xiaoyao Li wrote:
-> > > I'm wondering why CPUID_APM_INVTSC is set as unmigratable_flags. Could
-> > > anyone explain it?
-> > 
-> > 
-> > commit 68bfd0ad4a1dcc4c328d5db85dc746b49c1ec07e
-> > Author: Marcelo Tosatti <mtosatti@redhat.com>
-> > Date:   Wed May 14 16:30:09 2014 -0300
-> > 
-> >      target-i386: block migration and savevm if invariant tsc is exposed
-> >      Invariant TSC documentation mentions that "invariant TSC will run at a
-> >      constant rate in all ACPI P-, C-. and T-states".
-> >      This is not the case if migration to a host with different TSC frequency
-> >      is allowed, or if savevm is performed. So block migration/savevm.
-> > 
-> > So the rationale here was that without ensuring the destination host
-> > has the same TSC clock frequency, we can't migrate.
-> 
-> It seems to me the concept of invtsc was extended to "tsc freq will not
-> change even after the machine is live migrated". I'm not sure it is correct
-> to extend the concept of invtsc.
-> 
-> The main reason of introducing invtsc is to tell the tsc hardware keeps
-> counting (at the same rate) even at deep C state, so long as other states.
-> 
-> For example, a guest is created on machine A with X GHz tsc, and invtsc
-> exposed (machine A can ensure the guest's tsc counts at X GHz at any state).
-> If the guest is migrated to machine B with Y GHz tsc, and machine B can also
-> ensure the invtsc of its guest, i.e., the guest's tsc counts at Y GHz at any
-> state. IMHO, in this case, the invtsc is supported at both src and dest,
-> which means it is a migratable feature. However, the migration itself fails,
-> due to mismatched/different configuration of tsc freq, not due to invtsc.
-> 
-> > However, this was later extended to allow invtsc migratioon when setting
-> > tsc-khz explicitly:
-> > 
-> > commit d99569d9d8562c480e0befab601756b0b7b5d0e0
-> > Author: Eduardo Habkost <ehabkost@redhat.com>
-> > Date:   Sun Jan 8 15:32:34 2017 -0200
-> > 
-> >      kvm: Allow invtsc migration if tsc-khz is set explicitly
-> >      We can safely allow a VM to be migrated with invtsc enabled if
-> >      tsc-khz is set explicitly, because:
-> >      * QEMU already refuses to start if it can't set the TSC frequency
-> >        to the configured value.
-> >      * Management software is already required to keep device
-> >        configuration (including CPU configuration) the same on
-> >        migration source and destination.
-> >      Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
-> >      Message-Id: <20170108173234.25721-3-ehabkost@redhat.com>
-> >      Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
-> 
-> But in the case that user doesn't set tsc freq explicitly, the live
-> migration is likely to fail or have issues even without invtsc exposed to
-> guest, 
+On Sat, Jan 20, 2024 at 11:14=E2=80=AFPM Alexey Baturo <baturo.alexey@gmail=
+.com> wrote:
+>
+> Hi,
+>
+> Having the feature to run binaries with pointer masking on qemu-user is r=
+eally nice, but I see this patch series as an initial support.
+> Obviously there'll be more patches and fixes for pointer masking as soon =
+as arch tests are ready.
+> I suggest supporting qemu-user in the next patches, but make sure we do t=
+his before claiming 100% support for pointer masking.
+> @Deepak Gupta what do you think?
 
-Depends on how the guest is using the TSC, but yes.
+I think that makes sense. Thanks.
 
-> if the destination host has a different tsc frequency than src host.
-> 
-> So why bother checking invtsc only?
-
-Well, if invtsc is exposed to the guest, then it might use the TSC for
-timekeeping purposes. 
-
-Therefore you don't want to fail (on the invtsc clock characteristics)
-otherwise timekeeping in the guest might be problematic.
-
-But this are all just heuristics. 
-
-Do you have a suggestion for different behaviour?
-
-> 
-> > And support for libvirt was added:
-> > 
-> > https://listman.redhat.com/archives/libvir-list/2017-January/141757.html
-> > 
-> > > 
-> > > When the host supports invtsc, it can be exposed to guest.
-> > > When the src VM has invtsc exposed, what will forbid it to be migrated to a
-> > > dest that also supports VMs with invtsc exposed?
-> > > 
-> > > 
-> > 
-> 
-> 
-
+>
+> Thanks
+>
+> =D1=81=D0=B1, 20 =D1=8F=D0=BD=D0=B2. 2024=E2=80=AF=D0=B3. =D0=B2 10:37, R=
+ichard Henderson <richard.henderson@linaro.org>:
+>>
+>> On 1/19/24 09:40, Deepak Gupta wrote:
+>> > On Thu, Jan 18, 2024 at 12:50=E2=80=AFPM Richard Henderson
+>> > <richard.henderson@linaro.org> wrote:
+>> >> At some point pointer masking will be in hardware, and the kernel wil=
+l gain support for
+>> >> it, and there will likely be a prctl() added for it.  At the point th=
+e kernel finalizes
+>> >> the API, you will be able to enable pointer masking for qemu-user.
+>> >
+>> > I am sure I am missing some important detail here, BUT...
+>> >
+>> > How is it different from aarch64 "top byte ignore".
+>>
+>> It is very similar, yes.
+>>
+>> > I think commit: 16c8497 enables top byte ignore for user pointers and
+>> > by default for qemu-user for aarch64 target.
+>>
+>> Not quite, no.
+>>
+>> commit 0e0c030c681730f3ec55ba3b223b608a8f3e8282
+>> Author: Richard Henderson <richard.henderson@linaro.org>
+>> Date:   Fri Feb 12 10:48:51 2021 -0800
+>>
+>>      linux-user/aarch64: Implement PR_TAGGED_ADDR_ENABLE
+>>
+>> is more relevant.
+>>
+>> > IIRC, user <--> kernel abi is only needed for pointers that are passed
+>> > to the kernel.
+>>
+>> It is also needed to *enable* pointer masking at all.
+>>
+>> For aarch64, TBI has been enabled for user-space since the beginning, bu=
+t that is not true
+>> for riscv.  Therefore there will be a need for a syscall to opt in and e=
+nable pointer masking.
+>>
+>> > And in the case of qemu-user, we are talking about the host kernel.
+>>
+>> No, we are not.  We are always emulating the guest kernel.
+>>
+>>
+>> r~
 
