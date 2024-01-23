@@ -4,134 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC1DC47DDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 17:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC6DEC47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 18:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSKsh-0005ku-Qd; Tue, 23 Jan 2024 12:48:16 -0500
+	id 1rSL38-0007kB-Sx; Tue, 23 Jan 2024 12:59:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rSKsa-0005ii-2o
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:48:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rSKsW-0008M5-6y
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:48:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706032079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OSFtPIFFlfm1sGLwlSnsBorGYQU6ikFoSFx3RRiDTXA=;
- b=AZr8f8vIJvR7h0lKNBnBkb3Dt7uF9qm9N+rMBGrqRi8at8ZoDjMImy7Jt2qS507qlQPE5v
- 8GXzAt6xVm7Y2wwCVF6Sj4Dy2g83a5uWveGPus9zfKb7hp3bJ9yFebu7Cc/ngYCxJVUTAq
- xc4xLRZoMixxMa51RIzgYACDlFFDgEo=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-Xu1BuZMSPGumDU-nMOFNLQ-1; Tue, 23 Jan 2024 12:47:55 -0500
-X-MC-Unique: Xu1BuZMSPGumDU-nMOFNLQ-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-680b2c9b0ccso71103296d6.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 09:47:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSL32-0007ja-Mn
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:58:57 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSL30-0001j2-8V
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:58:56 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-559f92bf7b6so8349058a12.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 09:58:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706032732; x=1706637532; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B7lDEw5sJ8RJslvEgx8xhus/fp/Xsse5BBqHV+Ka7yE=;
+ b=qEpr8ohDDNuDuRHPVZ+zaglp0802xP2pGBWadVBypNRKof9QDvDfXl+wq2aNaj+Iqh
+ WRSb7VQXohdaJsf0us08fDkKshxBNyx2115LgusSd4V/UJSDHSynTnvepVhRYUTb4zZW
+ cjx0SnRI7mHGUM6wSHSoe84UudZAfskhWkBFk8aPzU8yH95lavlFpygEEEyES6DhNqnd
+ 9UG1e3Ah7f5DNzF/jltnTlf13w7+mKFhyZnImNcCkddgFtQgUU4XMw7AIYZ7PNp1engS
+ bhLl1oRnRr+B214pZNvFFOhC8wzEoxcKcqOkizw75AiW/wL+GX/eCpZQ1ZHS8U0OoMCs
+ i5ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706032075; x=1706636875;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OSFtPIFFlfm1sGLwlSnsBorGYQU6ikFoSFx3RRiDTXA=;
- b=xKmhng3JCkVAonseryeAx87TS9RHJWDi904DBo8iwljf8eep0B3WW0mn022DhZzfUd
- XWaYGNpyOYfQdUmDsfpH8dvsrEt90Ti1Rx/5MkceC5V9X/wR+ZAdF5yO+ZiGDzRlVFwk
- m9wWOLvOaKElXnDSGJ/DmxvQ+zo9oo7e8vUW0QU8C/HbiuNroDrBi3/OIJq3ufR/jlAy
- hrmKUITU5yl3SA5BnKBMXuPmgouoelU/x8kdo5WFbKM+H/it2WYyP9lJx1WpRF33/jDo
- 1fyiHwAvM8woxfdDJj/Gs22rXlatCNsSrRP2rHc4kb6CESQKZNr5TDcMJ4ft2HUuVa8O
- NRFA==
-X-Gm-Message-State: AOJu0Yy90kAlDpnjzSQHEdSYVMis8umwqgV+c81WRV8FhKnHq7JJrfqO
- u9cAqtI2aHQy7x53GW6EWHJX7IK6W3mvuyPpciFJrNIfcU+S5ITIDRp0oNsAtvpgWP3wbRqbUiS
- Nlnk3+HMBNIy0++F/JdcRBxOUPgJzyXJWYUic8e4kY/1fGvzrtMGk
-X-Received: by 2002:ad4:5cee:0:b0:67f:2321:935e with SMTP id
- iv14-20020ad45cee000000b0067f2321935emr1258176qvb.62.1706032074854; 
- Tue, 23 Jan 2024 09:47:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHlV4Bh/8dq73UEKj3sXR/O6mnmOfaGglJy6LtCR/d+vPkZmoSxwt87joNstficeXCuJdQgsw==
-X-Received: by 2002:ad4:5cee:0:b0:67f:2321:935e with SMTP id
- iv14-20020ad45cee000000b0067f2321935emr1258169qvb.62.1706032074587; 
- Tue, 23 Jan 2024 09:47:54 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-177-121.web.vodafone.de.
- [109.43.177.121]) by smtp.gmail.com with ESMTPSA id
- or9-20020a056214468900b00686a4f9312bsm576786qvb.50.2024.01.23.09.47.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 09:47:54 -0800 (PST)
-Message-ID: <2a8e7077-0603-4455-8b4c-69a4200dd280@redhat.com>
-Date: Tue, 23 Jan 2024 18:47:50 +0100
+ d=1e100.net; s=20230601; t=1706032732; x=1706637532;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B7lDEw5sJ8RJslvEgx8xhus/fp/Xsse5BBqHV+Ka7yE=;
+ b=HnXrQsy3RkSSef/t67IESuV6xiLUkBybIh+Sqp2ZPg1RK00P3L1FCP1ycr4mKNbaWJ
+ WRYMVos64fRufVW1dKYihhrDY1JXqZR88AilEOR+nreENYeQE9K1yL9XFGtTOcHoOeF4
+ OLTcvc4+HCQdR4BgkaRjWTzpidbJcSXZVnX7pie2Lz/4KGVg/iC92r/ZLrZ/bP9g+wIi
+ XQXQZFT6Zo3o4ApQAAMk/vp7h5tTveu5waxF9Ofkn0ztkZ5ifu7UZiPCsr2piUgkQdqX
+ NN9UZObShXefwDeBYkRYCc5d9f9vBi9ygFZ/ryN1xnfl7Fa6WdYRWhEM+GB0a1ZZweZV
+ RmhA==
+X-Gm-Message-State: AOJu0YwdeDY0twMjDOYrbOiebrDWlxC2gPcK2lL2hm96ljK/E2aP2CXd
+ m2wiJCHbtajqnn7wwqflrpohBUx0o6G1mSy5EUptln2/UcJ/ass1UBpyQvYZ7XlcfCjscdbG/pE
+ 2seyuEiHTJKwaEpwcAffWVPXix/EC9UxsEy84a5l8ggaPaG8X
+X-Google-Smtp-Source: AGHT+IHX17gvPAsTxI4g6tmIw7bR4Ed8sZRvGJk6b311QVva0NYsXTMwDg1D9luiaVFMl89yx/Fs5fl6oGZxhBMg5ws=
+X-Received: by 2002:aa7:c45a:0:b0:55c:708b:2b53 with SMTP id
+ n26-20020aa7c45a000000b0055c708b2b53mr1883346edr.28.1706032732640; Tue, 23
+ Jan 2024 09:58:52 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/16] tests: enable meson test timeouts to improve
- debuggability
-Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20231215070357.10888-1-thuth@redhat.com>
- <db19cdd7-4049-4b9a-9108-c1f05f992d89@tls.msk.ru>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <db19cdd7-4049-4b9a-9108-c1f05f992d89@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240119212945.2440655-1-jan.kloetzke@kernkonzept.com>
+In-Reply-To: <20240119212945.2440655-1-jan.kloetzke@kernkonzept.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 23 Jan 2024 17:58:41 +0000
+Message-ID: <CAFEAcA8f5BBexmtoBHgV6o+KrHbjVvCTZ6VDV54muK_wdvgQTg@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: fix exception syndrome for AArch32 bkpt insn
+To: =?UTF-8?B?SmFuIEtsw7Z0emtl?= <jan.kloetzke@kernkonzept.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,28 +89,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/01/2024 17.50, Michael Tokarev wrote:
-> 15.12.2023 10:03, Thomas Huth wrote:
->> This is a respin of Daniel's series that re-enables the meson test
->> runner timeouts. To make sure that we do not get into trouble on
->> older systems, I ran all the tests with "make check SPEED=slow -j32"
->> on my laptop that has only 16 SMT threads, so each test was running
->> quite a bit slower than with a normal "-j$(nproc)" run. I think
->> that these timeouts should now work in most cases - if not, we still
->> can adjust them easily later.
-> 
-> I'm picking this up for stable branches too, since there we have the same
-> problems in CI environment. In particular, bios-tables-test almost always
-> times out, even hitting retry doesn't help.  Let's see how it goes..
+On Fri, 19 Jan 2024 at 22:40, Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.co=
+m> wrote:
+>
+> Debug exceptions that target AArch32 Hyp mode are reported differently
+> than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
+> such exceptions need to be either converted to a prefetch abort
+> (breakpoints, vector catch) or a data abort (watchpoints).
+>
+> Signed-off-by: Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.com>
 
-Uh, wait, that does not make too much sense ... if bios-tables-test already 
-times out *without* the additional meson-based timeouts, then adding the 
-meson timeouts won't help. bios-tables-test uses the manually coded timeout 
-from boot_sector_test() that is currently set to 600 seconds. If you hit 
-that timeout, that likely means that something is really broken in your 
-branch - or is it sometimes still succeeding?
+Thanks for the patch; yes, this is definitely a bug.
 
-  Thomas
+> ---
+>  target/arm/helper.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index e068d35383..71dd60ad2d 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -11013,6 +11013,26 @@ static void arm_cpu_do_interrupt_aarch32(CPUStat=
+e *cs)
+>      }
+>
+>      if (env->exception.target_el =3D=3D 2) {
+> +        /* Debug exceptions are reported differently on AARCH32 */
 
+Capitalization is "AArch32".
 
+> +        switch (syn_get_ec(env->exception.syndrome)) {
+> +        case EC_BREAKPOINT:
+> +        case EC_BREAKPOINT_SAME_EL:
+> +        case EC_AA32_BKPT:
+> +        case EC_VECTORCATCH:
+> +            env->exception.syndrome =3D syn_insn_abort(arm_current_el(en=
+v) =3D=3D 2,
+> +                                                     0, 0, 0x22);
+> +            break;
+> +        case EC_WATCHPOINT:
+> +        case EC_WATCHPOINT_SAME_EL:
+> +            /*
+> +             * ISS is compatible between Watchpoints and Data Aborts. Al=
+so
+> +             * retain the lowest EC bit as it signals the originating EL=
+.
+> +             */
+> +            env->exception.syndrome &=3D (1U << (ARM_EL_EC_SHIFT + 1)) -=
+ 1U;
+
+Is this supposed to be clearing out (most of) the EC field?
+I'm not sure that's what it's doing. In any case I think we
+could write this in a more clearly understandable way using
+either some new #defines or functions in syndrome.h or the
+deposit64/extract64 functions.
+
+My suggestion is to put in syndrome.h:
+
+#define ARM_EL_EC_LENGTH 6
+
+static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
+{
+    return deposit32(syn, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH, ec);
+}
+
+(you'll need to add #include "qemu/bitops.h" too)
+
+and then these cases can be written:
+
+    case EC_WATCHPOINT:
+        env->exception.syndrome =3D syn_set_ec(env->exception.syndrome,
+                                             EC_DATAABORT);
+        break;
+    case EC_WATCHPOINT_SAME_EL:
+        env->exception.syndrome =3D syn_set_ec(env->exception.syndrome,
+                                             EC_DATAABORT_SAME_EL);
+        break;
+
+> +            env->exception.syndrome |=3D (EC_DATAABORT << ARM_EL_EC_SHIF=
+T)
+> +                                       | ARM_EL_ISV;
+
+I don't think we should be setting ISV here -- the EC_WATCHPOINT
+syndromes don't have any of the instruction-syndrome info
+and "watchpoint" isn't one of the cases where an AArch32
+data-abort syndrome should have ISV set.
+
+> +            break;
+> +        }
+>          arm_cpu_do_interrupt_aarch32_hyp(cs);
+>          return;
+>      }
+> --
+
+thanks
+-- PMM
 
