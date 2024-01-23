@@ -4,92 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FC3C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 17:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A909CC47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 17:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSKUf-0004mb-JJ; Tue, 23 Jan 2024 12:23:25 -0500
+	id 1rSKgE-000065-KP; Tue, 23 Jan 2024 12:35:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSKUe-0004mM-Bh
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:23:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSKUb-0003vM-Bl
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:23:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706030600;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RwaaR3S6dqYLs7KyBvCXb7PoA39urmMNK4K1foXxwfc=;
- b=V2ayq80atvllMMLV9dAnNI5KEq7C08si975RxZ2GAJaMNFuSuzviQfSg0qW5WeJlvQGNEo
- clbUaN6lobvYw5hLrTofPyRXLQCJm4ppwOBb8m2ghZAgPN4bayGYFUW+YoPXfIcazDQ1VV
- OSiRV08xLPKyY47cJhDTu6kXv5Vb0Sw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-9wOzXtGsOkqgNj5X-OuViQ-1; Tue, 23 Jan 2024 12:23:18 -0500
-X-MC-Unique: 9wOzXtGsOkqgNj5X-OuViQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-40e9d8e9a39so39111805e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 09:23:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSKgB-0008V4-Tg
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:35:20 -0500
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSKg9-0006UA-Fb
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 12:35:19 -0500
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2cf0e9f76b4so12518881fa.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 09:35:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706031314; x=1706636114; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=paIsa4xyA7FzF8RxzgnnwI2DhQRer0e6faRBj+BRK1s=;
+ b=lCKIwYfWz18Ie5P8xvs5sYGV36U78bZXwjcYpPVidWZY9ilQKicGqsSDA6rwjteO9V
+ FLfsedYzEwexSaiB4ToJ+IfqfIQdYAOwv209VELjSutJHU4TLDmNzSLN7JT9z1EXSiL9
+ m8OSijYxN1RAHYjAZTVzD65gjhYDkQ4isk1/04zf0f2B1nzo6z+p8KCjMIOtl8YrZwXS
+ OmNL/F43kSP4C9it1o7ygqcG+Cj67EHqsBVBrALT/MHObISyS89pbLi+PwYJLEdbib4Y
+ xf1RhDIv4x2p9ABnhsPEob6Rg7ajav3hfEqnVdeeWiyfppnrOu81gOJbQMzDVKrBv3DG
+ C3wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706030597; x=1706635397;
- h=in-reply-to:from:references:cc:to:content-language:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=RwaaR3S6dqYLs7KyBvCXb7PoA39urmMNK4K1foXxwfc=;
- b=vCf2TZU5b0PbuxHmSFDI4TX23FnL4V3EIbXxBSioNN8P02K31CUcplkZW2m0WCLPyn
- FLmXjxf1JeRZPNbwm9Fu0OHAusUzg8PTWdWuhyHIrgnyRLUQvp3pQMDpK1W7JaeetohV
- hwtCs+D2wMGiqcJY5Wj5uFTRRTBUiM7H76vtbe0m2Gl0sadUR8B1aOKpIFnR3E7JxEzR
- a1fTjRCsZo/NW3FWiA9cLIjd+0Q5tNZT58KDg4OpDS5wwv8UI+MT2lLjkEduWltvTBY5
- lSR9fgG0zImtQgJbPYkHa+uEVqDLdSouVhhHOtS+BijwrBKDlk9XHOtBe28oobm2PkmW
- jh+g==
-X-Gm-Message-State: AOJu0YwxxzJIk99R5QHb/EZ7v80NxBU15ww8ltVZeo379c5NMRbMk9vU
- YWX+p4v05+vVYL5Bw27WrKO64GB41fWIadhmskqxHF5iK6Ub6ZDIhxfRbKvyRwbXCirMFMji9an
- XXAlLvZfVH1LoBUsd2Cvt10P60yQ5AeVeevwzXICvajZ58tJS5JuN
-X-Received: by 2002:a05:600c:3208:b0:40e:8903:6e1 with SMTP id
- r8-20020a05600c320800b0040e890306e1mr718290wmp.40.1706030597066; 
- Tue, 23 Jan 2024 09:23:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGs75VW4/gboYCmw8wBm0XEV2OQEXspWDQgao5uwe92zxa9YfyIxjiLICYVJyAkf0+yP03CIA==
-X-Received: by 2002:a05:600c:3208:b0:40e:8903:6e1 with SMTP id
- r8-20020a05600c320800b0040e890306e1mr718283wmp.40.1706030596727; 
- Tue, 23 Jan 2024 09:23:16 -0800 (PST)
-Received: from ?IPV6:2003:cf:d73b:4143:2bf6:228a:1b7a:e384?
- (p200300cfd73b41432bf6228a1b7ae384.dip0.t-ipconnect.de.
- [2003:cf:d73b:4143:2bf6:228a:1b7a:e384])
- by smtp.gmail.com with ESMTPSA id
- iv11-20020a05600c548b00b0040d8ff79fd8sm43252595wmb.7.2024.01.23.09.23.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 09:23:16 -0800 (PST)
-Content-Type: multipart/alternative;
- boundary="------------5IwzkY0xB1bX1d7Xc0pikBAj"
-Message-ID: <90b2a5da-d4b5-4749-aba4-7a0d42b4f6f8@redhat.com>
-Date: Tue, 23 Jan 2024 18:23:15 +0100
+ d=1e100.net; s=20230601; t=1706031314; x=1706636114;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=paIsa4xyA7FzF8RxzgnnwI2DhQRer0e6faRBj+BRK1s=;
+ b=O36lUzsGfKyOFhzdtcilAbzxyXHu7Cw/OAr8+Oi3vZg8vCfzH1Xp93f+6FZirJijZK
+ Ly5yAg4bUAVB+VqaMORGaQT9VaMOEOD1Z1rEz1gEmpy104p9OJ9o4SuQzkQCpG6eBQBO
+ awOeG9FWPGZ7IWG09XehxIlmnbrGZMUP1nERfruE371MNkHz9z1D43aHYq27Hlp2lhRX
+ hB2ep110bnPILnBD1IBJy8nytlgpUDHqP5JwA6yHHHdyYZA9GspozBCllurWAwXOiLiT
+ GwmmXjEin2u76XuoQvoc6LNhUfb5TWe6r/XArhgF0CoKkgD9Del4HVPkx0cDQ+MCffsX
+ PR1w==
+X-Gm-Message-State: AOJu0Ywg2WSHewBxJPz2UprsTpWrLN36H80VPz4UyCHojl7R+vVKZOYW
+ 8DZmABBM3YbIBKYd/cfymKexTwo2ezqdHy9ux75Q4r6JYAbAJFK8ILsUM2P2hINWlUSS/iMKdgd
+ +JLSsoB5horUoDhbqrzn/VEeDNchGckFXjy79n2GSEq7mXtYY
+X-Google-Smtp-Source: AGHT+IFvn9Yuj96pUlRRn3cZmgzMs3auBztK5Li3ptsTYWYxhwQydC7bFy6sjZSsiOI9I29v1WNvYDWrCv22rIvIa+M=
+X-Received: by 2002:a2e:9bc4:0:b0:2cc:6f7f:6ba4 with SMTP id
+ w4-20020a2e9bc4000000b002cc6f7f6ba4mr49199ljj.199.1706031314210; Tue, 23 Jan
+ 2024 09:35:14 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
- thread
-Content-Language: en-US
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
-References: <20231221212339.164439-1-kwolf@redhat.com>
- <20231221212339.164439-12-kwolf@redhat.com>
- <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
- <Za_zAj11uwavd2va@redhat.com>
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <Za_zAj11uwavd2va@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240118074749.2299959-1-rayhan.faizel@gmail.com>
+In-Reply-To: <20240118074749.2299959-1-rayhan.faizel@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 23 Jan 2024 17:35:03 +0000
+Message-ID: <CAFEAcA9xYiTWU1Nk2_G8gAbC=spQZDFbQazEeVWJYKJu=PFs2Q@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/char/imx_serial: Implement receive FIFO and ageing
+ timer for imx serial.
+To: Rayhan Faizel <rayhan.faizel@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:i.MX31 (kzm)" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,221 +91,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------5IwzkY0xB1bX1d7Xc0pikBAj
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-On 23.01.24 18:10, Kevin Wolf wrote:
-> Am 23.01.2024 um 17:40 hat Hanna Czenczek geschrieben:
->> On 21.12.23 22:23, Kevin Wolf wrote:
->>> From: Stefan Hajnoczi<stefanha@redhat.com>
->>>
->>> Stop depending on the AioContext lock and instead access
->>> SCSIDevice->requests from only one thread at a time:
->>> - When the VM is running only the BlockBackend's AioContext may access
->>>     the requests list.
->>> - When the VM is stopped only the main loop may access the requests
->>>     list.
->>>
->>> These constraints protect the requests list without the need for locking
->>> in the I/O code path.
->>>
->>> Note that multiple IOThreads are not supported yet because the code
->>> assumes all SCSIRequests are executed from a single AioContext. Leave
->>> that as future work.
->>>
->>> Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
->>> Reviewed-by: Eric Blake<eblake@redhat.com>
->>> Message-ID:<20231204164259.1515217-2-stefanha@redhat.com>
->>> Signed-off-by: Kevin Wolf<kwolf@redhat.com>
->>> ---
->>>    include/hw/scsi/scsi.h |   7 +-
->>>    hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
->>>    2 files changed, 131 insertions(+), 57 deletions(-)
->> My reproducer forhttps://issues.redhat.com/browse/RHEL-3934  now breaks more
->> often because of this commit than because of the original bug, i.e. when
->> repeatedly hot-plugging and unplugging a virtio-scsi and a scsi-hd device,
->> this tends to happen when unplugging the scsi-hd:
->>
->> {"execute":"device_del","arguments":{"id":"stg0"}}
->> {"return": {}}
->> qemu-system-x86_64: ../block/block-backend.c:2429: blk_get_aio_context:
->> Assertion `ctx == blk->ctx' failed.
->>
->> (gdb) bt
->> #0  0x00007f32a668d83c in  () at /usr/lib/libc.so.6
->> #1  0x00007f32a663d668 in raise () at /usr/lib/libc.so.6
->> #2  0x00007f32a66254b8 in abort () at /usr/lib/libc.so.6
->> #3  0x00007f32a66253dc in  () at /usr/lib/libc.so.6
->> #4  0x00007f32a6635d26 in  () at /usr/lib/libc.so.6
->> #5  0x0000556e6b4880a4 in blk_get_aio_context (blk=0x556e6e89ccf0) at
->> ../block/block-backend.c:2429
->> #6  blk_get_aio_context (blk=0x556e6e89ccf0) at
->> ../block/block-backend.c:2417
->> #7  0x0000556e6b112d87 in scsi_device_for_each_req_async_bh
->> (opaque=0x556e6e2c6d10) at ../hw/scsi/scsi-bus.c:128
->> #8  0x0000556e6b5d1966 in aio_bh_poll (ctx=ctx@entry=0x556e6d8aa290) at
->> ../util/async.c:218
->> #9  0x0000556e6b5bb16a in aio_poll (ctx=0x556e6d8aa290,
->> blocking=blocking@entry=true) at ../util/aio-posix.c:722
->> #10 0x0000556e6b4564b6 in iothread_run (opaque=opaque@entry=0x556e6d89d920)
->> at ../iothread.c:63
->> #11 0x0000556e6b5bde58 in qemu_thread_start (args=0x556e6d8aa9b0) at
->> ../util/qemu-thread-posix.c:541
->> #12 0x00007f32a668b9eb in  () at /usr/lib/libc.so.6
->> #13 0x00007f32a670f7cc in  () at /usr/lib/libc.so.6
->>
->> I don’t know anything about the problem yet, but as usual, I like
->> speculation and discovering how wrong I was later on, so one thing I came
->> across that’s funny about virtio-scsi is that requests can happen even while
->> a disk is being attached or detached.  That is, Linux seems to probe all
->> LUNs when a new virtio-scsi device is being attached, and it won’t stop just
->> because a disk is being attached or removed.  So maybe that’s part of the
->> problem, that we get a request while the BB is being detached, and
->> temporarily in an inconsistent state (BDS context differs from BB context).
-> I don't know anything about the problem either, but since you already
-> speculated about the cause, let me speculate about the solution:
-> Can we hold the graph writer lock for the tran_commit() call in
-> bdrv_try_change_aio_context()? And of course take the reader lock for
-> blk_get_aio_context(), but that should be completely unproblematic.
+On Thu, 18 Jan 2024 at 07:49, Rayhan Faizel <rayhan.faizel@gmail.com> wrote:
 >
-> At the first sight I don't see a reason why this would break something,
-> but I've learnt not to trust my first impression with the graph locking
-> work...
+> This patch implements a 32 half word FIFO as per imx serial device
+> specifications. If a non empty FIFO is below the trigger level, an ageing
+> timer will tick for a duration of 8 characters. On expiry, AGTIM will be set
+> triggering an interrupt. AGTIM timer resets when there is activity in
+> the receive FIFO.
 >
-> Of course, I also didn't check if there are more things inside of the
-> device emulation that need additional locking in this case, too. But
-> even if so, blk_get_aio_context() should never see an inconsistent
-> state.
+> Otherwise, RRDY is set when trigger level is
+> exceeded. The receive trigger level is 8 in newer kernel versions and 1 in
+> older ones.
+>
+> This change will break migration compatibility.
+>
+> [Changes in v3]
+>
+> - Caught more whitespace changes that went overlooked
+> - Moved fifo and timer initialization to realize
+>
+> [Changes in v2]
+>
+> As per Peter Maydell's suggestions,
+>
+> - Use generic FIFO32 implementation in place of handmade impl.
+> - Moved timer_init to serial init and use timer_del in reset
+> - Removed stray whitespaces
+> - Increment VMSTATE version
+>
+> Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
+> ---
+>  hw/char/imx_serial.c         | 97 +++++++++++++++++++++++++++++++-----
+>  include/hw/char/imx_serial.h | 18 ++++++-
+>  2 files changed, 102 insertions(+), 13 deletions(-)
 
-Ah, sorry, saw your reply only now that I hit “send”.
+Thanks; this looks good and was easy to review.
+I have a couple of comments about corner cases of the device
+behaviour and a few final coding style nits, and that's all.
 
-I forgot that we do have that big lock that I thought rather to avoid 
-:)  Sounds good and very reasonable to me.  Changing the contexts in the 
-graph sounds like a graph change operation, and reading and comparing 
-contexts in the graph sounds like reading the graph.
+> +static void imx_serial_rx_fifo_push(IMXSerialState *s, uint32_t value)
+> +{
+> +    if (fifo32_is_full(&s->rx_fifo)) {
+> +        /* Discard lost character on overflow */
+> +        fifo32_pop(&s->rx_fifo);
 
-Hanna
---------------5IwzkY0xB1bX1d7Xc0pikBAj
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Is this the right behaviour on rx overflow? The imx6 TRM
+I have says the behaviour is:
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <div class="moz-cite-prefix">On 23.01.24 18:10, Kevin Wolf wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:Za_zAj11uwavd2va@redhat.com">
-      <pre class="moz-quote-pre" wrap="">Am 23.01.2024 um 17:40 hat Hanna Czenczek geschrieben:
-</pre>
-      <blockquote type="cite">
-        <pre class="moz-quote-pre" wrap="">On 21.12.23 22:23, Kevin Wolf wrote:
-</pre>
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">From: Stefan Hajnoczi<a class="moz-txt-link-rfc2396E" href="mailto:stefanha@redhat.com">&lt;stefanha@redhat.com&gt;</a>
+ * when we put the 32nd character into the RX FIFO
+   (i.e. the last one which will fit) then we we need
+   to arrange that when it is read it has the
+   URXD.OVRRUN and URXD.ERR bits associated with it,
+   which we can achieve by ORing them in before we push
+   the char into the FIFO here
+ * when the 33rd character arrives, we set USR2.ORE and
+   discard this 33rd character (i.e. never put it in the fifo)
 
-Stop depending on the AioContext lock and instead access
-SCSIDevice-&gt;requests from only one thread at a time:
-- When the VM is running only the BlockBackend's AioContext may access
-   the requests list.
-- When the VM is stopped only the main loop may access the requests
-   list.
+> +    }
+> +    fifo32_push(&s->rx_fifo, value);
+> +}
+> +
+> +static uint32_t imx_serial_rx_fifo_pop(IMXSerialState *s)
+> +{
+> +    if (fifo32_is_empty(&s->rx_fifo)) {
+> +        return URXD_ERR;
 
-These constraints protect the requests list without the need for locking
-in the I/O code path.
+Similarly, I don't think this is how the UART signals that
+you just tried to read from an empty FIFO either. My reading
+of the TRM is that if there's data in the FIFO you get it
+in the low 8 bits, and CHARRDY is set in bit 15. If the
+FIFO is empty and the guest tries to read it then it gets
+a word with CHARRDY clear and the other bits don't have
+valid data (an entirely 0 word would do). The ERR bit is
+only set for the OVRRUN/FRMERR/BRK/PRERR cases.
 
-Note that multiple IOThreads are not supported yet because the code
-assumes all SCSIRequests are executed from a single AioContext. Leave
-that as future work.
+> +    }
+> +    return fifo32_pop(&s->rx_fifo);
+> +}
+> +
+> +static void imx_serial_rx_fifo_ageing_timer_int(void *opaque)
+> +{
+> +    IMXSerialState *s = (IMXSerialState *) opaque;
+> +    s->usr1 |= USR1_AGTIM;
+> +
+> +    imx_update(s);
+> +}
+> +
+> +static void imx_serial_rx_fifo_ageing_timer_restart(void *opaque)
+> +{
+> +    /*
+> +     * Ageing timer starts ticking when
+> +     * RX FIFO is non empty and below trigger level.
+> +     * Timer is reset if new character is received or
+> +     * a FIFO read occurs.
+> +     * Timer triggers an interrupt when duration of
+> +     * 8 characters has passed ( assuming 115200 baudrate ).
 
-Signed-off-by: Stefan Hajnoczi<a class="moz-txt-link-rfc2396E" href="mailto:stefanha@redhat.com">&lt;stefanha@redhat.com&gt;</a>
-Reviewed-by: Eric Blake<a class="moz-txt-link-rfc2396E" href="mailto:eblake@redhat.com">&lt;eblake@redhat.com&gt;</a>
-Message-ID:<a class="moz-txt-link-rfc2396E" href="mailto:20231204164259.1515217-2-stefanha@redhat.com">&lt;20231204164259.1515217-2-stefanha@redhat.com&gt;</a>
-Signed-off-by: Kevin Wolf<a class="moz-txt-link-rfc2396E" href="mailto:kwolf@redhat.com">&lt;kwolf@redhat.com&gt;</a>
----
-  include/hw/scsi/scsi.h |   7 +-
-  hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
-  2 files changed, 131 insertions(+), 57 deletions(-)
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">
-My reproducer for <a class="moz-txt-link-freetext" href="https://issues.redhat.com/browse/RHEL-3934">https://issues.redhat.com/browse/RHEL-3934</a> now breaks more
-often because of this commit than because of the original bug, i.e. when
-repeatedly hot-plugging and unplugging a virtio-scsi and a scsi-hd device,
-this tends to happen when unplugging the scsi-hd:
+We don't need the spaces after ( and before ) here.
 
-{"execute":"device_del","arguments":{"id":"stg0"}}
-{"return": {}}
-qemu-system-x86_64: ../block/block-backend.c:2429: blk_get_aio_context:
-Assertion `ctx == blk-&gt;ctx' failed.
+> +     */
+> +    IMXSerialState *s = (IMXSerialState *) opaque;
+> +    uint8_t rxtl = s->ufcr & TL_MASK;
+> +    int rx_used = fifo32_num_used(&s->rx_fifo);
+> +
+> +    if (rx_used > 0 && rx_used < rxtl) {
 
-(gdb) bt
-#0  0x00007f32a668d83c in  () at /usr/lib/libc.so.6
-#1  0x00007f32a663d668 in raise () at /usr/lib/libc.so.6
-#2  0x00007f32a66254b8 in abort () at /usr/lib/libc.so.6
-#3  0x00007f32a66253dc in  () at /usr/lib/libc.so.6
-#4  0x00007f32a6635d26 in  () at /usr/lib/libc.so.6
-#5  0x0000556e6b4880a4 in blk_get_aio_context (blk=0x556e6e89ccf0) at
-../block/block-backend.c:2429
-#6  blk_get_aio_context (blk=0x556e6e89ccf0) at
-../block/block-backend.c:2417
-#7  0x0000556e6b112d87 in scsi_device_for_each_req_async_bh
-(opaque=0x556e6e2c6d10) at ../hw/scsi/scsi-bus.c:128
-#8  0x0000556e6b5d1966 in aio_bh_poll (ctx=ctx@entry=0x556e6d8aa290) at
-../util/async.c:218
-#9  0x0000556e6b5bb16a in aio_poll (ctx=0x556e6d8aa290,
-blocking=blocking@entry=true) at ../util/aio-posix.c:722
-#10 0x0000556e6b4564b6 in iothread_run (opaque=opaque@entry=0x556e6d89d920)
-at ../iothread.c:63
-#11 0x0000556e6b5bde58 in qemu_thread_start (args=0x556e6d8aa9b0) at
-../util/qemu-thread-posix.c:541
-#12 0x00007f32a668b9eb in  () at /usr/lib/libc.so.6
-#13 0x00007f32a670f7cc in  () at /usr/lib/libc.so.6
+Rather than checking rx_used against rxtl, can we do what the
+datasheet says and check against "is USR1.RRDY == 0" ?
 
-I don’t know anything about the problem yet, but as usual, I like
-speculation and discovering how wrong I was later on, so one thing I came
-across that’s funny about virtio-scsi is that requests can happen even while
-a disk is being attached or detached.  That is, Linux seems to probe all
-LUNs when a new virtio-scsi device is being attached, and it won’t stop just
-because a disk is being attached or removed.  So maybe that’s part of the
-problem, that we get a request while the BB is being detached, and
-temporarily in an inconsistent state (BDS context differs from BB context).
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-I don't know anything about the problem either, but since you already
-speculated about the cause, let me speculate about the solution:
-Can we hold the graph writer lock for the tran_commit() call in
-bdrv_try_change_aio_context()? And of course take the reader lock for
-blk_get_aio_context(), but that should be completely unproblematic.
+> +        timer_mod_ns(&s->ageing_timer,
+> +            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + AGE_DURATION_NS);
+> +    } else {
+> +        timer_del(&s->ageing_timer);
+> +    }
+> +}
+> +
+>  static void imx_serial_reset(IMXSerialState *s)
+>  {
 
-At the first sight I don't see a reason why this would break something,
-but I've learnt not to trust my first impression with the graph locking
-work...
+> @@ -345,6 +414,10 @@ static void imx_serial_realize(DeviceState *dev, Error **errp)
+>  {
+>      IMXSerialState *s = IMX_SERIAL(dev);
+>
+> +    fifo32_create(&s->rx_fifo, FIFO_SIZE);
+> +    timer_init_ns(&s->ageing_timer, QEMU_CLOCK_VIRTUAL,
+> +        imx_serial_rx_fifo_ageing_timer_int, s);
 
-Of course, I also didn't check if there are more things inside of the
-device emulation that need additional locking in this case, too. But
-even if so, blk_get_aio_context() should never see an inconsistent
-state.</pre>
-    </blockquote>
-    <span style="white-space: pre-wrap">
-</span><br>
-    Ah, sorry, saw your reply only now that I hit “send”.<br>
-    <br>
-    I forgot that we do have that big lock that I thought rather to
-    avoid :)  Sounds good and very reasonable to me.  Changing the
-    contexts in the graph sounds like a graph change operation, and
-    reading and comparing contexts in the graph sounds like reading the
-    graph.<br>
-    <br>
-    Hanna<br>
-  </body>
-</html>
+Generally for indent on function calls we make the second line
+line up with the first character after the '(' on the preceding line.
 
---------------5IwzkY0xB1bX1d7Xc0pikBAj--
+> +
+>      DPRINTF("char dev for uart: %p\n", qemu_chr_fe_get_driver(&s->chr));
+>
+>      qemu_chr_fe_set_handlers(&s->chr, imx_can_receive, imx_receive,
+> diff --git a/include/hw/char/imx_serial.h b/include/hw/char/imx_serial.h
+> index b823f94519..b5f714add1 100644
+> --- a/include/hw/char/imx_serial.h
+> +++ b/include/hw/char/imx_serial.h
+> @@ -21,10 +21,13 @@
+>  #include "hw/sysbus.h"
+>  #include "chardev/char-fe.h"
+>  #include "qom/object.h"
+> +#include "qemu/fifo32.h"
+>
+>  #define TYPE_IMX_SERIAL "imx.serial"
+>  OBJECT_DECLARE_SIMPLE_TYPE(IMXSerialState, IMX_SERIAL)
+>
+> +#define FIFO_SIZE       32
+> +
+>  #define URXD_CHARRDY    (1<<15)   /* character read is valid */
+>  #define URXD_ERR        (1<<14)   /* Character has error */
+>  #define URXD_FRMERR     (1<<12)   /* Character has frame error */
+> @@ -65,6 +68,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IMXSerialState, IMX_SERIAL)
+>  #define UCR1_TXMPTYEN   (1<<6)    /* Tx Empty Interrupt Enable */
+>  #define UCR1_UARTEN     (1<<0)    /* UART Enable */
+>
+> +#define UCR2_ATEN       BIT(3)    /* Ageing Timer Enable */
 
+Can you define this as (1<<3), for consistency with how all
+the other defines in this file are written, please?
+
+>  #define UCR2_TXEN       (1<<2)    /* Transmitter enable */
+>  #define UCR2_RXEN       (1<<1)    /* Receiver enable */
+>  #define UCR2_SRST       (1<<0)    /* Reset complete */
+
+thanks
+-- PMM
 
