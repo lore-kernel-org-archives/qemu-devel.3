@@ -4,75 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780E3C47DDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08126C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSJmU-00075B-W7; Tue, 23 Jan 2024 11:37:48 -0500
+	id 1rSJpV-00014i-6U; Tue, 23 Jan 2024 11:40:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSJmE-0006yN-GJ
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:37:32 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSJmB-0002a3-4m
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:37:28 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-559f92bf7b6so8158047a12.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:37:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706027845; x=1706632645; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=usY41eUzvkiHlTGvN4HbTI5QCF83cM1nTnbncS+87js=;
- b=T4xtt1V8EpiNWYebGIJ6zb/6gQtf2n2Le8QmDIX48y85r9XDb9f6f0AjjLwMXMjvWu
- IBOU8gkXFEJzAW+N/PBtquR40oBjSRCsAv7U7UqplM93imvjTifVoy0SL76UgntY+URd
- 2MgUTAxSjdoVwBkPQ30pionCiXZfNGByoeSCpq03U48eUre4HaIdvIz5/GFLZqUzO0Zk
- vRYn4iawQa33Gr2LHItIAHCffQf7ua6M7T/bEPu/wPaIKAr9IuME6iq074/Y2RMn2xyd
- UG5LwTbXC5w7HFs/dCySlzWirq1+NPJRaLSCK6lTb8wWyNuOhuGe7QduSWI5GEVFcHd5
- Bx+A==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSJpT-000149-Hz
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:40:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSJpP-0003Gb-Ok
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:40:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706028044;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KobH5MX03kEU0/Zo2QEsyU3yjbYsZ/IZn/OfGuHqZp0=;
+ b=OTWPjVOTd/ptrWOvzH2OMHnuaZkkn5DFa2gGhEtaehFSMtAgEj1aRA3v22PCPy0FDGJRG8
+ DdidqIDKfV2zTa9Ws2VgFrChxak1XWzdnjOclcU54PmcGEEuwtxKdCnppg3EP4P57/QqIq
+ EXp+GxlQg7qTNRzV0O7a49qfioAKrm4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-186-Ma41hbL8PoqGkADw0zOe1w-1; Tue, 23 Jan 2024 11:40:41 -0500
+X-MC-Unique: Ma41hbL8PoqGkADw0zOe1w-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-40e479a51e4so25145585e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:40:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706027845; x=1706632645;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=usY41eUzvkiHlTGvN4HbTI5QCF83cM1nTnbncS+87js=;
- b=MMDagJrvQOMxzS9vZ63r15rdZSrRVO9BzmI/zDFR3fb/qLGOI5xnS9FEfzc8SZzT5O
- BNCiQcHDXoNccaqWsJ5wc4JhSFE4YaOyTCYTx2WFV6dcSB9VAUz5kL/j8kUqe9QDP/jJ
- KuIlBcSZTl4x/ngQ6lFD0y3/SG15IHDgOEWY+KKlJZYdajCW29wqfjYUKa2DkIRIf15o
- nmZlzsB4OASRQENm/12TjZ2vAcQhTtwDmQQPxFWWXbmSkPaPCN6DRlnBaD0AcUMFHBmm
- zNSDMy7UXyg85Iru/X4PkzZJABw7IK0Mire2spbEgf6zEYBobwvlvT2xazdXiSoaDCsR
- vk/g==
-X-Gm-Message-State: AOJu0YzrPgwg1V4ekv3i/PvKNU5i8CxGSAy+WSEZsVdcketZwNJmU+OP
- JSuHNyjUuWKEk+T1rdZ9Cu2REICZOPh8LF70sI/SyUisCYs74/ODjMx0qq1e5z/upXs2IPqxTw3
- Dh4DoTexQCnW9HMm3w22FAlNkRZh0hCWB80+3kA==
-X-Google-Smtp-Source: AGHT+IHENleDekqy37Cb71Bw/jLXERZ0hSghGMZnJiaWaGfwKnjjfzgfnQu/Lx6C7Gz8P1p4TUbDMvX2WjE9hUZ7UxM=
-X-Received: by 2002:aa7:de0c:0:b0:55c:8d17:1bea with SMTP id
- h12-20020aa7de0c000000b0055c8d171beamr1140754edv.17.1706027845209; Tue, 23
- Jan 2024 08:37:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706028041; x=1706632841;
+ h=in-reply-to:from:references:cc:to:content-language:subject
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=KobH5MX03kEU0/Zo2QEsyU3yjbYsZ/IZn/OfGuHqZp0=;
+ b=h01z4rJXKNnY1l51M2Cc2D/7Z8QPMWOSPRv9YdIhNKYkId2rrJ/o/Ev218wnLFJ/MQ
+ RdIscptnsRqx7J1yCmY3hDoy/prutv7RTj/71vYdjTPtvHmeKAQ3K/4C4koak++NLLVb
+ jQSB39oy+V/HHJCp9Ev6NJxLjGgGvhsvXpVLLl/RTZRMOcpdt5TE2YPyhYrfStkVVy+w
+ abWQWch6FXGF3sEOPS63T26INNo+UURrXHgg2/xZyK5Wgc2fsf4vTvLONicLR9AUPCY5
+ oYHwN1sXdLPNk9wgnCyrX1D4sQcSmLcy6LMAfIDA6yCMJdATlcdV0vYTmMch2pRppNQe
+ oGuA==
+X-Gm-Message-State: AOJu0Yy0l41c173/NvuF0DV7/Y+TU23w1708xAExxSXFsN6fPuVnd0P4
+ suhBrTAkQfWPml637Vf4yFbc4mKwJpgn8hyZutGqY2wOZeCIlgc6tor7p4sfihjJJhUk7iqzoxN
+ GwC5VAMQrOfZpiP1kzHAeChAtXfaKlS0DeQByJywXnmib2bDW6QNR
+X-Received: by 2002:a05:600c:18a5:b0:40d:b191:10e with SMTP id
+ x37-20020a05600c18a500b0040db191010emr306739wmp.175.1706028040778; 
+ Tue, 23 Jan 2024 08:40:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLxFCi+uDdHeHYLVuYy2V+x/cP3f0tuh3hR4v8qmFRBJdQlaYGPs9Ypqhbk5nQKJxUzVgZJQ==
+X-Received: by 2002:a05:600c:18a5:b0:40d:b191:10e with SMTP id
+ x37-20020a05600c18a500b0040db191010emr306733wmp.175.1706028040345; 
+ Tue, 23 Jan 2024 08:40:40 -0800 (PST)
+Received: from ?IPV6:2003:cf:d73b:4143:2bf6:228a:1b7a:e384?
+ (p200300cfd73b41432bf6228a1b7ae384.dip0.t-ipconnect.de.
+ [2003:cf:d73b:4143:2bf6:228a:1b7a:e384])
+ by smtp.gmail.com with ESMTPSA id
+ bi13-20020a05600c3d8d00b0040e8800fcf3sm22935620wmb.5.2024.01.23.08.40.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jan 2024 08:40:39 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------ykasGuEektmD3i4bNf0Hgwsh"
+Message-ID: <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
+Date: Tue, 23 Jan 2024 17:40:39 +0100
 MIME-Version: 1.0
-References: <20240122063501.782041-1-bcain@quicinc.com>
-In-Reply-To: <20240122063501.782041-1-bcain@quicinc.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 23 Jan 2024 16:37:14 +0000
-Message-ID: <CAFEAcA8zUMvRjKZqUKNYTG7OKzRBi-yb60f3=JEY=Gep0KeYWA@mail.gmail.com>
-Subject: Re: [PULL 00/15] target-hexagon queue, hexagon docker
-To: Brian Cain <bcain@quicinc.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, richard.henderson@linaro.org, 
- philmd@linaro.org, quic_mathbern@quicinc.com, stefanha@redhat.com, ale@rev.ng, 
- anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
+ thread
+Content-Language: en-US
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: stefanha@redhat.com, qemu-devel@nongnu.org
+References: <20231221212339.164439-1-kwolf@redhat.com>
+ <20231221212339.164439-12-kwolf@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20231221212339.164439-12-kwolf@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,48 +104,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jan 2024 at 06:35, Brian Cain <bcain@quicinc.com> wrote:
->
-> The following changes since commit 3f2a357b95845ea0bf7463eff6661e43b97d1afc:
->
->   Merge tag 'hw-cpus-20240119' of https://github.com/philmd/qemu into staging (2024-01-19 11:39:38 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/quic/qemu tags/pull-hex-20240121
->
-> for you to fetch changes up to bbe4209c8b4300d722f47791f9151e1a69cb0135:
->
->   target/hexagon: reduce scope of def_regnum, remove dead assignment (2024-01-21 22:02:48 -0800)
->
-> ----------------------------------------------------------------
-> Coverity fix, cross toolchain update, switch to decodetree
->
-> ----------------------------------------------------------------
-> Brian Cain (2):
->       tests/docker: Hexagon toolchain update
->       target/hexagon: reduce scope of def_regnum, remove dead assignment
->
-> Taylor Simpson (13):
->       Hexagon (target/hexagon) Fix shadow variable when idef-parser is off
->       Hexagon (target/hexagon) Clean up handling of modifier registers
->       Hexagon (target/hexagon) Make generators object oriented - gen_tcg_funcs
->       Hexagon (target/hexagon) Make generators object oriented - gen_helper_protos
->       Hexagon (target/hexagon) Make generators object oriented - gen_helper_funcs
->       Hexagon (target/hexagon) Make generators object oriented - gen_idef_parser_funcs
->       Hexagon (target/hexagon) Make generators object oriented - gen_op_regs
->       Hexagon (target/hexagon) Make generators object oriented - gen_analyze_funcs
->       Hexagon (target/hexagon) Remove unused WRITES_PRED_REG attribute
->       Hexagon (target/hexagon) Remove dead functions from hex_common.py
->       Hexagon (target/hexagon) Use QEMU decodetree (32-bit instructions)
->       Hexagon (target/hexagon) Use QEMU decodetree (16-bit instructions)
->       Hexagon (target/hexagon) Remove old dectree.py
+This is a multi-part message in MIME format.
+--------------ykasGuEektmD3i4bNf0Hgwsh
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+On 21.12.23 22:23, Kevin Wolf wrote:
+> From: Stefan Hajnoczi<stefanha@redhat.com>
+>
+> Stop depending on the AioContext lock and instead access
+> SCSIDevice->requests from only one thread at a time:
+> - When the VM is running only the BlockBackend's AioContext may access
+>    the requests list.
+> - When the VM is stopped only the main loop may access the requests
+>    list.
+>
+> These constraints protect the requests list without the need for locking
+> in the I/O code path.
+>
+> Note that multiple IOThreads are not supported yet because the code
+> assumes all SCSIRequests are executed from a single AioContext. Leave
+> that as future work.
+>
+> Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
+> Reviewed-by: Eric Blake<eblake@redhat.com>
+> Message-ID:<20231204164259.1515217-2-stefanha@redhat.com>
+> Signed-off-by: Kevin Wolf<kwolf@redhat.com>
+> ---
+>   include/hw/scsi/scsi.h |   7 +-
+>   hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
+>   2 files changed, 131 insertions(+), 57 deletions(-)
 
-Applied, thanks.
+My reproducer for https://issues.redhat.com/browse/RHEL-3934 now breaks 
+more often because of this commit than because of the original bug, i.e. 
+when repeatedly hot-plugging and unplugging a virtio-scsi and a scsi-hd 
+device, this tends to happen when unplugging the scsi-hd:
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+{"execute":"device_del","arguments":{"id":"stg0"}}
+{"return": {}}
+qemu-system-x86_64: ../block/block-backend.c:2429: blk_get_aio_context: 
+Assertion `ctx == blk->ctx' failed.
 
--- PMM
+(gdb) bt
+#0  0x00007f32a668d83c in  () at /usr/lib/libc.so.6
+#1  0x00007f32a663d668 in raise () at /usr/lib/libc.so.6
+#2  0x00007f32a66254b8 in abort () at /usr/lib/libc.so.6
+#3  0x00007f32a66253dc in  () at /usr/lib/libc.so.6
+#4  0x00007f32a6635d26 in  () at /usr/lib/libc.so.6
+#5  0x0000556e6b4880a4 in blk_get_aio_context (blk=0x556e6e89ccf0) at 
+../block/block-backend.c:2429
+#6  blk_get_aio_context (blk=0x556e6e89ccf0) at 
+../block/block-backend.c:2417
+#7  0x0000556e6b112d87 in scsi_device_for_each_req_async_bh 
+(opaque=0x556e6e2c6d10) at ../hw/scsi/scsi-bus.c:128
+#8  0x0000556e6b5d1966 in aio_bh_poll (ctx=ctx@entry=0x556e6d8aa290) at 
+../util/async.c:218
+#9  0x0000556e6b5bb16a in aio_poll (ctx=0x556e6d8aa290, 
+blocking=blocking@entry=true) at ../util/aio-posix.c:722
+#10 0x0000556e6b4564b6 in iothread_run 
+(opaque=opaque@entry=0x556e6d89d920) at ../iothread.c:63
+#11 0x0000556e6b5bde58 in qemu_thread_start (args=0x556e6d8aa9b0) at 
+../util/qemu-thread-posix.c:541
+#12 0x00007f32a668b9eb in  () at /usr/lib/libc.so.6
+#13 0x00007f32a670f7cc in  () at /usr/lib/libc.so.6
+
+I don’t know anything about the problem yet, but as usual, I like 
+speculation and discovering how wrong I was later on, so one thing I 
+came across that’s funny about virtio-scsi is that requests can happen 
+even while a disk is being attached or detached.  That is, Linux seems 
+to probe all LUNs when a new virtio-scsi device is being attached, and 
+it won’t stop just because a disk is being attached or removed.  So 
+maybe that’s part of the problem, that we get a request while the BB is 
+being detached, and temporarily in an inconsistent state (BDS context 
+differs from BB context).
+
+I’ll look more into it.
+
+Hanna
+--------------ykasGuEektmD3i4bNf0Hgwsh
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 21.12.23 22:23, Kevin Wolf wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20231221212339.164439-12-kwolf@redhat.com">
+      <pre class="moz-quote-pre" wrap="">From: Stefan Hajnoczi <a class="moz-txt-link-rfc2396E" href="mailto:stefanha@redhat.com">&lt;stefanha@redhat.com&gt;</a>
+
+Stop depending on the AioContext lock and instead access
+SCSIDevice-&gt;requests from only one thread at a time:
+- When the VM is running only the BlockBackend's AioContext may access
+  the requests list.
+- When the VM is stopped only the main loop may access the requests
+  list.
+
+These constraints protect the requests list without the need for locking
+in the I/O code path.
+
+Note that multiple IOThreads are not supported yet because the code
+assumes all SCSIRequests are executed from a single AioContext. Leave
+that as future work.
+
+Signed-off-by: Stefan Hajnoczi <a class="moz-txt-link-rfc2396E" href="mailto:stefanha@redhat.com">&lt;stefanha@redhat.com&gt;</a>
+Reviewed-by: Eric Blake <a class="moz-txt-link-rfc2396E" href="mailto:eblake@redhat.com">&lt;eblake@redhat.com&gt;</a>
+Message-ID: <a class="moz-txt-link-rfc2396E" href="mailto:20231204164259.1515217-2-stefanha@redhat.com">&lt;20231204164259.1515217-2-stefanha@redhat.com&gt;</a>
+Signed-off-by: Kevin Wolf <a class="moz-txt-link-rfc2396E" href="mailto:kwolf@redhat.com">&lt;kwolf@redhat.com&gt;</a>
+---
+ include/hw/scsi/scsi.h |   7 +-
+ hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
+ 2 files changed, 131 insertions(+), 57 deletions(-)
+</pre>
+    </blockquote>
+    <br>
+    My reproducer for <a class="moz-txt-link-freetext" href="https://issues.redhat.com/browse/RHEL-3934">https://issues.redhat.com/browse/RHEL-3934</a> now
+    breaks more often because of this commit than because of the
+    original bug, i.e. when repeatedly hot-plugging and unplugging a
+    virtio-scsi and a scsi-hd device, this tends to happen when
+    unplugging the scsi-hd:<br>
+    <br>
+    {"execute":"device_del","arguments":{"id":"stg0"}}<br>
+    {"return": {}}<br>
+    qemu-system-x86_64: ../block/block-backend.c:2429:
+    blk_get_aio_context: Assertion `ctx == blk-&gt;ctx' failed.<br>
+    <br>
+    (gdb) bt<br>
+    #0  0x00007f32a668d83c in  () at /usr/lib/libc.so.6<br>
+    #1  0x00007f32a663d668 in raise () at /usr/lib/libc.so.6<br>
+    #2  0x00007f32a66254b8 in abort () at /usr/lib/libc.so.6<br>
+    #3  0x00007f32a66253dc in  () at /usr/lib/libc.so.6<br>
+    #4  0x00007f32a6635d26 in  () at /usr/lib/libc.so.6<br>
+    #5  0x0000556e6b4880a4 in blk_get_aio_context (blk=0x556e6e89ccf0)
+    at ../block/block-backend.c:2429<br>
+    #6  blk_get_aio_context (blk=0x556e6e89ccf0) at
+    ../block/block-backend.c:2417<br>
+    #7  0x0000556e6b112d87 in scsi_device_for_each_req_async_bh
+    (opaque=0x556e6e2c6d10) at ../hw/scsi/scsi-bus.c:128<br>
+    #8  0x0000556e6b5d1966 in aio_bh_poll (ctx=ctx@entry=0x556e6d8aa290)
+    at ../util/async.c:218<br>
+    #9  0x0000556e6b5bb16a in aio_poll (ctx=0x556e6d8aa290,
+    blocking=blocking@entry=true) at ../util/aio-posix.c:722<br>
+    #10 0x0000556e6b4564b6 in iothread_run
+    (opaque=opaque@entry=0x556e6d89d920) at ../iothread.c:63<br>
+    #11 0x0000556e6b5bde58 in qemu_thread_start (args=0x556e6d8aa9b0) at
+    ../util/qemu-thread-posix.c:541<br>
+    #12 0x00007f32a668b9eb in  () at /usr/lib/libc.so.6<br>
+    #13 0x00007f32a670f7cc in  () at /usr/lib/libc.so.6<br>
+    <br>
+    I don’t know anything about the problem yet, but as usual, I like
+    speculation and discovering how wrong I was later on, so one thing I
+    came across that’s funny about virtio-scsi is that requests can
+    happen even while a disk is being attached or detached.  That is,
+    Linux seems to probe all LUNs when a new virtio-scsi device is being
+    attached, and it won’t stop just because a disk is being attached or
+    removed.  So maybe that’s part of the problem, that we get a request
+    while the BB is being detached, and temporarily in an inconsistent
+    state (BDS context differs from BB context).<br>
+    <br>
+    I’ll look more into it.<br>
+    <br>
+    Hanna<br>
+  </body>
+</html>
+
+--------------ykasGuEektmD3i4bNf0Hgwsh--
+
 
