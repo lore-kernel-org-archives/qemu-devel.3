@@ -4,89 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7838AC47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 18:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7EEC47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 19:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSLzD-0004KZ-GV; Tue, 23 Jan 2024 13:59:04 -0500
+	id 1rSM7P-00077H-T7; Tue, 23 Jan 2024 14:07:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rSLzA-0004Jv-If
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 13:59:00 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rSM7H-00076k-9d
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 14:07:24 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rSLz8-0005Nf-Da
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 13:59:00 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40eb033c1b0so24323305e9.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 10:58:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706036336; x=1706641136; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=YhpwPIwMBlvL+OsTFRSnSM+bvZBcd/phHKPqJLfjKhc=;
- b=OlZVhsbThrvGftqLReSp9RCs3TY19jr4kTOzOupFtQb6r4rM1Sl5XAYtmnyzIcQMqo
- g4NIowvtzr1CkLkijK96le0zxyCL2hbx7WCZ6EvjJY6EmOXeymSyyGqBcFXktRbwKLD3
- 1TQbjSl5r2XBFvs8e50Of9DSb2Ukg8vRJTDCRQOw8FYfUPVEk8hV6xbty0m/iL9y6znk
- vdB9+Yi2JoA+RB6GJ14Rq4/iY9+vrQIQN3LTrA6vtmZT64cC5vP/UMdArENFPKOir6/c
- tvegxcbVaaWyPBdU5g6gmB25JPVC6z0V+rUK1OwEuZxPBjbGwMWiap1c18gATPvJr2Bd
- YxOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706036336; x=1706641136;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YhpwPIwMBlvL+OsTFRSnSM+bvZBcd/phHKPqJLfjKhc=;
- b=HfO9QahbyDOFKI+Ph3inhQsWpL8K42JgIpsmhyTNR+/b377IIM3/9ggi6FI4FT12XV
- pLqYNjrjOCkiX7pL5/24CEso1dB7Y2qARVVJnmdPAfk1is/K0sGGRCFus7MVt+givcfD
- JtjXgJ527Pb3ADEddvOIHtfs8B8nJBct4JN/xF2WQwfRMF1M2DE4n7yzxWJ6lPSdvz9M
- Oq5TUJns6V8BD935XXnBJl61jWKt+7J6NRah1ajM0AX6nSAqwYIEyByZt0bZ8QrKsSfa
- rjSldhXArHfL6inRbkxBpOGTi/1FTeRPo2u+WADpugBhV5FKQ1xZ3CC2etBNOBmZ1by6
- 3PFg==
-X-Gm-Message-State: AOJu0YwAeHyAjCpHbKTK3qxjVTQKGcPNukCn0s5hzi0c25/3BaciMxDW
- yBEhA1IIzwwi/A3TafDIwNHcaVOgg/IyB5MqPFoTVtVjBKO6FaN1S6vvKbE/uK8=
-X-Google-Smtp-Source: AGHT+IH7eghgmAdzVN2+5+XImR18tQVseP+Gn83qv2kqsEP+H9kqhzfmEnNFZEWcVWVUgi+RHKd3/g==
-X-Received: by 2002:a05:600c:5029:b0:40d:f9c8:887f with SMTP id
- n41-20020a05600c502900b0040df9c8887fmr430653wmr.51.1706036336582; 
- Tue, 23 Jan 2024 10:58:56 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- y3-20020adfee03000000b003368c8d120fsm17027966wrn.7.2024.01.23.10.58.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jan 2024 10:58:56 -0800 (PST)
-Date: Tue, 23 Jan 2024 19:58:55 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 3/4] target/riscv: SMBIOS support for RISC-V virt
- machine
-Message-ID: <20240123-09e26e57d75c53e4872d158f@orel>
-References: <20240123184229.10415-1-heinrich.schuchardt@canonical.com>
- <20240123184229.10415-4-heinrich.schuchardt@canonical.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rSM7F-0007A0-L4
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 14:07:23 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id BF54422291;
+ Tue, 23 Jan 2024 19:07:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706036836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=K4AD7aOoTVmyy3oDuFcAZRfpuZ/XBCXs8IHQYYlFaes=;
+ b=Dhsp2VOnvRZJUMXTckB99VFDx2qN2O+G8WZ+aP+gsIIkRED8/VgBrmuovG5DnsOk5zzEAu
+ xg/j1ROdA3Ldb0ZznCPfPPxT7AuKyYqOgJ+z6LbHOHhYwBBhjQd302Jv1ffGCe5ZM1V7I8
+ uEL+gkvZZmdVhzWPXvfyFAZ5g8yDebM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706036836;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=K4AD7aOoTVmyy3oDuFcAZRfpuZ/XBCXs8IHQYYlFaes=;
+ b=M69MrDyvJGz2ef8z2vkJdjbvxiQu7b0SoOhDCDW1qUin0qoI8rA9pZap7OMBFdYfLhJtFj
+ TPHix2A5gVDRkaCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706036835; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=K4AD7aOoTVmyy3oDuFcAZRfpuZ/XBCXs8IHQYYlFaes=;
+ b=pOXfnmbKmHKdoIVHocPEo2vmZlLkSYyO/kGfEYJqWBtULBQJ9ZGtHr4adLyZDfS3XVDZzx
+ Dh/gGtSOPiAozryGJyKJf85crBGgShYZvEjGURevL8pJJlP/2EY5x69fskfxxz6yNeF9Yp
+ c1Ge/cAZFvd4Q5TT8D6C4zLeuPSJsH8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706036835;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=K4AD7aOoTVmyy3oDuFcAZRfpuZ/XBCXs8IHQYYlFaes=;
+ b=NtMdp6bQQUSoEOPQYVKhDdfKGWytEQd9tHlhdf2FcHts7Qc2+tiLYA/bgo1i98ZOc5QGdC
+ DjFL8Wluzr+8wnDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4860A13786;
+ Tue, 23 Jan 2024 19:07:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1fJWBGMOsGWSOwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 23 Jan 2024 19:07:15 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Juan
+ Quintela <quintela@redhat.com>, Leonardo Bras <leobras@redhat.com>,
+ Claudio Fontana <cfontana@suse.de>
+Subject: Re: [RFC PATCH v3 07/30] migration: Add fixed-ram URI compatibility
+ check
+In-Reply-To: <ZaT0h7wnXDc-5K4-@x1n>
+References: <20231127202612.23012-1-farosas@suse.de>
+ <20231127202612.23012-8-farosas@suse.de> <ZaT0h7wnXDc-5K4-@x1n>
+Date: Tue, 23 Jan 2024 16:07:12 -0300
+Message-ID: <87y1cfeun3.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240123184229.10415-4-heinrich.schuchardt@canonical.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pOXfnmbK;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NtMdp6bQ
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-6.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim]; BAYES_HAM(-3.00)[100.00%];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+X-Rspamd-Queue-Id: BF54422291
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,31 +132,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 23, 2024 at 07:42:28PM +0100, Heinrich Schuchardt wrote:
-> Generate SMBIOS tables for the RISC-V mach-virt.
-> Add CONFIG_SMBIOS=y to the RISC-V default config.
-> Set the default processor family in the type 4 table.
-> 
-> The implementation is based on the corresponding ARM and Loongson code.
-> 
-> With the patch the following firmware tables are provided:
-> 
->     etc/smbios/smbios-anchor
->     etc/smbios/smbios-tables
-> 
-> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-> ---
-> v4:
-> 	remove a superfluous #ifdef
-> v3:
-> 	use misa_mxl_max to determine bitness
-> v2:
-> 	set processor family
-> ---
->  hw/riscv/Kconfig |  1 +
->  hw/riscv/virt.c  | 42 ++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 43 insertions(+)
+Peter Xu <peterx@redhat.com> writes:
+
+> On Mon, Nov 27, 2023 at 05:25:49PM -0300, Fabiano Rosas wrote:
+>> The fixed-ram migration format needs a channel that supports seeking
+>> to be able to write each page to an arbitrary offset in the migration
+>> stream.
+>>=20
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> ---
+>> - avoided overwriting errp in compatibility check
+>> ---
+>>  migration/migration.c | 16 ++++++++++++++++
+>>  1 file changed, 16 insertions(+)
+>>=20
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 28a34c9068..897ed1db67 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -135,10 +135,26 @@ static bool transport_supports_multi_channels(Sock=
+etAddress *saddr)
+>>             saddr->type =3D=3D SOCKET_ADDRESS_TYPE_VSOCK;
+>>  }
+>>=20=20
+>> +static bool migration_needs_seekable_channel(void)
+>> +{
+>> +    return migrate_fixed_ram();
+>> +}
+>> +
+>> +static bool transport_supports_seeking(MigrationAddress *addr)
+>> +{
+>> +    return addr->transport =3D=3D MIGRATION_ADDRESS_TYPE_FILE;
+>> +}
+>
+> What about TYPE_FD?  Is it going to be supported later?
 >
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+nSorry, I missed this one.
+
+Yes, and thanks for asking because I just remembered I have code for
+this lost in a git stash somewhere. I'll include it in v4.
+
+>> +
+>>  static bool
+>>  migration_channels_and_transport_compatible(MigrationAddress *addr,
+>>                                              Error **errp)
+>>  {
+>> +    if (migration_needs_seekable_channel() &&
+>> +        !transport_supports_seeking(addr)) {
+>> +        error_setg(errp, "Migration requires seekable transport (e.g. f=
+ile)");
+>> +        return false;
+>> +    }
+>> +
+>>      if (migration_needs_multiple_sockets() &&
+>>          (addr->transport =3D=3D MIGRATION_ADDRESS_TYPE_SOCKET) &&
+>>          !transport_supports_multi_channels(&addr->u.socket)) {
+>> --=20
+>> 2.35.3
+>>=20
 
