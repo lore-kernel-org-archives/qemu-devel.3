@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A67C47DDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 22:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FEAC47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 22:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSPZy-00075Z-Hn; Tue, 23 Jan 2024 17:49:14 -0500
+	id 1rSPbr-0002bm-HG; Tue, 23 Jan 2024 17:51:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSPZw-00073h-93
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:49:13 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSPbq-0002bY-2g
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:51:10 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSPZs-0004NA-1d
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:49:12 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-40e800461baso57950015e9.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 14:49:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSPbi-0004qq-VB
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:51:09 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-55a90b2b554so3626352a12.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 14:51:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706050146; x=1706654946; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qbNjV/GRSEnvliPT0ZyleNqMAmiv0RWp/+WjhZ6DISw=;
- b=Wpwg7gCs1cH3Z7ff+0S09PwC9olTubUQFd81UOBYj3NRXI8hH0/bbZzuYXANXOEGZu
- QRCRYaVRZ8Mm0+ZFU6oCd84n70XgJ2QG5RhqPbamDtJ3daTX60D+giO7o+1mOyqHgVLz
- VBDOC1WfSWeS03p4154uHU8wYGH9QrWAG3nouyAe159xMvQo7pRMXo+2kXt3aRNbOavJ
- 9EgSbbFv+MxuA6PAtKWqnV+SjXqMMGHFA8PPB7AXqgjUXkF0hZTOUpBPVcqnDJjs3U5w
- cvQgKvZkg68ZSQ21lEMpW46GpxDnn5dzaZisV310fXp5nwA2oQleKNa8l9QB03Lm/tW3
- A9PA==
+ d=linaro.org; s=google; t=1706050261; x=1706655061; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=s1GQ6gQkNHmdyIztcc/OZaeE+FdOD5+FKIj80DpHp+c=;
+ b=k4v8MumuC2Id8LuRUEcinJiVAnCioh6c8ocmvWKB2zMHhyWuYmuCIWFyjJJxT4gPVv
+ rs8ITVKu+R1cPGtcZppUSdS0pmXkcbGIrt7Z9hVYHcJkfuXD+b1P/SJrwTy/QzIRfw6t
+ 6W8U852U+HYlklcNSRvLUcqrthh2MrvYqJUZ1CuUB1Bow1bDEe76liGr+0S5PXDAb8rX
+ Z5vcO2n5nfQ9CfpXrV+onmMNUuAar8Qk8Pl2cKuB1ZjxRVxzV3C4FLJCPxqT48+F/ekW
+ w1kvjxumncU4Hlv5dulm1f8cUAKxvGn8JdunLocl8mZ31Dvt3PsoC03WNSKQ9IN0C6vs
+ nPKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706050146; x=1706654946;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qbNjV/GRSEnvliPT0ZyleNqMAmiv0RWp/+WjhZ6DISw=;
- b=rGhyiJts+SYEbgLiVkyYQ2hoY27afTXGaO/sd41Pb7O0vOYrZgBr21HoRMyhwPzpeV
- /AyYGsDZ+On4UgZA6RV9+fJHZcMMwV0yqIsk/wr5HPNhA5NtFstUH9+EPfo/qP8hItf1
- hk0rZbz3iTv2Bm/WEF+h4ZybfnjteN65U6Wk9+mOFAHSQRVMwMMUpLej9TF2hz6ONJ6q
- zPIhAGL90BjWGoRSEAaUrOfKa8MdXIEBB4JGttRKQ8ZdzGBsxOWIt/nAvPDtavk+qzxr
- BPaVmD9YE30dDRAN+FN1hCxhVfXl6/ZJ0b6HUmxUf+HCU/VO1fhiqtsW1OqBnmSsDe81
- fGyA==
-X-Gm-Message-State: AOJu0YwJl6uFrlqn1q0yoUtr8thFo3DkN++CZqaIpWELeFPzDDHvWmT2
- JjPCtXeEf1UKT4+EY1RE+uCGnPip0t9h8TWYO9dO2ol0LBltP3AUylDr2MkR7T2I2zDAFfP2F3r
- P
-X-Google-Smtp-Source: AGHT+IHhENtLntBFmrZ6uyzvqIhXoKM15eqZVwkk2ZXb5h7bYxfRnH6B2QaaWWSMze6xfYuzQuAXzQ==
-X-Received: by 2002:a05:600c:46c5:b0:40e:617e:412f with SMTP id
- q5-20020a05600c46c500b0040e617e412fmr491321wmo.150.1706050146214; 
- Tue, 23 Jan 2024 14:49:06 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.194.78])
+ d=1e100.net; s=20230601; t=1706050261; x=1706655061;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s1GQ6gQkNHmdyIztcc/OZaeE+FdOD5+FKIj80DpHp+c=;
+ b=I1CwzmYTgPG6sSzWVbf56ez5lYFdK54oNOg47Y+sWfA23I02QpBPIpMR+dDnOnfB5m
+ nbxYSoNP5JK+MUU/q/dXxmzafmT5m9Uws/2fzDQSov6scoJVuv4hooMDLdxrCPVd/pWP
+ QP6AMAKd4AUpa//eHdmnya8wqml9LDDQjPwAdvV4RVetsGqshp3ESCCYMDfRkUUKtyqY
+ kYgiAK6i5X9gbuVTsHRZ/T5XxZHqnNwZyfpv/VIDuTfId2JeUwObnaNMNHqIJwNLZptv
+ vBO+hPUa4iRWBxVgrMkqeOGFKYcZKpzxf2Pkf+ogwk1n6djnfDNhyKiQYtawojWz34DA
+ zE3A==
+X-Gm-Message-State: AOJu0YzPLgRh3cgaHxNzZ29X++9vgM7Dxt0CqhwlCiRu4UyOJsER3FHs
+ XTrJFz9gG75qPkKuA5BBM8FpjPei3K7GyinEU/aAwtqNG43eSD6CLoo7M+wmEANjn2MtGNvsDwF
+ X
+X-Google-Smtp-Source: AGHT+IHGuHvs2ZAcJHS4IHmAWSyTGqWRBSyXRs4atMJCkmR3qtpaUlTP2sHPoQaRFJuZNoLVmgEMow==
+X-Received: by 2002:a17:906:5387:b0:a29:3c2b:c911 with SMTP id
+ g7-20020a170906538700b00a293c2bc911mr288361ejo.63.1706050261030; 
+ Tue, 23 Jan 2024 14:51:01 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.194.78])
  by smtp.gmail.com with ESMTPSA id
- h5-20020a05600c314500b0040e5e21cd7bsm43236968wmo.11.2024.01.23.14.49.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jan 2024 14:49:05 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 4/5] hw/arm/aspeed: Introduce aspeed_soc_cpu_type() helper
-Date: Tue, 23 Jan 2024 23:48:41 +0100
-Message-ID: <20240123224842.18485-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240123224842.18485-1-philmd@linaro.org>
-References: <20240123224842.18485-1-philmd@linaro.org>
+ o17-20020a17090608d100b00a27c463fbdesm14786608eje.211.2024.01.23.14.51.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jan 2024 14:51:00 -0800 (PST)
+Message-ID: <f45b4746-99f7-4cd5-a806-f9a9aa269d08@linaro.org>
+Date: Tue, 23 Jan 2024 23:50:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/5] hw/arm/aspeed: Check for CPU types in
+ machine_run_board_init()
+Content-Language: en-US
+To: qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20240123224842.18485-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240123224842.18485-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,89 +97,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to alter AspeedSoCClass::cpu_type in the next
-commit, introduce the aspeed_soc_cpu_type() helper to
-retrieve the per-SoC CPU type from AspeedSoCClass.
++Gavin
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/arm/aspeed_soc.h | 1 +
- hw/arm/aspeed_ast10x0.c     | 2 +-
- hw/arm/aspeed_ast2400.c     | 3 ++-
- hw/arm/aspeed_ast2600.c     | 3 ++-
- hw/arm/aspeed_soc_common.c  | 5 +++++
- 5 files changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index cb832bc1ee..a060a59918 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -143,6 +143,7 @@ struct AspeedSoCClass {
-     qemu_irq (*get_irq)(AspeedSoCState *s, int dev);
- };
- 
-+const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
- 
- enum {
-     ASPEED_DEV_SPI_BOOT,
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index 8becb146a8..dca601a3f9 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -211,7 +211,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     /* AST1030 CPU Core */
-     armv7m = DEVICE(&a->armv7m);
-     qdev_prop_set_uint32(armv7m, "num-irq", 256);
--    qdev_prop_set_string(armv7m, "cpu-type", sc->cpu_type);
-+    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
-     qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-     object_property_set_link(OBJECT(&a->armv7m), "memory",
-                              OBJECT(s->memory), &error_abort);
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index ad76035528..3baf95916d 100644
---- a/hw/arm/aspeed_ast2400.c
-+++ b/hw/arm/aspeed_ast2400.c
-@@ -156,7 +156,8 @@ static void aspeed_ast2400_soc_init(Object *obj)
-     }
- 
-     for (i = 0; i < sc->num_cpus; i++) {
--        object_initialize_child(obj, "cpu[*]", &a->cpu[i], sc->cpu_type);
-+        object_initialize_child(obj, "cpu[*]", &a->cpu[i],
-+                                aspeed_soc_cpu_type(sc));
-     }
- 
-     snprintf(typename, sizeof(typename), "aspeed.scu-%s", socname);
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 386a88d4e0..b264433cf0 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -158,7 +158,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
-     }
- 
-     for (i = 0; i < sc->num_cpus; i++) {
--        object_initialize_child(obj, "cpu[*]", &a->cpu[i], sc->cpu_type);
-+        object_initialize_child(obj, "cpu[*]", &a->cpu[i],
-+                                aspeed_soc_cpu_type(sc));
-     }
- 
-     snprintf(typename, sizeof(typename), "aspeed.scu-%s", socname);
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index 828f61093b..36ca189ce9 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -18,6 +18,11 @@
- #include "hw/char/serial.h"
- 
- 
-+const char *aspeed_soc_cpu_type(AspeedSoCClass *sc)
-+{
-+    return sc->cpu_type;
-+}
-+
- qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev)
- {
-     return ASPEED_SOC_GET_CLASS(s)->get_irq(s, dev);
--- 
-2.41.0
+On 23/1/24 23:48, Philippe Mathieu-Daudé wrote:
+> Since v1:
+> - Follow suggestions from Cédric from [*]
+> 
+> [*] https://lore.kernel.org/qemu-devel/e13c655b-7904-4e47-a673-4efd13c26b3d@kaod.org/
+> 
+> Based-on: <20240123222508.13826-1-philmd@linaro.org>
+> 
+> Philippe Mathieu-Daudé (5):
+>    hw/arm/aspeed: Remove dead code
+>    hw/arm/aspeed: Set default CPU count using aspeed_soc_num_cpus()
+>    hw/arm/aspeed: Init CPU defaults in a common helper
+>    hw/arm/aspeed: Introduce aspeed_soc_cpu_type() helper
+>    hw/arm/aspeed: Check for CPU types in machine_run_board_init()
+> 
+>   include/hw/arm/aspeed_soc.h |  4 ++-
+>   hw/arm/aspeed.c             | 70 +++++++++++++++----------------------
+>   hw/arm/aspeed_ast10x0.c     |  8 +++--
+>   hw/arm/aspeed_ast2400.c     | 15 ++++++--
+>   hw/arm/aspeed_ast2600.c     |  9 +++--
+>   hw/arm/aspeed_soc_common.c  |  8 +++++
+>   6 files changed, 65 insertions(+), 49 deletions(-)
+> 
 
 
