@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E9B2C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 23:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22274C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 23:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSQ6h-0001Sg-Tr; Tue, 23 Jan 2024 18:23:03 -0500
+	id 1rSQCs-0002cK-QN; Tue, 23 Jan 2024 18:29:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSQ6f-0001SS-Ti
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:23:02 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1rSQCr-0002c6-3J
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:29:25 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSQ6d-0001EH-Ia
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:23:01 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1d72f71f222so18313785ad.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 15:22:58 -0800 (PST)
+ id 1rSQCp-00023D-Jq
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:29:24 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1d5f252411aso27877385ad.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 15:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706052178; x=1706656978; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706052558; x=1706657358; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6+uvILft0/f0YO6LyYjgnK5d0Jdms3RFOfsFnucysco=;
- b=JsXYjOlgG67RFgaAEq9Bh+1yXRrivLivfuj7iNGJ7mSSH+ZvtSMutw0dvZfrRQlASK
- 99liNWcbTMAQRDh+FQvWl7cHcb5bG8CXaMv74FGctKdrxTqIoWHTqnPY/KXCpi/jERls
- 9geCcUoKW13oCWBb6eQ6q/xFPACHKiSivy8SuXTKWXGGWBPX6JpDa+JlSeWkRUaS1etu
- FwasRDs5ncCGHDQg0YU+Qe5bzEMxc8zprFdmAY0gELnfrD6Qa294NnTJOVB3fm6bw8ZM
- QLZMoJGN398ah6Yfqs/NmPpctuX8o90EpeEnNgUUM2cg2GzzNcLB6e0bMjypNNQNv/yx
- toLg==
+ bh=qf2U+J352BZMJ4duf5NgSdY273q3LP1n6EiYu41+lzU=;
+ b=dTeL09VVeb4WKkpASy4P4aWdsQxrUjZBOMr01ctTNA0F40J2FDF5+QfX2b6ISCiJUN
+ S78DxA7r9B8Oyserv4a7ON4vcVFimBhOJOS43QO8y/G41ApggNwGt7Q3Px+3S7qNVBiA
+ 6F01WC5b3GsRnvtkUTduE3Ry3eiKQf8FbwMoCTH1vsKlEKnTLRfDdjObcXffaxXvO998
+ MchZsl7coRpCctC4odLN2snNGZrio46rgu0/YFHexatsvI9XJs5+h1U18SP0Wa3pgfoY
+ nJDj+Hm3uVBln8q4qkaAGzpBkhhtq0UqJdebJWELWivGPp18PNLIqwPB168S02tVuzeB
+ mf+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706052178; x=1706656978;
+ d=1e100.net; s=20230601; t=1706052558; x=1706657358;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6+uvILft0/f0YO6LyYjgnK5d0Jdms3RFOfsFnucysco=;
- b=NctOBVUmbyjk5QfrOsdefS2Upo58NN1rqwKjRN6yB5N45xysHLrXG1IB4hITKKNLk/
- nCj7FlKC0mudISSQsxQ8G+yXzccX3paOnXsXdfdQcyT0ARFOsuqqELa093ECxoCzy9Cj
- 02FTIHkbJJTkfD6vP28NGyX19PcVMOCPd4Vl0kBXY47nIsVtFSB6gog65WX4Q1mQa/Ff
- Oeu+b1Z83lZBNu+QLwaL7J4umO64ZpJJJhNuYGerYdXLk46QKMlXaPXzmZ3qyhkytZr/
- NSlBQriqUH81V7JQM/a5bA9cT8uJd7B5PH6T46UB5SUa5Yog9Fos7jtQQH8kzbQCUYly
- 5CsQ==
-X-Gm-Message-State: AOJu0YzbfWNoiXkVOxiC4mMSZ3oTDlTwXveDhMchiUdZqv/kWhHsRtS1
- dgDvpdTroWnItkSHEVGPYBWzR1CGH6q8XMJLEe8+SIIaHVbOAu/weU+q3MOd+4LKkREaAV23LNX
- z
-X-Google-Smtp-Source: AGHT+IHU7R/DMboUIqfcwfdQ+04Pz8cyfG3FZBcPsqhbnvMPYvIF3ihTi+UaOpp8vFGZsLfLHrX0DA==
-X-Received: by 2002:a17:902:70cc:b0:1d5:5984:df52 with SMTP id
- l12-20020a17090270cc00b001d55984df52mr3934986plt.60.1706052177748; 
- Tue, 23 Jan 2024 15:22:57 -0800 (PST)
+ bh=qf2U+J352BZMJ4duf5NgSdY273q3LP1n6EiYu41+lzU=;
+ b=HehJCG9rQx/3mIIIiF0WY2ryWeSqWsnEHWrIGHISB/zdvATk4sB+tLrb78GRbNKJVu
+ k/YGwgK9t3vwxM9gkjqWRoQ3tac2+qRfwavVOkqcgd1zTt9K4NtX7MH1eq2yZYvAPKCd
+ rxsWsRUm6zxJsydpPEfi+ZesGK/XnmWuSb6sZ8v7noYbgjbzFQ7NttY/tNw95sq7/yXH
+ utCv2rwDyrztThv7JL/lkt3Zguy0bE85Be/W+OL3GXsa49FjOCduWkA2nKvQTxpWsyeQ
+ xS4DCQ51a7042PqF+VPpXTrObQw8q2VzWWJgqhXOdLgFQYkMFEVBB7yz2x07pzTUz7qY
+ tPcQ==
+X-Gm-Message-State: AOJu0Ywmdmi2MN8fMW8KsNcQYiChILN6yKApy5NMJalj0ABgtn811vpY
+ Kz0B7j5acm8jrFz6u8HRCsZnZO3W98WzAxM/YdBUplOdLA8r1OLWSVfPxa5sHi2DCV0wkhwAVDz
+ m
+X-Google-Smtp-Source: AGHT+IGELFoodVCa1KHezr/rCK7bWVH1/wQIruS70QbIAsGq5gjXV8lgyqIkgpP3CpXnc7qKicdqlA==
+X-Received: by 2002:a17:902:f685:b0:1d5:7316:c899 with SMTP id
+ l5-20020a170902f68500b001d57316c899mr4338880plg.14.1706052558215; 
+ Tue, 23 Jan 2024 15:29:18 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
  (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
  by smtp.gmail.com with ESMTPSA id
- s2-20020a170902b18200b001d72ba7cac3sm6023730plr.213.2024.01.23.15.22.55
+ jb13-20020a170903258d00b001d7271916dfsm6738997plb.25.2024.01.23.15.29.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 15:22:57 -0800 (PST)
-Message-ID: <603c1aca-44f8-4ec0-a3dd-7b08b2dba2b3@linaro.org>
-Date: Wed, 24 Jan 2024 09:22:52 +1000
+ Tue, 23 Jan 2024 15:29:17 -0800 (PST)
+Message-ID: <7b0f7699-14b3-4923-868e-d59b53947971@linaro.org>
+Date: Wed, 24 Jan 2024 09:29:13 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 09/34] exec: [VADDR] Use vaddr in DisasContextBase for
- virtual addresses
+Subject: Re: [RFC PATCH 10/34] exec: [VADDR] typedef abi_ptr to vaddr
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, philmd@linaro.org
 References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-10-anjo@rev.ng>
+ <20240119144024.14289-11-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-10-anjo@rev.ng>
+In-Reply-To: <20240119144024.14289-11-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,20 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/24 00:39, Anton Johansson wrote:
-> Updates target/ QEMU_LOG macros to use VADDR_PRIx for printing updated
-> DisasContextBase fields.
-> 
-> Signed-off-by: Anton Johansson<anjo@rev.ng>
+On 1/20/24 00:40, Anton Johansson wrote:
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->   include/exec/translator.h   |  6 +++---
->   target/mips/tcg/translate.h |  3 ++-
->   target/hexagon/translate.c  |  3 ++-
->   target/m68k/translate.c     |  2 +-
->   target/mips/tcg/translate.c | 12 ++++++------
->   5 files changed, 14 insertions(+), 12 deletions(-)
+>   include/exec/cpu_ldst.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+> index 6061e33ac9..eb8f3f0595 100644
+> --- a/include/exec/cpu_ldst.h
+> +++ b/include/exec/cpu_ldst.h
+> @@ -121,8 +121,8 @@ static inline bool guest_range_valid_untagged(abi_ulong start, abi_ulong len)
+>       h2g_nocheck(x); \
+>   })
+>   #else
+> -typedef target_ulong abi_ptr;
+> -#define TARGET_ABI_FMT_ptr TARGET_FMT_lx
+> +typedef vaddr abi_ptr;
+> +#define TARGET_ABI_FMT_ptr VADDR_PRIx
+>   #endif
+>   
+>   uint32_t cpu_ldub_data(CPUArchState *env, abi_ptr ptr);
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
