@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A24AEC47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 23:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E74C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 23:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSQaK-000237-Ml; Tue, 23 Jan 2024 18:53:40 -0500
+	id 1rSQbi-0002za-Bi; Tue, 23 Jan 2024 18:55:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSQaI-00022j-S3
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:53:38 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1rSQbf-0002zN-TZ
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:55:04 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSQaH-0005rR-7R
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:53:38 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5ce74ea4bf2so3198491a12.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 15:53:36 -0800 (PST)
+ id 1rSQbe-0005z4-Dk
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:55:03 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6dd82bfa998so995026b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 15:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706054015; x=1706658815; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706054101; x=1706658901; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YR/6IZdoMpApMNPayM6rp9uVnlkzmT9gg8m8LRchJVY=;
- b=msKxkJ3Eigvw7kT1df6V+7u8nlMAV6AkUaqMH3hfN2UafWPx+/OgzhN0hGRCaReXXN
- n3wFrYBUTq4NMVzXbv2cqo/pouH8MZAmJb5LA9saBm7sW+322kPyKctWMfqQSpUwniG+
- vLWsWOuMJlqhseUVBrWHhwHxJjYZPXW4pBL/A0zNStnk6yH8fvRttjTI5lTDX1wYE9Q4
- 2xovyGPaRPSElFRluArbZsHfahoHq8Jhk/B88d0gGIDXlzvYHaS1qXx6uigGlqvbxcff
- 3OFNAwzEfsVyNsA5CkLqGzsd+C3rqhVt437y7W9SPViG30Bl6kxReA+r8IlMM5rCC5hg
- bR6w==
+ bh=/fWQcBZCwJrwGdSn60qxlAV24JhiMU/j17JiiD8U7RI=;
+ b=zBzX185mrXA4Fagc/RmjTdSOtNOziKLZS5VGaV5Uc+AYuZUS/dwOxQyYq8a/Sgr2L1
+ SSBjo8lAmtoyPyh7EY0xKXsaNlcqhmLdSmD0eF0ezHkw0dwNW4ahfp1RTm97ok6NkvOL
+ sRJk2agM/VTAohI9DRP/S8L57X2Q53HV975oQCihw1RC39a31Y5f9dFZ3NJFEoyo62yy
+ 38qGQX0//nOWxKnTXojh/cdF3/e0A+AfPrvpcgdff4Dw5UETcZFzWMK9qPvQXPyTgSrs
+ 4nzgz0vo3EpztzBybRtmMuEWoLOomlJg/1RpxxTj/dRmjT2l3a1vpCg0iMa2H8wirJMN
+ oyDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706054015; x=1706658815;
+ d=1e100.net; s=20230601; t=1706054101; x=1706658901;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YR/6IZdoMpApMNPayM6rp9uVnlkzmT9gg8m8LRchJVY=;
- b=t7UUlLd3jCAb+m1uFv1Nz+WvCiRbB0yzelRXUmLGNNchCX3W+yicYuB2ExddeJyt+v
- vFyIFMtdhatgEM/yE68ne7t28miEov9SoJmGfksHZxUM7ry+2Hcp76lodzeLuOTCHw9M
- rG09RclL9/pRbgYHOWujfuzC2t0bpfgAwk8kYQi6FbG4wGBCDDu5TrWHedXVf/LBLRSz
- XI0RnIbUyMAisApJmASLRsEL/KlqQobLX6rEcOCpqZXOxcjtErMtoCaZCfqYoXeVg+CW
- KD2h0eSERffAqnrYsXry5L7LkPxvMyrYRxwmRUZGhovZ4iu+5fNCdEmGoVfb040mHhA1
- tUYA==
-X-Gm-Message-State: AOJu0YzBEw4NpzdTasmqdxQxtVvPuflQuH5KkaxIusF4TiEG5YCkMzgv
- Yg9W42UJEbZqE1n9kH55ls16rEmmf8h5e6dJfZVNTeWdoyrgeWTn3dD7Hswxg/A=
-X-Google-Smtp-Source: AGHT+IHc4H7C6gXiKnKo8vgrBjFpYOxCbUzL8yHKzBHlalDCp86T2B6Yv+yf3lL/NQVz9rUwxiq/Aw==
-X-Received: by 2002:a05:6a21:1a9:b0:19a:fbfa:b16a with SMTP id
- le41-20020a056a2101a900b0019afbfab16amr528211pzb.30.1706054015652; 
- Tue, 23 Jan 2024 15:53:35 -0800 (PST)
+ bh=/fWQcBZCwJrwGdSn60qxlAV24JhiMU/j17JiiD8U7RI=;
+ b=BbzOCYApRWB8umruqTqLVjHZEoD2vpkTurLoHmeXD9DP+51m3wC7oDVCjPGIcn1Cg8
+ Cgv4ChfeYEPsYr/dqiZHB8nA25nemqnAkbEuk0DcezPveMEX79PUwz6ONSaXpVu+8jXY
+ Vme4SrZG23bNqj5hEDIv2ysU8fJa5tTMmZ9ItYzKJhsUFB0I91llhLe6+/ZJtnWqCAaM
+ EKgWZrIZPQxeTLpfRBSZn7yp4xX0pRdHr9tifzizbItK6QV9rhKXIvrx4IrBUXb1Wla1
+ 2u/zR/r/uf8aTuOXcFKbbFgVEH6iAG5/aaPuZoaayQg7TvcZJGP//q3C/wqRKDL/w2Y0
+ zsRw==
+X-Gm-Message-State: AOJu0YwlpMrvOerEJ1ihrH9mGE+cGvTKmq1rTX/uj4878FzBPsUfaz8X
+ NorH+NbluyL9QZtL3aFnc+4PkTtrtfMd/jJNZDRwy8vWvB+v2FcFjMvB6fwIK8g=
+X-Google-Smtp-Source: AGHT+IHrtmWawTF26K3HNoOQr747VDWiQMjGcXt55VqORuoXq+p8N1HtYHyZXOMSh6pTVfLl0YAUCg==
+X-Received: by 2002:aa7:8891:0:b0:6dc:c49e:a7b6 with SMTP id
+ z17-20020aa78891000000b006dcc49ea7b6mr2934408pfe.65.1706054100557; 
+ Tue, 23 Jan 2024 15:55:00 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
  (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
  by smtp.gmail.com with ESMTPSA id
- r13-20020aa7844d000000b006dbd18ad865sm6441913pfn.55.2024.01.23.15.53.33
+ r13-20020aa7844d000000b006dbd18ad865sm6441913pfn.55.2024.01.23.15.54.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 15:53:35 -0800 (PST)
-Message-ID: <973bcce0-8f68-4181-aa76-48a48be7f99e@linaro.org>
-Date: Wed, 24 Jan 2024 09:53:29 +1000
+ Tue, 23 Jan 2024 15:55:00 -0800 (PST)
+Message-ID: <92ed19b0-b86f-4c5d-9b74-bcf1cdd7f3cf@linaro.org>
+Date: Wed, 24 Jan 2024 09:54:57 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 13/34] target: Uninline cpu_get_tb_cpu_state()
+Subject: Re: [RFC PATCH 14/34] exec: [CPUTLB] Move PAGE_* macros to common
+ header
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, philmd@linaro.org
 References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-14-anjo@rev.ng>
+ <20240119144024.14289-15-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-14-anjo@rev.ng>
+In-Reply-To: <20240119144024.14289-15-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,53 +100,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/20/24 00:40, Anton Johansson wrote:
-> Required to compile accel/tcg/translate-all.c once for softmmu targets.
-> The function gets quite big for some targets so uninlining makes sense.
+> These don't vary across targets and are used in soon-to-be common code
+> (cputlb.c).
 > 
 > Signed-off-by: Anton Johansson<anjo@rev.ng>
 > ---
->   include/exec/cpu-common.h |  4 +++
->   target/alpha/cpu.h        | 11 -------
->   target/arm/cpu.h          |  3 --
->   target/avr/cpu.h          | 18 -----------
->   target/cris/cpu.h         | 10 ------
->   target/hexagon/cpu.h      | 12 -------
->   target/hppa/cpu.h         | 43 -------------------------
->   target/i386/cpu.h         |  9 ------
->   target/loongarch/cpu.h    | 11 -------
->   target/m68k/cpu.h         | 16 ---------
->   target/microblaze/cpu.h   |  8 -----
->   target/mips/cpu.h         |  9 ------
->   target/nios2/cpu.h        | 12 -------
->   target/openrisc/cpu.h     | 10 ------
->   target/ppc/cpu.h          | 13 --------
->   target/riscv/cpu.h        |  3 --
->   target/rx/cpu.h           |  9 ------
->   target/s390x/cpu.h        | 22 -------------
->   target/sh4/cpu.h          | 15 ---------
->   target/sparc/cpu.h        | 35 --------------------
->   target/tricore/cpu.h      | 12 -------
->   target/xtensa/cpu.h       | 68 ---------------------------------------
->   target/alpha/cpu.c        | 11 +++++++
->   target/avr/cpu.c          | 18 +++++++++++
->   target/cris/cpu.c         | 10 ++++++
->   target/hexagon/cpu.c      | 12 +++++++
->   target/hppa/cpu.c         | 47 +++++++++++++++++++++++++++
->   target/i386/cpu.c         |  9 ++++++
->   target/loongarch/cpu.c    | 11 +++++++
->   target/m68k/cpu.c         | 16 +++++++++
->   target/microblaze/cpu.c   |  7 ++++
->   target/mips/cpu.c         |  9 ++++++
->   target/nios2/cpu.c        | 12 +++++++
->   target/openrisc/cpu.c     | 10 ++++++
->   target/ppc/cpu.c          | 11 +++++++
->   target/rx/cpu.c           |  9 ++++++
->   target/s390x/cpu.c        | 24 ++++++++++++++
->   target/sh4/cpu.c          | 15 +++++++++
->   target/sparc/cpu.c        | 35 ++++++++++++++++++++
->   target/tricore/cpu.c      | 12 +++++++
->   target/xtensa/cpu.c       | 68 +++++++++++++++++++++++++++++++++++++++
->   41 files changed, 350 insertions(+), 349 deletions(-)
+>   include/exec/cpu-all.h    | 24 ------------------------
+>   include/exec/cpu-common.h | 30 ++++++++++++++++++++++++++++++
+>   2 files changed, 30 insertions(+), 24 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
