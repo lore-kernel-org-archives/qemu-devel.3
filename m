@@ -4,107 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21315C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 19:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63DEC47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 20:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSM7l-0007EX-87; Tue, 23 Jan 2024 14:07:53 -0500
+	id 1rSNkc-00018m-6P; Tue, 23 Jan 2024 15:52:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rSM7f-0007EA-0j
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 14:07:47 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rSM7c-0007Bf-5M
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 14:07:46 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id CE72F1F79C;
- Tue, 23 Jan 2024 19:07:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706036860; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JmGG+cmKaSegHcY7WzY5LUArbMnAIv0v0NYYR5pxXpA=;
- b=J3wYqcEEFyVQXD3Tv6nEpFjDzerlBkMVoaNCBURzAoyp538mD4W2kID4EkRpHOXS8CVnZe
- A8NT+kIzL5sHTaRMUZZhh3tk1gNgzV4zZR+RxEXrQQk0R8omCcdWHq3A0KpPh0/vjEJ+zx
- lhkvWhrz85m+ZvC6TLUJz/CluP59u8k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706036860;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JmGG+cmKaSegHcY7WzY5LUArbMnAIv0v0NYYR5pxXpA=;
- b=9WmxwriJBnouU+NTEc251GH36XgcHPXgES2DDG5UpaWTFJLVc9tWseAIp7+4RErx7DPHbm
- zoe0fkKHpfIzRwAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706036860; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JmGG+cmKaSegHcY7WzY5LUArbMnAIv0v0NYYR5pxXpA=;
- b=J3wYqcEEFyVQXD3Tv6nEpFjDzerlBkMVoaNCBURzAoyp538mD4W2kID4EkRpHOXS8CVnZe
- A8NT+kIzL5sHTaRMUZZhh3tk1gNgzV4zZR+RxEXrQQk0R8omCcdWHq3A0KpPh0/vjEJ+zx
- lhkvWhrz85m+ZvC6TLUJz/CluP59u8k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706036860;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JmGG+cmKaSegHcY7WzY5LUArbMnAIv0v0NYYR5pxXpA=;
- b=9WmxwriJBnouU+NTEc251GH36XgcHPXgES2DDG5UpaWTFJLVc9tWseAIp7+4RErx7DPHbm
- zoe0fkKHpfIzRwAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5C53613786;
- Tue, 23 Jan 2024 19:07:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sZBJCXwOsGWzOwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 23 Jan 2024 19:07:40 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Juan
- Quintela <quintela@redhat.com>, Leonardo Bras <leobras@redhat.com>,
- Claudio Fontana <cfontana@suse.de>
-Subject: Re: [RFC PATCH v3 07/30] migration: Add fixed-ram URI compatibility
- check
-In-Reply-To: <ZaT0h7wnXDc-5K4-@x1n>
-References: <20231127202612.23012-1-farosas@suse.de>
- <20231127202612.23012-8-farosas@suse.de> <ZaT0h7wnXDc-5K4-@x1n>
-Date: Tue, 23 Jan 2024 16:07:37 -0300
-Message-ID: <87wmrzeume.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rSNka-00018b-Em
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 15:52:04 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rSNkY-0001ji-J7
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 15:52:04 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 23F9846A38;
+ Tue, 23 Jan 2024 23:52:39 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CEFF86A02B;
+ Tue, 23 Jan 2024 23:51:57 +0300 (MSK)
+Message-ID: <6d279ebd-fa9f-4839-97ca-7921679392f5@tls.msk.ru>
+Date: Tue, 23 Jan 2024 23:51:57 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/16] tests: enable meson test timeouts to improve
+ debuggability
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20231215070357.10888-1-thuth@redhat.com>
+ <db19cdd7-4049-4b9a-9108-c1f05f992d89@tls.msk.ru>
+ <2a8e7077-0603-4455-8b4c-69a4200dd280@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <2a8e7077-0603-4455-8b4c-69a4200dd280@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,64 +89,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+23.01.2024 20:47, Thomas Huth:
+> On 23/01/2024 17.50, Michael Tokarev wrote:
+..
 
-> On Mon, Nov 27, 2023 at 05:25:49PM -0300, Fabiano Rosas wrote:
->> The fixed-ram migration format needs a channel that supports seeking
->> to be able to write each page to an arbitrary offset in the migration
->> stream.
->>=20
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> ---
->> - avoided overwriting errp in compatibility check
->> ---
->>  migration/migration.c | 16 ++++++++++++++++
->>  1 file changed, 16 insertions(+)
->>=20
->> diff --git a/migration/migration.c b/migration/migration.c
->> index 28a34c9068..897ed1db67 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -135,10 +135,26 @@ static bool transport_supports_multi_channels(Sock=
-etAddress *saddr)
->>             saddr->type =3D=3D SOCKET_ADDRESS_TYPE_VSOCK;
->>  }
->>=20=20
->> +static bool migration_needs_seekable_channel(void)
->> +{
->> +    return migrate_fixed_ram();
->> +}
->> +
->> +static bool transport_supports_seeking(MigrationAddress *addr)
->> +{
->> +    return addr->transport =3D=3D MIGRATION_ADDRESS_TYPE_FILE;
->> +}
->
-> What about TYPE_FD?  Is it going to be supported later?
->
+>> I'm picking this up for stable branches too, since there we have the same
+>> problems in CI environment. In particular, bios-tables-test almost always
+>> times out, even hitting retry doesn't help.  Let's see how it goes..
+> 
+> Uh, wait, that does not make too much sense ... if bios-tables-test already times out *without* the additional meson-based timeouts, then adding the 
+> meson timeouts won't help. bios-tables-test uses the manually coded timeout from boot_sector_test() that is currently set to 600 seconds. If you hit 
+> that timeout, that likely means that something is really broken in your branch - or is it sometimes still succeeding?
 
-Sorry, I missed this one.
+I mistyped the test name as I was dealing with bios-tables-test at that
+time in another context (unrelated).  Actual failing test in this case,
+among others, is avocado acpi_smbios_bits, eg
+  https://gitlab.com/qemu-project/qemu/-/jobs/5991505589#L231 which timed
+out on multiple attempts.  In this example it took a bit less than 65s.
+Subsequent retry succeeded in 51s:
+  https://gitlab.com/qemu-project/qemu/-/jobs/5995055845#L212
+but this run was at much later time, apparently when gitlab was had less
+load, - as whole run was significantly faster.
 
-Yes, and thanks for asking because I just remembered I have code for
-this lost in a git stash somewhere. I'll include it in v4.
+So this particular failure has nothing to do with this patchset, and
+the patchset does not do anything to it.
 
->> +
->>  static bool
->>  migration_channels_and_transport_compatible(MigrationAddress *addr,
->>                                              Error **errp)
->>  {
->> +    if (migration_needs_seekable_channel() &&
->> +        !transport_supports_seeking(addr)) {
->> +        error_setg(errp, "Migration requires seekable transport (e.g. f=
-ile)");
->> +        return false;
->> +    }
->> +
->>      if (migration_needs_multiple_sockets() &&
->>          (addr->transport =3D=3D MIGRATION_ADDRESS_TYPE_SOCKET) &&
->>          !transport_supports_multi_channels(&addr->u.socket)) {
->> --=20
->> 2.35.3
->>=20
+(I was in a bit distracted mode whole day today due to $ork issues).
+
+Thanks,
+
+/mjt
 
