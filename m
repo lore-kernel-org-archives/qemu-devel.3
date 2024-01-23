@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46848C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 22:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC69C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 23:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSPiV-0003xN-B4; Tue, 23 Jan 2024 17:58:04 -0500
+	id 1rSPxl-00005X-Li; Tue, 23 Jan 2024 18:13:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSPiQ-0003wg-7u
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:57:58 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1rSPxk-00005P-6H
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:13:48 -0500
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSPiO-0005mn-4Y
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 17:57:57 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-5d3912c9a83so749690a12.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 14:57:55 -0800 (PST)
+ id 1rSPxh-0008Tr-2Y
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:13:47 -0500
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-5999ec531dcso777181eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 15:13:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706050674; x=1706655474; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706051623; x=1706656423; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VfX7PvtuU6sQswDMBJTfdwXYAVMGdKVCo6D8KO1tzaY=;
- b=KNWELlTSaNL1EPbvxO2o2iDi0il2A/3R7+e2kSRjmwJAOZs6b7cRKSFUpjP1hX7BH2
- EMcspCnw0ryf25Wxa4pfDHKXytyv+EhDWK+Oi2Rdo4ibwK41pZIDJhBuprOBFh8V+Xxq
- PxGlFD5aj2aTyPtylWuk+oSHva/8L7Zt8yrYLSiYfqejkpXBm1CoNsG08sLVBPP0GlGz
- dAlzCYirPk0d0JDC54Rm/Sj2upkcIoMDeCdHZ0pemwJOd+S1GyZnjbzWPeeZQSFZgHw+
- LgEq5Kgp8Bf3BQOgjZvkzXwsS/d9NYPQxp4nn1eLl8CU6JAibUTJ4/9F9/HHzvlyZaPS
- HxDA==
+ bh=sdCdF02lzGx9cWCw+4GiCPcD/WjXXpN+gm8h/tirqvU=;
+ b=YpvihMjmiLFoNOY8etGP9M5coekOsp7Ok0Fl2m+gszdT88NvdAG4mQRcJfhzM/+w0u
+ sdad2GhAvB2DEoaYPSNqTkT3QVxLTKga0Yvly2HmOC8mDJz3SBe9Lyej9kq5cLCq1Ozs
+ AJxt0xkonIit9tknTrRlNiU9IZusJrPmia5h0g+ZCGAJwWpzihfLht8KUCs70NANW/e9
+ XAud93GVH0N/svnVcr5/kN2Qjah6O4dXjfPPEF7PwNO5ze3mrKJ8JLAypIhmLuM0+dO0
+ kcseUV9ztRa21K45gnb1ISEVB0dNcygXxTZWkyl1ViM4VzhHyvxNHg52+z53EBe0qwKx
+ 1yOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706050674; x=1706655474;
+ d=1e100.net; s=20230601; t=1706051623; x=1706656423;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VfX7PvtuU6sQswDMBJTfdwXYAVMGdKVCo6D8KO1tzaY=;
- b=gQc+PffWyMFRr3bfXET8KbvF0oJ+JGeL35qLuXBWL2qe3RvCsnLMouLmd7M8PpP7aZ
- m7+ObehBQIs59ylAHTfR0m4wNfqxYvX499yPbOxuNkcMShtwXI1uEuErJjDvgPVx6/qY
- ee5psQ27AO/kjCYF/WXRYDOyneBMgchwqWg0LbwW2EIpJqJGd6h2vHLwOMPxpvWpwF23
- 9bw97s/fvNWN18+x8ycRv8Bc2ZSJ5/IQ18/FUVZ6cTwcgxKJLiqiAr6AZW5kAXrcB6Gy
- 16fdioPsz/3vP3czUpXmPQ1Pm42XbXB6inz1Pl71EZxgNviKku1nzoxBwstRq59VIHR5
- mozg==
-X-Gm-Message-State: AOJu0Yw/mjoNFaYjJlaYWVWcdK2vYGKy7wgkImDcBMIwWnoQpxqywdON
- vvIOoUHWh6nfiSmJoN2CvR173OUFGeYd7Pw80+X79gDOiEzZ1y5SUtoTpVmvpbg=
-X-Google-Smtp-Source: AGHT+IH2vOFRq7Azv5/rQpBoKw9EiodqZ0VT/5zsRJ9MigImYkU2s2QVFATkPT05UeytgGgaXBrtow==
-X-Received: by 2002:a05:6a20:158f:b0:19a:f1bb:5b1 with SMTP id
- h15-20020a056a20158f00b0019af1bb05b1mr3689440pzj.96.1706050674579; 
- Tue, 23 Jan 2024 14:57:54 -0800 (PST)
+ bh=sdCdF02lzGx9cWCw+4GiCPcD/WjXXpN+gm8h/tirqvU=;
+ b=SONJY6F33oobqquqaWmMUlSAPLsUt+XusIo2UsQBkcdtTzg4Hxizf9gzwlTjPXxX/x
+ nsGZB/EZI11AEmoBb3b+dYfhQDBxsNIwuamqqbfSslyddQU29A6YgVeUWviGDAnH8bNC
+ wyN1HrQ3eYd6/AzlhgNOg+Ge/IC358fCQnOAufSGNtSWu2UAw5hC6P4G6hAywUDWDy4z
+ pS8LfdZXKha2FKGte4irSbtbstsJFe/+nItka0u9ANaIF2Es5UUx516egXJrwiSTLI5l
+ 559AEQxjiXxzmhKq6dtsT0rqQbe7NL54uyElN0FRPjuHHLYL9RUpNwKBhQrCmdxeTAb0
+ iEEA==
+X-Gm-Message-State: AOJu0YyVE5EMQZG6cVnI47Y5AJkpQ6mjGY7KnfhmNQBFyAX+TPowV8HH
+ j+3mXUUDzeCXzF/lbU70Cz/jtl4hRxTu9NTw+5/qSjby76Nlw+dIQDzX3GjxoTk=
+X-Google-Smtp-Source: AGHT+IH1L0jw9h48cxXvEdFe2UPs930rOHE6Tt2T7z9EVoTQ+73aKGbzjRvRRWYELuew4ZmgIJ3K2A==
+X-Received: by 2002:a05:6358:9999:b0:176:470f:92c5 with SMTP id
+ j25-20020a056358999900b00176470f92c5mr4581114rwb.47.1706051623368; 
+ Tue, 23 Jan 2024 15:13:43 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
  (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
  by smtp.gmail.com with ESMTPSA id
- y17-20020a056a00191100b006d977f70cd5sm12184674pfi.23.2024.01.23.14.57.52
+ c10-20020aa781ca000000b006db11bab9d9sm12183306pfn.202.2024.01.23.15.13.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 14:57:53 -0800 (PST)
-Message-ID: <dd125003-24a5-4fac-a9aa-e0dcfaeda9bf@linaro.org>
-Date: Wed, 24 Jan 2024 08:57:48 +1000
+ Tue, 23 Jan 2024 15:13:42 -0800 (PST)
+Message-ID: <ae70faa8-1f4f-4b45-b6ec-61fc1726c03d@linaro.org>
+Date: Wed, 24 Jan 2024 09:13:38 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 07/34] hw/core: [VADDR] Include vaddr.h from cpu.h
+Subject: Re: [RFC PATCH 08/34] target: [VADDR] Use vaddr in
+ gen_intermediate_code
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, philmd@linaro.org
 References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-8-anjo@rev.ng>
+ <20240119144024.14289-9-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-8-anjo@rev.ng>
+In-Reply-To: <20240119144024.14289-9-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,15 +100,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/20/24 00:39, Anton Johansson wrote:
-> cpu-common.h is only needed for vaddr
+> Makes gen_intermediate_code() signature target agnostic so the function
+> can be called from accel/tcg/translate-all.c without target specifics.
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> Signed-off-by: Anton Johansson<anjo@rev.ng>
 > ---
->   include/hw/core/cpu.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/exec/translator.h     | 2 +-
+>   target/alpha/translate.c      | 2 +-
+>   target/arm/tcg/translate.c    | 2 +-
+>   target/avr/translate.c        | 2 +-
+>   target/cris/translate.c       | 2 +-
+>   target/hexagon/translate.c    | 2 +-
+>   target/hppa/translate.c       | 2 +-
+>   target/i386/tcg/translate.c   | 2 +-
+>   target/loongarch/translate.c  | 2 +-
+>   target/m68k/translate.c       | 2 +-
+>   target/microblaze/translate.c | 2 +-
+>   target/mips/tcg/translate.c   | 2 +-
+>   target/nios2/translate.c      | 2 +-
+>   target/openrisc/translate.c   | 2 +-
+>   target/ppc/translate.c        | 2 +-
+>   target/riscv/translate.c      | 2 +-
+>   target/rx/translate.c         | 2 +-
+>   target/s390x/tcg/translate.c  | 2 +-
+>   target/sh4/translate.c        | 2 +-
+>   target/sparc/translate.c      | 2 +-
+>   target/tricore/translate.c    | 2 +-
+>   target/xtensa/translate.c     | 2 +-
+>   22 files changed, 22 insertions(+), 22 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
