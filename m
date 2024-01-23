@@ -4,68 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC0AC47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF4CC47DDB
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSJiq-0004HA-7S; Tue, 23 Jan 2024 11:34:00 -0500
+	id 1rSJiX-000450-5k; Tue, 23 Jan 2024 11:33:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSJio-0004Fp-O8
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:33:58 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSJiK-00044R-Vr
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:33:29 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSJin-0001y9-5X
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:33:58 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-50eabfac2b7so5690361e87.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:33:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSJiI-0001q6-Ec
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:33:28 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6dd7deb57d4so583926b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:33:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706027635; x=1706632435; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=UVQj/pj2j2Q29AF21r65RdS6NR6Cczwvrqv9AsCTXVI=;
- b=HHQMPy8UlGVbMmaMfLOAig7H18ObOQISgg1bCw8h8V67NvCfxWsQ1zJvVZJwMvdvaa
- iPQd1jP6yngdmSo44Fuzx7gF/4+cJXb+6+Su97reQSBRAmsI4ZdbLEIbfTBmpwBAEy97
- 1ZwHzV89MNLqvIcu1J4NV3DuVENodMJL4JEd66Dd5r/cl5EZhq2El2aMhS8TA2EgHSYo
- WkP2wFmSPZSbZ/fGiIOc2vi8tp/FKM7fydZQc8/O5hssCZJWskB+y4UmMOFcv5tdw7Ba
- G2Tm6Ju66rwpH6pjL6s/P5SNlLlHsrEz5jlzSoN4VdeCY8w+Q3xh86pIlb37xg3DcaSM
- JU/g==
+ d=linaro.org; s=google; t=1706027603; x=1706632403; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JzfTUmUVx4D7HEnd6YIJXkXY20l9mcZwVc6tk4Jj/pk=;
+ b=i1hnA7UYGBKcK9ivcH6JUtkrhWQfmYoSBqLcpBjQmENpW9IXV/1Rz29SEpOVNzw6TY
+ G7OCqSORccFG0GTsbpN0F01kk/Qs0qHceF2VUj3CGOAwSm0mPBenXQ4unVdtF9asH125
+ 37UHTjLf1AZFH8oD98IBNPmU1t79spycRA3CrETLD3n9uxvSLd4DhIMaGlYXDvgAijd+
+ Mg3qp+VLLwVCGAzOaPr5fwKLDfmr5oaGZYeQ/96sRGiPToqRufw7u47e0p2Eya2w0dFD
+ CLpS04OzPmRb8qws8L42QKvSspksJEfsTU0yzMi+KsFQUlkQLwbOlXSdTDg/nGJ1MwNQ
+ 6C1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706027635; x=1706632435;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UVQj/pj2j2Q29AF21r65RdS6NR6Cczwvrqv9AsCTXVI=;
- b=nIcI/fxxWvxSuW9v1kBDH78keLJs2n6fSTO4CmxMrdHGF9ElG43Zrelg2+LiuCZOUb
- dPEBCjczjV0MgDp75Lt44BMvVqjlKsccg6j+txMob5yKm0FK2dr9ANIzhv1TJ3fI8T2e
- IXuxJDSXEgvv/jtnwAqfdl+izvgOy/78WPj7IEN4/wTrWhBdfbqPgaxVNZj/xMG3FvIn
- CccEvykuK5jEX6bf4pYV8Zwb1U3P7HqozSDppgWIjF61wz3l/hWiBV488cf4BRg1ameR
- uqA8bfE3zAmt/fIS+cA8DoiPTM5kpJY9nT1u61GTqwJYI9/rNcUd9wAX4GTDueXw/7z3
- LuUQ==
-X-Gm-Message-State: AOJu0Ywr5irohrEKx/Nv1cExx3TU3XuUZqbgQTH3NgIfxC9X3JzUu/4d
- has1q7hzdinlUS6dvcBAmEKZL0M74FCO+bdwCyMfyJWqnx3SRWz2o75y3MsJhfudutJ6KfSSw8m
- HHtReIK5etDqjtmZZFmbfihMtiK11/EbsljeQdQ==
-X-Google-Smtp-Source: AGHT+IEdiB9UYHlh2oL1Ub+k7anQ27oKag2OC2QrGSz9RYyCvhH0sUdYG+Vfy2GLaib9FvnfGV6FhkEgQX99Kh4NHBs=
-X-Received: by 2002:a05:6512:1250:b0:50e:3720:e974 with SMTP id
- fb16-20020a056512125000b0050e3720e974mr3394861lfb.10.1706027635311; Tue, 23
- Jan 2024 08:33:55 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706027603; x=1706632403;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JzfTUmUVx4D7HEnd6YIJXkXY20l9mcZwVc6tk4Jj/pk=;
+ b=NIWrOPU6bYTzYJsVoLVdVb7HSPvU4pRII+O5MMQTlT3ihWHLzdzECgWz/yBrQo+iP6
+ 7igwQEELHb5mqCClCKWlYD7xpRPllZcFSBbMBn8+xmlyG3/D2xVmwJFclK4Vycbrnylb
+ aRSTOVGx8IuKTxE7UKHbnMU4NW99jZwQh8LR3BrQeArgQytgw9VvX5I1XvCsMfnm72P1
+ Id0Alcp739zVfdyHf1Kofft3eN4F+EI1x+eKk1wU+6vGU9FdNfNyvegXeIw/uQKNl2i7
+ teSn1usfa30dWfYzBkv0ia8PyCOSSvc0rqJxzrT0e9HEI1TWM3xJM9u4tEXp0LyebFLR
+ wRZA==
+X-Gm-Message-State: AOJu0YxhU1QhpJmaQch2RaWjrQcnMnNZK9O1kjrutdurj7tE+F7UOtwY
+ Ak+ksIoHzP7uQ3Lb2WIlnW6jK8io0m3d/nTXcbjLyXvuICr0fdzSahDYMNN33eEETjdCLFHGefV
+ Mcds=
+X-Google-Smtp-Source: AGHT+IHpapGE/wah6BBnhwMv6w1/khfDx2/axY8O3VGRpN7dMJC053lmBUn6hKNuCwmmPoIUFrTAvA==
+X-Received: by 2002:a05:6a00:4656:b0:6d9:d506:3afa with SMTP id
+ kp22-20020a056a00465600b006d9d5063afamr3812281pfb.60.1706027603599; 
+ Tue, 23 Jan 2024 08:33:23 -0800 (PST)
+Received: from ?IPV6:2001:44b8:2176:c800:94f0:22fe:dda1:1842?
+ (2001-44b8-2176-c800-94f0-22fe-dda1-1842.static.ipv6.internode.on.net.
+ [2001:44b8:2176:c800:94f0:22fe:dda1:1842])
+ by smtp.gmail.com with ESMTPSA id
+ 37-20020a630a25000000b005ceb4a6d72bsm10064271pgk.65.2024.01.23.08.33.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jan 2024 08:33:23 -0800 (PST)
+Message-ID: <70ad1d52-2dc6-46b1-82a3-983840ab8861@linaro.org>
+Date: Wed, 24 Jan 2024 02:33:18 +1000
 MIME-Version: 1.0
-References: <20240117140722.3979657-1-armbru@redhat.com>
-In-Reply-To: <20240117140722.3979657-1-armbru@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 23 Jan 2024 16:33:43 +0000
-Message-ID: <CAFEAcA-tX=GPm1zDq5pnL+T_cbivKUQ1dZe_vQ0XAjvehWLdpQ@mail.gmail.com>
-Subject: Re: [PATCH] migration: Plug memory leak on HMP migrate error path
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
- het.gala@nutanix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x131.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 02/34] target: [PAGE_VARY] Move TARGET_PAGE_BITS_MIN
+ to TargetPageBits
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: ale@rev.ng, philmd@linaro.org
+References: <20240119144024.14289-1-anjo@rev.ng>
+ <20240119144024.14289-3-anjo@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240119144024.14289-3-anjo@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,44 +100,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Jan 2024 at 19:49, Markus Armbruster <armbru@redhat.com> wrote:
->
-> hmp_migrate() leaks @caps when qmp_migrate() fails.  Plug the leak
-> with g_autoptr().
->
-> Fixes: 967f2de5c9ec (migration: Implement MigrateChannelList to hmp migration flow.) v8.2.0-rc0
-> Fixes: CID 1533124
+On 1/20/24 00:39, Anton Johansson wrote:
+> TARGET_PAGE_BITS_MIN is now defined as target_page.bits_min when
+> PAGE_VARY is used, similar to other TARGET_PAGE_* macros.  We still pick
+> whatever minimum the target specifies, however in a heterogeneous
+> context we would want the maximum of all target_page.bits_min.
 
-Isn't this 1533125 ? 1533124 is a false positive in
-the migrate_mode() function.
+Do we?  Or do we need to reject different minimums as incompatible?
 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  migration/migration-hmp-cmds.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 740a219aa4..99b49df5dd 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -764,7 +764,7 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
->      bool resume = qdict_get_try_bool(qdict, "resume", false);
->      const char *uri = qdict_get_str(qdict, "uri");
->      Error *err = NULL;
-> -    MigrationChannelList *caps = NULL;
-> +    g_autoptr(MigrationChannelList) caps = NULL;
->      g_autoptr(MigrationChannel) channel = NULL;
->
->      if (inc) {
-> @@ -789,8 +789,6 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
->          return;
->      }
->
-> -    qapi_free_MigrationChannelList(caps);
-> -
->      if (!detach) {
->          HMPMigrationStatus *status;
 
-thanks
--- PMM
+r~
 
