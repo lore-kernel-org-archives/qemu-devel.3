@@ -4,78 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDABC47DDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 008F5C47258
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 16:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSJTM-0003oP-Ms; Tue, 23 Jan 2024 11:18:00 -0500
+	id 1rSJSv-0003We-C0; Tue, 23 Jan 2024 11:17:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSJTL-0003mU-PI
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:17:59 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rSJSp-0003Tc-3v
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:17:27 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSJTJ-0007eL-0r
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:17:59 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6dd7debc476so457642b3a.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:17:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rSJSm-0007TJ-2m
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 11:17:26 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2906bd9f2ebso2098728a91.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 08:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706026675; x=1706631475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zPfNttPXTR9h5tB3nJI+pxcAw/vTz53KQbJKMTMP5ys=;
- b=zFm3Gv1mj6WNUx9NCLb3SaRTSujup3cVnjVW+UCUqXanqVFJajrJEC7W2xMwLMLiNf
- lEjWw9757cn5wJGk2EFE+uQRItrUe+GKQZ3wWss3L6lIjF2QIG3k/ghWT5lbAr46tzGy
- W9+JPlYPhs5OtlOpT2Rg+xwh5324MUmk3QbhPGFNkBEoOGcwfMpS2koJp2IFjRM+gimC
- seHw4+Rthv1+UZHcZ6Dd16NCTHqOxJ5eXuwsGhi8etuTLN8iz6e52eQVMXIVMylOuGKO
- Q99bC1ANKlhqCFHhJ4cuDN1bodf5fQ/JQHBUxvTQ8UaueYUzwwl85m4YAbQIfm8fIzeK
- BP4w==
+ d=ventanamicro.com; s=google; t=1706026642; x=1706631442; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=o+uMzKgEdWxAfaTKc31QCrp/gGCfKuJesU8lsEew9OQ=;
+ b=gplP29iVSScKTk34+wZ8YaVmjICPbnpENSyV7qfE9dBhm2L2dy1ADtJh8DyBrSpCbl
+ q8HtzfWfsm2y8WOBhz7dKR/9LjqA04i4vtegq3ZtUGjp/OAZxHTCXv7CbaKpGSTkRNFE
+ 1LxoPNQo4p9PehvMU4xjHY2aaNVUNabdHQcHLHD0vAMchg/xXN8qIBbjOPmUX/av593W
+ I+IwtVLmSqmMsGzOfHm22J+j3RmUUZr3m2YhSoPvhIYmlVdIph+kcn3NEK8gG2XCU8ZN
+ uiU/oIl5Sk4gYEdW74r5V0ghpmtSFXfarFSpXlqd00Uox/CxdcY0BvyD4BWgbxdweQK4
+ F0lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706026675; x=1706631475;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zPfNttPXTR9h5tB3nJI+pxcAw/vTz53KQbJKMTMP5ys=;
- b=GslJz+iYco3iY/UeNqXdKyhZpRqH+hP/inxsAVuv8qYUwxWAJ3lGgqIjEZxuTie25o
- 9f6osrzLfL2fJyv+EzyXYr9Yr9prIR8taxcWljdx/PQ3fg8VdlX1OxmwBevHk232YC3J
- cx/IUK3rLOmGG1lKFBeuVHoCbrC7jaMqhtQzf1EsObBUkVICuQvf9LWUFjNhHgaU67j8
- AtRO8bWS82X4krzpBPk+H6wFKvGtESx4bvx6wzk9eGpXsOkzhALqzSmmSVsOw3bgMZEa
- cw9Qdetq6krNAjhXZdzXFdSLrdEHTKMPZW0oHGqsxB2SqGXhebsoW2ocFRs8me6XbkcC
- a3ZQ==
-X-Gm-Message-State: AOJu0YxfYqQsYJQdIBq4Db1rZl9ZyUtY9/eGzQ3JXAt9ozf4DbMtLZCz
- HGtylml7R9cBAUgHU/W9GCk845V3oJpGPSxKACSKqTuQb4NCDvFVlC0C27Tg7Os=
-X-Google-Smtp-Source: AGHT+IEDTU2Zv8n4q4EpIsOWBzw5b+IeawLaHcbWmYv4Bjdg9MsJA0sxgZCZSz4st7vLfhCCHjo0Hg==
-X-Received: by 2002:a05:6a00:238d:b0:6db:6fc9:5e79 with SMTP id
- f13-20020a056a00238d00b006db6fc95e79mr4064280pfc.3.1706026675448; 
- Tue, 23 Jan 2024 08:17:55 -0800 (PST)
-Received: from ?IPV6:2001:44b8:2176:c800:94f0:22fe:dda1:1842?
- (2001-44b8-2176-c800-94f0-22fe-dda1-1842.static.ipv6.internode.on.net.
- [2001:44b8:2176:c800:94f0:22fe:dda1:1842])
- by smtp.gmail.com with ESMTPSA id
- d5-20020a056a00244500b006da19433468sm11799778pfj.61.2024.01.23.08.17.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 08:17:54 -0800 (PST)
-Message-ID: <20117cb1-b167-425d-ae7c-a5e149264f70@linaro.org>
-Date: Wed, 24 Jan 2024 02:17:49 +1000
+ d=1e100.net; s=20230601; t=1706026642; x=1706631442;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=o+uMzKgEdWxAfaTKc31QCrp/gGCfKuJesU8lsEew9OQ=;
+ b=OjTcbypI2Vi2BzsRdDAys32gyrIWnr7MJQv91PKoE6WowyNGICLrBmYvdtQTxdnsIF
+ BafYT/CMQFl3PmjT6lK0x3rUwCYBVt/4zDFzLJbR177yksxKBJqXgTWbNMzSZNtPUEkS
+ OW99BoHJuQ9nr5JmKiYyuBFu8QQ77J88PFDHf1I/gpM2qN7cJ/FMJBe0YxSfvZnAMTh2
+ pDWBVb35T567onjCGHFoyNgKuSrB2fJ6SPS8BINstoizKEc/ZBgumRAiK67A1acZwu9a
+ faIRyUK9etouAzG+9tJDdael4u4lscp0kIXAGyTdRd7+y/Gvy0qdWcMHjZRBltzc8Ou5
+ x7NA==
+X-Gm-Message-State: AOJu0YydEZDKDYXBOfnu+mJ1qY00aylodhzY34Tx9Mt/ASYTBu8AZeYh
+ c5I3ZW7InEpNamb/nevrSjlSmEOWDkHhzQH0mhp7zpeeh05C2rzuWRYTVNNU9+7hBQNFPVUR75t
+ X
+X-Google-Smtp-Source: AGHT+IHLlmK+3asEIWRwGkfIALuLSuka+7+zFVfUpIxr6eMhMnjtuu0bBVX3V8wotnnveIrNnetOzA==
+X-Received: by 2002:a17:90b:3cf:b0:28e:3b7f:a2af with SMTP id
+ go15-20020a17090b03cf00b0028e3b7fa2afmr7414350pjb.47.1706026641730; 
+ Tue, 23 Jan 2024 08:17:21 -0800 (PST)
+Received: from grind.. ([152.234.127.94]) by smtp.gmail.com with ESMTPSA id
+ u14-20020a17090ac88e00b0028bcc2a47e9sm11755686pjt.38.2024.01.23.08.17.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jan 2024 08:17:21 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH 0/3] target/riscv/kvm: support 'vlenb' and vregs[]
+Date: Tue, 23 Jan 2024 13:17:11 -0300
+Message-ID: <20240123161714.160149-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Fix A64 scalar SQSHRN and SQRSHRN
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240123153416.877308-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240123153416.877308-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,35 +93,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/24 01:34, Peter Maydell wrote:
-> In commit 1b7bc9b5c8bf374dd we changed handle_vec_simd_sqshrn() so
-> that instead of starting with a 0 value and depositing in each new
-> element from the narrowing operation, it instead started with the raw
-> result of the narrowing operation of the first element.
-> 
-> This is fine in the vector case, because the deposit operations for
-> the second and subsequent elements will always overwrite any higher
-> bits that might have been in the first element's result value in
-> tcg_rd.  However in the scalar case we only go through this loop
-> once.  The effect is that for a signed narrowing operation, if the
-> result is negative then we will now return a value where the bits
-> above the first element are incorrectly 1 (because the narrowfn
-> returns a sign-extended result, not one that is truncated to the
-> element size).
-> 
-> Fix this by using an extract operation to get exactly the correct
-> bits of the output of the narrowfn for element 1, instead of a
-> plain move.
-> 
-> Cc:qemu-stable@nongnu.org
-> Fixes: 1b7bc9b5c8bf374dd3 ("target/arm: Avoid tcg_const_ptr in handle_vec_simd_sqshrn")
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2089
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/translate-a64.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Hi,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This short series implements both 'vlenb' and 'vregs[]' in the KVM
+driver.
 
-r~
+The patches were done a couple of months ago but we were missing some
+changes in Linux (support to 'vlenb' in KVM) that got upstreamed
+recently with Linux 6.8.
+
+Patches based on top of Alistair's riscv-to-apply.next that already has
+the 'remove vlen, add vlenb' changes.
+
+Daniel Henrique Barboza (3):
+  target/riscv/kvm: change kvm_reg_id to uint64_t
+  target/riscv/kvm: initialize 'vlenb' via get-reg-list
+  target/riscv/kvm: get/set vector vregs[]
+
+ target/riscv/kvm/kvm-cpu.c | 144 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 138 insertions(+), 6 deletions(-)
+
+-- 
+2.43.0
+
 
