@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722E6C47422
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 21:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B404C47422
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 21:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSkTD-0004ve-Dz; Wed, 24 Jan 2024 16:07:39 -0500
+	id 1rSkTn-0005TL-9V; Wed, 24 Jan 2024 16:08:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSkT4-0004nQ-Pw
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:07:31 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1rSkTZ-0005SN-K4
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:08:02 -0500
+Received: from mail-il1-x134.google.com ([2607:f8b0:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSkT2-0001xg-1L
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:07:30 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6dbce74f917so2748961b3a.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 13:07:27 -0800 (PST)
+ id 1rSkTY-0002Yb-3B
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:08:01 -0500
+Received: by mail-il1-x134.google.com with SMTP id
+ e9e14a558f8ab-362a0aa2a33so344205ab.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 13:07:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706130446; x=1706735246; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706130478; x=1706735278; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=waKoU6FzM38PjxmkthCNgVIQE2lcoOobxUOj/sb72RQ=;
- b=vwyF94I8DYe/tB7CRDeVqnq+/unc8cV7o6QRBL16JbSf3gt+Bw4bcuQU56megXKybc
- tMUM2/3lf7PPsVYcpWWeIi4GkVzmvpXr1LVEzR5SaDTF+JxYIiWLsfN3IDydVSzsHfaG
- mzg0fKEawrQE3P8QhjYC8hmXQpKo9VGNLVL156gEdnUM25wN6pIygwjoN/99SeD89HyC
- KGzNYEon3u84f2BApo8cLEkcb+83zqlTznKAv7z3tv5QG9n1HFAfH5dbElu6OYHOmC9Z
- /Nx5/Y3CWYWmT41I10W/derQSlG3HsnYGeYbFCjGgYPJanAf1+QVyCJjN0RkT2M3jS/t
- /gUA==
+ bh=791cZu6A7Ndii3DHqtHOZ7waa4pX0IAVBgDH47eoipA=;
+ b=uXboQP8RIJ+OC/Xiw2pOLAMlhDoHde1jx4Zjx8SvCfECEaTEOZxZjT+02QFNNKOMXO
+ I3j9o2WjG7QF5zaq0DhPeu8HFQak2cuVDql3xHuYDo4L93Q+uvx3sfGB1X1hWSGNyWh/
+ BQTORWy0TOKW34knDyAVlIUGLRgjcGWTeTSYbMzjvXhJDAljUbHGg1vdWYWydWT4YJ2Z
+ 2AZ0aANX0oWOD83ia+nmvsotSCQptgaR+PzGKbMfuC1Rs7hyThiVJidYT/cd6SRBZJbe
+ 7sxQg2fxx2dtOgFdvFOnAQ1uoScfRmhSXU8NVLafG+SPqCH7NYjRFGH6SxbQ9tigj8TX
+ WfcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706130446; x=1706735246;
+ d=1e100.net; s=20230601; t=1706130478; x=1706735278;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=waKoU6FzM38PjxmkthCNgVIQE2lcoOobxUOj/sb72RQ=;
- b=liEZpEu3FcI92w49HCERGJXO636ONmHUWp8f8P7xf4pFreBsmi1SSsyBlrGDAl/yB2
- PaYNbmSKjOL7nGFHqxCXcBN4Bahe7outymIxDYxr7IAors+h54mQCN+G6Af9ApYJwTqT
- 0K0nRbN1DiVMW+Up7oGqMjrpQk3d4Q0/DnVcb2ZzsGKtr9gqlNLuBTwGzp0/uqJ9pMLC
- JROeQg/Au5gsHE3Zf4ep828uN2NWYBO0JJ0Din6oYBH/zVTY70dADJm656/KQsP+Wb81
- QwJZyDYBVTB/gpuUzOk8u8F2cBV8JkY7fHhxzuzhQt7L9w472U1EwIBx8itQlJWMOlB4
- xiSQ==
-X-Gm-Message-State: AOJu0YwHZz4khBL0nXPor19YvXOUAzbsKhZyfkVUQCc73TwQDu5+GSZA
- +PQsOkl5/3KtQZYG+fHM41bjGBar91nS0Jz8am5raL+Y4NQmaZHhCSE1hlv9meE=
-X-Google-Smtp-Source: AGHT+IFPDEDlLbW7AsypZIrSo81MmAi9PiOXZKk5UFzVXlN8897fqbCQzWqu/SjglKjkpllUHnICjw==
-X-Received: by 2002:a05:6a20:d41e:b0:19c:68b9:ae96 with SMTP id
- il30-20020a056a20d41e00b0019c68b9ae96mr33154pzb.122.1706130446586; 
- Wed, 24 Jan 2024 13:07:26 -0800 (PST)
+ bh=791cZu6A7Ndii3DHqtHOZ7waa4pX0IAVBgDH47eoipA=;
+ b=YHMcctSx895m3b4SDxBe1zH7XhvoHyc0lsWbdrbhCv1qSz+pBnTsjPms5nkYKUCH9Q
+ zA6iDo2B6zZW+R+3gg7APCnqiZ9JKVWwqRslgkhd0J4c0wVqnCx8Dw6Z4mSP9kRjTW2Z
+ DW8acE8mLTN0TzaD4DPuvvqo7VGO3TxQjOMEC0LDpCC9R9ZnT6bo3qBq/D7kXcWpTazQ
+ urOTGBj46xmMhENcHZRciRduvOTEBkWXmmn7/u/szzecfdpSdZ7IHmDKUms1n4128p+Q
+ k+uo03pDKjACqmrgvrWK10ov9hnggMyK6ssx17ihAUpEwfu+plOT9+PTEHY41H+01q3N
+ 0CAQ==
+X-Gm-Message-State: AOJu0Yxf9sIPL7sx/N3l46GISo3Btuj5kx0INvYkDJrjBppLZ9+DZwJP
+ qKPZZwkdJ7PosmeLIbqiJq4h3T2Lq8iREJwwkQm0qrAxDYW1dW/nduEeHIEBu/Q=
+X-Google-Smtp-Source: AGHT+IFIw31Kkj1XJOzcU+Lv2VXEeDyS/hQA5YhsTFmse6PJ76Je7LumbFiKxUN+aDSsTFzWfeuAdw==
+X-Received: by 2002:a05:6e02:14c:b0:361:adb5:959f with SMTP id
+ j12-20020a056e02014c00b00361adb5959fmr42499ilr.54.1706130478101; 
+ Wed, 24 Jan 2024 13:07:58 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:5fcf:9e3:2e58:9c7?
  (2001-44b8-2176-c800-5fcf-09e3-2e58-09c7.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:5fcf:9e3:2e58:9c7])
  by smtp.gmail.com with ESMTPSA id
- r13-20020a63d90d000000b005ce033f3b54sm12497610pgg.27.2024.01.24.13.07.24
+ r13-20020a63d90d000000b005ce033f3b54sm12497610pgg.27.2024.01.24.13.07.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 13:07:26 -0800 (PST)
-Message-ID: <712c22e4-6000-4af5-9487-287b2d1fed02@linaro.org>
-Date: Thu, 25 Jan 2024 07:07:22 +1000
+ Wed, 24 Jan 2024 13:07:57 -0800 (PST)
+Message-ID: <af5f319b-cdde-451f-b7cd-0faf4e1b7e12@linaro.org>
+Date: Thu, 25 Jan 2024 07:07:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] tcg: Make tb_cflags() usable from target-agnostic
- code
+Subject: Re: [PATCH v5 3/4] accel/tcg: Remove #ifdef TARGET_I386 from perf.c
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20240124075609.14756-1-philmd@linaro.org>
- <20240124075609.14756-3-philmd@linaro.org>
+ <20240124075609.14756-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240124075609.14756-3-philmd@linaro.org>
+In-Reply-To: <20240124075609.14756-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::134;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,17 +103,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 1/24/24 17:56, Philippe Mathieu-Daudé wrote:
 > From: Ilya Leoshkevich<iii@linux.ibm.com>
 > 
-> Currently tb_cflags() is defined in exec-all.h, which is not usable
-> from target-agnostic code. Move it to translation-block.h, which is.
+> Preparation for moving perf.c to tcg/.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> This affects only profiling guest code, which has code in a non-0 based
+> segment, e.g., 16-bit code, which is not particularly important.
+> 
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
 > Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
-> Message-ID:<20231208003754.3688038-3-iii@linux.ibm.com>
+> Reviewed-by: Alex Bennée<alex.bennee@linaro.org>
+> Message-ID:<20231208003754.3688038-4-iii@linux.ibm.com>
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/exec/exec-all.h          | 6 ------
->   include/exec/translation-block.h | 6 ++++++
->   2 files changed, 6 insertions(+), 6 deletions(-)
+>   accel/tcg/perf.c | 4 ----
+>   1 file changed, 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
