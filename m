@@ -4,86 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E26C7C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4372FC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSRue-0000I4-AQ; Tue, 23 Jan 2024 20:18:44 -0500
+	id 1rSRvD-00017b-Ll; Tue, 23 Jan 2024 20:19:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSRub-0000Hc-Md
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:18:41 -0500
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSRuY-0002Uf-Le
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:18:41 -0500
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3bd884146e9so3895620b6e.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:18:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706059117; x=1706663917; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jlwHxnYTelKImYkHHzfzeO8DIN7ErB5+rYvEzxnoGVQ=;
- b=NAAbhqQ+ZDmklY5u+269yWqLGoLQO2NjlPJKlRJtE5fhWKKylR+kkJkUEQ8VpfNUyt
- RZvoSTXg4N1rRM6b8N7EvCUDbGAA8Fn+UI7oF2ok6DeJzL1wFFPZENdkdY++l4YEXEWy
- 3OB15+tE8s312qdRyJG3hz0TtXhqp7Mios4H8WVq9jdaoFyD0Tkz3Y250yZ7yKYsgmUH
- PHTrZS+PWYBtrBQnfwVyTao7UPXqcDxrU5U8FPYUpX9NqsLopI1vtJzUa0MYAWs0hw/4
- bUY4vEN5HLQ0Q6qQXOIKSDjiosdIgJqrNSUu3ltQVhT0K+q1NTObfl4DooUxZiDImkXH
- gKTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706059117; x=1706663917;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jlwHxnYTelKImYkHHzfzeO8DIN7ErB5+rYvEzxnoGVQ=;
- b=PIGYZrJgs/al7XYYkY/qckMP68R9zKn8bbCGuGsNTooRGZRGNtUu+8c1hPbMA5a09n
- XPEuK+R7jxcztG9hGMyjSnhCJsc3xzrUFi0GOeuqrvQQKjqztVWX5NaVJfUJUvz5nyQd
- KcRUhdCl6dKEd/euU/+F6x2MxuWryd3Od7VoCflijaeSe7XyKTwZq/BufK2R/lLJBrbf
- ULQQEUppv03poBJvXdyg7e1+pXlQWKU5c8PDqBpLElGLA/ybYPD0k4XeFY1/R3KPd5YG
- FX7V6SBSmPdWqPZMIbdTIQrkYQNhjyEPF5XZQQayv5hF3Z2WktmSNxjqyXcCZfULdmbp
- bX9Q==
-X-Gm-Message-State: AOJu0YweXPZ9DwnDB/PIpQOQVBF6FrNSXuu0XO2TCd83LetIn/meXJnT
- CL32ooYd9cgK+IahAsxcgw2OB/kkSdbNRk6YwaBSAaF5a/B24Vzvj3xcIUEgZ0Bd9TTSBCmxmTs
- /
-X-Google-Smtp-Source: AGHT+IEVeJPAuvRTDexqrc3cFgXQBCVcKQS40tYqEUOmAYFPlk8SIacO0K55hn+xgTOvQc7C0A5hRg==
-X-Received: by 2002:a05:6870:f61c:b0:205:da63:2e12 with SMTP id
- ek28-20020a056870f61c00b00205da632e12mr2523606oab.101.1706059116855; 
- Tue, 23 Jan 2024 17:18:36 -0800 (PST)
-Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
- (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
- [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
- by smtp.gmail.com with ESMTPSA id
- u33-20020a631421000000b005cdad153d84sm10729818pgl.90.2024.01.23.17.18.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 17:18:36 -0800 (PST)
-Message-ID: <c7c7c7a5-e099-47e2-92ae-6822cd13868e@linaro.org>
-Date: Wed, 24 Jan 2024 11:18:31 +1000
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1rSRvA-00011A-A0
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:19:17 -0500
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1rSRv7-0002VR-CB
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:19:15 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id 0BCADCE2FED;
+ Wed, 24 Jan 2024 01:19:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F879C433F1;
+ Wed, 24 Jan 2024 01:19:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1706059149;
+ bh=xI9QkHcCotyomOjIkiFDcV0CgjT/jadobMJ6uOqT+z4=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=VWi/B60bSgT8d+xlNibrY+ZlcSMlXnFkOsPMO2pb78lcWGxVZkrI3hq51TaCnck13
+ xSSCTfR2q60z9A031tlJZKL5XX7/LOOZKn7WuughmGxhS4MYgK7d3gd4GJLRMAZaFI
+ DGuVkD7lRl0TGwytzrb7Cen81lkSgjAdrne+EykfVTKwF0+KzKM3tk5kmAYZRiyUf7
+ F96/XxnvkvtcYjXqPGBpMtGLLW+qS+M7Zino3aYXwpcip17eNKbUHF+VBDXBXRfCIV
+ T4SWqGjNYzv5hv+2DlGeLlssrLEnui4steaFn9rl/lRRvqD6xlrPMlV7eNDNUE2MrQ
+ t1cOGOYgsyH/w==
+Date: Tue, 23 Jan 2024 17:19:07 -0800 (PST)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
+cc: sstabellini@kernel.org, anthony.perard@citrix.com, paul@xen.org, 
+ vikram.garhwal@amd.com, viresh.kumar@linaro.org, 
+ xen-devel@lists.xenproject.org, qemu-devel@nongnu.org, 
+ Peng Fan <peng.fan@nxp.com>
+Subject: Re: [PATCH V2] xen: Drop out of coroutine context
+ xen_invalidate_map_cache_entry
+In-Reply-To: <20240124021450.21656-1-peng.fan@oss.nxp.com>
+Message-ID: <alpine.DEB.2.22.394.2401231718590.2287888@ubuntu-linux-20-04-desktop>
+References: <20240124021450.21656-1-peng.fan@oss.nxp.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 19/34] accel/tcg: [CPUTLB] Use TCGContext.addr_type
- instead of TARGET_LONG_BITS
-Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: ale@rev.ng, philmd@linaro.org
-References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-20-anjo@rev.ng>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-20-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x236.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=sstabellini@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,16 +75,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/24 00:40, Anton Johansson wrote:
-> @@ -815,12 +815,13 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
->                                  unsigned bits)
->   {
->       TLBFlushRangeData d;
-> +    const unsigned long_bits = (tcg_ctx->addr_type == TCG_TYPE_I32) ? 32 : 64;
+On Wed, 24 Jan 2024, Peng Fan (OSS) wrote:
+> From: Peng Fan <peng.fan@nxp.com>
+> 
+> xen_invalidate_map_cache_entry is not expected to run in a
+> coroutine. Without this, there is crash:
+> 
+>     signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+>     threadid=<optimized out>) at pthread_kill.c:78
+>     at /usr/src/debug/glibc/2.38+git-r0/sysdeps/posix/raise.c:26
+>     fmt=0xffff9e1ca8a8 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n",
+>     assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
+>     file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
+>     function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:92
+>     assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
+>     file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
+>     function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:101
+>     at ../qemu-xen-dir-remote/block/graph-lock.c:260
+>     at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/block/graph-lock.h:259
+>     host=host@entry=0xffff742c8000, size=size@entry=2097152)
+>     at ../qemu-xen-dir-remote/block/io.c:3362
+>     host=0xffff742c8000, size=2097152)
+>     at ../qemu-xen-dir-remote/block/block-backend.c:2859
+>     host=<optimized out>, size=<optimized out>, max_size=<optimized out>)
+>     at ../qemu-xen-dir-remote/block/block-ram-registrar.c:33
+>     size=2097152, max_size=2097152)
+>     at ../qemu-xen-dir-remote/hw/core/numa.c:883
+>     buffer=buffer@entry=0xffff743c5000 "")
+>     at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:475
+>     buffer=buffer@entry=0xffff743c5000 "")
+>     at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:487
+>     as=as@entry=0xaaaae1ca3ae8 <address_space_memory>, buffer=0xffff743c5000,
+>     len=<optimized out>, is_write=is_write@entry=true,
+>     access_len=access_len@entry=32768)
+>     at ../qemu-xen-dir-remote/system/physmem.c:3199
+>     dir=DMA_DIRECTION_FROM_DEVICE, len=<optimized out>,
+>     buffer=<optimized out>, as=0xaaaae1ca3ae8 <address_space_memory>)
+>     at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/sysemu/dma.h:236
+>     elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769)
+>     at ../qemu-xen-dir-remote/hw/virtio/virtio.c:758
+>     elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769, idx=idx@entry=0)
+>     at ../qemu-xen-dir-remote/hw/virtio/virtio.c:919
+>     elem=elem@entry=0xaaaaf620aa30, len=32769)
+>     at ../qemu-xen-dir-remote/hw/virtio/virtio.c:994
+>     req=req@entry=0xaaaaf620aa30, status=status@entry=0 '\000')
+>     at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:67
+>     ret=0) at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:136
+>     at ../qemu-xen-dir-remote/block/block-backend.c:1559
+> --Type <RET> for more, q to quit, c to continue without paging--
+>     at ../qemu-xen-dir-remote/block/block-backend.c:1614
+>     i1=<optimized out>) at ../qemu-xen-dir-remote/util/coroutine-ucontext.c:177
+>     at ../sysdeps/unix/sysv/linux/aarch64/setcontext.S:123
+> 
+> Signed-off-by: Peng Fan <peng.fan@nxp.com>
 
-No, this value isn't initialized at the correct time.
-We are out of scope here.
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
 
-r~
+> 
+> V2:
+>  Drop unused ret in XenMapCacheData (thanks Stefano)
+> 
+>  hw/xen/xen-mapcache.c | 30 ++++++++++++++++++++++++++++--
+>  1 file changed, 28 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+> index f7d974677d..8d62b3d2ed 100644
+> --- a/hw/xen/xen-mapcache.c
+> +++ b/hw/xen/xen-mapcache.c
+> @@ -481,11 +481,37 @@ static void xen_invalidate_map_cache_entry_unlocked(uint8_t *buffer)
+>      g_free(entry);
+>  }
+>  
+> -void xen_invalidate_map_cache_entry(uint8_t *buffer)
+> +typedef struct XenMapCacheData {
+> +    Coroutine *co;
+> +    uint8_t *buffer;
+> +} XenMapCacheData;
+> +
+> +static void xen_invalidate_map_cache_entry_bh(void *opaque)
+>  {
+> +    XenMapCacheData *data = opaque;
+> +
+>      mapcache_lock();
+> -    xen_invalidate_map_cache_entry_unlocked(buffer);
+> +    xen_invalidate_map_cache_entry_unlocked(data->buffer);
+>      mapcache_unlock();
+> +
+> +    aio_co_wake(data->co);
+> +}
+> +
+> +void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
+> +{
+> +    if (qemu_in_coroutine()) {
+> +        XenMapCacheData data = {
+> +            .co = qemu_coroutine_self(),
+> +            .buffer = buffer,
+> +        };
+> +        aio_bh_schedule_oneshot(qemu_get_current_aio_context(),
+> +                                xen_invalidate_map_cache_entry_bh, &data);
+> +        qemu_coroutine_yield();
+> +    } else {
+> +        mapcache_lock();
+> +        xen_invalidate_map_cache_entry_unlocked(buffer);
+> +        mapcache_unlock();
+> +    }
+>  }
+>  
+>  void xen_invalidate_map_cache(void)
+> -- 
+> 2.35.3
+> 
 
