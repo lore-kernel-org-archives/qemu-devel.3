@@ -4,66 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A84C47DDF
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C855C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rScC3-0007fv-31; Wed, 24 Jan 2024 07:17:24 -0500
+	id 1rScVv-0005kh-M0; Wed, 24 Jan 2024 07:37:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vadim.shakirov@syntacore.com>)
- id 1rScBu-0007fT-Jl; Wed, 24 Jan 2024 07:17:17 -0500
-Received: from mta-04.yadro.com ([89.207.88.248])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vadim.shakirov@syntacore.com>)
- id 1rScBs-00022S-J6; Wed, 24 Jan 2024 07:17:14 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com E9D59C0002
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1706098627;
- bh=ASux4KlJHtWR7c1zy0HzR6e4UEPp0SFvfTsiW9xejbc=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=tmyLSnGMNWtae9kSERUZu/azWe9vujP0OYXlolMudld0xUmDih5LDcwiOKtwFy7WU
- rvHDmt+9X4B1UJM5ygWyfZPNOR8DznngyNR2ZAFMIagaPfS8qBe2amckHSRoPcO0II
- LrVjIOdn/9q2eWVZ9qByXZ5ECERWEtSJVrwdAeyed5X9e35VaMfFNJpvRTppRnxasD
- MjaMuYG7L8iW5+agkJIWpxxRGoXq4mWI3l3yU0nvMc/Q6G1UTqfbI0k3oqkiiMQK7N
- gnFUVMVe4bPS5hTo52JV1kfFBXxtPjmtu1pyfRH0fH09ts/Xn/go/ZNPVzPVecqLAx
- 6a4hMEyY03ZrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1706098627;
- bh=ASux4KlJHtWR7c1zy0HzR6e4UEPp0SFvfTsiW9xejbc=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=GRxI0Ws2a2XvYAqRjJigUAQtf6MrZ/dLNgOFUB/a5kLtBqlMaJsLGWHWg6vCEZQgw
- txxMhQuF3Jqjd6MfM/Jr/YDQO7s99gHMTwZdA4IpIOtb0djr+2vjwquMKse2K33ITm
- l4MrQ0gRdX51trrPXSVKVDuA3xgbResF1+v7HzypthC8MoxDS9MvIS/ue1l2DJY/u9
- 13EJwIGpeueBFtEI7DB6YpgZgLEKxHb8wLxNl/NNmeIKcG7FoIeFhGVS0WxiDe9uIA
- mMQrxjW0evj+7fwBe1ZOPphDfivcJp246euiFq2BLR4PCJr/DgbaZFMW+zzgli/pLF
- Dd/VOq0OMVMOw==
-From: Vadim Shakirov <vadim.shakirov@syntacore.com>
-To: <qemu-devel@nongnu.org>
-CC: Vadim Shakirov <vadim.shakirov@syntacore.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin Meng
- <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, "Daniel Henrique
- Barboza" <dbarboza@ventanamicro.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>
-Subject: [PATCH] target/riscv/csr: Added the ability to delegate LCOFI to VS
-Date: Wed, 24 Jan 2024 15:16:07 +0300
-Message-ID: <20240124121607.698469-1-vadim.shakirov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rScVq-0005id-P1
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:37:50 -0500
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rScVo-0006Oe-Nx
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:37:50 -0500
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-5100fd7f71dso818222e87.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 04:37:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706099865; x=1706704665; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=anXfizGFL/FiMlPSuxh+INuOqI7Q/a7lIPZHLKwCaQ8=;
+ b=rFFRj14nds/OPZGdFoRQJg9llzRp831/JEiLH5rqN/21NAI645qb8nOZUSsfEuB3bj
+ T0ruDZI4PayzwbaOEd+OqiZvgeKI1IFJHg5NmHbM2TXB3NI0OIodElMuBWnyHgHUODsb
+ RmiO++lCVMt/DJMEGe6XLvIcKo0c+aXlpjgLAuO6RZkdtH45xogBxoFinWyPGlI1tXQT
+ GuQ3bSPBgQ6g+QFAkb/hCiOxnPlmKRUHDM5BEdG2WN7AzkJoAOAyOI17vLZd6Lmeg8Xs
+ Hs+AzySPoqk6Dr/w4fqG568kGEJtVCLCeOS881CpZhKmLCMV35EE13T6yKD74mwDjWwp
+ mpDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706099865; x=1706704665;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=anXfizGFL/FiMlPSuxh+INuOqI7Q/a7lIPZHLKwCaQ8=;
+ b=IL7OCzvfsIlEG0KdH1cLJJeLi46CR0NygwVN0jJPLLoAY1dYKsJMvP1HyggGX+rSq5
+ DUpGdxtxYmuCgb5h2FBxJo13iCgI29JB6l/apcmM59+QbuaMsoq1siwdFtWkKXb7X030
+ kCt5BlIkRhpaaAyuYQ1NPnDHBAjV3XZW2gR36GpNGco7CTEPLpmDLvlui1wYgd3zsbHG
+ KJY6Y//B64XJDgHbfQqn/0eBt6arjlSnIYrD2Emk9EmdeWodb2Z7DetJ/Q5DCjkQpBVC
+ dD6B6fT0f6aJlJ/6eJsBR3Oc6dtp93Ax8vQK6jafDMyA43cCWRsz4Xw037+KMJ39gZsH
+ hWHw==
+X-Gm-Message-State: AOJu0YzlLMDKyq0hEyRPd1uOdX632UOpWiYZC/VyP6l3P0AF4ljMLf1g
+ ZETxS9YRXnIAuoM+l5P7C9rKa0NocfciVfJb1R313VCk/1siwYq19jVHgW2p1Qg=
+X-Google-Smtp-Source: AGHT+IGR33VImbL4PW8UFMoeRUsRS6etgUcV6SIP2VnR0NI02jW2qisdew9YmFsQWaZlMgAbWWoIaQ==
+X-Received: by 2002:ac2:5df0:0:b0:510:c63:8f38 with SMTP id
+ z16-20020ac25df0000000b005100c638f38mr930305lfq.119.1706099864703; 
+ Wed, 24 Jan 2024 04:37:44 -0800 (PST)
+Received: from [192.168.69.100] (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
+ [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
+ q9-20020aa7cc09000000b00558a3e892b3sm16257147edt.41.2024.01.24.04.37.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 04:37:44 -0800 (PST)
+Message-ID: <ac17cdc2-b34b-47f9-bf5e-545e4aa4a1ca@linaro.org>
+Date: Wed, 24 Jan 2024 13:37:41 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
- S-Exch-01.corp.yadro.com (10.78.5.241)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=vadim.shakirov@syntacore.com; helo=mta-04.yadro.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv/cpu.h: mcountinhibit, mcounteren and
+ scounteren always 32-bit
+Content-Language: en-US
+To: Vadim Shakirov <vadim.shakirov@syntacore.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+References: <20240124120658.695350-1-vadim.shakirov@syntacore.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240124120658.695350-1-vadim.shakirov@syntacore.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,29 +99,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the AIA specification in the paragraph "Virtual interrupts for VS level"
-it is indicated for interrupts 13-63: if the bit in hideleg is enabled,
-then the corresponding vsip and vsie bits are aliases to sip and sie
+Hi Vadim,
 
-Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
----
- target/riscv/csr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 24/1/24 13:06, Vadim Shakirov wrote:
+> mcountinhibit, mcounteren and scounteren must always be 32-bit by
+> privileged spec
+> 
+> Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
+> ---
+>   target/riscv/cpu.h     | 6 +++---
+>   target/riscv/machine.c | 6 +++---
+>   2 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 5b0824ef8f..3cf059199c 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -317,10 +317,10 @@ struct CPUArchState {
+>        */
+>       bool two_stage_indirect_lookup;
+>   
+> -    target_ulong scounteren;
+> -    target_ulong mcounteren;
+> +    uint32_t scounteren;
+> +    uint32_t mcounteren;
+>   
+> -    target_ulong mcountinhibit;
+> +    uint32_t mcountinhibit;
+>   
+>       /* PMU counter state */
+>       PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index fdde243e04..daab121799 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -398,9 +398,9 @@ const VMStateDescription vmstate_riscv_cpu = {
+>           VMSTATE_UINTTL(env.mtval, RISCVCPU),
+>           VMSTATE_UINTTL(env.miselect, RISCVCPU),
+>           VMSTATE_UINTTL(env.siselect, RISCVCPU),
+> -        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
+> -        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
+> -        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
+> +        VMSTATE_UINT32(env.scounteren, RISCVCPU),
+> +        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
+> +        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 1ddc03ff39..ec55be3c45 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1133,7 +1133,7 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
- static const uint64_t delegable_ints =
-     S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
- static const uint64_t vs_delegable_ints =
--    (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
-+    VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
- static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-                                      HS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
- #define DELEGABLE_EXCPS ((1ULL << (RISCV_EXCP_INST_ADDR_MIS)) | \
--- 
-2.34.1
+When changing a migrated field size, you need to bump the version_id,
+see https://www.qemu.org/docs/master/devel/migration/main.html#versions.
 
+Regards,
+
+Phil.
 
