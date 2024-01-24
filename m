@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D06AC48260
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 10:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 197CCC48277
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 10:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSaJQ-0003Cz-TD; Wed, 24 Jan 2024 05:16:52 -0500
+	id 1rSaJZ-0003EP-75; Wed, 24 Jan 2024 05:17:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSaJQ-0003Ck-6e
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 05:16:52 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSaJW-0003ED-VY
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 05:16:59 -0500
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSaJO-0003nP-Aq
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 05:16:51 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a30359b97a8so345924066b.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 02:16:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSaJV-0003oZ-DC
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 05:16:58 -0500
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2cf2a381b86so2734441fa.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 02:16:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706091409; x=1706696209; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706091415; x=1706696215; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aG1VmNa9qyKWKkyTkfP1qaYwJsyZK0k+Eh9BTsafnvQ=;
- b=VzLi3jxHhxEo920rGX6gRIDmRiZj2AkSHCaXwZKpN+TWCS4+yhHuxhDKEciGgNeR7+
- xmlRzUOrDC/m2/1eSaR7vBmWr/RLDIgpTca9JGLk/6hDdQ4eiX+HG26dh3KlgdQ7Guu0
- YEJ8Ht2gDxtPpqq1IN6GiUJZrUvM7IglPa0FsnaM3wZOyGZOOzyjBTYhf4F4WM28dqax
- +g+5natMg7mVDhASbJpl3Jvq5wArg7axR6yw1OeXaWwI/IrZlJCgB+rna3JdesOyJ0UC
- 8AsgC+AN3Tb+58Iw/lLXZ/4Q/A/YszCTinzmEEWuY1g8qpm9Iy3WbNhUc95HZiVuSrbU
- j/dQ==
+ bh=FBMlS39CW/Iv4VBfcOh+Zv0cB8PVhw/t20rhumALwGU=;
+ b=Kkdr2i3BB1dXg81R+RWi9qDJn3QQEEOuI7C4nuEx2ab9BEdZkuncnRWCnxZNw8YAkB
+ G5oIjVSS3hrjIVSBAquYqq+H4DoCQzTkByzWBIvOsB2ggBjxpK4sioJzxfMdxrvBGibd
+ yE49qpZB39HYrGXQ12bu3gGfN+89LdxV4BQq9gK1sWpRFkjBUqp/UvJLYZ+L3DtWbg9g
+ R2AkkD2ruvaIBzf7e0vouGV8t18Tno3+EkmIRAaDGBccusojcRb04b8eVSSap4dWPY1O
+ b4aNDMKMKyKSaabx88powozt844fgfzbN97Fz04gnw94srmdl/3S/NL1nwmUKWEdhx5H
+ ateQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706091409; x=1706696209;
+ d=1e100.net; s=20230601; t=1706091415; x=1706696215;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aG1VmNa9qyKWKkyTkfP1qaYwJsyZK0k+Eh9BTsafnvQ=;
- b=SinOml0dtSKFTZDZUxtwZHf+Mb0IdfVGt0Sfi+vgSmCxT3rt4YLgwzisNnqkL25V8u
- p61k5sMeNzfrDlnW5MdhXY/qGn/32BFYtUiUhDqU1zoDo6t+vVKEEyz7xuBEC1hYHZrg
- MncgfFQIS9HNcfGZM+l/IAGtU4ndReDxxNHk8b7mENVCd5SWtjSfCZhpsglYpzlqsYYE
- tEXqxF5EWRZiwgxGdPisKHbYQz0HBOrkmuy2Pzv9nTpqDDyuiHalRD4Csab9eCz7JreH
- dDLiSo8qlATZLMglhmWs7asevSlGJBoESlKcI3Yhyk/ZnW1mYhugdDcLSFTC1fJ3vI7y
- RnVA==
-X-Gm-Message-State: AOJu0YwLpHDjUT5h86FK6g8bEGyCCWSrPoYqB4CkP8chiw/+eIQGA1CT
- kWZgfg3zICYmNdDiX/5dbL2EgpNumdHrWyS38JrCuoiliy+nLoIVsbJpSYl079Y=
-X-Google-Smtp-Source: AGHT+IG7V+UBnvi+5pbPb6BUIafu8xEh+xMJhHE6KHSpw95PGthvKCiqljmTc1FngTIWiHANLuzCPg==
-X-Received: by 2002:a17:907:c201:b0:a31:3d5a:1337 with SMTP id
- ti1-20020a170907c20100b00a313d5a1337mr120904ejc.45.1706091408933; 
- Wed, 24 Jan 2024 02:16:48 -0800 (PST)
+ bh=FBMlS39CW/Iv4VBfcOh+Zv0cB8PVhw/t20rhumALwGU=;
+ b=ORIIHZVpyokCZ5MhPf+rDjABkoldUMve766OX1bh3nPuDiZbGvSWEGs5JTQF+3SotK
+ 61pVRpP+S+ldlGjfgZ4YTtQt/Ew/UfHPDoSQTIc+jdeybPNeKU4075LZArbVSWyx15RC
+ yuEikW/XHIs0MRGWRUxBuD0wCT2KO3Ps178hArNjK7JvpNFJaQEn3Whll0u3NbOwAiOs
+ i/nAPTUm3OXP97mxkOVXIshTP3U+UEOKnLCUBj/QNSAZ19J1x0NoE/5JSR3z2AdIFXNx
+ Yg+SIJRcJBmgrVIHbwb+tEgdghV35w5L5kIog8PjyO+K27GbZF85uPdjJtDFroCTCkwu
+ KoiA==
+X-Gm-Message-State: AOJu0Ywcm8PR3Hl/X5LWfCnbcxJTZWHztCtppc6ZzHcwfk51CsSMVYBd
+ K4ZU9RIiIFL+pidhGHfl6Ds/YtL4XjB0AWMAR51L/UZ54koZ5w3r3G61QSv1eHA=
+X-Google-Smtp-Source: AGHT+IGWwkbYOC0U4dBmSTynpfE6ssaqXGSArnjuAeOxnV9ZtNSORTiLNAcuzDaJQpkloBLfSHLM6A==
+X-Received: by 2002:a2e:be84:0:b0:2cc:c7ef:924d with SMTP id
+ a4-20020a2ebe84000000b002ccc7ef924dmr971451ljr.29.1706091415358; 
+ Wed, 24 Jan 2024 02:16:55 -0800 (PST)
 Received: from m1x-phil.lan (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
  [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
- i2-20020a170906090200b00a2a04c9226asm15225890ejd.194.2024.01.24.02.16.47
+ cn7-20020a0564020ca700b0055c349e04f8sm3444326edb.36.2024.01.24.02.16.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Jan 2024 02:16:48 -0800 (PST)
+ Wed, 24 Jan 2024 02:16:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Anton Johansson <anjo@rev.ng>,
 	qemu-devel@nongnu.org
@@ -64,17 +64,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
  Claudio Fontana <cfontana@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/9] accel/tcg: Rename tcg_ss[] -> tcg_specific_ss[] in meson
-Date: Wed, 24 Jan 2024 11:16:31 +0100
-Message-ID: <20240124101639.30056-2-philmd@linaro.org>
+Subject: [PATCH 2/9] accel/tcg: Rename tcg_cpus_destroy() -> tcg_cpu_destroy()
+Date: Wed, 24 Jan 2024 11:16:32 +0100
+Message-ID: <20240124101639.30056-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240124101639.30056-1-philmd@linaro.org>
 References: <20240124101639.30056-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,46 +97,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tcg_ss[] source set contains target-specific units.
-Rename it as 'tcg_specific_ss[]' for clarity.
+tcg_cpus_destroy() operates on a single vCPU, rename it
+as 'tcg_cpu_destroy'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/tcg/meson.build | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ accel/tcg/tcg-accel-ops.h       | 2 +-
+ accel/tcg/tcg-accel-ops-mttcg.c | 2 +-
+ accel/tcg/tcg-accel-ops-rr.c    | 2 +-
+ accel/tcg/tcg-accel-ops.c       | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 46f7d53eeb..aef80de967 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -1,8 +1,8 @@
--tcg_ss = ss.source_set()
- common_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'cpu-exec-common.c',
- ))
--tcg_ss.add(files(
-+tcg_specific_ss = ss.source_set()
-+tcg_specific_ss.add(files(
-   'tcg-all.c',
-   'cpu-exec.c',
-   'tb-maint.c',
-@@ -11,12 +11,12 @@ tcg_ss.add(files(
-   'translate-all.c',
-   'translator.c',
- ))
--tcg_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
--tcg_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_false: files('user-exec-stub.c'))
-+tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
-+tcg_specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_false: files('user-exec-stub.c'))
- if get_option('plugins')
--  tcg_ss.add(files('plugin-gen.c'))
-+  tcg_specific_ss.add(files('plugin-gen.c'))
- endif
--specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_ss)
-+specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
+diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
+index f9bc6330e2..17c7ed00eb 100644
+--- a/accel/tcg/tcg-accel-ops.h
++++ b/accel/tcg/tcg-accel-ops.h
+@@ -14,7 +14,7 @@
  
- specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
-   'cputlb.c',
+ #include "sysemu/cpus.h"
+ 
+-void tcg_cpus_destroy(CPUState *cpu);
++void tcg_cpu_destroy(CPUState *cpu);
+ int tcg_cpus_exec(CPUState *cpu);
+ void tcg_handle_interrupt(CPUState *cpu, int mask);
+ void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
+diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
+index af7307013a..bcba314a65 100644
+--- a/accel/tcg/tcg-accel-ops-mttcg.c
++++ b/accel/tcg/tcg-accel-ops-mttcg.c
+@@ -118,7 +118,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
+         qemu_wait_io_event(cpu);
+     } while (!cpu->unplug || cpu_can_run(cpu));
+ 
+-    tcg_cpus_destroy(cpu);
++    tcg_cpu_destroy(cpu);
+     bql_unlock();
+     rcu_remove_force_rcu_notifier(&force_rcu.notifier);
+     rcu_unregister_thread();
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 3208035d85..0617f66b5b 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -131,7 +131,7 @@ static void rr_deal_with_unplugged_cpus(void)
+ 
+     CPU_FOREACH(cpu) {
+         if (cpu->unplug && !cpu_can_run(cpu)) {
+-            tcg_cpus_destroy(cpu);
++            tcg_cpu_destroy(cpu);
+             break;
+         }
+     }
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 813065c0ec..9b84b84218 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -63,7 +63,7 @@ void tcg_cpu_init_cflags(CPUState *cpu, bool parallel)
+     cpu->tcg_cflags |= cflags;
+ }
+ 
+-void tcg_cpus_destroy(CPUState *cpu)
++void tcg_cpu_destroy(CPUState *cpu)
+ {
+     cpu_thread_signal_destroyed(cpu);
+ }
 -- 
 2.41.0
 
