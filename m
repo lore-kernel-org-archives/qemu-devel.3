@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B3DC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8538EC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSS06-00045B-Kp; Tue, 23 Jan 2024 20:24:24 -0500
+	id 1rSSCB-00083q-Us; Tue, 23 Jan 2024 20:36:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSS00-00041w-FN
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:24:16 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSRzx-00036i-PD
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:24:15 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5ca29c131ebso3526375a12.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:24:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706059452; x=1706664252; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=N/sWT9OhmRADi08c5CWgU8jH2w7OHrcforBmTLg1c8k=;
- b=vAXmqsD+FP/NRoAEs15vF3WxkT7NAR3aPInttA3ex4+vQrvuLHHwIPH3+3UwJiZS18
- +ACD5d3Yt2stsY5tfSPxjEsGwydUOe3nJPS10qTTyyTDxRN3lsJYCLtatXf+UqvQgyjf
- GshOvr02gHRvaaCkTr6CQZWnWWw7NZbBdB1ND43FHYcCKoicCl90blXQPESwLUS8Uc0b
- ra0F/HhI6EMLS03L7MFOhETf7We3RX/N6MKY083SVrCGIzHMsUALJHzgLwW4/uzG1gys
- BwHKBrorknFDZmJ/kC+ElUVgoIUgBMQzaX6192IilgvDoP4hMMQ4GZdYRgkQ4egeFlf+
- ZpEg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSCA-00083S-DC
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:36:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSC8-0004tm-Ns
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:36:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706060207;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=SLQ7etTJN6X8ECNfO9QO2r/aTw82hLziht+HY9KFy/o=;
+ b=iw8Y0aSvZu6+Dlt8Ys6MR+xFr1d/UcSrkTvwfPdgMOXVpDUcB//sKyPRzaTrbYYn7UQ2vF
+ isqwdITFdqNozfQRQ1UTCDTXpNLZesbDGZIPI5rB+343Uic3P1X4vDAFycwALRhb6+KEPW
+ 8kePzGIA9PUZji7rUXWlz7MuV4dVTBM=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-237-G3EQRtSpNJ-FaLH3-aVGPg-1; Tue, 23 Jan 2024 20:36:45 -0500
+X-MC-Unique: G3EQRtSpNJ-FaLH3-aVGPg-1
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-6d9b3a964a1so1749280b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:36:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706059452; x=1706664252;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N/sWT9OhmRADi08c5CWgU8jH2w7OHrcforBmTLg1c8k=;
- b=ig/radvJihqqPQK+7WB+rYo91GpF0iW5f6Ee+v5o/ZbbYQzdpVXRm29s4c9hVONnBF
- i0+fE44bXiwlWh0ndVkF4zTkV7mv3ml+jBCk1qsKzBDcXybrMwtWEdq3Gb7skiVIxNhS
- dHTLg/Kdif09Lq6yM+JRcjWyhdyRC3jsLZWh8fVNQPzau6bCY4a4tG+CuRbWkg07I7/f
- Gz+K6Vex7fqY5zD3TsshG7eYT5uMM8WpT2OMQVwhfZCirRp069jBqwhEJbqL0q/DEpLf
- vG+t3MdW2opYSgehRRqA0T3/nWHFWF8mEGMUAfnaYpgsfYg2PGzr7Sgi2u1yFYxQyodC
- E0jg==
-X-Gm-Message-State: AOJu0YyKXldgJGqpHFlCQMCww255u/txy3tD/LoH2jghrFFUpXLOIIno
- xp9XOf33LbsPBGV6XVkWh8/suotEpvLMFKuy7hTqCPH19VRbhtqCVYakZKIiNJs=
-X-Google-Smtp-Source: AGHT+IFzeOOlCTW9sQTfUbpbMyf0nEZMY8OnxE4iSdRwLsQw2Ei4i5qrgo54riw5n25GiwLh9nVkQg==
-X-Received: by 2002:a05:6a20:a8a9:b0:19a:b7f6:7d5b with SMTP id
- ca41-20020a056a20a8a900b0019ab7f67d5bmr94652pzb.103.1706059452220; 
- Tue, 23 Jan 2024 17:24:12 -0800 (PST)
-Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
- (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
- [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
- by smtp.gmail.com with ESMTPSA id
- h20-20020a635314000000b005d4156b3ea2sm1099201pgb.93.2024.01.23.17.24.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 17:24:11 -0800 (PST)
-Message-ID: <ad27bb5c-1de2-4614-b80f-56fe83a8706d@linaro.org>
-Date: Wed, 24 Jan 2024 11:24:08 +1000
+ d=1e100.net; s=20230601; t=1706060204; x=1706665004;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SLQ7etTJN6X8ECNfO9QO2r/aTw82hLziht+HY9KFy/o=;
+ b=ih9QJk8fI4jw+STZE50dBc5GxJf3I4H0MjSbOFPWatC1VJRTdPFy/aJKQ+j2GwN77u
+ el0o8uJZwzSQLRtYxJ9qw75TEJRzgMpCx2MTaIkhkAlc+IWl4HbKjILobag3zXS+E8AG
+ qINgH4U/88A7f8XTGohFrvQPrXXUO7TMzD4r1FQV9Hphw/JGt530dDIQeDsVavPsKUVL
+ EmJUsX0LdTc4p30ZzYjt1NWmR3yU2PBB3zC/6rl7RU9kESSE+QqhREEUqPrVFFgfANGY
+ y2Ij1vJrAApxyZw+FYJVlgc4PO7+xBhJlOJPq6lsO+s09PNkZ/oQL/4sUakXc5X35JCf
+ stgA==
+X-Gm-Message-State: AOJu0YwCylsjdbA40bv/v1fStg+YJSKYNR+RYru2TEGtjZZkfGxh4ucw
+ dZ6SYgl25nRz6irsZghZREnl1f+Zk/VW0CivkFLEMgL1ioyvfJNrVlMPdRIv4bodhar32qXRSCm
+ nGJURASWVryaMXDA9tir+fVdrpE+Nj6dGYrFCAwNbtzx6N/lzz4u7
+X-Received: by 2002:a05:6a21:3991:b0:196:16b0:c554 with SMTP id
+ ad17-20020a056a21399100b0019616b0c554mr16805362pzc.5.1706060204187; 
+ Tue, 23 Jan 2024 17:36:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEoiDyagALzGkkP8fzpzUOMt86y8Vsyh2xG+bNtzyqZ6cSQXq9oYguebqopLpH3racKjd+SLQ==
+X-Received: by 2002:a05:6a21:3991:b0:196:16b0:c554 with SMTP id
+ ad17-20020a056a21399100b0019616b0c554mr16805345pzc.5.1706060203851; 
+ Tue, 23 Jan 2024 17:36:43 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ i24-20020aa787d8000000b006dd8532765bsm846707pfo.191.2024.01.23.17.36.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jan 2024 17:36:43 -0800 (PST)
+Date: Wed, 24 Jan 2024 09:36:37 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ farosas@suse.de, het.gala@nutanix.com
+Subject: Re: [PATCH] migration: Plug memory leak on HMP migrate error path
+Message-ID: <ZbBppQ_4sfyYgl4n@x1n>
+References: <20240117140722.3979657-1-armbru@redhat.com>
+ <CAFEAcA-tX=GPm1zDq5pnL+T_cbivKUQ1dZe_vQ0XAjvehWLdpQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 22/34] accel/tcg: [CPUTLB] Move
- CPU_TLB_DYN_[DEFAULT|MIN]* to cputlb.c
-Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: ale@rev.ng, philmd@linaro.org
-References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-23-anjo@rev.ng>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-23-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-tX=GPm1zDq5pnL+T_cbivKUQ1dZe_vQ0XAjvehWLdpQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,17 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/24 00:40, Anton Johansson wrote:
-> These macros are only used for softmmu targets and only used in
-> cputlb.c, move definitions there.
+On Tue, Jan 23, 2024 at 04:33:43PM +0000, Peter Maydell wrote:
+> On Wed, 17 Jan 2024 at 19:49, Markus Armbruster <armbru@redhat.com> wrote:
+> >
+> > hmp_migrate() leaks @caps when qmp_migrate() fails.  Plug the leak
+> > with g_autoptr().
+> >
+> > Fixes: 967f2de5c9ec (migration: Implement MigrateChannelList to hmp migration flow.) v8.2.0-rc0
+> > Fixes: CID 1533124
 > 
-> Signed-off-by: Anton Johansson<anjo@rev.ng>
-> ---
->   include/exec/cpu-defs.h | 3 ---
->   accel/tcg/cputlb.c      | 3 +++
->   2 files changed, 3 insertions(+), 3 deletions(-)
+> Isn't this 1533125 ? 1533124 is a false positive in
+> the migrate_mode() function.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Indeed.. I fixed it in the staging branch (which will be in the final
+pull), thanks.
 
-r~
+https://gitlab.com/peterx/qemu/-/commit/74278c11b980429916116baf0f742357af51ebb4
+
+-- 
+Peter Xu
+
 
