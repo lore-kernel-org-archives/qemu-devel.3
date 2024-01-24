@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E26C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 21:05:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807E3C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 21:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSkQM-0002WA-8F; Wed, 24 Jan 2024 16:04:42 -0500
+	id 1rSkSm-0004eJ-RP; Wed, 24 Jan 2024 16:07:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSkQD-0002Ve-Qc
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:04:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSkQA-0001OE-69
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:04:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706130266;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pzumg2ibmjGB8BsT1tRBbbHW7FHEV7ESfyDIgA5MVVY=;
- b=KJCeklE/IMSZhmfL9Iiz2RGHgbIQthdEiL3f9mIsIcnWs9jbp8SwUzKsNt8w3I5KJD+vX7
- 1W8IyNA2UmU2oVD+8XhFVvAbxdOG6iS6t7e1CPEY9VXqsEk97qleKzhnAPRT6/8fQIhI/1
- Tt8bsbcssiu02jBC6hDMCYAol+RZexE=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-wsPJCeOmPyWgZ7N_7qMk-A-1; Wed, 24 Jan 2024 16:04:25 -0500
-X-MC-Unique: wsPJCeOmPyWgZ7N_7qMk-A-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-781720619f9so895450085a.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 13:04:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706130264; x=1706735064;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSkSl-0004eA-0J
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:07:11 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSkSi-0001wA-Bj
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:07:10 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6dd80d3d419so1780096b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 13:07:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706130426; x=1706735226; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pzumg2ibmjGB8BsT1tRBbbHW7FHEV7ESfyDIgA5MVVY=;
- b=ZLOA1G6zL2hC18Io5ssYfNY8AlUErny3rm49y8pUY1bXM8+D1nwgDDBi0NQZ/E0CaM
- Bkn2wfw9TsjFxyV+ZoOEtYYr2RP1JFKSx65fYjG1C7RNtCDn4H2ka9a2JOt/2Sc6ol+6
- UDil+e/jVl5pX+7gaISLM/d5HynJrnUZDTiDNAnES35HNb3PQZx4meOiFL0a6mJ66cNu
- e0/uELpaZHozNSXEddI/YImGMYcZITZj1oLGwuSq5JJ6uqTyTHZ7TdTLXCTFqo/55jds
- PsG5t1PIbpwlOupiUieRIPjNHDZJWvCzGtGlYkVfhHjk4cQ6ok8Uy+BYOL1yA7TWeZd9
- rspw==
-X-Gm-Message-State: AOJu0Yxa2fc6yZdMT1ycw7GgaJ6hgauihTOz4UGORiFPe7Pm83HEeQsW
- DFWXsCZOdw5ZwbcBTXSTmXKEbLBW28f2aAw4K60FybFLPCoE2+jnCiDX7+dFu8jW6F+jXHkJHN2
- d8NCnTQrvSb/3MzX8cNLIFXctSFHt91tPlj0aj6xVcUsj9qLPGVmL
-X-Received: by 2002:a37:e301:0:b0:783:4b92:3b3b with SMTP id
- y1-20020a37e301000000b007834b923b3bmr8931013qki.121.1706130263872; 
- Wed, 24 Jan 2024 13:04:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFGk6ZsWoDpoXUt0dPdS4Aa3VxW7YetY8+xBZvjLqGld+O2hjjmLpFvEU/MKwo9BPm58Y7OmQ==
-X-Received: by 2002:a37:e301:0:b0:783:4b92:3b3b with SMTP id
- y1-20020a37e301000000b007834b923b3bmr8930996qki.121.1706130263585; 
- Wed, 24 Jan 2024 13:04:23 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/4ElbIcff0CHPDqU1I8wUrQFcsPXxKnQT6oSTHK94D0=;
+ b=CefUfLQO0laAZXTHPGWe4qGtdu/UjCXwc1HWCAP3bif1DcVukGB8Fyse4D6nOdg8Kr
+ tp5ByzuFxYEB/TxpuPY75BTIjxPp6PbAi5Slv55zXCSqO69vdf626dwsVdPgoJ9FKQvk
+ B82F2BJbK0MJFedLObvEDh0+DQqwMndb3aMjEpN+gutDzHOLLUcx2UptCc82M+JrelwG
+ e87QoaPqR4Ur8Up4O/yRyS9t918CO1cndJjt5G6mYm2m9pgQgGLeTNH6aE8zjgn1h6G6
+ At1ujkYkQAfHiCKAyYiyYvxV4zFNmTLoD0GGRskrL9thfoSoJKIa6H76NrBO0z21cuuW
+ U1fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706130426; x=1706735226;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/4ElbIcff0CHPDqU1I8wUrQFcsPXxKnQT6oSTHK94D0=;
+ b=QgCRUqDmqS3wJ5m5H2BwqkI6+HH93XAUXqp+nDwL2IaUXgPtaPSDQgR+JUKgbGLtUc
+ ETgqXemXbcPvI/04s+/YNufXR2zSmL6aZ6neGgwpPHlJDyqhoa1gkJS/kZW7rhTZAQCc
+ eM8VqWce7JSTaJl04QLyLUWn+6MWgt0j/KolQG4FmF6iDeQ5N3hpM66gzWqrzIxVi3tg
+ j2M8FatpoMH+ibI72Ahs93CKvgkrptpx7lcDEGn6WF3xGvY4rIBU2MADlwM2CCrpX7Mk
+ NKofczMyKDdN9BiiZxiWuE2aGsRscKoaIPcJXkrSSAGsldrtjf6nJBHrNMNkdMRpV6ig
+ Ftfg==
+X-Gm-Message-State: AOJu0YxfUJ1mPKIy2YxCsm5umZu6EqYi0JX0+mVacyoGCrpAwvx5u4HC
+ h0RpomaZipwzmQqoVL2akLLYkroKBuh1qUVYOJHgSnISrKfDcAmEvw91bwV6ZE8=
+X-Google-Smtp-Source: AGHT+IGqhMsXarAOnI3havs5nKD2Pe/+PS5TCgG2uSYqvolZ1u82RqYQbR1h3mlaGAGNwMVg1f5U0Q==
+X-Received: by 2002:a05:6a20:1591:b0:196:6d16:6db4 with SMTP id
+ h17-20020a056a20159100b001966d166db4mr56234pzj.53.1706130426294; 
+ Wed, 24 Jan 2024 13:07:06 -0800 (PST)
+Received: from ?IPV6:2001:44b8:2176:c800:5fcf:9e3:2e58:9c7?
+ (2001-44b8-2176-c800-5fcf-09e3-2e58-09c7.static.ipv6.internode.on.net.
+ [2001:44b8:2176:c800:5fcf:9e3:2e58:9c7])
  by smtp.gmail.com with ESMTPSA id
- m29-20020a05620a215d00b00783958079b0sm4015507qkm.123.2024.01.24.13.04.21
+ r13-20020a63d90d000000b005ce033f3b54sm12497610pgg.27.2024.01.24.13.07.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 13:04:22 -0800 (PST)
-Message-ID: <ef080ff4-1fd5-4639-a316-6e09949608c7@redhat.com>
-Date: Wed, 24 Jan 2024 22:04:19 +0100
+ Wed, 24 Jan 2024 13:07:05 -0800 (PST)
+Message-ID: <4394fc8e-3646-4811-adeb-fc44e307e90f@linaro.org>
+Date: Thu, 25 Jan 2024 07:06:57 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] virtio_iommu: Clear IOMMUPciBus pointer cache when
- system reset
+Subject: Re: [PATCH v5 1/4] target: Make qemu_target_page_mask() available for
+ *-user
 Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Cc: "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>
-References: <20240122064015.94630-1-zhenzhong.duan@intel.com>
- <20240122064015.94630-2-zhenzhong.duan@intel.com>
- <c47b95f9-ca42-4f8e-85d1-8fc72404e441@redhat.com>
- <SJ0PR11MB6744E96BE6A6014F7E43899892742@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <SJ0PR11MB6744E96BE6A6014F7E43899892742@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20240124075609.14756-1-philmd@linaro.org>
+ <20240124075609.14756-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240124075609.14756-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,59 +99,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On 1/24/24 17:56, Philippe Mathieu-Daudé wrote:
+> From: Ilya Leoshkevich<iii@linux.ibm.com>
+> 
+> Currently qemu_target_page_mask() is usable only from the softmmu
+> code. Make it possible to use it from the *-user code as well.
+> 
+> Make use of it in perf.c.
+> 
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> Message-ID:<20231208003754.3688038-2-iii@linux.ibm.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   accel/tcg/perf.c       |  3 ++-
+>   system/physmem.c       |  5 -----
+>   target/target-common.c | 10 ++++++++++
+>   target/meson.build     |  2 ++
+>   4 files changed, 14 insertions(+), 6 deletions(-)
+>   create mode 100644 target/target-common.c
 
-On 1/23/24 11:03, Duan, Zhenzhong wrote:
->
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH 1/3] virtio_iommu: Clear IOMMUPciBus pointer cache
->> when system reset
->>
->> On 1/22/24 07:40, Zhenzhong Duan wrote:
->>> IOMMUPciBus pointer cache is indexed by bus number, bus number
->>> may not always be a fixed value, i.e., guest reboot to different
->>> kernel which set bus number with different algorithm.
-this cannot harm to reset it but I don't know if this can be encountered.
->>>
->>> This could lead to endpoint binding to wrong iommu MR in
->>> virtio_iommu_get_endpoint(), then vfio device setup wrong
->>> mapping from other device.
->>>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>   hw/virtio/virtio-iommu.c | 2 ++
->>>   1 file changed, 2 insertions(+)
->>>
->>> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
->>> index 8a4bd933c6..bfce3237f3 100644
->>> --- a/hw/virtio/virtio-iommu.c
->>> +++ b/hw/virtio/virtio-iommu.c
->>> @@ -1264,6 +1264,8 @@ static void virtio_iommu_system_reset(void
->> *opaque)
->>>       trace_virtio_iommu_system_reset();
->>>
->>> +    memset(s->iommu_pcibus_by_bus_num, 0, sizeof(s-
->>> iommu_pcibus_by_bus_num));
->>> +
->>>       /*
->>>        * config.bypass is sticky across device reset, but should be restored on
->>>        * system reset
->> you could remove the memset in virtio_iommu_device_realize() then ?
-> Good suggestion, will do.
-By the way what about the vtd implementation. s->vtd_address_spaces is
-hash table but I don't see it reset either?
-Also if is requested here we would need it on smmuv3 as well.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Thanks
-
-Eric
->
-> Thanks
-> Zhenzhong
-
+r~
 
