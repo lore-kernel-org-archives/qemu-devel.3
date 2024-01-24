@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74D0C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7F0C47422
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSmPG-0006i8-Nf; Wed, 24 Jan 2024 18:11:42 -0500
+	id 1rSmPM-0006j1-QC; Wed, 24 Jan 2024 18:11:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSmPF-0006hO-2O
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:11:41 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1rSmPL-0006iG-A6
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:11:47 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSmPD-0003up-Fb
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:11:40 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5c66b093b86so140991a12.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:11:37 -0800 (PST)
+ id 1rSmPJ-0003wi-Rb
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:11:47 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6dd80d3d419so1871899b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:11:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706137896; x=1706742696; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706137904; x=1706742704; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XDkAiNGuU47Lf9GHTQcJgmICrLyRLIEDQVJIdDAwQeU=;
- b=OMt0DXZIq+a7SVKYvpRmgZ7DDdEPacr7iURF2UPuOPx6FUzNWsXjE/0Cg2TD0lbj07
- 3QsFYP57ebCGMFUdIdMTbVtZ8hS+5oR/CnyX/QHQPXMWIo/2vSftdJBYgSlcAeovjYtL
- vJWw/Rs7lUNyQfCJuQkmWo3s7rkOLPTNPT4uA+epPW9uoIwzTfPVT4fZwi3HdAVbq8o6
- szexNHDa0HFkkFcn/UG70kuoCXOmKi/jhshhxCkSxaWSBm9b6LFkdwN3MCn5OGsK2PCl
- dKJQTFGkRqPvvJlbCv0qqiu8GgmdtJEPE6hM36g1h31bGfi18Q/CHi1YoOvmXuuzaNmA
- 2Pew==
+ bh=ooNjC5URG4Lz86seiX3R4uiDgkFfNlSMcOQI4mNAUj4=;
+ b=nHyYmjHa9lAWZbwQ3LnGmUvXG/G24oWnjPpRXzDKzWmWuNvFcW8gPUZxM9Cf7NboBv
+ 9qszf3ORlaOotqLKlV95QwMrRxv9s+rCzFdwEGXjWKmAidh+xhh3ruhm8gJzor0cHcLb
+ XjZe4zUbp4Usq/1nkgrWiYPPGO5ZCnPDZGu5rj33KT8hkRvPAopkB5pP4N4Sp1LfXQIb
+ 8SKHeP3xbu4oNfb56eqE1c8I2tY9gFDjXyMJMlEhluSSg1EIHzPq/kZufdrsVv2q2uTM
+ eq+gv4WvOiBOAuCz7Hj4Dmj040dA2nDA5oW/edgVmNrmRywUq6c0PEao1h+ZlCV6o5z+
+ U1Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706137896; x=1706742696;
+ d=1e100.net; s=20230601; t=1706137904; x=1706742704;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XDkAiNGuU47Lf9GHTQcJgmICrLyRLIEDQVJIdDAwQeU=;
- b=DFLnI4Cdx6Iy+hhD3a/4BrSZ8qZzptk46kX8Oxk545+/c1XmCuExpEXDhcXOliyhrI
- LVzasgEytYd3a7xEidQ3cXsQQiav9Es8p+WKA+b7iPvrTAjtTnIfX+RcvdqEbCsM0ZV/
- 6N/rmUmC4nWwGaaACe7CqTGye1tncuw2pBDjJaM3IPNOawiuoRndrjZRB2zZ8FtZNPvw
- CetmU0BbzGahzm/mre5sNEuTAy4vHW46lKoY4bRpX3tPCSPRUtpsiRu3DLf8wB2sxTKK
- s6bInTuhcUn1BVgb/xsrmM3U+ZlEglo5hSODjtXJ3uqJB7ul9RD8Yi6s3YCHhavUthcL
- a/wg==
-X-Gm-Message-State: AOJu0YxqWAQgHjaOoWh3wSdKIqqbl706b1UVFjAfgC7CEPT+YOlKMYzD
- 9qHNvFtTvcaN6GMYLALbKM9/LMKOvx1oRiTgz4Fu6lXZ/6G+C2V9hA2THNWv/O8=
-X-Google-Smtp-Source: AGHT+IGLhTB9Ki6xXgWMCXAWw9vFKuU+73QutgL1XfD8FtvBIKCLfdyEsKkIme/D360A/3V2MBSfBQ==
-X-Received: by 2002:a05:6a20:1454:b0:19a:a026:4e7c with SMTP id
- a20-20020a056a20145400b0019aa0264e7cmr134356pzi.49.1706137896214; 
- Wed, 24 Jan 2024 15:11:36 -0800 (PST)
+ bh=ooNjC5URG4Lz86seiX3R4uiDgkFfNlSMcOQI4mNAUj4=;
+ b=sAW7gIgs+p580tMT96cmnurux5mQkHvRGZwoQrwFooCrkxcarJ41UkFfosmrnqdsM/
+ +CjkefXWhY3D6D2/AHzKsDz9ECS/3hjuMap3CacjfnAWqPEUyvDeXNPMJw9UggB9vaIQ
+ mBwHLHzySfupPRCPv0rYCNd5TIyT6rzpnP5edFxS91d/XA07ErTm2u1hbSHs/HljdRe4
+ IB4cZrwVeBMKFDddyVXNeNd8m4qXSuO04ivjHyN5y1zPLNmmRALBgYNRSw4/JAamROts
+ zKUnlGqKzbh4oEGpjugtLZQXTpOAYJIqp/iI864GdP/WjKuAf1WyD/IJNj7Z4yfuqxUZ
+ LQow==
+X-Gm-Message-State: AOJu0YwImF+v5TzTs1QyT6hzNpn0o3tPZZXI0rHs/X5dNfWqLCuL6iZQ
+ 0FTDZ0BcJc8xGL1BPzmMlgqJ2nPvY27KyUvISRDyHcApWwSm4BrOClrHPVKzF4nMqvSmOyBqAmQ
+ j
+X-Google-Smtp-Source: AGHT+IH3WsLdt/BiUPFU2xBxgSSGl4vblS9mQOn4djUNUmb35vecmD9JfJ5nmnz5oO1wSeKkXhzmGg==
+X-Received: by 2002:a05:6a00:18a2:b0:6d9:cb27:e47 with SMTP id
+ x34-20020a056a0018a200b006d9cb270e47mr302674pfh.18.1706137904441; 
+ Wed, 24 Jan 2024 15:11:44 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:5fcf:9e3:2e58:9c7?
  (2001-44b8-2176-c800-5fcf-09e3-2e58-09c7.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:5fcf:9e3:2e58:9c7])
  by smtp.gmail.com with ESMTPSA id
- d1-20020a056a0010c100b006dbc750ea5asm9684090pfu.196.2024.01.24.15.11.31
+ d1-20020a056a0010c100b006dbc750ea5asm9684090pfu.196.2024.01.24.15.11.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 15:11:35 -0800 (PST)
-Message-ID: <62908ce0-da58-4f36-a88f-22487231fb08@linaro.org>
-Date: Thu, 25 Jan 2024 09:11:30 +1000
+ Wed, 24 Jan 2024 15:11:44 -0800 (PST)
+Message-ID: <2f66bba4-992c-4af7-a09f-42bbf2540dde@linaro.org>
+Date: Thu, 25 Jan 2024 09:11:38 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] hw/arm/exynos: Add missing QOM parent for CPU cores
+Subject: Re: [PATCH v2 3/6] hw/arm/highbank: Add missing QOM parent for CPU
+ cores
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -76,13 +78,13 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Gavin Shan <gshan@redhat.com>, Alistair Francis <alistair@alistair23.me>,
  Igor Mammedov <imammedo@redhat.com>
 References: <20240123222508.13826-1-philmd@linaro.org>
- <20240123222508.13826-2-philmd@linaro.org>
+ <20240123222508.13826-4-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240123222508.13826-2-philmd@linaro.org>
+In-Reply-To: <20240123222508.13826-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,7 +113,7 @@ On 1/24/24 08:25, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/arm/exynos4210.c | 1 +
+>   hw/arm/highbank.c | 1 +
 >   1 file changed, 1 insertion(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
