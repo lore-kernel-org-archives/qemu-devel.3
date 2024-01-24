@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8538EC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:37:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55436C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSSCB-00083q-Us; Tue, 23 Jan 2024 20:36:51 -0500
+	id 1rSSIh-0001ix-GB; Tue, 23 Jan 2024 20:43:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSCA-00083S-DC
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:36:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSId-0001dy-Rl
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:43:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSC8-0004tm-Ns
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:36:50 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSIb-00060m-RU
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:43:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706060207;
+ s=mimecast20190719; t=1706060608;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SLQ7etTJN6X8ECNfO9QO2r/aTw82hLziht+HY9KFy/o=;
- b=iw8Y0aSvZu6+Dlt8Ys6MR+xFr1d/UcSrkTvwfPdgMOXVpDUcB//sKyPRzaTrbYYn7UQ2vF
- isqwdITFdqNozfQRQ1UTCDTXpNLZesbDGZIPI5rB+343Uic3P1X4vDAFycwALRhb6+KEPW
- 8kePzGIA9PUZji7rUXWlz7MuV4dVTBM=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PAs8PX+Eo6fGpjv1IpdoZekJnEyXvNDhvYWp4y0TMyo=;
+ b=HHvd2f3z7bU/lfKNYeEg5+zm/NNed9tlGOaiUBZuP92vVGenfs31NaZ5YZZchvxdh/5KSo
+ lgqIDSELIaV3p3IsHParBhPAMztG9lmVnjnaNKATDaZOFsCy4LG/jVDVVvbWL9B9gkamkX
+ pOr9gssBjININ4vW/eqtMIvglpMo54Q=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-G3EQRtSpNJ-FaLH3-aVGPg-1; Tue, 23 Jan 2024 20:36:45 -0500
-X-MC-Unique: G3EQRtSpNJ-FaLH3-aVGPg-1
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-6d9b3a964a1so1749280b3a.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:36:45 -0800 (PST)
+ us-mta-288-IlNeg4DmMIqlEL3ILpjBWA-1; Tue, 23 Jan 2024 20:43:27 -0500
+X-MC-Unique: IlNeg4DmMIqlEL3ILpjBWA-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5cf53f904f9so736412a12.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:43:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706060204; x=1706665004;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SLQ7etTJN6X8ECNfO9QO2r/aTw82hLziht+HY9KFy/o=;
- b=ih9QJk8fI4jw+STZE50dBc5GxJf3I4H0MjSbOFPWatC1VJRTdPFy/aJKQ+j2GwN77u
- el0o8uJZwzSQLRtYxJ9qw75TEJRzgMpCx2MTaIkhkAlc+IWl4HbKjILobag3zXS+E8AG
- qINgH4U/88A7f8XTGohFrvQPrXXUO7TMzD4r1FQV9Hphw/JGt530dDIQeDsVavPsKUVL
- EmJUsX0LdTc4p30ZzYjt1NWmR3yU2PBB3zC/6rl7RU9kESSE+QqhREEUqPrVFFgfANGY
- y2Ij1vJrAApxyZw+FYJVlgc4PO7+xBhJlOJPq6lsO+s09PNkZ/oQL/4sUakXc5X35JCf
- stgA==
-X-Gm-Message-State: AOJu0YwCylsjdbA40bv/v1fStg+YJSKYNR+RYru2TEGtjZZkfGxh4ucw
- dZ6SYgl25nRz6irsZghZREnl1f+Zk/VW0CivkFLEMgL1ioyvfJNrVlMPdRIv4bodhar32qXRSCm
- nGJURASWVryaMXDA9tir+fVdrpE+Nj6dGYrFCAwNbtzx6N/lzz4u7
-X-Received: by 2002:a05:6a21:3991:b0:196:16b0:c554 with SMTP id
- ad17-20020a056a21399100b0019616b0c554mr16805362pzc.5.1706060204187; 
- Tue, 23 Jan 2024 17:36:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEoiDyagALzGkkP8fzpzUOMt86y8Vsyh2xG+bNtzyqZ6cSQXq9oYguebqopLpH3racKjd+SLQ==
-X-Received: by 2002:a05:6a21:3991:b0:196:16b0:c554 with SMTP id
- ad17-20020a056a21399100b0019616b0c554mr16805345pzc.5.1706060203851; 
- Tue, 23 Jan 2024 17:36:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706060606; x=1706665406;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PAs8PX+Eo6fGpjv1IpdoZekJnEyXvNDhvYWp4y0TMyo=;
+ b=m8+MPiOJRL8CxQP1MZtmeQhkMr0kpuJODsdxr+n3uAJPPmj5m+LpcaOuUmHQ3jSinp
+ FWhIH4h6IGwmf1crpS30eXJjVxsntMspwbJV0mm78kd4dIA4e2l/EwE6VpTX1EZRUsE9
+ gSFZuORddkPksTSpbob3RRH3BSWmD2WN4ziusWB3QMEJHGlDR5UfBVcS56nBvyLtbhd1
+ Wd5GsCqIYU6ome2Ft6fmsKfku28UMZS8OMWAiUQ5tM/0W2YhuSu5OD5S21OUAbI/0W6R
+ YNHtRJiVta+rEFKD+TnhX5o+U7+XO5LFiDnNTdMZboWLJZ/ILnYgRvs02ocht9ZL+RXL
+ thFQ==
+X-Gm-Message-State: AOJu0YxtyJY3Njsi8Huk4e6qqNdfomTAbyGt9JNi99JqofYdALJtZrhB
+ /Z0Q7chhfvJkjBsCWMGmoD2oATQZpspx5BHNdzuOrhvOXuglItw8KTjTlGxSiKkoSzrxLUZblGy
+ gNh17uuX6kqpe4APzUvrYGMMn2ohlr7NDqXPX4bb5s7iq4YJmtCW1
+X-Received: by 2002:a05:6a20:e68c:b0:19a:3d53:3ecf with SMTP id
+ mz12-20020a056a20e68c00b0019a3d533ecfmr935746pzb.1.1706060606092; 
+ Tue, 23 Jan 2024 17:43:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGGZWNGLFqRpKFCTFx5d7xfOgzlI2n9/S6sxSnbKjwaSxg3mi/Q9FIdky0lbX+3qDTIonAM3g==
+X-Received: by 2002:a05:6a20:e68c:b0:19a:3d53:3ecf with SMTP id
+ mz12-20020a056a20e68c00b0019a3d533ecfmr935733pzb.1.1706060605760; 
+ Tue, 23 Jan 2024 17:43:25 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- i24-20020aa787d8000000b006dd8532765bsm846707pfo.191.2024.01.23.17.36.41
+ jw12-20020a170903278c00b001d73047d4f9sm5947555plb.284.2024.01.23.17.43.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jan 2024 17:36:43 -0800 (PST)
-Date: Wed, 24 Jan 2024 09:36:37 +0800
+ Tue, 23 Jan 2024 17:43:25 -0800 (PST)
+Date: Wed, 24 Jan 2024 09:43:19 +0800
 From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- farosas@suse.de, het.gala@nutanix.com
-Subject: Re: [PATCH] migration: Plug memory leak on HMP migrate error path
-Message-ID: <ZbBppQ_4sfyYgl4n@x1n>
-References: <20240117140722.3979657-1-armbru@redhat.com>
- <CAFEAcA-tX=GPm1zDq5pnL+T_cbivKUQ1dZe_vQ0XAjvehWLdpQ@mail.gmail.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Het Gala <het.gala@nutanix.com>
+Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org, farosas@suse.de,
+ armbru@redhat.com
+Subject: Re: [PATCH] Make 'uri' optional for migrate QAPI
+Message-ID: <ZbBrN-V8goSJxEst@x1n>
+References: <20240123064219.40514-1-het.gala@nutanix.com>
+ <Za93I-50U745B27C@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA-tX=GPm1zDq5pnL+T_cbivKUQ1dZe_vQ0XAjvehWLdpQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Za93I-50U745B27C@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,22 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 23, 2024 at 04:33:43PM +0000, Peter Maydell wrote:
-> On Wed, 17 Jan 2024 at 19:49, Markus Armbruster <armbru@redhat.com> wrote:
-> >
-> > hmp_migrate() leaks @caps when qmp_migrate() fails.  Plug the leak
-> > with g_autoptr().
-> >
-> > Fixes: 967f2de5c9ec (migration: Implement MigrateChannelList to hmp migration flow.) v8.2.0-rc0
-> > Fixes: CID 1533124
+On Tue, Jan 23, 2024 at 08:21:55AM +0000, Daniel P. Berrangé wrote:
+> On Tue, Jan 23, 2024 at 06:42:19AM +0000, Het Gala wrote:
+> > 'uri' argument should be optional, as 'uri' and 'channels'
+> > arguments are mutally exclusive in nature.
+> > 
+> > Fixes: 074dbce5fcce (migration: New migrate and
+> > migrate-incoming argument 'channels')
+> > Signed-off-by: Het Gala <het.gala@nutanix.com>
+> > ---
+> >  qapi/migration.json | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index eb2f883513..197d3faa43 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -1757,7 +1757,7 @@
+> >  #
+> >  ##
+> >  { 'command': 'migrate',
+> > -  'data': {'uri': 'str',
+> > +  'data': {'*uri': 'str',
+> >             '*channels': [ 'MigrationChannel' ],
+> >             '*blk': { 'type': 'bool', 'features': [ 'deprecated' ] },
+> >             '*inc': { 'type': 'bool', 'features': [ 'deprecated' ] },
 > 
-> Isn't this 1533125 ? 1533124 is a false positive in
-> the migrate_mode() function.
+> Hmm, this mistake shows a lack of coverage in migration-test.c for
+> the 'channels' argument. I thought the original series adding 'channels'
+> included the tests for this. Either way, this needs to come with test
+> coverage for use of 'channels', with 'uri' omitted.
 
-Indeed.. I fixed it in the staging branch (which will be in the final
-pull), thanks.
-
-https://gitlab.com/peterx/qemu/-/commit/74278c11b980429916116baf0f742357af51ebb4
+Agreed.  Het, do you plan to provide a test case?
 
 -- 
 Peter Xu
