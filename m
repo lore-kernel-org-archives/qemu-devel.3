@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD197C47DDF
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D0AC47DDF
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rScez-0007sh-Rl; Wed, 24 Jan 2024 07:47:17 -0500
+	id 1rScev-0007kM-IJ; Wed, 24 Jan 2024 07:47:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rScey-0007ny-1J
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:47:16 -0500
+ id 1rSceP-0007bO-Pk
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:46:42 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rSces-00083X-LA
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:47:12 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKkDD16cZz6K8yv;
- Wed, 24 Jan 2024 20:44:12 +0800 (CST)
+ id 1rSceN-00080k-UB
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:46:41 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKkCd43zyz6K9N9;
+ Wed, 24 Jan 2024 20:43:41 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id C2D86140D1A;
- Wed, 24 Jan 2024 20:47:08 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 32B84140390;
+ Wed, 24 Jan 2024 20:46:38 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 24 Jan 2024 12:47:08 +0000
+ 15.1.2507.35; Wed, 24 Jan 2024 12:46:37 +0000
 To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Fan Ni
  <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>
 CC: Ira Weiny <ira.weiny@intel.com>, Huai-Cheng Kuo
@@ -38,10 +38,9 @@ CC: Ira Weiny <ira.weiny@intel.com>, Huai-Cheng Kuo
  Hyeonggon Yoo <42.hyeyoo@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
  Stefan Hajnoczi <stefanha@gmail.com>, <linuxarm@huawei.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 12/12] tests/acpi: Update DSDT.cxl to reflect change _STA
- return value.
-Date: Wed, 24 Jan 2024 12:41:00 +0000
-Message-ID: <20240124124100.8218-13-Jonathan.Cameron@huawei.com>
+Subject: [PATCH 11/12] hw/i386: Fix _STA return value for ACPI0017
+Date: Wed, 24 Jan 2024 12:40:59 +0000
+Message-ID: <20240124124100.8218-12-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
 References: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
@@ -76,34 +75,39 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-_STA will now return 0xB (in common with most other devices)
-rather than not setting the bits to indicate this fake device
-has not been enabled, and self tests haven't passed.
+Found whilst testing a series for the linux kernel that actually
+bothers to check if enabled is set. 0xB is the option used
+for vast majority of DSDT entries in QEMU.
+It is a little odd for a device that doesn't really exist and
+is simply a hook to tell the OS there is a CEDT table but 0xB
+seems a reasonable choice and avoids need to special case
+this device in the OS.
+
+Means:
+* Device present.
+* Device enabled and decoding it's resources.
+* Not shown in UI
+* Functioning properly
+* No battery (on this device!)
 
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/q35/DSDT.cxl                | Bin 9713 -> 9714 bytes
- 2 files changed, 1 deletion(-)
+ hw/i386/acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 9ce0f596cc..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/q35/DSDT.cxl",
-diff --git a/tests/data/acpi/q35/DSDT.cxl b/tests/data/acpi/q35/DSDT.cxl
-index 145301c52af9a17242bb306c210f8a7e0f01b827..afcdc0d0ba8e41bb70ac20a78dcc8562ca0cb74b 100644
-GIT binary patch
-delta 64
-zcmez9{mGllCD<k8lPUuP<Nb|X6BX6{S>uD9;-j0~S)C(%d^zGhJY9GlodY}#3=GW~
-UL^$JvLmU~FaB*)wsA#|f0Fwq1RsaA1
-
-delta 63
-zcmez5{n4AtCD<k8qbdUf<M)kR6BX6`SmT48;-j0~Se+w$d^zGhJY9GlodY}#3=GW~
-TL^$GuLmU~FFm67iXutvhh3yhn
-
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index edc979379c..e3e9afd376 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1415,7 +1415,7 @@ static void build_acpi0017(Aml *table)
+     aml_append(dev, aml_name_decl("_HID", aml_string("ACPI0017")));
+ 
+     method = aml_method("_STA", 0, AML_NOTSERIALIZED);
+-    aml_append(method, aml_return(aml_int(0x01)));
++    aml_append(method, aml_return(aml_int(0x0B)));
+     aml_append(dev, method);
+     build_cxl_dsm_method(dev);
+ 
 -- 
 2.39.2
 
