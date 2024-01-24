@@ -4,52 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9654C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 17:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 554EDC47E49
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 17:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSguJ-0004IA-MQ; Wed, 24 Jan 2024 12:19:23 -0500
+	id 1rShD5-00029L-IQ; Wed, 24 Jan 2024 12:38:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1rSguG-0004EY-7m
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:19:20 -0500
-Received: from rev.ng ([5.9.113.41])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rShD3-00028B-KP
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:38:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1rSguE-0005YS-EV
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:19:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=zkLxAs4kHM9h7SJkHoIou3sYZTwbSWrSUV2u3oOecq4=; b=VW3pfVvTdCOqzdS/SvifEO/uLv
- liiLYFaUX2M8dx0fmiNl10o8oOUt5qv8Gb2INmc1b3EvkFhUYdDNwRdQDfa6GO6qGIQe274oC4CK6
- Y7cyY1Oplr8bb+ETYoeEPT7Ao72Dgyu3nOsQvzlDpEWPpRP+A545qn3RZosIwp5QoeDY=;
-Date: Wed, 24 Jan 2024 18:19:26 +0100
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>, 
- Claudio Fontana <cfontana@suse.de>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH 9/9] target/i386: Extract x86_cpu_exec_halt() from
- accel/tcg/
-Message-ID: <lf6xtka7t7mbai3g6t2lbjtjj4dsfzvvdxivs5dqmphwudjs76@6ekdkiqmxn3u>
-References: <20240124101639.30056-1-philmd@linaro.org>
- <20240124101639.30056-10-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rShD2-00026z-2h
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:38:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706117923;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=F4OmqxgKC3qddtr32VKeaMZ3RM6Vrl6zAhR61NVpNCM=;
+ b=SOZ/p14nmRwFi6jS8elXJlNOuV7ba79pcKy9fvRz+z8jgIZzhr8Xdm/ZP8xgeJLfRqikpq
+ R3ZJvXuRMsrP776nUcDQ0YkBbIcTRZMB9nC/PPchm3cHygpsXLEj5YI4wB1YEb7dScQ4ZM
+ bzU0cDTAdtkFim5Gf3WzFMhhTPQEWCk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-301-kvcE8gPUMZuwz-zrv7iZqA-1; Wed, 24 Jan 2024 12:38:39 -0500
+X-MC-Unique: kvcE8gPUMZuwz-zrv7iZqA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3576F845DC9;
+ Wed, 24 Jan 2024 17:38:39 +0000 (UTC)
+Received: from localhost (unknown [10.39.194.82])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id BCDF0C0FDCA;
+ Wed, 24 Jan 2024 17:38:38 +0000 (UTC)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: [PATCH 1/2] virtio-scsi: Attach event vq notifier with no_poll
+Date: Wed, 24 Jan 2024 18:38:29 +0100
+Message-ID: <20240124173834.66320-2-hreitz@redhat.com>
+In-Reply-To: <20240124173834.66320-1-hreitz@redhat.com>
+References: <20240124173834.66320-1-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240124101639.30056-10-philmd@linaro.org>
-Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,110 +79,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/01/24, Philippe Mathieu-Daudé wrote:
-> Move this x86-specific code out of the generic accel/tcg/.
-> 
-> Reported-by: Anton Johansson <anjo@rev.ng>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  target/i386/tcg/helper-tcg.h        |  1 +
->  accel/tcg/cpu-exec.c                | 12 ------------
->  target/i386/tcg/sysemu/seg_helper.c | 13 +++++++++++++
->  target/i386/tcg/tcg-cpu.c           |  1 +
->  4 files changed, 15 insertions(+), 12 deletions(-)
-> 
-> diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-> index 253b1f561e..effc2c1c98 100644
-> --- a/target/i386/tcg/helper-tcg.h
-> +++ b/target/i386/tcg/helper-tcg.h
-> @@ -39,6 +39,7 @@ QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > TARGET_PHYS_ADDR_SPACE_BITS);
->   */
->  void x86_cpu_do_interrupt(CPUState *cpu);
->  #ifndef CONFIG_USER_ONLY
-> +void x86_cpu_exec_halt(CPUState *cpu);
->  bool x86_need_replay_interrupt(int interrupt_request);
->  bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
->  #endif
-> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> index 390a9644da..7662f4973d 100644
-> --- a/accel/tcg/cpu-exec.c
-> +++ b/accel/tcg/cpu-exec.c
-> @@ -30,9 +30,6 @@
->  #include "qemu/rcu.h"
->  #include "exec/log.h"
->  #include "qemu/main-loop.h"
-> -#if defined(TARGET_I386) && !defined(CONFIG_USER_ONLY)
-> -#include "hw/i386/apic.h"
-> -#endif
->  #include "sysemu/cpus.h"
->  #include "exec/cpu-all.h"
->  #include "sysemu/cpu-timers.h"
-> @@ -672,15 +669,6 @@ static inline bool cpu_handle_halt(CPUClass *cc, CPUState *cpu)
->  {
->  #ifndef CONFIG_USER_ONLY
->      if (cpu->halted) {
-> -#if defined(TARGET_I386)
-> -        if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
-> -            X86CPU *x86_cpu = X86_CPU(cpu);
-> -            bql_lock();
-> -            apic_poll_irq(x86_cpu->apic_state);
-> -            cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
-> -            bql_unlock();
-> -        }
-> -#endif /* TARGET_I386 */
->          if (cc->tcg_ops->cpu_exec_halt) {
->              cc->tcg_ops->cpu_exec_halt(cpu);
->          }
-> diff --git a/target/i386/tcg/sysemu/seg_helper.c b/target/i386/tcg/sysemu/seg_helper.c
-> index e6f42282bb..2db8083748 100644
-> --- a/target/i386/tcg/sysemu/seg_helper.c
-> +++ b/target/i386/tcg/sysemu/seg_helper.c
-> @@ -20,6 +20,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/log.h"
-> +#include "qemu/main-loop.h"
->  #include "cpu.h"
->  #include "exec/helper-proto.h"
->  #include "exec/cpu_ldst.h"
-> @@ -127,6 +128,18 @@ void x86_cpu_do_interrupt(CPUState *cs)
->      }
->  }
->  
-> +void x86_cpu_exec_halt(CPUState *cpu)
-> +{
-> +    if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
-> +        X86CPU *x86_cpu = X86_CPU(cpu);
-> +
-> +        bql_lock();
-> +        apic_poll_irq(x86_cpu->apic_state);
-> +        cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
-> +        bql_unlock();
-> +    }
-> +}
-> +
->  bool x86_need_replay_interrupt(int interrupt_request)
->  {
->      /*
-> diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-> index 255d56d4c3..3028b57c97 100644
-> --- a/target/i386/tcg/tcg-cpu.c
-> +++ b/target/i386/tcg/tcg-cpu.c
-> @@ -119,6 +119,7 @@ static const struct TCGCPUOps x86_tcg_ops = {
->  #else
->      .tlb_fill = x86_cpu_tlb_fill,
->      .do_interrupt = x86_cpu_do_interrupt,
-> +    .cpu_exec_halt = x86_cpu_exec_halt,
->      .cpu_exec_interrupt = x86_cpu_exec_interrupt,
->      .do_unaligned_access = x86_cpu_do_unaligned_access,
->      .debug_excp_handler = breakpoint_handler,
-> -- 
-> 2.41.0
-> 
-Reviewed-by: Anton Johansson <anjo@rev.ng>
+As of commit 38738f7dbbda90fbc161757b7f4be35b52205552 ("virtio-scsi:
+don't waste CPU polling the event virtqueue"), we only attach an io_read
+notifier for the virtio-scsi event virtqueue instead, and no polling
+notifiers.  During operation, the event virtqueue is typically
+non-empty, but none of the buffers are intended to be used immediately.
+Instead, they only get used when certain events occur.  Therefore, it
+makes no sense to continuously poll it when non-empty, because it is
+supposed to be and stay non-empty.
+
+We do this by using virtio_queue_aio_attach_host_notifier_no_poll()
+instead of virtio_queue_aio_attach_host_notifier() for the event
+virtqueue.
+
+Commit 766aa2de0f29b657148e04599320d771c36fd126 ("virtio-scsi: implement
+BlockDevOps->drained_begin()") however has virtio_scsi_drained_end() use
+virtio_queue_aio_attach_host_notifier() for all virtqueues, including
+the event virtqueue.  This can lead to it being polled again, undoing
+the benefit of commit 38738f7dbbda90fbc161757b7f4be35b52205552.
+
+Fix it by using virtio_queue_aio_attach_host_notifier_no_poll() for the
+event virtqueue.
+
+Reported-by: Fiona Ebner <f.ebner@proxmox.com>
+Fixes: 766aa2de0f29b657148e04599320d771c36fd126
+       ("virtio-scsi: implement BlockDevOps->drained_begin()")
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ hw/scsi/virtio-scsi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 690aceec45..9f02ceea09 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -1149,6 +1149,7 @@ static void virtio_scsi_drained_begin(SCSIBus *bus)
+ static void virtio_scsi_drained_end(SCSIBus *bus)
+ {
+     VirtIOSCSI *s = container_of(bus, VirtIOSCSI, bus);
++    VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
+     VirtIODevice *vdev = VIRTIO_DEVICE(s);
+     uint32_t total_queues = VIRTIO_SCSI_VQ_NUM_FIXED +
+                             s->parent_obj.conf.num_queues;
+@@ -1166,7 +1167,11 @@ static void virtio_scsi_drained_end(SCSIBus *bus)
+ 
+     for (uint32_t i = 0; i < total_queues; i++) {
+         VirtQueue *vq = virtio_get_queue(vdev, i);
+-        virtio_queue_aio_attach_host_notifier(vq, s->ctx);
++        if (vq == vs->event_vq) {
++            virtio_queue_aio_attach_host_notifier_no_poll(vq, s->ctx);
++        } else {
++            virtio_queue_aio_attach_host_notifier(vq, s->ctx);
++        }
+     }
+ }
+ 
+-- 
+2.43.0
+
 
