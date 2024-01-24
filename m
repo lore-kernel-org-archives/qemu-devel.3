@@ -4,96 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3911FC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 13:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED7AC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 13:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSdRI-0006jg-L9; Wed, 24 Jan 2024 08:37:12 -0500
+	id 1rSdSr-0007nj-K0; Wed, 24 Jan 2024 08:38:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rSdRE-0006g2-PR
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:37:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rSdRC-0001jT-Od
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:37:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706103424;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=od6VM9/RvmIKeJ6TC2wZtgEazuqsbs4NThCk6V91RLo=;
- b=F94BhItXjN9GEOGrYK8936QaA2VKWkboY96ttnHvKPSCZOqr5rzf56PIYQ3QMfykpUCka+
- KxYPZh4cvIRRXouEfuGVTYdt0PKI5JrWEm/qXalZ6i4NdVTsgS5VUCT6Jp/00gqvU+qu6P
- qAbeDjFiqMwW51yK5qy2wIBCc+YRmBA=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-llUm2zo8Np20QXcCIu1ChA-1; Wed, 24 Jan 2024 08:37:03 -0500
-X-MC-Unique: llUm2zo8Np20QXcCIu1ChA-1
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-7bf356bdc2fso585398239f.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 05:37:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706103422; x=1706708222;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rSdSq-0007na-Gw
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:38:48 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rSdSo-0001u1-To
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:38:48 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6dd7a44d51bso1557714b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 05:38:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1706103525; x=1706708325; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=od6VM9/RvmIKeJ6TC2wZtgEazuqsbs4NThCk6V91RLo=;
- b=BBZPURlQ6d5tcfoyX86y9sgqDTAsOAWX9dnVCzeBpTbFw+6KpMxcGX0uIsecoXwcR/
- +meNS+15JKUfv0rAYkdm8UcxFXsD8IksthGOK+dJF5ZR6NFBjsw3L2YRHsIgSW34/Ito
- 5E0WnKW8iBwi6XZVZEMCY6btWCZVNGJSGqnm8QFR5Nec6UlFzrTPe9e1ZXEArQG9+Xmp
- g9Rbqy8zg0zdBt/PeAoTgov6WwZjMfc7ucQKPmF3LLj9roNsoOC856AbkpO1B4HU9Xyk
- e/5+4AbQ5zhK/JTnkvIRyVqh0nwwo3b17GA8RDq7XKxXJ6E7NZD3Bmj/9fBYgY35InNF
- YBeA==
-X-Gm-Message-State: AOJu0YzR5VzNqbmc/P1P0uneRNpPnvo2Mq2Jxzuyppu6zzgOtdx/Hhzf
- ZZ/Qjerpd36nb4+Dt30WCjbBFETZO2mUgaGzIs4JUEDaAUzm9vUtRxyELZmDkzGhyuE5J6Xlm6a
- pqYzS3U9dqbbomiX9Tq2GNoe6yRblw1uqcVqi8vCuRPxBoTUfUymi
-X-Received: by 2002:a6b:6302:0:b0:7bf:928d:3149 with SMTP id
- p2-20020a6b6302000000b007bf928d3149mr1671061iog.26.1706103422341; 
- Wed, 24 Jan 2024 05:37:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFBqlY+1h4C1Blc8cuiKUmfzB+aJ61OzPF5/3K6MNdRZ+rcpdGf8xvZIjpusC02Nz7jzI53ew==
-X-Received: by 2002:a6b:6302:0:b0:7bf:928d:3149 with SMTP id
- p2-20020a6b6302000000b007bf928d3149mr1671050iog.26.1706103422121; 
- Wed, 24 Jan 2024 05:37:02 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- z15-20020a6bc90f000000b007bf05f618f3sm7778526iof.55.2024.01.24.05.37.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jan 2024 05:37:01 -0800 (PST)
-Date: Wed, 24 Jan 2024 06:37:00 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, peterx@redhat.com, yanghliu@redhat.com,
- mst@redhat.com, clg@redhat.com, jasowang@redhat.com
-Subject: Re: [PATCH 1/3] virtio-iommu: Add an option to define the input
- range width
-Message-ID: <20240124063700.67c8c32c.alex.williamson@redhat.com>
-In-Reply-To: <a35c4fad-a981-4fbf-81d1-be5625a537b9@redhat.com>
-References: <20240123181753.413961-1-eric.auger@redhat.com>
- <20240123181753.413961-2-eric.auger@redhat.com>
- <20240123165141.7a79de34.alex.williamson@redhat.com>
- <a35c4fad-a981-4fbf-81d1-be5625a537b9@redhat.com>
-Organization: Red Hat
+ bh=Bp7f1hEOsiV7YtpZ9AGCbB4JxicM5nyS0Cu3Hyvk+k8=;
+ b=E33MVfuK2kKL4buKEXt8mEHuWSy3ok2UOPrHpQ/Spf3zKHgG0+YWTrcyhOETZ5R5aA
+ kb5aYqfNa6niDsm4gn9ixa5/JGV9NkDn+nqhXkBiiiVcvJPtvP30cZWFnx8pgok2SWTj
+ lvFl0/XBptnmIU35hybTMVUKeGeL0DXeh9Q0yLIX5vJZYGB25kSo+P7O65Wk8uAccD0g
+ rl7EHAag8Md/ScVb//6xeHPTAPI6PAddjRhtaMc48b2W4Zfx6gCgMNHfLTv90COzaNjz
+ w4PVrEUPlTzcBNwZe2ZwmWh+NmCMQNt3niX8/bgFEvA8oEkDzfzJPE6dgCr1WAfMNnpP
+ OBig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706103525; x=1706708325;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bp7f1hEOsiV7YtpZ9AGCbB4JxicM5nyS0Cu3Hyvk+k8=;
+ b=BbEkyb7c4WoMPy7jrWcb8MLf2Og4tnYI+57kE0/QH11fM19Ng2wnCWg+VPqvtEgZCq
+ W77cMPfuwQ0xbfS+PBB88Cj1UydGw3EnscTbeCY5ueclujZpuv2RK03JRJw22C4BKpD3
+ oCwEh4cNAe+kdt50rLI/LAogwSYJhcsJ9ZW371Hi751iGXzxi1p8CrxiXUXuBeftOtKc
+ F73RJOc6hRhfw/29Z43ee8jw8ILF3plcdfZFnkpZltRSUXuUhWciF7rujaGHL1gKfGsz
+ DigRu/szdRqC6m7DvQD39i9EIptdioC4j7dQuOx4wS3AZzpkVD7Vts9Aba8eqpBWoH46
+ xMxA==
+X-Gm-Message-State: AOJu0YxkV49KueAtmwicppqcqIrXb0th/RZMHdNVX0B+FIdk9f39h4OU
+ AZUgiEqS2xLFchu6vh6FC91Q4n9HD8hSbEF3rYaw0A122JLYWc/Hc3kw3+OoKfbxX4ebr1oozgK
+ 1
+X-Google-Smtp-Source: AGHT+IHPp755/3BRCAM6G4MKGo6YlH1VtDNX3Nck4jJuySDP5i3KrVaz+HMCP9Y66UR46AQ2BY2Q9Q==
+X-Received: by 2002:a05:6a00:1791:b0:6db:db71:f469 with SMTP id
+ s17-20020a056a00179100b006dbdb71f469mr3824850pfg.53.1706103525274; 
+ Wed, 24 Jan 2024 05:38:45 -0800 (PST)
+Received: from [192.168.68.110] ([152.234.127.94])
+ by smtp.gmail.com with ESMTPSA id
+ fj2-20020a056a003a0200b006d98505dacasm13759390pfb.132.2024.01.24.05.38.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 05:38:44 -0800 (PST)
+Message-ID: <78107c83-7035-414c-9a44-af5e234fd5c2@ventanamicro.com>
+Date: Wed, 24 Jan 2024 10:38:40 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: qemu riscv, thead c906, Linux boot regression
+Content-Language: en-US
+To: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Christoph_M=C3=BCllner?=
+ <christoph.muellner@vrull.eu>
+Cc: linux-riscv@lists.infradead.org, LIU Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Andrew Jones <ajones@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <874jf2rj4g.fsf@all.your.base.are.belong.to.us>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <874jf2rj4g.fsf@all.your.base.are.belong.to.us>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,74 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Jan 2024 14:14:19 +0100
-Eric Auger <eric.auger@redhat.com> wrote:
 
-> Hi Alex,
+
+On 1/24/24 09:49, Björn Töpel wrote:
+> Hi!
 > 
-> On 1/24/24 00:51, Alex Williamson wrote:
-> > On Tue, 23 Jan 2024 19:15:55 +0100
-> > Eric Auger <eric.auger@redhat.com> wrote:
-> >  
-> >> aw-bits is a new option that allows to set the bit width of
-> >> the input address range. This value will be used as a default for
-> >> the device config input_range.end. By default it is set to 64 bits
-> >> which is the current value.
-> >>
-> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> >> ---
-> >>  include/hw/virtio/virtio-iommu.h | 1 +
-> >>  hw/virtio/virtio-iommu.c         | 4 +++-
-> >>  2 files changed, 4 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-> >> index 781ebaea8f..5fbe4677c2 100644
-> >> --- a/include/hw/virtio/virtio-iommu.h
-> >> +++ b/include/hw/virtio/virtio-iommu.h
-> >> @@ -66,6 +66,7 @@ struct VirtIOIOMMU {
-> >>      bool boot_bypass;
-> >>      Notifier machine_done;
-> >>      bool granule_frozen;
-> >> +    uint8_t aw_bits;
-> >>  };
-> >>  
-> >>  #endif
-> >> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> >> index ec2ba11d1d..e7f299e0c6 100644
-> >> --- a/hw/virtio/virtio-iommu.c
-> >> +++ b/hw/virtio/virtio-iommu.c
-> >> @@ -1314,7 +1314,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-> >>       */
-> >>      s->config.bypass = s->boot_bypass;
-> >>      s->config.page_size_mask = qemu_real_host_page_mask();
-> >> -    s->config.input_range.end = UINT64_MAX;
-> >> +    s->config.input_range.end =
-> >> +        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;  
-> > What happens when someone sets aw_bits = 1?  There are a whole bunch of
-> > impractical values here ripe for annoying bug reports.  vtd_realize()
-> > returns an Error for any values other than 39 or 48.  We might pick an
-> > arbitrary lower bound (39?) or some other more creative solution here
-> > to avoid those silly issues in our future.  Thanks,  
-> You're right. I can check the input value. This needs to be dependent on
-> the machine though but this should be feasable.
-> Then I would allow 39 and 48 for q35 and 64 only on ARM.
-
-AFAIK AMD-Vi supports 64-bit address space.  Without querying the host
-there's no way to place an accurate limit below 64-bit.  Thanks,
-
-Alex
-
-> >>      s->config.domain_range.end = UINT32_MAX;
-> >>      s->config.probe_size = VIOMMU_PROBE_SIZE;
-> >>  
-> >> @@ -1525,6 +1526,7 @@ static Property virtio_iommu_properties[] = {
-> >>      DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
-> >>                       TYPE_PCI_BUS, PCIBus *),
-> >>      DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-> >> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
-> >>      DEFINE_PROP_END_OF_LIST(),
-> >>  };
-> >>    
+> I bumped the RISC-V Linux kernel CI to use qemu 8.2.0, and realized that
+> thead c906 didn't boot anymore. Bisection points to commit d6a427e2c0b2
+> ("target/riscv/cpu.c: restrict 'marchid' value")
 > 
+> Reverting that commit, or the hack below solves the boot issue:
+> 
+> --8<--
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 8cbfc7e781ad..e18596c8a55a 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -505,6 +505,9 @@ static void rv64_thead_c906_cpu_init(Object *obj)
+>       cpu->cfg.ext_xtheadsync = true;
+>   
+>       cpu->cfg.mvendorid = THEAD_VENDOR_ID;
+> +    cpu->cfg.marchid = ((QEMU_VERSION_MAJOR << 16) |
+> +                        (QEMU_VERSION_MINOR << 8)  |
+> +                        (QEMU_VERSION_MICRO));
+>   #ifndef CONFIG_USER_ONLY
+>       set_satp_mode_max_supported(cpu, VM_1_10_SV39);
+>   #endif
+> --8<--
+> 
+> I'm unsure what the correct qemu way of adding a default value is,
+> or if c906 should have a proper marchid.
 
+In case you need to set a 'marchid' different than zero for c906, this hack would
+be a proper fix. As mentioned in the commit msg of the patch you mentioned:
+
+"Named CPUs should set 'marchid' to a meaningful value instead, and generic
+  CPUs can set to any valid value."
+
+That means that any specific marchid value that the CPU uses must to be set
+in its own cpu_init() function.
+
+
+Thanks,
+
+Daniel
+
+
+> 
+> Maybe Christoph or Zhiwei can answer?
+> 
+> qemu command-line:
+> qemu-system-riscv64 -nodefaults -nographic -machine virt,acpi=off \
+>     -cpu thead-c906 ...
+> 
+> 
+> Thanks,
+> Björn
 
