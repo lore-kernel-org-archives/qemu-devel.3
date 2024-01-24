@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CE4C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488BBC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSccY-0005Sn-UZ; Wed, 24 Jan 2024 07:44:47 -0500
+	id 1rSccx-0005qr-LX; Wed, 24 Jan 2024 07:45:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rSccQ-0005S6-RW
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:44:38 -0500
+ id 1rSccv-0005ls-NJ
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:45:09 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rSccO-0007VY-DM
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:44:37 -0500
+ id 1rScct-0007i4-Kt
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:45:09 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKk9G18Rwz6K910;
- Wed, 24 Jan 2024 20:41:38 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKk9n5GrGz6JBLl;
+ Wed, 24 Jan 2024 20:42:05 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id C5631140684;
- Wed, 24 Jan 2024 20:44:34 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id A1C38140684;
+ Wed, 24 Jan 2024 20:45:05 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 24 Jan 2024 12:44:33 +0000
+ 15.1.2507.35; Wed, 24 Jan 2024 12:45:05 +0000
 To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Fan Ni
  <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>
 CC: Ira Weiny <ira.weiny@intel.com>, Huai-Cheng Kuo
@@ -38,9 +38,9 @@ CC: Ira Weiny <ira.weiny@intel.com>, Huai-Cheng Kuo
  Hyeonggon Yoo <42.hyeyoo@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
  Stefan Hajnoczi <stefanha@gmail.com>, <linuxarm@huawei.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 07/12] hw/cxl: Pass CXLComponentState to cache_mem_ops
-Date: Wed, 24 Jan 2024 12:40:55 +0000
-Message-ID: <20240124124100.8218-8-Jonathan.Cameron@huawei.com>
+Subject: [PATCH 08/12] hw/cxl: Pass NULL for a NULL MemoryRegionOps
+Date: Wed, 24 Jan 2024 12:40:56 +0000
+Message-ID: <20240124124100.8218-9-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
 References: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
@@ -77,13 +77,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Li Zhijian <lizhijian@fujitsu.com>
 
-cache_mem_ops.{read,write}() interprets opaque as
-CXLComponentState(cxl_cstate) instead of ComponentRegisters(cregs).
+a NULL parameter is enough for a NULL MemoryRegionOps
 
-Fortunately, cregs is the first member of cxl_cstate, so their values are
-the same.
-
-Fixes: 9e58f52d3f8 ("hw/cxl/component: Introduce CXL components (8.1.x, 8.2.5)")
 Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
@@ -91,18 +86,18 @@ Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 29d477492b..9dfde6c0b3 100644
+index 9dfde6c0b3..5ddd47ed8d 100644
 --- a/hw/cxl/cxl-component-utils.c
 +++ b/hw/cxl/cxl-component-utils.c
-@@ -199,7 +199,7 @@ void cxl_component_register_block_init(Object *obj,
-     /* io registers controls link which we don't care about in QEMU */
-     memory_region_init_io(&cregs->io, obj, NULL, cregs, ".io",
-                           CXL2_COMPONENT_IO_REGION_SIZE);
--    memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cregs,
-+    memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cstate,
-                           ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
+@@ -197,7 +197,7 @@ void cxl_component_register_block_init(Object *obj,
+                        CXL2_COMPONENT_BLOCK_SIZE);
  
-     memory_region_add_subregion(&cregs->component_registers, 0, &cregs->io);
+     /* io registers controls link which we don't care about in QEMU */
+-    memory_region_init_io(&cregs->io, obj, NULL, cregs, ".io",
++    memory_region_init_io(&cregs->io, obj, NULL, NULL, ".io",
+                           CXL2_COMPONENT_IO_REGION_SIZE);
+     memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cstate,
+                           ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
 -- 
 2.39.2
 
