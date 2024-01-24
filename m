@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C0FBC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B5CC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSmmm-0007Xh-9L; Wed, 24 Jan 2024 18:36:00 -0500
+	id 1rSmsU-0003Sb-6l; Wed, 24 Jan 2024 18:41:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <johnstra10@gmail.com>)
- id 1rSmmk-0007XZ-Tl
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:35:59 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rSmsR-0003Qq-IW
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:41:51 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <johnstra10@gmail.com>)
- id 1rSmmh-0005oe-QW
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:35:58 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1d71207524dso26975255ad.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:35:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rSmsP-0001Fs-N0
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:41:51 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6db0fdd2b8fso3214319b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:41:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706139353; x=1706744153; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PIVjt+ckhj1BFpTJ8aRt1qPg1YE2IlwSqtIt2kv4zxA=;
- b=UnscIFZp7ak75tRyJg2iqB5u9bJ4Rq9ufcWJo9iozm+VChCx7KQ7EW3/gMNRkHy5Og
- RZEeFwykrMFwX3gLstfnJB7soDDnT22qljs5w3yjH+9kALo1H86b6u60HlaYheePJ8hN
- PtXgPsPYnHmPvfEzQgEsSvv7vXZK7AvrOy6RQgYLGVsg15DVqpmHS8Lq0/Ys3X9YSWPE
- f4zmKAKCKfJYOCgVLhnyCKaGY70w/x4Wl3K3zjyB4F7whRT3Ss/35wAvoDuF8jurYGrW
- Sq9VU4YpCIk8S6+CFbw6q1SnFXJDMlg9+TXfoverqCZ0aqBjkZv1x7ltHH0PvN1PcOsH
- ZAXA==
+ d=gmail.com; s=20230601; t=1706139708; x=1706744508; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gaSatxmH+joCu/w8PnCw+KneNZItml6/XeGG6dTffFY=;
+ b=K4geTy8xTwnx02Nn6G0kxEmCMsGGLMXPDMiwtINjjbz17QipBCRarxjx1XOP68uSfi
+ GUCL6Ml2LRV6fGfiIGzlDmJfWyAr8ltsxVK4DpWkmmf3ndcrjwbkeJ8Ept8OIfWP4bKW
+ CUX72AGqAL//KqvOQkk2H3FH3mQpnQK15weFCAmsFAwOVySvitiL0sVHJscIg8MPIaCI
+ KsYtMPnbqiLlwyt8VG1+4guJh9jSKa8JCj99fn++ZkZCSeP3++wCI64jNr3hymp2Y8Qf
+ kDzDUPoQAz0c9eb3kV7n8+s0xNZTYIxH2JKM9hAPWJhzyv49Q7cw2Gp7jPuOQqO82i4A
+ gDow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706139353; x=1706744153;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PIVjt+ckhj1BFpTJ8aRt1qPg1YE2IlwSqtIt2kv4zxA=;
- b=xD5iF3qoGt8UAS9cVhT5fcCu/8mA3cH4+BJDxFcXmw9Es1SPBEPDgJfIQ8MWhj8ppR
- lbG3cbqbeR8Sds6OW93LpG7e9WKzTMLFhbLX3jTaMCVMYDgVkdLJ+V2lcswvgnoR0zUx
- OIWEvyQEfQKRMEr/KYFD2ChJ+f85KGrNTdp5YCMBCQKbUnwL0haTCOTjwH3DTDYMiSE1
- /5HvBQZomBjntzzActN73dBeMaiGYMnb53ycHPO61sHDIvDZCVDW9cT5WBlq245bMShZ
- O5XPsOT5kL6mBiKEoBSXP4JyIMQl15yfyTP45e1y+afnpwz1JZJoXabRo+r5DyXHD1jw
- BhNw==
-X-Gm-Message-State: AOJu0YykkyzVxz1EVFN++L2+7oQ7h23NzYkqx9rlYDAq6+pgmh9FZfnz
- UqtrOqy671yTywlt0iLnEC8Y/4IuahFzLm6wGy+Gm4Xvmcs/7W0Kekb2baKJVos=
-X-Google-Smtp-Source: AGHT+IEwrfEp+0REui4enSInxX02dQeo8keqkLr+H3SDJ/s+vyuykKTI4jnRkvazKmDG2P53Os11eA==
-X-Received: by 2002:a17:902:cecb:b0:1d4:3734:3dc5 with SMTP id
- d11-20020a170902cecb00b001d437343dc5mr185011plg.48.1706139353440; 
- Wed, 24 Jan 2024 15:35:53 -0800 (PST)
-Received: from [50.34.46.225] ([50.34.46.225])
+ d=1e100.net; s=20230601; t=1706139708; x=1706744508;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gaSatxmH+joCu/w8PnCw+KneNZItml6/XeGG6dTffFY=;
+ b=Q3z4+r2AFjm2kN58oDHshJq9CBuqmXR4DZB7Wa9A8CPLSOD6FCtH7vaQnJUkoHLSZc
+ BGp6yIgMdgqqBVshHWAd+oJYQNg+L+5LZ3YmdBSevuk3YJ3kXefW/pE29o8ROmEGdWVY
+ Dy6hyfVMLOOJ46/9MSw6wrE0pvJhoM6vpJLF5r9qS2C6W9BbESrjMg8Jz6QHVAxDvYbq
+ sggTTB7QNbRJ3OndFl9SeupXF+qfEjrGSQMxKHEJ+/Lnvvs7+zdMBP9mEJeQ6nG3nO9r
+ Kf5MhOXN74pHlKEbia4GZDxU4v8oWUlxjrvTeqQEjUN/WyHk8bF51G8fTY8Bus3x4z5L
+ NMew==
+X-Gm-Message-State: AOJu0YzXwNwJ+XxP0I/Fjo7JRJHYLOSfakGqM4oeaAhA0EDXxcmnelyP
+ fJIr+6cxNlmUNwFfAYO4+8SNzYUIn+pHcT1a471PqpjwMDeGOsdM
+X-Google-Smtp-Source: AGHT+IHVe9lTVakJVs+F5MIJosRAJv06fJmfY4gFLfd0qojOcZiL4TdrioGI5uwOyIKDgl47EPPBxA==
+X-Received: by 2002:a05:6a00:2194:b0:6d9:ac99:316b with SMTP id
+ h20-20020a056a00219400b006d9ac99316bmr358593pfi.50.1706139708121; 
+ Wed, 24 Jan 2024 15:41:48 -0800 (PST)
+Received: from debian (c-71-202-32-218.hsd1.ca.comcast.net. [71.202.32.218])
  by smtp.gmail.com with ESMTPSA id
- o1-20020a170902bcc100b001d75cd8e3c0sm4691459pls.130.2024.01.24.15.35.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 15:35:53 -0800 (PST)
-Message-ID: <b60c850d-bbc8-45dd-92c5-f16273740225@gmail.com>
-Date: Wed, 24 Jan 2024 15:35:52 -0800
+ i3-20020aa78b43000000b006d9be279432sm14352504pfd.2.2024.01.24.15.41.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jan 2024 15:41:47 -0800 (PST)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Wed, 24 Jan 2024 15:41:45 -0800
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ Fan Ni <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>,
+ Ira Weiny <ira.weiny@intel.com>,
+ Huai-Cheng Kuo <hchkuo@avery-design.com.tw>,
+ Dave Jiang <dave.jiang@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Davidlohr Bueso <dave@stgolabs.net>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Li Zhijian <lizhijian@fujitsu.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>, linuxarm@huawei.com,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 05/12] hw/cxl/mbox: Remove dead code
+Message-ID: <ZbGgOR1zTEp17_F7@debian>
+References: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
+ <20240124124100.8218-6-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] accel/kvm: Define KVM_ARCH_HAVE_MCE_INJECTION in each
- target
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-References: <20240124155425.73195-1-philmd@linaro.org>
- <20240124155425.73195-2-philmd@linaro.org>
-From: john strange <johnstra10@gmail.com>
-In-Reply-To: <20240124155425.73195-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=johnstra10@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240124124100.8218-6-Jonathan.Cameron@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,176 +103,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It might be good to replace "MCE" in kvm-all.c with a generic 
-abstraction for error injection to avoid carrying the MCE constructs 
-into non-x86 sigbus handlers.
+On Wed, Jan 24, 2024 at 12:40:53PM +0000, Jonathan Cameron wrote:
+> From: Davidlohr Bueso <dave@stgolabs.net>
+> 
+> Two functions were reported to have dead code, remove the bogus
+> branches altogether, as well as a misplaced qemu_log call.
+> 
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-thanks,
--john
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
 
-On 1/24/24 07:54, Philippe Mathieu-Daudé wrote:
-> Instead of having KVM_HAVE_MCE_INJECTION optionally defined,
-> always define KVM_ARCH_HAVE_MCE_INJECTION for each target,
-> and set KVM_HAVE_MCE_INJECTION if it is not zero.
->
-> It is now clearer for KVM targets to detect if they lack the
-> MCE injection implementation. Also, moving headers around
-> is no more painful, because if a target neglects to define
-> KVM_ARCH_HAVE_MCE_INJECTION, the build will fail.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> I'd rather keep "cpu-param.h" simple/short.
->
-> Is a per-target "kvm-param.h" any better?
-> Or per-target "accel-param.h"? For example TCG_GUEST_DEFAULT_MO
-> is TCG specific and could also go there. Otherwise it will go
-> in "cpu-param.h".
-> ---
->   include/sysemu/kvm.h         | 5 +++++
->   target/arm/cpu-param.h       | 5 +++++
->   target/arm/cpu.h             | 4 ----
->   target/i386/cpu-param.h      | 2 ++
->   target/i386/cpu.h            | 2 --
->   target/loongarch/cpu-param.h | 2 ++
->   target/mips/cpu-param.h      | 2 ++
->   target/ppc/cpu-param.h       | 2 ++
->   target/riscv/cpu-param.h     | 2 ++
->   target/s390x/cpu-param.h     | 2 ++
->   10 files changed, 22 insertions(+), 6 deletions(-)
->
-> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-> index d614878164..2e9aa2fc53 100644
-> --- a/include/sysemu/kvm.h
-> +++ b/include/sysemu/kvm.h
-> @@ -212,6 +212,7 @@ int kvm_on_sigbus(int code, void *addr);
->   
->   #ifdef NEED_CPU_H
->   #include "cpu.h"
-> +#include "cpu-param.h"
->   
->   void kvm_flush_coalesced_mmio_buffer(void);
->   
-> @@ -349,6 +350,10 @@ bool kvm_vcpu_id_is_valid(int vcpu_id);
->   /* Returns VCPU ID to be used on KVM_CREATE_VCPU ioctl() */
->   unsigned long kvm_arch_vcpu_id(CPUState *cpu);
->   
-> +#if KVM_ARCH_HAVE_MCE_INJECTION
-> +#define KVM_HAVE_MCE_INJECTION
-> +#endif
-> +
->   #ifdef KVM_HAVE_MCE_INJECTION
->   void kvm_arch_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
->   #endif
-> diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
-> index f9b462a98f..d71cc29864 100644
-> --- a/target/arm/cpu-param.h
-> +++ b/target/arm/cpu-param.h
-> @@ -30,7 +30,12 @@
->    */
->   # define TARGET_PAGE_BITS_VARY
->   # define TARGET_PAGE_BITS_MIN  10
-> +#endif
->   
-> +#ifdef TARGET_AARCH64
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 1
-> +#else
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
->   #endif
->   
->   #endif
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index ec276fcd57..f92c8d3b88 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -30,10 +30,6 @@
->   /* ARM processors have a weak memory model */
->   #define TCG_GUEST_DEFAULT_MO      (0)
->   
-> -#ifdef TARGET_AARCH64
-> -#define KVM_HAVE_MCE_INJECTION 1
-> -#endif
+>  hw/cxl/cxl-mailbox-utils.c | 43 +++++++++++++-------------------------
+>  1 file changed, 15 insertions(+), 28 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 6eff56fb1b..dc42850767 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -1001,15 +1001,8 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+>  
+>      cxl_dev_disable_media(&ct3d->cxl_dstate);
+>  
+> -    if (secs > 2) {
+> -        /* sanitize when done */
+> -        return CXL_MBOX_BG_STARTED;
+> -    } else {
+> -        __do_sanitization(ct3d);
+> -        cxl_dev_enable_media(&ct3d->cxl_dstate);
 > -
->   #define EXCP_UDEF            1   /* undefined instruction */
->   #define EXCP_SWI             2   /* software interrupt */
->   #define EXCP_PREFETCH_ABORT  3
-> diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
-> index 911b4cd51b..5933b0b756 100644
-> --- a/target/i386/cpu-param.h
-> +++ b/target/i386/cpu-param.h
-> @@ -24,4 +24,6 @@
->   #endif
->   #define TARGET_PAGE_BITS 12
->   
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 1
-> +
->   #endif
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 7f0786e8b9..230ab1cded 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -33,8 +33,6 @@
->   /* The x86 has a strong memory model with some store-after-load re-ordering */
->   #define TCG_GUEST_DEFAULT_MO      (TCG_MO_ALL & ~TCG_MO_ST_LD)
->   
-> -#define KVM_HAVE_MCE_INJECTION 1
+> -        return CXL_MBOX_SUCCESS;
+> -    }
+> +    /* sanitize when done */
+> +    return CXL_MBOX_BG_STARTED;
+>  }
+>  
+>  static CXLRetCode cmd_get_security_state(const struct cxl_cmd *cmd,
+> @@ -1387,27 +1380,21 @@ static void bg_timercb(void *opaque)
+>  
+>          cci->bg.complete_pct = 100;
+>          cci->bg.ret_code = ret;
+> -        if (ret == CXL_MBOX_SUCCESS) {
+> -            switch (cci->bg.opcode) {
+> -            case 0x4400: /* sanitize */
+> -            {
+> -                CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
 > -
->   /* support for self modifying code even if the modified instruction is
->      close to the modifying instruction */
->   #define TARGET_HAS_PRECISE_SMC
-> diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-> index cfe195db4e..f69a94e6b5 100644
-> --- a/target/loongarch/cpu-param.h
-> +++ b/target/loongarch/cpu-param.h
-> @@ -14,4 +14,6 @@
->   
->   #define TARGET_PAGE_BITS 12
->   
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
+> -                __do_sanitization(ct3d);
+> -                cxl_dev_enable_media(&ct3d->cxl_dstate);
+> -            }
+> +        switch (cci->bg.opcode) {
+> +        case 0x4400: /* sanitize */
+> +        {
+> +            CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
 > +
->   #endif
-> diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
-> index 594c91a156..45c885e00e 100644
-> --- a/target/mips/cpu-param.h
-> +++ b/target/mips/cpu-param.h
-> @@ -30,4 +30,6 @@
->   #define TARGET_PAGE_BITS_MIN 12
->   #endif
->   
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
-> +
->   #endif
-> diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
-> index 0a0416e0a8..9975ae73ab 100644
-> --- a/target/ppc/cpu-param.h
-> +++ b/target/ppc/cpu-param.h
-> @@ -33,4 +33,6 @@
->   #endif
->   #define TARGET_PAGE_BITS 12
->   
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
-> +
->   #endif
-> diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-> index b2a9396dec..e6199f4f6d 100644
-> --- a/target/riscv/cpu-param.h
-> +++ b/target/riscv/cpu-param.h
-> @@ -28,4 +28,6 @@
->    *  - M mode HLV/HLVX/HSV 0b111
->    */
->   
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
-> +
->   #endif
-> diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-> index 84ca08626b..4728b3957e 100644
-> --- a/target/s390x/cpu-param.h
-> +++ b/target/s390x/cpu-param.h
-> @@ -13,4 +13,6 @@
->   #define TARGET_PHYS_ADDR_SPACE_BITS 64
->   #define TARGET_VIRT_ADDR_SPACE_BITS 64
->   
-> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
-> +
->   #endif
+> +            __do_sanitization(ct3d);
+> +            cxl_dev_enable_media(&ct3d->cxl_dstate);
+> +        }
+> +        break;
+> +        case 0x4304: /* TODO: scan media */
+> +            break;
+> +        default:
+> +            __builtin_unreachable();
+>              break;
+> -            case 0x4304: /* TODO: scan media */
+> -                break;
+> -            default:
+> -                __builtin_unreachable();
+> -                break;
+> -            }
+>          }
+> -
+> -        qemu_log("Background command %04xh finished: %s\n",
+> -                 cci->bg.opcode,
+> -                 ret == CXL_MBOX_SUCCESS ? "success" : "aborted");
+>      } else {
+>          /* estimate only */
+>          cci->bg.complete_pct = 100 * now / total_time;
+> -- 
+> 2.39.2
+> 
 
