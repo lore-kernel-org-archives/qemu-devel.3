@@ -4,89 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABA9C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97725C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSe2j-0004TK-Gi; Wed, 24 Jan 2024 09:15:53 -0500
+	id 1rSeQD-0004Mp-4i; Wed, 24 Jan 2024 09:40:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rSe2U-0004Kd-7m
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:15:45 -0500
+ (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1rSeQA-0004MJ-1m
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:40:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rSe2S-0001PG-Iq
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:15:37 -0500
+ (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1rSeQ8-00061Z-6y
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:40:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706105736;
+ s=mimecast20190719; t=1706107202;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=elOfKOGNedOe/JPT/oWJQXKuQpjws5ocJG2TnWB9sGs=;
- b=FjRn66EpXBk6a94NX6HCehNS0Z+B6+lNseS5JXCmc1cSgI5TCQFrwucVg9iND3ZKtzj+qo
- +4QAGLA1NmIIixRUWyEBZGXnqVKcK2D11XzVqj5XkA4z+82TaXHF1Ivanz4jHY5DxhVdRa
- 57qKLU6g5ak467eglq6DEVMX7SilXcQ=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XT53JLMsm9q9tNGztQTxRA1bMzyUdQZzokx6dbxj0Wk=;
+ b=ODYuZv2vQPyAHXR1QmeQZOqCvXs8HRg1liAOvCRcCgzmV+GZ7zwoGpo5eKUkpppXhP0qW/
+ vCu0TVzD4vU4AvdW3yEDwvQ7xFKe6DUl0YZYJzkZc6quPty8eiGM9QnyFsn7b/6kmd4bm0
+ i65VJQx1BxSCxJYP/adHZQd7uSNPY80=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-I-YL5PTSMGuAMewIhvaRug-1; Wed, 24 Jan 2024 09:15:33 -0500
-X-MC-Unique: I-YL5PTSMGuAMewIhvaRug-1
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-7bf8868dfc7so417557339f.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 06:15:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706105733; x=1706710533;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=elOfKOGNedOe/JPT/oWJQXKuQpjws5ocJG2TnWB9sGs=;
- b=ucRHvbyuIrC+pwKpk2rM0Bs+RI81+sZrN0GgdvnSm0idEy5f7Td5zlSTwvtzQtuhnJ
- N3WpHvAx+bi1gootn58s+Uo9XTWdzQMzNA+CIPWnl3Pc15RmueLLFU6j3zfk23H/RyKh
- zuOArHs3PrXJXBlWU1kq2136Cq87YLskIQmybQ2BU4a0ZV83WsCZBOyyfWZKmDwkN8xr
- s5MRlVXZB/sdEixqeO2qHgT38xjqzsSIi4wijqk5uv9CKgn7PVQ+F6AWZUnhlaZAkC5E
- dz2PnF7xGurduONp/n8pPDtdrEIt+XG8Mtum2Pq6iOSkrOkY08HtveNQj4691/XLMkLT
- H8ww==
-X-Gm-Message-State: AOJu0Yz5UVr7M4VBaQlCduyRr1AQ+x5tgjFfDXuXupbQv4XWeO3+48AD
- IK5E578jS+RGiI1LhElfv5NV0gVak0EqmNWpJU26iG1wp0MN9xa35FJjugwXpcKWJfj9VsV5Ae9
- RrtEL+Gtj3WP6+qOQLXgl5sAlqB7GtnzQpRTxKP9/nktBIUTtFlAQ
-X-Received: by 2002:a05:6e02:13e7:b0:361:a9c7:d5c3 with SMTP id
- w7-20020a056e0213e700b00361a9c7d5c3mr1387343ilj.31.1706105732770; 
- Wed, 24 Jan 2024 06:15:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJOaGucA+7rpymi/ZNvH+Kn3kBP+Cqs19FnSL0EhWpMxQz3rLcW0jMHB4+fZWaCHGxvMEmwQ==
-X-Received: by 2002:a05:6e02:13e7:b0:361:a9c7:d5c3 with SMTP id
- w7-20020a056e0213e700b00361a9c7d5c3mr1387328ilj.31.1706105732483; 
- Wed, 24 Jan 2024 06:15:32 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- br5-20020a056e0223c500b0035fb30380bcsm1848590ilb.58.2024.01.24.06.15.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jan 2024 06:15:32 -0800 (PST)
-Date: Wed, 24 Jan 2024 07:15:31 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, peterx@redhat.com, yanghliu@redhat.com,
- mst@redhat.com, clg@redhat.com, jasowang@redhat.com
-Subject: Re: [PATCH 1/3] virtio-iommu: Add an option to define the input
- range width
-Message-ID: <20240124071531.44bd7164.alex.williamson@redhat.com>
-In-Reply-To: <a92a2023-7448-4b74-bfd9-e412c6092270@redhat.com>
-References: <20240123181753.413961-1-eric.auger@redhat.com>
- <20240123181753.413961-2-eric.auger@redhat.com>
- <20240123165141.7a79de34.alex.williamson@redhat.com>
- <a35c4fad-a981-4fbf-81d1-be5625a537b9@redhat.com>
- <20240124063700.67c8c32c.alex.williamson@redhat.com>
- <a92a2023-7448-4b74-bfd9-e412c6092270@redhat.com>
-Organization: Red Hat
+ us-mta-86-qI6vGugAPLGFHoljyH9AwQ-1; Wed, 24 Jan 2024 09:39:59 -0500
+X-MC-Unique: qI6vGugAPLGFHoljyH9AwQ-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A2ED2185A788;
+ Wed, 24 Jan 2024 14:39:58 +0000 (UTC)
+Received: from [10.39.195.127] (unknown [10.39.195.127])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 536C0492BFA;
+ Wed, 24 Jan 2024 14:39:57 +0000 (UTC)
+Message-ID: <e5a4478e-c7f9-c639-690b-9eeb7c62212e@redhat.com>
+Date: Wed, 24 Jan 2024 15:39:56 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
+Subject: Re: [PATCH v2] target/i386/host-cpu: Use iommu phys_bits with VFIO
+ assigned devices on Intel h/w
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@redhat.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Dongwon Kim <dongwon.kim@intel.com>, Yanghang Liu <yanghliu@redhat.com>,
+ "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+References: <20240118192049.1796763-1-vivek.kasireddy@intel.com>
+ <9462383d-3e42-460e-b721-8371d35e29a6@redhat.com>
+ <7982b791-3333-473a-b42b-fbcf21f153cb@linaro.org>
+From: Laszlo Ersek <lersek@redhat.com>
+In-Reply-To: <7982b791-3333-473a-b42b-fbcf21f153cb@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lersek@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -111,91 +89,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Jan 2024 14:57:41 +0100
-Eric Auger <eric.auger@redhat.com> wrote:
-
-> Hi Alex,
+On 1/24/24 13:58, Philippe Mathieu-Daudé wrote:
+> On 24/1/24 12:53, Cédric Le Goater wrote:
+>> On 1/18/24 20:20, Vivek Kasireddy wrote:
+>>> Recent updates in OVMF and Seabios have resulted in MMIO regions
+>>> being placed at the upper end of the physical address space. As a
+>>> result, when a Host device is assigned to the Guest via VFIO, the
+>>> following mapping failures occur when VFIO tries to map the MMIO
+>>> regions of the device:
+>>> VFIO_MAP_DMA failed: Invalid argument
+>>> vfio_dma_map(0x557b2f2736d0, 0x380000000000, 0x1000000,
+>>> 0x7f98ac400000) = -22 (Invalid argument)
+>>>
+>>> The above failures are mainly seen on some Intel platforms where
+>>> the physical address width is larger than the Host's IOMMU
+>>> address width. In these cases, VFIO fails to map the MMIO regions
+>>> because the IOVAs would be larger than the IOMMU aperture regions.
+>>>
+>>> Therefore, one way to solve this problem would be to ensure that
+>>> cpu->phys_bits = <IOMMU phys_bits>
+>>> This can be done by parsing the IOMMU caps value from sysfs and
+>>> extracting the address width and using it to override the
+>>> phys_bits value as shown in this patch.
+>>>
+>>> Previous attempt at solving this issue in OVMF:
+>>> https://edk2.groups.io/g/devel/topic/102359124
+>>>
+>>> Cc: Gerd Hoffmann <kraxel@redhat.com>
+>>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Cc: Alex Williamson <alex.williamson@redhat.com>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Cc: Laszlo Ersek <lersek@redhat.com>
+>>> Cc: Dongwon Kim <dongwon.kim@intel.com>
+>>> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+>>> Tested-by: Yanghang Liu <yanghliu@redhat.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>>
+>>> ---
+>>> v2:
+>>> - Replace the term passthrough with assigned (Laszlo)
+>>> - Update the commit message to note that both OVMF and Seabios
+>>>    guests are affected (Cédric)
+>>> - Update the subject to indicate what is done in the patch
+>>> ---
+>>>   target/i386/host-cpu.c | 61 +++++++++++++++++++++++++++++++++++++++++-
+>>>   1 file changed, 60 insertions(+), 1 deletion(-)
 > 
-> On 1/24/24 14:37, Alex Williamson wrote:
-> > On Wed, 24 Jan 2024 14:14:19 +0100
-> > Eric Auger <eric.auger@redhat.com> wrote:
-> >  
-> >> Hi Alex,
-> >>
-> >> On 1/24/24 00:51, Alex Williamson wrote:  
-> >>> On Tue, 23 Jan 2024 19:15:55 +0100
-> >>> Eric Auger <eric.auger@redhat.com> wrote:
-> >>>    
-> >>>> aw-bits is a new option that allows to set the bit width of
-> >>>> the input address range. This value will be used as a default for
-> >>>> the device config input_range.end. By default it is set to 64 bits
-> >>>> which is the current value.
-> >>>>
-> >>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> >>>> ---
-> >>>>  include/hw/virtio/virtio-iommu.h | 1 +
-> >>>>  hw/virtio/virtio-iommu.c         | 4 +++-
-> >>>>  2 files changed, 4 insertions(+), 1 deletion(-)
-> >>>>
-> >>>> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-> >>>> index 781ebaea8f..5fbe4677c2 100644
-> >>>> --- a/include/hw/virtio/virtio-iommu.h
-> >>>> +++ b/include/hw/virtio/virtio-iommu.h
-> >>>> @@ -66,6 +66,7 @@ struct VirtIOIOMMU {
-> >>>>      bool boot_bypass;
-> >>>>      Notifier machine_done;
-> >>>>      bool granule_frozen;
-> >>>> +    uint8_t aw_bits;
-> >>>>  };
-> >>>>  
-> >>>>  #endif
-> >>>> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> >>>> index ec2ba11d1d..e7f299e0c6 100644
-> >>>> --- a/hw/virtio/virtio-iommu.c
-> >>>> +++ b/hw/virtio/virtio-iommu.c
-> >>>> @@ -1314,7 +1314,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-> >>>>       */
-> >>>>      s->config.bypass = s->boot_bypass;
-> >>>>      s->config.page_size_mask = qemu_real_host_page_mask();
-> >>>> -    s->config.input_range.end = UINT64_MAX;
-> >>>> +    s->config.input_range.end =
-> >>>> +        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;    
-> >>> What happens when someone sets aw_bits = 1?  There are a whole bunch of
-> >>> impractical values here ripe for annoying bug reports.  vtd_realize()
-> >>> returns an Error for any values other than 39 or 48.  We might pick an
-> >>> arbitrary lower bound (39?) or some other more creative solution here
-> >>> to avoid those silly issues in our future.  Thanks,    
-> >> You're right. I can check the input value. This needs to be dependent on
-> >> the machine though but this should be feasable.
-> >> Then I would allow 39 and 48 for q35 and 64 only on ARM.  
-> > AFAIK AMD-Vi supports 64-bit address space.  Without querying the host
-> > there's no way to place an accurate limit below 64-bit.  Thanks,  
 > 
-> Hum this means I would need to look at
-> /sys/class/iommu/<iommu>/amd-iommu/ or /sys/class/iommu/dmar* to
-> discriminate between AMD IOMMU and INTEL IOMMU physical IOMMU. Would
-> that be acceptable?
-
-I'm not necessarily suggesting that we look at the host, I'm mostly
-just stating that enforcing 39/48 bits on non-ARM is incorrect for a
-large portion of the non-ARM world too.  There might even be some
-interesting use cases for a 32-bit IOVA space, so maybe just set
-defaults tuned for compatibility and accept anything between 32- and
-64-bits.  Thanks,
-
-Alex
-
-> >>>>      s->config.domain_range.end = UINT32_MAX;
-> >>>>      s->config.probe_size = VIOMMU_PROBE_SIZE;
-> >>>>  
-> >>>> @@ -1525,6 +1526,7 @@ static Property virtio_iommu_properties[] = {
-> >>>>      DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
-> >>>>                       TYPE_PCI_BUS, PCIBus *),
-> >>>>      DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-> >>>> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
-> >>>>      DEFINE_PROP_END_OF_LIST(),
-> >>>>  };
-> >>>>      
+>>> +static int intel_iommu_check(void *opaque, QemuOpts *opts, Error
+>>> **errp)
+>>> +{
+>>> +    g_autofree char *dev_path = NULL, *iommu_path = NULL, *caps = NULL;
+>>> +    const char *driver = qemu_opt_get(opts, "driver");
+>>> +    const char *device = qemu_opt_get(opts, "host");
+>>> +    uint32_t *iommu_phys_bits = opaque;
+>>> +    struct stat st;
+>>> +    uint64_t iommu_caps;
+>>> +
+>>> +    /*
+>>> +     * Check if the user requested VFIO device assignment. We don't
+>>> have
+>>> +     * to limit phys_bits if there are no valid assigned devices.
+>>> +     */
+>>> +    if (g_strcmp0(driver, "vfio-pci") || !device) {
+>>> +        return 0;
+>>> +    }
+>>> +
+>>> +    dev_path = g_strdup_printf("/sys/bus/pci/devices/%s", device);
+>>> +    if (stat(dev_path, &st) < 0) {
+>>> +        return 0;
+>>> +    }
+>>> +
+>>> +    iommu_path = g_strdup_printf("%s/iommu/intel-iommu/cap", dev_path);
+>>> +    if (stat(iommu_path, &st) < 0) {
+>>> +        return 0;
+>>> +    }
+>>> +
+>>> +    if (g_file_get_contents(iommu_path, &caps, NULL, NULL)) {
+>>> +        if (sscanf(caps, "%lx", &iommu_caps) != 1) {
+>>
+>> nit. This should use a PRIx64 define.
+>>
+>>> +            return 0;
+>>> +        }
+>>> +        *iommu_phys_bits = ((iommu_caps >> 16) & 0x3f) + 1;
+>>
+>> Please use 0x3fULL
 > 
+> or:
+> 
+>            *iommu_phys_bits = 1 + extract32(iommu_caps, 16, 6);
+
+Huh, interesting; I've never seen this recommended before, even though
+it comes from a very old commit -- 84988cf910a6 ("bitops.h: Add
+functions to extract and deposit bitfields", 2012-07-07).
+
+I thought only edk2 had BitFieldRead32() :)
+
+Laszlo
 
 
