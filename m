@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B75C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 07:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2820BC47422
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 07:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSXu8-00039Z-Qp; Wed, 24 Jan 2024 02:42:36 -0500
+	id 1rSXuF-0003Hm-UV; Wed, 24 Jan 2024 02:42:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSXu6-00039G-W7
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 02:42:35 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSXuE-0003GN-O0
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 02:42:42 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSXu5-00034x-IC
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 02:42:34 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3394bec856fso255017f8f.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 23:42:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSXuB-00036Y-KI
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 02:42:41 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-40ec3535225so9915065e9.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 23:42:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706082151; x=1706686951; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706082158; x=1706686958; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jOMcngLxDGJkByS9gEJEYPbL5+4ZqnQIMdvGkNbM490=;
- b=tfIAk8jUxJ+9qxE3YU0jZNpY0cFh9QX2v9oaiJQktevljvWdFxN6s/bg7maF60jvwZ
- Kpxuee6/OOYgoONLuer3HOq3pRkRZm0hxy8SsoLnL2AqYKZT8lcKW3xNie6VRMe4ywlw
- qeF6VZR/7QpyXvbLsYvq16KoJ1fsAj5b4vDnf/J4b68iR9HU7kAsJ+kJgd42UrSkFz6K
- r3YPs51de7mIw4LWSVqaBl0t/LolSz1j7bpVjEe1qiKDOEnqSLvVkl9lDm6T6JraGBxD
- BwRVJu9mBPqtwic25Om0C9PfzemhTbP7LtJ2zHfYoJLi9zLQTY8zhODJ88YBzRcYsPIR
- 4EWA==
+ bh=0LfIs7wXUaYUULeAS3e2X+WCSShQ2MUHLfcscfH09+U=;
+ b=KstOr1mM/om7HpQqrQLv3E7C7UndAaqdgdSjTa52NS9BvdN7gGADsqwsZ9KEMBFga7
+ CD7aepBaKcypBH+Hl+beamcqFqu/zq4+4/naBTKZsLLiJZtLAdte1fW9q8/YB7YfpPkS
+ 0xFdHv3aDzjicZhYLDxZ79pULdEGqKYEeLDk+zZo5Wl04/fG2WhDEjrAZMUuR7ofsRxU
+ +WvW3W0JuHJSYNRhMup95j9gjQ166VpyzFpLg3CbFPaWX4oO1PvmgCmfnT4TDzH1mokv
+ 8OH/ff/eLXYkPt8MLv03QLHboN4vS+S8Vmw8wVOO/4fTqd2fwqrCNPnREr60Nb2CzCoF
+ u3CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706082151; x=1706686951;
+ d=1e100.net; s=20230601; t=1706082158; x=1706686958;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jOMcngLxDGJkByS9gEJEYPbL5+4ZqnQIMdvGkNbM490=;
- b=iREqsJuuFkC4G3WxK0DtA64Z0lIeTkpGk4Kj3aPRmpBnn6xF7GTbbFT25U24zeYWR8
- IbEdiMZXnTUKrhCBoM/NJ5GexelAmQ45YTxI6WP0XrTIN7S++GSaHDUHD3bTe0JNC/9T
- L+YMXDuSmkGTsj5PoN6FHQWKkBR5GCc987qVYr/coEKosZYdYl1UxCeU2cfGD9Ls6n5O
- gknj0w7DjFIZpXtvA7GB0L7KMFOc4u3/1WhS2b2jAq9wGN4ZuaHCAuPatWNQuaB1JZgV
- ulSd0k+m4PlJDffZGsDuyKoZ9dqaQDZcwYAQ+ylry1DCEqfqrLhR76pVCr4TOqKfxkU5
- Lb9g==
-X-Gm-Message-State: AOJu0YxxYgdmO+WW732qNzIkp8N0+XDr3R4xIYWrj8n61TtGSdRVARCE
- U0FwgCbJINjqwvYCjqCFnZBQUQbVDYWSEVc/IBq8nw/jXBIdXtu6fn4vzEw6Et9Kuk0rClOkm1e
- S
-X-Google-Smtp-Source: AGHT+IGllL7xwRJu4k3cTkOFtPQhDOtZ7+FXJEZ/64J94LuhTEdjWOWhvbVqjt8Mw/puimu8l3cruA==
-X-Received: by 2002:a7b:c4d3:0:b0:40e:52fd:7341 with SMTP id
- g19-20020a7bc4d3000000b0040e52fd7341mr383336wmk.141.1706082151723; 
- Tue, 23 Jan 2024 23:42:31 -0800 (PST)
+ bh=0LfIs7wXUaYUULeAS3e2X+WCSShQ2MUHLfcscfH09+U=;
+ b=KUc1buV/s5d0rG/g90WqhSYC1Zcz0CK/kBzGoGktq4pLeZ4VLJjVuMeoVUim7CDCzu
+ TFmnUmcVw49xYVe52JIGaSN/S0PWLNXhW84QH3Kz3Vfes/jjpqhzadqHLVIDpJrQEFJe
+ HPGInf7fYBiGJLjZtBRepidYxUBADsaMw4iCJdsnOcH86U5KL0FYjyHVlKhbNXM58mmC
+ TPTdxcl2Zr2+fUeoq7r3Yc7PHaa7vIT4MbaTD8OxSsY7fub0KsSdOWq7lzK9xJ5DF2cJ
+ 09c+uRNuVOXYXK2nxJLkmcsGyev1/4h7Dxb4h28DZFhqLxkWixD48D88uBRAz1W/0VrM
+ qNCg==
+X-Gm-Message-State: AOJu0YyjuvWkU5mBDlhmDhxhHAqQFuUJjxpKs/YZ5z4wMF1QHKnH5UGC
+ xZYY4ExufaCogXzOe8fzrlclZH1V2PZhrb6MtIABSJJ7h2uxbEtv08l6qeQ0P0/VY1r2ex3YpWf
+ X
+X-Google-Smtp-Source: AGHT+IHamU2WFi5iMAKXcInpPdC+7yZesGDEwbvijPxIIogJ8VyWAuds54XbX8F6cwkHpI2gofe2Ng==
+X-Received: by 2002:a05:600c:5207:b0:40e:7e40:10c6 with SMTP id
+ fb7-20020a05600c520700b0040e7e4010c6mr679976wmb.182.1706082158086; 
+ Tue, 23 Jan 2024 23:42:38 -0800 (PST)
 Received: from m1x-phil.lan (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
  [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
- p3-20020a05600c1d8300b0040ec7f229b3sm43731wms.34.2024.01.23.23.42.29
+ c8-20020a05600c0a4800b0040e4746d80fsm44902735wmq.19.2024.01.23.23.42.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jan 2024 23:42:31 -0800 (PST)
+ Tue, 23 Jan 2024 23:42:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -67,17 +67,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/6] hw/scsi/virtio-scsi: Use RCU_READ macro
-Date: Wed, 24 Jan 2024 08:41:59 +0100
-Message-ID: <20240124074201.8239-5-philmd@linaro.org>
+Subject: [PATCH 5/6] hw/vfio/common: Use RCU_READ macros
+Date: Wed, 24 Jan 2024 08:42:00 +0100
+Message-ID: <20240124074201.8239-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240124074201.8239-1-philmd@linaro.org>
 References: <20240124074201.8239-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,39 +101,81 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Replace the manual rcu_read_(un)lock calls by the
-WITH_RCU_READ_LOCK_GUARD macro (See commit ef46ae67ba
+*RCU_READ_LOCK_GUARD macros (See commit ef46ae67ba
 "docs/style: call out the use of GUARD macros").
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/scsi/virtio-scsi.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ hw/vfio/common.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 690aceec45..998227404a 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -343,14 +343,14 @@ static void virtio_scsi_do_one_tmf_bh(VirtIOSCSIReq *req)
-         target = req->req.tmf.lun[1];
-         qatomic_inc(&s->resetting);
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 4aa86f563c..09878a3603 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -308,13 +308,13 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+         return;
+     }
  
--        rcu_read_lock();
--        QTAILQ_FOREACH_RCU(kid, &s->bus.qbus.children, sibling) {
--            SCSIDevice *d1 = SCSI_DEVICE(kid->child);
--            if (d1->channel == 0 && d1->id == target) {
--                device_cold_reset(&d1->qdev);
-+        WITH_RCU_READ_LOCK_GUARD() {
-+            QTAILQ_FOREACH_RCU(kid, &s->bus.qbus.children, sibling) {
-+                SCSIDevice *d1 = SCSI_DEVICE(kid->child);
-+                if (d1->channel == 0 && d1->id == target) {
-+                    device_cold_reset(&d1->qdev);
-+                }
-             }
+-    rcu_read_lock();
++    RCU_READ_LOCK_GUARD();
+ 
+     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+         bool read_only;
+ 
+         if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
+-            goto out;
++            return;
          }
--        rcu_read_unlock();
+         /*
+          * vaddr is only valid until rcu_read_unlock(). But after
+@@ -343,8 +343,6 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+             vfio_set_migration_error(ret);
+         }
+     }
+-out:
+-    rcu_read_unlock();
+ }
  
-         qatomic_dec(&s->resetting);
-         break;
+ static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
+@@ -1223,23 +1221,23 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if (iotlb->target_as != &address_space_memory) {
+         error_report("Wrong target AS \"%s\", only system memory is allowed",
+                      iotlb->target_as->name ? iotlb->target_as->name : "none");
+-        goto out;
+-    }
+-
+-    rcu_read_lock();
+-    if (vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
+-        ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+-                                    translated_addr);
+-        if (ret) {
+-            error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+-                         "0x%"HWADDR_PRIx") = %d (%s)",
+-                         bcontainer, iova, iotlb->addr_mask + 1, ret,
+-                         strerror(-ret));
++    } else {
++        WITH_RCU_READ_LOCK_GUARD() {
++            if (vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
++                ret = vfio_get_dirty_bitmap(bcontainer, iova,
++                                            iotlb->addr_mask + 1,
++                                            translated_addr);
++                if (ret) {
++                    error_report("vfio_iommu_map_dirty_notify(%p,"
++                                 " 0x%"HWADDR_PRIx
++                                 ", 0x%"HWADDR_PRIx") = %d (%s)",
++                                 bcontainer, iova, iotlb->addr_mask + 1, ret,
++                                 strerror(-ret));
++                }
++            }
+         }
+     }
+-    rcu_read_unlock();
+ 
+-out:
+     if (ret) {
+         vfio_set_migration_error(ret);
+     }
 -- 
 2.41.0
 
