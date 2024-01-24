@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0508C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B3DC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:24:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSRzQ-0003Ye-Iz; Tue, 23 Jan 2024 20:23:40 -0500
+	id 1rSS06-00045B-Kp; Tue, 23 Jan 2024 20:24:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSRzP-0003YH-5P
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:23:39 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ id 1rSS00-00041w-FN
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:24:16 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSRzN-00033H-88
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:23:38 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3bd5c4cffefso4882643b6e.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:23:36 -0800 (PST)
+ id 1rSRzx-00036i-PD
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:24:15 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-5ca29c131ebso3526375a12.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:24:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706059416; x=1706664216; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706059452; x=1706664252; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ctTqhHc+TkxAsoFMtjhaHkgPljQ5EJNcimehBmqanNA=;
- b=UDiQvZ+I/hELR9IORUVmRz6RKJp5HOpZuXJW0eE2bG+SoY+uxIKjLI1wUJYEpMrm1Y
- WQbc4wkskH4mAPZPGqOfCCdRbVoFbA/umx0/m7y5OMCoJ43fg4n+PAC4/zSc80++Qlfn
- LHb5XgbWRqGVnGfLyIgAFVFZIk2vQw4ZcNkxDCIozboY1N9q9K7WwGZLb72S4Pf0QIdl
- 1aoy4lQSg3fmagmUJs2SWwq8DsrTN0OxU/oHx78NxLgVSpGJSTlZR5taKOZ1NGLhbkIU
- rf7yJjI2zeXlblbVyeQIYCTpq1v84/AlzFRMdCM5IHNaGGtb0lOTtQvMuZVWrx7HpPtT
- Gmlg==
+ bh=N/sWT9OhmRADi08c5CWgU8jH2w7OHrcforBmTLg1c8k=;
+ b=vAXmqsD+FP/NRoAEs15vF3WxkT7NAR3aPInttA3ex4+vQrvuLHHwIPH3+3UwJiZS18
+ +ACD5d3Yt2stsY5tfSPxjEsGwydUOe3nJPS10qTTyyTDxRN3lsJYCLtatXf+UqvQgyjf
+ GshOvr02gHRvaaCkTr6CQZWnWWw7NZbBdB1ND43FHYcCKoicCl90blXQPESwLUS8Uc0b
+ ra0F/HhI6EMLS03L7MFOhETf7We3RX/N6MKY083SVrCGIzHMsUALJHzgLwW4/uzG1gys
+ BwHKBrorknFDZmJ/kC+ElUVgoIUgBMQzaX6192IilgvDoP4hMMQ4GZdYRgkQ4egeFlf+
+ ZpEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706059416; x=1706664216;
+ d=1e100.net; s=20230601; t=1706059452; x=1706664252;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ctTqhHc+TkxAsoFMtjhaHkgPljQ5EJNcimehBmqanNA=;
- b=KEE5+J7P3hc84A1SZR/5jzbRCWTyF26eqUNyDa+MXnji+jCX4ojlfjRvVK+QTyC0vU
- j+/E+FelqeJpTjFFgEHnvrkdOlAogYOnP/I1TCUxLlq1AByQ8UxmZ/IrxmalxlbOeZvu
- zmc9HMJXSgpuii63t7hzTdmRemzq7B0PPfCr0DhOoPBNYBNrYU8KLrcgZD4B01k7lXNw
- jFGpqwMQ1XZxuqVQ3GukvhBB8/0hN72YjN0+eLEUe/EkWKqSTaFgl33VkDd6QGdDGyHY
- DLv+PvD2ZR82Uz91exctYlddNimYI5BSWh+pWpx7vMDWamHRiWT8S0Fh1HpShGAzI3AI
- jitQ==
-X-Gm-Message-State: AOJu0Yw0VzA7UGcZraS/rXlDwaQqG1CYrBTcCqQDaeIBoIukD4oQoGi0
- oFxEitE6fkHAmnlnZ9xXNqY49M6c2iOHGCAIlPI8lO/56gUxV4VY3aY7eMDBDdQ=
-X-Google-Smtp-Source: AGHT+IEq14EJyJCdYAzmepbjPKht0wyDK38WYWLkLSaEoPM9zLH6bOseYb6pqTIJyYmEYjR7RswIAg==
-X-Received: by 2002:a05:6808:2221:b0:3bd:be5b:246f with SMTP id
- bd33-20020a056808222100b003bdbe5b246fmr947380oib.11.1706059416085; 
- Tue, 23 Jan 2024 17:23:36 -0800 (PST)
+ bh=N/sWT9OhmRADi08c5CWgU8jH2w7OHrcforBmTLg1c8k=;
+ b=ig/radvJihqqPQK+7WB+rYo91GpF0iW5f6Ee+v5o/ZbbYQzdpVXRm29s4c9hVONnBF
+ i0+fE44bXiwlWh0ndVkF4zTkV7mv3ml+jBCk1qsKzBDcXybrMwtWEdq3Gb7skiVIxNhS
+ dHTLg/Kdif09Lq6yM+JRcjWyhdyRC3jsLZWh8fVNQPzau6bCY4a4tG+CuRbWkg07I7/f
+ Gz+K6Vex7fqY5zD3TsshG7eYT5uMM8WpT2OMQVwhfZCirRp069jBqwhEJbqL0q/DEpLf
+ vG+t3MdW2opYSgehRRqA0T3/nWHFWF8mEGMUAfnaYpgsfYg2PGzr7Sgi2u1yFYxQyodC
+ E0jg==
+X-Gm-Message-State: AOJu0YyKXldgJGqpHFlCQMCww255u/txy3tD/LoH2jghrFFUpXLOIIno
+ xp9XOf33LbsPBGV6XVkWh8/suotEpvLMFKuy7hTqCPH19VRbhtqCVYakZKIiNJs=
+X-Google-Smtp-Source: AGHT+IFzeOOlCTW9sQTfUbpbMyf0nEZMY8OnxE4iSdRwLsQw2Ei4i5qrgo54riw5n25GiwLh9nVkQg==
+X-Received: by 2002:a05:6a20:a8a9:b0:19a:b7f6:7d5b with SMTP id
+ ca41-20020a056a20a8a900b0019ab7f67d5bmr94652pzb.103.1706059452220; 
+ Tue, 23 Jan 2024 17:24:12 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
  (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
  by smtp.gmail.com with ESMTPSA id
- h20-20020a635314000000b005d4156b3ea2sm1099201pgb.93.2024.01.23.17.23.33
+ h20-20020a635314000000b005d4156b3ea2sm1099201pgb.93.2024.01.23.17.24.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 17:23:35 -0800 (PST)
-Message-ID: <633149a1-e8b5-4d1c-99fe-9fb93b4bc797@linaro.org>
-Date: Wed, 24 Jan 2024 11:23:30 +1000
+ Tue, 23 Jan 2024 17:24:11 -0800 (PST)
+Message-ID: <ad27bb5c-1de2-4614-b80f-56fe83a8706d@linaro.org>
+Date: Wed, 24 Jan 2024 11:24:08 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 21/34] accel/tcg: [CPUTLB] Use
- tcg_ctx->tlb_dyn_max_bits
+Subject: Re: [RFC PATCH 22/34] accel/tcg: [CPUTLB] Move
+ CPU_TLB_DYN_[DEFAULT|MIN]* to cputlb.c
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, philmd@linaro.org
 References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-22-anjo@rev.ng>
+ <20240119144024.14289-23-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-22-anjo@rev.ng>
+In-Reply-To: <20240119144024.14289-23-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,15 +100,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/20/24 00:40, Anton Johansson wrote:
-> @@ -172,7 +172,7 @@ static void tlb_mmu_resize_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
->       rate = desc->window_max_entries * 100 / old_size;
->   
->       if (rate > 70) {
-> -        new_size = MIN(old_size << 1, 1 << CPU_TLB_DYN_MAX_BITS);
-> +        new_size = MIN(old_size << 1, 1 << tcg_ctx->tlb_dyn_max_bits);
+> These macros are only used for softmmu targets and only used in
+> cputlb.c, move definitions there.
+> 
+> Signed-off-by: Anton Johansson<anjo@rev.ng>
+> ---
+>   include/exec/cpu-defs.h | 3 ---
+>   accel/tcg/cputlb.c      | 3 +++
+>   2 files changed, 3 insertions(+), 3 deletions(-)
 
-Out of scope.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
