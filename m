@@ -4,68 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58EFFC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 17:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5335DC47E49
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 17:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rShHd-0007NZ-3Z; Wed, 24 Jan 2024 12:43:29 -0500
+	id 1rShPc-0003SL-1Z; Wed, 24 Jan 2024 12:51:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rShHa-0007NE-88
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:43:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rShHY-00033I-RE
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:43:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706118202;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Z9WlEsi/AsyZ9BP5ixRG8hBx19L5nfQN00RwzJz2njo=;
- b=eWzOA8eM2cueOYUv/rrHp7LAHdKtCZ45M3liT37fgnPizqfCOHv92pHwgi+wNkvTUZMl37
- Ds0C6GOCOHADhHBjp8zR1Declg4wZJJE20MVI304+MoPmbdZvoLC3pOnvccco0JrQQtKob
- uYGHxK8/IGyyWtsVCYVqf+zOiY+J9Gw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-j2c22SLiO6O8r2GZexRV2w-1; Wed,
- 24 Jan 2024 12:43:17 -0500
-X-MC-Unique: j2c22SLiO6O8r2GZexRV2w-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BCE94380673B;
- Wed, 24 Jan 2024 17:43:16 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.80])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B463D492BFD;
- Wed, 24 Jan 2024 17:43:15 +0000 (UTC)
-Date: Wed, 24 Jan 2024 11:43:14 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com, 
- kwolf@redhat.com, den@virtuozzo.com
-Subject: Re: [PATCH] iotests/277: Use iotests.sock_dir for socket creation
-Message-ID: <3v7hvc2kt7obfhvnfrgmtwk4ofvy5dmrkiho3cbqsm2vnfhnl2@6n5i47olcp64>
-References: <20240124162257.168325-1-andrey.drobyshev@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rShPZ-0003Rf-Ej
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:51:42 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rShPX-0005Oi-SI
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:51:41 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-40ec34160baso14005915e9.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 09:51:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706118696; x=1706723496; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hg2CaFeSRERPSRSpgWVp6h9hUCgu+AWuuixAe4CnUwg=;
+ b=zBq2Pp9lWvF1s9tT5KIcuwOlv2RSiWY4K2smvGolMbSXTjCz9KKdbXjGyKiwQlDbPt
+ vtaES+422oycBynYp7u/t05/jn//pBaDOmMi5aRsBaPVtL1zpkX/yl6RLVSr0I6E+YMf
+ FC82e1j05WJ3IPvmLuH+FghE4Bwx8THJ4iYW5kP4oX3U5nzS8JiJbNhYbf4v4F7wMnSu
+ jCaNViNRh1Erv/D9v5ErV37PRRpJKYtDGpXZ62oNsv7Tdh5V0O1u9yCjmTqwOip4GuJ/
+ zahGptvf6eM7fw0Pk4Rx1kpkpQlSpQhrFIlIFOcX/ag2171GhRBKm7FTdDkSmWzukoO7
+ EjjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706118696; x=1706723496;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hg2CaFeSRERPSRSpgWVp6h9hUCgu+AWuuixAe4CnUwg=;
+ b=i1Kbx3lIFLEhQA2gATK52+1eu+EGQs1tb3OPemtA4iBb7DNWeSl0af060ekQZA3O4c
+ kk2jdNhLW+hD9bmTbk6pzJUBYMYpeiSojVSjPj9Dim1TQxhMI/G3/lmxjTnXFPitWcNL
+ vWzKY30KFNNzbQ28w+mOLX3Yc5MCSuLG6b0Pq4/YddyYJ5KL7lF47fgnRkKCwD8mFabR
+ tM8FVAgOhRreE8kYX0XtrgcA3qeBDQMC2+PcW0BHdg9j1fFu0fMJEo+8gFQlqBZWiKt9
+ 37WefrLfZMv+0BMIVS6o5PIkb2I+Cija2cjMARafLZp05Jj0fegkrGC8KznxrnkrAAPJ
+ ZJNg==
+X-Gm-Message-State: AOJu0YwBe3RC4urUMs9sOdgncb1ViqCi30oIe2MFqGb/f7RzE5dRERms
+ jWQyk2Nv2/SCpZAOTb/HBCS0hBoZfM8wGOGeWCUhs7NZW87A93JJa8iaVA2qVepAFQO6szBn8fk
+ e
+X-Google-Smtp-Source: AGHT+IEKen4F4PaI3+xxKM6MZHw9nH+q3IsThSAO/BTdND7xqrFzpb8IYNoEDgdicenIAlBs1ywUTg==
+X-Received: by 2002:a05:600c:19d0:b0:40e:ab32:28ba with SMTP id
+ u16-20020a05600c19d000b0040eab3228bamr1895391wmq.72.1706118696285; 
+ Wed, 24 Jan 2024 09:51:36 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ d19-20020a05600c34d300b0040e48abec33sm352268wmq.45.2024.01.24.09.51.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jan 2024 09:51:36 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 84BE25F754;
+ Wed, 24 Jan 2024 17:51:35 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] configure: run plugin TCG tests again
+In-Reply-To: <20240124115332.612162-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Wed, 24 Jan 2024 12:53:32 +0100")
+References: <20240124115332.612162-1-pbonzini@redhat.com>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Wed, 24 Jan 2024 17:51:35 +0000
+Message-ID: <87wmry62mw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240124162257.168325-1-andrey.drobyshev@virtuozzo.com>
-User-Agent: NeoMutt/20231221
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,42 +98,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 06:22:57PM +0200, Andrey Drobyshev wrote:
-> If socket path is too long (longer than 108 bytes), socket can't be
-> opened.  This might lead to failure when test dir path is long enough.
-> Make sure socket is created in iotests.sock_dir to avoid such a case.
-> 
-> This commit basically aligns iotests/277 with the rest of iotests.
-> 
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  tests/qemu-iotests/277 | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+> Commit 39fb3cfc28b ("configure: clean up plugin option handling", 2023-10=
+-18)
+> dropped the CONFIG_PLUGIN line from tests/tcg/config-host.mak, due to con=
+fusion
+> caused by the shadowing of $config_host_mak.  However, TCG tests were sti=
+ll
+> expecting it.  Oops.
+>
+> Put it back, in the meanwhile the shadowing is gone so it's clear that it=
+ goes
+> in the tests/tcg configuration.
 
-> 
-> diff --git a/tests/qemu-iotests/277 b/tests/qemu-iotests/277
-> index 24833e7eb6..4224202ac2 100755
-> --- a/tests/qemu-iotests/277
-> +++ b/tests/qemu-iotests/277
-> @@ -27,7 +27,8 @@ from iotests import file_path, log
->  iotests.script_initialize()
->  
->  
-> -nbd_sock, conf_file = file_path('nbd-sock', 'nbd-fault-injector.conf')
-> +conf_file = file_path('nbd-fault-injector.conf')
-> +nbd_sock = file_path('nbd-sock', base_dir=iotests.sock_dir)
->  
->  
->  def make_conf_file(event):
-> -- 
-> 2.39.3
-> 
+Queued to testing/next, thanks.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
