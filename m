@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C970DC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 09:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A8EC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 09:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSZMN-0002f1-Vq; Wed, 24 Jan 2024 04:15:52 -0500
+	id 1rSZNK-0002vW-T5; Wed, 24 Jan 2024 04:16:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rSZMK-0002ea-SP
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 04:15:49 -0500
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ id 1rSZNF-0002qP-AE
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 04:16:47 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rSZME-0001P3-ME
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 04:15:46 -0500
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-5100893015fso1835469e87.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 01:15:36 -0800 (PST)
+ id 1rSZND-0001aO-RP
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 04:16:45 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a3109a489d9so40099166b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 01:16:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706087735; x=1706692535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706087801; x=1706692601; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=dDUGwrU3qbNypFqKDx6zM1TwiZwabEv5EaERUyRrsAY=;
- b=P7nN1dtwC0hucN7JoP95d2mVqWT3ZomgQqQfaqF0Abwz0nIn3cZINgZZ2rwhPg8rzc
- z8+NjeIXEk163ce3rVAUEXGsptrrn8Z+oiKNJS+Qk7MwGzzrM/FX0TskF82+ecbZ3poA
- Fw7jN5ZoR+U8s2dZcP/tdEt/h4j02udEYmdtC7ULnYVtwztXf79Ujs7A3UnV14QlZvdJ
- rmIJeeo7KTst/YWSvJXnZ+OPBGMTXnrEYHCaBd1LvCtz35x0OJyZAfQvYoI4Ms2xyfIA
- EMXPA1eu6GMjn3T2TvmxbR0DnfZEIgmsOTjhP7vSutrTcjSyR0IftvfgvcKNTZYAJdHz
- slqQ==
+ bh=Umezlf82cNEXBsnuAmwJCiCK+rbSn5pyORAh9dMUNJU=;
+ b=ovXEdq7EfUoeWHJc58dEs7ayX3ew3Rw3VS9UTYEP9Kw6nJPzp2MGtVyhna/LXTt/oF
+ W/G/nlMuECr2qVmhE3yZDJ9QR6qTjYB5o7t3h3WSSB6lDXwtD+mDHXmxndTI3zPyyc0x
+ wvXmYBIV7oQp20Px+Fe+rVpzVHVLhTfIA5CTijn2HfLd0Hwlo6zYj0uwuffvOX5BC8c9
+ vYAvyZGaQDiXMrvUJ/AkXRM7pukLwvPHODCv88x/Zodhe4+yP7ZjRfERksOuRj6nhTP9
+ U+ekQRKoe5BLnWD4Fa1w5P4zCAFtJfeztrfKZnWQ6WBbFy6xyR5EMQ0Mz8X1MVeaJ5gk
+ D3nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706087735; x=1706692535;
+ d=1e100.net; s=20230601; t=1706087801; x=1706692601;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dDUGwrU3qbNypFqKDx6zM1TwiZwabEv5EaERUyRrsAY=;
- b=P6vmYUYCyYAyEGKh3htmnKYVrdhRVXePTiKh/owXMUNeT65yqffG6D/Lb0Zy8AZUw1
- kr62OhPC8souC6hwC1puLQn0W63F2BXjP3Rv//m+CL6m9P+Ci8aZ0i+djNGsD4btpIo4
- aziwtCdjhzsxaszPuKMr3tnxta7maMrqsG0WVt++CgV9Me8jMWlEyO79+PtxNiRZ15pv
- 9QzF0ukkfoFFoCRnL9Id5KhSydyjQgfcygUZsjHUC+k/HacjgDquK1nOFZMFd484ACt5
- m6MMKFGSsAHDfBE6bMhnU0qNUVuIlJ7fkx4RTowvdbu38pkBnX+YgMkrSM1QtOF+rtL7
- DsTQ==
-X-Gm-Message-State: AOJu0YwjPhwLMKq1JinFR9gfAvHkG7+oq4zOYGBvdTWjiy1x26iz+14T
- GpVXIF5j3RAKXTeRgmiN6U5HBGyVZ2NRLHNrRxbKV6LDW0cVT6t30584PPneFYU/zK667oxGstX
- xMmk=
-X-Google-Smtp-Source: AGHT+IFjQRY8dz1l9++hGKsOBtwOsaOEG4j7L6rs4ZAX967/fGh97w7aRn+dlEvpnFCj8eNFeXGFIw==
-X-Received: by 2002:a05:6512:1317:b0:50e:6c1d:5dec with SMTP id
- x23-20020a056512131700b0050e6c1d5decmr2523426lfu.23.1706087734916; 
- Wed, 24 Jan 2024 01:15:34 -0800 (PST)
+ bh=Umezlf82cNEXBsnuAmwJCiCK+rbSn5pyORAh9dMUNJU=;
+ b=W31whGDthqad4KLqQLfEdf6HA3btjCRBrwX3keIpnFQGHhdGLuDQhczQfk2f5hRBRs
+ PnzyNkGHnFXgXiLb14LcmQny3D87Cuz5TD272JEtDRDoVat6S/pY9P6/zmkaO9Uo+ZO4
+ 9KgPFeZxs26v/7AxafXVLCekeubjGXcmUEMdN2E/Tuv4sL1KlUgMTS2CBF5L0t6hWUwW
+ 2s5a1EnyO9w8v/4UIYSeRBhpeIH6Xk6y8HUvQqTc2B/iZDhCEtWW4YFSBCpQ4uDnDw7J
+ 9GvpeHneVmDxOALQSEsOotmTFcYG9yVJVN2mFgd8+ckvpm1gEstIJQPpRr3FOuf14Ck/
+ oHWA==
+X-Gm-Message-State: AOJu0YwWEN7Kpwc2NPktW/1nX1Ny+2vw/b1mu09fatNyPn2GeX4wQKc1
+ 463A9UGGeuqY9C0Y3iPBB5jQwoeCC3xzOKkxvj47kmWhDx5L0p9ZhnPM7UBp7E+uo9QXc49st00
+ penA=
+X-Google-Smtp-Source: AGHT+IHFbX/gqrdhwgsvxpJdZt6WWh0Bx3V0Rt7c8JwbBX/5xHVf77BhFNvczUcRgOAp/3rr5veDQQ==
+X-Received: by 2002:a17:906:b817:b0:a2f:d7b2:ec89 with SMTP id
+ dv23-20020a170906b81700b00a2fd7b2ec89mr748160ejb.18.1706087801623; 
+ Wed, 24 Jan 2024 01:16:41 -0800 (PST)
 Received: from meli.delivery (adsl-114.109.242.225.tellas.gr.
  [109.242.225.114]) by smtp.gmail.com with ESMTPSA id
- g4-20020a17090669c400b00a2bf375ceebsm15122949ejs.208.2024.01.24.01.15.33
+ k6-20020a170906128600b00a2b0b0fc80esm15143513ejb.193.2024.01.24.01.16.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jan 2024 01:15:34 -0800 (PST)
-Date: Wed, 24 Jan 2024 11:13:52 +0200
+ Wed, 24 Jan 2024 01:16:41 -0800 (PST)
+Date: Wed, 24 Jan 2024 11:15:44 +0200
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org,
  Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
@@ -70,17 +70,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  C=?UTF-8?B?w6k=?= dric Le Goater <clg@redhat.com>,
  Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
-Subject: Re: [PATCH 3/6] hw/display/virtio-gpu-udmabuf: Use RCU_READ macro
+Subject: Re: [PATCH 6/6] hw/virtio/vhost: Use RCU_READ macro
 User-Agent: meli 0.8.5-rc.3
 References: <20240124074201.8239-1-philmd@linaro.org>
- <20240124074201.8239-4-philmd@linaro.org>
-In-Reply-To: <20240124074201.8239-4-philmd@linaro.org>
-Message-ID: <7rdpv.zrb3rigymykz@linaro.org>
+ <20240124074201.8239-7-philmd@linaro.org>
+In-Reply-To: <20240124074201.8239-7-philmd@linaro.org>
+Message-ID: <7rdrr.x7htvdbn5hy9@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,35 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Jan 2024 09:41, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+On Wed, 24 Jan 2024 09:42, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 >Replace the manual rcu_read_(un)lock calls by the
 >WITH_RCU_READ_LOCK_GUARD macro (See commit ef46ae67ba
 >"docs/style: call out the use of GUARD macros").
 >
 >Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >---
-> hw/display/virtio-gpu-udmabuf.c | 6 +++---
+> hw/virtio/vhost.c | 6 +++---
 > 1 file changed, 3 insertions(+), 3 deletions(-)
 >
->diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
->index d51184d658..0ee6685803 100644
->--- a/hw/display/virtio-gpu-udmabuf.c
->+++ b/hw/display/virtio-gpu-udmabuf.c
->@@ -42,9 +42,9 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->                      sizeof(struct udmabuf_create_item) * res->iov_cnt);
+>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>index 2c9ac79468..1f5ecb843e 100644
+>--- a/hw/virtio/vhost.c
+>+++ b/hw/virtio/vhost.c
+>@@ -186,12 +186,12 @@ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
+>             hwaddr phys, s, offset;
 > 
->     for (i = 0; i < res->iov_cnt; i++) {
->-        rcu_read_lock();
->-        rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
->-        rcu_read_unlock();
->+        WITH_RCU_READ_LOCK_GUARD() {
->+            rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
->+        }
+>             while (used_size) {
+>-                rcu_read_lock();
+>-                iotlb = address_space_get_iotlb_entry(dev->vdev->dma_as,
+>+                WITH_RCU_READ_LOCK_GUARD() {
+>+                    iotlb = address_space_get_iotlb_entry(dev->vdev->dma_as,
+>                                                       used_phys,
+>                                                       true,
+>                                                       MEMTXATTRS_UNSPECIFIED);
+>-                rcu_read_unlock();
+>+                }
 > 
->         if (!rb || rb->fd < 0) {
->             g_free(list);
+>                 if (!iotlb.target_as) {
+>                     qemu_log_mask(LOG_GUEST_ERROR, "translation "
 >-- 
 >2.41.0
+>
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
