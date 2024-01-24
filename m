@@ -4,84 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0471C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCD51C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 02:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSSQ0-0002u8-Tq; Tue, 23 Jan 2024 20:51:08 -0500
+	id 1rSSYz-0004f1-LQ; Tue, 23 Jan 2024 21:00:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSSQ0-0002u0-A1
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:51:08 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSSPx-0006uM-8B
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:51:07 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1d71cb97937so30059265ad.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:51:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706061063; x=1706665863; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jcyblh6lesa2++Oaey8QhwobyOMPL9wprPiqAR+KcEw=;
- b=KTEMeF9SnPnCy0+U1muu+kGEmruy317Cu4/9VJJGTHNyrAq2QHGH/EcgoZGXa2GrNZ
- 3BLgCTbY0vxBFO1dp0spIMEn5rDuf/mrFqn3hMQK89dXQVRhWiUhdeCh6wR1s2kOrRSL
- 6/96DSNQhoYAtHrqy3Hs4qhMeI2tc1l5IfdlmUaQHTxuB2edWQAHcNqaxPBcSHLxzD1Q
- +jwJvZT0iIlPuIwB58mOBy/PVUihs8BT5QOEAhwVcdHl7lTGvyM7ys68MBZbqfWoILR7
- PRqlvfUsljppLf7Dxkv2FXRPK3MQ5ZpRUZ9V5zOSGctvP503MurVgc8GdNglNF7pOl1r
- Fq8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706061063; x=1706665863;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jcyblh6lesa2++Oaey8QhwobyOMPL9wprPiqAR+KcEw=;
- b=aUsBuvzNm/HMybQH6hhET0e2IlE2A+1Tu2x9g1XGNTzKPOR7Mnof9TjOMCRFP0bekP
- 0rSwZzdrNFjEasGgbUFkDFvrTLPHAHYzlFs3Ds1oGP+rGrMsW9D5Rrs9yYmwi3SJ+W1u
- rQ113k7PpdCUUj9wKaPxSXYXZ/XlzYXRD/bjVurseisYKMJYj8oRFO+yr8J0zzUrSvq4
- vxOsq+1sueuVSTkM1PZn1YAjWkmsagSa5t9vqhDuREmTqTZhh4ndOEvmw7l0BvXVLP9y
- oYKSrz4Qd16a1so4vw/0Rme+qa+Al5pNawCqvJNFMDIW61WUBROePjMXFyxUFNEN6AG4
- N9Hw==
-X-Gm-Message-State: AOJu0YxUsw22CXrl+B+mTFDOcz2bjMwMTg3sD/1CnzY6doM0oXtWxsJx
- B4jdXS9srQlLBYs4YdjeEWG20tO7FOlWyB3+ZUWZCQlDcflBe1LX2jDPmtoAScQ=
-X-Google-Smtp-Source: AGHT+IEZs6Jgc+TsAzm2ORWBYWkeFTyP0555EByvjGKnrwXLHP4rudUrO/Upqd8b+HvzbvSHLyfgDA==
-X-Received: by 2002:a17:902:b587:b0:1d5:e89a:cd9f with SMTP id
- a7-20020a170902b58700b001d5e89acd9fmr51509pls.139.1706061063343; 
- Tue, 23 Jan 2024 17:51:03 -0800 (PST)
-Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
- (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
- [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
- by smtp.gmail.com with ESMTPSA id
- u8-20020a170903124800b001d60a70809bsm9421430plh.168.2024.01.23.17.51.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 17:51:02 -0800 (PST)
-Message-ID: <c35ef7c6-81fc-44e4-b148-9e98d80af397@linaro.org>
-Date: Wed, 24 Jan 2024 11:50:58 +1000
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rSSYv-0004el-Fl
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:00:21 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rSSYr-00082t-Mx
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:00:21 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxefAkb7BlT4IEAA--.18564S3;
+ Wed, 24 Jan 2024 10:00:05 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8DxdMwkb7BlyMoVAA--.48561S3; 
+ Wed, 24 Jan 2024 10:00:04 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: Set cpuid CSR register only once with
+ kvm mode
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20240115085121.180524-1-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <19d3e2aa-d018-9bcd-323d-17f2ddeb2428@loongson.cn>
+Date: Wed, 24 Jan 2024 10:00:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 23/34] tcg: [CPUTLB] Add `mo_te` field to TCGContext
+In-Reply-To: <20240115085121.180524-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: ale@rev.ng, philmd@linaro.org
-References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-24-anjo@rev.ng>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-24-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-CM-TRANSID: AQAAf8DxdMwkb7BlyMoVAA--.48561S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Zw1fWr17uF18WrWftr1UurX_yoW8AFW8pr
+ ZrCFZ0gF1rJaykAa4DZ3sY9r15J3yIga1xuFy2ka4Ikrn8X3s8XF48K3srtFy3G3s5AF40
+ vF4fAr15ua18J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.17, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,30 +83,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/24 00:40, Anton Johansson wrote:
-> Required by cpu_ldub_code() and friends in cputlb.c to access the MO_TE
-> MemOp in a target-independent way.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+ÔÚ 2024/1/15 ÏÂÎç4:51, Bibo Mao Ð´µÀ:
+> CSR cpuid register is used for routing irq to different vcpus, its
+> value is kept unchanged since poweron. So it is not necessary to
+> set CSR cpuid register after system resets, and it is only set at
+> vm creation stage.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   include/tcg/tcg.h | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-> index 7743868dc9..4ca626aeae 100644
-> --- a/include/tcg/tcg.h
-> +++ b/include/tcg/tcg.h
-> @@ -489,6 +489,7 @@ struct TCGContext {
->       TCGType addr_type;            /* TCG_TYPE_I32 or TCG_TYPE_I64 */
+>   target/loongarch/kvm/kvm.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
+
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+> index 84bcdf5f86..2230f029d0 100644
+> --- a/target/loongarch/kvm/kvm.c
+> +++ b/target/loongarch/kvm/kvm.c
+> @@ -250,7 +250,7 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+>       return ret;
+>   }
 >   
->   #ifdef CONFIG_SOFTMMU
-> +    MemOp mo_te;
->       int page_mask;
->       uint8_t page_bits;
->       uint8_t tlb_dyn_max_bits;
+> -static int kvm_loongarch_put_csr(CPUState *cs)
+> +static int kvm_loongarch_put_csr(CPUState *cs, int level)
+>   {
+>       int ret = 0;
+>       LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+> @@ -322,8 +322,11 @@ static int kvm_loongarch_put_csr(CPUState *cs)
+>       ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_RVACFG),
+>                              &env->CSR_RVACFG);
+>   
+> -    ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
+> +    /* CPUID is constant after poweron, it should be set only once */
+> +    if (level >= KVM_PUT_FULL_STATE) {
+> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
+>                              &env->CSR_CPUID);
+> +    }
+>   
+>       ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG1),
+>                              &env->CSR_PRCFG1);
+> @@ -598,7 +601,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
+>           return ret;
+>       }
+>   
+> -    ret = kvm_loongarch_put_csr(cs);
+> +    ret = kvm_loongarch_put_csr(cs, level);
+>       if (ret) {
+>           return ret;
+>       }
+>
+> base-commit: 977542ded7e6b28d2bc077bcda24568c716e393c
 
-Not the correct scope for this.
-
-
-r~
 
