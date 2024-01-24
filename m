@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B21AC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 22:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E715C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 22:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSlRY-0003gK-4q; Wed, 24 Jan 2024 17:10:00 -0500
+	id 1rSm8w-0005Ks-8v; Wed, 24 Jan 2024 17:54:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1rSlRX-0003gA-AB
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:09:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
- id 1rSlRV-0003yh-Cd
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:09:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706134195;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3ev2cUolUExhE+v2NM+XApuyX7D2IX6EHvyqjtGfnr4=;
- b=OicvTay91Uk/rR3cJ1ll+W9xlGpgeQjGCmZ00szNqUzZnvdptaHxF6o/sOfzoVWc7JRTOp
- eTrmVck3sNXdD6q8d3OjHesg2gprzbHnITB0awjb2oBvIX5Zet6B6jGwkANhlGHqRSBgLG
- iZ28w51sMLnO+rcZVexTaF/QLhTAXuQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-185-9KMD5WgpO7Gj96Zb24B9sw-1; Wed, 24 Jan 2024 17:09:51 -0500
-X-MC-Unique: 9KMD5WgpO7Gj96Zb24B9sw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0F29BB42B24;
- Wed, 24 Jan 2024 22:09:49 +0000 (UTC)
-Received: from tpad.localdomain (unknown [10.96.133.6])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id AD42C1121312;
- Wed, 24 Jan 2024 22:09:48 +0000 (UTC)
-Received: by tpad.localdomain (Postfix, from userid 1000)
- id 40A18403E5C44; Wed, 24 Jan 2024 19:05:17 -0300 (-03)
-Date: Wed, 24 Jan 2024 19:05:17 -0300
-From: Marcelo Tosatti <mtosatti@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Lei Wang <lei4.wang@intel.com>
-Subject: Re: Why invtsc (CPUID_APM_INVTSC) is unmigratable?
-Message-ID: <ZbGJnbo1CJyAk61y@tpad>
-References: <825f29d7-9112-45a2-b4a3-7d3b54c3c0a2@intel.com>
- <Zaqf839r8TXvkIAf@tpad>
- <b6950a34-0ef6-4945-9e50-5a47e86490e1@intel.com>
- <Za/doRj6sEibC64y@tpad>
- <e34d49cc-b743-4df1-9a31-96c987dc2ad3@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSm8v-0005Kg-6M
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:54:49 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSm8s-0001k7-Ev
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:54:48 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1d746ce7d13so32599225ad.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 14:54:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706136885; x=1706741685; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x2nI9rtsZtS/jfj4b1io6ekxBYd9MBqJSO8Zb2YBI5E=;
+ b=JAVVy9BIGPUijK4MZoyjD6JVVwRHuogaBMTE+4kBh5xmiw2ER+60QbBMnpNrVGB7j8
+ zqfSWKsN8bMlBbexEl1aHR5xMhyytO7lei4seyJQNtg+fxbvcxqAe0v3xbzZUieRsOaM
+ oyhKopyLTCjg6KqUx5brHFgGeZBib4A5LtrB2bARZxBPtW1IIcQoLKotACDuIgwsmVoX
+ tDDFenEvVLrKp6cFcHPN4jJS8Bt/Y1Ee6YIl4aFqYEG91jFh+/hEeoTMRjMpOts5kEh9
+ D1+aBpcCROe3GY+3k+q6E3b7YiHRTkFu+JntqS/AihNTk5SOUa+Xp8RqQahqTGfQNTaU
+ fW1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706136885; x=1706741685;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x2nI9rtsZtS/jfj4b1io6ekxBYd9MBqJSO8Zb2YBI5E=;
+ b=FyBb5Gnv39BSdfFc0VWnmGCJtReLFsEYQsc+trpKAwSWUkaaorTTRpVadgDWBuPv+N
+ /pZTD11Op9n4Aj0NnFBAbQxcDD0GdZ/7/FvEGA8PKlHiq/NxcBNgF8b7j0KFCB61eTlw
+ 77R94dDCEFOHPtVu5WAyDxbm05cU9gLYdVOxtUdO8x4UR9bV55EU/anSUh/OJc4Cs2yU
+ tIQyvXYtDLJM41j5vk1yvGOZEF03ewrKGhbId8nvGLpzYa0M9smdxd7KSbGnp7cauSq9
+ WDEDY1zuiaYH6cHetIm43FytQ7fOy5ZnMxJfa6OttUNESB9ojZAHjm4EUKtTtbMLlGNh
+ 3YnQ==
+X-Gm-Message-State: AOJu0YxRfaiKu0wipIPWHISjh1CuiwRRdxWzGh2FYc68hdj3qFenf+H2
+ 4bTEKHQcHFb0o/g6sJ4T+brs/EZXIwacVh0NessI3b41+oQ0vl/9KQAT2gt6yyo=
+X-Google-Smtp-Source: AGHT+IHp+ppUZbe0RhIepHDJqDfOFr5K9dF6x6asATz1KuhpVJbt43bdA0DRAJo/sAdx7oXVEbuGiA==
+X-Received: by 2002:a17:902:e546:b0:1d7:450c:be68 with SMTP id
+ n6-20020a170902e54600b001d7450cbe68mr149905plf.66.1706136885083; 
+ Wed, 24 Jan 2024 14:54:45 -0800 (PST)
+Received: from ?IPV6:2001:44b8:2176:c800:5fcf:9e3:2e58:9c7?
+ (2001-44b8-2176-c800-5fcf-09e3-2e58-09c7.static.ipv6.internode.on.net.
+ [2001:44b8:2176:c800:5fcf:9e3:2e58:9c7])
+ by smtp.gmail.com with ESMTPSA id
+ bi3-20020a170902bf0300b001d6fe15b563sm10909619plb.157.2024.01.24.14.54.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 14:54:44 -0800 (PST)
+Message-ID: <cc8024bd-ce99-47b0-9418-f99f37dab924@linaro.org>
+Date: Thu, 25 Jan 2024 08:54:41 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e34d49cc-b743-4df1-9a31-96c987dc2ad3@intel.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mtosatti@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/9] accel/tcg: Rename tcg_cpus_destroy() ->
+ tcg_cpu_destroy()
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
+ Claudio Fontana <cfontana@suse.de>
+References: <20240124101639.30056-1-philmd@linaro.org>
+ <20240124101639.30056-3-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240124101639.30056-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,87 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 10:52:46PM +0800, Xiaoyao Li wrote:
-> On 1/23/2024 11:39 PM, Marcelo Tosatti wrote:
-> > On Sat, Jan 20, 2024 at 05:44:07PM +0800, Xiaoyao Li wrote:
-> > > On 1/20/2024 12:14 AM, Marcelo Tosatti wrote:
-> > > > On Fri, Jan 19, 2024 at 02:46:22PM +0800, Xiaoyao Li wrote:
-> > > > > I'm wondering why CPUID_APM_INVTSC is set as unmigratable_flags. Could
-> > > > > anyone explain it?
-> > > > 
-> > > > 
-> > > > commit 68bfd0ad4a1dcc4c328d5db85dc746b49c1ec07e
-> > > > Author: Marcelo Tosatti <mtosatti@redhat.com>
-> > > > Date:   Wed May 14 16:30:09 2014 -0300
-> > > > 
-> > > >       target-i386: block migration and savevm if invariant tsc is exposed
-> > > >       Invariant TSC documentation mentions that "invariant TSC will run at a
-> > > >       constant rate in all ACPI P-, C-. and T-states".
-> > > >       This is not the case if migration to a host with different TSC frequency
-> > > >       is allowed, or if savevm is performed. So block migration/savevm.
-> > > > 
-> > > > So the rationale here was that without ensuring the destination host
-> > > > has the same TSC clock frequency, we can't migrate.
-> > > 
-> > > It seems to me the concept of invtsc was extended to "tsc freq will not
-> > > change even after the machine is live migrated". I'm not sure it is correct
-> > > to extend the concept of invtsc.
-> > > 
-> > > The main reason of introducing invtsc is to tell the tsc hardware keeps
-> > > counting (at the same rate) even at deep C state, so long as other states.
-> > > 
-> > > For example, a guest is created on machine A with X GHz tsc, and invtsc
-> > > exposed (machine A can ensure the guest's tsc counts at X GHz at any state).
-> > > If the guest is migrated to machine B with Y GHz tsc, and machine B can also
-> > > ensure the invtsc of its guest, i.e., the guest's tsc counts at Y GHz at any
-> > > state. IMHO, in this case, the invtsc is supported at both src and dest,
-> > > which means it is a migratable feature. However, the migration itself fails,
-> > > due to mismatched/different configuration of tsc freq, not due to invtsc.
-> > > 
-> > > > However, this was later extended to allow invtsc migratioon when setting
-> > > > tsc-khz explicitly:
-> > > > 
-> > > > commit d99569d9d8562c480e0befab601756b0b7b5d0e0
-> > > > Author: Eduardo Habkost <ehabkost@redhat.com>
-> > > > Date:   Sun Jan 8 15:32:34 2017 -0200
-> > > > 
-> > > >       kvm: Allow invtsc migration if tsc-khz is set explicitly
-> > > >       We can safely allow a VM to be migrated with invtsc enabled if
-> > > >       tsc-khz is set explicitly, because:
-> > > >       * QEMU already refuses to start if it can't set the TSC frequency
-> > > >         to the configured value.
-> > > >       * Management software is already required to keep device
-> > > >         configuration (including CPU configuration) the same on
-> > > >         migration source and destination.
-> > > >       Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
-> > > >       Message-Id: <20170108173234.25721-3-ehabkost@redhat.com>
-> > > >       Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
-> > > 
-> > > But in the case that user doesn't set tsc freq explicitly, the live
-> > > migration is likely to fail or have issues even without invtsc exposed to
-> > > guest,
-> > 
-> > Depends on how the guest is using the TSC, but yes.
-> > 
-> > > if the destination host has a different tsc frequency than src host.
-> > > 
-> > > So why bother checking invtsc only?
-> > 
-> > Well, if invtsc is exposed to the guest, then it might use the TSC for
-> > timekeeping purposes.
-> > 
-> > Therefore you don't want to fail (on the invtsc clock characteristics)
-> > otherwise timekeeping in the guest might be problematic.
-> > 
-> > But this are all just heuristics.
-> > 
-> > Do you have a suggestion for different behaviour?
+On 1/24/24 20:16, Philippe Mathieu-Daudé wrote:
+> tcg_cpus_destroy() operates on a single vCPU, rename it
+> as 'tcg_cpu_destroy'.
 > 
-> I think we need to block live migration when user doesn't specify a certain
-> tsc frequency explicitly, regardless of invtsc.
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   accel/tcg/tcg-accel-ops.h       | 2 +-
+>   accel/tcg/tcg-accel-ops-mttcg.c | 2 +-
+>   accel/tcg/tcg-accel-ops-rr.c    | 2 +-
+>   accel/tcg/tcg-accel-ops.c       | 2 +-
+>   4 files changed, 4 insertions(+), 4 deletions(-)
 
-Problem is if that guest is using kvmclock for timekeeping, then live migration 
-is safe (kvmclock logic will update the tsc frequency of the destination
-host upon migration).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
