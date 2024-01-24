@@ -4,59 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37347C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35EFC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 15:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSeeV-00038E-8b; Wed, 24 Jan 2024 09:54:55 -0500
+	id 1rSemd-0007HK-P9; Wed, 24 Jan 2024 10:03:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rSeeK-00036J-6n
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:54:44 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rSema-0007Gk-JC; Wed, 24 Jan 2024 10:03:16 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rSeeI-0000KT-Lo
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:54:43 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKn3l6yKZz6K6DR;
- Wed, 24 Jan 2024 22:52:03 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id C524F140684;
- Wed, 24 Jan 2024 22:54:38 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 24 Jan
- 2024 14:54:38 +0000
-Date: Wed, 24 Jan 2024 14:54:37 +0000
-To: <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
- <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
- <nifan@outlook.com>, <jim.harris@samsung.com>, "Fan Ni" <fan.ni@samsung.com>
-Subject: Re: [PATCH v3 3/9] include/hw/cxl/cxl_device: Rename mem_size as
- static_mem_size for type3 memory devices
-Message-ID: <20240124145437.00006522@Huawei.com>
-In-Reply-To: <20231107180907.553451-4-nifan.cxl@gmail.com>
-References: <20231107180907.553451-1-nifan.cxl@gmail.com>
- <20231107180907.553451-4-nifan.cxl@gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rSemY-0001y5-Jg; Wed, 24 Jan 2024 10:03:16 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3666249262;
+ Wed, 24 Jan 2024 16:03:04 +0100 (CET)
+Message-ID: <d0cbb4ed-bdb9-4487-ab7b-4b5e72a36e7e@proxmox.com>
+Date: Wed, 24 Jan 2024 16:03:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] qapi: blockdev-backup: add discard-source parameter
+Content-Language: en-US
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ xiechanglong.d@gmail.com, wencongyang2@huawei.com, hreitz@redhat.com,
+ kwolf@redhat.com, jsnow@redhat.com
+References: <20240117160737.1057513-1-vsementsov@yandex-team.ru>
+ <20240117160737.1057513-4-vsementsov@yandex-team.ru>
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20240117160737.1057513-4-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,54 +57,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  7 Nov 2023 10:07:07 -0800
-nifan.cxl@gmail.com wrote:
-
-> From: Fan Ni <fan.ni@samsung.com>
+Am 17.01.24 um 17:07 schrieb Vladimir Sementsov-Ogievskiy:
+> Add a parameter that enables discard-after-copy. That is mostly useful
+> in "push backup with fleecing" scheme, when source is snapshot-access
+> format driver node, based on copy-before-write filter snapshot-access
+> API:
 > 
-> Rename mem_size as static_mem_size for type3 memdev to cover static RAM and
-> pmem capacity, preparing for the introduction of dynamic capacity to support
-> dynamic capacity devices.
+> [guest]      [snapshot-access] ~~ blockdev-backup ~~> [backup target]
+>    |            |
+>    | root       | file
+>    v            v
+> [copy-before-write]
+>    |             |
+>    | file        | target
+>    v             v
+> [active disk]   [temp.img]
 > 
-> Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Hi Fan,
-
-One trivial comment inline.
-
-> ---
->  hw/cxl/cxl-mailbox-utils.c  | 4 ++--
->  hw/mem/cxl_type3.c          | 8 ++++----
->  include/hw/cxl/cxl_device.h | 2 +-
->  3 files changed, 7 insertions(+), 7 deletions(-)
+> In this case discard-after-copy does two things:
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index f80dd6474f..707fd9fe7f 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -774,7 +774,7 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
->      snprintf(id->fw_revision, 0x10, "BWFW VERSION %02d", 0);
->  
->      stq_le_p(&id->total_capacity,
-> -             cxl_dstate->mem_size / CXL_CAPACITY_MULTIPLIER);
-> +            cxl_dstate->static_mem_size / CXL_CAPACITY_MULTIPLIER);
-Indent ended up one space short.
+>  - discard data in temp.img to save disk space
+>  - avoid further copy-before-write operation in discarded area
+> 
+> Note that we have to declare WRITE permission on source in
+> copy-before-write filter, for discard to work.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
->      stq_le_p(&id->persistent_capacity,
->               cxl_dstate->pmem_size / CXL_CAPACITY_MULTIPLIER);
->      stq_le_p(&id->volatile_capacity,
-> @@ -1149,7 +1149,7 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
->      struct clear_poison_pl *in = (void *)payload_in;
->  
->      dpa = ldq_le_p(&in->dpa);
-> -    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->mem_size) {
-> +    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->static_mem_size) {
->          return CXL_MBOX_INVALID_PA;
->      }
->  
+Ran into another issue when the cluster_size of the fleecing image is
+larger than for the backup target, e.g.
+
+> #!/bin/bash
+> rm /tmp/fleecing.qcow2
+> ./qemu-img create /tmp/disk.qcow2 -f qcow2 1G
+> ./qemu-img create /tmp/fleecing.qcow2 -o cluster_size=2M -f qcow2 1G
+> ./qemu-img create /tmp/backup.qcow2 -f qcow2 1G
+> ./qemu-system-x86_64 --qmp stdio \
+> --blockdev qcow2,node-name=node0,file.driver=file,file.filename=/tmp/disk.qcow2 \
+> --blockdev qcow2,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.qcow2,discard=unmap \
+> --blockdev qcow2,node-name=node2,file.driver=file,file.filename=/tmp/backup.qcow2 \
+> <<EOF
+> {"execute": "qmp_capabilities"}
+> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "discard": "unmap", "node-name": "snap0" } }
+> {"execute": "blockdev-backup", "arguments": { "device": "snap0", "target": "node2", "sync": "full", "job-id": "backup0", "discard-source": true } }
+> EOF
+
+will fail with
+
+> qemu-system-x86_64: ../util/hbitmap.c:570: hbitmap_reset: Assertion `QEMU_IS_ALIGNED(count, gran) || (start + count == hb->orig_size)' failed.
+
+Backtrace shows the assert happens while discarding, when resetting the
+BDRVCopyBeforeWriteState access_bitmap
+ > #6  0x0000555556142a2a in hbitmap_reset (hb=0x555557e01b80, start=0,
+count=1048576) at ../util/hbitmap.c:570
+> #7  0x0000555555f80764 in bdrv_reset_dirty_bitmap_locked (bitmap=0x55555850a660, offset=0, bytes=1048576) at ../block/dirty-bitmap.c:563
+> #8  0x0000555555f807ab in bdrv_reset_dirty_bitmap (bitmap=0x55555850a660, offset=0, bytes=1048576) at ../block/dirty-bitmap.c:570
+> #9  0x0000555555f7bb16 in cbw_co_pdiscard_snapshot (bs=0x5555581a7f60, offset=0, bytes=1048576) at ../block/copy-before-write.c:330
+> #10 0x0000555555f8d00a in bdrv_co_pdiscard_snapshot (bs=0x5555581a7f60, offset=0, bytes=1048576) at ../block/io.c:3734
+> #11 0x0000555555fd2380 in snapshot_access_co_pdiscard (bs=0x5555582b4f60, offset=0, bytes=1048576) at ../block/snapshot-access.c:55
+> #12 0x0000555555f8b65d in bdrv_co_pdiscard (child=0x5555584fe790, offset=0, bytes=1048576) at ../block/io.c:3144
+> #13 0x0000555555f78650 in block_copy_task_entry (task=0x555557f588f0) at ../block/block-copy.c:597
+
+My guess for the cause is that in block_copy_calculate_cluster_size() we
+only look at the target. But now that we need to discard the source,
+we'll also need to consider that for the calculation?
+
+Best Regards,
+Fiona
 
 
