@@ -4,65 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A70FBC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 02:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D255BC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 02:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSSun-0001jS-91; Tue, 23 Jan 2024 21:22:57 -0500
+	id 1rSTLB-0007ai-Ke; Tue, 23 Jan 2024 21:50:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rSSuk-0001jJ-Ue
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:22:55 -0500
-Received: from mgamail.intel.com ([198.175.65.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rSSui-00033H-O8
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:22:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706062973; x=1737598973;
- h=from:to:subject:date:message-id:in-reply-to:references:
- mime-version:content-transfer-encoding;
- bh=qAvw6hTolCzx2sHTXWzuyxxYR6MONniX9EjUwRMKQ1w=;
- b=biip+8dmX1Fg8p7PxnCYTkQu8GM2nHGWakuhRTbsO15GaoeeRzi5jeNA
- v6fR+rDEGG/9m+9sJHOEqKi+9LgexCVAhkdbmD3drjMaWfb/Z9FW3a+xV
- DLDceQMIodYt9RdmN8j/PPsjWQ13OAPWYxQkZEXl2K8kqrgu6LnVHzMwn
- ZnGEmTj6geAg4HUyRRaABAzASLOolSP18uiiWmWHn7QeHlxdPNWRITamo
- L81423auK+/xuF33BVgNR+9gNOYXUgqoTzEqVSU0lru8Lcdq5W/fg0o1S
- s48S6GkPXVxtyHlocuRzLDwzlfCi9bGqh/ZAX97nR6xd0V/mLwRmfInmt g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="1603205"
-X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; 
-   d="scan'208";a="1603205"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jan 2024 18:22:48 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,215,1701158400"; d="scan'208";a="28234906"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by fmviesa001.fm.intel.com with ESMTP; 23 Jan 2024 18:22:47 -0800
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Subject: [PATCH v3 1/2] ui/gtk: flush display pipeline before saving vmstate
- when blob=true
-Date: Wed, 20 Sep 2023 16:24:26 -0700
-Message-Id: <20230920232426.5950-1-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231204183718.16777-1-dongwon.kim@intel.com>
-References: <20231204183718.16777-1-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSTL9-0007aT-51
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:50:11 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSTL7-0007OU-CI
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 21:50:10 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3bd6581bc62so3483838b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 18:50:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706064606; x=1706669406; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QH9cKBpP5sSR5LCKwwh3f1JzaqtUU0FUjP4Gq8BAb/U=;
+ b=ays2AaHzNM7zfigtAPyaIFq7vuMlBLGrP+VptQnMjvQcFeC1nHxEMhG+Cl5zhyjuOF
+ 6pSmi9ULsVwlzOSnlT7aPMEz/GIT/P6/mBtoh4UywwmvaMY0PDchQ/E8NZUa3Hkhl8Lr
+ fr7gjfQOyKfF6P4/cekOCSpMzW0GxG8lfTse5uIFwoetaXidvCYwOchd3mlx1vKrTEvu
+ A9C+s/ZThyeFuAS/mMtrpLN5Gf9IjBjk2UTYHuOOdr9yrRBHRpOXZ7Y8IDytHkMXGhNL
+ RFCqWD4clvqKDMJwgZBNcPNjXixK43lKluGpkeLCGb0Eny6VumHOj5Tl8u8ygpb/y8jF
+ Xi1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706064606; x=1706669406;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QH9cKBpP5sSR5LCKwwh3f1JzaqtUU0FUjP4Gq8BAb/U=;
+ b=JyzREB3k4DCGIft+uq+Wx6WOZiV/ZKzusuUqauBb7MkeqOHT14WJ5gQrZxByTmFyL1
+ OoxRiWnH8bq9tBgIr8Qm7CE0zRLHP2XgE1FKnMQWOwYWfEE3LaoWbwQv/KWwdG37/9WS
+ 1GeqOZjLSdJWq5H7Qgr2bTp9AcsuY8lPGYu09DoI3rVXzoxndCrY0yY+JDOJGyQr6480
+ qX+sDu+Y5YV9eqvD24I7Upsy/CVP37UGtyRnfcOM5GdQMzXWVa2na2O3WNP2f54JpOhH
+ /NvbisdBHw0hH3CSCWvRYTQXyBfrtZgiTozcDUXrqkoTp2bkGl5nejFEx2sIbxTqh8dk
+ R65g==
+X-Gm-Message-State: AOJu0Yzj5n/tdJjmrp5jgTbmwvacGSupFujVZB40tP/PddLLGQrpMV8r
+ dt4Vy7jR0tG7Y9sxJqWFCs7/1op83wlh/FG6FoSGzVOIx9erGOMq5RW9ukYn/pE=
+X-Google-Smtp-Source: AGHT+IG67LNtf9NxIvagAVr2WN9G5UrZxkPNfqwnu+POX2rGXiAPUfH+C2w3PH8OO0N6JUKb2TRZhw==
+X-Received: by 2002:a05:6808:238a:b0:3bd:4cc0:3ba1 with SMTP id
+ bp10-20020a056808238a00b003bd4cc03ba1mr1120364oib.16.1706064606484; 
+ Tue, 23 Jan 2024 18:50:06 -0800 (PST)
+Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
+ (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
+ [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
+ by smtp.gmail.com with ESMTPSA id
+ u33-20020a631421000000b005cdad153d84sm10803393pgl.90.2024.01.23.18.50.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jan 2024 18:50:06 -0800 (PST)
+Message-ID: <49702a11-d61c-428e-bb6f-e60a6ec2ecea@linaro.org>
+Date: Wed, 24 Jan 2024 12:50:01 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 26/34] Wrap target macros in functions
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, ale@rev.ng
+References: <20240119144024.14289-1-anjo@rev.ng>
+ <20240119144024.14289-27-anjo@rev.ng>
+ <a69519cf-27f6-479e-9ec6-ff7e11454c90@linaro.org>
+ <n2u2ifeti6fqzppvojuyi4i4phzrb4xbk3x2rpjhhesnwxwbdy@lmf3m6fqcr7g>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <n2u2ifeti6fqzppvojuyi4i4phzrb4xbk3x2rpjhhesnwxwbdy@lmf3m6fqcr7g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- DKIMWL_WL_HIGH=-1.327, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,97 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+On 1/23/24 22:12, Anton Johansson wrote:
+> On 23/01/24, Philippe Mathieu-Daudé wrote:
+>> Hi Anton,
+>>
+>> On 19/1/24 15:40, Anton Johansson wrote:
+>>> Adds wrapper functions around common target specific macros required by
+>>> accel/tcg.
+>>>
+>>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>>> ---
+>>>    include/hw/core/cpu.h |  9 +++++++
+>>>    cpu-target.c          | 62 +++++++++++++++++++++++++++++++++++++++++++
+>>>    2 files changed, 71 insertions(+)
+>>>
+>>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+>>> index 57d100c203..a2d65c1d7a 100644
+>>> --- a/include/hw/core/cpu.h
+>>> +++ b/include/hw/core/cpu.h
+>>> @@ -26,6 +26,7 @@
+>>>    #include "exec/vaddr.h"
+>>>    #include "exec/memattrs.h"
+>>>    #include "exec/tlb-common.h"
+>>> +#include "exec/memop.h"
+>>>    #include "qapi/qapi-types-run-state.h"
+>>>    #include "qemu/bitmap.h"
+>>>    #include "qemu/rcu_queue.h"
+>>> @@ -1164,6 +1165,14 @@ void cpu_exec_unrealizefn(CPUState *cpu);
+>>>     * what you are doing!
+>>>     */
+>>>    bool target_words_bigendian(void);
+>>> +bool target_supports_mttcg(void);
+>>> +bool target_has_precise_smc(void);
+>>> +int target_long_bits(void);
+>>> +int target_phys_addr_space_bits(void);
+>>> +uint8_t target_insn_start_words(void);
+>>> +uint8_t target_default_memory_order(void);
+>>> +uint8_t target_tlb_dyn_max_bits(void);
+>>> +MemOp target_endian_memory_order(void);
+>>
+>> None of these helpers take argument. I don't understand
+>> how they can be called in heterogeneous context.
+> 
+> No you're right, I was focused mostly on getting accel/tcg to compile
+> with hetrogeneous being a goal downt the line.
+> 
+> I like the idea of moving these fields to a struct filled out per
+> target, but dispatching would also work.
 
-If the guest state is paused before it gets a response for the current
-scanout frame submission (resource-flush), it won't flush new frames
-after being restored as it still waits for the old response, which is
-accepted as a scanout render done signal. So it's needed to unblock
-the current scanout render pipeline before the run state is changed
-to make sure the guest receives the response for the current frame
-submission.
+All of the bits that you're referencing in TCGContext, outside of compilation, should be 
+treated the same way.  Like Phil, I'd prefer to move these once and get the API right.
 
-v2: Giving some time for the fence to be signaled before flushing
-    the pipeline
 
-v3: Prevent redundant call of gd_hw_gl_flushed by checking dmabuf
-    and fence_fd >= 0 in it (e.g. during and after eglClientWaitSync
-    in gd_change_runstate).
-
-    Destroy sync object later in gd_hw_fl_flushed since it is needed
-    by eglClientWaitSync.
-
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- ui/egl-helpers.c |  2 --
- ui/gtk.c         | 31 +++++++++++++++++++++++++++----
- 2 files changed, 27 insertions(+), 6 deletions(-)
-
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 3d19dbe382..a77f9e57d9 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -385,8 +385,6 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
-     if (dmabuf->sync) {
-         dmabuf->fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
-                                                       dmabuf->sync);
--        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
--        dmabuf->sync = NULL;
-     }
- }
- 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 810d7fc796..eaca890cba 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -597,10 +597,14 @@ void gd_hw_gl_flushed(void *vcon)
-     VirtualConsole *vc = vcon;
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
- 
--    qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
--    close(dmabuf->fence_fd);
--    dmabuf->fence_fd = -1;
--    graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+    if (dmabuf && dmabuf->fence_fd >= 0) {
-+        qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
-+        close(dmabuf->fence_fd);
-+        dmabuf->fence_fd = -1;
-+        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
-+        dmabuf->sync = NULL;
-+        graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+    }
- }
- 
- /** DisplayState Callbacks (opengl version) **/
-@@ -678,6 +682,25 @@ static const DisplayGLCtxOps egl_ctx_ops = {
- static void gd_change_runstate(void *opaque, bool running, RunState state)
- {
-     GtkDisplayState *s = opaque;
-+    int i;
-+
-+    if (state == RUN_STATE_SAVE_VM) {
-+        for (i = 0; i < s->nb_vcs; i++) {
-+            VirtualConsole *vc = &s->vc[i];
-+
-+            if (vc->gfx.guest_fb.dmabuf &&
-+                vc->gfx.guest_fb.dmabuf->fence_fd >= 0) {
-+                eglClientWaitSync(qemu_egl_display,
-+                                  vc->gfx.guest_fb.dmabuf->sync,
-+                                  EGL_SYNC_FLUSH_COMMANDS_BIT_KHR,
-+                                  100000000);
-+
-+                /* force flushing current scanout blob rendering process
-+                 * just in case the fence is still not signaled */
-+                gd_hw_gl_flushed(vc);
-+            }
-+        }
-+    }
- 
-     gd_update_caption(s);
- }
--- 
-2.34.1
-
+r~
 
