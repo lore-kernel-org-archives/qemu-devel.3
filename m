@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A23C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 17:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED4FC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 17:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rShD4-00028p-0d; Wed, 24 Jan 2024 12:38:46 -0500
+	id 1rShEM-0003pH-Ji; Wed, 24 Jan 2024 12:40:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rShD2-00026G-N4
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:38:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rShD0-00026T-0M
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:38:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706117921;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=sgjNTkQlo22fZWHf6YGut2OQWswQUfoPMwnpvIq/O50=;
- b=FNJJbiDL1CMPRVkIo3Ui+slBzf7+FaYJTwBzMCa6wvdYxk17AaJq5Ne4Z5x4WlfKVfYuwi
- whd2HShxjLXUMmT1DQG5QMar9+hbbp5al0n86XRLK7kHMAYxyI0Qv3aVVv2hlBZng8hVbP
- zplrPkBi6wBzU+C2Ir1qPgJiUrDf5EM=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-vlwdfaVfOX2jI0TuUVdnXg-1; Wed,
- 24 Jan 2024 12:38:37 -0500
-X-MC-Unique: vlwdfaVfOX2jI0TuUVdnXg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 066B93C0F370;
- Wed, 24 Jan 2024 17:38:37 +0000 (UTC)
-Received: from localhost (unknown [10.39.194.82])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3747228AC;
- Wed, 24 Jan 2024 17:38:36 +0000 (UTC)
-From: Hanna Czenczek <hreitz@redhat.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: [PATCH 0/2] virtio: Keep notifications disabled during drain
-Date: Wed, 24 Jan 2024 18:38:28 +0100
-Message-ID: <20240124173834.66320-1-hreitz@redhat.com>
+ (Exim 4.90_1) (envelope-from <komlodi@google.com>)
+ id 1rShEF-0003l4-HH
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:40:00 -0500
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <komlodi@google.com>)
+ id 1rShED-0002Hw-Nm
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 12:39:59 -0500
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-429d2ebdf05so3691cf.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 09:39:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1706117996; x=1706722796; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yXTaes9a+DpnB/iregs+Axn1k2lzOZ8nIqaAsqGVNkc=;
+ b=DEj4hP8rs28nBShVxNlL4Y0Fw6iKS0+MdIE/JZKJCTv8GVMqpXMZg/OLR1Z3sPWtpH
+ g4oVWpLlRYwf7ChDgijcuentFpxFqK/rhiGIRak9Ns5tJOWoGVKyhyT5gPl4qj5Rl/9Q
+ HxodKKcT0y6hGcXK2TYTwXR3ykaYxRXA+PAu1uQ8ADAET1qPKN/QCNttU4DQToyCUPUA
+ 0nzVycO/dcD84pdXy+kWIs0GELmPW04++7S5f6G4sNQApMk/c12m4sgBLc3zSpTjQSpX
+ fpTfMvFb14F1P0SjmJpkSNfhTDOhec9qjUxNr04YjpnbYLAho0iKeStWkr3RU3xKSmjs
+ rk9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706117996; x=1706722796;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yXTaes9a+DpnB/iregs+Axn1k2lzOZ8nIqaAsqGVNkc=;
+ b=X/6uYYxpMEbEozSp8tiIjp+7nN1j9GF8n1a3azOR7HcBFSsxWRCyj+2Q7EFbvx2/uI
+ Q5fG6ZOxONGIVS8srOorOcotNwHQ0kn8RMcAEgn6+YjXd/CJXKsPs6BM4e2v3Q5lftF9
+ D+YBsNoXXcmg0FkrqlPPx3/KNEKgHR0GOeUuV8yCaQy7+Oi1lSyMdTKdVz5J1RSqp6EF
+ UHYep9eQjwtOQHHFBw0PGraNMggyp0/YOlLgcZfMfDbMSs3RYplVjOi9GJ0k6q68tizc
+ jpyXjcI2EnIox2duo7yBIZh95Y36z5px0pyWHhV+nYj/VRFZygEynycQAONExVe6Kh40
+ UI+w==
+X-Gm-Message-State: AOJu0Yw3zh3rS/32yTte1Nc0IvM6vA8MfTs+TfuQc3JuucILhcF1NgVs
+ ttFjCcu6LYacbodGwI5o8mBhSHBN7tPFQn2asweemP1uhWxSj4Zx3bxLy/Od7k+gatl16zwTOz8
+ 6NkqSL9qIDQiwMW0mO4Jww/DuBu0EDSmHuvAy/EAat5C3QKeWPQ/N
+X-Google-Smtp-Source: AGHT+IHVTUDl5HeBL8gOoHkniaoDDrUYhyn0JxDPM3kADBliPZ0ptXaZW9yHOKoqT5c9slkf8nOYtXFemlUJSGYunnM=
+X-Received: by 2002:a05:622a:100b:b0:42a:6098:8122 with SMTP id
+ d11-20020a05622a100b00b0042a60988122mr171591qte.3.1706117995919; Wed, 24 Jan
+ 2024 09:39:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+References: <20240110212641.1916202-1-komlodi@google.com>
+ <ZZ/1J4q1TEFmc72P@mail.minyard.net>
+In-Reply-To: <ZZ/1J4q1TEFmc72P@mail.minyard.net>
+From: Joe Komlodi <komlodi@google.com>
+Date: Wed, 24 Jan 2024 09:39:44 -0800
+Message-ID: <CAGDLtxssLuFYutF-GUksbWmaOb7FCdhoOH-OdbfMEZ2Ma3Bu4A@mail.gmail.com>
+Subject: Re: [PATCH 0/4] hw/i2c: smbus: Reset fixes
+To: minyard@acm.org
+Cc: qemu-devel@nongnu.org, venture@google.com, cminyard@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=komlodi@google.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,92 +91,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Thu, Jan 11, 2024 at 6:03=E2=80=AFAM Corey Minyard <minyard@acm.org> wro=
+te:
+>
+> On Wed, Jan 10, 2024 at 09:26:37PM +0000, Joe Komlodi wrote:
+> > Hi all,
+> >
+> > This series adds some resets for SMBus and for the I2C core. Along with
+> > it, we make SMBus slave error printing a little more helpful.
+> >
+> > These reset issues were very infrequent, they would maybe occur in 1 ou=
+t
+> > of hundreds of resets in our testing, but the way they happen is pretty
+> > straightforward.
+> > Basically as long as a reset happens in the middle of a transaction, th=
+e
+> > state of the old transaction would still partially be there after the
+> > reset. Once a new transaction comes in, the partial stale state can
+> > cause the new transaction to incorrectly fail.
+>
+> This seems wrong to me.  In a real system, the reset would be done on
+> the smbus master and not necessarily on the mux (though I looked at a
+> few of the PCA954x devices and they appear to have reset lines, but
+> different systems may drive that reset differently).
+>
+> It seems to me that the bug is the smbus master device isn't getting
+> reset in a system reset.  Just adding the reset logic there would be
+> easier and more consistent with the real hardware.
+>
+> -corey
+>
+Oops, sorry, missed this in my inbox.
 
-When registering callbacks via aio_set_event_notifier_poll(), the
-io_poll_end() callback is only invoked when polling actually ends.  If
-the notifiers are removed while in a polling section, it is not called.
-Therefore, io_poll_start() is not necessarily followed up by
-io_poll_end().
+That sounds good to me, I'll send up a v2 that resets the SMBus master
+instead of the mux.
 
-It is not entirely clear whether this is good or bad behavior.  On one
-hand, it may be unexpected to callers.  On the other, it may be
-counterproductive to call io_poll_end() when the polling section has not
-ended yet.
+Thanks,
+Joe
 
-Right now, there is only one user of aio_set_event_notifier(), which is
-virtio_queue_aio_attach_host_notifier().  It does not expect this
-behavior, which leads to virtqueue notifiers remaining disabled if
-virtio_queue_aio_detach_host_notifier() is called while polling.  That
-can happen e.g. through virtio_scsi_drained_begin() or
-virtio_blk_drained_begin() (through virtio_blk_data_plane_detach()).
-In such a case, the virtqueue may not be processed for a while, letting
-the guest driver hang.  This can be reproduced by repeatedly
-hot-plugging and -unplugging a virtio-scsi device with a scsi-hd disk,
-because the guest will try to enumerate the virtio-scsi device while
-we’re attaching the scsi-hd disk, which causes a drain, which can cause
-the virtio-scsi virtqueue to stall as described.
-
-Stefan has suggested ensuring we always follow up io_poll_start() by
-io_poll_end():
-
-https://lists.nongnu.org/archive/html/qemu-block/2023-12/msg00163.html
-
-I prefer changing the caller instead, because I don’t think we actually
-want the virtqueue notifier to be force-enabled when removing our AIO
-notifiers.  So I believe we actually only want to take care to
-force-enable it when we re-attach the AIO notifiers, and to kick
-virtqueue processing once, in case we missed any events while the AIO
-notifiers were not attached.
-
-That is done by patch 2.  We have already discussed a prior version of
-it here:
-
-https://lists.nongnu.org/archive/html/qemu-block/2024-01/msg00001.html
-
-And compared to that, based on the discussion, there are some changes:
-1. Used virtio_queue_notify() instead of virtio_queue_notify_vq(), as
-   suggested by Paolo, because it’s thread-safe
-2. Moved virtio_queue_notify() into
-   virtio_queue_aio_attach_host_notifier*(), because we always want it
-3. Dropped virtio_queue_set_notification(vq, 0) from
-   virtio_queue_aio_detach_host_notifier(): Paolo wasn’t sure whether
-   that was safe to do from any context.  We don’t really need to call
-   it anyway, so I just dropped it.
-4. Added patch 1:
-
-Patch 1 fixes virtio_scsi_drained_end() so it won’t attach polling
-notifiers for the event virtqueue.  That didn’t turn out to be an issue
-so far, but with patch 2, Fiona saw the virtqueue processing queue
-spinning in a loop as described in
-38738f7dbbda90fbc161757b7f4be35b52205552 ("virtio-scsi: don't waste CPU
-polling the event virtqueue").
-
-
-Note that as of eaad0fe26050c227dc5dad63205835bac4912a51 ("scsi: only
-access SCSIDevice->requests from one thread") there’s a different
-problem when trying to reproduce the bug via hot-plugging and
--unplugging a virtio-scsi device, specifically, when unplugging, qemu
-may crash with an assertion failure[1].  I don’t have a full fix for
-that yet, but in case you need a work-around for the specific case of
-virtio-scsi hot-plugging and -unplugging, you can use this patch:
-
-https://czenczek.de/0001-DONTMERGE-Fix-crash-on-scsi-unplug.patch
-
-
-[1] https://lists.nongnu.org/archive/html/qemu-block/2024-01/msg00317.html
-
-
-Hanna Czenczek (2):
-  virtio-scsi: Attach event vq notifier with no_poll
-  virtio: Keep notifications disabled during drain
-
- include/block/aio.h   |  7 ++++++-
- hw/scsi/virtio-scsi.c |  7 ++++++-
- hw/virtio/virtio.c    | 42 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 54 insertions(+), 2 deletions(-)
-
--- 
-2.43.0
-
+> >
+> > Thanks,
+> > Joe
+> >
+> > Joe Komlodi (4):
+> >   hw/i2c: core: Add reset
+> >   hw/i2c/smbus_slave: Add object path on error prints
+> >   hw/i2c: smbus_slave: Reset state on reset
+> >   hw/i2c: smbus: mux: Reset SMBusDevice state on reset
+> >
+> >  hw/i2c/core.c                | 30 +++++++++++++++++++++++++-----
+> >  hw/i2c/i2c_mux_pca954x.c     |  5 +++++
+> >  hw/i2c/smbus_slave.c         | 20 ++++++++++++++++++--
+> >  include/hw/i2c/i2c.h         |  6 +++++-
+> >  include/hw/i2c/smbus_slave.h |  1 +
+> >  5 files changed, 54 insertions(+), 8 deletions(-)
+> >
+> > --
+> > 2.43.0.472.g3155946c3a-goog
+> >
+> >
 
