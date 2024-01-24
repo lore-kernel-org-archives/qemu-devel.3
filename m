@@ -4,76 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D135C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 11:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230ABC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 11:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSb4X-0000fO-Lr; Wed, 24 Jan 2024 06:05:33 -0500
+	id 1rSb5l-00020J-Qx; Wed, 24 Jan 2024 06:06:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rSb4T-0000f0-Oc; Wed, 24 Jan 2024 06:05:31 -0500
-Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSb5k-0001zc-1c
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 06:06:48 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rSb4S-0004XL-1p; Wed, 24 Jan 2024 06:05:29 -0500
-Received: by mail-qv1-xf31.google.com with SMTP id
- 6a1803df08f44-686a92a8661so6253776d6.0; 
- Wed, 24 Jan 2024 03:05:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSb5e-0004kx-OO
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 06:06:47 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-337d05b8942so6058846f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 03:06:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706094324; x=1706699124; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u36/nsLr5X1D0ttTCt/NuhcyEuMauru3wBo/q1oYkUY=;
- b=nJsKvwYzZBFglX2jZnbFf9yb66pqbo25wIaQJuyQ52h9Ju5AU06C2Y1eKK5uk8J6Pg
- h8Bhm989asD4dc5lGeWmU0YSmGh1JT3e/Xnbr/W4G0yk+OgkTe9kYYfQa2jYO6T7476Q
- ZZgezppRe4AB/zzWuzyVj0Ez2n4hFmlw3iM5L9OaONCrL/kka87hkoADE0gPaE7mUauL
- GfAd5cOPFTgN0wc7BI3TcsCn+ooYgw1mYQSQzmln3kapsyEMevWT1tbKJp7eU1qqgezz
- 01rWMOxtY9AaYNhAo4pDIgXjfDntYMNxGqtGu5E8LKfXKtSDQ20/1ExpEuQItJNlaEb4
- 9Hvg==
+ d=linaro.org; s=google; t=1706094401; x=1706699201; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Iy/OKjpiO5yoeXxY83xqvHL6o7nHTDd39y/0xcYG3qM=;
+ b=hlmgl4rPJKhE908qaoUiGFGZPyL8H6Xn77AmdNMjqxaTYk+VIXFagKHvzQ2ZIfsluE
+ /S5Vw1rrBiWEG1IAVFo24kFafMSgFOqx7PNjUWD45SpPdjcHP+IlZ6603p4iqkpYyzFB
+ yP+b+s7CFJSr9FM/JYQWghn7MgL5gZ6QD3wIQ9TgoKl3FgerV/aXXEFqfI3Jk+ASj2UA
+ BKRiD0vVRbH3ZCt8To7aWNm4dQCL8kKflJhY+ts0xOPtu1OFJsiOalN4VplDwcQxv6Kn
+ MZ82+Nwhokd7Rndm7tr2Swi6OP+HmieYLGZy4IQg+lGvNcRxsNQBWNjpiOO3saEpduF7
+ a/eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706094324; x=1706699124;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=u36/nsLr5X1D0ttTCt/NuhcyEuMauru3wBo/q1oYkUY=;
- b=WV/UkV+5ZLbryatU6muNSN1CJpRN9eoYcpD8LLRA6elgzPrDjxVQeraD9nQLQy64ZC
- IChyG1oApP6ayE6Kx5yHFUj0Y3omyv+gFuoQ5rElaj1HMWiSDA732MNo+XeKCe+mcTli
- tTSdcckg7Q5wzveVtKVfStynblPfnd1Nih2ndzjFacUL3LUHYEPK/QRQXUx0c1Mgl5dp
- Bz8aRUVvurHYMbzy0Ye5Wmln2cLmrNLmC+Ykopcl/wEheLeQqjis4+Pa3S3ByO2yUJ9U
- l/SKfZ7HCWZnJHj6sDIl3APoVgFlRhadcNlCRd3rfvFZ6Igo5OS9NaEfHaJuQv1WJpXn
- kpdQ==
-X-Gm-Message-State: AOJu0Yw/jYShQK0U+9rSuM8SO1hJ8RrenxSIKByG4yoOCcveD+dAabP3
- LxGdwms1B5tBEkMIGDubydBNIrjtyfg7z0yXRcAu0zX9SRsbBZB5hPo13hUGYUP7xvANkmC1Zau
- KY0+HG+nlPuoiVCNgCuj0xLiMX0Y=
-X-Google-Smtp-Source: AGHT+IFfxiapwuoW0ZGVsup1YrpwMPv3YL/C0gfpR/2dYeD9OZkSw9opptBabrnS08CV0H4CPXBpChakszLK1RFwU20=
-X-Received: by 2002:a05:6214:1d07:b0:67f:feeb:e034 with SMTP id
- e7-20020a0562141d0700b0067ffeebe034mr2847131qvd.129.1706094324318; Wed, 24
- Jan 2024 03:05:24 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706094401; x=1706699201;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Iy/OKjpiO5yoeXxY83xqvHL6o7nHTDd39y/0xcYG3qM=;
+ b=T45sneuKVwi3EOxV8hEGEgwFSuvG5g5T4ESxarcNmsaNRivrvEdPPHzEqGH2AIVMK0
+ Jcr9YJTDTsV9gDnlLqTt0tBSEEpP6SXBaj7XgmskGmOhczxxJr8q2j8UIQOi4IOAqvBp
+ t5Kz62LlLCqMBq8PxAAopolgAJNKl8RsO2IO1e2hBaxzs4JHUthEKgxzqIDaUXqnveaD
+ yqPGj4m/vHIsro3ec1rDC3aLfQV16D6eKFp3ONAof/H8cfOVvJsEa+M9oqJDe1a+LlMF
+ wlgAwW7XwfvF09hJVdvw3rMpYSUmHuzFtdAASEUV9u8F2uH4WR+DQwnMe+rItliA0foa
+ ZfdA==
+X-Gm-Message-State: AOJu0Yy90p5Gwo99sz7hTeNuGi8UDkx/TZKzcRYnIvCZtv964jzPzE9y
+ Jveri0XF8K+uPcTfNCnnbl36IH3NKddLxRXPCfMqdQC08xLPsLY7S8uYvhRTbPE=
+X-Google-Smtp-Source: AGHT+IH/SauWLJ1xOlrVqSMxVFexDKwt7XPZ6S6pWBnjez+xHwFpHdDkwUvpg8Qby7kwDeLsfRpNeA==
+X-Received: by 2002:a5d:618b:0:b0:339:372e:770f with SMTP id
+ j11-20020a5d618b000000b00339372e770fmr502198wru.46.1706094400988; 
+ Wed, 24 Jan 2024 03:06:40 -0800 (PST)
+Received: from [192.168.69.100] (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
+ [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
+ d10-20020adfa40a000000b0033953f87085sm414725wra.35.2024.01.24.03.06.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 03:06:40 -0800 (PST)
+Message-ID: <5a1cb4ae-b43c-4ef5-9572-6636a2d787e7@linaro.org>
+Date: Wed, 24 Jan 2024 12:06:34 +0100
 MIME-Version: 1.0
-References: <20240124105749.204610-1-f.ebner@proxmox.com>
-In-Reply-To: <20240124105749.204610-1-f.ebner@proxmox.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 24 Jan 2024 15:05:12 +0400
-Message-ID: <CAJ+F1C+4c4B5hRmbQRYnhvEtTJgbmxDTz1es+ovDeRPWdpr+Pg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] ui/clipboard: mark type as not available when
- there is no data
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com, m.frank@proxmox.com, 
- berrange@redhat.com, mcascell@redhat.com, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf31.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/31] docs: mark CRIS support as deprecated
+Content-Language: en-US
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ John Snow <jsnow@redhat.com>, libvir-list@redhat.com,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-s390x@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liweiwei@iscas.ac.cn>,
+ Nicholas Piggin <npiggin@gmail.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Cleber Rosa <crosa@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Bin Meng <bin.meng@windriver.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Xiaojuan Yang <yangxiaojuan@loongson.cn>, qemu-ppc@nongnu.org,
+ David Hildenbrand <david@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Beraldo Leal <bleal@redhat.com>,
+ Rabin Vincent <rabinv@axis.com>
+References: <20230925144854.1872513-1-alex.bennee@linaro.org>
+ <20230925144854.1872513-5-alex.bennee@linaro.org>
+ <ZRG1g/2hWi8+AzNn@redhat.com> <878r8urxxc.fsf@linaro.org>
+ <CAJy5ezoucKM=VvYsHeFep7r0i1PV_JUCgq6gs4JJQVHqq3Yz3Q@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAJy5ezoucKM=VvYsHeFep7r0i1PV_JUCgq6gs4JJQVHqq3Yz3Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,99 +122,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 2:59=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
-rote:
->
-> With VNC, a client can send a non-extended VNC_MSG_CLIENT_CUT_TEXT
-> message with len=3D0. In qemu_clipboard_set_data(), the clipboard info
-> will be updated setting data to NULL (because g_memdup(data, size)
-> returns NULL when size is 0). If the client does not set the
-> VNC_ENCODING_CLIPBOARD_EXT feature when setting up the encodings, then
-> the 'request' callback for the clipboard peer is not initialized.
-> Later, because data is NULL, qemu_clipboard_request() can be reached
-> via vdagent_chr_write() and vdagent_clipboard_recv_request() and
-> there, the clipboard owner's 'request' callback will be attempted to
-> be called, but that is a NULL pointer.
->
-> In particular, this can happen when using the KRDC (22.12.3) VNC
-> client.
->
-> Another scenario leading to the same issue is with two clients (say
-> noVNC and KRDC):
->
-> The noVNC client sets the extension VNC_FEATURE_CLIPBOARD_EXT and
-> initializes its cbpeer.
->
-> The KRDC client does not, but triggers a vnc_client_cut_text() (note
-> it's not the _ext variant)). There, a new clipboard info with it as
-> the 'owner' is created and via qemu_clipboard_set_data() is called,
-> which in turn calls qemu_clipboard_update() with that info.
->
-> In qemu_clipboard_update(), the notifier for the noVNC client will be
-> called, i.e. vnc_clipboard_notify() and also set vs->cbinfo for the
-> noVNC client. The 'owner' in that clipboard info is the clipboard peer
-> for the KRDC client, which did not initialize the 'request' function.
-> That sounds correct to me, it is the owner of that clipboard info.
->
-> Then when noVNC sends a VNC_MSG_CLIENT_CUT_TEXT message (it did set
-> the VNC_FEATURE_CLIPBOARD_EXT feature correctly, so a check for it
-> passes), that clipboard info is passed to qemu_clipboard_request() and
-> the original segfault still happens.
->
-> Fix the issue by handling updates with size 0 differently. In
-> particular, mark in the clipboard info that the type is not available.
->
-> While at it, switch to g_memdup2(), because g_memdup() is deprecated.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: CVE-2023-6683
-> Reported-by: Markus Frank <m.frank@proxmox.com>
-> Suggested-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->
-> Changes in v3:
->     * Yet another new appraoch, setting available to false when
->       no data is passed in when updating.
->     * Update commit message to focus on the fact that non-extended
->       VNC_MSG_CLIENT_CUT_TEXT messages with len=3D0 are problematic.
->
->  ui/clipboard.c | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/ui/clipboard.c b/ui/clipboard.c
-> index 3d14bffaf8..b3f6fa3c9e 100644
-> --- a/ui/clipboard.c
-> +++ b/ui/clipboard.c
-> @@ -163,9 +163,15 @@ void qemu_clipboard_set_data(QemuClipboardPeer *peer=
-,
->      }
->
->      g_free(info->types[type].data);
-> -    info->types[type].data =3D g_memdup(data, size);
-> -    info->types[type].size =3D size;
-> -    info->types[type].available =3D true;
-> +    if (size) {
-> +        info->types[type].data =3D g_memdup2(data, size);
-> +        info->types[type].size =3D size;
-> +        info->types[type].available =3D true;
-> +    } else {
-> +        info->types[type].data =3D NULL;
-> +        info->types[type].size =3D 0;
-> +        info->types[type].available =3D false;
-> +    }
->
->      if (update) {
->          qemu_clipboard_update(info);
-> --
-> 2.39.2
->
->
->
+On 25/9/23 19:17, Edgar E. Iglesias wrote:
+> 
+> On Mon, Sep 25, 2023 at 7:00 PM Alex Bennée <alex.bennee@linaro.org 
+> <mailto:alex.bennee@linaro.org>> wrote:
+> 
+> 
+>     Daniel P. Berrangé <berrange@redhat.com
+>     <mailto:berrange@redhat.com>> writes:
+> 
+>      > On Mon, Sep 25, 2023 at 03:48:27PM +0100, Alex Bennée wrote:
+>      >> This might be premature but while streamling the avocado tests I
+>      >> realised the only tests we have are "check-tcg" ones. The aging
+>      >> fedora-criss-cross image works well enough for developers but
+>     can't be
+>      >> used in CI as we need supported build platforms to build QEMU.
+>      >>
+>      >> Does this mean the writing is on the wall for this architecture?
+>      >>
+>      >> Signed-off-by: Alex Bennée <alex.bennee@linaro.org
+>     <mailto:alex.bennee@linaro.org>>
+>      >> Cc: Rabin Vincent <rabinv@axis.com <mailto:rabinv@axis.com>>
+>      >> Cc: Edgar E. Iglesias <edgar.iglesias@xilinx.com
+>     <mailto:edgar.iglesias@xilinx.com>>
+>      >> ---
+>      >>  docs/about/deprecated.rst | 11 +++++++++++
+>      >>  1 file changed, 11 insertions(+)
+>      >>
+>      >> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>      >> index dc4da95329..7cfe313aa6 100644
+>      >> --- a/docs/about/deprecated.rst
+>      >> +++ b/docs/about/deprecated.rst
+>      >> @@ -399,6 +399,17 @@ Specifying the iSCSI password in plain text
+>     on the command line using the
+>      >>  used instead, to refer to a ``--object secret...`` instance
+>     that provides
+>      >>  a password via a file, or encrypted.
+>      >>
+>      >> +TCG CPUs
+>      >> +--------
+>      >> +
+>      >> +CRIS CPU architecture (since 8.1)
+>      >> +'''''''''''''''''''''''''''''''''
+>      >> +
+>      >> +The CRIS architecture was pulled from Linux in 4.17 and the
+>     compiler
+>      >> +is no longer packaged in any distro making it harder to run the
+>      >> +``check-tcg`` tests. Unless we can improve the testing
+>     situation there
+>      >> +is a chance the code will bitrot without anyone noticing.
+>      >
+>      > Deprecated is generally a warning that we intend to delete the
+>      > feature.   If we're just going to relegate it to untested
+>      > status (what I'd call "tier 3" quality), then we should document
+>      > that elsewhere.  I don't mind which way we go.
+> 
+>     We do have reasonably good coverage with tests/tcg/cris but of course
+>     without a compiler we can't build them.
+> 
+>     Both nios2 and microblaze have build-toolchain scripts which can be used
+>     to re-create containers. However my preference is having pre-built
+>     toolchains hosted by others like we do for loongarch, hexagon, xtensa
+>     and tricore. Then the docker image can simply curl them into an image.
+> 
+> 
+> Yeah, I guess it's time to deprecate it...
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Is that an informal Acked-by? (:
 
+> 
+> Cheers,
+> Edgar
 
---=20
-Marc-Andr=C3=A9 Lureau
 
