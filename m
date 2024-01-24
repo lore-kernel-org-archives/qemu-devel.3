@@ -4,101 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99F9BC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 13:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9FBC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSdlJ-0001ov-Vj; Wed, 24 Jan 2024 08:57:53 -0500
+	id 1rSdnA-00038Q-Gj; Wed, 24 Jan 2024 08:59:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSdlH-0001m9-AO
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:57:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSdlF-0005sc-NJ
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:57:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706104668;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a1fnDX6sltVJ/8BF/VLCjhr9I2rkrkUjdXw/y9U6yng=;
- b=Iztaz4jC6B8McewtTC+ZOMY4cMTNS8I/3iSSKYtkHCqPMbnAkp5qqChiOAkAQ2WtaCq4SD
- nvOvHbD0sha7UFIDfOmk1nqJpurZQmIRxvaUxYqKqhJ2K4u58280TKerL6FiUio6cRN0F+
- B85sF1by/Bbli3B6QmzMKXlvVGQ8Q68=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-v3UwvcpYNbyqlniOtpmM9A-1; Wed, 24 Jan 2024 08:57:46 -0500
-X-MC-Unique: v3UwvcpYNbyqlniOtpmM9A-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-781d8e14fd8so791513085a.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 05:57:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rSdn8-00038B-T1; Wed, 24 Jan 2024 08:59:47 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rSdn6-0006CM-VV; Wed, 24 Jan 2024 08:59:46 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-558f523c072so6523670a12.2; 
+ Wed, 24 Jan 2024 05:59:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706104782; x=1706709582; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8fNpQFi2GM0w37a0PO1Z4htSzc3o14Ers8stsbamzC8=;
+ b=Rr6RvpLagDK/eOPKz4M2UYwUX8ijdoqWhSeCjNJ3y/NZmZNr7kFgLlmXcK99/awbeX
+ rVxAu8xLPxF0N9AJXmszXwU6i3Wlgo0rJxV9NOpvqKpM5fuOJwtfzdvBV3VMCDU5eHrK
+ t/dYlfu2/6X4qimPieFDkv96mXs8ik6eK8dAiWfZviEEfTWWss+HfJk0FKY0xW0tWeZg
+ mLyQS0VL/eBKyidPmNS0hqJ9Vec/BUZXPqRflG9RURywK1N3C5+M/vmBrm1Bg+8srGKR
+ X6qG1raqS+9kZwECPdq6xJ0Yx7XP7T1BHzm18mEjfYCbTZ5rcRyuCzYyoDKhH6hSuhz8
+ Smqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706104666; x=1706709466;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1706104782; x=1706709582;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=a1fnDX6sltVJ/8BF/VLCjhr9I2rkrkUjdXw/y9U6yng=;
- b=YgV8fRN+ZaB6bW+iPAjdN62kt51K/dHg/9/NHJQhcEAdU0MStfEsigKiq2K3zxuzhq
- 6L4kzrOPNQ5F/xslcYiYoxA+VPb9f45AFPfLa+iNMUJa4f5DSOWf7ky8A2e6e6loeay6
- 7t3fOx6Uv8g1+FgDJRXABdXhn7BJ2J/ZUafJ6uCmpVSYkFBZIvjxKpVoIozX274bhQXe
- XcH06NkB6Q/wBwKjonpStOsIrwFMfOX+2+LEyYfKpjrTZcRsqvjfSp/uVdDZvhTchmiU
- KnAHhI0fJfN2Non7P+cJknl4RbAxcCv2paqOwgmBLVIG2aLrwqrAfc30Ar4pt5xleK7/
- I/ow==
-X-Gm-Message-State: AOJu0YxlUj4dmUPLy6f50+RiK3waiT5LBnn/E+tOQKRfmUftT+Y8/4N0
- kuN9cthJU3NC87JL1M3RIn/xDxQ/6d+tCCtIhTG/o80NzPIWo/TAl8jLtgiWK9nAMXWxhr8O7dh
- nXLOuTwbD4w37npAo3ZkV7DTY+mnGapzLF5vRKlidRT6OR3T7qa9F
-X-Received: by 2002:a05:622a:15c5:b0:42a:311f:a7c2 with SMTP id
- d5-20020a05622a15c500b0042a311fa7c2mr2663607qty.1.1706104666254; 
- Wed, 24 Jan 2024 05:57:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG7MTMyz4h2VKLbeWY6SaQLP4NTNYQxpxI3gu8FgK5UMva7AzMACuhZwo7t/N3bUD5d92PHCw==
-X-Received: by 2002:a05:622a:15c5:b0:42a:311f:a7c2 with SMTP id
- d5-20020a05622a15c500b0042a311fa7c2mr2663596qty.1.1706104665995; 
- Wed, 24 Jan 2024 05:57:45 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ay23-20020a05622a229700b0042a5c2a81a8sm614103qtb.60.2024.01.24.05.57.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 05:57:45 -0800 (PST)
-Message-ID: <a92a2023-7448-4b74-bfd9-e412c6092270@redhat.com>
-Date: Wed, 24 Jan 2024 14:57:41 +0100
+ bh=8fNpQFi2GM0w37a0PO1Z4htSzc3o14Ers8stsbamzC8=;
+ b=lXLG35Qplru5nzZUEdNTLU5NYUPwgWmI1A3AMTkcT4w32xACtHNLtzivqMYrM9lDf3
+ WwXbzPisEQpcxctnLuCL9IscBJ6Aiqgk3+OBEjkpAibMAruMeb7gLLfHEnmnLxXy24Eg
+ ilGVHtxgHDv3LLnUKOzRHPX2PCNqwo50E2kCf766655AWBl0TFxZYS4PSR0N+sbOyghA
+ UqDU2DEF62SPzUFs3f5VmJqVnA4hbKnLUFklCbqUdQlOEUyEtzxJXMgkI+Sm/2oVhZNy
+ mkFZufypGIwiHLMaVxYOd+972vO3DhZLOSXleBEANjAqBwSgB6bDPAocho0aDPvLerdM
+ VZ0Q==
+X-Gm-Message-State: AOJu0Yw5PV50I3e/oBYgAmEQ4YI749x6tNJsyMIJf9qMP7AHasC8DBd/
+ oDCNjRWrJgXNgGkoYyYl7tECPVH/W6WCiylwnPB2TC/EOOKKV7gbrd7V5mm52CVt6mnJks295sL
+ gYofdxaBFZr/I6UzQyviQVrlh/n8=
+X-Google-Smtp-Source: AGHT+IEIiUNtaw0Djb+h4wv6InydMRC9iK8ay6yELMASXhGw+2lMNB0xwGazogaamNzlbn8coQQSf/Bvu53RFGNj4Hk=
+X-Received: by 2002:a05:6402:2550:b0:55c:a89c:359f with SMTP id
+ l16-20020a056402255000b0055ca89c359fmr392192edb.15.1706104781630; Wed, 24 Jan
+ 2024 05:59:41 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] virtio-iommu: Add an option to define the input range
- width
-Content-Language: en-US
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, peterx@redhat.com, yanghliu@redhat.com,
- mst@redhat.com, clg@redhat.com, jasowang@redhat.com
-References: <20240123181753.413961-1-eric.auger@redhat.com>
- <20240123181753.413961-2-eric.auger@redhat.com>
- <20240123165141.7a79de34.alex.williamson@redhat.com>
- <a35c4fad-a981-4fbf-81d1-be5625a537b9@redhat.com>
- <20240124063700.67c8c32c.alex.williamson@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240124063700.67c8c32c.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20230925144854.1872513-1-alex.bennee@linaro.org>
+ <20230925144854.1872513-5-alex.bennee@linaro.org>
+ <ZRG1g/2hWi8+AzNn@redhat.com> <878r8urxxc.fsf@linaro.org>
+ <CAJy5ezoucKM=VvYsHeFep7r0i1PV_JUCgq6gs4JJQVHqq3Yz3Q@mail.gmail.com>
+ <5a1cb4ae-b43c-4ef5-9572-6636a2d787e7@linaro.org>
+In-Reply-To: <5a1cb4ae-b43c-4ef5-9572-6636a2d787e7@linaro.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Wed, 24 Jan 2024 14:59:28 +0100
+Message-ID: <CAJy5ezoW40OxdEjLgu4VXLrA7CurVSSUcj5JM18fh6wxPb0eYg@mail.gmail.com>
+Subject: Re: [PATCH 04/31] docs: mark CRIS support as deprecated
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ John Snow <jsnow@redhat.com>, libvir-list@redhat.com, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-s390x@nongnu.org, Song Gao <gaosong@loongson.cn>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Weiwei Li <liweiwei@iscas.ac.cn>, Nicholas Piggin <npiggin@gmail.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Cleber Rosa <crosa@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Bin Meng <bin.meng@windriver.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Xiaojuan Yang <yangxiaojuan@loongson.cn>,
+ qemu-ppc@nongnu.org, 
+ David Hildenbrand <david@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Laurent Vivier <lvivier@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Leif Lindholm <quic_llindhol@quicinc.com>, Beraldo Leal <bleal@redhat.com>, 
+ Rabin Vincent <rabinv@axis.com>
+Content-Type: multipart/alternative; boundary="000000000000757348060fb1796c"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,86 +115,220 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+--000000000000757348060fb1796c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 1/24/24 14:37, Alex Williamson wrote:
-> On Wed, 24 Jan 2024 14:14:19 +0100
-> Eric Auger <eric.auger@redhat.com> wrote:
+On Wed, Jan 24, 2024 at 12:06=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philm=
+d@linaro.org>
+wrote:
+
+> On 25/9/23 19:17, Edgar E. Iglesias wrote:
+> >
+> > On Mon, Sep 25, 2023 at 7:00=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@l=
+inaro.org
+> > <mailto:alex.bennee@linaro.org>> wrote:
+> >
+> >
+> >     Daniel P. Berrang=C3=A9 <berrange@redhat.com
+> >     <mailto:berrange@redhat.com>> writes:
+> >
+> >      > On Mon, Sep 25, 2023 at 03:48:27PM +0100, Alex Benn=C3=A9e wrote=
+:
+> >      >> This might be premature but while streamling the avocado tests =
+I
+> >      >> realised the only tests we have are "check-tcg" ones. The aging
+> >      >> fedora-criss-cross image works well enough for developers but
+> >     can't be
+> >      >> used in CI as we need supported build platforms to build QEMU.
+> >      >>
+> >      >> Does this mean the writing is on the wall for this architecture=
+?
+> >      >>
+> >      >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org
+> >     <mailto:alex.bennee@linaro.org>>
+> >      >> Cc: Rabin Vincent <rabinv@axis.com <mailto:rabinv@axis.com>>
+> >      >> Cc: Edgar E. Iglesias <edgar.iglesias@xilinx.com
+> >     <mailto:edgar.iglesias@xilinx.com>>
+> >      >> ---
+> >      >>  docs/about/deprecated.rst | 11 +++++++++++
+> >      >>  1 file changed, 11 insertions(+)
+> >      >>
+> >      >> diff --git a/docs/about/deprecated.rst
+> b/docs/about/deprecated.rst
+> >      >> index dc4da95329..7cfe313aa6 100644
+> >      >> --- a/docs/about/deprecated.rst
+> >      >> +++ b/docs/about/deprecated.rst
+> >      >> @@ -399,6 +399,17 @@ Specifying the iSCSI password in plain tex=
+t
+> >     on the command line using the
+> >      >>  used instead, to refer to a ``--object secret...`` instance
+> >     that provides
+> >      >>  a password via a file, or encrypted.
+> >      >>
+> >      >> +TCG CPUs
+> >      >> +--------
+> >      >> +
+> >      >> +CRIS CPU architecture (since 8.1)
+> >      >> +'''''''''''''''''''''''''''''''''
+> >      >> +
+> >      >> +The CRIS architecture was pulled from Linux in 4.17 and the
+> >     compiler
+> >      >> +is no longer packaged in any distro making it harder to run th=
+e
+> >      >> +``check-tcg`` tests. Unless we can improve the testing
+> >     situation there
+> >      >> +is a chance the code will bitrot without anyone noticing.
+> >      >
+> >      > Deprecated is generally a warning that we intend to delete the
+> >      > feature.   If we're just going to relegate it to untested
+> >      > status (what I'd call "tier 3" quality), then we should document
+> >      > that elsewhere.  I don't mind which way we go.
+> >
+> >     We do have reasonably good coverage with tests/tcg/cris but of cour=
+se
+> >     without a compiler we can't build them.
+> >
+> >     Both nios2 and microblaze have build-toolchain scripts which can be
+> used
+> >     to re-create containers. However my preference is having pre-built
+> >     toolchains hosted by others like we do for loongarch, hexagon, xten=
+sa
+> >     and tricore. Then the docker image can simply curl them into an
+> image.
+> >
+> >
+> > Yeah, I guess it's time to deprecate it...
 >
->> Hi Alex,
->>
->> On 1/24/24 00:51, Alex Williamson wrote:
->>> On Tue, 23 Jan 2024 19:15:55 +0100
->>> Eric Auger <eric.auger@redhat.com> wrote:
->>>  
->>>> aw-bits is a new option that allows to set the bit width of
->>>> the input address range. This value will be used as a default for
->>>> the device config input_range.end. By default it is set to 64 bits
->>>> which is the current value.
->>>>
->>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>> ---
->>>>  include/hw/virtio/virtio-iommu.h | 1 +
->>>>  hw/virtio/virtio-iommu.c         | 4 +++-
->>>>  2 files changed, 4 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
->>>> index 781ebaea8f..5fbe4677c2 100644
->>>> --- a/include/hw/virtio/virtio-iommu.h
->>>> +++ b/include/hw/virtio/virtio-iommu.h
->>>> @@ -66,6 +66,7 @@ struct VirtIOIOMMU {
->>>>      bool boot_bypass;
->>>>      Notifier machine_done;
->>>>      bool granule_frozen;
->>>> +    uint8_t aw_bits;
->>>>  };
->>>>  
->>>>  #endif
->>>> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
->>>> index ec2ba11d1d..e7f299e0c6 100644
->>>> --- a/hw/virtio/virtio-iommu.c
->>>> +++ b/hw/virtio/virtio-iommu.c
->>>> @@ -1314,7 +1314,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
->>>>       */
->>>>      s->config.bypass = s->boot_bypass;
->>>>      s->config.page_size_mask = qemu_real_host_page_mask();
->>>> -    s->config.input_range.end = UINT64_MAX;
->>>> +    s->config.input_range.end =
->>>> +        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;  
->>> What happens when someone sets aw_bits = 1?  There are a whole bunch of
->>> impractical values here ripe for annoying bug reports.  vtd_realize()
->>> returns an Error for any values other than 39 or 48.  We might pick an
->>> arbitrary lower bound (39?) or some other more creative solution here
->>> to avoid those silly issues in our future.  Thanks,  
->> You're right. I can check the input value. This needs to be dependent on
->> the machine though but this should be feasable.
->> Then I would allow 39 and 48 for q35 and 64 only on ARM.
-> AFAIK AMD-Vi supports 64-bit address space.  Without querying the host
-> there's no way to place an accurate limit below 64-bit.  Thanks,
-
-Hum this means I would need to look at
-/sys/class/iommu/<iommu>/amd-iommu/ or /sys/class/iommu/dmar* to
-discriminate between AMD IOMMU and INTEL IOMMU physical IOMMU. Would
-that be acceptable?
-
-Eric
+> Is that an informal Acked-by? (:
 >
-> Alex
 >
->>>>      s->config.domain_range.end = UINT32_MAX;
->>>>      s->config.probe_size = VIOMMU_PROBE_SIZE;
->>>>  
->>>> @@ -1525,6 +1526,7 @@ static Property virtio_iommu_properties[] = {
->>>>      DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
->>>>                       TYPE_PCI_BUS, PCIBus *),
->>>>      DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
->>>> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
->>>>      DEFINE_PROP_END_OF_LIST(),
->>>>  };
->>>>    
+OK with me!
 
+Acked-by: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+
+--000000000000757348060fb1796c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jan 24, 2024 at 12:06=E2=80=
+=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">=
+philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">On 25/9/23 19:17, Edgar E. Iglesias wrote:<br>
+&gt; <br>
+&gt; On Mon, Sep 25, 2023 at 7:00=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=
+=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.org=
+</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:alex.bennee@linaro.org" target=3D"_blank"=
+>alex.bennee@linaro.org</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berra=
+nge@redhat.com" target=3D"_blank">berrange@redhat.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:berrange@redhat.com" t=
+arget=3D"_blank">berrange@redhat.com</a>&gt;&gt; writes:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; On Mon, Sep 25, 2023 at 03:48:27PM +0100, Ale=
+x Benn=C3=A9e wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; This might be premature but while streaml=
+ing the avocado tests I<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; realised the only tests we have are &quot=
+;check-tcg&quot; ones. The aging<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; fedora-criss-cross image works well enoug=
+h for developers but<br>
+&gt;=C2=A0 =C2=A0 =C2=A0can&#39;t be<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; used in CI as we need supported build pla=
+tforms to build QEMU.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Does this mean the writing is on the wall=
+ for this architecture?<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Signed-off-by: Alex Benn=C3=A9e &lt;<a hr=
+ef=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.o=
+rg</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:alex.bennee@linaro.org=
+" target=3D"_blank">alex.bennee@linaro.org</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Cc: Rabin Vincent &lt;<a href=3D"mailto:r=
+abinv@axis.com" target=3D"_blank">rabinv@axis.com</a> &lt;mailto:<a href=3D=
+"mailto:rabinv@axis.com" target=3D"_blank">rabinv@axis.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Cc: Edgar E. Iglesias &lt;<a href=3D"mail=
+to:edgar.iglesias@xilinx.com" target=3D"_blank">edgar.iglesias@xilinx.com</=
+a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:edgar.iglesias@xilinx.=
+com" target=3D"_blank">edgar.iglesias@xilinx.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; ---<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;=C2=A0 docs/about/deprecated.rst | 11 ++++=
++++++++<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;=C2=A0 1 file changed, 11 insertions(+)<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; diff --git a/docs/about/deprecated.rst b/=
+docs/about/deprecated.rst<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; index dc4da95329..7cfe313aa6 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; --- a/docs/about/deprecated.rst<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +++ b/docs/about/deprecated.rst<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; @@ -399,6 +399,17 @@ Specifying the iSCSI=
+ password in plain text<br>
+&gt;=C2=A0 =C2=A0 =C2=A0on the command line using the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;=C2=A0 used instead, to refer to a ``--obj=
+ect secret...`` instance<br>
+&gt;=C2=A0 =C2=A0 =C2=A0that provides<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;=C2=A0 a password via a file, or encrypted=
+.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +TCG CPUs<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +--------<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +CRIS CPU architecture (since 8.1)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;=
+&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;=
+&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +The CRIS architecture was pulled from Li=
+nux in 4.17 and the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0compiler<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +is no longer packaged in any distro maki=
+ng it harder to run the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +``check-tcg`` tests. Unless we can impro=
+ve the testing<br>
+&gt;=C2=A0 =C2=A0 =C2=A0situation there<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; +is a chance the code will bitrot without=
+ anyone noticing.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Deprecated is generally a warning that we int=
+end to delete the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; feature.=C2=A0 =C2=A0If we&#39;re just going =
+to relegate it to untested<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; status (what I&#39;d call &quot;tier 3&quot; =
+quality), then we should document<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; that elsewhere.=C2=A0 I don&#39;t mind which =
+way we go.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0We do have reasonably good coverage with tests/tcg/=
+cris but of course<br>
+&gt;=C2=A0 =C2=A0 =C2=A0without a compiler we can&#39;t build them.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Both nios2 and microblaze have build-toolchain scri=
+pts which can be used<br>
+&gt;=C2=A0 =C2=A0 =C2=A0to re-create containers. However my preference is h=
+aving pre-built<br>
+&gt;=C2=A0 =C2=A0 =C2=A0toolchains hosted by others like we do for loongarc=
+h, hexagon, xtensa<br>
+&gt;=C2=A0 =C2=A0 =C2=A0and tricore. Then the docker image can simply curl =
+them into an image.<br>
+&gt; <br>
+&gt; <br>
+&gt; Yeah, I guess it&#39;s time to deprecate it...<br>
+<br>
+Is that an informal Acked-by? (:<br><br></blockquote><div><br></div><div>OK=
+ with me!</div><div><br></div><div>Acked-by: Edgar E. Iglesias &lt;<a href=
+=3D"mailto:edgar.iglesias@gmail.com">edgar.iglesias@gmail.com</a>&gt;</div>=
+<div>=C2=A0</div></div></div>
+
+--000000000000757348060fb1796c--
 
