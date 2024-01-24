@@ -4,68 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3B6C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998F2C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSc3s-0001Yd-6C; Wed, 24 Jan 2024 07:08:56 -0500
+	id 1rSc7q-00048t-EP; Wed, 24 Jan 2024 07:13:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vadim.shakirov@syntacore.com>)
- id 1rSc3q-0001YD-0m; Wed, 24 Jan 2024 07:08:54 -0500
-Received: from mta-04.yadro.com ([89.207.88.248])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSc7o-00046U-Jr
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:13:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vadim.shakirov@syntacore.com>)
- id 1rSc3m-00080A-95; Wed, 24 Jan 2024 07:08:53 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com EE66DC0002
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1706098121;
- bh=DF3tDmrsdN5mqIYobCTSS8cQ5lq44Vz72IGCEa43Yqc=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=fOGiFbOpPVe5TlvqePG9SdgOpa//rlIA/nTtdgj8YkzXZghXwncHc3ym1pCnbT9uH
- 4xNLHEZ6LF7R/b2peWa5KdI+LAy6HIyASdM1ijNq9irYlpdASPR+212vcwSVbKnBpN
- qkD+86HuG23GTxLK8LBQTZVMtstdlhOaNu/rx9sXN0wEPerR6Dkl1xglb7fVRWQSPM
- xzL9+HREKaOVtr0yMFptO8JoqfyhcIaMaSXaELVCOeWmriPAs2PfMhH2HjRYFXTv1a
- 3QdpUVR+kpcjNqIw7zmgHjc3ZCMsjRIkvnByF7PokArPTw1tGm/WUT7hcEagv4iE7a
- JsH5B3N2Myu9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1706098121;
- bh=DF3tDmrsdN5mqIYobCTSS8cQ5lq44Vz72IGCEa43Yqc=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=zz8oRVVbfQ3RGIWnfemaSay1UPt4xYKF7UI57btc8qwY/UeqKiMkh7vN6adZkZIFS
- /lWBKByFVhBFgcDBPEJwXVt/gszBBhEwjWSz5VT412afnPz2r4dTqY5wEAhkyFGC8X
- cjOW1OSkHtseDpcr/YWrIGNENazv99tZKktX+GvJ03nyyDJ29Fn8WPTzyAdPi3vlZF
- so2vste7NWk9VNKAVyMm3C3LbU4aukZrcVFVmmUA113UZ1avQOWW/2RV+NkRkCGmjV
- 1yaFmY0CdjNhPpfdnI12yiq9/hs5Cp2hZe20xJgdfkYcN05ZtYb1dkGF6fpHCW2Bi7
- UlTpIyYEKYxWw==
-From: Vadim Shakirov <vadim.shakirov@syntacore.com>
-To: "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Vadim Shakirov <vadim.shakirov@syntacore.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin Meng
- <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, "Daniel Henrique
- Barboza" <dbarboza@ventanamicro.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>
-Subject: [PATCH] target/riscv/cpu.h: mcountinhibit,
- mcounteren and scounteren always 32-bit
-Date: Wed, 24 Jan 2024 15:06:58 +0300
-Message-ID: <20240124120658.695350-1-vadim.shakirov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rSc7j-0000xT-MK
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:12:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706098374;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fbv7RXp+qxP9P1RZSNBJGJO8Pf8GPVJZCX/HAArbneM=;
+ b=XiQ4xW/ThYGYePySTuLwDTLfkHsmp3ViK7VN2yEZay0ZqunZam2CigECkldfeE3iDqG67x
+ EkbWr3iHgSjifBXgCRPweXdQOSyPU9zhlMfhGx3A6v8WZ7AfAhvQlR1Cczh6OEEa9Nj7Zc
+ UoLb1v5Ra8hOE6s007dHd4K0cSAQmZI=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-110-AilnOp-fPACBr54ZkAAp9g-1; Wed, 24 Jan 2024 07:12:52 -0500
+X-MC-Unique: AilnOp-fPACBr54ZkAAp9g-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-50e55470b49so4226919e87.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 04:12:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706098370; x=1706703170;
+ h=in-reply-to:from:references:cc:to:content-language:subject
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=fbv7RXp+qxP9P1RZSNBJGJO8Pf8GPVJZCX/HAArbneM=;
+ b=RqPNrdDZihrRJHZOAHh4OsIVOSAWCYTMTPOnpu+Lm61Jcnd7XxrgTyyredvDRZJ2ii
+ rEOTtTJSRF8T4O+dXE5d7a9VQAaB7tQR2HyxJIoCjD/NxnnPdjUuzqRsPg9gaeliSlQ/
+ lYusKPgO8/0LVpYHZI8Vo+vXlQUW39WIaYEYbD9qqvEe7NJ1IG3ndrH8IgGxfKzVA87d
+ 2tVm16XJi9lI0gzBEG2SqMSPQQ5Zq90vSFsiOigi/u57qDOzNU9z/2Yk4Syln6peBsLW
+ sLfgnUxByjOC3OxDBBMjYQgJDZeruC2iqDg8Kxx+Mq76yUGLVx+wiFwKWMlP3nn5FO55
+ pDdQ==
+X-Gm-Message-State: AOJu0YxjOWopk6cB2NGGzr+Hu7JJy++1S0c8OQ5aqJvhT+AIgNKtyIlA
+ v7wkSvgOPfmKkWKi6x0uXXe/LTrblOdbe8LmorMDueAcjgcwdFBfOF1ePeKWWAGOZHG8ajGxEMZ
+ VM17BgDaMf3Lhgyjk1wl3QYZvD1erotORq4tIk3KD1BroO9xrumbA
+X-Received: by 2002:a19:5f1d:0:b0:50e:ac2a:6b59 with SMTP id
+ t29-20020a195f1d000000b0050eac2a6b59mr3180907lfb.120.1706098370635; 
+ Wed, 24 Jan 2024 04:12:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG/9gvi6Qg0YJCIb4W4ZQexszW4INTPyTF+P6hVFDnWaCuWq5ZfcZqCXY9B2Eh8xIZyrruRow==
+X-Received: by 2002:a19:5f1d:0:b0:50e:ac2a:6b59 with SMTP id
+ t29-20020a195f1d000000b0050eac2a6b59mr3180898lfb.120.1706098370205; 
+ Wed, 24 Jan 2024 04:12:50 -0800 (PST)
+Received: from ?IPV6:2003:cf:d73b:41d9:5581:da3:1344:320c?
+ (p200300cfd73b41d955810da31344320c.dip0.t-ipconnect.de.
+ [2003:cf:d73b:41d9:5581:da3:1344:320c])
+ by smtp.gmail.com with ESMTPSA id
+ f24-20020a193818000000b005100dc5faf8sm239582lfa.178.2024.01.24.04.12.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 04:12:49 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------5G0XJLuenLrKDGzI7Nj9AIcu"
+Message-ID: <dcaea54b-f3de-4ba6-8ae6-313778689f74@redhat.com>
+Date: Wed, 24 Jan 2024 13:12:47 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-09.corp.yadro.com (172.17.11.59) To
- S-Exch-01.corp.yadro.com (10.78.5.241)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=vadim.shakirov@syntacore.com; helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
+ thread
+Content-Language: en-US
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
+References: <20231221212339.164439-1-kwolf@redhat.com>
+ <20231221212339.164439-12-kwolf@redhat.com>
+ <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
+ <Za_zAj11uwavd2va@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <Za_zAj11uwavd2va@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,51 +97,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mcountinhibit, mcounteren and scounteren must always be 32-bit by
-privileged spec
+This is a multi-part message in MIME format.
+--------------5G0XJLuenLrKDGzI7Nj9AIcu
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
+On 23.01.24 18:10, Kevin Wolf wrote:
+> Am 23.01.2024 um 17:40 hat Hanna Czenczek geschrieben:
+>> On 21.12.23 22:23, Kevin Wolf wrote:
+>>> From: Stefan Hajnoczi<stefanha@redhat.com>
+>>>
+>>> Stop depending on the AioContext lock and instead access
+>>> SCSIDevice->requests from only one thread at a time:
+>>> - When the VM is running only the BlockBackend's AioContext may access
+>>>     the requests list.
+>>> - When the VM is stopped only the main loop may access the requests
+>>>     list.
+>>>
+>>> These constraints protect the requests list without the need for locking
+>>> in the I/O code path.
+>>>
+>>> Note that multiple IOThreads are not supported yet because the code
+>>> assumes all SCSIRequests are executed from a single AioContext. Leave
+>>> that as future work.
+>>>
+>>> Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
+>>> Reviewed-by: Eric Blake<eblake@redhat.com>
+>>> Message-ID:<20231204164259.1515217-2-stefanha@redhat.com>
+>>> Signed-off-by: Kevin Wolf<kwolf@redhat.com>
+>>> ---
+>>>    include/hw/scsi/scsi.h |   7 +-
+>>>    hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
+>>>    2 files changed, 131 insertions(+), 57 deletions(-)
+>> My reproducer forhttps://issues.redhat.com/browse/RHEL-3934  now breaks more
+>> often because of this commit than because of the original bug, i.e. when
+>> repeatedly hot-plugging and unplugging a virtio-scsi and a scsi-hd device,
+>> this tends to happen when unplugging the scsi-hd:
+>>
+>> {"execute":"device_del","arguments":{"id":"stg0"}}
+>> {"return": {}}
+>> qemu-system-x86_64: ../block/block-backend.c:2429: blk_get_aio_context:
+>> Assertion `ctx == blk->ctx' failed.
+
+[...]
+
+> I don't know anything about the problem either, but since you already
+> speculated about the cause, let me speculate about the solution:
+> Can we hold the graph writer lock for the tran_commit() call in
+> bdrv_try_change_aio_context()? And of course take the reader lock for
+> blk_get_aio_context(), but that should be completely unproblematic.
+
+I tried this, and it’s not easy taking the lock just for tran_commit(), 
+because some callers of bdrv_try_change_aio_context() already hold the 
+write lock (specifically bdrv_attach_child_common(), 
+bdrv_attach_child_common_abort(), and bdrv_root_unref_child()[1]), and 
+qmp_x_blockdev_set_iothread() holds the read lock.  Other callers don’t 
+hold any lock[2].
+
+So I’m not sure whether we should mark all of 
+bdrv_try_change_aio_context() as GRAPH_WRLOCK and then make all callers 
+take the lock, or really only take it for tran_commit(), and have 
+callers release the lock around bdrv_try_change_aio_context(). Former 
+sounds better to naïve me.
+
+(In any case, FWIW, having blk_set_aio_context() take the write lock, 
+and scsi_device_for_each_req_async_bh() take the read lock[3], does fix 
+the assertion failure.)
+
+Hanna
+
+[1] bdrv_root_unref_child() is not marked as GRAPH_WRLOCK, but it’s 
+callers generally seem to ensure that the lock is taken when calling it.
+
+[2] blk_set_aio_context() (evidently), blk_exp_add(), 
+external_snapshot_abort(), {blockdev,drive}_backup_action(), 
+qmp_{blockdev,drive}_mirror()
+
+[3] I’ve made the _bh a coroutine (for bdrv_graph_co_rdlock()) and 
+replaced the aio_bh_schedule_oneshot() by aio_co_enter() – hope that’s 
+right.
+--------------5G0XJLuenLrKDGzI7Nj9AIcu
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 23.01.24 18:10, Kevin Wolf wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:Za_zAj11uwavd2va@redhat.com">
+      <pre class="moz-quote-pre" wrap="">Am 23.01.2024 um 17:40 hat Hanna Czenczek geschrieben:
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">On 21.12.23 22:23, Kevin Wolf wrote:
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">From: Stefan Hajnoczi<a class="moz-txt-link-rfc2396E" href="mailto:stefanha@redhat.com">&lt;stefanha@redhat.com&gt;</a>
+
+Stop depending on the AioContext lock and instead access
+SCSIDevice-&gt;requests from only one thread at a time:
+- When the VM is running only the BlockBackend's AioContext may access
+   the requests list.
+- When the VM is stopped only the main loop may access the requests
+   list.
+
+These constraints protect the requests list without the need for locking
+in the I/O code path.
+
+Note that multiple IOThreads are not supported yet because the code
+assumes all SCSIRequests are executed from a single AioContext. Leave
+that as future work.
+
+Signed-off-by: Stefan Hajnoczi<a class="moz-txt-link-rfc2396E" href="mailto:stefanha@redhat.com">&lt;stefanha@redhat.com&gt;</a>
+Reviewed-by: Eric Blake<a class="moz-txt-link-rfc2396E" href="mailto:eblake@redhat.com">&lt;eblake@redhat.com&gt;</a>
+Message-ID:<a class="moz-txt-link-rfc2396E" href="mailto:20231204164259.1515217-2-stefanha@redhat.com">&lt;20231204164259.1515217-2-stefanha@redhat.com&gt;</a>
+Signed-off-by: Kevin Wolf<a class="moz-txt-link-rfc2396E" href="mailto:kwolf@redhat.com">&lt;kwolf@redhat.com&gt;</a>
 ---
- target/riscv/cpu.h     | 6 +++---
- target/riscv/machine.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+  include/hw/scsi/scsi.h |   7 +-
+  hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
+  2 files changed, 131 insertions(+), 57 deletions(-)
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">
+My reproducer for <a class="moz-txt-link-freetext" href="https://issues.redhat.com/browse/RHEL-3934">https://issues.redhat.com/browse/RHEL-3934</a> now breaks more
+often because of this commit than because of the original bug, i.e. when
+repeatedly hot-plugging and unplugging a virtio-scsi and a scsi-hd device,
+this tends to happen when unplugging the scsi-hd:
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5b0824ef8f..3cf059199c 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -317,10 +317,10 @@ struct CPUArchState {
-      */
-     bool two_stage_indirect_lookup;
- 
--    target_ulong scounteren;
--    target_ulong mcounteren;
-+    uint32_t scounteren;
-+    uint32_t mcounteren;
- 
--    target_ulong mcountinhibit;
-+    uint32_t mcountinhibit;
- 
-     /* PMU counter state */
-     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index fdde243e04..daab121799 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -398,9 +398,9 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINTTL(env.mtval, RISCVCPU),
-         VMSTATE_UINTTL(env.miselect, RISCVCPU),
-         VMSTATE_UINTTL(env.siselect, RISCVCPU),
--        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
--        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
--        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
-+        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
-         VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
-                              vmstate_pmu_ctr_state, PMUCTRState),
-         VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
--- 
-2.34.1
+{"execute":"device_del","arguments":{"id":"stg0"}}
+{"return": {}}
+qemu-system-x86_64: ../block/block-backend.c:2429: blk_get_aio_context:
+Assertion `ctx == blk-&gt;ctx' failed.</pre>
+      </blockquote>
+    </blockquote>
+    <br>
+    [...]<br>
+    <br>
+    <span style="white-space: pre-wrap">
+</span>
+    <blockquote type="cite" cite="mid:Za_zAj11uwavd2va@redhat.com">
+      <pre class="moz-quote-pre" wrap="">I don't know anything about the problem either, but since you already
+speculated about the cause, let me speculate about the solution:
+Can we hold the graph writer lock for the tran_commit() call in
+bdrv_try_change_aio_context()? And of course take the reader lock for
+blk_get_aio_context(), but that should be completely unproblematic.</pre>
+    </blockquote>
+    <br>
+    I tried this, and it’s not easy taking the lock just for
+    tran_commit(), because some callers of bdrv_try_change_aio_context()
+    already hold the write lock (specifically
+    bdrv_attach_child_common(), bdrv_attach_child_common_abort(), and
+    bdrv_root_unref_child()[1]), and qmp_x_blockdev_set_iothread() holds
+    the read lock.  Other callers don’t hold any lock[2].<br>
+    <br>
+    So I’m not sure whether we should mark all of
+    bdrv_try_change_aio_context() as GRAPH_WRLOCK and then make all
+    callers take the lock, or really only take it for tran_commit(), and
+    have callers release the lock around bdrv_try_change_aio_context(). 
+    Former sounds better to naïve me.<br>
+    <br>
+    (In any case, FWIW, having blk_set_aio_context() take the write
+    lock, and scsi_device_for_each_req_async_bh() take the read lock[3],
+    does fix the assertion failure.)<br>
+    <br>
+    Hanna<br>
+    <br>
+    [1] bdrv_root_unref_child() is not marked as GRAPH_WRLOCK, but it’s
+    callers generally seem to ensure that the lock is taken when calling
+    it.<br>
+    <br>
+    [2] blk_set_aio_context() (evidently), blk_exp_add(),
+    external_snapshot_abort(), {blockdev,drive}_backup_action(),
+    qmp_{blockdev,drive}_mirror()<br>
+    <br>
+    [3] I’ve made the _bh a coroutine (for bdrv_graph_co_rdlock()) and
+    replaced the aio_bh_schedule_oneshot() by aio_co_enter() – hope
+    that’s right.<br>
+  </body>
+</html>
+
+--------------5G0XJLuenLrKDGzI7Nj9AIcu--
 
 
