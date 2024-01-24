@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97BCC47422
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C0FBC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSmVc-0002QH-P6; Wed, 24 Jan 2024 18:18:16 -0500
+	id 1rSmmm-0007Xh-9L; Wed, 24 Jan 2024 18:36:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSmVb-0002P9-4J
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:18:15 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <johnstra10@gmail.com>)
+ id 1rSmmk-0007XZ-Tl
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:35:59 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSmVZ-0005iK-Ep
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:18:14 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6daa89a6452so4361109b3a.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:18:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <johnstra10@gmail.com>)
+ id 1rSmmh-0005oe-QW
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:35:58 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d71207524dso26975255ad.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:35:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706138292; x=1706743092; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=gmail.com; s=20230601; t=1706139353; x=1706744153; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=W6hHELT1Cs1XXl8oCVlrvXMDWO1i4PgfYwTjGwgOarM=;
- b=sgV9aA2e65H9rKm1ERYGDHBDXgJ6fW97+NR7Z39PzXVZss6se/C/givabwpfVQl1Iy
- rDJE4FlvILNg3uUj/xUHDGnY88AAPUVBYsKH0LG/00GBGyqrB71NT0VT/+Yyjc3NlxMB
- zqX51QMCO1XnJ5KK9GllZG9vWu5LAhBfSOUOK+ZNzuOTIugKGiBlDmjq27pbV1D8CgUQ
- LWv+Oaf88NUJtFLqTbs1OjPfhAgowruCTlYkrwYwrBpV2UElVS3GC7pPB++Hb0NbhbdN
- fPE6XakSbtA3Y0TGRY8rxCEdrOEkoP9o1pxoOcWKfO2ICnT+nNp0l6NIJRnhvoX/0MTb
- utZA==
+ bh=PIVjt+ckhj1BFpTJ8aRt1qPg1YE2IlwSqtIt2kv4zxA=;
+ b=UnscIFZp7ak75tRyJg2iqB5u9bJ4Rq9ufcWJo9iozm+VChCx7KQ7EW3/gMNRkHy5Og
+ RZEeFwykrMFwX3gLstfnJB7soDDnT22qljs5w3yjH+9kALo1H86b6u60HlaYheePJ8hN
+ PtXgPsPYnHmPvfEzQgEsSvv7vXZK7AvrOy6RQgYLGVsg15DVqpmHS8Lq0/Ys3X9YSWPE
+ f4zmKAKCKfJYOCgVLhnyCKaGY70w/x4Wl3K3zjyB4F7whRT3Ss/35wAvoDuF8jurYGrW
+ Sq9VU4YpCIk8S6+CFbw6q1SnFXJDMlg9+TXfoverqCZ0aqBjkZv1x7ltHH0PvN1PcOsH
+ ZAXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706138292; x=1706743092;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1706139353; x=1706744153;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W6hHELT1Cs1XXl8oCVlrvXMDWO1i4PgfYwTjGwgOarM=;
- b=wQMsA7T7xKwI4B2rLYUlMvrabE0SVvfo57fKkN0+HU2roIIhGHbeJDrT5o5fnM2REr
- lgr67AMoHHApvjt3TrWolICeIaNFj9fnxpFh9uPpPQkXbYnIkgfPJoXJwbMu+hosmzzA
- 9Ga1PUNZdvy0n/1xlcAmThdZ0wZy7T7Oi3tOkAgpNZYM5xIXmrghjWSjUU+ZLiSvsmbF
- tqT6MqId4uQsjKxmwUYfHDIudtwspjBYxX1jKFZMZpmSXcihaVyPcCeBSpF4PeajM+t3
- 7gcyOgCtAKy6unYoaUBPddh75yppUXMEewdZtu13hNMXOZ+eeTLo0hHaXuf9C1ERzud2
- 9oSA==
-X-Gm-Message-State: AOJu0Yz6UU+8/HIg+jKQcYcgPJdVL0gkCLN0rrmgiwlicx38AqOmCANo
- 0SxOOHZr3T2QbMjeky62sR1jDVLaPFr/rGJBZxkNL+VFeRtSv1RTBo8N7NFvhs0=
-X-Google-Smtp-Source: AGHT+IFimQXr76un10rOZUdwv9ZPjriLjA2eZt2p/4UyW6cEBacbwGhVBb3KTYWo7QTVeuncVSijdQ==
-X-Received: by 2002:a05:6a00:2285:b0:6d9:d71c:d1a3 with SMTP id
- f5-20020a056a00228500b006d9d71cd1a3mr278597pfe.66.1706138292138; 
- Wed, 24 Jan 2024 15:18:12 -0800 (PST)
-Received: from ?IPV6:2001:44b8:2176:c800:5fcf:9e3:2e58:9c7?
- (2001-44b8-2176-c800-5fcf-09e3-2e58-09c7.static.ipv6.internode.on.net.
- [2001:44b8:2176:c800:5fcf:9e3:2e58:9c7])
+ bh=PIVjt+ckhj1BFpTJ8aRt1qPg1YE2IlwSqtIt2kv4zxA=;
+ b=xD5iF3qoGt8UAS9cVhT5fcCu/8mA3cH4+BJDxFcXmw9Es1SPBEPDgJfIQ8MWhj8ppR
+ lbG3cbqbeR8Sds6OW93LpG7e9WKzTMLFhbLX3jTaMCVMYDgVkdLJ+V2lcswvgnoR0zUx
+ OIWEvyQEfQKRMEr/KYFD2ChJ+f85KGrNTdp5YCMBCQKbUnwL0haTCOTjwH3DTDYMiSE1
+ /5HvBQZomBjntzzActN73dBeMaiGYMnb53ycHPO61sHDIvDZCVDW9cT5WBlq245bMShZ
+ O5XPsOT5kL6mBiKEoBSXP4JyIMQl15yfyTP45e1y+afnpwz1JZJoXabRo+r5DyXHD1jw
+ BhNw==
+X-Gm-Message-State: AOJu0YykkyzVxz1EVFN++L2+7oQ7h23NzYkqx9rlYDAq6+pgmh9FZfnz
+ UqtrOqy671yTywlt0iLnEC8Y/4IuahFzLm6wGy+Gm4Xvmcs/7W0Kekb2baKJVos=
+X-Google-Smtp-Source: AGHT+IEwrfEp+0REui4enSInxX02dQeo8keqkLr+H3SDJ/s+vyuykKTI4jnRkvazKmDG2P53Os11eA==
+X-Received: by 2002:a17:902:cecb:b0:1d4:3734:3dc5 with SMTP id
+ d11-20020a170902cecb00b001d437343dc5mr185011plg.48.1706139353440; 
+ Wed, 24 Jan 2024 15:35:53 -0800 (PST)
+Received: from [50.34.46.225] ([50.34.46.225])
  by smtp.gmail.com with ESMTPSA id
- ks11-20020a056a004b8b00b006d6b91c6eb6sm14657150pfb.13.2024.01.24.15.18.09
+ o1-20020a170902bcc100b001d75cd8e3c0sm4691459pls.130.2024.01.24.15.35.53
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 15:18:11 -0800 (PST)
-Message-ID: <64b7a417-35a1-4674-ba74-cf7149363358@linaro.org>
-Date: Thu, 25 Jan 2024 09:18:07 +1000
+ Wed, 24 Jan 2024 15:35:53 -0800 (PST)
+Message-ID: <b60c850d-bbc8-45dd-92c5-f16273740225@gmail.com>
+Date: Wed, 24 Jan 2024 15:35:52 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] hw/arm/aspeed: Check for CPU types in
- machine_run_board_init()
+Subject: Re: [PATCH 1/2] accel/kvm: Define KVM_ARCH_HAVE_MCE_INJECTION in each
+ target
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240123224842.18485-1-philmd@linaro.org>
- <20240123224842.18485-6-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240123224842.18485-6-philmd@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20240124155425.73195-1-philmd@linaro.org>
+ <20240124155425.73195-2-philmd@linaro.org>
+From: john strange <johnstra10@gmail.com>
+In-Reply-To: <20240124155425.73195-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=johnstra10@gmail.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,25 +98,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/24 08:48, Philippe Mathieu-Daudé wrote:
-> Aspeed SoCs use a single CPU type (set as AspeedSoCClass::cpu_type).
-> Convert it to a NULL-terminated array (of a single non-NULL element).
-> 
-> Set MachineClass::valid_cpu_types[] to use the common machine code
-> to provide hints when the requested CPU is invalid (see commit
-> e702cbc19e ("machine: Improve is_cpu_type_supported()").
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+It might be good to replace "MCE" in kvm-all.c with a generic 
+abstraction for error injection to avoid carrying the MCE constructs 
+into non-x86 sigbus handlers.
+
+thanks,
+-john
+
+On 1/24/24 07:54, Philippe Mathieu-Daudé wrote:
+> Instead of having KVM_HAVE_MCE_INJECTION optionally defined,
+> always define KVM_ARCH_HAVE_MCE_INJECTION for each target,
+> and set KVM_HAVE_MCE_INJECTION if it is not zero.
+>
+> It is now clearer for KVM targets to detect if they lack the
+> MCE injection implementation. Also, moving headers around
+> is no more painful, because if a target neglects to define
+> KVM_ARCH_HAVE_MCE_INJECTION, the build will fail.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/arm/aspeed_soc.h |  3 ++-
->   hw/arm/aspeed.c             |  1 +
->   hw/arm/aspeed_ast10x0.c     |  6 +++++-
->   hw/arm/aspeed_ast2400.c     | 12 ++++++++++--
->   hw/arm/aspeed_ast2600.c     |  6 +++++-
->   hw/arm/aspeed_soc_common.c  |  5 ++++-
->   6 files changed, 27 insertions(+), 6 deletions(-)
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
+> I'd rather keep "cpu-param.h" simple/short.
+>
+> Is a per-target "kvm-param.h" any better?
+> Or per-target "accel-param.h"? For example TCG_GUEST_DEFAULT_MO
+> is TCG specific and could also go there. Otherwise it will go
+> in "cpu-param.h".
+> ---
+>   include/sysemu/kvm.h         | 5 +++++
+>   target/arm/cpu-param.h       | 5 +++++
+>   target/arm/cpu.h             | 4 ----
+>   target/i386/cpu-param.h      | 2 ++
+>   target/i386/cpu.h            | 2 --
+>   target/loongarch/cpu-param.h | 2 ++
+>   target/mips/cpu-param.h      | 2 ++
+>   target/ppc/cpu-param.h       | 2 ++
+>   target/riscv/cpu-param.h     | 2 ++
+>   target/s390x/cpu-param.h     | 2 ++
+>   10 files changed, 22 insertions(+), 6 deletions(-)
+>
+> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> index d614878164..2e9aa2fc53 100644
+> --- a/include/sysemu/kvm.h
+> +++ b/include/sysemu/kvm.h
+> @@ -212,6 +212,7 @@ int kvm_on_sigbus(int code, void *addr);
+>   
+>   #ifdef NEED_CPU_H
+>   #include "cpu.h"
+> +#include "cpu-param.h"
+>   
+>   void kvm_flush_coalesced_mmio_buffer(void);
+>   
+> @@ -349,6 +350,10 @@ bool kvm_vcpu_id_is_valid(int vcpu_id);
+>   /* Returns VCPU ID to be used on KVM_CREATE_VCPU ioctl() */
+>   unsigned long kvm_arch_vcpu_id(CPUState *cpu);
+>   
+> +#if KVM_ARCH_HAVE_MCE_INJECTION
+> +#define KVM_HAVE_MCE_INJECTION
+> +#endif
+> +
+>   #ifdef KVM_HAVE_MCE_INJECTION
+>   void kvm_arch_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
+>   #endif
+> diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
+> index f9b462a98f..d71cc29864 100644
+> --- a/target/arm/cpu-param.h
+> +++ b/target/arm/cpu-param.h
+> @@ -30,7 +30,12 @@
+>    */
+>   # define TARGET_PAGE_BITS_VARY
+>   # define TARGET_PAGE_BITS_MIN  10
+> +#endif
+>   
+> +#ifdef TARGET_AARCH64
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 1
+> +#else
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
+>   #endif
+>   
+>   #endif
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index ec276fcd57..f92c8d3b88 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -30,10 +30,6 @@
+>   /* ARM processors have a weak memory model */
+>   #define TCG_GUEST_DEFAULT_MO      (0)
+>   
+> -#ifdef TARGET_AARCH64
+> -#define KVM_HAVE_MCE_INJECTION 1
+> -#endif
+> -
+>   #define EXCP_UDEF            1   /* undefined instruction */
+>   #define EXCP_SWI             2   /* software interrupt */
+>   #define EXCP_PREFETCH_ABORT  3
+> diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
+> index 911b4cd51b..5933b0b756 100644
+> --- a/target/i386/cpu-param.h
+> +++ b/target/i386/cpu-param.h
+> @@ -24,4 +24,6 @@
+>   #endif
+>   #define TARGET_PAGE_BITS 12
+>   
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 1
+> +
+>   #endif
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 7f0786e8b9..230ab1cded 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -33,8 +33,6 @@
+>   /* The x86 has a strong memory model with some store-after-load re-ordering */
+>   #define TCG_GUEST_DEFAULT_MO      (TCG_MO_ALL & ~TCG_MO_ST_LD)
+>   
+> -#define KVM_HAVE_MCE_INJECTION 1
+> -
+>   /* support for self modifying code even if the modified instruction is
+>      close to the modifying instruction */
+>   #define TARGET_HAS_PRECISE_SMC
+> diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
+> index cfe195db4e..f69a94e6b5 100644
+> --- a/target/loongarch/cpu-param.h
+> +++ b/target/loongarch/cpu-param.h
+> @@ -14,4 +14,6 @@
+>   
+>   #define TARGET_PAGE_BITS 12
+>   
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
+> +
+>   #endif
+> diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
+> index 594c91a156..45c885e00e 100644
+> --- a/target/mips/cpu-param.h
+> +++ b/target/mips/cpu-param.h
+> @@ -30,4 +30,6 @@
+>   #define TARGET_PAGE_BITS_MIN 12
+>   #endif
+>   
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
+> +
+>   #endif
+> diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
+> index 0a0416e0a8..9975ae73ab 100644
+> --- a/target/ppc/cpu-param.h
+> +++ b/target/ppc/cpu-param.h
+> @@ -33,4 +33,6 @@
+>   #endif
+>   #define TARGET_PAGE_BITS 12
+>   
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
+> +
+>   #endif
+> diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
+> index b2a9396dec..e6199f4f6d 100644
+> --- a/target/riscv/cpu-param.h
+> +++ b/target/riscv/cpu-param.h
+> @@ -28,4 +28,6 @@
+>    *  - M mode HLV/HLVX/HSV 0b111
+>    */
+>   
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
+> +
+>   #endif
+> diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
+> index 84ca08626b..4728b3957e 100644
+> --- a/target/s390x/cpu-param.h
+> +++ b/target/s390x/cpu-param.h
+> @@ -13,4 +13,6 @@
+>   #define TARGET_PHYS_ADDR_SPACE_BITS 64
+>   #define TARGET_VIRT_ADDR_SPACE_BITS 64
+>   
+> +#define KVM_ARCH_HAVE_MCE_INJECTION 0
+> +
+>   #endif
 
