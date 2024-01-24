@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A0BC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C09F1C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 12:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rScdi-0006qR-MX; Wed, 24 Jan 2024 07:45:58 -0500
+	id 1rScdw-0007B6-TX; Wed, 24 Jan 2024 07:46:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rScdU-0006ne-Av
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:45:44 -0500
+ id 1rScdv-00074i-2R
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:46:11 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rScdP-0007qS-Fh
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:45:43 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKkBt3T1Nz67lcT;
- Wed, 24 Jan 2024 20:43:02 +0800 (CST)
+ id 1rScdt-0007xc-E4
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 07:46:10 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKkCT30mTz6K6TN;
+ Wed, 24 Jan 2024 20:43:33 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 9C246140684;
- Wed, 24 Jan 2024 20:45:36 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 81F2A140B2F;
+ Wed, 24 Jan 2024 20:46:07 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 24 Jan 2024 12:45:36 +0000
+ 15.1.2507.35; Wed, 24 Jan 2024 12:46:07 +0000
 To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Fan Ni
  <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>
 CC: Ira Weiny <ira.weiny@intel.com>, Huai-Cheng Kuo
@@ -38,10 +38,9 @@ CC: Ira Weiny <ira.weiny@intel.com>, Huai-Cheng Kuo
  Hyeonggon Yoo <42.hyeyoo@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
  Stefan Hajnoczi <stefanha@gmail.com>, <linuxarm@huawei.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 09/12] hw/mem/cxl_type3: Fix potential divide by zero reported
- by coverity
-Date: Wed, 24 Jan 2024 12:40:57 +0000
-Message-ID: <20240124124100.8218-10-Jonathan.Cameron@huawei.com>
+Subject: [PATCH 10/12] tests/acpi: Allow update of DSDT.cxl
+Date: Wed, 24 Jan 2024 12:40:58 +0000
+Message-ID: <20240124124100.8218-11-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
 References: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
@@ -76,39 +75,23 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes Coverity ID 1522368.
+The _STA value returned currently indicates the ACPI0017 device
+is not enabled.  Whilst this isn't a real device, setting _STA
+like this may prevent an OS from enumerating it correctly and
+hence from parsing the CEDT table.
 
-Currently error_fatal is set if interleave_ways_dec() is going to return 0
-but we should handle that zero return explicitly.
-
-Reported-by: Stefan Hajnoczi <stefanha@gmail.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
 ---
-Note this is a stop gap until a more complex HDM decoder verification series.
----
- hw/mem/cxl_type3.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 1b92a065a3..24211703c6 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -794,8 +794,12 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-         }
-         if (((uint64_t)host_addr < decoder_base) ||
-             (hpa_offset >= decoder_size)) {
--            dpa_base += decoder_size /
--                cxl_interleave_ways_dec(iw, &error_fatal);
-+            int decoded_iw = cxl_interleave_ways_dec(iw, &error_fatal);
-+
-+            if (decoded_iw == 0)
-+                return false;
-+
-+            dpa_base += decoder_size / decoded_iw;
-             continue;
-         }
- 
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..9ce0f596cc 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/q35/DSDT.cxl",
 -- 
 2.39.2
 
