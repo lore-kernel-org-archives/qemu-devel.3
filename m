@@ -4,109 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230ABC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 11:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5EEC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 11:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSb5l-00020J-Qx; Wed, 24 Jan 2024 06:06:49 -0500
+	id 1rSbp7-0004iP-Em; Wed, 24 Jan 2024 06:53:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSb5k-0001zc-1c
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 06:06:48 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSb5e-0004kx-OO
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 06:06:47 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-337d05b8942so6058846f8f.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 03:06:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706094401; x=1706699201; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Iy/OKjpiO5yoeXxY83xqvHL6o7nHTDd39y/0xcYG3qM=;
- b=hlmgl4rPJKhE908qaoUiGFGZPyL8H6Xn77AmdNMjqxaTYk+VIXFagKHvzQ2ZIfsluE
- /S5Vw1rrBiWEG1IAVFo24kFafMSgFOqx7PNjUWD45SpPdjcHP+IlZ6603p4iqkpYyzFB
- yP+b+s7CFJSr9FM/JYQWghn7MgL5gZ6QD3wIQ9TgoKl3FgerV/aXXEFqfI3Jk+ASj2UA
- BKRiD0vVRbH3ZCt8To7aWNm4dQCL8kKflJhY+ts0xOPtu1OFJsiOalN4VplDwcQxv6Kn
- MZ82+Nwhokd7Rndm7tr2Swi6OP+HmieYLGZy4IQg+lGvNcRxsNQBWNjpiOO3saEpduF7
- a/eQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rSbp6-0004iG-Mb
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 06:53:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rSbp5-0004hY-9M
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 06:53:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706097217;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=hOuj7K70heo2hGx8cAjlkx6UmMb15xVuezZeMseMc4A=;
+ b=A1ZP8fWyELo/8SEuQRV4pUdxYN/tSmQ61IPJJMK+F6emeEjhDn9aXC9P0OAv58Q25b/YPA
+ GWW3KJABw60TewB90YU9b6sQ6khKQHNQ2722LHVyOhhE7W0fla5ds1CBMKlgyXFwqJKrGA
+ PyVs+VHz6s7z6lsQf856ePCDxJspAl0=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-533-6ISNXjS_Nzy3I0WxuuyjAA-1; Wed, 24 Jan 2024 06:53:35 -0500
+X-MC-Unique: 6ISNXjS_Nzy3I0WxuuyjAA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a30c5ce1977so67712466b.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 03:53:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706094401; x=1706699201;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Iy/OKjpiO5yoeXxY83xqvHL6o7nHTDd39y/0xcYG3qM=;
- b=T45sneuKVwi3EOxV8hEGEgwFSuvG5g5T4ESxarcNmsaNRivrvEdPPHzEqGH2AIVMK0
- Jcr9YJTDTsV9gDnlLqTt0tBSEEpP6SXBaj7XgmskGmOhczxxJr8q2j8UIQOi4IOAqvBp
- t5Kz62LlLCqMBq8PxAAopolgAJNKl8RsO2IO1e2hBaxzs4JHUthEKgxzqIDaUXqnveaD
- yqPGj4m/vHIsro3ec1rDC3aLfQV16D6eKFp3ONAof/H8cfOVvJsEa+M9oqJDe1a+LlMF
- wlgAwW7XwfvF09hJVdvw3rMpYSUmHuzFtdAASEUV9u8F2uH4WR+DQwnMe+rItliA0foa
- ZfdA==
-X-Gm-Message-State: AOJu0Yy90p5Gwo99sz7hTeNuGi8UDkx/TZKzcRYnIvCZtv964jzPzE9y
- Jveri0XF8K+uPcTfNCnnbl36IH3NKddLxRXPCfMqdQC08xLPsLY7S8uYvhRTbPE=
-X-Google-Smtp-Source: AGHT+IH/SauWLJ1xOlrVqSMxVFexDKwt7XPZ6S6pWBnjez+xHwFpHdDkwUvpg8Qby7kwDeLsfRpNeA==
-X-Received: by 2002:a5d:618b:0:b0:339:372e:770f with SMTP id
- j11-20020a5d618b000000b00339372e770fmr502198wru.46.1706094400988; 
- Wed, 24 Jan 2024 03:06:40 -0800 (PST)
-Received: from [192.168.69.100] (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
- [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
- d10-20020adfa40a000000b0033953f87085sm414725wra.35.2024.01.24.03.06.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 03:06:40 -0800 (PST)
-Message-ID: <5a1cb4ae-b43c-4ef5-9572-6636a2d787e7@linaro.org>
-Date: Wed, 24 Jan 2024 12:06:34 +0100
+ d=1e100.net; s=20230601; t=1706097214; x=1706702014;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hOuj7K70heo2hGx8cAjlkx6UmMb15xVuezZeMseMc4A=;
+ b=Z7wVx8/0eHvIY9yTnmTwuX8NHb7iJLk9bgPn/Vf5oUVPbxnD62Pt2zW7EaIUJkBAhf
+ lMDPOu6yubw+L46/TNDk5e/mjlc+Nwgo20Q04J52RpmyzD9+Z1UpKZ3aVoF0de71whBI
+ BNZ5FkQ0bgrFFynHqVqTgE7TCwVd/PwFOxb8F9fdS4XyQjwOnhvGk5vqs3TPyPdfvfny
+ NNnwcEBNQqhn9C2qvLjquzeXNY9hbG2iV2JyfPTRSSf6Rm23lF4Msq5dUAzk8dHJvUmp
+ YDJhAXu8K1HYXFFCROcx424aZHxdk2ywTN1b38VFauLXWYfJ1A2XaELDtpfy7JYh9amM
+ Z9ig==
+X-Gm-Message-State: AOJu0YxleRXTYzhvWIHYPrCabCXHa6FJxTnepjfaGszjXvCVUFHkXHHb
+ CD7xja60YcBUftMDs22OYWRfN0ZbcHDnR0s09MfIbBKQem4JruoTwjk8XSlpEbIioZlFiF99KuN
+ 9dwBO+QvNf0xFG6dX+NEsNUEaU9BTI2QdCSoZUnU9QYkg8cZVYdsRFOZtlHuaTUoxwGzUeVhRn+
+ KcQokrosXuAmeiFGRmoG9lpJL8fl39MpQrOfa0
+X-Received: by 2002:a17:907:d405:b0:a27:6570:adbc with SMTP id
+ vi5-20020a170907d40500b00a276570adbcmr1076582ejc.33.1706097214403; 
+ Wed, 24 Jan 2024 03:53:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHMY/XbL1m0MJtUP3+NScatvnLhizDWF3Rymfj8P3ElycwQwBLSJxcVuBrpi26xf2+QLBu7Sg==
+X-Received: by 2002:a17:907:d405:b0:a27:6570:adbc with SMTP id
+ vi5-20020a170907d40500b00a276570adbcmr1076569ejc.33.1706097213942; 
+ Wed, 24 Jan 2024 03:53:33 -0800 (PST)
+Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ by smtp.gmail.com with ESMTPSA id
+ tj6-20020a170907c24600b00a311685890csm619505ejc.22.2024.01.24.03.53.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jan 2024 03:53:33 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org
+Subject: [PATCH] configure: run plugin TCG tests again
+Date: Wed, 24 Jan 2024 12:53:32 +0100
+Message-ID: <20240124115332.612162-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/31] docs: mark CRIS support as deprecated
-Content-Language: en-US
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- John Snow <jsnow@redhat.com>, libvir-list@redhat.com,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-s390x@nongnu.org, Song Gao <gaosong@loongson.cn>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liweiwei@iscas.ac.cn>,
- Nicholas Piggin <npiggin@gmail.com>, Radoslaw Biernacki <rad@semihalf.com>,
- Eduardo Habkost <eduardo@habkost.net>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Bin Meng <bin.meng@windriver.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, qemu-ppc@nongnu.org,
- David Hildenbrand <david@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
- qemu-arm@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Leif Lindholm <quic_llindhol@quicinc.com>, Beraldo Leal <bleal@redhat.com>,
- Rabin Vincent <rabinv@axis.com>
-References: <20230925144854.1872513-1-alex.bennee@linaro.org>
- <20230925144854.1872513-5-alex.bennee@linaro.org>
- <ZRG1g/2hWi8+AzNn@redhat.com> <878r8urxxc.fsf@linaro.org>
- <CAJy5ezoucKM=VvYsHeFep7r0i1PV_JUCgq6gs4JJQVHqq3Yz3Q@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJy5ezoucKM=VvYsHeFep7r0i1PV_JUCgq6gs4JJQVHqq3Yz3Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,76 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/9/23 19:17, Edgar E. Iglesias wrote:
-> 
-> On Mon, Sep 25, 2023 at 7:00 PM Alex Bennée <alex.bennee@linaro.org 
-> <mailto:alex.bennee@linaro.org>> wrote:
-> 
-> 
->     Daniel P. Berrangé <berrange@redhat.com
->     <mailto:berrange@redhat.com>> writes:
-> 
->      > On Mon, Sep 25, 2023 at 03:48:27PM +0100, Alex Bennée wrote:
->      >> This might be premature but while streamling the avocado tests I
->      >> realised the only tests we have are "check-tcg" ones. The aging
->      >> fedora-criss-cross image works well enough for developers but
->     can't be
->      >> used in CI as we need supported build platforms to build QEMU.
->      >>
->      >> Does this mean the writing is on the wall for this architecture?
->      >>
->      >> Signed-off-by: Alex Bennée <alex.bennee@linaro.org
->     <mailto:alex.bennee@linaro.org>>
->      >> Cc: Rabin Vincent <rabinv@axis.com <mailto:rabinv@axis.com>>
->      >> Cc: Edgar E. Iglesias <edgar.iglesias@xilinx.com
->     <mailto:edgar.iglesias@xilinx.com>>
->      >> ---
->      >>  docs/about/deprecated.rst | 11 +++++++++++
->      >>  1 file changed, 11 insertions(+)
->      >>
->      >> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->      >> index dc4da95329..7cfe313aa6 100644
->      >> --- a/docs/about/deprecated.rst
->      >> +++ b/docs/about/deprecated.rst
->      >> @@ -399,6 +399,17 @@ Specifying the iSCSI password in plain text
->     on the command line using the
->      >>  used instead, to refer to a ``--object secret...`` instance
->     that provides
->      >>  a password via a file, or encrypted.
->      >>
->      >> +TCG CPUs
->      >> +--------
->      >> +
->      >> +CRIS CPU architecture (since 8.1)
->      >> +'''''''''''''''''''''''''''''''''
->      >> +
->      >> +The CRIS architecture was pulled from Linux in 4.17 and the
->     compiler
->      >> +is no longer packaged in any distro making it harder to run the
->      >> +``check-tcg`` tests. Unless we can improve the testing
->     situation there
->      >> +is a chance the code will bitrot without anyone noticing.
->      >
->      > Deprecated is generally a warning that we intend to delete the
->      > feature.   If we're just going to relegate it to untested
->      > status (what I'd call "tier 3" quality), then we should document
->      > that elsewhere.  I don't mind which way we go.
-> 
->     We do have reasonably good coverage with tests/tcg/cris but of course
->     without a compiler we can't build them.
-> 
->     Both nios2 and microblaze have build-toolchain scripts which can be used
->     to re-create containers. However my preference is having pre-built
->     toolchains hosted by others like we do for loongarch, hexagon, xtensa
->     and tricore. Then the docker image can simply curl them into an image.
-> 
-> 
-> Yeah, I guess it's time to deprecate it...
+Commit 39fb3cfc28b ("configure: clean up plugin option handling", 2023-10-18)
+dropped the CONFIG_PLUGIN line from tests/tcg/config-host.mak, due to confusion
+caused by the shadowing of $config_host_mak.  However, TCG tests were still
+expecting it.  Oops.
 
-Is that an informal Acked-by? (:
+Put it back, in the meanwhile the shadowing is gone so it's clear that it goes
+in the tests/tcg configuration.
 
-> 
-> Cheers,
-> Edgar
+Cc: alex.bennee@linaro.org
+Fixes: 39fb3cfc28b ("configure: clean up plugin option handling", 2023-10-18)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configure | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/configure b/configure
+index 3d8e24ae011..ff058d6c486 100755
+--- a/configure
++++ b/configure
+@@ -1644,6 +1644,9 @@ fi
+ mkdir -p tests/tcg
+ echo "# Automatically generated by configure - do not modify" > tests/tcg/$config_host_mak
+ echo "SRC_PATH=$source_path" >> tests/tcg/$config_host_mak
++if test "$plugins" = "yes" ; then
++    echo "CONFIG_PLUGIN=y" >> tests/tcg/$config_host_mak
++fi
+ 
+ tcg_tests_targets=
+ for target in $target_list; do
+-- 
+2.43.0
 
 
