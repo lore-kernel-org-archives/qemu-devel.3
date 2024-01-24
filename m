@@ -4,72 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D557AC47422
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 06:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D24EC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 06:51:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSX2y-0004dL-D1; Wed, 24 Jan 2024 01:47:40 -0500
+	id 1rSX5v-0005Pd-LA; Wed, 24 Jan 2024 01:50:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rSX2w-0004cy-Ks
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 01:47:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=rIgd=JC=kaod.org=clg@ozlabs.org>)
+ id 1rSX5t-0005PM-Hn; Wed, 24 Jan 2024 01:50:41 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rSX2t-000329-Nm
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 01:47:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706078852;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Erg2DYAGXbbJnLgK4yt6LveyEc7Km7pacwKc6FRXP00=;
- b=U6dUC4V65OKYGaz30zbNoHkoOslcSG1nvbIXwEz+Gn8FcI5nlKnJjlN/be3xj6hQWknm7E
- y648+0aGLRujidBEqSiMhgTLNM4VNzCk4uKE/XjYezc0vPl+XADKg8v9FRe2mEE1RKjJsz
- BumbVICPbhQCjCMoDLI+uhguSGltSXQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-5Wopvq8uNBOVdbXTn1I0vA-1; Wed, 24 Jan 2024 01:47:27 -0500
-X-MC-Unique: 5Wopvq8uNBOVdbXTn1I0vA-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ (Exim 4.90_1) (envelope-from <SRS0=rIgd=JC=kaod.org=clg@ozlabs.org>)
+ id 1rSX5s-0003iM-06; Wed, 24 Jan 2024 01:50:41 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TKZN41c2Lz4x2S;
+ Wed, 24 Jan 2024 17:50:28 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 76DB883B8E8;
- Wed, 24 Jan 2024 06:47:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 391AE492BC9;
- Wed, 24 Jan 2024 06:47:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0DD9721E66C8; Wed, 24 Jan 2024 07:47:26 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
- farosas@suse.de,  het.gala@nutanix.com
-Subject: Re: [PATCH] migration: Plug memory leak on HMP migrate error path
-In-Reply-To: <ZbBppQ_4sfyYgl4n@x1n> (Peter Xu's message of "Wed, 24 Jan 2024
- 09:36:37 +0800")
-References: <20240117140722.3979657-1-armbru@redhat.com>
- <CAFEAcA-tX=GPm1zDq5pnL+T_cbivKUQ1dZe_vQ0XAjvehWLdpQ@mail.gmail.com>
- <ZbBppQ_4sfyYgl4n@x1n>
-Date: Wed, 24 Jan 2024 07:47:26 +0100
-Message-ID: <87bk9bdy81.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TKZN20Bxlz4wcg;
+ Wed, 24 Jan 2024 17:50:25 +1100 (AEDT)
+Message-ID: <b1731d4b-00ca-4fc1-8d2f-fe8e9236a324@kaod.org>
+Date: Wed, 24 Jan 2024 07:50:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] hw/arm/aspeed: Remove dead code
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>
+References: <20240123224842.18485-1-philmd@linaro.org>
+ <20240123224842.18485-2-philmd@linaro.org>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240123224842.18485-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=rIgd=JC=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,27 +67,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 1/23/24 23:48, Philippe Mathieu-Daudé wrote:
+> Remove copy/paste typo from commit 6c323aba40 ("hw/arm/aspeed:
+> Adding new machine Tiogapass in QEMU").
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> On Tue, Jan 23, 2024 at 04:33:43PM +0000, Peter Maydell wrote:
->> On Wed, 17 Jan 2024 at 19:49, Markus Armbruster <armbru@redhat.com> wrote:
->> >
->> > hmp_migrate() leaks @caps when qmp_migrate() fails.  Plug the leak
->> > with g_autoptr().
->> >
->> > Fixes: 967f2de5c9ec (migration: Implement MigrateChannelList to hmp migration flow.) v8.2.0-rc0
->> > Fixes: CID 1533124
->> 
->> Isn't this 1533125 ? 1533124 is a false positive in
->> the migrate_mode() function.
 
-Yes.
 
-> Indeed.. I fixed it in the staging branch (which will be in the final
-> pull), thanks.
->
-> https://gitlab.com/peterx/qemu/-/commit/74278c11b980429916116baf0f742357af51ebb4
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Thanks for catching & fixing my typo!
+Thanks,
+
+C.
+
+
+> ---
+>   hw/arm/aspeed.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index cc59176563..4bc292ff84 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1301,7 +1301,6 @@ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc, void *data)
+>       mc->default_ram_size       = 1 * GiB;
+>       mc->default_cpus = mc->min_cpus = mc->max_cpus =
+>           aspeed_soc_num_cpus(amc->soc_name);
+> -        aspeed_soc_num_cpus(amc->soc_name);
+>   };
+>   
+>   static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
 
 
