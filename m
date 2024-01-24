@@ -4,81 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4ACDC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 08:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46C2AC47DDF
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 08:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSZ3x-0007J0-DO; Wed, 24 Jan 2024 03:56:49 -0500
+	id 1rSZ5V-00080k-L1; Wed, 24 Jan 2024 03:58:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rSZ3u-0007Is-Jl
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:56:46 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rSZ3s-0006a6-58
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:56:46 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxHOvE0LBl9KcEAA--.8315S3;
- Wed, 24 Jan 2024 16:56:37 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxLs_B0LBlCYMWAA--.33620S3; 
- Wed, 24 Jan 2024 16:56:35 +0800 (CST)
-Subject: Re: [NOTFORMERGE PATCH 2/2] gitlab: Add Loongarch64 KVM-only build
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Zhiguo Wu <wuzhiguo@loongson.cn>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Bibo Mao <maobibo@loongson.cn>, Xiaojuan Yang <yangxiaojuan@loongson.cn>,
- Beraldo Leal <bleal@redhat.com>, WANG Xuerui <git@xen0n.name>,
- =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>, Tianrui Zhao <zhaotianrui@loongson.cn>
-References: <20240102172239.69452-1-philmd@linaro.org>
- <20240102172239.69452-3-philmd@linaro.org>
- <dbc7f2c6-15c0-4d5a-abf7-8946ff2d03cb@redhat.com>
- <4cc9ab90-c1bc-03d3-d82e-a763199fa029@loongson.cn>
- <96bdddb5-e15c-469f-b74b-7e82049888f1@redhat.com>
- <3766d853-8dc5-f455-e0ea-dd970c65a6c5@loongson.cn>
- <6f17d2f1-6876-4f1c-beb5-c6a4e89340d8@redhat.com>
- <94b84fa3-4a10-3fef-0415-6b87f2aa255b@loongson.cn>
- <0964ddb6-f403-4bec-8f90-23f8b9b0dfd6@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <102fd8fe-fb9c-9374-1ab7-1daccfad0064@loongson.cn>
-Date: Wed, 24 Jan 2024 16:56:33 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rSZ5U-00080I-06
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:58:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rSZ5S-0006rF-9h
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:58:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706086700;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xqF7xeXx4QdGIePp01OWGWGK0gn7pWQRSN+ak9TRF0A=;
+ b=hfSGDxGM+uqEO/nZehU376PtWcwWPrV0HES8rmP3x6O645RlGPDukj+syb/uLbA+bxjA1h
+ R7pdjDlNDkGQsqzRQYdhthyI4MTsI0ptSNvRlF1vvcf6ClLzwqgfSanm0cqOfIkrfLfR+U
+ 5+KDwDFjC0ePfId8Jgt6APUEdjVdieY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-292-ZyGAwALgN-6NnqPV-DP-TQ-1; Wed, 24 Jan 2024 03:58:18 -0500
+X-MC-Unique: ZyGAwALgN-6NnqPV-DP-TQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-337cc89a049so2677916f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 00:58:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706086697; x=1706691497;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xqF7xeXx4QdGIePp01OWGWGK0gn7pWQRSN+ak9TRF0A=;
+ b=EaNLNjuCBDtAyXjO3w0APdgxe3H6b/K9u8yJ8aaEVhIK1GZWzTGcdfDqPn/D+nRd2Z
+ ddllKqfRvfBN5uerODuxE0hGM0k+cim7yHqTXPY2a3Z3M9yZbQWXmbAnxeIuWixqhgSD
+ GBQR22FzxIqzTPsd+PscYyZMIkFcCp0cTpDy+rhXNe5jGeUa+aqc6CTNWK6iIFKoBQwe
+ 61hjAAP1aqC66ArV5XMmjAVXb/b4QqTGsIOzSU93SopXvUDh3oNX/xlhSuVSHLmTseTm
+ Bxdw11pfLjwzJm2QMbvyeYIDVT1cJTa2Bpkq6fWhGwS4DRaYTL9GEchZUq5LdDcStgc5
+ UQmA==
+X-Gm-Message-State: AOJu0Ywvek1hKP4LcRzasIHrvn3BBaiUwFm4PzwiCelTMdbKjsfZoEFv
+ 5sf5DXd5o2UKSDsH6RHGsZuEQ1w5dKGIYa/dy1NxXsDS3I8W6iJmdkGuSyXyXvGPI9jgD7Efa3N
+ xdWRlj8+671hD932Tz6pauT7uyAEWSzFM17sKqYcYthUVhCuxOeD6
+X-Received: by 2002:a05:600c:4750:b0:40e:bfbf:f332 with SMTP id
+ w16-20020a05600c475000b0040ebfbff332mr904243wmo.27.1706086697326; 
+ Wed, 24 Jan 2024 00:58:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbiZboiYxcbzltM+cc80JbPyEqFsnJI1P2TY7ip9Dz6SIyGTsC7AGuGh0WW2HjkBZUC6jsuw==
+X-Received: by 2002:a05:600c:4750:b0:40e:bfbf:f332 with SMTP id
+ w16-20020a05600c475000b0040ebfbff332mr904234wmo.27.1706086697015; 
+ Wed, 24 Jan 2024 00:58:17 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ k13-20020a05600c1c8d00b0040eb99a7037sm4607070wms.44.2024.01.24.00.58.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jan 2024 00:58:16 -0800 (PST)
+Date: Wed, 24 Jan 2024 09:58:15 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, Ani
+ Sinha <anisinha@redhat.com>
+Subject: Re: [PULL 03/15] tests/acpi/bios-tables-test: do not write new
+ blobs unless there are changes
+Message-ID: <20240124095815.3392a6a4@imammedo.users.ipa.redhat.com>
+In-Reply-To: <11a3b4ebee91cf6129c8d6fa3fd94fb29b1f8bff.1701450838.git.mst@redhat.com>
+References: <cover.1701450838.git.mst@redhat.com>
+ <11a3b4ebee91cf6129c8d6fa3fd94fb29b1f8bff.1701450838.git.mst@redhat.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.39; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <0964ddb6-f403-4bec-8f90-23f8b9b0dfd6@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8BxLs_B0LBlCYMWAA--.33620S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7urWxZrWfGryxJF45WF4xZrc_yoW8Wr1xpF
- yfAFWjqw4kJ395Kas3Kw1DuFnIyrWSvayIga1kCa4UW34DAr9Yqr48Jrs09a40q3s7Ww12
- vF4avasxXF98A3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
- ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9
- N3UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.17,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,56 +105,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Fri, 1 Dec 2023 12:15:16 -0500
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-在 2024/1/11 下午7:26, Philippe Mathieu-Daudé 写道:
-> On 11/1/24 10:51, gaosong wrote:
->> 在 2024/1/11 下午5:04, Thomas Huth 写道:
->>> On 11/01/2024 09.50, gaosong wrote:
->>>> 在 2024/1/11 下午4:20, Thomas Huth 写道:
->>>>> On 11/01/2024 08.37, gaosong wrote:
->
->>>> LoongArch no support these cmds  or some problems .
->>>> -    "gva2gpa 0",
->>>> -    "memsave 0 4096 \"/dev/null\"",
->>>> -    "x /8i 0x100",
->>>> -    "xp /16x 0",
->>>>
->>>> Could we disable these 4 cmds or the test_temp check?
->>>> After we fix the cmds problems, we can enable them.
->>>
->>> Even if loongarch does not support one of these commands, it should 
->>> not crash QEMU. So please fix the crashes first before considering 
->>> to enable the KVM-only test in the CI.
->>>
->>
->> Sure,  we will fix the cmds problems first.
->
-> The issue might be missing get_phys_page_attrs_debug() implementation.
+> From: Ani Sinha <anisinha@redhat.com>
+> 
+> When dumping table blobs using rebuild-expected-aml.sh, table blobs from all
+> test variants are dumped regardless of whether there are any actual changes to
+> the tables or not. This creates lot of new files for various test variants that
+> are not part of the git repository. This is because we do not check in all table
+> blobs for all test variants into the repository. Only those blobs for those
+> variants that are different from the generic test-variant agnostic blob are
+> checked in.
+> 
+> This change makes the test smarter by checking if at all there are any changes
+> in the tables from the checked-in gold master blobs and take actions
+> accordingly.
+> 
+> When there are no changes:
+>  - No new table blobs would be written.
+>  - Existing table blobs will be refreshed (git diff will show no changes).
+> When there are changes:
+>  - New table blob files will be dumped.
+>  - Existing table blobs will be refreshed (git diff will show that the files
+>    changed, asl diff will show the actual changes).
 
-We use  '--enable-kvm --disable-tcg ',
-the get_phys_page_debug()  is NULL,  so the test-hmp failed.
+> When new tables are introduced:
+>  - Zero byte empty file blobs for new tables as instructed in the header of
+>    bios-tables-test.c will be regenerated to actual table blobs.
 
-target/loongarch/cpu.c
-...
-#ifndef CONFIG_USER_ONLY
-#include "hw/core/sysemu-cpu-ops.h"
+Ani,
 
-static const struct SysemuCPUOps loongarch_sysemu_ops = {
-#ifdef CONFIG_TCG
-     .get_phys_page_debug = loongarch_cpu_get_phys_page_debug,
-#endif
-};
-...
+what previously worked is the is there weren't _any_ expected blobs
+(exact match/fallback) found a new table would be dumped.
+So then later 'git status' would show a list of new files. 
+With this commit it's however not dumping new files files,
+and explodes at
+#5  0x000055555556808e in load_expected_aml (data=0x7fffffffd7b0) at tests/qtest/bios-tables-test.c:414
+#6  0x00005555555676b0 in dump_aml_files (data=0x7fffffffd7b0, rebuild=true) at tests/qtest/bios-tables-test.c:256
 
-I see the other architectures  only implement 
-get_phys_page_attrs_debug() or  get_phys_page_debug()
-and not only build these functions on tcg mode.
+sure it can be worked around by manually creating empty files
+for expected files but if it's a new machine type, one has to create
+a bunch of them basically running multiple iterations of rebuild in V=2
+mode to see what's missing.
+(IMHO cure turned out to be worse than illness)
 
-Should we need implement  get_phys_page_attrs_debug() ?  or just use 
-get_phys_page_debug()
+for reproducing create a test for other than default machine type, ex:
 
-Thanks.
-Song Gao
+    test_data data = {                                                           
+        .machine = "pc-i440fx-2.0",                                              
+        .variant = ".pc_legacy",                                                              
+    }; 
+
+
+is it possible to fix it so that one doesn't have to create empty files manually?
+
+> 
+> This would make analyzing changes to tables less confusing and there would
+> be no need to clean useless untracked files when there are no table changes.
+> 
+> CC: peter.maydell@linaro.org
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Message-Id: <20231107044952.5461-1-anisinha@redhat.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  tests/qtest/bios-tables-test.c | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> index 71af5cf69f..fe6a9a8563 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -112,6 +112,7 @@ static const char *iasl;
+>  #endif
+>  
+>  static int verbosity_level;
+> +static GArray *load_expected_aml(test_data *data);
+>  
+>  static bool compare_signature(const AcpiSdtTable *sdt, const char *signature)
+>  {
+> @@ -244,21 +245,32 @@ static void test_acpi_fadt_table(test_data *data)
+>  
+>  static void dump_aml_files(test_data *data, bool rebuild)
+>  {
+> -    AcpiSdtTable *sdt;
+> +    AcpiSdtTable *sdt, *exp_sdt;
+>      GError *error = NULL;
+>      gchar *aml_file = NULL;
+> +    test_data exp_data = {};
+>      gint fd;
+>      ssize_t ret;
+>      int i;
+>  
+> +    exp_data.tables = load_expected_aml(data);
+>      for (i = 0; i < data->tables->len; ++i) {
+>          const char *ext = data->variant ? data->variant : "";
+>          sdt = &g_array_index(data->tables, AcpiSdtTable, i);
+> +        exp_sdt = &g_array_index(exp_data.tables, AcpiSdtTable, i);
+>          g_assert(sdt->aml);
+> +        g_assert(exp_sdt->aml);
+>  
+>          if (rebuild) {
+>              aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
+>                                         sdt->aml, ext);
+> +            if (!g_file_test(aml_file, G_FILE_TEST_EXISTS) &&
+> +                sdt->aml_len == exp_sdt->aml_len &&
+> +                !memcmp(sdt->aml, exp_sdt->aml, sdt->aml_len)) {
+> +                /* identical tables, no need to write new files */
+> +                g_free(aml_file);
+> +                continue;
+> +            }
+>              fd = g_open(aml_file, O_WRONLY|O_TRUNC|O_CREAT,
+>                          S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH);
+>              if (fd < 0) {
 
 
