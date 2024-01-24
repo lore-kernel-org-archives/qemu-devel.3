@@ -4,87 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E06EC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1835CC47422
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:12:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSdwM-0001Jo-F5; Wed, 24 Jan 2024 09:09:18 -0500
+	id 1rSdyY-0002Iv-Ku; Wed, 24 Jan 2024 09:11:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSdwL-0001Jd-41
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:09:17 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSdwI-00082s-Ee
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:09:16 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-40e7065b692so59826455e9.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 06:09:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706105352; x=1706710152; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hMpoMnQIlEpaRr0/5XClGONtW8gGQ7ZA0gSck2S1TUo=;
- b=cqjT0syGQl0NLEKAFZysrzokBkva+a6wgAOUMdVM72WXsuPx/xQfd3boKTHfbqr84p
- DwWguEqYKfCDththsiIFYfvsyTrIjCYUISZbW/3lTdqry99wGJ5lRINSgJnthdo3GGJ3
- f6dmOS6BOoWfs/LFs0Lbm84mIm68MRxhWNlnIse1GYS9k6YdYQ2pSeNJHNSzOmniHcVN
- 82Sh0Am3D9xhFm1MvWyikQMvbmj31JFky0akQA6D40UE2OiTwRFDst+JroBEziSSsweu
- sITUzP7ze3z9JdCly+3Gl0dNQcio7q2pAobceRQxV9vcIhv1qeaSfNI4IbB5RlkVQEdT
- 7TPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706105352; x=1706710152;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hMpoMnQIlEpaRr0/5XClGONtW8gGQ7ZA0gSck2S1TUo=;
- b=w8c10b0rttJktM915cZiSfF1LC7CKMw9V1qkBV2NgcPqVuMTMQt3QvS3kWyBzdrC2F
- XVMtmub9Me26+VaZ6T2fzedBIl4qdrR1AOWAYNt4Cy3PQYMi44ShJ1fEHXr1lTVfoFXa
- 2uRLGbc0Q/oO9Y3hjXSWNh14xj1mXw+blpGYdVILL96T182BhSWEmCQuNpHC6v7RDAsA
- 5rkS5spqYkfaL2sU9Fs7qc8iv2lgDWUWgpQv6lTzp+tnvKohpsYbXHaFV71s0hiJ4sCG
- q/6armmg7Jrk1uwAnYgqtLc9/4c/7UNu1HckmRh4ChUZcTdgC2MIg0mzgNb1YImdKpx2
- EGhw==
-X-Gm-Message-State: AOJu0YzZG7+TcCfgi8GMxRxSscJAgkNT1qV0qFvbcXOSPaBnr5MaDNb9
- XhnLBWKdZwfbv6BMhv0t3Y43cGRbEwmPs3Hi2RwpZrI2ILp9YbeMAO7QGGyhmoE=
-X-Google-Smtp-Source: AGHT+IHD/25cP2db0IdFfXzIWztEylqwEa90lf3/q9QtHHyBNr3qk5kilJTUGWPwT9KGou6Rm7EH3A==
-X-Received: by 2002:a05:600c:1994:b0:40d:7fbe:e966 with SMTP id
- t20-20020a05600c199400b0040d7fbee966mr1191788wmq.40.1706105352277; 
- Wed, 24 Jan 2024 06:09:12 -0800 (PST)
-Received: from [192.168.69.100] (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
- [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
- u13-20020a05600c19cd00b0040e451fd602sm49602477wmq.33.2024.01.24.06.09.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 06:09:11 -0800 (PST)
-Message-ID: <887a8b74-423f-4c4c-8cdd-d29fcb4f14b8@linaro.org>
-Date: Wed, 24 Jan 2024 15:09:09 +0100
+ (Exim 4.90_1) (envelope-from <m.frank@proxmox.com>)
+ id 1rSdyW-0002IY-Vl; Wed, 24 Jan 2024 09:11:32 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <m.frank@proxmox.com>)
+ id 1rSdyV-0000c1-1A; Wed, 24 Jan 2024 09:11:32 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0B1DE49262;
+ Wed, 24 Jan 2024 15:11:20 +0100 (CET)
+Message-ID: <c031f8ea-848a-4dca-8c77-579031672e34@proxmox.com>
+Date: Wed, 24 Jan 2024 15:11:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] hw/vfio/common: Use RCU_READ macros
+Subject: Re: [PATCH v3 1/2] ui/clipboard: mark type as not available when
+ there is no data
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ mcascell@redhat.com, qemu-stable@nongnu.org
+References: <20240124105749.204610-1-f.ebner@proxmox.com>
 Content-Language: en-US
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
- Greg Kurz <groug@kaod.org>, Richard Henderson
- <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C_=C3=A9_dric_Le_Goater?= <clg@redhat.com>
-References: <20240124074201.8239-1-philmd@linaro.org>
- <20240124074201.8239-6-philmd@linaro.org> <7reip.7d0x82au0t9p@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <7reip.7d0x82au0t9p@linaro.org>
+From: Markus Frank <m.frank@proxmox.com>
+In-Reply-To: <20240124105749.204610-1-f.ebner@proxmox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=m.frank@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,63 +58,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/1/24 10:25, Manos Pitsidianakis wrote:
-> On Wed, 24 Jan 2024 09:42, Philippe Mathieu-Daudé <philmd@linaro.org> 
-> wrote:
->> Replace the manual rcu_read_(un)lock calls by the
->> *RCU_READ_LOCK_GUARD macros (See commit ef46ae67ba
->> "docs/style: call out the use of GUARD macros").
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> hw/vfio/common.c | 34 ++++++++++++++++------------------
->> 1 file changed, 16 insertions(+), 18 deletions(-)
->>
->> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->> index 4aa86f563c..09878a3603 100644
->> --- a/hw/vfio/common.c
->> +++ b/hw/vfio/common.c
->> @@ -308,13 +308,13 @@ static void vfio_iommu_map_notify(IOMMUNotifier 
->> *n, IOMMUTLBEntry *iotlb)
->>         return;
->>     }
->>
->> -    rcu_read_lock();
->> +    RCU_READ_LOCK_GUARD();
->>
->>     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
->>         bool read_only;
->>
->>         if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
->> -            goto out;
->> +            return;
-> 
-> Since this is the only early return, we could alternatively do:
-> 
-> -         if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
-> +         if (vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
-> 
-> remove the goto/return, and wrap the rest of the codeflow in this if's 
-> brackets. And then we could use WITH_RCU_READ_LOCK_GUARD instead. That'd 
-> increase the code indentation however.
+Tested the two paths that could lead to this segfault.
+KRDC and noVNC running simultaneously on wayland and both running on Xorg when the clipboard is cleared.
+Everything worked fine and no segfault happens.
 
-If the maintainer agrees with the style & code churn, I don't
-mind respining.
-
+On  2024-01-24 11:57, Fiona Ebner wrote:
+> With VNC, a client can send a non-extended VNC_MSG_CLIENT_CUT_TEXT
+> message with len=0. In qemu_clipboard_set_data(), the clipboard info
+> will be updated setting data to NULL (because g_memdup(data, size)
+> returns NULL when size is 0). If the client does not set the
+> VNC_ENCODING_CLIPBOARD_EXT feature when setting up the encodings, then
+> the 'request' callback for the clipboard peer is not initialized.
+> Later, because data is NULL, qemu_clipboard_request() can be reached
+> via vdagent_chr_write() and vdagent_clipboard_recv_request() and
+> there, the clipboard owner's 'request' callback will be attempted to
+> be called, but that is a NULL pointer.
 > 
->>         }
->>         /*
->>          * vaddr is only valid until rcu_read_unlock(). But after
->> @@ -343,8 +343,6 @@ static void vfio_iommu_map_notify(IOMMUNotifier 
->> *n, IOMMUTLBEntry *iotlb)
->>             vfio_set_migration_error(ret);
->>         }
->>     }
->> -out:
->> -    rcu_read_unlock();
->> }
+> In particular, this can happen when using the KRDC (22.12.3) VNC
+> client.
+> 
+> Another scenario leading to the same issue is with two clients (say
+> noVNC and KRDC):
+> 
+> The noVNC client sets the extension VNC_FEATURE_CLIPBOARD_EXT and
+> initializes its cbpeer.
+> 
+> The KRDC client does not, but triggers a vnc_client_cut_text() (note
+> it's not the _ext variant)). There, a new clipboard info with it as
+> the 'owner' is created and via qemu_clipboard_set_data() is called,
+> which in turn calls qemu_clipboard_update() with that info.
+> 
+> In qemu_clipboard_update(), the notifier for the noVNC client will be
+> called, i.e. vnc_clipboard_notify() and also set vs->cbinfo for the
+> noVNC client. The 'owner' in that clipboard info is the clipboard peer
+> for the KRDC client, which did not initialize the 'request' function.
+> That sounds correct to me, it is the owner of that clipboard info.
+> 
+> Then when noVNC sends a VNC_MSG_CLIENT_CUT_TEXT message (it did set
+> the VNC_FEATURE_CLIPBOARD_EXT feature correctly, so a check for it
+> passes), that clipboard info is passed to qemu_clipboard_request() and
+> the original segfault still happens.
+> 
+> Fix the issue by handling updates with size 0 differently. In
+> particular, mark in the clipboard info that the type is not available.
+> 
+> While at it, switch to g_memdup2(), because g_memdup() is deprecated.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: CVE-2023-6683
+> Reported-by: Markus Frank <m.frank@proxmox.com>
+> Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Markus Frank <m.frank@proxmox.com>
+> ---
+> 
+> Changes in v3:
+>      * Yet another new appraoch, setting available to false when
+>        no data is passed in when updating.
+>      * Update commit message to focus on the fact that non-extended
+>        VNC_MSG_CLIENT_CUT_TEXT messages with len=0 are problematic.
+> 
+>   ui/clipboard.c | 12 +++++++++---
+>   1 file changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/ui/clipboard.c b/ui/clipboard.c
+> index 3d14bffaf8..b3f6fa3c9e 100644
+> --- a/ui/clipboard.c
+> +++ b/ui/clipboard.c
+> @@ -163,9 +163,15 @@ void qemu_clipboard_set_data(QemuClipboardPeer *peer,
+>       }
+>   
+>       g_free(info->types[type].data);
+> -    info->types[type].data = g_memdup(data, size);
+> -    info->types[type].size = size;
+> -    info->types[type].available = true;
+> +    if (size) {
+> +        info->types[type].data = g_memdup2(data, size);
+> +        info->types[type].size = size;
+> +        info->types[type].available = true;
+> +    } else {
+> +        info->types[type].data = NULL;
+> +        info->types[type].size = 0;
+> +        info->types[type].available = false;
+> +    }
+>   
+>       if (update) {
+>           qemu_clipboard_update(info);
 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
-Thanks!
 
