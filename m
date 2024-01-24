@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A2E0C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 20:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A52DFC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 20:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSjSc-0001Yb-9o; Wed, 24 Jan 2024 15:02:58 -0500
+	id 1rSjUQ-0003pT-DL; Wed, 24 Jan 2024 15:04:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rSjSZ-0001Xe-Oo
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 15:02:56 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1rSjUO-0003os-QV
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 15:04:48 -0500
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rSjSX-0005Yw-PU
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 15:02:55 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d7881b1843so6610905ad.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 12:02:53 -0800 (PST)
+ id 1rSjUM-0005nj-TN
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 15:04:48 -0500
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5ce942efda5so4498350a12.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 12:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706126572; x=1706731372; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1706126685; x=1706731485; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+w2Z/B9DvCeSq6bcxM6bUW3f+gLJiWZyp7gFEq+AuD4=;
- b=m4ixX/bnXZWKeFDCL3DiExe9LYfzcOp0fwMSG3DyfyLkLVCsizrtvu+bPMUlqI+pg7
- /SdNhXFXHK84Eyzjteum80CM2BzfqQddIvOp5AQL1v8ovvS87DdyIoHg8DSkVJfrWxxB
- L5RkZNVJa+rmE3B9EzjDh2e0WSy8CERyZvpiZHUyqTmnVyn4KLTiBOnK8dEMIk+g7318
- rCe02nUz3Ke6T5OifLe3GmKQdAthm+K1Ygx1Eydo/QRqRbTQ07sFoqi5AlUH6+hh/KSo
- l7pODVfWnV3C5U4GCy8wmvc8CUI7Lt6vzFSJuNRa4K1slOSR4zli3I7G6dBm2MQ/wbAG
- 7Lug==
+ bh=TcvvEUmUOJhLGSOP0GKE13bG52dB7JqCEYHsc4HIS/o=;
+ b=K8YcrkPeZPlS9frcA/K03oxmtCA0DRqOmjrZ792RlAY/ozKuy/VZ5YNOj+S+JRbzDg
+ GeOfRU6B2V8pvj03nctp/KSo8o5x6xgCCTka7UYEpp/YhmFsUsjA2i1XVB0EO26KW6w6
+ u181n6MSHdeZAAQYEoQQHd2HYZcTOXSIrEWJsoxlIvOWDe3ix2MMKrmycA9IcFw8hgtC
+ 8E4Pq9aMWXeO0AsYZGLYKzVJRb9p8M/cy/rB1l0HV/NLAmq1CnBJmWSoQsgxcVALqWxv
+ SlvxizDAdmHw+W6Nd2Co1H4tVQCYQ7D1Uvm6CnGXcF60rJqHOJ2Aq1UBBrZzijSnG29c
+ +VRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706126572; x=1706731372;
+ d=1e100.net; s=20230601; t=1706126685; x=1706731485;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+w2Z/B9DvCeSq6bcxM6bUW3f+gLJiWZyp7gFEq+AuD4=;
- b=siHk/lfrda/mti4RzTKXfESoHamzyvWf/3pg4sD8Ui2RcywCdMbp7jS4f/x1d2UYy0
- xfNsZqcHR6mSb//DFMTm/MWwx5fc5teseBUWaBFhbJKh7EHikz0lFv/4EurrKhh56Fly
- JcBdo7B+0daEVR1BoqYk0OsHHfKyMIqTx7MFFxZXfBU62Y/1ZVQWSokZOk+HWyzc5SM5
- z7JoSPbwRYOHIhAP0KcogQ8I1TqbWolPBcSMmIwgaKhZjQTdC0dKnpug0/vevU25ovjh
- IO10PQEnDE0vCKhixVEy/FE4zqyU+XXHtwR4hkQ4+fjeJVTxSHP9Bi2rrRB4tQ9irxRf
- 5TBg==
-X-Gm-Message-State: AOJu0Yxis2zHPeXV3sYxsM0gI/9LNGszda+aSP1Q3jIKN7iZ3dlPWQtu
- e7ivvEEZOx8cwTQMpA6kF3peE1V/tZ2Rcp8jGO683hAlaaJnHA+ReVWsNUDxobA=
-X-Google-Smtp-Source: AGHT+IHmdnAzRy94TdW37rxIReLv8xmTxnle59ObMQ60OBh/Hx1dq+31Zqz4kUmazN7Jz6XbTetWjA==
-X-Received: by 2002:a17:902:6b4a:b0:1d5:f10d:2ac6 with SMTP id
- g10-20020a1709026b4a00b001d5f10d2ac6mr1232352plt.115.1706126571674; 
- Wed, 24 Jan 2024 12:02:51 -0800 (PST)
+ bh=TcvvEUmUOJhLGSOP0GKE13bG52dB7JqCEYHsc4HIS/o=;
+ b=SY7u2hvAIRyK4XnB7THkLA8vXz04alXkBBlqtC9k5At1JabcbP+8orwE3O/J7Mcg/L
+ q/5A1fJN0Dp6PCi7Hvy5CKkktgS/12MDgZsfBZRqcJd70HksH/HLjC6tK580bi3kWdPN
+ MKyE/HRoHcqN+zGofrX0hGreQElk3z0UcyYmxp4eGGJD24p4awtaJG1YBbMNJHoA7kVh
+ qaMrktut30j1s7A7/kDH10mtjrQ3idAb6JAlE09Pdct7jpHF/3KZj5MtQknqHcDOzVJh
+ PSN/gc9tnfS84p3plfJpFxE8GsDqUFGOyrm4ZFFVX2wuQnrKTckiWLg8DfoJRQcFTn8m
+ pSrg==
+X-Gm-Message-State: AOJu0YwWTqFQaultH3kufTjhJWfbe1ooaREIjzAjAlAyB83xVBEc5+9W
+ SbmZ628TAqzY6zejhoQLSiIVdY8oqj/zOugoS+hMVUlaHUg0tNgRZiI6nHcU8ig=
+X-Google-Smtp-Source: AGHT+IFBNH2JOb+HkKfQWimA0hg/iE5eAaf55qpqq22/PIAfGc5hvld2z/gHUyMOp8Ye4XFSyEp08w==
+X-Received: by 2002:a05:6a20:5618:b0:19b:7ccb:2140 with SMTP id
+ ir24-20020a056a20561800b0019b7ccb2140mr1363069pzc.105.1706126685443; 
+ Wed, 24 Jan 2024 12:04:45 -0800 (PST)
 Received: from [192.168.68.110] ([152.234.127.94])
  by smtp.gmail.com with ESMTPSA id
- d13-20020a170902c18d00b001d7134d149dsm9769222pld.256.2024.01.24.12.02.49
+ i192-20020a639dc9000000b005d6323da62esm14262pgd.84.2024.01.24.12.04.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 12:02:51 -0800 (PST)
-Message-ID: <08188a93-0d5b-40bf-aefb-ac74d9c3d0be@ventanamicro.com>
-Date: Wed, 24 Jan 2024 17:02:47 -0300
+ Wed, 24 Jan 2024 12:04:45 -0800 (PST)
+Message-ID: <61d7fcf6-6b7a-4d19-a6f9-74713b31bc40@ventanamicro.com>
+Date: Wed, 24 Jan 2024 17:04:41 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: qemu riscv, thead c906, Linux boot regression
+Subject: Re: [PATCH v4 1/2] target/riscv: use misa_mxl_max to populate isa
+ string rather than TARGET_LONG_BITS
 Content-Language: en-US
-To: =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Christoph_M=C3=BCllner?=
- <christoph.muellner@vrull.eu>
-Cc: linux-riscv@lists.infradead.org, LIU Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Conor Dooley
- <conor@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>
-References: <874jf2rj4g.fsf@all.your.base.are.belong.to.us>
- <78107c83-7035-414c-9a44-af5e234fd5c2@ventanamicro.com>
- <87wmryr0rx.fsf@all.your.base.are.belong.to.us>
+To: Conor Dooley <conor@kernel.org>, qemu-riscv@nongnu.org
+Cc: Conor Dooley <conor.dooley@microchip.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Andrew Jones <ajones@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+References: <20240124-squatting-getup-a16a8499ad73@spud>
+ <20240124-swear-monthly-56c281f809a6@spud>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <87wmryr0rx.fsf@all.your.base.are.belong.to.us>
+In-Reply-To: <20240124-swear-monthly-56c281f809a6@spud>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,87 +103,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 1/24/24 16:26, Björn Töpel wrote:
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
+On 1/24/24 09:55, Conor Dooley wrote:
+> From: Conor Dooley <conor.dooley@microchip.com>
 > 
->> On 1/24/24 09:49, Björn Töpel wrote:
->>> Hi!
->>>
->>> I bumped the RISC-V Linux kernel CI to use qemu 8.2.0, and realized that
->>> thead c906 didn't boot anymore. Bisection points to commit d6a427e2c0b2
->>> ("target/riscv/cpu.c: restrict 'marchid' value")
->>>
->>> Reverting that commit, or the hack below solves the boot issue:
->>>
->>> --8<--
->>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>> index 8cbfc7e781ad..e18596c8a55a 100644
->>> --- a/target/riscv/cpu.c
->>> +++ b/target/riscv/cpu.c
->>> @@ -505,6 +505,9 @@ static void rv64_thead_c906_cpu_init(Object *obj)
->>>        cpu->cfg.ext_xtheadsync = true;
->>>    
->>>        cpu->cfg.mvendorid = THEAD_VENDOR_ID;
->>> +    cpu->cfg.marchid = ((QEMU_VERSION_MAJOR << 16) |
->>> +                        (QEMU_VERSION_MINOR << 8)  |
->>> +                        (QEMU_VERSION_MICRO));
->>>    #ifndef CONFIG_USER_ONLY
->>>        set_satp_mode_max_supported(cpu, VM_1_10_SV39);
->>>    #endif
->>> --8<--
->>>
->>> I'm unsure what the correct qemu way of adding a default value is,
->>> or if c906 should have a proper marchid.
->>
->> In case you need to set a 'marchid' different than zero for c906, this hack would
->> be a proper fix. As mentioned in the commit msg of the patch you mentioned:
->>
->> "Named CPUs should set 'marchid' to a meaningful value instead, and generic
->>    CPUs can set to any valid value."
->>
->> That means that any specific marchid value that the CPU uses must to be set
->> in its own cpu_init() function.
+> A cpu may not have the same xlen as the compile time target, and
+> misa_mxl_max is the source of truth for what the hart supports.
 > 
-> Got it. Thanks, Daniel!
+> The conversion from misa_mxl_max to xlen already has one user, so
+> introduce a helper and use that to populate the isa string.
 > 
-> For completeness (since it came up on the weekly PW call); Conor pointed
-> out that zero *is* indeed the right marchid for c906, and in fact, the
-> non-zero marchid pre commit d6a427e2c0b2 was incorrect.
+> Link: https://lore.kernel.org/qemu-riscv/20240108-efa3f83dcd3997dc0af458d7@orel/
+> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+> ---
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+> I dropped the tags since I added the helper
+> ---
+>   target/riscv/cpu.c     | 9 ++++++++-
+>   target/riscv/cpu.h     | 1 +
+>   target/riscv/gdbstub.c | 2 +-
+>   3 files changed, 10 insertions(+), 2 deletions(-)
 > 
-> Post commit d6a427e2c0b2, the correct alternative is picked up, and
-> ERRATA_THEAD_PBMT (using non-standard memory type bits in
-> page-table-entries) kicks in. AFAIU, that's not implemented by qemu's
-> c906 support, which then traps.
-
-
-This looks like a very good reason to actually push what you called 'hack' as
-a fix. Yeah, in theory that commit did nothing wrong, but the side effect
-(missing support for non-standard memory type bits) is kind of a QEMU problem.
-
-You're welcome to format that hack into a patch, explaining in the commit msg why
-we need to set marchid for c906 to that specific value. I'd even add a TODO
-tag in rv64_thead_c906_cpu_init() to remind us that this is a band-aid and
-that we should remove it once we implement the needed support.
-
-
-
-> 
-> That's the theory. Maybe Christoph knows if the non-standard bits are
-> implemented or not?
-> 
-> Regardless; I removed booting Qemu T-head c906 from the CI, and the
-> build/boot passes nicely ;-) [1]
-
-I vote for setting marchid in c906 cpu_init and re-enable it in the CI.
-
-
-Thanks,
-
-Daniel
-
-> 
-> 
-> Björn
-> 
-> [1] https://github.com/linux-riscv/linux-riscv/actions/runs/7641764759/job/20819801235?pr=447
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index ad1df2318b..4aa4b2e988 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -307,6 +307,11 @@ void riscv_cpu_set_misa(CPURISCVState *env, RISCVMXL mxl, uint32_t ext)
+>       env->misa_ext_mask = env->misa_ext = ext;
+>   }
+>   
+> +int riscv_cpu_max_xlen(CPURISCVState env)
+> +{
+> +    return 16 << env.misa_mxl_max;
+> +}
+> +
+>   #ifndef CONFIG_USER_ONLY
+>   static uint8_t satp_mode_from_str(const char *satp_mode_str)
+>   {
+> @@ -2332,7 +2337,9 @@ char *riscv_isa_string(RISCVCPU *cpu)
+>       int i;
+>       const size_t maxlen = sizeof("rv128") + sizeof(riscv_single_letter_exts);
+>       char *isa_str = g_new(char, maxlen);
+> -    char *p = isa_str + snprintf(isa_str, maxlen, "rv%d", TARGET_LONG_BITS);
+> +    int xlen = riscv_cpu_max_xlen(cpu->env);
+> +    char *p = isa_str + snprintf(isa_str, maxlen, "rv%d", xlen);
+> +
+>       for (i = 0; i < sizeof(riscv_single_letter_exts) - 1; i++) {
+>           if (cpu->env.misa_ext & RV(riscv_single_letter_exts[i])) {
+>               *p++ = qemu_tolower(riscv_single_letter_exts[i]);
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 05e83c4ac9..aacc031397 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -511,6 +511,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                           MMUAccessType access_type, int mmu_idx,
+>                           bool probe, uintptr_t retaddr);
+>   char *riscv_isa_string(RISCVCPU *cpu);
+> +int riscv_cpu_max_xlen(CPURISCVState env);
+>   bool riscv_cpu_option_set(const char *optname);
+>   
+>   #define cpu_mmu_index riscv_cpu_mmu_index
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index 58b3ace0fe..f15980fdcf 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -218,7 +218,7 @@ static int riscv_gen_dynamic_csr_xml(CPUState *cs, int base_reg)
+>       CPURISCVState *env = &cpu->env;
+>       GString *s = g_string_new(NULL);
+>       riscv_csr_predicate_fn predicate;
+> -    int bitsize = 16 << env->misa_mxl_max;
+> +    int bitsize = riscv_cpu_max_xlen(*env);
+>       int i;
+>   
+>   #if !defined(CONFIG_USER_ONLY)
 
