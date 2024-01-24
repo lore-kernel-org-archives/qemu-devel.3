@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB678C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97BCC47422
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSmV4-00022L-Et; Wed, 24 Jan 2024 18:17:42 -0500
+	id 1rSmVc-0002QH-P6; Wed, 24 Jan 2024 18:18:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSmV1-00021l-M8
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:17:39 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rSmVb-0002P9-4J
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:18:15 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSmUz-0005UY-Pw
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:17:39 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6ddc2a78829so568318b3a.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:17:37 -0800 (PST)
+ id 1rSmVZ-0005iK-Ep
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:18:14 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6daa89a6452so4361109b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:18:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706138256; x=1706743056; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706138292; x=1706743092; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ar8qTwZwDiCd6oqwxtRWwP5S2G1AsLdhKA+gGlZlmdA=;
- b=cZTGgw+l+qo1JmgnxpElGtJ0s1mJwVqxfyORH7//nio2Mpd2pRWKl3bPzXFgdGmT/5
- v2NHk7W0ru+bVnW2TwpI8rGjfs/aQ0eo9tUuBSfD/ZMAiGlN1ntrlowZ19ZMGZPew4GN
- GSPdOIUgPUsZc3DAI+3B2QS4Cj88P607VZ6hSP6fiVUCPyDw6VEYV4GDXFuTpHMXWpHt
- 2ouiUxCo+I1O/FLP1iULE4izSPHriUOGZm8g56nl93orkP/77wkj9roUR/I/aN9/MADE
- M3S57vhnapEGizh1RLVN2No0DY87MhXp3mst/qjNbWqTERlAlmhI1m1Kgc3EMbi0A2C+
- wTMg==
+ bh=W6hHELT1Cs1XXl8oCVlrvXMDWO1i4PgfYwTjGwgOarM=;
+ b=sgV9aA2e65H9rKm1ERYGDHBDXgJ6fW97+NR7Z39PzXVZss6se/C/givabwpfVQl1Iy
+ rDJE4FlvILNg3uUj/xUHDGnY88AAPUVBYsKH0LG/00GBGyqrB71NT0VT/+Yyjc3NlxMB
+ zqX51QMCO1XnJ5KK9GllZG9vWu5LAhBfSOUOK+ZNzuOTIugKGiBlDmjq27pbV1D8CgUQ
+ LWv+Oaf88NUJtFLqTbs1OjPfhAgowruCTlYkrwYwrBpV2UElVS3GC7pPB++Hb0NbhbdN
+ fPE6XakSbtA3Y0TGRY8rxCEdrOEkoP9o1pxoOcWKfO2ICnT+nNp0l6NIJRnhvoX/0MTb
+ utZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706138256; x=1706743056;
+ d=1e100.net; s=20230601; t=1706138292; x=1706743092;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ar8qTwZwDiCd6oqwxtRWwP5S2G1AsLdhKA+gGlZlmdA=;
- b=OpJC8SXd3cwmXMMlABHyaNhU15/6IuA/o+es2SQIKSWC3bJ0z5jTqi8PBegQ+4HnSs
- AY4i7XrAjFQdYCWyVGdqT+PYdZXx5LhzyjzylFo8Llq+XBw5JVl6R25fMhcC9LYhy0ZW
- kBLMd8GrZ6f252j/7RK5mLO17n4aDe2rGBZMuCdhq/eq9PaSopeCy1PPoFRwy2OSQKuC
- 1t8o/nLSHTMmvENRG6Ylvx+i3+lQsMb6zGgtzYZlsNE6fIX7ygFfOo0SYqB6O9Dq+0N/
- OQBnL/t+fK7qWJLXYbNCEbOmWsjpghyrIZkquzLELInSUreN0s3WLVyoMH59a4wsqRuK
- L1Mw==
-X-Gm-Message-State: AOJu0YyjsJMcFl+4opYmfGHWC1Tqvx4z6P/3N23a4FbUfreJ1CjouAlc
- qEQ+Spq+4SlLxdImDYM60c0GIdcCGVQQb1CSqz/81QA1Icf4eeihRa+6/S3Z7Mdvor+3f7ENwt1
- d
-X-Google-Smtp-Source: AGHT+IEBoYbHGNdOIsdi+dWFga9rN2fW+CovYelG+DTP/N6JtbKRwtEcEQJWKTd9wgSC4+MJ2ymonw==
-X-Received: by 2002:a05:6a00:2d1c:b0:6d9:af69:b704 with SMTP id
- fa28-20020a056a002d1c00b006d9af69b704mr321198pfb.13.1706138256382; 
- Wed, 24 Jan 2024 15:17:36 -0800 (PST)
+ bh=W6hHELT1Cs1XXl8oCVlrvXMDWO1i4PgfYwTjGwgOarM=;
+ b=wQMsA7T7xKwI4B2rLYUlMvrabE0SVvfo57fKkN0+HU2roIIhGHbeJDrT5o5fnM2REr
+ lgr67AMoHHApvjt3TrWolICeIaNFj9fnxpFh9uPpPQkXbYnIkgfPJoXJwbMu+hosmzzA
+ 9Ga1PUNZdvy0n/1xlcAmThdZ0wZy7T7Oi3tOkAgpNZYM5xIXmrghjWSjUU+ZLiSvsmbF
+ tqT6MqId4uQsjKxmwUYfHDIudtwspjBYxX1jKFZMZpmSXcihaVyPcCeBSpF4PeajM+t3
+ 7gcyOgCtAKy6unYoaUBPddh75yppUXMEewdZtu13hNMXOZ+eeTLo0hHaXuf9C1ERzud2
+ 9oSA==
+X-Gm-Message-State: AOJu0Yz6UU+8/HIg+jKQcYcgPJdVL0gkCLN0rrmgiwlicx38AqOmCANo
+ 0SxOOHZr3T2QbMjeky62sR1jDVLaPFr/rGJBZxkNL+VFeRtSv1RTBo8N7NFvhs0=
+X-Google-Smtp-Source: AGHT+IFimQXr76un10rOZUdwv9ZPjriLjA2eZt2p/4UyW6cEBacbwGhVBb3KTYWo7QTVeuncVSijdQ==
+X-Received: by 2002:a05:6a00:2285:b0:6d9:d71c:d1a3 with SMTP id
+ f5-20020a056a00228500b006d9d71cd1a3mr278597pfe.66.1706138292138; 
+ Wed, 24 Jan 2024 15:18:12 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:5fcf:9e3:2e58:9c7?
  (2001-44b8-2176-c800-5fcf-09e3-2e58-09c7.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:5fcf:9e3:2e58:9c7])
  by smtp.gmail.com with ESMTPSA id
- ks11-20020a056a004b8b00b006d6b91c6eb6sm14657150pfb.13.2024.01.24.15.17.33
+ ks11-20020a056a004b8b00b006d6b91c6eb6sm14657150pfb.13.2024.01.24.15.18.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 15:17:36 -0800 (PST)
-Message-ID: <6c17d610-e029-4614-9275-f5420d0b05df@linaro.org>
-Date: Thu, 25 Jan 2024 09:17:30 +1000
+ Wed, 24 Jan 2024 15:18:11 -0800 (PST)
+Message-ID: <64b7a417-35a1-4674-ba74-cf7149363358@linaro.org>
+Date: Thu, 25 Jan 2024 09:18:07 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] hw/arm/aspeed: Introduce aspeed_soc_cpu_type()
- helper
+Subject: Re: [PATCH v2 5/5] hw/arm/aspeed: Check for CPU types in
+ machine_run_board_init()
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -74,13 +73,13 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 References: <20240123224842.18485-1-philmd@linaro.org>
- <20240123224842.18485-5-philmd@linaro.org>
+ <20240123224842.18485-6-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240123224842.18485-5-philmd@linaro.org>
+In-Reply-To: <20240123224842.18485-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,20 +103,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/24 08:48, Philippe Mathieu-Daudé wrote:
-> In order to alter AspeedSoCClass::cpu_type in the next
-> commit, introduce the aspeed_soc_cpu_type() helper to
-> retrieve the per-SoC CPU type from AspeedSoCClass.
+> Aspeed SoCs use a single CPU type (set as AspeedSoCClass::cpu_type).
+> Convert it to a NULL-terminated array (of a single non-NULL element).
+> 
+> Set MachineClass::valid_cpu_types[] to use the common machine code
+> to provide hints when the requested CPU is invalid (see commit
+> e702cbc19e ("machine: Improve is_cpu_type_supported()").
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/hw/arm/aspeed_soc.h | 1 +
->   hw/arm/aspeed_ast10x0.c     | 2 +-
->   hw/arm/aspeed_ast2400.c     | 3 ++-
->   hw/arm/aspeed_ast2600.c     | 3 ++-
->   hw/arm/aspeed_soc_common.c  | 5 +++++
->   5 files changed, 11 insertions(+), 3 deletions(-)
-> 
-> diff --git a/inclu
+>   include/hw/arm/aspeed_soc.h |  3 ++-
+>   hw/arm/aspeed.c             |  1 +
+>   hw/arm/aspeed_ast10x0.c     |  6 +++++-
+>   hw/arm/aspeed_ast2400.c     | 12 ++++++++++--
+>   hw/arm/aspeed_ast2600.c     |  6 +++++-
+>   hw/arm/aspeed_soc_common.c  |  5 ++++-
+>   6 files changed, 27 insertions(+), 6 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
