@@ -4,60 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893EEC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 19:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6643C47DDF
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 20:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSitI-0001mS-L0; Wed, 24 Jan 2024 14:26:30 -0500
+	id 1rSjS9-0001Rx-56; Wed, 24 Jan 2024 15:02:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bjorn@kernel.org>) id 1rSitC-0001k8-5A
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 14:26:22 -0500
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bjorn@kernel.org>) id 1rSit8-0006AZ-CZ
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 14:26:20 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id C0BE1CE312D;
- Wed, 24 Jan 2024 19:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D48FC433C7;
- Wed, 24 Jan 2024 19:26:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1706124374;
- bh=1luHflipx08MCbwskQYWL44FDmImdsKPSiQ2SiqpMTU=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=nmq3HUbXIzGld9+zZrrdh3XTvYDu2bcKTpFtnnB1njrhuAZzpUqwaJk58R1Bg4968
- G9VQf8DaGxNSX7Cp3S0F073p8aqBUE8w2dUOqMqhIXr0BFKzjtf5UJ8O0I3B+3Scrt
- twz/O/hEs3LR1FbuBVmFV7PQVaMma84l9+jgvIklBTTwf3jokMiLquShNKi/EnVrPr
- LTpvm2L4LBJyPQVRG8rkrON40GwAvEot3s5SA1Bewk56YYgP2vPl+vdGDVaFw4/Fq/
- cyt3rDXosI2RKxqwda8nK3DgxVdDVdQ+KtYHGbFaA9XOeXiQEDCXKmRKZSEEjffWEA
- 3+kMhp7m51WXQ==
-From: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- qemu-devel@nongnu.org, Christoph =?utf-8?Q?M=C3=BCllner?=
- <christoph.muellner@vrull.eu>
-Cc: linux-riscv@lists.infradead.org, LIU Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Conor Dooley
- <conor@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: qemu riscv, thead c906, Linux boot regression
-In-Reply-To: <78107c83-7035-414c-9a44-af5e234fd5c2@ventanamicro.com>
-References: <874jf2rj4g.fsf@all.your.base.are.belong.to.us>
- <78107c83-7035-414c-9a44-af5e234fd5c2@ventanamicro.com>
-Date: Wed, 24 Jan 2024 20:26:10 +0100
-Message-ID: <87wmryr0rx.fsf@all.your.base.are.belong.to.us>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSjS7-0001Ro-Gc
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 15:02:27 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSjS5-0005U6-UB
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 15:02:27 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a27733ae1dfso618830966b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 12:02:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706126544; x=1706731344; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dNLnvyHySmO7ItePxZVJYmXuwuXv7JxGocbFGTpD6y4=;
+ b=bM1PmXxDtP5CRA35yS3Y5EiJI0z7USUYwnpUvblrovLAucluNDFTG0tCWie3c+ELzS
+ OcWqMHbrxlT4zqizd+XKtU4jJmOjNfFOf5aCLHY/wn5GOriQ9bUsss6aPWVcayEHTWIm
+ 6o+2iE/lFdYoe1xpveiTD2yO3zPY5BaWddb5szBfhKc17Iq4Qz69wjAqRsTC1zGmUwvl
+ u+xJmKz0g9cs8Ha42WWRWvMHD9d9hsuRWIamXjJhMJhtwqd4Lye+iBZF8ZbC3eYM1apJ
+ 9pv4ilWQNwoNWjl68zrg7fX4wIEahMlScLjymRh51fh3DQGvzHNYDAqYETnXIiqs8idN
+ aqDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706126544; x=1706731344;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dNLnvyHySmO7ItePxZVJYmXuwuXv7JxGocbFGTpD6y4=;
+ b=Bgw+Y5y9YkCRm+0CtgSbh+Ku5oCwEMGJusLH68/1ppSDUj9GnnEVrrihsFJWzFDUZR
+ wmU12ghHW83x9YdRxi2tj10F0Ei/XuVi+taO+uUb7BtdtsZfnScvVbMtTuC1pLtY5afV
+ mqsHwu4XQNLpoPrKCAUPrAGs0jpEQzgp8hfiZGaQO2Lz+pg11xlGLTmsw9t4CGIUTi3q
+ cA5U7O1vbPtOpUcE+Q4xhVTnVjIzIcB2GiK7bnkGpp3Ue+nK6x3y4ne/SFGPv2nTSBTr
+ /105AZQhRojzEFpFQNVhKEVcqznCKQZXwYEkpqZDt095eNkcWSehmxZ1lrSf1Evq6iWN
+ /AIw==
+X-Gm-Message-State: AOJu0Yxg7J40jJWHIXA7W0seACiGSysUqiKzJ0qJp6QMEgenF73ctTGj
+ sYn+Y4aXrdGpvh2t/MCSDUb7SYq3KOTkKGH19wtqVww9rGqdr9BLxgWNXidqRig=
+X-Google-Smtp-Source: AGHT+IF6BIU59JlHK/K4aUcnrMvyBWBa0qLfz0nZGl0uZz845/5GDFaqGhhkaWMGBkeK872hQaVxmw==
+X-Received: by 2002:a17:907:a786:b0:a31:1a83:a84f with SMTP id
+ vx6-20020a170907a78600b00a311a83a84fmr578036ejc.283.1706126543245; 
+ Wed, 24 Jan 2024 12:02:23 -0800 (PST)
+Received: from [192.168.69.100] (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
+ [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
+ n7-20020a170906118700b00a2e33a6cbecsm221993eja.18.2024.01.24.12.02.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 12:02:22 -0800 (PST)
+Message-ID: <7b79af6a-515f-486c-be6e-4fb6b6091e5f@linaro.org>
+Date: Wed, 24 Jan 2024 21:02:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=bjorn@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -58
-X-Spam_score: -5.9
-X-Spam_bar: -----
-X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/9] target/i386: Extract x86_need_replay_interrupt() from
+ accel/tcg/
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
+ Claudio Fontana <cfontana@suse.de>, Eduardo Habkost <eduardo@habkost.net>
+References: <20240124101639.30056-1-philmd@linaro.org>
+ <20240124101639.30056-8-philmd@linaro.org>
+ <45m4n5stmuuyw2bco65l3dkjchtyl4m364j27ov5xjqase2m6r@qgtx77dgbyqh>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <45m4n5stmuuyw2bco65l3dkjchtyl4m364j27ov5xjqase2m6r@qgtx77dgbyqh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,70 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
+On 24/1/24 18:17, Anton Johansson wrote:
+> On 24/01/24, Philippe Mathieu-Daudé wrote:
+>> Move this x86-specific code out of the generic accel/tcg/.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/i386/tcg/helper-tcg.h        |  1 +
+>>   accel/tcg/cpu-exec.c                |  9 ---------
+>>   target/i386/tcg/sysemu/seg_helper.c | 10 ++++++++++
+>>   target/i386/tcg/tcg-cpu.c           |  1 +
+>>   4 files changed, 12 insertions(+), 9 deletions(-)
 
-> On 1/24/24 09:49, Bj=C3=B6rn T=C3=B6pel wrote:
->> Hi!
->>=20
->> I bumped the RISC-V Linux kernel CI to use qemu 8.2.0, and realized that
->> thead c906 didn't boot anymore. Bisection points to commit d6a427e2c0b2
->> ("target/riscv/cpu.c: restrict 'marchid' value")
->>=20
->> Reverting that commit, or the hack below solves the boot issue:
->>=20
->> --8<--
->> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->> index 8cbfc7e781ad..e18596c8a55a 100644
->> --- a/target/riscv/cpu.c
->> +++ b/target/riscv/cpu.c
->> @@ -505,6 +505,9 @@ static void rv64_thead_c906_cpu_init(Object *obj)
->>       cpu->cfg.ext_xtheadsync =3D true;
->>=20=20=20
->>       cpu->cfg.mvendorid =3D THEAD_VENDOR_ID;
->> +    cpu->cfg.marchid =3D ((QEMU_VERSION_MAJOR << 16) |
->> +                        (QEMU_VERSION_MINOR << 8)  |
->> +                        (QEMU_VERSION_MICRO));
->>   #ifndef CONFIG_USER_ONLY
->>       set_satp_mode_max_supported(cpu, VM_1_10_SV39);
->>   #endif
->> --8<--
->>=20
->> I'm unsure what the correct qemu way of adding a default value is,
->> or if c906 should have a proper marchid.
->
-> In case you need to set a 'marchid' different than zero for c906, this ha=
-ck would
-> be a proper fix. As mentioned in the commit msg of the patch you mentione=
-d:
->
-> "Named CPUs should set 'marchid' to a meaningful value instead, and gener=
-ic
->   CPUs can set to any valid value."
->
-> That means that any specific marchid value that the CPU uses must to be s=
-et
-> in its own cpu_init() function.
+> Ah this makes me happy!:)
 
-Got it. Thanks, Daniel!
+There are still few more, but this is a start...
 
-For completeness (since it came up on the weekly PW call); Conor pointed
-out that zero *is* indeed the right marchid for c906, and in fact, the
-non-zero marchid pre commit d6a427e2c0b2 was incorrect.
+$ git grep -wA3 TARGET_I386 accel/tcg
+accel/tcg/cpu-exec.c:311:#if defined(TARGET_I386)
+accel/tcg/cpu-exec.c-312-                flags |= CPU_DUMP_CCOP;
+accel/tcg/cpu-exec.c-313-#endif
+--
+accel/tcg/cpu-exec.c:727:#if defined(TARGET_I386)
+accel/tcg/cpu-exec.c-728-        cc->tcg_ops->fake_user_interrupt(cpu);
+accel/tcg/cpu-exec.c:729:#endif /* TARGET_I386 */
+--
+accel/tcg/cpu-exec.c:826:#if defined(TARGET_I386)
+accel/tcg/cpu-exec.c-827-        else if (interrupt_request & 
+CPU_INTERRUPT_INIT) {
+accel/tcg/cpu-exec.c-828-            X86CPU *x86_cpu = X86_CPU(cpu);
+accel/tcg/cpu-exec.c-829-            CPUArchState *env = &x86_cpu->env;
+...
+accel/tcg/cpu-exec.c:844:#endif /* !TARGET_I386 */
+--
 
-Post commit d6a427e2c0b2, the correct alternative is picked up, and
-ERRATA_THEAD_PBMT (using non-standard memory type bits in
-page-table-entries) kicks in. AFAIU, that's not implemented by qemu's
-c906 support, which then traps.
+> Reviewed-by: Anton Johansson <anjo@rev.ng>
 
-That's the theory. Maybe Christoph knows if the non-standard bits are
-implemented or not?
-
-Regardless; I removed booting Qemu T-head c906 from the CI, and the
-build/boot passes nicely ;-) [1]
-
-
-Bj=C3=B6rn
-
-[1] https://github.com/linux-riscv/linux-riscv/actions/runs/7641764759/job/=
-20819801235?pr=3D447
+Thanks!
 
