@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E74C47258
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jan 2024 23:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49736C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 00:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSQbi-0002za-Bi; Tue, 23 Jan 2024 18:55:06 -0500
+	id 1rSQpv-0007bm-1b; Tue, 23 Jan 2024 19:09:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSQbf-0002zN-TZ
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:55:04 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1rSQpt-0007be-5f
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 19:09:45 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSQbe-0005z4-Dk
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 18:55:03 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6dd82bfa998so995026b3a.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 15:55:02 -0800 (PST)
+ id 1rSQpr-0007mp-KI
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 19:09:44 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1d70a986c4aso21890835ad.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 16:09:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706054101; x=1706658901; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706054981; x=1706659781; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/fWQcBZCwJrwGdSn60qxlAV24JhiMU/j17JiiD8U7RI=;
- b=zBzX185mrXA4Fagc/RmjTdSOtNOziKLZS5VGaV5Uc+AYuZUS/dwOxQyYq8a/Sgr2L1
- SSBjo8lAmtoyPyh7EY0xKXsaNlcqhmLdSmD0eF0ezHkw0dwNW4ahfp1RTm97ok6NkvOL
- sRJk2agM/VTAohI9DRP/S8L57X2Q53HV975oQCihw1RC39a31Y5f9dFZ3NJFEoyo62yy
- 38qGQX0//nOWxKnTXojh/cdF3/e0A+AfPrvpcgdff4Dw5UETcZFzWMK9qPvQXPyTgSrs
- 4nzgz0vo3EpztzBybRtmMuEWoLOomlJg/1RpxxTj/dRmjT2l3a1vpCg0iMa2H8wirJMN
- oyDQ==
+ bh=CiGgcsIOkZ/yTS/6mH9nvv6FROrkbPwN/TqluapyvGg=;
+ b=e9EMXlZo1jGAQAO49kQqzEAYNn6d5bv9nbBgGORpY6o65WwBZwn3uf/t7Q6rLhvf0Z
+ lgK7YB3T57ZUt9DBU34tRVl383pKZOuSxOetYUrbLs8W1Outs3FtkpngZQkSs1Z3I4ca
+ Qxs1CmM8XdL5+xDakEWdQ3w7TQ8tJhOMjVsymirOEejbZRa56tWPOuFzs8dixTSS5bPj
+ goNzZ01hg8CaNWJYOCCVg0i6zsJR/ltzCM7vbKZ4p6Qv1Lrmx+vGoaF9jbtVSDsy0Csb
+ 0sEJrR6YI0NVPuoILRZyn9H9dW24P6xypuwERburdcIx3n4WnOwTxVWXcIj/+sOZtjlT
+ mhmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706054101; x=1706658901;
+ d=1e100.net; s=20230601; t=1706054981; x=1706659781;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/fWQcBZCwJrwGdSn60qxlAV24JhiMU/j17JiiD8U7RI=;
- b=BbzOCYApRWB8umruqTqLVjHZEoD2vpkTurLoHmeXD9DP+51m3wC7oDVCjPGIcn1Cg8
- Cgv4ChfeYEPsYr/dqiZHB8nA25nemqnAkbEuk0DcezPveMEX79PUwz6ONSaXpVu+8jXY
- Vme4SrZG23bNqj5hEDIv2ysU8fJa5tTMmZ9ItYzKJhsUFB0I91llhLe6+/ZJtnWqCAaM
- EKgWZrIZPQxeTLpfRBSZn7yp4xX0pRdHr9tifzizbItK6QV9rhKXIvrx4IrBUXb1Wla1
- 2u/zR/r/uf8aTuOXcFKbbFgVEH6iAG5/aaPuZoaayQg7TvcZJGP//q3C/wqRKDL/w2Y0
- zsRw==
-X-Gm-Message-State: AOJu0YwlpMrvOerEJ1ihrH9mGE+cGvTKmq1rTX/uj4878FzBPsUfaz8X
- NorH+NbluyL9QZtL3aFnc+4PkTtrtfMd/jJNZDRwy8vWvB+v2FcFjMvB6fwIK8g=
-X-Google-Smtp-Source: AGHT+IHrtmWawTF26K3HNoOQr747VDWiQMjGcXt55VqORuoXq+p8N1HtYHyZXOMSh6pTVfLl0YAUCg==
-X-Received: by 2002:aa7:8891:0:b0:6dc:c49e:a7b6 with SMTP id
- z17-20020aa78891000000b006dcc49ea7b6mr2934408pfe.65.1706054100557; 
- Tue, 23 Jan 2024 15:55:00 -0800 (PST)
+ bh=CiGgcsIOkZ/yTS/6mH9nvv6FROrkbPwN/TqluapyvGg=;
+ b=DtMebiN0CcUN3KQYKsI13OClEzK+6Jc6h0OvzjzlKdYDOlVhjKkpGjkBZEIkWlhYYp
+ mgqbYMUtHtQA12DB62b399vGbR4I18xFLVTj1gMdWTLe4shPC4jQqEPx0S8GBoJrVtSw
+ LKtNUIv7uh73csTI2NwgK+Ul8nacu8kMFtQrXeUJvK1BANPZbovRy7dvWQYy0azszPFA
+ LP0kPLMBGheTASZvVPQQcCLJYvTTBo1R6f42MtQdKV2VsGVWIWbWzPFem2/1qQNcqP+f
+ 8aWHM9CJ6Y5zbVBPsXI9qMS4cKHQMh+SwXDCJOTYwso29yKok4UKwYhJIwqInCs6DMIP
+ Cy4Q==
+X-Gm-Message-State: AOJu0YwiSvpZC2CSVxK8D6BIPP5xYqkHfhs82zxQVzsSV56vAbHk6ZC0
+ aYafdF5t7Bydjyl4pchVuU14AcpA7MyHDkktu6MFltdzxpEOMRchCQ33Waj/Du8=
+X-Google-Smtp-Source: AGHT+IFwX5K4nESfQS17YDcM8fHLpEYnFVTZAEPxCI7HtazGwPI0ri4gsQJLZEj+AnJaROsbw4uz+A==
+X-Received: by 2002:a17:902:d2c4:b0:1d6:e986:615e with SMTP id
+ n4-20020a170902d2c400b001d6e986615emr22747plc.28.1706054980742; 
+ Tue, 23 Jan 2024 16:09:40 -0800 (PST)
 Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
  (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
  [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
  by smtp.gmail.com with ESMTPSA id
- r13-20020aa7844d000000b006dbd18ad865sm6441913pfn.55.2024.01.23.15.54.58
+ e9-20020a170902b78900b001d7207fa2a7sm7431742pls.152.2024.01.23.16.09.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 15:55:00 -0800 (PST)
-Message-ID: <92ed19b0-b86f-4c5d-9b74-bcf1cdd7f3cf@linaro.org>
-Date: Wed, 24 Jan 2024 09:54:57 +1000
+ Tue, 23 Jan 2024 16:09:40 -0800 (PST)
+Message-ID: <11d58624-3a8a-4550-88d5-eb7264369a00@linaro.org>
+Date: Wed, 24 Jan 2024 10:09:35 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 14/34] exec: [CPUTLB] Move PAGE_* macros to common
+Subject: Re: [RFC PATCH 15/34] exec: [CPUTLB] Move TLB_*/tlb_*() to common
  header
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, philmd@linaro.org
 References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-15-anjo@rev.ng>
+ <20240119144024.14289-16-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-15-anjo@rev.ng>
+In-Reply-To: <20240119144024.14289-16-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,14 +100,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/20/24 00:40, Anton Johansson wrote:
-> These don't vary across targets and are used in soon-to-be common code
-> (cputlb.c).
+> TLB_* macros and tlb_*() functions are target independent, move to cpu-common.h.
 > 
 > Signed-off-by: Anton Johansson<anjo@rev.ng>
 > ---
->   include/exec/cpu-all.h    | 24 ------------------------
->   include/exec/cpu-common.h | 30 ++++++++++++++++++++++++++++++
->   2 files changed, 30 insertions(+), 24 deletions(-)
+>   include/exec/cpu-all.h    | 81 --------------------------------------
+>   include/exec/cpu-common.h | 83 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 83 insertions(+), 81 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
