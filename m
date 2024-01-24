@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55436C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0471C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSSIh-0001ix-GB; Tue, 23 Jan 2024 20:43:36 -0500
+	id 1rSSQ0-0002u8-Tq; Tue, 23 Jan 2024 20:51:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSId-0001dy-Rl
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:43:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rSSIb-00060m-RU
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:43:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706060608;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PAs8PX+Eo6fGpjv1IpdoZekJnEyXvNDhvYWp4y0TMyo=;
- b=HHvd2f3z7bU/lfKNYeEg5+zm/NNed9tlGOaiUBZuP92vVGenfs31NaZ5YZZchvxdh/5KSo
- lgqIDSELIaV3p3IsHParBhPAMztG9lmVnjnaNKATDaZOFsCy4LG/jVDVVvbWL9B9gkamkX
- pOr9gssBjININ4vW/eqtMIvglpMo54Q=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-288-IlNeg4DmMIqlEL3ILpjBWA-1; Tue, 23 Jan 2024 20:43:27 -0500
-X-MC-Unique: IlNeg4DmMIqlEL3ILpjBWA-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5cf53f904f9so736412a12.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:43:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSSQ0-0002u0-A1
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:51:08 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSSPx-0006uM-8B
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:51:07 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1d71cb97937so30059265ad.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:51:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706061063; x=1706665863; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jcyblh6lesa2++Oaey8QhwobyOMPL9wprPiqAR+KcEw=;
+ b=KTEMeF9SnPnCy0+U1muu+kGEmruy317Cu4/9VJJGTHNyrAq2QHGH/EcgoZGXa2GrNZ
+ 3BLgCTbY0vxBFO1dp0spIMEn5rDuf/mrFqn3hMQK89dXQVRhWiUhdeCh6wR1s2kOrRSL
+ 6/96DSNQhoYAtHrqy3Hs4qhMeI2tc1l5IfdlmUaQHTxuB2edWQAHcNqaxPBcSHLxzD1Q
+ +jwJvZT0iIlPuIwB58mOBy/PVUihs8BT5QOEAhwVcdHl7lTGvyM7ys68MBZbqfWoILR7
+ PRqlvfUsljppLf7Dxkv2FXRPK3MQ5ZpRUZ9V5zOSGctvP503MurVgc8GdNglNF7pOl1r
+ Fq8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706060606; x=1706665406;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1706061063; x=1706665863;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PAs8PX+Eo6fGpjv1IpdoZekJnEyXvNDhvYWp4y0TMyo=;
- b=m8+MPiOJRL8CxQP1MZtmeQhkMr0kpuJODsdxr+n3uAJPPmj5m+LpcaOuUmHQ3jSinp
- FWhIH4h6IGwmf1crpS30eXJjVxsntMspwbJV0mm78kd4dIA4e2l/EwE6VpTX1EZRUsE9
- gSFZuORddkPksTSpbob3RRH3BSWmD2WN4ziusWB3QMEJHGlDR5UfBVcS56nBvyLtbhd1
- Wd5GsCqIYU6ome2Ft6fmsKfku28UMZS8OMWAiUQ5tM/0W2YhuSu5OD5S21OUAbI/0W6R
- YNHtRJiVta+rEFKD+TnhX5o+U7+XO5LFiDnNTdMZboWLJZ/ILnYgRvs02ocht9ZL+RXL
- thFQ==
-X-Gm-Message-State: AOJu0YxtyJY3Njsi8Huk4e6qqNdfomTAbyGt9JNi99JqofYdALJtZrhB
- /Z0Q7chhfvJkjBsCWMGmoD2oATQZpspx5BHNdzuOrhvOXuglItw8KTjTlGxSiKkoSzrxLUZblGy
- gNh17uuX6kqpe4APzUvrYGMMn2ohlr7NDqXPX4bb5s7iq4YJmtCW1
-X-Received: by 2002:a05:6a20:e68c:b0:19a:3d53:3ecf with SMTP id
- mz12-20020a056a20e68c00b0019a3d533ecfmr935746pzb.1.1706060606092; 
- Tue, 23 Jan 2024 17:43:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGGZWNGLFqRpKFCTFx5d7xfOgzlI2n9/S6sxSnbKjwaSxg3mi/Q9FIdky0lbX+3qDTIonAM3g==
-X-Received: by 2002:a05:6a20:e68c:b0:19a:3d53:3ecf with SMTP id
- mz12-20020a056a20e68c00b0019a3d533ecfmr935733pzb.1.1706060605760; 
- Tue, 23 Jan 2024 17:43:25 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- jw12-20020a170903278c00b001d73047d4f9sm5947555plb.284.2024.01.23.17.43.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jan 2024 17:43:25 -0800 (PST)
-Date: Wed, 24 Jan 2024 09:43:19 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Het Gala <het.gala@nutanix.com>
-Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org, farosas@suse.de,
- armbru@redhat.com
-Subject: Re: [PATCH] Make 'uri' optional for migrate QAPI
-Message-ID: <ZbBrN-V8goSJxEst@x1n>
-References: <20240123064219.40514-1-het.gala@nutanix.com>
- <Za93I-50U745B27C@redhat.com>
+ bh=jcyblh6lesa2++Oaey8QhwobyOMPL9wprPiqAR+KcEw=;
+ b=aUsBuvzNm/HMybQH6hhET0e2IlE2A+1Tu2x9g1XGNTzKPOR7Mnof9TjOMCRFP0bekP
+ 0rSwZzdrNFjEasGgbUFkDFvrTLPHAHYzlFs3Ds1oGP+rGrMsW9D5Rrs9yYmwi3SJ+W1u
+ rQ113k7PpdCUUj9wKaPxSXYXZ/XlzYXRD/bjVurseisYKMJYj8oRFO+yr8J0zzUrSvq4
+ vxOsq+1sueuVSTkM1PZn1YAjWkmsagSa5t9vqhDuREmTqTZhh4ndOEvmw7l0BvXVLP9y
+ oYKSrz4Qd16a1so4vw/0Rme+qa+Al5pNawCqvJNFMDIW61WUBROePjMXFyxUFNEN6AG4
+ N9Hw==
+X-Gm-Message-State: AOJu0YxUsw22CXrl+B+mTFDOcz2bjMwMTg3sD/1CnzY6doM0oXtWxsJx
+ B4jdXS9srQlLBYs4YdjeEWG20tO7FOlWyB3+ZUWZCQlDcflBe1LX2jDPmtoAScQ=
+X-Google-Smtp-Source: AGHT+IEZs6Jgc+TsAzm2ORWBYWkeFTyP0555EByvjGKnrwXLHP4rudUrO/Upqd8b+HvzbvSHLyfgDA==
+X-Received: by 2002:a17:902:b587:b0:1d5:e89a:cd9f with SMTP id
+ a7-20020a170902b58700b001d5e89acd9fmr51509pls.139.1706061063343; 
+ Tue, 23 Jan 2024 17:51:03 -0800 (PST)
+Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
+ (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
+ [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
+ by smtp.gmail.com with ESMTPSA id
+ u8-20020a170903124800b001d60a70809bsm9421430plh.168.2024.01.23.17.51.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jan 2024 17:51:02 -0800 (PST)
+Message-ID: <c35ef7c6-81fc-44e4-b148-9e98d80af397@linaro.org>
+Date: Wed, 24 Jan 2024 11:50:58 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Za93I-50U745B27C@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 23/34] tcg: [CPUTLB] Add `mo_te` field to TCGContext
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: ale@rev.ng, philmd@linaro.org
+References: <20240119144024.14289-1-anjo@rev.ng>
+ <20240119144024.14289-24-anjo@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240119144024.14289-24-anjo@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,40 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 23, 2024 at 08:21:55AM +0000, Daniel P. Berrangé wrote:
-> On Tue, Jan 23, 2024 at 06:42:19AM +0000, Het Gala wrote:
-> > 'uri' argument should be optional, as 'uri' and 'channels'
-> > arguments are mutally exclusive in nature.
-> > 
-> > Fixes: 074dbce5fcce (migration: New migrate and
-> > migrate-incoming argument 'channels')
-> > Signed-off-by: Het Gala <het.gala@nutanix.com>
-> > ---
-> >  qapi/migration.json | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index eb2f883513..197d3faa43 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -1757,7 +1757,7 @@
-> >  #
-> >  ##
-> >  { 'command': 'migrate',
-> > -  'data': {'uri': 'str',
-> > +  'data': {'*uri': 'str',
-> >             '*channels': [ 'MigrationChannel' ],
-> >             '*blk': { 'type': 'bool', 'features': [ 'deprecated' ] },
-> >             '*inc': { 'type': 'bool', 'features': [ 'deprecated' ] },
+On 1/20/24 00:40, Anton Johansson wrote:
+> Required by cpu_ldub_code() and friends in cputlb.c to access the MO_TE
+> MemOp in a target-independent way.
 > 
-> Hmm, this mistake shows a lack of coverage in migration-test.c for
-> the 'channels' argument. I thought the original series adding 'channels'
-> included the tests for this. Either way, this needs to come with test
-> coverage for use of 'channels', with 'uri' omitted.
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   include/tcg/tcg.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+> index 7743868dc9..4ca626aeae 100644
+> --- a/include/tcg/tcg.h
+> +++ b/include/tcg/tcg.h
+> @@ -489,6 +489,7 @@ struct TCGContext {
+>       TCGType addr_type;            /* TCG_TYPE_I32 or TCG_TYPE_I64 */
+>   
+>   #ifdef CONFIG_SOFTMMU
+> +    MemOp mo_te;
+>       int page_mask;
+>       uint8_t page_bits;
+>       uint8_t tlb_dyn_max_bits;
 
-Agreed.  Het, do you plan to provide a test case?
+Not the correct scope for this.
 
--- 
-Peter Xu
 
+r~
 
