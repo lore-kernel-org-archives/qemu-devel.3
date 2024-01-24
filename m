@@ -4,124 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19D8C47DDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0508C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 01:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSRyO-0002iU-9g; Tue, 23 Jan 2024 20:22:36 -0500
+	id 1rSRzQ-0003Ye-Iz; Tue, 23 Jan 2024 20:23:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peng.fan@oss.nxp.com>)
- id 1rSRyK-0002i7-Ra
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:22:32 -0500
-Received: from mail-am0eur02on2054.outbound.protection.outlook.com
- ([40.107.247.54] helo=EUR02-AM0-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peng.fan@oss.nxp.com>)
- id 1rSRyJ-0002uw-4A
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:22:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DsOIIZEGkiOnhEAd5lO0OpQ1gShAfXrmGgF27OYBuh17stwK1s0BvEiogVVOL2ttHlDlqu8VP7N9fCWD1LuepXjaukflMexnrkpFpFn+sLE+qv7icdtEA70FsqWVyyymEcuZVu/XkcEYt/Sf0ZqUvC0udjmDPVHE6tTwZWjhHAhS7Fm4sW9sJNQ/+a5ciHz8noc5XRi+OHdPCAM/8z6X/sPHxGdU+p/yyWQNbS6UCx2t3FG6PBhhLBccPhR5ZVeY7MUIAaX3w9gMU177L3HlBesInYmrbFawdzHUwWHi3w+UtZ+NVc2tQAig04ZQ2+NlrsCduh5MvBR0wMb1dlHVJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cVBKLm1qoZuRH8kQqDRCj98oWwM+1CDRbyjg8jWXcbM=;
- b=JeR44muDASxXVv2Pb76ScZw8bWgtrmfSNNjIAF4BNxCgJaJ7Gy7gCJZIHeRd1+ILgAJWiY7txwf8HN1i4QkJnZA3Z+1XzB+pDtWKAxN+QFfhe5dBvW7SgIiBTy5yFZlAwCSfSlF7TfsX5tcYLwm7cvDh/mMRu2ci8n5OIwJqVouoJ0a1KMFIt/gv8rNYZV1KNDrgVgPvgeQhDcMOo/yiVpBxiLeaUKPxuutoPCesn7TU9z3ysyTeHfuJqLDuZobmU1Fr2PwgvVc0jl6m4WppCw1vfJsaVe2ot5PYPM1qlXNX02aEHLW72SFqBj14kfpHDjOGGhp9kR61zP1IrrgeCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com; 
- s=selector2-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cVBKLm1qoZuRH8kQqDRCj98oWwM+1CDRbyjg8jWXcbM=;
- b=bIT7RenYa8PFU+2NQRvQBg4fgaTD8034d/KDnvzKlTYM4H0vPeKP4xVt8CN8aO4YbzNF9Ga9Iu9Km0HZupuaSqNSGWl24g3DdpFElw6yb0WYSpNbZmYsm+byDKy6RpoD30zbK7stkUNLBkoAzfCSkx85tUAojLCzgkf8rLCGigs=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from DU0PR04MB9417.eurprd04.prod.outlook.com (2603:10a6:10:358::11)
- by AM8PR04MB7762.eurprd04.prod.outlook.com (2603:10a6:20b:241::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.31; Wed, 24 Jan
- 2024 01:17:26 +0000
-Received: from DU0PR04MB9417.eurprd04.prod.outlook.com
- ([fe80::c499:8cef:9bb1:ced6]) by DU0PR04MB9417.eurprd04.prod.outlook.com
- ([fe80::c499:8cef:9bb1:ced6%3]) with mapi id 15.20.7202.031; Wed, 24 Jan 2024
- 01:17:26 +0000
-From: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
-To: sstabellini@kernel.org, anthony.perard@citrix.com, paul@xen.org,
- vikram.garhwal@amd.com, viresh.kumar@linaro.org
-Cc: xen-devel@lists.xenproject.org, qemu-devel@nongnu.org,
- Peng Fan <peng.fan@nxp.com>
-Subject: [PATCH V2] xen: Drop out of coroutine context
- xen_invalidate_map_cache_entry
-Date: Wed, 24 Jan 2024 10:14:50 +0800
-Message-Id: <20240124021450.21656-1-peng.fan@oss.nxp.com>
-X-Mailer: git-send-email 2.35.3
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MA0PR01CA0089.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:ae::15) To DU0PR04MB9417.eurprd04.prod.outlook.com
- (2603:10a6:10:358::11)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSRzP-0003YH-5P
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:23:39 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rSRzN-00033H-88
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 20:23:38 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3bd5c4cffefso4882643b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 17:23:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706059416; x=1706664216; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ctTqhHc+TkxAsoFMtjhaHkgPljQ5EJNcimehBmqanNA=;
+ b=UDiQvZ+I/hELR9IORUVmRz6RKJp5HOpZuXJW0eE2bG+SoY+uxIKjLI1wUJYEpMrm1Y
+ WQbc4wkskH4mAPZPGqOfCCdRbVoFbA/umx0/m7y5OMCoJ43fg4n+PAC4/zSc80++Qlfn
+ LHb5XgbWRqGVnGfLyIgAFVFZIk2vQw4ZcNkxDCIozboY1N9q9K7WwGZLb72S4Pf0QIdl
+ 1aoy4lQSg3fmagmUJs2SWwq8DsrTN0OxU/oHx78NxLgVSpGJSTlZR5taKOZ1NGLhbkIU
+ rf7yJjI2zeXlblbVyeQIYCTpq1v84/AlzFRMdCM5IHNaGGtb0lOTtQvMuZVWrx7HpPtT
+ Gmlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706059416; x=1706664216;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ctTqhHc+TkxAsoFMtjhaHkgPljQ5EJNcimehBmqanNA=;
+ b=KEE5+J7P3hc84A1SZR/5jzbRCWTyF26eqUNyDa+MXnji+jCX4ojlfjRvVK+QTyC0vU
+ j+/E+FelqeJpTjFFgEHnvrkdOlAogYOnP/I1TCUxLlq1AByQ8UxmZ/IrxmalxlbOeZvu
+ zmc9HMJXSgpuii63t7hzTdmRemzq7B0PPfCr0DhOoPBNYBNrYU8KLrcgZD4B01k7lXNw
+ jFGpqwMQ1XZxuqVQ3GukvhBB8/0hN72YjN0+eLEUe/EkWKqSTaFgl33VkDd6QGdDGyHY
+ DLv+PvD2ZR82Uz91exctYlddNimYI5BSWh+pWpx7vMDWamHRiWT8S0Fh1HpShGAzI3AI
+ jitQ==
+X-Gm-Message-State: AOJu0Yw0VzA7UGcZraS/rXlDwaQqG1CYrBTcCqQDaeIBoIukD4oQoGi0
+ oFxEitE6fkHAmnlnZ9xXNqY49M6c2iOHGCAIlPI8lO/56gUxV4VY3aY7eMDBDdQ=
+X-Google-Smtp-Source: AGHT+IEq14EJyJCdYAzmepbjPKht0wyDK38WYWLkLSaEoPM9zLH6bOseYb6pqTIJyYmEYjR7RswIAg==
+X-Received: by 2002:a05:6808:2221:b0:3bd:be5b:246f with SMTP id
+ bd33-20020a056808222100b003bdbe5b246fmr947380oib.11.1706059416085; 
+ Tue, 23 Jan 2024 17:23:36 -0800 (PST)
+Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
+ (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
+ [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
+ by smtp.gmail.com with ESMTPSA id
+ h20-20020a635314000000b005d4156b3ea2sm1099201pgb.93.2024.01.23.17.23.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jan 2024 17:23:35 -0800 (PST)
+Message-ID: <633149a1-e8b5-4d1c-99fe-9fb93b4bc797@linaro.org>
+Date: Wed, 24 Jan 2024 11:23:30 +1000
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DU0PR04MB9417:EE_|AM8PR04MB7762:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2c19dfd0-2a01-4ea2-b171-08dc1c7a39d0
-X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: BpGthZYJRSu0W14QPZUkKdUXdMiCYILvqcPPhCP58+SpLn9JwtXY7dBsYyLGknbs6GOABAYytOF+yXIdIgC0iqn9ihhzYFrOYNbw32j2Vi6GAucTlETxssWGMtxcz+1cvqRBTIFB/p7e7YPtDckp8fTx7lh5uTyZKwsFOiV1nJ+0F0UwgF5UphOpQI8VZLfPkE6HPOjnaZ1s44Sw3k6ljcwe7FltKHgqSzil2CnA4X8DzY/h8GPwYD5fjuwE1hpRRx2C7qfn0REzFhQvYnG+0jA/DtzxMiR+dL14AvQ3tZysJ0wYQocePsED+dII5ZHQk+xWxsjhglWjFo8/p/dR2vi69P0wZsvjMBkDmd1bLbZuorZaPeev3+TyT9kx5etknd+WIAkOgMreGaVRERfEt/BlcZc8AkwfLrCIUs7XaP9YugpYZgcbIOL80E2inshzb5krUmJT/nqEcI41FX0Pq2kVEBVrAjtG19Sm/HyhLzzCUhiuIK6VaJAwFx/sg24HU7rUGqmvT9e0fVw8cfpGtP4Ee3AQeLlqx6DW/94xz5FnhLTNIDMOo6IETxASCC9hkghqoU0Og6paGmmtpevpXzhMkD72QrVY37lICLg2WwgEjKet60HuwKLZW13SE9Qm
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DU0PR04MB9417.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(136003)(366004)(376002)(39860400002)(396003)(346002)(230922051799003)(1800799012)(451199024)(64100799003)(186009)(52116002)(8936002)(8676002)(6506007)(6666004)(478600001)(66556008)(66946007)(6486002)(66476007)(316002)(2616005)(1076003)(6512007)(83380400001)(4326008)(41300700001)(5660300002)(2906002)(86362001)(26005)(38350700005)(38100700002);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?HgNDveB8WQlnPPKWBMZtGS6yE/hWQd9y6yEFJK+5GbkSAnSEPqs8eqACByNc?=
- =?us-ascii?Q?89DzWlnHFlE+OD++KLjifXs2sXrqL0PCFlql/MyfkCH3cgKRyCV4wORjUhrA?=
- =?us-ascii?Q?iw7pqHCBvf6/IpHsvYQW1U/l6LodwEX27J1hhJ5xVZ+6YKXVbuzBSl+btsz8?=
- =?us-ascii?Q?qunFHO0arTpiUuPeWQqEQelCr9IV5jb9pTgVNeYppFZ77CgPJsFxbMz/dque?=
- =?us-ascii?Q?hvInGtbf65NItbpYJ6n58c0sqIQD4cGFwG5gZryze3KDiFDnk+ajIUvPWW/3?=
- =?us-ascii?Q?eLoSIxh5XFgOhds3+EROBWdTh1EJF3nxNT6F8htiumU+Bp0LcqafzZr3iLBx?=
- =?us-ascii?Q?54rp1DWE7lnwkpxhIF+sl3CnYrAJwF/8eG1RNwqgZkCNzch5Cedqt09U0524?=
- =?us-ascii?Q?Y5WJQ/rd1VKs7ShkvnWfsZUZg0cB9rDAiYCne+XF9b3mv9PP36fe2OoNU9Gi?=
- =?us-ascii?Q?dOK6EohXsWKUYW819pRzTRt0DtUX1NAjoLrX+uk3T6PnXAb6SirDOEJH2v6o?=
- =?us-ascii?Q?ieNRjlWKvFWjAdIujCzDROIMreD88Zc+LoxpXlyT4lwG1j98rZyWGqJ57K1p?=
- =?us-ascii?Q?sE38xpW6l50mHJ0kFBMyXA56MMxpZCoPO0CHf+uQwqtutEOizq9d6vIWskC1?=
- =?us-ascii?Q?T9n85z7xLzwclM6iwztJ8M6gNWTBAi4uk5lWXqSq2k/PFxgnWqpsVixacQES?=
- =?us-ascii?Q?u3Nlt7294KCI8lyYsqq/y55lKDDzP4dOlSpzXwrfnhV2BJ7b4ylueNvgPlJ2?=
- =?us-ascii?Q?4CiyQK1/klZ42dZ0fEBBHViAqD+pXgndynrwV6sSp57itXLFmADb+7DN1rLC?=
- =?us-ascii?Q?3xx+XTlVub9J9s1eUWkVrr56/a83sHGW6SHn65ZwH/leoZ+xAwE20p1ECMub?=
- =?us-ascii?Q?hm/2s6SM60XJz/fwS5zaAkYBYJDQbyA4pGSMDXRmJ+o5h5Mym72axu2kSdnV?=
- =?us-ascii?Q?BpoxGOYBve6B6C9sjc4OWPU1uC7cZmPrkHx7nuFm45UDBLi5Tga0tnPiL5MP?=
- =?us-ascii?Q?tZG0/64Odt0AGtJKgWj+Y1bEMVCsLGF+NCxa8wZLNo69NkiBE/kAZUl7Cwz8?=
- =?us-ascii?Q?z9XmoXTixuz+c9N+fcNwD5BNxq472hlBaRKG8vDDyyW/NDQv2X/nmaQCq+IT?=
- =?us-ascii?Q?2u6dwafcCge3k+F1sikzE9WrAwYz8a3DirxyNwTFslx6g25c3E4KZp5iIKhX?=
- =?us-ascii?Q?uGuoM1Fh/2pX74bjimcPLTKOE6J4yutvq8fP+rwkzSFuf4QB/ohhFvF7sZs6?=
- =?us-ascii?Q?4In+ZqOkH4sjUrUZ6pjY9rgx0kVMSH16RYb04xezEBfwkrYJ+my+as760htU?=
- =?us-ascii?Q?1sv/GIsiDo8/7iR4BjUVtoqnyC+dFD4PxBSVzUw+fi2E6iRRF5HZoUzvKNab?=
- =?us-ascii?Q?bar+4jg3/h1id44Fo0V0ETsoUY+L2WH5Uwvl9ZQq3gIJXknTKnprKpQsVCBB?=
- =?us-ascii?Q?5zEeo1NlVTRo6QBAUcph5/dnrchmuLFpQrsCTKkT+QTFf8oIp5ZCjjHaXccc?=
- =?us-ascii?Q?AeZNZfC+FVoV2Ek/l2dBQc0Qfxvx1aELtkD2kr5zCpCVJBbscdcqaxKrCXJR?=
- =?us-ascii?Q?ICMFppb9vl9YlgJAsZw1f0RaX1s5NOpTTG+91qkS?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c19dfd0-2a01-4ea2-b171-08dc1c7a39d0
-X-MS-Exchange-CrossTenant-AuthSource: DU0PR04MB9417.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2024 01:17:26.5001 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: FAUAlSHRDKM9dcaUPrUOlhrk3taBPYWVWEVKfERehpFJeO+/bV5AbZLAPsrH/eUylDBJJUlzgH/vz0gnGR+K+Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7762
-Received-SPF: pass client-ip=40.107.247.54; envelope-from=peng.fan@oss.nxp.com;
- helo=EUR02-AM0-obe.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 21/34] accel/tcg: [CPUTLB] Use
+ tcg_ctx->tlb_dyn_max_bits
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: ale@rev.ng, philmd@linaro.org
+References: <20240119144024.14289-1-anjo@rev.ng>
+ <20240119144024.14289-22-anjo@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240119144024.14289-22-anjo@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,111 +99,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peng Fan <peng.fan@nxp.com>
+On 1/20/24 00:40, Anton Johansson wrote:
+> @@ -172,7 +172,7 @@ static void tlb_mmu_resize_locked(CPUTLBDesc *desc, CPUTLBDescFast *fast,
+>       rate = desc->window_max_entries * 100 / old_size;
+>   
+>       if (rate > 70) {
+> -        new_size = MIN(old_size << 1, 1 << CPU_TLB_DYN_MAX_BITS);
+> +        new_size = MIN(old_size << 1, 1 << tcg_ctx->tlb_dyn_max_bits);
 
-xen_invalidate_map_cache_entry is not expected to run in a
-coroutine. Without this, there is crash:
+Out of scope.
 
-    signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-    threadid=<optimized out>) at pthread_kill.c:78
-    at /usr/src/debug/glibc/2.38+git-r0/sysdeps/posix/raise.c:26
-    fmt=0xffff9e1ca8a8 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n",
-    assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
-    file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
-    function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:92
-    assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
-    file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
-    function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:101
-    at ../qemu-xen-dir-remote/block/graph-lock.c:260
-    at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/block/graph-lock.h:259
-    host=host@entry=0xffff742c8000, size=size@entry=2097152)
-    at ../qemu-xen-dir-remote/block/io.c:3362
-    host=0xffff742c8000, size=2097152)
-    at ../qemu-xen-dir-remote/block/block-backend.c:2859
-    host=<optimized out>, size=<optimized out>, max_size=<optimized out>)
-    at ../qemu-xen-dir-remote/block/block-ram-registrar.c:33
-    size=2097152, max_size=2097152)
-    at ../qemu-xen-dir-remote/hw/core/numa.c:883
-    buffer=buffer@entry=0xffff743c5000 "")
-    at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:475
-    buffer=buffer@entry=0xffff743c5000 "")
-    at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:487
-    as=as@entry=0xaaaae1ca3ae8 <address_space_memory>, buffer=0xffff743c5000,
-    len=<optimized out>, is_write=is_write@entry=true,
-    access_len=access_len@entry=32768)
-    at ../qemu-xen-dir-remote/system/physmem.c:3199
-    dir=DMA_DIRECTION_FROM_DEVICE, len=<optimized out>,
-    buffer=<optimized out>, as=0xaaaae1ca3ae8 <address_space_memory>)
-    at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/sysemu/dma.h:236
-    elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769)
-    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:758
-    elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769, idx=idx@entry=0)
-    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:919
-    elem=elem@entry=0xaaaaf620aa30, len=32769)
-    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:994
-    req=req@entry=0xaaaaf620aa30, status=status@entry=0 '\000')
-    at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:67
-    ret=0) at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:136
-    at ../qemu-xen-dir-remote/block/block-backend.c:1559
---Type <RET> for more, q to quit, c to continue without paging--
-    at ../qemu-xen-dir-remote/block/block-backend.c:1614
-    i1=<optimized out>) at ../qemu-xen-dir-remote/util/coroutine-ucontext.c:177
-    at ../sysdeps/unix/sysv/linux/aarch64/setcontext.S:123
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
----
-
-V2:
- Drop unused ret in XenMapCacheData (thanks Stefano)
-
- hw/xen/xen-mapcache.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index f7d974677d..8d62b3d2ed 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -481,11 +481,37 @@ static void xen_invalidate_map_cache_entry_unlocked(uint8_t *buffer)
-     g_free(entry);
- }
- 
--void xen_invalidate_map_cache_entry(uint8_t *buffer)
-+typedef struct XenMapCacheData {
-+    Coroutine *co;
-+    uint8_t *buffer;
-+} XenMapCacheData;
-+
-+static void xen_invalidate_map_cache_entry_bh(void *opaque)
- {
-+    XenMapCacheData *data = opaque;
-+
-     mapcache_lock();
--    xen_invalidate_map_cache_entry_unlocked(buffer);
-+    xen_invalidate_map_cache_entry_unlocked(data->buffer);
-     mapcache_unlock();
-+
-+    aio_co_wake(data->co);
-+}
-+
-+void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
-+{
-+    if (qemu_in_coroutine()) {
-+        XenMapCacheData data = {
-+            .co = qemu_coroutine_self(),
-+            .buffer = buffer,
-+        };
-+        aio_bh_schedule_oneshot(qemu_get_current_aio_context(),
-+                                xen_invalidate_map_cache_entry_bh, &data);
-+        qemu_coroutine_yield();
-+    } else {
-+        mapcache_lock();
-+        xen_invalidate_map_cache_entry_unlocked(buffer);
-+        mapcache_unlock();
-+    }
- }
- 
- void xen_invalidate_map_cache(void)
--- 
-2.35.3
-
+r~
 
