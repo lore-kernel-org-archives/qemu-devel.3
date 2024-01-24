@@ -4,85 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119B4C47DDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 03:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 363ECC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 03:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSTWq-0001n3-7y; Tue, 23 Jan 2024 22:02:16 -0500
+	id 1rSTdD-0003tH-SS; Tue, 23 Jan 2024 22:08:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSTWo-0001mf-9N
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 22:02:14 -0500
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rSTdB-0003sF-PO
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 22:08:50 -0500
 Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSTWm-0000Wd-PW
- for qemu-devel@nongnu.org; Tue, 23 Jan 2024 22:02:14 -0500
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rSTd7-0001EY-4R
+ for qemu-devel@nongnu.org; Tue, 23 Jan 2024 22:08:48 -0500
 Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-5ce9555d42eso4225733a12.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 19:02:12 -0800 (PST)
+ 41be03b00d2f7-5c6bd3100fcso2341367a12.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jan 2024 19:08:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706065331; x=1706670131; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1706065723; x=1706670523;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=C7GQuDJPr1bok1hYG5awukZhJRYkajoJM7JEm596HIY=;
- b=QpI1R12a32wP1xJM0ZkGmxv9MlNFA34ksGuxggrOGI5XHucg4n81NcUbj6Mr2+bggY
- ZANRxrG3BZ2z3zM72qWuzRKlW5B9rSN2bMEvxxQa/+O3kX5/LZAsZqvPQT+lSvJ7CsG5
- dTnyNvbmzvUNk/JrptMxFeBMnBzqpjB7BXSQujRBGA/peCHtXBL9QrOvNnBLfE4nn8q2
- DZbeCLoBGQg7gWGmCvAwGt5dQmg0kCQ/MofGjPp1yvprwHH1+iPRUYu2ePJjHIRFw+A4
- eehsVfxZsRZo3JucOvmxWYiqj8Lfl3Df0bqXWz9eGi8lHfPvBFutgBwX2DeMWqcl0Akt
- WSsA==
+ bh=VFo8VE/oCNQcg7y+0hi3tk0ijg8Jc1j7rMhdDApnhJI=;
+ b=mQGOkkEu43Yak1i9Ew+GDnLyjlbNSw/NY+2V9oRWHIC1gKJxwlwEh/1AfE9+l/2p6A
+ ++50L2H9BdywOQ/HFNVJh2QYIW5xDT6CFlFm0B/t/adLeg9SvNxrmbKNUxC8HDVXZQhf
+ m8oDCmJ6PHGVzeBgzsfN/0/MIryVUt18asaNRZGXOKAyO68owE3LRjeTVq5qKsgM6M4t
+ C/hw+z5W1MtH+TSmzAYjrthAyc5zjlOzmsuGwKMOj6LbAMqvuKLgPcnpVMcIQZTWhwyv
+ nGsdiy3YfmFnSFyapidYJI/UczZFgTGMqqatKHd/hUdfgzESUGK1LL/5lcYo8ffS7ZnB
+ 4c1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706065331; x=1706670131;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1706065723; x=1706670523;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C7GQuDJPr1bok1hYG5awukZhJRYkajoJM7JEm596HIY=;
- b=BZK3VkbLQ/5oHZqROZUrFlNuS4yHlF7+4NQww/QI11iXdH03Kt4g0yvT2lgBDIqV7i
- wBJgxm5EvYg4dWtlA4DOYvsYoOrYSwOzMIho/+J3X/Jl82CzRB0lSfuyNTZSwyhvlEsY
- BpTXDtpspVU6KzqFCzXTKoGVEuUsQ93FCs5GYcvN2LHxrNCmo9+kGYq81+mupYxLzGNn
- bNyBIDQRjPProRA8fxVSJLeAkjG+rOT1jkiEzQiusFCFwXZTkgS7XZ14UoxEbs7cGcaI
- TJgh3QTRP0cf54rLTjkUYTSfXttntMBytukwvRjfEhsxfi1p3zwJlO4V1LPNSi4xpOoP
- 9Ljg==
-X-Gm-Message-State: AOJu0YxtIvw2XdJrd4a1W4aKpUvPu9h2v7oLljc7yktlQCz9vM/SdpP8
- DMn3PTPqhbozI21lwpDbUS6eAKxYqsL9CLriY29nSUFwtJqEG4E0AtY0A7Op4h8=
-X-Google-Smtp-Source: AGHT+IGuYAvX1lgHRkGECCzT0ZDRRYh2hrQ2yBIPF9IR8qErFrgr1eHoVjeBjHb5vCoZ/yepKuFySw==
-X-Received: by 2002:a05:6a20:17a7:b0:19a:9d9f:6af9 with SMTP id
- bl39-20020a056a2017a700b0019a9d9f6af9mr247335pzb.73.1706065331086; 
- Tue, 23 Jan 2024 19:02:11 -0800 (PST)
-Received: from ?IPV6:2001:44b8:2176:c800:dd1:291f:3c3c:2485?
- (2001-44b8-2176-c800-0dd1-291f-3c3c-2485.static.ipv6.internode.on.net.
- [2001:44b8:2176:c800:dd1:291f:3c3c:2485])
+ bh=VFo8VE/oCNQcg7y+0hi3tk0ijg8Jc1j7rMhdDApnhJI=;
+ b=sZ2frbAt3yxqRkDqLu6/MBq05YxtET08uFudkXdKrFn0ea+AjZDZt8NzrwttcKUIwI
+ YIyIKze3znJx4jMXhEHkofuaZUkBCmjj17d9yauqQXpNKARjCsnC1IdrvlG3Oi+E3W7L
+ MFxT/O2ZUPhORGvw/dBZsIdA6xDQHI4XmUcqtYdd/fCzozaNyH2n4BlkVZSV7isHLqSJ
+ CvV0NeV8Lyu8+Wwp+rHkdGgFUmAEhNYUDhEJTI+CP1wBckXmbT/UATURL52le3h9EfqI
+ qfEOdKQamtzpzLIUwCbZDADHR8t8+RIBJeAxerG3vZQGZzYEexe0rDQoyWR43VBH37/x
+ KFsA==
+X-Gm-Message-State: AOJu0Ywme41McAGzqUw4XDh7MeF7agkyB0/K4YWTcDEDSr++yM3fYgAU
+ pd/1zbktNAaaDmgN4XExOHOrFu7SACN2zDD8pJ6KIOjcI4gK8xhvNSsXHzE/RNo=
+X-Google-Smtp-Source: AGHT+IHfntglvY7cr85OSIKd+heawzghHZglxVkz5tGKJB42nnuYpbxcKdH1C6I7IIHf5nsB+5FoRQ==
+X-Received: by 2002:a05:6a20:7284:b0:19c:53aa:53dd with SMTP id
+ o4-20020a056a20728400b0019c53aa53ddmr210373pzk.42.1706065722914; 
+ Tue, 23 Jan 2024 19:08:42 -0800 (PST)
+Received: from [157.82.200.138] ([157.82.200.138])
  by smtp.gmail.com with ESMTPSA id
- n8-20020a056a000d4800b006dd952e734esm259860pfv.65.2024.01.23.19.02.08
+ q12-20020a170902c9cc00b001d7267934c7sm7127456pld.298.2024.01.23.19.08.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jan 2024 19:02:10 -0800 (PST)
-Message-ID: <35591bdc-a0d9-4351-beb5-a8f4c48a7ba7@linaro.org>
-Date: Wed, 24 Jan 2024 13:02:06 +1000
+ Tue, 23 Jan 2024 19:08:42 -0800 (PST)
+Message-ID: <15d2f958-a51e-4b87-9a70-28edf3b55491@daynix.com>
+Date: Wed, 24 Jan 2024 12:08:33 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 28/34] accel/tcg: Make plugin-gen.c target independent
+Subject: Re: [PATCH v3 01/21] hw/riscv: Use misa_mxl instead of misa_mxl_max
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, kvm@vger.kernel.org,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Laurent Vivier
+ <laurent@vivier.eu>, Yanan Wang <wangyanan55@huawei.com>,
+ qemu-ppc@nongnu.org, Weiwei Li <liwei1518@gmail.com>, qemu-s390x@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexandre Iooss
+ <erdnaxe@crans.org>, John Snow <jsnow@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ David Woodhouse <dwmw2@infradead.org>, Cleber Rosa <crosa@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Bin Meng <bin.meng@windriver.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Eduardo Habkost <eduardo@habkost.net>, Brian Cain <bcain@quicinc.com>,
+ Paul Durrant <paul@xen.org>
+References: <20240122145610.413836-1-alex.bennee@linaro.org>
+ <20240122145610.413836-2-alex.bennee@linaro.org>
+ <20240123-b8d1c55688885bfc9125c42b@orel>
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: ale@rev.ng, philmd@linaro.org
-References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-29-anjo@rev.ng>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240119144024.14289-29-anjo@rev.ng>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240123-b8d1c55688885bfc9125c42b@orel>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::532;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,16 +128,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/24 00:40, Anton Johansson wrote:
-> Switches computation of offsets into CPUState to use that the offset
-> between CPUState and CPUArchState is guaranteed to be sizeof(CPUState).
+On 2024/01/23 17:20, Andrew Jones wrote:
+> On Mon, Jan 22, 2024 at 02:55:50PM +0000, Alex Bennée wrote:
+>> From: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>
+>> The effective MXL value matters when booting.
 > 
-> Signed-off-by: Anton Johansson<anjo@rev.ng>
-> ---
->   accel/tcg/plugin-gen.c | 15 +++++++--------
->   1 file changed, 7 insertions(+), 8 deletions(-)
+> I'd prefer this commit message get some elaboration. riscv_is_32bit()
+> is used in a variety of contexts, some where it should be reporting
+> the max misa.mxl. However, when used for booting an S-mode kernel it
+> should indeed report the effective mxl. I think we're fine with the
+> change, though, because at init and on reset the effective mxl is set
+> to the max mxl, so, in those contexts, where riscv_is_32bit() should
+> be reporting the max, it does.
+> 
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Message-Id: <20240103173349.398526-23-alex.bennee@linaro.org>
+>> Message-Id: <20231213-riscv-v7-1-a760156a337f@daynix.com>
+>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>> ---
+>>   hw/riscv/boot.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+>> index 0ffca05189f..bc67c0bd189 100644
+>> --- a/hw/riscv/boot.c
+>> +++ b/hw/riscv/boot.c
+>> @@ -36,7 +36,7 @@
+>>   
+>>   bool riscv_is_32bit(RISCVHartArrayState *harts)
+>>   {
+>> -    return harts->harts[0].env.misa_mxl_max == MXL_RV32;
+>> +    return harts->harts[0].env.misa_mxl == MXL_RV32;
+>>   }
+> 
+> Assuming everyone agrees with what I've written above, then maybe we
+> should write something similar in a comment above this function.
+> 
+> Thanks,
+> drew
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The corresponding commit in my series has a more elaborated message:
+https://patchew.org/QEMU/20240115-riscv-v9-0-ff171e1aedc8@daynix.com/20240115-riscv-v9-1-ff171e1aedc8@daynix.com/
 
-r~
+Alex, can you pull it?
+
+Regards,
+Akihiko Odaki
 
