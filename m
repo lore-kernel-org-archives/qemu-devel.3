@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D24EC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 06:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE8DAC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 06:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSX5v-0005Pd-LA; Wed, 24 Jan 2024 01:50:43 -0500
+	id 1rSX7a-00067G-Fn; Wed, 24 Jan 2024 01:52:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=rIgd=JC=kaod.org=clg@ozlabs.org>)
- id 1rSX5t-0005PM-Hn; Wed, 24 Jan 2024 01:50:41 -0500
+ id 1rSX7W-00066f-R9; Wed, 24 Jan 2024 01:52:22 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=rIgd=JC=kaod.org=clg@ozlabs.org>)
- id 1rSX5s-0003iM-06; Wed, 24 Jan 2024 01:50:41 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TKZN41c2Lz4x2S;
- Wed, 24 Jan 2024 17:50:28 +1100 (AEDT)
+ id 1rSX7T-0003vS-RT; Wed, 24 Jan 2024 01:52:21 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TKZQ933Vkz4x2S;
+ Wed, 24 Jan 2024 17:52:17 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TKZN20Bxlz4wcg;
- Wed, 24 Jan 2024 17:50:25 +1100 (AEDT)
-Message-ID: <b1731d4b-00ca-4fc1-8d2f-fe8e9236a324@kaod.org>
-Date: Wed, 24 Jan 2024 07:50:21 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TKZQ72pVvz4wd4;
+ Wed, 24 Jan 2024 17:52:15 +1100 (AEDT)
+Message-ID: <e58f2344-8b74-4ee6-9ca7-8d422dba0184@kaod.org>
+Date: Wed, 24 Jan 2024 07:52:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] hw/arm/aspeed: Remove dead code
+Subject: Re: [PATCH v2 2/5] hw/arm/aspeed: Set default CPU count using
+ aspeed_soc_num_cpus()
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>
 References: <20240123224842.18485-1-philmd@linaro.org>
- <20240123224842.18485-2-philmd@linaro.org>
+ <20240123224842.18485-3-philmd@linaro.org>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240123224842.18485-2-philmd@linaro.org>
+In-Reply-To: <20240123224842.18485-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -68,11 +68,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/23/24 23:48, Philippe Mathieu-Daudé wrote:
-> Remove copy/paste typo from commit 6c323aba40 ("hw/arm/aspeed:
-> Adding new machine Tiogapass in QEMU").
+> Since commit b7f1a0cb76 ("arm/aspeed: Compute the number
+> of CPUs from the SoC definition") Aspeed machines use the
+> aspeed_soc_num_cpus() helper to set the number of CPUs.
+> 
+> Use it for the ast1030-evb (commit 356b230ed1 "aspeed/soc:
+> Add AST1030 support") and supermicrox11-bmc (commit 40a38df55e
+> "hw/arm/aspeed: Add board model for Supermicro X11 BMC") machines.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
 
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
@@ -83,20 +87,35 @@ C.
 
 
 > ---
->   hw/arm/aspeed.c | 1 -
->   1 file changed, 1 deletion(-)
+>   hw/arm/aspeed.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index cc59176563..4bc292ff84 100644
+> index 4bc292ff84..5b01a4dd28 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -1301,7 +1301,6 @@ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc, void *data)
->       mc->default_ram_size       = 1 * GiB;
->       mc->default_cpus = mc->min_cpus = mc->max_cpus =
->           aspeed_soc_num_cpus(amc->soc_name);
-> -        aspeed_soc_num_cpus(amc->soc_name);
->   };
+> @@ -1212,6 +1212,8 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+>       amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+>       amc->i2c_init  = palmetto_bmc_i2c_init;
+>       mc->default_ram_size = 256 * MiB;
+> +    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+> +        aspeed_soc_num_cpus(amc->soc_name);
+>   }
 >   
->   static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
+>   static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
+> @@ -1586,11 +1588,12 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+>       mc->init = aspeed_minibmc_machine_init;
+>       amc->i2c_init = ast1030_evb_i2c_init;
+>       mc->default_ram_size = 0;
+> -    mc->default_cpus = mc->min_cpus = mc->max_cpus = 1;
+>       amc->fmc_model = "sst25vf032b";
+>       amc->spi_model = "sst25vf032b";
+>       amc->num_cs = 2;
+>       amc->macs_mask = 0;
+> +    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+> +        aspeed_soc_num_cpus(amc->soc_name);
+>   }
+>   
+>   static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
 
 
