@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27510C47422
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 22:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B21AC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 22:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSlIy-0000zU-IZ; Wed, 24 Jan 2024 17:01:08 -0500
+	id 1rSlRY-0003gK-4q; Wed, 24 Jan 2024 17:10:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rSlIw-0000zA-In
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:01:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
+ id 1rSlRX-0003gA-AB
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:09:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rSlIs-0005s0-0a
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:01:06 -0500
+ (Exim 4.90_1) (envelope-from <mtosatti@redhat.com>)
+ id 1rSlRV-0003yh-Cd
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 17:09:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706133660;
+ s=mimecast20190719; t=1706134195;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=SAnUBYIuiFw2VY3B2zyQtkCvm2LNngJths+XlfFPQw4=;
- b=cEytRFk+bazq4lPC2NaiSCc2m3leCH9OXT5RhJVPREg3J8H0T3qvkxWm8NEO48NFk4r55o
- Al+dn/F9LpQYWxjXn1Wftlp0I4qR+1N0pVDr5AzGxAdW9Uz+Mi5iPaBbV5oG7fMQ0xBTKN
- 5wsR9dNs0CArbIsLz099/h2q0jzIzEk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-44-s7KcRMaqOH6wPoRmPn1rGg-1; Wed,
- 24 Jan 2024 17:00:56 -0500
-X-MC-Unique: s7KcRMaqOH6wPoRmPn1rGg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=3ev2cUolUExhE+v2NM+XApuyX7D2IX6EHvyqjtGfnr4=;
+ b=OicvTay91Uk/rR3cJ1ll+W9xlGpgeQjGCmZ00szNqUzZnvdptaHxF6o/sOfzoVWc7JRTOp
+ eTrmVck3sNXdD6q8d3OjHesg2gprzbHnITB0awjb2oBvIX5Zet6B6jGwkANhlGHqRSBgLG
+ iZ28w51sMLnO+rcZVexTaF/QLhTAXuQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-185-9KMD5WgpO7Gj96Zb24B9sw-1; Wed, 24 Jan 2024 17:09:51 -0500
+X-MC-Unique: 9KMD5WgpO7Gj96Zb24B9sw-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 288DE29AA3B7;
- Wed, 24 Jan 2024 22:00:56 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.88])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 73054492BC6;
- Wed, 24 Jan 2024 22:00:55 +0000 (UTC)
-Date: Wed, 24 Jan 2024 17:00:54 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Fiona Ebner <f.ebner@proxmox.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH 1/2] virtio-scsi: Attach event vq notifier with no_poll
-Message-ID: <20240124220054.GA613094@fedora>
-References: <20240124173834.66320-1-hreitz@redhat.com>
- <20240124173834.66320-2-hreitz@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0F29BB42B24;
+ Wed, 24 Jan 2024 22:09:49 +0000 (UTC)
+Received: from tpad.localdomain (unknown [10.96.133.6])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id AD42C1121312;
+ Wed, 24 Jan 2024 22:09:48 +0000 (UTC)
+Received: by tpad.localdomain (Postfix, from userid 1000)
+ id 40A18403E5C44; Wed, 24 Jan 2024 19:05:17 -0300 (-03)
+Date: Wed, 24 Jan 2024 19:05:17 -0300
+From: Marcelo Tosatti <mtosatti@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Lei Wang <lei4.wang@intel.com>
+Subject: Re: Why invtsc (CPUID_APM_INVTSC) is unmigratable?
+Message-ID: <ZbGJnbo1CJyAk61y@tpad>
+References: <825f29d7-9112-45a2-b4a3-7d3b54c3c0a2@intel.com>
+ <Zaqf839r8TXvkIAf@tpad>
+ <b6950a34-0ef6-4945-9e50-5a47e86490e1@intel.com>
+ <Za/doRj6sEibC64y@tpad>
+ <e34d49cc-b743-4df1-9a31-96c987dc2ad3@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="AKxFsHwvUfu8guYx"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240124173834.66320-2-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <e34d49cc-b743-4df1-9a31-96c987dc2ad3@intel.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mtosatti@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,62 +89,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jan 24, 2024 at 10:52:46PM +0800, Xiaoyao Li wrote:
+> On 1/23/2024 11:39 PM, Marcelo Tosatti wrote:
+> > On Sat, Jan 20, 2024 at 05:44:07PM +0800, Xiaoyao Li wrote:
+> > > On 1/20/2024 12:14 AM, Marcelo Tosatti wrote:
+> > > > On Fri, Jan 19, 2024 at 02:46:22PM +0800, Xiaoyao Li wrote:
+> > > > > I'm wondering why CPUID_APM_INVTSC is set as unmigratable_flags. Could
+> > > > > anyone explain it?
+> > > > 
+> > > > 
+> > > > commit 68bfd0ad4a1dcc4c328d5db85dc746b49c1ec07e
+> > > > Author: Marcelo Tosatti <mtosatti@redhat.com>
+> > > > Date:   Wed May 14 16:30:09 2014 -0300
+> > > > 
+> > > >       target-i386: block migration and savevm if invariant tsc is exposed
+> > > >       Invariant TSC documentation mentions that "invariant TSC will run at a
+> > > >       constant rate in all ACPI P-, C-. and T-states".
+> > > >       This is not the case if migration to a host with different TSC frequency
+> > > >       is allowed, or if savevm is performed. So block migration/savevm.
+> > > > 
+> > > > So the rationale here was that without ensuring the destination host
+> > > > has the same TSC clock frequency, we can't migrate.
+> > > 
+> > > It seems to me the concept of invtsc was extended to "tsc freq will not
+> > > change even after the machine is live migrated". I'm not sure it is correct
+> > > to extend the concept of invtsc.
+> > > 
+> > > The main reason of introducing invtsc is to tell the tsc hardware keeps
+> > > counting (at the same rate) even at deep C state, so long as other states.
+> > > 
+> > > For example, a guest is created on machine A with X GHz tsc, and invtsc
+> > > exposed (machine A can ensure the guest's tsc counts at X GHz at any state).
+> > > If the guest is migrated to machine B with Y GHz tsc, and machine B can also
+> > > ensure the invtsc of its guest, i.e., the guest's tsc counts at Y GHz at any
+> > > state. IMHO, in this case, the invtsc is supported at both src and dest,
+> > > which means it is a migratable feature. However, the migration itself fails,
+> > > due to mismatched/different configuration of tsc freq, not due to invtsc.
+> > > 
+> > > > However, this was later extended to allow invtsc migratioon when setting
+> > > > tsc-khz explicitly:
+> > > > 
+> > > > commit d99569d9d8562c480e0befab601756b0b7b5d0e0
+> > > > Author: Eduardo Habkost <ehabkost@redhat.com>
+> > > > Date:   Sun Jan 8 15:32:34 2017 -0200
+> > > > 
+> > > >       kvm: Allow invtsc migration if tsc-khz is set explicitly
+> > > >       We can safely allow a VM to be migrated with invtsc enabled if
+> > > >       tsc-khz is set explicitly, because:
+> > > >       * QEMU already refuses to start if it can't set the TSC frequency
+> > > >         to the configured value.
+> > > >       * Management software is already required to keep device
+> > > >         configuration (including CPU configuration) the same on
+> > > >         migration source and destination.
+> > > >       Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
+> > > >       Message-Id: <20170108173234.25721-3-ehabkost@redhat.com>
+> > > >       Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
+> > > 
+> > > But in the case that user doesn't set tsc freq explicitly, the live
+> > > migration is likely to fail or have issues even without invtsc exposed to
+> > > guest,
+> > 
+> > Depends on how the guest is using the TSC, but yes.
+> > 
+> > > if the destination host has a different tsc frequency than src host.
+> > > 
+> > > So why bother checking invtsc only?
+> > 
+> > Well, if invtsc is exposed to the guest, then it might use the TSC for
+> > timekeeping purposes.
+> > 
+> > Therefore you don't want to fail (on the invtsc clock characteristics)
+> > otherwise timekeeping in the guest might be problematic.
+> > 
+> > But this are all just heuristics.
+> > 
+> > Do you have a suggestion for different behaviour?
+> 
+> I think we need to block live migration when user doesn't specify a certain
+> tsc frequency explicitly, regardless of invtsc.
 
---AKxFsHwvUfu8guYx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jan 24, 2024 at 06:38:29PM +0100, Hanna Czenczek wrote:
-> As of commit 38738f7dbbda90fbc161757b7f4be35b52205552 ("virtio-scsi:
-> don't waste CPU polling the event virtqueue"), we only attach an io_read
-> notifier for the virtio-scsi event virtqueue instead, and no polling
-> notifiers.  During operation, the event virtqueue is typically
-> non-empty, but none of the buffers are intended to be used immediately.
-> Instead, they only get used when certain events occur.  Therefore, it
-> makes no sense to continuously poll it when non-empty, because it is
-> supposed to be and stay non-empty.
->=20
-> We do this by using virtio_queue_aio_attach_host_notifier_no_poll()
-> instead of virtio_queue_aio_attach_host_notifier() for the event
-> virtqueue.
->=20
-> Commit 766aa2de0f29b657148e04599320d771c36fd126 ("virtio-scsi: implement
-> BlockDevOps->drained_begin()") however has virtio_scsi_drained_end() use
-> virtio_queue_aio_attach_host_notifier() for all virtqueues, including
-> the event virtqueue.  This can lead to it being polled again, undoing
-> the benefit of commit 38738f7dbbda90fbc161757b7f4be35b52205552.
->=20
-> Fix it by using virtio_queue_aio_attach_host_notifier_no_poll() for the
-> event virtqueue.
->=20
-> Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-> Fixes: 766aa2de0f29b657148e04599320d771c36fd126
->        ("virtio-scsi: implement BlockDevOps->drained_begin()")
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  hw/scsi/virtio-scsi.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-
-Thank you!
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---AKxFsHwvUfu8guYx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmWxiJUACgkQnKSrs4Gr
-c8hbCQf/fhI2RZoV1Db3OqSOwL5rJrXq9t/P7YSgHKA4GEPLD0iET7PCQiK1/ae1
-C6X6zq8SjyBMhduyXRfeYSPuNxR1o7YWVRdwiUKo/uWmVbJyNewvVfhMgibm0u0q
-3J4ZbdjBC91KFxg6+e/QkcyZwnci0kskalIFJOjC4ydizSJRY73gHpHZMptfDStF
-zQ44XYznN3TfQOGfBl22Y5YmTb3MW/jO/TSSEmXNJkKO2Jrpcxmy3nWoQT0cexxV
-4bgI3KGr+UXjuKM3BlO+SwlTeTT3z0tU97V5OA9S8+3u/lA+f4rOvfVwV3Zq5bRl
-d8pIX0IVsLoqjVaElWsJen8vLJv47w==
-=jdXK
------END PGP SIGNATURE-----
-
---AKxFsHwvUfu8guYx--
+Problem is if that guest is using kvmclock for timekeeping, then live migration 
+is safe (kvmclock logic will update the tsc frequency of the destination
+host upon migration).
 
 
