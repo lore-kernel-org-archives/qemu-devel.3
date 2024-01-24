@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78AFEC48260
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 15:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7812C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 15:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSfaM-0003aZ-By; Wed, 24 Jan 2024 10:54:42 -0500
+	id 1rSfac-0003g5-Ol; Wed, 24 Jan 2024 10:54:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSfaK-0003aA-Lb
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:54:40 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSfaP-0003bu-4s
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:54:46 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSfaH-0002Nc-Qa
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:54:40 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-339261a6ec2so3902037f8f.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 07:54:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSfaN-0002P7-J0
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:54:44 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-40e775695c6so54824025e9.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 07:54:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706111676; x=1706716476; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706111681; x=1706716481; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aTb7XsL1n33B1zcbpZjICkUyxotK3fc0XdMkkBFWEgg=;
- b=anQR07mYvhrjuYDuaduo4gvl2Pgyxo3W1wENdjnoClt71j+45t2IO9LvyuXVbOx14b
- Mu6OjXQX8zoSm8ZRxm2GHkQkt35blynjOZ7VYXeOQ+L+mXt9jOT8oOIqxMpF+ONZX2CP
- 88dqkQw60MqV0sAEnUnBJYWUO7kdMwpBn+cc8q0TBXjupRDhWbT8vrkCpgKFut/22JXP
- 7ZQmrrnd73qqfknx4zYP5Z6yPrITBCDb5Izm+rqKWIax9WOkK1QWgI/K81zq/YYeUTSX
- VGo2TMuO1EPWiHNaXoK6DyRjwljlbuRSBBvQ35EKgtmPP9U5KSIzsslGOtSvAQHHLAA4
- dxGQ==
+ bh=v3Z0Jq1OM+053LyGdHXwEFjN+ojKTQFR08GCVhW4ybo=;
+ b=zsihVpruycjU1JIQURwG+6A4eTLvnwD5oMzhCBPQxO3hdiv+DDfYxOG74jjihbU1j/
+ Amt/YICWuNzoIpJWA/M8KL6Ab+hnfX76zB0WTE0I6UCqHC9z9rCLr1rDTKneIrL9B25b
+ JSGx69+DZnPSO+mY63GUTJPDBzAZ+pky4Plkq20fBOGDNO5UZlkESmp5j0tB1x4O51Gr
+ F4Cz6RY9xHvO0bXg2eguAf1pU79wxVmnpfejo6VbECWOhA6MNcSHAHgKEptEV3moYC2k
+ az/Tzs7H4rq2bfSNoko2yvNZcMMyiStzPs90qioFuLwtO1h8KdZGrDhHaWjPWqUdtECd
+ r6JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706111676; x=1706716476;
+ d=1e100.net; s=20230601; t=1706111681; x=1706716481;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aTb7XsL1n33B1zcbpZjICkUyxotK3fc0XdMkkBFWEgg=;
- b=QFXqaJHZiVzUwK60fJtCP0sQhAyYZeBhSx0xM/bauPlrRU5Xg2ZxOxTFosS6A1C6z6
- yocsHGBuOkWuDrurlpzpOSEzBJPv9Rm/lAINXTcp79rHzV/sRiFBbfp0oy885MPveIqi
- nbk40CNkGCwkKnWhRWwxoCppt4vGZCaKNRIdbLL5c+P/1VOtz9Yx6oP8AHPz8Bm/d7+X
- OO0Q+u7Rx2xNlIqKXxAuO4HNEW7lC03oxKcPuwgaoSupwZ1PTlhSyqCi/EBwQI+bv6FU
- plM3x8m/mwnd/cIGXpaA/igscrSjsthgDKhgqhOwRNdSQ5JFRa7cvbaA9L6pzRvyE1aI
- T/1w==
-X-Gm-Message-State: AOJu0Yzw5n90L6dnJ0xv6L45Gy/A56hIPK+2OT7RiyQDWmzv+ye/kwhz
- a35swqaKV2GxwLNuUlLlzwYismue8SMtd4Ggok7kCFy0aqZU7lMi/WgCupwT3C6Cf0tHwvXp9Nw
- V
-X-Google-Smtp-Source: AGHT+IEWNMk3AgOpr1E3McOSW2fz67zuR1pIW2mreBkz+XaNSy0I1MnJTEPBGceydnI2SuRckjj6QA==
-X-Received: by 2002:adf:cc84:0:b0:337:6806:f919 with SMTP id
- p4-20020adfcc84000000b003376806f919mr854421wrj.107.1706111675960; 
- Wed, 24 Jan 2024 07:54:35 -0800 (PST)
+ bh=v3Z0Jq1OM+053LyGdHXwEFjN+ojKTQFR08GCVhW4ybo=;
+ b=TtXu1occJriRU0SeA4OMTLPH/nZbe4wYZJcN1AEFBsfLezdtO3Zof7lcaFRoI5lAzS
+ swotXwrHZ7Imi/7idCF5LbfrfSlp2Cvrs+UpxM9jzCBEdXJ5ZZmsHZb+OuquZj+zF9iu
+ AajJNrWC/JbX2cjukj/fAazLvfFS7sBamYB/nnIjRqIpzffORQ3PrWyL+oF1qfAgvvZB
+ uEHO3SyGq5cUl7jM85i+9LQqgRaz5Lx2mWpf8dbEFvS9weHc/rlStG9HIf52kITj+oHJ
+ tqntQHiK6lREg8WW38GgSlPhNxlvpeKEGCBPNFSMbLw/mqLCtUno7k5S9ZRBPS7f2Bit
+ 9fTQ==
+X-Gm-Message-State: AOJu0Yw7bITWcorskspEff9TAde1+JzfEou3hwNNwVVFWM9EXLmBT1xF
+ RS9Jj2S7Lf//CgRIDUcMkW/1Sw0LiS1M7jWbnOlDAvoK+y/MRgJtf6V7m26HCngNq4FkpXAZmWB
+ A
+X-Google-Smtp-Source: AGHT+IHKTp1SuOzIsHw5nkqILY05RVW6D4Zl2jPs9OD7SWzZf+XP/XIOGWgID01b2/sofwnHFo0tPA==
+X-Received: by 2002:a05:600c:4f87:b0:40d:8810:468b with SMTP id
+ n7-20020a05600c4f8700b0040d8810468bmr1763339wmq.88.1706111681634; 
+ Wed, 24 Jan 2024 07:54:41 -0800 (PST)
 Received: from localhost.localdomain
  (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr. [176.184.8.67])
  by smtp.gmail.com with ESMTPSA id
- s16-20020a5d5110000000b0033763a9ea2dsm9921845wrt.63.2024.01.24.07.54.33
+ l7-20020a05600c4f0700b0040d5f466deesm57530wmq.38.2024.01.24.07.54.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Jan 2024 07:54:35 -0800 (PST)
+ Wed, 24 Jan 2024 07:54:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
@@ -65,30 +65,19 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 1/2] accel/kvm: Define KVM_ARCH_HAVE_MCE_INJECTION in each
- target
-Date: Wed, 24 Jan 2024 16:54:24 +0100
-Message-ID: <20240124155425.73195-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/2] accel/kvm: Directly check KVM_ARCH_HAVE_MCE_INJECTION
+ value in place
+Date: Wed, 24 Jan 2024 16:54:25 +0100
+Message-ID: <20240124155425.73195-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240124155425.73195-1-philmd@linaro.org>
 References: <20240124155425.73195-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,170 +100,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of having KVM_HAVE_MCE_INJECTION optionally defined,
-always define KVM_ARCH_HAVE_MCE_INJECTION for each target,
-and set KVM_HAVE_MCE_INJECTION if it is not zero.
-
-It is now clearer for KVM targets to detect if they lack the
-MCE injection implementation. Also, moving headers around
-is no more painful, because if a target neglects to define
-KVM_ARCH_HAVE_MCE_INJECTION, the build will fail.
+Directly use KVM_ARCH_HAVE_MCE_INJECTION instead of
+KVM_HAVE_MCE_INJECTION.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-I'd rather keep "cpu-param.h" simple/short.
-
-Is a per-target "kvm-param.h" any better?
-Or per-target "accel-param.h"? For example TCG_GUEST_DEFAULT_MO
-is TCG specific and could also go there. Otherwise it will go
-in "cpu-param.h".
----
- include/sysemu/kvm.h         | 5 +++++
- target/arm/cpu-param.h       | 5 +++++
- target/arm/cpu.h             | 4 ----
- target/i386/cpu-param.h      | 2 ++
- target/i386/cpu.h            | 2 --
- target/loongarch/cpu-param.h | 2 ++
- target/mips/cpu-param.h      | 2 ++
- target/ppc/cpu-param.h       | 2 ++
- target/riscv/cpu-param.h     | 2 ++
- target/s390x/cpu-param.h     | 2 ++
- 10 files changed, 22 insertions(+), 6 deletions(-)
+ include/sysemu/kvm.h |  6 +++---
+ accel/kvm/kvm-all.c  | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index d614878164..2e9aa2fc53 100644
+index 2e9aa2fc53..4107678233 100644
 --- a/include/sysemu/kvm.h
 +++ b/include/sysemu/kvm.h
-@@ -212,6 +212,7 @@ int kvm_on_sigbus(int code, void *addr);
- 
- #ifdef NEED_CPU_H
- #include "cpu.h"
-+#include "cpu-param.h"
- 
- void kvm_flush_coalesced_mmio_buffer(void);
- 
-@@ -349,6 +350,10 @@ bool kvm_vcpu_id_is_valid(int vcpu_id);
+@@ -350,11 +350,11 @@ bool kvm_vcpu_id_is_valid(int vcpu_id);
  /* Returns VCPU ID to be used on KVM_CREATE_VCPU ioctl() */
  unsigned long kvm_arch_vcpu_id(CPUState *cpu);
  
+-#if KVM_ARCH_HAVE_MCE_INJECTION
+-#define KVM_HAVE_MCE_INJECTION
++#ifndef KVM_ARCH_HAVE_MCE_INJECTION
++#error Missing KVM_ARCH_HAVE_MCE_INJECTION definition in "cpu.h"
+ #endif
+ 
+-#ifdef KVM_HAVE_MCE_INJECTION
 +#if KVM_ARCH_HAVE_MCE_INJECTION
-+#define KVM_HAVE_MCE_INJECTION
-+#endif
-+
- #ifdef KVM_HAVE_MCE_INJECTION
  void kvm_arch_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
  #endif
-diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
-index f9b462a98f..d71cc29864 100644
---- a/target/arm/cpu-param.h
-+++ b/target/arm/cpu-param.h
-@@ -30,7 +30,12 @@
-  */
- # define TARGET_PAGE_BITS_VARY
- # define TARGET_PAGE_BITS_MIN  10
-+#endif
  
-+#ifdef TARGET_AARCH64
-+#define KVM_ARCH_HAVE_MCE_INJECTION 1
-+#else
-+#define KVM_ARCH_HAVE_MCE_INJECTION 0
- #endif
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 49e755ec4a..b98c0843b1 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2750,7 +2750,7 @@ void kvm_cpu_synchronize_pre_loadvm(CPUState *cpu)
+     run_on_cpu(cpu, do_kvm_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
+ }
  
- #endif
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index ec276fcd57..f92c8d3b88 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -30,10 +30,6 @@
- /* ARM processors have a weak memory model */
- #define TCG_GUEST_DEFAULT_MO      (0)
+-#ifdef KVM_HAVE_MCE_INJECTION
++#if KVM_ARCH_HAVE_MCE_INJECTION
+ static __thread void *pending_sigbus_addr;
+ static __thread int pending_sigbus_code;
+ static __thread bool have_sigbus_pending;
+@@ -2855,7 +2855,7 @@ int kvm_cpu_exec(CPUState *cpu)
  
--#ifdef TARGET_AARCH64
--#define KVM_HAVE_MCE_INJECTION 1
--#endif
--
- #define EXCP_UDEF            1   /* undefined instruction */
- #define EXCP_SWI             2   /* software interrupt */
- #define EXCP_PREFETCH_ABORT  3
-diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
-index 911b4cd51b..5933b0b756 100644
---- a/target/i386/cpu-param.h
-+++ b/target/i386/cpu-param.h
-@@ -24,4 +24,6 @@
- #endif
- #define TARGET_PAGE_BITS 12
+         attrs = kvm_arch_post_run(cpu, run);
  
-+#define KVM_ARCH_HAVE_MCE_INJECTION 1
-+
- #endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 7f0786e8b9..230ab1cded 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -33,8 +33,6 @@
- /* The x86 has a strong memory model with some store-after-load re-ordering */
- #define TCG_GUEST_DEFAULT_MO      (TCG_MO_ALL & ~TCG_MO_ST_LD)
+-#ifdef KVM_HAVE_MCE_INJECTION
++#if KVM_ARCH_HAVE_MCE_INJECTION
+         if (unlikely(have_sigbus_pending)) {
+             bql_lock();
+             kvm_arch_on_sigbus_vcpu(cpu, pending_sigbus_code,
+@@ -3339,7 +3339,7 @@ void kvm_init_cpu_signals(CPUState *cpu)
+     sigaction(SIG_IPI, &sigact, NULL);
  
--#define KVM_HAVE_MCE_INJECTION 1
--
- /* support for self modifying code even if the modified instruction is
-    close to the modifying instruction */
- #define TARGET_HAS_PRECISE_SMC
-diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-index cfe195db4e..f69a94e6b5 100644
---- a/target/loongarch/cpu-param.h
-+++ b/target/loongarch/cpu-param.h
-@@ -14,4 +14,6 @@
- 
- #define TARGET_PAGE_BITS 12
- 
-+#define KVM_ARCH_HAVE_MCE_INJECTION 0
-+
+     pthread_sigmask(SIG_BLOCK, NULL, &set);
+-#if defined KVM_HAVE_MCE_INJECTION
++#if KVM_ARCH_HAVE_MCE_INJECTION
+     sigdelset(&set, SIGBUS);
+     pthread_sigmask(SIG_SETMASK, &set, NULL);
  #endif
-diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
-index 594c91a156..45c885e00e 100644
---- a/target/mips/cpu-param.h
-+++ b/target/mips/cpu-param.h
-@@ -30,4 +30,6 @@
- #define TARGET_PAGE_BITS_MIN 12
- #endif
- 
-+#define KVM_ARCH_HAVE_MCE_INJECTION 0
-+
- #endif
-diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
-index 0a0416e0a8..9975ae73ab 100644
---- a/target/ppc/cpu-param.h
-+++ b/target/ppc/cpu-param.h
-@@ -33,4 +33,6 @@
- #endif
- #define TARGET_PAGE_BITS 12
- 
-+#define KVM_ARCH_HAVE_MCE_INJECTION 0
-+
- #endif
-diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-index b2a9396dec..e6199f4f6d 100644
---- a/target/riscv/cpu-param.h
-+++ b/target/riscv/cpu-param.h
-@@ -28,4 +28,6 @@
-  *  - M mode HLV/HLVX/HSV 0b111
-  */
- 
-+#define KVM_ARCH_HAVE_MCE_INJECTION 0
-+
- #endif
-diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-index 84ca08626b..4728b3957e 100644
---- a/target/s390x/cpu-param.h
-+++ b/target/s390x/cpu-param.h
-@@ -13,4 +13,6 @@
- #define TARGET_PHYS_ADDR_SPACE_BITS 64
- #define TARGET_VIRT_ADDR_SPACE_BITS 64
- 
-+#define KVM_ARCH_HAVE_MCE_INJECTION 0
-+
- #endif
+@@ -3358,7 +3358,7 @@ void kvm_init_cpu_signals(CPUState *cpu)
+ /* Called asynchronously in VCPU thread.  */
+ int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr)
+ {
+-#ifdef KVM_HAVE_MCE_INJECTION
++#if KVM_ARCH_HAVE_MCE_INJECTION
+     if (have_sigbus_pending) {
+         return 1;
+     }
+@@ -3375,7 +3375,7 @@ int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr)
+ /* Called synchronously (via signalfd) in main thread.  */
+ int kvm_on_sigbus(int code, void *addr)
+ {
+-#ifdef KVM_HAVE_MCE_INJECTION
++#if KVM_ARCH_HAVE_MCE_INJECTION
+     /* Action required MCE kills the process if SIGBUS is blocked.  Because
+      * that's what happens in the I/O thread, where we handle MCE via signalfd,
+      * we can only get action optional here.
 -- 
 2.41.0
 
