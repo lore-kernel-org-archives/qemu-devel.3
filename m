@@ -4,103 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC64C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 15:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165E2C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 15:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSesa-0002dq-HM; Wed, 24 Jan 2024 10:09:28 -0500
+	id 1rSf69-0000Xn-4B; Wed, 24 Jan 2024 10:23:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSesY-0002dP-Qj
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:09:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rSf67-0000Xe-07
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:23:27 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSesW-0003Gy-Pa
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:09:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706108963;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6BB/45mA47MVE6MtYrDmGPsJZKDMQOQ2Nq9K0pIyf+M=;
- b=Ub5fNW2s6Qg3B5KNaWGunVlOQASg1YmafHBMZvcr2EuaiimmHnwBdlPWYE3Rb8uxzALbGm
- Ar8QVz5RSeopWBn/3no/yTDxKeoEXaNOyY77sQTn9B9+haqTQG1ZjFx666u1eeJPqtDx+z
- bHYrQ40/JSIlyJCgXsVQSB1W7n9HnPs=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-512-ZMrILv8jM4CLjaZAdHbKwg-1; Wed, 24 Jan 2024 10:09:20 -0500
-X-MC-Unique: ZMrILv8jM4CLjaZAdHbKwg-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-783850ad4a4so729296785a.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 07:09:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706108960; x=1706713760;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6BB/45mA47MVE6MtYrDmGPsJZKDMQOQ2Nq9K0pIyf+M=;
- b=LmX9KVxoCSuFIiIpOW86wLuqqqZ2pNZYO3RWEf+Pgrd/ytdMT1+1R2FWKTPnntGgHa
- xiw+fxKjLIgdIN2C99h+nqtih+C/l3P0FHCBZJQTPuY3fvq+se01uz/CcehfcO76Dmqe
- mD6aL1RiXyIR8iKvz74ZkffoMDOIwtIshfe0mlgYOTsUnpqjRxSju7EuvvAFAqQlJRk0
- QtNoFQEFj2oJAUUwhB0qwFSZFvgv/qZiSmYYDvJ2Ods3WrVTVZySe6pnjff6E1LdA09V
- oikSB0mfTJA1jXxL88t4+PdTQm6CR/Rv+7HpAN0tQOG0bUsJ2mOkWApMUvhOYvIxGE1m
- 6weQ==
-X-Gm-Message-State: AOJu0YyXrlFCC7XsCe1F/WNp0XAgDTOwiMXHm7PCnULkUhIgOI+mmVAm
- bqCduugojFpyTyygpAcVOlHBiJmWpGTyZqZEieO2fm7Y2WMN/rv6ve0D9zucnUbustSBrpLYIz3
- llj3/CVLECZtN2TkDeibg/z4bpCCvJQPTio4d4ap+SNbtzkHwbrhN
-X-Received: by 2002:ae9:ec0b:0:b0:783:521d:5a56 with SMTP id
- h11-20020ae9ec0b000000b00783521d5a56mr7163345qkg.76.1706108960381; 
- Wed, 24 Jan 2024 07:09:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG/SQROi1P/GBgLFxReg6p9sCu7cGO8qOJJBL/oREebVJMi5xQO+f0/zNooVxQhwCuWkbFuxw==
-X-Received: by 2002:ae9:ec0b:0:b0:783:521d:5a56 with SMTP id
- h11-20020ae9ec0b000000b00783521d5a56mr7163328qkg.76.1706108960070; 
- Wed, 24 Jan 2024 07:09:20 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d4-20020a05620a158400b00783b813f18esm276024qkk.34.2024.01.24.07.09.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 07:09:18 -0800 (PST)
-Message-ID: <c77271a8-6d56-4ba4-8293-c17c2307ce93@redhat.com>
-Date: Wed, 24 Jan 2024 16:09:15 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rSf63-0005cQ-VS
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:23:26 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKnhL0xfFz6J9jy;
+ Wed, 24 Jan 2024 23:20:18 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 59A84140D1A;
+ Wed, 24 Jan 2024 23:23:18 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 24 Jan
+ 2024 15:23:17 +0000
+Date: Wed, 24 Jan 2024 15:23:16 +0000
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <nifan@outlook.com>, <jim.harris@samsung.com>, "Fan Ni" <fan.ni@samsung.com>
+Subject: Re: [PATCH v3 4/9] hw/mem/cxl_type3: Add support to create DC
+ regions to type3 memory devices
+Message-ID: <20240124152316.0000281c@Huawei.com>
+In-Reply-To: <20231107180907.553451-5-nifan.cxl@gmail.com>
+References: <20231107180907.553451-1-nifan.cxl@gmail.com>
+ <20231107180907.553451-5-nifan.cxl@gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] virtio-iommu: Add an option to define the input range
- width
-Content-Language: en-US
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, peterx@redhat.com, yanghliu@redhat.com,
- mst@redhat.com, clg@redhat.com, jasowang@redhat.com
-References: <20240123181753.413961-1-eric.auger@redhat.com>
- <20240123181753.413961-2-eric.auger@redhat.com>
- <20240123165141.7a79de34.alex.williamson@redhat.com>
- <a35c4fad-a981-4fbf-81d1-be5625a537b9@redhat.com>
- <20240124063700.67c8c32c.alex.williamson@redhat.com>
- <a92a2023-7448-4b74-bfd9-e412c6092270@redhat.com>
- <20240124071531.44bd7164.alex.williamson@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240124071531.44bd7164.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,99 +70,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
-On 1/24/24 15:15, Alex Williamson wrote:
-> On Wed, 24 Jan 2024 14:57:41 +0100
-> Eric Auger <eric.auger@redhat.com> wrote:
->
->> Hi Alex,
->>
->> On 1/24/24 14:37, Alex Williamson wrote:
->>> On Wed, 24 Jan 2024 14:14:19 +0100
->>> Eric Auger <eric.auger@redhat.com> wrote:
->>>  
->>>> Hi Alex,
->>>>
->>>> On 1/24/24 00:51, Alex Williamson wrote:  
->>>>> On Tue, 23 Jan 2024 19:15:55 +0100
->>>>> Eric Auger <eric.auger@redhat.com> wrote:
->>>>>    
->>>>>> aw-bits is a new option that allows to set the bit width of
->>>>>> the input address range. This value will be used as a default for
->>>>>> the device config input_range.end. By default it is set to 64 bits
->>>>>> which is the current value.
->>>>>>
->>>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>>>> ---
->>>>>>  include/hw/virtio/virtio-iommu.h | 1 +
->>>>>>  hw/virtio/virtio-iommu.c         | 4 +++-
->>>>>>  2 files changed, 4 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
->>>>>> index 781ebaea8f..5fbe4677c2 100644
->>>>>> --- a/include/hw/virtio/virtio-iommu.h
->>>>>> +++ b/include/hw/virtio/virtio-iommu.h
->>>>>> @@ -66,6 +66,7 @@ struct VirtIOIOMMU {
->>>>>>      bool boot_bypass;
->>>>>>      Notifier machine_done;
->>>>>>      bool granule_frozen;
->>>>>> +    uint8_t aw_bits;
->>>>>>  };
->>>>>>  
->>>>>>  #endif
->>>>>> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
->>>>>> index ec2ba11d1d..e7f299e0c6 100644
->>>>>> --- a/hw/virtio/virtio-iommu.c
->>>>>> +++ b/hw/virtio/virtio-iommu.c
->>>>>> @@ -1314,7 +1314,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
->>>>>>       */
->>>>>>      s->config.bypass = s->boot_bypass;
->>>>>>      s->config.page_size_mask = qemu_real_host_page_mask();
->>>>>> -    s->config.input_range.end = UINT64_MAX;
->>>>>> +    s->config.input_range.end =
->>>>>> +        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;    
->>>>> What happens when someone sets aw_bits = 1?  There are a whole bunch of
->>>>> impractical values here ripe for annoying bug reports.  vtd_realize()
->>>>> returns an Error for any values other than 39 or 48.  We might pick an
->>>>> arbitrary lower bound (39?) or some other more creative solution here
->>>>> to avoid those silly issues in our future.  Thanks,    
->>>> You're right. I can check the input value. This needs to be dependent on
->>>> the machine though but this should be feasable.
->>>> Then I would allow 39 and 48 for q35 and 64 only on ARM.  
->>> AFAIK AMD-Vi supports 64-bit address space.  Without querying the host
->>> there's no way to place an accurate limit below 64-bit.  Thanks,  
->> Hum this means I would need to look at
->> /sys/class/iommu/<iommu>/amd-iommu/ or /sys/class/iommu/dmar* to
->> discriminate between AMD IOMMU and INTEL IOMMU physical IOMMU. Would
->> that be acceptable?
-> I'm not necessarily suggesting that we look at the host, I'm mostly
-> just stating that enforcing 39/48 bits on non-ARM is incorrect for a
-> large portion of the non-ARM world too.  There might even be some
-> interesting use cases for a 32-bit IOVA space, so maybe just set
-> defaults tuned for compatibility and accept anything between 32- and
-> 64-bits.  Thanks,
-Yup that would be even simpler. Thank you for the clarification.
+On Tue,  7 Nov 2023 10:07:08 -0800
+nifan.cxl@gmail.com wrote:
 
-I will add that
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> With the change, when setting up memory for type3 memory device, we can
+> create DC regions.
+> A property 'num-dc-regions' is added to ct3_props to allow users to pass the
+> number of DC regions to create. To make it easier, other region parameters
+> like region base, length, and block size are hard coded. If needed,
+> these parameters can be added easily.
+> 
+> With the change, we can create DC regions with proper kernel side
+> support as below:
+> 
+> region=$(cat /sys/bus/cxl/devices/decoder0.0/create_dc_region)
+> echo $region> /sys/bus/cxl/devices/decoder0.0/create_dc_region
+> echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity
+> echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
+> 
+> echo "dc0" >/sys/bus/cxl/devices/decoder2.0/mode
+> echo 0x40000000 >/sys/bus/cxl/devices/decoder2.0/dpa_size
+> 
+> echo 0x40000000 > /sys/bus/cxl/devices/$region/size
+> echo  "decoder2.0" > /sys/bus/cxl/devices/$region/target0
+> echo 1 > /sys/bus/cxl/devices/$region/commit
+> echo $region > /sys/bus/cxl/drivers/cxl_region/bind
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Hi Fan, a few comments inline.
 
-Eric
->
-> Alex
->
->>>>>>      s->config.domain_range.end = UINT32_MAX;
->>>>>>      s->config.probe_size = VIOMMU_PROBE_SIZE;
->>>>>>  
->>>>>> @@ -1525,6 +1526,7 @@ static Property virtio_iommu_properties[] = {
->>>>>>      DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
->>>>>>                       TYPE_PCI_BUS, PCIBus *),
->>>>>>      DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
->>>>>> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
->>>>>>      DEFINE_PROP_END_OF_LIST(),
->>>>>>  };
->>>>>>      
+Jonathan
+
+> ---
+>  hw/mem/cxl_type3.c | 35 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 35 insertions(+)
+> 
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 754c885cd1..2d67d2015c 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -721,6 +721,36 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
+>      }
+>  }
+>  
+> +static int cxl_create_dc_regions(CXLType3Dev *ct3d)
+> +{
+> +    int i;
+> +    uint64_t region_base = 0;
+> +    uint64_t region_len =  2 * GiB;
+> +    uint64_t decode_len = 8; /* 8*256MB */
+
+If decode len is going to be div 256MiB then we need
+a name for that field that makes it clear that it is.
+
+decode_len_256mbytes or something like that and maybe
+region_len_bytes to keep things consistent.
+
+Why the spec didn't make our life easier and define decode length
+in bytes with some bits that must be zero is beyond me... 
+
+
+I think we need to make this at least optionally configurable or based
+in some fashion on the provided memory backend (divide that up
+by number of regions with appropriate rounding perhaps?)
+
+> +    uint64_t blk_size = 2 * MiB;
+> +    CXLDCDRegion *region;
+> +
+> +    if (ct3d->hostvmem) {
+> +        region_base += ct3d->hostvmem->size;
+> +    }
+> +    if (ct3d->hostpmem) {
+> +        region_base += ct3d->hostpmem->size;
+> +    }
+> +    for (i = 0; i < ct3d->dc.num_regions; i++) {
+> +        region = &ct3d->dc.regions[i];
+> +        region->base = region_base;
+> +        region->decode_len = decode_len;
+> +        region->len = region_len;
+> +        region->block_size = blk_size;
+> +        /* dsmad_handle is set when creating cdat table entries */
+> +        region->flags = 0;
+> +
+> +        region_base += region->len;
+> +    }
+> +
+> +    return 0;
+
+Given it doesn't fail (even after the rest of this series is applied),
+why return anything?  Make it void and we can drop the checks below..
+
+> +}
+> +
+>  static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+>  {
+>      DeviceState *ds = DEVICE(ct3d);
+> @@ -789,6 +819,10 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+>          g_free(p_name);
+>      }
+>  
+> +    if (cxl_create_dc_regions(ct3d)) {
+> +        return false;
+> +    }
+> +
+>      return true;
+>  }
+>  
+> @@ -1108,6 +1142,7 @@ static Property ct3_props[] = {
+>      DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
+>      DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
+>      DEFINE_PROP_UINT16("spdm", CXLType3Dev, spdm_port, 0),
+> +    DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+>  
 
 
