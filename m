@@ -4,76 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97725C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2330CC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 14:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSeQD-0004Mp-4i; Wed, 24 Jan 2024 09:40:09 -0500
+	id 1rSebC-0001ZS-3L; Wed, 24 Jan 2024 09:51:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1rSeQA-0004MJ-1m
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:40:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rSeb9-0001Yy-4V
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:51:27 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1rSeQ8-00061Z-6y
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:40:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706107202;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XT53JLMsm9q9tNGztQTxRA1bMzyUdQZzokx6dbxj0Wk=;
- b=ODYuZv2vQPyAHXR1QmeQZOqCvXs8HRg1liAOvCRcCgzmV+GZ7zwoGpo5eKUkpppXhP0qW/
- vCu0TVzD4vU4AvdW3yEDwvQ7xFKe6DUl0YZYJzkZc6quPty8eiGM9QnyFsn7b/6kmd4bm0
- i65VJQx1BxSCxJYP/adHZQd7uSNPY80=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-86-qI6vGugAPLGFHoljyH9AwQ-1; Wed, 24 Jan 2024 09:39:59 -0500
-X-MC-Unique: qI6vGugAPLGFHoljyH9AwQ-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A2ED2185A788;
- Wed, 24 Jan 2024 14:39:58 +0000 (UTC)
-Received: from [10.39.195.127] (unknown [10.39.195.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 536C0492BFA;
- Wed, 24 Jan 2024 14:39:57 +0000 (UTC)
-Message-ID: <e5a4478e-c7f9-c639-690b-9eeb7c62212e@redhat.com>
-Date: Wed, 24 Jan 2024 15:39:56 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rSeb6-0008O5-3H
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 09:51:26 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKmzR6KXCz6J9dr;
+ Wed, 24 Jan 2024 22:48:19 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0E4FC140684;
+ Wed, 24 Jan 2024 22:51:20 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 24 Jan
+ 2024 14:51:19 +0000
+Date: Wed, 24 Jan 2024 14:51:18 +0000
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <nifan@outlook.com>, <jim.harris@samsung.com>, "Fan Ni" <fan.ni@samsung.com>
+Subject: Re: [PATCH v3 2/9] hw/cxl/cxl-mailbox-utils: Add dynamic capacity
+ region representative and mailbox command support
+Message-ID: <20240124145118.00002f7d@Huawei.com>
+In-Reply-To: <20231107180907.553451-3-nifan.cxl@gmail.com>
+References: <20231107180907.553451-1-nifan.cxl@gmail.com>
+ <20231107180907.553451-3-nifan.cxl@gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Subject: Re: [PATCH v2] target/i386/host-cpu: Use iommu phys_bits with VFIO
- assigned devices on Intel h/w
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@redhat.com>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Dongwon Kim <dongwon.kim@intel.com>, Yanghang Liu <yanghliu@redhat.com>,
- "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-References: <20240118192049.1796763-1-vivek.kasireddy@intel.com>
- <9462383d-3e42-460e-b721-8371d35e29a6@redhat.com>
- <7982b791-3333-473a-b42b-fbcf21f153cb@linaro.org>
-From: Laszlo Ersek <lersek@redhat.com>
-In-Reply-To: <7982b791-3333-473a-b42b-fbcf21f153cb@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lersek@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,106 +70,154 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/24 13:58, Philippe Mathieu-Daudé wrote:
-> On 24/1/24 12:53, Cédric Le Goater wrote:
->> On 1/18/24 20:20, Vivek Kasireddy wrote:
->>> Recent updates in OVMF and Seabios have resulted in MMIO regions
->>> being placed at the upper end of the physical address space. As a
->>> result, when a Host device is assigned to the Guest via VFIO, the
->>> following mapping failures occur when VFIO tries to map the MMIO
->>> regions of the device:
->>> VFIO_MAP_DMA failed: Invalid argument
->>> vfio_dma_map(0x557b2f2736d0, 0x380000000000, 0x1000000,
->>> 0x7f98ac400000) = -22 (Invalid argument)
->>>
->>> The above failures are mainly seen on some Intel platforms where
->>> the physical address width is larger than the Host's IOMMU
->>> address width. In these cases, VFIO fails to map the MMIO regions
->>> because the IOVAs would be larger than the IOMMU aperture regions.
->>>
->>> Therefore, one way to solve this problem would be to ensure that
->>> cpu->phys_bits = <IOMMU phys_bits>
->>> This can be done by parsing the IOMMU caps value from sysfs and
->>> extracting the address width and using it to override the
->>> phys_bits value as shown in this patch.
->>>
->>> Previous attempt at solving this issue in OVMF:
->>> https://edk2.groups.io/g/devel/topic/102359124
->>>
->>> Cc: Gerd Hoffmann <kraxel@redhat.com>
->>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Cc: Alex Williamson <alex.williamson@redhat.com>
->>> Cc: Cédric Le Goater <clg@redhat.com>
->>> Cc: Laszlo Ersek <lersek@redhat.com>
->>> Cc: Dongwon Kim <dongwon.kim@intel.com>
->>> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
->>> Tested-by: Yanghang Liu <yanghliu@redhat.com>
->>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>>
->>> ---
->>> v2:
->>> - Replace the term passthrough with assigned (Laszlo)
->>> - Update the commit message to note that both OVMF and Seabios
->>>    guests are affected (Cédric)
->>> - Update the subject to indicate what is done in the patch
->>> ---
->>>   target/i386/host-cpu.c | 61 +++++++++++++++++++++++++++++++++++++++++-
->>>   1 file changed, 60 insertions(+), 1 deletion(-)
-> 
-> 
->>> +static int intel_iommu_check(void *opaque, QemuOpts *opts, Error
->>> **errp)
->>> +{
->>> +    g_autofree char *dev_path = NULL, *iommu_path = NULL, *caps = NULL;
->>> +    const char *driver = qemu_opt_get(opts, "driver");
->>> +    const char *device = qemu_opt_get(opts, "host");
->>> +    uint32_t *iommu_phys_bits = opaque;
->>> +    struct stat st;
->>> +    uint64_t iommu_caps;
->>> +
->>> +    /*
->>> +     * Check if the user requested VFIO device assignment. We don't
->>> have
->>> +     * to limit phys_bits if there are no valid assigned devices.
->>> +     */
->>> +    if (g_strcmp0(driver, "vfio-pci") || !device) {
->>> +        return 0;
->>> +    }
->>> +
->>> +    dev_path = g_strdup_printf("/sys/bus/pci/devices/%s", device);
->>> +    if (stat(dev_path, &st) < 0) {
->>> +        return 0;
->>> +    }
->>> +
->>> +    iommu_path = g_strdup_printf("%s/iommu/intel-iommu/cap", dev_path);
->>> +    if (stat(iommu_path, &st) < 0) {
->>> +        return 0;
->>> +    }
->>> +
->>> +    if (g_file_get_contents(iommu_path, &caps, NULL, NULL)) {
->>> +        if (sscanf(caps, "%lx", &iommu_caps) != 1) {
->>
->> nit. This should use a PRIx64 define.
->>
->>> +            return 0;
->>> +        }
->>> +        *iommu_phys_bits = ((iommu_caps >> 16) & 0x3f) + 1;
->>
->> Please use 0x3fULL
-> 
-> or:
-> 
->            *iommu_phys_bits = 1 + extract32(iommu_caps, 16, 6);
+On Tue,  7 Nov 2023 10:07:06 -0800
+nifan.cxl@gmail.com wrote:
 
-Huh, interesting; I've never seen this recommended before, even though
-it comes from a very old commit -- 84988cf910a6 ("bitops.h: Add
-functions to extract and deposit bitfields", 2012-07-07).
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> Per cxl spec 3.0, add dynamic capacity region representative based on
+> Table 8-126 and extend the cxl type3 device definition to include dc region
+> information. Also, based on info in 8.2.9.8.9.1, add 'Get Dynamic Capacity
+> Configuration' mailbox support.
+> 
+> Note: decode_len of a dc region is aligned to 256*MiB, need to be divided by
+> 256 * MiB before returned to the host for "Get Dynamic Capacity Configuration"
+> mailbox command.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
 
-I thought only edk2 had BitFieldRead32() :)
+Hi Fan,
 
-Laszlo
+I'm looking at how to move these much earlier in my tree on basis that
+they should be our main focus for merging in this QEMU cycle.
 
+Whilst I do that rebase, I'm taking a closer look at the code.
+I'm targetting rebasing on upstream qemu + the two patch sets I just
+sent out:
+[PATCH 00/12 qemu] CXL emulation fixes and minor cleanup. 
+[PATCH 0/5 qemu] hw/cxl: Update CXL emulation to reflect and reference r3.1
+
+It would be good to document why these commands should be optional (which I think
+comes down to the annoying fact that Get Dynamic Capacity Configuration isn't
+allowed to return 0 regions, but instead should not be available as a command
+if DCD isn't supported.
+
+Note this requires us to carry Gregory's patches to make the CCI command list
+constructed at runtime rather than baked in ahead of this set.
+
+So another question is should we jump directly to the r3.1 version of DCD?
+I think we probably should as it includes some additions that are necessary
+for a bunch of the potential use cases.
+
+
+> ---
+>  hw/cxl/cxl-mailbox-utils.c  | 80 +++++++++++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3.c          |  6 +++
+>  include/hw/cxl/cxl_device.h | 17 ++++++++
+>  3 files changed, 103 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 8eceedfa87..f80dd6474f 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -80,6 +80,8 @@ enum {
+>          #define GET_POISON_LIST        0x0
+>          #define INJECT_POISON          0x1
+>          #define CLEAR_POISON           0x2
+> +    DCD_CONFIG  = 0x48,
+> +        #define GET_DC_CONFIG          0x0
+>      PHYSICAL_SWITCH = 0x51,
+>          #define IDENTIFY_SWITCH_DEVICE      0x0
+>          #define GET_PHYSICAL_PORT_STATE     0x1
+> @@ -1210,6 +1212,74 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +/*
+> + * CXL r3.0 section 8.2.9.8.9.1: Get Dynamic Capacity Configuration
+
+As per the patch set I just sent out, I want to standardize on references
+to r3.1 because it's all that is easy to get.  However if we decide to r3.0
+DCD first the upgrade it later, then clearly these need to stick to r3.0 for
+now.
+
+> + * (Opcode: 4800h)
+> + */
+> +static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
+> +                                             uint8_t *payload_in,
+> +                                             size_t len_in,
+> +                                             uint8_t *payload_out,
+> +                                             size_t *len_out,
+> +                                             CXLCCI *cci)
+> +{
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    struct get_dyn_cap_config_in_pl {
+> +        uint8_t region_cnt;
+> +        uint8_t start_region_id;
+> +    } QEMU_PACKED;
+> +
+> +    struct get_dyn_cap_config_out_pl {
+> +        uint8_t num_regions;
+> +        uint8_t rsvd1[7];
+
+This changed in r3.1 (errata? - I haven't checked)
+Should be 'regions returned' in first byte.
+
+> +        struct {
+> +            uint64_t base;
+> +            uint64_t decode_len;
+> +            uint64_t region_len;
+> +            uint64_t block_size;
+> +            uint32_t dsmadhandle;
+
+> +            uint8_t flags;
+> +            uint8_t rsvd2[3];
+> +        } QEMU_PACKED records[];
+
+There are two fields after this as well.
+Total number of supported extents and number of available extents.
+
+That annoyingly means we can't use the structure to tell us where
+to find all the fields...
+
+
+> +    } QEMU_PACKED;
+> +
+> +    struct get_dyn_cap_config_in_pl *in = (void *)payload_in;
+> +    struct get_dyn_cap_config_out_pl *out = (void *)payload_out;
+> +    uint16_t record_count = 0, i;
+
+Better to split that on to 2 lines. Never hide setting a value
+in the middle of a set of declarations.
+
+> +    uint16_t out_pl_len;
+> +    uint8_t start_region_id = in->start_region_id;
+> +
+> +    if (start_region_id >= ct3d->dc.num_regions) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    record_count = MIN(ct3d->dc.num_regions - in->start_region_id,
+> +            in->region_cnt);
+> +
+> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+
+For r3.1 + 8 for the two trailing fields.
+
+> +    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
+> +
+> +    memset(out, 0, out_pl_len);
+
+As part of the cci rework we started zeroing the whole mailbox payload space
+after copying out the input payload.
+https://elixir.bootlin.com/qemu/latest/source/hw/cxl/cxl-device-utils.c#L204
+
+So shouldn't need this (unless we have a bug)
+
+Jonathan
 
