@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52597C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 13:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1733C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 13:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSczv-0001rt-7Y; Wed, 24 Jan 2024 08:08:55 -0500
+	id 1rSd2f-0003C3-7k; Wed, 24 Jan 2024 08:11:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSczs-0001n6-QN
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:08:53 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSd2e-0003Bn-9M
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:11:44 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSczq-0003zs-72
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:08:52 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-337d05b8942so6184984f8f.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 05:08:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSd2c-0004cK-NM
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:11:43 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-55790581457so7445022a12.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 05:11:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706101728; x=1706706528; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706101901; x=1706706701; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=P+w00aYVWLDaZ0z/ysw7lebbGl9R7ORAINPsdBB0cUQ=;
- b=mwkft5ih+IEoOemeqZYdNV3NAO+4Gm2QVnpRX8eNiLbfZI46hHrpoaKxlViFsAj9lz
- IW0XxbF3YwBii+lMJok4Jh21yb6FWoEMcTwovReb8+OKX5t8M9RE1ydBuw1GqH3lyglj
- RIB4jqZtxcyrbqeetQBRjC8Dsg/+2IkK2lRk/duGqZukePvFv+aD1NhMixZ79DuCgKH2
- 3TKJN3TSsm/8rV0BgUpIMv4GdseV7y/mjvqDdzyg4PsqlKNp9P4iY3vwRT+2rj9XzYzu
- KpZTobPYwN900qxgr/jmlNZXQzXDuYyzDw2n8uMEmgBcQ1d0Gbxs52B9iLJYwXIpSb2v
- d2pQ==
+ bh=1+yriHzBSrvhdxwzLlgEROlha6tWGWtUuK0s5iAD0tc=;
+ b=eaIeDpsnihWBp59SJT4zLshSc2CeeCCM6y0f3oX0o49PF759csqTunQA3Qu9KUo+81
+ B729cJpIi8BF1B+uSKiF+tBzqF3ucZWuJm7cQ0GHon9TmQ5berYfwWdWBL5AQRybp83U
+ sJy7wEwj88KfHqsSDOR8SwBs6mGR0VdTx3/FWl7fuDkmRZXf/OjRE0sl18J786ZYtK4A
+ 1FS6lmN107zTjvixlGez0o7K9cJkmLKV3tFpA4D2+KYXeLD2T8Xp4UUGhNDoyxrjSR82
+ tikv0ptVlsYr+WzbTqval3N865/0TEWXCrotvx6UKQoH1rEFqldIHANBAWO4g3J3YZcX
+ oyyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706101728; x=1706706528;
+ d=1e100.net; s=20230601; t=1706101901; x=1706706701;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P+w00aYVWLDaZ0z/ysw7lebbGl9R7ORAINPsdBB0cUQ=;
- b=lA0nSvLryuvs3suMRFfEkUhcaCG9UjzZ8pp2IWeFw7EprQiP3hprCHBFkeys0PREGA
- JB5BRoQZKCxwpYvFpW83PELZUnlNmX4TMaUaPB8ERyTYtpngb89DBintQ4jm1/agF4uc
- k7yinoCDWEqBJr1OYausFbKeuKipiWpBmBDUQ7Dt6mnPPk8b8U1RQxqvjcADRzzCnncD
- wfKIWngrdsVhDMTcyN/pe6lXBQ1vczaNVJN8gbRNb3IJah3POOQNBhuDae4sj+QO/cI4
- u1O+xc/w4zRO42ykj99v0Sno5jz8A3vlQH57ySiu2m3yaRDTaihNLbOpyeiEmJSVk1Vg
- XHyg==
-X-Gm-Message-State: AOJu0YzAkzwkV864Ckqyqn4JjohYAh80OxgFXJZ/Niu3DfUmTEjet4PS
- TnuzoPTz8NrPgdtyR15fU9xMvVeYZMsd2ZIWmjtnsm5z9bfHs74nLA/YXPRR5+A=
-X-Google-Smtp-Source: AGHT+IEuxiEzF8Ew3KDQATXOxVv+0frNsAg3XzkqsJwP9FR2cDsB2gTwNv0P4S9O4vtXVDRoWYc33w==
-X-Received: by 2002:a05:6000:1291:b0:337:c4d3:cfa2 with SMTP id
- f17-20020a056000129100b00337c4d3cfa2mr512592wrx.30.1706101728284; 
- Wed, 24 Jan 2024 05:08:48 -0800 (PST)
+ bh=1+yriHzBSrvhdxwzLlgEROlha6tWGWtUuK0s5iAD0tc=;
+ b=DHI6X6WZZGJXq3W15y3u5K/XvVHOgbnHavjFOvQ9EUKMPcJRO9NQeAwOZVkyK09uwU
+ jtml0GlDE2BT4w2MXXhJAd3hXTSnja6FurLmfypMsXPumKUqj1TUiAXIZaGjRvtcwN84
+ eDi0OCY3Kw5xdk0mghT6xo8+Zu6D+M5j+BGoqxQhGOyIBoD/bm/2VuUPIEbq66HaEtui
+ Chr8ZgBH91FKJuF/oMBGyneedwXn2v5/Ssk2S9Q4OH7fuMXVs/pCaGvnsoRQeBtExaQI
+ wQVJx2jXIxW7PSoexJzi1mzXXLHFs6XvWSqtQWaJQ0HCxA4fYo/POPFoPnhe0czphYuM
+ yRMA==
+X-Gm-Message-State: AOJu0Yx560i0mteYvcG+TyTp0/f6RPwGkRiarATx4r1cUAe3eYSEnREO
+ +NN7OmuRP3VSb58VrA1bpO3nh+ZOfy4Hxdx5ew3YkxNowI7R2LyxuvW6HS0NSYc=
+X-Google-Smtp-Source: AGHT+IGnJW9bKwi3tYYJAmCQt5Nil0FhR5NX4LLCFiljPA0UDRhpGmUNhtKvvNjjf7kcsXzgtL5UmQ==
+X-Received: by 2002:aa7:d88d:0:b0:55c:9237:5fcd with SMTP id
+ u13-20020aa7d88d000000b0055c92375fcdmr1265423edq.21.1706101900829; 
+ Wed, 24 Jan 2024 05:11:40 -0800 (PST)
 Received: from [192.168.69.100] (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr.
  [176.184.8.67]) by smtp.gmail.com with ESMTPSA id
- b13-20020a05600010cd00b003392c1f40acsm10050862wrx.28.2024.01.24.05.08.45
+ g2-20020a056402428200b00558a3268bbcsm16334626edc.53.2024.01.24.05.11.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 05:08:47 -0800 (PST)
-Message-ID: <33478869-d1c5-4f1c-9814-314e4076bfe5@linaro.org>
-Date: Wed, 24 Jan 2024 14:08:44 +0100
+ Wed, 24 Jan 2024 05:11:40 -0800 (PST)
+Message-ID: <37ca639f-ce64-40f7-9e17-5fb32770142d@linaro.org>
+Date: Wed, 24 Jan 2024 14:11:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/pc_piix: Make piix_intx_routing_notifier_xen()
- more device independent
+Subject: Re: [PATCH 1/9] gitlab: fix s390x tag for avocado-system-centos
 Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Chuck Zmudzinski <brchuckz@aol.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org,
- David Woodhouse <dwmw2@infradead.org>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paul Durrant <paul@xen.org>, Richard Henderson
- <richard.henderson@linaro.org>, Anthony PERARD <anthony.perard@citrix.com>
-References: <20240107231623.5282-1-shentey@gmail.com>
- <B404ABCE-E6B5-4716-BA60-3CEE74B72701@gmail.com>
- <20240114072529-mutt-send-email-mst@kernel.org>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ qemu-ppc@nongnu.org, "open list:S390 general arch..." <qemu-s390x@nongnu.org>
+References: <20240107170119.82222-1-npiggin@gmail.com>
+ <20240107170119.82222-2-npiggin@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240114072529-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240107170119.82222-2-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,33 +100,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/1/24 13:25, Michael S. Tsirkin wrote:
-> On Sun, Jan 14, 2024 at 12:21:59PM +0000, Bernhard Beschow wrote:
->>
->>
->> Am 7. Januar 2024 23:16:23 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
->>> This is a follow-up on commit 89965db43cce "hw/isa/piix3: Avoid Xen-specific
->>> variant of piix3_write_config()" which introduced
->>> piix_intx_routing_notifier_xen(). This function is implemented in board code but
->>> accesses the PCI configuration space of the PIIX ISA function to determine the
->>> PCI interrupt routes. Avoid this by reusing pci_device_route_intx_to_irq() which
->>> makes piix_intx_routing_notifier_xen() more device-agnostic.
->>>
->>> One remaining improvement would be making piix_intx_routing_notifier_xen()
->>> agnostic towards the number of PCI interrupt routes and move it to xen-hvm.
->>> This might be useful for possible Q35 Xen efforts but remains a future exercise
->>> for now.
->>>
->>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->>
->> Hi Michael,
->>
->> could you tag this, too? Or do we need another R-b?
->>
->> Best regards,
->> Bernhard
+On 7/1/24 18:01, Nicholas Piggin wrote:
+> The 390x tag should be s390x.
 > 
-> tagged, too.
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   .gitlab-ci.d/buildtest.yml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-FYI merged as commit ebd92d6de3.
+FTR this has been merged as commit cdd30f369a.
+
 
