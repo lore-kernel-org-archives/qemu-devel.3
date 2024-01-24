@@ -4,99 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7962C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 13:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA19C47E49
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 13:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSd5P-0006ae-5j; Wed, 24 Jan 2024 08:14:36 -0500
+	id 1rSd6V-000850-UX; Wed, 24 Jan 2024 08:15:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSd5J-0006Ta-QJ
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:14:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rSd6S-00082P-UD
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:15:41 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rSd5I-00056Y-7H
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:14:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706102067;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Kikj5Q9USpTy7MPHUzO0q8pIzEJ5a9YPFpJuSzTrSjU=;
- b=cGLOVONxs3zvuit1hKGlwBq4A/gM2aq7QQcoOIDaJ820cAMtOP/tTsJKP687gtje1QYftp
- rms6Ol5qcLAYfKDDSxWqiUMl7Eh2XvMvOasgutTEnL1FJg9PvvVctDF1t3J8i18BT+WPQk
- +fUkO8V2InMnuCiuXN3QOznPpRPV5J8=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-aSzfa7C7PFK0vaZ_o4096w-1; Wed, 24 Jan 2024 08:14:23 -0500
-X-MC-Unique: aSzfa7C7PFK0vaZ_o4096w-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7838d129bf8so638836285a.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 05:14:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706102063; x=1706706863;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Kikj5Q9USpTy7MPHUzO0q8pIzEJ5a9YPFpJuSzTrSjU=;
- b=PveRDKDtZ5wD7Ane56/rotubtU9sThCx5zsdzigsLrU0LhNj/bSxLPqsODh5scwtjb
- cRKYOvshCvM/mJ6GeOWyy7l0SPMcTE3W7bG/vuDw2esbhWRRyhXaByIvwxXCseXL1eu5
- Rl3RNQZVh+UVG9oOvAkzUVoZwLD2yUAcPyANGePRPJJCvyubpdlkTqsOLDpxT+h/wE2o
- W0LBXt6/QeIY8QSBV/bvjvOfZxptNjQRSw5EYBy37cuRgStd0N44F1fcbblFoE3vqyuV
- ye4bfo+r79jIV9py0T4Ci0+kfQJ9ecy7xU/uZguuTRprw9i72d09Ee9UuIBgLT3ZVIg6
- pEAg==
-X-Gm-Message-State: AOJu0YzBDF5PWtkm6b3btjk5Sqc/hW7YrXwsIjiQEBlHriHOp++KjoLM
- z18FyrC4VMDFpidPp8DfD74EJiKueX+uW174+sY0X2kX/QfDh18okAnzt8wkQANGFOen+CjjQSl
- 5OcFoFQ8vJYcGlkpW/tVul4aubveuOmsJ8kXOmm958vYa/ygWDPzR
-X-Received: by 2002:a05:620a:218a:b0:783:3625:9e35 with SMTP id
- g10-20020a05620a218a00b0078336259e35mr7571491qka.20.1706102063350; 
- Wed, 24 Jan 2024 05:14:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFYHiE6amf5nxZH3g53MA8KkSFzXbJDRFrFpKq2pqBxFGO97G1AelU82EA69a7m2V1iolBaHg==
-X-Received: by 2002:a05:620a:218a:b0:783:3625:9e35 with SMTP id
- g10-20020a05620a218a00b0078336259e35mr7571475qka.20.1706102063081; 
- Wed, 24 Jan 2024 05:14:23 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- e16-20020a37ac10000000b007816dc2ef52sm4019251qkm.8.2024.01.24.05.14.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 05:14:22 -0800 (PST)
-Message-ID: <a35c4fad-a981-4fbf-81d1-be5625a537b9@redhat.com>
-Date: Wed, 24 Jan 2024 14:14:19 +0100
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rSd6Q-0005WF-GD
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 08:15:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=c1iAhEM5d1m8JJrIm9rLS7yKHU+F9vmNlWCPnvr4dhA=; b=nNDSr/5/Y7t4xcfxQ3CNrMLJDk
+ Zw1wdzf9p7iYCggnOWzgvf2ukfpBs9/KIr/yFU1BmNTywEbK6n/rp+6bEysiZfkM4cv155btV6uxU
+ vzKzNr1lcWN9SyuovqQ4dN49WSlqXhhvNZKADb1YrCycn15iBtoKp8U3DNK1FUQKPsvbRjhma4B+r
+ MODsNvM7rbHsIn++ZHHjcQMu1XHWfr0Gga28+4O8dwUhkPeKfuzk+igQ7JorC6sZ5z4stNMZm3M1t
+ hCQMAKiCL1qcaI4SIm2V/pa7Y15hNNb3a5wMIJROhA8dH2ESF0pVQ3O6Ry28Jo1YQrPQ1EMo1jhAQ
+ fwiZJWq2FAlOyp1UiIX23d1tpMAWkTZbrHypWgeio8Gb06rP9ohuqft4DVdYsYzX67x8YZsmuWWKZ
+ IqFjIUNQKo5ZAGwtf5HCv+VommtR3zgaUel7DvBKZQ4fCV4PAL5H14Y7OS/LkH/IZu0EfW6fJ6BO7
+ E+o0l24apptrROBIXmS3BfUpt0ScAic+eKCcYHw3qlYNeX1BHncgB7YkBPRagHVmv6rnED2wHeNTY
+ 6K16RePt8FcPaDgxwBjfO3C0Yh5aFYIsRcd4CCx291rT1yvyyMMxnYcWLIOzmTpIeCuxoyBIrksGV
+ 3e3gJxwtD75IzQIN853tNIGl54XZFbun2RDbP/Hpc=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Greg Kurz <groug@kaod.org>, Richard Henderson <richard.henderson@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 2/6] hw/9pfs/9p-synth: Use RCU_READ macro
+Date: Wed, 24 Jan 2024 14:15:31 +0100
+Message-ID: <6538277.BgTanuEaLT@silver>
+In-Reply-To: <20240124074201.8239-3-philmd@linaro.org>
+References: <20240124074201.8239-1-philmd@linaro.org>
+ <20240124074201.8239-3-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] virtio-iommu: Add an option to define the input range
- width
-Content-Language: en-US
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, peterx@redhat.com, yanghliu@redhat.com,
- mst@redhat.com, clg@redhat.com, jasowang@redhat.com
-References: <20240123181753.413961-1-eric.auger@redhat.com>
- <20240123181753.413961-2-eric.auger@redhat.com>
- <20240123165141.7a79de34.alex.williamson@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240123165141.7a79de34.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,73 +71,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+On Wednesday, January 24, 2024 8:41:57 AM CET Philippe Mathieu-Daud=E9 wrot=
+e:
+> Replace the manual rcu_read_(un)lock calls by the
+> WITH_RCU_READ_LOCK_GUARD macro (See commit ef46ae67ba
+> "docs/style: call out the use of GUARD macros").
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+> ---
 
-On 1/24/24 00:51, Alex Williamson wrote:
-> On Tue, 23 Jan 2024 19:15:55 +0100
-> Eric Auger <eric.auger@redhat.com> wrote:
->
->> aw-bits is a new option that allows to set the bit width of
->> the input address range. This value will be used as a default for
->> the device config input_range.end. By default it is set to 64 bits
->> which is the current value.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->>  include/hw/virtio/virtio-iommu.h | 1 +
->>  hw/virtio/virtio-iommu.c         | 4 +++-
->>  2 files changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
->> index 781ebaea8f..5fbe4677c2 100644
->> --- a/include/hw/virtio/virtio-iommu.h
->> +++ b/include/hw/virtio/virtio-iommu.h
->> @@ -66,6 +66,7 @@ struct VirtIOIOMMU {
->>      bool boot_bypass;
->>      Notifier machine_done;
->>      bool granule_frozen;
->> +    uint8_t aw_bits;
->>  };
->>  
->>  #endif
->> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
->> index ec2ba11d1d..e7f299e0c6 100644
->> --- a/hw/virtio/virtio-iommu.c
->> +++ b/hw/virtio/virtio-iommu.c
->> @@ -1314,7 +1314,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
->>       */
->>      s->config.bypass = s->boot_bypass;
->>      s->config.page_size_mask = qemu_real_host_page_mask();
->> -    s->config.input_range.end = UINT64_MAX;
->> +    s->config.input_range.end =
->> +        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;
-> What happens when someone sets aw_bits = 1?  There are a whole bunch of
-> impractical values here ripe for annoying bug reports.  vtd_realize()
-> returns an Error for any values other than 39 or 48.  We might pick an
-> arbitrary lower bound (39?) or some other more creative solution here
-> to avoid those silly issues in our future.  Thanks,
-You're right. I can check the input value. This needs to be dependent on
-the machine though but this should be feasable.
-Then I would allow 39 and 48 for q35 and 64 only on ARM.
+Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Eric
->
-> Alex
->
->>      s->config.domain_range.end = UINT32_MAX;
->>      s->config.probe_size = VIOMMU_PROBE_SIZE;
->>  
->> @@ -1525,6 +1526,7 @@ static Property virtio_iommu_properties[] = {
->>      DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
->>                       TYPE_PCI_BUS, PCIBus *),
->>      DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
->> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
->>      DEFINE_PROP_END_OF_LIST(),
->>  };
->>  
+>  hw/9pfs/9p-synth.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+>=20
+> diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+> index 0ac79a500b..419ea69e3a 100644
+> --- a/hw/9pfs/9p-synth.c
+> +++ b/hw/9pfs/9p-synth.c
+> @@ -241,15 +241,15 @@ static struct dirent *synth_get_dentry(V9fsSynthNod=
+e *dir,
+>      int i =3D 0;
+>      V9fsSynthNode *node;
+> =20
+> -    rcu_read_lock();
+> -    QLIST_FOREACH(node, &dir->child, sibling) {
+> -        /* This is the off child of the directory */
+> -        if (i =3D=3D off) {
+> -            break;
+> +    WITH_RCU_READ_LOCK_GUARD() {
+> +        QLIST_FOREACH(node, &dir->child, sibling) {
+> +            /* This is the off child of the directory */
+> +            if (i =3D=3D off) {
+> +                break;
+> +            }
+> +            i++;
+>          }
+> -        i++;
+>      }
+> -    rcu_read_unlock();
+>      if (!node) {
+>          /* end of directory */
+>          return NULL;
+> @@ -494,13 +494,13 @@ static int synth_name_to_path(FsContext *ctx, V9fsP=
+ath *dir_path,
+>          goto out;
+>      }
+>      /* search for the name in the children */
+> -    rcu_read_lock();
+> -    QLIST_FOREACH(node, &dir_node->child, sibling) {
+> -        if (!strcmp(node->name, name)) {
+> -            break;
+> +    WITH_RCU_READ_LOCK_GUARD() {
+> +        QLIST_FOREACH(node, &dir_node->child, sibling) {
+> +            if (!strcmp(node->name, name)) {
+> +                break;
+> +            }
+>          }
+>      }
+> -    rcu_read_unlock();
+> =20
+>      if (!node) {
+>          errno =3D ENOENT;
+>=20
+
 
 
