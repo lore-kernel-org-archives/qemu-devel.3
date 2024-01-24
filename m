@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349A6C47422
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 21:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063BEC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 21:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSkWg-0007JQ-D0; Wed, 24 Jan 2024 16:11:14 -0500
+	id 1rSkXY-0000s2-U4; Wed, 24 Jan 2024 16:12:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSkWe-0007JC-Iw
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:11:12 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rSkXU-0000mx-JM
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:12:04 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rSkWc-0004x8-UQ
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:11:12 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5ca29c131ebso4349241a12.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 13:11:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rSkXR-00051a-HQ
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 16:12:03 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-290fb65531eso644250a91.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 13:12:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706130669; x=1706735469; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kQDL11g53pCVU/eOIwDhpYn6KRKNRmbK4sFqPyWfOTA=;
- b=WDxwypyVzsyb+/emCWtjZc0F4NK1UAIYLWGCTpEzBwDOCOhzIHKfAxm9V/Wvwj6YJA
- d8Qd9qr+xC0tXjDhtiXjIeB/blosOMyyQqn9jAOSDphPaEfe6MUY3u/zXyirD4nZfmBH
- GqL5ARt37jbz9VUCe+w3JYbgAkbl1geolBg8KFRqfAbMsogapwAzer5OmXajy528F3CT
- IfKvo1o/GGpZGAe/oPGfdOTOiJipKN+IRnRskh7y06CrR2NrCx5eF9zlan7GR9Y4M0PJ
- aoSs/3ySNfRTyZOXEMdAyMd5rf1yq9IQQ6TV6xf2yqEHXpyDspyJVoUxROsgsaWQL2V/
- d1zA==
+ d=gmail.com; s=20230601; t=1706130720; x=1706735520; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=en9elrlzH5ROGIslaMPqVVimkyWbMWGsUFGcvQEX4OE=;
+ b=PzqaRw1wdFAPBFx8MmDeKZONUCKyEM2J2zE0X/m/QjHZefJPNEv+K4a7SnQHSDPPTw
+ lkFrADM6POAewJ18F7Ea+bmCmhW8w8B+vzW2Ayu/Fe2eAMJJq/TaFRUKEEXpbZyrFetg
+ OxTV15blR8oleiPnKiN+HH1ec9uPhDPq3gJ9m4Ip636DbaxpTIfh3oRNwdeNfCp2KuaE
+ SEu/5WOghXrUIOcW+FwJ6SQytIfN2TiuiV0v2VThY3e4y3dd9z4UqYNq/RbNAhCVWb1I
+ CP+WYIyG6lJ3/3/Z2ePo4NGr8zzKZFrG/gsHh7042tosYIPKDkXP81xT9+VkxMRcVWbm
+ rGzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706130669; x=1706735469;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kQDL11g53pCVU/eOIwDhpYn6KRKNRmbK4sFqPyWfOTA=;
- b=KSfTF08Gq5dOvibthFKEA8T2XVri1mpsRQwcHD/Ga8CDeaWWngEfpO6g/Lw/ZukmoN
- A3GT47PdzUaezOE8OMLUDzqB3LggYSIYdFiRaHUpbx0nn7Temr6vhubNQCv1QPweA/Zn
- u6BgwTG0CdeFpJMpRk1jrPh7jnAOOp0DNWxBV8k3/2bP64Mlb5yyiMF2x0fkjtBvTlAw
- eEGUgN4mtJY+uDsDApdtkFM9lw7vYdJCHT0zYBarVYI2O/MY0PwDAlFGlMuA1xOEAGOw
- /05vViQwr4ubfDlFu3j9EzONiw0y10ysO9dse0S7D+CK5BHNJl4YAoc5rB3QEqQVlVbF
- X1rg==
-X-Gm-Message-State: AOJu0YwBMKyDpj+SQS0DOogtuBlVpHRwHoyEXtAMwCeySW/yl5huJvDI
- V9cK4bR/4kTpiHxKfWtXIS9BwskdXc4PH3E5xcs4Fs7AmXn+SrAHjqB++SNSHQ7CzQdtAHVi/+o
- n
-X-Google-Smtp-Source: AGHT+IGh+LCsx+LskQjRpZEYCcfO8qXjE5aQMo3c6dta2Pw9n+6g+xN7GvDXKM9HfztI6d19DrkRpw==
-X-Received: by 2002:a05:6a20:9593:b0:19b:5cf9:45ac with SMTP id
- iu19-20020a056a20959300b0019b5cf945acmr56567pzb.81.1706130669053; 
- Wed, 24 Jan 2024 13:11:09 -0800 (PST)
-Received: from ?IPV6:2001:44b8:2176:c800:5fcf:9e3:2e58:9c7?
- (2001-44b8-2176-c800-5fcf-09e3-2e58-09c7.static.ipv6.internode.on.net.
- [2001:44b8:2176:c800:5fcf:9e3:2e58:9c7])
+ d=1e100.net; s=20230601; t=1706130720; x=1706735520;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=en9elrlzH5ROGIslaMPqVVimkyWbMWGsUFGcvQEX4OE=;
+ b=ooruXWSMDlANsHU5pRhuhPxXxpvCvshDvmZ3yRgsRtOs61I3ZAr2lak7Cg9bvyn/eM
+ osnH+/UXEJG0aPRucIVQ1WcUnWqM/FqCnALsJ8FJuja9JEuWEOwvPa3Labki78y5oSJ4
+ FDRKY0lRgjmPpc4uY5llNJWwaVRBsJkGgWcnjHOKOo6dxEBS3hOgpyk0XixYsNmn/nhL
+ cDmJpE9a1Wj2jfcrNsOuo0D7gsWcmY+6b/JEVN+KE28qC3xUfSVGQmdZSgdxnonef2ey
+ qdRxyJxKNHd3wac6ufZTueAdYLBbTO7wvKjPGEjSsS4+AARvJ16mPaULLJj7m1G84Cxa
+ 09Kw==
+X-Gm-Message-State: AOJu0YzGKZHDzct1dBD7oJec1pPbBBDVsS84r5TUIe8RbnBEUWvc2RJo
+ YhcLZfyBDef01wTdakQTFT6m5eUu+UOcWdfXfGjhtjAniiz6ETrb
+X-Google-Smtp-Source: AGHT+IEk5Kj8Zs9IkifoB3g21OSw1ffdiYqnVXgWmdl/J8qaASYgziaGsv8xwvbkOOT2F+qre3g5sg==
+X-Received: by 2002:a17:90a:a410:b0:28e:8012:1329 with SMTP id
+ y16-20020a17090aa41000b0028e80121329mr139000pjp.23.1706130720053; 
+ Wed, 24 Jan 2024 13:12:00 -0800 (PST)
+Received: from debian (c-71-202-32-218.hsd1.ca.comcast.net. [71.202.32.218])
  by smtp.gmail.com with ESMTPSA id
- q24-20020aa79838000000b006dba11edc7csm13664451pfl.218.2024.01.24.13.11.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 13:11:08 -0800 (PST)
-Message-ID: <3aad97e2-7a2d-4629-bca2-0e5a0f439082@linaro.org>
-Date: Thu, 25 Jan 2024 07:11:01 +1000
+ l5-20020a17090add8500b0028dfdfc9a8esm94448pjv.37.2024.01.24.13.11.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jan 2024 13:11:59 -0800 (PST)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Wed, 24 Jan 2024 13:11:56 -0800
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ Fan Ni <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>,
+ Ira Weiny <ira.weiny@intel.com>,
+ Huai-Cheng Kuo <hchkuo@avery-design.com.tw>,
+ Dave Jiang <dave.jiang@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Davidlohr Bueso <dave@stgolabs.net>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Li Zhijian <lizhijian@fujitsu.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>, linuxarm@huawei.com,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 03/12] hw/pci-bridge/cxl_upstream: Drop g_malloc0()
+ failure handling
+Message-ID: <ZbF9HMx_XJCKTcIH@debian>
+References: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
+ <20240124124100.8218-4-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/4] accel/tcg: Move perf and debuginfo support to tcg
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Ilya Leoshkevich
- <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
-References: <20240124075609.14756-1-philmd@linaro.org>
- <20240124075609.14756-5-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240124075609.14756-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240124124100.8218-4-Jonathan.Cameron@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,54 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/24 17:56, Philippe Mathieu-Daudé wrote:
-> From: Ilya Leoshkevich <iii@linux.ibm.com>
+On Wed, Jan 24, 2024 at 12:40:51PM +0000, Jonathan Cameron wrote:
+> As a failure of g_malloc0() will result in QEMU exiting, it
+
+s/g_malloc0/g_malloc/
+
+
+Fan
+
+> won't return a NULL to check.  As such, drop the incorrect handling
+> of such NULL returns in the cdat table building code.
 > 
-> tcg/ should not depend on accel/tcg/, but perf and debuginfo
-> support provided by the latter are being used by tcg/tcg.c.
-> 
-> Since that's the only user, move both to tcg/.
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> Message-ID: <20231208003754.3688038-5-iii@linux.ibm.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > ---
->   {accel/tcg => tcg}/debuginfo.h | 4 ++--
->   {accel/tcg => tcg}/perf.h      | 4 ++--
-
-Headers should be in include/tcg/.
-
-> --- a/accel/tcg/translate-all.c
-> +++ b/accel/tcg/translate-all.c
-> @@ -63,7 +63,7 @@
->   #include "tb-context.h"
->   #include "internal-common.h"
->   #include "internal-target.h"
-> -#include "perf.h"
-> +#include "tcg/perf.h"
-
-Since it is used from accel/tcg/,
-
->   #include "tcg/insn-start-words.h"
->   
->   TBContext tb_ctx;
-> diff --git a/hw/core/loader.c b/hw/core/loader.c
-> index e7a9b3775b..b8e52f3fb0 100644
-> --- a/hw/core/loader.c
-> +++ b/hw/core/loader.c
-> @@ -62,7 +62,7 @@
->   #include "hw/boards.h"
->   #include "qemu/cutils.h"
->   #include "sysemu/runstate.h"
-> -#include "accel/tcg/debuginfo.h"
-> +#include "tcg/debuginfo.h"
-
-... and hw/core/.
-
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
+>  hw/pci-bridge/cxl_upstream.c | 6 ------
+>  1 file changed, 6 deletions(-)
+> 
+> diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+> index 36737189c6..d5341b530f 100644
+> --- a/hw/pci-bridge/cxl_upstream.c
+> +++ b/hw/pci-bridge/cxl_upstream.c
+> @@ -228,9 +228,6 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>  
+>      sslbis_size = sizeof(CDATSslbis) + sizeof(*sslbis_latency->sslbe) * count;
+>      sslbis_latency = g_malloc(sslbis_size);
+> -    if (!sslbis_latency) {
+> -        return -ENOMEM;
+> -    }
+>      *sslbis_latency = (CDATSslbis) {
+>          .sslbis_header = {
+>              .header = {
+> @@ -251,9 +248,6 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>      }
+>  
+>      sslbis_bandwidth = g_malloc(sslbis_size);
+> -    if (!sslbis_bandwidth) {
+> -        return 0;
+> -    }
+>      *sslbis_bandwidth = (CDATSslbis) {
+>          .sslbis_header = {
+>              .header = {
+> -- 
+> 2.39.2
+> 
 
