@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B5CC46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38DAEC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 23:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSmsU-0003Sb-6l; Wed, 24 Jan 2024 18:41:54 -0500
+	id 1rSmwf-0004Oo-FJ; Wed, 24 Jan 2024 18:46:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rSmsR-0003Qq-IW
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:41:51 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1rSmwd-0004OV-1u
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:46:11 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rSmsP-0001Fs-N0
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:41:51 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6db0fdd2b8fso3214319b3a.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:41:49 -0800 (PST)
+ id 1rSmwb-0003Xp-Bn
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 18:46:10 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6dc6f47302bso2806452b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 15:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706139708; x=1706744508; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706139967; x=1706744767; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gaSatxmH+joCu/w8PnCw+KneNZItml6/XeGG6dTffFY=;
- b=K4geTy8xTwnx02Nn6G0kxEmCMsGGLMXPDMiwtINjjbz17QipBCRarxjx1XOP68uSfi
- GUCL6Ml2LRV6fGfiIGzlDmJfWyAr8ltsxVK4DpWkmmf3ndcrjwbkeJ8Ept8OIfWP4bKW
- CUX72AGqAL//KqvOQkk2H3FH3mQpnQK15weFCAmsFAwOVySvitiL0sVHJscIg8MPIaCI
- KsYtMPnbqiLlwyt8VG1+4guJh9jSKa8JCj99fn++ZkZCSeP3++wCI64jNr3hymp2Y8Qf
- kDzDUPoQAz0c9eb3kV7n8+s0xNZTYIxH2JKM9hAPWJhzyv49Q7cw2Gp7jPuOQqO82i4A
- gDow==
+ bh=he2KEP2HM2IJJa5SoOBxLONvQh8hQtu1DQYEA4eCTE0=;
+ b=dbuXjndZ/OtwG7kjPOvtDKoFS7xXBBOfIZqPaNDkNsJxeKU7C2eZcKV4PNnUl/BKyz
+ 39wfM46pwi7GkIgeyWE4Lv+m6tk8IrtK9t5CT1qrUGY7kcXVp3kROXiq779v7YD9kL6N
+ UNFaovsv2nv/7MsxdHByKsVP/J7Rcc+6+xAG/oYIUV61lg8xc6SzZEt//unCs1hAeMBZ
+ uqgkMVao2kAy+YQmRMCOzxp2wgUM3MNknl/uWBb/kBPTAh/H1V6sLduRVq4xUUPvYB4p
+ hvh5eW16m5HIozmjXDhWA/CyBI8H7XXbKZ9mTv6f8jiogRNRHg/PASybJrUZG7Geg7IW
+ 13uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706139708; x=1706744508;
+ d=1e100.net; s=20230601; t=1706139967; x=1706744767;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gaSatxmH+joCu/w8PnCw+KneNZItml6/XeGG6dTffFY=;
- b=Q3z4+r2AFjm2kN58oDHshJq9CBuqmXR4DZB7Wa9A8CPLSOD6FCtH7vaQnJUkoHLSZc
- BGp6yIgMdgqqBVshHWAd+oJYQNg+L+5LZ3YmdBSevuk3YJ3kXefW/pE29o8ROmEGdWVY
- Dy6hyfVMLOOJ46/9MSw6wrE0pvJhoM6vpJLF5r9qS2C6W9BbESrjMg8Jz6QHVAxDvYbq
- sggTTB7QNbRJ3OndFl9SeupXF+qfEjrGSQMxKHEJ+/Lnvvs7+zdMBP9mEJeQ6nG3nO9r
- Kf5MhOXN74pHlKEbia4GZDxU4v8oWUlxjrvTeqQEjUN/WyHk8bF51G8fTY8Bus3x4z5L
- NMew==
-X-Gm-Message-State: AOJu0YzXwNwJ+XxP0I/Fjo7JRJHYLOSfakGqM4oeaAhA0EDXxcmnelyP
- fJIr+6cxNlmUNwFfAYO4+8SNzYUIn+pHcT1a471PqpjwMDeGOsdM
-X-Google-Smtp-Source: AGHT+IHVe9lTVakJVs+F5MIJosRAJv06fJmfY4gFLfd0qojOcZiL4TdrioGI5uwOyIKDgl47EPPBxA==
-X-Received: by 2002:a05:6a00:2194:b0:6d9:ac99:316b with SMTP id
- h20-20020a056a00219400b006d9ac99316bmr358593pfi.50.1706139708121; 
- Wed, 24 Jan 2024 15:41:48 -0800 (PST)
+ bh=he2KEP2HM2IJJa5SoOBxLONvQh8hQtu1DQYEA4eCTE0=;
+ b=H0IjmxCmxXhsU1jmVvmv7JwQLhQgikoxgKxRqlGjBCyx0VzGCpWf3MJd7ZuXfuD8RU
+ z2iy5f/3m9BKus0athIsArxuNx8k5eTgC461H8aPHd+GPWkVNcOSRN+TLn20EokaKfeB
+ k7XyselXo0HiLDvl2PoJ6kn5ti5k3MwWnFCN3AG20SkdUwsNOG2IlO4696IqUNcYO/Ks
+ msskZAXTZNsNicM0ZevNcC91QchXWCG69p9eTDfWtOrxVGgI9ZXmbxmG4KCJ3UZigF7W
+ BoaOQy+7zI/Vg9eQluTlcoW8pnQjd2xU0gfvPtroihK3noaNDMJpRingL95BY6Dv2N0Q
+ mPcQ==
+X-Gm-Message-State: AOJu0YzF5QfieGU/Nd+WvpNobluAZ037ujW0zl7Ic3zhD+2UIFcgbWOd
+ OGFCxLLqv27dYV001pX6tZONA5GnBC4rlEDaVSSNQQbEHR53DXCDwvW6pu32
+X-Google-Smtp-Source: AGHT+IEFp2stuPVEumm3xFBOnpfpRQTE1qiBs/EKyk20iJhoJG/Rgqut73EXKM7vZ31fzH2XWMKWFg==
+X-Received: by 2002:a05:6a00:3499:b0:6da:9ab2:d933 with SMTP id
+ cp25-20020a056a00349900b006da9ab2d933mr7400pfb.20.1706139966904; 
+ Wed, 24 Jan 2024 15:46:06 -0800 (PST)
 Received: from debian (c-71-202-32-218.hsd1.ca.comcast.net. [71.202.32.218])
  by smtp.gmail.com with ESMTPSA id
- i3-20020aa78b43000000b006d9be279432sm14352504pfd.2.2024.01.24.15.41.46
+ fk19-20020a056a003a9300b006db87354a8fsm14260226pfb.119.2024.01.24.15.46.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jan 2024 15:41:47 -0800 (PST)
+ Wed, 24 Jan 2024 15:46:06 -0800 (PST)
 From: fan <nifan.cxl@gmail.com>
 X-Google-Original-From: fan <fan@debian>
-Date: Wed, 24 Jan 2024 15:41:45 -0800
+Date: Wed, 24 Jan 2024 15:46:04 -0800
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  Fan Ni <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>,
@@ -71,16 +71,16 @@ Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  Li Zhijian <lizhijian@fujitsu.com>,
  Stefan Hajnoczi <stefanha@gmail.com>, linuxarm@huawei.com,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 05/12] hw/cxl/mbox: Remove dead code
-Message-ID: <ZbGgOR1zTEp17_F7@debian>
+Subject: Re: [PATCH 07/12] hw/cxl: Pass CXLComponentState to cache_mem_ops
+Message-ID: <ZbGhPIfJgzWlnsDS@debian>
 References: <20240124124100.8218-1-Jonathan.Cameron@huawei.com>
- <20240124124100.8218-6-Jonathan.Cameron@huawei.com>
+ <20240124124100.8218-8-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240124124100.8218-6-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42d.google.com
+In-Reply-To: <20240124124100.8218-8-Jonathan.Cameron@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,85 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 12:40:53PM +0000, Jonathan Cameron wrote:
-> From: Davidlohr Bueso <dave@stgolabs.net>
+On Wed, Jan 24, 2024 at 12:40:55PM +0000, Jonathan Cameron wrote:
+> From: Li Zhijian <lizhijian@fujitsu.com>
 > 
-> Two functions were reported to have dead code, remove the bogus
-> branches altogether, as well as a misplaced qemu_log call.
+> cache_mem_ops.{read,write}() interprets opaque as
+> CXLComponentState(cxl_cstate) instead of ComponentRegisters(cregs).
 > 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+> Fortunately, cregs is the first member of cxl_cstate, so their values are
+> the same.
+> 
+> Fixes: 9e58f52d3f8 ("hw/cxl/component: Introduce CXL components (8.1.x, 8.2.5)")
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 
 > ---
->  hw/cxl/cxl-mailbox-utils.c | 43 +++++++++++++-------------------------
->  1 file changed, 15 insertions(+), 28 deletions(-)
+>  hw/cxl/cxl-component-utils.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 6eff56fb1b..dc42850767 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -1001,15 +1001,8 @@ static CXLRetCode cmd_sanitize_overwrite(const struct cxl_cmd *cmd,
+> diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+> index 29d477492b..9dfde6c0b3 100644
+> --- a/hw/cxl/cxl-component-utils.c
+> +++ b/hw/cxl/cxl-component-utils.c
+> @@ -199,7 +199,7 @@ void cxl_component_register_block_init(Object *obj,
+>      /* io registers controls link which we don't care about in QEMU */
+>      memory_region_init_io(&cregs->io, obj, NULL, cregs, ".io",
+>                            CXL2_COMPONENT_IO_REGION_SIZE);
+> -    memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cregs,
+> +    memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cstate,
+>                            ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
 >  
->      cxl_dev_disable_media(&ct3d->cxl_dstate);
->  
-> -    if (secs > 2) {
-> -        /* sanitize when done */
-> -        return CXL_MBOX_BG_STARTED;
-> -    } else {
-> -        __do_sanitization(ct3d);
-> -        cxl_dev_enable_media(&ct3d->cxl_dstate);
-> -
-> -        return CXL_MBOX_SUCCESS;
-> -    }
-> +    /* sanitize when done */
-> +    return CXL_MBOX_BG_STARTED;
->  }
->  
->  static CXLRetCode cmd_get_security_state(const struct cxl_cmd *cmd,
-> @@ -1387,27 +1380,21 @@ static void bg_timercb(void *opaque)
->  
->          cci->bg.complete_pct = 100;
->          cci->bg.ret_code = ret;
-> -        if (ret == CXL_MBOX_SUCCESS) {
-> -            switch (cci->bg.opcode) {
-> -            case 0x4400: /* sanitize */
-> -            {
-> -                CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> -
-> -                __do_sanitization(ct3d);
-> -                cxl_dev_enable_media(&ct3d->cxl_dstate);
-> -            }
-> +        switch (cci->bg.opcode) {
-> +        case 0x4400: /* sanitize */
-> +        {
-> +            CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +
-> +            __do_sanitization(ct3d);
-> +            cxl_dev_enable_media(&ct3d->cxl_dstate);
-> +        }
-> +        break;
-> +        case 0x4304: /* TODO: scan media */
-> +            break;
-> +        default:
-> +            __builtin_unreachable();
->              break;
-> -            case 0x4304: /* TODO: scan media */
-> -                break;
-> -            default:
-> -                __builtin_unreachable();
-> -                break;
-> -            }
->          }
-> -
-> -        qemu_log("Background command %04xh finished: %s\n",
-> -                 cci->bg.opcode,
-> -                 ret == CXL_MBOX_SUCCESS ? "success" : "aborted");
->      } else {
->          /* estimate only */
->          cci->bg.complete_pct = 100 * now / total_time;
+>      memory_region_add_subregion(&cregs->component_registers, 0, &cregs->io);
 > -- 
 > 2.39.2
 > 
