@@ -4,87 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7812C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 15:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315E7C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 15:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSfac-0003g5-Ol; Wed, 24 Jan 2024 10:54:58 -0500
+	id 1rSfcH-0006QO-DU; Wed, 24 Jan 2024 10:56:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSfaP-0003bu-4s
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:54:46 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSfaN-0002P7-J0
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:54:44 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40e775695c6so54824025e9.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 07:54:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706111681; x=1706716481; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=v3Z0Jq1OM+053LyGdHXwEFjN+ojKTQFR08GCVhW4ybo=;
- b=zsihVpruycjU1JIQURwG+6A4eTLvnwD5oMzhCBPQxO3hdiv+DDfYxOG74jjihbU1j/
- Amt/YICWuNzoIpJWA/M8KL6Ab+hnfX76zB0WTE0I6UCqHC9z9rCLr1rDTKneIrL9B25b
- JSGx69+DZnPSO+mY63GUTJPDBzAZ+pky4Plkq20fBOGDNO5UZlkESmp5j0tB1x4O51Gr
- F4Cz6RY9xHvO0bXg2eguAf1pU79wxVmnpfejo6VbECWOhA6MNcSHAHgKEptEV3moYC2k
- az/Tzs7H4rq2bfSNoko2yvNZcMMyiStzPs90qioFuLwtO1h8KdZGrDhHaWjPWqUdtECd
- r6JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706111681; x=1706716481;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=v3Z0Jq1OM+053LyGdHXwEFjN+ojKTQFR08GCVhW4ybo=;
- b=TtXu1occJriRU0SeA4OMTLPH/nZbe4wYZJcN1AEFBsfLezdtO3Zof7lcaFRoI5lAzS
- swotXwrHZ7Imi/7idCF5LbfrfSlp2Cvrs+UpxM9jzCBEdXJ5ZZmsHZb+OuquZj+zF9iu
- AajJNrWC/JbX2cjukj/fAazLvfFS7sBamYB/nnIjRqIpzffORQ3PrWyL+oF1qfAgvvZB
- uEHO3SyGq5cUl7jM85i+9LQqgRaz5Lx2mWpf8dbEFvS9weHc/rlStG9HIf52kITj+oHJ
- tqntQHiK6lREg8WW38GgSlPhNxlvpeKEGCBPNFSMbLw/mqLCtUno7k5S9ZRBPS7f2Bit
- 9fTQ==
-X-Gm-Message-State: AOJu0Yw7bITWcorskspEff9TAde1+JzfEou3hwNNwVVFWM9EXLmBT1xF
- RS9Jj2S7Lf//CgRIDUcMkW/1Sw0LiS1M7jWbnOlDAvoK+y/MRgJtf6V7m26HCngNq4FkpXAZmWB
- A
-X-Google-Smtp-Source: AGHT+IHKTp1SuOzIsHw5nkqILY05RVW6D4Zl2jPs9OD7SWzZf+XP/XIOGWgID01b2/sofwnHFo0tPA==
-X-Received: by 2002:a05:600c:4f87:b0:40d:8810:468b with SMTP id
- n7-20020a05600c4f8700b0040d8810468bmr1763339wmq.88.1706111681634; 
- Wed, 24 Jan 2024 07:54:41 -0800 (PST)
-Received: from localhost.localdomain
- (lgp44-h02-176-184-8-67.dsl.sta.abo.bbox.fr. [176.184.8.67])
- by smtp.gmail.com with ESMTPSA id
- l7-20020a05600c4f0700b0040d5f466deesm57530wmq.38.2024.01.24.07.54.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Jan 2024 07:54:41 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
- qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] accel/kvm: Directly check KVM_ARCH_HAVE_MCE_INJECTION
- value in place
-Date: Wed, 24 Jan 2024 16:54:25 +0100
-Message-ID: <20240124155425.73195-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240124155425.73195-1-philmd@linaro.org>
-References: <20240124155425.73195-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rSfcG-0006Pz-H6
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:56:40 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rSfcE-0003Fv-IL
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 10:56:40 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TKpRD1JDGz6K5df;
+ Wed, 24 Jan 2024 23:54:00 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id B9FF9140A70;
+ Wed, 24 Jan 2024 23:56:34 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 24 Jan
+ 2024 15:56:34 +0000
+Date: Wed, 24 Jan 2024 15:56:33 +0000
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <nifan@outlook.com>, <jim.harris@samsung.com>, "Fan Ni" <fan.ni@samsung.com>
+Subject: Re: [PATCH v3 6/9] hw/mem/cxl_type3: Add DC extent list
+ representative and get DC extent list mailbox support
+Message-ID: <20240124155633.00002d5f@Huawei.com>
+In-Reply-To: <20231107180907.553451-7-nifan.cxl@gmail.com>
+References: <20231107180907.553451-1-nifan.cxl@gmail.com>
+ <20231107180907.553451-7-nifan.cxl@gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,87 +70,173 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly use KVM_ARCH_HAVE_MCE_INJECTION instead of
-KVM_HAVE_MCE_INJECTION.
+On Tue,  7 Nov 2023 10:07:10 -0800
+nifan.cxl@gmail.com wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/sysemu/kvm.h |  6 +++---
- accel/kvm/kvm-all.c  | 10 +++++-----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> Add dynamic capacity extent list representative to the definition of
+> CXLType3Dev and add get DC extent list mailbox command per
+> CXL.spec.3.0:.8.2.9.8.9.2.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+A few minor comments inline.
 
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index 2e9aa2fc53..4107678233 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -350,11 +350,11 @@ bool kvm_vcpu_id_is_valid(int vcpu_id);
- /* Returns VCPU ID to be used on KVM_CREATE_VCPU ioctl() */
- unsigned long kvm_arch_vcpu_id(CPUState *cpu);
- 
--#if KVM_ARCH_HAVE_MCE_INJECTION
--#define KVM_HAVE_MCE_INJECTION
-+#ifndef KVM_ARCH_HAVE_MCE_INJECTION
-+#error Missing KVM_ARCH_HAVE_MCE_INJECTION definition in "cpu.h"
- #endif
- 
--#ifdef KVM_HAVE_MCE_INJECTION
-+#if KVM_ARCH_HAVE_MCE_INJECTION
- void kvm_arch_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
- #endif
- 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 49e755ec4a..b98c0843b1 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2750,7 +2750,7 @@ void kvm_cpu_synchronize_pre_loadvm(CPUState *cpu)
-     run_on_cpu(cpu, do_kvm_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
- }
- 
--#ifdef KVM_HAVE_MCE_INJECTION
-+#if KVM_ARCH_HAVE_MCE_INJECTION
- static __thread void *pending_sigbus_addr;
- static __thread int pending_sigbus_code;
- static __thread bool have_sigbus_pending;
-@@ -2855,7 +2855,7 @@ int kvm_cpu_exec(CPUState *cpu)
- 
-         attrs = kvm_arch_post_run(cpu, run);
- 
--#ifdef KVM_HAVE_MCE_INJECTION
-+#if KVM_ARCH_HAVE_MCE_INJECTION
-         if (unlikely(have_sigbus_pending)) {
-             bql_lock();
-             kvm_arch_on_sigbus_vcpu(cpu, pending_sigbus_code,
-@@ -3339,7 +3339,7 @@ void kvm_init_cpu_signals(CPUState *cpu)
-     sigaction(SIG_IPI, &sigact, NULL);
- 
-     pthread_sigmask(SIG_BLOCK, NULL, &set);
--#if defined KVM_HAVE_MCE_INJECTION
-+#if KVM_ARCH_HAVE_MCE_INJECTION
-     sigdelset(&set, SIGBUS);
-     pthread_sigmask(SIG_SETMASK, &set, NULL);
- #endif
-@@ -3358,7 +3358,7 @@ void kvm_init_cpu_signals(CPUState *cpu)
- /* Called asynchronously in VCPU thread.  */
- int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr)
- {
--#ifdef KVM_HAVE_MCE_INJECTION
-+#if KVM_ARCH_HAVE_MCE_INJECTION
-     if (have_sigbus_pending) {
-         return 1;
-     }
-@@ -3375,7 +3375,7 @@ int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr)
- /* Called synchronously (via signalfd) in main thread.  */
- int kvm_on_sigbus(int code, void *addr)
- {
--#ifdef KVM_HAVE_MCE_INJECTION
-+#if KVM_ARCH_HAVE_MCE_INJECTION
-     /* Action required MCE kills the process if SIGBUS is blocked.  Because
-      * that's what happens in the I/O thread, where we handle MCE via signalfd,
-      * we can only get action optional here.
--- 
-2.41.0
+J
+> ---
+>  hw/cxl/cxl-mailbox-utils.c  | 73 +++++++++++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3.c          |  1 +
+>  include/hw/cxl/cxl_device.h | 23 ++++++++++++
+>  3 files changed, 97 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 1f512b3e6b..56f4aa237a 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -82,6 +82,7 @@ enum {
+>          #define CLEAR_POISON           0x2
+>      DCD_CONFIG  = 0x48,
+>          #define GET_DC_CONFIG          0x0
+> +        #define GET_DYN_CAP_EXT_LIST   0x1
+>      PHYSICAL_SWITCH = 0x51,
+>          #define IDENTIFY_SWITCH_DEVICE      0x0
+>          #define GET_PHYSICAL_PORT_STATE     0x1
+> @@ -1286,6 +1287,75 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +/*
+> + * CXL r3.0 section 8.2.9.8.9.2:
+> + * Get Dynamic Capacity Extent List (Opcode 4810h)
+
+4801h
+
+> + */
+> +static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+> +                                               uint8_t *payload_in,
+> +                                               size_t len_in,
+> +                                               uint8_t *payload_out,
+> +                                               size_t *len_out,
+> +                                               CXLCCI *cci)
+> +{
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    struct get_dyn_cap_ext_list_in_pl {
+> +        uint32_t extent_cnt;
+> +        uint32_t start_extent_id;
+> +    } QEMU_PACKED;
+> +
+> +    struct get_dyn_cap_ext_list_out_pl {
+> +        uint32_t count;
+> +        uint32_t total_extents;
+> +        uint32_t generation_num;
+> +        uint8_t rsvd[4];
+> +        CXLDCExtentRaw records[];
+> +    } QEMU_PACKED;
+> +
+> +    struct get_dyn_cap_ext_list_in_pl *in = (void *)payload_in;
+> +    struct get_dyn_cap_ext_list_out_pl *out = (void *)payload_out;
+> +    uint16_t record_count = 0, i = 0, record_done = 0;
+> +    CXLDCDExtentList *extent_list = &ct3d->dc.extents;
+> +    CXLDCDExtent *ent;
+> +    uint16_t out_pl_len;
+> +    uint32_t start_extent_id = in->start_extent_id;
+> +
+> +    if (start_extent_id > ct3d->dc.total_extent_count) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    record_count = MIN(in->extent_cnt,
+> +                       ct3d->dc.total_extent_count - start_extent_id);
+> +
+> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+> +    /* May need more processing here in the future */
+
+Not sure what this comment is referring to... I'd be tempted to just
+remove it.
+
+> +    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
+> +
+> +    memset(out, 0, out_pl_len);
+
+As before. It should be already zeroed.
+
+> +    stl_le_p(&out->count, record_count);
+> +    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
+> +    stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
+> +
+> +    if (record_count > 0) {
+> +        QTAILQ_FOREACH(ent, extent_list, node) {
+> +            if (i++ < start_extent_id) {
+> +                continue;
+> +            }
+> +            stq_le_p(&out->records[record_done].start_dpa, ent->start_dpa);
+> +            stq_le_p(&out->records[record_done].len, ent->len);
+> +            memcpy(&out->records[record_done].tag, ent->tag, 0x10);
+> +            stw_le_p(&out->records[record_done].shared_seq, ent->shared_seq);
+> +            record_done++;
+> +            if (record_done == record_count) {
+> +                break;
+> +            }
+> +        }
+> +    }
+> +
+> +    *len_out = out_pl_len;
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+
+
+
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 3dc6928bc5..5738c6f434 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -420,6 +420,25 @@ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
+>  
+>  #define DCD_MAX_REGION_NUM 8
+>  
+> +typedef struct CXLDCDExtentRaw {
+> +    uint64_t start_dpa;
+> +    uint64_t len;
+> +    uint8_t tag[0x10];
+> +    uint16_t shared_seq;
+> +    uint8_t rsvd[0x6];
+> +} QEMU_PACKED CXLDCExtentRaw;
+Naming mismatch.
+
+> +
+> +typedef struct CXLDCDExtent {
+> +    uint64_t start_dpa;
+> +    uint64_t len;
+> +    uint8_t tag[0x10];
+> +    uint16_t shared_seq;
+> +    uint8_t rsvd[0x6];
+> +
+> +    QTAILQ_ENTRY(CXLDCDExtent) node;
+> +} CXLDCDExtent;
+
+DCD or DC?  I don't really care but inconsistent currently.
+
+> +typedef QTAILQ_HEAD(, CXLDCDExtent) CXLDCDExtentList;
+> +
+>  typedef struct CXLDCDRegion {
+>      uint64_t base;
+>      uint64_t decode_len; /* aligned to 256*MiB */
+> @@ -470,6 +489,10 @@ struct CXLType3Dev {
+>          HostMemoryBackend *host_dc;
+>          AddressSpace host_dc_as;
+>          uint64_t total_capacity; /* 256M aligned */
+> +        CXLDCDExtentList extents;
+> +
+> +        uint32_t total_extent_count;
+> +        uint32_t ext_list_gen_seq;
+>  
+>          uint8_t num_regions; /* 0-8 regions */
+>          CXLDCDRegion regions[DCD_MAX_REGION_NUM];
 
 
