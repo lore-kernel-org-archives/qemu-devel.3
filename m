@@ -4,71 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4D5C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 08:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4ACDC46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jan 2024 08:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSYx2-0006B4-VE; Wed, 24 Jan 2024 03:49:40 -0500
+	id 1rSZ3x-0007J0-DO; Wed, 24 Jan 2024 03:56:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rSYx1-0006Ad-9Q
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:49:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rSYwz-0005BF-Dt
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:49:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706086176;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3X08dfag5R7v5b1s845+xQfye5O4XL7rNQQ9+It2RfE=;
- b=ZkWVM5QubfhGXB0Mus5/8y/lCJo3Zf7SW1kGn2jkJtYm218Iu6XOadAsOOml/TE5ZxK3D9
- CcRgkykC3lNy/dwCDdYVnRmoxLptAYJxcakz8GWy681MkUw1XC5WU7XTSGbdXQIe1A9rmw
- u1CfOeomqTZWQ6goL3U4Wxz4smcUyfA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-70zeL9hcMfOZj3J1GhyEOg-1; Wed,
- 24 Jan 2024 03:49:33 -0500
-X-MC-Unique: 70zeL9hcMfOZj3J1GhyEOg-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 327403C0F1A9;
- Wed, 24 Jan 2024 08:49:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.54])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8E4432028CD2;
- Wed, 24 Jan 2024 08:49:32 +0000 (UTC)
-Date: Wed, 24 Jan 2024 08:49:30 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] tests/qtest: Bump timeouts of boot_sector_test()-based
- tests to 610 seconds
-Message-ID: <ZbDPGjSRI6SsN-5L@redhat.com>
-References: <20240124084412.465638-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rSZ3u-0007Is-Jl
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:56:46 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rSZ3s-0006a6-58
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 03:56:46 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxHOvE0LBl9KcEAA--.8315S3;
+ Wed, 24 Jan 2024 16:56:37 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxLs_B0LBlCYMWAA--.33620S3; 
+ Wed, 24 Jan 2024 16:56:35 +0800 (CST)
+Subject: Re: [NOTFORMERGE PATCH 2/2] gitlab: Add Loongarch64 KVM-only build
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Zhiguo Wu <wuzhiguo@loongson.cn>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Bibo Mao <maobibo@loongson.cn>, Xiaojuan Yang <yangxiaojuan@loongson.cn>,
+ Beraldo Leal <bleal@redhat.com>, WANG Xuerui <git@xen0n.name>,
+ =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
+ Xianglai Li <lixianglai@loongson.cn>, Tianrui Zhao <zhaotianrui@loongson.cn>
+References: <20240102172239.69452-1-philmd@linaro.org>
+ <20240102172239.69452-3-philmd@linaro.org>
+ <dbc7f2c6-15c0-4d5a-abf7-8946ff2d03cb@redhat.com>
+ <4cc9ab90-c1bc-03d3-d82e-a763199fa029@loongson.cn>
+ <96bdddb5-e15c-469f-b74b-7e82049888f1@redhat.com>
+ <3766d853-8dc5-f455-e0ea-dd970c65a6c5@loongson.cn>
+ <6f17d2f1-6876-4f1c-beb5-c6a4e89340d8@redhat.com>
+ <94b84fa3-4a10-3fef-0415-6b87f2aa255b@loongson.cn>
+ <0964ddb6-f403-4bec-8f90-23f8b9b0dfd6@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <102fd8fe-fb9c-9374-1ab7-1daccfad0064@loongson.cn>
+Date: Wed, 24 Jan 2024 16:56:33 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <0964ddb6-f403-4bec-8f90-23f8b9b0dfd6@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240124084412.465638-1-thuth@redhat.com>
-User-Agent: Mutt/2.2.10 (2023-03-25)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.327,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8BxLs_B0LBlCYMWAA--.33620S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7urWxZrWfGryxJF45WF4xZrc_yoW8Wr1xpF
+ yfAFWjqw4kJ395Kas3Kw1DuFnIyrWSvayIga1kCa4UW34DAr9Yqr48Jrs09a40q3s7Ww12
+ vF4avasxXF98A3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9
+ N3UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.17,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,41 +93,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 09:44:12AM +0100, Thomas Huth wrote:
-> We're still seeing timeouts in qtests that use a TCG payload with TCI
-> on a slow k8s runner:
-> 
->  https://gitlab.com/qemu-project/qemu/-/jobs/5990992722
-> 
-> So we should bump the timeout of cdrom-test to see whether that
-> fixes the issue.
-> Now, cdrom-test, as bios-tables-test, pxe-test and vmgenid-test use
-> the boot_sector_test() function for running a TCG payload. That
-> function already uses an internal timeout of 600 seconds with
-> the remark that the test could be slow with TCI.
-> Thus from the outer meson test runner side, we should not use less
-> than 600 seconds as timeout values for these tests. Let's bump them
-> on the meson side to 610 seconds so that the tests themselves can
-> run with their internal 600 seconds timeout and have some additional
-> seconds on top for reporting the outcome.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  tests/qtest/meson.build | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+Hi,
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+在 2024/1/11 下午7:26, Philippe Mathieu-Daudé 写道:
+> On 11/1/24 10:51, gaosong wrote:
+>> 在 2024/1/11 下午5:04, Thomas Huth 写道:
+>>> On 11/01/2024 09.50, gaosong wrote:
+>>>> 在 2024/1/11 下午4:20, Thomas Huth 写道:
+>>>>> On 11/01/2024 08.37, gaosong wrote:
+>
+>>>> LoongArch no support these cmds  or some problems .
+>>>> -    "gva2gpa 0",
+>>>> -    "memsave 0 4096 \"/dev/null\"",
+>>>> -    "x /8i 0x100",
+>>>> -    "xp /16x 0",
+>>>>
+>>>> Could we disable these 4 cmds or the test_temp check?
+>>>> After we fix the cmds problems, we can enable them.
+>>>
+>>> Even if loongarch does not support one of these commands, it should 
+>>> not crash QEMU. So please fix the crashes first before considering 
+>>> to enable the KVM-only test in the CI.
+>>>
+>>
+>> Sure,  we will fix the cmds problems first.
+>
+> The issue might be missing get_phys_page_attrs_debug() implementation.
 
+We use  '--enable-kvm --disable-tcg ',
+the get_phys_page_debug()  is NULL,  so the test-hmp failed.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+target/loongarch/cpu.c
+...
+#ifndef CONFIG_USER_ONLY
+#include "hw/core/sysemu-cpu-ops.h"
+
+static const struct SysemuCPUOps loongarch_sysemu_ops = {
+#ifdef CONFIG_TCG
+     .get_phys_page_debug = loongarch_cpu_get_phys_page_debug,
+#endif
+};
+...
+
+I see the other architectures  only implement 
+get_phys_page_attrs_debug() or  get_phys_page_debug()
+and not only build these functions on tcg mode.
+
+Should we need implement  get_phys_page_attrs_debug() ?  or just use 
+get_phys_page_debug()
+
+Thanks.
+Song Gao
 
 
