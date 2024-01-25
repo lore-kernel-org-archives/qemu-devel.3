@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC7CC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 04:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FB9C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 04:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSrhO-00051T-Ch; Wed, 24 Jan 2024 23:50:46 -0500
+	id 1rSrkR-0005r8-P1; Wed, 24 Jan 2024 23:53:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrhM-000519-Ne
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:50:44 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrkQ-0005qz-LQ
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:53:54 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrhL-00087f-0r
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:50:44 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-40eb033c192so1707115e9.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 20:50:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrkO-0000Kd-Qa
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:53:54 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-40e7065b7bdso73898555e9.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 20:53:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706158241; x=1706763041; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706158431; x=1706763231; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Zf1Q5ChE7zffupadRXMHMHAGPvHuegrMX3stPwK3Tcc=;
- b=dBeXT1zkgTLrlHEGn6gYeCzYWzEaevM9uptIs8ZmNDogNV7zB5b58h0fyFJltD4z+T
- aEa7JF0DPVTDt6fZNTrZVcxG6Q1xfqKeij4kjBHlxFB8OG/FfJ9NkwJ3raLh/hFE39BQ
- k1Ycdz+P1nM6DQuf6WJ/D2lr1KHsZZg1J5imfOhAU1GAf5mu/+uC/kjHzuyg6yQiKk/u
- 6HsTQjdL9kePcKtvbunkgCft/+tF8WbKerGySjxtARa/fifsjLpwwn/qUlNP8T2qrrU9
- s2mNS3Jz+Sfv8PS6Z0qmNzwPE66lc3p66Gw5CI1IG326qJGOsGTLDYpXiq7rfPcaQPB5
- T69Q==
+ bh=r3a4oUdmIFuOpwtDNDmo7XjUJiyp+NopVlxi/RgGbxs=;
+ b=CHqi30QsWIis5WBlN/AbOYqmh9oUMONnTcoY3kMPW6SCgOmiOt01c10KM7vF7LgRwJ
+ M21cl6QMHQ+Zep+tpVF4LRyVuWHOkNBqGg9DzBpHjKZzLDlHJylIXcZzktYjzHBjgCIo
+ 6ppAQbcKseUNdG77rfz2h6dniV3rPdJBaaiYYAS/Vb+Eo3t88gRDLbIZ3HEct1E9vQqy
+ 0vYQTbN7YW02b8T/Gg7wbZgqy73x9TJ1DhE6E01+R66JCvkuSJSNcNj3onM0qOJdVHW2
+ 8cwIDGV4NWv1RPk4dkU91ghk+BS7s18ueNp8H6LBWJYytQZJD76JqTxvPyXKWUgbvhzK
+ 4+QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706158241; x=1706763041;
+ d=1e100.net; s=20230601; t=1706158431; x=1706763231;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zf1Q5ChE7zffupadRXMHMHAGPvHuegrMX3stPwK3Tcc=;
- b=bkGkLO7C3giXUEo0uaUFKuNZfe5zEFk7CvlcG7XlLYEBVSh0x0Y8GC7yX9SLkkDGku
- q9hOURSLvfzFvlihD1+Agt+B2t/KiXbNA7Zs77vMf1ZQPjJHTF1v/8Z1cgUTxsDksd0e
- MqDl8b9meb/g+m2Iuu6RcaBps6f4LPqDMU8sZUL7IkHwAb3svR0Is+T4zOlQi6cpky6H
- ZVCEUUTzMykzIgD0LPdP/HdwNfz9cu/RuSRKOmFQGBAQXAB4I8qE42uKzLDAlBf8zR5M
- lBbbXTFAZgxoTKEPpiTmsLz7871O9d/tUrjrHTOhL/5hFzBd7cx543s4PlWYdZxy6E5H
- j2AA==
-X-Gm-Message-State: AOJu0YwYIm3a4tKWAhMrzI7YT6VXbkVtKInory1GaWK1S8Hd5/fMz11w
- NjbnJWtSkhdaS67ogXsgwTGlrJZ1VeJRATurssq80gR9wZ+8ycakYDuwX0fCAnA=
-X-Google-Smtp-Source: AGHT+IFJrFRVmGWVbGRAtlxFgmL7R9pBO8w17tHEW5wq4ka8QfjB256NGPWth6FXvPCkisickqybkA==
-X-Received: by 2002:a05:600c:1716:b0:40e:7940:b04a with SMTP id
- c22-20020a05600c171600b0040e7940b04amr139642wmn.125.1706158241146; 
- Wed, 24 Jan 2024 20:50:41 -0800 (PST)
+ bh=r3a4oUdmIFuOpwtDNDmo7XjUJiyp+NopVlxi/RgGbxs=;
+ b=IrvKMjkCr2GOb9QmZxYM2rs2V6qwJV1VkWKaO7h/MfOg57k62pxtws7oyk4A7l0t06
+ bZh7cHnKBWeSwKwNpuJwt/e1rDvdpBT7oyxRD6pBZclSuzMFsSC+31meJHKJ8+faWycB
+ G2TzVNygIxar5jlCkbA9uaSpfp+Ka4euoEFJ5jLY6yIqShDq3tGDztY7Tw5uL9yvrM41
+ XTICBAOltrEGBeqJGjYuQn1k4cwGB9RflvqT/1uZQWiDMcayjJy8qCO+NXhIfg8UFhV9
+ cgDX4oK7Mocdhq9PxaJfDCuHkoepytIPmPXPDdNaSBAVTcYlnDJo8TkCnKuIKy+o2QRQ
+ XMmQ==
+X-Gm-Message-State: AOJu0Yx4DdE/Kqrc+GmGoBa/y74lPn7bANPfMjcAq0jEAETILnXpW+7F
+ y6WqQO0q0jwfiUXeKTt90NCgKWi0FTWlbadsSbvK+tlw36a3zeWcx6ceZr+3Fbk=
+X-Google-Smtp-Source: AGHT+IHB7KYbBqhPb6vwBkaKGC/jy8An+lwmVxzJsPSOoyFhaIVPRRQCT2R8d7RDIk1tZz3zKcvr/Q==
+X-Received: by 2002:a05:600c:30d2:b0:40e:88d4:4479 with SMTP id
+ h18-20020a05600c30d200b0040e88d44479mr91461wmn.221.1706158430971; 
+ Wed, 24 Jan 2024 20:53:50 -0800 (PST)
 Received: from [192.168.69.100] (lec62-h02-176-184-19-125.dsl.sta.abo.bbox.fr.
  [176.184.19.125]) by smtp.gmail.com with ESMTPSA id
- m5-20020a05600c4f4500b0040ec8330c8asm1076496wmq.39.2024.01.24.20.50.39
+ r20-20020a05600c459400b0040e527602c8sm1108581wmo.9.2024.01.24.20.53.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 20:50:40 -0800 (PST)
-Message-ID: <dbb0a39c-7495-4c38-9915-bb69fe86728f@linaro.org>
-Date: Thu, 25 Jan 2024 05:50:39 +0100
+ Wed, 24 Jan 2024 20:53:50 -0800 (PST)
+Message-ID: <f9cf4786-45d8-49d7-a7d8-44d177a11bf0@linaro.org>
+Date: Thu, 25 Jan 2024 05:53:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] hw/arm/aspeed: Init CPU defaults in a common helper
+Subject: Re: [PATCH v5 4/4] accel/tcg: Move perf and debuginfo support to tcg
 Content-Language: en-US
-To: Gavin Shan <gshan@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240123224842.18485-1-philmd@linaro.org>
- <20240123224842.18485-4-philmd@linaro.org>
- <3aeb1471-dc88-4971-9e77-e1896e40d446@redhat.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
+References: <20240124075609.14756-1-philmd@linaro.org>
+ <20240124075609.14756-5-philmd@linaro.org>
+ <3aad97e2-7a2d-4629-bca2-0e5a0f439082@linaro.org>
+ <3e32f06d1f4b35c3b5c67434593f466995a38c87.camel@linux.ibm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3aeb1471-dc88-4971-9e77-e1896e40d446@redhat.com>
+In-Reply-To: <3e32f06d1f4b35c3b5c67434593f466995a38c87.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,29 +97,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/1/24 03:26, Gavin Shan wrote:
-> Hi Phil,
-> 
-> On 1/24/24 08:48, Philippe Mathieu-Daudé wrote:
->> Rework aspeed_soc_num_cpus() as a new init_cpus_defaults()
->> helper to reduce code duplication.
+On 25/1/24 04:04, Ilya Leoshkevich wrote:
+> On Thu, 2024-01-25 at 07:11 +1000, Richard Henderson wrote:
+>> On 1/24/24 17:56, Philippe Mathieu-Daudé wrote:
+>>> From: Ilya Leoshkevich <iii@linux.ibm.com>
+>>>
+>>> tcg/ should not depend on accel/tcg/, but perf and debuginfo
+>>> support provided by the latter are being used by tcg/tcg.c.
+>>>
+>>> Since that's the only user, move both to tcg/.
+>>>
+>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>>> Message-ID: <20231208003754.3688038-5-iii@linux.ibm.com>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>    {accel/tcg => tcg}/debuginfo.h | 4 ++--
+>>>    {accel/tcg => tcg}/perf.h      | 4 ++--
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/arm/aspeed.c | 71 +++++++++++++++++++------------------------------
->>   1 file changed, 28 insertions(+), 43 deletions(-)
+>> Headers should be in include/tcg/.
 >>
+>>> --- a/accel/tcg/translate-all.c
+>>> +++ b/accel/tcg/translate-all.c
+>>> @@ -63,7 +63,7 @@
+>>>    #include "tb-context.h"
+>>>    #include "internal-common.h"
+>>>    #include "internal-target.h"
+>>> -#include "perf.h"
+>>> +#include "tcg/perf.h"
+>>
+>> Since it is used from accel/tcg/,
+>>
+>>>    #include "tcg/insn-start-words.h"
+>>>    
+>>>    TBContext tb_ctx;
+>>> diff --git a/hw/core/loader.c b/hw/core/loader.c
+>>> index e7a9b3775b..b8e52f3fb0 100644
+>>> --- a/hw/core/loader.c
+>>> +++ b/hw/core/loader.c
+>>> @@ -62,7 +62,7 @@
+>>>    #include "hw/boards.h"
+>>>    #include "qemu/cutils.h"
+>>>    #include "sysemu/runstate.h"
+>>> -#include "accel/tcg/debuginfo.h"
+>>> +#include "tcg/debuginfo.h"
+>>
+>> ... and hw/core/.
+>>
+>> Otherwise,
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>> r~
 > 
-> One nit needs to be addressed:
+> Can it be that this is the rebased v3?
+> v4 seems to have these issues fixed:
 > 
-> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> https://patchew.org/QEMU/20231212003837.64090-1-iii@linux.ibm.com/
 
-
-> Failure from './scripts/checkpatch.pl --strict'
-> 
-> ERROR: do not use C99 // comments
-> #216: FILE: hw/arm/aspeed.c:1505:
-> +    aspeed_machine_class_init_cpus_defaults(mc); //
-
-Oops, forgot to clean that =) Thanks!
+Indeed 🤦‍♂️ v6 on the way...
 
