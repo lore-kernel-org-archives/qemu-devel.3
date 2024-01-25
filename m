@@ -4,75 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB8A4C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 06:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C9EC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 06:33:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSsoX-0000zm-54; Thu, 25 Jan 2024 01:02:13 -0500
+	id 1rStHb-00076K-15; Thu, 25 Jan 2024 01:32:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junho920219@gmail.com>)
- id 1rSsoQ-0000sd-9W; Thu, 25 Jan 2024 01:02:07 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <junho920219@gmail.com>)
- id 1rSsoL-0007Uv-Tp; Thu, 25 Jan 2024 01:02:04 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a2c179aa5c4so668201466b.0; 
- Wed, 24 Jan 2024 22:01:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706162511; x=1706767311; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GQ26Gcz3SLQl8JTqQGnk1B/O0vFJDdf+UI3qd9GHIZE=;
- b=h+SMbLMUVmPAy1p+NG0ZhNuBfFtsZcsVSnmfov9FPmH6TP8tLjwHQpL7kOahj1HipH
- UyB6oF2Lfph2cGM8zujg8gba0+qfnF7lGKoYCMaOvEZyOBymctsBlcPHsE6JgJd8imBF
- 60e7wPORHUz+h0k8GOcqW/wRHoZIHV+IyxpVFmVpyEE3WP+76Zy5r9b2PdJOiiZpuC7M
- PDQNPEx3hCLQ2kjS7RCwfn24hCOPjgmFBDLRbkmIu/5d87IKFWSpEpEmxRbq2JmmuFYV
- 1ln23b0jO+eBZpPF3RteFdYj47damqU/infy9hMWJmEGUy5ujZk4svqnhk9ZXDBgRKVV
- YUvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706162511; x=1706767311;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GQ26Gcz3SLQl8JTqQGnk1B/O0vFJDdf+UI3qd9GHIZE=;
- b=ArYkOTdDVF2UXqctGXjjg8zagsj/2ZYXdXmJoksJmGymz1nzrJ7qNZccnhBXVTxslB
- 6eHMwZjnKUBiPKX0IwsCX4IMVv7PMDpw18UshmN03mHjZdM1iBd6GtwgFNlazlrRx64O
- Rlbd/ybr3pC4rvqPywHLBO1pOA/7UBGfQOSplfuDZAfGv/TdWldBU7M2DmkQ7wKfYEsx
- Fl7qj8AngLTKFVFqQUIn26uG0dMe+IRncAwrojQxk8e5q3QbtuSc7wOCb2+Xdl/RK1hG
- 9ENH4Yk3sWkiEE4QZIwIVBlRxN/zmCuODg85VrWbpYBrXPGRhWM1h83+HGLIySpbibwS
- sGqg==
-X-Gm-Message-State: AOJu0YxS7HfXwI63FgowQtCKk/7ebMdfasVid+XczmHh4RxieWfqOMFa
- SNM+PN1dX92Yl7CliucRXeSqqdYdg4Y2YBVsdUHP7JfHL4y/dxRcjtvjMI0gDadzaOASmexHqMI
- tyceU4CRhANTKbIzCioN5R7LoTBq2SljoJ5Q=
-X-Google-Smtp-Source: AGHT+IEF2KqcGp116/k8mKiAAv7i+++2SXlzDLSp9w8Uw2zsJM1S6XnsX9kDel0EWpOl31hH8JF0UD60F9qI1RfOP7s=
-X-Received: by 2002:a17:906:180a:b0:a2e:94a0:93b4 with SMTP id
- v10-20020a170906180a00b00a2e94a093b4mr167815eje.61.1706162510817; Wed, 24 Jan
- 2024 22:01:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rStHY-00075m-FZ
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 01:32:12 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rStHU-0000wo-Rq
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 01:32:12 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxG+ny_7Fl42QFAA--.1754S3;
+ Thu, 25 Jan 2024 14:30:10 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxHs_v_7FlDroYAA--.42256S2; 
+ Thu, 25 Jan 2024 14:30:07 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, thuth@redhat.com, wainersm@redhat.com, bleal@redhat.com,
+ richard.henderson@linaro.org, alex.bennee@linaro.org,
+ peter.maydell@linaro.org, pbonzini@redhat.com, maobibo@loongson.cn,
+ zhaotianrui@loongson.cn
+Subject: [PATCH] target/loongarch: Fix qtest test-hmp error when KVM-only build
+Date: Thu, 25 Jan 2024 14:14:01 +0800
+Message-Id: <20240125061401.52526-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-References: <CACrrvNSKQ1du+f40RvcDCvhjojvvDSsHi0FyWoJMMBtt8R+Q3A@mail.gmail.com>
- <20754e51-3100-4eab-a04d-110ca229a38b@redhat.com>
- <CYLWWAEWNXN2.1TJLV7UOK9M6R@wheely>
-In-Reply-To: <CYLWWAEWNXN2.1TJLV7UOK9M6R@wheely>
-From: Junho <junho920219@gmail.com>
-Date: Thu, 25 Jan 2024 15:01:39 +0900
-Message-ID: <CACrrvNSgx3sKdzvYu5cWeHCLnEOa6-0SDEcy9FKaUYKnxD82Rw@mail.gmail.com>
-Subject: Re: How can I know Page Table address on RAM?
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000062ef12060fbeea3f"
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=junho920219@gmail.com; helo=mail-ej1-x634.google.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8AxHs_v_7FlDroYAA--.42256S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,147 +65,566 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000062ef12060fbeea3f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The cc->sysemu_ops->get_phys_page_debug() is NULL when
+KVM-only build. this patch fixes it.
 
-Hello Nick,
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/internals.h      |  20 ++-
+ target/loongarch/cpu.c            |   2 -
+ target/loongarch/cpu_helper.c     | 231 ++++++++++++++++++++++++++++++
+ target/loongarch/tcg/tlb_helper.c | 230 -----------------------------
+ target/loongarch/meson.build      |   1 +
+ 5 files changed, 250 insertions(+), 234 deletions(-)
+ create mode 100644 target/loongarch/cpu_helper.c
 
-It helped a lot.
-The page table is software loaded on the MMU of the target I'm using.
-I'll watch for TLBs as recommended.
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 0beb034748..a2fc54c8a7 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -37,6 +37,17 @@ void restore_fp_status(CPULoongArchState *env);
+ #endif
+ 
+ #ifndef CONFIG_USER_ONLY
++enum {
++    TLBRET_MATCH = 0,
++    TLBRET_BADADDR = 1,
++    TLBRET_NOMATCH = 2,
++    TLBRET_INVALID = 3,
++    TLBRET_DIRTY = 4,
++    TLBRET_RI = 5,
++    TLBRET_XI = 6,
++    TLBRET_PE = 7,
++};
++
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+@@ -46,12 +57,17 @@ uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
+ uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
+ void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
+                                                uint64_t value);
++bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
++                          int *index);
++int get_physical_address(CPULoongArchState *env, hwaddr *physical,
++                         int *prot, target_ulong address,
++                         MMUAccessType access_type, int mmu_idx);
++hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
++
+ #ifdef CONFIG_TCG
+ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                             MMUAccessType access_type, int mmu_idx,
+                             bool probe, uintptr_t retaddr);
+-
+-hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+ #endif
+ #endif /* !CONFIG_USER_ONLY */
+ 
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 064540397d..1e58c160ab 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -752,9 +752,7 @@ static struct TCGCPUOps loongarch_tcg_ops = {
+ #include "hw/core/sysemu-cpu-ops.h"
+ 
+ static const struct SysemuCPUOps loongarch_sysemu_ops = {
+-#ifdef CONFIG_TCG
+     .get_phys_page_debug = loongarch_cpu_get_phys_page_debug,
+-#endif
+ };
+ 
+ static int64_t loongarch_cpu_get_arch_id(CPUState *cs)
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+new file mode 100644
+index 0000000000..f68d63f466
+--- /dev/null
++++ b/target/loongarch/cpu_helper.c
+@@ -0,0 +1,231 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * LoongArch CPU helpers for qemu
++ *
++ * Copyright (c) 2024 Loongson Technology Corporation Limited
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "internals.h"
++#include "cpu-csr.h"
++
++static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
++                                   int *prot, target_ulong address,
++                                   int access_type, int index, int mmu_idx)
++{
++    LoongArchTLB *tlb = &env->tlb[index];
++    uint64_t plv = mmu_idx;
++    uint64_t tlb_entry, tlb_ppn;
++    uint8_t tlb_ps, n, tlb_v, tlb_d, tlb_plv, tlb_nx, tlb_nr, tlb_rplv;
++
++    if (index >= LOONGARCH_STLB) {
++        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
++    } else {
++        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
++    }
++    n = (address >> tlb_ps) & 0x1;/* Odd or even */
++
++    tlb_entry = n ? tlb->tlb_entry1 : tlb->tlb_entry0;
++    tlb_v = FIELD_EX64(tlb_entry, TLBENTRY, V);
++    tlb_d = FIELD_EX64(tlb_entry, TLBENTRY, D);
++    tlb_plv = FIELD_EX64(tlb_entry, TLBENTRY, PLV);
++    if (is_la64(env)) {
++        tlb_ppn = FIELD_EX64(tlb_entry, TLBENTRY_64, PPN);
++        tlb_nx = FIELD_EX64(tlb_entry, TLBENTRY_64, NX);
++        tlb_nr = FIELD_EX64(tlb_entry, TLBENTRY_64, NR);
++        tlb_rplv = FIELD_EX64(tlb_entry, TLBENTRY_64, RPLV);
++    } else {
++        tlb_ppn = FIELD_EX64(tlb_entry, TLBENTRY_32, PPN);
++        tlb_nx = 0;
++        tlb_nr = 0;
++        tlb_rplv = 0;
++    }
++
++    /* Remove sw bit between bit12 -- bit PS*/
++    tlb_ppn = tlb_ppn & ~(((0x1UL << (tlb_ps - 12)) -1));
++
++    /* Check access rights */
++    if (!tlb_v) {
++        return TLBRET_INVALID;
++    }
++
++    if (access_type == MMU_INST_FETCH && tlb_nx) {
++        return TLBRET_XI;
++    }
++
++    if (access_type == MMU_DATA_LOAD && tlb_nr) {
++        return TLBRET_RI;
++    }
++
++    if (((tlb_rplv == 0) && (plv > tlb_plv)) ||
++        ((tlb_rplv == 1) && (plv != tlb_plv))) {
++        return TLBRET_PE;
++    }
++
++    if ((access_type == MMU_DATA_STORE) && !tlb_d) {
++        return TLBRET_DIRTY;
++    }
++
++    *physical = (tlb_ppn << R_TLBENTRY_64_PPN_SHIFT) |
++                (address & MAKE_64BIT_MASK(0, tlb_ps));
++    *prot = PAGE_READ;
++    if (tlb_d) {
++        *prot |= PAGE_WRITE;
++    }
++    if (!tlb_nx) {
++        *prot |= PAGE_EXEC;
++    }
++    return TLBRET_MATCH;
++}
++
++/*
++ * One tlb entry holds an adjacent odd/even pair, the vpn is the
++ * content of the virtual page number divided by 2. So the
++ * compare vpn is bit[47:15] for 16KiB page. while the vppn
++ * field in tlb entry contains bit[47:13], so need adjust.
++ * virt_vpn = vaddr[47:13]
++ */
++bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
++                          int *index)
++{
++    LoongArchTLB *tlb;
++    uint16_t csr_asid, tlb_asid, stlb_idx;
++    uint8_t tlb_e, tlb_ps, tlb_g, stlb_ps;
++    int i, compare_shift;
++    uint64_t vpn, tlb_vppn;
++
++    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
++    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
++    vpn = (vaddr & TARGET_VIRT_MASK) >> (stlb_ps + 1);
++    stlb_idx = vpn & 0xff; /* VA[25:15] <==> TLBIDX.index for 16KiB Page */
++    compare_shift = stlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
++
++    /* Search STLB */
++    for (i = 0; i < 8; ++i) {
++        tlb = &env->tlb[i * 256 + stlb_idx];
++        tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
++        if (tlb_e) {
++            tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
++            tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
++            tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
++
++            if ((tlb_g == 1 || tlb_asid == csr_asid) &&
++                (vpn == (tlb_vppn >> compare_shift))) {
++                *index = i * 256 + stlb_idx;
++                return true;
++            }
++        }
++    }
++
++    /* Search MTLB */
++    for (i = LOONGARCH_STLB; i < LOONGARCH_TLB_MAX; ++i) {
++        tlb = &env->tlb[i];
++        tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
++        if (tlb_e) {
++            tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
++            tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
++            tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
++            tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
++            compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
++            vpn = (vaddr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
++            if ((tlb_g == 1 || tlb_asid == csr_asid) &&
++                (vpn == (tlb_vppn >> compare_shift))) {
++                *index = i;
++                return true;
++            }
++        }
++    }
++    return false;
++}
++
++static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
++                                 int *prot, target_ulong address,
++                                 MMUAccessType access_type, int mmu_idx)
++{
++    int index, match;
++
++    match = loongarch_tlb_search(env, address, &index);
++    if (match) {
++        return loongarch_map_tlb_entry(env, physical, prot,
++                                       address, access_type, index, mmu_idx);
++    }
++
++    return TLBRET_NOMATCH;
++}
++
++static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
++                        target_ulong dmw)
++{
++    if (is_la64(env)) {
++        return va & TARGET_VIRT_MASK;
++    } else {
++        uint32_t pseg = FIELD_EX32(dmw, CSR_DMW_32, PSEG);
++        return (va & MAKE_64BIT_MASK(0, R_CSR_DMW_32_VSEG_SHIFT)) | \
++            (pseg << R_CSR_DMW_32_VSEG_SHIFT);
++    }
++}
++
++int get_physical_address(CPULoongArchState *env, hwaddr *physical,
++                         int *prot, target_ulong address,
++                         MMUAccessType access_type, int mmu_idx)
++{
++    int user_mode = mmu_idx == MMU_IDX_USER;
++    int kernel_mode = mmu_idx == MMU_IDX_KERNEL;
++    uint32_t plv, base_c, base_v;
++    int64_t addr_high;
++    uint8_t da = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, DA);
++    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++
++    /* Check PG and DA */
++    if (da & !pg) {
++        *physical = address & TARGET_PHYS_MASK;
++        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++        return TLBRET_MATCH;
++    }
++
++    plv = kernel_mode | (user_mode << R_CSR_DMW_PLV3_SHIFT);
++    if (is_la64(env)) {
++        base_v = address >> R_CSR_DMW_64_VSEG_SHIFT;
++    } else {
++        base_v = address >> R_CSR_DMW_32_VSEG_SHIFT;
++    }
++    /* Check direct map window */
++    for (int i = 0; i < 4; i++) {
++        if (is_la64(env)) {
++            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_64, VSEG);
++        } else {
++            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_32, VSEG);
++        }
++        if ((plv & env->CSR_DMW[i]) && (base_c == base_v)) {
++            *physical = dmw_va2pa(env, address, env->CSR_DMW[i]);
++            *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++            return TLBRET_MATCH;
++        }
++    }
++
++    /* Check valid extension */
++    addr_high = sextract64(address, TARGET_VIRT_ADDR_SPACE_BITS, 16);
++    if (!(addr_high == 0 || addr_high == -1)) {
++        return TLBRET_BADADDR;
++    }
++
++    /* Mapped address */
++    return loongarch_map_address(env, physical, prot, address,
++                                 access_type, mmu_idx);
++}
++
++hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = &cpu->env;
++    hwaddr phys_addr;
++    int prot;
++
++    if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
++                             cpu_mmu_index(env, false)) != 0) {
++        return -1;
++    }
++    return phys_addr;
++}
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 449043c68b..804ab7a263 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -17,236 +17,6 @@
+ #include "exec/log.h"
+ #include "cpu-csr.h"
+ 
+-enum {
+-    TLBRET_MATCH = 0,
+-    TLBRET_BADADDR = 1,
+-    TLBRET_NOMATCH = 2,
+-    TLBRET_INVALID = 3,
+-    TLBRET_DIRTY = 4,
+-    TLBRET_RI = 5,
+-    TLBRET_XI = 6,
+-    TLBRET_PE = 7,
+-};
+-
+-static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
+-                                   int *prot, target_ulong address,
+-                                   int access_type, int index, int mmu_idx)
+-{
+-    LoongArchTLB *tlb = &env->tlb[index];
+-    uint64_t plv = mmu_idx;
+-    uint64_t tlb_entry, tlb_ppn;
+-    uint8_t tlb_ps, n, tlb_v, tlb_d, tlb_plv, tlb_nx, tlb_nr, tlb_rplv;
+-
+-    if (index >= LOONGARCH_STLB) {
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-    } else {
+-        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    }
+-    n = (address >> tlb_ps) & 0x1;/* Odd or even */
+-
+-    tlb_entry = n ? tlb->tlb_entry1 : tlb->tlb_entry0;
+-    tlb_v = FIELD_EX64(tlb_entry, TLBENTRY, V);
+-    tlb_d = FIELD_EX64(tlb_entry, TLBENTRY, D);
+-    tlb_plv = FIELD_EX64(tlb_entry, TLBENTRY, PLV);
+-    if (is_la64(env)) {
+-        tlb_ppn = FIELD_EX64(tlb_entry, TLBENTRY_64, PPN);
+-        tlb_nx = FIELD_EX64(tlb_entry, TLBENTRY_64, NX);
+-        tlb_nr = FIELD_EX64(tlb_entry, TLBENTRY_64, NR);
+-        tlb_rplv = FIELD_EX64(tlb_entry, TLBENTRY_64, RPLV);
+-    } else {
+-        tlb_ppn = FIELD_EX64(tlb_entry, TLBENTRY_32, PPN);
+-        tlb_nx = 0;
+-        tlb_nr = 0;
+-        tlb_rplv = 0;
+-    }
+-
+-    /* Remove sw bit between bit12 -- bit PS*/
+-    tlb_ppn = tlb_ppn & ~(((0x1UL << (tlb_ps - 12)) -1));
+-
+-    /* Check access rights */
+-    if (!tlb_v) {
+-        return TLBRET_INVALID;
+-    }
+-
+-    if (access_type == MMU_INST_FETCH && tlb_nx) {
+-        return TLBRET_XI;
+-    }
+-
+-    if (access_type == MMU_DATA_LOAD && tlb_nr) {
+-        return TLBRET_RI;
+-    }
+-
+-    if (((tlb_rplv == 0) && (plv > tlb_plv)) ||
+-        ((tlb_rplv == 1) && (plv != tlb_plv))) {
+-        return TLBRET_PE;
+-    }
+-
+-    if ((access_type == MMU_DATA_STORE) && !tlb_d) {
+-        return TLBRET_DIRTY;
+-    }
+-
+-    *physical = (tlb_ppn << R_TLBENTRY_64_PPN_SHIFT) |
+-                (address & MAKE_64BIT_MASK(0, tlb_ps));
+-    *prot = PAGE_READ;
+-    if (tlb_d) {
+-        *prot |= PAGE_WRITE;
+-    }
+-    if (!tlb_nx) {
+-        *prot |= PAGE_EXEC;
+-    }
+-    return TLBRET_MATCH;
+-}
+-
+-/*
+- * One tlb entry holds an adjacent odd/even pair, the vpn is the
+- * content of the virtual page number divided by 2. So the
+- * compare vpn is bit[47:15] for 16KiB page. while the vppn
+- * field in tlb entry contains bit[47:13], so need adjust.
+- * virt_vpn = vaddr[47:13]
+- */
+-static bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+-                                 int *index)
+-{
+-    LoongArchTLB *tlb;
+-    uint16_t csr_asid, tlb_asid, stlb_idx;
+-    uint8_t tlb_e, tlb_ps, tlb_g, stlb_ps;
+-    int i, compare_shift;
+-    uint64_t vpn, tlb_vppn;
+-
+-    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+-    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    vpn = (vaddr & TARGET_VIRT_MASK) >> (stlb_ps + 1);
+-    stlb_idx = vpn & 0xff; /* VA[25:15] <==> TLBIDX.index for 16KiB Page */
+-    compare_shift = stlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+-
+-    /* Search STLB */
+-    for (i = 0; i < 8; ++i) {
+-        tlb = &env->tlb[i * 256 + stlb_idx];
+-        tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+-        if (tlb_e) {
+-            tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+-            tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+-            tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+-
+-            if ((tlb_g == 1 || tlb_asid == csr_asid) &&
+-                (vpn == (tlb_vppn >> compare_shift))) {
+-                *index = i * 256 + stlb_idx;
+-                return true;
+-            }
+-        }
+-    }
+-
+-    /* Search MTLB */
+-    for (i = LOONGARCH_STLB; i < LOONGARCH_TLB_MAX; ++i) {
+-        tlb = &env->tlb[i];
+-        tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+-        if (tlb_e) {
+-            tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+-            tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-            tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+-            tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+-            compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+-            vpn = (vaddr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+-            if ((tlb_g == 1 || tlb_asid == csr_asid) &&
+-                (vpn == (tlb_vppn >> compare_shift))) {
+-                *index = i;
+-                return true;
+-            }
+-        }
+-    }
+-    return false;
+-}
+-
+-static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+-                                 int *prot, target_ulong address,
+-                                 MMUAccessType access_type, int mmu_idx)
+-{
+-    int index, match;
+-
+-    match = loongarch_tlb_search(env, address, &index);
+-    if (match) {
+-        return loongarch_map_tlb_entry(env, physical, prot,
+-                                       address, access_type, index, mmu_idx);
+-    }
+-
+-    return TLBRET_NOMATCH;
+-}
+-
+-static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
+-                        target_ulong dmw)
+-{
+-    if (is_la64(env)) {
+-        return va & TARGET_VIRT_MASK;
+-    } else {
+-        uint32_t pseg = FIELD_EX32(dmw, CSR_DMW_32, PSEG);
+-        return (va & MAKE_64BIT_MASK(0, R_CSR_DMW_32_VSEG_SHIFT)) | \
+-            (pseg << R_CSR_DMW_32_VSEG_SHIFT);
+-    }
+-}
+-
+-static int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+-                                int *prot, target_ulong address,
+-                                MMUAccessType access_type, int mmu_idx)
+-{
+-    int user_mode = mmu_idx == MMU_IDX_USER;
+-    int kernel_mode = mmu_idx == MMU_IDX_KERNEL;
+-    uint32_t plv, base_c, base_v;
+-    int64_t addr_high;
+-    uint8_t da = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, DA);
+-    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
+-
+-    /* Check PG and DA */
+-    if (da & !pg) {
+-        *physical = address & TARGET_PHYS_MASK;
+-        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+-        return TLBRET_MATCH;
+-    }
+-
+-    plv = kernel_mode | (user_mode << R_CSR_DMW_PLV3_SHIFT);
+-    if (is_la64(env)) {
+-        base_v = address >> R_CSR_DMW_64_VSEG_SHIFT;
+-    } else {
+-        base_v = address >> R_CSR_DMW_32_VSEG_SHIFT;
+-    }
+-    /* Check direct map window */
+-    for (int i = 0; i < 4; i++) {
+-        if (is_la64(env)) {
+-            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_64, VSEG);
+-        } else {
+-            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_32, VSEG);
+-        }
+-        if ((plv & env->CSR_DMW[i]) && (base_c == base_v)) {
+-            *physical = dmw_va2pa(env, address, env->CSR_DMW[i]);
+-            *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+-            return TLBRET_MATCH;
+-        }
+-    }
+-
+-    /* Check valid extension */
+-    addr_high = sextract64(address, TARGET_VIRT_ADDR_SPACE_BITS, 16);
+-    if (!(addr_high == 0 || addr_high == -1)) {
+-        return TLBRET_BADADDR;
+-    }
+-
+-    /* Mapped address */
+-    return loongarch_map_address(env, physical, prot, address,
+-                                 access_type, mmu_idx);
+-}
+-
+-hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+-{
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
+-    hwaddr phys_addr;
+-    int prot;
+-
+-    if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
+-                             cpu_mmu_index(env, false)) != 0) {
+-        return -1;
+-    }
+-    return phys_addr;
+-}
+-
+ static void raise_mmu_exception(CPULoongArchState *env, target_ulong address,
+                                 MMUAccessType access_type, int tlb_error)
+ {
+diff --git a/target/loongarch/meson.build b/target/loongarch/meson.build
+index db310f6022..e002e9aaf6 100644
+--- a/target/loongarch/meson.build
++++ b/target/loongarch/meson.build
+@@ -8,6 +8,7 @@ loongarch_ss.add(files(
+ 
+ loongarch_system_ss = ss.source_set()
+ loongarch_system_ss.add(files(
++  'cpu_helper.c',
+   'loongarch-qmp-cmds.c',
+   'machine.c',
+ ))
+-- 
+2.25.1
 
-Thank you,
-Junho
-
-
-
-2024=EB=85=84 1=EC=9B=94 23=EC=9D=BC (=ED=99=94) =EC=98=A4=ED=9B=84 4:36, N=
-icholas Piggin <npiggin@gmail.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
-
-> On Mon Jan 22, 2024 at 6:54 PM AEST, Thomas Huth wrote:
-> > On 22/01/2024 05.11, Junho wrote:
-> > > Hello,
-> > >
-> > > I'm a QEMU user with PowerPc target architecture.
-> > > I have some personal modifications related to tb jmp cache and
-> chaining
-> > > logic to improve the performance of a specific guest code. To verify
-> the
-> > > safety, I have to guarantee that the page table on RAM does not chang=
-e
-> after
-> > > initialization. Do you have any information related to this work?
-> Currently,
-> > > what I need to find is the page table start address on the RAM so tha=
-t
-> I can
-> > > test with the range detected.
-> > >
-> > > I look forward to your response.
-> > >
-> > > Thank you
-> > > Junho
-> >
-> >   Hi,
-> >
-> > maybe it's best to ask this question on the qemu-ppc mailing list
-> instead
-> > (done now), since most PPC folks will rather read than one instead of
-> the
-> > high-traffic qemu-devel mailing list.
->
-> Hi Junho,
->
-> ppc targets have a lot of different MMUs, so it depends what you are
-> looking at.
->
-> The hash MMU has a page table that is linear in physical (real) memory,
-> so you might feasibly be able to watch it for updates. The SDR1 SPR has
-> hash table base and size. ISA v3.0 and later use an in-memory table
-> that is pointed to by the PTCR SPR.
->
-> Other types are software loaded and radix page tables which might be
-> infeasible or impossible to really track.
->
-> It would be interesting to know what kind of modifications you're doing,
-> it's possible they might be achieved another way. For example, there is
-> no requirement in the architecture for the TLB to be kept coherent with
-> page table modifications, so you might be able to watch for TLB flush
-> instructions rather than page table changes.
->
-> Thanks,
-> Nick
->
-
---00000000000062ef12060fbeea3f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello Nick,<div><br></div><div>It helped a lot.</div><div>=
-The page table is software loaded on the MMU of the target I&#39;m using.</=
-div><div>I&#39;ll=C2=A0watch for TLBs=C2=A0as=C2=A0recommended.</div><div><=
-br></div><div>Thank you,</div><div>Junho=C2=A0</div><div><br></div><div><br=
-></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
-_attr">2024=EB=85=84 1=EC=9B=94 23=EC=9D=BC (=ED=99=94) =EC=98=A4=ED=9B=84 =
-4:36, Nicholas Piggin &lt;<a href=3D"mailto:npiggin@gmail.com">npiggin@gmai=
-l.com</a>&gt;=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">On Mon Jan 22, 2024 at 6:54 PM AEST, Th=
-omas Huth wrote:<br>
-&gt; On 22/01/2024 05.11, Junho wrote:<br>
-&gt; &gt; Hello,<br>
-&gt; &gt; <br>
-&gt; &gt; I&#39;m a QEMU user with PowerPc target architecture.<br>
-&gt; &gt; I have some personal modifications related to tb jmp cache and ch=
-aining <br>
-&gt; &gt; logic to improve the performance of a specific guest code. To ver=
-ify the <br>
-&gt; &gt; safety, I have to guarantee that the page table on RAM does not c=
-hange after <br>
-&gt; &gt; initialization. Do you have any information related to this work?=
- Currently, <br>
-&gt; &gt; what I need to find is the page table start address on the RAM so=
- that I can <br>
-&gt; &gt; test with the range detected.<br>
-&gt; &gt; <br>
-&gt; &gt; I look forward to your response.<br>
-&gt; &gt; <br>
-&gt; &gt; Thank you<br>
-&gt; &gt; Junho<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0Hi,<br>
-&gt;<br>
-&gt; maybe it&#39;s best to ask this question on the qemu-ppc mailing list =
-instead <br>
-&gt; (done now), since most PPC folks will rather read than one instead of =
-the <br>
-&gt; high-traffic qemu-devel mailing list.<br>
-<br>
-Hi Junho,<br>
-<br>
-ppc targets have a lot of different MMUs, so it depends what you are<br>
-looking at.<br>
-<br>
-The hash MMU has a page table that is linear in physical (real) memory,<br>
-so you might feasibly be able to watch it for updates. The SDR1 SPR has<br>
-hash table base and size. ISA v3.0 and later use an in-memory table<br>
-that is pointed to by the PTCR SPR.<br>
-<br>
-Other types are software loaded and radix page tables which might be<br>
-infeasible or impossible to really track.<br>
-<br>
-It would be interesting to know what kind of modifications you&#39;re doing=
-,<br>
-it&#39;s possible they might be achieved another way. For example, there is=
-<br>
-no requirement in the architecture for the TLB to be kept coherent with<br>
-page table modifications, so you might be able to watch for TLB flush<br>
-instructions rather than page table changes.<br>
-<br>
-Thanks,<br>
-Nick<br>
-</blockquote></div>
-
---00000000000062ef12060fbeea3f--
 
