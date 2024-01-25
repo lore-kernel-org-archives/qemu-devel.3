@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA62C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA40AC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqQH-0004Dl-KJ; Wed, 24 Jan 2024 22:29:01 -0500
+	id 1rSqPW-00034F-SV; Wed, 24 Jan 2024 22:28:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQD-00040T-LL
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:57 -0500
+ id 1rSqPT-00033S-RQ
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:11 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQ9-0001Dr-9j
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:56 -0500
+ id 1rSqPR-0001Dr-29
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153333; x=1737689333;
+ t=1706153289; x=1737689289;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=s06UnV24lbwLXgkSjXlE2zzVtzYpjmejsk4AUuIp/PU=;
- b=Z8VNcQW1yx2yq8sSZu7cZlbEYSjm0G4i9Pg7kgNRsrNPrIIX2ROOYpuQ
- +fEJsKBTAfqeVJs1YRDODpwlVwVWhkw+MvRtq4jJGOnFzAfwwW1+3QjTi
- d7zujCXZft2AVb1se0FT0ZPduVCrVT6MJSiuNmZd/abEO+uiXmkNJY391
- oVJD+5nP93Klee2Dbg2t10ktK2SEnZ5j4IJVLClkJ8XDdfZ9YcPRrkyVY
- J512YTfD9R2orumrp8+QHB79CGwcf0tYZQjPRXfodpg5dQDdzyiYovCai
- t8178jX0cZCnBkggM8FKHaEG3afwK6HiTo1ZnLRos5/084IqJMR92qgEH g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9428432"
+ bh=2mNwsjv6vluae8uBwx0X4bXjQ8lU44YLJ4VZgJtV40o=;
+ b=b6cukiNilijnOl1pzcEfWLuG2DglDn0LVF2lpkeihFcbjGbj0a0gPqg/
+ PlEd0ziwo/otsbS0lQdyRcdcdsf1VZCMKP4yo8KgA+tFjLV8cs7w9YkpD
+ zqcG1iScfkwBMt7ZvBtEDeczX0sXr+bsXx3HGhjhRVfHy1fiAjttwDRDi
+ oG8bq3ck+s+7p98+fum0WDTvkOy+XW5mEGlxMYZyGUN3AH0vMP7iSGByD
+ oxBcm7yUKNGZ5Z6qoj9JKImAxRqM/x0LWPTerPjlbkeH1yOCLT0thExuR
+ zON5BnqrPjbKvrm2WPVLPgS5ECUb/Q9ea5XZm6fglhuFjq6riHrJzpIop A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9427927"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9428432"
+   d="scan'208";a="9427927"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:25:11 -0800
+ 24 Jan 2024 19:23:54 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2085194"
+   d="scan'208";a="2084440"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:25:05 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:23:48 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 17/66] i386/tdx: Adjust the supported CPUID based on TDX
- restrictions
-Date: Wed, 24 Jan 2024 22:22:39 -0500
-Message-Id: <20240125032328.2522472-18-xiaoyao.li@intel.com>
+Subject: [PATCH v4 03/66] HostMem: Add mechanism to opt in kvm guest memfd via
+ MachineState
+Date: Wed, 24 Jan 2024 22:22:25 -0500
+Message-Id: <20240125032328.2522472-4-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,470 +94,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to Chapter "CPUID Virtualization" in TDX module spec, CPUID
-bits of TD can be classified into 6 types:
+Add a new member "guest_memfd" to memory backends. When it's set
+to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
+guest_memfd will be allocated during RAMBlock allocation.
 
-------------------------------------------------------------------------
-1 | As configured | configurable by VMM, independent of native value;
-------------------------------------------------------------------------
-2 | As configured | configurable by VMM if the bit is supported natively
-    (if native)   | Otherwise it equals as native(0).
-------------------------------------------------------------------------
-3 | Fixed         | fixed to 0/1
-------------------------------------------------------------------------
-4 | Native        | reflect the native value
-------------------------------------------------------------------------
-5 | Calculated    | calculated by TDX module.
-------------------------------------------------------------------------
-6 | Inducing #VE  | get #VE exception
-------------------------------------------------------------------------
+Memory backend's @guest_memfd is wired with @require_guest_memfd
+field of MachineState. It avoid looking up the machine in phymem.c.
 
-Note:
-1. All the configurable XFAM related features and TD attributes related
-   features fall into type #2. And fixed0/1 bits of XFAM and TD
-   attributes fall into type #3.
+MachineState::require_guest_memfd is supposed to be set by any VMs
+that requires KVM guest memfd as private memory, e.g., TDX VM.
 
-2. For CPUID leaves not listed in "CPUID virtualization Overview" table
-   in TDX module spec, TDX module injects #VE to TDs when those are
-   queried. For this case, TDs can request CPUID emulation from VMM via
-   TDVMCALL and the values are fully controlled by VMM.
-
-Due to TDX module has its own virtualization policy on CPUID bits, it leads
-to what reported via KVM_GET_SUPPORTED_CPUID diverges from the supported
-CPUID bits for TDs. In order to keep a consistent CPUID configuration
-between VMM and TDs. Adjust supported CPUID for TDs based on TDX
-restrictions.
-
-Currently only focus on the CPUID leaves recognized by QEMU's
-feature_word_info[] that are indexed by a FeatureWord.
-
-Introduce a TDX CPUID lookup table, which maintains 1 entry for each
-FeatureWord. Each entry has below fields:
-
- - tdx_fixed0/1: The bits that are fixed as 0/1;
-
- - depends_on_vmm_cap: The bits that are configurable from the view of
-		       TDX module. But they requires emulation of VMM
-		       when configured as enabled. For those, they are
-		       not supported if VMM doesn't report them as
-		       supported. So they need be fixed up by checking
-		       if VMM supports them.
-
- - inducing_ve: TD gets #VE when querying this CPUID leaf. The result is
-                totally configurable by VMM.
-
- - supported_on_ve: It's valid only when @inducing_ve is true. It represents
-		    the maximum feature set supported that be emulated
-		    for TDs.
-
-By applying TDX CPUID lookup table and TDX capabilities reported from
-TDX module, the supported CPUID for TDs can be obtained from following
-steps:
-
-- get the base of VMM supported feature set;
-
-- if the leaf is not a FeatureWord just return VMM's value without
-  modification;
-
-- if the leaf is an inducing_ve type, applying supported_on_ve mask and
-  return;
-
-- include all native bits, it covers type #2, #4, and parts of type #1.
-  (it also includes some unsupported bits. The following step will
-   correct it.)
-
-- apply fixed0/1 to it (it covers #3, and rectifies the previous step);
-
-- add configurable bits (it covers the other part of type #1);
-
-- fix the ones in vmm_fixup;
-
-(Calculated type is ignored since it's determined at runtime).
-
-Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/cpu.h     |  16 +++
- target/i386/kvm/kvm.c |   4 +
- target/i386/kvm/tdx.c | 263 ++++++++++++++++++++++++++++++++++++++++++
- target/i386/kvm/tdx.h |   2 +
- 4 files changed, 285 insertions(+)
+Changes in v4:
+ - rename "require_guest_memfd" to "guest_memfd" in struct
+   HostMemoryBackend;	(David Hildenbrand)
+---
+ backends/hostmem-file.c  | 1 +
+ backends/hostmem-memfd.c | 1 +
+ backends/hostmem-ram.c   | 1 +
+ backends/hostmem.c       | 1 +
+ hw/core/machine.c        | 5 +++++
+ include/hw/boards.h      | 2 ++
+ include/sysemu/hostmem.h | 1 +
+ 7 files changed, 12 insertions(+)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 7f0786e8b98f..5b6bcba778ae 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -780,6 +780,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- 
- /* Support RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE */
- #define CPUID_7_0_EBX_FSGSBASE          (1U << 0)
-+/* Support for TSC adjustment MSR 0x3B */
-+#define CPUID_7_0_EBX_TSC_ADJUST        (1U << 1)
- /* Support SGX */
- #define CPUID_7_0_EBX_SGX               (1U << 2)
- /* 1st Group of Advanced Bit Manipulation Extensions */
-@@ -798,8 +800,12 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_EBX_INVPCID           (1U << 10)
- /* Restricted Transactional Memory */
- #define CPUID_7_0_EBX_RTM               (1U << 11)
-+/* Cache QoS Monitoring */
-+#define CPUID_7_0_EBX_PQM               (1U << 12)
- /* Memory Protection Extension */
- #define CPUID_7_0_EBX_MPX               (1U << 14)
-+/* Resource Director Technology Allocation */
-+#define CPUID_7_0_EBX_RDT_A             (1U << 15)
- /* AVX-512 Foundation */
- #define CPUID_7_0_EBX_AVX512F           (1U << 16)
- /* AVX-512 Doubleword & Quadword Instruction */
-@@ -855,10 +861,16 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_ECX_AVX512VNNI        (1U << 11)
- /* Support for VPOPCNT[B,W] and VPSHUFBITQMB */
- #define CPUID_7_0_ECX_AVX512BITALG      (1U << 12)
-+/* Intel Total Memory Encryption */
-+#define CPUID_7_0_ECX_TME               (1U << 13)
- /* POPCNT for vectors of DW/QW */
- #define CPUID_7_0_ECX_AVX512_VPOPCNTDQ  (1U << 14)
-+/* Placeholder for bit 15 */
-+#define CPUID_7_0_ECX_FZM               (1U << 15)
- /* 5-level Page Tables */
- #define CPUID_7_0_ECX_LA57              (1U << 16)
-+/* MAWAU for MPX */
-+#define CPUID_7_0_ECX_MAWAU             (31U << 17)
- /* Read Processor ID */
- #define CPUID_7_0_ECX_RDPID             (1U << 22)
- /* Bus Lock Debug Exception */
-@@ -869,6 +881,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_ECX_MOVDIRI           (1U << 27)
- /* Move 64 Bytes as Direct Store Instruction */
- #define CPUID_7_0_ECX_MOVDIR64B         (1U << 28)
-+/* ENQCMD and ENQCMDS instructions */
-+#define CPUID_7_0_ECX_ENQCMD            (1U << 29)
- /* Support SGX Launch Control */
- #define CPUID_7_0_ECX_SGX_LC            (1U << 30)
- /* Protection Keys for Supervisor-mode Pages */
-@@ -886,6 +900,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_EDX_SERIALIZE         (1U << 14)
- /* TSX Suspend Load Address Tracking instruction */
- #define CPUID_7_0_EDX_TSX_LDTRK         (1U << 16)
-+/* PCONFIG instruction */
-+#define CPUID_7_0_EDX_PCONFIG           (1U << 18)
- /* Architectural LBRs */
- #define CPUID_7_0_EDX_ARCH_LBR          (1U << 19)
- /* AMX_BF16 instruction */
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index ddbcd1071a7e..64dfa6c36a88 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -521,6 +521,10 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-         ret |= 1U << KVM_HINTS_REALTIME;
-     }
- 
-+    if (is_tdx_vm()) {
-+        tdx_get_supported_cpuid(function, index, reg, &ret);
-+    }
-+
-     return ret;
+diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
+index ac3e433cbddb..3c69db794607 100644
+--- a/backends/hostmem-file.c
++++ b/backends/hostmem-file.c
+@@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
+     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
++    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
+     ram_flags |= RAM_NAMED_FILE;
+     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 3923ea9364d5..745ead0034dc 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     name = host_memory_backend_get_name(backend);
+     ram_flags = backend->share ? RAM_SHARED : 0;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
++    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
+                                           backend->size, ram_flags, fd, 0, errp);
+ }
+diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
+index d121249f0f45..f7d81af783a5 100644
+--- a/backends/hostmem-ram.c
++++ b/backends/hostmem-ram.c
+@@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     name = host_memory_backend_get_name(backend);
+     ram_flags = backend->share ? RAM_SHARED : 0;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
++    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
+                                                   name, backend->size,
+                                                   ram_flags, errp);
+diff --git a/backends/hostmem.c b/backends/hostmem.c
+index 30f69b2cb5e9..b1c39e8065e2 100644
+--- a/backends/hostmem.c
++++ b/backends/hostmem.c
+@@ -276,6 +276,7 @@ static void host_memory_backend_init(Object *obj)
+     /* TODO: convert access to globals to compat properties */
+     backend->merge = machine_mem_merge(machine);
+     backend->dump = machine_dump_guest_core(machine);
++    backend->guest_memfd = machine_require_guest_memfd(machine);
+     backend->reserve = true;
+     backend->prealloc_threads = machine->smp.cpus;
+ }
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index fb5afdcae4cc..514a201dc570 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1192,6 +1192,11 @@ bool machine_mem_merge(MachineState *machine)
+     return machine->mem_merge;
  }
  
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 3c59b3b45419..a962f8a4ea60 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -15,11 +15,129 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qom/object_interfaces.h"
-+#include "standard-headers/asm-x86/kvm_para.h"
- #include "sysemu/kvm.h"
-+#include "sysemu/sysemu.h"
- 
- #include "hw/i386/x86.h"
- #include "kvm_i386.h"
- #include "tdx.h"
-+#include "../cpu-internal.h"
-+
-+#define TDX_SUPPORTED_KVM_FEATURES  ((1U << KVM_FEATURE_NOP_IO_DELAY) | \
-+                                     (1U << KVM_FEATURE_PV_UNHALT) | \
-+                                     (1U << KVM_FEATURE_PV_TLB_FLUSH) | \
-+                                     (1U << KVM_FEATURE_PV_SEND_IPI) | \
-+                                     (1U << KVM_FEATURE_POLL_CONTROL) | \
-+                                     (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
-+                                     (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
-+
-+typedef struct KvmTdxCpuidLookup {
-+    uint32_t tdx_fixed0;
-+    uint32_t tdx_fixed1;
-+
-+    /*
-+     * The CPUID bits that are configurable from the view of TDX module
-+     * but require VMM's support when wanting to enable them.
-+     *
-+     * For those bits, they cannot be enabled if VMM (KVM/QEMU) doesn't support
-+     * them.
-+     */
-+    uint32_t depends_on_vmm_cap;
-+
-+    bool inducing_ve;
-+    /*
-+     * The maximum supported feature set for given inducing-#VE leaf.
-+     * It's valid only when .inducing_ve is true.
-+     */
-+    uint32_t supported_value_on_ve;
-+} KvmTdxCpuidLookup;
-+
-+ /*
-+  * QEMU maintained TDX CPUID lookup tables, which reflects how CPUIDs are
-+  * virtualized for guest TDs based on "CPUID virtualization" of TDX spec.
-+  *
-+  * Note:
-+  *
-+  * This table will be updated runtime by tdx_caps reported by KVM.
-+  *
-+  */
-+static KvmTdxCpuidLookup tdx_cpuid_lookup[FEATURE_WORDS] = {
-+    [FEAT_1_EDX] = {
-+        .tdx_fixed0 =
-+            BIT(10) /* Reserved */ | BIT(20) /* Reserved */ | CPUID_IA64,
-+        .tdx_fixed1 =
-+            CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_APIC |
-+            CPUID_MTRR | CPUID_MCA | CPUID_CLFLUSH | CPUID_DTS,
-+        .depends_on_vmm_cap =
-+            CPUID_ACPI | CPUID_PBE,
-+    },
-+    [FEAT_1_ECX] = {
-+        .tdx_fixed0 =
-+            CPUID_EXT_VMX | CPUID_EXT_SMX | BIT(16) /* Reserved */,
-+        .tdx_fixed1 =
-+            CPUID_EXT_CX16 | CPUID_EXT_PDCM | CPUID_EXT_X2APIC |
-+            CPUID_EXT_AES | CPUID_EXT_XSAVE | CPUID_EXT_RDRAND |
-+            CPUID_EXT_HYPERVISOR,
-+        .depends_on_vmm_cap =
-+            CPUID_EXT_EST | CPUID_EXT_TM2 | CPUID_EXT_XTPR | CPUID_EXT_DCA,
-+    },
-+    [FEAT_8000_0001_EDX] = {
-+        .tdx_fixed1 =
-+            CPUID_EXT2_NX | CPUID_EXT2_PDPE1GB | CPUID_EXT2_RDTSCP |
-+            CPUID_EXT2_LM,
-+    },
-+    [FEAT_7_0_EBX] = {
-+        .tdx_fixed0 =
-+            CPUID_7_0_EBX_TSC_ADJUST | CPUID_7_0_EBX_SGX | CPUID_7_0_EBX_MPX,
-+        .tdx_fixed1 =
-+            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_RTM |
-+            CPUID_7_0_EBX_RDSEED | CPUID_7_0_EBX_SMAP |
-+            CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
-+            CPUID_7_0_EBX_SHA_NI,
-+        .depends_on_vmm_cap =
-+            CPUID_7_0_EBX_PQM | CPUID_7_0_EBX_RDT_A,
-+    },
-+    [FEAT_7_0_ECX] = {
-+        .tdx_fixed0 =
-+            CPUID_7_0_ECX_FZM | CPUID_7_0_ECX_MAWAU |
-+            CPUID_7_0_ECX_ENQCMD | CPUID_7_0_ECX_SGX_LC,
-+        .tdx_fixed1 =
-+            CPUID_7_0_ECX_MOVDIR64B | CPUID_7_0_ECX_BUS_LOCK_DETECT,
-+        .depends_on_vmm_cap =
-+            CPUID_7_0_ECX_TME,
-+    },
-+    [FEAT_7_0_EDX] = {
-+        .tdx_fixed1 =
-+            CPUID_7_0_EDX_SPEC_CTRL | CPUID_7_0_EDX_ARCH_CAPABILITIES |
-+            CPUID_7_0_EDX_CORE_CAPABILITY | CPUID_7_0_EDX_SPEC_CTRL_SSBD,
-+        .depends_on_vmm_cap =
-+            CPUID_7_0_EDX_PCONFIG,
-+    },
-+    [FEAT_8000_0008_EBX] = {
-+        .tdx_fixed0 =
-+            ~CPUID_8000_0008_EBX_WBNOINVD,
-+        .tdx_fixed1 =
-+            CPUID_8000_0008_EBX_WBNOINVD,
-+    },
-+    [FEAT_XSAVE] = {
-+        .tdx_fixed1 =
-+            CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC |
-+            CPUID_XSAVE_XSAVES,
-+    },
-+    [FEAT_6_EAX] = {
-+        .inducing_ve = true,
-+        .supported_value_on_ve = CPUID_6_EAX_ARAT,
-+    },
-+    [FEAT_8000_0007_EDX] = {
-+        .inducing_ve = true,
-+        .supported_value_on_ve = -1U,
-+    },
-+    [FEAT_KVM] = {
-+        .inducing_ve = true,
-+        .supported_value_on_ve = TDX_SUPPORTED_KVM_FEATURES,
-+    },
-+};
- 
- static TdxGuest *tdx_guest;
- 
-@@ -31,6 +149,151 @@ bool is_tdx_vm(void)
-     return !!tdx_guest;
- }
- 
-+static inline uint32_t host_cpuid_reg(uint32_t function,
-+                                      uint32_t index, int reg)
++bool machine_require_guest_memfd(MachineState *machine)
 +{
-+    uint32_t eax, ebx, ecx, edx;
-+    uint32_t ret = 0;
-+
-+    host_cpuid(function, index, &eax, &ebx, &ecx, &edx);
-+
-+    switch (reg) {
-+    case R_EAX:
-+        ret = eax;
-+        break;
-+    case R_EBX:
-+        ret = ebx;
-+        break;
-+    case R_ECX:
-+        ret = ecx;
-+        break;
-+    case R_EDX:
-+        ret = edx;
-+        break;
-+    }
-+    return ret;
++    return machine->require_guest_memfd;
 +}
 +
-+/*
-+ * get the configurable cpuid bits (can be set to 0 or 1) reported by TDX module
-+ * from tdx_caps. 
-+ */
-+static inline uint32_t tdx_cap_cpuid_config(uint32_t function,
-+                                            uint32_t index, int reg)
-+{
-+    struct kvm_tdx_cpuid_config *cpuid_c;
-+    int ret = 0;
-+    int i;
-+
-+    if (tdx_caps->nr_cpuid_configs <= 0) {
-+        return ret;
-+    }
-+
-+    for (i = 0; i < tdx_caps->nr_cpuid_configs; i++) {
-+        cpuid_c = &tdx_caps->cpuid_configs[i];
-+        /* 0xffffffff in sub_leaf means the leaf doesn't require a sublesf */
-+        if (cpuid_c->leaf == function &&
-+            (cpuid_c->sub_leaf == 0xffffffff || cpuid_c->sub_leaf == index)) {
-+            switch (reg) {
-+            case R_EAX:
-+                ret = cpuid_c->eax;
-+                break;
-+            case R_EBX:
-+                ret = cpuid_c->ebx;
-+                break;
-+            case R_ECX:
-+                ret = cpuid_c->ecx;
-+                break;
-+            case R_EDX:
-+                ret = cpuid_c->edx;
-+                break;
-+            default:
-+                return 0;
-+            }
-+        }
-+    }
-+    return ret;
-+}
-+
-+static FeatureWord get_cpuid_featureword_index(uint32_t function,
-+                                               uint32_t index, int reg)
-+{
-+    FeatureWord w;
-+
-+    for (w = 0; w < FEATURE_WORDS; w++) {
-+        FeatureWordInfo *f = &feature_word_info[w];
-+
-+        if (f->type == MSR_FEATURE_WORD || f->cpuid.eax != function ||
-+            f->cpuid.reg != reg ||
-+            (f->cpuid.needs_ecx && f->cpuid.ecx != index)) {
-+            continue;
-+        }
-+
-+        return w;
-+    }
-+
-+    return w;
-+}
-+
-+/*
-+ * TDX supported CPUID varies from what KVM reports. Adjust the result by
-+ * applying the TDX restrictions.
-+ */
-+void tdx_get_supported_cpuid(uint32_t function, uint32_t index, int reg,
-+                             uint32_t *ret)
-+{
-+    /*
-+     * it's KVMM + QEMU 's capabilities of what CPUID bits is supported or
-+     * can be emulated as supported.
-+     */
-+    uint32_t vmm_cap = *ret;
-+    FeatureWord w;
-+
-+    /* Only handle features leaves that recognized by feature_word_info[] */
-+    w = get_cpuid_featureword_index(function, index, reg);
-+    if (w == FEATURE_WORDS) {
-+        return;
-+    }
-+
-+    if (tdx_cpuid_lookup[w].inducing_ve) {
-+        *ret &= tdx_cpuid_lookup[w].supported_value_on_ve;
-+        return;
-+    }
-+
-+    /*
-+     * Include all the native bits as first step. It covers types
-+     * - As configured (if native)
-+     * - Native
-+     * - XFAM related and Attributes realted
-+     *
-+     * It also has side effect to enable unsupported bits, e.g., the
-+     * bits of "fixed0" type while present natively. It's safe because
-+     * the unsupported bits will be masked off by .fixed0 later.
-+     */
-+    *ret |= host_cpuid_reg(function, index, reg);
-+
-+    /* Adjust according to "fixed" type in tdx_cpuid_lookup. */
-+    *ret |= tdx_cpuid_lookup[w].tdx_fixed1;
-+    *ret &= ~tdx_cpuid_lookup[w].tdx_fixed0;
-+
-+    /*
-+     * Configurable cpuids are supported unconditionally. It's mainly to
-+     * include those configurable regardless of native existence.
-+     */
-+    *ret |= tdx_cap_cpuid_config(function, index, reg);
-+
-+    /*
-+     * clear the configurable bits that require VMM emulation and VMM doesn't
-+     * report the support.
-+     */
-+    *ret &= ~(tdx_cpuid_lookup[w].depends_on_vmm_cap & ~vmm_cap);
-+
-+    /* special handling */
-+    if (function == 1 && reg == R_ECX && !enable_cpu_pm) {
-+        *ret &= ~CPUID_EXT_MONITOR;
-+    }
-+}
-+
- enum tdx_ioctl_level{
-     TDX_VM_IOCTL,
-     TDX_VCPU_IOCTL,
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index 4036ca2f3f99..06599b65b827 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -27,5 +27,7 @@ bool is_tdx_vm(void);
- #endif /* CONFIG_TDX */
- 
- int tdx_kvm_init(MachineState *ms, Error **errp);
-+void tdx_get_supported_cpuid(uint32_t function, uint32_t index, int reg,
-+                             uint32_t *ret);
- 
- #endif /* QEMU_I386_TDX_H */
+ static char *cpu_slot_to_string(const CPUArchId *cpu)
+ {
+     GString *s = g_string_new(NULL);
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index bcfde8a84d10..2e6156ae96b8 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -36,6 +36,7 @@ bool machine_usb(MachineState *machine);
+ int machine_phandle_start(MachineState *machine);
+ bool machine_dump_guest_core(MachineState *machine);
+ bool machine_mem_merge(MachineState *machine);
++bool machine_require_guest_memfd(MachineState *machine);
+ HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *machine);
+ void machine_set_cpu_numa_node(MachineState *machine,
+                                const CpuInstanceProperties *props,
+@@ -370,6 +371,7 @@ struct MachineState {
+     char *dt_compatible;
+     bool dump_guest_core;
+     bool mem_merge;
++    bool require_guest_memfd;
+     bool usb;
+     bool usb_disabled;
+     char *firmware;
+diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
+index 0e411aaa29e1..04b884bf42a6 100644
+--- a/include/sysemu/hostmem.h
++++ b/include/sysemu/hostmem.h
+@@ -74,6 +74,7 @@ struct HostMemoryBackend {
+     uint64_t size;
+     bool merge, dump, use_canonical_path;
+     bool prealloc, is_mapped, share, reserve;
++    bool guest_memfd;
+     uint32_t prealloc_threads;
+     ThreadContext *prealloc_context;
+     DECLARE_BITMAP(host_nodes, MAX_NODES + 1);
 -- 
 2.34.1
 
