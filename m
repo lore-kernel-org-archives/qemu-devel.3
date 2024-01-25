@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB00C47422
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC55C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT2gE-0006qp-JR; Thu, 25 Jan 2024 11:34:18 -0500
+	id 1rT2gF-0006rM-74; Thu, 25 Jan 2024 11:34:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT2gC-0006oX-E2
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:16 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1rT2gD-0006pg-Jp
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:17 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT2g8-000287-Uz
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:16 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-40e76109cdeso77101775e9.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:34:12 -0800 (PST)
+ id 1rT2g9-00028c-Lu
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:17 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3392b045e0aso4741618f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706200451; x=1706805251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706200452; x=1706805252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nXb190+lhYx3lCV3waqp1Pgx9RLFbwQo2doe5u6vJo0=;
- b=jQacrLeElBhY2VsPUmiiTHp7LMo43BnnTLv8I/3I9vB9xIzQC9BYIm3oMJDQ2KzQ5z
- uuzQMIdctBqFy17glRDaxwFieQwwomoiQzQ2ONqGl49tCUoF5Q8dvaHHXetlY4+ST17P
- Fffl8iC/E5qOwOxtdV6wnhH5rpcKIWqPR/17p6cDJRMd6uVrkeBVZ1ZqB6GEN31UQ0TQ
- 3Oq8lAMbVRzm0sneGP2Tjlvi7nXE9cia0Q8zow6cru8kP1zw1ZumcwA7BTlkxUjIUJk2
- lZIHy+zxxOONCxg05XDIIzjm4S3FbPUlb8G36blFTAr1s9hrcV87klwix2PmsjoP4pxe
- YguA==
+ bh=1djk9Mx2e66FY1I90FdC46YRiQSkTTbTopB41mRqY/E=;
+ b=BT2Q5L6FPLJcD/jSKXnk249PDNrv6ov26TMQcaHHnPc8X/JGUzcS9SgQO1IjmBW3iz
+ OrGc1vt2Bg9BeNDrfRJ7mn5WaOOdmnHJ6TSOfMTg2mkh6iQJ5vR6DfKtI8fMthzbZg5l
+ ZJ0XEP3C1ZYJBaHTP8F0ni9wIOgZF0rsjtUdWDd0DiCUoPcY9C/r/bjo7d2VT6mKJUum
+ j0WCgEVc3id9s+czxpW5BusmrjmvdhFK8w2c+mdECBEnts5AyxyGCD4xnft9KnOO+1n0
+ T5pSCm9lfHKGHAIQaYSQ66/Klf6G966Q8WsVKGB+t+WFp07qkcxpJtPSoABmF+dE6x1w
+ lmGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706200451; x=1706805251;
+ d=1e100.net; s=20230601; t=1706200452; x=1706805252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nXb190+lhYx3lCV3waqp1Pgx9RLFbwQo2doe5u6vJo0=;
- b=VUR1mB2CQb+7YvnyAQjHFvqMlVvjhJ+7V4qnVNp9a3BGEw7J+ruB66J2yLS2njvbnM
- KwclgWWqbh9/7Wx9ALaKOCRkN1jaZ+bqbt4LRY6rCwjwSgoGaZwa9VS5VLqgijhmndPa
- ZGiQqKbHDSToR5ap2+u29mXiXO/+XR7N9vvqoppKFO0ZDWCSCzc+YC21uCJBKyd6tkru
- n0EazAVNcLPtofdrcQsRicL9tDbCwDdSte81QQMYT89ImuBOHgTgnQq/q27gploBx9z8
- Hnm1PjnR54TQcsMMjnPJGSdmLSa7IZxP3FQsKP70M7LtMD3V5bRSK6KFRC0tp2I48C41
- 8/8w==
-X-Gm-Message-State: AOJu0Yz873QtDpI7gaZj4WSosqUSESBiNOl9GhBfE8u5ahId0CwbjffQ
- JpboVHKnCUIvg4X0WnLEIMYLWFboqqEAAXweXVHBb0V2JZFfIIPywCE+dXsJX77+u/9G3UH0JiQ
- 2
-X-Google-Smtp-Source: AGHT+IE0HVnIpPRsMYXIc3iE3qK38WGkTQQ5apxgP2dO9pN94oPR2pBbMSyOI/zQvndLN2N8XGhK+Q==
-X-Received: by 2002:a05:600c:a01:b0:40d:7d87:6730 with SMTP id
- z1-20020a05600c0a0100b0040d7d876730mr716948wmp.101.1706200451391; 
- Thu, 25 Jan 2024 08:34:11 -0800 (PST)
+ bh=1djk9Mx2e66FY1I90FdC46YRiQSkTTbTopB41mRqY/E=;
+ b=KQHFjG1SKbk21u//DSXlVZ9QHee2814x+9mUfNBXjnRzCKS2h6SvzbNwVeehsEofos
+ Yafj2RmbRK4fyYS+MX/WOWjwwP29NOUVc3GJvJylYJyMBZL/de9AioNr7iX9KLUI2mXx
+ qrrNCRDZKqd0HRC4xosy+LUYt1fyiUyjgRUVPNXor0+eacMlrC7UlfMqZ8KFvMLF/TJk
+ QiqBX4FrpGs3i260ICbX3bhWjNeN66rKVF4Mn0HA0VrgtSaNChOYsA7VcqWTjaK/k1vr
+ rEjjn8rpfK3LaU7h4ZdffkvXZcCBsiJcvYQIGUZTM8GEtpyWseIEeq2PAde0iBUymtGW
+ Zr0A==
+X-Gm-Message-State: AOJu0YzJj9BQHzSYyQG0lXz3AaNbtj5HsQlwkqXDSAI8kVVuglM2e8nl
+ gSSjA24mQVPptSaXoF1PsGuZSgIAcGkYsVEYA22r46yp7PjH5U1eFnOaQ6ladp/pUYbOpltq5il
+ C
+X-Google-Smtp-Source: AGHT+IEBT4lW0PjnuwQtKEuRYzIUG+veTyNR8elNqgPJe4sY/WkL5skwdc7hJOPIWdbW6s6gy1QRnA==
+X-Received: by 2002:a05:600c:5022:b0:40e:d232:b5cb with SMTP id
+ n34-20020a05600c502200b0040ed232b5cbmr558309wmr.195.1706200452194; 
+ Thu, 25 Jan 2024 08:34:12 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  p13-20020a05600c358d00b0040ea875a527sm3122208wmq.26.2024.01.25.08.34.11
@@ -62,16 +62,16 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
-Subject: [PATCH 04/10] aspeed: Clean up includes
-Date: Thu, 25 Jan 2024 16:34:02 +0000
-Message-Id: <20240125163408.1595135-5-peter.maydell@linaro.org>
+Subject: [PATCH 06/10] m68k: Clean up includes
+Date: Thu, 25 Jan 2024 16:34:04 +0000
+Message-Id: <20240125163408.1595135-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125163408.1595135-1-peter.maydell@linaro.org>
 References: <20240125163408.1595135-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,7 +94,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit was created with scripts/clean-includes.
+This commit was created with scripts/clean-includes:
+./scripts/clean-includes --git m68k include/hw/audio/asc.h include/hw/m68k/*.h
 
 All .c should include qemu/osdep.h first.  The script performs three
 related cleanups:
@@ -107,48 +108,34 @@ related cleanups:
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/aspeed_eeprom.h     | 1 -
- tests/qtest/qtest_aspeed.h | 2 --
- hw/arm/aspeed_eeprom.c     | 1 +
- 3 files changed, 1 insertion(+), 3 deletions(-)
+ include/hw/audio/asc.h      | 1 -
+ include/hw/m68k/q800-glue.h | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/hw/arm/aspeed_eeprom.h b/hw/arm/aspeed_eeprom.h
-index bbf9e54365b..f08c16ef506 100644
---- a/hw/arm/aspeed_eeprom.h
-+++ b/hw/arm/aspeed_eeprom.h
-@@ -7,7 +7,6 @@
- #ifndef ASPEED_EEPROM_H
- #define ASPEED_EEPROM_H
+diff --git a/include/hw/audio/asc.h b/include/hw/audio/asc.h
+index 4741f92c461..04fac270b6a 100644
+--- a/include/hw/audio/asc.h
++++ b/include/hw/audio/asc.h
+@@ -13,7 +13,6 @@
+ #ifndef HW_AUDIO_ASC_H
+ #define HW_AUDIO_ASC_H
  
 -#include "qemu/osdep.h"
+ #include "hw/sysbus.h"
+ #include "audio/audio.h"
  
- extern const uint8_t tiogapass_bmc_fruid[];
- extern const size_t tiogapass_bmc_fruid_len;
-diff --git a/tests/qtest/qtest_aspeed.h b/tests/qtest/qtest_aspeed.h
-index 235dfaa186a..d35b0c7cba5 100644
---- a/tests/qtest/qtest_aspeed.h
-+++ b/tests/qtest/qtest_aspeed.h
-@@ -12,8 +12,6 @@
- #ifndef QTEST_ASPEED_H
- #define QTEST_ASPEED_H
+diff --git a/include/hw/m68k/q800-glue.h b/include/hw/m68k/q800-glue.h
+index ceb916d16c1..04fac25f6c2 100644
+--- a/include/hw/m68k/q800-glue.h
++++ b/include/hw/m68k/q800-glue.h
+@@ -23,7 +23,6 @@
+ #ifndef HW_Q800_GLUE_H
+ #define HW_Q800_GLUE_H
  
--#include <stdint.h>
--
- #include "libqtest.h"
+-#include "qemu/osdep.h"
+ #include "hw/sysbus.h"
  
- #define AST2600_ASPEED_I2C_BASE_ADDR 0x1e78a000
-diff --git a/hw/arm/aspeed_eeprom.c b/hw/arm/aspeed_eeprom.c
-index ace5266cec9..daa3d329d10 100644
---- a/hw/arm/aspeed_eeprom.c
-+++ b/hw/arm/aspeed_eeprom.c
-@@ -4,6 +4,7 @@
-  * SPDX-License-Identifier: GPL-2.0-only
-  */
- 
-+#include "qemu/osdep.h"
- #include "aspeed_eeprom.h"
- 
- /* Tiogapass BMC FRU */
+ #define TYPE_GLUE "q800-glue"
 -- 
 2.34.1
 
