@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A7E5C48260
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 02:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2522C46CD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 02:41:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSpfN-0003UC-Eu; Wed, 24 Jan 2024 21:40:34 -0500
+	id 1rSpfi-0003bu-Gy; Wed, 24 Jan 2024 21:40:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSpfG-0003Te-H8
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:40:26 -0500
+ id 1rSpfJ-0003UH-80
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:40:31 -0500
 Received: from mgamail.intel.com ([192.55.52.115])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSpfE-0007d2-Qh
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:40:26 -0500
+ id 1rSpfG-0007ct-PS
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:40:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706150424; x=1737686424;
+ t=1706150426; x=1737686426;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=nblpklNzUZKD78eAt5m3cZr0n/f8GwIruXeYbHNh9Ok=;
- b=GNMj4WwjqCql2nsXhJFhjnK2sY3ph8jbPgUrD8fy8F+dHCt7yPTZUSnt
- 63goLi9xTnGuM0buD2nQblt0wq+DbE4GihSqAZkyyll6Bu0N9QOtHbvmy
- 2SIaWFhCjVI7bFTMI0zJYwqZBzzvqmY7/Uw0obVHUG9H7VuurIQfDEwhp
- PO/b3bdxACJgasXBtI/Pk3z/P5nxHzq6j8ssD5v8dMzCEJghrgOoI8vTI
- +kCVfAzwrUxJqT5Mf0ajxWlyr/zDi8zrn93pfWIFlr070lfXeTbbovpjs
- 98G+CByrUlKDzN3oI1VgSOEpTlW9AKeYNOUy+MqLBDGXtc08RkqKy05/Q A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="401687453"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="401687453"
+ bh=zCSUWz6x4CYmJnL/NhcGx17babqI2D0aVpH7noNHZvM=;
+ b=jUXv4DvwtJeKz5hRdSEPGWNSm/RszoAnEj8U/ulSCWfgqgZWPwriwziY
+ oKJFMheyKzXGh1dl6MAvgzshj4YWSblN3zgM6iiI3m0fBuy0IqZll7HDJ
+ 1AdpOgHbyDa0SinW9jrsN0MGY7pd0rbGpslk885JU5j7TPwhexz1RtduY
+ MPHDoJ/Z1QJdfyIqYd/3eY2z6Z2GkCaBR7HnrJn+1XqeXLaLgXCskryuL
+ 0XLOKXYbbunA8+XEiIfvIjPlhsDZumHrNNFyIslhKZB0s9F7L9zBavaQq
+ QHpstOMmKk0w/Ts/hLqEppR0c1xCQSs/5ImXQZI1ZZ+wpMpcU0e4y2cqy w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="401687461"
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="401687461"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 18:40:22 -0800
+ 24 Jan 2024 18:40:26 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2120530"
+   d="scan'208";a="2120537"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa003.jf.intel.com with ESMTP; 24 Jan 2024 18:40:21 -0800
+ by orviesa003.jf.intel.com with ESMTP; 24 Jan 2024 18:40:24 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	kvm@vger.kernel.org,
 	xiaoyao.li@intel.com
-Subject: [PATCH v3 1/3] i386/cpuid: Decrease cpuid_i when skipping CPUID leaf
- 1F
-Date: Wed, 24 Jan 2024 21:40:14 -0500
-Message-Id: <20240125024016.2521244-2-xiaoyao.li@intel.com>
+Subject: [PATCH v3 3/3] i386/cpuid: Move leaf 7 to correct group
+Date: Wed, 24 Jan 2024 21:40:16 -0500
+Message-Id: <20240125024016.2521244-4-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125024016.2521244-1-xiaoyao.li@intel.com>
 References: <20240125024016.2521244-1-xiaoyao.li@intel.com>
@@ -81,30 +80,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Existing code misses a decrement of cpuid_i when skip leaf 0x1F.
-There's a blank CPUID entry(with leaf, subleaf as 0, and all fields
-stuffed 0s) left in the CPUID array.
+CPUID leaf 7 was grouped together with SGX leaf 0x12 by commit
+b9edbadefb9e ("i386: Propagate SGX CPUID sub-leafs to KVM") by mistake.
 
-It conflicts with correct CPUID leaf 0.
+SGX leaf 0x12 has its specific logic to check if subleaf (starting from 2)
+is valid or not by checking the bit 0:3 of corresponding EAX is 1 or
+not.
 
+Leaf 7 follows the logic that EAX of subleaf 0 enumerates the maximum
+valid subleaf.
+
+Fixes: b9edbadefb9e ("i386: Propagate SGX CPUID sub-leafs to KVM")
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by:Yang Weijiang <weijiang.yang@intel.com>
 ---
- target/i386/kvm/kvm.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/kvm/kvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 76a66246eb72..dff9dedbd761 100644
+index 9758c83693ec..42970ab046fa 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -1914,6 +1914,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         }
-         case 0x1f:
-             if (env->nr_dies < 2) {
-+                cpuid_i--;
-                 break;
+@@ -1951,7 +1951,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
+                 c = &cpuid_data.entries[cpuid_i++];
              }
-             /* fallthrough */
+             break;
+-        case 0x7:
+         case 0x12:
+             for (j = 0; ; j++) {
+                 c->function = i;
+@@ -1971,6 +1970,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+                 c = &cpuid_data.entries[cpuid_i++];
+             }
+             break;
++        case 0x7:
+         case 0x14:
+         case 0x1d:
+         case 0x1e: {
 -- 
 2.34.1
 
