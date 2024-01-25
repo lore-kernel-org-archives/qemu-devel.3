@@ -4,86 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFA9C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 14:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEFAC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 14:36:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT0GW-0002ZW-3C; Thu, 25 Jan 2024 08:59:36 -0500
+	id 1rT0p1-00062D-4E; Thu, 25 Jan 2024 09:35:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rT0GU-0002WL-0q
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 08:59:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rT0oy-00060w-Qb
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 09:35:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rT0GS-0007We-D2
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 08:59:33 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rT0ow-0006Vf-Sc
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 09:35:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706191170;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Re3c+KJWH3bNudfRYB+9GmOIyL/3Ce00Hc1oyRFjYkk=;
- b=Z+OBtDMWIJ2XevwXz9vWsWStLWYsPYnVLjSkdJb7XwPuAaAD7OVemg/DaBhu3+a4eZf9OY
- yKNCzD+OkpSlmwa2KzyCC3q/F6ZcUpMKSS670dI3ZflXnqJcRrlmmWeelfq8yACBw6XupC
- XSKN8ipmZ3fNda3Dmpz/eHXKt3MnvCw=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1706193308;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=6qf77vf4Whp7QoqqCS8zl/3FSO4WIkKe2N8YtJaa/cI=;
+ b=FaZ1OI/Jtd64SiSAJ+kxTEHYuXJoIfne5jvVkjJPL4yjHCgl4XFiY4SBxHfgCR4+p5lMxj
+ lL4IhGBZYcljsELpadwshgAn3CU3RVpU8asMGximd4thdvlZx5dnN+C7yy+RzffLW1PrFU
+ Ksp065NTqEaKHJM/hG7h4MoBgNLNZ0E=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-K2Uq_zz9Mda2lyFAhqrDAA-1; Thu, 25 Jan 2024 08:59:29 -0500
-X-MC-Unique: K2Uq_zz9Mda2lyFAhqrDAA-1
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-7d2df856a0bso1178596241.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 05:59:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706191167; x=1706795967;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Re3c+KJWH3bNudfRYB+9GmOIyL/3Ce00Hc1oyRFjYkk=;
- b=b52EMBU/Uw0+q5WQ+bHjbn0bDvsxrvwwWpHoOITjqeZov+xi3Y/BI7DOUwFbsfUWBS
- Oec1QtIXN7TlKxOjH0iBu/rHWP2HT6vvdSPTb2wYfBRbVNZwUNwr8fezDxWhYv8xDOUz
- b8GKvTgddMZs/UIkjvjCvjCxk18MmdorHq8am4Bm51ElEYFCsxLiSa/gtbSlPvrQqz6K
- KoXJjHxScjbUXk4aZIDUzM5d03rfG9IXvXaMFkBYaWc6HpoF0gr6ZyTxrcXz5uMMQxoL
- 8eFxwWfQHhXgfwc/WBkGntpTAE9zg/XtT3guYTIzku0iZQUcEbqZi8hbZys6G8oEkH8c
- xPDA==
-X-Gm-Message-State: AOJu0Yyanb8NShzVqNR/ldBospojaKVn2sXWU8/ziC+j1Z2EEG2s+6zM
- QEd7iGInkxmmL3GXpDOt1JhBDSXcFvoco39zZ52Wc5t33c6SLmt8u4bsCWWC0tIax0S9ig4no8f
- /S7mp6Xu2QjgpEkXq9wN9Tyfcv7r2Z+0/h1NvchdRTQYQrT2A9b9uFatAmd/VIoDn5arXfphMsP
- pbh9LiVpivnFNK9mwdxZH89dUQcBA=
-X-Received: by 2002:a05:6102:a04:b0:46b:1f7d:4e8d with SMTP id
- t4-20020a0561020a0400b0046b1f7d4e8dmr203074vsa.6.1706191167730; 
- Thu, 25 Jan 2024 05:59:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGLZrcW01K4ol06zzTrvOO6k3Y+QiQJlJkB02IjPv13Sab0FS39iEIpF1lETV2roIs3SUkZ3FmkfA2foAbmPz8=
-X-Received: by 2002:a05:6102:a04:b0:46b:1f7d:4e8d with SMTP id
- t4-20020a0561020a0400b0046b1f7d4e8dmr203068vsa.6.1706191167486; Thu, 25 Jan
- 2024 05:59:27 -0800 (PST)
-MIME-Version: 1.0
-References: <CABgObfaCq+++xj7ow5Sm22P5nfMZyh-BKt57m3Po6voKyCnuXQ@mail.gmail.com>
- <CAFEAcA-fnOjEOWGjw1vqyx3Evnf6U99-Yo-mqMkXD87J_ZdTgg@mail.gmail.com>
- <289b0f6c-8d77-4604-88c0-c257e0837d67@tls.msk.ru>
-In-Reply-To: <289b0f6c-8d77-4604-88c0-c257e0837d67@tls.msk.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 25 Jan 2024 14:59:16 +0100
-Message-ID: <CABgObfb9V25_ScxxRiqgF7fAPRrnBqzweKebkDTY9uKpqiuzsw@mail.gmail.com>
+ us-mta-249-YCDWnPhNOIeRhhNbYkPy0A-1; Thu, 25 Jan 2024 09:35:05 -0500
+X-MC-Unique: YCDWnPhNOIeRhhNbYkPy0A-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6C87510726A2;
+ Thu, 25 Jan 2024 14:35:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.95])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id ABB3751D5;
+ Thu, 25 Jan 2024 14:35:04 +0000 (UTC)
+Date: Thu, 25 Jan 2024 14:35:02 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, "Wolf, Kevin" <kwolf@redhat.com>,
+ "Maydell, Peter" <peter.maydell@linaro.org>
 Subject: Re: Do we still need pre-meson compatibility hacks?
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, 
- "Wolf, Kevin" <kwolf@redhat.com>, "P. Berrange, Daniel" <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Message-ID: <ZbJxlgqwkRdmdYmB@redhat.com>
+References: <CABgObfaCq+++xj7ow5Sm22P5nfMZyh-BKt57m3Po6voKyCnuXQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABgObfaCq+++xj7ow5Sm22P5nfMZyh-BKt57m3Po6voKyCnuXQ@mail.gmail.com>
+User-Agent: Mutt/2.2.10 (2023-03-25)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,37 +80,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 25, 2024 at 2:02=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
-> Heh.  I still use `make qemu-system-arm` (or `ninja qemu-system-arm`), bu=
-t only
-> because I haven't followed closely what's the "right" target to use.  I d=
-on't
-> care much which target it is exactly, but guess this is some info which n=
-eeds
-> to be findable somewhere (again, maybe it's in the docs for a long time, =
-and
-> I just need rtfm).
+On Thu, Jan 25, 2024 at 08:54:09AM +0100, Paolo Bonzini wrote:
+> Right now configure contains a couple hacks to preserve some of the
+> semantics of the pre-meson build system:
+> 
+> 1) emulation of ./configure by creating a build directory and a forwarding
+> GNUmakefile (requested by Kevin)
+> 
+> 2) creation of symlinks such as x86_64-softmmu/qemu-system-x86_64 and
+> arm-linux-user/qemu-arm (requested by Peter)
+> 
+> Neither of these are a lot of code, but if people aren't relying on them we
+> might as well delete them. Do they have any users still?
 
-Yes, it is the right one.
+The latter feels redundant, but the former feels worthwhile as long as we
+keep a wrapper cnofigure script around.
 
-> > I suspect that "just run configure in the source tree" is still
-> > popular with the kind of people who don't frequently build
-> > QEMU, though.
->
-> "Run configure" is popular indeed, -- configure might either be a startup=
- script
-> or just something to tell which command to use.  Again, personally I don'=
-t care
-> much which it will be as long as I know what it is ;)
+It seems like we're not far off being able to do a build with the normal
+sequence of
 
-Sure, that one can be kept.  Part of the reason I asked, was to
-understand if it may make sense to clean the Makefile a bit (e.g.
-split source and build bits).
+  meson setup build
+  meson compile -C build
 
-Paolo
+The creation of the config-host.mak and config-host.h files looks like
+the big one. I feel like config-host.mak ought not to even exist. Meson
+only consumes a subset of values written into that AFAICT:
+
+$ git grep 'config_host\b'
+meson.build:config_host = keyval.load(meson.current_build_dir() / 'config-host.mak')
+meson.build:target_dirs = config_host['TARGET_DIRS'].split()
+meson.build:default_targets = 'CONFIG_DEFAULT_TARGETS' in config_host
+meson.build:if config_host.has_key('GDB')
+meson.build:  summary_info += {'gdb':             config_host['GDB']}
+meson.build:summary_info += {'genisoimage':       config_host['GENISOIMAGE']}
+
+and I would have thought meson could detect 'gdb' / 'genisoimage' itself,
+and have a meson cli option for target_dirs / default_targets.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
