@@ -4,55 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8AAC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 10:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B219C48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 11:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSxEq-0004CD-Tp; Thu, 25 Jan 2024 05:45:43 -0500
+	id 1rSxWz-0000ez-QZ; Thu, 25 Jan 2024 06:04:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Usek=JD=kaod.org=clg@ozlabs.org>)
- id 1rSxEV-00044m-EE; Thu, 25 Jan 2024 05:45:21 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Usek=JD=kaod.org=clg@ozlabs.org>)
- id 1rSxET-0007oj-7R; Thu, 25 Jan 2024 05:45:19 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLHXV2BLMz4x7q;
- Thu, 25 Jan 2024 21:45:14 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLHXS3SpTz4x5r;
- Thu, 25 Jan 2024 21:45:12 +1100 (AEDT)
-Message-ID: <8fbf05d8-c075-4fd9-8f63-44aa78612403@kaod.org>
-Date: Thu, 25 Jan 2024 11:45:11 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSxWx-0000ds-W2
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 06:04:24 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rSxWw-0000MP-A6
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 06:04:23 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-559f92bf7b6so1285582a12.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 03:04:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706180659; x=1706785459; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DElJdwkJ4Jd916Jz3aAhSW19N2hTUUTK7AhnNkymAtE=;
+ b=ARjlap3ycR2MLa0HufS0I9ONCGhQZc7VAI8hEad8DPXQFVx0UaTNfoEJsSIGrue/V3
+ QtaR6CiX4AAe4Vmh9uo+Ww3Ou3q6GnZx3K0U9QDM3hb2dHYv8Y1uvB44BkpOnOo89Ns0
+ rzpvc++8WIeZ8/nhQC9VhwGOoO2VkVSm4WWMVXDk5OIpms8e13F4FWEOKH2QVEo9filF
+ zNSdkNU375HJ8sqStQi7SnA9BoX0umYtZH6yiE4jloVNcQv7BCjgaci+JqjOwFywG4Do
+ 7KlPTlg5rCC6aXZoKkwrYJELZW9oXMQ2oDlT17CnUFd29TjlT2FbsXLQF8SFVPgHbLKC
+ D4oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706180659; x=1706785459;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DElJdwkJ4Jd916Jz3aAhSW19N2hTUUTK7AhnNkymAtE=;
+ b=DBlOyriz8qyac3Pfo185vmuBh/nTyEb6DNc3o56bh1a5mjBYci1jwOZWjkXgTZ4HBC
+ boXQUIAu+JIaMBND5aN3vhVsrHucd30OcZQet4Q5xKmH3ki/iyDaL7vM5Sxn4GixMGB+
+ 44mvjiY8C7rh/kmyhI1Jon8OhcedsiSCD5R7e5uWxghtuiY9YhM+kJsZp6f73K3B0YDv
+ Z046R7uvGTm6Sq5Lj5pZD4cfVoLPlb8AW1FJKQChunzHk96tLz/dcZfDO7WEKtkr5Opl
+ ArAaxI8qCTOJtRCexpt/8q8F3AGxM/6crVH2GhMkwyqLv/lGKpYRoxVhVRZLCOzSyq8/
+ nmSw==
+X-Gm-Message-State: AOJu0Yykdxe4BME9ybfDqmjD+ZyXdCO+gB/sxF5J3UmWBzXRMQbFe1nA
+ cdvgoEtbRhyfAu3QBehVdDCIsYrvoffYNRXgiOkmgeEqC0Wv1apSzWqVppF8V7EqK8b8Q6e0RoM
+ UtsgEcXVuI0hD1gm5TZ4aXqWb8UqBfMGObGgWeQ==
+X-Google-Smtp-Source: AGHT+IGJ4bo+kk0gGxvkd4SKL0SlafhV1GwtyOsX8KYZXSSVQUDpfKIxiNdssBFE1EF3CfnDSNcCLAW27kF//TmEP/4=
+X-Received: by 2002:a05:6402:1609:b0:55b:7fd6:4daa with SMTP id
+ f9-20020a056402160900b0055b7fd64daamr757828edv.8.1706180659369; Thu, 25 Jan
+ 2024 03:04:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] target/ppc: optimise ppcemb_tlb_t flushing
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-References: <20240117151238.93323-1-npiggin@gmail.com>
- <20240117151238.93323-6-npiggin@gmail.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240117151238.93323-6-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Usek=JD=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+References: <CABgObfaCq+++xj7ow5Sm22P5nfMZyh-BKt57m3Po6voKyCnuXQ@mail.gmail.com>
+In-Reply-To: <CABgObfaCq+++xj7ow5Sm22P5nfMZyh-BKt57m3Po6voKyCnuXQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 25 Jan 2024 11:04:07 +0000
+Message-ID: <CAFEAcA-fnOjEOWGjw1vqyx3Evnf6U99-Yo-mqMkXD87J_ZdTgg@mail.gmail.com>
+Subject: Re: Do we still need pre-meson compatibility hacks?
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, "Wolf, Kevin" <kwolf@redhat.com>, 
+ "P. Berrange, Daniel" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,115 +88,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/17/24 16:12, Nicholas Piggin wrote:
-> Filter TLB flushing by PID and mmuidx.
-> 
-> Zoltan reports that, together with the previous TLB flush changes,
-> performance of a sam460ex machine running lame to convert a wav to mp3
-> is improved nearly 10%:
-> 
->                    CPU time    TLB partial flushes  TLB elided flushes
-> Before            37s         508238               7680722
-> After             34s             73                  1143
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+On Thu, 25 Jan 2024 at 07:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> Right now configure contains a couple hacks to preserve some of the semantics of the pre-meson build system:
+>
+> 1) emulation of ./configure by creating a build directory and a forwarding GNUmakefile (requested by Kevin)
+>
+> 2) creation of symlinks such as x86_64-softmmu/qemu-system-x86_64 and arm-linux-user/qemu-arm (requested by Peter)
+>
+> Neither of these are a lot of code, but if people aren't relying on them we might as well delete them. Do they have any users still?
 
+Personally I have moved away from using the old $TARGET/qemu-foo
+so I would not miss the symlinks if they went away. Can't
+speak for anybody else on that one.
 
+I suspect that "just run configure in the source tree" is still
+popular with the kind of people who don't frequently build
+QEMU, though.
 
-Acked-by: Cédric Le Goater <clg@kaod.org>
-
-Thanks,
-
-C.
-
-
-> ---
->   target/ppc/mmu_helper.c | 43 +++++++++++++++++++++++++++++++++++------
->   1 file changed, 37 insertions(+), 6 deletions(-)
-> 
-> diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-> index ba965f1779..c071b4d5e2 100644
-> --- a/target/ppc/mmu_helper.c
-> +++ b/target/ppc/mmu_helper.c
-> @@ -751,11 +751,20 @@ target_ulong helper_4xx_tlbre_lo(CPUPPCState *env, target_ulong entry)
->   
->   static void ppcemb_tlb_flush(CPUState *cs, ppcemb_tlb_t *tlb)
->   {
-> -    target_ulong ea;
-> +    unsigned mmu_idx = 0;
->   
-> -    for (ea = tlb->EPN; ea < tlb->EPN + tlb->size; ea += TARGET_PAGE_SIZE) {
-> -        tlb_flush_page(cs, ea);
-> +    if (tlb->prot & 0xf) {
-> +        mmu_idx |= 0x1;
->       }
-> +    if ((tlb->prot >> 4) & 0xf) {
-> +        mmu_idx |= 0x2;
-> +    }
-> +    if (tlb->attr & 1) {
-> +        mmu_idx <<= 2;
-> +    }
-> +
-> +    tlb_flush_range_by_mmuidx(cs, tlb->EPN, tlb->size, mmu_idx,
-> +                              TARGET_LONG_BITS);
->   }
->   
->   void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
-> @@ -770,7 +779,7 @@ void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
->       entry &= PPC4XX_TLB_ENTRY_MASK;
->       tlb = &env->tlb.tlbe[entry];
->       /* Invalidate previous TLB (if it's valid) */
-> -    if (tlb->prot & PAGE_VALID) {
-> +    if ((tlb->prot & PAGE_VALID) && tlb->PID == env->spr[SPR_40x_PID]) {
->           qemu_log_mask(CPU_LOG_MMU, "%s: invalidate old TLB %d start "
->                         TARGET_FMT_lx " end " TARGET_FMT_lx "\n", __func__,
->                         (int)entry, tlb->EPN, tlb->EPN + tlb->size);
-> @@ -821,7 +830,7 @@ void helper_4xx_tlbwe_lo(CPUPPCState *env, target_ulong entry,
->       entry &= PPC4XX_TLB_ENTRY_MASK;
->       tlb = &env->tlb.tlbe[entry];
->       /* Invalidate previous TLB (if it's valid) */
-> -    if (tlb->prot & PAGE_VALID) {
-> +    if ((tlb->prot & PAGE_VALID) && tlb->PID == env->spr[SPR_40x_PID]) {
->           qemu_log_mask(CPU_LOG_MMU, "%s: invalidate old TLB %d start "
->                         TARGET_FMT_lx " end " TARGET_FMT_lx "\n", __func__,
->                         (int)entry, tlb->EPN, tlb->EPN + tlb->size);
-> @@ -851,6 +860,25 @@ target_ulong helper_4xx_tlbsx(CPUPPCState *env, target_ulong address)
->       return ppcemb_tlb_search(env, address, env->spr[SPR_40x_PID]);
->   }
->   
-> +static bool mmubooke_pid_match(CPUPPCState *env, ppcemb_tlb_t *tlb)
-> +{
-> +    if (tlb->PID == env->spr[SPR_BOOKE_PID]) {
-> +        return true;
-> +    }
-> +    if (!env->nb_pids) {
-> +        return false;
-> +    }
-> +
-> +    if (env->spr[SPR_BOOKE_PID1] && tlb->PID == env->spr[SPR_BOOKE_PID1]) {
-> +        return true;
-> +    }
-> +    if (env->spr[SPR_BOOKE_PID2] && tlb->PID == env->spr[SPR_BOOKE_PID2]) {
-> +        return true;
-> +    }
-> +
-> +    return false;
-> +}
-> +
->   /* PowerPC 440 TLB management */
->   void helper_440_tlbwe(CPUPPCState *env, uint32_t word, target_ulong entry,
->                         target_ulong value)
-> @@ -863,7 +891,10 @@ void helper_440_tlbwe(CPUPPCState *env, uint32_t word, target_ulong entry,
->       tlb = &env->tlb.tlbe[entry];
->   
->       /* Invalidate previous TLB (if it's valid) */
-> -    if (tlb->prot & PAGE_VALID) {
-> +    if ((tlb->prot & PAGE_VALID) && mmubooke_pid_match(env, tlb)) {
-> +        qemu_log_mask(CPU_LOG_MMU, "%s: invalidate old TLB %d start "
-> +                      TARGET_FMT_lx " end " TARGET_FMT_lx "\n", __func__,
-> +                      (int)entry, tlb->EPN, tlb->EPN + tlb->size);
->           ppcemb_tlb_flush(env_cpu(env), tlb);
->       }
->   
-
+thanks
+-- PMM
 
