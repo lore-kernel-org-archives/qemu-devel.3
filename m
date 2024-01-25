@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DE9C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A29FC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqTY-0001VM-Qt; Wed, 24 Jan 2024 22:32:25 -0500
+	id 1rSqSO-0003aJ-Aj; Wed, 24 Jan 2024 22:31:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqTQ-00014S-OR
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:16 -0500
+ id 1rSqSM-0003K0-25
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:10 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqTP-0001Dr-4b
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:16 -0500
+ id 1rSqSF-0001Dr-3P
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153535; x=1737689535;
+ t=1706153464; x=1737689464;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=maYjgz/h/ZZjwQV0B3brw6jcZafKzTlp30cuMRoIjBA=;
- b=iAL2CllfVQonGbDJZbOt+750HqvuATqKObYPbjdIUndkbVoMAmnlDRP+
- TVIvVtf2/+AEiGt01qKwThPk+ZEc599/E2Fr5EUX/c3ylAqwOnRqdE5aH
- C+yHl4jXRNbtb9znjKEesypgcr4K3eNnQ8y0kzCb6RG034JDsVtxhq2XU
- fC/z2k8Qbr5zWZF8NL1hbdffvKcV3+NoApwBOwK3EBWyLePjY6XA8XIuN
- C754wTJw2aLeQ2JLIs0qCspRJTn3/3Ex5kpnPbVmzDna3n5kK/ZsNSIjI
- vibC9zEx8W1WLF63x3PscoTFpj9QfXkYdX9a73Bib0NXFZXXdgbxkSmC4 w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430556"
+ bh=AdKQF2BW1bf4ZYSY+8ORr/ArRwOGx//exmON+mQRoYo=;
+ b=IoKyhKjR4+nc6z6jFs8npx4oqFEnd2VkpqH68fuElOp6tuP9azNiHXJA
+ ZwX1aL/RRpzhFBoooernWMTCNe33ePDY2FtksKrqoizdkR425xAN0ZlWA
+ 1v9cBB9Oxg5gxD4K3fBfwqnyvoBZ7plgoc1FI0kgs7qCGMAkhsO/lLUr6
+ D3KLhrWAtJ4ihluzL4VNZq9JDKSULcmRRXYlMT4Lk9avvBgE3mUzJ6Bgc
+ gcXDi3SUiX/A7Sk5ET4Cs08ZlbupW7UPl4YWDa6V9KUAygHYXd+nN9jqV
+ LK26VdL3SeLFaE1M4NpewO3XB9w7hO3l6kwF7qZZHKfL0+0rgeG83zCuu Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9429922"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9430556"
+   d="scan'208";a="9429922"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:29:26 -0800
+ 24 Jan 2024 19:28:00 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2086706"
+   d="scan'208";a="2086101"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:29:21 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:27:55 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,9 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 64/66] i386/tdx: Skip kvm_put_apicbase() for TDs
-Date: Wed, 24 Jan 2024 22:23:26 -0500
-Message-Id: <20240125032328.2522472-65-xiaoyao.li@intel.com>
+Subject: [PATCH v4 48/66] i386/tdx: Finalize TDX VM
+Date: Wed, 24 Jan 2024 22:23:10 -0500
+Message-Id: <20240125032328.2522472-49-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -93,30 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM doesn't allow wirting to MSR_IA32_APICBASE for TDs.
+Invoke KVM_TDX_FINALIZE_VM to finalize the TD's measurement and make
+the TD vCPUs runnable once machine initialization is complete.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/kvm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/kvm/tdx.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 128cce929ed3..109f778ba14d 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3065,6 +3065,11 @@ void kvm_put_apicbase(X86CPU *cpu, uint64_t value)
- {
-     int ret;
- 
-+    /* TODO: Allow accessing guest state for debug TDs. */
-+    if (is_tdx_vm()) {
-+        return;
-+    }
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 341b4e76bf7d..69a697608219 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -674,6 +674,13 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+     /* Tdvf image was copied into private region above. It becomes unnecessary. */
+     ram_block = tdx_guest->tdvf_region->ram_block;
+     ram_block_discard_range(ram_block, 0, ram_block->max_length);
 +
-     ret = kvm_put_one_msr(cpu, MSR_IA32_APICBASE, value);
-     assert(ret == 1);
++    r = tdx_vm_ioctl(KVM_TDX_FINALIZE_VM, 0, NULL);
++    if (r < 0) {
++        error_report("KVM_TDX_FINALIZE_VM failed %s", strerror(-r));
++        exit(0);
++    }
++    tdx_guest->parent_obj.ready = true;
  }
+ 
+ static Notifier tdx_machine_done_notify = {
 -- 
 2.34.1
 
