@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1146EC47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 15:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B47C48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 15:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT1OV-0007VN-PJ; Thu, 25 Jan 2024 10:11:55 -0500
+	id 1rT1Oi-0007WQ-Pj; Thu, 25 Jan 2024 10:12:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT1OT-0007Us-8X
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:11:53 -0500
+ id 1rT1Og-0007WC-Kw
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:12:07 -0500
 Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT1OR-0003WD-Jw
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:11:53 -0500
+ id 1rT1Od-0003XI-W3
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:12:05 -0500
 Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-55a50649ff6so7565658a12.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 07:11:51 -0800 (PST)
+ 4fb4d7f45d1cf-55cef56c6f9so1120418a12.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 07:12:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706195510; x=1706800310; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706195523; x=1706800323; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=s89qc2IuPrmSVnfyJ6Cc0sT6CMYQNYh9BN1AJpZVRCs=;
- b=Wtfma48iFGDehv5gt7LWqRdLd+MhnW7RaqC6IatbYZQkLVA5u13HgJIE2Mps+3iQOZ
- 19A369Pb/bZ9Zm2sIiXRMd68qEmeaJZuZ8sPtHRcvIhggUXULQDy2yAsVNkNiREZU53k
- nYKdUzSkuBSjrCREGuOgRG8S+HHh3UYK3e1zzZwp+Ir9cdEoIxt0Luw4Na1B/EJGqFvh
- bMmF9ffQ6/d+54JsrjVPMQTfxFwag9S7cmg8qHhKLxVHvEyIgSJVf9ajxmQn3HgJM8xA
- QOqaGM4OocXtMuOEBbcf41y2YqE9myifbqeGM+SATZAHHzhd5hbrcoJaq48eDa5AOi8Z
- 0/lA==
+ bh=2i80wxe0/0QtBO80+y4+RhgnOoR/kF0A14FE8rom+X4=;
+ b=yz+Fc3xo0EO8072CmkMWBjCo0Adxm6h9D+aqc9MEB52i5LDXiOsLGPNeA97gHK3Sfv
+ OAdXmyEvyKS9W0tsmh/Gql/q8oU7i89rOpVPAUjAnDSbkP0seXfxXLYfYsa5AaVOAq17
+ /S97qKLXgYMyo4L2ZzXLjss3F+y9UYiUIyRJwaoA4t9ETBPDiLyXYKUPCk5DrkS/MxAV
+ H5/BqYpABSbf9KYzi2ODThTN7+8uQ4fUwIclV2x2aT5mh8xK7P2A4cAGqsHkCqfE0npE
+ 1XumyYQkc6RlLQ4fuP8KGLnkpBveLbnT36yNyiZ9x5VCbhMDXXNh6MCztctp3D3FG1tx
+ ITjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706195510; x=1706800310;
+ d=1e100.net; s=20230601; t=1706195523; x=1706800323;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=s89qc2IuPrmSVnfyJ6Cc0sT6CMYQNYh9BN1AJpZVRCs=;
- b=HMo0LEkzNIgtN5H0L0SjxEu0ZpjOI8Grk474ELKxjeXYpI+nLV5XbkLgGtkTLXegWb
- f/ZMZu6eq/h3RFTi5zl5zUGgPg46SBZg1gHypEKkqqmuAKDKGzUJZJIA/PyZNVPnrSzc
- yoz8PGQjnWAcP6TVqkwudwWrCh0VQovW8AY8wCBgA8g48vXGcKFZ/w2GenVxd6Sws+Rn
- m6qr3SfH1Mv7KUhNjSCDc9fCM4bYaq+u0rumGhiyh5VL/U9yJuFmOlf8HIajV3uK+3K4
- NuEtlQj/Q+DMDErVzWe6C0nTeiqFvBpZx1VNUaAn0cSXd1tinhDgSuIDOhx8tDG/+epm
- oZ1Q==
-X-Gm-Message-State: AOJu0YzfUAJNjv9hT/DGk9e1Uzk00KtohrKp3ahyiipf9GpKZ9zVjJlh
- fuVZfkGd/lNGXCuKT8vhqFA+9MO7Ez3/omo8lmGUCE6moV/wa3hMAoxe5mrYkPXh6vuk5SZS0Rs
- MlITW5l+7bQXrrNp6UsDLqBBQuS2ganYOtPRX3w==
-X-Google-Smtp-Source: AGHT+IFsNDmDiIWUVlAFABYJsJH/ZMV6Q84Wvzfa63SAt6tgoTbxUAfkwgi101bGP/2QLEHdlIuyeI5FMnC6f53ykoo=
-X-Received: by 2002:a05:6402:1a2c:b0:55c:c66c:271d with SMTP id
- be12-20020a0564021a2c00b0055cc66c271dmr673303edb.17.1706195510238; Thu, 25
- Jan 2024 07:11:50 -0800 (PST)
+ bh=2i80wxe0/0QtBO80+y4+RhgnOoR/kF0A14FE8rom+X4=;
+ b=MITap/HRsNx41gTner8ChK32MELvEkNWn9FQ2JS3QvFwMTQZIQvwmbbPy2QATFt6Ja
+ DEVVnUVhAGJHwu4o9Co9Yq4TjXGjDK+bMOkrUajUVorpVQFcLtROSwJDTLeVrGZ0YhOm
+ BXo8wvrKbhCQRZ6ijrwwIpnjcedyAM/M79Zk6kzk+uqZOoGMbrKJHeq5HitS11hTniuv
+ HiS47gyVjUrChsAnPPVNnBmS+pNrAlknnTdRcR+MUcAm3FiZYIk/JJYeo1w8O6DDCZMI
+ 4hU25vnuVlurT+daxqtPLsffCY1KXKk5eYp4kcpRKcHW4rpgT6HFW75M//A+L78xR6mO
+ wUeg==
+X-Gm-Message-State: AOJu0Ywq0lyNw2r4qYmCFKgN2Os64EGJT5CwOj2Om7Ay/HQbWAeLI9y1
+ v5Crg/zLFkJlbbEfbibfKM04DuMaZFrIe2q7xuzKiTNq9i3W+AZ36xHLg+92ns3uRIXdOX6TInt
+ Z2rvIELx3EWiehVLdSAXYJX0OiLgzlgEDOx0Msw==
+X-Google-Smtp-Source: AGHT+IEaIb8owQVao7zQjpPLzd6gv0uNzMpIaEWQWy4PvJvYxWTBM8f9IhneXkoqvZ19ZjckIoHJ/0SjycjeGCPglSc=
+X-Received: by 2002:a05:6402:2554:b0:55d:1504:13c8 with SMTP id
+ l20-20020a056402255400b0055d150413c8mr282350edb.48.1706195522803; Thu, 25 Jan
+ 2024 07:12:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20240123102412.4569-1-richard.henderson@linaro.org>
-In-Reply-To: <20240123102412.4569-1-richard.henderson@linaro.org>
+References: <20240124104231.603418-1-thuth@redhat.com>
+In-Reply-To: <20240124104231.603418-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jan 2024 15:11:39 +0000
-Message-ID: <CAFEAcA_LzB3gGw1Z4aMa_LW3UdS0QGOjL7+TbHCAMVf-k3rgqA@mail.gmail.com>
-Subject: Re: [PULL v2 0/8] tcg pach queue
-To: Richard Henderson <richard.henderson@linaro.org>
+Date: Thu, 25 Jan 2024 15:11:51 +0000
+Message-ID: <CAFEAcA8pcavVOH6T17Uokps0=nQdCQF4Nujj9Ave-Sek5jpueg@mail.gmail.com>
+Subject: Re: [PULL 0/7] Test timeout fixes and URI code clean up
+To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
@@ -87,15 +87,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jan 2024 at 10:24, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Wed, 24 Jan 2024 at 10:42, Thomas Huth <thuth@redhat.com> wrote:
 >
-> v2: Dropped s390x test case, which gets mis-compiled with
-> some cross-compiler.  Add tcg/arm fix.
->
->
-> r~
->
+>  Hi Peter!
 >
 > The following changes since commit 09be34717190c1620f0c6e5c8765b8da354aeb4b:
 >
@@ -103,18 +97,15 @@ On Tue, 23 Jan 2024 at 10:24, Richard Henderson
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240123
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-01-24
 >
-> for you to fetch changes up to 9f6523e8e4689cafdbed7c10b7cf7c775b5a607b:
+> for you to fetch changes up to e7b991451eecb58af34d6d3d17209e97f5e97f96:
 >
->   tcg/arm: Fix SIGILL in tcg_out_qemu_st_direct (2024-01-23 13:32:10 +1000)
+>   util/uri: Remove unused macros ISA_RESERVED() and ISA_GEN_DELIM() (2024-01-24 09:54:05 +0100)
 >
 > ----------------------------------------------------------------
-> tcg/arm: Fix SIGILL in tcg_out_qemu_st_direct
-> tcg/s390x: Fix encoding of VRIc, VRSa, VRSc insns
-> tcg: Clean up error paths in alloc_code_gen_buffer_splitwx_memfd
-> linux-user/riscv: Adjust vdso signal frame cfa offsets
-> linux-user: Fixed cpu restore with pc 0 on SIGBUS
+> * Test timeout fixes
+> * Clean up URI code
 >
 
 
