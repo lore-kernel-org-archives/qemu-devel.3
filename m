@@ -4,53 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17CA4C46CD2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A7E5C48260
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 02:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSpfH-0003Tn-Ma; Wed, 24 Jan 2024 21:40:27 -0500
+	id 1rSpfN-0003UC-Eu; Wed, 24 Jan 2024 21:40:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSpfF-0003TV-W9
+ id 1rSpfG-0003Te-H8
  for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:40:26 -0500
 Received: from mgamail.intel.com ([192.55.52.115])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSpfD-0007ct-QA
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:40:25 -0500
+ id 1rSpfE-0007d2-Qh
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:40:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706150423; x=1737686423;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=3933UFFK4+NnKWVMGTTstsPH7Q7r+J7R/gfhlP4cKH4=;
- b=OPSA1UbnCF0HQkAFTlcU7CY1VPsVUFKxqjzQkR0PzHkOWZmEJiWUefbm
- 93lBPhawTkSIX5/BzUWpZnBAZVkvvwT8JtC+TCYoIttBMCF47ahXxAuJ7
- MFA2EGLCbzzIl6iNtM2YndHTJqd4V+SJGy0uXVxbyoVPGm7gOBTOV8JrB
- gU1qfFE5FlHap64+nBWUIwIxuSFECariboa3E0/z8Twqzzv6kSdSDXQOm
- dEUG9FvsWiJ2RnsORbuECkcADpO1CuR2rhX3lzaKfc5nMr24khT8CBWT9
- l0o4gSRgAVJEtrrDbEZbOqIOxg4+2Y7xa1n4tjofYe52ZTjce3aT/cRMV A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="401687446"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="401687446"
+ t=1706150424; x=1737686424;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=nblpklNzUZKD78eAt5m3cZr0n/f8GwIruXeYbHNh9Ok=;
+ b=GNMj4WwjqCql2nsXhJFhjnK2sY3ph8jbPgUrD8fy8F+dHCt7yPTZUSnt
+ 63goLi9xTnGuM0buD2nQblt0wq+DbE4GihSqAZkyyll6Bu0N9QOtHbvmy
+ 2SIaWFhCjVI7bFTMI0zJYwqZBzzvqmY7/Uw0obVHUG9H7VuurIQfDEwhp
+ PO/b3bdxACJgasXBtI/Pk3z/P5nxHzq6j8ssD5v8dMzCEJghrgOoI8vTI
+ +kCVfAzwrUxJqT5Mf0ajxWlyr/zDi8zrn93pfWIFlr070lfXeTbbovpjs
+ 98G+CByrUlKDzN3oI1VgSOEpTlW9AKeYNOUy+MqLBDGXtc08RkqKy05/Q A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="401687453"
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="401687453"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 18:40:21 -0800
+ 24 Jan 2024 18:40:22 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2120527"
+   d="scan'208";a="2120530"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa003.jf.intel.com with ESMTP; 24 Jan 2024 18:40:19 -0800
+ by orviesa003.jf.intel.com with ESMTP; 24 Jan 2024 18:40:21 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	kvm@vger.kernel.org,
 	xiaoyao.li@intel.com
-Subject: [PATCH v3 0/3] i386: Minor fixes for building  CPUIDs
-Date: Wed, 24 Jan 2024 21:40:13 -0500
-Message-Id: <20240125024016.2521244-1-xiaoyao.li@intel.com>
+Subject: [PATCH v3 1/3] i386/cpuid: Decrease cpuid_i when skipping CPUID leaf
+ 1F
+Date: Wed, 24 Jan 2024 21:40:14 -0500
+Message-Id: <20240125024016.2521244-2-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240125024016.2521244-1-xiaoyao.li@intel.com>
+References: <20240125024016.2521244-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.55.52.115; envelope-from=xiaoyao.li@intel.com;
@@ -78,37 +81,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The issue that fixed by Patch 1 looks fatal though it doesn't appear on
-KVM because KVM always searches with assending order and hit with the
-correct cpuid leaf 0.
+Existing code misses a decrement of cpuid_i when skip leaf 0x1F.
+There's a blank CPUID entry(with leaf, subleaf as 0, and all fields
+stuffed 0s) left in the CPUID array.
 
-Patch 2 removes the wrong constraint on CPUID leaf 1f.
+It conflicts with correct CPUID leaf 0.
 
-Patch 3 fix the build of CPUID leaf 7.
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by:Yang Weijiang <weijiang.yang@intel.com>
+---
+ target/i386/kvm/kvm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v3:
-- collect Reviewed-by tags;
-- rebase to latest master branch
-  4a4efae44f19 ("Merge tag 'pull-hex-20240121' of https://github.com/quic/qemu into staging")
-
-v2:
-https://lore.kernel.org/qemu-devel/20230613131929.720453-1-xiaoyao.li@intel.com/
-Changes in v2:
-- Add Patch 3;
-- rebase to latest master branch
-
-v1:
-https://lore.kernel.org/qemu-devel/20220712021249.3227256-1-xiaoyao.li@intel.com/
-
-
-Xiaoyao Li (3):
-  i386/cpuid: Decrease cpuid_i when skipping CPUID leaf 1F
-  i386/cpuid: Remove subleaf constraint on CPUID leaf 1F
-  i386/cpuid: Move leaf 7 to correct group
-
- target/i386/kvm/kvm.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 76a66246eb72..dff9dedbd761 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1914,6 +1914,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         }
+         case 0x1f:
+             if (env->nr_dies < 2) {
++                cpuid_i--;
+                 break;
+             }
+             /* fallthrough */
 -- 
 2.34.1
 
