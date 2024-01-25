@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E73BC47422
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C764C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT2YS-0002Pk-8n; Thu, 25 Jan 2024 11:26:16 -0500
+	id 1rT2YJ-0002KI-18; Thu, 25 Jan 2024 11:26:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rT2YR-0002Pa-4M
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:26:15 -0500
-Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2418::600]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ id 1rT2YC-0002IP-Ug
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:26:01 -0500
+Received: from mail-dm6nam11on20601.outbound.protection.outlook.com
+ ([2a01:111:f400:7eaa::601]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rT2YP-0000Vn-8e
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:26:14 -0500
+ id 1rT2Y9-0000SA-K5
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:26:00 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mzjBmzbga8TrRz2PrFngYMrJ5cJCRL6H2Rp+6BBmubWcDEOsn964FA8U+Z7Qx4wWXlEgcbK8bVLHYp9ABr8sIWAbmCSu8jFCTbbJFySLeEupt16TaJyRUbVFXhAww9OeN6UMg6/HkmEOLXDpH396MkoxekwIefRJgfG8GJ7VdYDpYfLCED+BWD49y9Tvf29WB8UB57Y7+l1havepX9DPejowHdX2ln7bkKhljuJnAJ4guVIus6uv5p5x7XEi2rbThM9raPnFsAZkk6cpiTEi+uz0h/C3nSdM3YkVOeo+MI3Q+483PIpU3n4FobKu3cBOAa13To+5z0TWw2lSSMhoVw==
+ b=OXBtKGLoifx/KlNSqm/UZlfvU125aO9fFXIMOJVc6kbNgfeTaDYFZJVw1GYeYWgm1uby6nLM+4XqyWjfMhKkl6X1oB8LLfCcESzx7JEWVY9C800e31gJCbWqJnsYG2MU7Vi7vTCa2GC1rqb9nlWLcTdZz9lx/aNksEFwuwbPgooBZq2BgDX7HbwQ27+/tIqE0seZ04w1f8rYdc9zS3rTBacpULRZTFX9TIYzfOQR6sbbveQ9RhnEAIdo4s+z+wxqIKyGgW//BnTa3QDBBObo8Z7bLovTsl3WOj/bifPLIcu8LAIP6xro+ZFCngdhSntdqt1VAbC6pEKet9vYH3reOw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4zy4AaUsE8ycrSz5IejZl8Zo89GZWYWXE8niRefWRUw=;
- b=hhZdQu72SLvNFsvW43OMYqW4subGqQZH3UHfwttMtv7Df437gMpuu7z09o07+8+5jW40RHuWCohzOcCc8B2wkt3oL1uscIZJs8Xe1+pD/Nt4vKkLBYKueon9UkH25vYvjl2m1PlFQ128aO8QR+seJrkFwKfMdMcPzZp980PfZiblrlVlbXOGYWWaSQxl3KItawW7KxJEfDeedrbf4yCfp50QsX7qyUix0W9XkFWZUmg3liMkAxrnX1R9gQXW4b2/hcDWgpFOGTSTBhGkxu/m0sLGXE+muknW/igDNs1hQTb3F8rHFc5+BgvISqgrSl25zIrJKAXXli4eFTlmQynLEw==
+ bh=N2luifolw7a6U9Ml2qGEzAIwBi2Yfqe7F7+I3RhSzko=;
+ b=JCUyVlRSfmX7AQBNY5cAqJuYl6ruIFO3xi8SJ8ISj+y7oa0+YtMvC4zijqxLSM6aIyHlvHewbKEo5zpiLQALg40tbZePaENN6xCT7jPhVBc/ADmRvx2jODR9j8B1pXYSl250R1DPlgYHmVZRLRHT/AuNTqA4wwZ+QUzY8/+eHm++UIJb9S41OlkvDY1mJ4S9QZMSnDu/kH+gMxgZ5zTlgIDmuaV6OoNqCClbC7Tj4lX95WhPXqn5yBPBrCllLyTGzqUQij51FRKFo5IBLeHVId/ig6mqs57rLrMuXltMCYWYbklNVHIFojLlLjfKaRYr8sAqLJs6hHVVJ2wKdnWaPw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -36,18 +36,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4zy4AaUsE8ycrSz5IejZl8Zo89GZWYWXE8niRefWRUw=;
- b=fuDfzo08wC0wMuxcCSgzZbOhoznUQGg4sn7mfStm/0Cfg4pfcqZFFemK3+Rurn6DdiX8kc79w9CMIIdnwMsb0dvP1pNB6zazg9ilyXQY2wTds3io89l1UN734yRCBY3Yj/QFw06Wx+W81EAFm8IqbxF+4/EZEdLfhpiiNxgz2mkY3KCtw02cOIxnD5K9MG5rkeEq/5TRVJN9BgupE1K0rBXGzahrECRcJV+u+jkWNOYjQs4gZsqTU5/4v2XifJ2DLlXcEveInWI9hafXkgcJ3Kn6wr6hmRil/C9mIugx+CTnOE5AdBHSljG+9dZ561+GyRY+BIvH8111DLEbkz3ZPQ==
-Received: from DM5PR07CA0061.namprd07.prod.outlook.com (2603:10b6:4:ad::26) by
- SJ0PR12MB5453.namprd12.prod.outlook.com (2603:10b6:a03:37f::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7228.24; Thu, 25 Jan 2024 16:26:09 +0000
+ bh=N2luifolw7a6U9Ml2qGEzAIwBi2Yfqe7F7+I3RhSzko=;
+ b=kxDLBAJfd1fTw7R11Tlkh6pJ7RiYK58MUwSXHbWf0hAB3IKI0q3c68Ow1QcLEDceX/waNxlwWO9bcYds6NwNgHRxqEmXD/slCEX5kTfJbGgzvR017vVXGwBx9huRILqhckogvpEN0ND4rzJz6rHmPFmyeQOh0wXmJKB5tgws+QRrAQJmvHEoYovIgavRnaBlhKKp5NMKsMCE5ufGIGD8DAHHeG0shMLDPC8Ms5GIiROohPQCxUM2vxsxsHtRidetWYyFYNlhN1exl8Ocdr8i6ghhptLLzeSqCPmdEH6x0OTzxLs5N0qD3cGLP+n7Dzxp+8AQpAhuPLKKdNbnDh+kTw==
+Received: from DM5PR07CA0066.namprd07.prod.outlook.com (2603:10b6:4:ad::31) by
+ SJ2PR12MB8782.namprd12.prod.outlook.com (2603:10b6:a03:4d0::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.24; Thu, 25 Jan
+ 2024 16:25:52 +0000
 Received: from DS3PEPF000099DC.namprd04.prod.outlook.com
- (2603:10b6:4:ad:cafe::f1) by DM5PR07CA0061.outlook.office365.com
- (2603:10b6:4:ad::26) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:10b6:4:ad:cafe::71) by DM5PR07CA0066.outlook.office365.com
+ (2603:10b6:4:ad::31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.22 via Frontend
- Transport; Thu, 25 Jan 2024 16:26:09 +0000
+ Transport; Thu, 25 Jan 2024 16:25:51 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
@@ -58,26 +58,26 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
 Received: from mail.nvidia.com (216.228.118.233) by
  DS3PEPF000099DC.mail.protection.outlook.com (10.167.17.198) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7228.16 via Frontend Transport; Thu, 25 Jan 2024 16:26:09 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ 15.20.7228.16 via Frontend Transport; Thu, 25 Jan 2024 16:25:51 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
  (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 25 Jan
- 2024 08:25:58 -0800
+ 2024 08:25:41 -0800
 Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Thu, 25 Jan 2024 08:25:57 -0800
+ 15.2.986.41; Thu, 25 Jan 2024 08:25:40 -0800
 Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.126.190.181)
  with Microsoft SMTP Server id 15.2.986.41 via Frontend Transport;
- Thu, 25 Jan 2024 08:25:56 -0800
+ Thu, 25 Jan 2024 08:25:39 -0800
 From: Avihai Horon <avihaih@nvidia.com>
 To: <qemu-devel@nongnu.org>
 CC: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, "Avihai
  Horon" <avihaih@nvidia.com>
-Subject: [PATCH 16/17] migration/multifd: Use the new migration channel
- connect API for multifd
-Date: Thu, 25 Jan 2024 18:25:27 +0200
-Message-ID: <20240125162528.7552-17-avihaih@nvidia.com>
+Subject: [PATCH 06/17] migration/tls: Rename main migration channel TLS
+ functions
+Date: Thu, 25 Jan 2024 18:25:17 +0200
+Message-ID: <20240125162528.7552-7-avihaih@nvidia.com>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20240125162528.7552-1-avihaih@nvidia.com>
 References: <20240125162528.7552-1-avihaih@nvidia.com>
@@ -87,35 +87,35 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099DC:EE_|SJ0PR12MB5453:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8e807c04-803e-4577-ea2a-08dc1dc2569e
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DC:EE_|SJ2PR12MB8782:EE_
+X-MS-Office365-Filtering-Correlation-Id: a2908811-10df-48c2-45e4-08dc1dc24bf0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: rdRa8V4Os6bCUACc2DHs7FWmh/NLOzy32iYWEVp1UKLAU9W0tqkph1EfIbyy5AxiV9CdoDUrU7fGi5qkQbZ0XpBK05jgbgV3KKvkY7lnfanY4NoWHObA3IAgvj876dcSVkhMe1v7AIn+2RyUL6e28ZwV9vc19vLJZsRnmSjEXzDnFjmgX1W3NnBIm6cBxEi24A6M0ycDS+hC0NXPbmeIoIiqGHKEEqhFvrP4SoJHKYh8cbzjfY2mr+5iiaFQMXWZq5X/FMDIuk+XmT9RoNDnM02TQlQpPZS9I/CGx586NqcLUvJh2XF/MTxegRf1jTwLVzMaUc8p2qW+pk39ydxSpC74PkBH/QjUvFfCP+qTYsaVhWWKPXAJ8syj+CfuimUmzYPK4paSUW3QJ7kAtexgiflX6NUN7r+xx7JVKQizN0FukiVEgvFNtcK6vBf8tNYJ2YFZvTiq5JznZmEtTCf4bPgccEZHA4RyELWBckGZhVMYW+wVK4k4P1IV2GxDmTWKlq70Egs+EG69uhUKTy4M/won8Bk7sCCfGDSnm+FQsA0nufrZklJyJn6S+0jAw4hukkWY5JhNAjt56iswjRkN+3ReI39TZmb5np9E38HC9+tA3PHrSLHW6RUvP+B0Va+ihPWdd5sfEn6b5TwQbJqBqXMSL7TUPPVAJjofMMDLVy5huygEUG1Oq+QNtxz2/D3CSQ0ewlt4W3Pxa4YS+2tRvcHH3hPQ+xk/431fjkjOO2V+SRXm32DL5CTympS3rpYG
+X-Microsoft-Antispam-Message-Info: dzjuDFLZX3AGyyz1A0Oa8g2TDEgNXIGteClSBTDlb10BvJ3+b+o7ld3ED9Kv4uBeown9XtKUvO7uc2jiyWJPwFCkHVL/DDDc8X7WYc/8Moynp+iL9zxcdqfv5oic9e0KzRDXa/AAUoeMWLSybWasO0av7gvxYacondIhFURYBihRwSnSY+4VPoa2sqGMlS8JrmOKyhQL/mTvtRF3MF/4i1fs0WaOm2oE4Z1uvChANUcXsufxnHNUoKiZ4tByCfNK20E2evJSKTNzOIEJ0p5QsxKE2XmKF15+6SQBGp+75O7hP0MX4+Lb5OO/Yns+OV5rl69MTo/hC1lSEH4cUH/3bADSPjzm5NPFuMeWsxN2lr33GrTXII9x2b0pC6zJZk00PhNIxnfSSCCWS6NEfO/xp0okueDWPHIT4i2OfJ5iNb087yihojmhfQxonLH+aGeG5dzyCuolUNKwI3+ueqb/lc/O6LS4AxZab42iypGBKCg8FLiKzLndVitK8oUTAYQIxQHMPXH37ecpDAHA3Fy6n7aqBzdvtoe4eHwTTs2QG+PbbPxkuU0tWKUbY8LO3lB6PXHgA5XZhGzFDlz6XEoJN+ibeBR65XTKXhskX6o/GJjP6AULBrsRubxBz6cGAo7fWR4L1byecPU3MlRQeiZ64SCItLmzML+x5GPFIDQIhfKawWljwyHopiTFAcB51co26SexxPJ7gy/Xh+TGTddLmkdI0s6CcRKBt5NmtQKwLuHwpNfAoAzI6AS5BL1P8W8I
 X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230031)(4636009)(346002)(136003)(39860400002)(376002)(396003)(230922051799003)(64100799003)(186009)(82310400011)(1800799012)(451199024)(40470700004)(46966006)(36840700001)(36860700001)(47076005)(2906002)(36756003)(41300700001)(86362001)(7636003)(82740400003)(356005)(54906003)(7696005)(6916009)(316002)(70586007)(70206006)(478600001)(2616005)(6666004)(336012)(426003)(83380400001)(5660300002)(8676002)(4326008)(1076003)(107886003)(8936002)(26005)(40480700001)(40460700003);
+ SFS:(13230031)(4636009)(39860400002)(396003)(346002)(376002)(136003)(230922051799003)(186009)(451199024)(82310400011)(64100799003)(1800799012)(46966006)(40470700004)(36840700001)(41300700001)(36756003)(478600001)(6666004)(47076005)(4326008)(316002)(7696005)(70206006)(70586007)(107886003)(2616005)(6916009)(1076003)(54906003)(26005)(8676002)(5660300002)(83380400001)(336012)(40480700001)(40460700003)(426003)(8936002)(82740400003)(36860700001)(2906002)(356005)(7636003)(86362001);
  DIR:OUT; SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jan 2024 16:26:09.2477 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8e807c04-803e-4577-ea2a-08dc1dc2569e
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jan 2024 16:25:51.3416 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2908811-10df-48c2-45e4-08dc1dc24bf0
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
  Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099DC.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB5453
-Received-SPF: softfail client-ip=2a01:111:f403:2418::600;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8782
+Received-SPF: softfail client-ip=2a01:111:f400:7eaa::601;
  envelope-from=avihaih@nvidia.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,161 +132,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the new migration channel connect API for multifd and remove old
-channel connect code.
+Rename functions related to main migration channel TLS upgrade. This is
+done in preparation for the next patch which will add a new TLS upgrade
+API for migration channels with the same name.
+No functional changes intended.
 
 Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 ---
- migration/multifd.c    | 89 ++++++++++--------------------------------
- migration/trace-events |  3 --
- 2 files changed, 21 insertions(+), 71 deletions(-)
+ migration/tls.h        |  6 ++----
+ migration/channel.c    |  2 +-
+ migration/tls.c        | 24 ++++++++++--------------
+ migration/trace-events |  6 +++---
+ 4 files changed, 16 insertions(+), 22 deletions(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index cc9a1182fa..c679b64721 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -18,10 +18,10 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "ram.h"
-+#include "channel.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "socket.h"
--#include "tls.h"
- #include "qemu-file.h"
- #include "trace.h"
- #include "multifd.h"
-@@ -790,61 +790,6 @@ int multifd_send_channels_created(void)
-     return ret;
+diff --git a/migration/tls.h b/migration/tls.h
+index 5797d153cb..5435dd4867 100644
+--- a/migration/tls.h
++++ b/migration/tls.h
+@@ -32,10 +32,8 @@ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+                                            const char *hostname,
+                                            Error **errp);
+ 
+-void migration_tls_channel_connect(MigrationState *s,
+-                                   QIOChannel *ioc,
+-                                   const char *hostname,
+-                                   Error **errp);
++void migration_tls_channel_connect_main(MigrationState *s, QIOChannel *ioc,
++                                        const char *hostname, Error **errp);
+ 
+ /* Whether the QIO channel requires further TLS handshake? */
+ bool migrate_channel_requires_tls_upgrade(QIOChannel *ioc);
+diff --git a/migration/channel.c b/migration/channel.c
+index f9de064f3b..041a63eb21 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -69,7 +69,7 @@ void migration_channel_connect(MigrationState *s,
+ 
+     if (!error) {
+         if (migrate_channel_requires_tls_upgrade(ioc)) {
+-            migration_tls_channel_connect(s, ioc, hostname, &error);
++            migration_tls_channel_connect_main(s, ioc, hostname, &error);
+ 
+             if (!error) {
+                 /* tls_channel_connect will call back to this
+diff --git a/migration/tls.c b/migration/tls.c
+index fa03d9136c..803cb54c8b 100644
+--- a/migration/tls.c
++++ b/migration/tls.c
+@@ -98,17 +98,18 @@ void migration_tls_channel_process_incoming(MigrationState *s,
  }
  
--static bool multifd_channel_connect(MultiFDSendParams *p,
--                                    QIOChannel *ioc,
--                                    Error **errp);
--
--static void multifd_new_send_channel_cleanup(MultiFDSendParams *p,
--                                             QIOChannel *ioc, Error *err);
--
--static void multifd_tls_outgoing_handshake(QIOChannel *ioc, gpointer opaque,
--                                           Error *err)
--{
--    MultiFDSendParams *p = opaque;
--
--    if (!err) {
--        if (multifd_channel_connect(p, ioc, &err)) {
--            return;
--        }
--    }
--
--    multifd_new_send_channel_cleanup(p, ioc, err);
--}
--
--static bool multifd_channel_connect(MultiFDSendParams *p,
--                                    QIOChannel *ioc,
--                                    Error **errp)
--{
--    MigrationState *s = migrate_get_current();
--
--    trace_multifd_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)),
--                                       s->hostname);
--
--    if (migrate_channel_requires_tls_upgrade(ioc)) {
--        /*
--         * multifd_tls_outgoing_handshake will call back to this function after
--         * the TLS handshake, so we mustn't call multifd_send_thread until then.
--         */
--        if (migration_tls_channel_connect(ioc, p->name, s->hostname,
--                                          multifd_tls_outgoing_handshake, p,
--                                          true, errp)) {
--            object_unref(OBJECT(ioc));
--            return true;
--        }
--        return false;
--    }
--
--    qio_channel_set_delay(ioc, false);
--    migration_ioc_register_yank(ioc);
--    p->registered_yank = true;
--    p->c = ioc;
--    qemu_thread_create(&p->thread, p->name, multifd_send_thread, p,
--                       QEMU_THREAD_JOINABLE);
--    p->running = true;
--    qemu_sem_post(&p->create_sem);
--    return true;
--}
--
- static void multifd_new_send_channel_cleanup(MultiFDSendParams *p,
-                                              QIOChannel *ioc, Error *err)
- {
-@@ -863,26 +808,34 @@ static void multifd_new_send_channel_cleanup(MultiFDSendParams *p,
-      error_free(err);
- }
  
--static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
-+static void multifd_new_send_channel_callback(QIOChannel *ioc, void *opaque,
-+                                              Error *err)
+-static void migration_tls_outgoing_handshake(QIOTask *task,
+-                                             gpointer opaque)
++static void migration_tls_outgoing_handshake_main(QIOTask *task,
++                                                  gpointer opaque)
  {
-     MultiFDSendParams *p = opaque;
--    QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
--    Error *local_err = NULL;
+     MigrationState *s = opaque;
+     QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
+     Error *err = NULL;
  
--    trace_multifd_new_send_channel_async(p->id);
--    if (!qio_task_propagate_error(task, &local_err)) {
--        if (multifd_channel_connect(p, ioc, &local_err)) {
--            return;
--        }
-+    if (err) {
-+        multifd_new_send_channel_cleanup(p, ioc, err);
-+        return;
+     if (qio_task_propagate_error(task, &err)) {
+-        trace_migration_tls_outgoing_handshake_error(error_get_pretty(err));
++        trace_migration_tls_outgoing_handshake_main_error(
++            error_get_pretty(err));
+     } else {
+-        trace_migration_tls_outgoing_handshake_complete();
++        trace_migration_tls_outgoing_handshake_main_complete();
      }
- 
--    trace_multifd_new_send_channel_async_error(p->id, local_err);
--    multifd_new_send_channel_cleanup(p, ioc, local_err);
-+    qio_channel_set_delay(ioc, false);
-+    migration_ioc_register_yank(ioc);
-+    p->registered_yank = true;
-+    p->c = ioc;
-+    qemu_thread_create(&p->thread, p->name, multifd_send_thread, p,
-+                       QEMU_THREAD_JOINABLE);
-+    p->running = true;
-+    qemu_sem_post(&p->create_sem);
+     migration_channel_connect(s, ioc, NULL, err);
+     object_unref(OBJECT(ioc));
+@@ -133,10 +134,8 @@ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+     return qio_channel_tls_new_client(ioc, creds, hostname, errp);
  }
  
--static void multifd_new_send_channel_create(gpointer opaque)
-+static void multifd_new_send_channel_create(MultiFDSendParams *p)
+-void migration_tls_channel_connect(MigrationState *s,
+-                                   QIOChannel *ioc,
+-                                   const char *hostname,
+-                                   Error **errp)
++void migration_tls_channel_connect_main(MigrationState *s, QIOChannel *ioc,
++                                        const char *hostname, Error **errp)
  {
--    socket_send_channel_create(multifd_new_send_channel_async, opaque);
-+    Error *local_err = NULL;
-+
-+    if (!migration_channel_connect(multifd_new_send_channel_callback, p->name,
-+                                   p, true, &local_err)) {
-+        multifd_new_send_channel_cleanup(p, NULL, local_err);
-+    }
+     QIOChannelTLS *tioc;
+ 
+@@ -147,13 +146,10 @@ void migration_tls_channel_connect(MigrationState *s,
+ 
+     /* Save hostname into MigrationState for handshake */
+     s->hostname = g_strdup(hostname);
+-    trace_migration_tls_outgoing_handshake_start(hostname);
++    trace_migration_tls_outgoing_handshake_main_start(hostname);
+     qio_channel_set_name(QIO_CHANNEL(tioc), "migration-tls-outgoing");
+-    qio_channel_tls_handshake(tioc,
+-                              migration_tls_outgoing_handshake,
+-                              s,
+-                              NULL,
+-                              NULL);
++    qio_channel_tls_handshake(tioc, migration_tls_outgoing_handshake_main, s,
++                              NULL, NULL);
  }
  
- int multifd_save_setup(Error **errp)
+ bool migrate_channel_requires_tls_upgrade(QIOChannel *ioc)
 diff --git a/migration/trace-events b/migration/trace-events
-index 6c915d8567..6ac73b0d85 100644
+index de4a743c8a..9448b5cedf 100644
 --- a/migration/trace-events
 +++ b/migration/trace-events
-@@ -126,8 +126,6 @@ postcopy_preempt_switch_channel(int channel) "%d"
- postcopy_preempt_reset_channel(void) ""
+@@ -325,9 +325,9 @@ migration_socket_outgoing_connected(const char *hostname) "hostname=%s"
+ migration_socket_outgoing_error(const char *err) "error=%s"
  
- # multifd.c
--multifd_new_send_channel_async(uint8_t id) "channel %u"
--multifd_new_send_channel_async_error(uint8_t id, void *err) "channel=%u err=%p"
- multifd_recv(uint8_t id, uint64_t packet_num, uint32_t used, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " pages %u flags 0x%x next packet size %u"
- multifd_recv_new_channel(uint8_t id) "channel %u"
- multifd_recv_sync_main(long packet_num) "packet num %ld"
-@@ -144,7 +142,6 @@ multifd_send_sync_main_wait(uint8_t id) "channel %u"
- multifd_send_terminate_threads(bool error) "error %d"
- multifd_send_thread_end(uint8_t id, uint64_t packets, uint64_t normal_pages) "channel %u packets %" PRIu64 " normal pages %"  PRIu64
- multifd_send_thread_start(uint8_t id) "%u"
--multifd_set_outgoing_channel(void *ioc, const char *ioctype, const char *hostname)  "ioc=%p ioctype=%s hostname=%s"
- 
- # migration.c
- migrate_set_state(const char *new_state) "new state %s"
+ # tls.c
+-migration_tls_outgoing_handshake_start(const char *hostname) "hostname=%s"
+-migration_tls_outgoing_handshake_error(const char *err) "err=%s"
+-migration_tls_outgoing_handshake_complete(void) ""
++migration_tls_outgoing_handshake_main_start(const char *hostname) "hostname=%s"
++migration_tls_outgoing_handshake_main_error(const char *err) "err=%s"
++migration_tls_outgoing_handshake_main_complete(void) ""
+ migration_tls_incoming_handshake_start(void) ""
+ migration_tls_incoming_handshake_error(const char *err) "err=%s"
+ migration_tls_incoming_handshake_complete(void) ""
 -- 
 2.26.3
 
