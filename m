@@ -4,73 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFE9C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 15:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE35CC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT1xI-0007JT-50; Thu, 25 Jan 2024 10:47:52 -0500
+	id 1rT2Hp-0006vI-OJ; Thu, 25 Jan 2024 11:09:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rT1xD-0007I7-9b; Thu, 25 Jan 2024 10:47:47 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rT1xA-0008Bw-Sd; Thu, 25 Jan 2024 10:47:47 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EBACE473EF;
- Thu, 25 Jan 2024 18:48:24 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D28626B88E;
- Thu, 25 Jan 2024 18:47:39 +0300 (MSK)
-Message-ID: <43364237-cd10-4a50-a23b-bc177bf1be94@tls.msk.ru>
-Date: Thu, 25 Jan 2024 18:47:39 +0300
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rT2Hn-0006tm-Bh
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:09:03 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rT2Hl-0000Ms-MP
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:09:03 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2906bcae4feso2656265a91.3
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:09:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706198940; x=1706803740; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xCathHofE5nAYfNrhxY2aVLV9v0ArUIt8XjBeYaXknw=;
+ b=nV7oklE8XLyDNG1h8pPPZDV0HJpyPNSHtGsSXybhNYYPSwIfO+vL4jmmRVeghYAKb4
+ 8H7sZ/6yzAgKE2kRg2WemgEU+zjCzQjf6S9lFtFF21czmUo7lrmHelgjJBeJMy9jx0B0
+ +8AoJLriop7uVaxuOLHZV5H1CHi1Tgylqf2GMrpyVZLdnA3YzX2xaRhht8Tuga/WIhtg
+ XSfd1VMe/7XS5/a4+kV+qbonrYH7ur6QoiIgRRpPh68rX5yjhpvumaOFTpsrRCU/8gNJ
+ 0/mqN03ZCfK+icKAuL7x9DKxTKG3ma+1ydNeNnV4+ZnPNR2it2L05fHzwviiGju0z3Je
+ AmBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706198940; x=1706803740;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xCathHofE5nAYfNrhxY2aVLV9v0ArUIt8XjBeYaXknw=;
+ b=wAmIkiDLrM34rmDuN9mXMyKc9zre01tOkil/ex25NmB/S1Q6nhNmCh42+N4WyEXzZT
+ NrDYBMTzU60EK/Zjmdc3eBjMNlRlw3NxeLadfk/p1KTkljgvHF8OZAdqq3UJJOgz1HvZ
+ aq2QypSuchegNM7sznUZ/WbSNEQpG2KNDU5aHlAwQaG3aPRPDbAN7rTtGLnBK7LEe4ub
+ lMwsrfBMG4iHl3Zegge3rLKsZd7mUP8VWb4rd1x3pxu0Va5+6O7B188Sv3lBhRpskpay
+ LU3MFmdb6wY6jZH6FF3YZnPIEfmbloLZd+309O4KoljRuJBmGkE2JG4zpyt3fkvMx38l
+ yLzA==
+X-Gm-Message-State: AOJu0YyHS3YEbm2SMaDfegwi32sUZOhZK6XArGKEHzix7y6Grl+1Zopl
+ tzUWYqY0vf9LtrKDJI9bIHboY1UtAgR9K9nCrEvMxMx1trNGqm9a01DCkkHl
+X-Google-Smtp-Source: AGHT+IFunAMcsDDVtG2FVN/xFXc73njkvk6lKoRcGL9Tem3cdEhL1zxhpgXOASFqGX0JtpN1Jb2BqQ==
+X-Received: by 2002:a17:90a:4411:b0:28e:73c0:85c with SMTP id
+ s17-20020a17090a441100b0028e73c0085cmr783157pjg.76.1706198939712; 
+ Thu, 25 Jan 2024 08:08:59 -0800 (PST)
+Received: from wheely.local0.net (110-175-3-177.tpgi.com.au. [110.175.3.177])
+ by smtp.gmail.com with ESMTPSA id
+ oe7-20020a17090b394700b00293851b198csm14190pjb.56.2024.01.25.08.08.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jan 2024 08:08:59 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PATCH v2 3/4] scripts/replay-dump.py: rejig decoders in event number
+ order
+Date: Fri, 26 Jan 2024 02:08:34 +1000
+Message-ID: <20240125160835.480488-4-npiggin@gmail.com>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20240125160835.480488-1-npiggin@gmail.com>
+References: <20240125160835.480488-1-npiggin@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Block patches
-Content-Language: en-US
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, qemu-block@nongnu.org, Fam Zheng
- <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20240122160126.394141-1-stefanha@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240122160126.394141-1-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,20 +100,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-22.01.2024 19:01, Stefan Hajnoczi :
+Sort decoder functions to be ascending in order of event number,
+same as the decoder tables.
 
-> Akihiko Odaki (1):
->    coroutine-ucontext: Save fake stack for pooled coroutine
-> 
-> Fiona Ebner (1):
->    block/io: clear BDRV_BLOCK_RECURSE flag after recursing in
->      bdrv_co_block_status
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ scripts/replay-dump.py | 56 +++++++++++++++++++++---------------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-These too also look like -stable matherial, both of the changes.
-Please let me know if it's not.
-
-Thanks,
-
-/mjt
+diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+index 35732da08f..a1d7ae0364 100755
+--- a/scripts/replay-dump.py
++++ b/scripts/replay-dump.py
+@@ -144,6 +144,19 @@ def swallow_bytes(eid, name, dumpfile, nr):
+     dumpfile.seek(nr, os.SEEK_CUR)
+     return True
+ 
++total_insns = 0
++
++def decode_instruction(eid, name, dumpfile):
++    global total_insns
++    ins_diff = read_dword(dumpfile)
++    total_insns += ins_diff
++    print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
++    return True
++
++def decode_interrupt(eid, name, dumpfile):
++    print_event(eid, name)
++    return True
++
+ def decode_exception(eid, name, dumpfile):
+     print_event(eid, name)
+     return True
+@@ -203,15 +216,6 @@ def decode_async_net(eid, name, dumpfile):
+     print_event(eid, name, "net:%x flags:%x bytes:%d" % (net_id, flags, size))
+     return True
+ 
+-total_insns = 0
+-
+-def decode_instruction(eid, name, dumpfile):
+-    global total_insns
+-    ins_diff = read_dword(dumpfile)
+-    total_insns += ins_diff
+-    print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
+-    return True
+-
+ def decode_shutdown(eid, name, dumpfile):
+     print_event(eid, name)
+     return True
+@@ -227,6 +231,21 @@ def decode_audio_out(eid, name, dumpfile):
+     print_event(eid, name, "%d" % (audio_data))
+     return True
+ 
++def decode_random(eid, name, dumpfile):
++    ret = read_dword(dumpfile)
++    size = read_dword(dumpfile)
++    swallow_bytes(eid, name, dumpfile, size)
++    if (ret):
++        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
++    else:
++        print_event(eid, name, "%d bytes" % (size))
++    return True
++
++def decode_clock(eid, name, dumpfile):
++    clock_data = read_qword(dumpfile)
++    print_event(eid, name, "0x%x" % (clock_data))
++    return True
++
+ def __decode_checkpoint(eid, name, dumpfile, old):
+     """Decode a checkpoint.
+ 
+@@ -257,25 +276,6 @@ def decode_checkpoint_init(eid, name, dumpfile):
+     print_event(eid, name)
+     return True
+ 
+-def decode_interrupt(eid, name, dumpfile):
+-    print_event(eid, name)
+-    return True
+-
+-def decode_clock(eid, name, dumpfile):
+-    clock_data = read_qword(dumpfile)
+-    print_event(eid, name, "0x%x" % (clock_data))
+-    return True
+-
+-def decode_random(eid, name, dumpfile):
+-    ret = read_dword(dumpfile)
+-    size = read_dword(dumpfile)
+-    swallow_bytes(eid, name, dumpfile, size)
+-    if (ret):
+-        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
+-    else:
+-        print_event(eid, name, "%d bytes" % (size))
+-    return True
+-
+ def decode_end(eid, name, dumpfile):
+     print_event(eid, name)
+     return False
+-- 
+2.42.0
 
 
