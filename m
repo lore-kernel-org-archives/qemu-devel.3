@@ -4,57 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B81C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 09:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98498C48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 09:26:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSvxe-0005Gj-QT; Thu, 25 Jan 2024 04:23:51 -0500
+	id 1rSvzI-0006Tm-HF; Thu, 25 Jan 2024 04:25:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Usek=JD=kaod.org=clg@ozlabs.org>)
- id 1rSvxU-0005FM-Dr; Thu, 25 Jan 2024 04:23:41 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rSvzH-0006TS-6S; Thu, 25 Jan 2024 04:25:31 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Usek=JD=kaod.org=clg@ozlabs.org>)
- id 1rSvxS-0000NF-77; Thu, 25 Jan 2024 04:23:40 -0500
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLFkG5JTWz4x43;
- Thu, 25 Jan 2024 20:23:34 +1100 (AEDT)
+ id 1rSvzE-0000lb-Tf; Thu, 25 Jan 2024 04:25:30 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLFmQ1gwRz4x5q;
+ Thu, 25 Jan 2024 20:25:26 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLFkC48CHz4x5q;
- Thu, 25 Jan 2024 20:23:31 +1100 (AEDT)
-Message-ID: <637f0580-31ac-4fb1-b609-a3333000640e@kaod.org>
-Date: Thu, 25 Jan 2024 10:23:30 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLFmM0NS7z4wbh;
+ Thu, 25 Jan 2024 20:25:22 +1100 (AEDT)
+Message-ID: <ffdd4ee9-2d76-4840-b661-b873abbd07d2@kaod.org>
+Date: Thu, 25 Jan 2024 10:25:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/avocado: improve flaky ppc/pnv
- boot_linux_console.py test
+Subject: Re: [PATCH v2 5/8] tests/avocado: Add ppc pseries and powernv hash
+ MMU tests
 Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Cleber Rosa <crosa@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, qemu-devel@nongnu.org
-References: <20240124060134.406331-1-npiggin@gmail.com>
+ Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ qemu-ppc@nongnu.org
+References: <20240117141224.90462-1-npiggin@gmail.com>
+ <20240117141224.90462-6-npiggin@gmail.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240124060134.406331-1-npiggin@gmail.com>
+In-Reply-To: <20240117141224.90462-6-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=Usek=JD=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,33 +75,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/24/24 07:01, Nicholas Piggin wrote:
-> The expected MTD partition detection output does not always appear on
-> the console, despite the test reaching the boot loader and the string
-> appearing in dmesg. Possibly due to an init script that quietens the
-> console output. Using an earlier log message improves reliability.
+On 1/17/24 15:12, Nicholas Piggin wrote:
+> POWER CPUs support hash and radix MMU modes. Linux supports running in
+> either mode, but defaults to radix. To keep up testing of QEMU's hash
+> MMU implementation, add some Linux hash boot tests.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   tests/avocado/boot_linux_console.py | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-> index 3f0180e1f8..922a9e7b79 100644
-> --- a/tests/avocado/boot_linux_console.py
-> +++ b/tests/avocado/boot_linux_console.py
-> @@ -1368,7 +1368,9 @@ def do_test_ppc64_powernv(self, proc):
->           self.wait_for_console_pattern("CPU: " + proc + " generation processor")
->           self.wait_for_console_pattern("zImage starting: loaded")
->           self.wait_for_console_pattern("Run /init as init process")
-> -        self.wait_for_console_pattern("Creating 1 MTD partitions")
-> +        self.wait_for_console_pattern("rtc-opal opal-rtc: setting system clock")
-> +        # MTD partition detection output is sometimes cut off from console
-> +        # output, suspect S14silence-console init script.
->   
->       def test_ppc_powernv8(self):
->           """
-
 
 
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
@@ -105,5 +89,111 @@ Thanks,
 
 C.
 
+
+> ---
+>   tests/avocado/ppc_powernv.py | 23 +++++++++++++++++++----
+>   tests/avocado/ppc_pseries.py | 20 +++++++++++++++++---
+>   2 files changed, 36 insertions(+), 7 deletions(-)
+> 
+> diff --git a/tests/avocado/ppc_powernv.py b/tests/avocado/ppc_powernv.py
+> index d0e5c07bde..4342941d5d 100644
+> --- a/tests/avocado/ppc_powernv.py
+> +++ b/tests/avocado/ppc_powernv.py
+> @@ -12,11 +12,11 @@
+>   class powernvMachine(QemuSystemTest):
+>   
+>       timeout = 90
+> -    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+> +    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
+>       panic_message = 'Kernel panic - not syncing'
+>       good_message = 'VFS: Cannot open root device'
+>   
+> -    def do_test_linux_boot(self):
+> +    def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
+>           self.require_accelerator("tcg")
+>           kernel_url = ('https://archives.fedoraproject.org/pub/archive'
+>                         '/fedora-secondary/releases/29/Everything/ppc64le/os'
+> @@ -25,9 +25,8 @@ def do_test_linux_boot(self):
+>           kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+>   
+>           self.vm.set_console()
+> -        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=hvc0'
+>           self.vm.add_args('-kernel', kernel_path,
+> -                         '-append', kernel_command_line)
+> +                         '-append', command_line)
+>           self.vm.launch()
+>   
+>       def test_linux_boot(self):
+> @@ -54,6 +53,22 @@ def test_linux_smp_boot(self):
+>           wait_for_console_pattern(self, console_pattern, self.panic_message)
+>           wait_for_console_pattern(self, self.good_message, self.panic_message)
+>   
+> +    def test_linux_smp_hpt_boot(self):
+> +        """
+> +        :avocado: tags=arch:ppc64
+> +        :avocado: tags=machine:powernv
+> +        :avocado: tags=accel:tcg
+> +        """
+> +
+> +        self.vm.add_args('-smp', '4')
+> +        self.do_test_linux_boot(self.KERNEL_COMMON_COMMAND_LINE +
+> +                                'disable_radix')
+> +        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
+> +        wait_for_console_pattern(self, 'hash-mmu: Initializing hash mmu',
+> +                                 self.panic_message)
+> +        wait_for_console_pattern(self, console_pattern, self.panic_message)
+> +        wait_for_console_pattern(self, self.good_message, self.panic_message)
+> +
+>       def test_linux_smt_boot(self):
+>           """
+>           :avocado: tags=arch:ppc64
+> diff --git a/tests/avocado/ppc_pseries.py b/tests/avocado/ppc_pseries.py
+> index a8311e6555..74aaa4ac4a 100644
+> --- a/tests/avocado/ppc_pseries.py
+> +++ b/tests/avocado/ppc_pseries.py
+> @@ -12,11 +12,11 @@
+>   class pseriesMachine(QemuSystemTest):
+>   
+>       timeout = 90
+> -    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+> +    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
+>       panic_message = 'Kernel panic - not syncing'
+>       good_message = 'VFS: Cannot open root device'
+>   
+> -    def do_test_ppc64_linux_boot(self):
+> +    def do_test_ppc64_linux_boot(self, kernel_command_line = KERNEL_COMMON_COMMAND_LINE):
+>           kernel_url = ('https://archives.fedoraproject.org/pub/archive'
+>                         '/fedora-secondary/releases/29/Everything/ppc64le/os'
+>                         '/ppc/ppc64/vmlinuz')
+> @@ -24,7 +24,6 @@ def do_test_ppc64_linux_boot(self):
+>           kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+>   
+>           self.vm.set_console()
+> -        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=hvc0'
+>           self.vm.add_args('-kernel', kernel_path,
+>                            '-append', kernel_command_line)
+>           self.vm.launch()
+> @@ -62,6 +61,21 @@ def test_ppc64_linux_smp_boot(self):
+>           wait_for_console_pattern(self, console_pattern, self.panic_message)
+>           wait_for_console_pattern(self, self.good_message, self.panic_message)
+>   
+> +    def test_ppc64_linux_hpt_smp_boot(self):
+> +        """
+> +        :avocado: tags=arch:ppc64
+> +        :avocado: tags=machine:pseries
+> +        """
+> +
+> +        self.vm.add_args('-smp', '4')
+> +        self.do_test_ppc64_linux_boot(self.KERNEL_COMMON_COMMAND_LINE +
+> +                                      'disable_radix')
+> +        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
+> +        wait_for_console_pattern(self, 'hash-mmu: Initializing hash mmu',
+> +                                 self.panic_message)
+> +        wait_for_console_pattern(self, console_pattern, self.panic_message)
+> +        wait_for_console_pattern(self, self.good_message, self.panic_message)
+> +
+>       def test_ppc64_linux_smt_boot(self):
+>           """
+>           :avocado: tags=arch:ppc64
 
 
