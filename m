@@ -4,84 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9254C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 07:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DB0C48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 07:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rStrF-0007HN-3G; Thu, 25 Jan 2024 02:09:05 -0500
+	id 1rSu5R-0003SV-0a; Thu, 25 Jan 2024 02:23:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rStrC-0007G6-RB; Thu, 25 Jan 2024 02:09:03 -0500
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rStrA-0001UY-Ld; Thu, 25 Jan 2024 02:09:02 -0500
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-599a6d731easo1713478eaf.1; 
- Wed, 24 Jan 2024 23:08:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706166535; x=1706771335; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z+atoXai5trvSDP/Nbzt582yyAZCcrYkTr6J6VWHTJc=;
- b=kqQFWAi7+sQxNTS01iJtDekZrEmfYHGq7MKc3DyFFcfWIZUO8HOX2FmghMAnT4zrHt
- D1PIE9t8Dx/+EKrK4hSSF7LiLMF0hzSguxJIUwbS1Q5ZawgvDrLTmQG62lgV+usMel0x
- 7yMZPAcreXxdRn7ebp6YwZaVlh0+nwEz/GSZA3U8+F/52Ie9VuRRt/kzcZcQtOSzzILU
- sWK8DQjS02d439xDdhqf5hYvTUEKuUTu05scOzBSRfkE2ix1REjCk0Lu7S8tIe5jUxuC
- zKW7SBjyQ7YyEDRT3/TWjWmUyYcgcCTAc1AKCeJ3FybDjIImgejTi2+7jLW6hlahN8T+
- 7idg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706166535; x=1706771335;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=z+atoXai5trvSDP/Nbzt582yyAZCcrYkTr6J6VWHTJc=;
- b=HuDbUMCRUlLHPtFDPswkvS1QujyjIkem5zvm13uFA/HxnSCwpu3Zre1MaaBbRzup2h
- hqM3bZ9XpGFNFvUG0g8TXflq0s/j6Si1zY96OodsFFpYfMHNi2VaheXe1Ga7S5HgBo98
- gdFsIgNHiatNGTB0J+LUrJAcw1L7spuDlpJ6SjWHVEjHHA+moRL+43WYdn4kNgAXQaD7
- pP+iiuFaRW9UH0L2uykVbMBZ4h9lA7o59tCTLhkEc3s7oTtB0vsWDQNWWJumC8QOC/Pc
- OVAE+kO+decBUG5pePC5ir1VGLw0fwjoKRcJCu9e1s/8rc1q3f6sXXYLWaQ1km5PvCvz
- IxcA==
-X-Gm-Message-State: AOJu0YxGkNz60FaLXijlimobvW0Nzryj8pjpuMRqnRWPJcwYfvB3tbCE
- Fk+X+KlReJ/zAq0Cz7OAlzWXb4TCn32I7HImJvkxf6iiPyWFrlZp
-X-Google-Smtp-Source: AGHT+IGFNsY+h7Wj9F4W5g2W7c5MSxgTgsMxcGDdjsa57IAZEfhFOje1Bd8Roy9QxZVt820/N4vLjA==
-X-Received: by 2002:a05:6358:5288:b0:176:3451:7ce2 with SMTP id
- g8-20020a056358528800b0017634517ce2mr785409rwa.28.1706166534976; 
- Wed, 24 Jan 2024 23:08:54 -0800 (PST)
-Received: from localhost (110-175-3-177.tpgi.com.au. [110.175.3.177])
- by smtp.gmail.com with ESMTPSA id
- y3-20020a170902d64300b001d74031b250sm6918347plh.266.2024.01.24.23.08.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 23:08:54 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 25 Jan 2024 17:08:49 +1000
-Message-Id: <CYNLK2X6DAAA.2I40127UHT4UN@wheely>
-Subject: Re: [PATCH 2/8] ppc/spapr|pnv: Remove SAO from pa-features when
- running MTTCG
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "David Gibson" <david@gibson.dropbear.id.au>
-Cc: <qemu-ppc@nongnu.org>, =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Daniel
- Henrique Barboza" <danielhb413@gmail.com>, "Harsh Prateek Bora"
- <harshpb@linux.ibm.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20240118140942.164319-1-npiggin@gmail.com>
- <20240118140942.164319-3-npiggin@gmail.com> <ZanA-usH_Ec0uqie@zatzit>
- <CYLPOZ0VDE7U.40VIK25R65PQ@wheely> <ZbHRaWhUbpsHa4I-@zatzit>
-In-Reply-To: <ZbHRaWhUbpsHa4I-@zatzit>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=npiggin@gmail.com; helo=mail-oo1-xc31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rSu5P-0003SJ-BG
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:23:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rSu5K-0005b9-M0
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:23:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706167416;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yTI+nDTYQTPJLwM7JL2s7diVHZaZWwtsPS+7Z3/UlLU=;
+ b=HKEjxjKG7SCdRmpr85pQtoYmtpwO6ztUeHQU/QZaliO4LcC8xwEh+HYKAxbxnOhyIookc3
+ w697iEOr4H1F/jNY3DA7uVvPhpPPIguc41wNAbdxemT7FrMd1hwxe3u0gjQnFK+Syeuqeo
+ WDjvTj42eESzN6en+pzE1IrmYWTabaI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-ILKDbpiDNxmw_bZza8EVKA-1; Thu, 25 Jan 2024 02:22:30 -0500
+X-MC-Unique: ILKDbpiDNxmw_bZza8EVKA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BC7C48493E8
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 07:22:29 +0000 (UTC)
+Received: from fedora.redhat.com (unknown [10.39.208.14])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 79A131121306;
+ Thu, 25 Jan 2024 07:22:28 +0000 (UTC)
+From: Anthony Harivel <aharivel@redhat.com>
+To: pbonzini@redhat.com,
+	mtosatti@redhat.com,
+	berrange@redhat.com
+Cc: qemu-devel@nongnu.org, vchundur@redhat.com,
+ Anthony Harivel <aharivel@redhat.com>
+Subject: [PATCH v3 1/3] qio: add support for SO_PEERCRED for socket channel
+Date: Thu, 25 Jan 2024 08:22:12 +0100
+Message-ID: <20240125072214.318382-2-aharivel@redhat.com>
+In-Reply-To: <20240125072214.318382-1-aharivel@redhat.com>
+References: <20240125072214.318382-1-aharivel@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,105 +84,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu Jan 25, 2024 at 1:11 PM AEST, David Gibson wrote:
-> On Tue, Jan 23, 2024 at 11:57:56AM +1000, Nicholas Piggin wrote:
-> > On Fri Jan 19, 2024 at 10:23 AM AEST, David Gibson wrote:
-> > > On Fri, Jan 19, 2024 at 12:09:36AM +1000, Nicholas Piggin wrote:
-> > > > SAO is a page table attribute that strengthens the memory ordering =
-of
-> > > > accesses. QEMU with MTTCG does not implement this, so clear it in
-> > > > ibm,pa-features. There is a complication with spapr migration that =
-is
-> > > > addressed with comments, it is not a new problem here.
-> > > >=20
-> > > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > > > ---
-> > > >  hw/ppc/pnv.c   |  5 +++++
-> > > >  hw/ppc/spapr.c | 15 +++++++++++++++
-> > > >  2 files changed, 20 insertions(+)
-> > > >=20
-> > > > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > > > index b949398689..4969fbdb05 100644
-> > > > --- a/hw/ppc/pnv.c
-> > > > +++ b/hw/ppc/pnv.c
-> > > > @@ -158,6 +158,11 @@ static void pnv_dt_core(PnvChip *chip, PnvCore=
- *pc, void *fdt)
-> > > >      char *nodename;
-> > > >      int cpus_offset =3D get_cpus_node(fdt);
-> > > > =20
-> > > > +    if (qemu_tcg_mttcg_enabled()) {
-> > > > +        /* SSO (SAO) ordering is not supported under MTTCG. */
-> > > > +        pa_features[4 + 2] &=3D ~0x80;
-> > > > +    }
-> > > > +
-> > > >      nodename =3D g_strdup_printf("%s@%x", dc->fw_name, pc->pir);
-> > > >      offset =3D fdt_add_subnode(fdt, cpus_offset, nodename);
-> > > >      _FDT(offset);
-> > > > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> > > > index 021b1a00e1..1c79d5670d 100644
-> > > > --- a/hw/ppc/spapr.c
-> > > > +++ b/hw/ppc/spapr.c
-> > > > @@ -284,6 +284,21 @@ static void spapr_dt_pa_features(SpaprMachineS=
-tate *spapr,
-> > > >          return;
-> > > >      }
-> > > > =20
-> > > > +    if (qemu_tcg_mttcg_enabled()) {
-> > > > +        /*
-> > > > +         * SSO (SAO) ordering is not supported under MTTCG, so dis=
-able it.
-> > > > +         * There is no cap for this, so there is a migration bug h=
-ere.
-> > > > +         * However don't disable it entirely, to allow it to be us=
-ed under
-> > > > +         * KVM. This is a minor concern because:
-> > > > +         * - SAO is an obscure an rarely (if ever) used feature.
-> > > > +         * - SAO is removed from POWER10 / v3.1, so there is alrea=
-dy a
-> > > > +         *   migration problem today.
-> > > > +         * - Linux does not test this pa-features bit today anyway=
-, so it's
-> > > > +         *   academic.
-> > > > +         */
-> > > > +        pa_features[4 + 2] &=3D ~0x80;
-> > >
-> > > Oof.. I see the reasoning but modifying guest visible parameters base=
-d
-> > > on host capabilities without a cap really worries me nonetheless.
-> >=20
-> > Yeah :( It's not a new problem, but changing it based on host
-> > does make it look uglier I guess.
->
-> It's not really about whether it looks uglier, it's the fact that any
-> dependency of guest visible aspects of the VM on host properties is a
-> potential landmine for migration.
->
-> The qemu migration model is - pretty fundamentally - that the VM
-> should look and behave, from the point of view of the guest, the same
-> before and after migration.  If the behaviour of the VM changes based
-> on host properties it breaks that assumption, and it does so in a way
-> that the user can't control or even easily predict.  Tools such as
-> libvirt, or even qemu itself, can't verify that the migration is valid
-> if there are effectively invisible parameters to the VM configuration
-> that come from the host instead of the command line.
+The function qio_channel_get_peercred() returns a pointer to the
+credentials of the peer process connected to this socket.
 
-I agree, you did manage to drill this lesson in.
+This credentials structure is defined in <sys/socket.h> as follows:
 
-What I meant was that -- today we have a problem where a target can
-run on a host with buggy implementation, whether boot or migration.
-This patch addresses the boot case. Migration case is still broken,
-arguably the situation is still improved. Anyway...
+struct ucred {
+	pid_t pid;    /* Process ID of the sending process */
+	uid_t uid;    /* User ID of the sending process */
+	gid_t gid;    /* Group ID of the sending process */
+};
 
-> > Other option could be to just disable it always. I don't mind
-> > but someone did mention experimenting with it when I asked
-> > about removing support from Linux. They could still test with
-> > bare metal, and if ever started actually being used then we
-> > could add a cap for it.
->
-> I think that's a better idea.
+The use of this function is possible only for connected AF_UNIX stream
+sockets and for AF_UNIX stream and datagram socket pairs.
 
-Alright we'll go that way.
+On platform other than Linux, the function return 0.
 
-Thanks,
-Nick
+Signed-off-by: Anthony Harivel <aharivel@redhat.com>
+---
+ include/io/channel.h | 21 +++++++++++++++++++++
+ io/channel-socket.c  | 23 +++++++++++++++++++++++
+ io/channel.c         | 12 ++++++++++++
+ 3 files changed, 56 insertions(+)
+
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 5f9dbaab65b0..0413435ce011 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -149,6 +149,9 @@ struct QIOChannelClass {
+                                   void *opaque);
+     int (*io_flush)(QIOChannel *ioc,
+                     Error **errp);
++    void (*io_peerpid)(QIOChannel *ioc,
++                        unsigned int *pid,
++                        Error **errp);
+ };
+ 
+ /* General I/O handling functions */
+@@ -898,4 +901,22 @@ int coroutine_mixed_fn qio_channel_writev_full_all(QIOChannel *ioc,
+ int qio_channel_flush(QIOChannel *ioc,
+                       Error **errp);
+ 
++/**
++ * qio_channel_get_peercred:
++ * @ioc: the channel object
++ * @pid: pointer to pid
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Returns the pid of the peer process connected to this socket.
++ *
++ * The use of this function is possible only for connected
++ * AF_UNIX stream sockets and for AF_UNIX stream and datagram
++ * socket pairs on Linux.
++ * Return 0 for the non-Linux OS.
++ *
++ */
++void qio_channel_get_peerpid(QIOChannel *ioc,
++                              unsigned int *pid,
++                              Error **errp);
++
+ #endif /* QIO_CHANNEL_H */
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index 3a899b060858..e6a73592650c 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -841,6 +841,28 @@ qio_channel_socket_set_cork(QIOChannel *ioc,
+     socket_set_cork(sioc->fd, v);
+ }
+ 
++static void
++qio_channel_socket_get_peerpid(QIOChannel *ioc,
++                               unsigned int *pid,
++                               Error **errp)
++{
++#ifdef CONFIG_LINUX
++    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
++    Error *err = NULL;
++    socklen_t len = sizeof(struct ucred);
++
++    struct ucred cred;
++    if (getsockopt(sioc->fd,
++               SOL_SOCKET, SO_PEERCRED,
++               &cred, &len) == -1) {
++        error_setg_errno(&err, errno, "Unable to get peer credentials");
++        error_propagate(errp, err);
++    }
++    *pid = (unsigned int)cred.pid;
++#else
++    *pid = 0;
++#endif
++}
+ 
+ static int
+ qio_channel_socket_close(QIOChannel *ioc,
+@@ -938,6 +960,7 @@ static void qio_channel_socket_class_init(ObjectClass *klass,
+ #ifdef QEMU_MSG_ZEROCOPY
+     ioc_klass->io_flush = qio_channel_socket_flush;
+ #endif
++    ioc_klass->io_peerpid = qio_channel_socket_get_peerpid;
+ }
+ 
+ static const TypeInfo qio_channel_socket_info = {
+diff --git a/io/channel.c b/io/channel.c
+index 86c5834510ff..a5646650cf72 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -490,6 +490,18 @@ void qio_channel_set_cork(QIOChannel *ioc,
+     }
+ }
+ 
++void qio_channel_get_peerpid(QIOChannel *ioc,
++                             unsigned int *pid,
++                             Error **errp)
++{
++    QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
++
++    if (!klass->io_peerpid) {
++        error_setg(errp, "Channel does not support peer pid");
++        return;
++    }
++    klass->io_peerpid(ioc, pid, errp);
++}
+ 
+ off_t qio_channel_io_seek(QIOChannel *ioc,
+                           off_t offset,
+-- 
+2.43.0
+
 
