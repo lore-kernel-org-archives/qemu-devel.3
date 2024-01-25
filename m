@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E91CC47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C9BC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqPX-00035E-Lp; Wed, 24 Jan 2024 22:28:15 -0500
+	id 1rSqQj-000571-Fa; Wed, 24 Jan 2024 22:29:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqPV-00033d-Cv
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:13 -0500
+ id 1rSqQd-0004f0-KG
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:24 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqPS-0001E0-8E
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:12 -0500
+ id 1rSqQb-0001Dy-Fc
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153290; x=1737689290;
+ t=1706153361; x=1737689361;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=cd95ICCUREoT5IBvq1v8Fe11FptmQcfXH7kQX7VjfAI=;
- b=man6ttYUXKmgqukBiLb271BX125Ixuq5jdaNadIkgEjo0jaYdYyNzukr
- k48Lzbzl2xORMd6+Gl7MPNKMYVLmpUGgYRaoyv/p74PuJsTSWLQMyhsvf
- Bb2dX4MSjyWHvQwxKY9IpIR48egnsHxyC7OHsU2wzloRehXIimVEqU23S
- mdZkbFQYNOvNSlEpdYjOiOipQl5yghtLG0+CO3xQSftvLWgGVmI/HVuSO
- PCOaxiCo7slvbdhzgQsT91Jpr+Ui7eqfhkUuLjLH7UJJqva65soWrwojH
- pNq/KZrb1ykedGdTKQNmE+vIgQyCghQRvSNwyWGRgwIkTsT5Kti8vM+Rb w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9427937"
+ bh=4xH30obpzju+HkXz72Fksgx3mUojVcIP/XKw7H+oMbY=;
+ b=Sc+eZjQ1Y+DTRo30d68fRymbJt9XVH5SIxdeEsrgYp8cXYINzERQEDY4
+ 0dDBo2D1qZj4xwo7JiCPrCIXCYVSoAsC16kgBrHNcxKY9Y2w25xeTf8gv
+ JOfnmsOmpQC7dpmkDVv6QPkho6Sm8iZTBEReJIzrdv7tonzVhoWuBI5NH
+ RQL8+NvDiq7pMfH7rSR92/kWIk5XqFwtcBpUqU2LNfrxV4xp0WoJvOX0q
+ KDRPUgXL2kwOz057A1uOid838Cm5asxtw1mtU+MvjYEPmO7ncsvY2AXau
+ mCEoiUOWytMXqLiTwEKXZVLOE+MbA+7RYXeA7g1qSkJCb87T33hMBt7Ba Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9428789"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9427937"
+   d="scan'208";a="9428789"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:23:59 -0800
+ 24 Jan 2024 19:25:55 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2084481"
+   d="scan'208";a="2085651"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:23:54 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:25:50 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 04/66] trace/kvm: Split address space and slot id in
- trace_kvm_set_user_memory()
-Date: Wed, 24 Jan 2024 22:22:26 -0500
-Message-Id: <20240125032328.2522472-5-xiaoyao.li@intel.com>
+Subject: [PATCH v4 25/66] i386/tdx: Add property sept-ve-disable for tdx-guest
+ object
+Date: Wed, 24 Jan 2024 22:22:47 -0500
+Message-Id: <20240125032328.2522472-26-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,44 +94,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The upper 16 bits of kvm_userspace_memory_region::slot are
-address space id. Parse it separately in trace_kvm_set_user_memory().
+Bit 28 of TD attribute, named SEPT_VE_DISABLE. When set to 1, it disables
+EPT violation conversion to #VE on guest TD access of PENDING pages.
+
+Some guest OS (e.g., Linux TD guest) may require this bit as 1.
+Otherwise refuse to boot.
+
+Add sept-ve-disable property for tdx-guest object, for user to configure
+this bit.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
- accel/kvm/kvm-all.c    | 5 +++--
- accel/kvm/trace-events | 2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+Changes in v4:
+- collect Acked-by from Markus
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index f6b0f8d2db1c..56b41a4ea8dc 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -304,8 +304,9 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
-     ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
-     slot->old_flags = mem.flags;
- err:
--    trace_kvm_set_user_memory(mem.slot, mem.flags, mem.guest_phys_addr,
--                              mem.memory_size, mem.userspace_addr, ret);
-+    trace_kvm_set_user_memory(mem.slot >> 16, (uint16_t)mem.slot, mem.flags,
-+                              mem.guest_phys_addr, mem.memory_size,
-+                              mem.userspace_addr, ret);
-     if (ret < 0) {
-         error_report("%s: KVM_SET_USER_MEMORY_REGION failed, slot=%d,"
-                      " start=0x%" PRIx64 ", size=0x%" PRIx64 ": %s",
-diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-index a25902597b1b..9f599abc172c 100644
---- a/accel/kvm/trace-events
-+++ b/accel/kvm/trace-events
-@@ -15,7 +15,7 @@ kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
- kvm_irqchip_release_virq(int virq) "virq %d"
- kvm_set_ioeventfd_mmio(int fd, uint64_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%" PRIx64 " val=0x%x assign: %d size: %d match: %d"
- kvm_set_ioeventfd_pio(int fd, uint16_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%x val=0x%x assign: %d size: %d match: %d"
--kvm_set_user_memory(uint32_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
-+kvm_set_user_memory(uint16_t as, uint16_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "AddrSpace#%d Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
- kvm_clear_dirty_log(uint32_t slot, uint64_t start, uint32_t size) "slot#%"PRId32" start 0x%"PRIx64" size 0x%"PRIx32
- kvm_resample_fd_notify(int gsi) "gsi %d"
- kvm_dirty_ring_full(int id) "vcpu %d"
+Changes in v3:
+- update the comment of property @sept-ve-disable to make it more
+  descriptive and use new format. (Daniel and Markus)
+---
+ qapi/qom.json         |  7 ++++++-
+ target/i386/kvm/tdx.c | 24 ++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 5b3c3146947f..2177f3101382 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -900,10 +900,15 @@
+ #
+ # Properties for tdx-guest objects.
+ #
++# @sept-ve-disable: toggle bit 28 of TD attributes to control disabling
++#     of EPT violation conversion to #VE on guest TD access of PENDING
++#     pages.  Some guest OS (e.g., Linux TD guest) may require this to
++#     be set, otherwise they refuse to boot.
++#
+ # Since: 9.0
+ ##
+ { 'struct': 'TdxGuestProperties',
+-  'data': { }}
++  'data': { '*sept-ve-disable': 'bool' } }
+ 
+ ##
+ # @ThreadContextProperties:
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 634aca504b32..51db64bec7ce 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -32,6 +32,8 @@
+                                      (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
+                                      (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
+ 
++#define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
++
+ #define TDX_ATTRIBUTES_MAX_BITS      64
+ 
+ static FeatureMask tdx_attrs_ctrl_fields[TDX_ATTRIBUTES_MAX_BITS] = {
+@@ -513,6 +515,24 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     return 0;
+ }
+ 
++static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
++{
++    TdxGuest *tdx = TDX_GUEST(obj);
++
++    return !!(tdx->attributes & TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE);
++}
++
++static void tdx_guest_set_sept_ve_disable(Object *obj, bool value, Error **errp)
++{
++    TdxGuest *tdx = TDX_GUEST(obj);
++
++    if (value) {
++        tdx->attributes |= TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE;
++    } else {
++        tdx->attributes &= ~TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE;
++    }
++}
++
+ /* tdx guest */
+ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
+                                    tdx_guest,
+@@ -528,6 +548,10 @@ static void tdx_guest_init(Object *obj)
+     qemu_mutex_init(&tdx->lock);
+ 
+     tdx->attributes = 0;
++
++    object_property_add_bool(obj, "sept-ve-disable",
++                             tdx_guest_get_sept_ve_disable,
++                             tdx_guest_set_sept_ve_disable);
+ }
+ 
+ static void tdx_guest_finalize(Object *obj)
 -- 
 2.34.1
 
