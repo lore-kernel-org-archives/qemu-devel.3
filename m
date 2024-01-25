@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A39C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F84C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:01:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT4wg-0001ZL-6L; Thu, 25 Jan 2024 13:59:26 -0500
+	id 1rT4xg-0001xS-7n; Thu, 25 Jan 2024 14:00:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rT4wf-0001ZB-0H
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:59:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rT4xa-0001sk-EC
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:00:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rT4wd-0004BG-C6
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:59:24 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rT4xY-0004Tn-O9
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:00:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706209162;
+ s=mimecast20190719; t=1706209219;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Kl73FxSJqw9943ht3ZUY/1NHzH2iGjvMdWzlWBzy3tw=;
- b=KC1IbvCJpP/FXNxU3i9R+t9G8ardatyVluimj0eWVsoxWm8zEf23DXeOJ5JIXlkwX8aEHV
- SWrs5PsTKpCx0BunvZtvrUbhPYhkFySY67ApvdIhB+qzTdyi4OIb/odw4Igp1nsX2gXSiV
- kdiN5gVu/FwCCnSDoUDI/Xs4FXqKsF0=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K3tJtJPgfpKoin1vZVCGxgpjofH4Mr52+jDtR97+9W8=;
+ b=Z8O3z25i/CzZGwHvLwdsfB1c+UKbIu/VgiaXcXbdDMUd1N7DuaG/TGqZD/c/YdE3r6miHd
+ iApjgxG4erzjLWolfshBY8qiXivtG8+dRvDhA4EQud9TGF2kvykq5CdSTQOoCPo/d2O2iL
+ 0RpSrNydhpDkraIVBv6Z7SQuW1bQh9k=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-570-2gzKhRegMPKNZ7iWAdo6fw-1; Thu, 25 Jan 2024 13:59:19 -0500
-X-MC-Unique: 2gzKhRegMPKNZ7iWAdo6fw-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-50e7ddf4dacso5639671e87.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 10:59:19 -0800 (PST)
+ us-mta-297-oK5fYTzGOS2rBRfuT2sgDA-1; Thu, 25 Jan 2024 14:00:11 -0500
+X-MC-Unique: oK5fYTzGOS2rBRfuT2sgDA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a2b068401b4so138549566b.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 11:00:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706209158; x=1706813958;
+ d=1e100.net; s=20230601; t=1706209210; x=1706814010;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Kl73FxSJqw9943ht3ZUY/1NHzH2iGjvMdWzlWBzy3tw=;
- b=HHC+3aEtL5OeT+Y3AkAGhsKyQQOArYLIOAcQJQKIGmP0D59bXnQpm6PMI9I3yI5++g
- oRKKcpqfyYAiN+tzPcbNQl+Qs2vyUmWsiCCwwDmtvjWchvgaCDGG6Xm6J1dh3DoUb46M
- KpSdN2itGwrRpIhO+7AySoTS3wGZzgDCbMM6v1pGWG3vqBO/HsL44aKhW3D9CCRvChGH
- VcaQmR+Z1lc/m+VLnbMpyCSVuu/WNd6wGGsZB7NNU4Lb9GIEWwCeTGZMUfz1xB4bFYfU
- nEsV0J+gc1qt+NNdve/j/VMTMw3Q+D7qYmIlbFtLH9O+m7TlrwSxqfTjnWyHHEDzqLSe
- nj+Q==
-X-Gm-Message-State: AOJu0YyTT8PQXkkgEON9KVAgRq0uBMQcwr/ITtzQaGm+Cw1Uryh81Ewd
- M8kAC9ooDwwKPT9Cm4DAW29k56Z5XYQZpwvmLZq/+770PPzboSOC1CVMTVWStF79KqUYNJcLaCf
- tbJDU0efMGJNpBe9LRcRRL2EaGeR0HX3H5QmrKZVE7PwWu/6xiPGm
-X-Received: by 2002:a19:f816:0:b0:510:c4a:a02d with SMTP id
- a22-20020a19f816000000b005100c4aa02dmr138904lff.122.1706209158232; 
- Thu, 25 Jan 2024 10:59:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNMEJrDySfzXm1C9uB7TaMLV+NX3XIGilCkZGHTv0QIdp7KxC98rZNMXPdkAySqv8jxZZ2+A==
-X-Received: by 2002:a19:f816:0:b0:510:c4a:a02d with SMTP id
- a22-20020a19f816000000b005100c4aa02dmr138897lff.122.1706209157869; 
- Thu, 25 Jan 2024 10:59:17 -0800 (PST)
+ bh=K3tJtJPgfpKoin1vZVCGxgpjofH4Mr52+jDtR97+9W8=;
+ b=CtEvBfgZgXOuYoGRLOhd0P0Bg9rIDSk9CmrajYwieBldqhT3qJx/58EpmJDli/VkfN
+ mKR791Nq5NZyTQAlxSYu7Yczuxzt99QRZdNriGHoyQXPbV257BAkQRwHHnWtrUfMpG4J
+ q3SJlmf71awNzG31kreKEmn59yvlbwLGFLr0c6/8P7VBu5vkz+VRPENrtzuZtg/wmeMO
+ pn17BKGOjDQVcnRmpM5DN2w3Ze9odR77G6gXqL9PdDtUiaS0xtoA7VW4xkKf6KRMLGua
+ VZpgVH2olNuwrS0skVRkZZwrVV5MJXnMQkeA4lZXMMKO45wsG9WozIfuFP5eEk/MtFnp
+ NPzQ==
+X-Gm-Message-State: AOJu0Yxe915wWM6CMKWoKFYUTIxd/reLl/wxOU+lDwiIUJMewGNpafIB
+ zUNKrqu8QanMsEhs6s7p6ARyPJJAK91bpyPTJid0o3VOWvAfmo/uGTaS0/F5ltYBuuauFTFOuP+
+ 9PWeIVJx+GNGgKVxNM2wqoJnNspDDYvrCiZwKUkjkJc/DFfdr/2mFjTu9DbjM
+X-Received: by 2002:a17:907:cc09:b0:a31:8c73:f42d with SMTP id
+ uo9-20020a170907cc0900b00a318c73f42dmr344816ejc.28.1706209210314; 
+ Thu, 25 Jan 2024 11:00:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEji1WddOy9rnJ96c8vEdHzRv3SmBUq2A+Cwhbe4vP6m0t5iijOmlejdFBD531JhG5qJqJXpg==
+X-Received: by 2002:a17:907:cc09:b0:a31:8c73:f42d with SMTP id
+ uo9-20020a170907cc0900b00a318c73f42dmr344806ejc.28.1706209210091; 
+ Thu, 25 Jan 2024 11:00:10 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- ty23-20020a170907c71700b00a31291a0d33sm1312196ejc.26.2024.01.25.10.59.16
+ ty23-20020a170907c71700b00a31291a0d33sm1312196ejc.26.2024.01.25.11.00.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jan 2024 10:59:17 -0800 (PST)
-Message-ID: <b0fea381-7f11-444d-b53c-5c782cfad6b2@redhat.com>
-Date: Thu, 25 Jan 2024 19:59:16 +0100
+ Thu, 25 Jan 2024 11:00:09 -0800 (PST)
+Message-ID: <35965c26-3856-47de-a437-3d7102189186@redhat.com>
+Date: Thu, 25 Jan 2024 20:00:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/qtest/xlnx-versal-trng-test.c: Drop use of
- variable length array
+Subject: Re: [PATCH 2/2] meson: Enable -Wvla
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20240125173211.1786196-1-peter.maydell@linaro.org>
- <20240125173211.1786196-2-peter.maydell@linaro.org>
+ <20240125173211.1786196-3-peter.maydell@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -116,17 +115,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240125173211.1786196-2-peter.maydell@linaro.org>
+In-Reply-To: <20240125173211.1786196-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -145,23 +144,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/01/2024 18.32, Peter Maydell wrote:
-> This test program is the last use of any variable length array in the
-> codebase.  If we can get rid of all uses of VLAs we can make the
-> compiler error on new additions.  This is a defensive measure against
-> security bugs where an on-stack dynamic allocation isn't correctly
-> size-checked (e.g.  CVE-2021-3527).
+> QEMU has historically used variable length arrays only very rarely.
+> Variable length arrays are a potential security issue where an
+> on-stack dynamic allocation isn't correctly size-checked, especially
+> when the size comes from the guest.  (An example problem of this kind
+> from the past is CVE-2021-3527).  Forbidding them entirely is a
+> defensive measure against further bugs of this kind.
 > 
-> In this case the test code didn't even want a variable-sized
-> array, it was just accidentally using syntax that gave it one.
-> (The array size for C has to be an actual constant expression,
-> not just something that happens to be known to be constant...)
-> 
-> Remove the VLA usage.
+> Enable -Wvla to prevent any new uses from sneaking into the codebase.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tests/qtest/xlnx-versal-trng-test.c | 19 +++++++++++--------
->   1 file changed, 11 insertions(+), 8 deletions(-)
+>   meson.build | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index d0329966f1b..385b8247073 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -601,6 +601,7 @@ warn_flags = [
+>     '-Wno-psabi',
+>     '-Wno-gnu-variable-sized-type-not-at-end',
+>     '-Wshadow=local',
+> +  '-Wvla',
+>   ]
+>   
+>   if host_os != 'darwin'
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
