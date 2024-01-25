@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA859C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C42B1C47422
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:10:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT2Hh-0006p3-Tj; Thu, 25 Jan 2024 11:08:58 -0500
+	id 1rT2Hu-0006yl-FS; Thu, 25 Jan 2024 11:09:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rT2Hd-0006kT-Ju
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:08:53 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rT2Ht-0006vj-44
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:09:09 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rT2Hc-0000LQ-4Q
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:08:53 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-5cf6d5117f9so4026425a12.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:08:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rT2Hr-0000NS-75
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:09:08 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-517ab9a4a13so5279253a12.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:09:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706198930; x=1706803730; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706198944; x=1706803744; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NQ83V6u3JjoeeV13hHMhpfCkNlbCNZFwOk7uKsoQQk8=;
- b=R7BEaC7B+4lN8ueXVTp1iV/kSqP0LkCgt7NVJBtgNlXshd8D5GNJ15QrOprlKSrjMX
- lVuDfqj8Hwqo3IPzPv8moJV42+G5Vr6TN1dCafcoGI4AYfUL1c4jUD8A9uvshsUX9d1b
- bO7CUUZO2lrIixTcgQxwT56ALrQnG309xN+h/MeInWtElaDoomN1a4MMTi1AS2tCYphb
- +p2j8UspmrRVGLh474iXaeCSvjlRtwWiv03orsnWsqCH+VeWAzBwsEjDXYtEwEq9I1ox
- K+UYZtKIJn2c11ELlE3yIuVYZvIXyEtTKbg8kvCpcLBnqXFu7BuFjd51Ok2Fyx4Pqpdk
- kWfw==
+ bh=pkwo7UCJpMNv5mPn2sWjbV8ooarPUagmTu1VnxL99W0=;
+ b=Pb+EbWFzONOflOcPXQ+B5pwth+kHgsvb/MiYrXFZ0nsweoNwnq7GQVn4FJ6M4C88m6
+ hmG9ZgsJJvifsfA87N2ILv2Nl0TD4ahRn8/B0YDC7abGtEy2gkr/N8vW3DwcLpaDJeHA
+ +FS5M33G/IYybzkvDgweJXBvM0M9yNy8iZWKOzyFzEJmM2D9yTdyb6xcaTq++QV7bld7
+ FeCpxDH9Sy/QjkmQzZTlARyG4pvIj+nxjupqLWM3IkXWuCBED7PmPlvew5/st2IOgqoB
+ uNXS5w/H/cC/+IToIQmWTnCNGrR6Bf46wL8OWv99gDS/rSitfiIjBorxGASWTQjJclnn
+ n41w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706198930; x=1706803730;
+ d=1e100.net; s=20230601; t=1706198944; x=1706803744;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NQ83V6u3JjoeeV13hHMhpfCkNlbCNZFwOk7uKsoQQk8=;
- b=osMWaVoq5F5Qjmmp0ZTFoxiS2uKJWW3nWNiACEfMast8fNrkg9PrnRQnuKYYItpL7V
- nEpug6vaUUThlp9mdVy5e3hBWquavgenOmJsJk553Q9eT3HnhIbganT77DZEminIH+JK
- s0h11PPHlSo0SawnLS7Z6Ks19Hyg7O3wxG7NGrk2NcV07Aq4cJ+mRJGT9mf2nFY0OriX
- GH2QcS8HeH/Vg6yh8YR1BWfez82NjrsFJ4GVrYEFr0zuYdduqsiw4lQYt5HEnsBtx40h
- 1bh8/+GofKRldcjyWbNti15j4IH+xzOYoC0uV7BqLhq28B1rPtXrefTFq5DcFpTEZnIY
- GuVw==
-X-Gm-Message-State: AOJu0YxnQ0iX1/INt8DbBovTUlU7JQVfhsDIA3xHGTNVHgZF/0lkQsM0
- NqsPJMaW3iQn+j924RJq0QLl0KEqgLAA9lgxsZuPKqxUa6kc3JYn0OVXQ9u6
-X-Google-Smtp-Source: AGHT+IGnpf/EMqVVaDkzyvRuvSPQDS3JC94doqdKlZqcM3tX4d9JgJltw7QaxVQBrRJLPS75wIs07w==
-X-Received: by 2002:a17:90b:3711:b0:28f:f728:c3f4 with SMTP id
- mg17-20020a17090b371100b0028ff728c3f4mr829646pjb.72.1706198929781; 
- Thu, 25 Jan 2024 08:08:49 -0800 (PST)
+ bh=pkwo7UCJpMNv5mPn2sWjbV8ooarPUagmTu1VnxL99W0=;
+ b=W6sDYXQi8ec70dspaqj3GjUjS/HWr5+WfHfXbV732y//R+Rqe+h0hc7MPuFqDYm9YW
+ N8N4FN49EtSb04hI4Pajk8AAIHGM7u2rmFAvTQa6Azdd9vQc1Ga1Bqjos0LUurxoTYTf
+ K0DoZJ9UrcM4LOS4k89DDxApBbCOORdayPwj4LN0Kuf2QWFXQoXjIcsF+mIq5h7TtTFi
+ D37tGJhkY1MNPUwRjHtiqcE3F+qUDBs1RZUqoFNN1xRD2HUL09vm0WTE4X1yvY1qCGDt
+ U3a4uRKlk4wj7wMDoHsBsEN1P3CzRyB5O1siAB6nQfDjyk98RoIyWGdSTH9kSFbW6joO
+ bATA==
+X-Gm-Message-State: AOJu0Ywnb05iUu+gcgbw9SyKGVlUyY1t3rQHJpaVpEVTePbauZ4rPp8y
+ 52kF4MD/oZyaFV6aInXFnvF7MqlmMsZfrzCcN5B686Y5xD3lyPxg4q+hLXtC
+X-Google-Smtp-Source: AGHT+IHkq+KFB8siFeMpeiKhcBdVZCuCCy+rsE0uDvcSnJYCyTlA2yC3AXNw0dMDgrsuaHhs9EcEaw==
+X-Received: by 2002:a17:90a:d313:b0:290:f9b6:8078 with SMTP id
+ p19-20020a17090ad31300b00290f9b68078mr1050445pju.7.1706198944532; 
+ Thu, 25 Jan 2024 08:09:04 -0800 (PST)
 Received: from wheely.local0.net (110-175-3-177.tpgi.com.au. [110.175.3.177])
  by smtp.gmail.com with ESMTPSA id
- oe7-20020a17090b394700b00293851b198csm14190pjb.56.2024.01.25.08.08.45
+ oe7-20020a17090b394700b00293851b198csm14190pjb.56.2024.01.25.08.09.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 08:08:49 -0800 (PST)
+ Thu, 25 Jan 2024 08:09:04 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,17 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>
-Subject: [PATCH v2 1/4] replay: allow runstate shutdown->running when
- replaying trace
-Date: Fri, 26 Jan 2024 02:08:32 +1000
-Message-ID: <20240125160835.480488-2-npiggin@gmail.com>
+Subject: [PATCH v2 4/4] tests/avocado: excercise scripts/replay-dump.py in
+ replay tests
+Date: Fri, 26 Jan 2024 02:08:35 +1000
+Message-ID: <20240125160835.480488-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240125160835.480488-1-npiggin@gmail.com>
 References: <20240125160835.480488-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,79 +100,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When replaying a trace, it is possible to go from shutdown to
-running with a reverse-debugging step. This can be useful if the
-problem being debugged triggers a reset or shutdown.
+This runs replay-dump.py after recording a trace, and fails the test if
+the script fails.
+
+replay-dump.py is modified to exit with non-zero if an error is
+encountered while parsing, to support this.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/sysemu/runstate.h |  1 +
- replay/replay.c           |  2 ++
- system/runstate.c         | 19 +++++++++++++++++++
- 3 files changed, 22 insertions(+)
+ scripts/replay-dump.py         |  6 ++++--
+ tests/avocado/replay_kernel.py | 16 ++++++++++++++++
+ tests/avocado/replay_linux.py  | 16 ++++++++++++++++
+ 3 files changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
-index 0117d243c4..fe25eed3c0 100644
---- a/include/sysemu/runstate.h
-+++ b/include/sysemu/runstate.h
-@@ -9,6 +9,7 @@ void runstate_set(RunState new_state);
- RunState runstate_get(void);
- bool runstate_is_running(void);
- bool runstate_needs_reset(void);
-+void runstate_replay_enable(void);
+diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+index a1d7ae0364..bfea9c099b 100755
+--- a/scripts/replay-dump.py
++++ b/scripts/replay-dump.py
+@@ -21,6 +21,7 @@
+ import argparse
+ import struct
+ import os
++import sys
+ from collections import namedtuple
+ from os import path
  
- typedef void VMChangeStateHandler(void *opaque, bool running, RunState state);
+@@ -104,7 +105,7 @@ def call_decode(table, index, dumpfile):
+         print("Could not decode index: %d" % (index))
+         print("Entry is: %s" % (decoder))
+         print("Decode Table is:\n%s" % (table))
+-        return False
++        raise(Exception("unknown event"))
+     else:
+         return decoder.fn(decoder.eid, decoder.name, dumpfile)
  
-diff --git a/replay/replay.c b/replay/replay.c
-index 3fd241a4fc..2951eed3bd 100644
---- a/replay/replay.c
-+++ b/replay/replay.c
-@@ -383,6 +383,8 @@ static void replay_enable(const char *fname, int mode)
-         /* go to the beginning */
-         fseek(replay_file, HEADER_SIZE, SEEK_SET);
-         replay_fetch_data_kind();
-+
-+        runstate_replay_enable();
-     }
+@@ -125,7 +126,7 @@ def print_event(eid, name, string=None, event_count=None):
+ def decode_unimp(eid, name, _unused_dumpfile):
+     "Unimplemented decoder, will trigger exit"
+     print("%s not handled - will now stop" % (name))
+-    return False
++    raise(Exception("unhandled event"))
  
-     replay_init_events();
-diff --git a/system/runstate.c b/system/runstate.c
-index d6ab860eca..bd0fed8657 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -182,6 +182,12 @@ static const RunStateTransition runstate_transitions_def[] = {
-     { RUN_STATE__MAX, RUN_STATE__MAX },
- };
+ def decode_plain(eid, name, _unused_dumpfile):
+     "Plain events without additional data"
+@@ -439,6 +440,7 @@ def decode_file(filename):
+                                     dumpfile)
+     except Exception as inst:
+         print(f"error {inst}")
++        sys.exit(1)
  
-+static const RunStateTransition replay_runstate_transitions_def[] = {
-+    { RUN_STATE_SHUTDOWN, RUN_STATE_RUNNING},
-+
-+    { RUN_STATE__MAX, RUN_STATE__MAX },
-+};
-+
- static bool runstate_valid_transitions[RUN_STATE__MAX][RUN_STATE__MAX];
+     finally:
+         print(f"Reached {dumpfile.tell()} of {dumpsize} bytes")
+diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
+index 10d99403a4..9b3ee6726b 100644
+--- a/tests/avocado/replay_kernel.py
++++ b/tests/avocado/replay_kernel.py
+@@ -13,6 +13,7 @@
+ import shutil
+ import logging
+ import time
++import subprocess
  
- bool runstate_check(RunState state)
-@@ -189,6 +195,19 @@ bool runstate_check(RunState state)
-     return current_run_state == state;
- }
+ from avocado import skip
+ from avocado import skipUnless
+@@ -22,6 +23,11 @@
+ from avocado.utils import process
+ from boot_linux_console import LinuxKernelTest
  
-+void runstate_replay_enable(void)
-+{
-+    const RunStateTransition *p;
++from pathlib import Path
 +
-+    assert(replay_mode == REPLAY_MODE_PLAY);
++self_dir = Path(__file__).parent
++src_dir = self_dir.parent.parent
 +
-+    for (p = &replay_runstate_transitions_def[0]; p->from != RUN_STATE__MAX;
-+         p++) {
-+        runstate_valid_transitions[p->from][p->to] = true;
-+    }
+ class ReplayKernelBase(LinuxKernelTest):
+     """
+     Boots a Linux kernel in record mode and checks that the console
+@@ -63,6 +69,8 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
+             vm.shutdown()
+             logger.info('finished the recording with log size %s bytes'
+                         % os.path.getsize(replay_path))
++            self.run_replay_dump(replay_path)
++            logger.info('successfully tested replay-dump.py')
+         else:
+             vm.wait()
+             logger.info('successfully finished the replay')
+@@ -70,6 +78,14 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
+         logger.info('elapsed time %.2f sec' % elapsed)
+         return elapsed
+ 
++    def run_replay_dump(self, replay_path):
++        try:
++            subprocess.check_call(["./scripts/replay-dump.py",
++                                   "-f", replay_path],
++                                  cwd=src_dir, stdout=subprocess.DEVNULL)
++        except subprocess.CalledProcessError:
++            self.fail('replay-dump.py failed')
 +
-+}
+     def run_rr(self, kernel_path, kernel_command_line, console_pattern,
+                shift=7, args=None):
+         replay_path = os.path.join(self.workdir, 'replay.bin')
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+index f3a43dc98c..dd148ff639 100644
+--- a/tests/avocado/replay_linux.py
++++ b/tests/avocado/replay_linux.py
+@@ -11,6 +11,7 @@
+ import os
+ import logging
+ import time
++import subprocess
+ 
+ from avocado import skipUnless
+ from avocado_qemu import BUILD_DIR
+@@ -21,6 +22,11 @@
+ from avocado.utils.path import find_command
+ from avocado_qemu import LinuxTest
+ 
++from pathlib import Path
 +
- static void runstate_init(void)
- {
-     const RunStateTransition *p;
++self_dir = Path(__file__).parent
++src_dir = self_dir.parent.parent
++
+ class ReplayLinux(LinuxTest):
+     """
+     Boots a Linux system, checking for a successful initialization
+@@ -94,6 +100,8 @@ def launch_and_wait(self, record, args, shift):
+             vm.shutdown()
+             logger.info('finished the recording with log size %s bytes'
+                 % os.path.getsize(replay_path))
++            self.run_replay_dump(replay_path)
++            logger.info('successfully tested replay-dump.py')
+         else:
+             vm.event_wait('SHUTDOWN', self.timeout)
+             vm.wait()
+@@ -108,6 +116,14 @@ def run_rr(self, args=None, shift=7):
+         logger = logging.getLogger('replay')
+         logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
+ 
++    def run_replay_dump(self, replay_path):
++        try:
++            subprocess.check_call(["./scripts/replay-dump.py",
++                                   "-f", replay_path],
++                                  cwd=src_dir, stdout=subprocess.DEVNULL)
++        except subprocess.CalledProcessError:
++            self.fail('replay-dump.py failed')
++
+ @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+ class ReplayLinuxX8664(ReplayLinux):
+     """
 -- 
 2.42.0
 
