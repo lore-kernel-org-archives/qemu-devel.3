@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F9FC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 05:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B15FC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 05:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSsiT-0003Gl-1J; Thu, 25 Jan 2024 00:55:57 -0500
+	id 1rSsia-0003Io-K2; Thu, 25 Jan 2024 00:56:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSsiP-0003GC-DM
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 00:55:54 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSsiY-0003IO-P4
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 00:56:02 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSsiM-00016R-4B
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 00:55:52 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-40ed1e78835so1527335e9.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 21:55:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSsiW-00017c-LH
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 00:56:02 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-40ed252edd7so617125e9.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 21:56:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706162147; x=1706766947; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LTjUodNM1cz/FwQ+agsvuxdNwnKZ6thXnjAI9kk5o1E=;
- b=hure3xIE0uajhbLsa4z+UrtyDXcDnOk8FD9OjbUuyG4dchJou+ZC1bO5WgdTIEIM3k
- HqzxjBxXrn/klSAhPll1WhqJWV8S7UEtQwffknl+qtFDYw2ZlNSIzBASyT0Ifl933504
- z/lamoS3u6lQvBmPAMhW6CFzpEWkOoyrYeE4SO+LDoJ3FeCgmCLVkIttxOOWqxTrJ1B7
- NN7V9kMeJQBpEl1ponzkOoJUcdP0xggVeoN+Mayxg5bPzBbevnidyzKtD400xTlxoaSW
- irDJR8wfZ6qkzsvAo8v69PazULTVbVF9EfWhQIkRWmZjzKTWJyc+aUYBwMXUcEWGgKs6
- NfMg==
+ d=linaro.org; s=google; t=1706162159; x=1706766959; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LJEHUrHwrIT1rKWRwjxDbaX0Pfnq9aLQleOdaQTs5wo=;
+ b=QzZS1YwBmtBz3ojbAGMurPXeDuyjSwwAegyNdVCF3farpbgdKjFSKsy/eRgwkcsUB3
+ Ak5G0fgXwhvjFIvODWpQeAg4yqATEwimOFucOBAf1RxzsbluoeCtQgEvF0O8jsjAXbaN
+ BIay5ZUcfFbz/BRtwa1vLGNgs68OT/P0xRSIeVHDK5sYYPojanN3yQcajVqf5uT37bWp
+ swvK1WkE2aSZ6SFgP7IBLRHUyXRFYcFRpL3R5CyxqP85XQ5jWA5WiJs28SCBhwd/QFJM
+ zV3w2n+m398sszlDEcKq+b4lI2xgxlfpDDzOR/VR4lmcafle5/eoVZz5WVOPwQRbUb9h
+ eOHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706162147; x=1706766947;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LTjUodNM1cz/FwQ+agsvuxdNwnKZ6thXnjAI9kk5o1E=;
- b=RQDggitFS31Hk9Dj7kkE3cP6uwIonATNAmB8nROFyRuNnHslUjei1+0t4r5RtQRmma
- rRy1aRDuQE9Xt3UOFwQQihXhg20jIZJUAYktHp8kz4ZPBnzCZ0nPA8G0fdKSWh8BaTUB
- 2B/TULMg+IHVM8z8EPW9oZGZWMAduZfd5lJEUpOxNKCSig6klksHID/iZtJ1DfuUzFev
- 3F4McLC3mVg/uNM4L7OIBfyGaKlY8Fzwml/aWsB6n15P9iaAPCnuxtcbzc9jnf35ZA3l
- UZ57PWwtyUY+DpBM0ilbBb1saTC4Cy9BdNuE4Oyt5oCYMjwPMa+vBoU4B5osZAhH/O9W
- uqKg==
-X-Gm-Message-State: AOJu0YwVynSYFZMp3GCI8ue6fdsW0WNT5dRQV0NuJw/e72DhsF6iKjLU
- zy4QqT0pN+uKtoqotMMtwC/Qa3DgleaxHcToe9RR6Nt+cZZIbaNxy/HyO7gHMlGV8NBUtLIkVHE
- m
-X-Google-Smtp-Source: AGHT+IH8UIffeq77TyMsovKwPG6RUMJkmw6FZkcgB2XjfAQjwF/3zWNY6DwUnEzCI8ccPZmMvM513g==
-X-Received: by 2002:a05:600c:54d0:b0:40e:6639:6708 with SMTP id
- iw16-20020a05600c54d000b0040e66396708mr16641wmb.49.1706162147617; 
- Wed, 24 Jan 2024 21:55:47 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706162159; x=1706766959;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LJEHUrHwrIT1rKWRwjxDbaX0Pfnq9aLQleOdaQTs5wo=;
+ b=KEfRKUC5HP9p1Ckt33fzXEVAYLqx7P+A12exg0mH0v/pd3vHYN5ns8eIekocHVAq3L
+ A4UAx3+WHv7xxHrqbDarSHWz4EICOBuouEcWAb+EPzxq0OGz427Nf8cJtvQk3Yd61tJk
+ /N4aNFLJoOAu9I5PyoW8Pl39rvkkkAsAiYPLgHLMv/htiGiNUud5W7LEHHK+7aV8xf1l
+ Tf655xEd9yZTsogxeg/V7NYvR7nY2tU6OwskFZiAqg4PGiq6aweb9w5EQcwtLRA/Ex4j
+ jv0qWzxSD/PSs7XYqegESPdutSTSlTkMmj0sUbICVaSvtyic37DEtm+OeotsvIejHkzo
+ 8+XA==
+X-Gm-Message-State: AOJu0Yw2jojCWBeMMCPV/77l19Gj1g4c/4lLHjVYD7aDEoBS0A7MlAIt
+ 3spht01mFjmeJHRg5j5yj127N/VDAwNQcqllWLGg8likomd4X2FojjW6El1t/iYVL+CeNBOzEVO
+ 9
+X-Google-Smtp-Source: AGHT+IHCvKIVJaAVJwaZtt3+7OP4zquSVFl5Cr4sh4Qp8b4dFuoMciLinvFom4nSWQ2Os8vbiFa3ew==
+X-Received: by 2002:a05:600c:a41:b0:40e:89fe:255b with SMTP id
+ c1-20020a05600c0a4100b0040e89fe255bmr109927wmq.160.1706162159016; 
+ Wed, 24 Jan 2024 21:55:59 -0800 (PST)
 Received: from m1x-phil.lan (lec62-h02-176-184-19-125.dsl.sta.abo.bbox.fr.
  [176.184.19.125]) by smtp.gmail.com with ESMTPSA id
- d10-20020a05600c3aca00b0040e88fbe051sm1222406wms.48.2024.01.24.21.55.46
+ fk15-20020a05600c0ccf00b0040e9f7dadc6sm1246791wmb.25.2024.01.24.21.55.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Jan 2024 21:55:47 -0800 (PST)
+ Wed, 24 Jan 2024 21:55:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, qemu-arm@nongnu.org,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 0/5] hw/arm/aspeed: Check for CPU types in
- machine_run_board_init()
-Date: Thu, 25 Jan 2024 06:55:39 +0100
-Message-ID: <20240125055544.79405-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gavin Shan <gshan@redhat.com>
+Subject: [PATCH v3 2/5] hw/arm/aspeed: Set default CPU count using
+ aspeed_soc_num_cpus()
+Date: Thu, 25 Jan 2024 06:55:41 +0100
+Message-ID: <20240125055544.79405-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240125055544.79405-1-philmd@linaro.org>
+References: <20240125055544.79405-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,34 +99,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Series fully reviewed.
+Since commit b7f1a0cb76 ("arm/aspeed: Compute the number
+of CPUs from the SoC definition") Aspeed machines use the
+aspeed_soc_num_cpus() helper to set the number of CPUs.
 
-Since v2:
-- Addressed Gavin & Richard review comments.
-- Collected R-b tags
+Use it for the ast1030-evb (commit 356b230ed1 "aspeed/soc:
+Add AST1030 support") and supermicrox11-bmc (commit 40a38df55e
+"hw/arm/aspeed: Add board model for Supermicro X11 BMC") machines.
 
-Since v1:
-- Follow suggestions from Cédric from [*]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+---
+ hw/arm/aspeed.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-[*] https://lore.kernel.org/qemu-devel/e13c655b-7904-4e47-a673-4efd13c26b3d@kaod.org/
-
-Based-on: <20240123222508.13826-1-philmd@linaro.org>
-
-Philippe Mathieu-Daudé (5):
-  hw/arm/aspeed: Remove dead code
-  hw/arm/aspeed: Set default CPU count using aspeed_soc_num_cpus()
-  hw/arm/aspeed: Init CPU defaults in a common helper
-  hw/arm/aspeed: Introduce aspeed_soc_cpu_type() helper
-  hw/arm/aspeed: Check for CPU types in machine_run_board_init()
-
- include/hw/arm/aspeed_soc.h |  4 ++-
- hw/arm/aspeed.c             | 70 +++++++++++++++----------------------
- hw/arm/aspeed_ast10x0.c     |  8 +++--
- hw/arm/aspeed_ast2400.c     | 15 ++++++--
- hw/arm/aspeed_ast2600.c     |  9 +++--
- hw/arm/aspeed_soc_common.c  |  8 +++++
- 6 files changed, 65 insertions(+), 49 deletions(-)
-
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 4bc292ff84..5b01a4dd28 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1212,6 +1212,8 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+     amc->i2c_init  = palmetto_bmc_i2c_init;
+     mc->default_ram_size = 256 * MiB;
++    mc->default_cpus = mc->min_cpus = mc->max_cpus =
++        aspeed_soc_num_cpus(amc->soc_name);
+ }
+ 
+ static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
+@@ -1586,11 +1588,12 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+     mc->init = aspeed_minibmc_machine_init;
+     amc->i2c_init = ast1030_evb_i2c_init;
+     mc->default_ram_size = 0;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus = 1;
+     amc->fmc_model = "sst25vf032b";
+     amc->spi_model = "sst25vf032b";
+     amc->num_cs = 2;
+     amc->macs_mask = 0;
++    mc->default_cpus = mc->min_cpus = mc->max_cpus =
++        aspeed_soc_num_cpus(amc->soc_name);
+ }
+ 
+ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
 -- 
 2.41.0
 
