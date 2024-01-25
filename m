@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14A10C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EDA7C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 20:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT5nO-0004ir-7F; Thu, 25 Jan 2024 14:53:54 -0500
+	id 1rT60F-000449-5k; Thu, 25 Jan 2024 15:07:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rT5nI-0004gn-19
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:48 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <n.ostrenkov@gmail.com>)
+ id 1rT60D-00043i-Sv
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 15:07:09 -0500
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rT5nF-0001bj-LJ
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:47 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-29041f26e28so3784527a91.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 11:53:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <n.ostrenkov@gmail.com>)
+ id 1rT60B-0005yv-R8
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 15:07:09 -0500
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-5f69383e653so923987b3.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 12:07:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706212424; x=1706817224; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XskUeql9uVyd/MNKiXou2+W/uTtdrDCIW2uzgKAjUxY=;
- b=Y8lWmgIjNnrCupnBW7ml3WJ4PWuf8pcV7Cdp3Ojq7sPc7GJLOrkLTXkbcp6RMkufku
- TSmHW3vliAyuPSyf7FN8EzOduCmRuhqFIEdjB4CkUZCfoQmPaOX2lgZwXy1Pzf58wyKn
- QK5/pz10cx4w7swvHReGd267bFViDCE5P/9RLM/0+lD9mo+x0b0Tzu5hHMTYKo4F/Sk0
- pOdO+WflroNcvHbVWLYI3/99MQjtZLMllmJnRJkamhsYQyKYSjMbghrtikFs/Fx3PLh7
- ymfPI+8a4jcLzzEIJyHYuV5QEbsBTwwi6gFqrXU+oquzHG6GKLxNDs9SyTEJERvLqWla
- 1RwA==
+ d=gmail.com; s=20230601; t=1706213226; x=1706818026; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UUrUxZciJePsgxmm08uzb18AE00Lk717exTxlp550xM=;
+ b=Km4i5cVmpZfdVTeqDHWc/lTbiRWNDTox8skuLyqIrWoVZVh4mWc7/I9YyivA1OkkpI
+ motxTxzx3GKg/k0ElQ0lXshv5w5ktAx0EWBm+cC1mcxYIm0ftd4RCjfc3tvYzOecd9xQ
+ Nq2/Donx2hZDO+ckGTV9eqBNe6RkPZA0N3LjVEU67qFc1TQ/wcaj6Jd/51X0zbGyMeh8
+ OYGb2xgg8sLxCg2ZJ/XywAIjMxUCzOORzkkpLxJSqGamgUbbYiAnWnQ8VMB5ibTUx/gm
+ 0S9u0xy1c9wS2hDeUChplvZCGy3ur/yFQXIVCEmkMz8enVpXHEBc+wR4kZwRpnOYNPoj
+ 6lgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706212424; x=1706817224;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XskUeql9uVyd/MNKiXou2+W/uTtdrDCIW2uzgKAjUxY=;
- b=tLwN740zB/rOQzRshRcTiEnnjZZBYFo/LKkPHcVCMH67f2Ko9qluZF7/YbHSNq9MMt
- RR3t6BNEK2vUEbHUoIXWq2Sitg09Bh9WAGlh9TFelFYYRDCZ45gafjFAlzv+qpvtYuF+
- VMIfFGOYEhdqAWr3wSwJKzn4DwVZJqqAKBWYHazz6beul05qWlIGpPx5m6ICN+slkIEA
- gSeCTkd2Nvl6ErxzA4aa4FEqJaWcdQHZbJf2GhMGokaBUUfa/8ahJtOrfckzqLEvs/Gk
- MLqKrfR8lsdb8iRbtxcERGwEZuRPBRKgyhT0vBSOl8OC41/rHwXxVbtoNkUtM0bpTaeq
- ivXg==
-X-Gm-Message-State: AOJu0Yxzf+jL7pNAduwcZVZc8tZPxVLRJ8CDyS6/ZEkSoGn/MiuDqBv9
- ZN1RQw1xrJnCLQw6X4cjqNe9oW7IgqipOnryrbzTNnPeZv2PxIyh9BJhJY37SOpgDAiJXmmwOC3
- H
-X-Google-Smtp-Source: AGHT+IEZNcE20xtE8XlkLRtot80FQblCg/zfVaVxf576W/aLdHVmo6pIZaDD5mQm5CTqLM6Q49U/iQ==
-X-Received: by 2002:a17:90a:5785:b0:28c:fb86:23ce with SMTP id
- g5-20020a17090a578500b0028cfb8623cemr125892pji.44.1706212424015; 
- Thu, 25 Jan 2024 11:53:44 -0800 (PST)
-Received: from grind.. ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
- by smtp.gmail.com with ESMTPSA id
- r7-20020a17090ad40700b0028b6759d8c1sm1958613pju.29.2024.01.25.11.53.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 11:53:43 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 6/6] target/riscv: Promote svade to a normal extension
-Date: Thu, 25 Jan 2024 16:53:19 -0300
-Message-ID: <20240125195319.329181-7-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240125195319.329181-1-dbarboza@ventanamicro.com>
-References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1706213226; x=1706818026;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UUrUxZciJePsgxmm08uzb18AE00Lk717exTxlp550xM=;
+ b=cWSuNceW+23fCbckscqfq7+GKzepidy+X44wK4E0VzwuEGYHIgl88c9iHjQG3nSZZB
+ JVGQc4x+JhOuzHCn0zh5Ne6KIIXp6SwmaG2FgXVHEZ1+ERUjwbpTqHReqo5p+uirAy8g
+ hZtOURMlTJjPY82tFM+IRmpa01EUlrYal8CdEgZLML7hSw2TRZdMONT38YiOQtYdVZ68
+ Y0vTt1ZbG8oF/7NSVqiPU5dmlq/bLdpaWe5o3DEaDJ5NqvYLreE17+0tR52J7LtTpPu8
+ ACllD2yv4Ns0aIuJOzvwlDQ8PVATqFcp1KAHEL49x5mKbZQ2tyTO2icNCIgv3TpM/FcM
+ S6Ew==
+X-Gm-Message-State: AOJu0YzKxNHOuq9hl2njaXJftXXU8Oe0giOGd9Y9Ys1o/O91vdWFk0vq
+ 7+e64nX5nDa9NLDpzV+rRLi5/eBMNXB6nAXgQF482mr6VGyWtY/L70wE/W5z2pPi0hUZIk/dKKf
+ gBkN1L49fazXFha6IgQ7ErhY8gWq/DvL078Q=
+X-Google-Smtp-Source: AGHT+IHaC+PfRumgDJ0OW1G64/VdMUU0qr5QpnVD0EgzJa+JU45jRWwjon0pNu7W751koIWbZPLXr/VkSWWIwlFoc84=
+X-Received: by 2002:a0d:d489:0:b0:5ff:cb36:4121 with SMTP id
+ w131-20020a0dd489000000b005ffcb364121mr367355ywd.91.1706213226043; Thu, 25
+ Jan 2024 12:07:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1031.google.com
+References: <20231117173916.3658-1-n.ostrenkov@gmail.com>
+ <CAC8KSA1SydreP4hT+3bJS-tZeeFH5_ZWbHCMCAMedM1pYjMP-w@mail.gmail.com>
+In-Reply-To: <CAC8KSA1SydreP4hT+3bJS-tZeeFH5_ZWbHCMCAMedM1pYjMP-w@mail.gmail.com>
+From: Nikita Ostrenkov <n.ostrenkov@gmail.com>
+Date: Thu, 25 Jan 2024 23:06:55 +0300
+Message-ID: <CAC8KSA3B47ceDtNW9DySAPGx4wEOqMGnJ5+NzoXqskurPb3SvQ@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/usb: fix xhci port notify
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000003fdac4060fcab9e5"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=n.ostrenkov@gmail.com; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,65 +88,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <ajones@ventanamicro.com>
+--0000000000003fdac4060fcab9e5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Named features are extensions which don't make sense for users to
-control and are therefore not exposed on the command line. However,
-svade is an extension which makes sense for users to control, so treat
-it like a "normal" extension. The default is false, since QEMU has
-always implemented hardware A/D PTE bit updating, so users must opt into
-svade (or get it from a CPU type which enables it by default).
+ping
+https://patchew.org/QEMU/20231117173916.3658-1-n.ostrenkov@gmail.com/
 
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+=D0=BF=D0=BD, 18 =D0=B4=D0=B5=D0=BA. 2023=E2=80=AF=D0=B3., 13:40 Nikita Ost=
+renkov <n.ostrenkov@gmail.com>:
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a56c2ff91d..4ddde25412 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1421,6 +1421,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
- 
-     MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
-     MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
-+    MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
-     MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
-     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
-     MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
-@@ -1528,7 +1529,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
-  * and priv_ver like regular extensions.
-  */
- const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
--    MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
-     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
- 
-     /*
-@@ -2175,8 +2175,6 @@ static RISCVCPUProfile RVA22U64 = {
-  * Other named features that we already implement: Sstvecd, Sstvala,
-  * Sscounterenw
-  *
-- * Named features that we need to enable: svade
-- *
-  * The remaining features/extensions comes from RVA22U64.
-  */
- static RISCVCPUProfile RVA22S64 = {
-@@ -2188,11 +2186,11 @@ static RISCVCPUProfile RVA22S64 = {
-     .ext_offsets = {
-         /* rva22s64 exts */
-         CPU_CFG_OFFSET(ext_zifencei), CPU_CFG_OFFSET(ext_svpbmt),
--        CPU_CFG_OFFSET(ext_svinval),
-+        CPU_CFG_OFFSET(ext_svinval), CPU_CFG_OFFSET(ext_svade),
- 
-         /* rva22s64 named features */
-         CPU_CFG_OFFSET(ext_sstvecd), CPU_CFG_OFFSET(ext_sstvala),
--        CPU_CFG_OFFSET(ext_sscounterenw), CPU_CFG_OFFSET(ext_svade),
-+        CPU_CFG_OFFSET(ext_sscounterenw),
- 
-         RISCV_PROFILE_EXT_LIST_END
-     }
--- 
-2.43.0
+> ping
+> https://patchew.org/QEMU/20231117173916.3658-1-n.ostrenkov@gmail.com/
+>
+> =D0=BF=D1=82, 17 =D0=BD=D0=BE=D1=8F=D0=B1. 2023=E2=80=AF=D0=B3., 20:39 Ni=
+kita Ostrenkov <n.ostrenkov@gmail.com>:
+>
+>> From MCF5253 Reference manual
+>> https://www.nxp.com/docs/en/reference-manual/MCF5253RM.pdf
+>>
+>> Host mode: Port Change Detect. The controller sets this bit to a one whe=
+n
+>> on any port a Connect Status occurs, a PortEnable/Disable Change occurs,=
+ an
+>> Over Current Change occurs, or the Force Port Resume bit is set as
+>> theresult of a J-K transition on the suspended port.
+>>
+>> Signed-off-by: Nikita Ostrenkov <n.ostrenkov@gmail.com>
+>> ---
+>>  hw/usb/hcd-xhci.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+>> index 4b60114207..1b2f4ac721 100644
+>> --- a/hw/usb/hcd-xhci.c
+>> +++ b/hw/usb/hcd-xhci.c
+>> @@ -2627,6 +2627,7 @@ static void xhci_port_notify(XHCIPort *port,
+>> uint32_t bits)
+>>      if (!xhci_running(port->xhci)) {
+>>          return;
+>>      }
+>> +    port->xhci->usbsts |=3D USBSTS_PCD;
+>>      xhci_event(port->xhci, &ev, 0);
+>>  }
+>>
+>> --
+>> 2.34.1
+>>
+>>
 
+--0000000000003fdac4060fcab9e5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">ping<div dir=3D"auto"><a href=3D"https://patchew.org/QEMU=
+/20231117173916.3658-1-n.ostrenkov@gmail.com/">https://patchew.org/QEMU/202=
+31117173916.3658-1-n.ostrenkov@gmail.com/</a></div></div><br><div class=3D"=
+gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=D0=BF=D0=BD, 18 =D0=B4=
+=D0=B5=D0=BA. 2023=E2=80=AF=D0=B3., 13:40 Nikita Ostrenkov &lt;<a href=3D"m=
+ailto:n.ostrenkov@gmail.com">n.ostrenkov@gmail.com</a>&gt;:<br></div><block=
+quote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc=
+ solid;padding-left:1ex"><div dir=3D"auto">ping<div dir=3D"auto"><a href=3D=
+"https://patchew.org/QEMU/20231117173916.3658-1-n.ostrenkov@gmail.com/" tar=
+get=3D"_blank" rel=3D"noreferrer">https://patchew.org/QEMU/20231117173916.3=
+658-1-n.ostrenkov@gmail.com/</a><br></div></div><br><div class=3D"gmail_quo=
+te"><div dir=3D"ltr" class=3D"gmail_attr">=D0=BF=D1=82, 17 =D0=BD=D0=BE=D1=
+=8F=D0=B1. 2023=E2=80=AF=D0=B3., 20:39 Nikita Ostrenkov &lt;<a href=3D"mail=
+to:n.ostrenkov@gmail.com" target=3D"_blank" rel=3D"noreferrer">n.ostrenkov@=
+gmail.com</a>&gt;:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">From MCF5253 Ref=
+erence manual <a href=3D"https://www.nxp.com/docs/en/reference-manual/MCF52=
+53RM.pdf" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https:=
+//www.nxp.com/docs/en/reference-manual/MCF5253RM.pdf</a><br>
+<br>
+Host mode: Port Change Detect. The controller sets this bit to a one when o=
+n any port a Connect Status occurs, a PortEnable/Disable Change occurs, an =
+Over Current Change occurs, or the Force Port Resume bit is set as theresul=
+t of a J-K transition on the suspended port.<br>
+<br>
+Signed-off-by: Nikita Ostrenkov &lt;<a href=3D"mailto:n.ostrenkov@gmail.com=
+" rel=3D"noreferrer noreferrer" target=3D"_blank">n.ostrenkov@gmail.com</a>=
+&gt;<br>
+---<br>
+=C2=A0hw/usb/hcd-xhci.c | 1 +<br>
+=C2=A01 file changed, 1 insertion(+)<br>
+<br>
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c<br>
+index 4b60114207..1b2f4ac721 100644<br>
+--- a/hw/usb/hcd-xhci.c<br>
++++ b/hw/usb/hcd-xhci.c<br>
+@@ -2627,6 +2627,7 @@ static void xhci_port_notify(XHCIPort *port, uint32_t=
+ bits)<br>
+=C2=A0 =C2=A0 =C2=A0if (!xhci_running(port-&gt;xhci)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
++=C2=A0 =C2=A0 port-&gt;xhci-&gt;usbsts |=3D USBSTS_PCD;<br>
+=C2=A0 =C2=A0 =C2=A0xhci_event(port-&gt;xhci, &amp;ev, 0);<br>
+=C2=A0}<br>
+<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div>
+</blockquote></div>
+
+--0000000000003fdac4060fcab9e5--
 
