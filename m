@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3206C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E71CC48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqSM-0003OP-OD; Wed, 24 Jan 2024 22:31:10 -0500
+	id 1rSqT3-0006jL-Sz; Wed, 24 Jan 2024 22:31:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqS4-00031o-FC
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:55 -0500
+ id 1rSqSz-00066L-Ub
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:50 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqS0-0001E0-Kb
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:50 -0500
+ id 1rSqSy-0001E0-3Q
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153448; x=1737689448;
+ t=1706153508; x=1737689508;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=O90Sz6D/CUBJHW4iQssE9lD+uGaFEj7py9EJ59KxMp8=;
- b=HQuRXcgd1vHUzz4TNNQ6D7I3xuHX1cuGDNsERgXjnSA6lGiEnITWgt6X
- oswy/8o0ZUJncK6GnOar5bZCGuVMnALQKjjEgOiQzyH3erDekxZ8Pxr2A
- 02MGb2Nd3J1fZ8iYhHalXMt5r7S7T8RdDVse9zvz6apgbvMQ1o4uVYbbE
- LOe7EpCcMrMFqWr633fxJaEl5IvkVbzvyfUoGi33UmvyrFtEUuQatQnB1
- vTpD3w0QjzVsKT3BV4SrK5zbQdn4JtN6nxYo1A31SxDmv7hZ/gh9Vahpu
- jjkn+ygI8Pu0EtrfL5UzVoBDgHRrPvLVq8Rsb3lA8fMjvWjvrBQ2rIWax Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9429749"
+ bh=dYbC6/O6Cy+T1AZ7szpJepdFNBXHXc3/nDTSns21eRk=;
+ b=KR2ky1/m1iQN0w+sDZwAcBdiby2RRVDtJDRKDFf4tNjJxa9AYJUScHHv
+ BqtrsArNihyZgJdnTd/oTRHvBToT7B+N/YgubWxKHmn3g6Q4f3aQVCwEZ
+ M8iY8xRH+lwAjSTcSVmam7Ygd78ooH/SD4ULFkNT8W4YOEUML/QDXF5Kx
+ 38YkaGf8HL2iOhlBASRc3o8kmD4VcTjfBl1pRUG0CkWO/S/oMeEDacmBs
+ ne3dhqJVFb5sBwrTlYBGmu7M2irieWXXx6zeTy7ZQSgWZPKOnVBFDaSlK
+ trjNZEY9ZWPgpZJA2ux/HuuhhIy7WCax0q0O0erTF4MUhK7EhQAYYR2JL Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430354"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9429749"
+   d="scan'208";a="9430354"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:27:44 -0800
+ 24 Jan 2024 19:28:49 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2086065"
+   d="scan'208";a="2086423"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:27:39 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:28:44 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 45/66] memory: Introduce
- memory_region_init_ram_guest_memfd()
-Date: Wed, 24 Jan 2024 22:23:07 -0500
-Message-Id: <20240125032328.2522472-46-xiaoyao.li@intel.com>
+Subject: [PATCH v4 57/66] i386/tdx: Disable PIC for TDX VMs
+Date: Wed, 24 Jan 2024 22:23:19 -0500
+Message-Id: <20240125032328.2522472-58-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,71 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce memory_region_init_ram_guest_memfd() to allocate private
-guset memfd on the MemoryRegion initialization. It's for the use case of
-TDVF, which must be private on TDX case.
+Legacy PIC (8259) cannot be supported for TDX VMs since TDX module
+doesn't allow directly interrupt injection.  Using posted interrupts
+for the PIC is not a viable option as the guest BIOS/kernel will not
+do EOI for PIC IRQs, i.e. will leave the vIRR bit set.
+
+Hence disable PIC for TDX VMs and error out if user wants PIC.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/exec/memory.h |  6 ++++++
- system/memory.c       | 27 +++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+ target/i386/kvm/tdx.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index f25959f6d30f..3a7f41b030e8 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1607,6 +1607,12 @@ bool memory_region_init_ram(MemoryRegion *mr,
-                             uint64_t size,
-                             Error **errp);
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 7eb3628763ae..838b7916278c 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -708,6 +708,13 @@ int tdx_kvm_init(MachineState *ms, Error **errp)
+         return -EINVAL;
+     }
  
-+bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
-+                                        Object *owner,
-+                                        const char *name,
-+                                        uint64_t size,
-+                                        Error **errp);
-+
- /**
-  * memory_region_init_rom: Initialize a ROM memory region.
-  *
-diff --git a/system/memory.c b/system/memory.c
-index 74f647f2e56f..41049d3e4c9a 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3619,6 +3619,33 @@ bool memory_region_init_ram(MemoryRegion *mr,
-     return true;
- }
- 
-+bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
-+                                        Object *owner,
-+                                        const char *name,
-+                                        uint64_t size,
-+                                        Error **errp)
-+{
-+    DeviceState *owner_dev;
-+
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
-+                                                RAM_GUEST_MEMFD, errp)) {
-+        return false;
++    if (x86ms->pic == ON_OFF_AUTO_AUTO) {
++        x86ms->pic = ON_OFF_AUTO_OFF;
++    } else if (x86ms->pic == ON_OFF_AUTO_ON) {
++        error_setg(errp, "TDX VM doesn't support PIC");
++        return -EINVAL;
 +    }
 +
-+    memory_region_set_default_private(mr);
-+
-+    /* This will assert if owner is neither NULL nor a DeviceState.
-+     * We only want the owner here for the purposes of defining a
-+     * unique name for migration. TODO: Ideally we should implement
-+     * a naming scheme for Objects which are not DeviceStates, in
-+     * which case we can relax this restriction.
-+     */
-+    owner_dev = DEVICE(owner);
-+    vmstate_register_ram(mr, owner_dev);
-+
-+    return true;
-+}
-+
- bool memory_region_init_rom(MemoryRegion *mr,
-                             Object *owner,
-                             const char *name,
+     if (!tdx_caps) {
+         r = get_tdx_capabilities(errp);
+         if (r) {
 -- 
 2.34.1
 
