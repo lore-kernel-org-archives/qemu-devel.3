@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1F8C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE88CC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqT0-00068a-A5; Wed, 24 Jan 2024 22:31:50 -0500
+	id 1rSqPn-00039W-P7; Wed, 24 Jan 2024 22:28:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqSo-0005bO-Lp
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:45 -0500
+ id 1rSqPl-00038x-Tk
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:29 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqSm-0001Dr-Pa
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:38 -0500
+ id 1rSqPj-0001E0-V5
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153497; x=1737689497;
+ t=1706153308; x=1737689308;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=lJ82lCFI695z/glZ2qnv5XtiBvg9EIj3OI7ohtlxvBE=;
- b=iPJIGnzq2I7RQSegrTuFkQhC+C0TEyPkhJT2+BQkI9apboLpKis1DBOY
- toTjypHp07VDs+IgW3akZiQpFyPbtm96I/z2gY2Fakug8YOLFdhG8NU01
- LpYaaiZEhS6UC3E/oX+3dnHl9QGb348xr44V0szDviu4GeK+9mYOSXO3v
- 3v2Evx0XYz6+yHOIvyxWEJBcmImwMRCohy22Ieht6X7mZORkzV3x6twqI
- XvDviLvlJsJ4s9aKpk7ht79SLOV2C/DOYgnViH7wt7e+OnOxxvfK/QJ1Z
- pC3e8tv1EhyrMX+WFd5DfyIfDG1BiwWd8pu8FTSjNyVWlxt1orW1gz+qr Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430254"
+ bh=JJ7DfZYPfF53P59ZPLA5hFKttXpMbcVvDC2Fx+eVoTw=;
+ b=A3SzchQJHl1AFWM/usBrmAsquf19YOhpwbovq8JJfJa95/fD9rilzT2+
+ PA7bF3H/rzwlZtVimq6/hiqiOD6KthrvGcZB4Vj7LgqZiC4wInfxUSguW
+ +TuaW/itg+FlASytmVowjtlY42n0Eb6dj6/j/BSzPhD4dVy+O30+TAFdD
+ m0qIdhXCKFzO4WLBpTap8vG6R277y8fC7wjnjPzjXEyLA5PM12Iqy1cET
+ n2Fu1ssBuj5Qase9caC36gnHTCMl5Pt6UMKKn11MHM60HwKSStFiWlKzZ
+ kTSGpAVhCz5oZTL5V6LcnuP6anqmaa0Mku+dwxGm0NTVvFTbAXxTH11gs A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9428158"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9430254"
+   d="scan'208";a="9428158"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:28:39 -0800
+ 24 Jan 2024 19:24:38 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2086331"
+   d="scan'208";a="2084814"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:28:34 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:24:32 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,9 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 55/66] q35: Introduce smm_ranges property for q35-pci-host
-Date: Wed, 24 Jan 2024 22:23:17 -0500
-Message-Id: <20240125032328.2522472-56-xiaoyao.li@intel.com>
+Subject: [PATCH v4 11/66] i386: Introduce tdx-guest object
+Date: Wed, 24 Jan 2024 22:22:33 -0500
+Message-Id: <20240125032328.2522472-12-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -93,152 +93,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Isaku Yamahata <isaku.yamahata@linux.intel.com>
+Introduce tdx-guest object which implements the interface of
+CONFIDENTIAL_GUEST_SUPPORT, and will be used to create TDX VMs (TDs) by
 
-Add a q35 property to check whether or not SMM ranges, e.g. SMRAM, TSEG,
-etc... exist for the target platform.  TDX doesn't support SMM and doesn't
-play nice with QEMU modifying related guest memory ranges.
+  qemu -machine ...,confidential-guest-support=tdx0	\
+       -object tdx-guest,id=tdx0
 
-Signed-off-by: Isaku Yamahata <isaku.yamahata@linux.intel.com>
-Co-developed-by: Sean Christopherson <sean.j.christopherson@intel.com>
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+It has only one member 'attributes' with fixed value 0 and not
+configurable so far.
+
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
- hw/i386/pc_q35.c          |  2 ++
- hw/pci-host/q35.c         | 42 +++++++++++++++++++++++++++------------
- include/hw/i386/pc.h      |  1 +
- include/hw/pci-host/q35.h |  1 +
- 4 files changed, 33 insertions(+), 13 deletions(-)
+Changes in v4:
+ - update the new qapi `since` filed from 8.2 to 9.0
 
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index f43d5142b8e5..4e467fbb2f65 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -236,6 +236,8 @@ static void pc_q35_init(MachineState *machine)
-                             x86ms->above_4g_mem_size, NULL);
-     object_property_set_bool(phb, PCI_HOST_BYPASS_IOMMU,
-                              pcms->default_bus_bypass_iommu, NULL);
-+    object_property_set_bool(phb, PCI_HOST_PROP_SMM_RANGES,
-+                             x86_machine_is_smm_enabled(x86ms), NULL);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(phb), &error_fatal);
+Changes in v1
+ - make @attributes not user-settable
+---
+ configs/devices/i386-softmmu/default.mak |  1 +
+ hw/i386/Kconfig                          |  5 +++
+ qapi/qom.json                            | 12 +++++++
+ target/i386/kvm/meson.build              |  2 ++
+ target/i386/kvm/tdx.c                    | 40 ++++++++++++++++++++++++
+ target/i386/kvm/tdx.h                    | 19 +++++++++++
+ 6 files changed, 79 insertions(+)
+ create mode 100644 target/i386/kvm/tdx.c
+ create mode 100644 target/i386/kvm/tdx.h
+
+diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
+index 598c6646dfc0..9b5ec59d65b0 100644
+--- a/configs/devices/i386-softmmu/default.mak
++++ b/configs/devices/i386-softmmu/default.mak
+@@ -18,6 +18,7 @@
+ #CONFIG_QXL=n
+ #CONFIG_SEV=n
+ #CONFIG_SGA=n
++#CONFIG_TDX=n
+ #CONFIG_TEST_DEVICES=n
+ #CONFIG_TPM_CRB=n
+ #CONFIG_TPM_TIS_ISA=n
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index a1846be6f761..c0ccf50ac3ef 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -10,6 +10,10 @@ config SGX
+     bool
+     depends on KVM
  
-     /* pci */
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index 98d4a7c253a6..0b6cbaed7ed5 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -179,6 +179,8 @@ static Property q35_host_props[] = {
-                      mch.below_4g_mem_size, 0),
-     DEFINE_PROP_SIZE(PCI_HOST_ABOVE_4G_MEM_SIZE, Q35PCIHost,
-                      mch.above_4g_mem_size, 0),
-+    DEFINE_PROP_BOOL(PCI_HOST_PROP_SMM_RANGES, Q35PCIHost,
-+                     mch.has_smm_ranges, true),
-     DEFINE_PROP_BOOL("x-pci-hole64-fix", Q35PCIHost, pci_hole64_fix, true),
-     DEFINE_PROP_END_OF_LIST(),
- };
-@@ -214,6 +216,7 @@ static void q35_host_initfn(Object *obj)
-     /* mch's object_initialize resets the default value, set it again */
-     qdev_prop_set_uint64(DEVICE(s), PCI_HOST_PROP_PCI_HOLE64_SIZE,
-                          Q35_PCI_HOST_HOLE64_SIZE_DEFAULT);
++config TDX
++    bool
++    depends on KVM
 +
-     object_property_add(obj, PCI_HOST_PROP_PCI_HOLE_START, "uint32",
-                         q35_host_get_pci_hole_start,
-                         NULL, NULL, NULL);
-@@ -476,6 +479,10 @@ static void mch_write_config(PCIDevice *d,
-         mch_update_pciexbar(mch);
-     }
+ config PC
+     bool
+     imply APPLESMC
+@@ -26,6 +30,7 @@ config PC
+     imply QXL
+     imply SEV
+     imply SGX
++    imply TDX
+     imply TEST_DEVICES
+     imply TPM_CRB
+     imply TPM_TIS_ISA
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 95516ba325e5..5b3c3146947f 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -895,6 +895,16 @@
+             'reduced-phys-bits': 'uint32',
+             '*kernel-hashes': 'bool' } }
  
-+    if (!mch->has_smm_ranges) {
-+        return;
-+    }
++##
++# @TdxGuestProperties:
++#
++# Properties for tdx-guest objects.
++#
++# Since: 9.0
++##
++{ 'struct': 'TdxGuestProperties',
++  'data': { }}
 +
-     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
-                        MCH_HOST_BRIDGE_SMRAM_SIZE)) {
-         mch_update_smram(mch);
-@@ -494,10 +501,13 @@ static void mch_write_config(PCIDevice *d,
- static void mch_update(MCHPCIState *mch)
- {
-     mch_update_pciexbar(mch);
+ ##
+ # @ThreadContextProperties:
+ #
+@@ -974,6 +984,7 @@
+     'sev-guest',
+     'thread-context',
+     's390-pv-guest',
++    'tdx-guest',
+     'throttle-group',
+     'tls-creds-anon',
+     'tls-creds-psk',
+@@ -1041,6 +1052,7 @@
+       'secret_keyring':             { 'type': 'SecretKeyringProperties',
+                                       'if': 'CONFIG_SECRET_KEYRING' },
+       'sev-guest':                  'SevGuestProperties',
++      'tdx-guest':                  'TdxGuestProperties',
+       'thread-context':             'ThreadContextProperties',
+       'throttle-group':             'ThrottleGroupProperties',
+       'tls-creds-anon':             'TlsCredsAnonProperties',
+diff --git a/target/i386/kvm/meson.build b/target/i386/kvm/meson.build
+index 84d9143e6029..6ea0ce27b757 100644
+--- a/target/i386/kvm/meson.build
++++ b/target/i386/kvm/meson.build
+@@ -9,6 +9,8 @@ i386_kvm_ss.add(when: 'CONFIG_XEN_EMU', if_true: files('xen-emu.c'))
+ 
+ i386_kvm_ss.add(when: 'CONFIG_SEV', if_false: files('sev-stub.c'))
+ 
++i386_kvm_ss.add(when: 'CONFIG_TDX', if_true: files('tdx.c'))
 +
-     mch_update_pam(mch);
--    mch_update_smram(mch);
--    mch_update_ext_tseg_mbytes(mch);
--    mch_update_smbase_smram(mch);
-+    if (mch->has_smm_ranges) {
-+        mch_update_smram(mch);
-+        mch_update_ext_tseg_mbytes(mch);
-+        mch_update_smbase_smram(mch);
-+    }
+ i386_system_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'), if_false: files('hyperv-stub.c'))
  
-     /*
-      * pci hole goes from end-of-low-ram to io-apic.
-@@ -538,19 +548,21 @@ static void mch_reset(DeviceState *qdev)
-     pci_set_quad(d->config + MCH_HOST_BRIDGE_PCIEXBAR,
-                  MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT);
- 
--    d->config[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_DEFAULT;
--    d->config[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_DEFAULT;
--    d->wmask[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_WMASK;
--    d->wmask[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_WMASK;
-+    if (mch->has_smm_ranges) {
-+        d->config[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_DEFAULT;
-+        d->config[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_DEFAULT;
-+        d->wmask[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_WMASK;
-+        d->wmask[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_WMASK;
- 
--    if (mch->ext_tseg_mbytes > 0) {
--        pci_set_word(d->config + MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
--                     MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_QUERY);
-+        if (mch->ext_tseg_mbytes > 0) {
-+            pci_set_word(d->config + MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
-+                        MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_QUERY);
-+        }
+ i386_system_ss.add_all(when: 'CONFIG_KVM', if_true: i386_kvm_ss)
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+new file mode 100644
+index 000000000000..d3792d4a3d56
+--- /dev/null
++++ b/target/i386/kvm/tdx.c
+@@ -0,0 +1,40 @@
++/*
++ * QEMU TDX support
++ *
++ * Copyright Intel
++ *
++ * Author:
++ *      Xiaoyao Li <xiaoyao.li@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory
++ *
++ */
 +
-+        d->config[MCH_HOST_BRIDGE_F_SMBASE] = 0;
-+        d->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0xff;
-     }
- 
--    d->config[MCH_HOST_BRIDGE_F_SMBASE] = 0;
--    d->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0xff;
--
-     mch_update(mch);
- }
- 
-@@ -578,6 +590,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
-                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
-     }
- 
-+    if (!mch->has_smm_ranges) {
-+        return;
-+    }
++#include "qemu/osdep.h"
++#include "qom/object_interfaces.h"
 +
-     /* if *disabled* show SMRAM to all CPUs */
-     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
-                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index b7c59818df7d..1aa3ed590596 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -165,6 +165,7 @@ void pc_guest_info_init(PCMachineState *pcms);
- #define PCI_HOST_PROP_PCI_HOLE64_SIZE  "pci-hole64-size"
- #define PCI_HOST_BELOW_4G_MEM_SIZE     "below-4g-mem-size"
- #define PCI_HOST_ABOVE_4G_MEM_SIZE     "above-4g-mem-size"
-+#define PCI_HOST_PROP_SMM_RANGES       "smm-ranges"
- 
- 
- void pc_pci_as_mapping_init(MemoryRegion *system_memory,
-diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
-index bafcbe675214..22fadfa3ed76 100644
---- a/include/hw/pci-host/q35.h
-+++ b/include/hw/pci-host/q35.h
-@@ -50,6 +50,7 @@ struct MCHPCIState {
-     MemoryRegion tseg_blackhole, tseg_window;
-     MemoryRegion smbase_blackhole, smbase_window;
-     bool has_smram_at_smbase;
-+    bool has_smm_ranges;
-     Range pci_hole;
-     uint64_t below_4g_mem_size;
-     uint64_t above_4g_mem_size;
++#include "tdx.h"
++
++/* tdx guest */
++OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
++                                   tdx_guest,
++                                   TDX_GUEST,
++                                   CONFIDENTIAL_GUEST_SUPPORT,
++                                   { TYPE_USER_CREATABLE },
++                                   { NULL })
++
++static void tdx_guest_init(Object *obj)
++{
++    TdxGuest *tdx = TDX_GUEST(obj);
++
++    tdx->attributes = 0;
++}
++
++static void tdx_guest_finalize(Object *obj)
++{
++}
++
++static void tdx_guest_class_init(ObjectClass *oc, void *data)
++{
++}
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+new file mode 100644
+index 000000000000..415aeb5af746
+--- /dev/null
++++ b/target/i386/kvm/tdx.h
+@@ -0,0 +1,19 @@
++#ifndef QEMU_I386_TDX_H
++#define QEMU_I386_TDX_H
++
++#include "exec/confidential-guest-support.h"
++
++#define TYPE_TDX_GUEST "tdx-guest"
++#define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
++
++typedef struct TdxGuestClass {
++    ConfidentialGuestSupportClass parent_class;
++} TdxGuestClass;
++
++typedef struct TdxGuest {
++    ConfidentialGuestSupport parent_obj;
++
++    uint64_t attributes;    /* TD attributes */
++} TdxGuest;
++
++#endif /* QEMU_I386_TDX_H */
 -- 
 2.34.1
 
