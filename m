@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98498C48260
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 09:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CED7C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 09:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSvzI-0006Tm-HF; Thu, 25 Jan 2024 04:25:32 -0500
+	id 1rSvzP-0006Yi-TS; Thu, 25 Jan 2024 04:25:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Usek=JD=kaod.org=clg@ozlabs.org>)
- id 1rSvzH-0006TS-6S; Thu, 25 Jan 2024 04:25:31 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ id 1rSvzO-0006YW-Rp; Thu, 25 Jan 2024 04:25:38 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Usek=JD=kaod.org=clg@ozlabs.org>)
- id 1rSvzE-0000lb-Tf; Thu, 25 Jan 2024 04:25:30 -0500
+ id 1rSvzN-0000m9-9G; Thu, 25 Jan 2024 04:25:38 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLFmQ1gwRz4x5q;
- Thu, 25 Jan 2024 20:25:26 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLFmZ70lfz4x5q;
+ Thu, 25 Jan 2024 20:25:34 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLFmM0NS7z4wbh;
- Thu, 25 Jan 2024 20:25:22 +1100 (AEDT)
-Message-ID: <ffdd4ee9-2d76-4840-b661-b873abbd07d2@kaod.org>
-Date: Thu, 25 Jan 2024 10:25:20 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLFmW65t9z4wbh;
+ Thu, 25 Jan 2024 20:25:31 +1100 (AEDT)
+Message-ID: <3fc6c6ed-5c19-43ba-be8a-358b914c4546@kaod.org>
+Date: Thu, 25 Jan 2024 10:25:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] tests/avocado: Add ppc pseries and powernv hash
- MMU tests
+Subject: Re: [PATCH v2 6/8] tests/avocado: Add pseries KVM boot_linux test
 Content-Language: en-US
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -46,20 +44,19 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  qemu-ppc@nongnu.org
 References: <20240117141224.90462-1-npiggin@gmail.com>
- <20240117141224.90462-6-npiggin@gmail.com>
+ <20240117141224.90462-7-npiggin@gmail.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240117141224.90462-6-npiggin@gmail.com>
+In-Reply-To: <20240117141224.90462-7-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=Usek=JD=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,9 +73,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/17/24 15:12, Nicholas Piggin wrote:
-> POWER CPUs support hash and radix MMU modes. Linux supports running in
-> either mode, but defaults to radix. To keep up testing of QEMU's hash
-> MMU implementation, add some Linux hash boot tests.
+> ppc has no avocado tests for the KVM backend. Add a KVM boot_linux.py
+> test for pseries.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
@@ -91,109 +87,27 @@ C.
 
 
 > ---
->   tests/avocado/ppc_powernv.py | 23 +++++++++++++++++++----
->   tests/avocado/ppc_pseries.py | 20 +++++++++++++++++---
->   2 files changed, 36 insertions(+), 7 deletions(-)
+>   tests/avocado/boot_linux.py | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 > 
-> diff --git a/tests/avocado/ppc_powernv.py b/tests/avocado/ppc_powernv.py
-> index d0e5c07bde..4342941d5d 100644
-> --- a/tests/avocado/ppc_powernv.py
-> +++ b/tests/avocado/ppc_powernv.py
-> @@ -12,11 +12,11 @@
->   class powernvMachine(QemuSystemTest):
+> diff --git a/tests/avocado/boot_linux.py b/tests/avocado/boot_linux.py
+> index 7c9cf6ae15..4c9b15ba06 100644
+> --- a/tests/avocado/boot_linux.py
+> +++ b/tests/avocado/boot_linux.py
+> @@ -102,6 +102,14 @@ def test_pseries_tcg(self):
+>           self.vm.add_args("-accel", "tcg")
+>           self.launch_and_wait(set_up_ssh_connection=False)
 >   
->       timeout = 90
-> -    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-> +    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
->       panic_message = 'Kernel panic - not syncing'
->       good_message = 'VFS: Cannot open root device'
->   
-> -    def do_test_linux_boot(self):
-> +    def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
->           self.require_accelerator("tcg")
->           kernel_url = ('https://archives.fedoraproject.org/pub/archive'
->                         '/fedora-secondary/releases/29/Everything/ppc64le/os'
-> @@ -25,9 +25,8 @@ def do_test_linux_boot(self):
->           kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
->   
->           self.vm.set_console()
-> -        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=hvc0'
->           self.vm.add_args('-kernel', kernel_path,
-> -                         '-append', kernel_command_line)
-> +                         '-append', command_line)
->           self.vm.launch()
->   
->       def test_linux_boot(self):
-> @@ -54,6 +53,22 @@ def test_linux_smp_boot(self):
->           wait_for_console_pattern(self, console_pattern, self.panic_message)
->           wait_for_console_pattern(self, self.good_message, self.panic_message)
->   
-> +    def test_linux_smp_hpt_boot(self):
+> +    def test_pseries_kvm(self):
 > +        """
-> +        :avocado: tags=arch:ppc64
-> +        :avocado: tags=machine:powernv
-> +        :avocado: tags=accel:tcg
-> +        """
-> +
-> +        self.vm.add_args('-smp', '4')
-> +        self.do_test_linux_boot(self.KERNEL_COMMON_COMMAND_LINE +
-> +                                'disable_radix')
-> +        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
-> +        wait_for_console_pattern(self, 'hash-mmu: Initializing hash mmu',
-> +                                 self.panic_message)
-> +        wait_for_console_pattern(self, console_pattern, self.panic_message)
-> +        wait_for_console_pattern(self, self.good_message, self.panic_message)
-> +
->       def test_linux_smt_boot(self):
->           """
->           :avocado: tags=arch:ppc64
-> diff --git a/tests/avocado/ppc_pseries.py b/tests/avocado/ppc_pseries.py
-> index a8311e6555..74aaa4ac4a 100644
-> --- a/tests/avocado/ppc_pseries.py
-> +++ b/tests/avocado/ppc_pseries.py
-> @@ -12,11 +12,11 @@
->   class pseriesMachine(QemuSystemTest):
->   
->       timeout = 90
-> -    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-> +    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
->       panic_message = 'Kernel panic - not syncing'
->       good_message = 'VFS: Cannot open root device'
->   
-> -    def do_test_ppc64_linux_boot(self):
-> +    def do_test_ppc64_linux_boot(self, kernel_command_line = KERNEL_COMMON_COMMAND_LINE):
->           kernel_url = ('https://archives.fedoraproject.org/pub/archive'
->                         '/fedora-secondary/releases/29/Everything/ppc64le/os'
->                         '/ppc/ppc64/vmlinuz')
-> @@ -24,7 +24,6 @@ def do_test_ppc64_linux_boot(self):
->           kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
->   
->           self.vm.set_console()
-> -        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=hvc0'
->           self.vm.add_args('-kernel', kernel_path,
->                            '-append', kernel_command_line)
->           self.vm.launch()
-> @@ -62,6 +61,21 @@ def test_ppc64_linux_smp_boot(self):
->           wait_for_console_pattern(self, console_pattern, self.panic_message)
->           wait_for_console_pattern(self, self.good_message, self.panic_message)
->   
-> +    def test_ppc64_linux_hpt_smp_boot(self):
-> +        """
-> +        :avocado: tags=arch:ppc64
 > +        :avocado: tags=machine:pseries
+> +        :avocado: tags=accel:kvm
 > +        """
-> +
-> +        self.vm.add_args('-smp', '4')
-> +        self.do_test_ppc64_linux_boot(self.KERNEL_COMMON_COMMAND_LINE +
-> +                                      'disable_radix')
-> +        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
-> +        wait_for_console_pattern(self, 'hash-mmu: Initializing hash mmu',
-> +                                 self.panic_message)
-> +        wait_for_console_pattern(self, console_pattern, self.panic_message)
-> +        wait_for_console_pattern(self, self.good_message, self.panic_message)
-> +
->       def test_ppc64_linux_smt_boot(self):
->           """
->           :avocado: tags=arch:ppc64
+> +        self.require_accelerator("kvm")
+> +        self.vm.add_args("-accel", "kvm")
+> +        self.launch_and_wait(set_up_ssh_connection=False)
+>   
+>   class BootLinuxS390X(LinuxTest):
+>       """
 
 
