@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F4AFC48285
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67896C47258
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 22:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT8EK-0007WE-VY; Thu, 25 Jan 2024 17:29:53 -0500
+	id 1rT8Ei-0007g7-2p; Thu, 25 Jan 2024 17:30:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rT8EI-0007Vp-I6; Thu, 25 Jan 2024 17:29:50 -0500
+ id 1rT8EM-0007Ws-TF; Thu, 25 Jan 2024 17:29:55 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rT8EG-0001x1-OG; Thu, 25 Jan 2024 17:29:50 -0500
+ id 1rT8EL-0001xP-BB; Thu, 25 Jan 2024 17:29:54 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4BDC447562;
+ by isrv.corpit.ru (Postfix) with ESMTP id 50A5B47564;
  Fri, 26 Jan 2024 01:30:29 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A85B26BA52;
+ by tsrv.corpit.ru (Postfix) with SMTP id CDD826BA54;
  Fri, 26 Jan 2024 01:29:42 +0300 (MSK)
-Received: (nullmailer pid 147065 invoked by uid 1000);
+Received: (nullmailer pid 147072 invoked by uid 1000);
  Thu, 25 Jan 2024 22:29:42 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH trivial 0/2] split out os_close_all_open_fd and use it in
- net/tap.c too
-Date: Fri, 26 Jan 2024 01:29:34 +0300
-Message-Id: <cover.1706221377.git.mjt@tls.msk.ru>
+Subject: [PATCH trivial 2/2] net/tap: use os_close_all_open_fd() instead of
+ open-coding it
+Date: Fri, 26 Jan 2024 01:29:36 +0300
+Message-Id: <14aa02474bc5127910810969b87b659d766e2969.1706221377.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1706221377.git.mjt@tls.msk.ru>
+References: <cover.1706221377.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -59,28 +61,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have at least two places in qemu where we're closing all possible file
-descriptors, - in async-teardown.c and in net/tap.c.  While async-teardown
-one uses either close_range() or readdir(/proc/self/fd), the two calls in
-net/tap.c loops from 3 to RLIMIT_NOFILE, which might be quite slow, and
-it actually *is* slow on some systems (eg, just qemu-system-x86_64 startup
-with a tap device is very slow on alpine linux).
+Current code loops over every file descriptor up to SC_OPEN_MAX/RLIMIT_NOFILE
+which might be huge and the loop might be slow.  But we already have
+os_close_all_open_fd() which is fast.  Use it.
 
-While for net/tap.c, maybe the better fix is to get rid of this closing
-entirely and use O_CLOEXEC instead, this needs to be prepared at first,
-while we alredy have almost ready-to-be-used implementation which only
-needs to be moved into a common place.
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ net/tap.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-Michael Tokarev (2):
-  close_all_open_fd(): move to oslib-posix.c
-  net/tap: use os_close_all_open_fd() instead of open-coding it
-
- include/sysemu/os-posix.h |  1 +
- net/tap.c                 | 15 ++-------------
- system/async-teardown.c   | 37 +------------------------------------
- util/oslib-posix.c        | 36 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 40 insertions(+), 49 deletions(-)
-
+diff --git a/net/tap.c b/net/tap.c
+index c698b70475..11c85c50dc 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -459,13 +459,7 @@ static void launch_script(const char *setup_script, const char *ifname,
+         return;
+     }
+     if (pid == 0) {
+-        int open_max = sysconf(_SC_OPEN_MAX), i;
+-
+-        for (i = 3; i < open_max; i++) {
+-            if (i != fd) {
+-                close(i);
+-            }
+-        }
++        os_close_all_open_fd(3);
+         parg = args;
+         *parg++ = (char *)setup_script;
+         *parg++ = (char *)ifname;
+@@ -549,16 +543,11 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
+         return -1;
+     }
+     if (pid == 0) {
+-        int open_max = sysconf(_SC_OPEN_MAX), i;
+         char *fd_buf = NULL;
+         char *br_buf = NULL;
+         char *helper_cmd = NULL;
+ 
+-        for (i = 3; i < open_max; i++) {
+-            if (i != sv[1]) {
+-                close(i);
+-            }
+-        }
++        os_close_all_open_fd(3);
+ 
+         fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
+ 
 -- 
 2.39.2
 
