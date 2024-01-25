@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5AF9C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 12:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C69EC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 12:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSyud-0005z7-Sq; Thu, 25 Jan 2024 07:32:55 -0500
+	id 1rSz4l-0005cq-UJ; Thu, 25 Jan 2024 07:43:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSyub-0005p8-T7
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 07:32:53 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1rSz4g-0005cD-QL
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 07:43:18 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSyuZ-0004LC-B2
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 07:32:53 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-40ec6a002a7so19618855e9.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 04:32:50 -0800 (PST)
+ id 1rSz4c-0003Uu-M7
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 07:43:17 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55cca88b6a5so1402442a12.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 04:43:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706185969; x=1706790769; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706186590; x=1706791390; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4hkJswXreC+jSYrjgI8dedn9By3CLWmPVCT4M6zB3Dg=;
- b=eFJP8XuG6XlN+Vnu+RgJs5T9txyW0uastuO/lKLFwLT+vNByA46zNVVPC8oXFTHf/Z
- r0YMQXyIgYrCWD2UU5/J0QHkgk8R/RZGHA51Zxl0xj4jdouIywnzGIOxcEgvCC8s3s70
- rj30qIsR0lheS7JxwegXrVfy35ysqzoZUK1/t/QLubEfOIvS5oOpQTkvJcWngdT8nLA0
- DgwRRGPMKcKryiVTVKOG7YLt7nVQcnA5ns2oLLJjyKm43wxTaVnLtm5AJnK8NurMUZCK
- veQSHASvh09alHXn1oVgzI88Sgm1j9y5+NWhCDtpTE9CZnrRXz31xci/mPFLA8pQ7mDq
- ywOQ==
+ bh=ZBo2p2FT+kQJVb1ClssDnQgpm0jNvb9prJhWz+pDlgs=;
+ b=e/Tcl7z6W4mRpP66lwCByIXf2b7d3wQ3x/nwA5G4ugfa/UqpGyJpLujZoX54GfKpQB
+ 9gu+iI3wqwPR3bViiyzCx5GmG5efcXNJqUINIt0/xrXCxPRzWqaYzv07hUX73tCj5I/Z
+ I6mPVJSBPK5I5+7p4X9jjYHUAovVIYu5jV38NASMqKHhRb8xpuFV4cDOZb1lU41fG7tQ
+ fTxvTxGBKS3cNV62wSuJLu0S0yfkp99azbHgOpMPay/rZYCK4Kjr5wIeKG7F+vuRwpgh
+ EIaHdZbwvrSAJ88HswnH7GYxLrWxrdRJ2SwKtsL/li33FGzH+QUUD8NXvIzUYx0dVmfj
+ HdtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706185969; x=1706790769;
+ d=1e100.net; s=20230601; t=1706186590; x=1706791390;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4hkJswXreC+jSYrjgI8dedn9By3CLWmPVCT4M6zB3Dg=;
- b=LdPrqOWIjDoY8G79V11NEnFvUifXsonFDiqSqEk9wKDuDVIOP3jhrsWZmzw5+IHPek
- 6lgoAqJdEnVjMNb2nJfCZB7XRgje+GDoQnjsVfwvc1vQDUYLm8uFSCD6Osm9cyIkLs/j
- 1Ot32mgxlQUsg3+egplOWLtv3SUIz2wQnBUFm3Hk/I3EMWdCYvkxsKpzjH4hFLBHerG5
- nlzI+8bYxMZD2L9VTQtjcHIx1W5mEosb5PyXjLIAe/1H0BCwqrpGuL/igcI3xFZgL6GC
- UG17tjkTEbbeqZjKEX4RYjpzXy67+cBdCldIVnZTDW1AD/tYBTCRNALwwatI7+Mrcini
- SrZw==
-X-Gm-Message-State: AOJu0Yw84fSMoM/RDZrsl18aMDY5FE8y+DGhfwxazb90F1FyIj2edZMd
- Y/Vwd0UaiVC5n9CP6j2/UTDU9KFYSOljKaVqecUPGD4XoBNsMflH9TGX1twHWy2EVC2Zu2mnM2X
- pbVMxe26lSb7zFKBHRfaaqdcMWh1GNmzLToFS6bjxXLfaiB98
-X-Google-Smtp-Source: AGHT+IFGDkZePA6GiZUpi7E3FeRBT3qrOxtmaaNhi2HRt/3vn8oDIDKv0WvB3IzQgtlTG4r2e8oAUBKolZu9BD0peWg=
-X-Received: by 2002:a1c:740d:0:b0:40d:5a9f:5281 with SMTP id
- p13-20020a1c740d000000b0040d5a9f5281mr349739wmc.200.1706185969413; Thu, 25
- Jan 2024 04:32:49 -0800 (PST)
+ bh=ZBo2p2FT+kQJVb1ClssDnQgpm0jNvb9prJhWz+pDlgs=;
+ b=LOxz+bG9lFiTy0QGbKmZxWv7bfnDhXJFSI8VlAIqea/NSNRi1uOdehJTL1Bd5Psvpc
+ J7w8vEhs/fNIeAveC2EUTwHIKj0rcs8PPenELak4doEl2F68UJ7YDZa6JQLcYaAKYq2W
+ 5osnBS/Mx9HKaslYe3qGTbFSgIs8Lk/jHBE9gBtl1ZwlFjkLMSt6D9qrVG9YaoxyayR2
+ LHHq956cgBwjlS+wDTGtms6V3BPkBGSoZZZtEwq9ddY5BlfXviQ7GX+6xluGtWXcjF+p
+ LZqUYlnkwS41XDA7xTg4n1S9FFTisPTMrRcVj920beFszQio6XNxir1w1YENZIfVq46O
+ b+Ww==
+X-Gm-Message-State: AOJu0YxItojdcv5qjizK1tb0R1DM+mIUBHx/1bfhChwpDJ+2e+ekGC/2
+ kaTUuQcIL+/6YyeNuFbjrCRa0Z9lDCv/xv9h5YYRugoMTVMEagyPnjhRyi+MvjfOFAn5Eoa8ZIJ
+ S9tC8ZUYEwYxenk4VtbExyjfNDTqlGSlUe4Eg1g==
+X-Google-Smtp-Source: AGHT+IHuSZRAOx0L/by82S3yKFUXyk9IudxIsKBTKEFHn3w+GEFvzVNrAL0MKAtUQhF/CYCTYfotIpIaV3+Ek6NEGE8=
+X-Received: by 2002:aa7:dcd3:0:b0:55a:c0e7:1e03 with SMTP id
+ w19-20020aa7dcd3000000b0055ac0e71e03mr627592edu.71.1706186590082; Thu, 25 Jan
+ 2024 04:43:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20240122111812.45918-1-kwolf@redhat.com>
-In-Reply-To: <20240122111812.45918-1-kwolf@redhat.com>
+References: <20240122173706.4019545-1-nabihestefan@google.com>
+ <20240122173706.4019545-2-nabihestefan@google.com>
+In-Reply-To: <20240122173706.4019545-2-nabihestefan@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jan 2024 12:32:38 +0000
-Message-ID: <CAFEAcA9H6rnsAy0JhXgD7ghJ=8tX=TWrtcPxCJcPied7qO4XgQ@mail.gmail.com>
-Subject: Re: [PULL v2 00/14] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Date: Thu, 25 Jan 2024 12:42:59 +0000
+Message-ID: <CAFEAcA_nvmAvoDvxabkbrkghAY1OwwNS52-ua1XeEdFPmvTqEg@mail.gmail.com>
+Subject: Re: [PATCH v14 1/9] hw/misc: Add Nuvoton's PCI Mailbox Module
+To: Nabih Estefan <nabihestefan@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
+ wuhaotsh@google.com, jasowang@redhat.com, avi.fishman@nuvoton.com, 
+ kwliu@nuvoton.com, tomer.maimon@nuvoton.com, Hila.Miranda-Kuzi@nuvoton.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,51 +90,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jan 2024 at 11:22, Kevin Wolf <kwolf@redhat.com> wrote:
+On Mon, 22 Jan 2024 at 17:37, Nabih Estefan <nabihestefan@google.com> wrote:
 >
-> The following changes since commit 3f2a357b95845ea0bf7463eff6661e43b97d1afc:
+> From: Hao Wu <wuhaotsh@google.com>
 >
->   Merge tag 'hw-cpus-20240119' of https://github.com/philmd/qemu into staging (2024-01-19 11:39:38 +0000)
+> The PCI Mailbox Module is a high-bandwidth communcation module
+> between a Nuvoton BMC and CPU. It features 16KB RAM that are both
+> accessible by the BMC and core CPU. and supports interrupt for
+> both sides.
 >
-> are available in the Git repository at:
->
->   https://repo.or.cz/qemu/kevin.git tags/for-upstream
->
-> for you to fetch changes up to c14962c3ea6f0998d028142ed14affcb9dfccf28:
->
->   block/blklogwrites: Protect mutable driver state with a mutex. (2024-01-22 12:16:26 +0100)
->
-> ----------------------------------------------------------------
-> Block layer patches
->
-> - virtio-blk: Multiqueue fixes and cleanups
-> - blklogwrites: Fixes for write_zeroes and superblock update races
-> - commit/stream: Allow users to request only format driver names in
->   backing file format
-> - monitor: only run coroutine commands in qemu_aio_context
->
+> This patch implements the BMC side of the PCI mailbox module.
+> Communication with the core CPU is emulated via a chardev and
+> will be in a follow-up patch.
 
-This seems to be consistently failing on the
-ubuntu-20.04-s390x-all job, though not always for the
-same exact test failure:
 
-https://gitlab.com/qemu-project/qemu/-/jobs/6009661151
-   -- timeouts in various tests and iotests
-https://gitlab.com/qemu-project/qemu/-/jobs/6003367403
-   -- test run hit the 75m job timeout
-https://gitlab.com/qemu-project/qemu/-/jobs/5999451175
-   -- timeout on test-replication and an error in an iotest
-https://gitlab.com/qemu-project/qemu/-/jobs/5993334498
-   -- timeout on test-replication and in an iotest
+> +// The device is using a Little Endian Protocol.
+> +// If running into errors, please check what protocol is being expected.
 
-Similarly from an earlier attempt at merge when I was testing
-this pullreq together with a different one:
-https://gitlab.com/qemu-project/qemu/-/jobs/5984802405
-https://gitlab.com/qemu-project/qemu/-/jobs/5983419166
-https://gitlab.com/qemu-project/qemu/-/jobs/5982308583
+(1) This is not the right format for a comment in our coding style.
+(2) This is not sufficient to count as protocol documentation.
 
-The job passed OK on the merge that became current head-of-git:
-https://gitlab.com/qemu-project/qemu/-/jobs/5990993136
+The protocol should be documented in enough detail that I could,
+by reading *only the comment and not the code at all*, implement
+something that connects to the chardev and talks to the device.
 
 thanks
 -- PMM
