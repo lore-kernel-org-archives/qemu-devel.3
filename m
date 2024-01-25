@@ -4,90 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F06C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 18:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A39C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:00:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT4m1-0007WR-9X; Thu, 25 Jan 2024 13:48:25 -0500
+	id 1rT4wg-0001ZL-6L; Thu, 25 Jan 2024 13:59:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rT4lz-0007WA-RA
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:48:24 -0500
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rT4lw-0000lj-Qx
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:48:23 -0500
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-5100c3f7df1so4183546e87.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 10:48:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706208498; x=1706813298; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ONx91jBu5LRK3syKrOs9LilMUK1Ea9I59D06jidi0tU=;
- b=O1YSVgsb4elWUrVyDGm3ZUwmUlhrrJBfopxCpyhtyqvhBF+77xWZqpwbbIg4iWKqQo
- ix78JXl662V7h7TKmOycTBQfzDo/dq0p4RFBBqSyS0FaCQvpvwHtXZ0+LkK3ppndJMJ8
- VlBN9r2OcAz6K7EmudUb0tx78y6mJi5oZt/PhMiA59HP9s8xvmHifRxfh1oVWxfFHAyk
- 5PBrdqaYsPLRojbxQY3FXyF01kD1Fvr5L6vLEtP4LHemRj2WNdBGkIuT9sbUWMYsF15y
- 7a5vvU6EbvsH4yUKow2cmI+pYr19+fKH428+tXvHPB3Nu9ufhPfrQ7PcGfe8F4K5uFaJ
- A2Tw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rT4wf-0001ZB-0H
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:59:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rT4wd-0004BG-C6
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:59:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706209162;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Kl73FxSJqw9943ht3ZUY/1NHzH2iGjvMdWzlWBzy3tw=;
+ b=KC1IbvCJpP/FXNxU3i9R+t9G8ardatyVluimj0eWVsoxWm8zEf23DXeOJ5JIXlkwX8aEHV
+ SWrs5PsTKpCx0BunvZtvrUbhPYhkFySY67ApvdIhB+qzTdyi4OIb/odw4Igp1nsX2gXSiV
+ kdiN5gVu/FwCCnSDoUDI/Xs4FXqKsF0=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-570-2gzKhRegMPKNZ7iWAdo6fw-1; Thu, 25 Jan 2024 13:59:19 -0500
+X-MC-Unique: 2gzKhRegMPKNZ7iWAdo6fw-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-50e7ddf4dacso5639671e87.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 10:59:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706208498; x=1706813298;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ONx91jBu5LRK3syKrOs9LilMUK1Ea9I59D06jidi0tU=;
- b=dA4Yr8nMgz1xAJ6NXvIzKeuo42rlakoy057uqoBiZ/TxfWfEjglLLolBxnfUT1vJF5
- B3ILDIcM0t31RQHlRPxhpw/99sVAy+CvEmDMwv7FZbf9y/X2MdqK3PSI3KkLPKEK9gLT
- Ebe5xCxfWXX6oAcULG4qKP6um+Ih6JpumhU2g0TXMdakplOIMGfOXPOLKynE1q0OeNX/
- 2UX+za5gzYXXMLRoZ4tYNvEoTLbsV6I1DTtMnfk+W4eWmFN7dQhqDS+YCT3Z46pd5y0c
- //gScrnDPuAbO3Q9R5g6/m9RPUbVqaubejqzy3F1cDmeKZ7Fe1i8bcsBj5WyUDRruzJM
- 9ZXA==
-X-Gm-Message-State: AOJu0Yx40EMQFObx4N1CBKZiVOuEQS76l8OAkQAtVhRaziwTe5VKePYu
- WaDL29bIDk2mzJmvBzN2RruLE0nKetqxnLxHgmhREhV8bNJ/pyCMWJ3szO9gyZE=
-X-Google-Smtp-Source: AGHT+IGGzd/BaeJ51IqiLPAfklhov9IMf+cWA+nQ78fq319Sb6a4Xys9Dhq3eD6qF4gvu67xiPNa3Q==
-X-Received: by 2002:a05:6512:4019:b0:510:f7c:1b91 with SMTP id
- br25-20020a056512401900b005100f7c1b91mr368234lfb.47.1706208497667; 
- Thu, 25 Jan 2024 10:48:17 -0800 (PST)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- w17-20020a05600c475100b0040e486bc0dfsm3496789wmo.27.2024.01.25.10.48.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 10:48:17 -0800 (PST)
-Date: Thu, 25 Jan 2024 18:48:22 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "yanghliu@redhat.com" <yanghliu@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "clg@redhat.com" <clg@redhat.com>
-Subject: Re: [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling
- for hotplugged devices
-Message-ID: <20240125184822.GB122027@myrica>
-References: <20240117080414.316890-1-eric.auger@redhat.com>
- <SJ0PR11MB6744C50921CC63221A93C75492712@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <7bc955a1-f58d-43b1-8e95-c452bb11f208@redhat.com>
+ d=1e100.net; s=20230601; t=1706209158; x=1706813958;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Kl73FxSJqw9943ht3ZUY/1NHzH2iGjvMdWzlWBzy3tw=;
+ b=HHC+3aEtL5OeT+Y3AkAGhsKyQQOArYLIOAcQJQKIGmP0D59bXnQpm6PMI9I3yI5++g
+ oRKKcpqfyYAiN+tzPcbNQl+Qs2vyUmWsiCCwwDmtvjWchvgaCDGG6Xm6J1dh3DoUb46M
+ KpSdN2itGwrRpIhO+7AySoTS3wGZzgDCbMM6v1pGWG3vqBO/HsL44aKhW3D9CCRvChGH
+ VcaQmR+Z1lc/m+VLnbMpyCSVuu/WNd6wGGsZB7NNU4Lb9GIEWwCeTGZMUfz1xB4bFYfU
+ nEsV0J+gc1qt+NNdve/j/VMTMw3Q+D7qYmIlbFtLH9O+m7TlrwSxqfTjnWyHHEDzqLSe
+ nj+Q==
+X-Gm-Message-State: AOJu0YyTT8PQXkkgEON9KVAgRq0uBMQcwr/ITtzQaGm+Cw1Uryh81Ewd
+ M8kAC9ooDwwKPT9Cm4DAW29k56Z5XYQZpwvmLZq/+770PPzboSOC1CVMTVWStF79KqUYNJcLaCf
+ tbJDU0efMGJNpBe9LRcRRL2EaGeR0HX3H5QmrKZVE7PwWu/6xiPGm
+X-Received: by 2002:a19:f816:0:b0:510:c4a:a02d with SMTP id
+ a22-20020a19f816000000b005100c4aa02dmr138904lff.122.1706209158232; 
+ Thu, 25 Jan 2024 10:59:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHNMEJrDySfzXm1C9uB7TaMLV+NX3XIGilCkZGHTv0QIdp7KxC98rZNMXPdkAySqv8jxZZ2+A==
+X-Received: by 2002:a19:f816:0:b0:510:c4a:a02d with SMTP id
+ a22-20020a19f816000000b005100c4aa02dmr138897lff.122.1706209157869; 
+ Thu, 25 Jan 2024 10:59:17 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
+ [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
+ ty23-20020a170907c71700b00a31291a0d33sm1312196ejc.26.2024.01.25.10.59.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jan 2024 10:59:17 -0800 (PST)
+Message-ID: <b0fea381-7f11-444d-b53c-5c782cfad6b2@redhat.com>
+Date: Thu, 25 Jan 2024 19:59:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7bc955a1-f58d-43b1-8e95-c452bb11f208@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=jean-philippe@linaro.org; helo=mail-lf1-x12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] tests/qtest/xlnx-versal-trng-test.c: Drop use of
+ variable length array
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240125173211.1786196-1-peter.maydell@linaro.org>
+ <20240125173211.1786196-2-peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240125173211.1786196-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,181 +144,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On Thu, Jan 18, 2024 at 10:43:55AM +0100, Eric Auger wrote:
-> Hi Zhenzhong,
-> On 1/18/24 08:10, Duan, Zhenzhong wrote:
-> > Hi Eric,
-> >
-> >> -----Original Message-----
-> >> From: Eric Auger <eric.auger@redhat.com>
-> >> Cc: mst@redhat.com; clg@redhat.com
-> >> Subject: [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling
-> >> for hotplugged devices
-> >>
-> >> In [1] we attempted to fix a case where a VFIO-PCI device protected
-> >> with a virtio-iommu was assigned to an x86 guest. On x86 the physical
-> >> IOMMU may have an address width (gaw) of 39 or 48 bits whereas the
-> >> virtio-iommu used to expose a 64b address space by default.
-> >> Hence the guest was trying to use the full 64b space and we hit
-> >> DMA MAP failures. To work around this issue we managed to pass
-> >> usable IOVA regions (excluding the out of range space) from VFIO
-> >> to the virtio-iommu device. This was made feasible by introducing
-> >> a new IOMMU Memory Region callback dubbed iommu_set_iova_regions().
-> >> This latter gets called when the IOMMU MR is enabled which
-> >> causes the vfio_listener_region_add() to be called.
-> >>
-> >> However with VFIO-PCI hotplug, this technique fails due to the
-> >> race between the call to the callback in the add memory listener
-> >> and the virtio-iommu probe request. Indeed the probe request gets
-> >> called before the attach to the domain. So in that case the usable
-> >> regions are communicated after the probe request and fail to be
-> >> conveyed to the guest. To be honest the problem was hinted by
-> >> Jean-Philippe in [1] and I should have been more careful at
-> >> listening to him and testing with hotplug :-(
-> > It looks the global virtio_iommu_config.bypass is never cleared in guest.
-> > When guest virtio_iommu driver enable IOMMU, should it clear this
-> > bypass attribute?
-> > If it could be cleared in viommu_probe(), then qemu will call
-> > virtio_iommu_set_config() then virtio_iommu_switch_address_space_all()
-> > to enable IOMMU MR. Then both coldplugged and hotplugged devices will work.
+On 25/01/2024 18.32, Peter Maydell wrote:
+> This test program is the last use of any variable length array in the
+> codebase.  If we can get rid of all uses of VLAs we can make the
+> compiler error on new additions.  This is a defensive measure against
+> security bugs where an on-stack dynamic allocation isn't correctly
+> size-checked (e.g.  CVE-2021-3527).
 > 
-> this field is iommu wide while the probe applies on a one device.In
-> general I would prefer not to be dependent on the MR enablement. We know
-> that the device is likely to be protected and we can collect its
-> requirements beforehand.
+> In this case the test code didn't even want a variable-sized
+> array, it was just accidentally using syntax that gave it one.
+> (The array size for C has to be an actual constant expression,
+> not just something that happens to be known to be constant...)
 > 
-> >
-> > Intel iommu has a similar bit in register GCMD_REG.TE, when guest
-> > intel_iommu driver probe set it, on qemu side, vtd_address_space_refresh_all()
-> > is called to enable IOMMU MRs.
-> interesting.
+> Remove the VLA usage.
 > 
-> Would be curious to get Jean Philippe's pov.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   tests/qtest/xlnx-versal-trng-test.c | 19 +++++++++++--------
+>   1 file changed, 11 insertions(+), 8 deletions(-)
 
-I'd rather not rely on this, it's hard to justify a driver change based
-only on QEMU internals. And QEMU can't count on the driver always clearing
-bypass. There could be situations where the guest can't afford to do it,
-like if an endpoint is owned by the firmware and has to keep running.
-
-There may be a separate argument for clearing bypass. With a coldplugged
-VFIO device the flow is:
-
-1. Map the whole guest address space in VFIO to implement boot-bypass.
-   This allocates all guest pages, which takes a while and is wasteful.
-   I've actually crashed a host that way, when spawning a guest with too
-   much RAM.
-2. Start the VM
-3. When the virtio-iommu driver attaches a (non-identity) domain to the
-   assigned endpoint, then unmap the whole address space in VFIO, and most
-   pages are given back to the host.
-
-We can't disable boot-bypass because the BIOS needs it. But instead the
-flow could be:
-
-1. Start the VM, with only the virtual endpoints. Nothing to pin.
-2. The virtio-iommu driver disables bypass during boot
-3. Hotplug the VFIO device. With bypass disabled there is no need to pin
-   the whole guest address space, unless the guest explicitly asks for an
-   identity domain.
-
-However, I don't know if this is a realistic scenario that will actually
-be used.
-
-By the way, do you have an easy way to reproduce the issue described here?
-I've had to enable iommu.forcedac=1 on the command-line, otherwise Linux
-just allocates 32-bit IOVAs.
-
-> >
-> >> For coldplugged device the technique works because we make sure all
-> >> the IOMMU MR are enabled once on the machine init done: 94df5b2180
-> >> ("virtio-iommu: Fix 64kB host page size VFIO device assignment")
-> >> for granule freeze. But I would be keen to get rid of this trick.
-> >>
-> >> Using an IOMMU MR Ops is unpractical because this relies on the IOMMU
-> >> MR to have been enabled and the corresponding vfio_listener_region_add()
-> >> to be executed. Instead this series proposes to replace the usage of this
-> >> API by the recently introduced PCIIOMMUOps: ba7d12eb8c  ("hw/pci:
-> >> modify
-> >> pci_setup_iommu() to set PCIIOMMUOps"). That way, the callback can be
-> >> called earlier, once the usable IOVA regions have been collected by
-> >> VFIO, without the need for the IOMMU MR to be enabled.
-> >>
-> >> This looks cleaner. In the short term this may also be used for
-> >> passing the page size mask, which would allow to get rid of the
-> >> hacky transient IOMMU MR enablement mentionned above.
-> >>
-> >> [1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
-> >>    https://lore.kernel.org/all/20231019134651.842175-1-
-> >> eric.auger@redhat.com/
-> >>
-> >> [2] https://lore.kernel.org/all/20230929161547.GB2957297@myrica/
-> >>
-> >> Extra Notes:
-> >> With that series, the reserved memory regions are communicated on time
-> >> so that the virtio-iommu probe request grabs them. However this is not
-> >> sufficient. In some cases (my case), I still see some DMA MAP failures
-> >> and the guest keeps on using IOVA ranges outside the geometry of the
-> >> physical IOMMU. This is due to the fact the VFIO-PCI device is in the
-> >> same iommu group as the pcie root port. Normally the kernel
-> >> iova_reserve_iommu_regions (dma-iommu.c) is supposed to call
-> >> reserve_iova()
-> >> for each reserved IOVA, which carves them out of the allocator. When
-> >> iommu_dma_init_domain() gets called for the hotplugged vfio-pci device
-> >> the iova domain is already allocated and set and we don't call
-> >> iova_reserve_iommu_regions() again for the vfio-pci device. So its
-> >> corresponding reserved regions are not properly taken into account.
-> > I suspect there is same issue with coldplugged devices. If those devices
-> > are in same group, get iova_reserve_iommu_regions() is only called
-> > for first device. But other devices's reserved regions are missed.
-> 
-> Correct
-> >
-> > Curious how you make passthrough device and pcie root port under same
-> > group.
-> > When I start a x86 guest with passthrough device, I see passthrough
-> > device and pcie root port are in different group.
-> >
-> > -[0000:00]-+-00.0
-> >            +-01.0
-> >            +-02.0
-> >            +-03.0-[01]----00.0
-> >
-> > /sys/kernel/iommu_groups/3/devices:
-> > 0000:00:03.0
-> > /sys/kernel/iommu_groups/7/devices:
-> > 0000:01:00.0
-> >
-> > My qemu cmdline:
-> > -device pcie-root-port,id=root0,slot=0
-> > -device vfio-pci,host=6f:01.0,id=vfio0,bus=root0
-> 
-> I just replayed the scenario:
-> - if you have a coldplugged vfio-pci device, the pci root port and the
-> passthroughed device end up in different iommu groups. On my end I use
-> ioh3420 but you confirmed that's the same for the generic pcie-root-port
-> - however if you hotplug the vfio-pci device that's a different story:
-> they end up in the same group. Don't ask me why. I tried with
-> both virtio-iommu and intel iommu and I end up with the same topology.
-> That looks really weird to me.
-
-It also took me a while to get hotplug to work on x86:
-pcie_cap_slot_plug_cb() didn't get called, instead it would call
-ich9_pm_device_plug_cb(). Not sure what I'm doing wrong.
-To work around that I instantiated a second pxb-pcie root bus and then a
-pcie root port on there. So my command-line looks like:
-
- -device virtio-iommu
- -device pxb-pcie,id=pcie.1,bus_nr=1
- -device pcie-root-port,chassis=2,id=pcie.2,bus=pcie.1
-
- device_add vfio-pci,host=00:04.0,bus=pcie.2
-
-And somehow pcieport and the assigned device do end up in separate IOMMU
-groups.
-
-Thanks,
-Jean
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
