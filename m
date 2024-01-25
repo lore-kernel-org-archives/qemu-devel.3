@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3BFC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 07:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3C4C47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 07:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSuDG-0007fg-5a; Thu, 25 Jan 2024 02:31:51 -0500
+	id 1rSuDJ-0007jH-3I; Thu, 25 Jan 2024 02:31:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rSuD1-0007do-PJ
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:31:35 -0500
+ id 1rSuDG-0007h8-6g
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:31:51 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rSuCz-0008MV-QY
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:31:35 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1rSuDE-0000ad-CF
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:31:49 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxWOhPDrJl6WwFAA--.975S3;
- Thu, 25 Jan 2024 15:31:27 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxdfFhDrJlBG0FAA--.20713S3;
+ Thu, 25 Jan 2024 15:31:45 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx8ORNDrJl8OMYAA--.43196S2; 
- Thu, 25 Jan 2024 15:31:26 +0800 (CST)
+ AQAAf8AxHs9gDrJlHeQYAA--.42878S3; 
+ Thu, 25 Jan 2024 15:31:45 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
-To: 
-Cc: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Subject: [PULL 0/2] loongarch-to-apply queue
-Date: Thu, 25 Jan 2024 15:15:17 +0800
-Message-Id: <20240125071519.53361-1-gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 1/2] target/loongarch: Set cpuid CSR register only once with
+ kvm mode
+Date: Thu, 25 Jan 2024 15:15:36 +0800
+Message-Id: <20240125071537.53397-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240125071537.53397-1-gaosong@loongson.cn>
+References: <20240125071537.53397-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Bx8ORNDrJl8OMYAA--.43196S2
+X-CM-TRANSID: AQAAf8AxHs9gDrJlHeQYAA--.42878S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,30 +66,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4a4efae44f19528589204581e9e2fab69c5d39aa:
+From: Bibo Mao <maobibo@loongson.cn>
 
-  Merge tag 'pull-hex-20240121' of https://github.com/quic/qemu into staging (2024-01-23 13:40:45 +0000)
+CSR cpuid register is used for routing irq to different vcpus, its
+value is kept unchanged since poweron. So it is not necessary to
+set CSR cpuid register after system resets, and it is only set at
+vm creation stage.
 
-are available in the Git repository at:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240115085121.180524-1-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/kvm/kvm.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240125
-
-for you to fetch changes up to fc70099621fe7002d30fc1509456d1ae57264aa6:
-
-  target/loongarch/kvm: Enable LSX/LASX extension (2024-01-25 15:25:31 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20240125
-
-----------------------------------------------------------------
-Bibo Mao (1):
-      target/loongarch: Set cpuid CSR register only once with kvm mode
-
-Song Gao (1):
-      target/loongarch/kvm: Enable LSX/LASX extension
-
- linux-headers/asm-loongarch/kvm.h |  1 +
- target/loongarch/kvm/kvm.c        | 54 +++++++++++++++++++++++++++++++--------
- 2 files changed, 45 insertions(+), 10 deletions(-)
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 84bcdf5f86..2230f029d0 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -250,7 +250,7 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+     return ret;
+ }
+ 
+-static int kvm_loongarch_put_csr(CPUState *cs)
++static int kvm_loongarch_put_csr(CPUState *cs, int level)
+ {
+     int ret = 0;
+     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+@@ -322,8 +322,11 @@ static int kvm_loongarch_put_csr(CPUState *cs)
+     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_RVACFG),
+                            &env->CSR_RVACFG);
+ 
+-    ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
++    /* CPUID is constant after poweron, it should be set only once */
++    if (level >= KVM_PUT_FULL_STATE) {
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
+                            &env->CSR_CPUID);
++    }
+ 
+     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG1),
+                            &env->CSR_PRCFG1);
+@@ -598,7 +601,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
+         return ret;
+     }
+ 
+-    ret = kvm_loongarch_put_csr(cs);
++    ret = kvm_loongarch_put_csr(cs, level);
+     if (ret) {
+         return ret;
+     }
+-- 
+2.25.1
 
 
