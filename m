@@ -4,75 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2FEC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 15:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38836C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 15:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT1OK-0007TL-Ex; Thu, 25 Jan 2024 10:11:44 -0500
+	id 1rT1YK-0004Ou-FK; Thu, 25 Jan 2024 10:22:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT1OI-0007Sw-QC
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:11:42 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT1OH-0003Um-7R
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:11:42 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-55d0031d8b5so657329a12.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 07:11:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706195498; x=1706800298; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JlZx2CConwDZM4SlbaEO4H+Gs581wkGTZT7k6BZJkPg=;
- b=mEr453wJRpsudQDeb31SHErZK4qrGKX2k519kpyQHanSW3d8UqW63NZsxul8L8s0AQ
- fPlJtnA8JKsE7i+geYzLdBEa4MaJw7kI8AlqpwGXcQKuxEGZiEsNSzn4hk/LXMOMmBUo
- D5tdPcBi8c6/cdqVXg5tak40z7oO8apib7OTypWSjTAzKVCkCGlFQEobibOjHMhS6W55
- rr0NhDFW2ZwTjiXCijF7mhn5gVsIoK30pd7gcEK6fNa9DAHpumVz+z6bocPEn533PddU
- vpNnT+NEVby3UJcnYBi6eWPDAx147nz9SCd5lYr86opQav4TSBpHcXB4WeHxlZTsk/cf
- gKQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706195498; x=1706800298;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JlZx2CConwDZM4SlbaEO4H+Gs581wkGTZT7k6BZJkPg=;
- b=qQ4GahHf+7YxAqlKi0UYJHGTxHyhlIh/DFw6BzNO6hyw3qTyAM+/5TiTkeGg4W9t1B
- n0MCuhm2nsgx0JZbALYKCI2Wn2zkrS4wuILDhjg5Z47H32im+U6wZN0+fmHAnH0hCAWM
- gxyZCbesxRvA3Zs9csIqfqBKZ4VQN6FbGPu2bsVbyeBmbehN0e3zl8B2g+hZ7Ey0lJpY
- kKm3U/a1vilnSoGB5X83RhZc9t9Il243/SSw3pSvLrSZFDG0zLGoIz/DYOxaehX6ffEY
- jYEgeq+d7SH8tMszNtNpUsQb+vDyZSdmwMmiLEiGEGX2PM8M/rGC6vhdcqSnVjvOioFW
- JTZg==
-X-Gm-Message-State: AOJu0YwgOJ3xrUqZHFmZFpjuOZyCYcK6FQi7nNX612vjhVY2c3WT3MoE
- gd8UXV/WfZTUbqunzTZ5qsHscoE4zd1EtrzPVSaF49ujGFhjOgUd8PYCvYbleKjXiH8Ua6MThlv
- kaB6UvReSoh9oYa7aJUf+O2asPiwtOLSxgW7TCw==
-X-Google-Smtp-Source: AGHT+IGgdemACCkbDf+TCIXx/mm8rnVQmR0QrQNtMjNKRogDUp2QE1yWq2+ZzIaCgglAX3ok6iB4SlVF9q4ydcmU5fM=
-X-Received: by 2002:a05:6402:254c:b0:55d:12b8:626 with SMTP id
- l12-20020a056402254c00b0055d12b80626mr394458edb.35.1706195497841; Thu, 25 Jan
- 2024 07:11:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rT1YJ-0004Of-MS
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:22:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rT1YI-0007FO-0r
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:22:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706196120;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=S0cVTuBTyXzld7x1iW7DlhQfLLP+UdE6Aa1+QGSRg7k=;
+ b=Ad0cAF7GJBEIxWFrj++BctS6eXx74I/lEQ0vD5QyjV3LLoF18SCl3SAPfuts8Ai4O20e6z
+ iLR8qS0WlgbmrM2YlYy3zZ/8VeCKDMubxU/YBcGMfoSqNCjzVJ3q14PJuGdItemdixuOKe
+ pIFQOSQSJ+oaHwoKKMaU2XZ/+fJAfos=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-g89eusZAN06uvVn80NS5pw-1; Thu,
+ 25 Jan 2024 10:21:56 -0500
+X-MC-Unique: g89eusZAN06uvVn80NS5pw-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4341D3C1494B;
+ Thu, 25 Jan 2024 15:21:56 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.39.194.139])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 6C7F7492BC6;
+ Thu, 25 Jan 2024 15:21:55 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, stefanha@redhat.com, peter.maydell@linaro.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] iotests/iothreads-stream: Use the right TimeoutError
+Date: Thu, 25 Jan 2024 16:21:50 +0100
+Message-ID: <20240125152150.42389-1-kwolf@redhat.com>
 MIME-Version: 1.0
-References: <20240122160126.394141-1-stefanha@redhat.com>
-In-Reply-To: <20240122160126.394141-1-stefanha@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jan 2024 15:11:25 +0000
-Message-ID: <CAFEAcA_vRf6uAEDNJjOpXVk+pkYx-cX_YvBr5Swyh7hOEk62zw@mail.gmail.com>
-Subject: Re: [PULL 0/2] Block patches
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, 
- Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,30 +77,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jan 2024 at 16:01, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->
-> The following changes since commit 09be34717190c1620f0c6e5c8765b8da354aeb4b:
->
->   Merge tag 'pull-request-2024-01-19' of https://gitlab.com/thuth/qemu into staging (2024-01-20 17:22:16 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/stefanha/qemu.git tags/block-pull-request
->
-> for you to fetch changes up to 8a9be7992426c8920d4178e7dca59306a18c7a3a:
->
->   block/io: clear BDRV_BLOCK_RECURSE flag after recursing in bdrv_co_block_status (2024-01-22 11:00:12 -0500)
->
-> ----------------------------------------------------------------
-> Pull request
->
-> ----------------------------------------------------------------
+Since Python 3.11 asyncio.TimeoutError is an alias for TimeoutError, but
+in older versions it's not. We really have to catch asyncio.TimeoutError
+here, otherwise a slow test run will fail (as has happened multiple
+times on CI recently).
 
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ tests/qemu-iotests/tests/iothreads-stream | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Applied, thanks.
+diff --git a/tests/qemu-iotests/tests/iothreads-stream b/tests/qemu-iotests/tests/iothreads-stream
+index 503f221f16..231195b5e8 100755
+--- a/tests/qemu-iotests/tests/iothreads-stream
++++ b/tests/qemu-iotests/tests/iothreads-stream
+@@ -18,6 +18,7 @@
+ #
+ # Creator/Owner: Kevin Wolf <kwolf@redhat.com>
+ 
++import asyncio
+ import iotests
+ 
+ iotests.script_initialize(supported_fmts=['qcow2'],
+@@ -69,6 +70,6 @@ with iotests.FilePath('disk1.img') as base1_path, \
+                 # The test is done once both jobs are gone
+                 if finished == 2:
+                     break
+-        except TimeoutError:
++        except asyncio.TimeoutError:
+             pass
+         vm.cmd('query-jobs')
+-- 
+2.43.0
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
 
