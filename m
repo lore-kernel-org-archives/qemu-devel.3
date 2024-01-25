@@ -4,80 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF66C48260
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D07C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT2gG-0006tp-GK; Thu, 25 Jan 2024 11:34:20 -0500
+	id 1rT2iN-0005YX-PA; Thu, 25 Jan 2024 11:36:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT2gF-0006rq-9y
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:19 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT2gB-0002Ai-Ai
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:19 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-40e913e3f03so87223285e9.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:34:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706200454; x=1706805254; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3B7RIYSQBA2EJV4QrqnnX0R7U4YmJKg5KsLLI0ApV2U=;
- b=T2rxg3vkySHMQvphLG/I4yaLExBBr5fNmE7/rVutu47xdMZguAVEbSLUEGu++efIoI
- RBS6Fdkj3Tlmc/El8IMLrqCpXw1bL1JScnweShUV668uCiX0tq/OtjHhnifE1kCQMJJh
- BIjUypzLzy9bASl9heFIy7OPsVH2TvDA/Td8Lk10yJt0DY2YszNnK3yM/6XBuU0y+LDn
- 3+j/jocbfLh4T3SR+3aa1PcyEwxMCv3q0/pp4FLQW+yHLfkXeo/xjBCCzvWhMm43C7t1
- irBPOCj42nPtEqCNMtZ/rXQyzrteYpwhWyxWYtdc+S4IjBGGb9hYgd7WliyziDY6upe/
- wArQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706200454; x=1706805254;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3B7RIYSQBA2EJV4QrqnnX0R7U4YmJKg5KsLLI0ApV2U=;
- b=lXiwNS2LUTzVseIi65faOGI4sKXFGcTe5PQ6oZXaiP40DZus6sEgQCXAryxpbNoxId
- QS+v25ZXEp+x6BA6/GsfcX15rxPM6F2+aC/C1F7bHDG/ph1a8c3qvzcIw6uv1bWPcU/V
- WDWKlRy949CqO/ASrC5kSVNqYyHDoDox3IMSzDsjdzSUUmC1Q+lD5/c7FeJ9PuFB5mj1
- DMjmoOXHCy6KvZ4a4Qhv/pWXRi8kmW0jceKgTnIeWOwjIlTLdcsfl7c/nGlD1y4vYo9g
- TTJ/xMlcQkIbePo08vHl8PvVaPUWZEe4S4e4r/WwEr2cPy10LcKf7p5UdsVyWCLSOMF+
- xv2g==
-X-Gm-Message-State: AOJu0Yyrr1gVQzipXu1YQnIfQIvWPwNsG+xsaXpXF6l1adTW2ITad219
- 4sXNKIZvXLUdy/bcjTqaUKofwpTl3zPz10itkkrDBduwzOJZOAmkNov/MTsGzR0xSZSz3v8PtaW
- 3
-X-Google-Smtp-Source: AGHT+IHAV+HJ4CQw/CsjJbiEyOWODFMOY+687qWqxl57jwwCUCdZivdKIsMtI/O8/EKLE0uSuKwjLA==
-X-Received: by 2002:a05:600c:4f54:b0:40e:a0fc:6435 with SMTP id
- m20-20020a05600c4f5400b0040ea0fc6435mr687987wmq.116.1706200453923; 
- Thu, 25 Jan 2024 08:34:13 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- p13-20020a05600c358d00b0040ea875a527sm3122208wmq.26.2024.01.25.08.34.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 08:34:13 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1rT2i5-0005G4-Ey
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:36:13 -0500
+Received: from mail-vi1eur05on20700.outbound.protection.outlook.com
+ ([2a01:111:f403:2613::700]
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1rT2i3-0002kg-RW
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:36:13 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hA0JtSr6cJT19YKaKKAcEkk8zdNQL8fg7+kFO0l8gnC0D0wUlMzVkejNVze7ZAn48FfKVXJKt/dEDqlLG6+8XZwQX6NJBK4JdwKU/Fwzo7Filh7SvSWdw0tuB1EK3/ezQ5lPcUnIR2wkBbDZE5+iXTX7+ewR1IvwDvwGMARvu3wQYwG/QTlRk0vL5FhJ9v/VG7D3ZhVmhnGiO/q6fI2NlM4Vf+L0jRqPA1kgayD2/EOoh7Iuj3iibjBByn64hMbZZQ264/4dfrwAc9MNOS5JQc6iC04KUNCB3YofFu6wK9M6sMXfm18wy/Bt7gVsjmhfOi3OPjMJXaBQqWkPMp8udg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1f9cd5lLLMpRlcPl+84723/8dYwPGD/ckQkmyM1lOGw=;
+ b=i8R2kSLKdeQvkvQAVVzI6wzrROsoDoncduuS1bHx6OkA79kwfqbJb4bno7ylHT+bl/6uJ/PI0vmTTrTUhwUJynAzZHBYV6nPIigskMUJ1LeZgz7zvc7gEPp5ORo1ShVj/8Y88uo54hzAQ/6z7/R5vuvaK0Gn5PCGuc94bIzIKbmCBkNF0eeTn+hjFaUBnC82UOUeq/s75O3q69ekI4N6MNWYAoH6HmfKBn/P7a7qtYi2cWEaINyuGVtaSSd/viEkE/MsajtcwfgfxF4XQRpGk5jeFD1xQHHfLq5YzwPMD05oYHgrtTyMrvDyeDwq1sffxeEVOD5xQ/kF9RWMNwbGSw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1f9cd5lLLMpRlcPl+84723/8dYwPGD/ckQkmyM1lOGw=;
+ b=HFzndN+i2bbrODokz+pP7lXyq1+OmJFJ5b2nEpfUeiI7Fhtei31MaJm09eOaKyB1GX4TSF2b0b24vk0dmkTD0UlmQ15EPAuE3FFJ7Vw5Y6ektXkWxArRv2kDtn42DR5zfIeEcfb1V03lVAsgSIRlO3RQkoU08ZnGIzyNOBebN1/q39lpAJJTpXSLHM0z6+T6yQC0xB2ooFGwD1LuyiaKEwkzammecOzbhimAuyjaapp0wbnz3aIePK3KPi/CZNyO0Dn3ireul7cgrcFL91c/P0NUyEG+pCzycyn4xQXgGxd/gu5oHAx1QotTPtE9tUAXgEpAcj1Ac4qt8ZjfzY5DJg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from DBBPR08MB10650.eurprd08.prod.outlook.com (2603:10a6:10:52d::7)
+ by PAWPR08MB9808.eurprd08.prod.outlook.com (2603:10a6:102:2ea::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.22; Thu, 25 Jan
+ 2024 16:36:06 +0000
+Received: from DBBPR08MB10650.eurprd08.prod.outlook.com
+ ([fe80::d027:c96c:6bb1:d5c3]) by DBBPR08MB10650.eurprd08.prod.outlook.com
+ ([fe80::d027:c96c:6bb1:d5c3%6]) with mapi id 15.20.7228.022; Thu, 25 Jan 2024
+ 16:36:04 +0000
+Message-ID: <0e33c0ce-4052-4c2a-8405-13f1385e7947@virtuozzo.com>
+Date: Thu, 25 Jan 2024 18:36:17 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] kvm: emit GUEST_PANICKED event in case of abnormal KVM
+ exit
+Content-Language: en-US
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-Subject: [PATCH 10/10] misc: Clean up includes
-Date: Thu, 25 Jan 2024 16:34:08 +0000
-Message-Id: <20240125163408.1595135-11-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240125163408.1595135-1-peter.maydell@linaro.org>
-References: <20240125163408.1595135-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
+Cc: pbonzini@redhat.com, den@openvz.org, richard.henderson@linaro.org
+References: <20231101152311.181817-1-andrey.drobyshev@virtuozzo.com>
+ <f588c351-a7cc-48a7-9ac0-201171a9ed4b@virtuozzo.com>
+ <de8eed0a-468d-4433-ab45-4ef2c666e6b6@virtuozzo.com>
+In-Reply-To: <de8eed0a-468d-4433-ab45-4ef2c666e6b6@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+X-ClientProxiedBy: FR2P281CA0145.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:98::17) To DBBPR08MB10650.eurprd08.prod.outlook.com
+ (2603:10a6:10:52d::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DBBPR08MB10650:EE_|PAWPR08MB9808:EE_
+X-MS-Office365-Filtering-Correlation-Id: 601f7b3f-7b54-4bb5-8d6e-08dc1dc3b93d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: zCW35HOWBnSCV8GEgiKPwEoEUajfjxWkjd9c/SJkVzc2cGW3+wUnELfrXuddYtKmktAZ3GFFdxRWpj8FYbBefr7xKeB9vF2TUjLkT6eqzcalZagzsPOTZoG8FOAG6kJd+hGo1IaD1bV31iffRpeTC2vlyE+4o1CSB4DfkV3O1QG/tJP7oGrmeXzjrrNfoQDNZYlZIu853O2l/mb6ERDzlZLQMWUVot91w1p1Hqn+3PttIgoijHptjEH7BHLMoD2magb4xpItcCsj0+lMNgUbY6Bwve0vFumQf3xf1A4f+gCAWVNJ/c0qGCJTSZVBVxR8TUFJHOZrkMQC3bYZD45lxsG2q2eu6RsYhnkADBsTMN1X1DZG9Qb2Akt4/Kfz+e6xg/C/oky6EWGPpGhu628Lxti8cxWesant5h89Qsut5Kl17yo9h/vu7NdM5XRHPEvCZAsk7w+s+OBDA5Cr2BNvNcR6vIB7quRl0W0dWRS4wHQidBemvkG1zo9AiSrVlRlSvYafxgImW0uw1K48RaoAqvIiaiWAbSd2WicOp7MDre/Frd3ujuY8iwsSOWbL9qTRI3uDYExnoXb3yaD/7Om48NQ2bkgsvVF2VXn86/V5LBcn7EMH/jsJOUxC57Wk8LgXfYxmf+xd10cdBclgLNA13Q==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DBBPR08MB10650.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376002)(366004)(39850400004)(346002)(396003)(136003)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(41300700001)(4326008)(38100700002)(31686004)(2616005)(6916009)(66476007)(66556008)(31696002)(66946007)(316002)(44832011)(83380400001)(2906002)(8676002)(26005)(8936002)(53546011)(6512007)(6666004)(55236004)(86362001)(6486002)(6506007)(5660300002)(478600001)(36756003)(45980500001)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RElXL0djQldLdTRmK3p2bUV6L2owSnkvbjJwbmlwRW9oaE43cVdVWFRVb2lq?=
+ =?utf-8?B?RUJhUDc2S3NTZFh6MGowajJXdkEvN0tXVlNHMXBKSUg0ZkkxVGdNUmJidm9Y?=
+ =?utf-8?B?RDhFL05QZXVFWGRaZ3MyTTgvbDk3NzFOZ3E2QkY4SU9LZ05ZbjJJWlU4SlhN?=
+ =?utf-8?B?MTNvZnNmNEpQNExBNU10cVphYnNtdGdLQUthRDhDdzRUelFZSnI5eFhHNGNE?=
+ =?utf-8?B?ZlplUVFEZ3hWZVdhZGprRS9mRTBTeC9aM2owY0VmWVJGc2NVUCtUVUxla1ZL?=
+ =?utf-8?B?OXdUeCs5c2pXK0l3TE5heWVjODI0Y1BRcnh2TENmbndTeWYwVEpyZCs2V2g4?=
+ =?utf-8?B?Rmlxa0JyWHh6OFlTazFseHAwTmZ6TkI5VjVONW5WdWZXL3ViWmlLYWlzS2N1?=
+ =?utf-8?B?UWJ2WnR1Wk80K1J5Y3lLV3p3ejFJTXh3UmdjaDk0OXg3L0c4UEhJMGNOZklK?=
+ =?utf-8?B?MTBacFpKS2IxdmFranhlUjhXN1JLOVVqcURGbEJCMTFxOHRaMGJ2ZHNpVENO?=
+ =?utf-8?B?ck9kcGRPeTNXcGM3MW40TC82cXdoR0tCR2gybmtGb2k2SjVKOTF3dldwcC9R?=
+ =?utf-8?B?OE1jZVFPeWVWbXlUWnJiL0IwZk5nSUprTGR6TTBnTGcwNTl6cFhUUWhWbTlr?=
+ =?utf-8?B?dW4wNUNwRGFoYUxOMlFtMjQrTDNzRUF4YUxRKzJ1UFpjYUlwTGppd3k1d0lX?=
+ =?utf-8?B?Z1Q1eVdlVEVzWVRDaWR6YVNZdTg4SFFWSUtzNHkraG9QWjRnejREU0wxc2RO?=
+ =?utf-8?B?Mm1Xek5hYW94Y01HYndHVWExL0VPelRoN2M3TENxQmF5aThOa29wcHByUkJF?=
+ =?utf-8?B?RlRhQThFeWMzd3lTMElPbUlSc1IvcUJmZkFrdSt5clVUYkNrNnFIYjNyYVdV?=
+ =?utf-8?B?K2FHMGpwSE9seDVWbHFubUgxMVBiOG1BaVM1VFFGcVEwNTg5bzkrbWFvblQv?=
+ =?utf-8?B?TlhzWG85T0xRTHQxVktyazdxZXlSVDZ5SGFGS3ZiWTR2WW5SQUkxMWtoOFpn?=
+ =?utf-8?B?NzliNlVSNnFvTVcxMDYwRGpvcndRd01LTkd6cVRIMVBKc3pwc3RTbTgwTEI5?=
+ =?utf-8?B?Y3V6K05zc3hhNGFxYVRxOU5LeFEvY2x4OVIxU0h6NWJIbWJNMWFlYWxCOVdk?=
+ =?utf-8?B?Wm92U3ZyRmdZblp5N0VnWmtES0E5WHhMUmZCREREdExLTElZdFZ0Nk8vZmcy?=
+ =?utf-8?B?VlNYbzNTaVBvVjg1NmtUT3lRckZUQTh4Y3ZvcVVJRnlDNGVkUHkvVDlKRGdo?=
+ =?utf-8?B?TkYrVnR6Ty9RZWJ3aFJkZnZGQnVPOXB2VlNzdHN4djhiaHR6Y2I4N3RWQS9l?=
+ =?utf-8?B?TFF2L09KRmRSdXNmb0RIS3d6dGNDSDBJVXRwbWhxWUZ2bzNqeHlSb0lwZENn?=
+ =?utf-8?B?c3hrc1p6TS9VdEY0aHNyb0lOSjN6Nlp1R29panorU3lqZEYvTHVCV3VXUEVK?=
+ =?utf-8?B?RXB1SFcrOTBvcG1sTDNmdTVXdm1KYitJK2JEWU9XcUZUMWRsM0VXaTN0L0RY?=
+ =?utf-8?B?R3R5aUJlTUlVQitzd3ZPUzJSRWxNeDdvM3ZnbHNkL1VoaUhlczZ6Z3hIT2I3?=
+ =?utf-8?B?Qit3UDRTb2FORkVMeDlMbHhWZm1pUnpQRHorMWFNYlFYaldTOEJXdW1PYUF1?=
+ =?utf-8?B?VFY0Z2JFUi9sVy9vemRGeExDRTlLQlV6bVNGRWUycnBoakxraWZTYzh5S2ZX?=
+ =?utf-8?B?d1kvcXFiZ0dIQ1lnSmpCS1ZkUVUvN3VRQktvM3FuUkYyY3Ftc1hhSHBuRlFE?=
+ =?utf-8?B?cld1MDFpeFRGV1lFc1I5TDZiQ3ZsbDYxV0lLY2FEdFJFMjd5VTdWem5nMFhG?=
+ =?utf-8?B?aC9RdWNxckxHTlVLZHp1K3l3YmpwdmZkVFhDQ2FmbkdIMVg4d1pYZ1BnTkxS?=
+ =?utf-8?B?YURVeWtITTRFci9mOW03WEtuYi9YeHJXYkVyZ2d4VjF6b1BQUzYyeDRLMWJm?=
+ =?utf-8?B?YjcxSW9scHZQb1VQZzkxOVgraFpVbTViOW8vUEtzWEVKcTlqSEdtWEMrZWxw?=
+ =?utf-8?B?R2c0Y0U5UFlpVHY3MmhFbjArdFdKR0JMaWVaRGp1RGJUQ2IyQXdxc1VTb3NK?=
+ =?utf-8?B?a3cxV2UyUXVrZFpqaUZjRDJlMmZIVHhiV2Y4LytVdkRiQU53RCtrLyt1c1E4?=
+ =?utf-8?B?NG9tNFBGWmk5bmM2Q2R5U0k5UHhGbythczhPaU5WQUVjWjhJaUkzeDVGazV5?=
+ =?utf-8?B?YVE9PQ==?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 601f7b3f-7b54-4bb5-8d6e-08dc1dc3b93d
+X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10650.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jan 2024 16:36:04.4422 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8iCgqfxSdWvr4+qZRuiRBKPsEyQGEbSdWNUfikuHU1MyXLcuByxBsbBxMBvQ7/XVniS2kOn4c9tDGQYEAhvopSpw2vK4D9SfPEbc8m4K92o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB9808
+Received-SPF: pass client-ip=2a01:111:f403:2613::700;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=EUR05-VI1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,90 +151,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit was created with scripts/clean-includes:
- ./scripts/clean-includes --git misc net/af-xdp.c plugins/*.c audio/pwaudio.c util/userfaultfd.c
+On 1/11/24 15:15, Andrey Drobyshev wrote:
+> On 11/1/23 18:13, Denis V. Lunev wrote:
+>> On 11/1/23 16:23, Andrey Drobyshev wrote:
+>>> Currently we emit GUEST_PANICKED event in case kvm_vcpu_ioctl() returns
+>>> KVM_EXIT_SYSTEM_EVENT with the event type KVM_SYSTEM_EVENT_CRASH.  Let's
+>>> extend this scenario and emit GUEST_PANICKED in case of an abnormal KVM
+>>> exit.  That's a natural thing to do since in this case guest is no
+>>> longer operational anyway.
+>>>
+>>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>> Acked-by: Denis V. Lunev <den@virtuozzo.com>
+>>> ---
+>>>   accel/kvm/kvm-all.c | 19 +++++++++++++++----
+>>>   1 file changed, 15 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>>> index e39a810a4e..d74b3f0b0e 100644
+>>> --- a/accel/kvm/kvm-all.c
+>>> +++ b/accel/kvm/kvm-all.c
+>>> @@ -2816,6 +2816,14 @@ static void kvm_eat_signals(CPUState *cpu)
+>>>       } while (sigismember(&chkset, SIG_IPI));
+>>>   }
+>>>   +static void kvm_emit_guest_crash(CPUState *cpu)
+>>> +{
+>>> +    kvm_cpu_synchronize_state(cpu);
+>>> +    qemu_mutex_lock_iothread();
+>>> +    qemu_system_guest_panicked(cpu_get_crash_info(cpu));
+>>> +    qemu_mutex_unlock_iothread();
+>>> +}
+>>> +
+>>>   int kvm_cpu_exec(CPUState *cpu)
+>>>   {
+>>>       struct kvm_run *run = cpu->kvm_run;
+>>> @@ -2969,21 +2977,24 @@ int kvm_cpu_exec(CPUState *cpu)
+>>>                   ret = EXCP_INTERRUPT;
+>>>                   break;
+>>>               case KVM_SYSTEM_EVENT_CRASH:
+>>> -                kvm_cpu_synchronize_state(cpu);
+>>> -                qemu_mutex_lock_iothread();
+>>> -                qemu_system_guest_panicked(cpu_get_crash_info(cpu));
+>>> -                qemu_mutex_unlock_iothread();
+>>> +                kvm_emit_guest_crash(cpu);
+>>>                   ret = 0;
+>>>                   break;
+>>>               default:
+>>>                   DPRINTF("kvm_arch_handle_exit\n");
+>>>                   ret = kvm_arch_handle_exit(cpu, run);
+>>> +                if (ret < 0) {
+>>> +                    kvm_emit_guest_crash(cpu);
+>>> +                }
+>>>                   break;
+>>>               }
+>>>               break;
+>>>           default:
+>>>               DPRINTF("kvm_arch_handle_exit\n");
+>>>               ret = kvm_arch_handle_exit(cpu, run);
+>>> +            if (ret < 0) {
+>>> +                kvm_emit_guest_crash(cpu);
+>>> +            }
+>>>               break;
+>>>           }
+>>>       } while (ret == 0);
+>> This allows to gracefully handle this problem in production
+>> and reset the guest using on_crash action in libvirt.
+> 
+> Ping
 
-All .c should include qemu/osdep.h first.  The script performs three
-related cleanups:
-
-* Ensure .c files include qemu/osdep.h first.
-* Including it in a .h is redundant, since the .c  already includes
-  it.  Drop such inclusions.
-* Likewise, including headers qemu/osdep.h includes is redundant.
-  Drop these, too.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-These are all cases where files include things osdep already gives them.
----
- audio/pwaudio.c    | 1 -
- net/af-xdp.c       | 1 -
- plugins/core.c     | 1 -
- plugins/loader.c   | 1 -
- util/userfaultfd.c | 1 -
- 5 files changed, 5 deletions(-)
-
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 3ce5f6507b4..3b14e04fbb0 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -11,7 +11,6 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "audio.h"
--#include <errno.h>
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include <spa/param/audio/format-utils.h>
-diff --git a/net/af-xdp.c b/net/af-xdp.c
-index 6c65028fb00..38e600703a3 100644
---- a/net/af-xdp.c
-+++ b/net/af-xdp.c
-@@ -13,7 +13,6 @@
- 
- #include "qemu/osdep.h"
- #include <bpf/bpf.h>
--#include <inttypes.h>
- #include <linux/if_link.h>
- #include <linux/if_xdp.h>
- #include <net/if.h>
-diff --git a/plugins/core.c b/plugins/core.c
-index 49588285dd0..ee2fa41af9e 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -27,7 +27,6 @@
- #include "tcg/tcg.h"
- #include "tcg/tcg-op.h"
- #include "plugin.h"
--#include "qemu/compiler.h"
- 
- struct qemu_plugin_cb {
-     struct qemu_plugin_ctx *ctx;
-diff --git a/plugins/loader.c b/plugins/loader.c
-index 734c11cae04..9768b78eb6b 100644
---- a/plugins/loader.c
-+++ b/plugins/loader.c
-@@ -33,7 +33,6 @@
- #ifndef CONFIG_USER_ONLY
- #include "hw/boards.h"
- #endif
--#include "qemu/compiler.h"
- 
- #include "plugin.h"
- 
-diff --git a/util/userfaultfd.c b/util/userfaultfd.c
-index fdff4867e8b..1b2fa949d4d 100644
---- a/util/userfaultfd.c
-+++ b/util/userfaultfd.c
-@@ -18,7 +18,6 @@
- #include <poll.h>
- #include <sys/syscall.h>
- #include <sys/ioctl.h>
--#include <fcntl.h>
- 
- typedef enum {
-     UFFD_UNINITIALIZED = 0,
--- 
-2.34.1
-
+Ping
 
