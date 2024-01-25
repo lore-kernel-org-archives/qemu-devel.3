@@ -4,59 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39624C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 17:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 717BEC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 17:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT3Wc-0004Lu-4R; Thu, 25 Jan 2024 12:28:26 -0500
+	id 1rT3aM-0006BB-Tg; Thu, 25 Jan 2024 12:32:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rT3WY-0004K0-SW; Thu, 25 Jan 2024 12:28:22 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rT3WX-0005o1-4Q; Thu, 25 Jan 2024 12:28:22 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c14:750a:0:640:e46:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 04A6661E69;
- Thu, 25 Jan 2024 20:28:18 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b678::1:5] (unknown
- [2a02:6b8:b081:b678::1:5])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id HSYE9a1IkiE0-TyjSznMm; Thu, 25 Jan 2024 20:28:17 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1706203697;
- bh=L9IrCFHjo4klQXKJZ3uNYnl+eXqDWOTPWgVKozg/5VA=;
- h=In-Reply-To:Cc:References:To:From:Subject:Date:Message-ID;
- b=gUryWXbamadOC9QfIho01KWxXU4brPnomexozql6Sb1ACuyLSRiKLTNxZMlEE/AIX
- 3+Hoz0NJKxRB1roQRz2AY3PRq8IArVT8Czva502TFDtSG4Tkb2tWaaowolpps6EWD2
- sV6izu0mf8SDHUtU4lOAZNSXz2ERhOHuBlcoaVlE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <823f29e0-46b4-40bc-8158-163b3ad828fe@yandex-team.ru>
-Date: Thu, 25 Jan 2024 20:28:17 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rT3aL-0006Ag-1M
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:17 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rT3aJ-0006na-33
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:16 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-40eacb6067dso57033715e9.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 09:32:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706203932; x=1706808732; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=qYjEPErl5XVh5u2nT0CJZDvflYNdae3uJnahchVLNhA=;
+ b=jAyEVuIpg+ONfrSB6uW03dH3WVXziNiRGgkDk32GYsARKGcS+E9YPTFxJ2He3hhtSS
+ Li3M9Mp38OGR3y8wWtum2QncdH9d0P5Qn0WxgG76O+oEy61AyeIX6oblLJ7A6ow2XbkP
+ 0Yl2jHnJcVr1Na6H5eBCdAxfE2Ms5SK4h4QlVcvKQdtBD1RBEGcedPYYSpX/9sR7KQDX
+ nTIVx2Yhq/tTCS7B7TE55fsEC80Tf4PbwQ2j4Ywdd6qstoVPZrlf1i8D0FcktC/RhDNE
+ rH9LkcxUQxyf/ao1w2kFalsuiAlRLKLkjPOFKoimu7l27tdPOU6pB+97cZRPoLfqIIn1
+ Rw1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706203932; x=1706808732;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qYjEPErl5XVh5u2nT0CJZDvflYNdae3uJnahchVLNhA=;
+ b=PCZOHi0XDuFv+XlF47DtIiDHrT28awy+RqxYWWoc3nD2OCPbTE/tfvq57pzUJGgdKq
+ qmyAXbnnOj2MVsJ7gJlgH3VaJ4cscILjZKicAqtWImuHF5r2huvPsl7SMz+uKEeWiORs
+ isYVZ+feyyKGvEPW/l0WnUbvazApGEhPylIiwPclTk1eJYG3f/KFHqFFYNweNMpf1NrI
+ oAxZVd+xCeFq9giWoezu9LDz+9FRd27e6cHRMF/9UG/15RWkEn+1S2DwOmZQVcEVkviP
+ +8xqRS5c82RD30TD+5neg94XdJjQ/9PQs9WB05NZXcFD+xcTmgfrWp+bYudoQBfASGcC
+ f8rA==
+X-Gm-Message-State: AOJu0YzhWW0DRI8tnLBHmmVefHq/yRDsmkj0q29Ytza9ZVSGQg7RDXfo
+ U9yNA+SkoEDOciVSeecYjGskxsXNx0rIPLu5/ww+2aCmh4vgNl5hbuFuQS5Wq+lJtJhD8tMDS1t
+ B
+X-Google-Smtp-Source: AGHT+IGTtOwq0/g6b8okxw62hPkqwjcd4cSVWXKTNtUdM3YoZ8zb9LwCHiIQmAAX2vY1H/NBIKcoVw==
+X-Received: by 2002:a7b:c40a:0:b0:40e:9ec9:e4bc with SMTP id
+ k10-20020a7bc40a000000b0040e9ec9e4bcmr27835wmi.332.1706203932488; 
+ Thu, 25 Jan 2024 09:32:12 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ i13-20020a05600c354d00b0040e45799541sm3287805wmq.15.2024.01.25.09.32.12
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jan 2024 09:32:12 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 1/2] tests/qtest/xlnx-versal-trng-test.c: Drop use of variable
+ length array
+Date: Thu, 25 Jan 2024 17:32:10 +0000
+Message-Id: <20240125173211.1786196-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240125173211.1786196-1-peter.maydell@linaro.org>
+References: <20240125173211.1786196-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] qapi: blockdev-backup: add discard-source parameter
-Content-Language: en-US
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- xiechanglong.d@gmail.com, wencongyang2@huawei.com, hreitz@redhat.com,
- kwolf@redhat.com, jsnow@redhat.com
-References: <20240117160737.1057513-1-vsementsov@yandex-team.ru>
- <20240117160737.1057513-4-vsementsov@yandex-team.ru>
- <9479f045-1c09-41a6-b625-940b0ee723d5@proxmox.com>
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <9479f045-1c09-41a6-b625-940b0ee723d5@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -79,63 +94,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.01.24 17:46, Fiona Ebner wrote:
-> Am 17.01.24 um 17:07 schrieb Vladimir Sementsov-Ogievskiy:
->> Add a parameter that enables discard-after-copy. That is mostly useful
->> in "push backup with fleecing" scheme, when source is snapshot-access
->> format driver node, based on copy-before-write filter snapshot-access
->> API:
->>
->> [guest]      [snapshot-access] ~~ blockdev-backup ~~> [backup target]
->>     |            |
->>     | root       | file
->>     v            v
->> [copy-before-write]
->>     |             |
->>     | file        | target
->>     v             v
->> [active disk]   [temp.img]
->>
->> In this case discard-after-copy does two things:
->>
->>   - discard data in temp.img to save disk space
->>   - avoid further copy-before-write operation in discarded area
->>
->> Note that we have to declare WRITE permission on source in
->> copy-before-write filter, for discard to work.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> 
-> Unfortunately, setting BLK_PERM_WRITE unconditionally breaks
-> blockdev-backup for a read-only node (even when not using discard-source):
+This test program is the last use of any variable length array in the
+codebase.  If we can get rid of all uses of VLAs we can make the
+compiler error on new additions.  This is a defensive measure against
+security bugs where an on-stack dynamic allocation isn't correctly
+size-checked (e.g.  CVE-2021-3527).
 
-Ohh, right.
+In this case the test code didn't even want a variable-sized
+array, it was just accidentally using syntax that gave it one.
+(The array size for C has to be an actual constant expression,
+not just something that happens to be known to be constant...)
 
-So, that's the place when we have to somehow pass through discrard-souce option to CBW filter, so that it know that WRITE permission is needed. Will try in v3. Thanks again for testing!
+Remove the VLA usage.
 
-> 
->> #!/bin/bash
->> ./qemu-img create /tmp/disk.raw -f raw 1G
->> ./qemu-img create /tmp/backup.raw -f raw 1G
->> ./qemu-system-x86_64 --qmp stdio \
->> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw,read-only=true \
->> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/backup.raw \
->> <<EOF
->> {"execute": "qmp_capabilities"}
->> {"execute": "blockdev-backup", "arguments": { "device": "node0", "target": "node1", "sync": "full", "job-id": "backup0" } }
->> EOF
-> 
-> The above works before applying this patch, but leads to an error
-> afterwards:
-> 
->> {"error": {"class": "GenericError", "desc": "Block node is read-only"}}
-> 
-> Best Regards,
-> Fiona
-> 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/qtest/xlnx-versal-trng-test.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
+diff --git a/tests/qtest/xlnx-versal-trng-test.c b/tests/qtest/xlnx-versal-trng-test.c
+index cef4e575bba..ba86f39d13c 100644
+--- a/tests/qtest/xlnx-versal-trng-test.c
++++ b/tests/qtest/xlnx-versal-trng-test.c
+@@ -298,10 +298,13 @@ static size_t trng_collect(uint32_t *rnd, size_t cnt)
+     return i;
+ }
+ 
++/* These tests all generate 512 bits of random data with the device */
++#define TEST_DATA_WORDS (512 / 32)
++
+ static void trng_test_autogen(void)
+ {
+-    const size_t cnt = 512 / 32;
+-    uint32_t rng[cnt], prng[cnt];
++    const size_t cnt = TEST_DATA_WORDS;
++    uint32_t rng[TEST_DATA_WORDS], prng[TEST_DATA_WORDS];
+     size_t n;
+ 
+     trng_reset();
+@@ -343,8 +346,8 @@ static void trng_test_autogen(void)
+ 
+ static void trng_test_oneshot(void)
+ {
+-    const size_t cnt = 512 / 32;
+-    uint32_t rng[cnt];
++    const size_t cnt = TEST_DATA_WORDS;
++    uint32_t rng[TEST_DATA_WORDS];
+     size_t n;
+ 
+     trng_reset();
+@@ -370,8 +373,8 @@ static void trng_test_oneshot(void)
+ 
+ static void trng_test_per_str(void)
+ {
+-    const size_t cnt = 512 / 32;
+-    uint32_t rng[cnt], prng[cnt];
++    const size_t cnt = TEST_DATA_WORDS;
++    uint32_t rng[TEST_DATA_WORDS], prng[TEST_DATA_WORDS];
+     size_t n;
+ 
+     trng_reset();
+@@ -415,8 +418,8 @@ static void trng_test_forced_prng(void)
+     const char *prop = "forced-prng";
+     const uint64_t seed = 0xdeadbeefbad1bad0ULL;
+ 
+-    const size_t cnt = 512 / 32;
+-    uint32_t rng[cnt], prng[cnt];
++    const size_t cnt = TEST_DATA_WORDS;
++    uint32_t rng[TEST_DATA_WORDS], prng[TEST_DATA_WORDS];
+     size_t n;
+ 
+     trng_reset();
 -- 
-Best regards,
-Vladimir
+2.34.1
 
 
