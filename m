@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 717BEC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 17:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE1A9C47422
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 17:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT3aM-0006BB-Tg; Thu, 25 Jan 2024 12:32:18 -0500
+	id 1rT3aO-0006Bl-K7; Thu, 25 Jan 2024 12:32:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT3aL-0006Ag-1M
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:17 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1rT3aM-0006Ax-AJ
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:18 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT3aJ-0006na-33
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:16 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-40eacb6067dso57033715e9.1
+ id 1rT3aJ-0006nZ-4A
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:18 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-40e8fec0968so89836395e9.1
  for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 09:32:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1706203932; x=1706808732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qYjEPErl5XVh5u2nT0CJZDvflYNdae3uJnahchVLNhA=;
- b=jAyEVuIpg+ONfrSB6uW03dH3WVXziNiRGgkDk32GYsARKGcS+E9YPTFxJ2He3hhtSS
- Li3M9Mp38OGR3y8wWtum2QncdH9d0P5Qn0WxgG76O+oEy61AyeIX6oblLJ7A6ow2XbkP
- 0Yl2jHnJcVr1Na6H5eBCdAxfE2Ms5SK4h4QlVcvKQdtBD1RBEGcedPYYSpX/9sR7KQDX
- nTIVx2Yhq/tTCS7B7TE55fsEC80Tf4PbwQ2j4Ywdd6qstoVPZrlf1i8D0FcktC/RhDNE
- rH9LkcxUQxyf/ao1w2kFalsuiAlRLKLkjPOFKoimu7l27tdPOU6pB+97cZRPoLfqIIn1
- Rw1g==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=59hk5vLV+YriYiITrglneSa9mhMufI4e7Kn6+RlSZS0=;
+ b=jVaQ9Ag84uj3F5n1FRBy3mnqukCZo+3jFMJqjAH9haFmzhBgG3XaHVzl91x0qzfp5e
+ i3hvYZHqW1kGj21BYDnUs1o73K/sShoTyqpNgPQmoF2m59vGK0Gbp7rgFsFX0glu93JP
+ p7P4GHQTpP7CJAEtieQtf3WpZhmw52d//NQrwh8agX0s3JRgFmryTz5oaTKZA5XzwWTe
+ NFEQPPDbollke9HgIjnp1ocQvq0HeSuEG4ewVQtXRBeBmgZRBaae2B+1DIrt2iBfrA1F
+ 6EUPiDGM4m6zGdDs4GDhaKi05CELPQvipvQO/RvKAcfLMUHD97SzvpPlqZ83Rfz4eggK
+ YSpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1706203932; x=1706808732;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qYjEPErl5XVh5u2nT0CJZDvflYNdae3uJnahchVLNhA=;
- b=PCZOHi0XDuFv+XlF47DtIiDHrT28awy+RqxYWWoc3nD2OCPbTE/tfvq57pzUJGgdKq
- qmyAXbnnOj2MVsJ7gJlgH3VaJ4cscILjZKicAqtWImuHF5r2huvPsl7SMz+uKEeWiORs
- isYVZ+feyyKGvEPW/l0WnUbvazApGEhPylIiwPclTk1eJYG3f/KFHqFFYNweNMpf1NrI
- oAxZVd+xCeFq9giWoezu9LDz+9FRd27e6cHRMF/9UG/15RWkEn+1S2DwOmZQVcEVkviP
- +8xqRS5c82RD30TD+5neg94XdJjQ/9PQs9WB05NZXcFD+xcTmgfrWp+bYudoQBfASGcC
- f8rA==
-X-Gm-Message-State: AOJu0YzhWW0DRI8tnLBHmmVefHq/yRDsmkj0q29Ytza9ZVSGQg7RDXfo
- U9yNA+SkoEDOciVSeecYjGskxsXNx0rIPLu5/ww+2aCmh4vgNl5hbuFuQS5Wq+lJtJhD8tMDS1t
- B
-X-Google-Smtp-Source: AGHT+IGTtOwq0/g6b8okxw62hPkqwjcd4cSVWXKTNtUdM3YoZ8zb9LwCHiIQmAAX2vY1H/NBIKcoVw==
-X-Received: by 2002:a7b:c40a:0:b0:40e:9ec9:e4bc with SMTP id
- k10-20020a7bc40a000000b0040e9ec9e4bcmr27835wmi.332.1706203932488; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=59hk5vLV+YriYiITrglneSa9mhMufI4e7Kn6+RlSZS0=;
+ b=OcpNzWBKs6ptLPUkpdLV6dvoZejj5iuDWaGOKPIUstCZU+S0zifct4Q+E9qjqVvMLI
+ ORahqOxnXjzQfZH6zJI9P2dPCF+6q12VHEQ9Wggr6uW2oEclGS8sG6fLVGiNbd1veTlw
+ 4k9NhuJkmM4ac44KHWqD6RPhCXWFOjAvop49SRlaAKoTKIuGAhkIF8x3lGoXHJVpHUFZ
+ p0pHE/LnC29whpfZAO0Zk6Uj3A7QDpxD3fk1qQ3WWXa94fMMK5h4LomcbahJgajNYrdO
+ kqzN6v2A0/R8JKM1PgjBopTq9DH+u+NPe7u40QEuHjDNTZ1vxgnlsYXI7BGvWu3jNaiM
+ dDHg==
+X-Gm-Message-State: AOJu0YztjvOhkh24l1EgKeXTHXS6xPe1zk4HfeeAQZ7TEEtUONGVhxrL
+ HJcPAr2vAnRgCzdMrhHSKbb6UdyScd4Uuf5mxsqS6+dS1bVb46tYyi5GyRRNkFwxKDWvwqPpw5j
+ T
+X-Google-Smtp-Source: AGHT+IG0DM6x0aF9JblvHUJ6njeKLX87za7UmhDQ5kQR9S2NdsZigdbbwW7N02S64y5Gt9g01e75eA==
+X-Received: by 2002:a05:600c:3514:b0:40e:7232:be0b with SMTP id
+ h20-20020a05600c351400b0040e7232be0bmr53461wmq.12.1706203932091; 
  Thu, 25 Jan 2024 09:32:12 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020a05600c354d00b0040e45799541sm3287805wmq.15.2024.01.25.09.32.12
+ i13-20020a05600c354d00b0040e45799541sm3287805wmq.15.2024.01.25.09.32.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 09:32:12 -0800 (PST)
+ Thu, 25 Jan 2024 09:32:11 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/2] tests/qtest/xlnx-versal-trng-test.c: Drop use of variable
- length array
-Date: Thu, 25 Jan 2024 17:32:10 +0000
-Message-Id: <20240125173211.1786196-2-peter.maydell@linaro.org>
+Subject: [PATCH 0/2] Enable -Wvla, forbidding use of variable length arrays
+Date: Thu, 25 Jan 2024 17:32:09 +0000
+Message-Id: <20240125173211.1786196-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240125173211.1786196-1-peter.maydell@linaro.org>
-References: <20240125173211.1786196-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,77 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This test program is the last use of any variable length array in the
-codebase.  If we can get rid of all uses of VLAs we can make the
-compiler error on new additions.  This is a defensive measure against
-security bugs where an on-stack dynamic allocation isn't correctly
-size-checked (e.g.  CVE-2021-3527).
+For a while now I've had an on-and-off-again campaign to get rid of
+the handful of uses of C variable-length-array syntax in our
+codebase.  The rationale for this is that if the array size can be
+controlled by the guest and we don't get the size limit checking
+right, this is an easy to exploit security issue.  (An example
+problem of this kind from the past is CVE-2021-3527).  Forbidding
+them entirely is a defensive measure against further bugs of this
+kind.
 
-In this case the test code didn't even want a variable-sized
-array, it was just accidentally using syntax that gave it one.
-(The array size for C has to be an actual constant expression,
-not just something that happens to be known to be constant...)
+I submitted a bunch of patches to this effect last year, and
+the result is we're now down to just a single use of VLAs, in
+a test program. This patchset removes that last VLA usage,
+and enables -Wvla in our warning options, so that we will catch
+any future attempts to use this C feature.
 
-Remove the VLA usage.
+thanks
+-- PMM
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
+Peter Maydell (2):
+  tests/qtest/xlnx-versal-trng-test.c: Drop use of variable length array
+  meson: Enable -Wvla
+
+ meson.build                         |  1 +
  tests/qtest/xlnx-versal-trng-test.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/tests/qtest/xlnx-versal-trng-test.c b/tests/qtest/xlnx-versal-trng-test.c
-index cef4e575bba..ba86f39d13c 100644
---- a/tests/qtest/xlnx-versal-trng-test.c
-+++ b/tests/qtest/xlnx-versal-trng-test.c
-@@ -298,10 +298,13 @@ static size_t trng_collect(uint32_t *rnd, size_t cnt)
-     return i;
- }
- 
-+/* These tests all generate 512 bits of random data with the device */
-+#define TEST_DATA_WORDS (512 / 32)
-+
- static void trng_test_autogen(void)
- {
--    const size_t cnt = 512 / 32;
--    uint32_t rng[cnt], prng[cnt];
-+    const size_t cnt = TEST_DATA_WORDS;
-+    uint32_t rng[TEST_DATA_WORDS], prng[TEST_DATA_WORDS];
-     size_t n;
- 
-     trng_reset();
-@@ -343,8 +346,8 @@ static void trng_test_autogen(void)
- 
- static void trng_test_oneshot(void)
- {
--    const size_t cnt = 512 / 32;
--    uint32_t rng[cnt];
-+    const size_t cnt = TEST_DATA_WORDS;
-+    uint32_t rng[TEST_DATA_WORDS];
-     size_t n;
- 
-     trng_reset();
-@@ -370,8 +373,8 @@ static void trng_test_oneshot(void)
- 
- static void trng_test_per_str(void)
- {
--    const size_t cnt = 512 / 32;
--    uint32_t rng[cnt], prng[cnt];
-+    const size_t cnt = TEST_DATA_WORDS;
-+    uint32_t rng[TEST_DATA_WORDS], prng[TEST_DATA_WORDS];
-     size_t n;
- 
-     trng_reset();
-@@ -415,8 +418,8 @@ static void trng_test_forced_prng(void)
-     const char *prop = "forced-prng";
-     const uint64_t seed = 0xdeadbeefbad1bad0ULL;
- 
--    const size_t cnt = 512 / 32;
--    uint32_t rng[cnt], prng[cnt];
-+    const size_t cnt = TEST_DATA_WORDS;
-+    uint32_t rng[TEST_DATA_WORDS], prng[TEST_DATA_WORDS];
-     size_t n;
- 
-     trng_reset();
 -- 
 2.34.1
 
