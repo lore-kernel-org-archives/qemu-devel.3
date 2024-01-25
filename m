@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB20C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 04:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CEADC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 04:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSrd1-0002vQ-UL; Wed, 24 Jan 2024 23:46:15 -0500
+	id 1rSrfM-0003gY-FH; Wed, 24 Jan 2024 23:48:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrcz-0002re-Fi
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:46:13 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rSrfL-0003gM-2T; Wed, 24 Jan 2024 23:48:39 -0500
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrcx-0004Zk-8O
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:46:13 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-40e7e2e04f0so68671705e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 20:46:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rSrfJ-0007fq-3z; Wed, 24 Jan 2024 23:48:38 -0500
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-7d2dfe840f2so2131697241.3; 
+ Wed, 24 Jan 2024 20:48:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706157969; x=1706762769; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wZyqofPTExVY5+AUvxwvkWlwvtNGB0iFAXRO/yw5vUE=;
- b=WMO/NIf5iQNAV2Bi8PkfDs1+Yoy3mcQ0qTqWRNmFdY/V9Lx7RYfmz33NALdSp88YNf
- RZxc5/LMhz4sSsEyCGzgEQ6CyNSwBxt/RK+6m01gQfH1TO6qIbATpanWqJzmTjaEaOM+
- fy+8FaR5G2EjhviPFziz8VUOy4yYda73GCW2SIxMJQYW7PuK3hG1K2F0iO1v7ZR9PXl9
- V4IqjMNsmItKfH8fj+atlPmqxCjmKQCTATgsfW/BzQdyy4zTt5jD3RcQMMU/Fh/yx2/4
- IqzgmyQJfsRExUrCQydApfoTO7FOTU6EiU1/OOc7R5cP/EvySFOcbBS6TQ2eFxGO+laY
- U2Lg==
+ d=gmail.com; s=20230601; t=1706158115; x=1706762915; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+eG06+ZtlmCm7ejlN6thPQHB616F4x3lro8dDncABOw=;
+ b=LasMkbI5rE8JOSFipbLzbWDfIPYYvpimpfBUZpRiou5NanbiD81GR2I2U0S4t+Qykp
+ zUqSCsYGkOgetZwNO4tvfwmlyzgzEJ+OoQAoljCmPapSkj6qQxEGLin/6prmF6mwmqXe
+ gIXgHHL5xSTIF+wvNJ9ZA+h3kBY/EPtN8ZwWA1GybPneh5Ts7FyiZ+pIndIoVcc85yas
+ VntuA+YBQ51fJm6I9P594ADlK9OgSv0Wk38iEkB8ntlELb/U4C7k3O3RkymCxY8vC1PY
+ mXqEdXUqMQUMzT7jQK0ft47xfxbJuadlNO6IWWJlSb6BtdSkHxTF7hN+vpLyp6njBezJ
+ YZ6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706157969; x=1706762769;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wZyqofPTExVY5+AUvxwvkWlwvtNGB0iFAXRO/yw5vUE=;
- b=i0lzhn2etDhYYOkG0zlmcVQVCfpqETKeo8DiRezxH4MBTXYSuY4S3QM/1dxKLSTp/A
- Z/sm4RnzmdjSUGOqfth26u/Vk3dUCMExVPpDN4EX7v04kp9nCstnhJY8FfvucoUpqh7L
- evENKygde870Pq2haAtfadPbGmukkU8yGr/o2Ob7BKcQrE3/eMjXcCpFG5OmkLCk9avj
- DGQrHgLOs51Vihx/TH8y6/xbgFWM7SdIEjsc8yZ9GysnmtiFW4kfOhLyjO4QWb3wyzHY
- ZlTp8AHOc+W/x/QaTlvVvFHNa1mk7W+vMABOZ6L0lPlCmGLBftEvb48VPfoGpT3UHwSn
- w0dg==
-X-Gm-Message-State: AOJu0YwTXfWXadydFWmiTqd5Pqd+TqP5jBYDesliCgKMOi4XQvG7YOXT
- 96ghr5zm3CS2pwkIoCamj19HSu+ZbykEv5pnW5CngCJTJwwf/Txl0rYy1i9necQ=
-X-Google-Smtp-Source: AGHT+IHn4NSTcR7zU7h6T0ENR1igZw1VdvphTM2Jfh+nzsYvYAeyTxJ0NWU/cybMT23GE/M/wwiyyg==
-X-Received: by 2002:a05:600c:c0e:b0:40e:c564:a9ea with SMTP id
- fm14-20020a05600c0c0e00b0040ec564a9eamr1258408wmb.20.1706157968767; 
- Wed, 24 Jan 2024 20:46:08 -0800 (PST)
-Received: from [192.168.69.100] (lec62-h02-176-184-19-125.dsl.sta.abo.bbox.fr.
- [176.184.19.125]) by smtp.gmail.com with ESMTPSA id
- df10-20020a5d5b8a000000b0033947d7651asm4750596wrb.5.2024.01.24.20.46.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 20:46:08 -0800 (PST)
-Message-ID: <2c5bb08f-8cd9-4c4e-b2b8-39d93daeb03a@linaro.org>
-Date: Thu, 25 Jan 2024 05:46:06 +0100
+ d=1e100.net; s=20230601; t=1706158115; x=1706762915;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+eG06+ZtlmCm7ejlN6thPQHB616F4x3lro8dDncABOw=;
+ b=fkmkDR0ElzQRzJLVX4iineBy5PlhdrRLj1shJgaYIzg7Y/hJJjj3Lq1ihHSzo+QipR
+ I+Gr9lxYL5ULAgHSORlA1Prku7wS0/Xd0cc8ORLCTlfdVWbeFouKuX7cg/xgOWtRNPMa
+ 4sTIysJdDRKjaybkSmv+mbn4SQLmypSPvPUOMaE1MeWIkb4TGD4q0i9EAw8mpeCdKdsA
+ wXI04jSIopf6bBywEtIjqnZcH6sOUMVSgXOSJd2WjwiQvPSVhFkVMUyVE4M+0eIgXCVb
+ IqZ2sWSLHqt6/G9BTfv6a5Vs7daXdawfiMlHwLkH07coZqYEfqLPXbuvbeZpw3jDwKcy
+ vQ1w==
+X-Gm-Message-State: AOJu0Yzf3SeIv4VuEv19pw2tHeLVop69JLdDv9AKttCUNWCWCVyYUPdC
+ KdgdJP7Xekf0kkrl5CnkFZCMKuXdwF7NViRKrQ7W3D1qO81Xe6irFSH7r3ACOxCKmRTPkNBQYeB
+ dbOhe/pkWzJ55uEORL77MUHFHqRQ=
+X-Google-Smtp-Source: AGHT+IG/i9EqdckoZ8/npx8R2icKu5Lx61HAxGguDtyQL1YOkah/oLuIahJkHMnDYxVLE05LOWzRsnOFty3ajUNCq+o=
+X-Received: by 2002:a05:6122:a03:b0:4b6:b979:a28 with SMTP id
+ 3-20020a0561220a0300b004b6b9790a28mr273991vkn.17.1706158115654; Wed, 24 Jan
+ 2024 20:48:35 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/9] accel/tcg: Hoist CPUClass arg to functions with
- external linkage
-To: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
- Claudio Fontana <cfontana@suse.de>, Markus Armbruster <armbru@redhat.com>
-References: <20240124101639.30056-1-philmd@linaro.org>
- <20240124101639.30056-6-philmd@linaro.org>
- <00177e2f-766f-4adc-b7dc-6b45f6a22c92@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <00177e2f-766f-4adc-b7dc-6b45f6a22c92@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240123161714.160149-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20240123161714.160149-1-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 25 Jan 2024 14:48:09 +1000
+Message-ID: <CAKmqyKPoZLr_AOeRhUAVor3m+c66sqqFsvN3AnNpHNmyfmPdRw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] target/riscv/kvm: support 'vlenb' and vregs[]
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,43 +90,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/1/24 23:59, Richard Henderson wrote:
-> On 1/24/24 20:16, Philippe Mathieu-Daudé wrote:
->> Hoist the CPUClass argument from most of these internal helpers:
->>
->>   - check_for_breakpoints_slow
->>   - check_for_breakpoints()
->>   - cpu_tb_exec()
->>   - cpu_exec_enter()
->>   - cpu_exec_exit()
->>   - cpu_handle_halt()
->>   - cpu_handle_debug_exception()
->>   - cpu_handle_exception()
->>   - need_replay_interrupt()
->>   - cpu_handle_interrupt()
->>   - cpu_loop_exec_tb()
->>   - cpu_exec_loop()
->>   - cpu_exec_setjmp()
->>
->> to the following ones with external linkage:
->>
->>   - lookup_tb_ptr()
->>   - cpu_exec_step_atomic()
->>   - cpu_exec()
->>
->> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
->> ---
->>   accel/tcg/cpu-exec.c | 82 ++++++++++++++++++++------------------------
->>   1 file changed, 37 insertions(+), 45 deletions(-)
-> 
-> I'm not so keen on this.  Does it really make a difference?
-> What about simply making more use of CPUState->cc instead?
+On Wed, Jan 24, 2024 at 2:18=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Hi,
+>
+> This short series implements both 'vlenb' and 'vregs[]' in the KVM
+> driver.
+>
+> The patches were done a couple of months ago but we were missing some
+> changes in Linux (support to 'vlenb' in KVM) that got upstreamed
+> recently with Linux 6.8.
+>
+> Patches based on top of Alistair's riscv-to-apply.next that already has
+> the 'remove vlen, add vlenb' changes.
+>
+> Daniel Henrique Barboza (3):
+>   target/riscv/kvm: change kvm_reg_id to uint64_t
+>   target/riscv/kvm: initialize 'vlenb' via get-reg-list
+>   target/riscv/kvm: get/set vector vregs[]
 
-TIL CPUState->cc... Which makes me wonder why this isn't handler
-generically via QOM macros.
+Thanks!
 
-> 
-> 
-> r~
+Applied to riscv-to-apply.next
 
+Alistair
+
+>
+>  target/riscv/kvm/kvm-cpu.c | 144 +++++++++++++++++++++++++++++++++++--
+>  1 file changed, 138 insertions(+), 6 deletions(-)
+>
+> --
+> 2.43.0
+>
+>
 
