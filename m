@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CEADC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 04:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0701CC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 04:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSrfM-0003gY-FH; Wed, 24 Jan 2024 23:48:40 -0500
+	id 1rSrgH-0004LT-FR; Wed, 24 Jan 2024 23:49:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rSrfL-0003gM-2T; Wed, 24 Jan 2024 23:48:39 -0500
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrgA-0004KX-0h
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:49:30 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rSrfJ-0007fq-3z; Wed, 24 Jan 2024 23:48:38 -0500
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-7d2dfe840f2so2131697241.3; 
- Wed, 24 Jan 2024 20:48:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrg6-0007jt-Ty
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:49:28 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-40ed1e78835so1094985e9.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 20:49:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706158115; x=1706762915; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+eG06+ZtlmCm7ejlN6thPQHB616F4x3lro8dDncABOw=;
- b=LasMkbI5rE8JOSFipbLzbWDfIPYYvpimpfBUZpRiou5NanbiD81GR2I2U0S4t+Qykp
- zUqSCsYGkOgetZwNO4tvfwmlyzgzEJ+OoQAoljCmPapSkj6qQxEGLin/6prmF6mwmqXe
- gIXgHHL5xSTIF+wvNJ9ZA+h3kBY/EPtN8ZwWA1GybPneh5Ts7FyiZ+pIndIoVcc85yas
- VntuA+YBQ51fJm6I9P594ADlK9OgSv0Wk38iEkB8ntlELb/U4C7k3O3RkymCxY8vC1PY
- mXqEdXUqMQUMzT7jQK0ft47xfxbJuadlNO6IWWJlSb6BtdSkHxTF7hN+vpLyp6njBezJ
- YZ6A==
+ d=linaro.org; s=google; t=1706158164; x=1706762964; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cLxTTOXo7xpLqBEJ9vWV9WSn92V3ukRQLKc/frP90ZI=;
+ b=IqYjgj4LuNn0CucpfSk9Mv6KvwM/J7aRT52zZch9EIbuuoD++agX8+ZC6XZujJjvMS
+ pXqAAO6IY7y5NQLW4TgbZSPA2pUm5OtIDiygY3N0l6J6Ehm02U8XUbNVkVsUJMvX1x4v
+ tcqCqEr41eQ3yHZB2cxy0GuRpvgPRl5QZCBRtbflc2roLsHtLrNefgUSAlun5WPuyfsX
+ 7VdgV4HTmOdb2X5CE3/T0HXUjfOlUuWS79wM/xER4XnKtT/ic+T0xF+mqLm0LPscIlCt
+ wx+jsYgFlVNTtvVBwYRP9C0g3SwXm6iLTqcebPDkE3y1JoLR6WyZYzxZNhyyfs0OjvGD
+ H1oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706158115; x=1706762915;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+eG06+ZtlmCm7ejlN6thPQHB616F4x3lro8dDncABOw=;
- b=fkmkDR0ElzQRzJLVX4iineBy5PlhdrRLj1shJgaYIzg7Y/hJJjj3Lq1ihHSzo+QipR
- I+Gr9lxYL5ULAgHSORlA1Prku7wS0/Xd0cc8ORLCTlfdVWbeFouKuX7cg/xgOWtRNPMa
- 4sTIysJdDRKjaybkSmv+mbn4SQLmypSPvPUOMaE1MeWIkb4TGD4q0i9EAw8mpeCdKdsA
- wXI04jSIopf6bBywEtIjqnZcH6sOUMVSgXOSJd2WjwiQvPSVhFkVMUyVE4M+0eIgXCVb
- IqZ2sWSLHqt6/G9BTfv6a5Vs7daXdawfiMlHwLkH07coZqYEfqLPXbuvbeZpw3jDwKcy
- vQ1w==
-X-Gm-Message-State: AOJu0Yzf3SeIv4VuEv19pw2tHeLVop69JLdDv9AKttCUNWCWCVyYUPdC
- KdgdJP7Xekf0kkrl5CnkFZCMKuXdwF7NViRKrQ7W3D1qO81Xe6irFSH7r3ACOxCKmRTPkNBQYeB
- dbOhe/pkWzJ55uEORL77MUHFHqRQ=
-X-Google-Smtp-Source: AGHT+IG/i9EqdckoZ8/npx8R2icKu5Lx61HAxGguDtyQL1YOkah/oLuIahJkHMnDYxVLE05LOWzRsnOFty3ajUNCq+o=
-X-Received: by 2002:a05:6122:a03:b0:4b6:b979:a28 with SMTP id
- 3-20020a0561220a0300b004b6b9790a28mr273991vkn.17.1706158115654; Wed, 24 Jan
- 2024 20:48:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706158164; x=1706762964;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cLxTTOXo7xpLqBEJ9vWV9WSn92V3ukRQLKc/frP90ZI=;
+ b=u+YuPx1heNOvKclmLeSjHXxOoVULtmar77jK8Wv2F4+DAnNT2zELz1ldPcgXPt9w6z
+ H5TqdqyZHZ3WLbG4WIOZOq3idLijFIcnsTI0R+ILLC58H4GQbLKEG7cKcD9YXIqh0Lb3
+ h7wzXGF4QgITgeg5KZPsITDgvl68x5L4Zd+ecEgKUHR8xe0oKdUGJo6k2xgKTiT8eob5
+ rfQ1jij1YXjlNhHDUS5mvGtjejyBkxJKeOGkQhYgyfIbvwvOzFRr5zzmXyeb67FnAkJd
+ KKlGgy3CX8n7FTZ49ASTn54gHhTgRSouuEAjyX2FowQLYsQ6TzIZI08oNNDTaZ9Sz8t3
+ 9BQg==
+X-Gm-Message-State: AOJu0YxVlcjxp9fHEQ5mAF7ZzuChVIYfqphewJWeGYV/UMYq+KCbZTTH
+ ZRf9SC2itPIFiVU7+TrxBcBq5RpLxEAZnQBW2UlQCcZgfUwfvUtskzG0YxCZOs0=
+X-Google-Smtp-Source: AGHT+IEEWoSlodstLFMAyAhCCVAkJ9rWNQ4m94c1TeiEnN/JNR88UwNA5pbYRqfpR3P55fzwAQZTNA==
+X-Received: by 2002:a05:600c:450:b0:40e:4d21:6729 with SMTP id
+ s16-20020a05600c045000b0040e4d216729mr2142361wmb.71.1706158164462; 
+ Wed, 24 Jan 2024 20:49:24 -0800 (PST)
+Received: from [192.168.69.100] (lec62-h02-176-184-19-125.dsl.sta.abo.bbox.fr.
+ [176.184.19.125]) by smtp.gmail.com with ESMTPSA id
+ m5-20020a05600c4f4500b0040ec8330c8asm1076496wmq.39.2024.01.24.20.49.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 20:49:24 -0800 (PST)
+Message-ID: <4bef6135-d1f2-4d91-8914-4b4debc30758@linaro.org>
+Date: Thu, 25 Jan 2024 05:49:21 +0100
 MIME-Version: 1.0
-References: <20240123161714.160149-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240123161714.160149-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 25 Jan 2024 14:48:09 +1000
-Message-ID: <CAKmqyKPoZLr_AOeRhUAVor3m+c66sqqFsvN3AnNpHNmyfmPdRw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] target/riscv/kvm: support 'vlenb' and vregs[]
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] hw/arm/vexpress: Check for CPU types in
+ machine_run_board_init()
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, Rob Herring <robh@kernel.org>,
+ Joel Stanley <joel@jms.id.au>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Gavin Shan <gshan@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20240123222508.13826-1-philmd@linaro.org>
+ <20240123222508.13826-6-philmd@linaro.org>
+ <264a79c2-7aad-468b-b53e-a269b524bb11@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <264a79c2-7aad-468b-b53e-a269b524bb11@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,38 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 2:18=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> This short series implements both 'vlenb' and 'vregs[]' in the KVM
-> driver.
->
-> The patches were done a couple of months ago but we were missing some
-> changes in Linux (support to 'vlenb' in KVM) that got upstreamed
-> recently with Linux 6.8.
->
-> Patches based on top of Alistair's riscv-to-apply.next that already has
-> the 'remove vlen, add vlenb' changes.
->
-> Daniel Henrique Barboza (3):
->   target/riscv/kvm: change kvm_reg_id to uint64_t
->   target/riscv/kvm: initialize 'vlenb' via get-reg-list
->   target/riscv/kvm: get/set vector vregs[]
+On 25/1/24 00:09, Richard Henderson wrote:
+> On 1/24/24 08:25, Philippe Mathieu-Daudé wrote:
+>> Restrict MachineClass::valid_cpu_types[] to the single
+>> valid CPU types.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/arm/vexpress.c | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+>> index f1b45245d5..a3561a1b56 100644
+>> --- a/hw/arm/vexpress.c
+>> +++ b/hw/arm/vexpress.c
+>> @@ -783,22 +783,32 @@ static void vexpress_class_init(ObjectClass *oc, 
+>> void *data)
+>>   static void vexpress_a9_class_init(ObjectClass *oc, void *data)
+>>   {
+>> +    static const char * const valid_cpu_types[] = {
+>> +        ARM_CPU_TYPE_NAME("cortex-a9"),
+>> +        NULL
+>> +    };
+>>       MachineClass *mc = MACHINE_CLASS(oc);
+>>       VexpressMachineClass *vmc = VEXPRESS_MACHINE_CLASS(oc);
+>>       mc->desc = "ARM Versatile Express for Cortex-A9";
+>>       mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a9");
+>> +    mc->valid_cpu_types = valid_cpu_types;
+> 
+> Repetition of the cpu type here.  Do you still need default_cpu_type?
+> I didn't see it in the highbank patch, but it might have been outside 
+> the patch context.
+> 
+> If it is needed, perhaps "default_cpu_type = valid_cpu_types[0]".
+
+The plan is to eventually get there applying
+https://lore.kernel.org/qemu-devel/20231116163726.28952-1-philmd@linaro.org/
+
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 Thanks!
 
-Applied to riscv-to-apply.next
-
-Alistair
-
->
->  target/riscv/kvm/kvm-cpu.c | 144 +++++++++++++++++++++++++++++++++++--
->  1 file changed, 138 insertions(+), 6 deletions(-)
->
-> --
-> 2.43.0
->
->
 
