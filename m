@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD13C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC62BC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqT0-0006Bp-Px; Wed, 24 Jan 2024 22:31:50 -0500
+	id 1rSqTE-0007oQ-EP; Wed, 24 Jan 2024 22:32:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqSn-0005bF-3t
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:39 -0500
+ id 1rSqTB-0007V9-D8
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:01 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqSk-0001E0-Pf
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:36 -0500
+ id 1rSqT9-0001Dy-5q
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153495; x=1737689495;
+ t=1706153519; x=1737689519;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ojsjJjwwvXFn32DtEbF5sMQKOA0I6qo1coDuhp7qGAs=;
- b=JXqNme4dvEGkdAtOc4TYn4W8DqfsjGtnosVQkmmlPqE1I0SmM/064YxL
- ALIIsQjKn5KCiJQ5d6JRcH9fze4M7/frQkpU/gDtHrlXPWLf2sDwGMhZV
- 3facUP1MOddGkseKR61fBN6Zj3WJTteVXVKbHp8EVTyuCkVRpN7yQmf01
- EbNzIWyVLchXBD/GWzI6rRzvUoJyF+mxqp4AyMj6ptmJEqkWRetU8Zzdj
- b5ZsuzmrhcAaWb2erkbpdYEPQ7WALr/DwrPT6twB9qaGevB9HF3UyhNH8
- ANS8yVraoKdLD57BnQs+qJrKmLD35W8H8FRiWjitMmLHALj0LKfl3G795 A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430199"
+ bh=kAhbpSvf5mcqCqnuUHwzUyFR0bBkU6DMg1Kt+jDOu9k=;
+ b=Vnf6HWBgPiF3W//ca0dVmvvDvXOFOtUX1F46+EedR1aw0pkVCkhR89vc
+ RKWCIWhsjicrrJjF1o1hE0nLMKKGJNoudNbtdz9Lq2S/Eq/ZEeuOcHw10
+ Ni5XM3z47DqtubRemhRFOqMND/FnQCAH88BtUU3bK7Gh0t6JcGHs6km/z
+ xry6H61mY5y/3xTcpJE4hxvZ+shed+NkVvAjK6/05lYqmmbsthVJxqek3
+ B92Gt7iCrGRO5A7o9+s6NWmGaTOHksYRSB1x2kjGwYl8YN3hjV0JP2aGk
+ YG6zqWt4vHZ68xDCkaBIGdMtExJCGkXz9GmMYHK6mYKFOv4tYxne3B1hQ g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430418"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9430199"
+   d="scan'208";a="9430418"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:28:33 -0800
+ 24 Jan 2024 19:29:00 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2086272"
+   d="scan'208";a="2086471"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:28:28 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:28:55 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 54/66] pci-host/q35: Move PAM initialization above SMRAM
- initialization
-Date: Wed, 24 Jan 2024 22:23:16 -0500
-Message-Id: <20240125032328.2522472-55-xiaoyao.li@intel.com>
+Subject: [PATCH v4 59/66] i386/tdx: LMCE is not supported for TDX
+Date: Wed, 24 Jan 2024 22:23:21 -0500
+Message-Id: <20240125032328.2522472-60-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,54 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Isaku Yamahata <isaku.yamahata@intel.com>
+LMCE is not supported TDX since KVM doesn't provide emulation for
+MSR_IA32_FEAT_CTL.
 
-In mch_realize(), process PAM initialization before SMRAM initialization so
-that later patch can skill all the SMRAM related with a single check.
-
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- hw/pci-host/q35.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ target/i386/kvm/kvm-cpu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index 0d7d4e3f0860..98d4a7c253a6 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -568,6 +568,16 @@ static void mch_realize(PCIDevice *d, Error **errp)
-     /* setup pci memory mapping */
-     pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
+diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+index 9c791b7b0520..8c618869533c 100644
+--- a/target/i386/kvm/kvm-cpu.c
++++ b/target/i386/kvm/kvm-cpu.c
+@@ -15,6 +15,7 @@
+ #include "sysemu/sysemu.h"
+ #include "hw/boards.h"
  
-+    /* PAM */
-+    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
-+             mch->system_memory, mch->pci_address_space,
-+             PAM_BIOS_BASE, PAM_BIOS_SIZE);
-+    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
-+        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
-+                 mch->system_memory, mch->pci_address_space,
-+                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
-+    }
++#include "tdx.h"
+ #include "kvm_i386.h"
+ #include "hw/core/accel-cpu.h"
+ 
+@@ -60,6 +61,10 @@ static bool lmce_supported(void)
+     if (kvm_ioctl(kvm_state, KVM_X86_GET_MCE_CAP_SUPPORTED, &mce_cap) < 0) {
+         return false;
+     }
 +
-     /* if *disabled* show SMRAM to all CPUs */
-     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
-                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
-@@ -634,15 +644,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
- 
-     object_property_add_const_link(qdev_get_machine(), "smram",
-                                    OBJECT(&mch->smram));
--
--    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
--             mch->system_memory, mch->pci_address_space,
--             PAM_BIOS_BASE, PAM_BIOS_SIZE);
--    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
--        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
--                 mch->system_memory, mch->pci_address_space,
--                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
--    }
++    if (is_tdx_vm())
++        return false;
++
+     return !!(mce_cap & MCG_LMCE_P);
  }
  
- uint64_t mch_mcfg_base(void)
 -- 
 2.34.1
 
