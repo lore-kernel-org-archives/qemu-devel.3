@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BC0C46CD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 02:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E01C46CD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 02:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSpBb-0000qM-Q5; Wed, 24 Jan 2024 21:09:47 -0500
+	id 1rSpCz-0001ha-Oj; Wed, 24 Jan 2024 21:11:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1rSpBa-0000q1-1l
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:09:46 -0500
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1rSpCy-0001hI-3D
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:11:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1rSpBY-0005AB-Jo
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:09:45 -0500
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1rSpCw-0005Tl-LR
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 21:11:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706148583;
+ s=mimecast20190719; t=1706148669;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MOHbsRr20QruXk56khtKTTMov+K3GYDTbgrYusTtrGc=;
- b=bqxOWOTgnmvHpM41A94arR+ZGFCRjjcSQHZalZ/2Th+L5BAtrrnWJVGNn6RUNLu5ZX59TX
- NuYCr9fsDc/8vkMf7kPJ5fNtU6X9pa69HNmRQt9Ey1q/hMbpXwv6ht95whKlUGZu9jYSwr
- I41CEUxXZMU72kfFVM9nFKmth5ZbJw4=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IxVvneKtmt0XkxdEeJCPkZw+HwbT0oKKeve1U4V7NSA=;
+ b=QwdZDZybhfPhuK+5YoAwf6BpFKecCZwNhHXC5J2BqFI1EINg139gqv+PO6WkG01VSzhiwd
+ Uf3A56zVt877jhElTQCKzxysFuk4Y2HaTTau6Gh2k8fU4OrKu080EF984zUfLpImI6SdW4
+ y2DVeU1DP16yttXGQlO2i6C1aVdDsX0=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-unklQh8FOVmw8Lfoi74_mA-1; Wed, 24 Jan 2024 21:09:41 -0500
-X-MC-Unique: unklQh8FOVmw8Lfoi74_mA-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1d73d38b93bso57148995ad.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 18:09:41 -0800 (PST)
+ us-mta-659-RdXoT5otMo-TwcKRvPYMZA-1; Wed, 24 Jan 2024 21:11:08 -0500
+X-MC-Unique: RdXoT5otMo-TwcKRvPYMZA-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-5ce67a3f275so3746354a12.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 18:11:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706148580; x=1706753380;
+ d=1e100.net; s=20230601; t=1706148667; x=1706753467;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MOHbsRr20QruXk56khtKTTMov+K3GYDTbgrYusTtrGc=;
- b=E2Q3RhpE98KzYTeT+S1bc7iUjpTuLFLu4VdUelgIL2fVtrSUeMJ28PjxgAzDDB8oyx
- xmly7S9ntnmfBsZ6A884qdjkJFdJo9KjXG1rUl5INaeFQInVHQaZzsTLLejPAChoBhFn
- sc37NQJg2d66Bk2XBNb+33rdYkQAfYW4UcVuvfZhcnM5yWLvd2n4Duak509g2leHAEk9
- 8GDTMvN1WGPo9zncTXSTQtZ5vQfTGTOK2zP5ZkFOZAMANJSY6Pbxm9tX0CrS3/gHhKah
- NGk6Bl3RgydgoqMu2omVaJJ8wzHkZ3AQkk03/ChfaSkpysFzoyuQsjgzg1+uMG/vLLIq
- /RBQ==
-X-Gm-Message-State: AOJu0YwCUBL5siJx9KOwvCWmkTRQNNH3dEhspSMa0I5o6rnfexVkddFZ
- daY8aCEHP/ObYr9F6y2/AAY7MYrfE3EB738Ti/SdoyprWijNEvWpqoOHZKPm5dpQsk/Hy93nRoS
- lfB4XUYqD9987BzZGldluDHWZsP2Z3UA7h/vi7C8jEMz2kKxiFQ9z
-X-Received: by 2002:a17:902:e744:b0:1d7:505f:9223 with SMTP id
- p4-20020a170902e74400b001d7505f9223mr346188plf.80.1706148580256; 
- Wed, 24 Jan 2024 18:09:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHMPBDnFwKe8/inF9yVwTzzUtzUDuTQfYs89TYjGp4zR2Zy93TO2OBWtLWtOhdNXsbqRNIPUA==
-X-Received: by 2002:a17:902:e744:b0:1d7:505f:9223 with SMTP id
- p4-20020a170902e74400b001d7505f9223mr346167plf.80.1706148579938; 
- Wed, 24 Jan 2024 18:09:39 -0800 (PST)
+ bh=IxVvneKtmt0XkxdEeJCPkZw+HwbT0oKKeve1U4V7NSA=;
+ b=P9Uk2EVtnIl7Vp/FDTVJOPNQ5AfLrWmvLdG6EFj20PeSiRSOJ8um8oYv4Lq2uJGoeW
+ TzIkEQX7z/x3o8+bF8J41HTL5FvHOisPyhWB7BDlLS1UEF3kpmYQH26fi/Fu9sc/rLGP
+ z/XU5SI52LNLfKtMOSfXAvFVHg7ZXur2hi85HZE/lTZsc9S5tdKT/pQXOveld91WBPLe
+ GlhnSThjiczUwru2qmh1u2pZtuI2PeUKLcUUm2BDGD2UGggER4hyWAclMdVtQ/3sTcd1
+ Q7VUn/ILqs16GZyzT+054heCBeN2Ix6BSXaLj5dnTZFCAK7tejTk86VJwufpeHx5xtlP
+ 35rw==
+X-Gm-Message-State: AOJu0YxjLdCn7pXDjgEMo5PUKUv8SgRPYmMlF8Dl2mRKMGV6Ck+mGFOI
+ FQmT2MQ/iUm4BrjdEL0I8vlBntINk1sOPPxutMTx5zCXIB/3CMiWcFj3+CAulDLJh7/j1bpjKLx
+ +eowmaSNmm/3K5/YrlC/e7afF4GwvvbJma4wENA9vxSlJNhxepDbv
+X-Received: by 2002:a05:6a20:7d89:b0:19a:813c:62c4 with SMTP id
+ v9-20020a056a207d8900b0019a813c62c4mr339947pzj.29.1706148667162; 
+ Wed, 24 Jan 2024 18:11:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJZNtpzAOxDwX3zP2ZeUwQ+7BgepNDHaC7xXMWRq8cCEU8TufXabwT7NgX+/F9a9KA82jlhQ==
+X-Received: by 2002:a05:6a20:7d89:b0:19a:813c:62c4 with SMTP id
+ v9-20020a056a207d8900b0019a813c62c4mr339931pzj.29.1706148666898; 
+ Wed, 24 Jan 2024 18:11:06 -0800 (PST)
 Received: from [10.72.112.202] ([43.228.180.230])
  by smtp.gmail.com with ESMTPSA id
- 12-20020a170902e9cc00b001d7035b11d6sm11015403plk.254.2024.01.24.18.09.32
+ 12-20020a170902e9cc00b001d7035b11d6sm11015403plk.254.2024.01.24.18.11.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jan 2024 18:09:39 -0800 (PST)
-Message-ID: <8f5768fb-71f0-4c26-97d7-95177fa6cac3@redhat.com>
-Date: Thu, 25 Jan 2024 12:09:30 +1000
+ Wed, 24 Jan 2024 18:11:06 -0800 (PST)
+Message-ID: <f3465ee8-74f9-4b95-919b-16f7255c93a2@redhat.com>
+Date: Thu, 25 Jan 2024 12:11:01 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] hw/arm/exynos: Add missing QOM parent for CPU cores
+Subject: Re: [PATCH v2 2/6] hw/arm/exynos: Check for CPU types in
+ machine_run_board_init()
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -79,9 +80,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Alistair Francis <alistair@alistair23.me>,
  Igor Mammedov <imammedo@redhat.com>
 References: <20240123222508.13826-1-philmd@linaro.org>
- <20240123222508.13826-2-philmd@linaro.org>
+ <20240123222508.13826-3-philmd@linaro.org>
 From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20240123222508.13826-2-philmd@linaro.org>
+In-Reply-To: <20240123222508.13826-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
@@ -110,13 +111,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/24/24 08:25, Philippe Mathieu-Daudé wrote:
-> QDev objects created with qdev_new() need to manually add
-> their parent relationship with object_property_add_child().
+> Restrict MachineClass::valid_cpu_types[] to the single
+> valid CPU type.
+> 
+> Instead of ignoring invalid CPU type requested by the user:
+> 
+>    $ qemu-system-arm -M nuri -cpu cortex-a7 -S -monitor stdio
+>    QEMU 8.2.50 monitor - type 'help' for more information
+>    (qemu) info qom-tree
+>    /machine (nuri-machine)
+>      /soc (exynos4210)
+>        /cpu[0] (cortex-a9-arm-cpu)
+>        ...
+> 
+> We now display an error:
+> 
+>    $ qemu-system-arm -M nuri -cpu cortex-a7
+>    qemu-system-arm: Invalid CPU model: cortex-a7
+>    The only valid type is: cortex-a9
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/arm/exynos4210.c | 1 +
->   1 file changed, 1 insertion(+)
+>   hw/arm/exynos4_boards.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 > 
 
 Reviewed-by: Gavin Shan <gshan@redhat.com>
