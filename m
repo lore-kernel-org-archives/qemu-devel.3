@@ -4,94 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8EAC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 17:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD86C48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 18:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT3az-0007A0-Nm; Thu, 25 Jan 2024 12:32:57 -0500
+	id 1rT44o-00028N-5U; Thu, 25 Jan 2024 13:03:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rT3ax-0006sV-AA
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rT44l-00024S-Oj
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:03:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rT3av-0006rk-8W
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 12:32:54 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rT44j-0004Lv-Ks
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 13:03:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706203972;
+ s=mimecast20190719; t=1706205820;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YlyXHXLezAMliACVNbPNFAQBlgifrPDgzPLngRgk11A=;
- b=W9PWAABXqkYZOCmcNmDlL+uzuE1nOCVzWjBxDxyGj2kVGfWSNhF9B4XAUHD8nBYC2jyahA
- NMuOWfy7fuRCCDKHW2dMuZptM/f89jOtccLL+U2gfgfBvP1c4o3yHZLJhIgIL/JUSKnoU+
- /+BFD9/cFPqdGl1TxEROwS9KODAKcgQ=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-38Z7vPedMK2WbRQ65HhtUw-1; Thu, 25 Jan 2024 12:32:49 -0500
-X-MC-Unique: 38Z7vPedMK2WbRQ65HhtUw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a2d1e1fa245so310885066b.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 09:32:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706203968; x=1706808768;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YlyXHXLezAMliACVNbPNFAQBlgifrPDgzPLngRgk11A=;
- b=XD4mmvXPvCt6+2q+WdJOpl7SfCk8X0cGHUd12WeFXexkc9Z3+Qfp49eIbfNalCmpWs
- F+43F1jMsbSxkyaIwVvgZfk3MscdZyMrdjxe++kF66kv4avLyVNlGjlb9kz+HGrZpdgG
- FJ/qaUxB7/wYrX4Slr2axKm0QP/ybyyRyZZ9XF/Tu+xvmMkitI1P6czWXgSYh+7FXSpL
- 6TVJsLWFjF+3Pgi7ZypfyLYzxxImwgCBhZGx/bb1Zu7O7SDWszi0+FcNvsYB0dWDJ2zo
- pQUeJJFmc/fi04eB4F7lmQ46pDVKfJbPgo6SLqo878TiJlY53FHMRjO0SWYsOm+FKXN8
- ATHQ==
-X-Gm-Message-State: AOJu0YzQEL3Y/54UOWzcd4DSr77s5lAyh6qE2RN3nDerVqWHFIsFKHiU
- gLRHmOznUwcPkNIDeUIhWY7HOdhQzYwC5nFIZPURL+k9bjwTgOK0j8SQIfgzWA83Vj3Tt2Cl6/h
- GfQhkDdrzVWhQkAcndycG5335xcmazrUUtwe3wCq/4cwVePWuGrHW
-X-Received: by 2002:a17:907:c313:b0:a32:2205:6ad9 with SMTP id
- tl19-20020a170907c31300b00a3222056ad9mr307173ejc.295.1706203968191; 
- Thu, 25 Jan 2024 09:32:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH0rYlLb3jVgJrGvD076yy09SQsw94sU8PvEw0UuC2yArIGsuNnfpOkL3haK50oP5jVHH4qcw==
-X-Received: by 2002:a17:907:c313:b0:a32:2205:6ad9 with SMTP id
- tl19-20020a170907c31300b00a3222056ad9mr307168ejc.295.1706203967877; 
- Thu, 25 Jan 2024 09:32:47 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCVgGiiLwCopcOz00eAewnuyfXB3zBZ1Cy6fH49AEJAd6RR0glqIcMI2LdtzD8/yeiha72Dcsm8GFaJd3fZgTw6jkmKQNTnWxuZNrxJdBYRAbrJH5DPxRgHCjQo=
-Received: from ?IPV6:2003:cf:d73b:4169:9eef:dd9f:57fb:1235?
- (p200300cfd73b41699eefdd9f57fb1235.dip0.t-ipconnect.de.
- [2003:cf:d73b:4169:9eef:dd9f:57fb:1235])
- by smtp.gmail.com with ESMTPSA id
- cm2-20020a170907938200b00a2cc5199dd0sm1238341ejc.135.2024.01.25.09.32.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jan 2024 09:32:47 -0800 (PST)
-Message-ID: <08a66849-f190-4756-9b01-666f0d66afb6@redhat.com>
-Date: Thu, 25 Jan 2024 18:32:46 +0100
+ bh=YLn5NthawxaoNB5OXbCpHo9f4tYeIMJQ14cYuVpybxg=;
+ b=bst5Wx3vY3BDUG4ElBmaAMcgeHkcmtBLcb/BLHpHRnpgj+GbFnZwzgDB7juYW1Z0ykfLUp
+ 6mvckqu5v76/WJ/NusR5yhrtmSrGvnWu5QJl6Io0YDDYbHU8bQ2s1/ys61dBuZaUwYw0BV
+ 0Wm/Rf3yfWXk66M0uenQLStBfJj8AL4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-3MTE1ohrMg2tpTq_Xn9DRA-1; Thu,
+ 25 Jan 2024 13:03:34 -0500
+X-MC-Unique: 3MTE1ohrMg2tpTq_Xn9DRA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A665E383CCEC;
+ Thu, 25 Jan 2024 18:03:33 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.13])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C9D8E1121306;
+ Thu, 25 Jan 2024 18:03:32 +0000 (UTC)
+Date: Thu, 25 Jan 2024 13:03:26 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Fiona Ebner <f.ebner@proxmox.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH 2/2] virtio: Keep notifications disabled during drain
+Message-ID: <20240125180326.GA36016@fedora>
+References: <20240124173834.66320-1-hreitz@redhat.com>
+ <20240124173834.66320-3-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
- thread
-Content-Language: en-US
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
-References: <20231221212339.164439-1-kwolf@redhat.com>
- <20231221212339.164439-12-kwolf@redhat.com>
- <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
- <Za_zAj11uwavd2va@redhat.com>
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <Za_zAj11uwavd2va@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="jGUfvYasmf9PHV2E"
+Content-Disposition: inline
+In-Reply-To: <20240124173834.66320-3-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -109,91 +86,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.01.24 18:10, Kevin Wolf wrote:
-> Am 23.01.2024 um 17:40 hat Hanna Czenczek geschrieben:
->> On 21.12.23 22:23, Kevin Wolf wrote:
->>> From: Stefan Hajnoczi<stefanha@redhat.com>
->>>
->>> Stop depending on the AioContext lock and instead access
->>> SCSIDevice->requests from only one thread at a time:
->>> - When the VM is running only the BlockBackend's AioContext may access
->>>     the requests list.
->>> - When the VM is stopped only the main loop may access the requests
->>>     list.
->>>
->>> These constraints protect the requests list without the need for locking
->>> in the I/O code path.
->>>
->>> Note that multiple IOThreads are not supported yet because the code
->>> assumes all SCSIRequests are executed from a single AioContext. Leave
->>> that as future work.
->>>
->>> Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
->>> Reviewed-by: Eric Blake<eblake@redhat.com>
->>> Message-ID:<20231204164259.1515217-2-stefanha@redhat.com>
->>> Signed-off-by: Kevin Wolf<kwolf@redhat.com>
->>> ---
->>>    include/hw/scsi/scsi.h |   7 +-
->>>    hw/scsi/scsi-bus.c     | 181 ++++++++++++++++++++++++++++-------------
->>>    2 files changed, 131 insertions(+), 57 deletions(-)
->> My reproducer for https://issues.redhat.com/browse/RHEL-3934 now breaks more
->> often because of this commit than because of the original bug, i.e. when
->> repeatedly hot-plugging and unplugging a virtio-scsi and a scsi-hd device,
->> this tends to happen when unplugging the scsi-hd:
->>
->> {"execute":"device_del","arguments":{"id":"stg0"}}
->> {"return": {}}
->> qemu-system-x86_64: ../block/block-backend.c:2429: blk_get_aio_context:
->> Assertion `ctx == blk->ctx' failed.
 
-[...]
+--jGUfvYasmf9PHV2E
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> I don’t know anything about the problem yet, but as usual, I like
->> speculation and discovering how wrong I was later on, so one thing I came
->> across that’s funny about virtio-scsi is that requests can happen even while
->> a disk is being attached or detached.  That is, Linux seems to probe all
->> LUNs when a new virtio-scsi device is being attached, and it won’t stop just
->> because a disk is being attached or removed.  So maybe that’s part of the
->> problem, that we get a request while the BB is being detached, and
->> temporarily in an inconsistent state (BDS context differs from BB context).
-> I don't know anything about the problem either, but since you already
-> speculated about the cause, let me speculate about the solution:
-> Can we hold the graph writer lock for the tran_commit() call in
-> bdrv_try_change_aio_context()? And of course take the reader lock for
-> blk_get_aio_context(), but that should be completely unproblematic.
+On Wed, Jan 24, 2024 at 06:38:30PM +0100, Hanna Czenczek wrote:
+> During drain, we do not care about virtqueue notifications, which is why
+> we remove the handlers on it.  When removing those handlers, whether vq
+> notifications are enabled or not depends on whether we were in polling
+> mode or not; if not, they are enabled (by default); if so, they have
+> been disabled by the io_poll_start callback.
+>=20
+> Because we do not care about those notifications after removing the
+> handlers, this is fine.  However, we have to explicitly ensure they are
+> enabled when re-attaching the handlers, so we will resume receiving
+> notifications.  We do this in virtio_queue_aio_attach_host_notifier*().
+> If such a function is called while we are in a polling section,
+> attaching the notifiers will then invoke the io_poll_start callback,
+> re-disabling notifications.
+>=20
+> Because we will always miss virtqueue updates in the drained section, we
+> also need to poll the virtqueue once after attaching the notifiers.
+>=20
+> Buglink: https://issues.redhat.com/browse/RHEL-3934
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  include/block/aio.h |  7 ++++++-
+>  hw/virtio/virtio.c  | 42 ++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 48 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/include/block/aio.h b/include/block/aio.h
+> index 5d0a114988..8378553eb9 100644
+> --- a/include/block/aio.h
+> +++ b/include/block/aio.h
+> @@ -480,9 +480,14 @@ void aio_set_event_notifier(AioContext *ctx,
+>                              AioPollFn *io_poll,
+>                              EventNotifierHandler *io_poll_ready);
+> =20
+> -/* Set polling begin/end callbacks for an event notifier that has alread=
+y been
+> +/*
+> + * Set polling begin/end callbacks for an event notifier that has alread=
+y been
+>   * registered with aio_set_event_notifier.  Do nothing if the event noti=
+fier is
+>   * not registered.
+> + *
+> + * Note that if the io_poll_end() callback (or the entire notifier) is r=
+emoved
+> + * during polling, it will not be called, so an io_poll_begin() is not
+> + * necessarily always followed by an io_poll_end().
+>   */
+>  void aio_set_event_notifier_poll(AioContext *ctx,
+>                                   EventNotifier *notifier,
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 7549094154..4166da9e97 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -3556,6 +3556,17 @@ static void virtio_queue_host_notifier_aio_poll_en=
+d(EventNotifier *n)
+> =20
+>  void virtio_queue_aio_attach_host_notifier(VirtQueue *vq, AioContext *ct=
+x)
+>  {
+> +    /*
+> +     * virtio_queue_aio_detach_host_notifier() can leave notifications d=
+isabled.
+> +     * Re-enable them.  (And if detach has not been used before, notific=
+ations
+> +     * being enabled is still the default state while a notifier is atta=
+ched;
+> +     * see virtio_queue_host_notifier_aio_poll_end(), which will always =
+leave
+> +     * notifications enabled once the polling section is left.)
+> +     */
+> +    if (!virtio_queue_get_notification(vq)) {
+> +        virtio_queue_set_notification(vq, 1);
+> +    }
+> +
+>      aio_set_event_notifier(ctx, &vq->host_notifier,
+>                             virtio_queue_host_notifier_read,
+>                             virtio_queue_host_notifier_aio_poll,
+> @@ -3563,6 +3574,13 @@ void virtio_queue_aio_attach_host_notifier(VirtQue=
+ue *vq, AioContext *ctx)
+>      aio_set_event_notifier_poll(ctx, &vq->host_notifier,
+>                                  virtio_queue_host_notifier_aio_poll_begi=
+n,
+>                                  virtio_queue_host_notifier_aio_poll_end);
+> +
+> +    /*
+> +     * We will have ignored notifications about new requests from the gu=
+est
+> +     * during the drain, so "kick" the virt queue to process those reque=
+sts
+> +     * now.
+> +     */
+> +    virtio_queue_notify(vq->vdev, vq->queue_index);
 
-Actually, now that completely unproblematic part is giving me trouble.  
-I wanted to just put a graph lock into blk_get_aio_context() (making it 
-a coroutine with a wrapper), but callers of blk_get_aio_context() 
-generally assume the context is going to stay the BB’s context for as 
-long as their AioContext * variable is in scope.  I was tempted to think 
-callers know what happens to the BB they pass to blk_get_aio_context(), 
-and it won’t change contexts so easily, but then I remembered this is 
-exactly what happens in this case; we run 
-scsi_device_for_each_req_async_bh() in one thread (which calls 
-blk_get_aio_context()), and in the other, we change the BB’s context.
+event_notifier_set(&vq->host_notifier) is easier to understand because
+it doesn't contain a non-host_notifier code path that we must not take.
 
-It seems like there are very few blk_* functions right now that require 
-taking a graph lock around it, so I’m hesitant to go that route.  But if 
-we’re protecting a BB’s context via the graph write lock, I can’t think 
-of a way around having to take a read lock whenever reading a BB’s 
-context, and holding it for as long as we assume that context to remain 
-the BB’s context.  It’s also hard to figure out how long that is, case 
-by case; for example, dma_blk_read() schedules an AIO function in the BB 
-context; but we probably don’t care that this context remains the BB’s 
-context until the request is done.  In the case of 
-scsi_device_for_each_req_async_bh(), we already take care to re-schedule 
-it when it turns out the context is outdated, so it does seem quite 
-important here, and we probably want to keep the lock until after the 
-QTAILQ_FOREACH_SAFE() loop.
+Is there a reason why you used virtio_queue_notify() instead?
 
-On a tangent, this TOCTTOU problem makes me wary of other blk_* 
-functions that query information.  For example, fuse_read() (in 
-block/export/fuse.c) truncates requests to the BB length.  But what if 
-the BB length changes concurrently between blk_getlength() and 
-blk_pread()?  While we can justify using the graph lock for a BB’s 
-AioContext, we can’t use it for other metadata like its length.
+Otherwise:
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Hanna
+>  }
+> =20
+>  /*
+> @@ -3573,14 +3591,38 @@ void virtio_queue_aio_attach_host_notifier(VirtQu=
+eue *vq, AioContext *ctx)
+>   */
+>  void virtio_queue_aio_attach_host_notifier_no_poll(VirtQueue *vq, AioCon=
+text *ctx)
+>  {
+> +    /* See virtio_queue_aio_attach_host_notifier() */
+> +    if (!virtio_queue_get_notification(vq)) {
+> +        virtio_queue_set_notification(vq, 1);
+> +    }
+> +
+>      aio_set_event_notifier(ctx, &vq->host_notifier,
+>                             virtio_queue_host_notifier_read,
+>                             NULL, NULL);
+> +
+> +    /*
+> +     * See virtio_queue_aio_attach_host_notifier().
+> +     * Note that this may be unnecessary for the type of virtqueues this
+> +     * function is used for.  Still, it will not hurt to have a quick lo=
+ok into
+> +     * whether we can/should process any of the virtqueue elements.
+> +     */
+> +    virtio_queue_notify(vq->vdev, vq->queue_index);
+>  }
+> =20
+>  void virtio_queue_aio_detach_host_notifier(VirtQueue *vq, AioContext *ct=
+x)
+>  {
+>      aio_set_event_notifier(ctx, &vq->host_notifier, NULL, NULL, NULL);
+> +
+> +    /*
+> +     * aio_set_event_notifier_poll() does not guarantee whether io_poll_=
+end()
+> +     * will run after io_poll_begin(), so by removing the notifier, we d=
+o not
+> +     * know whether virtio_queue_host_notifier_aio_poll_end() has run af=
+ter a
+> +     * previous virtio_queue_host_notifier_aio_poll_begin(), i.e. whether
+> +     * notifications are enabled or disabled.  It does not really matter=
+ anyway;
+> +     * we just removed the notifier, so we do not care about notificatio=
+ns until
+> +     * we potentially re-attach it.  The attach_host_notifier functions =
+will
+> +     * ensure that notifications are enabled again when they are needed.
+> +     */
+>  }
+> =20
+>  void virtio_queue_host_notifier_read(EventNotifier *n)
+> --=20
+> 2.43.0
+>=20
+
+--jGUfvYasmf9PHV2E
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmWyom4ACgkQnKSrs4Gr
+c8jikQf/Sz45NWzHt/cjpIDqMX1Boam7tDOAkVdOUj4GYi3+jrk+3a11x1FYXyLB
+0toKrIlcl0zMgoM4/36w6+6jslA17rtfFgXnN8i8m8SftgFdRpbFZvP1oebJfeej
+DXR0yXoFXDnrwxn6srCcOIs2lg1SxtNcmDDLdkWXNmZTdEjUbhsV7mXE4TB+R0Jd
++TiZz/bAFMTOdD8Km1HnlVtlrHKOUQptZ23NYQ2DQXrm8OXU5RMMPDcF6YsQZ6eL
+c7Z2rnaTY7QiVeIblQZQn6Vynk9pyjb4Rqls6ilB68KwywEtIHGSF/nS+8iZ57FM
+c0JfzX9IGn3CsqM806TU8rCBOJ43cA==
+=1nWS
+-----END PGP SIGNATURE-----
+
+--jGUfvYasmf9PHV2E--
 
 
