@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D06C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5CFC48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqQS-0004Pv-5P; Wed, 24 Jan 2024 22:29:12 -0500
+	id 1rSqQE-00042T-MQ; Wed, 24 Jan 2024 22:28:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQP-0004Os-8T
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:09 -0500
+ id 1rSqQC-0003uq-Dn
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:56 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQN-0001E0-Fq
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:08 -0500
+ id 1rSqQ9-0001E0-AA
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153347; x=1737689347;
+ t=1706153333; x=1737689333;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=aKx76GEDnWqevQGtQVWwRbzYVLv0CmACuepOhLKyRX8=;
- b=HXmaPPP8T2S5nkQvNrCFZ+SoOWGsYf4+o8QKyWlLyvz286Ii+xcU61vk
- KzEDWt7TTwvuHxDLVWjVbHmpGiBYBIvz60FsZeU0D5sD3/PtFALvhbuSV
- 9LAf2Wblp7NGUkSXVCCW27kpGUTyR2MwKzueXKSrd9b9WnYrnh3euPFoy
- /M0+/6goi5PLGpfBbZzoTEHmNCjAT49RtVDJ8UR2qdGHL0K9IA0hTG7tB
- 8aB/Zu4BpTnS5ALNlPimYxk3R5f8o74/cm89AEuLHEu/LJnAo3FurQYyh
- 4IIwhLuKP6Wt1qphskrDh31GFfNN/S6mVbjVnoSenB9EsrKT8kkErf2rA w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9428564"
+ bh=MDV1CK+CwY5NNGZELqNeBXtymIPsaa9CAufkhjBYBw4=;
+ b=QOs7BaWN6fzfVLSmmv25FWMMuULQY2KCcCDNW+NDoJSh4jyfU01996Io
+ y/BxlYSB4O3YX9e271wMLfRetElA/mq8Ur8W8uTUCGDEAZcJxgyfQhc0Z
+ VMe1oEhLsy/Eyr3y91VKiTSYPDg+y8rmqyA+OUslna/lt+ifIKMTgb5hL
+ e58UWvqS5Mpf7p8ZtT/AgJ1Fcka1PklkgobyTyC5bgCDAnO1hhJWxAlSf
+ SNvnzn6fNUjvH5pjMw0+dD7F31Q6rSZHQ1xx4oB/VFlh8/PNoKCj6o05j
+ 1fnxg/FEPG44OuF7t9LYdTi3oGyel3SAjXlxP/qubViUHDRgfsIML9elA Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9428469"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9428564"
+   d="scan'208";a="9428469"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:25:27 -0800
+ 24 Jan 2024 19:25:16 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2085422"
+   d="scan'208";a="2085263"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:25:22 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:25:11 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 20/66] i386/tdx: Integrate tdx_caps->xfam_fixed0/1 into
- tdx_cpuid_lookup
-Date: Wed, 24 Jan 2024 22:22:42 -0500
-Message-Id: <20240125032328.2522472-21-xiaoyao.li@intel.com>
+Subject: [PATCH v4 18/66] i386/tdx: Make Intel-PT unsupported for TD guest
+Date: Wed, 24 Jan 2024 22:22:40 -0500
+Message-Id: <20240125032328.2522472-19-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,82 +93,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM requires userspace to pass XFAM configuration via CPUID 0xD leaves.
+Due to the fact that Intel-PT virtualization support has been broken in
+QEMU since Sapphire Rapids generation[1], below warning is triggered when
+luanching TD guest:
 
-Convert tdx_caps->xfam_fixed0/1 into corresponding
-tdx_cpuid_lookup[].tdx_fixed0/1 field of CPUID 0xD leaves. Thus the
-requirement can be applied naturally.
+  warning: host doesn't support requested feature: CPUID.07H:EBX.intel-pt [bit 25]
+
+Before Intel-pt is fixed in QEMU, just make Intel-PT unsupported for TD
+guest, to avoid the confusing warning.
+
+[1] https://lore.kernel.org/qemu-devel/20230531084311.3807277-1-xiaoyao.li@intel.com/
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/cpu.c     |  3 ---
- target/i386/cpu.h     |  3 +++
- target/i386/kvm/tdx.c | 24 ++++++++++++++++++++++++
- 3 files changed, 27 insertions(+), 3 deletions(-)
+Changes in v4:
+ - newly added patch;
+---
+ target/i386/kvm/tdx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 03822d9ba8ee..160ba8c940a2 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1575,9 +1575,6 @@ static const X86RegisterInfo32 x86_reg_info_32[CPU_NB_REGS32] = {
- };
- #undef REGISTER
- 
--/* CPUID feature bits available in XSS */
--#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
--
- ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
-     [XSTATE_FP_BIT] = {
-         /* x87 FP state component is always enabled if XSAVE is supported */
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 5b6bcba778ae..23d187d7cc5f 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -588,6 +588,9 @@ typedef enum X86Seg {
-                                  XSTATE_Hi16_ZMM_MASK | XSTATE_PKRU_MASK | \
-                                  XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK)
- 
-+/* CPUID feature bits available in XSS */
-+#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
-+
- /* CPUID feature words */
- typedef enum FeatureWord {
-     FEAT_1_EDX,         /* CPUID[1].EDX */
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 5dfea0378f26..4c8455783e36 100644
+index a962f8a4ea60..2703e97f991d 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -407,6 +407,30 @@ static void update_tdx_cpuid_lookup_by_tdx_caps(void)
-         entry->tdx_fixed0 &= ~config;
-         entry->tdx_fixed1 &= ~config;
+@@ -292,6 +292,11 @@ void tdx_get_supported_cpuid(uint32_t function, uint32_t index, int reg,
+     if (function == 1 && reg == R_ECX && !enable_cpu_pm) {
+         *ret &= ~CPUID_EXT_MONITOR;
      }
 +
-+    /*
-+     * Because KVM gets XFAM settings via CPUID leaves 0xD,  map
-+     * tdx_caps->xfam_fixed{0, 1} into tdx_cpuid_lookup[].tdx_fixed{0, 1}.
-+     *
-+     * Then the enforment applies in tdx_get_configurable_cpuid() naturally.
-+     */
-+    tdx_cpuid_lookup[FEAT_XSAVE_XCR0_LO].tdx_fixed0 =
-+            (uint32_t)~tdx_caps->xfam_fixed0 & CPUID_XSTATE_XCR0_MASK;
-+    tdx_cpuid_lookup[FEAT_XSAVE_XCR0_LO].tdx_fixed1 =
-+            (uint32_t)tdx_caps->xfam_fixed1 & CPUID_XSTATE_XCR0_MASK;
-+    tdx_cpuid_lookup[FEAT_XSAVE_XCR0_HI].tdx_fixed0 =
-+            (~tdx_caps->xfam_fixed0 & CPUID_XSTATE_XCR0_MASK) >> 32;
-+    tdx_cpuid_lookup[FEAT_XSAVE_XCR0_HI].tdx_fixed1 =
-+            (tdx_caps->xfam_fixed1 & CPUID_XSTATE_XCR0_MASK) >> 32;
-+
-+    tdx_cpuid_lookup[FEAT_XSAVE_XSS_LO].tdx_fixed0 =
-+            (uint32_t)~tdx_caps->xfam_fixed0 & CPUID_XSTATE_XSS_MASK;
-+    tdx_cpuid_lookup[FEAT_XSAVE_XSS_LO].tdx_fixed1 =
-+            (uint32_t)tdx_caps->xfam_fixed1 & CPUID_XSTATE_XSS_MASK;
-+    tdx_cpuid_lookup[FEAT_XSAVE_XSS_HI].tdx_fixed0 =
-+            (~tdx_caps->xfam_fixed0 & CPUID_XSTATE_XSS_MASK) >> 32;
-+    tdx_cpuid_lookup[FEAT_XSAVE_XSS_HI].tdx_fixed1 =
-+            (tdx_caps->xfam_fixed1 & CPUID_XSTATE_XSS_MASK) >> 32;
++    /* QEMU Intel-pt support is broken, don't advertise Intel-PT */
++    if (function == 7 && reg == R_EBX) {
++        *ret &= ~CPUID_7_0_EBX_INTEL_PT;
++    }
  }
  
- int tdx_kvm_init(MachineState *ms, Error **errp)
+ enum tdx_ioctl_level{
 -- 
 2.34.1
 
