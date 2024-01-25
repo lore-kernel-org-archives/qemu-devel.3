@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 503B9C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2987C47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqRr-0002Rp-Nu; Wed, 24 Jan 2024 22:30:39 -0500
+	id 1rSqSy-0005mS-1D; Wed, 24 Jan 2024 22:31:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqRq-0002Oj-4B
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:38 -0500
+ id 1rSqSb-0005Lf-9l
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:26 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqRn-0001Dr-V5
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:37 -0500
+ id 1rSqSW-0001Dr-GO
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153436; x=1737689436;
+ t=1706153480; x=1737689480;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=pw70+E9f7yP0q/kg6tok3Z3RGqPvOBZoP8fDG+f0630=;
- b=EncjZcTcDPWZ1Ni1RNXd2A87IBS5R1CMBV3pR4gUgMhAvSFByf/T5cJg
- R/n4bmVOtjjDWdzA2B+MEDdKwqMOBERiPA/5CunpP88cjn5i5DD4npjHm
- b7ud7kVoSdvIZxeFGrlnV5CyXTfyvr+T+27iN3ql6XV0PI+F4/4h3UfMs
- 7e/1P/t/FAyR8/wFtkeCmOsKwAVTJipwnhfAI2XK4+jjR10I9VnSJ0zwl
- rzurCrAARd3ENWYDUYELwI8tjV/68wweOpXxsMOpAeFTM/IFdZLTKIYxZ
- d91zr18XHn9nwSgY2Y/KkhUBuL+37a799gX3R0tZvNFFupORNMkpDJ+SK Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9429620"
+ bh=cFDdRJq7x7Q2vvZO3JoCS5Qlpsvshit/wI+5qgyo6o0=;
+ b=Vy4bhYZKKm5jC/GIxAqS5i0INvhSM6CqR/koeEVu2q/e8ORic+ILYF01
+ 8Jd9idEyiv9+bTd3UNX69RSG5wgH8nF3iUgrV794MtUxANBOHZwH5Vn14
+ VYlY/Fub1/V6cLC5iDrLSl6FPCw4pi8IpJ+ZFfApPogUbWlnP1CkAtiFf
+ S/2UyEqq/CI8Ooq9WuHSo1vtOoK5OJ9SEMY5baVslzsChIStkK+8A95NO
+ xYpzM6f2q8xnqGRcpCvMFN7FZWUhylCiggT15NayscVKsd3Pdd/HUzC+x
+ VMpTopBXmgLSLkdwfXGSuoNgjP6JC2DGqRdniZLl4VlVyvbPQ97k6JpwG w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430002"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9429620"
+   d="scan'208";a="9430002"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:27:28 -0800
+ 24 Jan 2024 19:28:12 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2085967"
+   d="scan'208";a="2086114"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:27:23 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:28:06 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 42/66] headers: Add definitions from UEFI spec for volumes,
- resources, etc...
-Date: Wed, 24 Jan 2024 22:23:04 -0500
-Message-Id: <20240125032328.2522472-43-xiaoyao.li@intel.com>
+Subject: [PATCH v4 50/66] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
+Date: Wed, 24 Jan 2024 22:23:12 -0500
+Message-Id: <20240125032328.2522472-51-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,228 +93,666 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add UEFI definitions for literals, enums, structs, GUIDs, etc... that
-will be used by TDX to build the UEFI Hand-Off Block (HOB) that is passed
-to the Trusted Domain Virtual Firmware (TDVF).
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-All values come from the UEFI specification [1], PI spec [2] and TDVF
-design guide[3].
+Add property "quote-generation-socket" to tdx-guest, which is a property
+of type SocketAddress to specify Quote Generation Service(QGS).
 
-[1] UEFI Specification v2.1.0 https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf
-[2] UEFI PI spec v1.8 https://uefi.org/sites/default/files/resources/UEFI_PI_Spec_1_8_March3.pdf
-[3] https://software.intel.com/content/dam/develop/external/us/en/documents/tdx-virtual-firmware-design-guide-rev-1.pdf
+On request of GetQuote, it connects to the QGS socket, read request
+data from shared guest memory, send the request data to the QGS,
+and store the response into shared guest memory, at last notify
+TD guest by interrupt.
 
+command line example:
+  qemu-system-x86_64 \
+    -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation-socket":{"type": "vsock", "cid":"1","port":"1234"}}' \
+    -machine confidential-guest-support=tdx0
+
+Note, above example uses vsock type socket because the QGS we used
+implements the vsock socket. It can be other types, like UNIX socket,
+which depends on the implementation of QGS.
+
+To avoid no response from QGS server, setup a timer for the transaction.
+If timeout, make it an error and interrupt guest. Define the threshold of
+time to 30s at present, maybe change to other value if not appropriate.
+
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Codeveloped-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Codeveloped-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/standard-headers/uefi/uefi.h | 198 +++++++++++++++++++++++++++
- 1 file changed, 198 insertions(+)
- create mode 100644 include/standard-headers/uefi/uefi.h
+Changes in v4:
+- merge next patch "i386/tdx: setup a timer for the qio channel";
 
-diff --git a/include/standard-headers/uefi/uefi.h b/include/standard-headers/uefi/uefi.h
+Changes in v3:
+- rename property "quote-generation-service" to "quote-generation-socket";
+- change the type of "quote-generation-socket" from str to
+  SocketAddress;
+- squash next patch into this one;
+---
+ qapi/qom.json                         |   6 +-
+ target/i386/kvm/meson.build           |   2 +-
+ target/i386/kvm/tdx-quote-generator.c | 170 ++++++++++++++++++++
+ target/i386/kvm/tdx-quote-generator.h |  95 +++++++++++
+ target/i386/kvm/tdx.c                 | 216 ++++++++++++++++++++++++++
+ target/i386/kvm/tdx.h                 |   6 +
+ 6 files changed, 493 insertions(+), 2 deletions(-)
+ create mode 100644 target/i386/kvm/tdx-quote-generator.c
+ create mode 100644 target/i386/kvm/tdx-quote-generator.h
+
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 15445f9e41fc..c60fb5710961 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -914,13 +914,17 @@
+ #     e.g., specific to the workload rather than the run-time or OS.
+ #     base64 encoded SHA384 digest.
+ #
++# @quote-generation-socket: socket address for Quote Generation
++#     Service(QGS)
++#
+ # Since: 9.0
+ ##
+ { 'struct': 'TdxGuestProperties',
+   'data': { '*sept-ve-disable': 'bool',
+             '*mrconfigid': 'str',
+             '*mrowner': 'str',
+-            '*mrownerconfig': 'str' } }
++            '*mrownerconfig': 'str',
++            '*quote-generation-socket': 'SocketAddress' } }
+ 
+ ##
+ # @ThreadContextProperties:
+diff --git a/target/i386/kvm/meson.build b/target/i386/kvm/meson.build
+index 30a90b4d371d..2fd7c27b76c4 100644
+--- a/target/i386/kvm/meson.build
++++ b/target/i386/kvm/meson.build
+@@ -9,7 +9,7 @@ i386_kvm_ss.add(when: 'CONFIG_XEN_EMU', if_true: files('xen-emu.c'))
+ 
+ i386_kvm_ss.add(when: 'CONFIG_SEV', if_false: files('sev-stub.c'))
+ 
+-i386_kvm_ss.add(when: 'CONFIG_TDX', if_true: files('tdx.c'), if_false: files('tdx-stub.c'))
++i386_kvm_ss.add(when: 'CONFIG_TDX', if_true: files('tdx.c', 'tdx-quote-generator.c'), if_false: files('tdx-stub.c'))
+ 
+ i386_system_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'), if_false: files('hyperv-stub.c'))
+ 
+diff --git a/target/i386/kvm/tdx-quote-generator.c b/target/i386/kvm/tdx-quote-generator.c
 new file mode 100644
-index 000000000000..b15aba796156
+index 000000000000..057ad09e7e95
 --- /dev/null
-+++ b/include/standard-headers/uefi/uefi.h
-@@ -0,0 +1,198 @@
++++ b/target/i386/kvm/tdx-quote-generator.c
+@@ -0,0 +1,170 @@
 +/*
-+ * Copyright (C) 2020 Intel Corporation
++ * QEMU TDX support
 + *
-+ * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
-+ *                        <isaku.yamahata at intel.com>
++ * Copyright Intel
 + *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ * Author:
++ *      Xiaoyao Li <xiaoyao.li@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory
 + *
 + */
 +
-+#ifndef HW_I386_UEFI_H
-+#define HW_I386_UEFI_H
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qapi/error.h"
++#include "qapi/qapi-visit-sockets.h"
 +
-+/***************************************************************************/
-+/*
-+ * basic EFI definitions
-+ * supplemented with UEFI Specification Version 2.8 (Errata A)
-+ * released February 2020
-+ */
-+/* UEFI integer is little endian */
++#include "tdx-quote-generator.h"
 +
-+typedef struct {
-+    uint32_t Data1;
-+    uint16_t Data2;
-+    uint16_t Data3;
-+    uint8_t Data4[8];
-+} EFI_GUID;
++typedef struct TdxQuoteGeneratorClass {
++    DeviceClass parent_class;
++} TdxQuoteGeneratorClass;
 +
-+typedef enum {
-+    EfiReservedMemoryType,
-+    EfiLoaderCode,
-+    EfiLoaderData,
-+    EfiBootServicesCode,
-+    EfiBootServicesData,
-+    EfiRuntimeServicesCode,
-+    EfiRuntimeServicesData,
-+    EfiConventionalMemory,
-+    EfiUnusableMemory,
-+    EfiACPIReclaimMemory,
-+    EfiACPIMemoryNVS,
-+    EfiMemoryMappedIO,
-+    EfiMemoryMappedIOPortSpace,
-+    EfiPalCode,
-+    EfiPersistentMemory,
-+    EfiUnacceptedMemoryType,
-+    EfiMaxMemoryType
-+} EFI_MEMORY_TYPE;
++OBJECT_DEFINE_TYPE(TdxQuoteGenerator, tdx_quote_generator, TDX_QUOTE_GENERATOR, OBJECT)
 +
-+#define EFI_HOB_HANDOFF_TABLE_VERSION 0x0009
++static void tdx_quote_generator_finalize(Object *obj)
++{
++}
 +
-+#define EFI_HOB_TYPE_HANDOFF              0x0001
-+#define EFI_HOB_TYPE_MEMORY_ALLOCATION    0x0002
-+#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR  0x0003
-+#define EFI_HOB_TYPE_GUID_EXTENSION       0x0004
-+#define EFI_HOB_TYPE_FV                   0x0005
-+#define EFI_HOB_TYPE_CPU                  0x0006
-+#define EFI_HOB_TYPE_MEMORY_POOL          0x0007
-+#define EFI_HOB_TYPE_FV2                  0x0009
-+#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED     0x000A
-+#define EFI_HOB_TYPE_UEFI_CAPSULE         0x000B
-+#define EFI_HOB_TYPE_FV3                  0x000C
-+#define EFI_HOB_TYPE_UNUSED               0xFFFE
-+#define EFI_HOB_TYPE_END_OF_HOB_LIST      0xFFFF
++static void tdx_quote_generator_class_init(ObjectClass *oc, void *data)
++{
++}
 +
-+typedef struct {
-+    uint16_t HobType;
-+    uint16_t HobLength;
-+    uint32_t Reserved;
-+} EFI_HOB_GENERIC_HEADER;
++static void tdx_quote_generator_init(Object *obj)
++{
++}
 +
-+typedef uint64_t EFI_PHYSICAL_ADDRESS;
-+typedef uint32_t EFI_BOOT_MODE;
++static void tdx_generate_quote_cleanup(struct tdx_generate_quote_task *task)
++{
++    timer_del(&task->timer);
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    uint32_t Version;
-+    EFI_BOOT_MODE BootMode;
-+    EFI_PHYSICAL_ADDRESS EfiMemoryTop;
-+    EFI_PHYSICAL_ADDRESS EfiMemoryBottom;
-+    EFI_PHYSICAL_ADDRESS EfiFreeMemoryTop;
-+    EFI_PHYSICAL_ADDRESS EfiFreeMemoryBottom;
-+    EFI_PHYSICAL_ADDRESS EfiEndOfHobList;
-+} EFI_HOB_HANDOFF_INFO_TABLE;
++    g_source_remove(task->watch);
++    qio_channel_close(QIO_CHANNEL(task->sioc), NULL);
++    object_unref(OBJECT(task->sioc));
 +
-+#define EFI_RESOURCE_SYSTEM_MEMORY          0x00000000
-+#define EFI_RESOURCE_MEMORY_MAPPED_IO       0x00000001
-+#define EFI_RESOURCE_IO                     0x00000002
-+#define EFI_RESOURCE_FIRMWARE_DEVICE        0x00000003
-+#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT  0x00000004
-+#define EFI_RESOURCE_MEMORY_RESERVED        0x00000005
-+#define EFI_RESOURCE_IO_RESERVED            0x00000006
-+#define EFI_RESOURCE_MEMORY_UNACCEPTED      0x00000007
-+#define EFI_RESOURCE_MAX_MEMORY_TYPE        0x00000008
++    /* Maintain the number of in-flight requests. */
++    qemu_mutex_lock(&task->quote_gen->lock);
++    task->quote_gen->num--;
++    qemu_mutex_unlock(&task->quote_gen->lock);
 +
-+#define EFI_RESOURCE_ATTRIBUTE_PRESENT                  0x00000001
-+#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED              0x00000002
-+#define EFI_RESOURCE_ATTRIBUTE_TESTED                   0x00000004
-+#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC           0x00000008
-+#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC         0x00000010
-+#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1           0x00000020
-+#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2           0x00000040
-+#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED           0x00000080
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED          0x00000100
-+#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED      0x00000200
-+#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE              0x00000400
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE        0x00000800
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE  0x00001000
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE     0x00002000
-+#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO                0x00004000
-+#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO                0x00008000
-+#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO                0x00010000
-+#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED        0x00020000
-+#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED      0x00040000
-+#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE    0x00080000
-+#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE         0x00100000
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE        0x00200000
-+#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE    0x00400000
-+#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT               0x00800000
-+#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE              0x01000000
-+#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE            0x02000000
++    task->completion(task);
++}
 +
-+typedef uint32_t EFI_RESOURCE_TYPE;
-+typedef uint32_t EFI_RESOURCE_ATTRIBUTE_TYPE;
++static gboolean tdx_get_quote_read(QIOChannel *ioc, GIOCondition condition,
++                                   gpointer opaque)
++{
++    struct tdx_generate_quote_task *task = opaque;
++    Error *err = NULL;
++    int ret;
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_GUID Owner;
-+    EFI_RESOURCE_TYPE ResourceType;
-+    EFI_RESOURCE_ATTRIBUTE_TYPE ResourceAttribute;
-+    EFI_PHYSICAL_ADDRESS PhysicalStart;
-+    uint64_t ResourceLength;
-+} EFI_HOB_RESOURCE_DESCRIPTOR;
++    ret = qio_channel_read(ioc, task->receive_buf + task->receive_buf_received,
++                           task->payload_len - task->receive_buf_received, &err);
++    if (ret < 0) {
++        if (ret ==  QIO_CHANNEL_ERR_BLOCK) {
++            return G_SOURCE_CONTINUE;
++        } else {
++            error_report_err(err);
++            task->status_code = TDX_VP_GET_QUOTE_ERROR;
++            goto end;
++        }
++    }
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_GUID Name;
++    task->receive_buf_received += ret;
++    if (ret == 0 || task->receive_buf_received == task->payload_len) {
++        task->status_code = TDX_VP_GET_QUOTE_SUCCESS;
++        goto end;
++    }
 +
-+    /* guid specific data follows */
-+} EFI_HOB_GUID_TYPE;
++    return G_SOURCE_CONTINUE;
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+} EFI_HOB_FIRMWARE_VOLUME;
++end:
++    tdx_generate_quote_cleanup(task);
++    return G_SOURCE_REMOVE;
++}
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+    EFI_GUID FvName;
-+    EFI_GUID FileName;
-+} EFI_HOB_FIRMWARE_VOLUME2;
++static gboolean tdx_send_report(QIOChannel *ioc, GIOCondition condition,
++                                gpointer opaque)
++{
++    struct tdx_generate_quote_task *task = opaque;
++    Error *err = NULL;
++    int ret;
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+    uint32_t AuthenticationStatus;
-+    bool ExtractedFv;
-+    EFI_GUID FvName;
-+    EFI_GUID FileName;
-+} EFI_HOB_FIRMWARE_VOLUME3;
++    ret = qio_channel_write(ioc, task->send_data + task->send_data_sent,
++                            task->send_data_size - task->send_data_sent, &err);
++    if (ret < 0) {
++        if (ret == QIO_CHANNEL_ERR_BLOCK) {
++            ret = 0;
++        } else {
++            error_report_err(err);
++            task->status_code = TDX_VP_GET_QUOTE_ERROR;
++            tdx_generate_quote_cleanup(task);
++            goto end;
++        }
++    }
++    task->send_data_sent += ret;
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    uint8_t SizeOfMemorySpace;
-+    uint8_t SizeOfIoSpace;
-+    uint8_t Reserved[6];
-+} EFI_HOB_CPU;
++    if (task->send_data_sent == task->send_data_size) {
++        task->watch = qio_channel_add_watch(QIO_CHANNEL(task->sioc), G_IO_IN,
++                                            tdx_get_quote_read, task, NULL);
++        goto end;
++    }
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+} EFI_HOB_MEMORY_POOL;
++    return G_SOURCE_CONTINUE;
 +
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
++end:
++    return G_SOURCE_REMOVE;
++}
 +
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+} EFI_HOB_UEFI_CAPSULE;
++static void tdx_quote_generator_connected(QIOTask *qio_task, gpointer opaque)
++{
++    struct tdx_generate_quote_task *task = opaque;
++    Error *err = NULL;
++    int ret;
 +
-+#define EFI_HOB_OWNER_ZERO                                      \
-+    ((EFI_GUID){ 0x00000000, 0x0000, 0x0000,                    \
-+        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } })
++    ret = qio_task_propagate_error(qio_task, &err);
++    if (ret) {
++        error_report_err(err);
++        task->status_code = TDX_VP_GET_QUOTE_QGS_UNAVAILABLE;
++        tdx_generate_quote_cleanup(task);
++        return;
++    }
 +
-+#endif
++    task->watch = qio_channel_add_watch(QIO_CHANNEL(task->sioc), G_IO_OUT,
++                                        tdx_send_report, task, NULL);
++}
++
++#define TRANSACTION_TIMEOUT 30000
++
++static void getquote_expired(void *opaque)
++{
++    struct tdx_generate_quote_task *task = opaque;
++
++    task->status_code = TDX_VP_GET_QUOTE_ERROR;
++    tdx_generate_quote_cleanup(task);
++}
++
++static void setup_get_quote_timer(struct tdx_generate_quote_task *task)
++{
++    int64_t time;
++
++    timer_init_ms(&task->timer, QEMU_CLOCK_VIRTUAL, getquote_expired, task);
++    time = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
++    timer_mod(&task->timer, time + TRANSACTION_TIMEOUT);
++}
++
++void tdx_generate_quote(struct tdx_generate_quote_task *task)
++{
++    struct TdxQuoteGenerator *quote_gen = task->quote_gen;
++    QIOChannelSocket *sioc;
++
++    sioc = qio_channel_socket_new();
++    task->sioc = sioc;
++
++    setup_get_quote_timer(task);
++
++    qio_channel_socket_connect_async(sioc, quote_gen->socket,
++                                     tdx_quote_generator_connected, task,
++                                     NULL, NULL);
++}
+diff --git a/target/i386/kvm/tdx-quote-generator.h b/target/i386/kvm/tdx-quote-generator.h
+new file mode 100644
+index 000000000000..54899d44aa6f
+--- /dev/null
++++ b/target/i386/kvm/tdx-quote-generator.h
+@@ -0,0 +1,95 @@
++#ifndef QEMU_I386_TDX_QUOTE_GENERATOR_H
++#define QEMU_I386_TDX_QUOTE_GENERATOR_H
++
++#include "qom/object_interfaces.h"
++#include "io/channel-socket.h"
++#include "exec/hwaddr.h"
++
++/* tdx quote generation */
++struct TdxQuoteGenerator {
++    Object parent_obj;
++
++    int num;
++    SocketAddress *socket;
++
++    QemuMutex lock;
++};
++
++#define TYPE_TDX_QUOTE_GENERATOR "tdx-quote-generator"
++
++OBJECT_DECLARE_SIMPLE_TYPE(TdxQuoteGenerator, TDX_QUOTE_GENERATOR)
++
++
++#define TDX_GET_QUOTE_STRUCTURE_VERSION 1ULL
++
++#define TDX_VP_GET_QUOTE_SUCCESS                0ULL
++#define TDX_VP_GET_QUOTE_IN_FLIGHT              (-1ULL)
++#define TDX_VP_GET_QUOTE_ERROR                  0x8000000000000000ULL
++#define TDX_VP_GET_QUOTE_QGS_UNAVAILABLE        0x8000000000000001ULL
++
++/* Limit to avoid resource starvation. */
++#define TDX_GET_QUOTE_MAX_BUF_LEN       (128 * 1024)
++#define TDX_MAX_GET_QUOTE_REQUEST       16
++
++#define TDX_GET_QUOTE_HDR_SIZE          24
++
++/* Format of pages shared with guest. */
++struct tdx_get_quote_header {
++    /* Format version: must be 1 in little endian. */
++    uint64_t structure_version;
++
++    /*
++     * GetQuote status code in little endian:
++     *   Guest must set error_code to 0 to avoid information leak.
++     *   Qemu sets this before interrupting guest.
++     */
++    uint64_t error_code;
++
++    /*
++     * in-message size in little endian: The message will follow this header.
++     * The in-message will be send to QGS.
++     */
++    uint32_t in_len;
++
++    /*
++     * out-message size in little endian:
++     * On request, out_len must be zero to avoid information leak.
++     * On return, message size from QGS. Qemu overwrites this field.
++     * The message will follows this header.  The in-message is overwritten.
++     */
++    uint32_t out_len;
++
++    /*
++     * Message buffer follows.
++     * Guest sets message that will be send to QGS.  If out_len > in_len, guest
++     * should zero remaining buffer to avoid information leak.
++     * Qemu overwrites this buffer with a message returned from QGS.
++     */
++};
++
++struct tdx_generate_quote_task {
++    hwaddr buf_gpa;
++    hwaddr payload_gpa;
++    uint64_t payload_len;
++
++    char *send_data;
++    uint64_t send_data_size;
++    uint64_t send_data_sent;
++
++    char *receive_buf;
++    uint64_t receive_buf_received;
++
++    uint64_t status_code;
++    struct tdx_get_quote_header hdr;
++
++    QIOChannelSocket *sioc;
++    guint watch;
++    QEMUTimer timer;
++    struct TdxQuoteGenerator *quote_gen;
++
++    void (*completion)(struct tdx_generate_quote_task *task);
++};
++
++void tdx_generate_quote(struct tdx_generate_quote_task *task);
++
++#endif /* QEMU_I386_TDX_QUOTE_GENERATOR_H */
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 602b5656d462..d27e775eec5d 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -16,6 +16,7 @@
+ #include "qemu/base64.h"
+ #include "qemu/mmap-alloc.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-visit-sockets.h"
+ #include "qom/object_interfaces.h"
+ #include "standard-headers/asm-x86/kvm_para.h"
+ #include "sysemu/kvm.h"
+@@ -23,12 +24,16 @@
+ #include "exec/address-spaces.h"
+ #include "exec/ramblock.h"
+ 
++#include "hw/i386/apic_internal.h"
++#include "hw/i386/apic-msidef.h"
+ #include "hw/i386/e820_memory_layout.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/tdvf.h"
+ #include "hw/i386/tdvf-hob.h"
++#include "hw/pci/msi.h"
+ #include "kvm_i386.h"
+ #include "tdx.h"
++#include "tdx-quote-generator.h"
+ #include "../cpu-internal.h"
+ 
+ #define TDX_SUPPORTED_KVM_FEATURES  ((1U << KVM_FEATURE_NOP_IO_DELAY) | \
+@@ -852,6 +857,175 @@ int tdx_parse_tdvf(void *flash_ptr, int size)
+     return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
+ }
+ 
++static void tdx_inject_interrupt(uint32_t apicid, uint32_t vector)
++{
++    int ret;
++
++    if (vector < 32 || vector > 255) {
++        return;
++    }
++
++    MSIMessage msg = {
++        .address = ((apicid & 0xff) << MSI_ADDR_DEST_ID_SHIFT) |
++                   (((uint64_t)apicid & 0xffffff00) << 32),
++        .data = vector | (APIC_DM_FIXED << MSI_DATA_DELIVERY_MODE_SHIFT),
++    };
++
++    ret = kvm_irqchip_send_msi(kvm_state, msg);
++    if (ret < 0) {
++        /* In this case, no better way to tell it to guest.  Log it. */
++        error_report("TDX: injection %d failed, interrupt lost (%s).\n",
++                     vector, strerror(-ret));
++    }
++}
++
++static hwaddr tdx_shared_bit(X86CPU *cpu)
++{
++    return (cpu->phys_bits > 48) ? BIT_ULL(51) : BIT_ULL(47);
++}
++
++static void tdx_get_quote_completion(struct tdx_generate_quote_task *task)
++{
++    int ret;
++
++    if (task->status_code == TDX_VP_GET_QUOTE_SUCCESS) {
++        ret = address_space_write(&address_space_memory, task->payload_gpa,
++                                  MEMTXATTRS_UNSPECIFIED, task->receive_buf,
++                                  task->receive_buf_received);
++        if (ret != MEMTX_OK) {
++            error_report("TDX: get-quote: failed to write quote data.\n");
++        } else {
++            task->hdr.out_len = cpu_to_le64(task->receive_buf_received);
++        }
++    }
++    task->hdr.error_code = cpu_to_le32(task->status_code);
++
++    /* Publish the response contents before marking this request completed. */
++    smp_wmb();
++    ret = address_space_write(&address_space_memory, task->buf_gpa,
++                              MEMTXATTRS_UNSPECIFIED, &task->hdr,
++                              TDX_GET_QUOTE_HDR_SIZE);
++    if (ret != MEMTX_OK) {
++        error_report("TDX: get-quote: failed to update GetQuote header.");
++    }
++
++    tdx_inject_interrupt(tdx_guest->event_notify_apicid,
++                         tdx_guest->event_notify_vector);
++
++    g_free(task->send_data);
++    g_free(task->receive_buf);
++    g_free(task);
++}
++
++static int tdx_handle_get_quote(X86CPU *cpu, struct kvm_tdx_vmcall *vmcall)
++{
++    struct tdx_generate_quote_task *task;
++    struct tdx_get_quote_header hdr;
++    hwaddr buf_gpa = vmcall->in_r12;
++    uint64_t buf_len = vmcall->in_r13;
++
++    QEMU_BUILD_BUG_ON(sizeof(struct tdx_get_quote_header) != TDX_GET_QUOTE_HDR_SIZE);
++
++    vmcall->status_code = TDG_VP_VMCALL_INVALID_OPERAND;
++
++    if (buf_len == 0) {
++        return 0;
++    }
++
++    /* GPA must be shared. */
++    if (!(buf_gpa & tdx_shared_bit(cpu))) {
++        return 0;
++    }
++    buf_gpa &= ~tdx_shared_bit(cpu);
++
++    if (!QEMU_IS_ALIGNED(buf_gpa, 4096) || !QEMU_IS_ALIGNED(buf_len, 4096)) {
++        vmcall->status_code = TDG_VP_VMCALL_ALIGN_ERROR;
++        return 0;
++    }
++
++    if (address_space_read(&address_space_memory, buf_gpa, MEMTXATTRS_UNSPECIFIED,
++                           &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
++        error_report("TDX: get-quote: failed to read GetQuote header.\n");
++        return -1;
++    }
++
++    if (le64_to_cpu(hdr.structure_version) != TDX_GET_QUOTE_STRUCTURE_VERSION) {
++        return 0;
++    }
++
++    /*
++     * Paranoid: Guest should clear error_code and out_len to avoid information
++     * leak.  Enforce it.  The initial value of them doesn't matter for qemu to
++     * process the request.
++     */
++    if (le64_to_cpu(hdr.error_code) != TDX_VP_GET_QUOTE_SUCCESS ||
++        le32_to_cpu(hdr.out_len) != 0) {
++        return 0;
++    }
++
++    /* Only safe-guard check to avoid too large buffer size. */
++    if (buf_len > TDX_GET_QUOTE_MAX_BUF_LEN ||
++        le32_to_cpu(hdr.in_len) > buf_len - TDX_GET_QUOTE_HDR_SIZE) {
++        return 0;
++    }
++
++    vmcall->status_code = TDG_VP_VMCALL_SUCCESS;
++    if (!tdx_guest->quote_generator) {
++        hdr.error_code = cpu_to_le64(TDX_VP_GET_QUOTE_QGS_UNAVAILABLE);
++        if (address_space_write(&address_space_memory, buf_gpa,
++                                MEMTXATTRS_UNSPECIFIED,
++                                &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
++            error_report("TDX: failed to update GetQuote header.\n");
++            return -1;
++        }
++        return 0;
++    }
++
++    qemu_mutex_lock(&tdx_guest->quote_generator->lock);
++    if (tdx_guest->quote_generator->num >= TDX_MAX_GET_QUOTE_REQUEST) {
++        qemu_mutex_unlock(&tdx_guest->quote_generator->lock);
++        vmcall->status_code = TDG_VP_VMCALL_RETRY;
++        return 0;
++    }
++    tdx_guest->quote_generator->num++;
++    qemu_mutex_unlock(&tdx_guest->quote_generator->lock);
++
++    /* Mark the buffer in-flight. */
++    hdr.error_code = cpu_to_le64(TDX_VP_GET_QUOTE_IN_FLIGHT);
++    if (address_space_write(&address_space_memory, buf_gpa,
++                            MEMTXATTRS_UNSPECIFIED,
++                            &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
++        error_report("TDX: failed to update GetQuote header.\n");
++        return -1;
++    }
++
++    task = g_malloc(sizeof(*task));
++    task->buf_gpa = buf_gpa;
++    task->payload_gpa = buf_gpa + TDX_GET_QUOTE_HDR_SIZE;
++    task->payload_len = buf_len - TDX_GET_QUOTE_HDR_SIZE;
++    task->hdr = hdr;
++    task->quote_gen = tdx_guest->quote_generator;
++    task->completion = tdx_get_quote_completion;
++
++    task->send_data_size = le32_to_cpu(hdr.in_len);
++    task->send_data = g_malloc(task->send_data_size);
++    task->send_data_sent = 0;
++
++    if (address_space_read(&address_space_memory, task->payload_gpa,
++                           MEMTXATTRS_UNSPECIFIED, task->send_data,
++                           task->send_data_size) != MEMTX_OK) {
++        g_free(task->send_data);
++        return -1;
++    }
++
++    task->receive_buf = g_malloc0(task->payload_len);
++    task->receive_buf_received = 0;
++
++    tdx_generate_quote(task);
++
++    return 0;
++}
++
+ static int tdx_handle_setup_event_notify_interrupt(X86CPU *cpu,
+                                                    struct kvm_tdx_vmcall *vmcall)
+ {
+@@ -882,6 +1056,8 @@ static int tdx_handle_vmcall(X86CPU *cpu, struct kvm_tdx_vmcall *vmcall)
+     }
+ 
+     switch (vmcall->subfunction) {
++    case TDG_VP_VMCALL_GET_QUOTE:
++        return tdx_handle_get_quote(cpu, vmcall);
+     case TDG_VP_VMCALL_SETUP_EVENT_NOTIFY_INTERRUPT:
+         return tdx_handle_setup_event_notify_interrupt(cpu, vmcall);
+     default:
+@@ -978,6 +1154,40 @@ static void tdx_guest_set_mrownerconfig(Object *obj, const char *value, Error **
+     tdx->mrownerconfig = g_strdup(value);
+ }
+ 
++static void tdx_guest_get_quote_generation(Object *obj, Visitor *v,
++                                            const char *name, void *opaque,
++                                            Error **errp)
++{
++    TdxGuest *tdx = TDX_GUEST(obj);
++
++    visit_type_SocketAddress(v, name, &tdx->quote_generator->socket, errp);
++}
++
++static void tdx_guest_set_quote_generation(Object *obj, Visitor *v,
++                                           const char *name, void *opaque,
++                                           Error **errp)
++{
++    TdxGuest *tdx = TDX_GUEST(obj);
++    SocketAddress *sock = NULL;
++    Object *qg_obj;
++    TdxQuoteGenerator *quote_generator;
++
++    if (!visit_type_SocketAddress(v, name, &sock, errp)) {
++        return;
++    }
++
++    if (tdx->quote_generator) {
++        object_unref(tdx->quote_generator);
++    }
++
++    qg_obj = object_new(TYPE_TDX_QUOTE_GENERATOR);
++    quote_generator = TDX_QUOTE_GENERATOR(qg_obj);
++    quote_generator->socket = sock;
++    qemu_mutex_init(&quote_generator->lock);
++
++    tdx->quote_generator = quote_generator;
++}
++
+ /* tdx guest */
+ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
+                                    tdx_guest,
+@@ -1012,6 +1222,12 @@ static void tdx_guest_init(Object *obj)
+                             tdx_guest_get_mrownerconfig,
+                             tdx_guest_set_mrownerconfig);
+ 
++    tdx->quote_generator = NULL;
++    object_property_add(obj, "quote-generation-socket", "SocketAddress",
++                            tdx_guest_get_quote_generation,
++                            tdx_guest_set_quote_generation,
++                            NULL, NULL);
++
+     tdx->event_notify_vector = -1;
+     tdx->event_notify_apicid = -1;
+ }
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index 992916e4c905..c6e4c275262d 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -9,6 +9,8 @@
+ #include "hw/i386/tdvf.h"
+ #include "sysemu/kvm.h"
+ 
++#include "tdx-quote-generator.h"
++
+ #define TYPE_TDX_GUEST "tdx-guest"
+ #define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
+ 
+@@ -16,6 +18,7 @@ typedef struct TdxGuestClass {
+     ConfidentialGuestSupportClass parent_class;
+ } TdxGuestClass;
+ 
++#define TDG_VP_VMCALL_GET_QUOTE                         0x10002ULL
+ #define TDG_VP_VMCALL_SETUP_EVENT_NOTIFY_INTERRUPT      0x10004ULL
+ 
+ #define TDG_VP_VMCALL_SUCCESS           0x0000000000000000ULL
+@@ -55,6 +58,9 @@ typedef struct TdxGuest {
+     /* runtime state */
+     uint32_t event_notify_vector;
+     uint32_t event_notify_apicid;
++
++    /* GetQuote */
++    TdxQuoteGenerator *quote_generator;
+ } TdxGuest;
+ 
+ #ifdef CONFIG_TDX
 -- 
 2.34.1
 
