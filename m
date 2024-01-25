@@ -4,105 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA773C48260
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73BAC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT5ia-0001MZ-Gi; Thu, 25 Jan 2024 14:48:56 -0500
+	id 1rT5n3-0004b9-T7; Thu, 25 Jan 2024 14:53:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rT5iZ-0001MH-0D
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:48:55 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rT5iX-0007xi-Gj
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:48:54 -0500
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40PIoNRL028342; Thu, 25 Jan 2024 19:48:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=Qed8Dob5Dm4XW/VPbOFQ9E3e49cYk02/zz73BLm3N24=;
- b=fSrqYbOPteusXqe8gTwHDHckZq0Zt6uOwkAoboDY2RjRK6GrzFzSlgm5ZToRT9oJt2zi
- reWr7EzU/GD/tOC/KjRt5P9u630Jw6k2gJYfihkwJbZkV7stvB/cGo8jiQnKobgvQAiB
- z3mLXDeUFwMqIh1tHAn4j8afJvUVKvo0z/pMIlNrvgLrVMJ2ytDrwj2H6a6oRSapPtW2
- MI34gMsL1hNBGQlQKJlNVfRb9ATzGnSKrSG9+O/j2ZKGU4fQdoQXC0RP1Qc77TFcSOiY
- fRn44VK7fswyYUjMYkbavLilyASr4iHeT7DEeesKNEwpRg1ZpxFAB50voHMRpVybTx3D TA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vuw9617f5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jan 2024 19:48:48 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40PJVtHL001222;
- Thu, 25 Jan 2024 19:48:47 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vuw9617ev-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jan 2024 19:48:47 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40PJVTqT022429; Thu, 25 Jan 2024 19:48:47 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vrt0me59n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jan 2024 19:48:47 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40PJmjEm19268202
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Jan 2024 19:48:45 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 06FBA20043;
- Thu, 25 Jan 2024 19:48:45 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1A54E20040;
- Thu, 25 Jan 2024 19:48:44 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.21.210])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 25 Jan 2024 19:48:44 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Warner Losh <imp@bsdimp.com>
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 0/3] make vm-build-freebsd fixes
-Date: Thu, 25 Jan 2024 20:48:15 +0100
-Message-ID: <20240125194840.1564-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rT5n2-0004al-Qr
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:32 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rT5n0-00018B-U7
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:32 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2901ceb0d33so860077a91.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 11:53:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1706212409; x=1706817209; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C/oyfu8F9JrvZRYOrB3TV7TzLXN+nQeozYC9MMIMKt4=;
+ b=muTUxIjIyHToMoqPH5H+zN9d73rGRz4RPCJ/I7frxYwy97Fgp/gX1tA8lKonIXw/Uq
+ 0ATil8GUand02aumrGhgVqYr8Mt8CoEuGWWLlWnGk74N95DqTr0B5phnduQ/Ib2Kl6jI
+ 25vqMMeE0JXLetr3Z4oSSrz9RScxu/ocR/qMiUZOP1j1L28qDv5kpxW3ENGaNfWiYfUV
+ xr2gLU1JbBFeIn0uVLsw1tMjygfNJ7ZKrifC95IYqCfGV55e+RoqVASp3p6J+PdifqkB
+ dRXmNapU8WxgWZF4hDitgKTbPZf/FnzhEgdFtoSow5Qr00Fx+N2GS+MJGuJx51PzTHOH
+ 2R+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706212409; x=1706817209;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=C/oyfu8F9JrvZRYOrB3TV7TzLXN+nQeozYC9MMIMKt4=;
+ b=NnMQNOyxQKwDvpNzAyKhw6DplV8blkVtR5ITjoJXAYVekRGPX7GW2Vs8Cv87vFZsOX
+ 2pLuFCYuZDIvqKm+sAjYa7zpaFwFoHreTzI8CEaeTJwyLT9ByCRTgYATJg/Nil3c+pLA
+ Q6ZgNCJRk2IgQmn4Xl/70HabZKBn5+0CYJNUPJ3meM1nS1MmbJxO9Hi+EXvEprLT1gmb
+ DkFve09iHJRw2Qdj+xvCChIdrUAo3UGsClXItbW45R8FdHGIVqL3kH92cNoj/LFHJo3C
+ HM+yrdIcJjqXU1pIr0bUoLQosW7tjcEdh20mE+4P+zyPpBc1gbD+GGj6DJsIvxutf5nz
+ srPQ==
+X-Gm-Message-State: AOJu0YyAyW1pjMoHrs4w02pHitZONsANs098re34xBGCFtauVuJ3PnoE
+ WJA4ZTpEZ5afnmxYFuu/hUnf+MBSThNFtZJ2mda1WqRYyCJmukMhHp5grA+qj+trxO93kdXIaRG
+ O
+X-Google-Smtp-Source: AGHT+IF5d+a2aej83/NQuV1JReLHg5rFAIKC9IRPwRlVTqtA73VDKA9JHyN6xVNzzmb2+6B9RkdckA==
+X-Received: by 2002:a17:90b:390e:b0:293:9966:6b1a with SMTP id
+ ob14-20020a17090b390e00b0029399666b1amr73360pjb.39.1706212408793; 
+ Thu, 25 Jan 2024 11:53:28 -0800 (PST)
+Received: from grind.. ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
+ by smtp.gmail.com with ESMTPSA id
+ r7-20020a17090ad40700b0028b6759d8c1sm1958613pju.29.2024.01.25.11.53.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jan 2024 11:53:28 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH 1/6] target/riscv/tcg: set 'mmu' with 'satp' in
+ cpu_set_profile()
+Date: Thu, 25 Jan 2024 16:53:14 -0300
+Message-ID: <20240125195319.329181-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240125195319.329181-1-dbarboza@ventanamicro.com>
+References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: SdYDaiEj5u4sH03T4ny1E3FWmPpOmZbO
-X-Proofpoint-ORIG-GUID: OxvFBlSyUOw4A4P1zT2sJ0aAWViZ96p5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_12,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- clxscore=1011 adultscore=0 mlxlogscore=837 priorityscore=1501 phishscore=0
- mlxscore=0 spamscore=0 suspectscore=0 impostorscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2401250143
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,25 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Recent changes in options handling removed the 'mmu' default the bare
+CPUs had, meaning that we must enable 'mmu' by hand when using the
+rva22s64 profile CPU.
 
-I needed to verify that my qemu-user changes didn't break BSD, and
-Daniel Berrange suggested vm-build-freebsd on IRC. I had several
-problems with it, which this series resolves.
+Given that this profile is setting a satp mode, it already implies that
+we need a 'mmu'. Enable the 'mmu' in this case.
 
-Best regards,
-Ilya
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/tcg/tcg-cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Ilya Leoshkevich (3):
-  tests/vm: Set UseDNS=no in the sshd configuration
-  tests/vm/freebsd: Reload the sshd configuration
-  meson: Disable CONFIG_NOTIFY1 on FreeBSD
-
- meson.build        | 1 +
- tests/vm/basevm.py | 2 ++
- tests/vm/freebsd   | 2 ++
- 3 files changed, 5 insertions(+)
-
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index da437975b4..88f92d1c7d 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1107,6 +1107,7 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+ 
+ #ifndef CONFIG_USER_ONLY
+     if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
++        object_property_set_bool(obj, "mmu", true, NULL);
+         const char *satp_prop = satp_mode_str(profile->satp_mode,
+                                               riscv_cpu_is_32bit(cpu));
+         object_property_set_bool(obj, satp_prop, profile->enabled, NULL);
 -- 
 2.43.0
 
