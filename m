@@ -4,77 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C69EC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 12:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E2A4C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 12:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSz4l-0005cq-UJ; Thu, 25 Jan 2024 07:43:24 -0500
+	id 1rSz8f-0006Z1-QL; Thu, 25 Jan 2024 07:47:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSz4g-0005cD-QL
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 07:43:18 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rSz4c-0003Uu-M7
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 07:43:17 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-55cca88b6a5so1402442a12.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 04:43:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706186590; x=1706791390; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZBo2p2FT+kQJVb1ClssDnQgpm0jNvb9prJhWz+pDlgs=;
- b=e/Tcl7z6W4mRpP66lwCByIXf2b7d3wQ3x/nwA5G4ugfa/UqpGyJpLujZoX54GfKpQB
- 9gu+iI3wqwPR3bViiyzCx5GmG5efcXNJqUINIt0/xrXCxPRzWqaYzv07hUX73tCj5I/Z
- I6mPVJSBPK5I5+7p4X9jjYHUAovVIYu5jV38NASMqKHhRb8xpuFV4cDOZb1lU41fG7tQ
- fTxvTxGBKS3cNV62wSuJLu0S0yfkp99azbHgOpMPay/rZYCK4Kjr5wIeKG7F+vuRwpgh
- EIaHdZbwvrSAJ88HswnH7GYxLrWxrdRJ2SwKtsL/li33FGzH+QUUD8NXvIzUYx0dVmfj
- HdtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706186590; x=1706791390;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZBo2p2FT+kQJVb1ClssDnQgpm0jNvb9prJhWz+pDlgs=;
- b=LOxz+bG9lFiTy0QGbKmZxWv7bfnDhXJFSI8VlAIqea/NSNRi1uOdehJTL1Bd5Psvpc
- J7w8vEhs/fNIeAveC2EUTwHIKj0rcs8PPenELak4doEl2F68UJ7YDZa6JQLcYaAKYq2W
- 5osnBS/Mx9HKaslYe3qGTbFSgIs8Lk/jHBE9gBtl1ZwlFjkLMSt6D9qrVG9YaoxyayR2
- LHHq956cgBwjlS+wDTGtms6V3BPkBGSoZZZtEwq9ddY5BlfXviQ7GX+6xluGtWXcjF+p
- LZqUYlnkwS41XDA7xTg4n1S9FFTisPTMrRcVj920beFszQio6XNxir1w1YENZIfVq46O
- b+Ww==
-X-Gm-Message-State: AOJu0YxItojdcv5qjizK1tb0R1DM+mIUBHx/1bfhChwpDJ+2e+ekGC/2
- kaTUuQcIL+/6YyeNuFbjrCRa0Z9lDCv/xv9h5YYRugoMTVMEagyPnjhRyi+MvjfOFAn5Eoa8ZIJ
- S9tC8ZUYEwYxenk4VtbExyjfNDTqlGSlUe4Eg1g==
-X-Google-Smtp-Source: AGHT+IHuSZRAOx0L/by82S3yKFUXyk9IudxIsKBTKEFHn3w+GEFvzVNrAL0MKAtUQhF/CYCTYfotIpIaV3+Ek6NEGE8=
-X-Received: by 2002:aa7:dcd3:0:b0:55a:c0e7:1e03 with SMTP id
- w19-20020aa7dcd3000000b0055ac0e71e03mr627592edu.71.1706186590082; Thu, 25 Jan
- 2024 04:43:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rSz8a-0006YH-2e; Thu, 25 Jan 2024 07:47:20 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rSz8Y-0007wA-56; Thu, 25 Jan 2024 07:47:19 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id AF44F4928A;
+ Thu, 25 Jan 2024 13:47:14 +0100 (CET)
+Message-ID: <36a903e5-c646-4596-a6e1-a7b1e2571c43@proxmox.com>
+Date: Thu, 25 Jan 2024 13:47:13 +0100
 MIME-Version: 1.0
-References: <20240122173706.4019545-1-nabihestefan@google.com>
- <20240122173706.4019545-2-nabihestefan@google.com>
-In-Reply-To: <20240122173706.4019545-2-nabihestefan@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jan 2024 12:42:59 +0000
-Message-ID: <CAFEAcA_nvmAvoDvxabkbrkghAY1OwwNS52-ua1XeEdFPmvTqEg@mail.gmail.com>
-Subject: Re: [PATCH v14 1/9] hw/misc: Add Nuvoton's PCI Mailbox Module
-To: Nabih Estefan <nabihestefan@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- wuhaotsh@google.com, jasowang@redhat.com, avi.fishman@nuvoton.com, 
- kwliu@nuvoton.com, tomer.maimon@nuvoton.com, Hila.Miranda-Kuzi@nuvoton.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] qapi: blockdev-backup: add discard-source parameter
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ xiechanglong.d@gmail.com, wencongyang2@huawei.com, hreitz@redhat.com,
+ kwolf@redhat.com, jsnow@redhat.com
+References: <20240117160737.1057513-1-vsementsov@yandex-team.ru>
+ <20240117160737.1057513-4-vsementsov@yandex-team.ru>
+ <d0cbb4ed-bdb9-4487-ab7b-4b5e72a36e7e@proxmox.com>
+In-Reply-To: <d0cbb4ed-bdb9-4487-ab7b-4b5e72a36e7e@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,30 +61,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jan 2024 at 17:37, Nabih Estefan <nabihestefan@google.com> wrote:
->
-> From: Hao Wu <wuhaotsh@google.com>
->
-> The PCI Mailbox Module is a high-bandwidth communcation module
-> between a Nuvoton BMC and CPU. It features 16KB RAM that are both
-> accessible by the BMC and core CPU. and supports interrupt for
-> both sides.
->
-> This patch implements the BMC side of the PCI mailbox module.
-> Communication with the core CPU is emulated via a chardev and
-> will be in a follow-up patch.
+Am 24.01.24 um 16:03 schrieb Fiona Ebner:
+> Am 17.01.24 um 17:07 schrieb Vladimir Sementsov-Ogievskiy:
+>> Add a parameter that enables discard-after-copy. That is mostly useful
+>> in "push backup with fleecing" scheme, when source is snapshot-access
+>> format driver node, based on copy-before-write filter snapshot-access
+>> API:
+>>
+>> [guest]      [snapshot-access] ~~ blockdev-backup ~~> [backup target]
+>>    |            |
+>>    | root       | file
+>>    v            v
+>> [copy-before-write]
+>>    |             |
+>>    | file        | target
+>>    v             v
+>> [active disk]   [temp.img]
+>>
+>> In this case discard-after-copy does two things:
+>>
+>>  - discard data in temp.img to save disk space
+>>  - avoid further copy-before-write operation in discarded area
+>>
+>> Note that we have to declare WRITE permission on source in
+>> copy-before-write filter, for discard to work.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> 
+> Ran into another issue when the cluster_size of the fleecing image is
+> larger than for the backup target, e.g.
+> 
+>> #!/bin/bash
+>> rm /tmp/fleecing.qcow2
+>> ./qemu-img create /tmp/disk.qcow2 -f qcow2 1G
+>> ./qemu-img create /tmp/fleecing.qcow2 -o cluster_size=2M -f qcow2 1G
+>> ./qemu-img create /tmp/backup.qcow2 -f qcow2 1G
+>> ./qemu-system-x86_64 --qmp stdio \
+>> --blockdev qcow2,node-name=node0,file.driver=file,file.filename=/tmp/disk.qcow2 \
+>> --blockdev qcow2,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.qcow2,discard=unmap \
+>> --blockdev qcow2,node-name=node2,file.driver=file,file.filename=/tmp/backup.qcow2 \
+>> <<EOF
+>> {"execute": "qmp_capabilities"}
+>> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+>> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "discard": "unmap", "node-name": "snap0" } }
+>> {"execute": "blockdev-backup", "arguments": { "device": "snap0", "target": "node2", "sync": "full", "job-id": "backup0", "discard-source": true } }
+>> EOF
+> 
+> will fail with
+> 
+>> qemu-system-x86_64: ../util/hbitmap.c:570: hbitmap_reset: Assertion `QEMU_IS_ALIGNED(count, gran) || (start + count == hb->orig_size)' failed.
+> 
+> Backtrace shows the assert happens while discarding, when resetting the
+> BDRVCopyBeforeWriteState access_bitmap
+>  > #6  0x0000555556142a2a in hbitmap_reset (hb=0x555557e01b80, start=0,
+> count=1048576) at ../util/hbitmap.c:570
+>> #7  0x0000555555f80764 in bdrv_reset_dirty_bitmap_locked (bitmap=0x55555850a660, offset=0, bytes=1048576) at ../block/dirty-bitmap.c:563
+>> #8  0x0000555555f807ab in bdrv_reset_dirty_bitmap (bitmap=0x55555850a660, offset=0, bytes=1048576) at ../block/dirty-bitmap.c:570
+>> #9  0x0000555555f7bb16 in cbw_co_pdiscard_snapshot (bs=0x5555581a7f60, offset=0, bytes=1048576) at ../block/copy-before-write.c:330
+>> #10 0x0000555555f8d00a in bdrv_co_pdiscard_snapshot (bs=0x5555581a7f60, offset=0, bytes=1048576) at ../block/io.c:3734
+>> #11 0x0000555555fd2380 in snapshot_access_co_pdiscard (bs=0x5555582b4f60, offset=0, bytes=1048576) at ../block/snapshot-access.c:55
+>> #12 0x0000555555f8b65d in bdrv_co_pdiscard (child=0x5555584fe790, offset=0, bytes=1048576) at ../block/io.c:3144
+>> #13 0x0000555555f78650 in block_copy_task_entry (task=0x555557f588f0) at ../block/block-copy.c:597
+> 
+> My guess for the cause is that in block_copy_calculate_cluster_size() we
+> only look at the target. But now that we need to discard the source,
+> we'll also need to consider that for the calculation?
+> 
 
+Just querying the source and picking the maximum won't work either,
+because snapshot-access does not currently implement .bdrv_co_get_info
+and because copy-before-write (doesn't implement .bdrv_co_get_info and
+is a filter) will just return the info of its file child. But the
+discard will go to the target child.
 
-> +// The device is using a Little Endian Protocol.
-> +// If running into errors, please check what protocol is being expected.
+If I do
 
-(1) This is not the right format for a comment in our coding style.
-(2) This is not sufficient to count as protocol documentation.
+1. .bdrv_co_get_info in snapshot-access: return info from file child
+2. .bdrv_co_get_info in copy-before-write: return maximum cluster_size
+from file child and target child
+3. block_copy_calculate_cluster_size: return maximum from source and target
 
-The protocol should be documented in enough detail that I could,
-by reading *only the comment and not the code at all*, implement
-something that connects to the chardev and talks to the device.
+then the issue does go away, but I don't know if that's not violating
+any assumptions and probably there's a better way to avoid the issue?
 
-thanks
--- PMM
+Best Regards,
+Fiona
+
 
