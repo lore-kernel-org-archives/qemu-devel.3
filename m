@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D41C47422
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 196FEC47422
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 19:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT5nI-0004gm-Fl; Thu, 25 Jan 2024 14:53:49 -0500
+	id 1rT5n1-0004aO-4h; Thu, 25 Jan 2024 14:53:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rT5nE-0004fi-M0
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:44 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1rT5mz-0004Zr-6z
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:29 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rT5nC-0001bP-Us
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:44 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5ce6b5e3c4eso3792998a12.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 11:53:42 -0800 (PST)
+ id 1rT5mx-00015N-Fp
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 14:53:28 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-29041136f73so3842001a91.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 11:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706212421; x=1706817221; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SBiik9g1hx97vjGuUcUYUffnQTp9SD2PKIA/lEbjSmE=;
- b=g2ngQMNH9OZIo+vyqz5bfU6Ky258cUk4dswczPQ9kvnHxDNDWACBJp44g5l+v29pF4
- d7KVarPx6/Ag53CaQmtGeEE9e2A+pZ0jCIruYjzda4/+aLQjFtztOBY2r9Q1Z5eLyOAG
- HqiYUnrXxuc8aA2AwWjPSWk3xmyTC310TULCEuqFZ/lKmxvQONTjxXkrcQZcMGDU+xMC
- DKWJW8e7NXYcz4TdIUbaQHJHopzMeMzDfWfHG6o6+Acfm0miEWLr9kBLDHEn2yDEZ/3V
- o42bN3XvxARNZPzchXMfL6Lw4V48U6a1+EgiqSOYaMLcUoeXsZolx0BfoP91CKYoklCY
- Wa4A==
+ d=ventanamicro.com; s=google; t=1706212405; x=1706817205; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MKkWlwwYYk5o7CvSFPpJVirm/B1Ja/1V+c7BjnxxjbA=;
+ b=IKcWSfMe0tgGmyLv72Bx1maAj643wozeh/Kp5R/egW2IoLxPoTQWoKOVoOKxYmGmXB
+ u9azgbEoTyjUuhlc4zad08XP1jA0El1aRCJOca+ugRIpusUCAEj/22Z0ic2CYyK//xIO
+ FW8YBJz3JvaJlY2oM+AmiQKEcaNKKd1lP/oKJP37B2ZR81rLZTVZ8MQ+5DzV/hitkb/Y
+ G31xSK8O5pBFwlU8jf4H8XVWfzQaXHUvaYi62LLqoN5yVS5I7TFiIj1jDHBB3YPqyrz8
+ 6y4HxKQkxgaHUDOt24zvGmaSFBCvPGNtaOy3OSIDIqhiASjnEAl7wZ12aoCBUzqnZhW3
+ m62w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706212421; x=1706817221;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SBiik9g1hx97vjGuUcUYUffnQTp9SD2PKIA/lEbjSmE=;
- b=qc3HqvUUTh6MgRhDAxe5npaFbhS2fyxcgaxsrszXZo4JfoOu9qdhdi7uoYleEjmi8J
- 2UA6D6w8v0WWYiswSp2d1QbmY0UdKe4TWulXBh2o3w3bJgZaqoHPZyVMXRKBu6+1r5Ky
- iYVKgi5vMP8BYohBEfKMmy+ff7rEvukEd0Wzy42xWGfdAQGv5g/S3p8sLnXQbwEobqFz
- lUmeTRPMpYKdn6KSRqeGzqvsn3hJj6rPOX8/rBaHikL7S9nSfM0BHtwqWGBMOjXNfCwb
- 7bBxr8I6QdmbS0P38DDESd1oSWCWdmSfXk2ZpkPAuhdiSef7xFKtE2YAWJa/4JZZ8NIe
- To8Q==
-X-Gm-Message-State: AOJu0Yz4wGSdFVRRV0F57B3qSrV36k9YC/QaW1PZ3lDykhEVoc3fILMA
- WLVRxtZXkBGyCOyi1ZMfg250hOOdChEPaZtKIL8KI8iR61xaJGWFWQ92J8gPUhjvdMZHwUmSGf6
- 1
-X-Google-Smtp-Source: AGHT+IFD0WOrv6nrjq96zwvaJPlRiVf32b4TwM3zf0rVDSpJmuP7prTqIicpfEo5SXpQ50vKvP28UA==
-X-Received: by 2002:a17:90a:680e:b0:28e:8522:7a3f with SMTP id
- p14-20020a17090a680e00b0028e85227a3fmr129707pjj.28.1706212421019; 
- Thu, 25 Jan 2024 11:53:41 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706212405; x=1706817205;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MKkWlwwYYk5o7CvSFPpJVirm/B1Ja/1V+c7BjnxxjbA=;
+ b=oFnOlmrlbDNUUJH01Spgk9+5R4QOXmLd+L2+i7/xdI01znOjPhg6oVyZQkLR9qMx7Y
+ wN5/A55MJGnnFMNJhXBUz0eYeOqY+stfyE/BvPoxP4dnghacKnXpbwJfQWixWhz7rDHp
+ U7DQZeouio7UAx3zpA0OAJtDN23jLCLJ2VGn+Wsb0T3jErX5v0sXIhXZFku99FlbDn4O
+ 5r9m2U5TzllmpkkbACZxjhLWQ7WOOdyuKsHREpgMVugkoRtlVFEtyj+wvoz4e0J1oSGU
+ GeQobt5DtnUNAQiC45frkXnxFtS/9Z0dEsoMZ4mDoB41zALNJb4TJKV5qPZwfwHZG0i1
+ mpzw==
+X-Gm-Message-State: AOJu0Yy1o+iWYN6obVz0SrzoENFAU/2FIByRIRDfTGsuBlcmDoczVixo
+ O6xrU8viU1yVpHrs40eSdgpZ3iEpQuyhPScH2C7T0QCnyqsHxh+WfNXo9LRE/5ilKwdDmpj4F9o
+ F
+X-Google-Smtp-Source: AGHT+IH+EqFEyaFymb9+H9z7kPe1kSYtvIEtTur9cLU4QGToXQNwdydtHW9t2+rsHf57v+j3ZMYDDg==
+X-Received: by 2002:a17:90b:a16:b0:28c:a632:1f87 with SMTP id
+ gg22-20020a17090b0a1600b0028ca6321f87mr137281pjb.34.1706212405597; 
+ Thu, 25 Jan 2024 11:53:25 -0800 (PST)
 Received: from grind.. ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
  by smtp.gmail.com with ESMTPSA id
- r7-20020a17090ad40700b0028b6759d8c1sm1958613pju.29.2024.01.25.11.53.38
+ r7-20020a17090ad40700b0028b6759d8c1sm1958613pju.29.2024.01.25.11.53.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 11:53:40 -0800 (PST)
+ Thu, 25 Jan 2024 11:53:25 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  ajones@ventanamicro.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 5/6] target/riscv: Gate hardware A/D PTE bit updating
-Date: Thu, 25 Jan 2024 16:53:18 -0300
-Message-ID: <20240125195319.329181-6-dbarboza@ventanamicro.com>
+Subject: [PATCH 0/6] riscv: named features riscv,isa, 'svade' rework
+Date: Thu, 25 Jan 2024 16:53:13 -0300
+Message-ID: <20240125195319.329181-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240125195319.329181-1-dbarboza@ventanamicro.com>
-References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,128 +94,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <ajones@ventanamicro.com>
+Hi,
 
-Gate hardware A/D PTE bit updating on {m,h}envcfg.ADUE and only
-enable menvcfg.ADUE on reset if svade has not been selected. Now
-that we also consider svade, we have four possible configurations:
+This is a bundle of fixes based on discoveries that were made in the
+last week or so:
 
- 1) !svade && !svadu
-    use hardware updating and there's no way to disable it
-    (the default, which maintains past behavior. Maintaining
-     the default, even with !svadu is a change that fixes [1])
+- what we call "named features" are actually real extensions, which are
+  considered to be ratified by the profile spec that defines them. This
+  means that we need to add riscv,isa strings for them. More info can be
+  found on the commit msg of patch 2;
 
- 2) !svade && svadu
-    use hardware updating, but also provide {m,h}envcfg.ADUE,
-    allowing software to switch to exception mode
-    (being able to switch is a change which fixes [1])
+- the design behind 'svade' and 'svadu' is wrong. 'svade' does not mean
+  'we do not have svadu'. In fact they can coexist. Patch 5 gives more
+  details about it.
 
- 3) svade && !svadu
-    use exception mode and there's no way to switch to hardware
-    updating
-    (this behavior change fixes [2])
 
- 4) svade && svadu
-    use exception mode, but also provide {m,h}envcfg.ADUE,
-    allowing software to switch to hardware updating
-    (this behavior change fixes [2])
+After this series, 'svade' is promoted to a regular extension and all
+the named features QEMU implements are now being displayed in riscv,isa.
 
-Fixes: 0af3f115e68e ("target/riscv: Add *envcfg.HADE related check in address translation") [1]
-Fixes: 48531f5adb2a ("target/riscv: implement svade") [2]
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu.c         |  2 +-
- target/riscv/cpu_helper.c  | 18 ++++++++++++++----
- target/riscv/tcg/tcg-cpu.c | 16 +++++-----------
- 3 files changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 7fd433daee..a56c2ff91d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -960,7 +960,7 @@ static void riscv_cpu_reset_hold(Object *obj)
-     env->two_stage_lookup = false;
- 
-     env->menvcfg = (cpu->cfg.ext_svpbmt ? MENVCFG_PBMTE : 0) |
--                   (cpu->cfg.ext_svadu ? MENVCFG_ADUE : 0);
-+                   (!cpu->cfg.ext_svade && cpu->cfg.ext_svadu ? MENVCFG_ADUE : 0);
-     env->henvcfg = 0;
- 
-     /* Initialized default priorities of local interrupts. */
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 8da9104da4..9da9758cb4 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -907,7 +907,9 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-     }
- 
-     bool pbmte = env->menvcfg & MENVCFG_PBMTE;
--    bool adue = env->menvcfg & MENVCFG_ADUE;
-+    bool svade = riscv_cpu_cfg(env)->ext_svade;
-+    bool svadu = riscv_cpu_cfg(env)->ext_svadu;
-+    bool adue = svadu ? env->menvcfg & MENVCFG_ADUE : !svade;
- 
-     if (first_stage && two_stage && env->virt_enabled) {
-         pbmte = pbmte && (env->henvcfg & HENVCFG_PBMTE);
-@@ -1082,9 +1084,17 @@ restart:
-         return TRANSLATE_FAIL;
-     }
- 
--    /* If necessary, set accessed and dirty bits. */
--    target_ulong updated_pte = pte | PTE_A |
--                (access_type == MMU_DATA_STORE ? PTE_D : 0);
-+    target_ulong updated_pte = pte;
-+
-+    /*
-+     * If ADUE is enabled, set accessed and dirty bits.
-+     * Otherwise raise an exception if necessary.
-+     */
-+    if (adue) {
-+        updated_pte |= PTE_A | (access_type == MMU_DATA_STORE ? PTE_D : 0);
-+    } else if (!(pte & PTE_A) || (access_type == MMU_DATA_STORE && !(pte & PTE_D))) {
-+        return TRANSLATE_FAIL;
-+    }
- 
-     /* Page table updates need to be atomic with MTTCG enabled */
-     if (updated_pte != pte && !is_debug) {
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 6d5028cf84..bc3c45b117 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -196,18 +196,14 @@ static bool cpu_cfg_offset_is_named_feat(uint32_t ext_offset)
- 
- static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_offset)
- {
--    switch (feat_offset) {
--    case CPU_CFG_OFFSET(ext_zic64b):
-+     /*
-+      * All other named features are already enabled
-+      * in riscv_tcg_cpu_instance_init().
-+      */
-+    if (feat_offset == CPU_CFG_OFFSET(ext_zic64b)) {
-         cpu->cfg.cbom_blocksize = 64;
-         cpu->cfg.cbop_blocksize = 64;
-         cpu->cfg.cboz_blocksize = 64;
--        break;
--    case CPU_CFG_OFFSET(ext_svade):
--        cpu->cfg.ext_svadu = false;
--        break;
--    default:
--        /* Named feature already enabled in riscv_tcg_cpu_instance_init */
--        return;
-     }
- }
- 
-@@ -349,8 +345,6 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
-     cpu->cfg.ext_zic64b = cpu->cfg.cbom_blocksize == 64 &&
-                           cpu->cfg.cbop_blocksize == 64 &&
-                           cpu->cfg.cboz_blocksize == 64;
--
--    cpu->cfg.ext_svade = !cpu->cfg.ext_svadu;
- }
- 
- static void riscv_cpu_validate_g(RISCVCPU *cpu)
+Andrew Jones (3):
+  target/riscv: Reset henvcfg to zero
+  target/riscv: Gate hardware A/D PTE bit updating
+  target/riscv: Promote svade to a normal extension
+
+Daniel Henrique Barboza (3):
+  target/riscv/tcg: set 'mmu' with 'satp' in cpu_set_profile()
+  target/riscv: add riscv,isa to named features
+  target/riscv: add remaining named features
+
+ target/riscv/cpu.c         | 63 ++++++++++++++++++++++++++++----------
+ target/riscv/cpu_cfg.h     | 15 +++++++--
+ target/riscv/cpu_helper.c  | 18 ++++++++---
+ target/riscv/csr.c         |  2 +-
+ target/riscv/tcg/tcg-cpu.c | 42 +++++++++++++++----------
+ 5 files changed, 99 insertions(+), 41 deletions(-)
+
 -- 
 2.43.0
 
