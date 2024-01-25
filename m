@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EB1C48260
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DE9C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqRU-0000UN-Be; Wed, 24 Jan 2024 22:30:16 -0500
+	id 1rSqTY-0001VM-Qt; Wed, 24 Jan 2024 22:32:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqRQ-0008Qz-AE
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:12 -0500
+ id 1rSqTQ-00014S-OR
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:16 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqRO-0001E0-Bz
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:11 -0500
+ id 1rSqTP-0001Dr-4b
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153410; x=1737689410;
+ t=1706153535; x=1737689535;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=uTljjXS9RD18pQISuHrBizkOSd90HeW/IsWeJlzYk+4=;
- b=EjIY8OTdOFFjytfigqRmPzDJervXXz3mDwCUBxpPczT+BU1cV4nsC4AA
- AIg3iM9GTjDht8oD4k2SzwaS4gw0L7B4ZDIr/8pxWiLaD5VJ0/kIzoxHa
- iTbqRnFh0xlEwpxFz7f2XEipUf/p5S81tCwwYABL0tJRuRIqUkRMbhy6+
- Us86O4TB2GFoOejzXLQ4lwp2oKYTG3l9MVOsWxlTQyoLP5fZTQcu05cLN
- ODde7OyTT/8H5tmTFUftopIiL6x2Jq7IDhp0wQvQ0g68OGT0oOmiESWxX
- yT4hrlQ6++zyFIGExbCDiZSujqOLcQZz5eRL1Az1oh7e6/jJywHrT1uzR Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9429276"
+ bh=maYjgz/h/ZZjwQV0B3brw6jcZafKzTlp30cuMRoIjBA=;
+ b=iAL2CllfVQonGbDJZbOt+750HqvuATqKObYPbjdIUndkbVoMAmnlDRP+
+ TVIvVtf2/+AEiGt01qKwThPk+ZEc599/E2Fr5EUX/c3ylAqwOnRqdE5aH
+ C+yHl4jXRNbtb9znjKEesypgcr4K3eNnQ8y0kzCb6RG034JDsVtxhq2XU
+ fC/z2k8Qbr5zWZF8NL1hbdffvKcV3+NoApwBOwK3EBWyLePjY6XA8XIuN
+ C754wTJw2aLeQ2JLIs0qCspRJTn3/3Ex5kpnPbVmzDna3n5kK/ZsNSIjI
+ vibC9zEx8W1WLF63x3PscoTFpj9QfXkYdX9a73Bib0NXFZXXdgbxkSmC4 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430556"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9429276"
+   d="scan'208";a="9430556"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:26:50 -0800
+ 24 Jan 2024 19:29:26 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2085819"
+   d="scan'208";a="2086706"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:26:45 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:29:21 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 35/66] kvm/tdx: Ignore memory conversion to shared of
- unassigned region
-Date: Wed, 24 Jan 2024 22:22:57 -0500
-Message-Id: <20240125032328.2522472-36-xiaoyao.li@intel.com>
+Subject: [PATCH v4 64/66] i386/tdx: Skip kvm_put_apicbase() for TDs
+Date: Wed, 24 Jan 2024 22:23:26 -0500
+Message-Id: <20240125032328.2522472-65-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,49 +93,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Isaku Yamahata <isaku.yamahata@intel.com>
+KVM doesn't allow wirting to MSR_IA32_APICBASE for TDs.
 
-TDX requires vMMIO region to be shared.  For KVM, MMIO region is the region
-which kvm memslot isn't assigned to (except in-kernel emulation).
-qemu has the memory region for vMMIO at each device level.
-
-While OVMF issues MapGPA(to-shared) conservatively on 32bit PCI MMIO
-region, qemu doesn't find corresponding vMMIO region because it's before
-PCI device allocation and memory_region_find() finds the device region, not
-PCI bus region.  It's safe to ignore MapGPA(to-shared) because when guest
-accesses those region they use GPA with shared bit set for vMMIO.  Ignore
-memory conversion request of non-assigned region to shared and return
-success.  Otherwise OVMF is confused and panics there.
-
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- accel/kvm/kvm-all.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ target/i386/kvm/kvm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index e26e9121b30d..eb8b3925dbe1 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2943,6 +2943,18 @@ static int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-     section = memory_region_find(get_system_memory(), start, size);
-     mr = section.mr;
-     if (!mr) {
-+        /*
-+         * Ignore converting non-assigned region to shared.
-+         *
-+         * TDX requires vMMIO region to be shared to inject #VE to guest.
-+         * OVMF issues conservatively MapGPA(shared) on 32bit PCI MMIO region,
-+         * and vIO-APIC 0xFEC00000 4K page.
-+         * OVMF assigns 32bit PCI MMIO region to
-+         * [top of low memory: typically 2GB=0xC000000,  0xFC00000)
-+         */
-+        if (!to_private) {
-+            return 0;
-+        }
-         return -1;
-     }
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 128cce929ed3..109f778ba14d 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3065,6 +3065,11 @@ void kvm_put_apicbase(X86CPU *cpu, uint64_t value)
+ {
+     int ret;
  
++    /* TODO: Allow accessing guest state for debug TDs. */
++    if (is_tdx_vm()) {
++        return;
++    }
++
+     ret = kvm_put_one_msr(cpu, MSR_IA32_APICBASE, value);
+     assert(ret == 1);
+ }
 -- 
 2.34.1
 
