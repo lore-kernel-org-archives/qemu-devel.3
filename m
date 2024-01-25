@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C95C8C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 11:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C905C48260
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 11:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSyLS-0003HJ-Qo; Thu, 25 Jan 2024 06:56:34 -0500
+	id 1rSyLU-0003I9-2p; Thu, 25 Jan 2024 06:56:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rSyLR-0003Gx-9d
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 06:56:33 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1rSyLS-0003HL-Mv
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 06:56:34 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rSyLP-0004yr-Ct
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 06:56:33 -0500
+ id 1rSyLP-0004z4-DC
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 06:56:34 -0500
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c29:fcc6:0:640:eb21:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 1B03960B5D;
- Thu, 25 Jan 2024 14:56:24 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 7F43E60BE5;
+ Thu, 25 Jan 2024 14:56:26 +0300 (MSK)
 Received: from davydov-max-nux.yandex-team.ru (unknown
  [2a02:6b8:b081:1220::1:4])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AuSJvL1IYeA0-wFmYrPCR; Thu, 25 Jan 2024 14:56:23 +0300
+ ESMTPSA id AuSJvL1IYeA0-oEljuE07; Thu, 25 Jan 2024 14:56:25 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1706183783;
- bh=0uiZeGyMSUa2QmI5W8xm1E0pgZzN4f5fA8o0yfSG2BA=;
- h=Cc:To:Message-Id:Date:Subject:From;
- b=N5+JEVYDSC/LUjDFuzzYLcKUerxQvYWTASoSRHWasvA0lx9GzkWIick0wpf4akMNs
- TmNiNhLhuv84pqKvZjtsrDcPZk4GTys3MtfGG+wt45l5XaepjtkDxsIi7f3ncW4bEu
- /lclutDVjAvQaTaTmlGNlAz38JpBZGOpLCLLJvJg=
+ s=default; t=1706183785;
+ bh=hu8jYt4ZexfRPQMt+iDW2pNu8liod6iwXg6FOJKzodI=;
+ h=In-Reply-To:Cc:References:To:Message-Id:Date:Subject:From;
+ b=hI6RvO4+g0YjJdHGwCVOU47GT5uaIhKj3/L6hnleZcMFEeJoLmqwBhc2DPJ22+ocs
+ BQ3d2XcI3rFHrY2Jt63JtEiVzM64+Jy11+syrrAiw7yn3EptwTvEfmbgm8CUMHmqpd
+ XK+ETW6qG7jsd8vPtvQfiVetN46RyIgwBWW6V0Ew=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Maksim Davydov <davydov-max@yandex-team.ru>
@@ -48,21 +47,25 @@ Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  davydov-max@yandex-team.ru, vsementsov@yandex-team.ru,
  alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
  michael.labiuk@virtuozzo.com
-Subject: [PATCH v8 0/4] compare machine type compat_props
-Date: Thu, 25 Jan 2024 14:56:06 +0300
-Message-Id: <20240125115610.23697-1-davydov-max@yandex-team.ru>
+Subject: [PATCH v8 3/4] python/qemu/machine: add method to retrieve
+ QEMUMachine::binary field
+Date: Thu, 25 Jan 2024 14:56:09 +0300
+Message-Id: <20240125115610.23697-4-davydov-max@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240125115610.23697-1-davydov-max@yandex-team.ru>
+References: <20240125115610.23697-1-davydov-max@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,64 +81,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This script can be used to choose the best machine type in the
-appropriate cases. Also we have to check compat_props of the old MT
-after changes to be sure that they haven't broken old the MT. For
-example, pc_compat_3_1 of pc-q35-3.1 has Icelake-Client which was
-removed.
+Add a supportive property to access the path to the QEMU binary
 
-v8 -> v7:
-* rebase
-* fix encoding
+Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
+Reviewed-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ python/qemu/machine/machine.py | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-v7 -> v6:
-* minor fixes
-
-v6 -> v5:
-* add ability to compare different QEMU binaries
-* replace abstract drivers by its implementations
-* improve human-readable format
-* code refactoring
-
-v5 -> v4:
-* minor fixes
-
-v4 -> v3:
-* increase read buffer limit to limit value in libvirt
-* add caching of qmp requests to speed up the script 
-
-v3 -> v2:
-* simplify adding new methods for getting QEMU default values
-* add typing
-* change concept from fixed dictionaries to classes
-
-v2 -> v1:
-* fix script code style and descriptions
-* reorder patches
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index 31cb9d617d..f648f6af45 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -328,6 +328,11 @@ def args(self) -> List[str]:
+         """Returns the list of arguments given to the QEMU binary."""
+         return self._args
  
-v1 -> previous iteration:
-* new default value print concept
-* QEMU python library is used to collect qmp data
-* remove auxiliary patches (that was used to fix `->get` sematics)
-* print compat_props in the correct order
-* delete `absract` field to reduce output JSON size
-
-
-Maksim Davydov (4):
-  qom: qom-list-properties: add default value
-  qmp: add dump machine type compatibility properties
-  python/qemu/machine: add method to retrieve QEMUMachine::binary field
-  scripts: add script to compare compatibility properties
-
- hw/core/machine-qmp-cmds.c       |  23 +-
- python/qemu/machine/machine.py   |   5 +
- qapi/machine.json                |  64 +++-
- qom/qom-qmp-cmds.c               |   1 +
- scripts/compare-machine-types.py | 486 +++++++++++++++++++++++++++++++
- tests/qtest/fuzz/qos_fuzz.c      |   2 +-
- 6 files changed, 577 insertions(+), 4 deletions(-)
- create mode 100755 scripts/compare-machine-types.py
-
++    @property
++    def binary(self) -> str:
++        """Returns path to the QEMU binary"""
++        return self._binary
++
+     def _pre_launch(self) -> None:
+         if self._qmp_set:
+             if self._monitor_address is None:
 -- 
 2.34.1
 
