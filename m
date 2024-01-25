@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E71CC48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E6C7C47DDF
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqT3-0006jL-Sz; Wed, 24 Jan 2024 22:31:53 -0500
+	id 1rSqTF-000876-Md; Wed, 24 Jan 2024 22:32:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqSz-00066L-Ub
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:50 -0500
+ id 1rSqTC-0007eK-M9
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:02 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqSy-0001E0-3Q
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:31:49 -0500
+ id 1rSqTA-0001E0-B6
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153508; x=1737689508;
+ t=1706153520; x=1737689520;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=dYbC6/O6Cy+T1AZ7szpJepdFNBXHXc3/nDTSns21eRk=;
- b=KR2ky1/m1iQN0w+sDZwAcBdiby2RRVDtJDRKDFf4tNjJxa9AYJUScHHv
- BqtrsArNihyZgJdnTd/oTRHvBToT7B+N/YgubWxKHmn3g6Q4f3aQVCwEZ
- M8iY8xRH+lwAjSTcSVmam7Ygd78ooH/SD4ULFkNT8W4YOEUML/QDXF5Kx
- 38YkaGf8HL2iOhlBASRc3o8kmD4VcTjfBl1pRUG0CkWO/S/oMeEDacmBs
- ne3dhqJVFb5sBwrTlYBGmu7M2irieWXXx6zeTy7ZQSgWZPKOnVBFDaSlK
- trjNZEY9ZWPgpZJA2ux/HuuhhIy7WCax0q0O0erTF4MUhK7EhQAYYR2JL Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430354"
+ bh=4/L/zFftOASDg8dMA/HkiVMm8CbnS0xqfd/o4PC3bt4=;
+ b=fvBz5/gvNMCGK3+tLTUmiJC4nvg1GadOnIkcyGrjLpgQsLusaR/5hoI5
+ R1z1JCNmxN4NsyJ5VGxYd2L7tOSN5YUrsaLgFlRMrkyNXzB6HUmF/K1uB
+ D5PziDSFzBGaDzsKDhjS918FYLu0X4V39uzUDSSHBXGhMucr4I1AaQPEW
+ ADw21jzNjr9DJxHWnq0RnkcIPYckTA6MUrDXDhRwAreu/6qa06itdEUrI
+ 3KYU8pwNxNF4hRs0aEHKBdxNs4a8j2sLDXBJ2/ADQy7bhIO2XvWP8Bhqx
+ Lz3P2w9xSRw2nPd4JQGfle21MZVDVTzLunBq9dZlB5w3m5yisUTAcvYPa w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430447"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9430354"
+   d="scan'208";a="9430447"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:28:49 -0800
+ 24 Jan 2024 19:29:05 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2086423"
+   d="scan'208";a="2086516"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:28:44 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:29:00 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,9 +61,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 57/66] i386/tdx: Disable PIC for TDX VMs
-Date: Wed, 24 Jan 2024 22:23:19 -0500
-Message-Id: <20240125032328.2522472-58-xiaoyao.li@intel.com>
+Subject: [PATCH v4 60/66] hw/i386: add eoi_intercept_unsupported member to
+ X86MachineState
+Date: Wed, 24 Jan 2024 22:23:22 -0500
+Message-Id: <20240125032328.2522472-61-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -93,33 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Legacy PIC (8259) cannot be supported for TDX VMs since TDX module
-doesn't allow directly interrupt injection.  Using posted interrupts
-for the PIC is not a viable option as the guest BIOS/kernel will not
-do EOI for PIC IRQs, i.e. will leave the vIRR bit set.
+Add a new bool member, eoi_intercept_unsupported, to X86MachineState
+with default value false. Set true for TDX VM.
 
-Hence disable PIC for TDX VMs and error out if user wants PIC.
+Inability to intercept eoi causes impossibility to emulate level
+triggered interrupt to be re-injected when level is still kept active.
+which affects interrupt controller emulation.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/i386/x86.c         | 1 +
+ include/hw/i386/x86.h | 1 +
+ target/i386/kvm/tdx.c | 2 ++
+ 3 files changed, 4 insertions(+)
 
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index f13f49069d40..504575abfa98 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -1422,6 +1422,7 @@ static void x86_machine_initfn(Object *obj)
+     x86ms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+     x86ms->bus_lock_ratelimit = 0;
+     x86ms->above_4g_mem_start = 4 * GiB;
++    x86ms->eoi_intercept_unsupported = false;
+ }
+ 
+ static void x86_machine_class_init(ObjectClass *oc, void *data)
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index ab1d38569019..b689feb389b3 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -59,6 +59,7 @@ struct X86MachineState {
+ 
+     /* CPU and apic information: */
+     bool apic_xrupt_override;
++    bool eoi_intercept_unsupported;
+     unsigned pci_irq_mask;
+     unsigned apic_id_limit;
+     uint16_t boot_cpus;
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 7eb3628763ae..838b7916278c 100644
+index 838b7916278c..c844d753736c 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -708,6 +708,13 @@ int tdx_kvm_init(MachineState *ms, Error **errp)
+@@ -715,6 +715,8 @@ int tdx_kvm_init(MachineState *ms, Error **errp)
          return -EINVAL;
      }
  
-+    if (x86ms->pic == ON_OFF_AUTO_AUTO) {
-+        x86ms->pic = ON_OFF_AUTO_OFF;
-+    } else if (x86ms->pic == ON_OFF_AUTO_ON) {
-+        error_setg(errp, "TDX VM doesn't support PIC");
-+        return -EINVAL;
-+    }
++    x86ms->eoi_intercept_unsupported = true;
 +
      if (!tdx_caps) {
          r = get_tdx_capabilities(errp);
