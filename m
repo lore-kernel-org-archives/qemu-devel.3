@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E386CC48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E39A9C48285
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqQ2-0003d5-BA; Wed, 24 Jan 2024 22:28:46 -0500
+	id 1rSqPb-00037b-C5; Wed, 24 Jan 2024 22:28:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQ0-0003Qx-BZ
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:44 -0500
+ id 1rSqPZ-00035w-63
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:17 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqPy-0001Dy-CY
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:44 -0500
+ id 1rSqPW-0001E0-A7
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153322; x=1737689322;
+ t=1706153294; x=1737689294;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=JSQZf9fpW+EfTuHXiZKh9ow2uMXtChqYfdgZMLqBnzA=;
- b=Y8+o9eYBxeTHNanMy32j/JLc6JG9VdS2IYj/z14H7wMi7MePs6Bd1YYb
- Awv8hUXG9RU8xKsXcP4OaAwqi9LmVdK+Ki1qU8jBeHIdvujcA81kVAB0P
- QHIct50oTZKPG/LX+JDb530uRpZg4kQx4QmDCWr/1zzCq5+ZAMGAp8deL
- jhOzNUzKJU3m/xA0p2+sSTlDJQcSTZq3+G63uUpveg5ZDc/+vTJbmCgxs
- 3Yv0B4xGnHGwYbGhkrPt/sjMy8Ivfa88aV4pWBrG3zXwoopB0zlGqVvMt
- ymenors/ldz98RgDBRS8tAjxebTb4ArrwOTFT2t/Uw30N5nEtIzGKjbHU A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9428381"
+ bh=HeSIyCfwY3UukiDGQMr59wgL9NJm35/w6ryNr1Q1bMU=;
+ b=nhfhwO8KyLw+2thws6spACgQl/i9lct4QqzDNKWqx8fc9lU3SGTxNGBg
+ /1MZ0ujm/LGh1P1Ij5XPHgDTHrn5A4KPWPiJqNRyk4EO+SHt483XSiprN
+ NGCLv1ql5jchXkspm8yQDVunM2XB83dwrW8lxywhnDQJvP+uSshcYBC8s
+ jZz/oKaOBdiF94vGJzS93yTJVpOXNJoWT6frRmz3/bKKRPoIHeev5hixX
+ DRr3i3NdaotJCXUOqUM//EHpF004o5SkN/TwiPMntcBkGNy0wWZZ1s6CO
+ GVRP3vhQ9V5KNzSirkWI5BdN5gPAV7HL5Sx7SRdUiXpKFekRFWRLrvLwh g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9427970"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9428381"
+   d="scan'208";a="9427970"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:25:05 -0800
+ 24 Jan 2024 19:24:15 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2085086"
+   d="scan'208";a="2084618"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:25:00 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:24:10 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 16/66] i386/tdx: Introduce is_tdx_vm() helper and cache
- tdx_guest object
-Date: Wed, 24 Jan 2024 22:22:38 -0500
-Message-Id: <20240125032328.2522472-17-xiaoyao.li@intel.com>
+Subject: [PATCH v4 07/66] physmem: Introduce
+ ram_block_discard_guest_memfd_range()
+Date: Wed, 24 Jan 2024 22:22:29 -0500
+Message-Id: <20240125032328.2522472-8-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,93 +94,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It will need special handling for TDX VMs all around the QEMU.
-Introduce is_tdx_vm() helper to query if it's a TDX VM.
+When memory page is converted from private to shared, the original
+private memory is back'ed by guest_memfd. Introduce
+ram_block_discard_guest_memfd_range() for discarding memory in
+guest_memfd.
 
-Cache tdx_guest object thus no need to cast from ms->cgs every time.
-
+Originally-from: Isaku Yamahata <isaku.yamahata@intel.com>
+Codeveloped-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Isaku Yamahata <isaku.yamahata@intel.com>
 ---
-changes in v3:
-- replace object_dynamic_cast with TDX_GUEST();
+Changes in in v4:
+- Drop ram_block_convert_range() and open code its implementation in the
+  next Patch.
 ---
- target/i386/kvm/tdx.c | 15 ++++++++++++++-
- target/i386/kvm/tdx.h | 10 ++++++++++
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ include/exec/cpu-common.h |  2 ++
+ system/physmem.c          | 23 +++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index ad76abd58373..3c59b3b45419 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -21,8 +21,16 @@
- #include "kvm_i386.h"
- #include "tdx.h"
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index fef3138d29fc..05610efa8b4f 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -175,6 +175,8 @@ typedef int (RAMBlockIterFunc)(RAMBlock *rb, void *opaque);
  
-+static TdxGuest *tdx_guest;
-+
- static struct kvm_tdx_capabilities *tdx_caps;
+ int qemu_ram_foreach_block(RAMBlockIterFunc func, void *opaque);
+ int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length);
++int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
++                                        size_t length);
  
-+/* It's valid after kvm_confidential_guest_init()->kvm_tdx_init() */
-+bool is_tdx_vm(void)
-+{
-+    return !!tdx_guest;
-+}
-+
- enum tdx_ioctl_level{
-     TDX_VM_IOCTL,
-     TDX_VCPU_IOCTL,
-@@ -103,15 +111,20 @@ static int get_tdx_capabilities(Error **errp)
+ #endif
  
- int tdx_kvm_init(MachineState *ms, Error **errp)
- {
-+    TdxGuest *tdx = TDX_GUEST(OBJECT(ms->cgs));
-     int r = 0;
- 
-     ms->require_guest_memfd = true;
- 
-     if (!tdx_caps) {
-         r = get_tdx_capabilities(errp);
-+        if (r) {
-+            return r;
-+        }
-     }
- 
--    return r;
-+    tdx_guest = tdx;
-+    return 0;
+diff --git a/system/physmem.c b/system/physmem.c
+index 4735b0462ed9..fc59470191ef 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3626,6 +3626,29 @@ err:
+     return ret;
  }
  
- /* tdx guest */
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index c8a23d95258d..4036ca2f3f99 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -1,6 +1,10 @@
- #ifndef QEMU_I386_TDX_H
- #define QEMU_I386_TDX_H
- 
-+#ifndef CONFIG_USER_ONLY
-+#include CONFIG_DEVICES /* CONFIG_TDX */
++int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
++                                        size_t length)
++{
++    int ret = -1;
++
++#ifdef CONFIG_FALLOCATE_PUNCH_HOLE
++    ret = fallocate(rb->guest_memfd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
++                    start, length);
++
++    if (ret) {
++        ret = -errno;
++        error_report("%s: Failed to fallocate %s:%" PRIx64 " +%zx (%d)",
++                     __func__, rb->idstr, start, length, ret);
++    }
++#else
++    ret = -ENOSYS;
++    error_report("%s: fallocate not available %s:%" PRIx64 " +%zx (%d)",
++                 __func__, rb->idstr, start, length, ret);
 +#endif
 +
- #include "exec/confidential-guest-support.h"
- 
- #define TYPE_TDX_GUEST "tdx-guest"
-@@ -16,6 +20,12 @@ typedef struct TdxGuest {
-     uint64_t attributes;    /* TD attributes */
- } TdxGuest;
- 
-+#ifdef CONFIG_TDX
-+bool is_tdx_vm(void);
-+#else
-+#define is_tdx_vm() 0
-+#endif /* CONFIG_TDX */
++    return ret;
++}
 +
- int tdx_kvm_init(MachineState *ms, Error **errp);
- 
- #endif /* QEMU_I386_TDX_H */
+ bool ramblock_is_pmem(RAMBlock *rb)
+ {
+     return rb->flags & RAM_PMEM;
 -- 
 2.34.1
 
