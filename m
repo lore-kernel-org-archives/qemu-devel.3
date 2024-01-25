@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B1F2C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:33:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0710FC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqTG-00087u-09; Wed, 24 Jan 2024 22:32:06 -0500
+	id 1rSqRf-0001qh-7s; Wed, 24 Jan 2024 22:30:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqTE-0007yc-H5
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:04 -0500
+ id 1rSqRd-0001iF-Bo
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:25 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqTB-0001Dr-BW
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:32:03 -0500
+ id 1rSqRb-0001Dr-Jo
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153521; x=1737689521;
+ t=1706153423; x=1737689423;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=4QlmHYOCpaUkhYHScvJ5cqeRVVb3OwqCd805KgUhquw=;
- b=A4UsyzwnbxE+5lhWKRqpgqxmRlRdDHLo7COe5cv+h2gaQSIdAL+Ez2Nc
- URd1MH1sth7iy7SIbsiA1JOEw3bPlNET2MvB2ObgQMM85RczjFnoGTXzT
- lar3wk4fcTPHcG1dr82iGR7rofIJV1/3MLy3HQaM1czcQckIXTUnjxF2Z
- gX0zhHEaZEsz/TRweRSETvNKLCIPUpmdqyVX+qcqVZDCAsp+Zdd7OX8IW
- yszxmYg7pRM2DfcGrlVos74or4+9jMYh1UBXnJuBwvdI8G+o+4jqTjQb4
- HdSdPxcMFK5Mh3Pj3GY/J18GC35Ta844sWJcJ/Imo9ANTtX/EhLw5Ud2p Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9430469"
+ bh=LMprznaE7hGwUz1+P1xbFwW0CPPmvi5wL423n1B1K+0=;
+ b=Zz1TU5gJ2dqt5s/qAX5BRchYi/3sq1u0QlmghQ1Dz7dRjMzfW/CtZVkF
+ mmqo82HOu3HkqqbqGYFkgUnwGd6+bnNaaVMjeODHW0bzK2JJllfaDCUuz
+ jJRvNwPR+mqVF41Z72qw8ZC18D9qGik6/9ezhZS9vzBlXqS644h/VDj45
+ eMmvYkMS5ppEGf7Y1INAon4zqy25fqsNpjnJB2vFz+Oaaw0OoeSNVZph9
+ GQZtRZC4SDXTRtI5yPivcRlyX69QJQZSeGejNDeGm4dbB6NFTKmkTIVMR
+ YlNnbq7UDVU+llsvrvbiVIXOm+BKLCftPw9ssDH1CNndveoTSNnKzJoJG g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9429477"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9430469"
+   d="scan'208";a="9429477"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:29:11 -0800
+ 24 Jan 2024 19:27:12 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2086561"
+   d="scan'208";a="2085901"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:29:05 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:27:07 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,10 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 61/66] hw/i386: add option to forcibly report edge trigger
- in acpi tables
-Date: Wed, 24 Jan 2024 22:23:23 -0500
-Message-Id: <20240125032328.2522472-62-xiaoyao.li@intel.com>
+Subject: [PATCH v4 39/66] i386/tdx: Don't initialize pc.rom for TDX VMs
+Date: Wed, 24 Jan 2024 22:23:01 -0500
+Message-Id: <20240125032328.2522472-40-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -94,291 +93,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Isaku Yamahata <isaku.yamahata@intel.com>
+For TDX, the address below 1MB are entirely general RAM. No need to
+initialize pc.rom memory region for TDs.
 
-When level trigger isn't supported on x86 platform,
-forcibly report edge trigger in acpi tables.
-
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/i386/acpi-build.c  | 99 ++++++++++++++++++++++++++++---------------
- hw/i386/acpi-common.c | 50 ++++++++++++++++------
- 2 files changed, 104 insertions(+), 45 deletions(-)
+This is more as a workaround of the issue that for q35 machine type, the
+real memslot update (which requires memslot deletion )for pc.rom happens
+after tdx_init_memory_region. It leads to the private memory ADD'ed
+before get lost. I haven't work out a good solution to resolve the
+order issue. So just skip the pc.rom setup to avoid memslot deletion.
+---
+ hw/i386/pc.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index edc979379c03..3d1e4457ff30 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -975,7 +975,8 @@ static void build_dbg_aml(Aml *table)
-     aml_append(table, scope);
- }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 5c80b5fe8a0e..f38694902764 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -43,6 +43,7 @@
+ #include "sysemu/xen.h"
+ #include "sysemu/reset.h"
+ #include "kvm/kvm_i386.h"
++#include "kvm/tdx.h"
+ #include "hw/xen/xen.h"
+ #include "qapi/qmp/qlist.h"
+ #include "qemu/error-report.h"
+@@ -1039,16 +1040,18 @@ void pc_memory_init(PCMachineState *pcms,
+     /* Initialize PC system firmware */
+     pc_system_firmware_init(pcms, rom_memory);
  
--static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
-+static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg,
-+                           bool level_trigger_unsupported)
- {
-     Aml *dev;
-     Aml *crs;
-@@ -987,7 +988,10 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
-     aml_append(dev, aml_name_decl("_UID", aml_int(uid)));
- 
-     crs = aml_resource_template();
--    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
-+    aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                  level_trigger_unsupported ?
-+                                  AML_EDGE : AML_LEVEL,
-+                                  AML_ACTIVE_HIGH,
-                                   AML_SHARED, irqs, ARRAY_SIZE(irqs)));
-     aml_append(dev, aml_name_decl("_PRS", crs));
- 
-@@ -1011,7 +1015,8 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
-     return dev;
-  }
- 
--static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
-+static Aml *build_gsi_link_dev(const char *name, uint8_t uid,
-+                               uint8_t gsi, bool level_trigger_unsupported)
- {
-     Aml *dev;
-     Aml *crs;
-@@ -1024,7 +1029,10 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
- 
-     crs = aml_resource_template();
-     irqs = gsi;
--    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
-+    aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                  level_trigger_unsupported ?
-+                                  AML_EDGE : AML_LEVEL,
-+                                  AML_ACTIVE_HIGH,
-                                   AML_SHARED, &irqs, 1));
-     aml_append(dev, aml_name_decl("_PRS", crs));
- 
-@@ -1043,7 +1051,7 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
- }
- 
- /* _CRS method - get current settings */
--static Aml *build_iqcr_method(bool is_piix4)
-+static Aml *build_iqcr_method(bool is_piix4, bool level_trigger_unsupported)
- {
-     Aml *if_ctx;
-     uint32_t irqs;
-@@ -1051,7 +1059,9 @@ static Aml *build_iqcr_method(bool is_piix4)
-     Aml *crs = aml_resource_template();
- 
-     irqs = 0;
--    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
-+    aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                  level_trigger_unsupported ?
-+                                  AML_EDGE : AML_LEVEL,
-                                   AML_ACTIVE_HIGH, AML_SHARED, &irqs, 1));
-     aml_append(method, aml_name_decl("PRR0", crs));
- 
-@@ -1085,7 +1095,7 @@ static Aml *build_irq_status_method(void)
-     return method;
- }
- 
--static void build_piix4_pci0_int(Aml *table)
-+static void build_piix4_pci0_int(Aml *table, bool level_trigger_unsupported)
- {
-     Aml *dev;
-     Aml *crs;
-@@ -1098,12 +1108,16 @@ static void build_piix4_pci0_int(Aml *table)
-     aml_append(sb_scope, pci0_scope);
- 
-     aml_append(sb_scope, build_irq_status_method());
--    aml_append(sb_scope, build_iqcr_method(true));
-+    aml_append(sb_scope, build_iqcr_method(true, level_trigger_unsupported));
- 
--    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0")));
--    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1")));
--    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2")));
--    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3")));
-+    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3"),
-+                                        level_trigger_unsupported));
- 
-     dev = aml_device("LNKS");
-     {
-@@ -1112,7 +1126,9 @@ static void build_piix4_pci0_int(Aml *table)
- 
-         crs = aml_resource_template();
-         irqs = 9;
--        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
-+        aml_append(crs, aml_interrupt(AML_CONSUMER,
-+                                      level_trigger_unsupported ?
-+                                      AML_EDGE : AML_LEVEL,
-                                       AML_ACTIVE_HIGH, AML_SHARED,
-                                       &irqs, 1));
-         aml_append(dev, aml_name_decl("_PRS", crs));
-@@ -1198,7 +1214,7 @@ static Aml *build_q35_routing_table(const char *str)
-     return pkg;
- }
- 
--static void build_q35_pci0_int(Aml *table)
-+static void build_q35_pci0_int(Aml *table, bool level_trigger_unsupported)
- {
-     Aml *method;
-     Aml *sb_scope = aml_scope("_SB");
-@@ -1237,25 +1253,41 @@ static void build_q35_pci0_int(Aml *table)
-     aml_append(sb_scope, pci0_scope);
- 
-     aml_append(sb_scope, build_irq_status_method());
--    aml_append(sb_scope, build_iqcr_method(false));
-+    aml_append(sb_scope, build_iqcr_method(false, level_trigger_unsupported));
- 
--    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA")));
--    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB")));
--    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC")));
--    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD")));
--    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE")));
--    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF")));
--    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG")));
--    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH")));
-+    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG"),
-+                                        level_trigger_unsupported));
-+    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH"),
-+                                        level_trigger_unsupported));
- 
--    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10));
--    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11));
--    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12));
--    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13));
--    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14));
--    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15));
--    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16));
--    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16,
-+                                            level_trigger_unsupported));
-+    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17,
-+                                            level_trigger_unsupported));
- 
-     aml_append(table, sb_scope);
- }
-@@ -1436,6 +1468,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-     PCMachineState *pcms = PC_MACHINE(machine);
-     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(machine);
-     X86MachineState *x86ms = X86_MACHINE(machine);
-+    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
-     AcpiMcfgInfo mcfg;
-     bool mcfg_valid = !!acpi_get_mcfg(&mcfg);
-     uint32_t nr_mem = machine->ram_slots;
-@@ -1468,7 +1501,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
-             build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
-         }
--        build_piix4_pci0_int(dsdt);
-+        build_piix4_pci0_int(dsdt, level_trigger_unsupported);
-     } else if (q35) {
-         sb_scope = aml_scope("_SB");
-         dev = aml_device("PCI0");
-@@ -1512,7 +1545,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         if (pm->pcihp_bridge_en) {
-             build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
-         }
--        build_q35_pci0_int(dsdt);
-+        build_q35_pci0_int(dsdt, level_trigger_unsupported);
+-    option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+-    memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+-                           &error_fatal);
+-    if (pcmc->pci_enabled) {
+-        memory_region_set_readonly(option_rom_mr, true);
++    if (!is_tdx_vm()) {
++        option_rom_mr = g_malloc(sizeof(*option_rom_mr));
++        memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
++                            &error_fatal);
++        if (pcmc->pci_enabled) {
++            memory_region_set_readonly(option_rom_mr, true);
++        }
++        memory_region_add_subregion_overlap(rom_memory,
++                                            PC_ROM_MIN_VGA,
++                                            option_rom_mr,
++                                            1);
      }
+-    memory_region_add_subregion_overlap(rom_memory,
+-                                        PC_ROM_MIN_VGA,
+-                                        option_rom_mr,
+-                                        1);
  
-     if (misc->has_hpet) {
-diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
-index 43dc23f7e06f..26ff3c738e78 100644
---- a/hw/i386/acpi-common.c
-+++ b/hw/i386/acpi-common.c
-@@ -103,6 +103,7 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
-     const CPUArchIdList *apic_ids = mc->possible_cpu_arch_ids(MACHINE(x86ms));
-     AcpiTable table = { .sig = "APIC", .rev = 3, .oem_id = oem_id,
-                         .oem_table_id = oem_table_id };
-+    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
- 
-     acpi_table_begin(&table, table_data);
-     /* Local APIC Address */
-@@ -122,18 +123,43 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
-                      IO_APIC_SECONDARY_ADDRESS, IO_APIC_SECONDARY_IRQBASE);
-     }
- 
--    if (x86ms->apic_xrupt_override) {
--        build_xrupt_override(table_data, 0, 2,
--            0 /* Flags: Conforms to the specifications of the bus */);
--    }
--
--    for (i = 1; i < 16; i++) {
--        if (!(x86ms->pci_irq_mask & (1 << i))) {
--            /* No need for a INT source override structure. */
--            continue;
--        }
--        build_xrupt_override(table_data, i, i,
--            0xd /* Flags: Active high, Level Triggered */);
-+    if (level_trigger_unsupported) {
-+        /* Force edge trigger */
-+        if (x86ms->apic_xrupt_override) {
-+            build_xrupt_override(table_data, 0, 2,
-+                                 /* Flags: active high, edge triggered */
-+                                 1 | (1 << 2));
-+        }
-+
-+        for (i = x86ms->apic_xrupt_override ? 1 : 0; i < 16; i++) {
-+            build_xrupt_override(table_data, i, i,
-+                                 /* Flags: active high, edge triggered */
-+                                 1 | (1 << 2));
-+        }
-+
-+        if (x86ms->ioapic2) {
-+            for (i = 0; i < 16; i++) {
-+                build_xrupt_override(table_data, IO_APIC_SECONDARY_IRQBASE + i,
-+                                     IO_APIC_SECONDARY_IRQBASE + i,
-+                                     /* Flags: active high, edge triggered */
-+                                     1 | (1 << 2));
-+            }
-+        }
-+    } else {
-+        if (x86ms->apic_xrupt_override) {
-+            build_xrupt_override(table_data, 0, 2,
-+                                 0 /* Flags: Conforms to the specifications of the bus */);
-+        }
-+
-+        for (i = 1; i < 16; i++) {
-+            if (!(x86ms->pci_irq_mask & (1 << i))) {
-+                /* No need for a INT source override structure. */
-+                continue;
-+            }
-+            build_xrupt_override(table_data, i, i,
-+                                 0xd /* Flags: Active high, Level Triggered */);
-+
-+        }
-     }
- 
-     if (x2apic_mode) {
+     fw_cfg = fw_cfg_arch_create(machine,
+                                 x86ms->boot_cpus, x86ms->apic_id_limit);
 -- 
 2.34.1
 
