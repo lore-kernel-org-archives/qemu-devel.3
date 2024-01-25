@@ -4,59 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D076AC47DDF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24F3C47258
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqFg-0006y6-Ee; Wed, 24 Jan 2024 22:18:04 -0500
+	id 1rSqFB-0006sJ-Ep; Wed, 24 Jan 2024 22:17:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1rSqFd-0006x9-0q; Wed, 24 Jan 2024 22:18:01 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1rSqFY-00053m-SA; Wed, 24 Jan 2024 22:18:00 -0500
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rSqF2-0006rY-28; Wed, 24 Jan 2024 22:17:26 -0500
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rSqEz-00052g-PM; Wed, 24 Jan 2024 22:17:23 -0500
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-4b978e5e240so1515059e0c.0; 
+ Wed, 24 Jan 2024 19:17:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202312; t=1706152667;
- bh=4VoQYP24BD5r1tFesV0JCVRlHGZYY+f8XwkrH8e5MOI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=P5t/dyrOvz6HF87hv8vAdqt/dDmPziFoLA+tEIM9U/lMcAxrEQe5xybU9JGQMQMvB
- 99UPl7OoRrH1tyv/Z5D7WkJOYZESPfR26Mun6GD8JskjJvmmDUY5qtxWHeS8IHXEzu
- Hzfr5WcmSNxTDoy8WSXJnCEana3sB/hbxV809tINiocFtNMKAx2Up45C2eBFcFvJAG
- 9m9mF4KToho/9+Ijp0bcL9vuPmW070ap5NYSpf4uew2hO3nR1FVVaXAa5d7MtGrCAk
- trvOCDneVdGLMz7zQtXfa5iycMdBxToyOITBNsAlMNWJ1c+NZO97pzsNMHLJAyxafD
- iEyMB9qLB59XQ==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4TL5cC0C5Xz4x5q; Thu, 25 Jan 2024 14:17:47 +1100 (AEDT)
-Date: Thu, 25 Jan 2024 14:11:37 +1100
-From: David Gibson <david@gibson.dropbear.id.au>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-ppc@nongnu.org, =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
- =?iso-8859-1?Q?Fr=E9d=E9ric?= Barrat <fbarrat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/8] ppc/spapr|pnv: Remove SAO from pa-features when
- running MTTCG
-Message-ID: <ZbHRaWhUbpsHa4I-@zatzit>
-References: <20240118140942.164319-1-npiggin@gmail.com>
- <20240118140942.164319-3-npiggin@gmail.com>
- <ZanA-usH_Ec0uqie@zatzit> <CYLPOZ0VDE7U.40VIK25R65PQ@wheely>
+ d=gmail.com; s=20230601; t=1706152640; x=1706757440; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lwaN3CbtlAQJ3htcvjSjKVPspX5QtiKkTXlSr2wqJ3c=;
+ b=Auu1iC0lWyMafTQLM3CEiQKHWiT0VS8vD9bnTd2mjNfjKNybsDg4zFubUTxRZxDJXn
+ yLYLXUMjF4i8Yq3bTWQOoLyHDO30t83vJ0wfwxcqwk30tqtSGU2Db4d0/6FZrgcO1wjm
+ JXJNCjHjE5VkLkk+tXYCHW+vnbpWt0Ol5ue0OylYIkXFinI2aikQJ6KQWBWyeIonRHFB
+ /QTkQw/q1TrcCxb9/IUeoFbrAPycQ0M3RtXIHsU47E58ejhcmh0Qb1itXQuc/GsH3P8e
+ Fn5pgXuJD4nRZsAZo75xCHj3zryQZ4PFFZPwG8xZ+D2MVAikeC3FFCDkNSRDQM7TwTkh
+ IRwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706152640; x=1706757440;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lwaN3CbtlAQJ3htcvjSjKVPspX5QtiKkTXlSr2wqJ3c=;
+ b=uM786k8nT+Xra06PSGCwNYpZalWx/pKRAnHy0VENns0kBGbRM7bSWiH939jJvQByQE
+ x485upHAYyrTzyHUxioao3KDxU9u14/3OW2gnEQlY1kCI72oA4tN1wlSnn+FWmB/2+go
+ DedYPvYtCAFCxLyEjGua3eYNB1moCInccorJpN6aPrQTCBm7DpzK7mvNVD2o3h1FYFSS
+ eK0fNJVrmtk8R1CTVQ4iesj1bpLh05Hlf5eWjJUtJwncaYJFtRSAz5bO964+2BXdDeKV
+ YkLbzyXnjEzt5D173vtMLycqYAy+I+hdhUMOQDALT/HZ9vQtNl0aHkTBNf0c8DXd/UI2
+ sCpA==
+X-Gm-Message-State: AOJu0Yw8UEJd1HqYfzMB3G8LpQ5qOwwuxu1X8OPI0DnhhYojoovmJ9K1
+ VPE87V+ji6DwPBhQcq1KkFtYB9WSqnHqLFGTKX7hPM9e2mV/X9M3U2Z8Yqe9kB4PQQgVUKuYNJa
+ fciA1SXQVwC5m3HWkD2+UMpXY9Bg=
+X-Google-Smtp-Source: AGHT+IHMHxdKXSL/IXvLYYZtkgnAb2Gv/ERvktmnhUmi93yIVwMielkr4sosTa0CGfH1uMGM6evZ/chjZ2JPgUrGoiw=
+X-Received: by 2002:a05:6122:4598:b0:4bd:6041:99f9 with SMTP id
+ de24-20020a056122459800b004bd604199f9mr189318vkb.31.1706152639678; Wed, 24
+ Jan 2024 19:17:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="jxp+fxGu16+O7y0Q"
-Content-Disposition: inline
-In-Reply-To: <CYLPOZ0VDE7U.40VIK25R65PQ@wheely>
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+References: <20231229120724.41383-1-heinrich.schuchardt@canonical.com>
+ <20231229120724.41383-4-heinrich.schuchardt@canonical.com>
+ <20240122-4f4cbce3692cd684e0409f9e@orel>
+ <22105210-d8d1-4808-b9ed-41eee71c53ca@canonical.com>
+ <20240122-195c4a8d0ece609441068e16@orel>
+In-Reply-To: <20240122-195c4a8d0ece609441068e16@orel>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 25 Jan 2024 13:16:53 +1000
+Message-ID: <CAKmqyKOpcLoMnSKwsecSqNEFS8rmxsAuPW_njT=+v_tPsswXww@mail.gmail.com>
+Subject: Re: Re: [PATCH v2 3/4] target/riscv: SMBIOS support for RISC-V virt
+ machine
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,123 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---jxp+fxGu16+O7y0Q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jan 23, 2024 at 11:57:56AM +1000, Nicholas Piggin wrote:
-> On Fri Jan 19, 2024 at 10:23 AM AEST, David Gibson wrote:
-> > On Fri, Jan 19, 2024 at 12:09:36AM +1000, Nicholas Piggin wrote:
-> > > SAO is a page table attribute that strengthens the memory ordering of
-> > > accesses. QEMU with MTTCG does not implement this, so clear it in
-> > > ibm,pa-features. There is a complication with spapr migration that is
-> > > addressed with comments, it is not a new problem here.
-> > >=20
-> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > > ---
-> > >  hw/ppc/pnv.c   |  5 +++++
-> > >  hw/ppc/spapr.c | 15 +++++++++++++++
-> > >  2 files changed, 20 insertions(+)
-> > >=20
-> > > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > > index b949398689..4969fbdb05 100644
-> > > --- a/hw/ppc/pnv.c
-> > > +++ b/hw/ppc/pnv.c
-> > > @@ -158,6 +158,11 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *=
-pc, void *fdt)
-> > >      char *nodename;
-> > >      int cpus_offset =3D get_cpus_node(fdt);
-> > > =20
-> > > +    if (qemu_tcg_mttcg_enabled()) {
-> > > +        /* SSO (SAO) ordering is not supported under MTTCG. */
-> > > +        pa_features[4 + 2] &=3D ~0x80;
-> > > +    }
-> > > +
-> > >      nodename =3D g_strdup_printf("%s@%x", dc->fw_name, pc->pir);
-> > >      offset =3D fdt_add_subnode(fdt, cpus_offset, nodename);
-> > >      _FDT(offset);
-> > > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> > > index 021b1a00e1..1c79d5670d 100644
-> > > --- a/hw/ppc/spapr.c
-> > > +++ b/hw/ppc/spapr.c
-> > > @@ -284,6 +284,21 @@ static void spapr_dt_pa_features(SpaprMachineSta=
-te *spapr,
-> > >          return;
-> > >      }
-> > > =20
-> > > +    if (qemu_tcg_mttcg_enabled()) {
-> > > +        /*
-> > > +         * SSO (SAO) ordering is not supported under MTTCG, so disab=
-le it.
-> > > +         * There is no cap for this, so there is a migration bug her=
-e.
-> > > +         * However don't disable it entirely, to allow it to be used=
- under
-> > > +         * KVM. This is a minor concern because:
-> > > +         * - SAO is an obscure an rarely (if ever) used feature.
-> > > +         * - SAO is removed from POWER10 / v3.1, so there is already=
- a
-> > > +         *   migration problem today.
-> > > +         * - Linux does not test this pa-features bit today anyway, =
-so it's
-> > > +         *   academic.
-> > > +         */
-> > > +        pa_features[4 + 2] &=3D ~0x80;
+On Tue, Jan 23, 2024 at 12:19=E2=80=AFAM Andrew Jones <ajones@ventanamicro.=
+com> wrote:
+>
+> On Mon, Jan 22, 2024 at 01:28:18PM +0100, Heinrich Schuchardt wrote:
+> > On 22.01.24 10:57, Andrew Jones wrote:
+> > > On Fri, Dec 29, 2023 at 01:07:23PM +0100, Heinrich Schuchardt wrote:
+> ...
+> > > > +#if defined(TARGET_RISCV32)
+> > > > +    smbios_set_default_processor_family(0x200);
+> > > > +#elif defined(TARGET_RISCV64)
+> > > > +    smbios_set_default_processor_family(0x201);
+> > > > +#endif
+> > >
+> > > I think we should use misa_mxl_max to determine the family, rather th=
+an
+> > > TARGET_*, because, iirc, we're slowly working our ways towards allowi=
+ng
+> > > rv32 cpus to be instantiated with qemu-system-riscv64.
 > >
-> > Oof.. I see the reasoning but modifying guest visible parameters based
-> > on host capabilities without a cap really worries me nonetheless.
->=20
-> Yeah :( It's not a new problem, but changing it based on host
-> does make it look uglier I guess.
+> > Hello Andrew,
+> >
+> > thank you for reviewing. I guess you mean something like:
+> >
+> >     if (riscv_is_32bit(&s->soc[0])) {
+> >         smbios_set_default_processor_family(0x200);
+> > #if defined(TARGET_RISCV64)
+> >     } else {
+> >         smbios_set_default_processor_family(0x201);
+> > #endif
+> >     }
+>
+> Yes, but I'm not sure we need the #ifdef around the 64-bit part.
+>
+> >
+> > riscv_is_32bit returns harts->harts[0].env.misa_mxl_max =3D=3D MXL_RV32=
+.
+> >
+> > Some real hardware has a 32bit hart and multiple 64bit harts. Will QEMU
+> > support mixing harts with different bitness on the virt machine in futu=
+re?
 
-It's not really about whether it looks uglier, it's the fact that any
-dependency of guest visible aspects of the VM on host properties is a
-potential landmine for migration.
+That is the hope. Although no one is directly working on it at the
+moment. We want to try and keep the RISC-V target setup to do this.
 
-The qemu migration model is - pretty fundamentally - that the VM
-should look and behave, from the point of view of the guest, the same
-before and after migration.  If the behaviour of the VM changes based
-on host properties it breaks that assumption, and it does so in a way
-that the user can't control or even easily predict.  Tools such as
-libvirt, or even qemu itself, can't verify that the migration is valid
-if there are effectively invisible parameters to the VM configuration
-that come from the host instead of the command line.
+The first goal is to just create and use a 32-bit CPU on the 64-bit
+build, which currently doesn't work but it's something that should
+work.
 
-> Other option could be to just disable it always. I don't mind
-> but someone did mention experimenting with it when I asked
-> about removing support from Linux. They could still test with
-> bare metal, and if ever started actually being used then we
-> could add a cap for it.
+Alistair
 
-I think that's a better idea.
-
---=20
-David Gibson			| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you.  NOT _the_ _other_
-				| _way_ _around_!
-http://www.ozlabs.org/~dgibson
-
---jxp+fxGu16+O7y0Q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmWx0WgACgkQzQJF27ox
-2Ge/uQ/9F1BCffihfan0nhy+4YY63xUmWoHYww59yF3jX1uJtUtwZuNPo/5JKY1s
-9LufgP7qtWp8qL/LBTmO/KybbCqdAQXHyqPOKBk88EatxyHGRTQqDnBXqpSP5RuU
-Io3dFbtuJ3NCBKqlRBqYPjEGny8SE3fxEk06TB0Bo2O3vPvegq9I9rZFI65FGkvT
-4xsRVcVB7hTTmKBs+iRKtiJ+kwkbImBv6hwdZ15dMhF/UCjDt06+x/qR0Djchsmo
-EteE9mjRCLYJn/Jhgat5xlpez8wqTIsUH2UUXSQ4B/w+qerowiwfAMGMINmA/YZ8
-T1oH9ok3JFuO3A5yaVDIcUn9FUU/PqK3wnyxo4vQZxkpQL05Av8vl2AYtZnpTjqJ
-qhAVeTyKzZ/iKCZTsWiSFK+5c19YlewOeua5t+VFbKBR1Bw97LqLAO7trhdvqanp
-oWAimoMmblDehJI86q/yt9Vqx7+MPayHSJPTq9ousUmHAm+ilhw89IPtgQA/el59
-ErxemAJLbW1mbNFNw0Icj2kRjCbNApIhp/KwUecAc63Q4z6jcyBjRiAYhYpwiqCj
-XH0txlk5kCq4c+op2dta/kP5LFPCT76PsEbI+UEl94xkAdlVeheTsyoTmonbczSn
-1tzfJx715e4mm12BxSVaFPmMR2fzl7TdnkCx/2TiX4Yc1iCDJqM=
-=c4/G
------END PGP SIGNATURE-----
-
---jxp+fxGu16+O7y0Q--
+> > In that case we would have to revisit the code using misa_mxl_max in
+> > multiple places.
+> >
+>
+> Never say never, but I don't think there has been much effort to support
+> these types of configurations with a single QEMU binary. My googling is
+> failing me right now, but I seem to recall that there may have been
+> efforts to implement Arm big.LITTLE with multiprocess QEMU [1]. IOW, I
+> think we're safe to use misa_mxl_max, since we'll have one for each QEMU
+> instance and we'll use a different QEMU instance for each hart bitness.
+>
+> [1] docs/system/multi-process.rst
+>
+> Thanks,
+> drew
+>
 
