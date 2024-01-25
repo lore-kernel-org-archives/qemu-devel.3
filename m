@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4E0EC47422
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899E5C47422
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 16:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT2gH-0006uj-F3; Thu, 25 Jan 2024 11:34:21 -0500
+	id 1rT2gC-0006oJ-2a; Thu, 25 Jan 2024 11:34:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT2gF-0006r6-1Y
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:19 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1rT2gB-0006kk-7j
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:15 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT2gB-0002AK-10
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:18 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33937dd1b43so3359945f8f.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:34:14 -0800 (PST)
+ id 1rT2g8-00027z-DA
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 11:34:14 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-40e86a9fc4bso88963575e9.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 08:34:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706200453; x=1706805253; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706200451; x=1706805251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q+eC4LHMBL/iVnWEGbnsMN/lqwJwozZWJpzQmLLpDa0=;
- b=gZTPy9M8DXpWBMJVATgRm04efqFyEE/FsBwtBdKklrr+Tr94m5Zca0TnRrNgIbXiCa
- iOhdZ+l4B7WN4RHmaCUT0bRaO3vaNyCzTckh6dEir4xSTFkNbHEN8GhVW9YJilawWH1i
- UGLNs9q7WPWbiAx+JYl7nuWVOKSJEL0MVdCNwk5m/gmyhdiHV0AKimFgskDm4CW0GhcJ
- SGM40qzwQezDNdETE1CY9TAAWQPBaQALbd2NeVp6UzvLOspnR9PcDu7huK5SjFYw35g9
- cGrDHnsgaKWezFWcAow/FZ04PfCHpe0MU8Ky28r4nJJUfxHhY0bzcXXSnpRfxSG25UJc
- +G2g==
+ bh=YHMUzgkXRP9wZQ4wL9pyKD3XATptA/6sivyW/DCZ/hM=;
+ b=bi/pruiCm49nj9ILT+kpStwEwO9eaRdLx3QMegVjbGBUuXzPqMCfY/VLEiowyEi/ah
+ sjm69QzKrnK33D0KCaHz2dlnm8r9wKoUQlfX5bFZQo8PYu67wvplJOyTMCYApYLiIU3F
+ mtWhegm0KDyHn7H/ZddOJCeua6OtkInuu4ke9tG4Ah2lxjlzZnZzjX70wTRrIn+bJLBx
+ AXzfLr4G7M9JTktV8zCTuxKi5ApGRRKwIG8ARVfW9okcIKwAFlTswzlb2BhMKIpOyvua
+ RHHchnmSce+JKyWqIwOk+tlkWo1pSgCkvuYOstu1y78n/jB5zoPKoMOaTU4hWflKlgaA
+ mpCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706200453; x=1706805253;
+ d=1e100.net; s=20230601; t=1706200451; x=1706805251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q+eC4LHMBL/iVnWEGbnsMN/lqwJwozZWJpzQmLLpDa0=;
- b=HlHkSZGhswHl5dTu9ekgE6d5PHvVqRNomqARVGzrK0Tia4FZV9B5SeAHUz6WcBuLW5
- xWzOSKWypV+1HDzX8OzPWimd5Eojydc441hTSix2BJi2PaO2CyTUGHcbha7nm2QCBik2
- 9tWI3LIbiIbf2K2aHPUkPSYUe08wrsvQlSs1IPtikQpQSH/F/rkzSjTTaphus6lKcvMF
- 6LXZPkgUSOGimmkyfYFtj8nCxlfKyw9x63QMIYbhWVIQx5mLRdbNitYxBXw4TXylVTP3
- kW2mRmcFtHQ+FtytfzTk8ic4TAn786Qhu5F4TID4NMi+iJm6K3zyby1t2WhM1b0gYeLr
- HwGQ==
-X-Gm-Message-State: AOJu0YysZ8A036BBksPz64A7aGbZP3gORjYplG3aifRKGT/fouf/RaR/
- i1FOFR/ccq4sJoZqd6VizvOZsf8zyos9U9hV2K1iwZlgaQ0zjpou43lm7FNcdK+gJggI8ZW03CK
- P
-X-Google-Smtp-Source: AGHT+IGyP5nRjHk0KpttX4oDcB2/nRV7auXh/RG+igrAkp1gDwPsD5uz4x8PKPiZDBAucmppiO9Tmg==
-X-Received: by 2002:a5d:6543:0:b0:339:502f:5e0c with SMTP id
- z3-20020a5d6543000000b00339502f5e0cmr1146669wrv.10.1706200453495; 
- Thu, 25 Jan 2024 08:34:13 -0800 (PST)
+ bh=YHMUzgkXRP9wZQ4wL9pyKD3XATptA/6sivyW/DCZ/hM=;
+ b=d1+THOKiV27IOdOUAw+WRQxqgcAySD8fYtgF352vNQjpI5hOG9FJDmXTO37VKqG04A
+ AexjgcD9E1m0n24+02AykvtBifDUR06yUdE2ZcCOL56E4Vx1MevDDb2LDjlUD7OEf3mQ
+ TCq2qsvfUg/q7x26ETqwupty9grtLHTj4rGFzgb3s1PL2WO/03619xSdLDvZ4/5nwHNQ
+ RNJSRVA9ezcipIiuqQZqQVQSkERxohPpsQtjYZaB9gWvorSNpuazdnNrL/YzDZe8S/i3
+ ftiHu6wQhlhnclsF8GK/27lJl+/G1ypedOnIrtoxoKt6iXtY6D+082MdysnYMZCVVOKD
+ nyCQ==
+X-Gm-Message-State: AOJu0YxAIK+uiRzrGtrO6mFFE5IKsY8kuPqv/IuwIIN0r0u8vVY+M+Sr
+ lQ7w5QwWvnIOdVag6qz0XOfqhqQe85fFRiVDpQ64oMkRA+9TqxC8u68aDirKQixH8H6w1ErZsAF
+ +
+X-Google-Smtp-Source: AGHT+IEG5L84L9UQXNBAuQGxJwjDbdv6l1TIIMxWTQVW/2Acw35eIfLzZx0nKHSdfcOUsZl6/DYHWQ==
+X-Received: by 2002:a05:600c:22c7:b0:40d:9061:b8 with SMTP id
+ 7-20020a05600c22c700b0040d906100b8mr743699wmg.223.1706200450979; 
+ Thu, 25 Jan 2024 08:34:10 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- p13-20020a05600c358d00b0040ea875a527sm3122208wmq.26.2024.01.25.08.34.13
+ p13-20020a05600c358d00b0040ea875a527sm3122208wmq.26.2024.01.25.08.34.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 08:34:13 -0800 (PST)
+ Thu, 25 Jan 2024 08:34:10 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
-Subject: [PATCH 09/10] riscv: Clean up includes
-Date: Thu, 25 Jan 2024 16:34:07 +0000
-Message-Id: <20240125163408.1595135-10-peter.maydell@linaro.org>
+Subject: [PATCH 03/10] disas/riscv: Clean up includes
+Date: Thu, 25 Jan 2024 16:34:01 +0000
+Message-Id: <20240125163408.1595135-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125163408.1595135-1-peter.maydell@linaro.org>
 References: <20240125163408.1595135-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,7 +95,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This commit was created with scripts/clean-includes:
- ./scripts/clean-includes --git riscv target/riscv/*.[ch]
+ ./scripts/clean-includes --git disas/riscv disas/riscv*[ch]
 
 All .c should include qemu/osdep.h first.  The script performs three
 related cleanups:
@@ -108,34 +108,47 @@ related cleanups:
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/riscv/vector_internals.h | 1 -
- target/riscv/vector_internals.c | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ disas/riscv.h          | 1 -
+ disas/riscv-xthead.c   | 1 +
+ disas/riscv-xventana.c | 1 +
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 8133111e5f6..842765f6c16 100644
---- a/target/riscv/vector_internals.h
-+++ b/target/riscv/vector_internals.h
-@@ -19,7 +19,6 @@
- #ifndef TARGET_RISCV_VECTOR_INTERNALS_H
- #define TARGET_RISCV_VECTOR_INTERNALS_H
+diff --git a/disas/riscv.h b/disas/riscv.h
+index 19e5ed2ce63..16a08e4895c 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -7,7 +7,6 @@
+ #ifndef DISAS_RISCV_H
+ #define DISAS_RISCV_H
  
 -#include "qemu/osdep.h"
- #include "qemu/bitops.h"
- #include "cpu.h"
- #include "tcg/tcg-gvec-desc.h"
-diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 9cf5c17cdea..12f5964fbbe 100644
---- a/target/riscv/vector_internals.c
-+++ b/target/riscv/vector_internals.c
-@@ -16,6 +16,7 @@
-  * this program.  If not, see <http://www.gnu.org/licenses/>.
+ #include "target/riscv/cpu_cfg.h"
+ 
+ /* types */
+diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
+index 99da679d16c..fcca326d1c3 100644
+--- a/disas/riscv-xthead.c
++++ b/disas/riscv-xthead.c
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
   */
  
 +#include "qemu/osdep.h"
- #include "vector_internals.h"
+ #include "disas/riscv.h"
+ #include "disas/riscv-xthead.h"
  
- /* set agnostic elements to 1s */
+diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
+index a0224d1fb31..cd694f15f32 100644
+--- a/disas/riscv-xventana.c
++++ b/disas/riscv-xventana.c
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include "qemu/osdep.h"
+ #include "disas/riscv.h"
+ #include "disas/riscv-xventana.h"
+ 
 -- 
 2.34.1
 
