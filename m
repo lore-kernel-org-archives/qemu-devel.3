@@ -4,104 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7787C46CD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D076AC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSq2m-0001yI-Jv; Wed, 24 Jan 2024 22:04:44 -0500
+	id 1rSqFg-0006y6-Ee; Wed, 24 Jan 2024 22:18:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rSq2k-0001wW-TQ
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:04:43 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
+ id 1rSqFd-0006x9-0q; Wed, 24 Jan 2024 22:18:01 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rSq2i-0004e3-Ms
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:04:42 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40P2gOHe007880; Thu, 25 Jan 2024 03:04:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=zX3eajORneZ+i+d/3wnbNiXSZaw7uVQiUa5q6xik00c=;
- b=V/QM4xAb113twfuY6DeJSnLqd/aBAPPJwxeafmwC/hzpDcxZCNfQV+bA3Sz2zlKmLLKj
- U+tBRr+6nXoqyjIjs2Q9k8Wr8ZOZbnI7GG8VmMEoVAVw++7zQvg3FnKWyZk5NWAutbQ2
- 7lwbi1F/r1rUrMdVY2g+JZ3PJiSr+iLIKwCVoBBbIRvbEVLNDH7luX4b3u2Cz9oAnPLt
- TRko6B8SMbpboPMOrMfKYlIfxnKoaMzZ2uDZKzmp8qBEHJTVaTNSsEaX2S8RVXbW7Rvq
- /x2jw9RFwk9mq4c8JpMgpxte9k1MUHvWFh9Vs1+erzy+2mHHtRq4bJgTX2S56FeRwaBt AA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vuf3arbw2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jan 2024 03:04:37 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40P2oXOq025241;
- Thu, 25 Jan 2024 03:04:37 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vuf3arbvj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jan 2024 03:04:36 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40P2eCLZ022438; Thu, 25 Jan 2024 03:04:35 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vrt0m9rs2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jan 2024 03:04:35 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40P34XUC8323636
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 25 Jan 2024 03:04:33 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7FB9C2004B;
- Thu, 25 Jan 2024 03:04:33 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A9AD20043;
- Thu, 25 Jan 2024 03:04:33 +0000 (GMT)
-Received: from [9.179.10.76] (unknown [9.179.10.76])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 25 Jan 2024 03:04:33 +0000 (GMT)
-Message-ID: <3e32f06d1f4b35c3b5c67434593f466995a38c87.camel@linux.ibm.com>
-Subject: Re: [PATCH v5 4/4] accel/tcg: Move perf and debuginfo support to tcg
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>
-Date: Thu, 25 Jan 2024 04:04:32 +0100
-In-Reply-To: <3aad97e2-7a2d-4629-bca2-0e5a0f439082@linaro.org>
-References: <20240124075609.14756-1-philmd@linaro.org>
- <20240124075609.14756-5-philmd@linaro.org>
- <3aad97e2-7a2d-4629-bca2-0e5a0f439082@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Q3Hco0Yv9cxQuokORVSarfgri8ptdqFT
-X-Proofpoint-ORIG-GUID: W7AkzegcoFM0mOjKwcrE1DeI6lZ2GqVA
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
+ id 1rSqFY-00053m-SA; Wed, 24 Jan 2024 22:18:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gibson.dropbear.id.au; s=202312; t=1706152667;
+ bh=4VoQYP24BD5r1tFesV0JCVRlHGZYY+f8XwkrH8e5MOI=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=P5t/dyrOvz6HF87hv8vAdqt/dDmPziFoLA+tEIM9U/lMcAxrEQe5xybU9JGQMQMvB
+ 99UPl7OoRrH1tyv/Z5D7WkJOYZESPfR26Mun6GD8JskjJvmmDUY5qtxWHeS8IHXEzu
+ Hzfr5WcmSNxTDoy8WSXJnCEana3sB/hbxV809tINiocFtNMKAx2Up45C2eBFcFvJAG
+ 9m9mF4KToho/9+Ijp0bcL9vuPmW070ap5NYSpf4uew2hO3nR1FVVaXAa5d7MtGrCAk
+ trvOCDneVdGLMz7zQtXfa5iycMdBxToyOITBNsAlMNWJ1c+NZO97pzsNMHLJAyxafD
+ iEyMB9qLB59XQ==
+Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
+ id 4TL5cC0C5Xz4x5q; Thu, 25 Jan 2024 14:17:47 +1100 (AEDT)
+Date: Thu, 25 Jan 2024 14:11:37 +1100
+From: David Gibson <david@gibson.dropbear.id.au>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-ppc@nongnu.org, =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+ =?iso-8859-1?Q?Fr=E9d=E9ric?= Barrat <fbarrat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/8] ppc/spapr|pnv: Remove SAO from pa-features when
+ running MTTCG
+Message-ID: <ZbHRaWhUbpsHa4I-@zatzit>
+References: <20240118140942.164319-1-npiggin@gmail.com>
+ <20240118140942.164319-3-npiggin@gmail.com>
+ <ZanA-usH_Ec0uqie@zatzit> <CYLPOZ0VDE7U.40VIK25R65PQ@wheely>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-24_12,2024-01-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=975
- suspectscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- mlxscore=0 clxscore=1011 phishscore=0 priorityscore=1501 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2401250021
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="jxp+fxGu16+O7y0Q"
+Content-Disposition: inline
+In-Reply-To: <CYLPOZ0VDE7U.40VIK25R65PQ@wheely>
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=dgibson@gandalf.ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,61 +72,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2024-01-25 at 07:11 +1000, Richard Henderson wrote:
-> On 1/24/24 17:56, Philippe Mathieu-Daud=C3=A9 wrote:
-> > From: Ilya Leoshkevich <iii@linux.ibm.com>
-> >=20
-> > tcg/ should not depend on accel/tcg/, but perf and debuginfo
-> > support provided by the latter are being used by tcg/tcg.c.
-> >=20
-> > Since that's the only user, move both to tcg/.
-> >=20
-> > Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > Message-ID: <20231208003754.3688038-5-iii@linux.ibm.com>
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > ---
-> > =C2=A0 {accel/tcg =3D> tcg}/debuginfo.h | 4 ++--
-> > =C2=A0 {accel/tcg =3D> tcg}/perf.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 4 ++=
---
->=20
-> Headers should be in include/tcg/.
->=20
-> > --- a/accel/tcg/translate-all.c
-> > +++ b/accel/tcg/translate-all.c
-> > @@ -63,7 +63,7 @@
-> > =C2=A0 #include "tb-context.h"
-> > =C2=A0 #include "internal-common.h"
-> > =C2=A0 #include "internal-target.h"
-> > -#include "perf.h"
-> > +#include "tcg/perf.h"
->=20
-> Since it is used from accel/tcg/,
->=20
-> > =C2=A0 #include "tcg/insn-start-words.h"
-> > =C2=A0=20
-> > =C2=A0 TBContext tb_ctx;
-> > diff --git a/hw/core/loader.c b/hw/core/loader.c
-> > index e7a9b3775b..b8e52f3fb0 100644
-> > --- a/hw/core/loader.c
-> > +++ b/hw/core/loader.c
-> > @@ -62,7 +62,7 @@
-> > =C2=A0 #include "hw/boards.h"
-> > =C2=A0 #include "qemu/cutils.h"
-> > =C2=A0 #include "sysemu/runstate.h"
-> > -#include "accel/tcg/debuginfo.h"
-> > +#include "tcg/debuginfo.h"
->=20
-> ... and hw/core/.
->=20
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->=20
-> r~
 
-Can it be that this is the rebased v3?
-v4 seems to have these issues fixed:
+--jxp+fxGu16+O7y0Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-https://patchew.org/QEMU/20231212003837.64090-1-iii@linux.ibm.com/
+On Tue, Jan 23, 2024 at 11:57:56AM +1000, Nicholas Piggin wrote:
+> On Fri Jan 19, 2024 at 10:23 AM AEST, David Gibson wrote:
+> > On Fri, Jan 19, 2024 at 12:09:36AM +1000, Nicholas Piggin wrote:
+> > > SAO is a page table attribute that strengthens the memory ordering of
+> > > accesses. QEMU with MTTCG does not implement this, so clear it in
+> > > ibm,pa-features. There is a complication with spapr migration that is
+> > > addressed with comments, it is not a new problem here.
+> > >=20
+> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > > ---
+> > >  hw/ppc/pnv.c   |  5 +++++
+> > >  hw/ppc/spapr.c | 15 +++++++++++++++
+> > >  2 files changed, 20 insertions(+)
+> > >=20
+> > > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> > > index b949398689..4969fbdb05 100644
+> > > --- a/hw/ppc/pnv.c
+> > > +++ b/hw/ppc/pnv.c
+> > > @@ -158,6 +158,11 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *=
+pc, void *fdt)
+> > >      char *nodename;
+> > >      int cpus_offset =3D get_cpus_node(fdt);
+> > > =20
+> > > +    if (qemu_tcg_mttcg_enabled()) {
+> > > +        /* SSO (SAO) ordering is not supported under MTTCG. */
+> > > +        pa_features[4 + 2] &=3D ~0x80;
+> > > +    }
+> > > +
+> > >      nodename =3D g_strdup_printf("%s@%x", dc->fw_name, pc->pir);
+> > >      offset =3D fdt_add_subnode(fdt, cpus_offset, nodename);
+> > >      _FDT(offset);
+> > > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> > > index 021b1a00e1..1c79d5670d 100644
+> > > --- a/hw/ppc/spapr.c
+> > > +++ b/hw/ppc/spapr.c
+> > > @@ -284,6 +284,21 @@ static void spapr_dt_pa_features(SpaprMachineSta=
+te *spapr,
+> > >          return;
+> > >      }
+> > > =20
+> > > +    if (qemu_tcg_mttcg_enabled()) {
+> > > +        /*
+> > > +         * SSO (SAO) ordering is not supported under MTTCG, so disab=
+le it.
+> > > +         * There is no cap for this, so there is a migration bug her=
+e.
+> > > +         * However don't disable it entirely, to allow it to be used=
+ under
+> > > +         * KVM. This is a minor concern because:
+> > > +         * - SAO is an obscure an rarely (if ever) used feature.
+> > > +         * - SAO is removed from POWER10 / v3.1, so there is already=
+ a
+> > > +         *   migration problem today.
+> > > +         * - Linux does not test this pa-features bit today anyway, =
+so it's
+> > > +         *   academic.
+> > > +         */
+> > > +        pa_features[4 + 2] &=3D ~0x80;
+> >
+> > Oof.. I see the reasoning but modifying guest visible parameters based
+> > on host capabilities without a cap really worries me nonetheless.
+>=20
+> Yeah :( It's not a new problem, but changing it based on host
+> does make it look uglier I guess.
+
+It's not really about whether it looks uglier, it's the fact that any
+dependency of guest visible aspects of the VM on host properties is a
+potential landmine for migration.
+
+The qemu migration model is - pretty fundamentally - that the VM
+should look and behave, from the point of view of the guest, the same
+before and after migration.  If the behaviour of the VM changes based
+on host properties it breaks that assumption, and it does so in a way
+that the user can't control or even easily predict.  Tools such as
+libvirt, or even qemu itself, can't verify that the migration is valid
+if there are effectively invisible parameters to the VM configuration
+that come from the host instead of the command line.
+
+> Other option could be to just disable it always. I don't mind
+> but someone did mention experimenting with it when I asked
+> about removing support from Linux. They could still test with
+> bare metal, and if ever started actually being used then we
+> could add a cap for it.
+
+I think that's a better idea.
+
+--=20
+David Gibson			| I'll have my music baroque, and my code
+david AT gibson.dropbear.id.au	| minimalist, thank you.  NOT _the_ _other_
+				| _way_ _around_!
+http://www.ozlabs.org/~dgibson
+
+--jxp+fxGu16+O7y0Q
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmWx0WgACgkQzQJF27ox
+2Ge/uQ/9F1BCffihfan0nhy+4YY63xUmWoHYww59yF3jX1uJtUtwZuNPo/5JKY1s
+9LufgP7qtWp8qL/LBTmO/KybbCqdAQXHyqPOKBk88EatxyHGRTQqDnBXqpSP5RuU
+Io3dFbtuJ3NCBKqlRBqYPjEGny8SE3fxEk06TB0Bo2O3vPvegq9I9rZFI65FGkvT
+4xsRVcVB7hTTmKBs+iRKtiJ+kwkbImBv6hwdZ15dMhF/UCjDt06+x/qR0Djchsmo
+EteE9mjRCLYJn/Jhgat5xlpez8wqTIsUH2UUXSQ4B/w+qerowiwfAMGMINmA/YZ8
+T1oH9ok3JFuO3A5yaVDIcUn9FUU/PqK3wnyxo4vQZxkpQL05Av8vl2AYtZnpTjqJ
+qhAVeTyKzZ/iKCZTsWiSFK+5c19YlewOeua5t+VFbKBR1Bw97LqLAO7trhdvqanp
+oWAimoMmblDehJI86q/yt9Vqx7+MPayHSJPTq9ousUmHAm+ilhw89IPtgQA/el59
+ErxemAJLbW1mbNFNw0Icj2kRjCbNApIhp/KwUecAc63Q4z6jcyBjRiAYhYpwiqCj
+XH0txlk5kCq4c+op2dta/kP5LFPCT76PsEbI+UEl94xkAdlVeheTsyoTmonbczSn
+1tzfJx715e4mm12BxSVaFPmMR2fzl7TdnkCx/2TiX4Yc1iCDJqM=
+=c4/G
+-----END PGP SIGNATURE-----
+
+--jxp+fxGu16+O7y0Q--
 
