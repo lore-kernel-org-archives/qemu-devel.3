@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B47C48260
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 15:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2FEC47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 15:12:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rT1Oi-0007WQ-Pj; Thu, 25 Jan 2024 10:12:08 -0500
+	id 1rT1OK-0007TL-Ex; Thu, 25 Jan 2024 10:11:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT1Og-0007WC-Kw
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:12:07 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1rT1OI-0007Sw-QC
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:11:42 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rT1Od-0003XI-W3
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:12:05 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-55cef56c6f9so1120418a12.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 07:12:03 -0800 (PST)
+ id 1rT1OH-0003Um-7R
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 10:11:42 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-55d0031d8b5so657329a12.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 07:11:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706195523; x=1706800323; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706195498; x=1706800298; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2i80wxe0/0QtBO80+y4+RhgnOoR/kF0A14FE8rom+X4=;
- b=yz+Fc3xo0EO8072CmkMWBjCo0Adxm6h9D+aqc9MEB52i5LDXiOsLGPNeA97gHK3Sfv
- OAdXmyEvyKS9W0tsmh/Gql/q8oU7i89rOpVPAUjAnDSbkP0seXfxXLYfYsa5AaVOAq17
- /S97qKLXgYMyo4L2ZzXLjss3F+y9UYiUIyRJwaoA4t9ETBPDiLyXYKUPCk5DrkS/MxAV
- H5/BqYpABSbf9KYzi2ODThTN7+8uQ4fUwIclV2x2aT5mh8xK7P2A4cAGqsHkCqfE0npE
- 1XumyYQkc6RlLQ4fuP8KGLnkpBveLbnT36yNyiZ9x5VCbhMDXXNh6MCztctp3D3FG1tx
- ITjg==
+ bh=JlZx2CConwDZM4SlbaEO4H+Gs581wkGTZT7k6BZJkPg=;
+ b=mEr453wJRpsudQDeb31SHErZK4qrGKX2k519kpyQHanSW3d8UqW63NZsxul8L8s0AQ
+ fPlJtnA8JKsE7i+geYzLdBEa4MaJw7kI8AlqpwGXcQKuxEGZiEsNSzn4hk/LXMOMmBUo
+ D5tdPcBi8c6/cdqVXg5tak40z7oO8apib7OTypWSjTAzKVCkCGlFQEobibOjHMhS6W55
+ rr0NhDFW2ZwTjiXCijF7mhn5gVsIoK30pd7gcEK6fNa9DAHpumVz+z6bocPEn533PddU
+ vpNnT+NEVby3UJcnYBi6eWPDAx147nz9SCd5lYr86opQav4TSBpHcXB4WeHxlZTsk/cf
+ gKQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706195523; x=1706800323;
+ d=1e100.net; s=20230601; t=1706195498; x=1706800298;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2i80wxe0/0QtBO80+y4+RhgnOoR/kF0A14FE8rom+X4=;
- b=MITap/HRsNx41gTner8ChK32MELvEkNWn9FQ2JS3QvFwMTQZIQvwmbbPy2QATFt6Ja
- DEVVnUVhAGJHwu4o9Co9Yq4TjXGjDK+bMOkrUajUVorpVQFcLtROSwJDTLeVrGZ0YhOm
- BXo8wvrKbhCQRZ6ijrwwIpnjcedyAM/M79Zk6kzk+uqZOoGMbrKJHeq5HitS11hTniuv
- HiS47gyVjUrChsAnPPVNnBmS+pNrAlknnTdRcR+MUcAm3FiZYIk/JJYeo1w8O6DDCZMI
- 4hU25vnuVlurT+daxqtPLsffCY1KXKk5eYp4kcpRKcHW4rpgT6HFW75M//A+L78xR6mO
- wUeg==
-X-Gm-Message-State: AOJu0Ywq0lyNw2r4qYmCFKgN2Os64EGJT5CwOj2Om7Ay/HQbWAeLI9y1
- v5Crg/zLFkJlbbEfbibfKM04DuMaZFrIe2q7xuzKiTNq9i3W+AZ36xHLg+92ns3uRIXdOX6TInt
- Z2rvIELx3EWiehVLdSAXYJX0OiLgzlgEDOx0Msw==
-X-Google-Smtp-Source: AGHT+IEaIb8owQVao7zQjpPLzd6gv0uNzMpIaEWQWy4PvJvYxWTBM8f9IhneXkoqvZ19ZjckIoHJ/0SjycjeGCPglSc=
-X-Received: by 2002:a05:6402:2554:b0:55d:1504:13c8 with SMTP id
- l20-20020a056402255400b0055d150413c8mr282350edb.48.1706195522803; Thu, 25 Jan
- 2024 07:12:02 -0800 (PST)
+ bh=JlZx2CConwDZM4SlbaEO4H+Gs581wkGTZT7k6BZJkPg=;
+ b=qQ4GahHf+7YxAqlKi0UYJHGTxHyhlIh/DFw6BzNO6hyw3qTyAM+/5TiTkeGg4W9t1B
+ n0MCuhm2nsgx0JZbALYKCI2Wn2zkrS4wuILDhjg5Z47H32im+U6wZN0+fmHAnH0hCAWM
+ gxyZCbesxRvA3Zs9csIqfqBKZ4VQN6FbGPu2bsVbyeBmbehN0e3zl8B2g+hZ7Ey0lJpY
+ kKm3U/a1vilnSoGB5X83RhZc9t9Il243/SSw3pSvLrSZFDG0zLGoIz/DYOxaehX6ffEY
+ jYEgeq+d7SH8tMszNtNpUsQb+vDyZSdmwMmiLEiGEGX2PM8M/rGC6vhdcqSnVjvOioFW
+ JTZg==
+X-Gm-Message-State: AOJu0YwgOJ3xrUqZHFmZFpjuOZyCYcK6FQi7nNX612vjhVY2c3WT3MoE
+ gd8UXV/WfZTUbqunzTZ5qsHscoE4zd1EtrzPVSaF49ujGFhjOgUd8PYCvYbleKjXiH8Ua6MThlv
+ kaB6UvReSoh9oYa7aJUf+O2asPiwtOLSxgW7TCw==
+X-Google-Smtp-Source: AGHT+IGgdemACCkbDf+TCIXx/mm8rnVQmR0QrQNtMjNKRogDUp2QE1yWq2+ZzIaCgglAX3ok6iB4SlVF9q4ydcmU5fM=
+X-Received: by 2002:a05:6402:254c:b0:55d:12b8:626 with SMTP id
+ l12-20020a056402254c00b0055d12b80626mr394458edb.35.1706195497841; Thu, 25 Jan
+ 2024 07:11:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20240124104231.603418-1-thuth@redhat.com>
-In-Reply-To: <20240124104231.603418-1-thuth@redhat.com>
+References: <20240122160126.394141-1-stefanha@redhat.com>
+In-Reply-To: <20240122160126.394141-1-stefanha@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 25 Jan 2024 15:11:51 +0000
-Message-ID: <CAFEAcA8pcavVOH6T17Uokps0=nQdCQF4Nujj9Ave-Sek5jpueg@mail.gmail.com>
-Subject: Re: [PULL 0/7] Test timeout fixes and URI code clean up
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
+Date: Thu, 25 Jan 2024 15:11:25 +0000
+Message-ID: <CAFEAcA_vRf6uAEDNJjOpXVk+pkYx-cX_YvBr5Swyh7hOEk62zw@mail.gmail.com>
+Subject: Re: [PULL 0/2] Block patches
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, 
+ Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,9 +89,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Jan 2024 at 10:42, Thomas Huth <thuth@redhat.com> wrote:
->
->  Hi Peter!
+On Mon, 22 Jan 2024 at 16:01, Stefan Hajnoczi <stefanha@redhat.com> wrote:
 >
 > The following changes since commit 09be34717190c1620f0c6e5c8765b8da354aeb4b:
 >
@@ -97,16 +97,16 @@ On Wed, 24 Jan 2024 at 10:42, Thomas Huth <thuth@redhat.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-01-24
+>   https://gitlab.com/stefanha/qemu.git tags/block-pull-request
 >
-> for you to fetch changes up to e7b991451eecb58af34d6d3d17209e97f5e97f96:
+> for you to fetch changes up to 8a9be7992426c8920d4178e7dca59306a18c7a3a:
 >
->   util/uri: Remove unused macros ISA_RESERVED() and ISA_GEN_DELIM() (2024-01-24 09:54:05 +0100)
+>   block/io: clear BDRV_BLOCK_RECURSE flag after recursing in bdrv_co_block_status (2024-01-22 11:00:12 -0500)
 >
 > ----------------------------------------------------------------
-> * Test timeout fixes
-> * Clean up URI code
+> Pull request
 >
+> ----------------------------------------------------------------
 
 
 Applied, thanks.
