@@ -4,49 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED23C47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 07:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77238C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 07:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSuDJ-0007jc-Gr; Thu, 25 Jan 2024 02:31:53 -0500
+	id 1rSuKe-0004fO-JU; Thu, 25 Jan 2024 02:39:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rSuDH-0007hR-CR
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:31:51 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rSuDD-0000Um-L3
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 02:31:50 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxaOhgDrJlAW0FAA--.958S3;
- Thu, 25 Jan 2024 15:31:44 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxHs9gDrJlHeQYAA--.42878S2; 
- Thu, 25 Jan 2024 15:31:44 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 0/2] loongarch-to-apply queue
-Date: Thu, 25 Jan 2024 15:15:35 +0800
-Message-Id: <20240125071537.53397-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rSuKb-0004eS-Dp; Thu, 25 Jan 2024 02:39:25 -0500
+Received: from mgamail.intel.com ([192.55.52.120])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rSuKZ-0002YQ-OU; Thu, 25 Jan 2024 02:39:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706168363; x=1737704363;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=VD+w9a50KOP5gQOa1rpKHZ8VF21XLZk8+rGBup4Yo5o=;
+ b=k4nYdVPo2ARBhiDxyf+Uwmq+57vr0SFxyJq2jrmlJQjflvdF/rClGUt7
+ LnLiJFSFut1gmc4bUvH/oi/PGuR4EinFDAwUkxHfcH235m/J2jf00aTtz
+ v1ZEjmNrNv7cfMoIc6a3hwOCcS1XfgC4NR4MMqWhZW/O9uv48macCj4Rr
+ nclO5Z+EToO/yJ/MYT4YASAy9wLz8kaZp2DVhdPFfI4/sAZGFdbI3Qk13
+ HTIsmJAZhQJkMt1PKFEYBW1JDPP2NzSFCn2YkbIjbM/NLHYEifDQf1dpm
+ M1ALac7JBghlBblIvsbvwhPjByI9554xi3SpUxTVGMSWncMeMEXLAqslA Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="400942952"
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="400942952"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Jan 2024 23:39:19 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
+   d="scan'208";a="2187713"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Jan 2024 23:39:12 -0800
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: eric.auger@redhat.com, jean-philippe@linaro.org,
+ alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, mst@redhat.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v2 0/2] Two minor fixes on virtio-iommu and smmu
+Date: Thu, 25 Jan 2024 15:37:04 +0800
+Message-Id: <20240125073706.339369-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxHs9gDrJlHeQYAA--.42878S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.55.52.120;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -58
+X-Spam_score: -5.9
+X-Spam_bar: -----
+X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,30 +79,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4a4efae44f19528589204581e9e2fab69c5d39aa:
+Hi,
 
-  Merge tag 'pull-hex-20240121' of https://github.com/quic/qemu into staging (2024-01-23 13:40:45 +0000)
+PATCH1 fixes a potential issue with vfio devices when reboot to a
+different OS which set bus number differently from previous OS.
+I didn't reproduce the issue in reality, but it's still possible
+in theory. VTD doesn't have same issue as it use some verify logic
+to ensure right iommu MR is picked.
 
-are available in the Git repository at:
+PATCH2 does same thing for smmu.
 
-  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240125
+v2:
+- Remove redundant memset in realize (Cédric)
+- Add a patch for smmu (Eric)
+- Drop the patch to support PCI device alias for now, as it's tricky in
+  using two different IOMMU MRs and Eric already sent a smarter fix.
 
-for you to fetch changes up to fc70099621fe7002d30fc1509456d1ae57264aa6:
 
-  target/loongarch/kvm: Enable LSX/LASX extension (2024-01-25 15:25:31 +0800)
+Thanks
+Zhenzhong
 
-----------------------------------------------------------------
-pull-loongarch-20240125
+Zhenzhong Duan (2):
+  virtio_iommu: Clear IOMMUPciBus pointer cache when system reset
+  smmu: Clear SMMUPciBus pointer cache when system reset
 
-----------------------------------------------------------------
-Bibo Mao (1):
-      target/loongarch: Set cpuid CSR register only once with kvm mode
+ hw/arm/smmu-common.c     | 2 ++
+ hw/virtio/virtio-iommu.c | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-Song Gao (1):
-      target/loongarch/kvm: Enable LSX/LASX extension
-
- linux-headers/asm-loongarch/kvm.h |  1 +
- target/loongarch/kvm/kvm.c        | 54 +++++++++++++++++++++++++++++++--------
- 2 files changed, 45 insertions(+), 10 deletions(-)
+-- 
+2.34.1
 
 
