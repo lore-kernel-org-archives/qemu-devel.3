@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 403DBC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB20C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 04:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqQr-00066G-Ak; Wed, 24 Jan 2024 22:29:37 -0500
+	id 1rSrd1-0002vQ-UL; Wed, 24 Jan 2024 23:46:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQq-0005wL-18
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:36 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQo-0001Dy-25
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153374; x=1737689374;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=E6VAdkr88fG+BmM8jv4sFZ7xt5v111/0ITZGjojxtF4=;
- b=D/EZ8Q68ZFzUIG77Jw3+0HiosHnq6Qgdl8xHpjh39cKUt77YLfkX3QKT
- 15h3OETJdooDp+VRAker95W94hRVWligKjAQkRbJ/WiE1WZR0eyaJ+lS1
- TMrC/XnFt4P+KQ3hC69ya4/uayTLUA1g4YmcaEx6DNHTAmPQtIVRclLfr
- +xgmq3rlOFd4+E2/vboM2HH9cseYF8tKDHNUXRe2/4GMPDFdBfvKpLUIW
- G3QNf1GdnXH4JXNeMZxZOEl9z7nhuGdjF7wH0DPLk7kUijMKAUWCp4rOd
- 8FPSpPq2EMuP32H1aqQywFBXn60dASbOJLfU7aB4vyjOIoYYY4uy2N/PV Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9428937"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9428937"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:26:12 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2085694"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:26:07 -0800
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
- Michael Roth <michael.roth@amd.com>,
- Sean Christopherson <seanjc@google.com>,
- Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Isaku Yamahata <isaku.yamahata@gmail.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 28/66] i386/tdx: Validate TD attributes
-Date: Wed, 24 Jan 2024 22:22:50 -0500
-Message-Id: <20240125032328.2522472-29-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
-References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrcz-0002re-Fi
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:46:13 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rSrcx-0004Zk-8O
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 23:46:13 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-40e7e2e04f0so68671705e9.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jan 2024 20:46:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706157969; x=1706762769; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wZyqofPTExVY5+AUvxwvkWlwvtNGB0iFAXRO/yw5vUE=;
+ b=WMO/NIf5iQNAV2Bi8PkfDs1+Yoy3mcQ0qTqWRNmFdY/V9Lx7RYfmz33NALdSp88YNf
+ RZxc5/LMhz4sSsEyCGzgEQ6CyNSwBxt/RK+6m01gQfH1TO6qIbATpanWqJzmTjaEaOM+
+ fy+8FaR5G2EjhviPFziz8VUOy4yYda73GCW2SIxMJQYW7PuK3hG1K2F0iO1v7ZR9PXl9
+ V4IqjMNsmItKfH8fj+atlPmqxCjmKQCTATgsfW/BzQdyy4zTt5jD3RcQMMU/Fh/yx2/4
+ IqzgmyQJfsRExUrCQydApfoTO7FOTU6EiU1/OOc7R5cP/EvySFOcbBS6TQ2eFxGO+laY
+ U2Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706157969; x=1706762769;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wZyqofPTExVY5+AUvxwvkWlwvtNGB0iFAXRO/yw5vUE=;
+ b=i0lzhn2etDhYYOkG0zlmcVQVCfpqETKeo8DiRezxH4MBTXYSuY4S3QM/1dxKLSTp/A
+ Z/sm4RnzmdjSUGOqfth26u/Vk3dUCMExVPpDN4EX7v04kp9nCstnhJY8FfvucoUpqh7L
+ evENKygde870Pq2haAtfadPbGmukkU8yGr/o2Ob7BKcQrE3/eMjXcCpFG5OmkLCk9avj
+ DGQrHgLOs51Vihx/TH8y6/xbgFWM7SdIEjsc8yZ9GysnmtiFW4kfOhLyjO4QWb3wyzHY
+ ZlTp8AHOc+W/x/QaTlvVvFHNa1mk7W+vMABOZ6L0lPlCmGLBftEvb48VPfoGpT3UHwSn
+ w0dg==
+X-Gm-Message-State: AOJu0YwTXfWXadydFWmiTqd5Pqd+TqP5jBYDesliCgKMOi4XQvG7YOXT
+ 96ghr5zm3CS2pwkIoCamj19HSu+ZbykEv5pnW5CngCJTJwwf/Txl0rYy1i9necQ=
+X-Google-Smtp-Source: AGHT+IHn4NSTcR7zU7h6T0ENR1igZw1VdvphTM2Jfh+nzsYvYAeyTxJ0NWU/cybMT23GE/M/wwiyyg==
+X-Received: by 2002:a05:600c:c0e:b0:40e:c564:a9ea with SMTP id
+ fm14-20020a05600c0c0e00b0040ec564a9eamr1258408wmb.20.1706157968767; 
+ Wed, 24 Jan 2024 20:46:08 -0800 (PST)
+Received: from [192.168.69.100] (lec62-h02-176-184-19-125.dsl.sta.abo.bbox.fr.
+ [176.184.19.125]) by smtp.gmail.com with ESMTPSA id
+ df10-20020a5d5b8a000000b0033947d7651asm4750596wrb.5.2024.01.24.20.46.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jan 2024 20:46:08 -0800 (PST)
+Message-ID: <2c5bb08f-8cd9-4c4e-b2b8-39d93daeb03a@linaro.org>
+Date: Thu, 25 Jan 2024 05:46:06 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/9] accel/tcg: Hoist CPUClass arg to functions with
+ external linkage
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
+ Claudio Fontana <cfontana@suse.de>, Markus Armbruster <armbru@redhat.com>
+References: <20240124101639.30056-1-philmd@linaro.org>
+ <20240124101639.30056-6-philmd@linaro.org>
+ <00177e2f-766f-4adc-b7dc-6b45f6a22c92@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <00177e2f-766f-4adc-b7dc-6b45f6a22c92@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,84 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Validate TD attributes with tdx_caps that fixed-0 bits must be zero and
-fixed-1 bits must be set.
+On 24/1/24 23:59, Richard Henderson wrote:
+> On 1/24/24 20:16, Philippe Mathieu-Daudé wrote:
+>> Hoist the CPUClass argument from most of these internal helpers:
+>>
+>>   - check_for_breakpoints_slow
+>>   - check_for_breakpoints()
+>>   - cpu_tb_exec()
+>>   - cpu_exec_enter()
+>>   - cpu_exec_exit()
+>>   - cpu_handle_halt()
+>>   - cpu_handle_debug_exception()
+>>   - cpu_handle_exception()
+>>   - need_replay_interrupt()
+>>   - cpu_handle_interrupt()
+>>   - cpu_loop_exec_tb()
+>>   - cpu_exec_loop()
+>>   - cpu_exec_setjmp()
+>>
+>> to the following ones with external linkage:
+>>
+>>   - lookup_tb_ptr()
+>>   - cpu_exec_step_atomic()
+>>   - cpu_exec()
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+>> ---
+>>   accel/tcg/cpu-exec.c | 82 ++++++++++++++++++++------------------------
+>>   1 file changed, 37 insertions(+), 45 deletions(-)
+> 
+> I'm not so keen on this.  Does it really make a difference?
+> What about simply making more use of CPUState->cc instead?
 
-Besides, sanity check the attribute bits that have not been supported by
-QEMU yet. e.g., debug bit, it will be allowed in the future when debug
-TD support lands in QEMU.
+TIL CPUState->cc... Which makes me wonder why this isn't handler
+generically via QOM macros.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-
----
-Changes in v3:
-- using error_setg() for error report; (Daniel)
----
- target/i386/kvm/tdx.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 1cb38b5d6221..8c2bf512397e 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -32,6 +32,7 @@
-                                      (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
-                                      (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
- 
-+#define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
- #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
- #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
- #define TDX_TD_ATTRIBUTES_PERFMON           BIT_ULL(63)
-@@ -478,13 +479,34 @@ int tdx_kvm_init(MachineState *ms, Error **errp)
-     return 0;
- }
- 
--static void setup_td_guest_attributes(X86CPU *x86cpu)
-+static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
-+{
-+    if (((tdx->attributes & tdx_caps->attrs_fixed0) | tdx_caps->attrs_fixed1) !=
-+        tdx->attributes) {
-+            error_setg(errp, "Invalid attributes 0x%lx for TDX VM "
-+                       "(fixed0 0x%llx, fixed1 0x%llx)",
-+                       tdx->attributes, tdx_caps->attrs_fixed0,
-+                       tdx_caps->attrs_fixed1);
-+            return -1;
-+    }
-+
-+    if (tdx->attributes & TDX_TD_ATTRIBUTES_DEBUG) {
-+        error_setg(errp, "Current QEMU doesn't support attributes.debug[bit 0] for TDX VM");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int setup_td_guest_attributes(X86CPU *x86cpu, Error **errp)
- {
-     CPUX86State *env = &x86cpu->env;
- 
-     tdx_guest->attributes |= (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS) ?
-                              TDX_TD_ATTRIBUTES_PKS : 0;
-     tdx_guest->attributes |= x86cpu->enable_pmu ? TDX_TD_ATTRIBUTES_PERFMON : 0;
-+
-+    return tdx_validate_attributes(tdx_guest, errp);
- }
- 
- int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-@@ -509,7 +531,10 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-         return r;
-     }
- 
--    setup_td_guest_attributes(x86cpu);
-+    r = setup_td_guest_attributes(x86cpu, errp);
-+    if (r) {
-+        return r;
-+    }
- 
-     init_vm->cpuid.nent = kvm_x86_arch_cpuid(env, init_vm->cpuid.entries, 0);
- 
--- 
-2.34.1
+> 
+> 
+> r~
 
 
