@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA40AC47258
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387EBC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:31:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqPW-00034F-SV; Wed, 24 Jan 2024 22:28:14 -0500
+	id 1rSqQN-0004LB-CF; Wed, 24 Jan 2024 22:29:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqPT-00033S-RQ
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:11 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqPR-0001Dr-29
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:28:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153289; x=1737689289;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=2mNwsjv6vluae8uBwx0X4bXjQ8lU44YLJ4VZgJtV40o=;
- b=b6cukiNilijnOl1pzcEfWLuG2DglDn0LVF2lpkeihFcbjGbj0a0gPqg/
- PlEd0ziwo/otsbS0lQdyRcdcdsf1VZCMKP4yo8KgA+tFjLV8cs7w9YkpD
- zqcG1iScfkwBMt7ZvBtEDeczX0sXr+bsXx3HGhjhRVfHy1fiAjttwDRDi
- oG8bq3ck+s+7p98+fum0WDTvkOy+XW5mEGlxMYZyGUN3AH0vMP7iSGByD
- oxBcm7yUKNGZ5Z6qoj9JKImAxRqM/x0LWPTerPjlbkeH1yOCLT0thExuR
- zON5BnqrPjbKvrm2WPVLPgS5ECUb/Q9ea5XZm6fglhuFjq6riHrJzpIop A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9427927"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9427927"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:23:54 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2084440"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:23:48 -0800
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
- Michael Roth <michael.roth@amd.com>,
- Sean Christopherson <seanjc@google.com>,
- Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Isaku Yamahata <isaku.yamahata@gmail.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 03/66] HostMem: Add mechanism to opt in kvm guest memfd via
- MachineState
-Date: Wed, 24 Jan 2024 22:22:25 -0500
-Message-Id: <20240125032328.2522472-4-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
-References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rSqQK-0004Ih-Dq; Wed, 24 Jan 2024 22:29:04 -0500
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rSqQI-0001Kv-Oa; Wed, 24 Jan 2024 22:29:04 -0500
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5988e55ede0so2843035eaf.2; 
+ Wed, 24 Jan 2024 19:29:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706153341; x=1706758141; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U3Ds87bzyhgOp6Yrd8tdiPZFrU7fBkowlbUAt5Jq324=;
+ b=OBUigplPjGskJ0whNtsIhv7yr9voKZ+by0UkEx/3RrEeDY9Fn1jSXr4jhavWsKvKo7
+ t1h+vpQfk72b1y5RyNvvrWTZKtUXKPare2rQcBGigKEE905/iOpLHyM1DsGf77oypn7r
+ tp+ic/KtOxaq85JQZ4GQxFF/T93KePNnLPpHKZqTxcxgj0hJuHTle9eX2ULHZOfRwGWl
+ 1o5rngSQaMmWcAj8jFqnIb6/6YK0+krOxbCdsTKYbU+3FNZvwFC3iTxD2yk18gOPtShQ
+ Uz0RPetgVnKKpUrnQ50+OZKsaVvMszAQZZt8CHsJqi4hisZ4lK4fkidoRxxkaJFQAWQ7
+ 7c6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706153341; x=1706758141;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=U3Ds87bzyhgOp6Yrd8tdiPZFrU7fBkowlbUAt5Jq324=;
+ b=hqWShhnfvAn+DAJsBBCXkjhXLgZJV3YDwYfPLJIgU/3FYebLryGT0JeLlyBHS03qw6
+ /dCVcdS/vz2g4yZvR+yLD6/su2e0jjDUTLFhMsJqcRpPsEhEyBBI320qO54c9JJldCcE
+ Wb+sipht0OWUDGC0UxRpKv9tIVRqBqNUcGswzyZqEZFyWVJP+A0ZW6N5Ewp/Qhz9AUtX
+ Sx/qBUCGdX4rfC8Cwnf/G96HJjIsWBabyUphloQ21BvVQTGVHsKs2ilxVtDMMpdG1QKI
+ nbRVkAN+YCdjhE/1LEt2cKNG3eqevzx92DjujK+eI8AnUy/Z4IeCZuvkB3YXsvB1gJXb
+ wdDg==
+X-Gm-Message-State: AOJu0Yw2xpolz3BxYj9jNN61EVRXWUlHG+I4tExCXH4GqHNXgCnH40Dh
+ uveNO46SDFcedKJKRin0tdELxrm7fh4f6OyZurJhNnddyFXfs3NzRL9b26ToVqdZ+MsXEeJ2jNh
+ air1RFUnZ1JYsof3KExpWCV+jpQo=
+X-Google-Smtp-Source: AGHT+IGLP1P4ytINv/zEzag+ieW8lZ5KL3Gn5ZbWcIk/lXJJTXZL8Wnr2l8xYj9GsnDr+FnOhKwvhR7aIgIjHxPhGkU=
+X-Received: by 2002:a05:6358:9999:b0:176:6144:df9f with SMTP id
+ j25-20020a056358999900b001766144df9fmr434209rwb.28.1706153340883; Wed, 24 Jan
+ 2024 19:29:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
+References: <20240123161714.160149-1-dbarboza@ventanamicro.com>
+ <20240123161714.160149-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20240123161714.160149-4-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 25 Jan 2024 13:28:34 +1000
+Message-ID: <CAKmqyKOPUCs5dNhi4192qWEcd_J96WDJzc911DACUbUVtoHEWw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] target/riscv/kvm: get/set vector vregs[]
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=alistair23@gmail.com; helo=mail-oo1-xc2b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,128 +91,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new member "guest_memfd" to memory backends. When it's set
-to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
-guest_memfd will be allocated during RAMBlock allocation.
+On Wed, Jan 24, 2024 at 2:18=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> vregs[] have variable size that depends on the current vlenb set by the
+> host, meaning we can't use our regular kvm_riscv_reg_id() to retrieve
+> it.
+>
+> Create a generic kvm_encode_reg_size_id() helper to encode any given
+> size in bytes into a given kvm reg id. kvm_riscv_vector_reg_id() will
+> use it to encode vlenb into a given vreg ID.
+>
+> kvm_riscv_(get|set)_vector() can then get/set all 32 vregs.
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Memory backend's @guest_memfd is wired with @require_guest_memfd
-field of MachineState. It avoid looking up the machine in phymem.c.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-MachineState::require_guest_memfd is supposed to be set by any VMs
-that requires KVM guest memfd as private memory, e.g., TDX VM.
+Alistair
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
-Changes in v4:
- - rename "require_guest_memfd" to "guest_memfd" in struct
-   HostMemoryBackend;	(David Hildenbrand)
----
- backends/hostmem-file.c  | 1 +
- backends/hostmem-memfd.c | 1 +
- backends/hostmem-ram.c   | 1 +
- backends/hostmem.c       | 1 +
- hw/core/machine.c        | 5 +++++
- include/hw/boards.h      | 2 ++
- include/sysemu/hostmem.h | 1 +
- 7 files changed, 12 insertions(+)
-
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index ac3e433cbddb..3c69db794607 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
-     ram_flags |= RAM_NAMED_FILE;
-     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 3923ea9364d5..745ead0034dc 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-                                           backend->size, ram_flags, fd, 0, errp);
- }
-diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-index d121249f0f45..f7d81af783a5 100644
---- a/backends/hostmem-ram.c
-+++ b/backends/hostmem-ram.c
-@@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-                                                   name, backend->size,
-                                                   ram_flags, errp);
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 30f69b2cb5e9..b1c39e8065e2 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -276,6 +276,7 @@ static void host_memory_backend_init(Object *obj)
-     /* TODO: convert access to globals to compat properties */
-     backend->merge = machine_mem_merge(machine);
-     backend->dump = machine_dump_guest_core(machine);
-+    backend->guest_memfd = machine_require_guest_memfd(machine);
-     backend->reserve = true;
-     backend->prealloc_threads = machine->smp.cpus;
- }
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index fb5afdcae4cc..514a201dc570 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1192,6 +1192,11 @@ bool machine_mem_merge(MachineState *machine)
-     return machine->mem_merge;
- }
- 
-+bool machine_require_guest_memfd(MachineState *machine)
-+{
-+    return machine->require_guest_memfd;
-+}
-+
- static char *cpu_slot_to_string(const CPUArchId *cpu)
- {
-     GString *s = g_string_new(NULL);
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index bcfde8a84d10..2e6156ae96b8 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -36,6 +36,7 @@ bool machine_usb(MachineState *machine);
- int machine_phandle_start(MachineState *machine);
- bool machine_dump_guest_core(MachineState *machine);
- bool machine_mem_merge(MachineState *machine);
-+bool machine_require_guest_memfd(MachineState *machine);
- HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *machine);
- void machine_set_cpu_numa_node(MachineState *machine,
-                                const CpuInstanceProperties *props,
-@@ -370,6 +371,7 @@ struct MachineState {
-     char *dt_compatible;
-     bool dump_guest_core;
-     bool mem_merge;
-+    bool require_guest_memfd;
-     bool usb;
-     bool usb_disabled;
-     char *firmware;
-diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
-index 0e411aaa29e1..04b884bf42a6 100644
---- a/include/sysemu/hostmem.h
-+++ b/include/sysemu/hostmem.h
-@@ -74,6 +74,7 @@ struct HostMemoryBackend {
-     uint64_t size;
-     bool merge, dump, use_canonical_path;
-     bool prealloc, is_mapped, share, reserve;
-+    bool guest_memfd;
-     uint32_t prealloc_threads;
-     ThreadContext *prealloc_context;
-     DECLARE_BITMAP(host_nodes, MAX_NODES + 1);
--- 
-2.34.1
-
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 57 ++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 55 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 3812481971..a7881de7f9 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -86,6 +86,27 @@ static uint64_t kvm_riscv_reg_id_u64(uint64_t type, ui=
+nt64_t idx)
+>      return KVM_REG_RISCV | KVM_REG_SIZE_U64 | type | idx;
+>  }
+>
+> +static uint64_t kvm_encode_reg_size_id(uint64_t id, size_t size_b)
+> +{
+> +    uint64_t size_ctz =3D __builtin_ctz(size_b);
+> +
+> +    return id | (size_ctz << KVM_REG_SIZE_SHIFT);
+> +}
+> +
+> +static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
+> +                                        uint64_t idx)
+> +{
+> +    uint64_t id;
+> +    size_t size_b;
+> +
+> +    g_assert(idx < 32);
+> +
+> +    id =3D KVM_REG_RISCV | KVM_REG_RISCV_VECTOR | KVM_REG_RISCV_VECTOR_R=
+EG(idx);
+> +    size_b =3D cpu->cfg.vlenb;
+> +
+> +    return kvm_encode_reg_size_id(id, size_b);
+> +}
+> +
+>  #define RISCV_CORE_REG(env, name) \
+>      kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CORE, \
+>                             KVM_REG_RISCV_CORE_REG(name))
+> @@ -694,7 +715,8 @@ static int kvm_riscv_get_regs_vector(CPUState *cs)
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+>      CPURISCVState *env =3D &cpu->env;
+>      target_ulong reg;
+> -    int ret =3D 0;
+> +    uint64_t vreg_id;
+> +    int vreg_idx, ret =3D 0;
+>
+>      if (!riscv_has_ext(env, RVV)) {
+>          return 0;
+> @@ -724,6 +746,21 @@ static int kvm_riscv_get_regs_vector(CPUState *cs)
+>              return ret;
+>          }
+>          cpu->cfg.vlenb =3D reg;
+> +
+> +        for (int i =3D 0; i < 32; i++) {
+> +            /*
+> +             * vreg[] is statically allocated using RV_VLEN_MAX.
+> +             * Use it instead of vlenb to calculate vreg_idx for
+> +             * simplicity.
+> +             */
+> +            vreg_idx =3D i * RV_VLEN_MAX / 64;
+> +            vreg_id =3D kvm_riscv_vector_reg_id(cpu, i);
+> +
+> +            ret =3D kvm_get_one_reg(cs, vreg_id, &env->vreg[vreg_idx]);
+> +            if (ret) {
+> +                return ret;
+> +            }
+> +        }
+>      }
+>
+>      return 0;
+> @@ -734,7 +771,8 @@ static int kvm_riscv_put_regs_vector(CPUState *cs)
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+>      CPURISCVState *env =3D &cpu->env;
+>      target_ulong reg;
+> -    int ret =3D 0;
+> +    uint64_t vreg_id;
+> +    int vreg_idx, ret =3D 0;
+>
+>      if (!riscv_has_ext(env, RVV)) {
+>          return 0;
+> @@ -761,6 +799,21 @@ static int kvm_riscv_put_regs_vector(CPUState *cs)
+>      if (kvm_v_vlenb.supported) {
+>          reg =3D cpu->cfg.vlenb;
+>          ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vlenb), &r=
+eg);
+> +
+> +        for (int i =3D 0; i < 32; i++) {
+> +            /*
+> +             * vreg[] is statically allocated using RV_VLEN_MAX.
+> +             * Use it instead of vlenb to calculate vreg_idx for
+> +             * simplicity.
+> +             */
+> +            vreg_idx =3D i * RV_VLEN_MAX / 64;
+> +            vreg_id =3D kvm_riscv_vector_reg_id(cpu, i);
+> +
+> +            ret =3D kvm_set_one_reg(cs, vreg_id, &env->vreg[vreg_idx]);
+> +            if (ret) {
+> +                return ret;
+> +            }
+> +        }
+>      }
+>
+>      return ret;
+> --
+> 2.43.0
+>
+>
 
