@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49656C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79F0C47258
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jan 2024 03:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rSqR6-0007jr-NK; Wed, 24 Jan 2024 22:29:52 -0500
+	id 1rSqRS-0000GA-T9; Wed, 24 Jan 2024 22:30:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqR1-0007J7-CV
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:47 -0500
+ id 1rSqRD-00081z-Ut
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:30:02 -0500
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rSqQz-0001Dr-Ev
- for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:47 -0500
+ id 1rSqRB-0001Dr-Us
+ for qemu-devel@nongnu.org; Wed, 24 Jan 2024 22:29:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706153385; x=1737689385;
+ t=1706153398; x=1737689398;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=EE0DYG8gi6shevrgMdBcMEkb8MmHXEhC21dRwuCBxTk=;
- b=O8QCvujkz+HE0i0Hxr65lA1rJj7qRYqUXNjIGhwY6XLzeEiNkDe1BBi1
- s5Cm35llw8I3P8/2Db5v59Y5sR2kw+A4OVYQ5cvjM2e8t8C4LYT8Ldp4M
- iw9EqzoIeOEq9SZAfhuDEMj397WZwNKEbKNPwLCwms3OhcH7zT4ITd60q
- GKtKx7huwkl41WSp/z32G4Vr5XcDMEEWIIqUpFvJW4s5hk7d6HKEdVGJ7
- KCHFenZIGOcgomwSoCIxUcsCbdAFY4p4FPxwKt0NWE+Rb7t9m9393VCX9
- nvurkTTLjmzHkPHbQ/GvmYpK/Jjfdj0JLRQ4zqYIuBZDy33NUI0yb8S7q Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9429044"
+ bh=s82lqcEyNhs1tpD/gdoT6tK5R+KBX8VxiSsRNuyuIxU=;
+ b=YrMsqPS+kacBayDa56W9yGo5PQbMRTARvU+N44c1ah/ornLlyAKNE9OF
+ fU64Gevht9bvBCT3lG05/n+W2UYKrFoAgR37tXhZZT+IZpVdlDpu4QLX/
+ J+epz1ODlLUKeUKGiZtJU2XXsaBQ8wrgtwMW2EE9IoojZWD/HIjga6D+A
+ Zh9cPr8c8Q7RrCDiMBzvsGvdEgxI9M6HVJrFyCMwZGofI7XpsL5hzCOu8
+ H5sDNCowuPR/YbqcCencEfFe5ERxBvjGz3cWwNhDGJspyHGC3VqbhJWxi
+ xTgUHX8ECh+uZJzaHOP/mNCo3BgPh4KTsQNj+1CglWv3FDJpGtY3KvQyv A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="9429166"
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9429044"
+   d="scan'208";a="9429166"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2024 19:26:23 -0800
+ 24 Jan 2024 19:26:39 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2085731"
+   d="scan'208";a="2085786"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:26:18 -0800
+ by orviesa005.jf.intel.com with ESMTP; 24 Jan 2024 19:26:34 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -61,9 +61,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, xiaoyao.li@intel.com,
  Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH v4 30/66] i386/tdx: Implement user specified tsc frequency
-Date: Wed, 24 Jan 2024 22:22:52 -0500
-Message-Id: <20240125032328.2522472-31-xiaoyao.li@intel.com>
+Subject: [PATCH v4 33/66] i386/tdx: Make memory type private by default
+Date: Wed, 24 Jan 2024 22:22:55 -0500
+Message-Id: <20240125032328.2522472-34-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240125032328.2522472-1-xiaoyao.li@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
@@ -93,89 +93,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reuse "-cpu,tsc-frequency=" to get user wanted tsc frequency and call VM
-scope VM_SET_TSC_KHZ to set the tsc frequency of TD before KVM_TDX_INIT_VM.
+By default (due to the recent UPM change), restricted memory attribute is
+shared.  Convert the memory region from shared to private at the memory
+slot creation time.
 
-Besides, sanity check the tsc frequency to be in the legal range and
-legal granularity (required by TDX module).
+add kvm region registering function to check the flag
+and convert the region, and add memory listener to TDX guest code to set
+the flag to the possible memory region.
 
+Without this patch
+- Secure-EPT violation on private area
+- KVM_MEMORY_FAULT EXIT (kvm -> qemu)
+- qemu converts the 4K page from shared to private
+- Resume VCPU execution
+- Secure-EPT violation again
+- KVM resolves EPT Violation
+This also prevents huge page because page conversion is done at 4K
+granularity.  Although it's possible to merge 4K private mapping into
+2M large page, it slows guest boot.
+
+With this patch
+- After memory slot creation, convert the region from private to shared
+- Secure-EPT violation on private area.
+- KVM resolves EPT Violation
+
+Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
-Changes in v3:
-- use @errp to report error info; (Daniel)
+ include/exec/memory.h |  1 +
+ target/i386/kvm/tdx.c | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-Changes in v1:
-- Use VM scope VM_SET_TSC_KHZ to set the TSC frequency of TD since KVM
-  side drop the @tsc_khz field in struct kvm_tdx_init_vm
----
- target/i386/kvm/kvm.c |  9 +++++++++
- target/i386/kvm/tdx.c | 25 +++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index fa07daad607a..348f76a9cb81 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -794,6 +794,15 @@ static int kvm_arch_set_tsc_khz(CPUState *cs)
-     int r, cur_freq;
-     bool set_ioctl = false;
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 7229fcc0415f..f25959f6d30f 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -850,6 +850,7 @@ struct IOMMUMemoryRegion {
+ #define MEMORY_LISTENER_PRIORITY_MIN            0
+ #define MEMORY_LISTENER_PRIORITY_ACCEL          10
+ #define MEMORY_LISTENER_PRIORITY_DEV_BACKEND    10
++#define MEMORY_LISTENER_PRIORITY_ACCEL_HIGH     20
  
-+    /*
-+     * TSC of TD vcpu is immutable, it cannot be set/changed via vcpu scope
-+     * VM_SET_TSC_KHZ, but only be initialized via VM scope VM_SET_TSC_KHZ
-+     * before ioctl KVM_TDX_INIT_VM in tdx_pre_create_vcpu()
-+     */
-+    if (is_tdx_vm()) {
-+        return 0;
-+    }
-+
-     if (!env->tsc_khz) {
-         return 0;
-     }
+ /**
+  * struct MemoryListener: callbacks structure for updates to the physical memory map
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index ead19923f318..a27c7b068a07 100644
+index 7b250d80bc1d..f892551821ce 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -33,6 +33,9 @@
-                                      (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
-                                      (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
+@@ -19,6 +19,7 @@
+ #include "standard-headers/asm-x86/kvm_para.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/sysemu.h"
++#include "exec/address-spaces.h"
  
-+#define TDX_MIN_TSC_FREQUENCY_KHZ   (100 * 1000)
-+#define TDX_MAX_TSC_FREQUENCY_KHZ   (10 * 1000 * 1000)
-+
- #define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
- #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
- #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
-@@ -565,6 +568,28 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-         return r;
-     }
+ #include "hw/i386/x86.h"
+ #include "kvm_i386.h"
+@@ -621,6 +622,19 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     return 0;
+ }
  
-+    if (env->tsc_khz && (env->tsc_khz < TDX_MIN_TSC_FREQUENCY_KHZ ||
-+                         env->tsc_khz > TDX_MAX_TSC_FREQUENCY_KHZ)) {
-+        error_setg(errp, "Invalid TSC %ld KHz, must specify cpu_frequency between [%d, %d] kHz",
-+                   env->tsc_khz, TDX_MIN_TSC_FREQUENCY_KHZ,
-+                   TDX_MAX_TSC_FREQUENCY_KHZ);
-+       return -EINVAL;
-+    }
++static void tdx_guest_region_add(MemoryListener *listener,
++                                 MemoryRegionSection *section)
++{
++    memory_region_set_default_private(section->mr);
++}
 +
-+    if (env->tsc_khz % (25 * 1000)) {
-+        error_setg(errp, "Invalid TSC %ld KHz, it must be multiple of 25MHz",
-+                   env->tsc_khz);
-+        return -EINVAL;
-+    }
++static MemoryListener tdx_memory_listener = {
++    .name = TYPE_TDX_GUEST,
++    .region_add = tdx_guest_region_add,
++    /* Higher than KVM memory listener = 10. */
++    .priority = MEMORY_LISTENER_PRIORITY_ACCEL_HIGH,
++};
 +
-+    /* it's safe even env->tsc_khz is 0. KVM uses host's tsc_khz in this case */
-+    r = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
-+    if (r < 0) {
-+        error_setg_errno(errp, -r, "Unable to set TSC frequency to %" PRId64 " kHz",
-+                         env->tsc_khz);
-+        return r;
-+    }
+ static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
+ {
+     TdxGuest *tdx = TDX_GUEST(obj);
+@@ -695,6 +709,12 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
+ static void tdx_guest_init(Object *obj)
+ {
+     TdxGuest *tdx = TDX_GUEST(obj);
++    static bool memory_listener_registered = false;
 +
-     r = setup_td_guest_attributes(x86cpu, errp);
-     if (r) {
-         return r;
++    if (!memory_listener_registered) {
++        memory_listener_register(&tdx_memory_listener, &address_space_memory);
++        memory_listener_registered = true;
++    }
+ 
+     qemu_mutex_init(&tdx->lock);
+ 
 -- 
 2.34.1
 
