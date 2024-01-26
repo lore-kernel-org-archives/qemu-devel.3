@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0269C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0D9C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:10:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMqt-0004RP-L9; Fri, 26 Jan 2024 09:06:41 -0500
+	id 1rTMtn-00062s-DM; Fri, 26 Jan 2024 09:09:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTMqZ-0004My-7r
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:06:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTMtk-000620-9d
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:09:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTMqW-00082w-1d
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:06:18 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTMth-00005E-QX
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:09:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706277974;
+ s=mimecast20190719; t=1706278173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fhEflVQmOH8ynwYJQAVG5NGPUljFKsIx9aOfzBw9VDo=;
- b=b1s4ir9OIgQmzr78NFl22/dMuqKBmJcHpy285GyjF5ADAC4pEvl7LZ9yDC/zMKcUBARV0g
- qgxwYTkVTbTt3C6XxrupvsYXQept9dskzvOsRKU25ySctCOYQSfKQRwifB9msrlKxcdyRP
- 3VaScyC2Ku60oxKjU7qkDyE/hJFks20=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NO7X1dwpU5Xvr/LrJb2bnn9ffrjcQd9yPnLE3T0EJgM=;
+ b=g2EmhkgIfNxw/VWXiTx+AQ3V/akW3Y1dYD5mjA2X5O9vPlBe6KjklN/mQP0gjesscuh4p3
+ R7O8j19Mkgm7O07UHTCBKhVMC2UQ5ZMp5SPmyuDCU6YD4SsNriKcfOWZY7bn6fb3BwxxmT
+ 5NHVUVasfBPqCu6O7/uIH4DYEvUBfWQ=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-X5lYpgUcN_mB45XqSQNS4A-1; Fri, 26 Jan 2024 09:06:13 -0500
-X-MC-Unique: X5lYpgUcN_mB45XqSQNS4A-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7816e45f957so66556485a.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:06:13 -0800 (PST)
+ us-mta-468-uSt0i6BhN5iVH6T5wFeqbg-1; Fri, 26 Jan 2024 09:09:31 -0500
+X-MC-Unique: uSt0i6BhN5iVH6T5wFeqbg-1
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-361a9198bffso1765415ab.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:09:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706277972; x=1706882772;
+ d=1e100.net; s=20230601; t=1706278171; x=1706882971;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fhEflVQmOH8ynwYJQAVG5NGPUljFKsIx9aOfzBw9VDo=;
- b=VzKzNPaboGOkYP7MFER5fNtsn6trVhK45XrUlAExI/xPkE6qPJlHa+Kw5czjkmnJsi
- wWpDpn9NZnxTZcsnTCC7U2QEj7sX/2Wvh04UCrUPXtidrDXbt6CYX4KHXVFDrPT057Lv
- unanHnpXGoTU36XYQnfkcrWesTiVvY95EOx/sQNhDWl4EXCChgd6U45hja/Gm/c+2XOl
- IKBxnp+YTnKT/tWjcd9dw6JdE7gM3n7sWd1X8HYPmplxK4EK75lPMepz9j5Wd/SgDOWa
- nUbuPAjnPPIKx1HzL2SB0pSU/gFMFfQ1U9LgJ8Pqnx6w2gOBWFEXn9GUNWZi87y895bB
- LztQ==
-X-Gm-Message-State: AOJu0Yw+LKtfitre7bmz/Jl6GyHeOGcG043VejUhoTejX8k0OjSJxiT1
- 4jr4pCXSY0nVoe10Es2oQDWJoKE+Ub3azjENFux5J6GA92YyUroh0K4qqECfKJjz6tbrlsX80yG
- vlpKfjrrXBojRR52bTUQvuPNq2YAz6EDBNrrznu/SZzc2r76eugKI
-X-Received: by 2002:ae9:c109:0:b0:781:3a8a:8eca with SMTP id
- z9-20020ae9c109000000b007813a8a8ecamr1746300qki.46.1706277972681; 
- Fri, 26 Jan 2024 06:06:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHc9nX2exl0HPnj4a/3igGvf2iYuX57KLmTmzRmj7AxnnovKkNj1C/dJ9R9KG4F0pHgZoNhoQ==
-X-Received: by 2002:ae9:c109:0:b0:781:3a8a:8eca with SMTP id
- z9-20020ae9c109000000b007813a8a8ecamr1746287qki.46.1706277972386; 
- Fri, 26 Jan 2024 06:06:12 -0800 (PST)
+ bh=NO7X1dwpU5Xvr/LrJb2bnn9ffrjcQd9yPnLE3T0EJgM=;
+ b=hPa3YB5TkCBReY75BJZ7AmVUCJtS9+2kUmF53OzRKYB3AOZjE1mxphXSty/XgPOHC7
+ 4a5j6fGgltUvgPcSkmgS/wqxTfLuXxBe1zBcRltZRl0Hb+3rndquHfm+US4QenjCedLf
+ Zfcp8zJTDfokhZWcIBSk+0/1B1cZDTX7yYvGbdNj1H0ge2HatldnUcUqz4d3xRBWDBz1
+ EQTaGx2vqst0oV6y8PgokXE8XZ4hCHRb5vwxZIx6xR2G4KxhjDCLxzCNiA0AFt7BmbZi
+ W25d338UZtkf/wV1/3wBnMpTKFTgPX73nnVJHFSTHvz9YdwXLKTjHxty+HYIDbtiL+PH
+ 4VYg==
+X-Gm-Message-State: AOJu0Yw4hLdaQotwUPWxA542nYRBoJjGF6dHR/t4aXlgvhOeQtDe35Z/
+ Gr7vgjN3GyUz/5/YVxnWzWVZWM3nH7Ju+S8yh/PP6x2a43kAKRvYMYV+mEC7QzY6K5v/XxW4jtD
+ 2gUEt0AOdwi/s3e6yT2zgiJvbup1MWRSnsr8Whnvmf58dw+Y2sTkF
+X-Received: by 2002:a05:6e02:1485:b0:35f:f880:10ec with SMTP id
+ n5-20020a056e02148500b0035ff88010ecmr1108850ilk.4.1706278170831; 
+ Fri, 26 Jan 2024 06:09:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEOZ9u2mMQVhkRNNWWWISV7liSk3fthtoJ6m5CDLOFBQhKRYyEd2roTBFBjCy9bijfswKayuQ==
+X-Received: by 2002:a05:6e02:1485:b0:35f:f880:10ec with SMTP id
+ n5-20020a056e02148500b0035ff88010ecmr1108832ilk.4.1706278170540; 
+ Fri, 26 Jan 2024 06:09:30 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- l7-20020a05620a0c0700b007832a7c7fcbsm597399qki.108.2024.01.26.06.06.10
+ f3-20020a056638022300b0046e509dd7a1sm289947jaq.118.2024.01.26.06.09.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 06:06:12 -0800 (PST)
-Message-ID: <02a0dd0d-b0ed-460f-9fe2-33c840dfcd3b@redhat.com>
-Date: Fri, 26 Jan 2024 15:06:09 +0100
+ Fri, 26 Jan 2024 06:09:30 -0800 (PST)
+Message-ID: <441fd675-56f8-406d-9bda-031f0c723b12@redhat.com>
+Date: Fri, 26 Jan 2024 15:09:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/46] hw/ppc/prep: use pci_init_nic_devices()
+Subject: Re: [PATCH v3 16/46] hw/ppc/spapr: use qemu_get_nic_info() and
+ pci_init_nic_devices()
 Content-Language: en-US
 To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
-Cc: qemu-ppc@nongnu.org
+ qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Jason Wang <jasowang@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ David Woodhouse <dwmw@amazon.co.uk>
 References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-16-dwmw2@infradead.org>
+ <20240108204909.564514-17-dwmw2@infradead.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -117,18 +125,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240108204909.564514-16-dwmw2@infradead.org>
+In-Reply-To: <20240108204909.564514-17-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,48 +156,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 08/01/2024 21.26, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
 > 
-> Previously, the first PCI NIC would be placed in PCI slot 3 and the rest
-> would be dynamically assigned. Even if the user overrode the default NIC
-> type and made it something other than PCNet.
+> Avoid directly referencing nd_table[] by first instantiating any
+> spapr-vlan devices using a qemu_get_nic_info() loop, then calling
+> pci_init_nic_devices() to do the rest.
 > 
-> Now, the first PCNet NIC (that is, anything not explicitly specified
-> to be anything different) will go to slot 3 even if it isn't the first
-> NIC specified on the commnd line. And anything else will be dynamically
-> assigned.
+> No functional change intended.
 > 
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/ppc/prep.c | 8 +++-----
->   1 file changed, 3 insertions(+), 5 deletions(-)
+>   hw/ppc/spapr.c | 18 +++++-------------
+>   1 file changed, 5 insertions(+), 13 deletions(-)
 > 
-> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-> index 137276bcb9..1a6cd05c61 100644
-> --- a/hw/ppc/prep.c
-> +++ b/hw/ppc/prep.c
-> @@ -241,7 +241,6 @@ static void ibm_40p_init(MachineState *machine)
->       ISADevice *isa_dev;
->       ISABus *isa_bus;
->       void *fw_cfg;
-> -    int i;
->       uint32_t kernel_base = 0, initrd_base = 0;
->       long kernel_size = 0, initrd_size = 0;
->       char boot_device;
-> @@ -336,10 +335,9 @@ static void ibm_40p_init(MachineState *machine)
->           /* XXX: s3-trio at PCI_DEVFN(2, 0) */
->           pci_vga_init(pci_bus);
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 4997aa4f1d..37604e7caf 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -2796,6 +2796,7 @@ static void spapr_machine_init(MachineState *machine)
+>       MemoryRegion *sysmem = get_system_memory();
+>       long load_limit, fw_size;
+>       Error *resize_hpt_err = NULL;
+> +    NICInfo *nd;
 >   
-> -        for (i = 0; i < nb_nics; i++) {
-> -            pci_nic_init_nofail(&nd_table[i], pci_bus, mc->default_nic,
-> -                                i == 0 ? "3" : NULL);
+>       if (!filename) {
+>           error_report("Could not find LPAR firmware '%s'", bios_name);
+> @@ -2996,21 +2997,12 @@ static void spapr_machine_init(MachineState *machine)
+>   
+>       phb = spapr_create_default_phb();
+>   
+> -    for (i = 0; i < nb_nics; i++) {
+> -        NICInfo *nd = &nd_table[i];
+> -
+> -        if (!nd->model) {
+> -            nd->model = g_strdup("spapr-vlan");
 > -        }
-> +        /* First PCNET device at PCI_DEVFN(3, 0) */
-> +        pci_init_nic_in_slot(pci_bus, mc->default_nic, NULL, "3");
-> +        pci_init_nic_devices(pci_bus, mc->default_nic);
+> -
+> -        if (g_str_equal(nd->model, "spapr-vlan") ||
+> -            g_str_equal(nd->model, "ibmveth")) {
+> -            spapr_vlan_create(spapr->vio_bus, nd);
+> -        } else {
+> -            pci_nic_init_nofail(&nd_table[i], phb->bus, nd->model, NULL);
+> -        }
+> +    while ((nd = qemu_find_nic_info("spapr-vlan", true, "ibmveth"))) {
+> +        spapr_vlan_create(spapr->vio_bus, nd);
 >       }
 >   
->       /* Prepare firmware configuration for OpenBIOS */
-
-Fine for me ... Hervé, could you maybe comment from a 40p point of view, too?
+> +    pci_init_nic_devices(phb->bus, NULL);
+> +
+>       for (i = 0; i <= drive_get_max_bus(IF_SCSI); i++) {
+>           spapr_vscsi_create(spapr->vio_bus);
+>       }
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
