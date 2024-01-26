@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6088C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:42:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D543C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNPG-0002dG-SF; Fri, 26 Jan 2024 09:42:10 -0500
+	id 1rTNPU-0002rf-NE; Fri, 26 Jan 2024 09:42:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rTNPF-0002cC-Bg
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:09 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1rTNPR-0002iw-8a
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:22 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rTNPD-0001Q8-Rw
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:09 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-40ee705e9bfso4746335e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:42:07 -0800 (PST)
+ id 1rTNPO-0001RB-CW
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:19 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a3510d79ae9so26146266b.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:42:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706280125; x=1706884925; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/GZnIc19yyP6aOZLjgxNv40MqHv0l7KgZDCJcfWR3fo=;
- b=XMIs2zCj+f4ltVpJ565o8q/4wIDwU/tlfrgIvstWdf8X9KVsE+4A9cCQNvGRrfL+tU
- B594gFQALQJS6cn9+gM/nIY9BA20tC8dzAIbY+racyjOr8iBUn8JXZ7IARJ79FS8PcnK
- XKDnnWiFMajGfcXep+N3fzG8oBKGcjmQ4CJrqE/4AVWFwkXS3QOL9xp/v7hyucYcaWO3
- OEPxkdPCIYZxRZEfUWNf8afqs0twBlTEPkATaa9nGalm67/HUtdhnBq40WbYa9fZKW3X
- k7L41DfsiQbnhvJsBH2b8OBiAdczKwiSdrV78JKoXBSWdOHodBLv4QOqN4gySC4VtCs+
- +DGA==
+ d=linaro.org; s=google; t=1706280136; x=1706884936; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CHxMCRnEljW/h+q6H+cTZi0z1+riOoBx0yCYJzMalqA=;
+ b=GGHW4nJNFs3nHZUHxJgrfGOaC5val6sksSriZuiJdlUJd4qYW8sHuRk8u2LltMkmFt
+ Tpdsd3/qfbVHLCxzpDvPoWqqtMtyiKHh7gVOMkPJqIzIuGcTwi3l0H5tw33IU0zsRwQg
+ dYq0lw9AsgHnVaHPaYGWOx59GQTwTrcRN2erMMaOw4EVkUKnVC3/f+nF3L/KCrWp0rFA
+ JCTycsIK0NHtxssm9BH0gZr0LdI69GAQMQ/BmucN6Q5aMS5i/QfIE8aNl9AvSnLDU+YJ
+ ckGjUmeIO6UIxX9EtqPLHeDE4gbpZPcl+LSvnc6zXr11epS1dynt+DuohLS5yhO9tzpb
+ RNHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706280125; x=1706884925;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/GZnIc19yyP6aOZLjgxNv40MqHv0l7KgZDCJcfWR3fo=;
- b=ktOZGkhu6nYGPW6MEnmYYxXc4VPWNubkQohNCebCnoIbPvHZEaQvxGvHYYSh0qvLZL
- a/s9U1rgTKbAmN4g8dyob4Y+M4jYolkUOFcpQNA5U8H9Zlkx3eAE3JfN9IhnH5mr7g6D
- oLRkR3Baks0tQKckvVK8N6Q3GwZFDu8Ac4lGSMsU+9xwyqdsGoOQTlhzGgSNCi6nW0b7
- BlU6PdD0YT4WSPt7DNp45s/1fwXcX7wmemIFxDRYpahM5WLUmqNQzgvMy4ZS5qLhj51G
- +CBseiGCewaXtgFPjo0K56Ezf3vakNNt+8INS/yil6TTOPsawBGP6D7D7l403OJnqoec
- JbJQ==
-X-Gm-Message-State: AOJu0YwIgs87zMFpDUDKA3ekRvurIYTPj5YZy/C+GgYbLIr5sleimCqd
- cjn7OvhGYfWTm8gWK8Mh8UD2PnUFMW4jXHo7Qtkakn04ct52iNrwB/YRPFO3Y9IDymsRoR5ySz4
- JqLs=
-X-Google-Smtp-Source: AGHT+IECCQbHs192oVPCw0UFEdjVNIG7BxqjTabwXT1vVecSm1EmfuepmJkoC122Jjr8Ln0La1Vxqg==
-X-Received: by 2002:a05:600c:4286:b0:40e:608a:365d with SMTP id
- v6-20020a05600c428600b0040e608a365dmr914033wmc.168.1706280124989; 
- Fri, 26 Jan 2024 06:42:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706280136; x=1706884936;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CHxMCRnEljW/h+q6H+cTZi0z1+riOoBx0yCYJzMalqA=;
+ b=h51AVG2Csndmyntwb+fKAg1nouPKwtzKNQ9+dByMytpw2e62P92p7vOCIdUuAXCwJW
+ W5IU2u9+oe2qLGfmJcT7fXYJ5bIHkNhR1AqN+M8kpk7dgrpGvShFZtLqEvhodNEGGWbo
+ 9yyFfm0Xc3EEm/Rl9Iy5YcfMQbZfExYlOB4YjnCBBA1SZ1gCE9K1jKgPwl+Q7utcGJ1/
+ T845FCbsQu9g1zN+AUDqhGqPRAxoUFwPUapfnU6Cr1QKfw60MBJ65Ar64cJLhj8hYsGS
+ VyXkoO1eiBNR2oLtNp/6Kphxuy8pQSpM1z2KymonCxpl2x+o2sdJCPMVOVKvqXQzciG+
+ oe3g==
+X-Gm-Message-State: AOJu0Yy8PeNTHn1clYwluqi3Kb5E6aDdLIHFxGJggl/1xa5St2WOP+is
+ cF2RyGC3Spgzsq4+6FSN0plQ5QQ0hCM0Pm7g/REbHCct95A+9SF8JfVabPEB9/dskVB0aWki01q
+ RJF4=
+X-Google-Smtp-Source: AGHT+IE/nwbDUrHd9Xycjmq2cUxBLHPYlTEVvA0xXHGyHK10r+V4+f06BIXwdHnkQmUOKk+Y44YrnQ==
+X-Received: by 2002:a17:906:b310:b0:a2c:298f:9057 with SMTP id
+ n16-20020a170906b31000b00a2c298f9057mr837333ejz.68.1706280136147; 
+ Fri, 26 Jan 2024 06:42:16 -0800 (PST)
 Received: from localhost.localdomain (adsl-114.109.242.225.tellas.gr.
  [109.242.225.114]) by smtp.gmail.com with ESMTPSA id
- ox27-20020a170907101b00b00a3221b95ce8sm699168ejb.77.2024.01.26.06.42.03
+ ox27-20020a170907101b00b00a3221b95ce8sm699168ejb.77.2024.01.26.06.42.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:42:04 -0800 (PST)
+ Fri, 26 Jan 2024 06:42:15 -0800 (PST)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>
-Subject: [PATCH v1 0/3] Fix resource freeing bugs in virtio-gpu-rutabaga
-Date: Fri, 26 Jan 2024 16:41:47 +0200
-Message-Id: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
+Subject: [PATCH v1 1/3] hw/display/virtio-gpu.c: use reset_bh class method
+Date: Fri, 26 Jan 2024 16:41:48 +0200
+Message-Id: <947fcb0c386e77b5ef59f4a6ca48baeee0d1a980.1706279540.git.manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
+References: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,27 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While testing the rutabaga gpu device, we noticed that if the device is 
-reset, it stops working and complains about missing resource ids. A 
-quick investigation discovered that the generic VirtIOGPU implementation 
-frees all resources, but for Rutabaga, they are tied with rutabaga 
-objects that need to be destroyed as well.
+While the VirtioGPU type has a reset_bh field to specify a reset
+callback, it's never used. virtio_gpu_reset() calls the general
+virtio_gpu_reset_bh() function for all devices that inherit from
+VirtioGPU.
 
-This series adds a resource_destroy class method that the Rutabaga 
-device can override and do its own bookkeeping. 
+While no devices override reset_bh at the moment, a device reset might
+require special logic for implementations in the future.
 
-Manos Pitsidianakis (3):
-  hw/display/virtio-gpu.c: use reset_bh class method
-  virtio-gpu.c: add resource_destroy class method
-  virtio-gpu-rutabaga.c: override resource_destroy method
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ hw/display/virtio-gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- hw/display/virtio-gpu-rutabaga.c | 31 ++++++++++++++++++++-----------
- hw/display/virtio-gpu.c          | 21 +++++++++++++++++----
- include/hw/virtio/virtio-gpu.h   |  2 ++
- 3 files changed, 39 insertions(+), 15 deletions(-)
-
-
-base-commit: e029fe22caad9b75c7ab69bd4e84853c11fb71e0
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index f8a675eb30..2b73ae585b 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1515,7 +1515,7 @@ void virtio_gpu_reset(VirtIODevice *vdev)
+             qemu_cond_wait_bql(&g->reset_cond);
+         }
+     } else {
+-        virtio_gpu_reset_bh(g);
++        aio_bh_call(g->reset_bh);
+     }
+ 
+     while (!QTAILQ_EMPTY(&g->cmdq)) {
 -- 
 γαῖα πυρί μιχθήτω
 
