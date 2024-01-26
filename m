@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E70C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30995C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTOeq-0000GT-F7; Fri, 26 Jan 2024 11:02:20 -0500
+	id 1rTOfv-000124-K4; Fri, 26 Jan 2024 11:03:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOeo-0000FT-KQ
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:02:18 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOfu-0000xD-3P
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:03:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOem-0005gc-0p
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:02:18 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOfs-0005rm-4t
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:03:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706284934;
+ s=mimecast20190719; t=1706285003;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K0i04O7174d0OKv11gEirJYlyXb4UP+O2CnLeSTT3do=;
- b=jPv65e2Q9Qy6qAlwCcmLFVCSL38GTlz/pc0gg8Af0EDJ5+J5poL/bjIRCAbGqe0y7HAhW7
- iX1RVo8MwLlRKJCZ1gmf/sWWC/VHnFfQhnhE5J8YypBpCsio6qX9pCEtJhfPCbvjckqy3P
- +4aYCkVRAgQEQCMXo1h795KlkOUl2VI=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zk0sP6rmajljurs2ccAeklwdmUeyPgag7oJCXCmQkmU=;
+ b=DGknJOIsCp0ZSBhjkCXy4ZLvjrlmxzz2Ijj1kuXwp8XLZq2Toytscw3uCrBJOKGAi5FoFp
+ c0mrv87biZS0BnvZRoefHrtFUwftMz8qivAiBSvfpHKu1J0zHlU7uOB9XaPhGU0xLLLQuw
+ hr/LtvUtMeYZS81qGXWPfom5TdLAYk0=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-206-jNekbWtgPAC0FoZCMhonog-1; Fri, 26 Jan 2024 11:02:10 -0500
-X-MC-Unique: jNekbWtgPAC0FoZCMhonog-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-42987be5d14so6379881cf.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:02:10 -0800 (PST)
+ us-mta-312-CJHfHFvKMw6LjrCAVv1BLA-1; Fri, 26 Jan 2024 11:03:21 -0500
+X-MC-Unique: CJHfHFvKMw6LjrCAVv1BLA-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7816bea8d28so380541585a.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:03:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706284928; x=1706889728;
+ d=1e100.net; s=20230601; t=1706285000; x=1706889800;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K0i04O7174d0OKv11gEirJYlyXb4UP+O2CnLeSTT3do=;
- b=dj6OgB6+1v2zi36QkrVxk4PsF08Y8W9zfvJx25HcZx7RUIrv3nP7XC6FrQT69/SMIZ
- ixvBuI7J63MGKY9Xshef6w6x75Pel+63oUaLT2OiUu9+eurpnvsyA1swFBR1gSF7AgAP
- CGaCKjW2q9kGW82F3DPMqU42tVW4XzxQyakO+mT58b2Ru8fjyEQH8soxcTtvAbxyW9dk
- hJf0+CN/47/9FX9i+ZdojBV15nWVP8vJw3b3RMzr9KiLse9pXIDG1NfMWS4sNGNZ1Qu9
- uw8PHTv+BVRkty/BsYXgd1K8fw7H5K/8wMLvv+jqF4PA8BSrO5Yz8rSMM3e+s3zWofjI
- pp/g==
-X-Gm-Message-State: AOJu0YzZRaInW1dQxDapdhhkI3m/B5+QAdKA/S7s4qfBjMH5zPnM5Ijp
- dmFDk1VosGpAXv+8G1ptd06h+yfni/0r2vo0MHlP4KkRvUIw6nca8mVzk+cy3aZWm4nbIeK8JF6
- TU+3vEd4s5jh/bnOvhkQYzWNYBL7rAfJyzrjRMoI0Xez0IyV/3FY/
-X-Received: by 2002:a05:622a:2485:b0:42a:3bcd:d1ba with SMTP id
- cn5-20020a05622a248500b0042a3bcdd1bamr86493qtb.33.1706284927979; 
- Fri, 26 Jan 2024 08:02:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUI4/Z/eOfg4yDo1GeeqGPkAlWYAog6diD37K8WillbyWHP4eC/1xzEmLGiQxLpoMJJ8MX5Q==
-X-Received: by 2002:a05:622a:2485:b0:42a:3bcd:d1ba with SMTP id
- cn5-20020a05622a248500b0042a3bcdd1bamr86371qtb.33.1706284926215; 
- Fri, 26 Jan 2024 08:02:06 -0800 (PST)
+ bh=zk0sP6rmajljurs2ccAeklwdmUeyPgag7oJCXCmQkmU=;
+ b=RXtMzCoBvXBMhweCLyOOiYIuv3eDeD5PswDe16AwXxywp1X468bcdlKumwb3uVkIHV
+ 16fTy4L8gWN19gwPIeX0uOiWfO6ZPIgr82oivdMSfGLayh09vrtiFvb2jCDeFSnLgT9F
+ sH0HmdYiJErGCi8Uoseemtl+4dsr11mhhmw2hO7HKVaRLVnbWin1hD/AqTj/OYHIveCx
+ otyIN8BUdALe7aus4elk7dHHeHIFyzQDLD9K++Zs46OigchGmeXU9GorsgmID721zv36
+ gbb7oSCcZsEtRXAK3CQdKCTG3arBjfkW7Y549Cw5qbkayq7Wh3LC2RrJGDY+9FjCM0kC
+ m4pw==
+X-Gm-Message-State: AOJu0YxPQdtc37sauqc/wUm8OUjZRNz5k5k6DbsHGWkkCmH0htItlZei
+ 8f4agfJygA4Wluq8UoxjHGUQRtalvfheSjERNezmehRooELcy6/QFW0DB2Dm7akeJUs7RJkFstN
+ WjGsW5jHwukp60kVebJP5/834eXznYyqnIrkUodTngX59Z+b1duSy
+X-Received: by 2002:a05:620a:4884:b0:783:bcd8:530 with SMTP id
+ ea4-20020a05620a488400b00783bcd80530mr1829471qkb.58.1706285000724; 
+ Fri, 26 Jan 2024 08:03:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHzG4dq/yA2/5IjCag5itQIZbihh2uTZDcnCR6YuwaGJ56qztK0VqIp67o7TdRBNRGKOq3f9g==
+X-Received: by 2002:a05:620a:4884:b0:783:bcd8:530 with SMTP id
+ ea4-20020a05620a488400b00783bcd80530mr1829411qkb.58.1706285000435; 
+ Fri, 26 Jan 2024 08:03:20 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- ie7-20020a05622a698700b00427fabefe3bsm616431qtb.52.2024.01.26.08.01.52
+ ie7-20020a05622a698700b00427fabefe3bsm616431qtb.52.2024.01.26.08.03.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 08:02:05 -0800 (PST)
-Message-ID: <befd1aaf-91af-465e-888f-1ed8db6282dc@redhat.com>
-Date: Fri, 26 Jan 2024 17:01:50 +0100
+ Fri, 26 Jan 2024 08:03:20 -0800 (PST)
+Message-ID: <14b546bf-2644-4e63-82d2-77d7ea43c732@redhat.com>
+Date: Fri, 26 Jan 2024 17:03:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 43/46] net: remove qemu_check_nic_model()
+Subject: Re: [PATCH v3 44/46] hw/pci: remove pci_nic_init_nofail()
 Content-Language: en-US
 To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -116,7 +116,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
 References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-44-dwmw2@infradead.org>
+ <20240108204909.564514-45-dwmw2@infradead.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -160,18 +160,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240108204909.564514-44-dwmw2@infradead.org>
+In-Reply-To: <20240108204909.564514-45-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -190,55 +190,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/01/2024 21.27, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
-
-Please add a short patch description à la "All callers have been converted 
-in the previous patches, so this is not required anymore".
-
-With that:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-
+> 
+> This function is no longer used.
+> 
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   include/net/net.h |  1 -
->   net/net.c         | 13 -------------
->   2 files changed, 14 deletions(-)
-> 
-> diff --git a/include/net/net.h b/include/net/net.h
-> index 31e63d1f0d..1be8b40074 100644
-> --- a/include/net/net.h
-> +++ b/include/net/net.h
-> @@ -204,7 +204,6 @@ int qemu_set_vnet_le(NetClientState *nc, bool is_le);
->   int qemu_set_vnet_be(NetClientState *nc, bool is_be);
->   void qemu_macaddr_default_if_unset(MACAddr *macaddr);
->   int qemu_show_nic_models(const char *arg, const char *const *models);
-> -void qemu_check_nic_model(NICInfo *nd, const char *model);
->   int qemu_find_nic_model(NICInfo *nd, const char * const *models,
->                           const char *default_model);
->   NICInfo *qemu_find_nic_info(const char *typename, bool match_default,
-> diff --git a/net/net.c b/net/net.c
-> index 4651b3f443..ffd4b42d5a 100644
-> --- a/net/net.c
-> +++ b/net/net.c
-> @@ -992,19 +992,6 @@ int qemu_show_nic_models(const char *arg, const char *const *models)
->       return 1;
->   }
->   
-> -void qemu_check_nic_model(NICInfo *nd, const char *model)
-> -{
-> -    const char *models[2];
-> -
-> -    models[0] = model;
-> -    models[1] = NULL;
-> -
-> -    if (qemu_show_nic_models(nd->model, models))
-> -        exit(0);
-> -    if (qemu_find_nic_model(nd, models, model) < 0)
-> -        exit(1);
-> -}
-> -
->   int qemu_find_nic_model(NICInfo *nd, const char * const *models,
->                           const char *default_model)
->   {
+>   hw/pci/pci.c         | 72 --------------------------------------------
+>   include/hw/pci/pci.h |  3 --
+>   2 files changed, 75 deletions(-)
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
 
