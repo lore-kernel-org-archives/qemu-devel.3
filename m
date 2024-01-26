@@ -4,61 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870EEC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DA8C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTLpi-00026k-So; Fri, 26 Jan 2024 08:01:23 -0500
+	id 1rTLrs-0003wi-6D; Fri, 26 Jan 2024 08:03:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rTLpM-0001yY-Tw
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:01:10 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rTLpJ-0007SS-P7
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:01:00 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TLyR24xWvz6K9L1;
- Fri, 26 Jan 2024 20:57:50 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 3D275140AB8;
- Fri, 26 Jan 2024 21:00:50 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Fri, 26 Jan
- 2024 13:00:49 +0000
-Date: Fri, 26 Jan 2024 13:00:48 +0000
-To: <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
- <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
- <nifan@outlook.com>, <jim.harris@samsung.com>, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v3 4/9] hw/mem/cxl_type3: Add support to create DC
- regions to type3 memory devices
-Message-ID: <20240126130048.000042f4@Huawei.com>
-In-Reply-To: <20240124152316.0000281c@Huawei.com>
-References: <20231107180907.553451-1-nifan.cxl@gmail.com>
- <20231107180907.553451-5-nifan.cxl@gmail.com>
- <20240124152316.0000281c@Huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rTLrp-0003pm-EJ
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:03:33 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rTLrn-00089g-HK
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:03:33 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-55c1ac8d2f2so259047a12.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 05:03:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1706274209; x=1706879009; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=rsmHwy1lmuZLk+LEm6fF2YtQQTk81qK0L1TD5i/tBJ0=;
+ b=WMtmvKUoje3FtNeYcsGtKPl2BJxSFm9taaTDLntbjLSm01VD12ow6gWGrSIgGiKpjK
+ LphCHeRvBBM3feCy+EdyfGWNqA4UiGer9/B5qRxTQpWT5FU5aYTfX2gHYBAZjHVo+zvS
+ X5u/rzCN0o/swkkQtL280rXb1gAO50k0SXZ0V/vQgONPs6Wgq47fVqO0CJZCWo2YcQJ3
+ x869HIG+nTkcA2fW5jH3UOQXdXIIIaiD84NZxpEX15B6pJcZsxk9UcinbbryjbnsumrY
+ SfFFVwwsmelqVVxE2k0UbHoqBtRzSkX6SpwVMcqo7cVOSgPwO7Z/lG4wbArnYuSJ5FpF
+ 9IlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706274209; x=1706879009;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rsmHwy1lmuZLk+LEm6fF2YtQQTk81qK0L1TD5i/tBJ0=;
+ b=r73GOnJOwq5uehSj/i0Z1xDVKBd98NY1qfQOQjHJyK5ogNJHDLyKOHfQjPl6LIFWgI
+ /lmPaFk6u4WkGIAX/cNC1BYogdIJ2yEDfBVsDgHKTpvpDYzBve/2RzDO8Eg6GeQKe4du
+ 99BsTvcQS10axbI6Zw3VGc73kJmmeaD/iwAClnNWb+QCcKeYtUUlNpdIg7SuVykaNSn6
+ xGxRS05RcwfiowtmB4M7A5u0xNRHl7VBR6wkA8yYzlxWpzngc+T8rGJRH0ddSLFdu6gY
+ 5DRGyzMikTX2Rf7hnm10svP8byABh1XXSGvqWvmaCqwKZzc/ip4bxwUYhrg+IjKP+Z9W
+ qWuQ==
+X-Gm-Message-State: AOJu0Yz735Pwi0KkEgzYNgT+vIshYpqGrKrWOeCf3pYKzanuvnmBgzqh
+ ZfJoBopeVhv3GaoBCQEHizZ2TNXzWTJgh/n7a42/ppK4mFn+dzcKiZxy9itOO0E=
+X-Google-Smtp-Source: AGHT+IFh4SAYEqCDdpfCaJJetNnaIVysFKYa16q5xm9h/+C0VuZe0+YpblFaNFuuUl55bnnRaNioqg==
+X-Received: by 2002:a17:906:7f97:b0:a31:1b72:9efd with SMTP id
+ f23-20020a1709067f9700b00a311b729efdmr787722ejr.66.1706274209086; 
+ Fri, 26 Jan 2024 05:03:29 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ vw16-20020a170907a71000b00a2ca97242d5sm601302ejc.120.2024.01.26.05.03.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Jan 2024 05:03:28 -0800 (PST)
+Date: Fri, 26 Jan 2024 14:03:27 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH 6/6] target/riscv: Promote svade to a normal extension
+Message-ID: <20240126-a0cd03d186454ff0a98f7911@orel>
+References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
+ <20240125195319.329181-7-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240125195319.329181-7-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,83 +93,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 24 Jan 2024 15:23:16 +0000
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
+On Thu, Jan 25, 2024 at 04:53:19PM -0300, Daniel Henrique Barboza wrote:
+> From: Andrew Jones <ajones@ventanamicro.com>
+> 
+> Named features are extensions which don't make sense for users to
+> control and are therefore not exposed on the command line. However,
+> svade is an extension which makes sense for users to control, so treat
+> it like a "normal" extension. The default is false, since QEMU has
+> always implemented hardware A/D PTE bit updating, so users must opt into
+> svade (or get it from a CPU type which enables it by default).
+> 
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index a56c2ff91d..4ddde25412 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1421,6 +1421,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>  
+>      MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
+>      MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
+> +    MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
 
-> On Tue,  7 Nov 2023 10:07:08 -0800
-> nifan.cxl@gmail.com wrote:
-> 
-> > From: Fan Ni <fan.ni@samsung.com>
-> > 
-> > With the change, when setting up memory for type3 memory device, we can
-> > create DC regions.
-> > A property 'num-dc-regions' is added to ct3_props to allow users to pass the
-> > number of DC regions to create. To make it easier, other region parameters
-> > like region base, length, and block size are hard coded. If needed,
-> > these parameters can be added easily.
-> > 
-> > With the change, we can create DC regions with proper kernel side
-> > support as below:
-> > 
-> > region=$(cat /sys/bus/cxl/devices/decoder0.0/create_dc_region)
-> > echo $region> /sys/bus/cxl/devices/decoder0.0/create_dc_region
-> > echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity
-> > echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
-> > 
-> > echo "dc0" >/sys/bus/cxl/devices/decoder2.0/mode
-> > echo 0x40000000 >/sys/bus/cxl/devices/decoder2.0/dpa_size
-> > 
-> > echo 0x40000000 > /sys/bus/cxl/devices/$region/size
-> > echo  "decoder2.0" > /sys/bus/cxl/devices/$region/target0
-> > echo 1 > /sys/bus/cxl/devices/$region/commit
-> > echo $region > /sys/bus/cxl/drivers/cxl_region/bind
-> > 
-> > Signed-off-by: Fan Ni <fan.ni@samsung.com>  
-> Hi Fan, a few comments inline.
-> 
-> Jonathan
-> 
-> > ---
-> >  hw/mem/cxl_type3.c | 35 +++++++++++++++++++++++++++++++++++
-> >  1 file changed, 35 insertions(+)
-> > 
-> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > index 754c885cd1..2d67d2015c 100644
-> > --- a/hw/mem/cxl_type3.c
-> > +++ b/hw/mem/cxl_type3.c
-> > @@ -721,6 +721,36 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
-> >      }
-> >  }
-> >  
-> > +static int cxl_create_dc_regions(CXLType3Dev *ct3d)
-> > +{
-> > +    int i;
-> > +    uint64_t region_base = 0;
-> > +    uint64_t region_len =  2 * GiB;
-> > +    uint64_t decode_len = 8; /* 8*256MB */  
-> 
-> If decode len is going to be div 256MiB then we need
-> a name for that field that makes it clear that it is.
-> 
-> decode_len_256mbytes or something like that and maybe
-> region_len_bytes to keep things consistent.
-> 
-> Why the spec didn't make our life easier and define decode length
-> in bytes with some bits that must be zero is beyond me... 
-> 
-> 
-> I think we need to make this at least optionally configurable or based
-> in some fashion on the provided memory backend (divide that up
-> by number of regions with appropriate rounding perhaps?)
+I forgot that the 'max' cpu type will ignore this off by default setting
+and enable svade by default. I'll send a v2 of this series where I ensure
+svade for 'max' also defaults false.
 
-This seems to be a mid patch set confusion..  It's fixed in patch 7.
-Whilst applying I've made this 2GiB here.
+Thanks,
+drew
 
-Jonathan
-
+>      MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
+>      MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
+>      MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
+> @@ -1528,7 +1529,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+>   * and priv_ver like regular extensions.
+>   */
+>  const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+> -    MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
+>      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+>  
+>      /*
+> @@ -2175,8 +2175,6 @@ static RISCVCPUProfile RVA22U64 = {
+>   * Other named features that we already implement: Sstvecd, Sstvala,
+>   * Sscounterenw
+>   *
+> - * Named features that we need to enable: svade
+> - *
+>   * The remaining features/extensions comes from RVA22U64.
+>   */
+>  static RISCVCPUProfile RVA22S64 = {
+> @@ -2188,11 +2186,11 @@ static RISCVCPUProfile RVA22S64 = {
+>      .ext_offsets = {
+>          /* rva22s64 exts */
+>          CPU_CFG_OFFSET(ext_zifencei), CPU_CFG_OFFSET(ext_svpbmt),
+> -        CPU_CFG_OFFSET(ext_svinval),
+> +        CPU_CFG_OFFSET(ext_svinval), CPU_CFG_OFFSET(ext_svade),
+>  
+>          /* rva22s64 named features */
+>          CPU_CFG_OFFSET(ext_sstvecd), CPU_CFG_OFFSET(ext_sstvala),
+> -        CPU_CFG_OFFSET(ext_sscounterenw), CPU_CFG_OFFSET(ext_svade),
+> +        CPU_CFG_OFFSET(ext_sscounterenw),
+>  
+>          RISCV_PROFILE_EXT_LIST_END
+>      }
+> -- 
+> 2.43.0
+> 
 
