@@ -4,57 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA99C47DDF
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D813BC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTL1b-0002cB-Ao; Fri, 26 Jan 2024 07:09:35 -0500
+	id 1rTL2A-00039n-GJ; Fri, 26 Jan 2024 07:10:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rTL1W-0002bs-V2; Fri, 26 Jan 2024 07:09:33 -0500
+ id 1rTL27-00030R-Pb
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:10:07 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rTL1R-00039L-QE; Fri, 26 Jan 2024 07:09:30 -0500
+ id 1rTL25-0003PB-Ls
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:10:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=Mo6PzkAJC+EgEGtHwkdDFmc14PQHVaYrgEyJ2YCGXFE=; b=EUcUTKakzUGhKBiEerBx1ZDXvW
- v7dOT1R3uLWbbqPoCHQ/aAzmtIjzZWe6u9J+ADWpwT+2ff3/uwK4FSKodM7vgEFbOmwjh8u7tz95L
- wwCVE5uPpnQ+/R6Xoa1hHQnkqWWqIfooWLgFaGrbl7nfJep5WUmfhKOOjp+pWRwWlcBrAF5iolot4
- ILn05KJgkKlsZf79Zx1k0F7MS6Yzqt20GpyThKNqXyxKqZ9H1Ff/aVsYrkU4gVsID8pJ+7jiqMRkK
- yUQEKY++wqrKWvpDmyxp/bc1oT/wf94S+fdLO/yuakex9IlKNs/5jK6km805xmzMmyiFaqkY21/4z
- X/34G7rg==;
+ bh=mN8ugIZEICUexKp7khxtEvNFLbmj8I2/TvCDR+ptJso=; b=vaTd8oWIe56TivuUCnI/UlrF4g
+ NfHrrakCSadMOn4ir6kMG+6BZFPAWDAfA1VoM5SxdU4yVD/Ie/+8aaG7lWCiQ/hZTsbuNPhwYDS4O
+ AXhtabFqV3jHM61gCZXgB5xbg2yAEz44IF8YXjR4dw0SBi4FPAfQAzQTmSJv3Wv7IGpSVQht3p8SJ
+ u4/6JwUsPa6csHzwO8p4JOOF1q3vtdg4MdogzXLipizv35bSVvDtl1aiVUOVbCxzYe8lveloSrpOR
+ cEfyRhi0pI0t38xUqqnSh2pDeqkfFxxNH/GOU1tmVnUJ2ufTKuPOm7OasoIKbxeWdActeAmG2DXr8
+ 69tTDqhw==;
 Received: from [2001:8b0:10b:5:66db:af88:1954:1e3]
  (helo=u3832b3a9db3152.ant.amazon.com)
  by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTL1M-0000000DXh7-0Sx7; Fri, 26 Jan 2024 12:09:21 +0000
-Message-ID: <f61da5b48fecf07e67a4e64419af6e14f05d7cdf.camel@infradead.org>
-Subject: Re: [PATCH v4 1/6] hw/xen: Set XenBackendInstance in the XenDevice
- before realizing it
+ id 1rTL22-0000000DXsj-32f0; Fri, 26 Jan 2024 12:10:04 +0000
+Message-ID: <68a78ef60be8f84540581b0eaf11daf0bd6a1248.camel@infradead.org>
+Subject: Re: [PATCH] hw/timer/hpet: fix IRQ routing in legacy support mode
 From: David Woodhouse <dwmw2@infradead.org>
-To: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Cc: Stefano Stabellini <sstabellini@kernel.org>, Julien Grall
- <julien@xen.org>,  Paul Durrant <paul@xen.org>, Anthony Perard
- <anthony.perard@citrix.com>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>,  =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Jason
- Wang <jasowang@redhat.com>, "open list:X86 Xen CPUs"
- <xen-devel@lists.xenproject.org>,  "open list:Block layer core"
- <qemu-block@nongnu.org>
-Date: Fri, 26 Jan 2024 12:09:20 +0000
-In-Reply-To: <20231202014108.2017803-2-volodymyr_babchuk@epam.com>
-References: <20231202014108.2017803-1-volodymyr_babchuk@epam.com>
- <20231202014108.2017803-2-volodymyr_babchuk@epam.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>
+Date: Fri, 26 Jan 2024 12:10:03 +0000
+In-Reply-To: <20231019000033.64684-1-dwmw2@infradead.org>
+References: <20231019000033.64684-1-dwmw2@infradead.org>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/pkcs7-signature"; 
- boundary="=-xU/Wt4Y89tMIMjdjhqEI"
+ boundary="=-8Sc3gNrJa5UpbwiDHc8T"
 User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -85,33 +80,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---=-xU/Wt4Y89tMIMjdjhqEI
+--=-8Sc3gNrJa5UpbwiDHc8T
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2023-12-02 at 01:41 +0000, Volodymyr Babchuk wrote:
+On Thu, 2023-10-19 at 01:00 +0100, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
 >=20
-> This allows a XenDevice implementation to know whether it was created
-> by QEMU, or merely discovered in XenStore after the toolstack created
-> it. This will allow us to create frontend/backend nodes only when we
-> should, rather than unconditionally attempting to overwrite them from
-> a driver domain which doesn't have privileges to do so.
+> The interrupt from timer 0 in legacy mode is supposed to go to IRQ 0 on
+> the i8259 and IRQ 2 on the I/O APIC. The generic x86 GSI handling can't
+> cope with IRQ numbers differing between the two chips (despite it also
+> being the case for PCI INTx routing), so add a special case for the HPET.
 >=20
-> As an added benefit, it also means we no longer have to call the
-> xen_backend_set_device() function from the device models immediately
-> after calling qdev_realize_and_unref(). Even though we could make
-> the argument that it's safe to do so, and the pointer to the unreffed
-> device *will* actually still be valid, it still made my skin itch to
-> look at it.
+> IRQ 2 isn't valid on the i8259; it's the cascade IRQ and would be
+> interpreted as spurious interrupt on the secondary PIC. So we can fix
+> up all attempts to deliver IRQ2, to actually deliver to IRQ0 on the PIC.
 >=20
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-> Reviewed-by: Paul Durrant <paul@xen.org>
 
-I still have this lying around in my working tree. Shall I forget all
-about it and let you take it with this patch series?=20
+Ping?
 
---=-xU/Wt4Y89tMIMjdjhqEI
+--=-8Sc3gNrJa5UpbwiDHc8T
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -203,25 +192,25 @@ IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
 dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
 NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
 xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwMTI2MTIwOTIwWjAvBgkqhkiG9w0BCQQxIgQgllWem1a4
-AmbMIDkyi/r5j+dJ+Vg+tQ5wKnvpX0GYW4Ewgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwMTI2MTIxMDAzWjAvBgkqhkiG9w0BCQQxIgQgPWAg4m0F
+B5EBOCAXsF/F+YCRAfzo08m6dWv9ohrA37owgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
 BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
 A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
 dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
 DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
 MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
 Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBK90P1JymnINopVL9N2w7Fx9KBtytOhOFb
-W83B/oZYS7s6opLVwNYp1QgoaOiyxGDuymHe5X9qZm56FSYG7JsZNAXrq3BHcAlIflnnIrowvPtF
-x1VRbpodWLIMfRDmjsPPOrEBBuWVfkrFOuYX36y9rrmP10gTx9cHzgwLZMG3L8MqNCA58LL56+Pw
-l8Y2ydsxzouw/UQ7Pxyd21EF0Cp55b+qYBhNOjvJsLr9M798TArwjG37gg+Hqohk9s3O0K//Lvs1
-1aRputatP335zisApKmFXpI8p6bt+qpZu0tEnZegqNz9XM3rm2BL4ZMwLAlhINZn7rXgcQIDzxoO
-4JwcHyHaOoIkobDfcOKKnTJmjKSX0hNqdUFo5+rvi5LJsiP9vjVC9+5nzjF/K8Gd98vm/8JX0lf7
-7hunrO+mtK1ctCo0kf36PlOxgumqGzV9kPE0NGVUXkt3d8Zsoj3hZzpDbNV1Yjv3+vyVWFT0NXcy
-MdyAOyrCzxR+UHmYxjBjwCO/n5IoOuJlGOnmUZ2DpRGWEynedclTowcNc9b/kh26uhDdgSwXYGwu
-LUZeO6muluf0tauhBKlOFM0SwTI9qQy8AwZdWaqrNUHPkJDArcgUlAM191Nhjao5cGIbaREcd7km
-uMHGkKxItq1z35EPVYl9IAyC/zFHywWma5zjs+/EhQAAAAAAAA==
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBBPbngdTqvNhdp/6dOYd4AHav95aGVXfdt
+7iOymrxoZs/9srOYj7cGCkBptA6ef2RB5c5h3T2CHNx0p4gfIsWQURxINqt4NR0kryxNmC1sp/Tm
+ZMZviYrJLBBYa9Mgjba3n6HGL/9XcREIaRIbUQtlOsvIdlp1HyPXdxk9fQvmwhsk4Atu/OhccKPK
+yPRAy4Lrak9Kjm6gZkbtymZD8f/XnnkrugTL/4LOXJhGTtk742KiEqnq5YbRxUdFImlJjvGk6ZPj
+DjpIQThHCD4yOJRvhMOZlSiRPNvmd1W7V+KXxl2FqICdrThxPjL23YNYrlhj8cTpwDvuCMP16TXp
+jEumv8hE/0uhAqDMCNPboc7eig6m2MyFYUguA6myIvg71ypnShm/jumqcgAkWm7JIlhlZPTM3kef
+tjb5wNFSbnWU3VftN0zDrYtAItVjz0a1SWHx+V3W8rUnkqooyut1JPQ6fj6QK0cp0uiyeEASk2Ot
+iy7SR+Q85dC7MNJm+R30P3XNEjReRLMw7ZrvkcLmKF5PvJmMpI6tjeDDFSOXDHC4WLEs1ZTk6EL4
+omDSOclo0MZV/rjN3CAd/XAJm7Hx9uPIawHM0csHcCsFWg9EFOZAxRVwLqxlC8pHRAW9mG0SVmKa
+aXmsSR3KnH87MYCYPByielzo1b3Sap91UM80Fk9GAwAAAAAAAA==
 
 
---=-xU/Wt4Y89tMIMjdjhqEI--
+--=-8Sc3gNrJa5UpbwiDHc8T--
 
