@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15073C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72299C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNHE-0002GS-FD; Fri, 26 Jan 2024 09:33:52 -0500
+	id 1rTNHN-0002TE-0d; Fri, 26 Jan 2024 09:34:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHC-0002Ej-57
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:50 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1rTNHK-0002Or-LM
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:58 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHA-0007sS-DP
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:49 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33921b95dddso1153370f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:48 -0800 (PST)
+ id 1rTNHI-0007yf-UV
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:58 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-33922d2cb92so651068f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706279627; x=1706884427; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706279635; x=1706884435; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=r1v3SV+PmV/A+0Uc2aWf5zTz7bzHoDfhI5pt+5wcTmM=;
- b=WBsp2ne/XAZmbJe2EkVtcfUmVsj12Y4MIXCxvq4hhGxdIcSGaaWCdRSWQ8rRNHA12h
- GI3HkvNegIqmbCAdmzeEx09y7VUaTwVU0YYC8kenKjWoFLgv0XPMg1j6RwnQhE56cOj1
- uE4VyHBbyqsoJ+KGxZCiE8UzwIBIAqK3u97n3lQupokx4QirXOdQTFEBWDDco7EdeuNZ
- /zwIcoVo0jBnkKTXj8tKP//MwYNwaBM6EMJZZIuOhF9J5BLLk9G30/cPkTpxICFDe5I6
- uxdcyaHM5H5ek0z+AJ0usGwHrB2wOZZ6550hMLbrJcxz3gokXoDfKAscoPByJDLWFZ/0
- cpaA==
+ :reply-to; bh=eZpEnAeJf53ixh3kz2oebZYqrcVt+0YUC5baVJx1ZCE=;
+ b=MOPEiymwOLR5akSKbdgGs9zAfxR9UWsfclcrQbx3U5rKA0x2ci4TOCC0/nwJNDDN2o
+ Odj4U2HofMgj0eG15Z0Q/nHUjRY+mSMyfBjQJ47t42hEafqnwlvzBwsAWSZxRtdIkrkQ
+ uh+zyxzw6GkyPAxfCojzXcnTnJ35lS9RPVvg0X6Xloedh6wtORCZNS3mBWq5d7cUvlBn
+ pUGV2Mi20N6lszQ/KZ2BTWZrhN+Nbj1XoL51DrZw+7JAZV0dcatbJ9FSpxu0bBkxX7mZ
+ aihAyR0/Bd0BRbtW8eR+VNXv1uPOm+gTQaC/COwDJt8bUE5623mA7WRd3DUw+5tm+q+F
+ YKQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706279627; x=1706884427;
+ d=1e100.net; s=20230601; t=1706279635; x=1706884435;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r1v3SV+PmV/A+0Uc2aWf5zTz7bzHoDfhI5pt+5wcTmM=;
- b=tLiAS5etpJhzFMEUgiNqxYHoavrBFTtGD2uNLxCQVyI2dSyPslO2bF3boFYzZv9ogB
- edmcGOUZZpoU12MWwLwa6D8qiql6zEtjFh4S91NgSUN/jZHzoYg65agjlL7FX9poJg4W
- ZUUwQGMCkZY8RuhiQo87+f7GBmIf9rArv+4m2Fty8bOBYrsNnFYr7B5N/nPXxab0wJOq
- Q7PCq8sYpqh6VR9tmYXZwUWqsoJ24gQigsdH/zGgxCmLWcuD2257J6DOobF62xN6Sdya
- Jje/V0MpD1P6EV3tdFNihKXEuu1A+9aV9HIItYxFOkkwGpK2L4kB07cd9+YEhVhxXaK5
- BVtw==
-X-Gm-Message-State: AOJu0YwtiehlJVnKPPJvzqzNYCdYhO/RPz+o3EHO07eXcByQFGPG5ep6
- LAZGqhw9B7XzDexK7YzkwHP+Ch3yZLSeUx/cGRWDkl7/WET+yj58abNt3fSWMLKSIgKvhXFUT1Q
- t
-X-Google-Smtp-Source: AGHT+IEcVNWisvqiZkQAoOFo2inzXfWoHFnIZMvkcTfVpgDghVxXOdzgJ9TEpTNjrXtPThhclCwvjA==
-X-Received: by 2002:a05:600c:510e:b0:40e:8613:84f with SMTP id
- o14-20020a05600c510e00b0040e8613084fmr574058wms.6.1706279626835; 
- Fri, 26 Jan 2024 06:33:46 -0800 (PST)
+ bh=eZpEnAeJf53ixh3kz2oebZYqrcVt+0YUC5baVJx1ZCE=;
+ b=aaO4f1jArDiju1Ey65vjHar7KXyp5RufypUMod3sjL9ArpVLH9RWEK4kzJhEZEaUFt
+ sig92g/i0noQfgcOkzU9uXwvZP76lXd9jFXbtWnx818BVPTXSjmYktPsJ0lCbG1ofLOz
+ DH3JVptvM5009sosBU1nsT0rypjEi0ZHqXd3x0Qv/L258Y5oFxI1hvp/JaFdwpo2hiLo
+ 0lF5Lk7EEQ16iRXSq/WRDhwb3d9XljmNM3ge29ZZ3ZHS3bBmBNs90H8s6O/R8XVV/cMO
+ +lVSNH62obhb5khRBDlzBZxJzx5RP4qIu4h4X3hg2PRgvDtRWc5lH/ENZqrPiYPABKMZ
+ gHhw==
+X-Gm-Message-State: AOJu0YyM9Bu2j4BN1qGXjj09LvyE7h6Wy2IvpjGAWL1is6ktrH4KRV3r
+ hpG3BkOuTts2wQiTK6EdbAR9PsjoTv2rxrS+EVg2SNhOj7BQznYn0R3VvItVjsG06i064GUS5ch
+ x
+X-Google-Smtp-Source: AGHT+IGgDeqPPldGOCcki9hFSfUDRsMg3C+p1Xn8qdFb3ej5mHljqC7bqWR9gmq8R96xe39bTfImmQ==
+X-Received: by 2002:adf:a486:0:b0:337:abfd:6058 with SMTP id
+ g6-20020adfa486000000b00337abfd6058mr682127wrb.74.1706279635690; 
+ Fri, 26 Jan 2024 06:33:55 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.46
+ n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:33:46 -0800 (PST)
+ Fri, 26 Jan 2024 06:33:55 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/36] hw/arm/exynos4210: Include missing 'exec/tswap.h' header
-Date: Fri, 26 Jan 2024 14:33:15 +0000
-Message-Id: <20240126143341.2101237-11-peter.maydell@linaro.org>
+Subject: [PULL 30/36] fsl-imx6ul: Add various missing unimplemented devices
+Date: Fri, 26 Jan 2024 14:33:35 +0000
+Message-Id: <20240126143341.2101237-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
 References: <20240126143341.2101237-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,37 +94,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-hw/arm/exynos4210.c calls tswap32() which is declared
-in "exec/tswap.h". Include it in order to avoid when
-refactoring unrelated headers:
+Add MMDC, OCOTP, SQPI, CAAM, and USBMISC as unimplemented devices.
 
-  hw/arm/exynos4210.c:499:22: error: call to undeclared function 'tswap32';
-  ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-          smpboot[n] = tswap32(smpboot[n]);
-                       ^
+This allows operating systems such as Linux to run emulations such as
+mcimx6ul-evk.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240118200643.29037-2-philmd@linaro.org
+Before commit 0cd4926b85 ("Refactor i.MX6UL processor code"), the affected
+memory ranges were covered by the unimplemented DAP device. The commit
+reduced the DAP address range from 0x100000 to 4kB, and the emulation
+thus no longer covered the various unimplemented devices in the affected
+address range.
+
+Fixes: 0cd4926b85 ("Refactor i.MX6UL processor code")
+Cc: Jean-Christophe Dubois <jcd@tribudubois.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240120005356.2599547-1-linux@roeck-us.net
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/exynos4210.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/hw/arm/fsl-imx6ul.h |  2 ++
+ hw/arm/fsl-imx6ul.c         | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index de39fb0ece8..af511a153dd 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -23,6 +23,7 @@
+diff --git a/include/hw/arm/fsl-imx6ul.h b/include/hw/arm/fsl-imx6ul.h
+index 14390f60144..8277b0e8b2c 100644
+--- a/include/hw/arm/fsl-imx6ul.h
++++ b/include/hw/arm/fsl-imx6ul.h
+@@ -182,6 +182,8 @@ enum FslIMX6ULMemoryMap {
+     FSL_IMX6UL_ENET1_ADDR           = 0x02188000,
  
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "exec/tswap.h"
- #include "cpu.h"
- #include "hw/cpu/a9mpcore.h"
- #include "hw/irq.h"
+     FSL_IMX6UL_USBO2_USBMISC_ADDR   = 0x02184800,
++    FSL_IMX6UL_USBO2_USBMISC_SIZE   = 0x200,
++
+     FSL_IMX6UL_USBO2_USB1_ADDR      = 0x02184000,
+     FSL_IMX6UL_USBO2_USB2_ADDR      = 0x02184200,
+ 
+diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
+index 486a009deb8..343bd65d1b2 100644
+--- a/hw/arm/fsl-imx6ul.c
++++ b/hw/arm/fsl-imx6ul.c
+@@ -193,6 +193,36 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
+     create_unimplemented_device("a7mpcore-dap", FSL_IMX6UL_A7MPCORE_DAP_ADDR,
+                                 FSL_IMX6UL_A7MPCORE_DAP_SIZE);
+ 
++    /*
++     * MMDC
++     */
++    create_unimplemented_device("a7mpcore-mmdc", FSL_IMX6UL_MMDC_CFG_ADDR,
++                                FSL_IMX6UL_MMDC_CFG_SIZE);
++
++    /*
++     * OCOTP
++     */
++    create_unimplemented_device("a7mpcore-ocotp", FSL_IMX6UL_OCOTP_CTRL_ADDR,
++                                FSL_IMX6UL_OCOTP_CTRL_SIZE);
++
++    /*
++     * QSPI
++     */
++    create_unimplemented_device("a7mpcore-qspi", FSL_IMX6UL_QSPI_ADDR,
++                                FSL_IMX6UL_QSPI_SIZE);
++
++    /*
++     * CAAM
++     */
++    create_unimplemented_device("a7mpcore-qspi", FSL_IMX6UL_CAAM_ADDR,
++                                FSL_IMX6UL_CAAM_SIZE);
++
++    /*
++     * USBMISC
++     */
++    create_unimplemented_device("a7mpcore-usbmisc", FSL_IMX6UL_USBO2_USBMISC_ADDR,
++                                FSL_IMX6UL_USBO2_USBMISC_SIZE);
++
+     /*
+      * GPTs
+      */
 -- 
 2.34.1
 
