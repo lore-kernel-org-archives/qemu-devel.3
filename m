@@ -4,118 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB5F9C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 21:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD083C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 21:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTTTx-0007cI-EH; Fri, 26 Jan 2024 16:11:25 -0500
+	id 1rTU7n-0003sC-VM; Fri, 26 Jan 2024 16:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTTTu-0007ab-7w
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 16:11:23 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTTTp-00073D-Lj
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 16:11:21 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-40ee418e7edso12407045e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 13:11:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706303475; x=1706908275; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vxYwthXZn31ySjM2DeVKX29v0Ws6VePUGUeM9gtZWoA=;
- b=JDyHEwqvqboDEDYNihCFNcIfscK5BYQxoaPaj7zQNDvQce41kvjJJ7wWCIoXaPO8Ny
- V2C2JM9kpYUFAtpXvyb+Qeb5R/mhscWC4bgWqWLQPNrm3/piv4BS/n5Q/AEQrJxJDRv4
- DgS03b2WjA0PboF5keTTl/bbAyy6WchopJLj8IiGlLvG2EcChbYI63uVPl6PRu59jT8W
- 7iBNyeGdfQ+9oQiKVjYhLiGjnXCeT71Xf4L4Fu8+/6iCG+ssZWyL0XXqf13O0+9lvUUU
- NNVVWzO25VGIAXR6AB7iTn96O8KOVfsQdkbAAL+4FdRxTmR8gkSSyq8K2WRFj+u1yYk4
- laVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706303475; x=1706908275;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vxYwthXZn31ySjM2DeVKX29v0Ws6VePUGUeM9gtZWoA=;
- b=vuB8c/g9GfM/UfysTfgqkVjAlXqc6F8H88h8Gh/aIdq0/O7bpFkmLO8owpb6+ewjC5
- FXMXPHOgTHFWdiFzW67eV6dk9LiIJCiXRNQWwj2WoCyc+aH55EW3Y5ig3D3ocAOWDgIZ
- 2AS9EwkLgbpFw2vWFd81xUd/+Ltf2bhl2wtF7f5kUN5I6+aFipQI5F2XkAp2npiWEhdx
- x0nHI7IhVkDwyZNCWFWTY2f6ix8aP7kSL1il/Ba4JfpnTHIF9JrpB71m8RwfzOU21f8h
- KtjU7goN1iNwPfBfR90XfVgzDHcZjMrYS1sGLzfuMkB+hZR3vq13dH3tIJl1d7xBTTni
- Yzbg==
-X-Gm-Message-State: AOJu0YyQlbYg2LBLalHWy9cBpAQIGHLUWdsFfaMm+fR+2s9kr3cPoOPM
- Y1cesSfeT7itQRVDVuLYIElK2hNUwNzr6vY0JfECldyFIFPKgOww0uqTYsVGIzw=
-X-Google-Smtp-Source: AGHT+IHPfVDNkHfFEZ920e1AvtHAgCTjycghkqkwfmMNm/uoHYkWmbEXdBjZ/pk1I5xFKz0+SjDwuw==
-X-Received: by 2002:a05:600c:4ca7:b0:40e:5534:728c with SMTP id
- g39-20020a05600c4ca700b0040e5534728cmr286415wmp.136.1706303475465; 
- Fri, 26 Jan 2024 13:11:15 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.142.39])
- by smtp.gmail.com with ESMTPSA id
- a5-20020a05600c348500b0040e48abec33sm6615547wmq.45.2024.01.26.13.11.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 13:11:15 -0800 (PST)
-Message-ID: <c4c07c69-11c6-4883-8ff8-1e5ec627d9bc@linaro.org>
-Date: Fri, 26 Jan 2024 22:11:08 +0100
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rTU7m-0003s4-Fg
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 16:52:34 -0500
+Received: from todd.t-8ch.de ([159.69.126.157])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rTU7j-00005r-Ej
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 16:52:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
+ t=1706305945; bh=AFl7S6eapc/1WeaK73InImADkR4LS9FiIyob68oLHgE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Gq0e+gSfDx4sD3KHEXTG51fw2qu+u/JNA6yvkMHNM7kNV9pUmM4ZzTXIlI9PKk+V8
+ gNu6By16hITXKuR2ATS9nVJZt5fJqwH3knkTrMfHQhxmuls5pTiFSBfGsHiKsDl1tR
+ U50BrKZ719BbgwjZhTcGKuoJLnpnZBcWHwOZ0KLI=
+Date: Fri, 26 Jan 2024 22:52:24 +0100
+From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: Re: [PATCH v4 4/4] hw/misc/pvpanic: add support for normal
+ shutdowns
+Message-ID: <79dc2259-125b-4f46-a80f-ab13ed935cb7@t-8ch.de>
+References: <20240107-pvpanic-shutdown-v4-0-81500a7e4081@t-8ch.de>
+ <20240107-pvpanic-shutdown-v4-4-81500a7e4081@t-8ch.de>
+ <287bcc2b-3268-4622-a649-8ce6b7e4f8a5@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] bulk: Prefer fast cpu_env() over slower CPU QOM cast
- macro
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Alexander Graf
- <agraf@csgraf.de>, Michael Rolnik <mrolnik@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, David Woodhouse
- <dwmw2@infradead.org>, Laurent Vivier <laurent@vivier.eu>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Huacai Chen <chenhuacai@kernel.org>, Chris Wulff <crwulff@gmail.com>,
- Marek Vasut <marex@denx.de>, Stafford Horne <shorne@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>, xen-devel@lists.xenproject.org,
- kvm@vger.kernel.org
-References: <20240125165648.49898-1-philmd@linaro.org>
- <20240125165648.49898-3-philmd@linaro.org>
- <135941df-2f8b-4fd5-91c7-40b413e6eae3@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <135941df-2f8b-4fd5-91c7-40b413e6eae3@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+In-Reply-To: <287bcc2b-3268-4622-a649-8ce6b7e4f8a5@oracle.com>
+Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
+ helo=todd.t-8ch.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,46 +65,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/1/24 18:09, Thomas Huth wrote:
-> On 25/01/2024 17.56, Philippe Mathieu-Daudé wrote:
->> Mechanical patch produced running the command documented
->> in scripts/coccinelle/cpu_env.cocci_template header.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
+Hi Alejandro,
 
->>   114 files changed, 273 insertions(+), 548 deletions(-)
+On 2024-01-26 13:47:33-0500, Alejandro Jimenez wrote:
+> On 1/7/24 09:05, Thomas Weißschuh wrote:
+> > Shutdown requests are normally hardware dependent.
+> > By extending pvpanic to also handle shutdown requests, guests can
+> > submit such requests with an easily implementable and cross-platform
+> > mechanism.
+> > 
+> > Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+> > ---
+> >   docs/specs/pvpanic.rst    | 2 ++
+> >   hw/misc/pvpanic.c         | 5 +++++
+> >   include/hw/misc/pvpanic.h | 3 ++-
+> >   3 files changed, 9 insertions(+), 1 deletion(-)
+> > 
+> [snip]
 > 
-> A huge patch ... I wonder whether it would make sense to split it up by 
-> target architecture to ease the review?
+> >   -------------
+> > diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
+> > index a4982cc5928e..246f9ae4e992 100644
+> > --- a/hw/misc/pvpanic.c
+> > +++ b/hw/misc/pvpanic.c
+> > @@ -40,6 +40,11 @@ static void handle_event(int event)
+> >           qemu_system_guest_crashloaded(NULL);
+> >           return;
+> >       }
+> > +
+> > +    if (event & PVPANIC_SHUTDOWN) {
+> > +        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
 > 
-> ...
->> diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
->> index a8d014d09a..eb0613bfbe 100644
->> --- a/hw/i386/vmmouse.c
->> +++ b/hw/i386/vmmouse.c
->> @@ -74,8 +74,7 @@ struct VMMouseState {
->>   static void vmmouse_get_data(uint32_t *data)
->>   {
->> -    X86CPU *cpu = X86_CPU(current_cpu);
->> -    CPUX86State *env = &cpu->env;
->> +    CPUX86State *env = cpu_env(CPU(current_cpu));
-> 
-> No need for the CPU() cast here, current_cpu is already
-> of type "CPUState *".
+> I would suggest that instead of directly requesting a system shutdown,
+> we should follow the same convention/handling of the other pvpanic
+> events and emit a QMP message signaling the specific event that took
+> place, to help a management layer application that might be listening
+> to determine the cause of the shutdown. It can also be a helpful
+> signal to let us know if a guest is (ab)using the new functionality.
 
-Yes, Paolo noticed and I fixed for v2.
+This sounds reasonable, thanks for the suggestion and patch.
 
-> I'll stop here, please respin with the cpu_env(CPU(current_cpu)) fixed to
-> cpu_env(current_cpu), and please split the patch by target CPU types.
+> If you agree with my reasoning and you'd allow me to piggyback on your
+> series, please add my complementary [PATCH 5/4] change that implements
+> the suggestion:
 
-Well I don't know, this is an reproducible mechanical patch..
-But indeed as Paolo you found an optimization so worth not making
-human review a pain.
+I picked up the patch and will test and resend the series in a few days.
 
-I was about to post v2 but I'll see how to split.
+[snip]
 
-Thanks for the review!
+If one of the maintainers reads this:
 
-Phil.
+Maybe patch 1, 2 and 3 could already be picked up as they seem not to be
+controversial.
+Then I can also continue to remove the UAPI header on the kernel side.
+
+Thomas
 
