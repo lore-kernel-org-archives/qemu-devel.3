@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79A3C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E987EC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQ6k-0004p4-D6; Fri, 26 Jan 2024 12:35:14 -0500
+	id 1rTQ5H-0008MB-Bv; Fri, 26 Jan 2024 12:33:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ5R-00009e-1L; Fri, 26 Jan 2024 12:33:55 -0500
-Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1rTQ5B-0008Ab-0P; Fri, 26 Jan 2024 12:33:37 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ5O-0001jV-Ea; Fri, 26 Jan 2024 12:33:52 -0500
+ <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1rTQ58-0001cP-9g; Fri, 26 Jan 2024 12:33:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
+ d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=KOJpufq4zmSAW4K5QRQS7wrF9AysmCJpGSwOq9y3MvE=; b=Kkc6w4XBr8jGCKymZ8GonYtRQf
- 3nKIA1F+AOT0Y0gp30CLxWOk0LHUYyXz6gt/8Cin6mmr3eAbf8dzVvSbbBSk9KelfbaAnW5/yJe5U
- nExgrTMI7VIqwGLenUCm2tKd4kN7NVsljwGTI1S2gcurVCy29EA/XOYrAGr4SHtmhme8En06YvlVr
- QQ7FZZSbOFHL7aJJVndJra1TxvjTN0ZuzpRZjXwrL/D8VH3MWjr1xAvkOZuixFv0WeSruJKJnjXhB
- SsoUQflZFtcaIEQI2SjAQqIKU7bcTVOWPzAHCGgDGAHCbADyxPEJ1yXdQfbzyi0lulvFZ/ELgPpvK
- 4BgnFm1Q==;
+ bh=XNIjAmOhj+SZtS07BQBFCx/gbJe5yDDVggy1z+Bpirk=; b=qRXBwy8wUZBA7uZmqg9qysYyBX
+ Y6Ht7Uox+6oAhC7gW4UQMkRldIgtf5lI/GgLn4EtGwZu0/+8aZ3UQ/6sw5Nm3YMXsI9ZplbcbqVRU
+ GiScBh5rU2/rvAZI+rbdLSXVYqwSpx2Xj+MikdK1RdUBZva0Xcpdckrj/KRFo1FxaE10njMG3SWRb
+ LkADFbDwwlhMqaRJtmytj91Ya617+xnZWYXRs2Ed1Z3ursa9//nPX6CeTgziudkhqDHG/KmFDVYxw
+ 09AEiwPniBXkf+XV7YRKFK7GNdiekuVJFoJ6xULYvfLkXQR20xacHe13v/fDVjSrdNymWeMDedHXz
+ Oo1BD/eA==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
- by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTQ4A-000000069Un-1mvK; Fri, 26 Jan 2024 17:32:35 +0000
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1rTQ48-0000000EKUL-0gC3; Fri, 26 Jan 2024 17:32:33 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rTQ49-00000001emi-0XuV;
- Fri, 26 Jan 2024 17:32:33 +0000
+ Hat Linux)) id 1rTQ48-00000001em5-2PYf;
+ Fri, 26 Jan 2024 17:32:32 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -84,21 +84,20 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v4 24/47] hw/arm/fsl: use qemu_configure_nic_device()
-Date: Fri, 26 Jan 2024 17:25:01 +0000
-Message-ID: <20240126173228.394202-25-dwmw2@infradead.org>
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PATCH v4 18/47] hw/sh4/r2d: use pci_init_nic_devices()
+Date: Fri, 26 Jan 2024 17:24:55 +0000
+Message-ID: <20240126173228.394202-19-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126173228.394202-1-dwmw2@infradead.org>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
- envelope-from=BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org;
- helo=desiato.infradead.org
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -123,67 +122,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- hw/arm/fsl-imx25.c  | 2 +-
- hw/arm/fsl-imx6.c   | 2 +-
- hw/arm/fsl-imx6ul.c | 2 +-
- hw/arm/fsl-imx7.c   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+Previously, the first PCI NIC would be assigned to slot 2 even if the
+user override the model and made it something other than an rtl8139
+which is the default. Everything else would be dynamically assigned.
 
-diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
-index 9d2fb75a68..a24fa7b443 100644
---- a/hw/arm/fsl-imx25.c
-+++ b/hw/arm/fsl-imx25.c
-@@ -170,7 +170,7 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
+Now, the first rtl8139 gets slot 2 and everything else is dynamic.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+---
+ hw/sh4/r2d.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 4944994e9c..e9f316a6ce 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -240,7 +240,6 @@ static void r2d_init(MachineState *machine)
+     MemoryRegion *sdram = g_new(MemoryRegion, 1);
+     qemu_irq *irq;
+     DriveInfo *dinfo;
+-    int i;
+     DeviceState *dev;
+     SysBusDevice *busdev;
+     MemoryRegion *address_space_mem = get_system_memory();
+@@ -309,9 +308,8 @@ static void r2d_init(MachineState *machine)
+                           0x555, 0x2aa, 0);
  
-     object_property_set_uint(OBJECT(&s->fec), "phy-num", s->phy_num,
-                              &error_abort);
--    qdev_set_nic_properties(DEVICE(&s->fec), &nd_table[0]);
-+    qemu_configure_nic_device(DEVICE(&s->fec), true, NULL);
+     /* NIC: rtl8139 on-board, and 2 slots. */
+-    for (i = 0; i < nb_nics; i++)
+-        pci_nic_init_nofail(&nd_table[i], pci_bus,
+-                            mc->default_nic, i == 0 ? "2" : NULL);
++    pci_init_nic_in_slot(pci_bus, mc->default_nic, NULL, "2");
++    pci_init_nic_devices(pci_bus, mc->default_nic);
  
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->fec), errp)) {
-         return;
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index af2e982b05..afe9a59a81 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -383,7 +383,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
- 
-     object_property_set_uint(OBJECT(&s->eth), "phy-num", s->phy_num,
-                              &error_abort);
--    qdev_set_nic_properties(DEVICE(&s->eth), &nd_table[0]);
-+    qemu_configure_nic_device(DEVICE(&s->eth), true, NULL);
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->eth), errp)) {
-         return;
-     }
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index e37b69a5e1..ca3dd439ec 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -442,7 +442,7 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-                                  s->phy_num[i], &error_abort);
-         object_property_set_uint(OBJECT(&s->eth[i]), "tx-ring-num",
-                                  FSL_IMX6UL_ETH_NUM_TX_RINGS, &error_abort);
--        qdev_set_nic_properties(DEVICE(&s->eth[i]), &nd_table[i]);
-+        qemu_configure_nic_device(DEVICE(&s->eth[i]), true, NULL);
-         sysbus_realize(SYS_BUS_DEVICE(&s->eth[i]), &error_abort);
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->eth[i]), 0,
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index 474cfdc87c..1acbe065db 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -446,7 +446,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-                                  s->phy_num[i], &error_abort);
-         object_property_set_uint(OBJECT(&s->eth[i]), "tx-ring-num",
-                                  FSL_IMX7_ETH_NUM_TX_RINGS, &error_abort);
--        qdev_set_nic_properties(DEVICE(&s->eth[i]), &nd_table[i]);
-+        qemu_configure_nic_device(DEVICE(&s->eth[i]), true, NULL);
-         sysbus_realize(SYS_BUS_DEVICE(&s->eth[i]), &error_abort);
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->eth[i]), 0, FSL_IMX7_ENETn_ADDR[i]);
+     /* USB keyboard */
+     usb_create_simple(usb_bus_find(-1), "usb-kbd");
 -- 
 2.43.0
 
