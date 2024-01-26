@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF28EC47DDF
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E7AC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTUKu-0001oG-4e; Fri, 26 Jan 2024 17:06:08 -0500
+	id 1rTULQ-0003U0-U8; Fri, 26 Jan 2024 17:06:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKS-0000A7-Ll
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:05:41 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKw-0001xI-IW
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:06:10 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKP-0004Cj-Hd
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:05:40 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-40e7065b7bdso17231575e9.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:05:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKs-0004R5-B9
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:06:08 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-40ee82d040dso9921965e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:06:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706306735; x=1706911535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706306761; x=1706911561; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FFJLEX8dK90+jos80xXDDodOgI2wmwmhf0FUxCQuinw=;
- b=Cz5GAQzXyFWJQnda5cT/mRJM4/z+9llym5n18wu+pTRcQrYEHaes3+dEXrVr6SD9uc
- FNP+8aFBPxkUuI/D0SE7WtV1oXxNiaxJjjTw5N2NJTNEKJ1S+q+AmW1lDbMDdYQMVR7I
- Cvc6Xb4bCKD809lorEV4AyW4b0DqPpiE5reWpKzzAyhCwPlOqqYHGSUlPhjAIzLcwVAL
- xtGMyOTmrXIjzbZ+B4qfuhLqge3ot7bqed4Pzu+V2ewdgVL0z+h8Ei/UE6XsvnSrOQlo
- HE0CpHaWNX6mtbQW6CedRX1yGukZP7rxMEQMyz9wwBOcaDbGvlJz45WwZXxdYTrfUYrx
- ooDg==
+ bh=1Fp9tWfUnWpTWSY0wSSNV5XB5wPrgNqsnYE0Bp5WmMs=;
+ b=FaMf0o5ELztjZZjY0qxxwlGRIwT8Pe+zfZjIqDoPSDmX4nfIA6CQh2CxJO6btaabAi
+ ygzNvz/1Ft7F0mTk4cTgQ+phOHFzlmKtSVCtFjOqSUbZotquJ7e75jwmO/Bt1Mm/qNy6
+ 3fHRiMp0FAxIThUk3lphL1NiQRXfzOIol6FiaZqW3TG2kHbagkdgWmAQW+kJJRlLeK4p
+ XtQ9G3iqORnzztKZtHuS9pU+dtvfVMGUIYRr1t4yLNgwtyXIUtus5ij1/YdiT66k1HeK
+ Unv/H8gWiFtZdpCu7WmqnCsUcQZcRm454YXr52J7xJ2GyZQ41IM51E9RFxZ47rI5cmIa
+ jV2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706306735; x=1706911535;
+ d=1e100.net; s=20230601; t=1706306761; x=1706911561;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FFJLEX8dK90+jos80xXDDodOgI2wmwmhf0FUxCQuinw=;
- b=O5gKakjdt3l919lYXTgvF6SIzEx0AZCKYn+O03TWTeK9yN4qbGDfA+wh1mCcOVkfSm
- UOZWgpdmInshHUwuqheVz+wF/YBxxxD67T3/utunF8GGqcZJVzoBM3cOcuDvwxy1m3LE
- /rQGEC/y6I7tWJuAKvj0i9//6GEJqA2CPtkqmSBhGJ4zzIYIm2G9NQkeqAYLpl4VpO0l
- lAc8QLMT/DqFR7p7YvGbkNdQVDnnXKCmg2ZhVhYzDVmuoaWbQftmKDEwyyFRd1NaKTj/
- vL7hTV85cSg5Ky1rxzEPqvWFRP8qiq2Zz3YeKLB6WRxaRU0SI2QJtLjL0kkJshEOTQkX
- 0z2Q==
-X-Gm-Message-State: AOJu0Yz0xvFjJdZNsTJ4I27yv6QLnSq4oJEFxIHA6LqZqB5sib75jv27
- /wxEiwEa/wC4gIPnewCjqkWPaOq3wdkIkZA1olM2wTZBB3mZngJNZyrphccd/9f6RiPMDF5bEG6
- Q
-X-Google-Smtp-Source: AGHT+IERKWPKqMlUDr8TgLLCEk48utrgqZ8fZ+srVdZ0DPEqZSZhTX1J0vsKsxaQU/Y2UaXBmJlN2g==
-X-Received: by 2002:a05:600c:2246:b0:40e:e944:154a with SMTP id
- a6-20020a05600c224600b0040ee944154amr243867wmm.198.1706306735629; 
- Fri, 26 Jan 2024 14:05:35 -0800 (PST)
+ bh=1Fp9tWfUnWpTWSY0wSSNV5XB5wPrgNqsnYE0Bp5WmMs=;
+ b=G3SEx84ZgobYV5HcVIK9rUxhmFEua9Qkv3SjelDcgN/vCXSfI9dNHfS8bOLZva0qwY
+ 8MMq9BLD8+1SMCbKwH6RHht2pFCx69lFouznmPOOeX3E0klFFKnexw2bH2Hd72aeTR8a
+ U4XGUd6qd/08SxMsI4RBrz0h9ATKAZhE/kBelo4RP1gJb7rKc5Ty/SL1lFkBSwKiD56O
+ zw2toZrn1yAH0PmT2OzAB/vgGClypycWXBqhZVkirwQ1/l3cYZV2pWvxIpUlLK3g4Y3z
+ dU7CNzapwInug6tDZgUQ8J4ivrU1e/RvFu0E9J8qV+2uX6aAVMKd2PfAuUnKLJrgARbr
+ QQkw==
+X-Gm-Message-State: AOJu0YxKiH824Aw9aIW+yY2gR0Ctes1nDrZS1A86OscZYEt0jxPoZhCO
+ VGrMTC9H12gL80R+n6mszYGQQlwoGh/OXtAVl0Qdb6e8tNC1RLcS0vM2XMX8hLcbDhBUqQ72nhI
+ S
+X-Google-Smtp-Source: AGHT+IFd1IbswSIXEXRwvvayIHbXjba/igiz3MLifb8MrBXCEI38IVU61Lu9pQK0loQXCyARtTly0w==
+X-Received: by 2002:a05:600c:5187:b0:40e:d44a:ca9c with SMTP id
+ fa7-20020a05600c518700b0040ed44aca9cmr330302wmb.48.1706306761345; 
+ Fri, 26 Jan 2024 14:06:01 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.142.39])
  by smtp.gmail.com with ESMTPSA id
- s6-20020a1709060c0600b00a2a37f63216sm1056778ejf.171.2024.01.26.14.05.33
+ bi19-20020a05600c3d9300b0040ee51f1025sm1819887wmb.43.2024.01.26.14.05.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 26 Jan 2024 14:05:35 -0800 (PST)
+ Fri, 26 Jan 2024 14:06:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
@@ -66,19 +66,19 @@ Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chris Wulff <crwulff@gmail.com>, Marek Vasut <marex@denx.de>
-Subject: [PATCH v2 14/23] target/nios2: Prefer fast cpu_env() over slower CPU
- QOM cast macro
-Date: Fri, 26 Jan 2024 23:03:56 +0100
-Message-ID: <20240126220407.95022-15-philmd@linaro.org>
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH v2 18/23] target/rx: Prefer fast cpu_env() over slower CPU QOM
+ cast macro
+Date: Fri, 26 Jan 2024 23:04:00 +0100
+Message-ID: <20240126220407.95022-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240126220407.95022-1-philmd@linaro.org>
 References: <20240126220407.95022-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,85 +106,73 @@ in scripts/coccinelle/cpu_env.cocci_template header.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/nios2/cpu.c        | 15 +++------------
- target/nios2/helper.c     |  3 +--
- target/nios2/nios2-semi.c |  6 ++----
- 3 files changed, 6 insertions(+), 18 deletions(-)
+ target/rx/gdbstub.c   | 6 ++----
+ target/rx/helper.c    | 6 ++----
+ target/rx/translate.c | 3 +--
+ 3 files changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/target/nios2/cpu.c b/target/nios2/cpu.c
-index a27732bf2b..a2eaf35c1a 100644
---- a/target/nios2/cpu.c
-+++ b/target/nios2/cpu.c
-@@ -28,28 +28,19 @@
+diff --git a/target/rx/gdbstub.c b/target/rx/gdbstub.c
+index d7e0e6689b..f222bf003b 100644
+--- a/target/rx/gdbstub.c
++++ b/target/rx/gdbstub.c
+@@ -21,8 +21,7 @@
  
- static void nios2_cpu_set_pc(CPUState *cs, vaddr value)
+ int rx_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
--
--    env->pc = value;
-+    cpu_env(cs)->pc = value;
- }
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
  
- static vaddr nios2_cpu_get_pc(CPUState *cs)
+     switch (n) {
+     case 0 ... 15:
+@@ -53,8 +52,7 @@ int rx_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int rx_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
--
--    return env->pc;
-+    return cpu_env(cs)->pc;
- }
- 
- static void nios2_restore_state_to_opc(CPUState *cs,
-                                        const TranslationBlock *tb,
-                                        const uint64_t *data)
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     uint32_t psw;
+     switch (n) {
+     case 0 ... 15:
+diff --git a/target/rx/helper.c b/target/rx/helper.c
+index dad5fb4976..80912e8dcb 100644
+--- a/target/rx/helper.c
++++ b/target/rx/helper.c
+@@ -45,8 +45,7 @@ void rx_cpu_unpack_psw(CPURXState *env, uint32_t psw, int rte)
+ #define INT_FLAGS (CPU_INTERRUPT_HARD | CPU_INTERRUPT_FIR)
+ void rx_cpu_do_interrupt(CPUState *cs)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
--
--    env->pc = data[0];
-+    cpu_env(cs)->pc = data[0];
- }
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     int do_irq = cs->interrupt_request & INT_FLAGS;
+     uint32_t save_psw;
  
- static bool nios2_cpu_has_work(CPUState *cs)
-diff --git a/target/nios2/helper.c b/target/nios2/helper.c
-index bb3b09e5a7..ac57121afc 100644
---- a/target/nios2/helper.c
-+++ b/target/nios2/helper.c
-@@ -287,8 +287,7 @@ void nios2_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                    MMUAccessType access_type,
-                                    int mmu_idx, uintptr_t retaddr)
+@@ -122,8 +121,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
+ 
+ bool rx_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
-+    CPUNios2State *env = cpu_env(cs);
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     int accept = 0;
+     /* hardware interrupt (Normal) */
+     if ((interrupt_request & CPU_INTERRUPT_HARD) &&
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 1829a0b1cd..26aaf7a6b5 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -131,8 +131,7 @@ static int bdsp_s(DisasContext *ctx, int d)
  
-     env->ctrl[CR_BADADDR] = addr;
-     cs->exception_index = EXCP_UNALIGN;
-diff --git a/target/nios2/nios2-semi.c b/target/nios2/nios2-semi.c
-index 0b84fcb6b6..420702e293 100644
---- a/target/nios2/nios2-semi.c
-+++ b/target/nios2/nios2-semi.c
-@@ -75,8 +75,7 @@ static int host_to_gdb_errno(int err)
- 
- static void nios2_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
+ void rx_cpu_dump_state(CPUState *cs, FILE *f, int flags)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
-+    CPUNios2State *env = cpu_env(cs);
-     target_ulong args = env->regs[R_ARG1];
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     int i;
+     uint32_t psw;
  
-     if (put_user_u32(ret, args) ||
-@@ -93,8 +92,7 @@ static void nios2_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
- 
- static void nios2_semi_u64_cb(CPUState *cs, uint64_t ret, int err)
- {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
-+    CPUNios2State *env = cpu_env(cs);
-     target_ulong args = env->regs[R_ARG1];
- 
-     if (put_user_u32(ret >> 32, args) ||
 -- 
 2.41.0
 
