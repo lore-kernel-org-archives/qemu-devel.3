@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AFBC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99090C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTJbq-0006iK-UK; Fri, 26 Jan 2024 05:38:54 -0500
+	id 1rTJhT-0000e5-TZ; Fri, 26 Jan 2024 05:44:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTJbp-0006hG-Ce
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 05:38:53 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTJhH-0000bV-MS
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 05:44:33 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTJbm-0006iA-9y
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 05:38:53 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-337d99f9cdfso316243f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 02:38:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTJh4-0002nD-4A
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 05:44:21 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-51028acdcf0so269895e87.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 02:44:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706265528; x=1706870328; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1706265849; x=1706870649; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mGEceRpzawgur6mwKEf1okcVHBJoqqu1g4hBfqZOOeY=;
- b=jmM5MHg+HCL/wFtSuS36zLq1iC8Tk85l10ycVUqQ86cB2Dg0y/FZgK/uT/UGsaPhG1
- 7kVT80lp0p6nLtLtAtqmcltO2AZfF9GpslKko9+hNz6Yst8k5nL8UMv4mMMf++zS/+r/
- xevIdq6oFZtoFG3qK0z2E34VtMdf3WQFCj0kZj5t/XnXtSj99s0keLi6Kiyl0Fz8VmdI
- AlK44+PApKybOPMac6UYxyXFwWn7zf8D2MnW0GtWHZJMY2RjheZQND3bjwdzk36w5fow
- QCf7/Q3NAfVXh7o3uU1PWVbd0T1qkjSiCK7iYUXD+RYe2NmLo1ShOhk14HMk+IBBjJbj
- 1Ayw==
+ bh=fauZjtje0U1FVRMrKjMx2UjITlVsoiQwgqcFx8wHmk4=;
+ b=CuPEWkA/KHjOx0L8koyqP9az317GZ7FOqGnRNd5oPAHCR3xddIdoqttSvK/ec99PJD
+ whspO664m+lKOW9SyAEtXaYmcrl/ISVQY6S2UsgZVceaBHCSBj5t093dhwrrjyiB8a6L
+ SNH3z3XOQJqpAbCvbOkSMtCxggTOLJe8lYSBHuxMYElHRAxrymIQ4LJPNbpjJE7q61ho
+ N+ibHvxsL8Y4PllCFT9Pk3KDL+NBVFX2+eJtYRxgMiks33T7EFyfwfOc2fF4emf0LfrG
+ kXyzJ4BZC6ZGeEN4hG7R917YcOZHTDSqq6XsuDoGw/C7l5dyF8EBZz7zUiV8VoL5Mc8Y
+ E6bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706265528; x=1706870328;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1706265849; x=1706870649;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mGEceRpzawgur6mwKEf1okcVHBJoqqu1g4hBfqZOOeY=;
- b=EoR+2PykBdIuX7XUwd2gUGVxXDWQqQtvwYO0TG+mxT/VYiy3aMh8DKTUkyrUijqv5B
- bPowRiRXNVA0uZoACTdRkQsxEvElAm8aa391U+wJ8MIYoPklUrPVeud+2CeyCgtfmPEi
- DjK+/i7f/GAqf5uKYDIU8QhQxN8I+0xXPU2MW/Ne3x3RYx/GPu1c/Qby1soVhM2/y+BR
- euZYT2NDK0vzVw9HiSM2FzdEM3lVQy9UJ1+s87Ogq5fhSTfYZvB9W6CXHmXjkMRBm0Um
- qe7+8AB82ZvL+SIBdwnusn6XOvr1yHzr3kvUMSoPcxTwr3208/s9jtc8u7D6claSf/zB
- 0V6w==
-X-Gm-Message-State: AOJu0YwSNooRb7jNm6pjGfGk6jnKjjeiYX9EtgFGpYYQUnK+uB318zCD
- hoTF0EG97YaTCZQTz8chJXRRmTDmK0X6jPN2mgcNczL6YwwFOhppGZSg8A2gQQv/V6IjKaFw0DF
- g
-X-Google-Smtp-Source: AGHT+IGgajcAerkUFRaQcgH0uxTDapYVMfxhQbjaSzODJ/d3kmOhpPq3X0OwB4NBBDnOhxOMLRHS+A==
-X-Received: by 2002:a7b:c8c9:0:b0:40e:bffb:ba19 with SMTP id
- f9-20020a7bc8c9000000b0040ebffbba19mr731249wml.48.1706265528398; 
- Fri, 26 Jan 2024 02:38:48 -0800 (PST)
+ bh=fauZjtje0U1FVRMrKjMx2UjITlVsoiQwgqcFx8wHmk4=;
+ b=HwQeyi+br9JDQtcNelflOVfR7eHgK1bNCStWKveja8q/mE7Mtw/1r3ui5Zg+cFN2ss
+ /HGN6LNSNthCAVKfhRwpdfa6QmMXmDenfg1yczru44/dqnLpk7IRKXOHarZyWJNjTI1f
+ YPxzqdNvfcBPyEECMDMasU1fcym60m/jwRtFMns87xUW54UJ0hf+8cTIqmkyfMiv4MZX
+ il1pZyW1jrmQ+9+BcTkS8kNbgSONqL4iYDYBY2dCCKgIloZrMmLguZvEkcAt987pbIKH
+ C07jhaasY7d0E8EPTbnq8oUhzEIohaUZCbsflHK+AYmhnclcieWRHC5uDO9rvxtA6Nc/
+ nr9A==
+X-Gm-Message-State: AOJu0YwuDGZqJKPNt7Xgk1Xz4bKKVpuEpv3Jzt5cH433fcUohXRebaxR
+ oRCG0kRF6f8odBptwRD2QNa51t5w7IBocSpy5bwoqhA/LBamGsppc6lgC9ZOHaU=
+X-Google-Smtp-Source: AGHT+IFMzEJnU8k7tPivK/ZHrbxoGbg2RttftXQbdxMboqBdH8488KOW414mOaVfwvx/B2ibfemAhw==
+X-Received: by 2002:ac2:4555:0:b0:510:16f3:8087 with SMTP id
+ j21-20020ac24555000000b0051016f38087mr583321lfm.32.1706265849153; 
+ Fri, 26 Jan 2024 02:44:09 -0800 (PST)
 Received: from [192.168.69.100] ([176.176.142.39])
  by smtp.gmail.com with ESMTPSA id
- s13-20020a05600c384d00b0040e4a7a7ca3sm1454671wmr.43.2024.01.26.02.38.46
+ x20-20020ac25dd4000000b0051023513d8bsm140051lfq.258.2024.01.26.02.44.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 02:38:48 -0800 (PST)
-Message-ID: <1128019c-adca-4cd4-aa73-937001ad990a@linaro.org>
-Date: Fri, 26 Jan 2024 11:38:45 +0100
+ Fri, 26 Jan 2024 02:44:08 -0800 (PST)
+Message-ID: <17455043-25cf-4978-afdd-147e689a1abd@linaro.org>
+Date: Fri, 26 Jan 2024 11:44:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] scripts/coccinelle: Add cpu_env.cocci_template script
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-References: <20240125165648.49898-1-philmd@linaro.org>
- <20240125165648.49898-2-philmd@linaro.org>
+Subject: Re: [PATCH 1/3] target/arm: Move v7m-related code from cpu32.c into a
+ separate file
 Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+References: <20240126084001.879548-1-thuth@redhat.com>
+ <20240126084001.879548-2-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240125165648.49898-2-philmd@linaro.org>
+In-Reply-To: <20240126084001.879548-2-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,96 +95,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/1/24 17:56, Philippe Mathieu-Daudé wrote:
-> Add a Coccinelle script to convert the following slow path
-> (due to the QOM cast macro):
+Hi Thomas,
+
+On 26/1/24 09:39, Thomas Huth wrote:
+> Move the code to a separate file so that we do not have to compile
+> it anymore if CONFIG_ARM_V7M is not set.
 > 
->    &ARCH_CPU(..)->env
-> 
-> to the following fast path:
-> 
->    cpu_env(..)
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   MAINTAINERS                               |  1 +
->   scripts/coccinelle/cpu_env.cocci_template | 60 +++++++++++++++++++++++
->   2 files changed, 61 insertions(+)
->   create mode 100644 scripts/coccinelle/cpu_env.cocci_template
-
-
-> diff --git a/scripts/coccinelle/cpu_env.cocci_template b/scripts/coccinelle/cpu_env.cocci_template
+>   target/arm/tcg/cpu-v7m.c   | 292 +++++++++++++++++++++++++++++++++++++
+>   target/arm/tcg/cpu32.c     | 261 ---------------------------------
+>   target/arm/tcg/meson.build |   4 +
+>   3 files changed, 296 insertions(+), 261 deletions(-)
+>   create mode 100644 target/arm/tcg/cpu-v7m.c
+> 
+> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
 > new file mode 100644
-> index 0000000000..53aa3a1fea
+> index 0000000000..d61873ab6d
 > --- /dev/null
-> +++ b/scripts/coccinelle/cpu_env.cocci_template
-> @@ -0,0 +1,60 @@
+> +++ b/target/arm/tcg/cpu-v7m.c
+> @@ -0,0 +1,292 @@
 > +/*
-> +
-> + Convert &ARCH_CPU(..)->env to use cpu_env(..).
-> +
-> + Rationale: ARCH_CPU() might be slow, being a QOM cast macro.
-> +            cpu_env() is its fast equivalent.
-> +
-> + SPDX-License-Identifier: GPL-2.0-or-later
-> + SPDX-FileCopyrightText: Linaro Ltd 2024
-> + SPDX-FileContributor: Philippe Mathieu-Daudé
-> +
-> + Usage as of v8.2.0:
-> +
-> + $ for targetdir in target/*; do test -d $targetdir || continue; \
-> +       export target=${targetdir:7}; \
-> +       sed \
-> +           -e "s/__CPUArchState__/$( \
-> +               git grep -h --no-line-number '@env: #CPU.*State' \
-> +                   target/$target/cpu.h \
-> +               | sed -n -e 's/.*\(CPU.*State\).\?/\1/p')/g" \
-> +           -e "s/__ARCHCPU__/$( \
-> +               git grep -h --no-line-number OBJECT_DECLARE_CPU_TYPE.*CPU \
-> +                   target/$target/cpu-qom.h \
-> +               | sed -n -e 's/.*(\(.*\), .*, .*)/\1/p')/g" \
-> +           -e "s/__ARCH_CPU__/$( \
-> +               git grep -h --no-line-number OBJECT_DECLARE_CPU_TYPE.*CPU \
-> +                   target/$target/cpu-qom.h \
-> +               | sed -n -e 's/.*(.*, .*, \(.*\))/\1/p')/g" \
-> +       < scripts/coccinelle/cpu_env.cocci_template \
-> +       > $TMPDIR/cpu_env_$target.cocci; \
-> +       for dir in hw target/$target; do \
-> +           spatch --macro-file scripts/cocci-macro-file.h \
-> +                  --sp-file $TMPDIR/cpu_env_$target.cocci \
-> +                  --keep-comments \
-> +                  --dir $dir \
-> +                  --in-place; \
-> +       done; \
-> +   done
-> +
-> +*/
-> +
-> +@ CPUState_arg_used @
-> +CPUState *cs;
-> +identifier cpu;
-> +identifier env;
-> +@@
-> +-   __ARCHCPU__ *cpu = __ARCH_CPU__(cs);
+> + * QEMU ARM V7 TCG-only CPUs.
 
-Here we remove ARCH_CPU(), ...
+s/V7/v7M/
 
-> +-   __CPUArchState__ *env = &cpu->env;
-> ++   __CPUArchState__ *env = cpu_env(cs);
-> +    ... when != cpu
+> + *
+> + * Copyright (c) 2012 SUSE LINUX Products GmbH
+> + *
+> + * This code is licensed under the GNU GPL v2 or later.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +@ depends on never CPUState_arg_used @
-> +identifier obj;
-> +identifier cpu;
-> +identifier env;
-> +@@
-> +-   __ARCHCPU__ *cpu = __ARCH_CPU__(obj);
-> +-   __CPUArchState__ *env = &cpu->env;
-> ++   __CPUArchState__ *env = cpu_env(CPU(obj));
+> +#include "qemu/osdep.h"
+> +#include "cpu.h"
+> +#include "hw/core/tcg-cpu-ops.h"
+> +#include "internals.h"
+> +#include "hw/intc/armv7m_nvic.h"
+> +
+> +/* CPU models. These are not needed for the AArch64 linux-user build. */
+> +#if !defined(CONFIG_USER_ONLY) || !defined(TARGET_AARCH64)
 
-... but here we just change it by a CPU() QOM call.
-So this 2nd change is just style cleanup.
+Could we do that in meson instead?
 
-> +    ... when != cpu
+> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+> index 6fca38f2cc..8c7f6b43f3 100644
+> --- a/target/arm/tcg/meson.build
+> +++ b/target/arm/tcg/meson.build
+> @@ -52,6 +52,10 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+>     'sve_helper.c',
+>   ))
+>   
+> +arm_ss.add(when: 'CONFIG_ARM_V7M', if_true: files(
+
+-> arm_system_ss
+
+> +  'cpu-v7m.c'
+> +))
 
 
