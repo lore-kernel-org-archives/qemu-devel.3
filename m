@@ -4,72 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE23C47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 08:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD7FC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 08:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTHPp-00063A-RC; Fri, 26 Jan 2024 03:18:23 -0500
+	id 1rTHcX-0002YE-Di; Fri, 26 Jan 2024 03:31:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rTHPi-00062C-C5; Fri, 26 Jan 2024 03:18:14 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTHcU-0002XZ-NP; Fri, 26 Jan 2024 03:31:26 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rTHPf-0002bi-Cn; Fri, 26 Jan 2024 03:18:13 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6352647710;
- Fri, 26 Jan 2024 11:18:55 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 17E256BD9B;
- Fri, 26 Jan 2024 11:18:09 +0300 (MSK)
-Message-ID: <287c0f15-e191-4e38-a76f-fcdbecf8df05@tls.msk.ru>
-Date: Fri, 26 Jan 2024 11:18:09 +0300
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTHcS-00072c-HQ; Fri, 26 Jan 2024 03:31:26 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLrWW2RWPz4x5r;
+ Fri, 26 Jan 2024 19:31:19 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLrWQ68Rvz4wx5;
+ Fri, 26 Jan 2024 19:31:14 +1100 (AEDT)
+Message-ID: <cc3daf3c-b6e0-42a9-9397-7171d1f63648@kaod.org>
+Date: Fri, 26 Jan 2024 09:31:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] mailmap: Fix Stefan Weil email
+Subject: Re: [PATCH v11 01/11] hw/fsi: Introduce IBM's Local bus
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Stefan Weil <sw@weilnetz.de>, qemu-trivial@nongnu.org
-References: <20240123082104.36208-1-philmd@linaro.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240123082104.36208-1-philmd@linaro.org>
+To: Ninad Palsule <ninad@linux.ibm.com>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
+Cc: qemu-arm@nongnu.org, Andrew Jeffery <andrew@aj.id.au>
+References: <20240126034026.31068-1-ninad@linux.ibm.com>
+ <20240126034026.31068-2-ninad@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240126034026.31068-2-ninad@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,16 +68,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-23.01.2024 11:21, Philippe Mathieu-Daudé:
-> Commit 5204b499a6 ("mailmap: Fix Stefan Weil author email")
-> corrected authorship for patch received at qemu-devel@nongnu.org,
-> correct now for patch received at qemu-trivial@nongnu.org.
+On 1/26/24 04:40, Ninad Palsule wrote:
+> This is a part of patchset where IBM's Flexible Service Interface is
+> introduced.
 > 
-> Update other authorship email for Stefan's commits.
+> The LBUS is modelled to maintain mapped memory for the devices. The
+> memory is mapped after CFAM config, peek table and FSI slave registers.
+> 
+> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> [ clg: - removed lbus_add_device() bc unused
+>         - removed lbus_create_device() bc used only once
+>         - removed "address" property
+>         - updated meson.build to build fsi dir
+>         - included an empty hw/fsi/trace-events ]
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
 
-Applied to trivial-patches, thanks!
 
-mailmap becomes a spelling fixer/filter, sort of :)
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-/mjt
+Thanks,
+
+C.
+
+
+> ---
+> v9:
+>    - Changed LBUS memory region to 1MB.
+> v11:
+>    - Split lbus and scratchpad into separate patches.
+>    - Added fsi_ prefix for all functions in lbus.
+>    - Removed FSI_LBUS* typedefs.
+>    - Replaced for loop with memset.
+> ---
+>   meson.build           |  1 +
+>   hw/fsi/trace.h        |  1 +
+>   include/hw/fsi/lbus.h | 32 ++++++++++++++++++++++++++++++++
+>   hw/fsi/lbus.c         | 43 +++++++++++++++++++++++++++++++++++++++++++
+>   hw/Kconfig            |  1 +
+>   hw/fsi/Kconfig        |  2 ++
+>   hw/fsi/meson.build    |  1 +
+>   hw/fsi/trace-events   |  0
+>   hw/meson.build        |  1 +
+>   9 files changed, 82 insertions(+)
+>   create mode 100644 hw/fsi/trace.h
+>   create mode 100644 include/hw/fsi/lbus.h
+>   create mode 100644 hw/fsi/lbus.c
+>   create mode 100644 hw/fsi/Kconfig
+>   create mode 100644 hw/fsi/meson.build
+>   create mode 100644 hw/fsi/trace-events
+> 
+> diff --git a/meson.build b/meson.build
+> index d0329966f1..7d926c6e82 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3290,6 +3290,7 @@ if have_system
+>       'hw/char',
+>       'hw/display',
+>       'hw/dma',
+> +    'hw/fsi',
+>       'hw/hyperv',
+>       'hw/i2c',
+>       'hw/i386',
+> diff --git a/hw/fsi/trace.h b/hw/fsi/trace.h
+> new file mode 100644
+> index 0000000000..ee67c7fb04
+> --- /dev/null
+> +++ b/hw/fsi/trace.h
+> @@ -0,0 +1 @@
+> +#include "trace/trace-hw_fsi.h"
+> diff --git a/include/hw/fsi/lbus.h b/include/hw/fsi/lbus.h
+> new file mode 100644
+> index 0000000000..e8a22e22a8
+> --- /dev/null
+> +++ b/include/hw/fsi/lbus.h
+> @@ -0,0 +1,32 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * Copyright (C) 2024 IBM Corp.
+> + *
+> + * IBM Local bus and connected device structures.
+> + */
+> +#ifndef FSI_LBUS_H
+> +#define FSI_LBUS_H
+> +
+> +#include "hw/qdev-core.h"
+> +#include "qemu/units.h"
+> +#include "exec/memory.h"
+> +
+> +#define TYPE_FSI_LBUS_DEVICE "fsi.lbus.device"
+> +OBJECT_DECLARE_SIMPLE_TYPE(FSILBusDevice, FSI_LBUS_DEVICE)
+> +
+> +typedef struct FSILBusDevice {
+> +    DeviceState parent;
+> +
+> +    MemoryRegion iomem;
+> +} FSILBusDevice;
+> +
+> +#define TYPE_FSI_LBUS "fsi.lbus"
+> +OBJECT_DECLARE_SIMPLE_TYPE(FSILBus, FSI_LBUS)
+> +
+> +typedef struct FSILBus {
+> +    BusState bus;
+> +
+> +    MemoryRegion mr;
+> +} FSILBus;
+> +
+> +#endif /* FSI_LBUS_H */
+> diff --git a/hw/fsi/lbus.c b/hw/fsi/lbus.c
+> new file mode 100644
+> index 0000000000..44d2319087
+> --- /dev/null
+> +++ b/hw/fsi/lbus.c
+> @@ -0,0 +1,43 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * Copyright (C) 2024 IBM Corp.
+> + *
+> + * IBM Local bus where FSI slaves are connected
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/fsi/lbus.h"
+> +
+> +#include "hw/qdev-properties.h"
+> +
+> +#include "trace.h"
+> +
+> +static void fsi_lbus_init(Object *o)
+> +{
+> +    FSILBus *lbus = FSI_LBUS(o);
+> +
+> +    memory_region_init(&lbus->mr, OBJECT(lbus), TYPE_FSI_LBUS, 1 * MiB);
+> +}
+> +
+> +static const TypeInfo fsi_lbus_info = {
+> +    .name = TYPE_FSI_LBUS,
+> +    .parent = TYPE_BUS,
+> +    .instance_init = fsi_lbus_init,
+> +    .instance_size = sizeof(FSILBus),
+> +};
+> +
+> +static const TypeInfo fsi_lbus_device_type_info = {
+> +    .name = TYPE_FSI_LBUS_DEVICE,
+> +    .parent = TYPE_DEVICE,
+> +    .instance_size = sizeof(FSILBusDevice),
+> +    .abstract = true,
+> +};
+> +
+> +static void fsi_lbus_register_types(void)
+> +{
+> +    type_register_static(&fsi_lbus_info);
+> +    type_register_static(&fsi_lbus_device_type_info);
+> +}
+> +
+> +type_init(fsi_lbus_register_types);
+> diff --git a/hw/Kconfig b/hw/Kconfig
+> index 9ca7b38c31..2c00936c28 100644
+> --- a/hw/Kconfig
+> +++ b/hw/Kconfig
+> @@ -9,6 +9,7 @@ source core/Kconfig
+>   source cxl/Kconfig
+>   source display/Kconfig
+>   source dma/Kconfig
+> +source fsi/Kconfig
+>   source gpio/Kconfig
+>   source hyperv/Kconfig
+>   source i2c/Kconfig
+> diff --git a/hw/fsi/Kconfig b/hw/fsi/Kconfig
+> new file mode 100644
+> index 0000000000..9c34a418d7
+> --- /dev/null
+> +++ b/hw/fsi/Kconfig
+> @@ -0,0 +1,2 @@
+> +config FSI
+> +    bool
+> diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
+> new file mode 100644
+> index 0000000000..93ba19dd04
+> --- /dev/null
+> +++ b/hw/fsi/meson.build
+> @@ -0,0 +1 @@
+> +system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c'))
+> diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/hw/meson.build b/hw/meson.build
+> index f01fac4617..463d702683 100644
+> --- a/hw/meson.build
+> +++ b/hw/meson.build
+> @@ -44,6 +44,7 @@ subdir('virtio')
+>   subdir('watchdog')
+>   subdir('xen')
+>   subdir('xenpv')
+> +subdir('fsi')
+>   
+>   subdir('alpha')
+>   subdir('arm')
+
 
