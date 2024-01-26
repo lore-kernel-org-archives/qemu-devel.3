@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9014C47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD606C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQ6i-0004S5-Ar; Fri, 26 Jan 2024 12:35:12 -0500
+	id 1rTQ60-00022H-K3; Fri, 26 Jan 2024 12:34:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ5R-00009d-0b; Fri, 26 Jan 2024 12:33:55 -0500
+ id 1rTQ5S-0000BX-DE; Fri, 26 Jan 2024 12:33:55 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ5O-0001jX-FH; Fri, 26 Jan 2024 12:33:52 -0500
+ id 1rTQ5O-0001jW-Hx; Fri, 26 Jan 2024 12:33:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=EN2ajdy4otemmrb2xvygJan0iJiZe9osoit8g3Fryzw=; b=aw7QMl2FOdGpX2URBLKLY9O25Z
- 3fyDarOFSCu7FdfGeuUOAHBmAb2tnUjAu1bvZwlYPeOiuB9dCADtk/Zr+m27jqS6HL6OjZw8gQQZP
- r4sjI/LTm1A/7fFc9NzofOb06hUw+QpB1t8YvG5GoXnMSYESbIXvf/ywjcywXVL7vGlmeUw1ihIWl
- uwq8gSP2SBn/pRnZhgiUyWWtV4e7Zee5sN55JOIfrWIqmxXqxOhO8zKI1DQT0mvjWte9Wp3eRFViS
- E0/CngId3tP/sMw1tS4vVxhL56woaV745KBmd5NWmYRxdEL3aPBZ+NX3Nz2IxGGsComhCp/wkH14P
- 6cZc8A+w==;
+ bh=IXEZX2HEBbMBwUhayue76+vBPs8XLNbiy1LneqBnSSQ=; b=L1IC8mi7FZhd2xkOxGFrYFeg8p
+ WcUxvd8Yz3sWSBxucd5MC2EQ3FIO6fL8OU/9NSnVMEybFgTeaMFjqd8sqZoiZEGmoPjSZLOMfQu0V
+ SHcceRwOGTSZ7pUIcP2LQjJjMWiO6ToDAIvqKQEOJRDXQJc8tZq9+uPDOElIVaxqs06OmiCZGdtHW
+ q6co0x6x6QDAE8FZea34ld2K+eJZgcBAjVzZeBbPtdbecn01YrcGpX9/0TlQs5n5PPEBTd4BMc6MZ
+ TFmR2CVGn1qarOl/+7+Az7QSTEFPqkBjq+Z0UZh35NzvyMyiToZBvfTyPreHo1CkH0CSQjWybDBmq
+ 48mFntgQ==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTQ4B-000000069Ut-2zDu; Fri, 26 Jan 2024 17:32:36 +0000
+ id 1rTQ4B-000000069Uu-2vfo; Fri, 26 Jan 2024 17:32:36 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rTQ4A-00000001enc-0lfJ;
+ Hat Linux)) id 1rTQ4A-00000001eo6-21Fg;
  Fri, 26 Jan 2024 17:32:34 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
@@ -84,10 +84,11 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PATCH v4 36/47] hw/mips/jazz: use qemu_find_nic_info()
-Date: Fri, 26 Jan 2024 17:25:13 +0000
-Message-ID: <20240126173228.394202-37-dwmw2@infradead.org>
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v4 40/47] hw/riscv: use qemu_configure_nic_device()
+Date: Fri, 26 Jan 2024 17:25:17 +0000
+Message-ID: <20240126173228.394202-41-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126173228.394202-1-dwmw2@infradead.org>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
@@ -123,50 +124,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: David Woodhouse <dwmw@amazon.co.uk>
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/mips/jazz.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ hw/riscv/microchip_pfsoc.c | 14 ++------------
+ hw/riscv/sifive_u.c        |  7 +------
+ 2 files changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index 0d2348aa5a..5bf3e328db 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -119,15 +119,19 @@ static const MemoryRegionOps dma_dummy_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index b775aa8946..7725dfbde5 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -202,7 +202,6 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+     MemoryRegion *envm_data = g_new(MemoryRegion, 1);
+     MemoryRegion *qspi_xip_mem = g_new(MemoryRegion, 1);
+     char *plic_hart_config;
+-    NICInfo *nd;
+     int i;
  
--static void mips_jazz_init_net(NICInfo *nd, IOMMUMemoryRegion *rc4030_dma_mr,
-+static void mips_jazz_init_net(IOMMUMemoryRegion *rc4030_dma_mr,
-                                DeviceState *rc4030, MemoryRegion *dp8393x_prom)
- {
-     DeviceState *dev;
-     SysBusDevice *sysbus;
-     int checksum, i;
-     uint8_t *prom;
-+    NICInfo *nd;
+     sysbus_realize(SYS_BUS_DEVICE(&s->e_cpus), &error_abort);
+@@ -411,17 +410,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+         memmap[MICROCHIP_PFSOC_USB].size);
  
--    qemu_check_nic_model(nd, "dp83932");
-+    nd = qemu_find_nic_info("dp8393x", true, "dp82932");
-+    if (!nd) {
-+        return;
-+    }
- 
-     dev = qdev_new("dp8393x");
-     qdev_set_nic_properties(dev, nd);
-@@ -324,12 +328,7 @@ static void mips_jazz_init(MachineState *machine,
-     }
- 
-     /* Network controller */
--    if (nb_nics == 1) {
--        mips_jazz_init_net(&nd_table[0], rc4030_dma_mr, rc4030, dp8393x_prom);
--    } else if (nb_nics > 1) {
--        error_report("This machine only supports one NIC");
--        exit(1);
+     /* GEMs */
+-
+-    nd = &nd_table[0];
+-    if (nd->used) {
+-        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
+-        qdev_set_nic_properties(DEVICE(&s->gem0), nd);
 -    }
-+    mips_jazz_init_net(rc4030_dma_mr, rc4030, dp8393x_prom);
+-    nd = &nd_table[1];
+-    if (nd->used) {
+-        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
+-        qdev_set_nic_properties(DEVICE(&s->gem1), nd);
+-    }
++    qemu_configure_nic_device(DEVICE(&s->gem0), true, NULL);
++    qemu_configure_nic_device(DEVICE(&s->gem1), true, NULL);
  
-     /* SCSI adapter */
-     dev = qdev_new(TYPE_SYSBUS_ESP);
+     object_property_set_int(OBJECT(&s->gem0), "revision", GEM_REVISION, errp);
+     object_property_set_int(OBJECT(&s->gem0), "phy-addr", 8, errp);
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index ec76dce6c9..5207ec1fa5 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -789,7 +789,6 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+     MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
+     char *plic_hart_config;
+     int i, j;
+-    NICInfo *nd = &nd_table[0];
+ 
+     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
+     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
+@@ -893,11 +892,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+     }
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->otp), 0, memmap[SIFIVE_U_DEV_OTP].base);
+ 
+-    /* FIXME use qdev NIC properties instead of nd_table[] */
+-    if (nd->used) {
+-        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
+-        qdev_set_nic_properties(DEVICE(&s->gem), nd);
+-    }
++    qemu_configure_nic_device(DEVICE(&s->gem), true, NULL);
+     object_property_set_int(OBJECT(&s->gem), "revision", GEM_REVISION,
+                             &error_abort);
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gem), errp)) {
 -- 
 2.43.0
 
