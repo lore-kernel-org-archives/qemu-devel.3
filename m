@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD27DC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 03:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D348C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 03:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTD5G-0004br-2M; Thu, 25 Jan 2024 22:40:50 -0500
+	id 1rTD5J-0004iL-Ul; Thu, 25 Jan 2024 22:40:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTD5E-0004ad-JP; Thu, 25 Jan 2024 22:40:48 -0500
+ id 1rTD5I-0004gp-Ac; Thu, 25 Jan 2024 22:40:52 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTD5A-0003NX-UM; Thu, 25 Jan 2024 22:40:48 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1rTD5G-0003Ow-Ac; Thu, 25 Jan 2024 22:40:52 -0500
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q3CIcO031449; Fri, 26 Jan 2024 03:40:34 GMT
+ 40Q2vjDU029460; Fri, 26 Jan 2024 03:40:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : in-reply-to : references : content-transfer-encoding
- : mime-version; s=pp1; bh=WNZ2O7bwuxdV6JBK8SqNrOXHk/HSEFNhSTfWB495W4I=;
- b=cTPvmG7kHQutrnaDKsDiuXPbLUk3XkJYA7/oNnNUaN81miw8PCcrU4CeMRVTAJ4Uq2cz
- DxBddmzzKZfi+cQ/kjIbvB64QZesEbAPFa9tknXzdZNda2LTjtOvmfUBwccfTaX3xnV/
- nMuiVOxzsfgRgbDwgTL5EzDPIAgLnVxr5feX8Mcc03+6By2SFWMbNTm7Zvr2OHp0y+kz
- dM0QzNQgn64qqmbom5/ar7bOTDAQqwbvD1uLCnSX7s5myznCNF81tE6YrPFRdvj9o7nW
- hpZv1eBtHCkNgjy4xMx9u/u81wETaeQ87ZpbokCzEXTuAhu14orFevb8ZoHgLU2pQmUS yA== 
+ : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=a2wggvB55ioieQw9s+/RcZCAlxFYQ0oPy11QRdH48+8=;
+ b=h8wGbCT5QOj0zrDC57f6q8M38gzwWgi846ruJw06H/ERU17fmx+aJ1zk5WbTf1pBis41
+ 4QDl6azbPqhTathND+YYNEqi7Dhsgt20QCVUPFgWTUovN7e9Z8qYGOh+020PPJoovLAe
+ PJCBYuMO4Szi1iNDWq822uVKiyB3ZOikHcLGKE+s+7MO1tTHxaFIYiH5UZY/VYXxSLG9
+ H0aDd/T1mTiV8Cv1lUyH7GOr+1QtXNfkpMLE10Y0uye03WCwHeOM82P3LWaWw7GdaCxs
+ XC9lKAkfVj2+O4vguPyandI/uW3ieskCaj4DvcNsLBYJk/iWKM/970saWrjLLW+vz3xR 4w== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv4mdrf8u-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv4dm8ysu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 03:40:34 +0000
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40Q3cEBY004676;
- Fri, 26 Jan 2024 03:40:33 GMT
+ Fri, 26 Jan 2024 03:40:33 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40Q3cC1Q004260;
+ Fri, 26 Jan 2024 03:40:32 GMT
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv4mdrf8j-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv4dm8ysj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 03:40:33 +0000
+ Fri, 26 Jan 2024 03:40:32 +0000
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
  by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q2dKdV025253; Fri, 26 Jan 2024 03:40:33 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrtqkr4pa-1
+ 40Q2ZIeE025268; Fri, 26 Jan 2024 03:40:31 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrtqkr4p0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 03:40:33 +0000
+ Fri, 26 Jan 2024 03:40:31 +0000
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40Q3eWjG64160166
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40Q3eUAt21627626
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jan 2024 03:40:32 GMT
+ Fri, 26 Jan 2024 03:40:30 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8695A58043;
- Fri, 26 Jan 2024 03:40:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 79BCB58043;
+ Fri, 26 Jan 2024 03:40:30 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4A11F58055;
- Fri, 26 Jan 2024 03:40:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 39DCB5805E;
+ Fri, 26 Jan 2024 03:40:30 +0000 (GMT)
 Received: from gfwa153.aus.stglabs.ibm.com (unknown [9.3.84.127])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Jan 2024 03:40:32 +0000 (GMT)
+ Fri, 26 Jan 2024 03:40:30 +0000 (GMT)
 From: Ninad Palsule <ninad@linux.ibm.com>
 To: qemu-devel@nongnu.org, clg@kaod.org, peter.maydell@linaro.org,
  andrew@codeconstruct.com.au, joel@jms.id.au, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
  philmd@linaro.org, lvivier@redhat.com
-Cc: Ninad Palsule <ninad@linux.ibm.com>, qemu-arm@nongnu.org
-Subject: [PATCH v11 10/11] hw/fsi: Added FSI documentation
-Date: Thu, 25 Jan 2024 21:40:25 -0600
-Message-Id: <20240126034026.31068-11-ninad@linux.ibm.com>
+Cc: Ninad Palsule <ninad@linux.ibm.com>, qemu-arm@nongnu.org,
+ Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH v11 04/11] hw/fsi: Introduce IBM's fsi-slave model
+Date: Thu, 25 Jan 2024 21:40:19 -0600
+Message-Id: <20240126034026.31068-5-ninad@linux.ibm.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240126034026.31068-1-ninad@linux.ibm.com>
 References: <20240126034026.31068-1-ninad@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: SHlpu5KLj9EgvglQQpkf3M4Q5HkbLxKI
-X-Proofpoint-GUID: Q5wVB3ha-3N9OTxC43Ko0yB9WpLO_xdA
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: pDNLoGFVTBXr22HLibtw4_QGuzewalLm
+X-Proofpoint-GUID: 4rh-MKs5CA4-ZEdOJ5D7gsf3BX7Y-x1M
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 mlxscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 priorityscore=1501 phishscore=0
- adultscore=0 malwarescore=0 clxscore=1015 spamscore=0 mlxlogscore=658
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2401260024
+ bulkscore=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ adultscore=0 spamscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0
+ clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2401260024
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=ninad@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -115,174 +117,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Documentation for IBM FSI model.
+This is a part of patchset where IBM's Flexible Service Interface is
+introduced.
 
+The FSI slave: The slave is the terminal point of the FSI bus for
+FSI symbols addressed to it. Slaves can be cascaded off of one
+another. The slave's configuration registers appear in address space
+of the CFAM to which it is attached.
+
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
 ---
-v11:
-  - Removed Cedri's signoff.
----
- docs/specs/fsi.rst   | 138 +++++++++++++++++++++++++++++++++++++++++++
- docs/specs/index.rst |   1 +
- 2 files changed, 139 insertions(+)
- create mode 100644 docs/specs/fsi.rst
+ include/hw/fsi/fsi.h | 19 ++++++++++
+ hw/fsi/fsi.c         | 87 +++++++++++++++++++++++++++++++++++++++++++-
+ hw/fsi/trace-events  |  2 +
+ 3 files changed, 106 insertions(+), 2 deletions(-)
 
-diff --git a/docs/specs/fsi.rst b/docs/specs/fsi.rst
-new file mode 100644
-index 0000000000..05a6b6347a
---- /dev/null
-+++ b/docs/specs/fsi.rst
-@@ -0,0 +1,138 @@
-+======================================
-+IBM's Flexible Service Interface (FSI)
-+======================================
+diff --git a/include/hw/fsi/fsi.h b/include/hw/fsi/fsi.h
+index 50e8f5c888..6e11747dd5 100644
+--- a/include/hw/fsi/fsi.h
++++ b/include/hw/fsi/fsi.h
+@@ -7,7 +7,14 @@
+ #ifndef FSI_FSI_H
+ #define FSI_FSI_H
+ 
++#include "exec/memory.h"
+ #include "hw/qdev-core.h"
++#include "hw/fsi/lbus.h"
++#include "qemu/bitops.h"
 +
-+The QEMU FSI emulation implements hardware interfaces between ASPEED SOC, FSI
-+master/slave and the end engine.
++/* Bitwise operations at the word level. */
++#define BE_BIT(x)           BIT(31 - (x))
++#define BE_GENMASK(hb, lb)  MAKE_64BIT_MASK((lb), ((hb) - (lb) + 1))
+ 
+ #define TYPE_FSI_BUS "fsi.bus"
+ OBJECT_DECLARE_SIMPLE_TYPE(FSIBus, FSI_BUS)
+@@ -16,4 +23,16 @@ typedef struct FSIBus {
+     BusState bus;
+ } FSIBus;
+ 
++#define TYPE_FSI_SLAVE "fsi.slave"
++OBJECT_DECLARE_SIMPLE_TYPE(FSISlaveState, FSI_SLAVE)
 +
-+FSI is a point-to-point two wire interface which is capable of supporting
-+distances of up to 4 meters. FSI interfaces have been used successfully for
-+many years in IBM servers to attach IBM Flexible Support Processors(FSP) to
-+CPUs and IBM ASICs.
++#define FSI_SLAVE_CONTROL_NR_REGS ((0x40 >> 2) + 1)
 +
-+FSI allows a service processor access to the internal buses of a host POWER
-+processor to perform configuration or debugging. FSI has long existed in POWER
-+processes and so comes with some baggage, including how it has been integrated
-+into the ASPEED SoC.
++typedef struct FSISlaveState {
++    DeviceState parent;
 +
-+Working backwards from the POWER processor, the fundamental pieces of interest
-+for the implementation are: (see the `FSI specification`_ for more details)
++    MemoryRegion iomem;
++    uint32_t regs[FSI_SLAVE_CONTROL_NR_REGS];
++} FSISlaveState;
 +
-+1. The Common FRU Access Macro (CFAM), an address space containing various
-+   "engines" that drive accesses on buses internal and external to the POWER
-+   chip. Examples include the SBEFIFO and I2C masters. The engines hang off of
-+   an internal Local Bus (LBUS) which is described by the CFAM configuration
-+   block.
+ #endif /* FSI_FSI_H */
+diff --git a/hw/fsi/fsi.c b/hw/fsi/fsi.c
+index 60cb03f7a2..528323d9cf 100644
+--- a/hw/fsi/fsi.c
++++ b/hw/fsi/fsi.c
+@@ -5,18 +5,101 @@
+  * IBM Flexible Service Interface
+  */
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/log.h"
++#include "trace.h"
+ 
+ #include "hw/fsi/fsi.h"
+ 
++#define TO_REG(x)                               ((x) >> 2)
 +
-+2. The FSI slave: The slave is the terminal point of the FSI bus for FSI
-+   symbols addressed to it. Slaves can be cascaded off of one another. The
-+   slave's configuration registers appear in address space of the CFAM to
-+   which it is attached.
+ static const TypeInfo fsi_bus_info = {
+     .name = TYPE_FSI_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(FSIBus),
+ };
+ 
+-static void fsi_bus_register_types(void)
++static uint64_t fsi_slave_read(void *opaque, hwaddr addr, unsigned size)
++{
++    FSISlaveState *s = FSI_SLAVE(opaque);
++    int reg = TO_REG(addr);
 +
-+3. The FSI master: A controller in the platform service processor (e.g. BMC)
-+   driving CFAM engine accesses into the POWER chip. At the hardware level
-+   FSI is a bit-based protocol supporting synchronous and DMA-driven accesses
-+   of engines in a CFAM.
++    trace_fsi_slave_read(addr, size);
 +
-+4. The On-Chip Peripheral Bus (OPB): A low-speed bus typically found in POWER
-+   processors. This now makes an appearance in the ASPEED SoC due to tight
-+   integration of the FSI master IP with the OPB, mainly the existence of an
-+   MMIO-mapping of the CFAM address straight onto a sub-region of the OPB
-+   address space.
++    if (reg >= FSI_SLAVE_CONTROL_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out of bounds read: 0x%"HWADDR_PRIx" for %u\n",
++                      __func__, addr, size);
++        return 0;
++    }
 +
-+5. An APB-to-OPB bridge enabling access to the OPB from the ARM core in the
-+   AST2600. Hardware limitations prevent the OPB from being directly mapped
-+   into APB, so all accesses are indirect through the bridge.
++    return s->regs[reg];
++}
 +
-+The LBUS is modelled to maintain the qdev bus hierarchy and to take advantages
-+of the object model to automatically generate the CFAM configuration block.
-+The configuration block presents engines in the order they are attached to the
-+CFAM's LBUS. Engine implementations should subclass the LBusDevice and set the
-+'config' member of LBusDeviceClass to match the engine's type.
++static void fsi_slave_write(void *opaque, hwaddr addr, uint64_t data,
++                                 unsigned size)
++{
++    FSISlaveState *s = FSI_SLAVE(opaque);
++    int reg = TO_REG(addr);
 +
-+CFAM designs offer a lot of flexibility, for instance it is possible for a
-+CFAM to be simultaneously driven from multiple FSI links. The modeling is not
-+so complete; it's assumed that each CFAM is attached to a single FSI slave (as
-+a consequence the CFAM subclasses the FSI slave).
++    trace_fsi_slave_write(addr, size, data);
 +
-+As for FSI, its symbols and wire-protocol are not modelled at all. This is not
-+necessary to get FSI off the ground thanks to the mapping of the CFAM address
-+space onto the OPB address space - the models follow this directly and map the
-+CFAM memory region into the OPB's memory region.
++    if (reg >= FSI_SLAVE_CONTROL_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out of bounds write: 0x%"HWADDR_PRIx" for %u\n",
++                      __func__, addr, size);
++        return;
++    }
 +
-+QEMU files related to FSI interface:
-+ - ``hw/fsi/aspeed-apb2opb.c``
-+ - ``include/hw/fsi/aspeed-apb2opb.h``
-+ - ``hw/fsi/opb.c``
-+ - ``include/hw/fsi/opb.h``
-+ - ``hw/fsi/fsi.c``
-+ - ``include/hw/fsi/fsi.h``
-+ - ``hw/fsi/fsi-master.c``
-+ - ``include/hw/fsi/fsi-master.h``
-+ - ``hw/fsi/fsi-slave.c``
-+ - ``include/hw/fsi/fsi-slave.h``
-+ - ``hw/fsi/cfam.c``
-+ - ``include/hw/fsi/cfam.h``
-+ - ``hw/fsi/engine-scratchpad.c``
-+ - ``include/hw/fsi/engine-scratchpad.h``
-+ - ``include/hw/fsi/lbus.h``
++    s->regs[reg] = data;
++}
 +
-+The following commands start the rainier machine with built-in FSI model.
-+There are no model specific arguments.
++static const struct MemoryRegionOps fsi_slave_ops = {
++    .read = fsi_slave_read,
++    .write = fsi_slave_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
 +
-+.. code-block:: console
++static void fsi_slave_reset(DeviceState *dev)
++{
++    FSISlaveState *s = FSI_SLAVE(dev);
++    int i;
 +
-+  qemu-system-arm -M rainier-bmc -nographic \
-+  -kernel fitImage-linux.bin \
-+  -dtb aspeed-bmc-ibm-rainier.dtb \
-+  -initrd obmc-phosphor-initramfs.rootfs.cpio.xz \
-+  -drive file=obmc-phosphor-image.rootfs.wic.qcow2,if=sd,index=2 \
-+  -append "rootwait console=ttyS4,115200n8 root=PARTLABEL=rofs-a"
++    /* Initialize registers */
++    for (i = 0; i < FSI_SLAVE_CONTROL_NR_REGS; i++) {
++        s->regs[i] = 0;
++    }
++}
 +
-+The implementation appears as following in the qemu device tree:
++static void fsi_slave_init(Object *o)
++{
++    FSISlaveState *s = FSI_SLAVE(o);
 +
-+.. code-block:: console
++    memory_region_init_io(&s->iomem, OBJECT(s), &fsi_slave_ops,
++                          s, TYPE_FSI_SLAVE, 0x400);
++}
 +
-+  (qemu) info qtree
-+  bus: main-system-bus
-+    type System
-+    ...
-+    dev: aspeed.apb2opb, id ""
-+      gpio-out "sysbus-irq" 1
-+      mmio 000000001e79b000/0000000000001000
-+      bus: opb.1
-+        type opb
-+        dev: fsi.master, id ""
-+          bus: fsi.bus.1
-+            type fsi.bus
-+            dev: cfam.config, id ""
-+            dev: cfam, id ""
-+              bus: lbus.1
-+                type lbus
-+                dev: scratchpad, id ""
-+                  address = 0 (0x0)
-+      bus: opb.0
-+        type opb
-+        dev: fsi.master, id ""
-+          bus: fsi.bus.0
-+            type fsi.bus
-+            dev: cfam.config, id ""
-+            dev: cfam, id ""
-+              bus: lbus.0
-+                type lbus
-+                dev: scratchpad, id ""
-+                  address = 0 (0x0)
++static void fsi_slave_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+pdbg is a simple application to allow debugging of the host POWER processors
-+from the BMC. (see the `pdbg source repository`_ for more details)
++    dc->bus_type = TYPE_FSI_BUS;
++    dc->desc = "FSI Slave";
++    dc->reset = fsi_slave_reset;
++}
 +
-+.. code-block:: console
++static const TypeInfo fsi_slave_info = {
++    .name = TYPE_FSI_SLAVE,
++    .parent = TYPE_DEVICE,
++    .instance_init = fsi_slave_init,
++    .instance_size = sizeof(FSISlaveState),
++    .class_init = fsi_slave_class_init,
++};
 +
-+  root@p10bmc:~# pdbg -a getcfam 0x0
-+  p0: 0x0 = 0xc0022d15
-+
-+.. _FSI specification:
-+   https://openpowerfoundation.org/specifications/fsi/
-+
-+.. _pdbg source repository:
-+   https://github.com/open-power/pdbg
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index b3f482b0aa..1484e3e760 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -24,6 +24,7 @@ guest hardware that is specific to QEMU.
-    acpi_erst
-    sev-guest-firmware
-    fw_cfg
-+   fsi
-    vmw_pvscsi-spec
-    edu
-    ivshmem-spec
++static void fsi_register_types(void)
+ {
+     type_register_static(&fsi_bus_info);
++    type_register_static(&fsi_slave_info);
+ }
+ 
+-type_init(fsi_bus_register_types);
++type_init(fsi_register_types);
+diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
+index c5753e2791..8f29adb7df 100644
+--- a/hw/fsi/trace-events
++++ b/hw/fsi/trace-events
+@@ -1,2 +1,4 @@
+ fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
+ fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
++fsi_slave_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
++fsi_slave_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
 -- 
 2.39.2
 
