@@ -4,52 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD083C47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 21:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F3DEC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTU7n-0003sC-VM; Fri, 26 Jan 2024 16:52:35 -0500
+	id 1rTUJF-0006uL-EH; Fri, 26 Jan 2024 17:04:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rTU7m-0003s4-Fg
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 16:52:34 -0500
-Received: from todd.t-8ch.de ([159.69.126.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rTU7j-00005r-Ej
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 16:52:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1706305945; bh=AFl7S6eapc/1WeaK73InImADkR4LS9FiIyob68oLHgE=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Gq0e+gSfDx4sD3KHEXTG51fw2qu+u/JNA6yvkMHNM7kNV9pUmM4ZzTXIlI9PKk+V8
- gNu6By16hITXKuR2ATS9nVJZt5fJqwH3knkTrMfHQhxmuls5pTiFSBfGsHiKsDl1tR
- U50BrKZ719BbgwjZhTcGKuoJLnpnZBcWHwOZ0KLI=
-Date: Fri, 26 Jan 2024 22:52:24 +0100
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: Re: [PATCH v4 4/4] hw/misc/pvpanic: add support for normal
- shutdowns
-Message-ID: <79dc2259-125b-4f46-a80f-ab13ed935cb7@t-8ch.de>
-References: <20240107-pvpanic-shutdown-v4-0-81500a7e4081@t-8ch.de>
- <20240107-pvpanic-shutdown-v4-4-81500a7e4081@t-8ch.de>
- <287bcc2b-3268-4622-a649-8ce6b7e4f8a5@oracle.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUJE-0006sr-9d
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:04:24 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUJA-0003Kh-7E
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:04:23 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-55c2c90c67dso588865a12.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:04:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706306656; x=1706911456; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fhPW+/fhD522LvSZgboHJx0z0AbZf2+RXOPHpa2tqdM=;
+ b=ZecPfz1VZW8W1c/ZP+25+UeG5ppVZTN18R9j4VrE81fb2ujT//Yaf2BcaFkw/fmMT3
+ syqAPOCDk6pOx6n6ScwSdjReuTr93/HIvlCXr9m3kPuM7FvqNUXnszRwr7Aa1DASj3BG
+ KxoV6HFBkKuJKm2Mf5ATuCXvhffhOxqBQU3SKIIGfMtLn8gVLW/WFQxRuyNpI1QNI4SO
+ SdyuPRSYESilq4Y+7S9Fo1VHw7Ny6eVsbfSk39kjvEVV7NywlivZTpK7rSH6tnUEHxQT
+ x5+SBg/X2nMYSwUbqiJ+8iL8zEKnvtToONh68FqrgWm0CY38Aau3rrNn21QAcvUTCCa3
+ /10Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706306656; x=1706911456;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fhPW+/fhD522LvSZgboHJx0z0AbZf2+RXOPHpa2tqdM=;
+ b=LFsWK5ZbXRI3ENlSfH8x+bKLiwZmOlYlCJq1UZo6wiPChB5E3u8RLrA2nJBGyKQ59l
+ E0gKOysQ/8W2ARxcgpHnokuZDpxsf0iCvJnzfYtqYgQcgol8f8X6z93CsFBmt1Se3KxC
+ TbHfefKFN7JQQfKPqMigkIdM/Jtpu3MV+pM/JAkPMTYoh6PMHMlXr5PT4E1gZabvWWkM
+ fYNlmawT4eanc3px9ZPzEKRKVVb2l7AMyotOidH7vTKvGOiEqrfJZOYCZpLYiAPW5U0b
+ z8+XvGztScjeaJ1xilFQaARBFIjOContGahqo/5UPB+A7ustwapxjNVNju/GM9MPTZGe
+ 1B8w==
+X-Gm-Message-State: AOJu0YylZ43wVRrXtCOa1TTYHd+8ycedQ+yJCzGcT9wym1K4kGzUBIKc
+ aYlVXeWBSGrPpHFQ3Pemc/ErDAra+VRJgFgX5UXdXRf1/Un7E2n5pguFYB+42Hcrnwq/H57iY+K
+ 7
+X-Google-Smtp-Source: AGHT+IG4Wg8rywDTMVuRM7GkwEmCFZtMm4l+BGhG1j8wou81QLrVUKTsIfgDuyEQppKx/hJqB7/64Q==
+X-Received: by 2002:a05:6402:34d4:b0:55d:357f:1837 with SMTP id
+ w20-20020a05640234d400b0055d357f1837mr298106edc.1.1706306656478; 
+ Fri, 26 Jan 2024 14:04:16 -0800 (PST)
+Received: from m1x-phil.lan ([176.176.142.39])
+ by smtp.gmail.com with ESMTPSA id
+ d26-20020a056402401a00b0055c6048544fsm1007886eda.66.2024.01.26.14.04.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 26 Jan 2024 14:04:16 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-riscv@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ kvm@vger.kernel.org, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH v2 01/23] hw/acpi/cpu: Use CPUState typedef
+Date: Fri, 26 Jan 2024 23:03:43 +0100
+Message-ID: <20240126220407.95022-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240126220407.95022-1-philmd@linaro.org>
+References: <20240126220407.95022-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <287bcc2b-3268-4622-a649-8ce6b7e4f8a5@oracle.com>
-Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
- helo=todd.t-8ch.de
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,59 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alejandro,
+QEMU coding style recommend using structure typedefs:
+https://www.qemu.org/docs/master/devel/style.html#typedefs
 
-On 2024-01-26 13:47:33-0500, Alejandro Jimenez wrote:
-> On 1/7/24 09:05, Thomas Weißschuh wrote:
-> > Shutdown requests are normally hardware dependent.
-> > By extending pvpanic to also handle shutdown requests, guests can
-> > submit such requests with an easily implementable and cross-platform
-> > mechanism.
-> > 
-> > Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
-> > ---
-> >   docs/specs/pvpanic.rst    | 2 ++
-> >   hw/misc/pvpanic.c         | 5 +++++
-> >   include/hw/misc/pvpanic.h | 3 ++-
-> >   3 files changed, 9 insertions(+), 1 deletion(-)
-> > 
-> [snip]
-> 
-> >   -------------
-> > diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
-> > index a4982cc5928e..246f9ae4e992 100644
-> > --- a/hw/misc/pvpanic.c
-> > +++ b/hw/misc/pvpanic.c
-> > @@ -40,6 +40,11 @@ static void handle_event(int event)
-> >           qemu_system_guest_crashloaded(NULL);
-> >           return;
-> >       }
-> > +
-> > +    if (event & PVPANIC_SHUTDOWN) {
-> > +        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-> 
-> I would suggest that instead of directly requesting a system shutdown,
-> we should follow the same convention/handling of the other pvpanic
-> events and emit a QMP message signaling the specific event that took
-> place, to help a management layer application that might be listening
-> to determine the cause of the shutdown. It can also be a helpful
-> signal to let us know if a guest is (ab)using the new functionality.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/acpi/cpu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This sounds reasonable, thanks for the suggestion and patch.
+diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
+index bc901660fb..209e1773f8 100644
+--- a/include/hw/acpi/cpu.h
++++ b/include/hw/acpi/cpu.h
+@@ -19,7 +19,7 @@
+ #include "hw/hotplug.h"
+ 
+ typedef struct AcpiCpuStatus {
+-    struct CPUState *cpu;
++    CPUState *cpu;
+     uint64_t arch_id;
+     bool is_inserting;
+     bool is_removing;
+-- 
+2.41.0
 
-> If you agree with my reasoning and you'd allow me to piggyback on your
-> series, please add my complementary [PATCH 5/4] change that implements
-> the suggestion:
-
-I picked up the patch and will test and resend the series in a few days.
-
-[snip]
-
-If one of the maintainers reads this:
-
-Maybe patch 1, 2 and 3 could already be picked up as they seem not to be
-controversial.
-Then I can also continue to remove the UAPI header on the kernel side.
-
-Thomas
 
