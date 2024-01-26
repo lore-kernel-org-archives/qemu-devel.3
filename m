@@ -4,56 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C098CC47422
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D3BC47DDB
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 04:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTDf3-0001k4-MN; Thu, 25 Jan 2024 23:17:49 -0500
+	id 1rTDet-0001hk-Ev; Thu, 25 Jan 2024 23:17:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDf2-0001ja-9g
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:48 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDes-0001fk-1F
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDf0-0004pb-Kj
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:47 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDep-0004n2-8X
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706242665;
+ s=mimecast20190719; t=1706242653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yOIHVYyv54egdlVoMdUVLVFk4lzZ/xlT1WvDt+htyXc=;
- b=H/L8B6CDo6mCUnCsoGj2c8DU2vEyq9W9SvrxIPD5Fh1QQbB9yCheuAmhPnxOrVe4MOK8ly
- szYgFXwBOdXx47Ef9r3X0XPbDAGH12FGG7LTBjAaaGbeOcJux+wNDo6SXcMP0nbrK67zGu
- jOikKgmMaxKi6JtjTnN3A678RDDwPy4=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-1j3nIyv_Pci_P4-hYm_S3A-1; Thu,
- 25 Jan 2024 23:17:43 -0500
-X-MC-Unique: 1j3nIyv_Pci_P4-hYm_S3A-1
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jMxyAGI3qYVs5QH6kzyj5YicRDJmhNpflR+yarg5k9k=;
+ b=T2hQR29Wk5kwkl4o9pPvfh/w0RHMEk42GgMO8/ZMNwWPUvIlltvZvSWImE7fOMXVBuMlAg
+ tSm09yfz1P3Sk3yztWYhzYzogonC/6EDa3lLG4bCI7JvfFuiLpKokKPd/NSwGIzv1T0czz
+ hg898G8BbI91LnE2Jh8ShICgpnTOXlA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-Z56msUsuOPSY-r67TdFsgQ-1; Thu, 25 Jan 2024 23:17:30 -0500
+X-MC-Unique: Z56msUsuOPSY-r67TdFsgQ-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DA4961C07F2B;
- Fri, 26 Jan 2024 04:17:42 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2FD65101A526;
+ Fri, 26 Jan 2024 04:17:30 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CBF83492BC6;
- Fri, 26 Jan 2024 04:17:40 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 38D7E492BC6;
+ Fri, 26 Jan 2024 04:17:27 +0000 (UTC)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>,
 	peterx@redhat.com
-Subject: [PULL 04/15] migration: Drop unnecessary check in ram's
- pending_exact()
-Date: Fri, 26 Jan 2024 12:17:14 +0800
-Message-ID: <20240126041725.124562-5-peterx@redhat.com>
-In-Reply-To: <20240126041725.124562-1-peterx@redhat.com>
-References: <20240126041725.124562-1-peterx@redhat.com>
+Subject: [PULL 00/15] Migration 20240126 patches
+Date: Fri, 26 Jan 2024 12:17:10 +0800
+Message-ID: <20240126041725.124562-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
@@ -83,61 +80,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-When the migration frameworks fetches the exact pending sizes, it means
-this check:
+The following changes since commit 5bab95dc74d43bbb28c6a96d24c810a664432057:
 
-  remaining_size < s->threshold_size
+  Merge tag 'pull-request-2024-01-24' of https://gitlab.com/thuth/qemu into staging (2024-01-25 12:33:42 +0000)
 
-Must have been done already, actually at migration_iteration_run():
+are available in the Git repository at:
 
-    if (must_precopy <= s->threshold_size) {
-        qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+  https://gitlab.com/peterx/qemu.git tags/migration-20240126-pull-request
 
-That should be after one round of ram_state_pending_estimate().  It makes
-the 2nd check meaningless and can be dropped.
+for you to fetch changes up to 24b0c2ec956ca225282f81470f7c26f5bb844885:
 
-To say it in another way, when reaching ->state_pending_exact(), we
-unconditionally sync dirty bits for precopy.
+  Make 'uri' optional for migrate QAPI (2024-01-26 11:06:13 +0800)
 
-Then we can drop migrate_get_current() there too.
+----------------------------------------------------------------
+Migration pull for 9.0
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240117075848.139045-3-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/ram.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+- Fabiano's patchset to fix migration state references in BHs
+- Fabiano's new 'n-1' migration test for CI
+- Het's fix on making "uri" optional in QMP migrate cmd
+- Markus's HMP leak fix reported by Coverity
+- Paolo's cleanup on uffd to replace u64 usage
+- Peter's small migration cleanup series all over the places
 
-diff --git a/migration/ram.c b/migration/ram.c
-index c0cdcccb75..d5b7cd5ac2 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3213,21 +3213,20 @@ static void ram_state_pending_estimate(void *opaque, uint64_t *must_precopy,
- static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
-                                     uint64_t *can_postcopy)
- {
--    MigrationState *s = migrate_get_current();
-     RAMState **temp = opaque;
-     RAMState *rs = *temp;
-+    uint64_t remaining_size;
- 
--    uint64_t remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
--
--    if (!migration_in_postcopy() && remaining_size < s->threshold_size) {
-+    if (!migration_in_postcopy()) {
-         bql_lock();
-         WITH_RCU_READ_LOCK_GUARD() {
-             migration_bitmap_sync_precopy(rs, false);
-         }
-         bql_unlock();
--        remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
-     }
- 
-+    remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
-+
-     if (migrate_postcopy_ram()) {
-         /* We can do postcopy, and all the data is postcopiable */
-         *can_postcopy += remaining_size;
+----------------------------------------------------------------
+
+Fabiano Rosas (9):
+  tests/qtest/migration: Don't use -cpu max for aarch64
+  ci: Add a migration compatibility test job
+  ci: Disable migration compatibility tests for aarch64
+  migration/yank: Use channel features
+  migration: Fix use-after-free of migration state object
+  migration: Take reference to migration state around
+    bg_migration_vm_start_bh
+  migration: Reference migration state around
+    loadvm_postcopy_handle_run_bh
+  migration: Add a wrapper to qemu_bh_schedule
+  migration: Centralize BH creation and dispatch
+
+Het Gala (1):
+  Make 'uri' optional for migrate QAPI
+
+Markus Armbruster (1):
+  migration: Plug memory leak on HMP migrate error path
+
+Paolo Bonzini (1):
+  userfaultfd: use 1ULL to build ioctl masks
+
+Peter Xu (3):
+  migration: Make threshold_size an uint64_t
+  migration: Drop unnecessary check in ram's pending_exact()
+  analyze-migration.py: Remove trick on parsing ramblocks
+
+ qapi/migration.json                       |  2 +-
+ migration/migration.h                     |  7 +-
+ migration/migration-hmp-cmds.c            |  4 +-
+ migration/migration.c                     | 82 +++++++++++++----------
+ migration/postcopy-ram.c                  | 16 ++---
+ migration/ram.c                           |  9 ++-
+ migration/savevm.c                        |  5 +-
+ migration/yank_functions.c                |  6 +-
+ subprojects/libvhost-user/libvhost-user.c |  2 +-
+ tests/qtest/migration-test.c              |  6 +-
+ .gitlab-ci.d/buildtest.yml                | 64 ++++++++++++++++++
+ scripts/analyze-migration.py              | 11 +--
+ 12 files changed, 135 insertions(+), 79 deletions(-)
+
 -- 
 2.43.0
 
