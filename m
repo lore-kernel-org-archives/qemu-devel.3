@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44553C48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30C9C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNfC-0005l3-W5; Fri, 26 Jan 2024 09:58:39 -0500
+	id 1rTNi9-0007zY-29; Fri, 26 Jan 2024 10:01:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNf9-0005kR-C7
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:58:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNi7-0007yV-1o
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:01:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNf7-0006gI-Qs
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:58:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNi5-0007t2-Ip
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:01:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706281113;
+ s=mimecast20190719; t=1706281297;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cBu5tXEHpSKPBcZyoFKTgVb4Ak5Oiwza79aExSzV6TI=;
- b=DO6/tj5rp/Epn8QAtc0GsvyLP1YoHDtIojmVQmCqeh/D5tlzHD+NZviUvqMhqcRkDcje7g
- 0XAZSNW/QzN+uVkP5V6aoYr4poRBPkwCF1eo7dxPVBdXoNpgWN7uJcNC5kemjDermTXyuo
- mWePy5WNAQ69wcD9FcUgP8tSeRamARg=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EbNcwVBZv62t2eZQbR8WW8dRh6LxCWHbZzQZlODZakg=;
+ b=iWo8VfxkZGcLUyz6+rtWJ5ZOsXRA43ZEMzFOl93hnIbAFlbPORe09/sEH4xuXH2yln1GKs
+ wkoGhXFu+byoC2PQTXTMRvCDa0HBOx4KNor0l7wxS0pwthoiwRmBUiaBZOUkDZKwfijutm
+ 3yuFKlPreJdenVh5IDxBtm3olIolo84=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-490-KskNFkM2O62PAkNrEZqM4A-1; Fri, 26 Jan 2024 09:58:30 -0500
-X-MC-Unique: KskNFkM2O62PAkNrEZqM4A-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-67ef8bbfe89so14195116d6.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:58:30 -0800 (PST)
+ us-mta-622-mdBN8VwZNnG8661JsMlGzg-1; Fri, 26 Jan 2024 10:01:30 -0500
+X-MC-Unique: mdBN8VwZNnG8661JsMlGzg-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-68058b0112cso12486686d6.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 07:01:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706281110; x=1706885910;
+ d=1e100.net; s=20230601; t=1706281289; x=1706886089;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cBu5tXEHpSKPBcZyoFKTgVb4Ak5Oiwza79aExSzV6TI=;
- b=ol3ICOgDwVT0JJWkRzwfJl8FBcAsW3BnA8BUQqVJQJ9GYcNlkw/kYgpj8NKQEv/h2d
- Ai/hgzH/TwCNlMJ4U0InU+hBVlSiyAGV+KRJDC6JOoDzVMvp9HC/JOQ71FIk0H+FvAXp
- yEjEzbsdDryMNG9z9igabbncXSOD5MUHSQhYnBJZyBhcJyaNLBSVfBa7YjviskdKne6N
- IN7HtmKWN6r35cnTL1UgfbaCHdyEWNLFumaIHexafNYGLyDsT2Hv5JqzZA6j653c+qET
- G+rKh3qLBDA83vRCADx5EZ2c0mKd6Gk2zHrwSw7wv5TrMAi4e7nUTvrHdGNUivVZ0gRi
- zvnA==
-X-Gm-Message-State: AOJu0YwmkZnU+eQZ+gszuLeFBBcZdjd3gUtV6P4NbUYw32K1viFk/3Tb
- l6k/t9cpLCFIrg3Y2sdfxT4fe1VoQYeFqac7QeRimDfsbyMCHeArTTaEdTPYOs8uCBd1Yo+FXoO
- uuWoPtmuUwTbexI7qDx6JfW2nWK04vK0to7azktsGhGNxPZ37HWru
-X-Received: by 2002:ac8:5c8b:0:b0:42a:6d05:270f with SMTP id
- r11-20020ac85c8b000000b0042a6d05270fmr1596796qta.7.1706281110046; 
- Fri, 26 Jan 2024 06:58:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHC5b097dKuBCTfctQRqf/DhxYhOjmvjD/wU5GbufoJj22xfErfX7LEdKO/f8kVCA7xRTkt8g==
-X-Received: by 2002:ac8:5c8b:0:b0:42a:6d05:270f with SMTP id
- r11-20020ac85c8b000000b0042a6d05270fmr1596779qta.7.1706281109775; 
- Fri, 26 Jan 2024 06:58:29 -0800 (PST)
+ bh=EbNcwVBZv62t2eZQbR8WW8dRh6LxCWHbZzQZlODZakg=;
+ b=CZnOJyTCtE3qI92waCRnD36q+vGPoZkef+j1Ptk9Y5Ie65JxChzpek7woY/l6eE/+U
+ BkIESr8iNJOlzCvZ51gWU+6iyJlNTR0TArJ3SZG5kZrmei7BkjDoFbZJbvUT3rE59tT9
+ ZlqvoxprT545+2/vIFJu822OyZhAdU9uywhl1XAjUjFr/3I1my0LQ9kl6S/vSG1gJo9P
+ Soo3BmKCYv62M9qIPgGROEiange3ByMUxM0W4OxhO7/dNedHr+ewjo+A6p3zIFoMKyeq
+ 3IQ71wz9pSYnYqRsZW8jGyawvxJdySNC30+P7M6mWzdnWlN/cwgRIcUHmzMvkd3lEa1a
+ AatA==
+X-Gm-Message-State: AOJu0Yw/OQotPd9pqA0zUyKyg0x2VQCDxtoWNE89ugv8frXgaS6rrrtX
+ oSJV1Z5T4IYeaipZgs9tPtJxnTzdgMAY4/S9vxBLKYoMpEMTczaqTwFCkEc5oGD5L9+gHkxvM4+
+ j8F3P5TpPRBzE5o7jMegbBbOgZdENkcylpnLn7eotr86FIRAEM+cw
+X-Received: by 2002:a05:6214:27cf:b0:681:7963:11ca with SMTP id
+ ge15-20020a05621427cf00b00681796311camr1259246qvb.126.1706281289486; 
+ Fri, 26 Jan 2024 07:01:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG0TSMt5SE6umiBnggBV8q9V2CroUkiPAVESFjnEb2hogjXelQ48Knhr7xIlXxGywknkkILkw==
+X-Received: by 2002:a05:6214:27cf:b0:681:7963:11ca with SMTP id
+ ge15-20020a05621427cf00b00681796311camr1259231qvb.126.1706281288904; 
+ Fri, 26 Jan 2024 07:01:28 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- r10-20020ac8520a000000b004298a09900bsm581120qtn.53.2024.01.26.06.58.26
+ nc7-20020a0562142dc700b00686ad7daabesm566907qvb.28.2024.01.26.07.01.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 06:58:29 -0800 (PST)
-Message-ID: <4509e46a-440a-4bcd-8c7d-d527af066c66@redhat.com>
-Date: Fri, 26 Jan 2024 15:58:25 +0100
+ Fri, 26 Jan 2024 07:01:27 -0800 (PST)
+Message-ID: <acbab626-204c-4f79-a59f-543d07c90cfc@redhat.com>
+Date: Fri, 26 Jan 2024 16:01:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/46] hw/arm/allwinner: use qemu_configure_nic_device()
+Subject: Re: [PATCH v3 23/46] hw/arm/exynos4: use qemu_create_nic_device()
 Content-Language: en-US
 To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Cc: Beniamino Galvani <b.galvani@gmail.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, qemu-arm@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jason Wang <jasowang@redhat.com>, David Woodhouse <dwmw@amazon.co.uk>
 References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-22-dwmw2@infradead.org>
+ <20240108204909.564514-24-dwmw2@infradead.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -121,7 +119,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240108204909.564514-22-dwmw2@infradead.org>
+In-Reply-To: <20240108204909.564514-24-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -154,98 +152,26 @@ On 08/01/2024 21.26, David Woodhouse wrote:
 > 
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/arm/allwinner-a10.c |  6 +-----
->   hw/arm/allwinner-h3.c  |  6 +-----
->   hw/arm/allwinner-r40.c | 27 ++-------------------------
->   3 files changed, 4 insertions(+), 35 deletions(-)
+>   hw/arm/exynos4_boards.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/arm/allwinner-a10.c b/hw/arm/allwinner-a10.c
-> index b0ea3f7f66..57f52871ec 100644
-> --- a/hw/arm/allwinner-a10.c
-> +++ b/hw/arm/allwinner-a10.c
-> @@ -142,11 +142,7 @@ static void aw_a10_realize(DeviceState *dev, Error **errp)
->       sysbus_realize(SYS_BUS_DEVICE(&s->dramc), &error_fatal);
->       sysbus_mmio_map(SYS_BUS_DEVICE(&s->dramc), 0, AW_A10_DRAMC_BASE);
+> diff --git a/hw/arm/exynos4_boards.c b/hw/arm/exynos4_boards.c
+> index b0e13eb4f0..003992189b 100644
+> --- a/hw/arm/exynos4_boards.c
+> +++ b/hw/arm/exynos4_boards.c
+> @@ -76,10 +76,8 @@ static void lan9215_init(uint32_t base, qemu_irq irq)
+>       SysBusDevice *s;
 >   
-> -    /* FIXME use qdev NIC properties instead of nd_table[] */
+>       /* This should be a 9215 but the 9118 is close enough */
 > -    if (nd_table[0].used) {
-> -        qemu_check_nic_model(&nd_table[0], TYPE_AW_EMAC);
-> -        qdev_set_nic_properties(DEVICE(&s->emac), &nd_table[0]);
-> -    }
-> +    qemu_configure_nic_device(DEVICE(&s->emac), true, NULL);
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->emac), errp)) {
->           return;
->       }
-> diff --git a/hw/arm/allwinner-h3.c b/hw/arm/allwinner-h3.c
-> index f05afddf7e..4f102ad082 100644
-> --- a/hw/arm/allwinner-h3.c
-> +++ b/hw/arm/allwinner-h3.c
-> @@ -369,11 +369,7 @@ static void allwinner_h3_realize(DeviceState *dev, Error **errp)
->                                 "sd-bus");
->   
->       /* EMAC */
-> -    /* FIXME use qdev NIC properties instead of nd_table[] */
-> -    if (nd_table[0].used) {
-> -        qemu_check_nic_model(&nd_table[0], TYPE_AW_SUN8I_EMAC);
-> -        qdev_set_nic_properties(DEVICE(&s->emac), &nd_table[0]);
-> -    }
-> +    qemu_configure_nic_device(DEVICE(&s->emac), true, NULL);
->       object_property_set_link(OBJECT(&s->emac), "dma-memory",
->                                OBJECT(get_system_memory()), &error_fatal);
->       sysbus_realize(SYS_BUS_DEVICE(&s->emac), &error_fatal);
-> diff --git a/hw/arm/allwinner-r40.c b/hw/arm/allwinner-r40.c
-> index a0d367c60d..4d5661b014 100644
-> --- a/hw/arm/allwinner-r40.c
-> +++ b/hw/arm/allwinner-r40.c
-> @@ -294,7 +294,6 @@ static void allwinner_r40_init(Object *obj)
->   
->   static void allwinner_r40_realize(DeviceState *dev, Error **errp)
->   {
-> -    const char *r40_nic_models[] = { "gmac", "emac", NULL };
->       AwR40State *s = AW_R40(dev);
->   
->       /* CPUs */
-> @@ -454,31 +453,8 @@ static void allwinner_r40_realize(DeviceState *dev, Error **errp)
->       sysbus_mmio_map(SYS_BUS_DEVICE(&s->dramc), 2,
->                       s->memmap[AW_R40_DEV_DRAMPHY]);
->   
-> -    /* nic support gmac and emac */
-> -    for (int i = 0; i < ARRAY_SIZE(r40_nic_models) - 1; i++) {
-> -        NICInfo *nic = &nd_table[i];
-> -
-> -        if (!nic->used) {
-> -            continue;
-> -        }
-> -        if (qemu_show_nic_models(nic->model, r40_nic_models)) {
-> -            exit(0);
-> -        }
-> -
-> -        switch (qemu_find_nic_model(nic, r40_nic_models, r40_nic_models[0])) {
-> -        case 0: /* gmac */
-> -            qdev_set_nic_properties(DEVICE(&s->gmac), nic);
-> -            break;
-> -        case 1: /* emac */
-> -            qdev_set_nic_properties(DEVICE(&s->emac), nic);
-> -            break;
-> -        default:
-> -            exit(1);
-> -            break;
-> -        }
-> -    }
-> -
->       /* GMAC */
-> +    qemu_configure_nic_device(DEVICE(&s->gmac), true, "gmac");
->       object_property_set_link(OBJECT(&s->gmac), "dma-memory",
->                                        OBJECT(get_system_memory()), &error_fatal);
->       sysbus_realize(SYS_BUS_DEVICE(&s->gmac), &error_fatal);
-> @@ -487,6 +463,7 @@ static void allwinner_r40_realize(DeviceState *dev, Error **errp)
->                          qdev_get_gpio_in(DEVICE(&s->gic), AW_R40_GIC_SPI_GMAC));
->   
->       /* EMAC */
-> +    qemu_configure_nic_device(DEVICE(&s->emac), true, "emac");
->       sysbus_realize(SYS_BUS_DEVICE(&s->emac), &error_fatal);
->       sysbus_mmio_map(SYS_BUS_DEVICE(&s->emac), 0, s->memmap[AW_R40_DEV_EMAC]);
->       sysbus_connect_irq(SYS_BUS_DEVICE(&s->emac), 0,
+> -        qemu_check_nic_model(&nd_table[0], "lan9118");
+> -        dev = qdev_new(TYPE_LAN9118);
+> -        qdev_set_nic_properties(dev, &nd_table[0]);
+> +    dev = qemu_create_nic_device(TYPE_LAN9118, true, NULL);
+> +    if (dev) {
+>           qdev_prop_set_uint32(dev, "mode_16bit", 1);
+>           s = SYS_BUS_DEVICE(dev);
+>           sysbus_realize_and_unref(s, &error_fatal);
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
