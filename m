@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F6EC48286
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 03:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DD7C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 03:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTD5G-0004ch-MP; Thu, 25 Jan 2024 22:40:50 -0500
+	id 1rTD5P-0004oI-Jv; Thu, 25 Jan 2024 22:40:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTD5E-0004ae-Ja; Thu, 25 Jan 2024 22:40:48 -0500
+ id 1rTD5J-0004iA-OY; Thu, 25 Jan 2024 22:40:53 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTD5B-0003Na-9o; Thu, 25 Jan 2024 22:40:48 -0500
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ id 1rTD5H-0003PK-LJ; Thu, 25 Jan 2024 22:40:53 -0500
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q30wAR010334; Fri, 26 Jan 2024 03:40:34 GMT
+ 40Q3ToOO026412; Fri, 26 Jan 2024 03:40:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-type : content-transfer-encoding; s=pp1;
- bh=PBF0o+fSK8BpLD09G20HopPY7egydpZsN7pz39XRURo=;
- b=GWSxRRdkoMz3fI7WTutSvRG+ayaB9gVKVM1G3DaDEexFtkqcil8RYHHnAOVE0cbr87zs
- PUia2eMqgfnOok1Nogd+zkifWTfN80+VNeV7T4U4Zlu5z7rl3Yx+GmHkYYRNXKh0hEaS
- benfPbiF5JpXTUVPBl2hg9rgSMqWcIHQy4szEHfGvTV0aBaW8AKI/CB/fofUyD5OUe+r
- nCuvvERo4PUHzUD11mUu3gC0UBGnx5vGMuiZ+cddljH8UCnhO1ETTff7S/mjfQ0pzbSB
- g3XZQJmg/jh41uRaG0s+fU+0noA2+4kqEf/oLCpO68Bway4iP4ceWhhpJ9PXsgW8IwBx JQ== 
+ bh=/Fz7kC7/AcBDgONrN1dksGhPl1NMl2kQImKTBU4Uxms=;
+ b=Ifngn3bfkY33cPV2qQOTXZJmfXY1yPDZ4DsI7Y4QUSPEenuLiv4vr2KpxmtXbmZPjflq
+ 6c9mGWlmLXoqnGs4BdV6J/r5yP3T/rC5wIsbooAGRO8uUIGL7lXra738KuDmd2gzDwD2
+ YQyelC7Z5xfX9UdMcvZ9vuxhAVvtBUg3fapIkaq+7kkNa8XI0H5eNvj0NovNgr76UN6r
+ JaObfx0HHEdGAe/nVDKzB0WehGGfzG5Q0UnCy/HRXMJ2MsObpXpIo/Oo9ZzDP4+LM1Qz
+ D2wuEPWl0O/AXV0TWYqui4mXgPFOwclcHaDVfyg1j1ETF+RKJWv0Tgz7ttRRgFQqLmoM PQ== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv168wfb1-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv4vm86bm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Fri, 26 Jan 2024 03:40:33 +0000
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40Q3QO7O019900;
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40Q3eXkG024154;
  Fri, 26 Jan 2024 03:40:33 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv168wfan-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv4vm86b9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Jan 2024 03:40:33 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40Q2dQwW028239; Fri, 26 Jan 2024 03:40:32 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vru7300pu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Fri, 26 Jan 2024 03:40:32 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q12iM8025638; Fri, 26 Jan 2024 03:40:31 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vrsgpgfmk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 03:40:31 +0000
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40Q3eUq98585756
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40Q3eVdj9896468
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Fri, 26 Jan 2024 03:40:31 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD7525805D;
- Fri, 26 Jan 2024 03:40:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 35DF958043;
+ Fri, 26 Jan 2024 03:40:31 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8465058059;
+ by IMSVA (Postfix) with ESMTP id D7B0258055;
  Fri, 26 Jan 2024 03:40:30 +0000 (GMT)
 Received: from gfwa153.aus.stglabs.ibm.com (unknown [9.3.84.127])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
@@ -72,9 +72,9 @@ To: qemu-devel@nongnu.org, clg@kaod.org, peter.maydell@linaro.org,
  philmd@linaro.org, lvivier@redhat.com
 Cc: Ninad Palsule <ninad@linux.ibm.com>, qemu-arm@nongnu.org,
  Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH v11 05/11] hw/fsi: Introduce IBM's cfam
-Date: Thu, 25 Jan 2024 21:40:20 -0600
-Message-Id: <20240126034026.31068-6-ninad@linux.ibm.com>
+Subject: [PATCH v11 06/11] hw/fsi: Introduce IBM's FSI master
+Date: Thu, 25 Jan 2024 21:40:21 -0600
+Message-Id: <20240126034026.31068-7-ninad@linux.ibm.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240126034026.31068-1-ninad@linux.ibm.com>
 References: <20240126034026.31068-1-ninad@linux.ibm.com>
@@ -82,16 +82,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 3xkOYFGyFc_HNIO8kTtTyC4tibOPteUA
-X-Proofpoint-GUID: 3y6BwvYsVbMJuGbGbMbJnky0aHq50k-j
+X-Proofpoint-GUID: 8EMX72eNrdinin57yvSsaNeiRKsGBTMR
+X-Proofpoint-ORIG-GUID: T87l9kKTmF-4XqNuwlrbfVENJdxjBdOU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 phishscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
- spamscore=0 bulkscore=0 suspectscore=0 mlxlogscore=813 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ suspectscore=0 bulkscore=0
+ adultscore=0 mlxscore=0 mlxlogscore=794 spamscore=0 phishscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2401260024
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=ninad@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -120,269 +120,267 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 This is a part of patchset where IBM's Flexible Service Interface is
 introduced.
 
-The Common FRU Access Macro (CFAM), an address space containing
-various "engines" that drive accesses on busses internal and external
-to the POWER chip. Examples include the SBEFIFO and I2C masters. The
-engines hang off of an internal Local Bus (LBUS) which is described
-by the CFAM configuration block.
+This commit models the FSI master. CFAM is hanging out of FSI master which is a bus controller.
+
+The FSI master: A controller in the platform service processor (e.g.
+BMC) driving CFAM engine accesses into the POWER chip. At the
+hardware level FSI is a bit-based protocol supporting synchronous and
+DMA-driven accesses of engines in a CFAM.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-[ clg: - moved object FSIScratchPad under FSICFAMState
-       - moved FSIScratchPad code under cfam.c
-       - introduced fsi_cfam_instance_init()
-       - reworked fsi_cfam_realize() ]
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
+[ clg: - move FSICFAMState object under FSIMasterState
+       - introduced fsi_master_init()
+       - reworked fsi_master_realize()
+       - dropped FSIBus definition ]
 Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
 ---
 v9:
-  - Added more registers to scratchpad
-  - Removed unnecessary address space
-  - Removed unnecessary header file
-  - Defined macros for config values.
-  - Cleaned up cfam config read.
+  - Initialized registers.
+  - Fixed the address check.
+v11:
+  - Replaced for loop with memset.
+  - Removed Joel's review tag as per Cedric.
 ---
- include/hw/fsi/cfam.h |  34 +++++++++
- hw/fsi/cfam.c         | 168 ++++++++++++++++++++++++++++++++++++++++++
- hw/fsi/meson.build    |   2 +-
- hw/fsi/trace-events   |   5 ++
- 4 files changed, 208 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/fsi/cfam.h
- create mode 100644 hw/fsi/cfam.c
+ include/hw/fsi/fsi-master.h |  32 +++++++
+ hw/fsi/fsi-master.c         | 170 ++++++++++++++++++++++++++++++++++++
+ hw/fsi/meson.build          |   2 +-
+ hw/fsi/trace-events         |   2 +
+ 4 files changed, 205 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/fsi/fsi-master.h
+ create mode 100644 hw/fsi/fsi-master.c
 
-diff --git a/include/hw/fsi/cfam.h b/include/hw/fsi/cfam.h
+diff --git a/include/hw/fsi/fsi-master.h b/include/hw/fsi/fsi-master.h
 new file mode 100644
-index 0000000000..7abc3b287b
+index 0000000000..68e5f56db2
 --- /dev/null
-+++ b/include/hw/fsi/cfam.h
-@@ -0,0 +1,34 @@
++++ b/include/hw/fsi/fsi-master.h
+@@ -0,0 +1,32 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + * Copyright (C) 2024 IBM Corp.
 + *
-+ * IBM Common FRU Access Macro
++ * IBM Flexible Service Interface Master
 + */
-+#ifndef FSI_CFAM_H
-+#define FSI_CFAM_H
++#ifndef FSI_FSI_MASTER_H
++#define FSI_FSI_MASTER_H
 +
 +#include "exec/memory.h"
-+
++#include "hw/qdev-core.h"
 +#include "hw/fsi/fsi.h"
-+#include "hw/fsi/lbus.h"
++#include "hw/fsi/cfam.h"
 +
-+#define TYPE_FSI_CFAM "cfam"
-+#define FSI_CFAM(obj) OBJECT_CHECK(FSICFAMState, (obj), TYPE_FSI_CFAM)
++#define TYPE_FSI_MASTER "fsi.master"
++OBJECT_DECLARE_SIMPLE_TYPE(FSIMasterState, FSI_MASTER)
 +
-+/* P9-ism */
-+#define CFAM_CONFIG_NR_REGS 0x28
++#define FSI_MASTER_NR_REGS ((0x2e0 >> 2) + 1)
 +
-+typedef struct FSICFAMState {
-+    /* < private > */
-+    FSISlaveState parent;
++typedef struct FSIMasterState {
++    DeviceState parent;
++    MemoryRegion iomem;
++    MemoryRegion opb2fsi;
 +
-+    /* CFAM config address space */
-+    MemoryRegion config_iomem;
++    FSIBus bus;
 +
-+    MemoryRegion mr;
++    uint32_t regs[FSI_MASTER_NR_REGS];
++    FSICFAMState cfam;
++} FSIMasterState;
 +
-+    FSILBus lbus;
-+    FSIScratchPad scratchpad;
-+} FSICFAMState;
 +
-+#endif /* FSI_CFAM_H */
-diff --git a/hw/fsi/cfam.c b/hw/fsi/cfam.c
++#endif /* FSI_FSI_H */
+diff --git a/hw/fsi/fsi-master.c b/hw/fsi/fsi-master.c
 new file mode 100644
-index 0000000000..c118221bc3
+index 0000000000..49ad4b988f
 --- /dev/null
-+++ b/hw/fsi/cfam.c
-@@ -0,0 +1,168 @@
++++ b/hw/fsi/fsi-master.c
+@@ -0,0 +1,170 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + * Copyright (C) 2024 IBM Corp.
 + *
-+ * IBM Common FRU Access Macro
++ * IBM Flexible Service Interface master
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+
 +#include "qapi/error.h"
++#include "qemu/log.h"
 +#include "trace.h"
 +
-+#include "hw/fsi/cfam.h"
-+#include "hw/fsi/fsi.h"
++#include "hw/fsi/fsi-master.h"
 +
-+#include "hw/qdev-properties.h"
++#define TYPE_OP_BUS "opb"
 +
-+#define ENGINE_CONFIG_NEXT            BE_BIT(0)
-+#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
-+#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
-+#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
++#define TO_REG(x)                               ((x) >> 2)
 +
-+/* Valid, slots, version, type, crc */
-+#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
-+    (ENGINE_CONFIG_NEXT       |   \
-+     0x00010000               |   \
-+     (__VER)                  |   \
-+     (__TYPE)                 |   \
-+     (__CRC))
++#define FSI_MENP0                               TO_REG(0x010)
++#define FSI_MENP32                              TO_REG(0x014)
++#define FSI_MSENP0                              TO_REG(0x018)
++#define FSI_MLEVP0                              TO_REG(0x018)
++#define FSI_MSENP32                             TO_REG(0x01c)
++#define FSI_MLEVP32                             TO_REG(0x01c)
++#define FSI_MCENP0                              TO_REG(0x020)
++#define FSI_MREFP0                              TO_REG(0x020)
++#define FSI_MCENP32                             TO_REG(0x024)
++#define FSI_MREFP32                             TO_REG(0x024)
 +
-+#define TO_REG(x)                          ((x) >> 2)
++#define FSI_MVER                                TO_REG(0x074)
++#define FSI_MRESP0                              TO_REG(0x0d0)
 +
-+#define CFAM_CONFIG_CHIP_ID                TO_REG(0x00)
-+#define CFAM_CONFIG_PEEK_STATUS            TO_REG(0x04)
-+#define CFAM_CONFIG_CHIP_ID_P9             0xc0022d15
-+#define CFAM_CONFIG_CHIP_ID_BREAK          0xc0de0000
++#define FSI_MRESB0                              TO_REG(0x1d0)
++#define   FSI_MRESB0_RESET_GENERAL              BE_BIT(0)
++#define   FSI_MRESB0_RESET_ERROR                BE_BIT(1)
 +
-+static uint64_t fsi_cfam_config_read(void *opaque, hwaddr addr, unsigned size)
++static uint64_t fsi_master_read(void *opaque, hwaddr addr, unsigned size)
 +{
-+    trace_fsi_cfam_config_read(addr, size);
++    FSIMasterState *s = FSI_MASTER(opaque);
++    int reg = TO_REG(addr);
 +
-+    switch (addr) {
-+    case 0x00:
-+        return CFAM_CONFIG_CHIP_ID_P9;
-+    case 0x04:
-+        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc);
-+    case 0x08:
-+        return CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa);
-+    case 0xc:
-+        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7);
-+    default:
-+        /*
-+         * The config table contains different engines from 0xc onwards.
-+         * The scratch pad is already added at address 0xc. We need to add
-+         * future engines from address 0x10 onwards. Returning 0 as engine
-+         * is not implemented.
-+         */
++    trace_fsi_master_read(addr, size);
++
++    if (reg >= FSI_MASTER_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out of bounds read: 0x%"HWADDR_PRIx" for %u\n",
++                      __func__, addr, size);
 +        return 0;
 +    }
++
++    return s->regs[reg];
 +}
 +
-+static void fsi_cfam_config_write(void *opaque, hwaddr addr, uint64_t data,
-+                                  unsigned size)
++static void fsi_master_write(void *opaque, hwaddr addr, uint64_t data,
++                             unsigned size)
 +{
-+    FSICFAMState *cfam = FSI_CFAM(opaque);
++    FSIMasterState *s = FSI_MASTER(opaque);
++    int reg = TO_REG(addr);
 +
-+    trace_fsi_cfam_config_write(addr, size, data);
++    trace_fsi_master_write(addr, size, data);
 +
-+    switch (TO_REG(addr)) {
-+    case CFAM_CONFIG_CHIP_ID:
-+    case CFAM_CONFIG_PEEK_STATUS:
-+        if (data == CFAM_CONFIG_CHIP_ID_BREAK) {
-+            bus_cold_reset(BUS(&cfam->lbus));
-+        }
-+        break;
-+    default:
-+        trace_fsi_cfam_config_write_noaddr(addr, size, data);
-+    }
-+}
-+
-+static const struct MemoryRegionOps cfam_config_ops = {
-+    .read = fsi_cfam_config_read,
-+    .write = fsi_cfam_config_write,
-+    .valid.max_access_size = 4,
-+    .valid.min_access_size = 4,
-+    .impl.max_access_size = 4,
-+    .impl.min_access_size = 4,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static uint64_t fsi_cfam_unimplemented_read(void *opaque, hwaddr addr,
-+                                            unsigned size)
-+{
-+    trace_fsi_cfam_unimplemented_read(addr, size);
-+
-+    return 0;
-+}
-+
-+static void fsi_cfam_unimplemented_write(void *opaque, hwaddr addr,
-+                                         uint64_t data, unsigned size)
-+{
-+    trace_fsi_cfam_unimplemented_write(addr, size, data);
-+}
-+
-+static const struct MemoryRegionOps fsi_cfam_unimplemented_ops = {
-+    .read = fsi_cfam_unimplemented_read,
-+    .write = fsi_cfam_unimplemented_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static void fsi_cfam_instance_init(Object *obj)
-+{
-+    FSICFAMState *s = FSI_CFAM(obj);
-+
-+    object_initialize_child(obj, "scratchpad", &s->scratchpad,
-+                            TYPE_FSI_SCRATCHPAD);
-+}
-+
-+static void fsi_cfam_realize(DeviceState *dev, Error **errp)
-+{
-+    FSICFAMState *cfam = FSI_CFAM(dev);
-+    FSISlaveState *slave = FSI_SLAVE(dev);
-+
-+    /* Each slave has a 2MiB address space */
-+    memory_region_init_io(&cfam->mr, OBJECT(cfam), &fsi_cfam_unimplemented_ops,
-+                          cfam, TYPE_FSI_CFAM, 2 * MiB);
-+
-+    qbus_init(&cfam->lbus, sizeof(cfam->lbus), TYPE_FSI_LBUS, DEVICE(cfam),
-+              NULL);
-+
-+    memory_region_init_io(&cfam->config_iomem, OBJECT(cfam), &cfam_config_ops,
-+                          cfam, TYPE_FSI_CFAM ".config", 0x400);
-+
-+    memory_region_add_subregion(&cfam->mr, 0, &cfam->config_iomem);
-+    memory_region_add_subregion(&cfam->mr, 0x800, &slave->iomem);
-+    memory_region_add_subregion(&cfam->mr, 0xc00, &cfam->lbus.mr);
-+
-+    /* Add scratchpad engine */
-+    if (!qdev_realize(DEVICE(&cfam->scratchpad), BUS(&cfam->lbus), errp)) {
++    if (reg >= FSI_MASTER_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out of bounds write: %"HWADDR_PRIx" for %u\n",
++                      __func__, addr, size);
 +        return;
 +    }
 +
-+    FSILBusDevice *fsi_dev = FSI_LBUS_DEVICE(&cfam->scratchpad);
-+    memory_region_add_subregion(&cfam->lbus.mr, 0, &fsi_dev->iomem);
++    switch (reg) {
++    case FSI_MENP0:
++        s->regs[FSI_MENP0] = data;
++        break;
++    case FSI_MENP32:
++        s->regs[FSI_MENP32] = data;
++        break;
++    case FSI_MSENP0:
++        s->regs[FSI_MENP0] |= data;
++        break;
++    case FSI_MSENP32:
++        s->regs[FSI_MENP32] |= data;
++        break;
++    case FSI_MCENP0:
++        s->regs[FSI_MENP0] &= ~data;
++        break;
++    case FSI_MCENP32:
++        s->regs[FSI_MENP32] &= ~data;
++        break;
++    case FSI_MRESP0:
++        /* Perform necessary resets leave register 0 to indicate no errors */
++        break;
++    case FSI_MRESB0:
++        if (data & FSI_MRESB0_RESET_GENERAL) {
++            device_cold_reset(DEVICE(opaque));
++        }
++        if (data & FSI_MRESB0_RESET_ERROR) {
++            /* FIXME: this seems dubious */
++            device_cold_reset(DEVICE(opaque));
++        }
++        break;
++    default:
++        s->regs[reg] = data;
++    }
 +}
 +
-+static void fsi_cfam_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->bus_type = TYPE_FSI_BUS;
-+    dc->realize = fsi_cfam_realize;
-+}
-+
-+static const TypeInfo fsi_cfam_info = {
-+    .name = TYPE_FSI_CFAM,
-+    .parent = TYPE_FSI_SLAVE,
-+    .instance_init = fsi_cfam_instance_init,
-+    .instance_size = sizeof(FSICFAMState),
-+    .class_init = fsi_cfam_class_init,
++static const struct MemoryRegionOps fsi_master_ops = {
++    .read = fsi_master_read,
++    .write = fsi_master_write,
++    .endianness = DEVICE_BIG_ENDIAN,
 +};
 +
-+static void fsi_cfam_register_types(void)
++static void fsi_master_init(Object *o)
 +{
-+    type_register_static(&fsi_cfam_info);
++    FSIMasterState *s = FSI_MASTER(o);
++
++    object_initialize_child(o, "cfam", &s->cfam, TYPE_FSI_CFAM);
++
++    qbus_init(&s->bus, sizeof(s->bus), TYPE_FSI_BUS, DEVICE(s), NULL);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &fsi_master_ops, s,
++                          TYPE_FSI_MASTER, 0x10000000);
++    memory_region_init(&s->opb2fsi, OBJECT(s), "fsi.opb2fsi", 0x10000000);
 +}
 +
-+type_init(fsi_cfam_register_types);
++static void fsi_master_realize(DeviceState *dev, Error **errp)
++{
++    FSIMasterState *s = FSI_MASTER(dev);
++
++    if (!qdev_realize(DEVICE(&s->cfam), BUS(&s->bus), errp)) {
++        return;
++    }
++
++    /* address ? */
++    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.mr);
++}
++
++static void fsi_master_reset(DeviceState *dev)
++{
++    FSIMasterState *s = FSI_MASTER(dev);
++
++    /* Initialize registers */
++    memset(s->regs, 0, sizeof(s->regs));
++
++    /* ASPEED default */
++    s->regs[FSI_MVER] = 0xe0050101;
++}
++
++static void fsi_master_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->bus_type = TYPE_OP_BUS;
++    dc->desc = "FSI Master";
++    dc->realize = fsi_master_realize;
++    dc->reset = fsi_master_reset;
++}
++
++static const TypeInfo fsi_master_info = {
++    .name = TYPE_FSI_MASTER,
++    .parent = TYPE_DEVICE,
++    .instance_init = fsi_master_init,
++    .instance_size = sizeof(FSIMasterState),
++    .class_init = fsi_master_class_init,
++};
++
++static void fsi_register_types(void)
++{
++    type_register_static(&fsi_master_info);
++}
++
++type_init(fsi_register_types);
 diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
-index 574f5f9289..96403d4efc 100644
+index 96403d4efc..7803b3afd1 100644
 --- a/hw/fsi/meson.build
 +++ b/hw/fsi/meson.build
 @@ -1 +1 @@
--system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c'))
-+system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c'))
+-system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c'))
++system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c','fsi-master.c'))
 diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
-index 8f29adb7df..b542956fb3 100644
+index b542956fb3..bf417b6dc3 100644
 --- a/hw/fsi/trace-events
 +++ b/hw/fsi/trace-events
-@@ -2,3 +2,8 @@ fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
- fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
- fsi_slave_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
- fsi_slave_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
-+fsi_cfam_config_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-+fsi_cfam_config_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
-+fsi_cfam_unimplemented_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-+fsi_cfam_unimplemented_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
-+fsi_cfam_config_write_noaddr(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
+@@ -7,3 +7,5 @@ fsi_cfam_config_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64
+ fsi_cfam_unimplemented_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
+ fsi_cfam_unimplemented_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
+ fsi_cfam_config_write_noaddr(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
++fsi_master_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
++fsi_master_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
 -- 
 2.39.2
 
