@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C262C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17BF6C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQ4s-0007bw-BS; Fri, 26 Jan 2024 12:33:18 -0500
+	id 1rTQ5p-0001e1-P5; Fri, 26 Jan 2024 12:34:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ4g-0007Cp-5x; Fri, 26 Jan 2024 12:33:06 -0500
+ id 1rTQ5R-00009k-7M; Fri, 26 Jan 2024 12:33:55 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ4c-0001jN-Dw; Fri, 26 Jan 2024 12:33:05 -0500
+ id 1rTQ5O-0001jU-FJ; Fri, 26 Jan 2024 12:33:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=l9x9HGNJH5fBiIeKzePXsIuGh5SQlI6/4CQcfviByuY=; b=IcyrOZNXHpSLCk6TAnka1I9R+t
- 3vjdvrDxoj9S0mBl3ozeCJWq/HpqMLvBUMFAORv+1SBecbE0cDjMuO9aFvZON++rc1jPkHaC+ghgP
- 5L8zN3gB8nHPOYYlPmvNpLlMSpTekahGSC4AOzs6+IIk9qK+fFFqtc84HLEgjDyCzQMwocC4VIUT/
- XGz64EbdU/7DMpdxI7atb/fpQg69VBiAOalydcEJ4bCCzYa2Cs/hf3UDE3MWX4+TH52Vy8uBkTNI0
- o2fSSTMwt5iZhujAmRuoamJkL+zcASmcD5odNtASTsals+MCB8T2mzCkE+4bw69w/+TPEehpiYgeY
- 5a7gBiQg==;
+ bh=4LcthZeMhomcS7qQ4JhYfqujNilKqWbfcJYcyaxs+fc=; b=eb0XJkJuWocD3iK6u87tYR06n9
+ ax3ot0dKSypGvUXc+P6A+yUMIk1i3PNIdSvyYe4WgJRtHGvbbkeuIkt53Nquif8nh/2x5gu93xpo2
+ PAZtMoQ8ww9Ismo7iFZPEGRrB6Bocjn7I0FyBo8WJE7Tyt4Y2ikEEFx3btIW7Kz66bESjqgqSdGb1
+ OfAgVgvvJ7SreyzHXMXFelEIW/XSl4VbQWXuLzxLPx9uI0lhd0g1p0u//FZIX+5tP7Nw1tmD3MCrf
+ 3wxV1hb3hqyP9hZNmVI2v8KGSj7ZVbhJFr8wM6ZcD0WTczEHy7RVXtbvJfHdKKPYcGzjqDMjN9uoi
+ Vu8mG43A==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTQ4A-000000069Ui-1qun; Fri, 26 Jan 2024 17:32:34 +0000
+ id 1rTQ4A-000000069Uj-1wtg; Fri, 26 Jan 2024 17:32:47 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rTQ46-00000001elG-432t;
- Fri, 26 Jan 2024 17:32:30 +0000
+ Hat Linux)) id 1rTQ47-00000001eln-3y12;
+ Fri, 26 Jan 2024 17:32:31 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -86,10 +86,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v4 01/47] net: add qemu_{configure, create}_nic_device(),
- qemu_find_nic_info()
-Date: Fri, 26 Jan 2024 17:24:38 +0000
-Message-ID: <20240126173228.394202-2-dwmw2@infradead.org>
+Subject: [PATCH v4 12/47] hw/mips/fuloong2e: use pci_init_nic_devices()
+Date: Fri, 26 Jan 2024 17:24:49 +0000
+Message-ID: <20240126173228.394202-13-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126173228.394202-1-dwmw2@infradead.org>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
@@ -124,153 +123,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Most code which directly accesses nd_table[] and nb_nics uses them for
-one of two things. Either "I have created a NIC device and I'd like a
-configuration for it", or "I will create a NIC device *if* there is a
-configuration for it".  With some variants on the theme around whether
-they actually *check* if the model specified in the configuration is
-the right one.
+The previous behaviour was: *if* the first NIC specified on the command
+line was an RTL8139 (or unspecified model) then it gets assigned to PCI
+slot 7, which is where the Fuloong board had an RTL8139. All other
+devices (including the first, if it was specified as anything other than
+an rtl8319) get dynamically assigned on the bus.
 
-Provide functions which perform both of those, allowing platforms to
-be a little more consistent and as a step towards making nd_table[]
-and nb_nics private to the net code.
-
-One might argue that platforms ought to be consistent about whether
-they create the unconfigured devices or not, but making significant
-user-visible changes is explicitly *not* the intent right now.
-
-The new functions leave the 'model' field of the NICInfo as NULL after
-using it for the default NIC model, unlike the qemu_check_nic_model()
-function which does set nd->model to match default_model explicitly.
-This is acceptable because there is no code which consumes nd->model
-except this NIC-matching code in net/net.c, and no reasonable excuse
-for any code wanting to use nd->model in future.
-
-Also export the qemu_find_nic_info() helper, as some platforms have
-special cases they need to handle.
+The new behaviour is subtly different: If the first NIC was given a
+specific model *other* than rtl8139, and a subsequent NIC was not,
+then the rtl8139 (or unspecified) NIC will go to slot 7 and the rest
+will be dynamically assigned.
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Paul Durrant <paul@xen.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- include/net/net.h | 40 +++++++++++++++++++++++++++++++++++++
- net/net.c         | 51 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 91 insertions(+)
+ hw/mips/fuloong2e.c | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index ffbd2c8d56..dff1872b4d 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -207,7 +207,47 @@ int qemu_show_nic_models(const char *arg, const char *const *models);
- void qemu_check_nic_model(NICInfo *nd, const char *model);
- int qemu_find_nic_model(NICInfo *nd, const char * const *models,
-                         const char *default_model);
-+/**
-+ * qemu_find_nic_info: Obtain NIC configuration information
-+ * @typename: Name of device object type
-+ * @match_default: Match NIC configurations with no model specified
-+ * @alias: Additional model string to match (for user convenience and
-+ *         backward compatibility).
-+ *
-+ * Search for a NIC configuration matching the NIC model constraints.
-+ */
-+NICInfo *qemu_find_nic_info(const char *typename, bool match_default,
-+                            const char *alias);
-+/**
-+ * qemu_configure_nic_device: Apply NIC configuration to a given device
-+ * @dev: Network device to be configured
-+ * @match_default: Match NIC configurations with no model specified
-+ * @alias: Additional model string to match
-+ *
-+ * Search for a NIC configuration for the provided device, using the
-+ * additionally specified matching constraints. If found, apply the
-+ * configuration using qdev_set_nic_properties() and return %true.
-+ *
-+ * This is used by platform code which creates the device anyway,
-+ * regardless of whether there is a configuration for it. This tends
-+ * to be platforms which ignore `--nodefaults` and create net devices
-+ * anyway, for example because the Ethernet device on that board is
-+ * always physically present.
-+ */
-+bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
-+                               const char *alias);
- 
-+/**
-+ * qemu_create_nic_device: Create a NIC device if a configuration exists for it
-+ * @typename: Object typename of network device
-+ * @match_default: Match NIC configurations with no model specified
-+ * @alias: Additional model string to match
-+ *
-+ * Search for a NIC configuration for the provided device type. If found,
-+ * create an object of the corresponding type and return it.
-+ */
-+DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
-+                                    const char *alias);
- void print_net_client(Monitor *mon, NetClientState *nc);
- void net_socket_rs_init(SocketReadState *rs,
-                         SocketReadStateFinalize *finalize,
-diff --git a/net/net.c b/net/net.c
-index 0520bc1681..aeb7f573fc 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -1087,6 +1087,57 @@ static int net_init_nic(const Netdev *netdev, const char *name,
-     return idx;
+diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+index 97b2c8ed8e..a45aac368c 100644
+--- a/hw/mips/fuloong2e.c
++++ b/hw/mips/fuloong2e.c
+@@ -201,19 +201,9 @@ static void main_cpu_reset(void *opaque)
+ /* Network support */
+ static void network_init(PCIBus *pci_bus)
+ {
+-    int i;
+-
+-    for (i = 0; i < nb_nics; i++) {
+-        NICInfo *nd = &nd_table[i];
+-        const char *default_devaddr = NULL;
+-
+-        if (i == 0 && (!nd->model || strcmp(nd->model, "rtl8139") == 0)) {
+-            /* The Fuloong board has a RTL8139 card using PCI SLOT 7 */
+-            default_devaddr = "07";
+-        }
+-
+-        pci_nic_init_nofail(nd, pci_bus, "rtl8139", default_devaddr);
+-    }
++    /* The Fuloong board has a RTL8139 card using PCI SLOT 7 */
++    pci_init_nic_in_slot(pci_bus, "rtl8139", NULL, "07");
++    pci_init_nic_devices(pci_bus, "rtl8139");
  }
  
-+NICInfo *qemu_find_nic_info(const char *typename, bool match_default,
-+                            const char *alias)
-+{
-+    NICInfo *nd;
-+    int i;
-+
-+    for (i = 0; i < nb_nics; i++) {
-+        nd = &nd_table[i];
-+
-+        if (!nd->used || nd->instantiated) {
-+            continue;
-+        }
-+
-+        if ((match_default && !nd->model) || !g_strcmp0(nd->model, typename)
-+            || (alias && !g_strcmp0(nd->model, alias))) {
-+            return nd;
-+        }
-+    }
-+    return NULL;
-+}
-+
-+
-+/* "I have created a device. Please configure it if you can" */
-+bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
-+                               const char *alias)
-+{
-+    NICInfo *nd = qemu_find_nic_info(object_get_typename(OBJECT(dev)),
-+                                     match_default, alias);
-+
-+    if (nd) {
-+        qdev_set_nic_properties(dev, nd);
-+        return true;
-+    }
-+    return false;
-+}
-+
-+/* "Please create a device, if you have a configuration for it" */
-+DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
-+                                    const char *alias)
-+{
-+    NICInfo *nd = qemu_find_nic_info(typename, match_default, alias);
-+    DeviceState *dev;
-+
-+    if (!nd) {
-+        return NULL;
-+    }
-+
-+    dev = qdev_new(typename);
-+    qdev_set_nic_properties(dev, nd);
-+    return dev;
-+}
- 
- static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
-     const Netdev *netdev,
+ static void mips_fuloong2e_init(MachineState *machine)
 -- 
 2.43.0
 
