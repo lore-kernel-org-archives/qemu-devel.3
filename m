@@ -4,78 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA0DC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0E6C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTPbC-00028Z-Kr; Fri, 26 Jan 2024 12:02:38 -0500
+	id 1rTPhp-00057M-Mz; Fri, 26 Jan 2024 12:09:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPb8-0001yK-Bs
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 12:02:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPho-00056d-AK
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 12:09:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPb6-0001ev-C6
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 12:02:33 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPhm-0003AZ-1D
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 12:09:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706288550;
+ s=mimecast20190719; t=1706288965;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=msrEboZ+7bRlCCSPb41xhxmS+xPCzGvU3ZZ9wEj1mKE=;
- b=IsCVT1VOe3AdEiLRlG6VU3Lz/1dZ/eYZXHoAlqR44DTQRD5teMVvb8Mq7Z5wERsY/d/Lk3
- Vkqe6Z/zA4e3iQcL7nBwPhEp0H8pmOtTw/YdEVo8hbN4bn0+TxjW/Ke2Y9iMypr9KUVmyi
- xuzhOKuqKV6hmFgydQbX7rKyI9cXbl0=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=C0SzL+zRQ0KIywrJY/fgdSQ4/8H3RGQGGgFdpnwjnFM=;
+ b=bzI8/g28tLH+SGzWaf1DALe1zHC3+LOqVqWIlBF/PDu7cm5DTmHPQNOyg1EMDue5ucSwmb
+ 7LyFg3MJPwFlcGQk4cZNRMoGMgXGqr0krfW/b2EEseBzY4wpD5a83BQlvAv759izMuRMw5
+ W9JJOR/DaJR1VXRDr0A0U1wcD+55EBo=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-0QYTgfIAPnSYP8tZa1dENw-1; Fri, 26 Jan 2024 12:02:28 -0500
-X-MC-Unique: 0QYTgfIAPnSYP8tZa1dENw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6800a9505ddso8707596d6.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 09:02:28 -0800 (PST)
+ us-mta-348-v643fnBdNFekZqXp42sL9g-1; Fri, 26 Jan 2024 12:09:23 -0500
+X-MC-Unique: v643fnBdNFekZqXp42sL9g-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-429be5ecc87so6426011cf.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 09:09:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706288548; x=1706893348;
+ d=1e100.net; s=20230601; t=1706288963; x=1706893763;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=msrEboZ+7bRlCCSPb41xhxmS+xPCzGvU3ZZ9wEj1mKE=;
- b=R3iVxR/zZkQZnMFLal8BIK10ijQ/3MX31mBSW+eaq6IgdQodTr8sD6gnj25bkitECu
- xWrzKBbaZ+sJ0nTW4Ls583suFj+38qWPNEVjA5kUhuKrOGLpzGU+Lp9znyUxl56VR/KP
- TaxKDzFCefbEDxVZbjJdWbQ7NdB51In6+cIM+rRB56e4lBBJLW/59mq4eqYw1pmZthvH
- JBEs4086vnrTNmFQG7TZV3xTnAFnL+fQ+TcXoTdIBAO1IXL+N8WESD+dfp/SB+Jbp402
- tx0W/HyWvdn1od+dG2qLnEbgAFCekK37z/Vjf87ZTSLfKxtSr+ps38WI0Yoas51HRV26
- PxYQ==
-X-Gm-Message-State: AOJu0YwDkzIUdD72Pl3BuCcMaZi+MqXOTJYY1Eosk0pysQ1or4f0f3BW
- uH+6NcTjIil7ZgkL9JAhOvkamN8ZbfXY603J5mWuphOS7ohgxDt1swX2uj789ydMzLhm+ZrAkgf
- EZOK0wwEYz7K/Y6wV9ecx0bylzaP8IB07CXRhriw9C8vcdWRP7DWGXpVjcojQ
-X-Received: by 2002:ad4:5f0b:0:b0:686:aba6:5f03 with SMTP id
- fo11-20020ad45f0b000000b00686aba65f03mr173055qvb.20.1706288546191; 
- Fri, 26 Jan 2024 09:02:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IERZegVFdKtaO/uxqpopIIEYM/WNnUdXzGWjyQcLayT4zcBKR/wdlfcK137nsSYdk3cIXfTDw==
-X-Received: by 2002:ad4:5f0b:0:b0:686:aba6:5f03 with SMTP id
- fo11-20020ad45f0b000000b00686aba65f03mr172971qvb.20.1706288544334; 
- Fri, 26 Jan 2024 09:02:24 -0800 (PST)
+ bh=C0SzL+zRQ0KIywrJY/fgdSQ4/8H3RGQGGgFdpnwjnFM=;
+ b=PuAPpXro6oINNrM6f5aiWVLqXvJ5r0Qvi5JPK0S1JZ/ueFN5qz/YYfmQAyRUilJbaj
+ V5tISqcfmMvZi7UcDeZt4ItsTIyVWZZ+9RT3ag2UZgLQkOIzO0H2BpB9bO/6Vk9fckha
+ DhipNhl5y2MOKdILzFA01jqlAAc/4x4LleynOaARy+mrEGDSs+ioKM2Mspt5tmRL4/m4
+ ryoqUU/drig6lSTgIYFDj00bB+sk5mLJOfFtc1wKvNBzaQ8e+qxq8LnO+vNgmWXjVK4O
+ 6edU7wUgcPQfIdSpsH4YrozYWITwXGQjWU8vPJe4E/bRr/5m5bNyx4ScjyLm3sp+zzYb
+ 4uXw==
+X-Gm-Message-State: AOJu0YxYIEoYvn3SisecSYrYPilHtH8kAX/5W9KtMKFqYJBEQvAZi9JH
+ h5jrk6uQv3iniN1OSYRc8QXKLn5+6D7Le5dHaP0UN6tXf7JcBmgk36raHR8xGxEOBKFZ0x2ha05
+ kThkO0OLFuhrDf20Z1u3LTmnv47HTRipGRIhg6gYZkmqx/Gz7S8Ll
+X-Received: by 2002:ac8:5791:0:b0:42a:68be:493b with SMTP id
+ v17-20020ac85791000000b0042a68be493bmr152007qta.51.1706288963011; 
+ Fri, 26 Jan 2024 09:09:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEMEn5J69PlD8XDoh2aJKf7NGXp79yfni+xfngZy/is5njHnWBvpbsZ6vZtEWSXFh2+HXFY0w==
+X-Received: by 2002:ac8:5791:0:b0:42a:68be:493b with SMTP id
+ v17-20020ac85791000000b0042a68be493bmr151967qta.51.1706288962670; 
+ Fri, 26 Jan 2024 09:09:22 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- oo29-20020a056214451d00b0068c373857edsm200931qvb.73.2024.01.26.09.02.22
+ ex7-20020a05622a518700b0042994b3c20dsm677135qtb.29.2024.01.26.09.09.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 09:02:23 -0800 (PST)
-Message-ID: <d20632bb-54f7-4f9a-afc4-535bea6f5da2@redhat.com>
-Date: Fri, 26 Jan 2024 18:02:20 +0100
+ Fri, 26 Jan 2024 09:09:22 -0800 (PST)
+Message-ID: <135941df-2f8b-4fd5-91c7-40b413e6eae3@redhat.com>
+Date: Fri, 26 Jan 2024 18:09:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/arm: Move v7m-related code from cpu32.c into a
- separate file
+Subject: Re: [PATCH 2/2] bulk: Prefer fast cpu_env() over slower CPU QOM cast
+ macro
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
-References: <20240126084001.879548-1-thuth@redhat.com>
- <20240126084001.879548-2-thuth@redhat.com>
- <17455043-25cf-4978-afdd-147e689a1abd@linaro.org>
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Alexander Graf
+ <agraf@csgraf.de>, Michael Rolnik <mrolnik@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, David Woodhouse
+ <dwmw2@infradead.org>, Laurent Vivier <laurent@vivier.eu>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Chris Wulff <crwulff@gmail.com>,
+ Marek Vasut <marex@denx.de>, Stafford Horne <shorne@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, xen-devel@lists.xenproject.org,
+ kvm@vger.kernel.org
+References: <20240125165648.49898-1-philmd@linaro.org>
+ <20240125165648.49898-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,18 +153,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <17455043-25cf-4978-afdd-147e689a1abd@linaro.org>
+In-Reply-To: <20240125165648.49898-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,83 +181,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/01/2024 11.44, Philippe Mathieu-Daudé wrote:
-> Hi Thomas,
+On 25/01/2024 17.56, Philippe Mathieu-Daudé wrote:
+> Mechanical patch produced running the command documented
+> in scripts/coccinelle/cpu_env.cocci_template header.
 > 
-> On 26/1/24 09:39, Thomas Huth wrote:
->> Move the code to a separate file so that we do not have to compile
->> it anymore if CONFIG_ARM_V7M is not set.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   target/arm/tcg/cpu-v7m.c   | 292 +++++++++++++++++++++++++++++++++++++
->>   target/arm/tcg/cpu32.c     | 261 ---------------------------------
->>   target/arm/tcg/meson.build |   4 +
->>   3 files changed, 296 insertions(+), 261 deletions(-)
->>   create mode 100644 target/arm/tcg/cpu-v7m.c
->>
->> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
->> new file mode 100644
->> index 0000000000..d61873ab6d
->> --- /dev/null
->> +++ b/target/arm/tcg/cpu-v7m.c
->> @@ -0,0 +1,292 @@
->> +/*
->> + * QEMU ARM V7 TCG-only CPUs.
-> 
-> s/V7/v7M/
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/i386/hvf/vmx.h                   |  9 +++----
+>   hw/i386/vmmouse.c                       |  6 ++---
+>   hw/i386/xen/xen-hvm.c                   |  3 +--
+>   hw/intc/arm_gicv3_cpuif_common.c        |  3 +--
+>   hw/ppc/mpc8544_guts.c                   |  3 +--
+>   hw/ppc/pnv.c                            |  3 +--
+>   hw/ppc/pnv_xscom.c                      |  3 +--
+>   hw/ppc/ppce500_spin.c                   |  3 +--
+>   hw/ppc/spapr.c                          |  3 +--
+>   hw/ppc/spapr_caps.c                     |  6 ++---
+>   target/alpha/cpu.c                      | 21 +++++----------
+>   target/alpha/gdbstub.c                  |  6 ++---
+>   target/alpha/helper.c                   | 12 +++------
+>   target/alpha/mem_helper.c               |  9 +++----
+>   target/arm/cpu.c                        | 15 ++++-------
+>   target/arm/debug_helper.c               |  6 ++---
+>   target/arm/gdbstub.c                    |  6 ++---
+>   target/arm/gdbstub64.c                  |  6 ++---
+>   target/arm/helper.c                     |  9 +++----
+>   target/arm/hvf/hvf.c                    | 12 +++------
+>   target/arm/kvm.c                        |  3 +--
+>   target/arm/ptw.c                        |  3 +--
+>   target/arm/tcg/cpu32.c                  |  3 +--
+>   target/avr/cpu.c                        | 21 +++++----------
+>   target/avr/gdbstub.c                    |  6 ++---
+>   target/avr/helper.c                     |  9 +++----
+>   target/cris/cpu.c                       |  3 +--
+>   target/cris/gdbstub.c                   |  9 +++----
+>   target/cris/helper.c                    | 12 +++------
+>   target/cris/translate.c                 |  3 +--
+>   target/hppa/cpu.c                       |  6 ++---
+>   target/hppa/int_helper.c                |  6 ++---
+>   target/hppa/mem_helper.c                |  3 +--
+>   target/i386/arch_memory_mapping.c       |  3 +--
+>   target/i386/cpu-dump.c                  |  3 +--
+>   target/i386/cpu.c                       | 36 +++++++++----------------
+>   target/i386/helper.c                    | 30 +++++++--------------
+>   target/i386/hvf/hvf.c                   |  6 ++---
+>   target/i386/hvf/x86.c                   |  3 +--
+>   target/i386/hvf/x86_emu.c               |  6 ++---
+>   target/i386/hvf/x86_task.c              | 10 +++----
+>   target/i386/hvf/x86hvf.c                |  6 ++---
+>   target/i386/kvm/kvm.c                   |  6 ++---
+>   target/i386/kvm/xen-emu.c               | 30 +++++++--------------
+>   target/i386/tcg/sysemu/bpt_helper.c     |  3 +--
+>   target/i386/tcg/tcg-cpu.c               | 12 +++------
+>   target/i386/tcg/user/excp_helper.c      |  3 +--
+>   target/i386/tcg/user/seg_helper.c       |  3 +--
+>   target/m68k/cpu.c                       | 30 +++++++--------------
+>   target/m68k/gdbstub.c                   |  6 ++---
+>   target/m68k/helper.c                    |  3 +--
+>   target/m68k/m68k-semi.c                 |  6 ++---
+>   target/m68k/op_helper.c                 |  9 +++----
+>   target/m68k/translate.c                 |  3 +--
+>   target/microblaze/helper.c              |  3 +--
+>   target/microblaze/translate.c           |  3 +--
+>   target/mips/cpu.c                       |  9 +++----
+>   target/mips/gdbstub.c                   |  6 ++---
+>   target/mips/kvm.c                       | 27 +++++++------------
+>   target/mips/sysemu/physaddr.c           |  3 +--
+>   target/mips/tcg/exception.c             |  3 +--
+>   target/mips/tcg/op_helper.c             |  3 +--
+>   target/mips/tcg/sysemu/special_helper.c |  3 +--
+>   target/mips/tcg/sysemu/tlb_helper.c     |  6 ++---
+>   target/mips/tcg/translate.c             |  3 +--
+>   target/nios2/cpu.c                      |  9 +++----
+>   target/nios2/helper.c                   |  3 +--
+>   target/nios2/nios2-semi.c               |  6 ++---
+>   target/openrisc/gdbstub.c               |  3 +--
+>   target/openrisc/interrupt.c             |  6 ++---
+>   target/openrisc/translate.c             |  3 +--
+>   target/ppc/cpu_init.c                   |  9 +++----
+>   target/ppc/excp_helper.c                |  3 +--
+>   target/ppc/gdbstub.c                    | 12 +++------
+>   target/ppc/kvm.c                        |  6 ++---
+>   target/ppc/ppc-qmp-cmds.c               |  3 +--
+>   target/ppc/user_only_helper.c           |  3 +--
+>   target/riscv/arch_dump.c                |  6 ++---
+>   target/riscv/cpu.c                      | 15 ++++-------
+>   target/riscv/cpu_helper.c               | 13 +++------
+>   target/riscv/debug.c                    |  9 +++----
+>   target/riscv/gdbstub.c                  |  6 ++---
+>   target/riscv/kvm/kvm-cpu.c              |  6 ++---
+>   target/riscv/tcg/tcg-cpu.c              |  9 +++----
+>   target/riscv/translate.c                |  3 +--
+>   target/rx/gdbstub.c                     |  6 ++---
+>   target/rx/helper.c                      |  6 ++---
+>   target/rx/translate.c                   |  3 +--
+>   target/s390x/cpu-dump.c                 |  3 +--
+>   target/s390x/gdbstub.c                  |  6 ++---
+>   target/s390x/helper.c                   |  3 +--
+>   target/s390x/kvm/kvm.c                  |  6 ++---
+>   target/s390x/tcg/excp_helper.c          |  9 +++----
+>   target/s390x/tcg/translate.c            |  3 +--
+>   target/sh4/cpu.c                        | 15 ++++-------
+>   target/sh4/gdbstub.c                    |  6 ++---
+>   target/sh4/helper.c                     |  9 +++----
+>   target/sh4/translate.c                  |  3 +--
+>   target/sparc/cpu.c                      | 12 +++------
+>   target/sparc/gdbstub.c                  |  3 +--
+>   target/sparc/int32_helper.c             |  3 +--
+>   target/sparc/int64_helper.c             |  3 +--
+>   target/sparc/ldst_helper.c              |  6 ++---
+>   target/sparc/mmu_helper.c               | 15 ++++-------
+>   target/sparc/translate.c                |  3 +--
+>   target/tricore/cpu.c                    | 12 +++------
+>   target/tricore/gdbstub.c                |  6 ++---
+>   target/tricore/helper.c                 |  3 +--
+>   target/tricore/translate.c              |  3 +--
+>   target/xtensa/dbg_helper.c              |  3 +--
+>   target/xtensa/exc_helper.c              |  3 +--
+>   target/xtensa/gdbstub.c                 |  6 ++---
+>   target/xtensa/helper.c                  |  9 +++----
+>   target/xtensa/translate.c               |  3 +--
+>   114 files changed, 273 insertions(+), 548 deletions(-)
 
-ok
+A huge patch ... I wonder whether it would make sense to split it up by 
+target architecture to ease the review?
 
->> + *
->> + * Copyright (c) 2012 SUSE LINUX Products GmbH
->> + *
->> + * This code is licensed under the GNU GPL v2 or later.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "cpu.h"
->> +#include "hw/core/tcg-cpu-ops.h"
->> +#include "internals.h"
->> +#include "hw/intc/armv7m_nvic.h"
->> +
->> +/* CPU models. These are not needed for the AArch64 linux-user build. */
->> +#if !defined(CONFIG_USER_ONLY) || !defined(TARGET_AARCH64)
-> 
-> Could we do that in meson instead?
+...
+> diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
+> index a8d014d09a..eb0613bfbe 100644
+> --- a/hw/i386/vmmouse.c
+> +++ b/hw/i386/vmmouse.c
+> @@ -74,8 +74,7 @@ struct VMMouseState {
+>   
+>   static void vmmouse_get_data(uint32_t *data)
+>   {
+> -    X86CPU *cpu = X86_CPU(current_cpu);
+> -    CPUX86State *env = &cpu->env;
+> +    CPUX86State *env = cpu_env(CPU(current_cpu));
 
-I don't think so... (see below)
+No need for the CPU() cast here, current_cpu is already
+of type "CPUState *".
 
->> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
->> index 6fca38f2cc..8c7f6b43f3 100644
->> --- a/target/arm/tcg/meson.build
->> +++ b/target/arm/tcg/meson.build
->> @@ -52,6 +52,10 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->>     'sve_helper.c',
->>   ))
->> +arm_ss.add(when: 'CONFIG_ARM_V7M', if_true: files(
-> 
-> -> arm_system_ss
+>   
+>       data[0] = env->regs[R_EAX]; data[1] = env->regs[R_EBX];
+>       data[2] = env->regs[R_ECX]; data[3] = env->regs[R_EDX];
+> @@ -84,8 +83,7 @@ static void vmmouse_get_data(uint32_t *data)
+>   
+>   static void vmmouse_set_data(const uint32_t *data)
+>   {
+> -    X86CPU *cpu = X86_CPU(current_cpu);
+> -    CPUX86State *env = &cpu->env;
+> +    CPUX86State *env = cpu_env(CPU(current_cpu));
 
-Don't we still need the code for the 32-bit qemu-arm binary? See:
+dito.
 
-$ ./qemu-arm -cpu help | grep cortex-m
-   cortex-m0
-   cortex-m3
-   cortex-m33
-   cortex-m4
-   cortex-m55
-   cortex-m7
+>       env->regs[R_EAX] = data[0]; env->regs[R_EBX] = data[1];
+>       env->regs[R_ECX] = data[2]; env->regs[R_EDX] = data[3];
+> diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+> index f42621e674..3d3ae49be5 100644
+> --- a/hw/i386/xen/xen-hvm.c
+> +++ b/hw/i386/xen/xen-hvm.c
+> @@ -487,8 +487,7 @@ static void regs_to_cpu(vmware_regs_t *vmport_regs, ioreq_t *req)
+>   
+>   static void regs_from_cpu(vmware_regs_t *vmport_regs)
+>   {
+> -    X86CPU *cpu = X86_CPU(current_cpu);
+> -    CPUX86State *env = &cpu->env;
+> +    CPUX86State *env = cpu_env(CPU(current_cpu));
 
-So I don't think we should add this to arm_system_ss only, should we?
+dito.
 
-  Thomas
+>       vmport_regs->ebx = env->regs[R_EBX];
+>       vmport_regs->ecx = env->regs[R_ECX];
+...
+> diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
+> index a26e83d048..3c6a852ad4 100644
+> --- a/hw/ppc/mpc8544_guts.c
+> +++ b/hw/ppc/mpc8544_guts.c
+> @@ -71,8 +71,7 @@ static uint64_t mpc8544_guts_read(void *opaque, hwaddr addr,
+>                                     unsigned size)
+>   {
+>       uint32_t value = 0;
+> -    PowerPCCPU *cpu = POWERPC_CPU(current_cpu);
+> -    CPUPPCState *env = &cpu->env;
+> +    CPUPPCState *env = cpu_env(CPU(current_cpu));
 
+dito ...
 
->> +  'cpu-v7m.c'
->> +))
-> 
+I'll stop here, please respin with the cpu_env(CPU(current_cpu)) fixed to
+cpu_env(current_cpu), and please split the patch by target CPU types.
+
+  Thanks,
+   Thomas
 
 
