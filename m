@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD606C47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A3EAC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQ60-00022H-K3; Fri, 26 Jan 2024 12:34:28 -0500
+	id 1rTQ6l-00052n-RK; Fri, 26 Jan 2024 12:35:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ5S-0000BX-DE; Fri, 26 Jan 2024 12:33:55 -0500
+ id 1rTQ5S-0000BY-EF; Fri, 26 Jan 2024 12:33:55 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ5O-0001jW-Hx; Fri, 26 Jan 2024 12:33:54 -0500
+ id 1rTQ5O-0001jL-FN; Fri, 26 Jan 2024 12:33:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=IXEZX2HEBbMBwUhayue76+vBPs8XLNbiy1LneqBnSSQ=; b=L1IC8mi7FZhd2xkOxGFrYFeg8p
- WcUxvd8Yz3sWSBxucd5MC2EQ3FIO6fL8OU/9NSnVMEybFgTeaMFjqd8sqZoiZEGmoPjSZLOMfQu0V
- SHcceRwOGTSZ7pUIcP2LQjJjMWiO6ToDAIvqKQEOJRDXQJc8tZq9+uPDOElIVaxqs06OmiCZGdtHW
- q6co0x6x6QDAE8FZea34ld2K+eJZgcBAjVzZeBbPtdbecn01YrcGpX9/0TlQs5n5PPEBTd4BMc6MZ
- TFmR2CVGn1qarOl/+7+Az7QSTEFPqkBjq+Z0UZh35NzvyMyiToZBvfTyPreHo1CkH0CSQjWybDBmq
- 48mFntgQ==;
+ bh=XxeZylvTDcaTa4u01FHqxu7ZZ2gT6dnZZU6JU8VOb4A=; b=jl+BB+Hf/RPEXoObcS5J1tHM7N
+ KA5dLm2rkV0PD+4PcWbFue9D0OsBIxsTlMB4PA7J02YJNwuJlMaw6pHOsM+CVrRIG8Xqx2Df4AuMt
+ H9soHKIaV/NUpJdrDvsBquAyZQ4Z8hIgI3oKwRG7puLS9LgfS9SHkXmFIv7cdAnY4NbxlqR7piaz5
+ 6Y2EIWO/akbzRSBXFX49VJcv5V4eA4xK5f85LLf2yQfMYIc8g/fpl5hvcCwIkZ+/+28ujB/hAjiIs
+ Koz4p39k4rrcla0Lg777d/+5nxhGcqIT5xK7CNgkvzwXxNpf5H9GaQwg18tFi7Lw7rDhhC+DV0ljV
+ UTGVcioQ==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTQ4B-000000069Uu-2vfo; Fri, 26 Jan 2024 17:32:36 +0000
+ id 1rTQ4A-000000069Uo-1wNQ; Fri, 26 Jan 2024 17:32:35 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rTQ4A-00000001eo6-21Fg;
- Fri, 26 Jan 2024 17:32:34 +0000
+ Hat Linux)) id 1rTQ49-00000001emu-1BWn;
+ Fri, 26 Jan 2024 17:32:33 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -84,11 +84,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v4 40/47] hw/riscv: use qemu_configure_nic_device()
-Date: Fri, 26 Jan 2024 17:25:17 +0000
-Message-ID: <20240126173228.394202-41-dwmw2@infradead.org>
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PATCH v4 26/47] hw/net/lan9118: use qemu_configure_nic_device()
+Date: Fri, 26 Jan 2024 17:25:03 +0000
+Message-ID: <20240126173228.394202-27-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126173228.394202-1-dwmw2@infradead.org>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
@@ -123,70 +122,121 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- hw/riscv/microchip_pfsoc.c | 14 ++------------
- hw/riscv/sifive_u.c        |  7 +------
- 2 files changed, 3 insertions(+), 18 deletions(-)
+Some callers instantiate the device unconditionally, others will do so only
+if there is a NICInfo to go with it. This appears to be fairly random, but
+preseve the existing behaviour for now.
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index b775aa8946..7725dfbde5 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -202,7 +202,6 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-     MemoryRegion *envm_data = g_new(MemoryRegion, 1);
-     MemoryRegion *qspi_xip_mem = g_new(MemoryRegion, 1);
-     char *plic_hart_config;
--    NICInfo *nd;
-     int i;
- 
-     sysbus_realize(SYS_BUS_DEVICE(&s->e_cpus), &error_abort);
-@@ -411,17 +410,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-         memmap[MICROCHIP_PFSOC_USB].size);
- 
-     /* GEMs */
--
--    nd = &nd_table[0];
--    if (nd->used) {
--        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
--        qdev_set_nic_properties(DEVICE(&s->gem0), nd);
--    }
--    nd = &nd_table[1];
--    if (nd->used) {
--        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
--        qdev_set_nic_properties(DEVICE(&s->gem1), nd);
--    }
-+    qemu_configure_nic_device(DEVICE(&s->gem0), true, NULL);
-+    qemu_configure_nic_device(DEVICE(&s->gem1), true, NULL);
- 
-     object_property_set_int(OBJECT(&s->gem0), "revision", GEM_REVISION, errp);
-     object_property_set_int(OBJECT(&s->gem0), "phy-addr", 8, errp);
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index ec76dce6c9..5207ec1fa5 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -789,7 +789,6 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
-     MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
-     char *plic_hart_config;
-     int i, j;
--    NICInfo *nd = &nd_table[0];
- 
-     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
-     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
-@@ -893,11 +892,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+---
+ hw/arm/kzm.c             | 4 ++--
+ hw/arm/mps2.c            | 2 +-
+ hw/arm/realview.c        | 6 ++----
+ hw/arm/vexpress.c        | 4 ++--
+ hw/net/lan9118.c         | 5 ++---
+ include/hw/net/lan9118.h | 2 +-
+ 6 files changed, 10 insertions(+), 13 deletions(-)
+
+diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
+index 9be91ebeaa..2ccd6f8a76 100644
+--- a/hw/arm/kzm.c
++++ b/hw/arm/kzm.c
+@@ -113,8 +113,8 @@ static void kzm_init(MachineState *machine)
+         alias_offset += ram[i].size;
      }
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->otp), 0, memmap[SIFIVE_U_DEV_OTP].base);
  
--    /* FIXME use qdev NIC properties instead of nd_table[] */
--    if (nd->used) {
--        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
--        qdev_set_nic_properties(DEVICE(&s->gem), nd);
--    }
-+    qemu_configure_nic_device(DEVICE(&s->gem), true, NULL);
-     object_property_set_int(OBJECT(&s->gem), "revision", GEM_REVISION,
-                             &error_abort);
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gem), errp)) {
+-    if (nd_table[0].used) {
+-        lan9118_init(&nd_table[0], KZM_LAN9118_ADDR,
++    if (qemu_find_nic_info("lan9118", true, NULL)) {
++        lan9118_init(KZM_LAN9118_ADDR,
+                      qdev_get_gpio_in(DEVICE(&s->soc.avic), 52));
+     }
+ 
+diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
+index bd873cc5de..50919ee46d 100644
+--- a/hw/arm/mps2.c
++++ b/hw/arm/mps2.c
+@@ -456,7 +456,7 @@ static void mps2_common_init(MachineState *machine)
+     /* In hardware this is a LAN9220; the LAN9118 is software compatible
+      * except that it doesn't support the checksum-offload feature.
+      */
+-    lan9118_init(&nd_table[0], mmc->ethernet_base,
++    lan9118_init(mmc->ethernet_base,
+                  qdev_get_gpio_in(armv7m,
+                                   mmc->fpga_type == FPGA_AN511 ? 47 : 13));
+ 
+diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+index 6e7529d98f..1f88da3702 100644
+--- a/hw/arm/realview.c
++++ b/hw/arm/realview.c
+@@ -84,7 +84,6 @@ static void realview_init(MachineState *machine,
+     SysBusDevice *busdev;
+     qemu_irq pic[64];
+     PCIBus *pci_bus = NULL;
+-    NICInfo *nd;
+     DriveInfo *dinfo;
+     I2CBus *i2c;
+     int n;
+@@ -295,10 +294,9 @@ static void realview_init(MachineState *machine,
+         }
+     }
+ 
+-    nd = qemu_find_nic_info(is_pb ? "lan9118" : "smc91c111", true, NULL);
+-    if (nd) {
++    if (qemu_find_nic_info(is_pb ? "lan9118" : "smc91c111", true, NULL)) {
+         if (is_pb) {
+-            lan9118_init(nd, 0x4e000000, pic[28]);
++            lan9118_init(0x4e000000, pic[28]);
+         } else {
+             smc91c111_init(0x4e000000, pic[28]);
+         }
+diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+index fd981f4c33..1e02e0965f 100644
+--- a/hw/arm/vexpress.c
++++ b/hw/arm/vexpress.c
+@@ -679,8 +679,8 @@ static void vexpress_common_init(MachineState *machine)
+     memory_region_add_subregion(sysmem, map[VE_VIDEORAM], &vms->vram);
+ 
+     /* 0x4e000000 LAN9118 Ethernet */
+-    if (nd_table[0].used) {
+-        lan9118_init(&nd_table[0], map[VE_ETHERNET], pic[15]);
++    if (qemu_find_nic_info("lan9118", true, NULL)) {
++        lan9118_init(map[VE_ETHERNET], pic[15]);
+     }
+ 
+     /* VE_USB: not modelled */
+diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+index 598dd79e17..47ff25b441 100644
+--- a/hw/net/lan9118.c
++++ b/hw/net/lan9118.c
+@@ -1408,14 +1408,13 @@ static void lan9118_register_types(void)
+ 
+ /* Legacy helper function.  Should go away when machine config files are
+    implemented.  */
+-void lan9118_init(NICInfo *nd, uint32_t base, qemu_irq irq)
++void lan9118_init(uint32_t base, qemu_irq irq)
+ {
+     DeviceState *dev;
+     SysBusDevice *s;
+ 
+-    qemu_check_nic_model(nd, "lan9118");
+     dev = qdev_new(TYPE_LAN9118);
+-    qdev_set_nic_properties(dev, nd);
++    qemu_configure_nic_device(dev, true, NULL);
+     s = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(s, &error_fatal);
+     sysbus_mmio_map(s, 0, base);
+diff --git a/include/hw/net/lan9118.h b/include/hw/net/lan9118.h
+index 3d0c67f339..4bf9da7a63 100644
+--- a/include/hw/net/lan9118.h
++++ b/include/hw/net/lan9118.h
+@@ -15,6 +15,6 @@
+ 
+ #define TYPE_LAN9118 "lan9118"
+ 
+-void lan9118_init(NICInfo *, uint32_t, qemu_irq);
++void lan9118_init(uint32_t, qemu_irq);
+ 
+ #endif
 -- 
 2.43.0
 
