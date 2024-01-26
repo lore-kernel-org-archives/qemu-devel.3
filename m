@@ -4,105 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1F5C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AFBC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTJUM-0003PR-Te; Fri, 26 Jan 2024 05:31:10 -0500
+	id 1rTJbq-0006iK-UK; Fri, 26 Jan 2024 05:38:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJUL-0003Nh-P9; Fri, 26 Jan 2024 05:31:09 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJUK-00047c-D2; Fri, 26 Jan 2024 05:31:09 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q9m5oa030092; Fri, 26 Jan 2024 10:30:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=nO1TGr4T0i/+/afwr16vaswH5GvOuQP6AMcInRnT4MU=;
- b=hWGPKfxNptsZgCJcgOSq1a7KlJVoHJYbxbA+gywiwVHkDersOpwXHj/4uP1ytbwLTM5r
- k8JxUJGRFtL/JKZ8jCq64OuzPl1pp9GiMKfP91+z0OEdRdSS7/G7m4TeVcc6wMxvgdgu
- Is828y0SF28THQKr3jp1t5mSZyxsLfVG4UX9xFIjnVGtIBXlXPNPPwKTaPWi88tbWNsQ
- QK+El+Q9NEjV9gj+c30Uq3sN0p02ZAxkZ7sp8KZNyggs/IypgOg0cqqZpohBpe25kLho
- LJlzItVIED+oLz60SVUFF0HuH/Ue8VLlEmWgCYEcSvyLIDmGS6jNtflxsw7/WcQCAxmk 4g== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vvadsru4n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:30:59 +0000
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40QA0JZ7031109;
- Fri, 26 Jan 2024 10:30:58 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vvadsru3s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:30:58 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q9d7FS025298; Fri, 26 Jan 2024 10:30:57 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrtqksu8j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:30:57 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40QAUvxe15270618
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jan 2024 10:30:57 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 22E6A5805A;
- Fri, 26 Jan 2024 10:30:57 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5431258054;
- Fri, 26 Jan 2024 10:30:56 +0000 (GMT)
-Received: from [9.61.160.70] (unknown [9.61.160.70])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Jan 2024 10:30:56 +0000 (GMT)
-Message-ID: <f34c377c-67e0-40bd-89b2-8de4b5f89774@linux.ibm.com>
-Date: Fri, 26 Jan 2024 04:30:56 -0600
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTJbp-0006hG-Ce
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 05:38:53 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTJbm-0006iA-9y
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 05:38:53 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-337d99f9cdfso316243f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 02:38:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706265528; x=1706870328; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mGEceRpzawgur6mwKEf1okcVHBJoqqu1g4hBfqZOOeY=;
+ b=jmM5MHg+HCL/wFtSuS36zLq1iC8Tk85l10ycVUqQ86cB2Dg0y/FZgK/uT/UGsaPhG1
+ 7kVT80lp0p6nLtLtAtqmcltO2AZfF9GpslKko9+hNz6Yst8k5nL8UMv4mMMf++zS/+r/
+ xevIdq6oFZtoFG3qK0z2E34VtMdf3WQFCj0kZj5t/XnXtSj99s0keLi6Kiyl0Fz8VmdI
+ AlK44+PApKybOPMac6UYxyXFwWn7zf8D2MnW0GtWHZJMY2RjheZQND3bjwdzk36w5fow
+ QCf7/Q3NAfVXh7o3uU1PWVbd0T1qkjSiCK7iYUXD+RYe2NmLo1ShOhk14HMk+IBBjJbj
+ 1Ayw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706265528; x=1706870328;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mGEceRpzawgur6mwKEf1okcVHBJoqqu1g4hBfqZOOeY=;
+ b=EoR+2PykBdIuX7XUwd2gUGVxXDWQqQtvwYO0TG+mxT/VYiy3aMh8DKTUkyrUijqv5B
+ bPowRiRXNVA0uZoACTdRkQsxEvElAm8aa391U+wJ8MIYoPklUrPVeud+2CeyCgtfmPEi
+ DjK+/i7f/GAqf5uKYDIU8QhQxN8I+0xXPU2MW/Ne3x3RYx/GPu1c/Qby1soVhM2/y+BR
+ euZYT2NDK0vzVw9HiSM2FzdEM3lVQy9UJ1+s87Ogq5fhSTfYZvB9W6CXHmXjkMRBm0Um
+ qe7+8AB82ZvL+SIBdwnusn6XOvr1yHzr3kvUMSoPcxTwr3208/s9jtc8u7D6claSf/zB
+ 0V6w==
+X-Gm-Message-State: AOJu0YwSNooRb7jNm6pjGfGk6jnKjjeiYX9EtgFGpYYQUnK+uB318zCD
+ hoTF0EG97YaTCZQTz8chJXRRmTDmK0X6jPN2mgcNczL6YwwFOhppGZSg8A2gQQv/V6IjKaFw0DF
+ g
+X-Google-Smtp-Source: AGHT+IGgajcAerkUFRaQcgH0uxTDapYVMfxhQbjaSzODJ/d3kmOhpPq3X0OwB4NBBDnOhxOMLRHS+A==
+X-Received: by 2002:a7b:c8c9:0:b0:40e:bffb:ba19 with SMTP id
+ f9-20020a7bc8c9000000b0040ebffbba19mr731249wml.48.1706265528398; 
+ Fri, 26 Jan 2024 02:38:48 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.142.39])
+ by smtp.gmail.com with ESMTPSA id
+ s13-20020a05600c384d00b0040e4a7a7ca3sm1454671wmr.43.2024.01.26.02.38.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jan 2024 02:38:48 -0800 (PST)
+Message-ID: <1128019c-adca-4cd4-aa73-937001ad990a@linaro.org>
+Date: Fri, 26 Jan 2024 11:38:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 00/11] Introduce model for IBM's FSI
+Subject: Re: [PATCH 1/2] scripts/coccinelle: Add cpu_env.cocci_template script
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+References: <20240125165648.49898-1-philmd@linaro.org>
+ <20240125165648.49898-2-philmd@linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
- pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
-Cc: qemu-arm@nongnu.org
-References: <20240126034026.31068-1-ninad@linux.ibm.com>
- <6a7c98da-c0de-4c59-9476-5b5fe17232c7@kaod.org>
-From: Ninad Palsule <ninad@linux.ibm.com>
-In-Reply-To: <6a7c98da-c0de-4c59-9476-5b5fe17232c7@kaod.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240125165648.49898-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: OWE37i6-pZGPtI1eSt_VmZg25o_oP629
-X-Proofpoint-GUID: h5wMSI637DzOmxIQEi5WD3XqnIPFF5bK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0
- priorityscore=1501 mlxscore=0 mlxlogscore=600 clxscore=1015
- impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311290000 definitions=main-2401260076
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=ninad@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,16 +99,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Cedric,
+On 25/1/24 17:56, Philippe Mathieu-Daudé wrote:
+> Add a Coccinelle script to convert the following slow path
+> (due to the QOM cast macro):
+> 
+>    &ARCH_CPU(..)->env
+> 
+> to the following fast path:
+> 
+>    cpu_env(..)
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   MAINTAINERS                               |  1 +
+>   scripts/coccinelle/cpu_env.cocci_template | 60 +++++++++++++++++++++++
+>   2 files changed, 61 insertions(+)
+>   create mode 100644 scripts/coccinelle/cpu_env.cocci_template
 
 
-> I did some minor comments. v12 should be queued for upstream. I will
-> reorder the Signed-off (mine) trailers.
+> diff --git a/scripts/coccinelle/cpu_env.cocci_template b/scripts/coccinelle/cpu_env.cocci_template
+> new file mode 100644
+> index 0000000000..53aa3a1fea
+> --- /dev/null
+> +++ b/scripts/coccinelle/cpu_env.cocci_template
+> @@ -0,0 +1,60 @@
+> +/*
+> +
+> + Convert &ARCH_CPU(..)->env to use cpu_env(..).
+> +
+> + Rationale: ARCH_CPU() might be slow, being a QOM cast macro.
+> +            cpu_env() is its fast equivalent.
+> +
+> + SPDX-License-Identifier: GPL-2.0-or-later
+> + SPDX-FileCopyrightText: Linaro Ltd 2024
+> + SPDX-FileContributor: Philippe Mathieu-Daudé
+> +
+> + Usage as of v8.2.0:
+> +
+> + $ for targetdir in target/*; do test -d $targetdir || continue; \
+> +       export target=${targetdir:7}; \
+> +       sed \
+> +           -e "s/__CPUArchState__/$( \
+> +               git grep -h --no-line-number '@env: #CPU.*State' \
+> +                   target/$target/cpu.h \
+> +               | sed -n -e 's/.*\(CPU.*State\).\?/\1/p')/g" \
+> +           -e "s/__ARCHCPU__/$( \
+> +               git grep -h --no-line-number OBJECT_DECLARE_CPU_TYPE.*CPU \
+> +                   target/$target/cpu-qom.h \
+> +               | sed -n -e 's/.*(\(.*\), .*, .*)/\1/p')/g" \
+> +           -e "s/__ARCH_CPU__/$( \
+> +               git grep -h --no-line-number OBJECT_DECLARE_CPU_TYPE.*CPU \
+> +                   target/$target/cpu-qom.h \
+> +               | sed -n -e 's/.*(.*, .*, \(.*\))/\1/p')/g" \
+> +       < scripts/coccinelle/cpu_env.cocci_template \
+> +       > $TMPDIR/cpu_env_$target.cocci; \
+> +       for dir in hw target/$target; do \
+> +           spatch --macro-file scripts/cocci-macro-file.h \
+> +                  --sp-file $TMPDIR/cpu_env_$target.cocci \
+> +                  --keep-comments \
+> +                  --dir $dir \
+> +                  --in-place; \
+> +       done; \
+> +   done
+> +
+> +*/
+> +
+> +@ CPUState_arg_used @
+> +CPUState *cs;
+> +identifier cpu;
+> +identifier env;
+> +@@
+> +-   __ARCHCPU__ *cpu = __ARCH_CPU__(cs);
 
-Thanks a lot for detailed review.
+Here we remove ARCH_CPU(), ...
 
-Regards,
+> +-   __CPUArchState__ *env = &cpu->env;
+> ++   __CPUArchState__ *env = cpu_env(cs);
+> +    ... when != cpu
+> +
+> +@ depends on never CPUState_arg_used @
+> +identifier obj;
+> +identifier cpu;
+> +identifier env;
+> +@@
+> +-   __ARCHCPU__ *cpu = __ARCH_CPU__(obj);
+> +-   __CPUArchState__ *env = &cpu->env;
+> ++   __CPUArchState__ *env = cpu_env(CPU(obj));
 
-Ninad
+... but here we just change it by a CPU() QOM call.
+So this 2nd change is just style cleanup.
+
+> +    ... when != cpu
 
 
