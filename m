@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCABC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F36C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTLEQ-0001WW-6l; Fri, 26 Jan 2024 07:22:50 -0500
+	id 1rTLFB-0002Vf-QP; Fri, 26 Jan 2024 07:23:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTLEH-0001To-9e; Fri, 26 Jan 2024 07:22:42 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rTLF9-0002EX-2D; Fri, 26 Jan 2024 07:23:35 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTLEF-0006sp-Eo; Fri, 26 Jan 2024 07:22:41 -0500
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLxfL4rMvz4wny;
- Fri, 26 Jan 2024 23:22:34 +1100 (AEDT)
+ id 1rTLF7-00073c-0U; Fri, 26 Jan 2024 07:23:34 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLxgN2V1Rz4wx5;
+ Fri, 26 Jan 2024 23:23:28 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLxfH3Y4kz4wcJ;
- Fri, 26 Jan 2024 23:22:31 +1100 (AEDT)
-Message-ID: <a865d3aa-ed36-4d75-9358-ca5292a04b32@kaod.org>
-Date: Fri, 26 Jan 2024 13:22:29 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLxgL3f8Fz4wd4;
+ Fri, 26 Jan 2024 23:23:26 +1100 (AEDT)
+Message-ID: <42d89d11-10dc-445b-a9bd-f33e109a863f@kaod.org>
+Date: Fri, 26 Jan 2024 13:23:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/avocado/machine_aspeed.py: Update buildroot images
- to 2023.11
+Subject: Re: [PATCH v3 0/5] hw/arm/aspeed: Check for CPU types in
+ machine_run_board_init()
 Content-Language: en-US
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cleber Rosa <crosa@redhat.com>
-References: <20240109173538.435781-1-clg@kaod.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20240125055544.79405-1-philmd@linaro.org>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240109173538.435781-1-clg@kaod.org>
+In-Reply-To: <20240125055544.79405-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,28 +69,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/24 18:35, Cédric Le Goater wrote:
-> Compared to mainline buildroot, these images have some customization :
+On 1/25/24 06:55, Philippe Mathieu-Daudé wrote:
+> Series fully reviewed.
 > 
-> - Linux version is bumped to 6.6.3 and built with a custom config
-> - U-Boot is switched to the one provided by OpenBMC for more support
-> - defconfigs extra tools for dev
+> Since v2:
+> - Addressed Gavin & Richard review comments.
+> - Collected R-b tags
 > 
-> See branch [1] for more details.
+> Since v1:
+> - Follow suggestions from Cédric from [*]
 > 
-> There are a few changes since last update, commit ed1f5ff84209. Images
-> all have a password now and I2C devices have been updated in the Linux
-> ast2600-evb device tree [2]. Do the necessary adjustements.
+> [*] https://lore.kernel.org/qemu-devel/e13c655b-7904-4e47-a673-4efd13c26b3d@kaod.org/
 > 
-> [1] https://github.com/legoater/buildroot/commits/aspeed-2023.11
-> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9deb10cf160e
+> Based-on: <20240123222508.13826-1-philmd@linaro.org>
 > 
-> Signed-off-by: Cédric Le Goater <clg@kaod.org>
-
+> Philippe Mathieu-Daudé (5):
+>    hw/arm/aspeed: Remove dead code
+>    hw/arm/aspeed: Set default CPU count using aspeed_soc_num_cpus()
+>    hw/arm/aspeed: Init CPU defaults in a common helper
+>    hw/arm/aspeed: Introduce aspeed_soc_cpu_type() helper
+>    hw/arm/aspeed: Check for CPU types in machine_run_board_init()
+> 
+>   include/hw/arm/aspeed_soc.h |  4 ++-
+>   hw/arm/aspeed.c             | 70 +++++++++++++++----------------------
+>   hw/arm/aspeed_ast10x0.c     |  8 +++--
+>   hw/arm/aspeed_ast2400.c     | 15 ++++++--
+>   hw/arm/aspeed_ast2600.c     |  9 +++--
+>   hw/arm/aspeed_soc_common.c  |  8 +++++
+>   6 files changed, 65 insertions(+), 49 deletions(-)
+> 
 
 Applied to aspeed-next.
 
 Thanks,
 
 C.
+
+
 
