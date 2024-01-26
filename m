@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88806C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 18:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F54C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 18:17:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQkc-0005ew-27; Fri, 26 Jan 2024 13:16:26 -0500
+	id 1rTQkl-0005w0-P8; Fri, 26 Jan 2024 13:16:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rTQka-0005dd-IH
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 13:16:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rTQkZ-0003TS-6H
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 13:16:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706292982;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uNG6H+3tybJ100+FQ7ifNQULqIkXKOGQRCmck6q+baY=;
- b=EN5YMU4liAN0i06vXq3uft96OSSZ1f7fvKe4ikSKYGQMh/aSP4ekZ5ndeS0wx4tv6pQu9s
- EVXnKgJuOqAVrMoNgTShqXBaSM3fIvQ4PlTi3+/9EcMb95oxTQpJ5uAja9U9IfxYdB8/gu
- x8MlqSLi2xJjfpZIapXtWWDamMggR6g=
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-83-X8AChXT7NZO0_ZBjLfyFaA-1; Fri, 26 Jan 2024 13:16:18 -0500
-X-MC-Unique: X8AChXT7NZO0_ZBjLfyFaA-1
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-3bbaf0ee0d9so1113172b6e.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 10:16:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rTQkj-0005vC-R7
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 13:16:33 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rTQki-0003UR-0Y
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 13:16:33 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55a539d205aso787841a12.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 10:16:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706292990; x=1706897790; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=k3m3r/DWlDKxkMoVx8YYRCp3xDTq17ve0cQaruo9Sms=;
+ b=xhOiyztSgouyoGx8ZGyYSbDgzsmot0AYpDcUcDzDvxX0CAUdCaluaDAbsjBDlTPH6f
+ HTeGK7RfiWFRJIRPpHU/AnjY/dpFqIR5czh21VAGtw+93Rle3oV4e5LCHF/wgh5wNI/X
+ wB6vHqEDUB02qnjF6F/S9YZMWwdm6ThBjPzeJewhYd3iMWP1doK4A6hQn5LCbNp0zS6b
+ nMOzC6qxii7T8YmpjTukONbKHB7gXBoQTbkxS/Fah++q/ID3MBYWk3gAEpWn52f8gYHN
+ trMYJ2bHcCjfDcyUcOwdf9RWigqAlkr1VoPuNM5lneBwgSKHSDIzqSgExn641DXv+Hfn
+ UQkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706292977; x=1706897777;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uNG6H+3tybJ100+FQ7ifNQULqIkXKOGQRCmck6q+baY=;
- b=Ub5KVR2lpALyoeXNhLPo+EP6T3M5+B+fnUsLFfYHqGJppde0GZJl5kcvaNJR1/IoZb
- 4WG8foL9EN5iwYpxYzSOezlcWniZQzvC5Dt+oiPYswnwSuGMDABeTbsWyOGPJNd8qeYf
- ufTIwOFJK1JwbxBHkovvO+jk7qlUevadbqgtiNEjNWbki+Bqry0aJSP7H66llFJUvas/
- dY3HGjsVWF/8U+XplwXfhTeC63wRjA+OFASdQ65kFCGLCRVQmXXdCGZxWEfOP+OMF/us
- 1REBXvpKfOlqLksDRBPmy0gGzDXb3Jq+j4rUZ3OSMKBIQsg+EwqD/EIEG2JN7yHV5qvQ
- mYlA==
-X-Gm-Message-State: AOJu0YygJP1uM/ZCLH74exbeiGO9ZPWVD//2k9M6CqM1VviR0kj/Pz1M
- VOW3BkLeI4/bX7vENRaSgXziaNHFhUEp4Ga5iTgbYEQfK91LiQpsWwU/78swfJp466YADSTxSXr
- B+50jHho7VSvXRBzO2xv0dhGl/7eRaz2IhKwJsUDh/Q/c+pzDYTrJjhKHfQLLJkf13VxBIebJTP
- XfOICGSGW8nySUrq+BHegyyOLoRnw=
-X-Received: by 2002:a05:6808:d4b:b0:3bd:f41f:f9a6 with SMTP id
- w11-20020a0568080d4b00b003bdf41ff9a6mr168935oik.25.1706292977729; 
- Fri, 26 Jan 2024 10:16:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFxGYME3uEkFpYZdF0yuGNjBmdCuRZUGKjm+7ziR8gEBrV71tk/J3Re8/gUBge6UdSLwQtE2ayJ0S4PUmkNJQ4=
-X-Received: by 2002:a05:6808:d4b:b0:3bd:f41f:f9a6 with SMTP id
- w11-20020a0568080d4b00b003bdf41ff9a6mr168928oik.25.1706292977542; Fri, 26 Jan
- 2024 10:16:17 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706292990; x=1706897790;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=k3m3r/DWlDKxkMoVx8YYRCp3xDTq17ve0cQaruo9Sms=;
+ b=RiWxXzf28fxkxTIBANSo6f+6uZeiFbFn20co7EAv9P5Bs7irSJCE9mUHCwXgnGcF2L
+ sYSKTrRshhuBCZfZKowJZAsOUcjT4hkYLbrGbwSylpCtaIk8/OzhVc8o+6LO81Qt2qFT
+ 27WWCGWSTVJTJSr3u3fhZSVILmn+9Pf9gC3LThjf4H24MagOIcWpyd91qHhondHHOcxG
+ cXfkXvJrgzI1+I5L6xjugbCi2oDwF4/HNIHHuUShSlGL+3/VNCqjkz+g96CrUvlS84F6
+ bFGWex6PhFYondOy31gDv/xMh6bNsOoA28L9IhewE4A+gN6JbW63ob0BskN+OeFylvRV
+ 4uwQ==
+X-Gm-Message-State: AOJu0YytMtwExAhBWy4CJYH2RtVkL9Pxs8lBKimGkTcj7ETvwkKusN1t
+ bGKFKJdN232T1VqoZabZuSn9vUH8VZWGkRlKqvM2U4QdRkh9WZfeDiUcrEOcB9ue0OdSgVm6Okw
+ 22a4v/XmA0xMi01r6K56ruCEFZfZtYzVSaK4ju1t4Myx5/oV2
+X-Google-Smtp-Source: AGHT+IFrE4eLiVQmy6rYyKkfPe9xErfuQr238Kn9uZXabCXjsLCJiOi5jkIHHXXHyMnAZAPoX3LyJ3YvVGQ4mvUiXf8=
+X-Received: by 2002:a05:6402:5208:b0:55d:2d9f:30c0 with SMTP id
+ s8-20020a056402520800b0055d2d9f30c0mr116896edd.1.1706292990511; Fri, 26 Jan
+ 2024 10:16:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20240124155425.73195-1-philmd@linaro.org>
-In-Reply-To: <20240124155425.73195-1-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 26 Jan 2024 19:16:06 +0100
-Message-ID: <CABgObfb8pKdf=Q7JPDQ9j=Zanbk9gYOC8ufxprGA88zAPaoO5Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] accel/kvm: Sanitize KVM_HAVE_MCE_INJECTION definition
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- kvm@vger.kernel.org, qemu-s390x@nongnu.org
+References: <20240126041725.124562-1-peterx@redhat.com>
+In-Reply-To: <20240126041725.124562-1-peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 26 Jan 2024 18:16:19 +0000
+Message-ID: <CAFEAcA-iEvpEkOGgMM5sy5S37J1xpqySAYx4ntzhV9JRriJa5g@mail.gmail.com>
+Subject: Re: [PULL 00/15] Migration 20240126 patches
+To: peterx@redhat.com
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,36 +87,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 4:54=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+On Fri, 26 Jan 2024 at 04:18, <peterx@redhat.com> wrote:
 >
-> Trivial replacement of KVM_HAVE_MCE_INJECTION by
-> KVM_ARCH_HAVE_MCE_INJECTION (not the "ARCH_" difference).
-
-I am confused, why can't you just rename the symbol and instead you go
-through this change?
-
-Paolo
-
-> Philippe Mathieu-Daud=C3=A9 (2):
->   accel/kvm: Define KVM_ARCH_HAVE_MCE_INJECTION in each target
->   accel/kvm: Directly check KVM_ARCH_HAVE_MCE_INJECTION value in place
+> From: Peter Xu <peterx@redhat.com>
 >
->  include/sysemu/kvm.h         |  7 ++++++-
->  target/arm/cpu-param.h       |  5 +++++
->  target/arm/cpu.h             |  4 ----
->  target/i386/cpu-param.h      |  2 ++
->  target/i386/cpu.h            |  2 --
->  target/loongarch/cpu-param.h |  2 ++
->  target/mips/cpu-param.h      |  2 ++
->  target/ppc/cpu-param.h       |  2 ++
->  target/riscv/cpu-param.h     |  2 ++
->  target/s390x/cpu-param.h     |  2 ++
->  accel/kvm/kvm-all.c          | 10 +++++-----
->  11 files changed, 28 insertions(+), 12 deletions(-)
+> The following changes since commit 5bab95dc74d43bbb28c6a96d24c810a664432057:
 >
-> --
-> 2.41.0
+>   Merge tag 'pull-request-2024-01-24' of https://gitlab.com/thuth/qemu into staging (2024-01-25 12:33:42 +0000)
 >
+> are available in the Git repository at:
+>
+>   https://gitlab.com/peterx/qemu.git tags/migration-20240126-pull-request
+>
+> for you to fetch changes up to 24b0c2ec956ca225282f81470f7c26f5bb844885:
+>
+>   Make 'uri' optional for migrate QAPI (2024-01-26 11:06:13 +0800)
+>
+> ----------------------------------------------------------------
+> Migration pull for 9.0
+>
+> - Fabiano's patchset to fix migration state references in BHs
+> - Fabiano's new 'n-1' migration test for CI
+> - Het's fix on making "uri" optional in QMP migrate cmd
+> - Markus's HMP leak fix reported by Coverity
+> - Paolo's cleanup on uffd to replace u64 usage
+> - Peter's small migration cleanup series all over the places
+>
+> ----------------------------------------------------------------
 
+This fails CI on the AArch64 host:
+https://gitlab.com/qemu-project/qemu/-/jobs/6031311759
+
+because it's trying to use the neoverse-n1 CPU with KVM.
+
+thanks
+-- PMM
 
