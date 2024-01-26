@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B70C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E180C47DDF
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTL9J-0004pE-Bs; Fri, 26 Jan 2024 07:17:33 -0500
+	id 1rTL8W-0004VI-58; Fri, 26 Jan 2024 07:16:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rTL8v-0004fv-Eo
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:17:22 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTL8P-0004UW-52; Fri, 26 Jan 2024 07:16:37 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rTL8s-00058D-TU
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:17:08 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TLxSR47RFz6J9tX;
- Fri, 26 Jan 2024 20:13:59 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 21E04140D1A;
- Fri, 26 Jan 2024 20:17:05 +0800 (CST)
-Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
- lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 26 Jan 2024 12:17:04 +0000
-To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Fan Ni
- <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>
-CC: Davidlohr Bueso <dave@stgolabs.net>, <linuxarm@huawei.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/5] hw/cxl: Update HDM Decoder capability to version 3
-Date: Fri, 26 Jan 2024 12:16:32 +0000
-Message-ID: <20240126121636.24611-2-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240126121636.24611-1-Jonathan.Cameron@huawei.com>
-References: <20240126121636.24611-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTL8L-00053L-Hu; Fri, 26 Jan 2024 07:16:36 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLxWG3KJ0z4wd4;
+ Fri, 26 Jan 2024 23:16:26 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLxW51TKHz4wd0;
+ Fri, 26 Jan 2024 23:16:16 +1100 (AEDT)
+Message-ID: <9d1368b2-b163-4fd7-90e6-c87a3e643bbc@kaod.org>
+Date: Fri, 26 Jan 2024 13:16:07 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 10/11] hw/fsi: Added FSI documentation
+Content-Language: en-US
+To: Ninad Palsule <ninad@linux.ibm.com>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
+Cc: qemu-arm@nongnu.org
+References: <20240126104956.74126-1-ninad@linux.ibm.com>
+ <20240126104956.74126-11-ninad@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240126104956.74126-11-ninad@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.247.231]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,93 +67,180 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Part of standardizing the QEMU code on CXL r3.1.
-No fuctional changes as everything added is optional and
-it is set as not implemented.
+On 1/26/24 11:49, Ninad Palsule wrote:
+> Documentation for IBM FSI model.
+> 
+> Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
+> ---
+> v11:
+>    - Removed Cedric's signoff.
+> ---
+>   docs/specs/fsi.rst   | 126 +++++++++++++++++++++++++++++++++++++++++++
+>   docs/specs/index.rst |   1 +
+>   2 files changed, 127 insertions(+)
+>   create mode 100644 docs/specs/fsi.rst
+> 
+> diff --git a/docs/specs/fsi.rst b/docs/specs/fsi.rst
+> new file mode 100644
+> index 0000000000..b33b4d565c
+> --- /dev/null
+> +++ b/docs/specs/fsi.rst
+> @@ -0,0 +1,126 @@
+> +======================================
+> +IBM's Flexible Service Interface (FSI)
+> +======================================
+> +
+> +The QEMU FSI emulation implements hardware interfaces between ASPEED SOC, FSI
+> +master/slave and the end engine.
+> +
+> +FSI is a point-to-point two wire interface which is capable of supporting
+> +distances of up to 4 meters. FSI interfaces have been used successfully for
+> +many years in IBM servers to attach IBM Flexible Support Processors(FSP) to
+> +CPUs and IBM ASICs.
+> +
+> +FSI allows a service processor access to the internal buses of a host POWER
+> +processor to perform configuration or debugging. FSI has long existed in POWER
+> +processes and so comes with some baggage, including how it has been integrated
+> +into the ASPEED SoC.
+> +
+> +Working backwards from the POWER processor, the fundamental pieces of interest
+> +for the implementation are: (see the `FSI specification`_ for more details)
+> +
+> +1. The Common FRU Access Macro (CFAM), an address space containing various
+> +   "engines" that drive accesses on buses internal and external to the POWER
+> +   chip. Examples include the SBEFIFO and I2C masters. The engines hang off of
+> +   an internal Local Bus (LBUS) which is described by the CFAM configuration
+> +   block.
+> +
+> +2. The FSI slave: The slave is the terminal point of the FSI bus for FSI
+> +   symbols addressed to it. Slaves can be cascaded off of one another. The
+> +   slave's configuration registers appear in address space of the CFAM to
+> +   which it is attached.
+> +
+> +3. The FSI master: A controller in the platform service processor (e.g. BMC)
+> +   driving CFAM engine accesses into the POWER chip. At the hardware level
+> +   FSI is a bit-based protocol supporting synchronous and DMA-driven accesses
+> +   of engines in a CFAM.
+> +
+> +4. The On-Chip Peripheral Bus (OPB): A low-speed bus typically found in POWER
+> +   processors. This now makes an appearance in the ASPEED SoC due to tight
+> +   integration of the FSI master IP with the OPB, mainly the existence of an
+> +   MMIO-mapping of the CFAM address straight onto a sub-region of the OPB
+> +   address space.
+> +
+> +5. An APB-to-OPB bridge enabling access to the OPB from the ARM core in the
+> +   AST2600. Hardware limitations prevent the OPB from being directly mapped
+> +   into APB, so all accesses are indirect through the bridge.
+> +
+> +The LBUS is modelled to maintain the qdev bus hierarchy and to take advantages
+> +of the object model to automatically generate the CFAM configuration block.
+> +The configuration block presents engines in the order they are attached to the
+> +CFAM's LBUS. Engine implementations should subclass the LBusDevice and set the
+> +'config' member of LBusDeviceClass to match the engine's type.
+> +
+> +CFAM designs offer a lot of flexibility, for instance it is possible for a
+> +CFAM to be simultaneously driven from multiple FSI links. The modeling is not
+> +so complete; it's assumed that each CFAM is attached to a single FSI slave (as
+> +a consequence the CFAM subclasses the FSI slave).
+> +
+> +As for FSI, its symbols and wire-protocol are not modelled at all. This is not
+> +necessary to get FSI off the ground thanks to the mapping of the CFAM address
+> +space onto the OPB address space - the models follow this directly and map the
+> +CFAM memory region into the OPB's memory region.
+> +
+> +QEMU files related to FSI interface are in following directories:
+> + - ``hw/fsi``
+> + - ``include/hw/fsi``
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This is not useful.
 
----
- include/hw/cxl/cxl_component.h | 16 ++++++++++++++--
- hw/cxl/cxl-component-utils.c   | 10 +++++++++-
- 2 files changed, 23 insertions(+), 3 deletions(-)
+> +The following commands start the ``rainier-bmc`` machine with built-in FSI
+> +model. There are no model specific arguments. Please check this document to
+> +learn more about Aspeed ``rainier-bmc`` machine: docs/system/arm/aspeed.rst
 
-diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index 5227a8e833..7d3edef1bf 100644
---- a/include/hw/cxl/cxl_component.h
-+++ b/include/hw/cxl/cxl_component.h
-@@ -109,8 +109,9 @@ REG32(CXL_RAS_ERR_HEADER0, CXL_RAS_REGISTERS_OFFSET + 0x18)
-     (CXL_SEC_REGISTERS_OFFSET + CXL_SEC_REGISTERS_SIZE)
- #define CXL_LINK_REGISTERS_SIZE   0x38
- 
--/* 8.2.5.12 - CXL HDM Decoder Capability Structure */
--#define HDM_DECODE_MAX 10 /* 8.2.5.12.1 */
-+/* CXL r3.1 Section 8.2.4.20: CXL HDM Decoder Capability Structure */
-+#define HDM_DECODE_MAX 10 /* Maximum decoders for Devices */
-+#define CXL_HDM_CAPABILITY_VERSION 3
- #define CXL_HDM_REGISTERS_OFFSET \
-     (CXL_LINK_REGISTERS_OFFSET + CXL_LINK_REGISTERS_SIZE)
- #define CXL_HDM_REGISTERS_SIZE (0x10 + 0x20 * HDM_DECODE_MAX)
-@@ -133,6 +134,11 @@ REG32(CXL_RAS_ERR_HEADER0, CXL_RAS_REGISTERS_OFFSET + 0x18)
-             FIELD(CXL_HDM_DECODER##n##_CTRL, COMMITTED, 10, 1)                 \
-             FIELD(CXL_HDM_DECODER##n##_CTRL, ERR, 11, 1)                       \
-             FIELD(CXL_HDM_DECODER##n##_CTRL, TYPE, 12, 1)                      \
-+            FIELD(CXL_HDM_DECODER##n##_CTRL, BI, 13, 1)                        \
-+            FIELD(CXL_HDM_DECODER##n##_CTRL, UIO, 14, 1)                       \
-+            FIELD(CXL_HDM_DECODER##n##_CTRL, UIG, 16, 4)                       \
-+            FIELD(CXL_HDM_DECODER##n##_CTRL, UIW, 20, 4)                       \
-+            FIELD(CXL_HDM_DECODER##n##_CTRL, ISP, 24, 4)                       \
-   REG32(CXL_HDM_DECODER##n##_TARGET_LIST_LO,                                   \
-         CXL_HDM_REGISTERS_OFFSET + (0x20 * n) + 0x24)                          \
-   REG32(CXL_HDM_DECODER##n##_TARGET_LIST_HI,                                   \
-@@ -148,6 +154,12 @@ REG32(CXL_HDM_DECODER_CAPABILITY, CXL_HDM_REGISTERS_OFFSET)
-     FIELD(CXL_HDM_DECODER_CAPABILITY, INTERLEAVE_256B, 8, 1)
-     FIELD(CXL_HDM_DECODER_CAPABILITY, INTERLEAVE_4K, 9, 1)
-     FIELD(CXL_HDM_DECODER_CAPABILITY, POISON_ON_ERR_CAP, 10, 1)
-+    FIELD(CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 11, 1)
-+    FIELD(CXL_HDM_DECODER_CAPABILITY, 16_WAY, 12, 1)
-+    FIELD(CXL_HDM_DECODER_CAPABILITY, UIO, 13, 1)
-+    FIELD(CXL_HDM_DECODER_CAPABILITY, UIO_DECODER_COUNT, 16, 4)
-+    FIELD(CXL_HDM_DECODER_CAPABILITY, MEMDATA_NXM_CAP, 20, 1)
-+    FIELD(CXL_HDM_DECODER_CAPABILITY, SUPPORTED_COHERENCY_MODEL, 21, 2)
- REG32(CXL_HDM_DECODER_GLOBAL_CONTROL, CXL_HDM_REGISTERS_OFFSET + 4)
-     FIELD(CXL_HDM_DECODER_GLOBAL_CONTROL, POISON_ON_ERR_EN, 0, 1)
-     FIELD(CXL_HDM_DECODER_GLOBAL_CONTROL, HDM_DECODER_ENABLE, 1, 1)
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 5ddd47ed8d..a55cf5a036 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -243,6 +243,14 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, INTERLEAVE_4K, 1);
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
-                      POISON_ON_ERR_CAP, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, UIO, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
-+                     UIO_DECODER_COUNT, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, MEMDATA_NXM_CAP, 0);
-+    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
-+                     SUPPORTED_COHERENCY_MODEL, 0); /* Unknown */
-     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_GLOBAL_CONTROL,
-                      HDM_DECODER_ENABLE, 0);
-     write_msk[R_CXL_HDM_DECODER_GLOBAL_CONTROL] = 0x3;
-@@ -326,7 +334,7 @@ void cxl_component_register_init_common(uint32_t *reg_state,
-         return;
-     }
- 
--    init_cap_reg(HDM, 5, 1);
-+    init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
-     hdm_init_common(reg_state, write_msk, type);
- 
-     if (caps < 5) {
--- 
-2.39.2
+This should be :  (:doc:`../../system/arm/aspeed`)
+
+I will fix it.
+
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Thanks,
+
+C.
+
+
+
+> +
+> +.. code-block:: console
+> +
+> +  qemu-system-arm -M rainier-bmc -nographic \
+> +  -kernel fitImage-linux.bin \
+> +  -dtb aspeed-bmc-ibm-rainier.dtb \
+> +  -initrd obmc-phosphor-initramfs.rootfs.cpio.xz \
+> +  -drive file=obmc-phosphor-image.rootfs.wic.qcow2,if=sd,index=2 \
+> +  -append "rootwait console=ttyS4,115200n8 root=PARTLABEL=rofs-a"
+> +
+> +The implementation appears as following in the qemu device tree:
+> +
+> +.. code-block:: console
+> +
+> +  (qemu) info qtree
+> +  bus: main-system-bus
+> +    type System
+> +    ...
+> +    dev: aspeed.apb2opb, id ""
+> +      gpio-out "sysbus-irq" 1
+> +      mmio 000000001e79b000/0000000000001000
+> +      bus: opb.1
+> +        type opb
+> +        dev: fsi.master, id ""
+> +          bus: fsi.bus.1
+> +            type fsi.bus
+> +            dev: cfam.config, id ""
+> +            dev: cfam, id ""
+> +              bus: lbus.1
+> +                type lbus
+> +                dev: scratchpad, id ""
+> +                  address = 0 (0x0)
+> +      bus: opb.0
+> +        type opb
+> +        dev: fsi.master, id ""
+> +          bus: fsi.bus.0
+> +            type fsi.bus
+> +            dev: cfam.config, id ""
+> +            dev: cfam, id ""
+> +              bus: lbus.0
+> +                type lbus
+> +                dev: scratchpad, id ""
+> +                  address = 0 (0x0)
+> +
+> +pdbg is a simple application to allow debugging of the host POWER processors
+> +from the BMC. (see the `pdbg source repository`_ for more details)
+> +
+> +.. code-block:: console
+> +
+> +  root@p10bmc:~# pdbg -a getcfam 0x0
+> +  p0: 0x0 = 0xc0022d15
+> +
+> +.. _FSI specification:
+> +   https://openpowerfoundation.org/specifications/fsi/
+> +
+> +.. _pdbg source repository:
+> +   https://github.com/open-power/pdbg
+> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+> index b3f482b0aa..1484e3e760 100644
+> --- a/docs/specs/index.rst
+> +++ b/docs/specs/index.rst
+> @@ -24,6 +24,7 @@ guest hardware that is specific to QEMU.
+>      acpi_erst
+>      sev-guest-firmware
+>      fw_cfg
+> +   fsi
+>      vmw_pvscsi-spec
+>      edu
+>      ivshmem-spec
 
 
