@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2303C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C70EC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMKI-0004Dw-5O; Fri, 26 Jan 2024 08:32:58 -0500
+	id 1rTMKD-00044y-Te; Fri, 26 Jan 2024 08:32:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMKC-0003zF-Mq; Fri, 26 Jan 2024 08:32:52 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rTMK6-0003RT-4t; Fri, 26 Jan 2024 08:32:46 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMKA-00080i-A8; Fri, 26 Jan 2024 08:32:52 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCP0wBDz4x80;
- Sat, 27 Jan 2024 00:32:49 +1100 (AEDT)
+ id 1rTMK3-00080V-Eo; Fri, 26 Jan 2024 08:32:45 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCG2KrGz4wxx;
+ Sat, 27 Jan 2024 00:32:42 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzCM2bwpz4wny;
- Sat, 27 Jan 2024 00:32:47 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzCC6wvQz4wny;
+ Sat, 27 Jan 2024 00:32:39 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 10/17] hw/fsi: Introduce IBM's fsi-slave model
-Date: Fri, 26 Jan 2024 14:32:09 +0100
-Message-ID: <20240126133217.996306-11-clg@kaod.org>
+Subject: [PULL 07/17] hw/fsi: Introduce IBM's Local bus
+Date: Fri, 26 Jan 2024 14:32:06 +0100
+Message-ID: <20240126133217.996306-8-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126133217.996306-1-clg@kaod.org>
 References: <20240126133217.996306-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,170 +71,184 @@ From: Ninad Palsule <ninad@linux.ibm.com>
 This is a part of patchset where IBM's Flexible Service Interface is
 introduced.
 
-The FSI slave: The slave is the terminal point of the FSI bus for
-FSI symbols addressed to it. Slaves can be cascaded off of one
-another. The slave's configuration registers appear in address space
-of the CFAM to which it is attached.
+The LBUS is modelled to maintain mapped memory for the devices. The
+memory is mapped after CFAM config, peek table and FSI slave registers.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
+[ clg: - removed lbus_add_device() bc unused
+       - removed lbus_create_device() bc used only once
+       - removed "address" property
+       - updated meson.build to build fsi dir
+       - included an empty hw/fsi/trace-events ]
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- include/hw/fsi/fsi.h | 18 ++++++++++
- hw/fsi/fsi.c         | 84 ++++++++++++++++++++++++++++++++++++++++++--
- hw/fsi/trace-events  |  2 ++
- 3 files changed, 102 insertions(+), 2 deletions(-)
+ meson.build           |  1 +
+ hw/fsi/trace.h        |  1 +
+ include/hw/fsi/lbus.h | 32 ++++++++++++++++++++++++++++++++
+ hw/fsi/lbus.c         | 43 +++++++++++++++++++++++++++++++++++++++++++
+ hw/Kconfig            |  1 +
+ hw/fsi/Kconfig        |  2 ++
+ hw/fsi/meson.build    |  1 +
+ hw/fsi/trace-events   |  0
+ hw/meson.build        |  1 +
+ 9 files changed, 82 insertions(+)
+ create mode 100644 hw/fsi/trace.h
+ create mode 100644 include/hw/fsi/lbus.h
+ create mode 100644 hw/fsi/lbus.c
+ create mode 100644 hw/fsi/Kconfig
+ create mode 100644 hw/fsi/meson.build
+ create mode 100644 hw/fsi/trace-events
 
-diff --git a/include/hw/fsi/fsi.h b/include/hw/fsi/fsi.h
-index 50e8f5c888f1..e00f6ef078c8 100644
---- a/include/hw/fsi/fsi.h
-+++ b/include/hw/fsi/fsi.h
-@@ -7,7 +7,13 @@
- #ifndef FSI_FSI_H
- #define FSI_FSI_H
- 
+diff --git a/meson.build b/meson.build
+index d0329966f1b4..7d926c6e8270 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3290,6 +3290,7 @@ if have_system
+     'hw/char',
+     'hw/display',
+     'hw/dma',
++    'hw/fsi',
+     'hw/hyperv',
+     'hw/i2c',
+     'hw/i386',
+diff --git a/hw/fsi/trace.h b/hw/fsi/trace.h
+new file mode 100644
+index 000000000000..ee67c7fb04da
+--- /dev/null
++++ b/hw/fsi/trace.h
+@@ -0,0 +1 @@
++#include "trace/trace-hw_fsi.h"
+diff --git a/include/hw/fsi/lbus.h b/include/hw/fsi/lbus.h
+new file mode 100644
+index 000000000000..e8a22e22a8fa
+--- /dev/null
++++ b/include/hw/fsi/lbus.h
+@@ -0,0 +1,32 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (C) 2024 IBM Corp.
++ *
++ * IBM Local bus and connected device structures.
++ */
++#ifndef FSI_LBUS_H
++#define FSI_LBUS_H
++
++#include "hw/qdev-core.h"
++#include "qemu/units.h"
 +#include "exec/memory.h"
- #include "hw/qdev-core.h"
-+#include "hw/fsi/lbus.h"
-+#include "qemu/bitops.h"
 +
-+/* Bitwise operations at the word level. */
-+#define BE_GENMASK(hb, lb)  MAKE_64BIT_MASK((lb), ((hb) - (lb) + 1))
- 
- #define TYPE_FSI_BUS "fsi.bus"
- OBJECT_DECLARE_SIMPLE_TYPE(FSIBus, FSI_BUS)
-@@ -16,4 +22,16 @@ typedef struct FSIBus {
-     BusState bus;
- } FSIBus;
- 
-+#define TYPE_FSI_SLAVE "fsi.slave"
-+OBJECT_DECLARE_SIMPLE_TYPE(FSISlaveState, FSI_SLAVE)
++#define TYPE_FSI_LBUS_DEVICE "fsi.lbus.device"
++OBJECT_DECLARE_SIMPLE_TYPE(FSILBusDevice, FSI_LBUS_DEVICE)
 +
-+#define FSI_SLAVE_CONTROL_NR_REGS ((0x40 >> 2) + 1)
-+
-+typedef struct FSISlaveState {
++typedef struct FSILBusDevice {
 +    DeviceState parent;
 +
 +    MemoryRegion iomem;
-+    uint32_t regs[FSI_SLAVE_CONTROL_NR_REGS];
-+} FSISlaveState;
++} FSILBusDevice;
 +
- #endif /* FSI_FSI_H */
-diff --git a/hw/fsi/fsi.c b/hw/fsi/fsi.c
-index 60cb03f7a24e..9a5f4e616f16 100644
---- a/hw/fsi/fsi.c
-+++ b/hw/fsi/fsi.c
-@@ -5,18 +5,98 @@
-  * IBM Flexible Service Interface
-  */
- #include "qemu/osdep.h"
++#define TYPE_FSI_LBUS "fsi.lbus"
++OBJECT_DECLARE_SIMPLE_TYPE(FSILBus, FSI_LBUS)
++
++typedef struct FSILBus {
++    BusState bus;
++
++    MemoryRegion mr;
++} FSILBus;
++
++#endif /* FSI_LBUS_H */
+diff --git a/hw/fsi/lbus.c b/hw/fsi/lbus.c
+new file mode 100644
+index 000000000000..44d2319087a8
+--- /dev/null
++++ b/hw/fsi/lbus.c
+@@ -0,0 +1,43 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (C) 2024 IBM Corp.
++ *
++ * IBM Local bus where FSI slaves are connected
++ */
++
++#include "qemu/osdep.h"
 +#include "qapi/error.h"
-+#include "qemu/log.h"
++#include "hw/fsi/lbus.h"
++
++#include "hw/qdev-properties.h"
++
 +#include "trace.h"
- 
- #include "hw/fsi/fsi.h"
- 
-+#define TO_REG(x)                               ((x) >> 2)
 +
- static const TypeInfo fsi_bus_info = {
-     .name = TYPE_FSI_BUS,
-     .parent = TYPE_BUS,
-     .instance_size = sizeof(FSIBus),
- };
- 
--static void fsi_bus_register_types(void)
-+static uint64_t fsi_slave_read(void *opaque, hwaddr addr, unsigned size)
++static void fsi_lbus_init(Object *o)
 +{
-+    FSISlaveState *s = FSI_SLAVE(opaque);
-+    int reg = TO_REG(addr);
++    FSILBus *lbus = FSI_LBUS(o);
 +
-+    trace_fsi_slave_read(addr, size);
-+
-+    if (reg >= FSI_SLAVE_CONTROL_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out of bounds read: 0x%"HWADDR_PRIx" for %u\n",
-+                      __func__, addr, size);
-+        return 0;
-+    }
-+
-+    return s->regs[reg];
++    memory_region_init(&lbus->mr, OBJECT(lbus), TYPE_FSI_LBUS, 1 * MiB);
 +}
 +
-+static void fsi_slave_write(void *opaque, hwaddr addr, uint64_t data,
-+                                 unsigned size)
-+{
-+    FSISlaveState *s = FSI_SLAVE(opaque);
-+    int reg = TO_REG(addr);
-+
-+    trace_fsi_slave_write(addr, size, data);
-+
-+    if (reg >= FSI_SLAVE_CONTROL_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out of bounds write: 0x%"HWADDR_PRIx" for %u\n",
-+                      __func__, addr, size);
-+        return;
-+    }
-+
-+    s->regs[reg] = data;
-+}
-+
-+static const struct MemoryRegionOps fsi_slave_ops = {
-+    .read = fsi_slave_read,
-+    .write = fsi_slave_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
++static const TypeInfo fsi_lbus_info = {
++    .name = TYPE_FSI_LBUS,
++    .parent = TYPE_BUS,
++    .instance_init = fsi_lbus_init,
++    .instance_size = sizeof(FSILBus),
 +};
 +
-+static void fsi_slave_reset(DeviceState *dev)
-+{
-+    FSISlaveState *s = FSI_SLAVE(dev);
-+
-+    /* Initialize registers */
-+    memset(s->regs, 0, sizeof(s->regs));
-+}
-+
-+static void fsi_slave_init(Object *o)
-+{
-+    FSISlaveState *s = FSI_SLAVE(o);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &fsi_slave_ops,
-+                          s, TYPE_FSI_SLAVE, 0x400);
-+}
-+
-+static void fsi_slave_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->bus_type = TYPE_FSI_BUS;
-+    dc->desc = "FSI Slave";
-+    dc->reset = fsi_slave_reset;
-+}
-+
-+static const TypeInfo fsi_slave_info = {
-+    .name = TYPE_FSI_SLAVE,
++static const TypeInfo fsi_lbus_device_type_info = {
++    .name = TYPE_FSI_LBUS_DEVICE,
 +    .parent = TYPE_DEVICE,
-+    .instance_init = fsi_slave_init,
-+    .instance_size = sizeof(FSISlaveState),
-+    .class_init = fsi_slave_class_init,
++    .instance_size = sizeof(FSILBusDevice),
++    .abstract = true,
 +};
 +
-+static void fsi_register_types(void)
- {
-     type_register_static(&fsi_bus_info);
-+    type_register_static(&fsi_slave_info);
- }
- 
--type_init(fsi_bus_register_types);
-+type_init(fsi_register_types);
++static void fsi_lbus_register_types(void)
++{
++    type_register_static(&fsi_lbus_info);
++    type_register_static(&fsi_lbus_device_type_info);
++}
++
++type_init(fsi_lbus_register_types);
+diff --git a/hw/Kconfig b/hw/Kconfig
+index 9ca7b38c31f1..2c00936c28e8 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -9,6 +9,7 @@ source core/Kconfig
+ source cxl/Kconfig
+ source display/Kconfig
+ source dma/Kconfig
++source fsi/Kconfig
+ source gpio/Kconfig
+ source hyperv/Kconfig
+ source i2c/Kconfig
+diff --git a/hw/fsi/Kconfig b/hw/fsi/Kconfig
+new file mode 100644
+index 000000000000..9c34a418d700
+--- /dev/null
++++ b/hw/fsi/Kconfig
+@@ -0,0 +1,2 @@
++config FSI
++    bool
+diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
+new file mode 100644
+index 000000000000..93ba19dd0411
+--- /dev/null
++++ b/hw/fsi/meson.build
+@@ -0,0 +1 @@
++system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c'))
 diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
-index c5753e27910a..8f29adb7df92 100644
---- a/hw/fsi/trace-events
-+++ b/hw/fsi/trace-events
-@@ -1,2 +1,4 @@
- fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
- fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
-+fsi_slave_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-+fsi_slave_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
+new file mode 100644
+index 000000000000..e69de29bb2d1
+diff --git a/hw/meson.build b/hw/meson.build
+index f01fac4617c9..463d70268304 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -44,6 +44,7 @@ subdir('virtio')
+ subdir('watchdog')
+ subdir('xen')
+ subdir('xenpv')
++subdir('fsi')
+ 
+ subdir('alpha')
+ subdir('arm')
 -- 
 2.43.0
 
