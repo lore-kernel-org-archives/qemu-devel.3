@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6D3C47DDF
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D2CC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNHJ-0002M8-2A; Fri, 26 Jan 2024 09:33:57 -0500
+	id 1rTNHB-0002ER-PL; Fri, 26 Jan 2024 09:33:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHH-0002K9-BU
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1rTNH9-0002C9-Hy
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:47 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHE-0007wt-Tn
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3392291b21bso634144f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:52 -0800 (PST)
+ id 1rTNH6-0007rO-RB
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:47 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3392b12dd21so627682f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706279631; x=1706884431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706279623; x=1706884423; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8W6Dmg/Z15G38A2ANLX0PCG/NULptGOn1F3YALWfvag=;
- b=fkEx0EjjHRzF3rvznw7+RqB3EJFj9s6om0y4h137cxnTPcjhjbuATTUIOSsqWrcku8
- mtufP+rbCoJdlWs5RVX6n+fYKRnYYiOEmQfe6PZYD0g/Zo2B6naQJR1X2qbr+Uopt72w
- 0tmlUG7Npzno68sfDbxP+zKRu2CvhgXpmvGH8yBp/wZYJvn4rAzipZhRgQwRuHYZUr3l
- 9Yguqo8be9o2xbdzlyVl1o0KP8n7g5Hv3PCTN/PvmACp1U+ZqaOFt/ZlKwxen1SJ4EHP
- 8smtBXJUIYUu4+okXQJqTj0DEQiU7QBDJuzxXHaASW9+Cr0GBUNMWCfGTP5AMElRPPL2
- E16g==
+ :reply-to; bh=AlL0ncqDDbK49LmHwxJsXF89nfVWU3/6tLGTdA35huY=;
+ b=uLvhLgjo8xo021bgFZqoiHKDmsw6eGjuJ0GHe13ZGY4qTaeCjFh7KNX6zDDMBow+SR
+ 4ra1Bsvam1M2+Dn53Ez9tirct6tSaGElRmkJ5hHhZpVC+JKT4aFCj9XY5XMGLbbjh6Cy
+ BZ/lwaDyBIOOx7/oswqdojFfBfqW/kQQ/aTbOnICqvbsnmDzZCOxQCY5LyOVMskkL39K
+ lLzggREGZNQFNZ0+DJO7MM7/UrzlP6XpbJfzf93G67q4GQxj9riPEH/O0JdrHdvoWwP5
+ PkefJgZ83uKG/LCh9RDGFawX6+MbO9Lt1NQ5BWWBop3ELnkxjegBESjbTbg88bpH4prz
+ RRBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706279631; x=1706884431;
+ d=1e100.net; s=20230601; t=1706279623; x=1706884423;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8W6Dmg/Z15G38A2ANLX0PCG/NULptGOn1F3YALWfvag=;
- b=IOBaDbz5SZDeSoASO0zLxrRExCKf4sFrayV3pFG3I6oTzX1quiesA6G3G8eZhtpZvT
- MWplpQI2VEamu93eR6Kl7Tg3FfD2a8CvR7NBMPSLIwi+Ba8nD7ro1NyylNYCYbiscj7s
- 3Xr3IUNFZa7L07CHYx+KI7lgNzWVJazbLQukwVsBhfVhzQ1eMQzH0qTITrHpmnND3whx
- WyAG6oSNHtze2Vci71lQ/XS2/Hoh4RJowrfKq1RVoZo14M9kFFcjV/viGp+zdz4kIsWP
- 0pcxNathGRhf9DJ8Xg6fBXgOJiT1+fzFQ6LA1X55kPtLgEq+8j0qduGfVbn1SMs/WKM1
- OTXA==
-X-Gm-Message-State: AOJu0YxYEcTr23t2LLxyRvFhvmc8bbWleJiZ8hp+oQO/LDGOYgylT+H5
- r7qkOPNMHNA0gNX8zH59wN+tAIeHfqFV1303ZM5eXn3M9bq2X2jo/Ep5hu+Xt74XvbCsvnY00Zm
- V
-X-Google-Smtp-Source: AGHT+IF9uk3c1ASXF2iTrylbz01F2lZILul21p0dTjJY97LbAxFj3xdLDYkfRD/yqN8e6kmrAfG4gQ==
-X-Received: by 2002:a5d:6303:0:b0:337:9b58:6b8d with SMTP id
- i3-20020a5d6303000000b003379b586b8dmr926115wru.112.1706279631407; 
- Fri, 26 Jan 2024 06:33:51 -0800 (PST)
+ bh=AlL0ncqDDbK49LmHwxJsXF89nfVWU3/6tLGTdA35huY=;
+ b=h04f893vF0FiPN90TbhQUbr8hkMBm05Zlp0kS6PO1Qs3AkaG4oCkpBtDnbbl0MziIs
+ OypKN8wWlUBu3yxfD2GQT/xHSe/2teKbrolgBlU3HJjRspM0PhUwYoKUbpgc3pf6Rj3j
+ qhSrtnIoOyHIgFLTwDpEb/MzydoGQMlVFImraUoEYlYdZjpkzcH4IVslaFu6LwC36fBh
+ /z8dxTXhtAJfC8FD0KzFy4vAN8uo7TNjnxpjWAn4DML7uXtbMOsuM5yz1xMZmQUBARWW
+ wcmxFG0kSAEoh38oGPMQctUjcsK/CrxShY6avMQ4guRyGPVDOXv+ugUMwXoD5So7vEK1
+ 180A==
+X-Gm-Message-State: AOJu0YykkkdA/0mTJMQuWFiW3AuyikGXmMI3/oHowDExn1VGO85D+EQW
+ CxjvZoXa4p3z32i8Y8vXt+GqwD/bx1cPkZME3mn4n8JZKoWSfKmVvpZug4mwqQo3n+6mhbIGYuO
+ T
+X-Google-Smtp-Source: AGHT+IGFrx9n39TrRKNsYW8V5g8lxlOcwyMbMeeB5nsHmMs/lrmLwwRAGlbRr280DRflIR2RLMBGDA==
+X-Received: by 2002:adf:a44e:0:b0:337:abf9:52a6 with SMTP id
+ e14-20020adfa44e000000b00337abf952a6mr1003213wra.77.1706279623434; 
+ Fri, 26 Jan 2024 06:33:43 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.51
+ n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:33:51 -0800 (PST)
+ Fri, 26 Jan 2024 06:33:43 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/36] hw/cpu/a9mpcore: Build it only once
-Date: Fri, 26 Jan 2024 14:33:26 +0000
-Message-Id: <20240126143341.2101237-22-peter.maydell@linaro.org>
+Subject: [PULL 02/36] target/arm: Fix VNCR fault detection logic
+Date: Fri, 26 Jan 2024 14:33:07 +0000
+Message-Id: <20240126143341.2101237-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
 References: <20240126143341.2101237-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,45 +93,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+In arm_deliver_fault() we check for whether the fault is caused
+by a data abort due to an access to a FEAT_NV2 sysreg in the
+memory pointed to by the VNCR. Unfortunately part of the
+condition checks the wrong argument to the function, meaning
+that it would spuriously trigger, resulting in some instruction
+aborts being taken to the wrong EL and reported incorrectly.
 
-hw/cpu/a9mpcore.c doesn't require "cpu.h" anymore.
-By removing it, the unit become target agnostic:
-we can build it once. Update meson.
+Use the right variable in the condition.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240118200643.29037-13-philmd@linaro.org
+Fixes: 674e5345275d425 ("target/arm: Report VNCR_EL2 based faults correctly")
+Reported-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-id: 20240116165605.2523055-1-peter.maydell@linaro.org
 ---
- hw/cpu/a9mpcore.c  | 2 +-
- hw/cpu/meson.build | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/arm/tcg/tlb_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/cpu/a9mpcore.c b/hw/cpu/a9mpcore.c
-index d03f57e579b..c30ef72c669 100644
---- a/hw/cpu/a9mpcore.c
-+++ b/hw/cpu/a9mpcore.c
-@@ -15,7 +15,7 @@
- #include "hw/irq.h"
- #include "hw/qdev-properties.h"
- #include "hw/core/cpu.h"
--#include "cpu.h"
-+#include "target/arm/cpu-qom.h"
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index dd5de74ffb7..5477c7fb7dc 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -184,7 +184,7 @@ void arm_deliver_fault(ARMCPU *cpu, vaddr addr,
+      * (and indeed syndrome does not have the EC field in it,
+      * because we masked that out in disas_set_insn_syndrome())
+      */
+-    bool is_vncr = (mmu_idx != MMU_INST_FETCH) &&
++    bool is_vncr = (access_type != MMU_INST_FETCH) &&
+         (env->exception.syndrome & ARM_EL_VNCR);
  
- #define A9_GIC_NUM_PRIORITY_BITS    5
- 
-diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
-index 6d319947ca0..38cdcfbe572 100644
---- a/hw/cpu/meson.build
-+++ b/hw/cpu/meson.build
-@@ -2,5 +2,5 @@ system_ss.add(files('core.c', 'cluster.c'))
- 
- system_ss.add(when: 'CONFIG_ARM11MPCORE', if_true: files('arm11mpcore.c'))
- system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview_mpcore.c'))
--specific_ss.add(when: 'CONFIG_A9MPCORE', if_true: files('a9mpcore.c'))
-+system_ss.add(when: 'CONFIG_A9MPCORE', if_true: files('a9mpcore.c'))
- specific_ss.add(when: 'CONFIG_A15MPCORE', if_true: files('a15mpcore.c'))
+     if (is_vncr) {
 -- 
 2.34.1
 
