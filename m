@@ -4,52 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83998C47DDF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE52C47422
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMKA-0003qn-PV; Fri, 26 Jan 2024 08:32:50 -0500
+	id 1rTMK8-0003e6-SL; Fri, 26 Jan 2024 08:32:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMK8-0003aF-AH; Fri, 26 Jan 2024 08:32:48 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rTMJz-0002uO-Nq; Fri, 26 Jan 2024 08:32:40 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMK5-00080i-OB; Fri, 26 Jan 2024 08:32:47 -0500
+ id 1rTMJx-000803-1G; Fri, 26 Jan 2024 08:32:39 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCJ4H8yz4x3D;
- Sat, 27 Jan 2024 00:32:44 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzC636xFz4wx5;
+ Sat, 27 Jan 2024 00:32:34 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzCG5vK0z4wny;
- Sat, 27 Jan 2024 00:32:42 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzC431ZWz4wny;
+ Sat, 27 Jan 2024 00:32:32 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 08/17] hw/fsi: Introduce IBM's scratchpad device
-Date: Fri, 26 Jan 2024 14:32:07 +0100
-Message-ID: <20240126133217.996306-9-clg@kaod.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gavin Shan <gshan@redhat.com>
+Subject: [PULL 04/17] hw/arm/aspeed: Init CPU defaults in a common helper
+Date: Fri, 26 Jan 2024 14:32:03 +0100
+Message-ID: <20240126133217.996306-5-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126133217.996306-1-clg@kaod.org>
 References: <20240126133217.996306-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,158 +69,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ninad Palsule <ninad@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This is a part of patchset where IBM's Flexible Service Interface is
-introduced.
+Rework aspeed_soc_num_cpus() as a new init_cpus_defaults()
+helper to reduce code duplication.
 
-The scratchpad provides a set of non-functional registers. The firmware
-is free to use them, hardware does not support any special management
-support. The scratchpad registers can be read or written from LBUS
-slave. The scratch pad is managed under FSI CFAM state.
-
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
-[ clg: - moved object FSIScratchPad under FSICFAMState
-       - moved FSIScratchPad code under cfam.c ]
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- include/hw/fsi/lbus.h | 11 ++++++
- hw/fsi/lbus.c         | 78 +++++++++++++++++++++++++++++++++++++++++--
- hw/fsi/trace-events   |  2 ++
- 3 files changed, 89 insertions(+), 2 deletions(-)
+ hw/arm/aspeed.c | 71 +++++++++++++++++++------------------------------
+ 1 file changed, 28 insertions(+), 43 deletions(-)
 
-diff --git a/include/hw/fsi/lbus.h b/include/hw/fsi/lbus.h
-index e8a22e22a8fa..558268c013f5 100644
---- a/include/hw/fsi/lbus.h
-+++ b/include/hw/fsi/lbus.h
-@@ -29,4 +29,15 @@ typedef struct FSILBus {
-     MemoryRegion mr;
- } FSILBus;
- 
-+#define TYPE_FSI_SCRATCHPAD "fsi.scratchpad"
-+#define SCRATCHPAD(obj) OBJECT_CHECK(FSIScratchPad, (obj), TYPE_FSI_SCRATCHPAD)
-+
-+#define FSI_SCRATCHPAD_NR_REGS 4
-+
-+typedef struct FSIScratchPad {
-+        FSILBusDevice parent;
-+
-+        uint32_t regs[FSI_SCRATCHPAD_NR_REGS];
-+} FSIScratchPad;
-+
- #endif /* FSI_LBUS_H */
-diff --git a/hw/fsi/lbus.c b/hw/fsi/lbus.c
-index 44d2319087a8..20495f42fd99 100644
---- a/hw/fsi/lbus.c
-+++ b/hw/fsi/lbus.c
-@@ -8,11 +8,12 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/fsi/lbus.h"
--
- #include "hw/qdev-properties.h"
--
-+#include "qemu/log.h"
- #include "trace.h"
- 
-+#define TO_REG(offset) ((offset) >> 2)
-+
- static void fsi_lbus_init(Object *o)
- {
-     FSILBus *lbus = FSI_LBUS(o);
-@@ -34,10 +35,83 @@ static const TypeInfo fsi_lbus_device_type_info = {
-     .abstract = true,
- };
- 
-+static uint64_t fsi_scratchpad_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    FSIScratchPad *s = SCRATCHPAD(opaque);
-+    int reg = TO_REG(addr);
-+
-+    trace_fsi_scratchpad_read(addr, size);
-+
-+    if (reg >= FSI_SCRATCHPAD_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return 0;
-+    }
-+
-+    return s->regs[reg];
-+}
-+
-+static void fsi_scratchpad_write(void *opaque, hwaddr addr, uint64_t data,
-+                                 unsigned size)
-+{
-+    FSIScratchPad *s = SCRATCHPAD(opaque);
-+
-+    trace_fsi_scratchpad_write(addr, size, data);
-+    int reg = TO_REG(addr);
-+
-+    if (reg >= FSI_SCRATCHPAD_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return;
-+    }
-+
-+    s->regs[reg] = data;
-+}
-+
-+static const struct MemoryRegionOps scratchpad_ops = {
-+    .read = fsi_scratchpad_read,
-+    .write = fsi_scratchpad_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static void fsi_scratchpad_realize(DeviceState *dev, Error **errp)
-+{
-+    FSILBusDevice *ldev = FSI_LBUS_DEVICE(dev);
-+
-+    memory_region_init_io(&ldev->iomem, OBJECT(ldev), &scratchpad_ops,
-+                          ldev, TYPE_FSI_SCRATCHPAD, 0x400);
-+}
-+
-+static void fsi_scratchpad_reset(DeviceState *dev)
-+{
-+    FSIScratchPad *s = SCRATCHPAD(dev);
-+
-+    memset(s->regs, 0, sizeof(s->regs));
-+}
-+
-+static void fsi_scratchpad_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->bus_type = TYPE_FSI_LBUS;
-+    dc->realize = fsi_scratchpad_realize;
-+    dc->reset = fsi_scratchpad_reset;
-+}
-+
-+static const TypeInfo fsi_scratchpad_info = {
-+    .name = TYPE_FSI_SCRATCHPAD,
-+    .parent = TYPE_FSI_LBUS_DEVICE,
-+    .instance_size = sizeof(FSIScratchPad),
-+    .class_init = fsi_scratchpad_class_init,
-+};
-+
- static void fsi_lbus_register_types(void)
- {
-     type_register_static(&fsi_lbus_info);
-     type_register_static(&fsi_lbus_device_type_info);
-+    type_register_static(&fsi_scratchpad_info);
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 5b01a4dd28f8..d2d490a6d142 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1141,10 +1141,14 @@ static void aspeed_machine_class_props_init(ObjectClass *oc)
+                                           "Change the SPI Flash model");
  }
  
- type_init(fsi_lbus_register_types);
-diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
-index e69de29bb2d1..c5753e27910a 100644
---- a/hw/fsi/trace-events
-+++ b/hw/fsi/trace-events
-@@ -0,0 +1,2 @@
-+fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-+fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
+-static int aspeed_soc_num_cpus(const char *soc_name)
++static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
+ {
+-   AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(soc_name));
+-   return sc->num_cpus;
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(mc);
++    AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
++
++    mc->default_cpus = sc->num_cpus;
++    mc->min_cpus = sc->num_cpus;
++    mc->max_cpus = sc->num_cpus;
+ }
+ 
+ static void aspeed_machine_class_init(ObjectClass *oc, void *data)
+@@ -1176,8 +1180,7 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 1;
+     amc->i2c_init  = palmetto_bmc_i2c_init;
+     mc->default_ram_size       = 256 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc, void *data)
+@@ -1193,8 +1196,7 @@ static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 1;
+     amc->i2c_init  = quanta_q71l_bmc_i2c_init;
+     mc->default_ram_size       = 128 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+@@ -1212,8 +1214,7 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+     amc->i2c_init  = palmetto_bmc_i2c_init;
+     mc->default_ram_size = 256 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+ static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
+@@ -1231,8 +1232,7 @@ static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
+     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+     amc->i2c_init  = palmetto_bmc_i2c_init;
+     mc->default_ram_size = 512 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc, void *data)
+@@ -1248,8 +1248,7 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 1;
+     amc->i2c_init  = ast2500_evb_i2c_init;
+     mc->default_ram_size       = 512 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc, void *data)
+@@ -1266,8 +1265,7 @@ static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 2;
+     amc->i2c_init  = yosemitev2_bmc_i2c_init;
+     mc->default_ram_size       = 512 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_romulus_class_init(ObjectClass *oc, void *data)
+@@ -1283,8 +1281,7 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 2;
+     amc->i2c_init  = romulus_bmc_i2c_init;
+     mc->default_ram_size       = 512 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc, void *data)
+@@ -1301,8 +1298,7 @@ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 2;
+     amc->i2c_init  = tiogapass_bmc_i2c_init;
+     mc->default_ram_size       = 1 * GiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
+@@ -1318,8 +1314,7 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 2;
+     amc->i2c_init  = sonorapass_bmc_i2c_init;
+     mc->default_ram_size       = 512 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_witherspoon_class_init(ObjectClass *oc, void *data)
+@@ -1335,8 +1330,7 @@ static void aspeed_machine_witherspoon_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 2;
+     amc->i2c_init  = witherspoon_bmc_i2c_init;
+     mc->default_ram_size = 512 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc, void *data)
+@@ -1355,8 +1349,7 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc, void *data)
+                      ASPEED_MAC3_ON;
+     amc->i2c_init  = ast2600_evb_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_tacoma_class_init(ObjectClass *oc, void *data)
+@@ -1374,8 +1367,7 @@ static void aspeed_machine_tacoma_class_init(ObjectClass *oc, void *data)
+     amc->macs_mask  = ASPEED_MAC2_ON;
+     amc->i2c_init  = witherspoon_bmc_i2c_init; /* Same board layout */
+     mc->default_ram_size = 1 * GiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_g220a_class_init(ObjectClass *oc, void *data)
+@@ -1392,8 +1384,7 @@ static void aspeed_machine_g220a_class_init(ObjectClass *oc, void *data)
+     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+     amc->i2c_init  = g220a_bmc_i2c_init;
+     mc->default_ram_size = 1024 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc, void *data)
+@@ -1410,8 +1401,7 @@ static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc, void *data)
+     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+     amc->i2c_init  = fp5280g2_bmc_i2c_init;
+     mc->default_ram_size = 512 * MiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
+@@ -1429,8 +1419,7 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
+     amc->macs_mask  = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+     amc->i2c_init  = rainier_bmc_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ #define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+@@ -1451,8 +1440,7 @@ static void aspeed_machine_fuji_class_init(ObjectClass *oc, void *data)
+     amc->i2c_init = fuji_bmc_i2c_init;
+     amc->uart_default = ASPEED_DEV_UART1;
+     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ #define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+@@ -1472,8 +1460,7 @@ static void aspeed_machine_bletchley_class_init(ObjectClass *oc, void *data)
+     amc->macs_mask = ASPEED_MAC2_ON;
+     amc->i2c_init  = bletchley_bmc_i2c_init;
+     mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+ static void fby35_reset(MachineState *state, ShutdownCause reason)
+@@ -1515,6 +1502,7 @@ static void aspeed_machine_fby35_class_init(ObjectClass *oc, void *data)
+     amc->i2c_init  = fby35_i2c_init;
+     /* FIXME: Replace this macro with something more general */
+     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
++    aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+ #define AST1030_INTERNAL_FLASH_SIZE (1024 * 1024)
+@@ -1592,8 +1580,7 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+     amc->spi_model = "sst25vf032b";
+     amc->num_cs = 2;
+     amc->macs_mask = 0;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ }
+ 
+ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+@@ -1612,8 +1599,7 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+     amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+@@ -1632,8 +1618,7 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+     amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus =
+-        aspeed_soc_num_cpus(amc->soc_name);
++    aspeed_machine_class_init_cpus_defaults(mc);
+ };
+ 
+ static const TypeInfo aspeed_machine_types[] = {
 -- 
 2.43.0
 
