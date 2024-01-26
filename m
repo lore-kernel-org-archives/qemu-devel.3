@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D799DC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 559B0C48286
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMKz-0005Yx-V2; Fri, 26 Jan 2024 08:33:43 -0500
+	id 1rTMKC-0003z0-UV; Fri, 26 Jan 2024 08:32:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMKW-0004uh-2L; Fri, 26 Jan 2024 08:33:13 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ id 1rTMK4-0003AI-AF; Fri, 26 Jan 2024 08:32:44 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMKR-0008B8-AS; Fri, 26 Jan 2024 08:33:08 -0500
+ id 1rTMK1-00080i-T6; Fri, 26 Jan 2024 08:32:43 -0500
 Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCh5Q7Hz4x80;
- Sat, 27 Jan 2024 00:33:04 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCC3P5Tz4wdD;
+ Sat, 27 Jan 2024 00:32:39 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzCg1lBQz4wny;
- Sat, 27 Jan 2024 00:33:02 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzC93H8vz4wny;
+ Sat, 27 Jan 2024 00:32:37 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 17/17] hw/fsi: Update MAINTAINER list
-Date: Fri, 26 Jan 2024 14:32:16 +0100
-Message-ID: <20240126133217.996306-18-clg@kaod.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gavin Shan <gshan@redhat.com>
+Subject: [PULL 06/17] hw/arm/aspeed: Check for CPU types in
+ machine_run_board_init()
+Date: Fri, 26 Jan 2024 14:32:05 +0100
+Message-ID: <20240126133217.996306-7-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126133217.996306-1-clg@kaod.org>
 References: <20240126133217.996306-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,37 +67,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ninad Palsule <ninad@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Added maintainer for IBM FSI model
+Aspeed SoCs use a single CPU type (set as AspeedSoCClass::cpu_type).
+Convert it to a NULL-terminated array (of a single non-NULL element).
 
-Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
+Set MachineClass::valid_cpu_types[] to use the common machine code
+to provide hints when the requested CPU is invalid (see commit
+e702cbc19e ("machine: Improve is_cpu_type_supported()").
+
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- MAINTAINERS | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/hw/arm/aspeed_soc.h |  3 ++-
+ hw/arm/aspeed.c             |  1 +
+ hw/arm/aspeed_ast10x0.c     |  6 +++++-
+ hw/arm/aspeed_ast2400.c     | 12 ++++++++++--
+ hw/arm/aspeed_ast2600.c     |  6 +++++-
+ hw/arm/aspeed_soc_common.c  |  5 ++++-
+ 6 files changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index dfaca8323e91..39deb8ee1f24 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3585,6 +3585,15 @@ F: tests/qtest/adm1272-test.c
- F: tests/qtest/max34451-test.c
- F: tests/qtest/isl_pmbus_vr-test.c
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index a060a5991874..0db5a41e7170 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -128,7 +128,8 @@ struct AspeedSoCClass {
+     DeviceClass parent_class;
  
-+FSI
-+M: Ninad Palsule <ninad@linux.ibm.com>
-+R: Cédric Le Goater <clg@kaod.org>
-+S: Maintained
-+F: hw/fsi/*
-+F: include/hw/fsi/*
-+F: docs/specs/fsi.rst
-+F: tests/qtest/fsi-test.c
-+
- Firmware schema specifications
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Daniel P. Berrange <berrange@redhat.com>
+     const char *name;
+-    const char *cpu_type;
++    /** valid_cpu_types: NULL terminated array of a single CPU type. */
++    const char * const *valid_cpu_types;
+     uint32_t silicon_rev;
+     uint64_t sram_size;
+     uint64_t secsram_size;
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index d2d490a6d142..fc8355cdce14 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1149,6 +1149,7 @@ static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
+     mc->default_cpus = sc->num_cpus;
+     mc->min_cpus = sc->num_cpus;
+     mc->max_cpus = sc->num_cpus;
++    mc->valid_cpu_types = sc->valid_cpu_types;
+ }
+ 
+ static void aspeed_machine_class_init(ObjectClass *oc, void *data)
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+index dca601a3f9b6..c3b5116a6a9d 100644
+--- a/hw/arm/aspeed_ast10x0.c
++++ b/hw/arm/aspeed_ast10x0.c
+@@ -417,13 +417,17 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
+ 
+ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
++        NULL
++    };
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(dc);
+ 
+     dc->realize = aspeed_soc_ast1030_realize;
+ 
+     sc->name = "ast1030-a1";
+-    sc->cpu_type = ARM_CPU_TYPE_NAME("cortex-m4"); /* TODO cortex-m4f */
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev = AST1030_A1_SILICON_REV;
+     sc->sram_size = 0xc0000;
+     sc->secsram_size = 0x40000; /* 256 * KiB */
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index 789e591f3ad0..c613e58144dd 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -502,6 +502,10 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
+ 
+ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("arm926"),
++        NULL
++    };
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
+@@ -510,7 +514,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+     dc->user_creatable = false;
+ 
+     sc->name         = "ast2400-a1";
+-    sc->cpu_type     = ARM_CPU_TYPE_NAME("arm926");
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2400_A1_SILICON_REV;
+     sc->sram_size    = 0x8000;
+     sc->spis_num     = 1;
+@@ -526,6 +530,10 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+ 
+ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("arm1176"),
++        NULL
++    };
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
+@@ -534,7 +542,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+     dc->user_creatable = false;
+ 
+     sc->name         = "ast2500-a1";
+-    sc->cpu_type     = ARM_CPU_TYPE_NAME("arm1176");
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2500_A1_SILICON_REV;
+     sc->sram_size    = 0x9000;
+     sc->spis_num     = 2;
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index 589a4a6eea10..24541b5284d4 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -628,13 +628,17 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+ 
+ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-a7"),
++        NULL
++    };
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+ 
+     dc->realize      = aspeed_soc_ast2600_realize;
+ 
+     sc->name         = "ast2600-a3";
+-    sc->cpu_type     = ARM_CPU_TYPE_NAME("cortex-a7");
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2600_A3_SILICON_REV;
+     sc->sram_size    = 0x16400;
+     sc->spis_num     = 2;
+diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+index 36ca189ce960..123a0c432cfd 100644
+--- a/hw/arm/aspeed_soc_common.c
++++ b/hw/arm/aspeed_soc_common.c
+@@ -20,7 +20,10 @@
+ 
+ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc)
+ {
+-    return sc->cpu_type;
++    assert(sc->valid_cpu_types);
++    assert(sc->valid_cpu_types[0]);
++    assert(!sc->valid_cpu_types[1]);
++    return sc->valid_cpu_types[0];
+ }
+ 
+ qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev)
 -- 
 2.43.0
 
