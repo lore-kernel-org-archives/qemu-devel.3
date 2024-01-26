@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AE7C47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:35:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C262C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQ5p-0001eX-SY; Fri, 26 Jan 2024 12:34:18 -0500
+	id 1rTQ4s-0007bw-BS; Fri, 26 Jan 2024 12:33:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rTQ5D-0008GK-Pz; Fri, 26 Jan 2024 12:33:39 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1rTQ4g-0007Cp-5x; Fri, 26 Jan 2024 12:33:06 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rTQ58-0001cS-I6; Fri, 26 Jan 2024 12:33:39 -0500
+ <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1rTQ4c-0001jN-Dw; Fri, 26 Jan 2024 12:33:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
+ d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=WRBuYa2rIuMOyCdfUaeq0aJt9tQyMaQzZk9uum9u4Yo=; b=pbgctkJkh9eaXYKWWUsW2nOnb5
- l3/8L/atRueV3pL+D+HzG7RHpQ+feZYCUdhPXZkdz2PfjHkDUCs9WxKoRw9ZI0wWNtnrluWAMaMoD
- OJ+N457sv2U7r8YHNyD0xMQ10uyPuk8lzBA04v7nt8pOF9VZIx6qjrTXKgkMpb0OedmfZ94Jd5O7h
- LYLz0sU8o9SGAzI6dm1AVi6h3b60IiNuLpJcHAGvvR8fOturCflELq4U38XAW3XovsNMiuh9jZ8L8
- b/pu5DMAf4ZGcH95ztIBGI2cN+TD9Q+Jm6vW0/1944EDl9T/wUt4fPE1kFkxTLnSyda/hvWlXeU0p
- z8rNRsyA==;
+ bh=l9x9HGNJH5fBiIeKzePXsIuGh5SQlI6/4CQcfviByuY=; b=IcyrOZNXHpSLCk6TAnka1I9R+t
+ 3vjdvrDxoj9S0mBl3ozeCJWq/HpqMLvBUMFAORv+1SBecbE0cDjMuO9aFvZON++rc1jPkHaC+ghgP
+ 5L8zN3gB8nHPOYYlPmvNpLlMSpTekahGSC4AOzs6+IIk9qK+fFFqtc84HLEgjDyCzQMwocC4VIUT/
+ XGz64EbdU/7DMpdxI7atb/fpQg69VBiAOalydcEJ4bCCzYa2Cs/hf3UDE3MWX4+TH52Vy8uBkTNI0
+ o2fSSTMwt5iZhujAmRuoamJkL+zcASmcD5odNtASTsals+MCB8T2mzCkE+4bw69w/+TPEehpiYgeY
+ 5a7gBiQg==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTQ49-0000000EKV4-2g9X; Fri, 26 Jan 2024 17:32:35 +0000
+ by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1rTQ4A-000000069Ui-1qun; Fri, 26 Jan 2024 17:32:34 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rTQ4A-00000001eo0-1h7n;
- Fri, 26 Jan 2024 17:32:34 +0000
+ Hat Linux)) id 1rTQ46-00000001elG-432t;
+ Fri, 26 Jan 2024 17:32:30 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -84,21 +84,22 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PATCH v4 39/47] hw/openrisc/openrisc_sim: use
- qemu_create_nic_device()
-Date: Fri, 26 Jan 2024 17:25:16 +0000
-Message-ID: <20240126173228.394202-40-dwmw2@infradead.org>
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v4 01/47] net: add qemu_{configure, create}_nic_device(),
+ qemu_find_nic_info()
+Date: Fri, 26 Jan 2024 17:24:38 +0000
+Message-ID: <20240126173228.394202-2-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126173228.394202-1-dwmw2@infradead.org>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -123,54 +124,153 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
----
- hw/openrisc/openrisc_sim.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Most code which directly accesses nd_table[] and nb_nics uses them for
+one of two things. Either "I have created a NIC device and I'd like a
+configuration for it", or "I will create a NIC device *if* there is a
+configuration for it".  With some variants on the theme around whether
+they actually *check* if the model specified in the configuration is
+the right one.
 
-diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-index 35da123aef..bffd6f721f 100644
---- a/hw/openrisc/openrisc_sim.c
-+++ b/hw/openrisc/openrisc_sim.c
-@@ -170,7 +170,7 @@ static void openrisc_create_fdt(Or1ksimState *state,
+Provide functions which perform both of those, allowing platforms to
+be a little more consistent and as a step towards making nd_table[]
+and nb_nics private to the net code.
+
+One might argue that platforms ought to be consistent about whether
+they create the unconfigured devices or not, but making significant
+user-visible changes is explicitly *not* the intent right now.
+
+The new functions leave the 'model' field of the NICInfo as NULL after
+using it for the default NIC model, unlike the qemu_check_nic_model()
+function which does set nd->model to match default_model explicitly.
+This is acceptable because there is no code which consumes nd->model
+except this NIC-matching code in net/net.c, and no reasonable excuse
+for any code wanting to use nd->model in future.
+
+Also export the qemu_find_nic_info() helper, as some platforms have
+special cases they need to handle.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ include/net/net.h | 40 +++++++++++++++++++++++++++++++++++++
+ net/net.c         | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 91 insertions(+)
+
+diff --git a/include/net/net.h b/include/net/net.h
+index ffbd2c8d56..dff1872b4d 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -207,7 +207,47 @@ int qemu_show_nic_models(const char *arg, const char *const *models);
+ void qemu_check_nic_model(NICInfo *nd, const char *model);
+ int qemu_find_nic_model(NICInfo *nd, const char * const *models,
+                         const char *default_model);
++/**
++ * qemu_find_nic_info: Obtain NIC configuration information
++ * @typename: Name of device object type
++ * @match_default: Match NIC configurations with no model specified
++ * @alias: Additional model string to match (for user convenience and
++ *         backward compatibility).
++ *
++ * Search for a NIC configuration matching the NIC model constraints.
++ */
++NICInfo *qemu_find_nic_info(const char *typename, bool match_default,
++                            const char *alias);
++/**
++ * qemu_configure_nic_device: Apply NIC configuration to a given device
++ * @dev: Network device to be configured
++ * @match_default: Match NIC configurations with no model specified
++ * @alias: Additional model string to match
++ *
++ * Search for a NIC configuration for the provided device, using the
++ * additionally specified matching constraints. If found, apply the
++ * configuration using qdev_set_nic_properties() and return %true.
++ *
++ * This is used by platform code which creates the device anyway,
++ * regardless of whether there is a configuration for it. This tends
++ * to be platforms which ignore `--nodefaults` and create net devices
++ * anyway, for example because the Ethernet device on that board is
++ * always physically present.
++ */
++bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
++                               const char *alias);
  
- static void openrisc_sim_net_init(Or1ksimState *state, hwaddr base, hwaddr size,
-                                   int num_cpus, OpenRISCCPU *cpus[],
--                                  int irq_pin, NICInfo *nd)
-+                                  int irq_pin)
- {
-     void *fdt = state->fdt;
-     DeviceState *dev;
-@@ -178,8 +178,10 @@ static void openrisc_sim_net_init(Or1ksimState *state, hwaddr base, hwaddr size,
-     char *nodename;
-     int i;
++/**
++ * qemu_create_nic_device: Create a NIC device if a configuration exists for it
++ * @typename: Object typename of network device
++ * @match_default: Match NIC configurations with no model specified
++ * @alias: Additional model string to match
++ *
++ * Search for a NIC configuration for the provided device type. If found,
++ * create an object of the corresponding type and return it.
++ */
++DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
++                                    const char *alias);
+ void print_net_client(Monitor *mon, NetClientState *nc);
+ void net_socket_rs_init(SocketReadState *rs,
+                         SocketReadStateFinalize *finalize,
+diff --git a/net/net.c b/net/net.c
+index 0520bc1681..aeb7f573fc 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -1087,6 +1087,57 @@ static int net_init_nic(const Netdev *netdev, const char *name,
+     return idx;
+ }
  
--    dev = qdev_new("open_eth");
--    qdev_set_nic_properties(dev, nd);
-+    dev = qemu_create_nic_device("open_eth", true, NULL);
-+    if (!dev) {
-+        return;
++NICInfo *qemu_find_nic_info(const char *typename, bool match_default,
++                            const char *alias)
++{
++    NICInfo *nd;
++    int i;
++
++    for (i = 0; i < nb_nics; i++) {
++        nd = &nd_table[i];
++
++        if (!nd->used || nd->instantiated) {
++            continue;
++        }
++
++        if ((match_default && !nd->model) || !g_strcmp0(nd->model, typename)
++            || (alias && !g_strcmp0(nd->model, alias))) {
++            return nd;
++        }
 +    }
++    return NULL;
++}
++
++
++/* "I have created a device. Please configure it if you can" */
++bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
++                               const char *alias)
++{
++    NICInfo *nd = qemu_find_nic_info(object_get_typename(OBJECT(dev)),
++                                     match_default, alias);
++
++    if (nd) {
++        qdev_set_nic_properties(dev, nd);
++        return true;
++    }
++    return false;
++}
++
++/* "Please create a device, if you have a configuration for it" */
++DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
++                                    const char *alias)
++{
++    NICInfo *nd = qemu_find_nic_info(typename, match_default, alias);
++    DeviceState *dev;
++
++    if (!nd) {
++        return NULL;
++    }
++
++    dev = qdev_new(typename);
++    qdev_set_nic_properties(dev, nd);
++    return dev;
++}
  
-     s = SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(s, &error_fatal);
-@@ -313,12 +315,10 @@ static void openrisc_sim_init(MachineState *machine)
-     openrisc_create_fdt(state, or1ksim_memmap, smp_cpus, machine->ram_size,
-                         machine->kernel_cmdline);
- 
--    if (nd_table[0].used) {
--        openrisc_sim_net_init(state, or1ksim_memmap[OR1KSIM_ETHOC].base,
--                              or1ksim_memmap[OR1KSIM_ETHOC].size,
--                              smp_cpus, cpus,
--                              OR1KSIM_ETHOC_IRQ, nd_table);
--    }
-+    openrisc_sim_net_init(state, or1ksim_memmap[OR1KSIM_ETHOC].base,
-+                          or1ksim_memmap[OR1KSIM_ETHOC].size,
-+                          smp_cpus, cpus,
-+                          OR1KSIM_ETHOC_IRQ);
- 
-     if (smp_cpus > 1) {
-         openrisc_sim_ompic_init(state, or1ksim_memmap[OR1KSIM_OMPIC].base,
+ static int (* const net_client_init_fun[NET_CLIENT_DRIVER__MAX])(
+     const Netdev *netdev,
 -- 
 2.43.0
 
