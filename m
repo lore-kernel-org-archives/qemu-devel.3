@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40D1C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13869C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTOwL-0007bj-Nw; Fri, 26 Jan 2024 11:20:25 -0500
+	id 1rTP04-0000yz-Bn; Fri, 26 Jan 2024 11:24:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOwI-0007bJ-Dp
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:20:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTP02-0000y2-Im
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:24:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOwG-0000HP-Pk
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:20:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTP00-0000q9-TY
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:24:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706286020;
+ s=mimecast20190719; t=1706286252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MRIjfaHeC/HCDOxGifaONkhJ6qMUTCsidTOpeocpbFI=;
- b=J98nAPV3tMYevFgzWTmuIuRhT1zrfXHWEnErWgLr8ZP5Cy/wg1MVACbzvY5g/sfJNcAs3q
- 1KVKaCakmjbr5PKmsmv6YdAD2tPbSB7FLuM2bWJ0N1sjXgRdNNaKb6WnnAr7KqdMzx4spK
- aWPru/BH4W6Z5ouMzARPFzj5OwwkWq4=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rMQuR8R6QlQHRSwOG/FSTc/zzqVC7dZA/DT7zA6+8dI=;
+ b=NfIfPoMnCXk56gHN19dQSEaYamfWciUd+2GiAcToIOCjqSlkE73/xGCmwYURLq6YSI4rX4
+ r6ZoKhZRNiID64hACQbRz3P+hqMuV1BcpzM5d1VyxF+PmuXRi9rgiu20ScfmtKxUv8xd76
+ /MIhOjjWXR76Rl0+akfaSob6aMfH2f0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-194-IReLm_5BPZmDaj8o3EAtMg-1; Fri, 26 Jan 2024 11:20:18 -0500
-X-MC-Unique: IReLm_5BPZmDaj8o3EAtMg-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-68058b0112cso13758636d6.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:20:18 -0800 (PST)
+ us-mta-61-7n-VIHdFPMS2QBANEZdfFA-1; Fri, 26 Jan 2024 11:24:10 -0500
+X-MC-Unique: 7n-VIHdFPMS2QBANEZdfFA-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-783ddd331f5so50703985a.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:24:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706286018; x=1706890818;
+ d=1e100.net; s=20230601; t=1706286250; x=1706891050;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MRIjfaHeC/HCDOxGifaONkhJ6qMUTCsidTOpeocpbFI=;
- b=a56TkzOtfhMr9c8qZXQ1SNKe37/jWT7X0vll9B7g/uuqpH2XIyxe9eHCK0HOwwahb1
- qYpgcZ99xAowmTIqCL7/+UGhuuIh/mYzuYtUEcjP1bpstcglIdeBdF5F3aXG5PQqH6QK
- uLn78SPNV3AscgqF15kHbzgdX9nYIP0LkE/47GZ3jYRlJug1N0nJW0Cu2IC79A+MbWVX
- duJSE97w+XSVsWQz85g5uJUIsOc+/CjTRldxMPy4j6InT6GPW6cR1xHrj4nat7wodWl5
- IWoXjJWzkZfjh5i7C3K55Yg9yQ3mIbnCigh8E26ZkBHn3xaH3So/d/7r9KCiysToG3Al
- +EQw==
-X-Gm-Message-State: AOJu0Yytk1fZDCnGdK5AAhH39avAsWpi/YufE+j5SSk6RIW4717FGMoG
- Vf9dGScbKiK7qf9VHSjVvEfVkHx48UvpoFyrnFJd03f97fmGsRHy9VHnoq1JqHh6HUo7UjxvTJH
- A+aNRqjLY/9VZqhuwXY1Sr0CEu6WJ2YAk9WbbQvo5UFjWQkeCMMlh
-X-Received: by 2002:a05:6214:2481:b0:686:aa83:4cc with SMTP id
- gi1-20020a056214248100b00686aa8304ccmr116085qvb.16.1706286017995; 
- Fri, 26 Jan 2024 08:20:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHswNQ/uBjF8/Et4Ed+zf4w9PiVErcfgVM/nEdyBOIwzjWjPL1NLQrRxdQyyvj3MNG/c4OfnQ==
-X-Received: by 2002:a05:6214:2481:b0:686:aa83:4cc with SMTP id
- gi1-20020a056214248100b00686aa8304ccmr116030qvb.16.1706286017691; 
- Fri, 26 Jan 2024 08:20:17 -0800 (PST)
+ bh=rMQuR8R6QlQHRSwOG/FSTc/zzqVC7dZA/DT7zA6+8dI=;
+ b=POK1H7WKovwTEQask5Cm2HnU5lmfmbjsUNyGLuaqgMYGZqdDett/EVeeDl/UV9jNeg
+ +DT/udBJojz5O0vlXXffLRiLnbs9yLueSbxheGx4sYxA30CSTG8YQ4nITAb+tRd6tPWc
+ XutDbLBzZOX/ZGJ1CuOa2CSKUtcAV7yxSkrYts3nKjS7kRJD2ZK8tcpxVDjGAx+Q0u7c
+ FWDJCvTX+iOf+MeOxR65OuEupn0Ga0DpzxPxMJFQ0E/9P9OIh8fZ0FTZaBMwz0GldwEJ
+ 30qk2bhk6xwm0vIEJC8PpzaFg2kJ+fALAlLGYuSigXsVr/Jzrt0/4v3QtCI3OgCNhJj7
+ 6UVQ==
+X-Gm-Message-State: AOJu0Yy54z2Q4rLmqIp7xm9vrPubhzek2I7ZwFQtXTM1HvbUNhYHmM/9
+ wVIiiwmWexO7datxvbm0VBwJd+KtGeFIggxzIMpXQ5ViMPFZJBJmZGk3b+/Cx7xwS+wNdRuT1O/
+ g/y+rEAKQhx+0q02k3OiCobYFd74JDJ+HhY43lHUd6oNLejuHgpUW
+X-Received: by 2002:ae9:f441:0:b0:783:72be:ad7b with SMTP id
+ z1-20020ae9f441000000b0078372bead7bmr117676qkl.49.1706286249871; 
+ Fri, 26 Jan 2024 08:24:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGve8osCeSz94pphOQKBeiYKdjKW3PTHAEmsCCFmca81zDyaESrbU9kB6ceXp2nM2J6gkk/hQ==
+X-Received: by 2002:ae9:f441:0:b0:783:72be:ad7b with SMTP id
+ z1-20020ae9f441000000b0078372bead7bmr117656qkl.49.1706286249602; 
+ Fri, 26 Jan 2024 08:24:09 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- om12-20020a0562143d8c00b006869bae3b11sm632416qvb.35.2024.01.26.08.20.02
+ n16-20020ae9c310000000b007832895cf8csm703584qkg.38.2024.01.26.08.23.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 08:20:17 -0800 (PST)
-Message-ID: <80fe8746-3b93-41c7-bd53-13bd8dac9471@redhat.com>
-Date: Fri, 26 Jan 2024 17:20:00 +0100
+ Fri, 26 Jan 2024 08:24:09 -0800 (PST)
+Message-ID: <ea48c56c-6fde-408b-a847-c1a7959cf8d1@redhat.com>
+Date: Fri, 26 Jan 2024 17:23:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 35/46] hw/mips/mipssim: use qemu_create_nic_device()
+Subject: Re: [PATCH v3 31/46] hw/net/etraxfs-eth: use
+ qemu_configure_nic_device()
 Content-Language: en-US
 To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Beniamino Galvani <b.galvani@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -79,13 +80,13 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, Rob Herring <robh@kernel.org>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>, Jan Kiszka <jan.kiszka@web.de>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Radoslaw Biernacki <rad@semihalf.com>,
  Leif Lindholm <quic_llindhol@quicinc.com>,
  Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
  Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>,
@@ -107,16 +108,12 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
  Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
  Stefano Stabellini <sstabellini@kernel.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+ Max Filippov <jcmvbkbc@gmail.com>, David Woodhouse <dwmw@amazon.co.uk>
 References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-36-dwmw2@infradead.org>
+ <20240108204909.564514-32-dwmw2@infradead.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -160,19 +157,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240108204909.564514-36-dwmw2@infradead.org>
+In-Reply-To: <20240108204909.564514-32-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,50 +188,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 08/01/2024 21.27, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
 > 
-> The MIPS SIM platform instantiates its NIC only if a corresponding
-> configuration exists for it. Use qemu_create_nic_device() function for
-> that.
-> 
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/mips/mipssim.c | 13 +++++++------
->   1 file changed, 7 insertions(+), 6 deletions(-)
+>   hw/cris/axis_dev88.c      | 9 ++++-----
+>   hw/net/etraxfs_eth.c      | 5 ++---
+>   include/hw/cris/etraxfs.h | 2 +-
+>   3 files changed, 7 insertions(+), 9 deletions(-)
 > 
-> diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
-> index 01e323904d..16af31648e 100644
-> --- a/hw/mips/mipssim.c
-> +++ b/hw/mips/mipssim.c
-> @@ -118,13 +118,15 @@ static void main_cpu_reset(void *opaque)
->       }
->   }
+> diff --git a/hw/cris/axis_dev88.c b/hw/cris/axis_dev88.c
+> index d82050d927..5556634921 100644
+> --- a/hw/cris/axis_dev88.c
+> +++ b/hw/cris/axis_dev88.c
+> @@ -308,15 +308,14 @@ void axisdev88_init(MachineState *machine)
 >   
-> -static void mipsnet_init(int base, qemu_irq irq, NICInfo *nd)
-> +static void mipsnet_init(int base, qemu_irq irq)
+>       /* Add the two ethernet blocks.  */
+>       dma_eth = g_malloc0(sizeof dma_eth[0] * 4); /* Allocate 4 channels.  */
+> -    etraxfs_eth_init(&nd_table[0], 0x30034000, 1, &dma_eth[0], &dma_eth[1]);
+> -    if (nb_nics > 1) {
+> -        etraxfs_eth_init(&nd_table[1], 0x30036000, 2, &dma_eth[2], &dma_eth[3]);
+> -    }
+>   
+> +    etraxfs_eth_init(0x30034000, 1, &dma_eth[0], &dma_eth[1]);
+>       /* The DMA Connector block is missing, hardwire things for now.  */
+>       etraxfs_dmac_connect_client(etraxfs_dmac, 0, &dma_eth[0]);
+>       etraxfs_dmac_connect_client(etraxfs_dmac, 1, &dma_eth[1]);
+> -    if (nb_nics > 1) {
+> +
+> +    if (qemu_find_nic_info("etraxfs-eth", true, "fseth")) {
+> +        etraxfs_eth_init(0x30036000, 2, &dma_eth[2], &dma_eth[3]);
+>           etraxfs_dmac_connect_client(etraxfs_dmac, 6, &dma_eth[2]);
+>           etraxfs_dmac_connect_client(etraxfs_dmac, 7, &dma_eth[3]);
+>       }
+> diff --git a/hw/net/etraxfs_eth.c b/hw/net/etraxfs_eth.c
+> index ba57a978d1..5faf20c782 100644
+> --- a/hw/net/etraxfs_eth.c
+> +++ b/hw/net/etraxfs_eth.c
+> @@ -647,15 +647,14 @@ static void etraxfs_eth_class_init(ObjectClass *klass, void *data)
+>   
+>   /* Instantiate an ETRAXFS Ethernet MAC.  */
+>   DeviceState *
+> -etraxfs_eth_init(NICInfo *nd, hwaddr base, int phyaddr,
+> +etraxfs_eth_init(hwaddr base, int phyaddr,
+>                    struct etraxfs_dma_client *dma_out,
+>                    struct etraxfs_dma_client *dma_in)
 >   {
 >       DeviceState *dev;
->       SysBusDevice *s;
+> -    qemu_check_nic_model(nd, "fseth");
 >   
-> -    dev = qdev_new("mipsnet");
+>       dev = qdev_new("etraxfs-eth");
 > -    qdev_set_nic_properties(dev, nd);
-> +    dev = qemu_create_nic_device("mipsnet", true, NULL);
-> +    if (!dev) {
-> +        return;
-> +    }
+> +    qemu_configure_nic_device(dev, true, "fseth");
+>       qdev_prop_set_uint32(dev, "phyaddr", phyaddr);
 >   
->       s = SYS_BUS_DEVICE(dev);
->       sysbus_realize_and_unref(s, &error_fatal);
-> @@ -225,9 +227,8 @@ mips_mipssim_init(MachineState *machine)
->                         sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
->       }
+>       /*
+> diff --git a/include/hw/cris/etraxfs.h b/include/hw/cris/etraxfs.h
+> index 467b529dc0..012c4e9974 100644
+> --- a/include/hw/cris/etraxfs.h
+> +++ b/include/hw/cris/etraxfs.h
+> @@ -31,7 +31,7 @@
+>   #include "hw/sysbus.h"
+>   #include "qapi/error.h"
 >   
-> -    if (nd_table[0].used)
-> -        /* MIPSnet uses the MIPS CPU INT0, which is interrupt 2. */
-> -        mipsnet_init(0x4200, env->irq[2], &nd_table[0]);
-> +    /* MIPSnet uses the MIPS CPU INT0, which is interrupt 2. */
-> +    mipsnet_init(0x4200, env->irq[2]);
->   }
+> -DeviceState *etraxfs_eth_init(NICInfo *nd, hwaddr base, int phyaddr,
+> +DeviceState *etraxfs_eth_init(hwaddr base, int phyaddr,
+>                                 struct etraxfs_dma_client *dma_out,
+>                                 struct etraxfs_dma_client *dma_in);
 >   
->   static void mips_mipssim_machine_init(MachineClass *mc)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
