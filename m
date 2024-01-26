@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0CFC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B58C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNHN-0002Tt-LI; Fri, 26 Jan 2024 09:34:01 -0500
+	id 1rTNHO-0002XK-E5; Fri, 26 Jan 2024 09:34:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHI-0002LU-LY
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:56 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1rTNHL-0002RO-J4
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:59 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHG-0007xj-UX
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:56 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-40ee418e7edso6502205e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:54 -0800 (PST)
+ id 1rTNHJ-0007z3-St
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:59 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-510218ab26fso724719e87.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706279633; x=1706884433; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706279636; x=1706884436; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VXXpoqeWUrMcxrn/dztG+5/UTCdvQjyp/SkalnZboFI=;
- b=aMprNKQvN3rlL2x9qwwvKNbnR7OBp9Yqk5vXrIesirQgAC7ZWTrQ2H8M2YkmPvG3qz
- kmQSJ7K7aTopR34FifU+N3ThHpOO7e5W+xSikExzPz3o+rVQxiAdQSNSXivyv8vJYeT5
- 6H6YxYU2+hkXiNQzmb/EusSNFYI5OGckqVeRhP4aSs8ERjkbRWGwXJoMcmuPt61msCLv
- oryLmKsa0z9R6gBxxnTpFa1nYP98uvHyrSFc80EwI2MmWNJ5qBbGtSl1ti6/EEqKecC1
- uvPqNM3WaNKoqp1MQC4Ag04ZRjstSqr6BrgFqQ0cD5XKnU4AGlyqEDPlA8umtEHmXScV
- HIJw==
+ :reply-to; bh=CbytbZE5r6VKI1aTBZEBghdNkVDSmRfkbInRbv2Plj8=;
+ b=ZqeJ10taPdCjvez4CdoAUJCaxLsAXocrTWkQJQP/bw+L6l1WZpQHqOzzauTL/HgCfH
+ NSMRt7OnyYGn2OJf0xZN1KZxB7Ac3k+RqyJlbIS9Vq3AnUatSO9Yr4Ka0C7+dfkBEb3Q
+ U9kqHop0YtnZKhdJF8kSrTzoZ3cM/1qnJN/bGWh8RjvLyyfSySOiXCE272L0BNNQLK0+
+ YRaDa+fTZ3l52EbrNqDdNtDYJYajvEoeEkKIQTX1OQDwxrL/LriWCYqLDBmTnrIG3iAX
+ 7AeHBmxOXKrkhRAl/1UTotIcXLDJoeDPCPlVSL4wMOl091/Ui4w0ZuFUKei/7f2NA1hb
+ HqSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706279633; x=1706884433;
+ d=1e100.net; s=20230601; t=1706279636; x=1706884436;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VXXpoqeWUrMcxrn/dztG+5/UTCdvQjyp/SkalnZboFI=;
- b=AKOdMqlKoTI6EYW9yI+L5apMVh97aLHlFb6VEKVGRHzYnSDlx5jYp8vCjecq58qWTm
- 98NaHnmgd8PfQFufbrUVbjvOjUwSUc/I/NP0OxmuBquCW4zxP3pXfQ595RVimxH2nCK8
- 3eMn3cmBChZSvHMChl2W/WY4K5Ubr7clDWneHKV3RWpxAqoP28FlqyzEXVxUAhYrXNi4
- 5ZLtRDjDSIBz7Q6mQziOre/h0dHhPewqKaDLoawe4l2WOUhy1yJaoXODOw0pagBf9KE/
- rLGqPc4jf9gqBBhDBaw5TfAmOAm0O0fvHY8shJR+8odbCtVCB+pYHcOmHRApQrKxQCxr
- 52Fg==
-X-Gm-Message-State: AOJu0YwMcwDhCWwKBVt+sfnHE0Vaan8diWoWyk4nZWcSD9JfHu095SJ7
- +djbxW7zJ6TKRF1xH4xmG79DHuEuiSjnyjjRNhDW/U9AywMHgmUchnLtWcD5mHGgz7imJoJ9NDz
- R
-X-Google-Smtp-Source: AGHT+IFs4lSQsnfz/Sf5JbJSQsXCraaIgQARnUoxerCbfPQ4yreYxVnujAwx/RArxqACMI4FtWH7jQ==
-X-Received: by 2002:a05:600c:21da:b0:40e:8550:4240 with SMTP id
- x26-20020a05600c21da00b0040e85504240mr1042789wmj.138.1706279633378; 
- Fri, 26 Jan 2024 06:33:53 -0800 (PST)
+ bh=CbytbZE5r6VKI1aTBZEBghdNkVDSmRfkbInRbv2Plj8=;
+ b=a+bFUpDtXpH1frAxV2iyHAYwa9ASJoRI+i7+PEJA2ERoVm1TYVjljmjE25lYBsavNr
+ mPl64RprL4tZz6MkTzjqo1nTohKPZoj7lmor75lSvWHakOE+YUOSqdUNx/dadwbI9uSx
+ WA5zRM4t4iLJ2Dyu1rJLVsqpeS2Q39g09GX8JSq+561tVIx/BV93COpHlOcK5RqYsSdZ
+ 0xCmFM9sqpZZ5PHR5GvKlnMItT8LgvN8MW8B6Yks93LJi3R/XexgL4KFl6IBnCenCnaW
+ ahtPcSLUiDfugeRomuu1BauwQDgQ7C7lvohVm+XjxS7Y2NgvxIYidIudTIacAsPifZmV
+ VLaw==
+X-Gm-Message-State: AOJu0YwMDp8SsXqjnKtZ8kKIa/9Zux11/jr3JGot1AfXpSutzdnACFkJ
+ ucruZvTEGjJ9Z0QxyiHja9xeovmX6P/LSdtQP9yS95HWiP5BMf4YXMomOSRfHGckxf+ogDbfkhq
+ 2
+X-Google-Smtp-Source: AGHT+IHN/1J38rMpghWDj72Ez7d93GxehQXOJaTPrsZp17r7QncdV8Q8+J8HQigE0ahunrOaTcphbQ==
+X-Received: by 2002:ac2:59da:0:b0:510:c20:74a9 with SMTP id
+ x26-20020ac259da000000b005100c2074a9mr1820442lfn.64.1706279636312; 
+ Fri, 26 Jan 2024 06:33:56 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.53
+ n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:33:53 -0800 (PST)
+ Fri, 26 Jan 2024 06:33:55 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/36] hw/arm/armv7m: Make 'hw/intc/armv7m_nvic.h' a target
- agnostic header
-Date: Fri, 26 Jan 2024 14:33:30 +0000
-Message-Id: <20240126143341.2101237-26-peter.maydell@linaro.org>
+Subject: [PULL 31/36] docs/system/arm/virt.rst: Add note on CPU features off
+ by default
+Date: Fri, 26 Jan 2024 14:33:36 +0000
+Message-Id: <20240126143341.2101237-32-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
 References: <20240126143341.2101237-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,48 +94,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Now than we can access the M-profile bank index
-definitions from the target-agnostic "cpu-qom.h"
-header, we don't need the huge "cpu.h" anymore
-(except in hw/arm/armv7m.c). Reduce its inclusion
-to the source unit.
+Add a note on CPU features that are off by default in `virt` machines.
+Some CPU features will remain off even if a CPU-capable CPU (e.g.,
+`-cpu max`) is selected because they require support in both the CPU
+itself and in the wider system. Therefore, the user, besides selecting a
+CPU that supports such features, must also turn on the feature using a
+machine option.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240118200643.29037-17-philmd@linaro.org
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-id: 20240122211215.95073-1-gustavo.romero@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/intc/armv7m_nvic.h | 2 +-
- hw/arm/armv7m.c               | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ docs/system/arm/virt.rst | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/include/hw/intc/armv7m_nvic.h b/include/hw/intc/armv7m_nvic.h
-index 6b4ae566c9a..89fe8aedaa9 100644
---- a/include/hw/intc/armv7m_nvic.h
-+++ b/include/hw/intc/armv7m_nvic.h
-@@ -10,7 +10,7 @@
- #ifndef HW_ARM_ARMV7M_NVIC_H
- #define HW_ARM_ARMV7M_NVIC_H
+diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+index c245c52b7ac..26fcba00b76 100644
+--- a/docs/system/arm/virt.rst
++++ b/docs/system/arm/virt.rst
+@@ -69,6 +69,19 @@ Supported guest CPU types:
+ Note that the default is ``cortex-a15``, so for an AArch64 guest you must
+ specify a CPU type.
  
--#include "target/arm/cpu.h"
-+#include "target/arm/cpu-qom.h"
- #include "hw/sysbus.h"
- #include "hw/timer/armv7m_systick.h"
- #include "qom/object.h"
-diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
-index 1f218277734..edcd8adc748 100644
---- a/hw/arm/armv7m.c
-+++ b/hw/arm/armv7m.c
-@@ -21,6 +21,7 @@
- #include "qemu/module.h"
- #include "qemu/log.h"
- #include "target/arm/idau.h"
-+#include "target/arm/cpu.h"
- #include "target/arm/cpu-features.h"
- #include "migration/vmstate.h"
- 
++Also, please note that passing ``max`` CPU (i.e. ``-cpu max``) won't
++enable all the CPU features for a given ``virt`` machine. Where a CPU
++architectural feature requires support in both the CPU itself and in the
++wider system (e.g. the MTE feature), it may not be enabled by default,
++but instead requires a machine option to enable it.
++
++For example, MTE support must be enabled with ``-machine virt,mte=on``,
++as well as by selecting an MTE-capable CPU (e.g., ``max``) with the
++``-cpu`` option.
++
++See the machine-specific options below, or check them for a given machine
++by passing the ``help`` suboption, like: ``-machine virt-9.0,help``.
++
+ Graphics output is available, but unlike the x86 PC machine types
+ there is no default display device enabled: you should select one from
+ the Display devices section of "-device help". The recommended option
 -- 
 2.34.1
 
