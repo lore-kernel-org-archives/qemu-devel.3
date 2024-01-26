@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95B2C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02304C48285
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTJ13-0000ZL-FC; Fri, 26 Jan 2024 05:00:53 -0500
+	id 1rTJ8j-0002fc-UE; Fri, 26 Jan 2024 05:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJ0b-0000QI-6J; Fri, 26 Jan 2024 05:00:35 -0500
+ id 1rTJ8h-0002es-RL; Fri, 26 Jan 2024 05:08:47 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJ0Y-0003E7-C1; Fri, 26 Jan 2024 05:00:24 -0500
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+ id 1rTJ8f-0004Vo-RF; Fri, 26 Jan 2024 05:08:47 -0500
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q9kbu6029387; Fri, 26 Jan 2024 10:00:04 GMT
+ 40Q8HHuL004780; Fri, 26 Jan 2024 10:08:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
- bh=IP644mm7Xeu/QdAxvZpUCdASXH1SqIfSP0wQTPfrnHk=;
- b=KHBJlMXN1W54Etug+5eOKFtCuh2zdZO5vIMlbJ7lWN3/yjkYPy2UVX6VdO2cWuUoQkr3
- 4MjsEukcvQ8uRvBXcElOQEFVhwZjzdz4eCpTpVVhufH8+SoHdeKDSyHk6g1R9TNYFZu2
- zvlfdJSEHLr2SFTqm62bG7C4973o+Y4jMme4Mi8II2ujVJ5FZAL92a/U7iqkruD7kVUc
- efxJyFnpKbyQC4ViqNdbj199Ld48J5fcx5HGZEC0neEKJEPZjwhLpk3mTPJgvqvhhTXH
- PP3ms96R9rAnIlAv8C+am1rW5WbLaT5kAhtQfxjgeNBo/ygdP70GvUKAIf9CtVX5hzUX 0Q== 
+ bh=hgpk0IY6UTbcRSXutAt4hE12DlHb0NhMjJGP1i7bUYg=;
+ b=jCDQjsOdSxigGMXSvb7C5S2ORHZaTGaovdMC/HST+sJ2MErtm/xbAXB0xcUBXXWG68r+
+ uGPUvmd0dEYmLCgHKz33VNm4dPKzWOVJnRUzU2+w919HTKAbS0xTfOiQVkP8ft3dH1Wo
+ 0Tshhmc7RR5ThvAbeLO6zCAqbNHMHHGOHD26GHdlcAzwSJfkqdx7c+vznC/CS9BXG8Xl
+ rFXMwlORgxA4jAWDNjDJ3mGjdiqtYvsXWDVcA5OyXpXRUWeHpqvCJKos8P4ww/9O7k7b
+ ae7pyk6r9udPNF74cTfBdvmzwfuSIzMoHN3UpQXZojZVtT3QTYRJ3zj7LS/be6nG7qIT Rw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv9yk0n4h-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv93djbbr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:00:03 +0000
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40Q9xl5b004690;
- Fri, 26 Jan 2024 10:00:03 GMT
+ Fri, 26 Jan 2024 10:08:33 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40Q9qNYi010766;
+ Fri, 26 Jan 2024 10:08:33 GMT
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv9yk0n2x-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv93djbba-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:00:03 +0000
+ Fri, 26 Jan 2024 10:08:32 +0000
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
  by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q9ZSSc025268; Fri, 26 Jan 2024 10:00:02 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrtqkspjv-1
+ 40Q9iuYG025272; Fri, 26 Jan 2024 10:08:32 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrtqksrck-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:00:02 +0000
+ Fri, 26 Jan 2024 10:08:31 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40QA01OC18219772
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40QA8Vx629754076
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jan 2024 10:00:01 GMT
+ Fri, 26 Jan 2024 10:08:31 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4BCD35805D;
- Fri, 26 Jan 2024 10:00:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2CA835805A;
+ Fri, 26 Jan 2024 10:08:31 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A99B58054;
- Fri, 26 Jan 2024 10:00:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 135D758062;
+ Fri, 26 Jan 2024 10:08:30 +0000 (GMT)
 Received: from [9.61.160.70] (unknown [9.61.160.70])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Jan 2024 10:00:00 +0000 (GMT)
-Message-ID: <5828efc8-3fa4-4daf-bc25-912b88ca3592@linux.ibm.com>
-Date: Fri, 26 Jan 2024 04:00:00 -0600
+ Fri, 26 Jan 2024 10:08:29 +0000 (GMT)
+Message-ID: <4ca3ee69-55e9-4cec-a4d8-23304ff6290d@linux.ibm.com>
+Date: Fri, 26 Jan 2024 04:08:29 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 04/11] hw/fsi: Introduce IBM's fsi-slave model
+Subject: Re: [PATCH v11 05/11] hw/fsi: Introduce IBM's cfam
 Content-Language: en-US
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
  peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
@@ -77,24 +77,24 @@ To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
  thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
 Cc: qemu-arm@nongnu.org, Andrew Jeffery <andrew@aj.id.au>
 References: <20240126034026.31068-1-ninad@linux.ibm.com>
- <20240126034026.31068-5-ninad@linux.ibm.com>
- <8b961658-d468-4f71-b2e4-4f1d148bdf55@kaod.org>
+ <20240126034026.31068-6-ninad@linux.ibm.com>
+ <6c1a24a2-dfc6-4ce3-828b-4bc196f9d71f@kaod.org>
 From: Ninad Palsule <ninad@linux.ibm.com>
-In-Reply-To: <8b961658-d468-4f71-b2e4-4f1d148bdf55@kaod.org>
+In-Reply-To: <6c1a24a2-dfc6-4ce3-828b-4bc196f9d71f@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: sQdUnBAW4m4R7LkNIky6VIdstOyZRRUo
-X-Proofpoint-ORIG-GUID: SggCwBCAowt4n562RlxV705xZsszIpD0
+X-Proofpoint-ORIG-GUID: lQWJ33gQ7GMRrFrOQVsfRt6h-mwgxp0k
+X-Proofpoint-GUID: Ov7bzAy6eXwqj8QXGdRGXmIOW3Xb2mt_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=624 spamscore=0
- clxscore=1015 bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
- phishscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2401260072
+ clxscore=1015 phishscore=0
+ spamscore=0 bulkscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 mlxlogscore=621
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2401260073
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=ninad@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -122,28 +122,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Hello Cedric,
 
 
+>> +#include "hw/fsi/fsi.h"
 >> +
->> +static void fsi_slave_reset(DeviceState *dev)
->> +{
->> +    FSISlaveState *s = FSI_SLAVE(dev);
->> +    int i;
+>> +#include "hw/qdev-properties.h"
 >> +
->> +    /* Initialize registers */
->> +    for (i = 0; i < FSI_SLAVE_CONTROL_NR_REGS; i++) {
->> +        s->regs[i] = 0;
->> +    }
+>> +#define ENGINE_CONFIG_NEXT            BE_BIT(0)
 >
-> memset would be better.
-Replaced for loop with memset.
+> BE_BIT is not used much. I wonder if we should keep it.
+Agree. It is only used at couple of places. Removed BE_BIT()
 >
-> with that fixed,
+> Anyhow,
 >
 >
 > Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Added tag.
-
-Thanks for the review.
+Added tag. Thanks for the review.
 
 Regards,
 
