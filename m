@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C367AC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 19:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F00C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 19:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTS0p-0002Sn-0B; Fri, 26 Jan 2024 14:37:15 -0500
+	id 1rTS0o-0002Sl-TP; Fri, 26 Jan 2024 14:37:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rTS0m-0002Qu-KZ; Fri, 26 Jan 2024 14:37:12 -0500
+ id 1rTS0m-0002Qv-Lv; Fri, 26 Jan 2024 14:37:12 -0500
 Received: from zproxy1.enst.fr ([2001:660:330f:2::dc])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rTS0k-0003ak-9z; Fri, 26 Jan 2024 14:37:12 -0500
+ id 1rTS0k-0003am-AV; Fri, 26 Jan 2024 14:37:12 -0500
 Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 263B2C0D84;
+ by zproxy1.enst.fr (Postfix) with ESMTP id 62EB6C0D86;
  Fri, 26 Jan 2024 20:37:05 +0100 (CET)
 Received: from zproxy1.enst.fr ([IPv6:::1])
  by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id G8AiXwxqoewB; Fri, 26 Jan 2024 20:37:04 +0100 (CET)
+ id pL3-P45c9Wp0; Fri, 26 Jan 2024 20:37:04 +0100 (CET)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id ADA6AC0DEB;
+ by zproxy1.enst.fr (Postfix) with ESMTP id E4693C0DEE;
  Fri, 26 Jan 2024 20:37:04 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr ADA6AC0DEB
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr E4693C0DEE
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
  s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706297824;
- bh=hL9TaZ4ibiwR+WC8tu4kAPe9gkBsSjiDSq5hSzb1jHg=;
+ bh=sLcpi0h2CrxIGF99Co/VPvMC+y3v77u7Y6/APVqUHoI=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=Xe65gfqwSGQ2180Nlali1HCAoJ4lOfozezS5TvTM+HdBPWrOgIh62vxhuWsDFf9b5
- CQw2ty43tqEN4Z0gK0hjZVm5Fm8xdzD7f1hIf5HgjYA18ym5Rp1tnh4w1H04O3YNDH
- cAjARPSot+azUfET6b99jLfAwMWYc/vjOE6t38XM=
+ b=P5414BE04UDoQOwQkouhCRZii4oFVBS+RriFkp93+lfWDb4vtDYNnOIXY0fUTqfde
+ XxE5Gye5gL0zxCnMbZHeTB+wGLPyAXXGKgjqPpYZJU7BgJL5+pX0vsYHYSYQO4WoFf
+ bIuFU4YiDdlk6R3EK7HNrMSiEAogn/CecosmbPUI=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy1.enst.fr ([IPv6:::1])
  by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id mXthl3Y1vUHZ; Fri, 26 Jan 2024 20:37:04 +0100 (CET)
+ id 8AYq580aijm5; Fri, 26 Jan 2024 20:37:04 +0100 (CET)
 Received: from localhost.localdomain (74.0.125.80.rev.sfr.net [80.125.0.74])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id 5E5AFC0DDF;
+ by zproxy1.enst.fr (Postfix) with ESMTPSA id A09E4C0D84;
  Fri, 26 Jan 2024 20:37:04 +0100 (CET)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
@@ -51,9 +51,9 @@ Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Subject: [PATCH 2/3] hw/arm : Connect DM163 to STM32L4x5
-Date: Fri, 26 Jan 2024 20:31:02 +0100
-Message-ID: <20240126193657.792005-3-ines.varhol@telecom-paris.fr>
+Subject: [PATCH 3/3] tests/qtest : Add testcase for DM163
+Date: Fri, 26 Jan 2024 20:31:03 +0100
+Message-ID: <20240126193657.792005-4-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126193657.792005-1-ines.varhol@telecom-paris.fr>
 References: <20240126193657.792005-1-ines.varhol@telecom-paris.fr>
@@ -83,157 +83,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+`test_dm163_bank()`
+Checks that the pin "sout" of the DM163 led driver outputs the values
+received on pin "sin" with the expected latency (depending on the bank).
+
+`test_dm163_gpio_connection()`
+Check that changes to relevant STM32L4x5 GPIO pins are prpagated to the
+DM163 device.
+
 Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 ---
- hw/arm/Kconfig                 |  1 +
- hw/arm/stm32l4x5_soc.c         | 55 +++++++++++++++++++++++++++++++++-
- include/hw/arm/stm32l4x5_soc.h |  3 ++
- 3 files changed, 58 insertions(+), 1 deletion(-)
+ tests/qtest/dm163-test.c | 192 +++++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build  |   1 +
+ 2 files changed, 193 insertions(+)
+ create mode 100644 tests/qtest/dm163-test.c
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 3e49b913f8..818aa2f1a2 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -463,6 +463,7 @@ config STM32L4X5_SOC
-     select STM32L4X5_SYSCFG
-     select STM32L4X5_RCC
-     select STM32L4X5_GPIO
-+    select DM163
-=20
- config XLNX_ZYNQMP_ARM
-     bool
-diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
-index 478c6ba056..8663546901 100644
---- a/hw/arm/stm32l4x5_soc.c
-+++ b/hw/arm/stm32l4x5_soc.c
-@@ -26,7 +26,9 @@
- #include "qapi/error.h"
- #include "exec/address-spaces.h"
- #include "sysemu/sysemu.h"
-+#include "hw/core/split-irq.h"
- #include "hw/arm/stm32l4x5_soc.h"
-+#include "hw/display/dm163.h"
- #include "hw/qdev-clock.h"
- #include "hw/misc/unimp.h"
-=20
-@@ -78,6 +80,31 @@ static const int exti_irq[NUM_EXTI_IRQ] =3D {
- #define RCC_BASE_ADDRESS 0x40021000
- #define RCC_IRQ 5
-=20
+diff --git a/tests/qtest/dm163-test.c b/tests/qtest/dm163-test.c
+new file mode 100644
+index 0000000000..7691ce1af0
+--- /dev/null
++++ b/tests/qtest/dm163-test.c
+@@ -0,0 +1,192 @@
 +/*
-+ * There are actually 14 input pins in the DM163 device.
-+ * Here the DM163 input pin EN isn't connected to the STM32L4x5
-+ * GPIOs as the IM120417002 colors shield doesn't actually use
-+ * this pin to drive the RGB matrix.
++ * QTest testcase for DM163
++ *
++ * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
++ * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
++ * Copyright (C) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#define NUM_DM163_INPUTS 13
 +
-+static const int dm163_input[NUM_DM163_INPUTS] =3D {
-+    1 * 16 + 2,  /* ROW0  PB2       */
-+    0 * 16 + 15, /* ROW1  PA15      */
-+    0 * 16 + 2,  /* ROW2  PA2       */
-+    0 * 16 + 7,  /* ROW3  PA7       */
-+    0 * 16 + 6,  /* ROW4  PA6       */
-+    0 * 16 + 5,  /* ROW5  PA5       */
-+    1 * 16 + 0,  /* ROW6  PB0       */
-+    0 * 16 + 3,  /* ROW7  PA3       */
-+    0 * 16 + 4,  /* SIN (SDA) PA4   */
-+    1 * 16 + 1,  /* DCK (SCK) PB1   */
-+    2 * 16 + 3,  /* RST_B (RST) PC3 */
-+    2 * 16 + 4,  /* LAT_B (LAT) PC4 */
-+    2 * 16 + 5,  /* SELBK (SB)  PC5 */
-+};
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#define SIN 8
++#define DCK 9
++#define RST_B 10
++#define LAT_B 11
++#define SELBK 12
++#define EN_B 13
++
++#define DEVICE_NAME "/machine/soc/dm163"
++#define GPIO_OUT(name, value) qtest_set_irq_in(qts, DEVICE_NAME, NULL, n=
+ame,   \
++                                               value)
++#define GPIO_PULSE(name)                                                =
+       \
++  do {                                                                  =
+       \
++    GPIO_OUT(name, 1);                                                  =
+       \
++    GPIO_OUT(name, 0);                                                  =
+       \
++  } while (0)
 +
 +
- static const uint32_t gpio_addr[] =3D {
-     0x48000000,
-     0x48000400,
-@@ -116,6 +143,8 @@ static void stm32l4x5_soc_initfn(Object *obj)
-         g_autofree char *name =3D g_strdup_printf("gpio%c", 'a' + i);
-         object_initialize_child(obj, name, &s->gpio[i], TYPE_STM32L4X5_G=
-PIO);
-     }
++static void rise_gpio_pin_dck(QTestState *qts)
++{
++    /* Configure output mode for pin PB1 */
++    qtest_writel(qts, 0x48000400, 0xFFFFFEB7);
++    /* Write 1 in ODR for PB1 */
++    qtest_writel(qts, 0x48000414, 0x00000002);
++}
 +
-+    object_initialize_child(obj, "dm163", &s->dm163, TYPE_DM163);
- }
-=20
- static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
-@@ -124,9 +153,10 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
-oc, Error **errp)
-     Stm32l4x5SocState *s =3D STM32L4X5_SOC(dev_soc);
-     const Stm32l4x5SocClass *sc =3D STM32L4X5_SOC_GET_CLASS(dev_soc);
-     MemoryRegion *system_memory =3D get_system_memory();
--    DeviceState *armv7m, *dev;
-+    DeviceState *armv7m, *dev, *gpio_output_fork;
-     SysBusDevice *busdev;
-     uint32_t pin_index;
-+    int gpio, pin;
-=20
-     if (!memory_region_init_rom(&s->flash, OBJECT(dev_soc), "flash",
-                                 sc->flash_size, errp)) {
-@@ -166,6 +196,12 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
-oc, Error **errp)
-         return;
-     }
-=20
-+    /* DM163 */
-+    dev =3D DEVICE(&s->dm163);
-+    if (!qdev_realize(dev, NULL, errp)) {
-+        return;
++static void lower_gpio_pin_dck(QTestState *qts)
++{
++    /* Configure output mode for pin PB1 */
++    qtest_writel(qts, 0x48000400, 0xFFFFFEB7);
++    /* Write 0 in ODR for PB1 */
++    qtest_writel(qts, 0x48000414, 0x00000000);
++}
++
++static void rise_gpio_pin_selbk(QTestState *qts)
++{
++    /* Configure output mode for pin PC5 */
++    qtest_writel(qts, 0x48000800, 0xFFFFF7FF);
++    /* Write 1 in ODR for PC5 */
++    qtest_writel(qts, 0x48000814, 0x00000020);
++}
++
++static void lower_gpio_pin_selbk(QTestState *qts)
++{
++    /* Configure output mode for pin PC5 */
++    qtest_writel(qts, 0x48000800, 0xFFFFF7FF);
++    /* Write 0 in ODR for PC5 */
++    qtest_writel(qts, 0x48000814, 0x00000000);
++}
++
++static void rise_gpio_pin_lat_b(QTestState *qts)
++{
++    /* Configure output mode for pin PC4 */
++    qtest_writel(qts, 0x48000800, 0xFFFFFDFF);
++    /* Write 1 in ODR for PC4 */
++    qtest_writel(qts, 0x48000814, 0x00000010);
++}
++
++static void lower_gpio_pin_lat_b(QTestState *qts)
++{
++    /* Configure output mode for pin PC4 */
++    qtest_writel(qts, 0x48000800, 0xFFFFFDFF);
++    /* Write 0 in ODR for PC4 */
++    qtest_writel(qts, 0x48000814, 0x00000000);
++}
++
++static void rise_gpio_pin_rst_b(QTestState *qts)
++{
++    /* Configure output mode for pin PC3 */
++    qtest_writel(qts, 0x48000800, 0xFFFFFF7F);
++    /* Write 1 in ODR for PC3 */
++    qtest_writel(qts, 0x48000814, 0x00000008);
++}
++
++static void lower_gpio_pin_rst_b(QTestState *qts)
++{
++    /* Configure output mode for pin PC3 */
++    qtest_writel(qts, 0x48000800, 0xFFFFFF7F);
++    /* Write 0 in ODR for PC3 */
++    qtest_writel(qts, 0x48000814, 0x00000000);
++}
++
++static void rise_gpio_pin_sin(QTestState *qts)
++{
++    /* Configure output mode for pin PA4 */
++    qtest_writel(qts, 0x48000000, 0xFFFFFDFF);
++    /* Write 1 in ODR for PA4 */
++    qtest_writel(qts, 0x48000014, 0x00000010);
++}
++
++static void lower_gpio_pin_sin(QTestState *qts)
++{
++    /* Configure output mode for pin PA4 */
++    qtest_writel(qts, 0x48000000, 0xFFFFFDFF);
++    /* Write 0 in ODR for PA4 */
++    qtest_writel(qts, 0x48000014, 0x00000000);
++}
++
++static void test_dm163_bank(const void *opaque)
++{
++    const long bank =3D (uintptr_t) opaque;
++    const int width =3D bank ? 192 : 144;
++
++    QTestState *qts =3D qtest_initf("-M b-l475e-iot01a");
++    qtest_irq_intercept_out_named(qts, DEVICE_NAME, "sout");
++    GPIO_OUT(RST_B, 1);
++    GPIO_OUT(EN_B, 0);
++    GPIO_OUT(DCK, 0);
++    GPIO_OUT(SELBK, bank);
++    GPIO_OUT(LAT_B, 1);
++
++    /* Fill bank with zeroes */
++    GPIO_OUT(SIN, 0);
++    for (int i =3D 0; i < width; i++) {
++        GPIO_PULSE(DCK);
++    }
++    /* Fill bank with ones, check that we get the previous zeroes */
++    GPIO_OUT(SIN, 1);
++    for (int i =3D 0; i < width; i++) {
++        GPIO_PULSE(DCK);
++        g_assert(!qtest_get_irq(qts, 0));
 +    }
 +
-     /* GPIOs */
-     for (unsigned i =3D 0; i < NUM_GPIOS; i++) {
-         g_autofree char *name =3D g_strdup_printf("%c", 'A' + i);
-@@ -204,6 +240,23 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
-oc, Error **errp)
-         }
-     }
-=20
-+    for (unsigned i =3D 0; i < NUM_DM163_INPUTS; i++) {
-+        gpio_output_fork =3D qdev_new(TYPE_SPLIT_IRQ);
-+        qdev_prop_set_uint32(gpio_output_fork, "num-lines", 2);
-+        qdev_realize_and_unref(gpio_output_fork, NULL, &error_fatal);
++    /* Pulse one more bit in the bank, check that we get a one */
++    GPIO_PULSE(DCK);
++    g_assert(qtest_get_irq(qts, 0));
 +
-+        qdev_connect_gpio_out(gpio_output_fork, 0,
-+                              qdev_get_gpio_in(DEVICE(&s->syscfg),
-+                                               dm163_input[i]));
-+        qdev_connect_gpio_out(gpio_output_fork, 1,
-+                              qdev_get_gpio_in(DEVICE(&s->dm163),
-+                                               i));
-+        gpio =3D dm163_input[i] / 16;
-+        pin =3D dm163_input[i] % 16;
-+        qdev_connect_gpio_out(DEVICE(&s->gpio[gpio]), pin,
-+                              qdev_get_gpio_in(DEVICE(gpio_output_fork),=
- 0));
-+    }
++    qtest_quit(qts);
++}
 +
-     /* EXTI device */
-     busdev =3D SYS_BUS_DEVICE(&s->exti);
-     if (!sysbus_realize(busdev, errp)) {
-diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_so=
-c.h
-index cb4da08629..60b31d430e 100644
---- a/include/hw/arm/stm32l4x5_soc.h
-+++ b/include/hw/arm/stm32l4x5_soc.h
-@@ -30,6 +30,7 @@
- #include "hw/misc/stm32l4x5_exti.h"
- #include "hw/misc/stm32l4x5_rcc.h"
- #include "hw/gpio/stm32l4x5_gpio.h"
-+#include "hw/display/dm163.h"
- #include "qom/object.h"
-=20
- #define TYPE_STM32L4X5_SOC "stm32l4x5-soc"
-@@ -48,6 +49,8 @@ struct Stm32l4x5SocState {
-     Stm32l4x5RccState rcc;
-     Stm32l4x5GpioState gpio[NUM_GPIOS];
-=20
-+    DM163State dm163;
++static void test_dm163_gpio_connection(void)
++{
++    QTestState *qts =3D qtest_init("-M b-l475e-iot01a");
++    qtest_irq_intercept_in(qts, "/machine/soc/dm163");
 +
-     MemoryRegion sram1;
-     MemoryRegion sram2;
-     MemoryRegion flash;
++    g_assert_false(qtest_get_irq(qts, SIN));
++    g_assert_false(qtest_get_irq(qts, DCK));
++    g_assert_false(qtest_get_irq(qts, RST_B));
++    g_assert_false(qtest_get_irq(qts, LAT_B));
++    g_assert_false(qtest_get_irq(qts, SELBK));
++
++    rise_gpio_pin_dck(qts);
++    g_assert_true(qtest_get_irq(qts, DCK));
++    lower_gpio_pin_dck(qts);
++    g_assert_false(qtest_get_irq(qts, DCK));
++
++    rise_gpio_pin_lat_b(qts);
++    g_assert_true(qtest_get_irq(qts, LAT_B));
++    lower_gpio_pin_lat_b(qts);
++    g_assert_false(qtest_get_irq(qts, LAT_B));
++
++    rise_gpio_pin_selbk(qts);
++    g_assert_true(qtest_get_irq(qts, SELBK));
++    lower_gpio_pin_selbk(qts);
++    g_assert_false(qtest_get_irq(qts, SELBK));
++
++    rise_gpio_pin_rst_b(qts);
++    g_assert_true(qtest_get_irq(qts, RST_B));
++    lower_gpio_pin_rst_b(qts);
++    g_assert_false(qtest_get_irq(qts, RST_B));
++
++    rise_gpio_pin_sin(qts);
++    g_assert_true(qtest_get_irq(qts, SIN));
++    lower_gpio_pin_sin(qts);
++    g_assert_false(qtest_get_irq(qts, SIN));
++
++    g_assert_false(qtest_get_irq(qts, DCK));
++    g_assert_false(qtest_get_irq(qts, LAT_B));
++    g_assert_false(qtest_get_irq(qts, SELBK));
++    g_assert_false(qtest_get_irq(qts, RST_B));
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_data_func("/dm163/bank0", (void *)0, test_dm163_bank);
++    qtest_add_data_func("/dm163/bank1", (void *)1, test_dm163_bank);
++    qtest_add_func("/dm163/gpio_connection", test_dm163_gpio_connection)=
+;
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 5692da4fc1..e9f6ac46ef 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -22,6 +22,7 @@ qtests_generic =3D [
+   'qos-test',
+   'readconfig-test',
+   'netdev-socket',
++  'dm163-test',
+ ]
+ if enable_modules
+   qtests_generic +=3D [ 'modules-test' ]
 --=20
 2.43.0
 
