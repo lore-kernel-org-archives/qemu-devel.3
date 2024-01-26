@@ -4,132 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DEAC47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 510BEC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTPIO-0001HJ-IF; Fri, 26 Jan 2024 11:43:12 -0500
+	id 1rTPO7-0004tX-Bq; Fri, 26 Jan 2024 11:49:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPIM-0001Dr-6Y
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:43:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTPO5-0004su-Vt; Fri, 26 Jan 2024 11:49:05 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPIK-0006Ro-P9
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:43:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706287387;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dB4JN1769bflCo/v+XQLLJCYuT5isi1WQE/kYtMezhs=;
- b=XqqNNS0OvFClAwQpY0mN5V28LHmEdTvjvTFLp7IABbIhCLZhnCATLCoyPWfl2wUea+YiWt
- Fo7MvJB/+y/PHRafHfGa/Ex6jeRFDPIx4V18slsjg0lCh8Xa8o0aWOAJ5m8PBR9s/hr2Rg
- zLXwxytbthLpuc7BS+weoSV0Mcc4DvE=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-hCV8u5qmMsGzg088hAN95g-1; Fri, 26 Jan 2024 11:43:06 -0500
-X-MC-Unique: hCV8u5qmMsGzg088hAN95g-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6805a03aeaeso11681526d6.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:43:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706287386; x=1706892186;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dB4JN1769bflCo/v+XQLLJCYuT5isi1WQE/kYtMezhs=;
- b=tvIxEwRFJEE2WmBoRh7t5OyA+uKCZGBoLTrGoWUSPrqyt6J4SICL34U/xf8W7w4qk0
- +lEED63466cvgnexzVpsexaTmrgUOMoAx4BQNWRHHU2Z289m9O68NhnFpBFgaTpj8dSQ
- 48xhhM8sm25WF6gy5ROvvizgED5AQpoKOMEZFDTtYkLPYVzvOgBuNg6kuDjzbVd2FukK
- zrCbqlYHt+qkCKxhQySY7qCQ5fLvoqdIu4a5VRuoI2wbSgWP26QIa0pf0p+iVRnxgXGh
- HEDqHBclaB2j82uE0Gb7xvmtRAS+GkmkJNfPwpwKRD6f0O/tZ/ottt8hSFBQQNAtBU+u
- cN/w==
-X-Gm-Message-State: AOJu0Yxp7OkZDBWlxNFe/oVIx4aV9uYgbP64SQL6DhVTyBzIGfOrwoVW
- XGM9ibMbEP9jabl6H3iJA/qyRag1ISYY/g7rznYKXNJI/p8FCoHqjqWdQOI9Ygkgua3pHYi4w6+
- 7dM5ojm8mHFY66XmH0sVcYCXB3Dwnq5ZP8hsDdpYlfEHADT2LL72Z
-X-Received: by 2002:a05:6214:dcc:b0:68c:37a8:ccb6 with SMTP id
- 12-20020a0562140dcc00b0068c37a8ccb6mr117324qvt.81.1706287386046; 
- Fri, 26 Jan 2024 08:43:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF9UrGnb8JUXFt7nRk+OOmsXWf+yIKgNVqWPfFNQjCXtykhG76hmTym+DJj/yNKfPKpglL4Vg==
-X-Received: by 2002:a05:6214:dcc:b0:68c:37a8:ccb6 with SMTP id
- 12-20020a0562140dcc00b0068c37a8ccb6mr117319qvt.81.1706287385802; 
- Fri, 26 Jan 2024 08:43:05 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
- [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- ej4-20020ad45a44000000b00681034fbc9esm641915qvb.94.2024.01.26.08.43.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 08:43:05 -0800 (PST)
-Message-ID: <d4dbea3a-5240-43d7-b7db-a25a42bf28f2@redhat.com>
-Date: Fri, 26 Jan 2024 17:43:02 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTPO3-0007bc-Rg; Fri, 26 Jan 2024 11:49:05 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TM3Yk1qTzz4xF2;
+ Sat, 27 Jan 2024 03:48:58 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TM3Yh5kY6z4x23;
+ Sat, 27 Jan 2024 03:48:56 +1100 (AEDT)
+Message-ID: <1ab62ecc-7e3e-4c84-96e9-040193d9b35b@kaod.org>
+Date: Fri, 26 Jan 2024 17:48:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 42/46] hw/xtensa/xtfpga: use qemu_create_nic_device()
+Subject: Re: [PULL 00/17] aspeed queue
 Content-Language: en-US
-To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
- Max Filippov <jcmvbkbc@gmail.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>, Jason Wang <jasowang@redhat.com>
-References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-43-dwmw2@infradead.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240108204909.564514-43-dwmw2@infradead.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Ninad Palsule <ninad@linux.ibm.com>
+References: <20240126133217.996306-1-clg@kaod.org>
+ <CAFEAcA8Q66Qw7spMOcBju0v-=C=x10hz1rwPWxjCzYWhdkX8Ww@mail.gmail.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CAFEAcA8Q66Qw7spMOcBju0v-=C=x10hz1rwPWxjCzYWhdkX8Ww@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,51 +67,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/01/2024 21.27, David Woodhouse wrote:
-> From: David Woodhouse <dwmw@amazon.co.uk>
+On 1/26/24 16:56, Peter Maydell wrote:
+> On Fri, 26 Jan 2024 at 13:33, Cédric Le Goater <clg@kaod.org> wrote:
+>>
+>> The following changes since commit e029fe22caad9b75c7ab69bd4e84853c11fb71e0:
+>>
+>>    Merge tag 'pull-qapi-2024-01-26' of https://repo.or.cz/qemu/armbru into staging (2024-01-26 10:21:27 +0000)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://github.com/legoater/qemu/ tags/pull-aspeed-20240126
+>>
+>> for you to fetch changes up to b40769f4b49d15485ffaaa7acade3e3593ee6daa:
+>>
+>>    hw/fsi: Update MAINTAINER list (2024-01-26 14:22:08 +0100)
+>>
+>> ----------------------------------------------------------------
+>> aspeed queue:
+>>
+>> * Update of buildroot images to 2023.11 (6.6.3 kernel)
+>> * Check of the valid CPU type supported by aspeed machines
+>> * Simplified models for the IBM's FSI bus and the Aspeed
+>>    controller bridge
+>>
+>> ----------------------------------------------------------------
 > 
-> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-> ---
->   hw/xtensa/xtfpga.c | 13 ++++++-------
->   1 file changed, 6 insertions(+), 7 deletions(-)
+> Looks like you have an endianness bug, either in the device
+> or in the test. From the s390 runner:
 > 
-> diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-> index fbad1c83a3..f49e6591dc 100644
-> --- a/hw/xtensa/xtfpga.c
-> +++ b/hw/xtensa/xtfpga.c
-> @@ -141,14 +141,16 @@ static void xtfpga_net_init(MemoryRegion *address_space,
->           hwaddr base,
->           hwaddr descriptors,
->           hwaddr buffers,
-> -        qemu_irq irq, NICInfo *nd)
-> +        qemu_irq irq)
->   {
->       DeviceState *dev;
->       SysBusDevice *s;
->       MemoryRegion *ram;
->   
-> -    dev = qdev_new("open_eth");
-> -    qdev_set_nic_properties(dev, nd);
-> +    dev = qemu_create_nic_device("open_eth", true, NULL);
-> +    if (!dev) {
-> +        return;
-> +    }
->   
->       s = SYS_BUS_DEVICE(dev);
->       sysbus_realize_and_unref(s, &error_fatal);
-> @@ -301,10 +303,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
->           memory_region_add_subregion(system_memory, board->io[1], io);
->       }
->       xtfpga_fpga_init(system_io, 0x0d020000, freq);
-> -    if (nd_table[0].used) {
-> -        xtfpga_net_init(system_io, 0x0d030000, 0x0d030400, 0x0d800000,
-> -                        extints[1], nd_table);
-> -    }
-> +    xtfpga_net_init(system_io, 0x0d030000, 0x0d030400, 0x0d800000, extints[1]);
->   
->       serial_mm_init(system_io, 0x0d050020, 2, extints[0],
->                      115200, serial_hd(0), DEVICE_NATIVE_ENDIAN);
+> https://gitlab.com/qemu-project/qemu/-/jobs/6029422595
+> 
+> 232/847 qemu:qtest+qtest-arm / qtest-arm/aspeed-fsi-test ERROR 0.38s
+> killed by signal 6 SIGABRT
+>>>> PYTHON=/home/gitlab-runner/builds/-LCfcJ2T/0/qemu-project/qemu/build/pyvenv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_BINARY=./qemu-system-arm G_TEST_DBUS_DAEMON=/home/gitlab-runner/builds/-LCfcJ2T/0/qemu-project/qemu/tests/dbus-vmstate-daemon.sh MALLOC_PERTURB_=82 QTEST_QEMU_IMG=./qemu-img /home/gitlab-runner/builds/-LCfcJ2T/0/qemu-project/qemu/build/tests/qtest/aspeed-fsi-test --tap -k
+> ――――――――――――――――――――――――――――――――――――― ✀ ―――――――――――――――――――――――――――――――――――――
+> stderr:
+> **
+> ERROR:../tests/qtest/aspeed-fsi-test.c:152:test_fsi0_getcfam_addr0:
+> assertion failed (curval == 0x152d02c0): (3221368085 == 355271360)
+> (test program exited with status code -6)
+> 
+> where 3221368085 is 0xC0022D15, and 355271360 is 0x152D02C0...
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+drat. Indeed. I didn't check BE ... Sorry about that.
+
+Ninad,
+
+Some changes are required in fsi_aspeed_apb2opb_write().
+
+Could you please rework the address space accesses to use
+address_space_*_le() routines instead of address_space_rw() ?
+This will be less concise.
+
+To check, you can use a PPC64 debian (big-endian) on a PPC64
+KVM guest or PowerVM LPAR, or a s390x LPAR.
+
+
+Thanks,
+
+C.
 
 
