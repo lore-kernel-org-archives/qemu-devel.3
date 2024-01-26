@@ -4,175 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30995C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E98AC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTOfv-000124-K4; Fri, 26 Jan 2024 11:03:27 -0500
+	id 1rTOhr-0002fQ-9F; Fri, 26 Jan 2024 11:05:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOfu-0000xD-3P
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:03:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTOfs-0005rm-4t
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:03:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706285003;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=zk0sP6rmajljurs2ccAeklwdmUeyPgag7oJCXCmQkmU=;
- b=DGknJOIsCp0ZSBhjkCXy4ZLvjrlmxzz2Ijj1kuXwp8XLZq2Toytscw3uCrBJOKGAi5FoFp
- c0mrv87biZS0BnvZRoefHrtFUwftMz8qivAiBSvfpHKu1J0zHlU7uOB9XaPhGU0xLLLQuw
- hr/LtvUtMeYZS81qGXWPfom5TdLAYk0=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-CJHfHFvKMw6LjrCAVv1BLA-1; Fri, 26 Jan 2024 11:03:21 -0500
-X-MC-Unique: CJHfHFvKMw6LjrCAVv1BLA-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7816bea8d28so380541585a.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:03:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rTOhp-0002f7-DN
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:05:25 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rTOhn-0006HT-AT
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:05:25 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-40e80046246so3566445e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:05:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706285121; x=1706889921; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vZMqqebCGrSOmYn0fd3+Dr6RdoYoM7h0k+VmkMtwnvU=;
+ b=q6fwL5W8FKe7YhqaCvqVeUeZz2xLSle3QVmA3qiGYDP5qlOOdGXPJ480ZQExVM16gB
+ 8fzEAif+xH7L61pLZmAVlZ/KLdCbbi/wpNLWGQX0LkZd2h8khhjVGQD7nh9FxqnmnmWe
+ 2boBw8o9GrXuc6BxIBzxOsj1Hp9gtayfHIFPguqXcu3UqtuEsMSkRh8rg55ikE6InTFS
+ 0zaa+UL/Donwy86ZIwg5Pk+bEXnKO3cpEucBrrUJLtFZIkkXM+NYYwWnKzpbY6xTrgFc
+ SvbrJl758Xn4gRo8DlXun623GsNQEU4IjMdIINIq3xVwEWY0DE8Jh/+Uk1AjcpT7ix+i
+ iX8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706285000; x=1706889800;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zk0sP6rmajljurs2ccAeklwdmUeyPgag7oJCXCmQkmU=;
- b=RXtMzCoBvXBMhweCLyOOiYIuv3eDeD5PswDe16AwXxywp1X468bcdlKumwb3uVkIHV
- 16fTy4L8gWN19gwPIeX0uOiWfO6ZPIgr82oivdMSfGLayh09vrtiFvb2jCDeFSnLgT9F
- sH0HmdYiJErGCi8Uoseemtl+4dsr11mhhmw2hO7HKVaRLVnbWin1hD/AqTj/OYHIveCx
- otyIN8BUdALe7aus4elk7dHHeHIFyzQDLD9K++Zs46OigchGmeXU9GorsgmID721zv36
- gbb7oSCcZsEtRXAK3CQdKCTG3arBjfkW7Y549Cw5qbkayq7Wh3LC2RrJGDY+9FjCM0kC
- m4pw==
-X-Gm-Message-State: AOJu0YxPQdtc37sauqc/wUm8OUjZRNz5k5k6DbsHGWkkCmH0htItlZei
- 8f4agfJygA4Wluq8UoxjHGUQRtalvfheSjERNezmehRooELcy6/QFW0DB2Dm7akeJUs7RJkFstN
- WjGsW5jHwukp60kVebJP5/834eXznYyqnIrkUodTngX59Z+b1duSy
-X-Received: by 2002:a05:620a:4884:b0:783:bcd8:530 with SMTP id
- ea4-20020a05620a488400b00783bcd80530mr1829471qkb.58.1706285000724; 
- Fri, 26 Jan 2024 08:03:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHzG4dq/yA2/5IjCag5itQIZbihh2uTZDcnCR6YuwaGJ56qztK0VqIp67o7TdRBNRGKOq3f9g==
-X-Received: by 2002:a05:620a:4884:b0:783:bcd8:530 with SMTP id
- ea4-20020a05620a488400b00783bcd80530mr1829411qkb.58.1706285000435; 
- Fri, 26 Jan 2024 08:03:20 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
- [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- ie7-20020a05622a698700b00427fabefe3bsm616431qtb.52.2024.01.26.08.03.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 08:03:20 -0800 (PST)
-Message-ID: <14b546bf-2644-4e63-82d2-77d7ea43c732@redhat.com>
-Date: Fri, 26 Jan 2024 17:03:07 +0100
+ d=1e100.net; s=20230601; t=1706285121; x=1706889921;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vZMqqebCGrSOmYn0fd3+Dr6RdoYoM7h0k+VmkMtwnvU=;
+ b=ni/1qKJOfSTuePx1zfzhzAB0ZylItUiIJDS2XKdJ0XZWYMmmu8DaXZvz2c8yg4/hSd
+ G+MRa17JEl3+gowBH8UwEnNZMWFqIjksAcXWCvTRHH8xiZIGLOEm87TKQNK9Xo1wC+TJ
+ +1mVTbbnl8X4+4pJLRZCOSC5RRRGIYyn1ZwUcVDIMytZxzeL4c3JHe7CDRKurVBiyT1w
+ FnFgyKEu6yI23khyhQOI3DGGAMOF4udXScnNvPDk/6LF5bEUi8tQZusKyHbjm1VEvzJm
+ 7xMAa7NmNM/OVHne9Tqk1SwRcF9HQ6caxOyAP9jQp6//tuzSUmsO6rPwEf0UqRb8Cf2g
+ uxgw==
+X-Gm-Message-State: AOJu0YxXhPhyAsom6wbe8YVv+ySs+WB0L8fnf95GB784JLBhmOlXmgY9
+ GhL0DjKc0A9/godbTC6qhZP8dJ1qkmXsbseZyTdVY+F2E4QISAz8xvXjJ51uEig=
+X-Google-Smtp-Source: AGHT+IG/pcMFYae8B8Wv7JUTR32yElobIPG6UcyJJiJucBDt1Oj9Phk1+Qr+5fA0VEGejtF2uRwXig==
+X-Received: by 2002:a05:600c:444b:b0:40c:269c:518f with SMTP id
+ v11-20020a05600c444b00b0040c269c518fmr33221wmn.115.1706285121451; 
+ Fri, 26 Jan 2024 08:05:21 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ d14-20020adfe2ce000000b0033928aadde1sm1539596wrj.48.2024.01.26.08.05.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Jan 2024 08:05:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C3D785F78A;
+ Fri, 26 Jan 2024 16:05:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Alexandre Iooss <erdnaxe@crans.org>
+Subject: Re: [PATCH v2 05/14] tests/plugin: add test plugin for inline
+ operations
+In-Reply-To: <20240118032400.3762658-6-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 18 Jan 2024 07:23:50 +0400")
+References: <20240118032400.3762658-1-pierrick.bouvier@linaro.org>
+ <20240118032400.3762658-6-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Fri, 26 Jan 2024 16:05:20 +0000
+Message-ID: <874jf0rsfz.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 44/46] hw/pci: remove pci_nic_init_nofail()
-Content-Language: en-US
-To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>,
- Hao Wu <wuhaotsh@google.com>, Radoslaw Biernacki <rad@semihalf.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
- <gaosong@loongson.cn>, Thomas Huth <huth@tuxfamily.org>,
- Laurent Vivier <laurent@vivier.eu>, Huacai Chen <chenhuacai@kernel.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jason Wang <jasowang@redhat.com>,
- Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Bin Meng
- <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
-References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-45-dwmw2@infradead.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240108204909.564514-45-dwmw2@infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,18 +101,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/01/2024 21.27, David Woodhouse wrote:
-> From: David Woodhouse <dwmw@amazon.co.uk>
-> 
-> This function is no longer used.
-> 
-> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> For now, it simply performs instruction, bb and mem count, and ensure
+> that inline vs callback versions have the same result. Later, we'll
+> extend it when new inline operations are added.
+>
+> Use existing plugins to test everything works is a bit cumbersome, as
+> different events are treated in different plugins. Thus, this new one.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   hw/pci/pci.c         | 72 --------------------------------------------
->   include/hw/pci/pci.h |  3 --
->   2 files changed, 75 deletions(-)
+>  tests/plugin/inline.c    | 182 +++++++++++++++++++++++++++++++++++++++
+>  tests/plugin/meson.build |   2 +-
+>  2 files changed, 183 insertions(+), 1 deletion(-)
+>  create mode 100644 tests/plugin/inline.c
+>
+> diff --git a/tests/plugin/inline.c b/tests/plugin/inline.c
+> new file mode 100644
+> index 00000000000..28d1c3b1e48
+> --- /dev/null
+> +++ b/tests/plugin/inline.c
+> @@ -0,0 +1,182 @@
+> +/*
+> + * Copyright (C) 2023, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> + *
+> + * Demonstrates and tests usage of inline ops.
+> + *
+> + * License: GNU GPL, version 2 or later.
+> + *   See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include <glib.h>
+> +#include <stdint.h>
+> +#include <stdio.h>
+> +
+> +#include <qemu-plugin.h>
+> +
+> +typedef struct {
+> +    uint64_t count_tb;
+> +    uint64_t count_tb_inline;
+> +    uint64_t count_insn;
+> +    uint64_t count_insn_inline;
+> +    uint64_t count_mem;
+> +    uint64_t count_mem_inline;
+> +} CPUCount;
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I wonder if there is any way to enforce the structures being an array of
+64 bit counts? I do worry the compiler might want day decide to do
+something silly but legal leading to confusion.
 
+I guess qemu_plugin_scoreboard_new could:
 
+  g_assert((element_size % sizeof(uint64_t)) =3D=3D 0)
+
+?
+
+> +static qemu_plugin_u64_t count_tb;
+> +static qemu_plugin_u64_t count_tb_inline;
+> +static qemu_plugin_u64_t count_insn;
+> +static qemu_plugin_u64_t count_insn_inline;
+> +static qemu_plugin_u64_t count_mem;
+> +static qemu_plugin_u64_t count_mem_inline;
+
+Can't this just be a non scoreboard instance of CPUCount?
+
+> +
+> +static uint64_t global_count_tb;
+> +static uint64_t global_count_insn;
+> +static uint64_t global_count_mem;
+> +static unsigned int max_cpu_index;
+> +static GMutex tb_lock;
+> +static GMutex insn_lock;
+> +static GMutex mem_lock;
+> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
+> +
+> +static void stats_insn(void)
+> +{
+> +    const uint64_t expected =3D global_count_insn;
+> +    const uint64_t per_vcpu =3D qemu_plugin_u64_sum(count_insn);
+> +    const uint64_t inl_per_vcpu =3D
+> +        qemu_plugin_u64_sum(count_insn_inline);
+> +    printf("insn: %" PRIu64 "\n", expected);
+> +    printf("insn: %" PRIu64 " (per vcpu)\n", per_vcpu);
+> +    printf("insn: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
+> +    g_assert(expected > 0);
+> +    g_assert(per_vcpu =3D=3D expected);
+> +    g_assert(inl_per_vcpu =3D=3D expected);
+> +}
+> +
+> +static void stats_tb(void)
+> +{
+> +    const uint64_t expected =3D global_count_tb;
+> +    const uint64_t per_vcpu =3D qemu_plugin_u64_sum(count_tb);
+> +    const uint64_t inl_per_vcpu =3D
+> +        qemu_plugin_u64_sum(count_tb_inline);
+> +    printf("tb: %" PRIu64 "\n", expected);
+> +    printf("tb: %" PRIu64 " (per vcpu)\n", per_vcpu);
+> +    printf("tb: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
+> +    g_assert(expected > 0);
+> +    g_assert(per_vcpu =3D=3D expected);
+> +    g_assert(inl_per_vcpu =3D=3D expected);
+> +}
+> +
+> +static void stats_mem(void)
+> +{
+> +    const uint64_t expected =3D global_count_mem;
+> +    const uint64_t per_vcpu =3D qemu_plugin_u64_sum(count_mem);
+> +    const uint64_t inl_per_vcpu =3D
+> +        qemu_plugin_u64_sum(count_mem_inline);
+> +    printf("mem: %" PRIu64 "\n", expected);
+> +    printf("mem: %" PRIu64 " (per vcpu)\n", per_vcpu);
+> +    printf("mem: %" PRIu64 " (per vcpu inline)\n", inl_per_vcpu);
+> +    g_assert(expected > 0);
+> +    g_assert(per_vcpu =3D=3D expected);
+> +    g_assert(inl_per_vcpu =3D=3D expected);
+> +}
+> +
+> +static void plugin_exit(qemu_plugin_id_t id, void *udata)
+> +{
+> +    const unsigned int num_cpus =3D qemu_plugin_scoreboard_size(counts);
+> +    g_assert(num_cpus =3D=3D max_cpu_index + 1);
+> +
+> +    for (int i =3D 0; i < num_cpus ; ++i) {
+> +        const uint64_t tb =3D *qemu_plugin_u64_get(count_tb, i);
+> +        const uint64_t tb_inline =3D *qemu_plugin_u64_get(count_tb_inlin=
+e, i);
+> +        const uint64_t insn =3D *qemu_plugin_u64_get(count_insn, i);
+> +        const uint64_t insn_inline =3D *qemu_plugin_u64_get(count_insn_i=
+nline, i);
+> +        const uint64_t mem =3D *qemu_plugin_u64_get(count_mem, i);
+> +        const uint64_t mem_inline =3D *qemu_plugin_u64_get(count_mem_inl=
+ine, i);
+> +        printf("cpu %d: tb (%" PRIu64 ", %" PRIu64 ") | "
+> +               "insn (%" PRIu64 ", %" PRIu64 ") | "
+> +               "mem (%" PRIu64 ", %" PRIu64 ")"
+> +               "\n",
+> +               i, tb, tb_inline, insn, insn_inline, mem, mem_inline);
+> +        g_assert(tb =3D=3D tb_inline);
+> +        g_assert(insn =3D=3D insn_inline);
+> +        g_assert(mem =3D=3D mem_inline);
+> +    }
+> +
+> +    stats_tb();
+> +    stats_insn();
+> +    stats_mem();
+> +
+> +    qemu_plugin_scoreboard_free(counts);
+> +}
+> +
+> +static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
+> +{
+> +    (*qemu_plugin_u64_get(count_tb, cpu_index))++;
+> +    g_mutex_lock(&tb_lock);
+> +    max_cpu_index =3D MAX(max_cpu_index, cpu_index);
+> +    global_count_tb++;
+> +    g_mutex_unlock(&tb_lock);
+> +}
+> +
+> +static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
+> +{
+> +    (*qemu_plugin_u64_get(count_insn, cpu_index))++;
+> +    g_mutex_lock(&insn_lock);
+> +    global_count_insn++;
+> +    g_mutex_unlock(&insn_lock);
+> +}
+> +
+> +static void vcpu_mem_access(unsigned int cpu_index,
+> +                            qemu_plugin_meminfo_t info,
+> +                            uint64_t vaddr,
+> +                            void *userdata)
+> +{
+> +    (*qemu_plugin_u64_get(count_mem, cpu_index))++;
+> +    g_mutex_lock(&mem_lock);
+> +    global_count_mem++;
+> +    g_mutex_unlock(&mem_lock);
+> +}
+> +
+> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> +{
+> +    qemu_plugin_register_vcpu_tb_exec_cb(
+> +        tb, vcpu_tb_exec, QEMU_PLUGIN_CB_NO_REGS, 0);
+> +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+> +        tb, QEMU_PLUGIN_INLINE_ADD_U64, count_tb_inline, 1);
+> +
+> +    for (int idx =3D 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
+> +        struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb, id=
+x);
+> +        qemu_plugin_register_vcpu_insn_exec_cb(
+> +            insn, vcpu_insn_exec, QEMU_PLUGIN_CB_NO_REGS, 0);
+> +        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+> +            insn, QEMU_PLUGIN_INLINE_ADD_U64, count_insn_inline, 1);
+> +        qemu_plugin_register_vcpu_mem_cb(insn, &vcpu_mem_access,
+> +                                         QEMU_PLUGIN_CB_NO_REGS,
+> +                                         QEMU_PLUGIN_MEM_RW, 0);
+> +        qemu_plugin_register_vcpu_mem_inline_per_vcpu(
+> +            insn, QEMU_PLUGIN_MEM_RW,
+> +            QEMU_PLUGIN_INLINE_ADD_U64,
+> +            count_mem_inline, 1);
+> +    }
+> +}
+> +
+> +QEMU_PLUGIN_EXPORT
+> +int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> +                        int argc, char **argv)
+> +{
+> +    counts =3D qemu_plugin_scoreboard_new(sizeof(CPUCount));
+> +    count_tb =3D qemu_plugin_u64_struct(counts, CPUCount, count_tb);
+> +    count_insn =3D qemu_plugin_u64_struct(counts, CPUCount, count_insn);
+> +    count_mem =3D qemu_plugin_u64_struct(counts, CPUCount, count_mem);
+> +    count_tb_inline =3D qemu_plugin_u64_struct(counts, CPUCount, count_t=
+b_inline);
+> +    count_insn_inline =3D
+> +        qemu_plugin_u64_struct(counts, CPUCount, count_insn_inline);
+> +    count_mem_inline =3D
+> +        qemu_plugin_u64_struct(counts, CPUCount, count_mem_inline);
+> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> +
+> +    return 0;
+> +}
+> diff --git a/tests/plugin/meson.build b/tests/plugin/meson.build
+> index e18183aaeda..9eece5bab51 100644
+> --- a/tests/plugin/meson.build
+> +++ b/tests/plugin/meson.build
+> @@ -1,6 +1,6 @@
+>  t =3D []
+>  if get_option('plugins')
+> -  foreach i : ['bb', 'empty', 'insn', 'mem', 'syscall']
+> +  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'syscall']
+>      if host_os =3D=3D 'windows'
+>        t +=3D shared_module(i, files(i + '.c') + '../../contrib/plugins/w=
+in32_linker.c',
+>                          include_directories: '../../include/qemu',
+
+Otherwise:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
