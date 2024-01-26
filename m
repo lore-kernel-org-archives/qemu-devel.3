@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD436C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8C6C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTJSm-0002d4-Tz; Fri, 26 Jan 2024 05:29:32 -0500
+	id 1rTJUA-00039z-AT; Fri, 26 Jan 2024 05:30:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJSk-0002cL-3x; Fri, 26 Jan 2024 05:29:30 -0500
+ id 1rTJTt-00030y-A6; Fri, 26 Jan 2024 05:30:51 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJSi-0003Dq-Aj; Fri, 26 Jan 2024 05:29:29 -0500
+ id 1rTJTj-0003qs-T1; Fri, 26 Jan 2024 05:30:39 -0500
 Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q85rn6006782; Fri, 26 Jan 2024 10:29:12 GMT
+ 40Q85rJA006784; Fri, 26 Jan 2024 10:30:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
- bh=9AVV3gY0n8mg8oeX8eDJdhxe+he3fWMtz9jSbUaYEaQ=;
- b=ZmeqbR7+/U9OvJmYOV9jpqZbx99ZaFYYftDs+Fl9CmOX8mdfW2bJJlXvOeD3yXo4c+EU
- nXkXvHazdEnMqc4KdREsJRoBnORXUYUjNGztLPQdue6OmQqqUXpaRm8fHP9Z7aJENFdQ
- JK2xD6CwSuXf9oFMnFehbk3ZCgYscpSnB44IBL2A+9LtzrxrYfLlqVhYJOmj6th00P3c
- ADx9G/lfFsk9fgFjq08H7j7Qv8CYAdWqmbqVPG4kh0qHATlZiHb8JV1qR2dkJuafHssE
- 64EKES/lNIX5pB6y7xtG+skGqss2UH4ZHbzm1B6WD3OrMeA6AqLuwIhq7htS2YKT4u9o +w== 
+ bh=eZlaQeUpgthLjvi6UkRtZUPHOu2HwFyGFVnW+Ln2xmY=;
+ b=IcYQrzOR9ApCX/maikweBPv/vxP/FLJ6CGZUd5iJQ0JBm/k387yTpX+jQQq6vPytbzHi
+ GVVqeBQvGPoEbXTqSACmbbVOjREIqibPBMQDj3eNJfUpDP+aX2f73k4z/trd9WUmcRI7
+ GZUvgOiJz8C6B+6kJJqLn88U64PopbXn5/RjPKgNg0P2BLakBPGvCHLzMmUBtODDv3ka
+ CGa+BXWSGmJ9eetPHZNbpBLpNjR1KAN3w8yG26OtDTsnzQPcFvJkSXS9ckiCFBZPEGYu
+ wC74XoR3lroXS8DKWeuTCkmNgoDgurSFC1UJr/4wfI7Fr0AinShY4I30s3ve4REPhxg5 cA== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv89sv1us-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv89sv307-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:29:12 +0000
+ Fri, 26 Jan 2024 10:30:14 +0000
 Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40QAS2UD015020;
- Fri, 26 Jan 2024 10:29:11 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv89sv1tx-1
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40QAKoCV030001;
+ Fri, 26 Jan 2024 10:30:14 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv89sv2ys-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:29:11 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40QA2sqM026876; Fri, 26 Jan 2024 10:29:10 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrrgttfkq-1
+ Fri, 26 Jan 2024 10:30:14 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40Q8xTiC022438; Fri, 26 Jan 2024 10:30:13 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vrt0mj0nu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:29:10 +0000
+ Fri, 26 Jan 2024 10:30:13 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40QATAN149283478
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40QAUCfF20382374
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jan 2024 10:29:10 GMT
+ Fri, 26 Jan 2024 10:30:12 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9A2E58054;
- Fri, 26 Jan 2024 10:29:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D8F335805C;
+ Fri, 26 Jan 2024 10:30:12 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F32025805A;
- Fri, 26 Jan 2024 10:29:08 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 827EC5805D;
+ Fri, 26 Jan 2024 10:30:11 +0000 (GMT)
 Received: from [9.61.160.70] (unknown [9.61.160.70])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Jan 2024 10:29:08 +0000 (GMT)
-Message-ID: <15cd2acb-9467-4b50-9ef5-5b2e705b7091@linux.ibm.com>
-Date: Fri, 26 Jan 2024 04:29:08 -0600
+ Fri, 26 Jan 2024 10:30:11 +0000 (GMT)
+Message-ID: <4ed4ce4e-6e8b-4790-808d-1d296cd1c0e3@linux.ibm.com>
+Date: Fri, 26 Jan 2024 04:30:11 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 10/11] hw/fsi: Added FSI documentation
+Subject: Re: [PATCH v11 11/11] hw/fsi: Update MAINTAINER list
 Content-Language: en-US
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
  peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
@@ -77,21 +77,21 @@ To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
  thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
 Cc: qemu-arm@nongnu.org
 References: <20240126034026.31068-1-ninad@linux.ibm.com>
- <20240126034026.31068-11-ninad@linux.ibm.com>
- <03fca693-5ade-401e-a7a2-49872ac3854b@kaod.org>
+ <20240126034026.31068-12-ninad@linux.ibm.com>
+ <4ec645e9-0fa7-46f5-ade0-847b3bdbb384@kaod.org>
 From: Ninad Palsule <ninad@linux.ibm.com>
-In-Reply-To: <03fca693-5ade-401e-a7a2-49872ac3854b@kaod.org>
+In-Reply-To: <4ec645e9-0fa7-46f5-ade0-847b3bdbb384@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: MmwFzsxgaRRZYtzLWvpSafXHxp9WEtHV
-X-Proofpoint-ORIG-GUID: UIoV99302p6_2rsmftkK30U3J8g3v0kr
+X-Proofpoint-GUID: 0dVVP_sQJ6WPfBku21hxcqmSbWuDnYwN
+X-Proofpoint-ORIG-GUID: HZ4MxueSm2KXHn7iR2t0_N4-lv7GA8qt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  clxscore=1015 suspectscore=0
- bulkscore=0 mlxlogscore=488 priorityscore=1501 phishscore=0 spamscore=0
+ bulkscore=0 mlxlogscore=724 priorityscore=1501 phishscore=0 spamscore=0
  mlxscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 impostorscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
  definitions=main-2401260076
@@ -121,39 +121,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hello Cedric,
 
->> +QEMU files related to FSI interface:
->> + - ``hw/fsi/aspeed-apb2opb.c``
->> + - ``include/hw/fsi/aspeed-apb2opb.h``
->> + - ``hw/fsi/opb.c``
->> + - ``include/hw/fsi/opb.h``
->> + - ``hw/fsi/fsi.c``
->> + - ``include/hw/fsi/fsi.h``
->> + - ``hw/fsi/fsi-master.c``
->> + - ``include/hw/fsi/fsi-master.h``
->> + - ``hw/fsi/fsi-slave.c``
->> + - ``include/hw/fsi/fsi-slave.h``
->> + - ``hw/fsi/cfam.c``
->> + - ``include/hw/fsi/cfam.h``
->> + - ``hw/fsi/engine-scratchpad.c``
->> + - ``include/hw/fsi/engine-scratchpad.h``
->> + - ``include/hw/fsi/lbus.h``
+On 1/26/24 02:57, Cédric Le Goater wrote:
+> On 1/26/24 04:40, Ninad Palsule wrote:
+>> Added maintainer for IBM FSI model
+>>
+>> Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
+>> ---
+>> v11:
+>>   - Added Cedric as reviewer.
 >
-> Please remove the file list above.
-Removed files and listed only directories so that people can easily find 
-the code.
 >
->> +The following commands start the rainier machine with built-in FSI 
->> model.
->
-> rainier -> ``rainier-bmc``
-Replaced it.
->
->> +There are no model specific arguments.
-> I would also add a reference to the docs/system/arm/aspeed.rst page.
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Added the reference.
-
-Thanks for the review.
+Added the tag. Thanks for the review.
 
 Regards,
 
