@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199A3C47422
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCABC48260
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:23:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTLEW-0001XF-DD; Fri, 26 Jan 2024 07:22:56 -0500
+	id 1rTLEQ-0001WW-6l; Fri, 26 Jan 2024 07:22:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTLEU-0001Ws-5V; Fri, 26 Jan 2024 07:22:54 -0500
+ id 1rTLEH-0001To-9e; Fri, 26 Jan 2024 07:22:42 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTLES-0006vR-GJ; Fri, 26 Jan 2024 07:22:53 -0500
+ id 1rTLEF-0006sp-Eo; Fri, 26 Jan 2024 07:22:41 -0500
 Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLxff0zdSz4wx5;
- Fri, 26 Jan 2024 23:22:50 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLxfL4rMvz4wny;
+ Fri, 26 Jan 2024 23:22:34 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLxfZ3JWCz4wcJ;
- Fri, 26 Jan 2024 23:22:46 +1100 (AEDT)
-Message-ID: <dd318403-7c4a-44d6-9b82-db6af3b60766@kaod.org>
-Date: Fri, 26 Jan 2024 13:22:46 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLxfH3Y4kz4wcJ;
+ Fri, 26 Jan 2024 23:22:31 +1100 (AEDT)
+Message-ID: <a865d3aa-ed36-4d75-9358-ca5292a04b32@kaod.org>
+Date: Fri, 26 Jan 2024 13:22:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 00/11] Introduce model for IBM's FSI
+Subject: Re: [PATCH] tests/avocado/machine_aspeed.py: Update buildroot images
+ to 2023.11
 Content-Language: en-US
-To: Ninad Palsule <ninad@linux.ibm.com>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
- pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
-Cc: qemu-arm@nongnu.org
-References: <20240126104956.74126-1-ninad@linux.ibm.com>
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>
+References: <20240109173538.435781-1-clg@kaod.org>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240126104956.74126-1-ninad@linux.ibm.com>
+In-Reply-To: <20240109173538.435781-1-clg@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
 X-Spam_score_int: -16
@@ -66,28 +67,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/24 11:49, Ninad Palsule wrote:
-> Hello,
+On 1/9/24 18:35, Cédric Le Goater wrote:
+> Compared to mainline buildroot, these images have some customization :
 > 
-> Please review the patch-set version 12.
-> I have incorporated review comments from Cedric.
-> v12:
->    - Minor changes.
->    - Added reviewed by tags.
+> - Linux version is bumped to 6.6.3 and built with a custom config
+> - U-Boot is switched to the one provided by OpenBMC for more support
+> - defconfigs extra tools for dev
 > 
-> Ninad Palsule (11):
->    hw/fsi: Introduce IBM's Local bus
->    hw/fsi: Introduce IBM's scratchpad device
->    hw/fsi: Introduce IBM's FSI Bus
->    hw/fsi: Introduce IBM's fsi-slave model
->    hw/fsi: Introduce IBM's cfam
->    hw/fsi: Introduce IBM's FSI master
->    hw/fsi: Aspeed APB2OPB & On-chip peripheral bus
->    hw/arm: Hook up FSI module in AST2600
->    hw/fsi: Added qtest
->    hw/fsi: Added FSI documentation
->    hw/fsi: Update MAINTAINER list
-
+> See branch [1] for more details.
+> 
+> There are a few changes since last update, commit ed1f5ff84209. Images
+> all have a password now and I2C devices have been updated in the Linux
+> ast2600-evb device tree [2]. Do the necessary adjustements.
+> 
+> [1] https://github.com/legoater/buildroot/commits/aspeed-2023.11
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9deb10cf160e
+> 
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
 
 
 Applied to aspeed-next.
@@ -95,6 +91,4 @@ Applied to aspeed-next.
 Thanks,
 
 C.
-
-
 
