@@ -4,70 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC0EC47DDF
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 00:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E298BC47258
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 00:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTAVY-0003gj-Ku; Thu, 25 Jan 2024 19:55:48 -0500
+	id 1rTAVa-0003h9-7H; Thu, 25 Jan 2024 19:55:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3DgOzZQcKChU59769y319916z.x97Bz7F-yzGz689818F.9C1@flex--komlodi.bounces.google.com>)
- id 1rTAVW-0003gX-Nz
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 19:55:46 -0500
+ <3EQOzZQcKChg8CA9C164CC492.0CAE2AI-12J29BCB4BI.CF4@flex--komlodi.bounces.google.com>)
+ id 1rTAVY-0003gu-OC
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 19:55:48 -0500
 Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3DgOzZQcKChU59769y319916z.x97Bz7F-yzGz689818F.9C1@flex--komlodi.bounces.google.com>)
- id 1rTAVV-0004op-81
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 19:55:46 -0500
+ <3EQOzZQcKChg8CA9C164CC492.0CAE2AI-12J29BCB4BI.CF4@flex--komlodi.bounces.google.com>)
+ id 1rTAVX-0004ow-3C
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 19:55:48 -0500
 Received: by mail-pf1-x449.google.com with SMTP id
- d2e1a72fcca58-6ddd112c8baso801247b3a.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 16:55:44 -0800 (PST)
+ d2e1a72fcca58-6ddc2aefbe4so142749b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 16:55:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1706230543; x=1706835343; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=tXuYwNH/IUM70PRZoBMhFLJZc38Ll5xp3sPVPlzs72Q=;
- b=ylVqJcBWQUqz16FhFTys9GmPCjp5e7CgpOQAOLxSnwwxzKVd8vdVnrLCLEmPvhWfS/
- v20smQ7+zsQknBmPZZYrRXAnlkxWmWl6/k7g43Idl/lo5icgPd+0lHDbuT1XZbPe+/kL
- Mr0kiYGgKPemcdddAxKdn9ZUiZxW2N4D3I4nPKps99b2PciUSL44OOWYrMEQ9Y9Eh7XY
- XLTkINcgHLIa7cseDdy+ypTUDC4/HSwQkJlFSGSIJ+Xl67nvQLi49y4lQ7oPetZG6Otp
- +yIfJHwlWpSKNGVL3DIzHCKDeWSHs108pFvVFnTo75uSBxaHUKBje5jurskH/uPjYzp0
- CS0w==
+ d=google.com; s=20230601; t=1706230545; x=1706835345; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=m19Pu1vkmJDMyBn5hNIU5j0Y+S3lgC3I8zwbtySHjio=;
+ b=erhDR9gOPTgIfKPR2ui3SqnzgedM0LZG+4IOItLXuiZolwACr1A2I/w21pxLsGFpW0
+ CY6Pmg+A+dV3scEO2aS0RXCnsXCmBV0fgQ5AgvDlaEYDG0zj0H8m0ZPMWn9auHUi/NIU
+ iXtW6EK61iqUY5ZcO5JyaZbp+uFqFG0AGuqTeq07xoNzZ7WFSiQpnsN1VbbTnvOqUb+/
+ 3qn0/jnWBTZNdUJFKWZN7njkxfGXRjAdd8yT/OWkT3r4jBEAMSTRMq/5hIHo26qptYFj
+ MONc7vKA2fQap56I73jgLkc487P+tembmjbgLnRdVAYv97rM5iWYAsKhRclQLYu02kiC
+ 6fyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706230543; x=1706835343;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tXuYwNH/IUM70PRZoBMhFLJZc38Ll5xp3sPVPlzs72Q=;
- b=oO1IBDxyVf3UR1cROWK7W+BJCinKTzrx009DoVaGVvAdRlsPwVLNfI6WCMIN0ef8nR
- WZozAUwlt/euNS48f5OyQnl7LwALaWnp9YFToELE0CneLqGKt2g39kawImqGmB/KTozZ
- JQb3bT8okr6yiN5/4GesD2zbLqNqGq+5UcfjWKhbVbyYlBb5hMAJJxYNVRaurCIZSW3e
- MLC3kQTyRtrmC8Db7LcrGEfRSbHerrOlYYzS5h5dM3H6bxezWKbQ2SBeT1IwYrn9d8j6
- juwd1QhA+1pHEqfDF/xQUZJNAmbsw6LylBAy3XnYBZHWw1cdUEI/7Oi/AlHnodU9kO2F
- fPZw==
-X-Gm-Message-State: AOJu0YwsldsEZswg+Hg5BrI1RD0BolGd2Gc4xQxQPHilaLuJp5/+BsPV
- MJ4K2BazJyR9fML45T8aBtKM9edXWqeLeMP2QIeE4CdwU/FktoWG2hiOqCL5iQiwNsCaG3V1gl7
- nVLOFnMaD1Jsoqh0d8kDah0JEnNu1zYn8+Q5B7UeflcM/DkVPhyG1EB1h+WJ9dFkm12hx3KA8kn
- bc2E6ZVMZgrGEKzjMptthYYL3w1EGJL39Y33tr
-X-Google-Smtp-Source: AGHT+IFoiCQBr4JXM4S+St+7SIta+IcDlWU2+nTEpX9QA8wjo9eawG76qsBaiVRdmWIVcKBALI5j81Tp3KN1
+ d=1e100.net; s=20230601; t=1706230545; x=1706835345;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=m19Pu1vkmJDMyBn5hNIU5j0Y+S3lgC3I8zwbtySHjio=;
+ b=RkqRpZMIC76Czkr6/SP0N0yOy6LqIotZ/9YLnU/x2QYtQHdRfmBuviv2NLgtNBsn/N
+ y/ZA9hKjrDQBmGkdRSHFN0CQU1h20yarDJLC09jS67cRvuI8XT28FVLkkHmAOHJfat04
+ U82PxRlkcqWj9XhhdNvzf/7NecIlp03nXzDU0lQ7UC59/LpaYG4T10JAwmcgLUL/d5l8
+ l1uwXC5AxebnLHYPudDVxUJhJzit9WdrBPYcdoo2KgVjNT35KW91hs0FqdSKAEjhjipV
+ AZVYmMbKo29f/0Gg7aV5opaQpiyXq5CEU0wHVDK/kzqIPerhA+v7Fz12hB+cSIzIFBE2
+ 6XPw==
+X-Gm-Message-State: AOJu0YyyqaVFOcHgzUloQ/s7+5I/yXALI3em7aZojFULe2GBRoedUcW7
+ 9yJqCoE820FsDzuW6J0C9LrJ9DKs7nbJ/YjZynGO+ZHt6tB4shYBDKV5jj0IspcN096TGbY0ytj
+ Okc1Rezc5oHL8hNtJyWS3zYoYggXe8XNUJamLxCqSnvpf2GVNhbxUwA7ap+BW/EhsqURK0H8KjD
+ lBeRzAQ5+8G43cuF1vLxivR2K+1a2MqP5pnoo1
+X-Google-Smtp-Source: AGHT+IHceoXjQVw+EsO1WWjw+SpKgK+xfMt68zYWoE0jve3G6T4RPO9uZHF2CsBRbqGSNClbnZVFhQQ2YIbb
 X-Received: from komlodi.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
- (user=komlodi job=sendgmr) by 2002:a05:6a00:f8e:b0:6dd:73a0:82ed with SMTP id
- ct14-20020a056a000f8e00b006dd73a082edmr113363pfb.0.1706230542804; Thu, 25 Jan
- 2024 16:55:42 -0800 (PST)
-Date: Fri, 26 Jan 2024 00:55:38 +0000
+ (user=komlodi job=sendgmr) by 2002:a05:6a00:3697:b0:6dd:8444:d141 with SMTP
+ id dw23-20020a056a00369700b006dd8444d141mr75871pfb.4.1706230545064; Thu, 25
+ Jan 2024 16:55:45 -0800 (PST)
+Date: Fri, 26 Jan 2024 00:55:39 +0000
+In-Reply-To: <20240126005541.1839038-1-komlodi@google.com>
 Mime-Version: 1.0
+References: <20240126005541.1839038-1-komlodi@google.com>
 X-Mailer: git-send-email 2.43.0.429.g432eaa2c6b-goog
-Message-ID: <20240126005541.1839038-1-komlodi@google.com>
-Subject: [PATCH v2 0/3] hw/i2c: smbus: Reset fixes
+Message-ID: <20240126005541.1839038-2-komlodi@google.com>
+Subject: [PATCH v2 1/3] hw/i2c: core: Add reset
 From: Joe Komlodi <komlodi@google.com>
 To: qemu-devel@nongnu.org
 Cc: venture@google.com, komlodi@google.com, minyard@acm.org
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
- envelope-from=3DgOzZQcKChU59769y319916z.x97Bz7F-yzGz689818F.9C1@flex--komlodi.bounces.google.com;
+ envelope-from=3EQOzZQcKChg8CA9C164CC492.0CAE2AI-12J29BCB4BI.CF4@flex--komlodi.bounces.google.com;
  helo=mail-pf1-x449.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
@@ -92,42 +94,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changelog:
+It's possible for a reset to come in the middle of a transaction, which
+causes the bus to be in an old state when a new transaction comes in.
 
-v1 -> v2
-- Dropped 4th patch "hw/i2c: smbus: mux: Reset SMBusDevice state
-on reset". After more testing and Corey's comment, I realized it
-wasn't needed.
-
-Original message:
-
-Hi all,
-
-This series adds some resets for SMBus and for the I2C core. Along with
-it, we make SMBus slave error printing a little more helpful.
-
-These reset issues were very infrequent, they would maybe occur in 1 out
-of hundreds of resets in our testing, but the way they happen is pretty
-straightforward.
-
-Basically as long as a reset happens in the middle of a transaction, the
-state of the old transaction would still partially be there after the
-reset. Once a new transaction comes in, the partial stale state can
-cause the new transaction to incorrectly fail.
-
-Thanks,
-Joe
-
-Joe Komlodi (3):
-  hw/i2c: core: Add reset
-  hw/i2c/smbus_slave: Add object path on error prints
-  hw/i2c: smbus_slave: Reset state on reset
-
+Signed-off-by: Joe Komlodi <komlodi@google.com>
+---
  hw/i2c/core.c        | 30 +++++++++++++++++++++++++-----
- hw/i2c/smbus_slave.c | 17 +++++++++++++++--
  include/hw/i2c/i2c.h |  6 +++++-
- 3 files changed, 45 insertions(+), 8 deletions(-)
+ 2 files changed, 30 insertions(+), 6 deletions(-)
 
+diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+index 4cf30b2c86..def4f134d0 100644
+--- a/hw/i2c/core.c
++++ b/hw/i2c/core.c
+@@ -23,11 +23,31 @@ static Property i2c_props[] = {
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+-static const TypeInfo i2c_bus_info = {
+-    .name = TYPE_I2C_BUS,
+-    .parent = TYPE_BUS,
+-    .instance_size = sizeof(I2CBus),
+-};
++static void i2c_bus_enter_reset(Object *obj, ResetType type)
++{
++    I2CBus *bus = I2C_BUS(obj);
++    I2CNode *node, *next;
++
++    bus->broadcast = false;
++    QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
++        QLIST_REMOVE(node, next);
++        g_free(node);
++    }
++}
++
++static void i2c_bus_class_init(ObjectClass *klass, void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    rc->phases.enter = i2c_bus_enter_reset;
++}
++
++ static const TypeInfo i2c_bus_info = {
++     .name = TYPE_I2C_BUS,
++     .parent = TYPE_BUS,
++     .instance_size = sizeof(I2CBus),
++     .class_size = sizeof(I2CBusClass),
++     .class_init = i2c_bus_class_init,
++ };
+ 
+ static int i2c_bus_pre_save(void *opaque)
+ {
+diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
+index 2a3abacd1b..420868a269 100644
+--- a/include/hw/i2c/i2c.h
++++ b/include/hw/i2c/i2c.h
+@@ -64,7 +64,7 @@ struct I2CSlave {
+ };
+ 
+ #define TYPE_I2C_BUS "i2c-bus"
+-OBJECT_DECLARE_SIMPLE_TYPE(I2CBus, I2C_BUS)
++OBJECT_DECLARE_TYPE(I2CBus, I2CBusClass, I2C_BUS)
+ 
+ typedef struct I2CNode I2CNode;
+ 
+@@ -83,6 +83,10 @@ struct I2CPendingMaster {
+ typedef QLIST_HEAD(I2CNodeList, I2CNode) I2CNodeList;
+ typedef QSIMPLEQ_HEAD(I2CPendingMasters, I2CPendingMaster) I2CPendingMasters;
+ 
++struct I2CBusClass {
++    DeviceClass parent_class;
++};
++
+ struct I2CBus {
+     BusState qbus;
+     I2CNodeList current_devs;
 -- 
 2.43.0.429.g432eaa2c6b-goog
 
