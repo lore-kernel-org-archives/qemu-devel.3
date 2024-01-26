@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6137BC47258
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 03:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF6FC47258
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 03:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTCb5-0005wF-Td; Thu, 25 Jan 2024 22:09:39 -0500
+	id 1rTCcW-0006ds-NQ; Thu, 25 Jan 2024 22:11:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTCb3-0005vl-W4
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 22:09:38 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTCcU-0006cb-Q4
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 22:11:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTCb2-0003nM-Ec
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 22:09:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTCcS-0004BT-Mz
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 22:11:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706238574;
+ s=mimecast20190719; t=1706238663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DQ6aU0hBhJsSBKI4V+8lS/22slOoEFPlO+42UiaJ0+A=;
- b=N0EA3CnbyRQs4IuOq9QpeTevLYxHhEe6/jP0NQ30punT0QGifhy5X8B9cWwjT4AGNRb/aY
- asAo1cwctG3EURxn/p1ajUXQ2w1UqXFZLbCOPPXMnPrSRFN1NssciPlfX8R1ncFy097BL7
- TYBxEe6OyEU05Bn9R2lKKBr63Ix1VuQ=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=E/Vk+b8r4RhTuHz/3oahxs/AnoHOQ4TIaeV5kJlPJL4=;
+ b=RNxLzi2HzMIXskbvAPQxqKOdOGuJ3MW4C2raHAvRoThBKfBcvCw6TvIY1YC5rSDflOxuxe
+ 2pgrRQJvlcw7glFWs7+leB5wZsQPPp8TvbkN6h2k1ktAqWFKW4lHHAEfpQfnWPZeYH+VoL
+ KY0P3CdgQzLeQY+zWcWlcrMpkoU682c=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-k7YXVQRsMDmMk_zd68pXKw-1; Thu, 25 Jan 2024 22:09:31 -0500
-X-MC-Unique: k7YXVQRsMDmMk_zd68pXKw-1
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-6dea8b7e74aso2237970a34.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 19:09:31 -0800 (PST)
+ us-mta-597-ILMSls35PYWVvdVFQZG6Qg-1; Thu, 25 Jan 2024 22:11:01 -0500
+X-MC-Unique: ILMSls35PYWVvdVFQZG6Qg-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-5ce9b15f4ccso1581035a12.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 19:11:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706238571; x=1706843371;
+ d=1e100.net; s=20230601; t=1706238660; x=1706843460;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DQ6aU0hBhJsSBKI4V+8lS/22slOoEFPlO+42UiaJ0+A=;
- b=ML1q1oXmfVYm0UTzhwp6kzTPQraKLMOHI0Mq/FJrRd4BL4jmcleEwuU2Ywo55LY0h8
- kMxbfWqXzvwf2P/c+HC3myjYjR0YyETeCCk4rGAgeqypS5ffmEEWrLb0h/o0yUPuh9E5
- X//djHe8GIyhqKzNGq4U7dYo1Qk6eRjIO2h6YgFGYRaaZXAaV86ESig0a8Mv+0UXY5qJ
- I54Oo8sT+7mV9yvtkhxdv/yPRwp6uMKhzFuXmMcBEeFSYf9sD3p+cTuwLW4R/3mDrN7+
- htH3++8PxQuPJHZOl0HttvQHoLOBJsqJ8fjH/sRmNdOF2xKFysuy9ktun3Jyesw0F8Py
- QofA==
-X-Gm-Message-State: AOJu0Yz8TxbdhTHj0QhVcp+wNPMhNpgBRx+FcTNtPdQYIVVO0OMW9iNH
- mmAwM9QFBuRyLLOosPFM6lwotASHJfDmm6SrupCO8mduru/plfP1cA4SYiGb+Ox4l6Q0G1n1D0S
- BuTewK3VuENSuSyiMxpU7GgIwXRwoA4qyhPCfVkBkzr0A6gCvR8qm
-X-Received: by 2002:a05:6870:a2ca:b0:214:c78e:b69c with SMTP id
- w10-20020a056870a2ca00b00214c78eb69cmr1302867oak.0.1706238571098; 
- Thu, 25 Jan 2024 19:09:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEEAtrkWdLn8hn/W3K32PR3OoXLoVxXzkd40MVOf9AQdgQ1gNy69V5x9Ls9UekaTOdq95w2ug==
-X-Received: by 2002:a05:6870:a2ca:b0:214:c78e:b69c with SMTP id
- w10-20020a056870a2ca00b00214c78eb69cmr1302851oak.0.1706238570774; 
- Thu, 25 Jan 2024 19:09:30 -0800 (PST)
+ bh=E/Vk+b8r4RhTuHz/3oahxs/AnoHOQ4TIaeV5kJlPJL4=;
+ b=HT3M12tqHmqjHaS/K5GpPqg8iq6JI+VGxGVvL1C4rpJSORZiaB9fGDbjdJ/PR4BlET
+ yAhPIH1DcZSdsqddfQvTIyFy5PmQpYuOp8+LwxmSPeTIQkiK9WWq/s+EfCfQ6OE6AblI
+ gWoUvtt5l7H3p8COD6Ecif99f22BJYVehYEUqw7DRXZJ3+FEp+/WkNEQVpSptoNPWxqL
+ NxNTzN5GSwpaVIGqrLWFqMsyUiwLMseo1d1256mhg3y5E8irK++SuTn+e1fPdqkt9sLV
+ fcNgBhRJmMGkPe3RRQcyFB9NEsP6flgQDQRwLi5ybXlPNSgFPIcMKcNJ1WPTnjouNfMv
+ 5WFw==
+X-Gm-Message-State: AOJu0YwJPcZlwkzcUd0pR1SxvOpKDX6kBF4dj7yqepyjJQ4d1fWk5flm
+ vxGPCISAyZjvECcxVmgfP+3k1xOC5ShqKP9M6x4q4TeAprne4oyM39w7kpcrYio2UK+iJ/9FTVv
+ 2TR0V7Xr0gP2wOn1B2AdBCtSPpoOTxU1jZsrE+AsqwEf7+nqrjgMt
+X-Received: by 2002:a17:902:ee53:b0:1d5:dfd8:a92a with SMTP id
+ 19-20020a170902ee5300b001d5dfd8a92amr1341557plo.1.1706238660079; 
+ Thu, 25 Jan 2024 19:11:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGv6rZDtgmf12NyNw1hyib44HpFSSofaISnLkjoc4PxpQjsu9VnezLA4CwnPAwdDCRWsdkXWw==
+X-Received: by 2002:a17:902:ee53:b0:1d5:dfd8:a92a with SMTP id
+ 19-20020a170902ee5300b001d5dfd8a92amr1341542plo.1.1706238659719; 
+ Thu, 25 Jan 2024 19:10:59 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- m1-20020a634c41000000b005cfd70edc1bsm239797pgl.7.2024.01.25.19.09.29
+ kk12-20020a170903070c00b001d70953f166sm201302plb.155.2024.01.25.19.10.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jan 2024 19:09:30 -0800 (PST)
-Date: Fri, 26 Jan 2024 11:09:26 +0800
+ Thu, 25 Jan 2024 19:10:59 -0800 (PST)
+Date: Fri, 26 Jan 2024 11:10:56 +0800
 From: Peter Xu <peterx@redhat.com>
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 01/17] migration: Fix logic of channels and transport
- compatibility check
-Message-ID: <ZbMiZgvrSpkw1PvW@x1n>
+Subject: Re: [PATCH 02/17] migration: Move local_err check in
+ migration_ioc_process_incoming()
+Message-ID: <ZbMiwBjr7cNmQDNR@x1n>
 References: <20240125162528.7552-1-avihaih@nvidia.com>
- <20240125162528.7552-2-avihaih@nvidia.com>
+ <20240125162528.7552-3-avihaih@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240125162528.7552-2-avihaih@nvidia.com>
+In-Reply-To: <20240125162528.7552-3-avihaih@nvidia.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,22 +99,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 25, 2024 at 06:25:12PM +0200, Avihai Horon wrote:
-> The commit in the fixes line mistakenly modified the channels and
-> transport compatibility check logic so it now checks multi-channel
-> support only for socket transport type.
+On Thu, Jan 25, 2024 at 06:25:13PM +0200, Avihai Horon wrote:
+> local_err in migration_ioc_process_incoming() is used only in the
+> multifd if branch. Move the local_err check under the multifd branch,
+> where it is actually used.
 > 
-> Thus, running multifd migration using a transport other than socket that
-> is incompatible with multi-channels (such as "exec") would lead to a
-> segmentation fault instead of an error message.
-> For example:
->   (qemu) migrate_set_capability multifd on
->   (qemu) migrate -d "exec:cat > /tmp/vm_state"
->   Segmentation fault (core dumped)
-> 
-> Fix it by checking multi-channel compatibility for all transport types.
-> 
-> Fixes: d95533e1cdcc ("migration: modify migration_channels_and_uri_compatible() for new QAPI syntax")
 > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
