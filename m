@@ -4,113 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B312BC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F9DC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 16:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTPAJ-00013V-J2; Fri, 26 Jan 2024 11:34:51 -0500
+	id 1rTPCY-0004KV-2y; Fri, 26 Jan 2024 11:37:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPAA-00012x-IH
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:34:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPCS-0004FT-Jd
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:37:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPA8-0003dn-5c
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:34:41 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTPCP-0005G3-8E
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 11:37:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706286879;
+ s=mimecast20190719; t=1706287020;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=U0kYxWOcHaM3G7cLqARYsXMflADkL8joNn0F09jCmds=;
- b=W3NiA/8lG+CHbdibSffsWBkoFQOH1rBZssRi5xa95lbDPuLzQSily6UK7Mw5SusLsDQzkf
- U732dMGWZVgOXXW92rbB5aF+uMPfR6eB2WjUNxlrz1IsrksMmY9e8teuXtPaSy1PfsZzpT
- OE7WZ3JXrJERmaaSuu6iRtLBWB3vdBA=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yHJA/a7AtrkrA1dPhXzDTAA1K342Bby9O7QNX8c10rA=;
+ b=UQhqKM/0Bmp7yJhzNc/m8TPNYJThlE6aruZ8/onIo7dA+0M39gaNuEQcjzHOCm6xLJDx85
+ ExkaOaQ3h5lqCBHDt0zIp++6UDwUdwxg6rN6B/1pzLE1Wid0TTX8FZhDBRqXN8pj/NEySt
+ b+khXDZOzFnH9YIithOKQUyRtKJ9ezs=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-dMeAVLVeOSS6kJ3ZgDNO1Q-1; Fri, 26 Jan 2024 11:34:38 -0500
-X-MC-Unique: dMeAVLVeOSS6kJ3ZgDNO1Q-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-783dc3f6017so56851085a.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:34:38 -0800 (PST)
+ us-mta-373-pq-wt8hCNVu82PaKyMyofA-1; Fri, 26 Jan 2024 11:36:58 -0500
+X-MC-Unique: pq-wt8hCNVu82PaKyMyofA-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6800e52d47aso39114476d6.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 08:36:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706286877; x=1706891677;
+ d=1e100.net; s=20230601; t=1706287018; x=1706891818;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U0kYxWOcHaM3G7cLqARYsXMflADkL8joNn0F09jCmds=;
- b=m4FjHVJhDlOY0GBiKI4EsBWjoYCvB1f21tnTCjuOY+gCnnMR0sVhXdrGLsjWTo9KTW
- QJ1hDf6zu0vsyU1CQiMuSsoVCksPe2G9zhnoRTgsHrDq9F34/yHgw3lRj32omIi7OvaM
- urLJW2S9YG7xPJAXyeHxZGgV9q1xdCNRGlS2ip2Z0AxD21rqxFSGsIJ1f5rRzFSPR/K7
- UKRxhmfaT8rO332iCK4g8Zok/CkcDUeb41ZGrnqYU+vuB7Y7h2bjqZbwUctXAObMUO/K
- awxCGdphDfjJkLi9bmb+68PRak/XFHWYRVlH/gtHk/fNvlRhaWCo8iOOSC3KZLbKrSnI
- cs/w==
-X-Gm-Message-State: AOJu0YxU9tc0ZQo6oBCBpgMLYVLBp0Rf64M0KP2mYXbSHpZ/GURkJZWl
- yVfr0JMBTVeRxkx+pQyvwpn3wzSzBXRaWhjHh5jSBafPQZJGXtJoTwMPSo3UCRRpiu3A+o6B19e
- //PMoFMnJvJvoHaYt1LJNSulg6Igl9MgWuKBp7Psnjp4ZZtyimCUz
-X-Received: by 2002:a05:620a:51c5:b0:783:46e8:4935 with SMTP id
- cx5-20020a05620a51c500b0078346e84935mr1597853qkb.147.1706286877671; 
- Fri, 26 Jan 2024 08:34:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQOHgg502b3x7Z6eLbjVonvWOwlPfj8Y308FKBt6KimQTj6u44eMIS9uaJ7MPDIbVA1RhBrQ==
-X-Received: by 2002:a05:620a:51c5:b0:783:46e8:4935 with SMTP id
- cx5-20020a05620a51c500b0078346e84935mr1597811qkb.147.1706286877429; 
- Fri, 26 Jan 2024 08:34:37 -0800 (PST)
+ bh=yHJA/a7AtrkrA1dPhXzDTAA1K342Bby9O7QNX8c10rA=;
+ b=L7t76Sp3PVgHEQkdR4PPo0EjqoJKMG3bm/q26Tg9B/UYVLxTcVNWEFA054iKMSdxoC
+ hKQ2HQudDiC+Sc2RU22Fq4/AosjAUye0tToUd4cuAopZDd5lpeNgN7f39fMrSEsRc7vJ
+ mniOIB3Kqbt789CXXrb4wHotaJJhDBDXIh33QEHA2Wj5ihfCK5w5fjwqPvK0xXFsLVwm
+ fZDN4jZO4UiNv6DGHaYSwwhAzv+om+ou6KZUMGPLLs8vmmypFTh2mberoQpR+wfNPwhN
+ h61TEeZuPcvdX+jGuPECn26LvmYu/cbsXakO0nXrw0YIhjgs16T6TvidkicZDuzQcfW7
+ mWww==
+X-Gm-Message-State: AOJu0Ywpq1WxF+vkJqOCBmvGyVwLF0dIcFmt5ysqfq/p55iwsKqE/nxo
+ NTWf1p+Tq4MhJxuK0qWF6BtLB+uUtj42ts7ElATQYDH2aHkfDcwQY9fcb/6sbP7zAU9V/tMkzGK
+ KLVbE5+juMJGmBM6smA3jxgsakD/A+CM0V+D4ZRXn02n0eXaxJb2h
+X-Received: by 2002:a05:6214:d6d:b0:68c:3504:19a1 with SMTP id
+ 13-20020a0562140d6d00b0068c350419a1mr152688qvs.32.1706287018238; 
+ Fri, 26 Jan 2024 08:36:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFEYqONftzwFkQaen4n9m6+D/pp+9cG9WOY8KzIaN5G9jpk3hXZtBk78M0Jq+/+iQBTnpZlqg==
+X-Received: by 2002:a05:6214:d6d:b0:68c:3504:19a1 with SMTP id
+ 13-20020a0562140d6d00b0068c350419a1mr152658qvs.32.1706287017965; 
+ Fri, 26 Jan 2024 08:36:57 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- os28-20020a05620a811c00b0078350718a63sm705856qkn.67.2024.01.26.08.34.25
+ od10-20020a0562142f0a00b0068c37c745f4sm146555qvb.21.2024.01.26.08.36.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 08:34:37 -0800 (PST)
-Message-ID: <0a760766-2195-40f2-9f75-0df10c6d7032@redhat.com>
-Date: Fri, 26 Jan 2024 17:34:24 +0100
+ Fri, 26 Jan 2024 08:36:57 -0800 (PST)
+Message-ID: <b684476f-e5c1-41ff-be02-c63a68109011@redhat.com>
+Date: Fri, 26 Jan 2024 17:36:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 38/46] hw/openrisc/openrisc_sim: use
- qemu_create_nic_device()
+Subject: Re: [PATCH v3 39/46] hw/riscv: use qemu_configure_nic_device()
 Content-Language: en-US
-To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>,
- Hao Wu <wuhaotsh@google.com>, Radoslaw Biernacki <rad@semihalf.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
- <gaosong@loongson.cn>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Jason Wang <jasowang@redhat.com>,
  Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Bin Meng
- <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Bin Meng <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
  Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  David Woodhouse <dwmw@amazon.co.uk>
 References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-39-dwmw2@infradead.org>
+ <20240108204909.564514-40-dwmw2@infradead.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -154,19 +128,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240108204909.564514-39-dwmw2@infradead.org>
+In-Reply-To: <20240108204909.564514-40-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -187,52 +161,67 @@ On 08/01/2024 21.27, David Woodhouse wrote:
 > 
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/openrisc/openrisc_sim.c | 18 +++++++++---------
->   1 file changed, 9 insertions(+), 9 deletions(-)
+>   hw/riscv/microchip_pfsoc.c | 14 ++------------
+>   hw/riscv/sifive_u.c        |  7 +------
+>   2 files changed, 3 insertions(+), 18 deletions(-)
 > 
-> diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
-> index 35da123aef..bffd6f721f 100644
-> --- a/hw/openrisc/openrisc_sim.c
-> +++ b/hw/openrisc/openrisc_sim.c
-> @@ -170,7 +170,7 @@ static void openrisc_create_fdt(Or1ksimState *state,
->   
->   static void openrisc_sim_net_init(Or1ksimState *state, hwaddr base, hwaddr size,
->                                     int num_cpus, OpenRISCCPU *cpus[],
-> -                                  int irq_pin, NICInfo *nd)
-> +                                  int irq_pin)
->   {
->       void *fdt = state->fdt;
->       DeviceState *dev;
-> @@ -178,8 +178,10 @@ static void openrisc_sim_net_init(Or1ksimState *state, hwaddr base, hwaddr size,
->       char *nodename;
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index b775aa8946..7725dfbde5 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -202,7 +202,6 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>       MemoryRegion *envm_data = g_new(MemoryRegion, 1);
+>       MemoryRegion *qspi_xip_mem = g_new(MemoryRegion, 1);
+>       char *plic_hart_config;
+> -    NICInfo *nd;
 >       int i;
 >   
-> -    dev = qdev_new("open_eth");
-> -    qdev_set_nic_properties(dev, nd);
-> +    dev = qemu_create_nic_device("open_eth", true, NULL);
-> +    if (!dev) {
-> +        return;
-> +    }
+>       sysbus_realize(SYS_BUS_DEVICE(&s->e_cpus), &error_abort);
+> @@ -411,17 +410,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+>           memmap[MICROCHIP_PFSOC_USB].size);
 >   
->       s = SYS_BUS_DEVICE(dev);
->       sysbus_realize_and_unref(s, &error_fatal);
-> @@ -313,12 +315,10 @@ static void openrisc_sim_init(MachineState *machine)
->       openrisc_create_fdt(state, or1ksim_memmap, smp_cpus, machine->ram_size,
->                           machine->kernel_cmdline);
->   
-> -    if (nd_table[0].used) {
-> -        openrisc_sim_net_init(state, or1ksim_memmap[OR1KSIM_ETHOC].base,
-> -                              or1ksim_memmap[OR1KSIM_ETHOC].size,
-> -                              smp_cpus, cpus,
-> -                              OR1KSIM_ETHOC_IRQ, nd_table);
+>       /* GEMs */
+> -
+> -    nd = &nd_table[0];
+> -    if (nd->used) {
+> -        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
+> -        qdev_set_nic_properties(DEVICE(&s->gem0), nd);
 > -    }
-> +    openrisc_sim_net_init(state, or1ksim_memmap[OR1KSIM_ETHOC].base,
-> +                          or1ksim_memmap[OR1KSIM_ETHOC].size,
-> +                          smp_cpus, cpus,
-> +                          OR1KSIM_ETHOC_IRQ);
+> -    nd = &nd_table[1];
+> -    if (nd->used) {
+> -        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
+> -        qdev_set_nic_properties(DEVICE(&s->gem1), nd);
+> -    }
+> +    qemu_configure_nic_device(DEVICE(&s->gem0), true, NULL);
+> +    qemu_configure_nic_device(DEVICE(&s->gem1), true, NULL);
 >   
->       if (smp_cpus > 1) {
->           openrisc_sim_ompic_init(state, or1ksim_memmap[OR1KSIM_OMPIC].base,
+>       object_property_set_int(OBJECT(&s->gem0), "revision", GEM_REVISION, errp);
+>       object_property_set_int(OBJECT(&s->gem0), "phy-addr", 8, errp);
+> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+> index ec76dce6c9..5207ec1fa5 100644
+> --- a/hw/riscv/sifive_u.c
+> +++ b/hw/riscv/sifive_u.c
+> @@ -789,7 +789,6 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+>       MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
+>       char *plic_hart_config;
+>       int i, j;
+> -    NICInfo *nd = &nd_table[0];
+>   
+>       qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
+>       qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
+> @@ -893,11 +892,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+>       }
+>       sysbus_mmio_map(SYS_BUS_DEVICE(&s->otp), 0, memmap[SIFIVE_U_DEV_OTP].base);
+>   
+> -    /* FIXME use qdev NIC properties instead of nd_table[] */
+> -    if (nd->used) {
+> -        qemu_check_nic_model(nd, TYPE_CADENCE_GEM);
+> -        qdev_set_nic_properties(DEVICE(&s->gem), nd);
+> -    }
+> +    qemu_configure_nic_device(DEVICE(&s->gem), true, NULL);
+>       object_property_set_int(OBJECT(&s->gem), "revision", GEM_REVISION,
+>                               &error_abort);
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->gem), errp)) {
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
