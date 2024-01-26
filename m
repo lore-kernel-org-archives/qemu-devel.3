@@ -4,98 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ADB3C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B698C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMdL-0001q5-Tj; Fri, 26 Jan 2024 08:52:39 -0500
+	id 1rTMfC-00032m-Ir; Fri, 26 Jan 2024 08:54:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.purdie@linuxfoundation.org>)
- id 1rTMdF-0001lI-8A
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:52:34 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.purdie@linuxfoundation.org>)
- id 1rTMdB-00052u-0t
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:52:30 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-339289fead2so464425f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 05:52:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linuxfoundation.org; s=google; t=1706277147; x=1706881947; darn=nongnu.org; 
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=XL0XKj6zKIS0+ah9Vzd7ofGxWXccZQX+Gk55QZZBRuM=;
- b=OqkDzzpwCDDm3x1/aYSKy8fxhAS9Oqoj2ycxCf3Y34QgUS8CRggN3zCC3MPjECjsKN
- Mlf96h2q7VbYwX+sDSFqVFOttVJ5FciEEAs9pr+LROE5DKGJD6fIxzlt5TJ1zIPi1IdM
- IoP55Xt29y3DfFUZ2m9yHYN4aTOtR1pZ3rL5o=
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTMet-0002zM-Mk
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:54:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTMeq-0005IO-I2
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:54:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706277251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9VRYilH8wo0GPEGOXIjrsT5q+mrKJOAq11IXLPYRxTw=;
+ b=Vn6mM9aKxmJhtq95bUYO0wlqAXHVl+JBDJCPnAPwkpI1TVF6h6HbSGnYBtVbayvtY09LKi
+ TNsj4CaZXbGzifoJ7xIPSsFajXKV/h15U4jnEsHoJRbVrqe30XmWCMsiqV1Xk/pFWheZ3B
+ /sYHtkF3Doij/skecGaFyv13zMIz9XI=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-404-tjytTzBcMb6oGnTN_RlMog-1; Fri, 26 Jan 2024 08:54:10 -0500
+X-MC-Unique: tjytTzBcMb6oGnTN_RlMog-1
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-3bde2a04c98so894723b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 05:54:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706277147; x=1706881947;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id
+ d=1e100.net; s=20230601; t=1706277249; x=1706882049;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XL0XKj6zKIS0+ah9Vzd7ofGxWXccZQX+Gk55QZZBRuM=;
- b=bFsCJE2Mf/N0k5CmefCmw6f/p3EhnQiXss/lQEXZJ4lAENOCsRVXjc4HxFyc8et59m
- /NNmMAZLRUxKI/CisuC36fKWJ2u/u0rvt12qh5LssUeLi8Fy9b9/KT31vaRXrRUHRklK
- PhdN8d9tkbb9u1eLnf+UYH+8Rp62/tkyy5B8c0FY/m+vz2KL8/U+dkxi5Z0aV3tJfk2A
- TNQdQROZQ+3Zqnp3X8YUdpxKguhq+maHl4J1uQBApjTiSfiAKl2p7EzlpXsZXQh1R/Q1
- +kO8n+q2FOHgJAhoskpY2SlPb3/3+TZcIYc19vO3Rp7u95J8xn/e/L4K5rmLDza48vuO
- ln1w==
-X-Gm-Message-State: AOJu0Yz1Rq34h91qN3IX7mxsTrPB8MoWV+k8LcGL0e3wp8hWLTIeG8Sn
- uZnGWO63Ip5RMvSdQnyqZSVuJVyo/B/kz034a0TTYWTHLgtqfaPMqxAhZ4AOzvWT8q8gyL07GPL
- I
-X-Google-Smtp-Source: AGHT+IFmqRVzRbZ/2LV/RMl3fo6Qc0mWEgqh5edxkGf+hKYuCk1cxLCu3QNjuIra8A35NYvzwdYJ9Q==
-X-Received: by 2002:a05:600c:19c8:b0:40e:b95b:e482 with SMTP id
- u8-20020a05600c19c800b0040eb95be482mr900032wmq.115.1706277146930; 
- Fri, 26 Jan 2024 05:52:26 -0800 (PST)
-Received: from ?IPv6:2001:8b0:aba:5f3c:eef:5a49:b13d:a655?
- ([2001:8b0:aba:5f3c:eef:5a49:b13d:a655])
- by smtp.gmail.com with ESMTPSA id
- h17-20020a05600c315100b0040d62f89381sm1959186wmo.35.2024.01.26.05.52.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 05:52:26 -0800 (PST)
-Message-ID: <3cc4df1a6fe27b211b29d2c17846812936255d7a.camel@linuxfoundation.org>
-Subject: Re: [PULL 05/13] linux-user: Use walk_memory_regions for
- open_self_maps
-From: Richard Purdie <richard.purdie@linuxfoundation.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Date: Fri, 26 Jan 2024 13:52:25 +0000
-In-Reply-To: <c845093f-1fe0-477e-bf5e-db22c985241a@tls.msk.ru>
-References: <20230901204251.137307-1-richard.henderson@linaro.org>
- <20230901204251.137307-6-richard.henderson@linaro.org>
- <9860cd401db66e6bf10e9e41df148b25ee6c73fd.camel@linuxfoundation.org>
- <c845093f-1fe0-477e-bf5e-db22c985241a@tls.msk.ru>
-Autocrypt: addr=richard.purdie@linuxfoundation.org; prefer-encrypt=mutual;
- keydata=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
- YNvg==
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.0-1 
+ bh=9VRYilH8wo0GPEGOXIjrsT5q+mrKJOAq11IXLPYRxTw=;
+ b=O8ALjUrP2DRXpmAAQp7d3Lelr0FVR0PMsYJmgx3oA+xQP9tXmjrgj14x/r/EgHjfZb
+ T0M+U5bT9PI/FZaz/4u7YcKS/hjeUNkzShqY8mFVHQ/lHj6Ebl6Clhe/D/K537PTeWZL
+ WqHYehaHNNyHsWM+RNrJVJzc3Pco0N1PERE/LgMZ8poQOyAqeWtxxpPwZHANhwpUMWqr
+ g4LtcRqfGbjTSeqaf6kfXivneA2mD7xH77hbavP7R0ieDDiivXMVvnJ8IuD+GciMyzjq
+ pL92cMDJe0jIfcnwWx1zcPdhKzu77zry2Vd0HzHn54eEpEpLXq1XbQ4gUU+jkxij82qu
+ /Zrw==
+X-Gm-Message-State: AOJu0YxHdlKXDlpKoXZFZUC9TTcL00KHIxUXKOoKlUIxvGNhJkCRI0a+
+ XPNXdEEgDsYeEZrfuL+gjJT6eM2OGlYwLck3xgdrvZZGD6LIjkLsnnZLy4tSQPOz62AWZ3xKwCh
+ 0WrJbeohIndp4YgFCSP+jC47/7fE1iQRx4aFmklWr/owwzqOWXhz/
+X-Received: by 2002:a05:6808:1918:b0:3bd:a87a:bcbd with SMTP id
+ bf24-20020a056808191800b003bda87abcbdmr1935195oib.39.1706277249625; 
+ Fri, 26 Jan 2024 05:54:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEeQWYupQnuJXVRiBPK6Z06vZlZ5Pm+d2RphwsdO1902xUz6SyG+5CadZdnh/ITNfDEXMwkjw==
+X-Received: by 2002:a05:6808:1918:b0:3bd:a87a:bcbd with SMTP id
+ bf24-20020a056808191800b003bda87abcbdmr1935168oib.39.1706277249364; 
+ Fri, 26 Jan 2024 05:54:09 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
+ [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
+ ck14-20020a05622a230e00b00429c9bf789fsm536259qtb.42.2024.01.26.05.53.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jan 2024 05:54:08 -0800 (PST)
+Message-ID: <531b0005-7308-4274-b357-33b699adc1cc@redhat.com>
+Date: Fri, 26 Jan 2024 14:53:52 +0100
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=richard.purdie@linuxfoundation.org;
- helo=mail-wr1-x430.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 12/46] hw/mips/fuloong2e: use pci_init_nic_devices()
+Content-Language: en-US
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, Rob Herring <robh@kernel.org>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
+ <gaosong@loongson.cn>, Thomas Huth <huth@tuxfamily.org>,
+ Laurent Vivier <laurent@vivier.eu>, Huacai Chen <chenhuacai@kernel.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jason Wang <jasowang@redhat.com>,
+ Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Bin Meng
+ <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+References: <20240108204909.564514-1-dwmw2@infradead.org>
+ <20240108204909.564514-13-dwmw2@infradead.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240108204909.564514-13-dwmw2@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,39 +188,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+On 08/01/2024 21.26, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> The previous behaviour was: *if* the first NIC specified on the command
+> line was an RTL8139 (or unspecified model) then it gets assigned to PCI
+> slot 7, which is where the Fuloong board had an RTL8139. All other
+> devices (including the first, if it was specified a anything other then
+> an rtl8319) get dynamically assigned on the bus.
+> 
+> The new behaviour is subtly different: If the first NIC was given a
+> specific model *other* than rtl8139, and a subsequent NIC was not,
+> then the rtl8139 (or unspecified) NIC will go to slot 7 and the rest
+> will be dynamically assigned.
 
-On Fri, 2024-01-26 at 16:33 +0300, Michael Tokarev wrote:
-> 26.01.2024 16:03, Richard Purdie wrote:
-> > I've run into a problem with this change.
-> >=20
-> > We (Yocto Project) upgraded to qemu 8.2.0 recently and after that we
-> > started seeing errors cross compiling webkitgtk on x86_64 for x86_64
-> > during the introspection code which runs under user mode qemu.
->=20
-> Besides your observations, please be aware there's quite a few issues in =
-8.2.0.
-> Please take a look at https://gitlab.com/mjt0k/qemu/-/commits/staging-8.2=
-/
-> (and https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2/ which is=
- updated
-> less often) for fixes already queued up, if you haven't looked there alre=
-ady.
-> 8.2.1 stable/bugfix release is scheduled for the beginning of the next we=
-ek.
+Sounds fine for me ... Philippe, what do you think?
 
-Thanks.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-I should note that I did test the staging-8.2 branch and nothing there
-helped. The issue was also present with master as of yesterday.
 
-https://bugzilla.yoctoproject.org/show_bug.cgi?id=3D15367 is Yocto
-Projects tracking of the issue which has the commits for master and
-staging-8.2 that I tested.
-
-Cheers,
-
-Richard
-
+> 
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> ---
+>   hw/mips/fuloong2e.c | 16 +++-------------
+>   1 file changed, 3 insertions(+), 13 deletions(-)
+> 
+> diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+> index 97b2c8ed8e..a45aac368c 100644
+> --- a/hw/mips/fuloong2e.c
+> +++ b/hw/mips/fuloong2e.c
+> @@ -201,19 +201,9 @@ static void main_cpu_reset(void *opaque)
+>   /* Network support */
+>   static void network_init(PCIBus *pci_bus)
+>   {
+> -    int i;
+> -
+> -    for (i = 0; i < nb_nics; i++) {
+> -        NICInfo *nd = &nd_table[i];
+> -        const char *default_devaddr = NULL;
+> -
+> -        if (i == 0 && (!nd->model || strcmp(nd->model, "rtl8139") == 0)) {
+> -            /* The Fuloong board has a RTL8139 card using PCI SLOT 7 */
+> -            default_devaddr = "07";
+> -        }
+> -
+> -        pci_nic_init_nofail(nd, pci_bus, "rtl8139", default_devaddr);
+> -    }
+> +    /* The Fuloong board has a RTL8139 card using PCI SLOT 7 */
+> +    pci_init_nic_in_slot(pci_bus, "rtl8139", NULL, "07");
+> +    pci_init_nic_devices(pci_bus, "rtl8139");
+>   }
+>   
+>   static void mips_fuloong2e_init(MachineState *machine)
 
 
