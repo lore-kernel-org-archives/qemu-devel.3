@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318B5C47DDF
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE25C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNPb-0003FJ-Gl; Fri, 26 Jan 2024 09:42:31 -0500
+	id 1rTNPi-0003sb-CL; Fri, 26 Jan 2024 09:42:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rTNPa-000371-1r
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:30 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1rTNPg-0003nD-5b
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:36 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rTNPY-0001RU-72
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:29 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-339289fead2so534560f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:42:27 -0800 (PST)
+ id 1rTNPe-0001Sb-Dg
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:35 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-55817a12ad8so341684a12.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:42:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706280146; x=1706884946; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706280152; x=1706884952; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cQtopNr5vvMf8lcJyxn/yFZa/KfoJjaby+4DFvKGnn8=;
- b=C0tY+8p1s5+j62icBultZP/BKwNlioJ6LxcpSvKNYzaajII/b+VVDxNndd9jSldrHl
- YEzbwuGaslFtoC376bhYiD1M6YyI9PymaZpLfYhvdRvsRk1wl40y/UHSaLNm0b72F721
- 5OK6wPuhiD6shI7K8QTgyqU006pTmPap3WI+oFjRkdrj9BvNIvt1bWys1XAAkRLmaYzQ
- y/+yrZQy2BCGWQyWyx5zVVw/W8RtB/7BET8oyHy+7+gpVDyiIcjfMGBe++ITrTGxsKyu
- 714NuHbRnbLlcQTRQUcvqOTSrUL3KLr0/XYghyZLOXhJvQi0PRqVEALNRMoaX8sBzQIZ
- bTEg==
+ bh=YRomrCy8IeTekhDJYOH7WoAUevPbXUg88RTgcJFKTB0=;
+ b=nGyEa9rat7slr0PqpIaTxu2aSdLe2/7gdhpdqTCFz4UEBU3nK96In4bky7ID9gi4T5
+ zQMigDNmbtrrKI7XM8Sr/4DbzwOmYWZXZalwXh51cqM+5wRkn96UikIEcKgrwLq7OS7q
+ 38aanHYry38udct9SmriWhxlkxUabIf8fOhI97ckp5nAU/eeRi2EQt5SOMi7M2KUtRp9
+ MgYfrxy083C00lV0ItRbZOfJOxFLVJJMvgH5qaZh79vglledSuw6BlklW50Sq0aaaS+D
+ 2bUIm97U3wiskRAT357SBRJWK2UqKYpjWnuTrIT1XGpN643hAluvx7JjTfVuYmN7/M9W
+ W62g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706280146; x=1706884946;
+ d=1e100.net; s=20230601; t=1706280152; x=1706884952;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cQtopNr5vvMf8lcJyxn/yFZa/KfoJjaby+4DFvKGnn8=;
- b=e+7pK9Phtx3J1zW5npQhX02d5SWh2PmnHE+5KJ0b7uIpmNZgfIEwZlfpJR4dkfdFGC
- LDQpTeJMJklSQrUHXHAfLwP9mpwlOGIXrgwI5qqqrkx6he1QHuBRqHefZSsvE/Vl7dAK
- Y4VLDCDT1cq+C54jQDWmEDZhCaCOcGVN3sBzYwXhC0qoJbn+ObGzF6CWOE68Pgg3JLcT
- q3JpxiCuH5N1bH4kzJENunmnUpraHw26Psbf1oHZg7YVLjUSc0a/wMBjiC6AzLX+pjyA
- TPjrvwxqx/acXCt9KaFRAmtcHEZ763/JSHyVRNWN/AHbT5AthiUxakdTitIRYYe+OX4r
- hMLQ==
-X-Gm-Message-State: AOJu0YzdsPlS9xexS7rjOivo0A6m0TSTCLqKEBprp0f8kHSoOHItPLHE
- 1K8dr3ZgyIwLXtEslegt9yfBZ80xX+OG4YCHx8kWUVjCizQwa/oPCDvPKAz71y35o/78akucbcF
- unzE=
-X-Google-Smtp-Source: AGHT+IHd+6xavana+NPb/ZCsOY5jqmQEf4NX5yvfwKgTl6uDFfxmJNEZ9E6pGoIGhVIIikGPOWGvgQ==
-X-Received: by 2002:a05:600c:3423:b0:40e:76b7:e8e3 with SMTP id
- y35-20020a05600c342300b0040e76b7e8e3mr942971wmp.226.1706280146256; 
- Fri, 26 Jan 2024 06:42:26 -0800 (PST)
+ bh=YRomrCy8IeTekhDJYOH7WoAUevPbXUg88RTgcJFKTB0=;
+ b=r9MC0bIYrAfAKDeFYqGZ9pDCjqp//FmYdmBOteDn9CY+hg6JAUftTOVaIQwM4UYuTm
+ nEKhqU1iN3o5VkFoxOoILQ9WPZ1pWhR5Spw1qPhGnLcL7IG3TZSsh04ZrW+35L5Ml1XA
+ 1wrx8tOyRoQt4xXu2Inx5EgqtCFgrJqua293boy8A+aUBNHjlsGijoaFxyqninojQ8eB
+ AfdzmUHYH2mvO3PtgjbzfxrmnTGqpFWIPMS2AwIOueOJ785Umm2ZCkk2HeoMtQ3RDzYT
+ YIlmnY5Fg2TNmTuuW1LyA9TdHUCcH2sGq4kFuL8LLaEdqsGGshKYsILFlT6l5ssYI2C+
+ YX8g==
+X-Gm-Message-State: AOJu0YwbVE7QjF8rU+rWciMI9zHAGBfQg+yarjW/yU3Wz1Uf/8R3FM5p
+ SErxgmBwz67gfVHefXseKFGQ4NpmW+evtSbu+cacRqSQiEJzINgFNMxOhMlu1rchNK1kjAFQfS8
+ ALIA=
+X-Google-Smtp-Source: AGHT+IHNIWgmlYJeROz+iV92mYwBMd78GXiTOKu5EbTU6koJT/9Gh88Sg3EDtSfD9Ar2GzY/JenQ+w==
+X-Received: by 2002:a17:906:7fd5:b0:a30:a9bc:5a15 with SMTP id
+ r21-20020a1709067fd500b00a30a9bc5a15mr907517ejs.20.1706280152018; 
+ Fri, 26 Jan 2024 06:42:32 -0800 (PST)
 Received: from localhost.localdomain (adsl-114.109.242.225.tellas.gr.
  [109.242.225.114]) by smtp.gmail.com with ESMTPSA id
- ox27-20020a170907101b00b00a3221b95ce8sm699168ejb.77.2024.01.26.06.42.25
+ ox27-20020a170907101b00b00a3221b95ce8sm699168ejb.77.2024.01.26.06.42.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:42:25 -0800 (PST)
+ Fri, 26 Jan 2024 06:42:31 -0800 (PST)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>
-Subject: [PATCH v1 2/3] virtio-gpu.c: add resource_destroy class method
-Date: Fri, 26 Jan 2024 16:41:49 +0200
-Message-Id: <c123808b760f4d8d743c4fd4a04e730005ff673e.1706279540.git.manos.pitsidianakis@linaro.org>
+Subject: [PATCH v1 3/3] virtio-gpu-rutabaga.c: override resource_destroy method
+Date: Fri, 26 Jan 2024 16:41:50 +0200
+Message-Id: <5dc2d365fa4f88c7b5761f1032e1ea505d6b7e86.1706279540.git.manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
 References: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,87 +96,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When destroying/unrefing resources, devices such as virtio-gpu-rutabaga
-need to do their own bookkeeping (free rutabaga resources that are
-associated with the virtio_gpu_simple_resource).
+When the Rutabaga GPU device frees resources, it calls
+rutabaga_resource_unref for that resource_id. However, when the generic
+VirtIOGPU functions destroys resources, it only removes the
+virtio_gpu_simple_resource from the device's VirtIOGPU->reslist list.
+The rutabaga resource associated with that resource_id is then leaked.
 
-This commit adds a class method so that virtio-gpu-rutabaga can override
-it in the next commit.
+This commit overrides the resource_destroy class method introduced in
+the previous commit to fix this.
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- hw/display/virtio-gpu.c        | 19 ++++++++++++++++---
- include/hw/virtio/virtio-gpu.h |  2 ++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu-rutabaga.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 2b73ae585b..96420ba74f 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -401,8 +401,9 @@ static void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
-     scanout->height = 0;
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index 9e67f9bd51..66b5a115ac 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -147,6 +147,24 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
  }
  
--static void virtio_gpu_resource_destroy(VirtIOGPU *g,
--                                        struct virtio_gpu_simple_resource *res)
 +static int32_t
-+virtio_gpu_resource_destroy(VirtIOGPU *g,
-+                            struct virtio_gpu_simple_resource *res)
- {
-     int i;
- 
-@@ -419,6 +420,8 @@ static void virtio_gpu_resource_destroy(VirtIOGPU *g,
-     QTAILQ_REMOVE(&g->reslist, res, next);
-     g->hostmem -= res->hostmem;
-     g_free(res);
++virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,
++                                   struct virtio_gpu_simple_resource *res)
++{
++    int32_t result;
++    VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
 +
-+    return 0;
++    result = rutabaga_resource_unref(vr->rutabaga, res->resource_id);
++
++    if (res->image) {
++        pixman_image_unref(res->image);
++    }
++
++    QTAILQ_REMOVE(&g->reslist, res, next);
++    g_free(res);
++    return result;
++}
++
+ static void
+ rutabaga_cmd_resource_unref(VirtIOGPU *g,
+                             struct virtio_gpu_ctrl_command *cmd)
+@@ -155,8 +173,6 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,
+     struct virtio_gpu_simple_resource *res;
+     struct virtio_gpu_resource_unref unref;
+ 
+-    VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
+-
+     VIRTIO_GPU_FILL_CMD(unref);
+ 
+     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+@@ -164,15 +180,8 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,
+     res = virtio_gpu_find_resource(g, unref.resource_id);
+     CHECK(res, cmd);
+ 
+-    result = rutabaga_resource_unref(vr->rutabaga, unref.resource_id);
++    result = virtio_gpu_rutabaga_resource_unref(g, res);
+     CHECK(!result, cmd);
+-
+-    if (res->image) {
+-        pixman_image_unref(res->image);
+-    }
+-
+-    QTAILQ_REMOVE(&g->reslist, res, next);
+-    g_free(res);
  }
  
- static void virtio_gpu_resource_unref(VirtIOGPU *g,
-@@ -1488,11 +1491,20 @@ static void virtio_gpu_device_unrealize(DeviceState *qdev)
- static void virtio_gpu_reset_bh(void *opaque)
- {
-     VirtIOGPU *g = VIRTIO_GPU(opaque);
-+    VirtIOGPUClass *vgc = VIRTIO_GPU_GET_CLASS(g);
-     struct virtio_gpu_simple_resource *res, *tmp;
-+    int32_t result, resource_id;
-     int i = 0;
- 
-     QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
--        virtio_gpu_resource_destroy(g, res);
-+        resource_id = res->resource_id;
-+        result = vgc->resource_destroy(g, res);
-+        if (result) {
-+            error_report("%s: %s resource_destroy"
-+                         "for resource_id = %d failed with return value = %d;",
-+                         __func__, object_get_typename(OBJECT(g)), resource_id,
-+                         result);
-+        }
-     }
- 
-     for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-@@ -1632,6 +1644,7 @@ static void virtio_gpu_class_init(ObjectClass *klass, void *data)
-     vgc->handle_ctrl = virtio_gpu_handle_ctrl;
-     vgc->process_cmd = virtio_gpu_simple_process_cmd;
-     vgc->update_cursor_data = virtio_gpu_update_cursor_data;
-+    vgc->resource_destroy = virtio_gpu_resource_destroy;
-     vgbc->gl_flushed = virtio_gpu_handle_gl_flushed;
- 
-     vdc->realize = virtio_gpu_device_realize;
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 584ba2ed73..5683354236 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -219,6 +219,8 @@ struct VirtIOGPUClass {
-     void (*update_cursor_data)(VirtIOGPU *g,
-                                struct virtio_gpu_scanout *s,
-                                uint32_t resource_id);
-+    int32_t (*resource_destroy)(VirtIOGPU *g,
-+                                struct virtio_gpu_simple_resource *res);
- };
- 
- struct VirtIOGPUGL {
+ static void
+@@ -1099,7 +1108,7 @@ static void virtio_gpu_rutabaga_class_init(ObjectClass *klass, void *data)
+     vgc->handle_ctrl = virtio_gpu_rutabaga_handle_ctrl;
+     vgc->process_cmd = virtio_gpu_rutabaga_process_cmd;
+     vgc->update_cursor_data = virtio_gpu_rutabaga_update_cursor;
+-
++    vgc->resource_destroy = virtio_gpu_rutabaga_resource_unref;
+     vdc->realize = virtio_gpu_rutabaga_realize;
+     device_class_set_props(dc, virtio_gpu_rutabaga_properties);
+ }
 -- 
 γαῖα πυρί μιχθήτω
 
