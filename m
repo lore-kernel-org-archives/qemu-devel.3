@@ -4,87 +4,174 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90410C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FABC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNub-0005wy-DC; Fri, 26 Jan 2024 10:14:33 -0500
+	id 1rTNut-0006BT-5j; Fri, 26 Jan 2024 10:14:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rTNuT-0005uS-CY
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:14:25 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rTNuQ-0002Ow-CB
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:14:24 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-40e913e3f03so7745515e9.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 07:14:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706282061; x=1706886861; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tEgUiso/gqEWntgDkK1RUcIR5FswJ9EKO+qEa+rec3o=;
- b=JHgtOBfFt5qA6WHUl5GqOhAyrqdWuBOn1lcJF96PUT5eshU6CkJyHv9fttFDNLDefU
- poKjnNhVsS9oG2BixXZ7OqeidXI8emXx95x/KI6Mx4bmIwHVD0XAk6kQw19xdXy5GVQC
- ncwnv65dvxvZt3CiR626Nq7J1gCU1sHv3wryU9Hr+4lKbsyndpNeKPiig9zVpmN+Is9z
- lCC9KKuKQ7bwUrCTQW2EtLc/z0orL/vKC0TGGOnYKzHLrnMVPZYQWuS6a9FzpVKDmGF5
- KuQHSDtPkM+tBMqbFzCdsQkPM6YrcMTaQoTCJrjN5eaCJu1Gin+MGrqg5EoUjAh5J8kH
- hEgw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNud-0005z4-Fm
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:14:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNuZ-0002PT-IP
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:14:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706282069;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=kL1PV0GnD1ZAEVsxwMOt7B0OpiCtHZ0Bo2cILBnhl8Y=;
+ b=HbOj7sVdSJaWjryED02dAa2BPktvMbaNmK+2lUgc/g4PA0M+7p4JtxXrbdXKtnolLEq/yL
+ 91TT354St/ZddeQyb4yabBBFLStamtK5yk2BCOhRf3I3JewWtU4BATl1uMEB/jCRU1ZzSo
+ Kq7fOpzr4kqG/FbarypkyQulaRlAi1o=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-vfrNLu0fPnaUVm7uKL9-Xw-1; Fri, 26 Jan 2024 10:14:27 -0500
+X-MC-Unique: vfrNLu0fPnaUVm7uKL9-Xw-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7817253831cso108453085a.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 07:14:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706282061; x=1706886861;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tEgUiso/gqEWntgDkK1RUcIR5FswJ9EKO+qEa+rec3o=;
- b=IuPUceyGm/XL3m4c+I+9mCrVf/s3tprFXObd2GlyokuiOjHIKTeCEFlSvR5DeA/654
- WmZkT97fcnmpYpmRWaB8H8fbIeeLNmgWSGCvYN2zDChURmBUvbCrlPKKnYz5o6YUZ+Qo
- bvZXHpy+ChO4UGrSTF2ihiGYXDtw5tOfJMYshccKBku1bfwM3+WJ7bYkhRt6rnielNzA
- RP+ERXfqQD3CE9Je4EdRLg2V/nLqNFBaTXCfKfx+6w76KG72zOrf4d5JhJP0CY5P6alK
- ovS7a7ZIcCGZ9AAuzGQ0FWomuj3VP39bX6kVtwsJ1T+h1q1CKslCUxjdT5vli494bCgD
- Fusg==
-X-Gm-Message-State: AOJu0Yw36EStbeqe153cl1AtL8rHU6DSVG3RduqclPU7JC26HZAGni8r
- PrkGoKsEB00/9VRMIMyUV9++ELzogj4qDGZ/Bh98HKXxRrM68pAaKzHqXuC/oo4=
-X-Google-Smtp-Source: AGHT+IFztlehBWZM55IzQmuXIMo4xtpCfJ/Cl5VvWN2J52W/s0h/usmLRXY2XZpi4a6IgPT/RPKDHA==
-X-Received: by 2002:a05:600c:4f82:b0:40d:92c4:c2da with SMTP id
- n2-20020a05600c4f8200b0040d92c4c2damr1053264wmq.31.1706282060631; 
- Fri, 26 Jan 2024 07:14:20 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- fa7-20020a056000258700b00338914eb90dsm1469247wrb.82.2024.01.26.07.14.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 07:14:20 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DBDDB5F78A;
- Fri, 26 Jan 2024 15:14:19 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Alexandre Iooss <erdnaxe@crans.org>
-Subject: Re: [PATCH v2 02/14] plugins: scoreboard API
-In-Reply-To: <20240118032400.3762658-3-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 18 Jan 2024 07:23:47 +0400")
-References: <20240118032400.3762658-1-pierrick.bouvier@linaro.org>
- <20240118032400.3762658-3-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.11.27; emacs 29.1
-Date: Fri, 26 Jan 2024 15:14:19 +0000
-Message-ID: <87il3grut0.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1706282067; x=1706886867;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kL1PV0GnD1ZAEVsxwMOt7B0OpiCtHZ0Bo2cILBnhl8Y=;
+ b=PCyWwlYzUJTYnT/pSbcK7bUkXErhq4CsdNYrETePTFk2z539BjfgWYHYax22pgsZ6D
+ dq5ck2jcTKOtsCiPjCxY80o7JvvKJOzZ6YPwT/yu35BOwBuFf1iiN7ggOKu329wNJuDE
+ SRpJ2hzU+IjfHWKELvIAuPJ3FH1R20b0mEGCAhsVIMaworBkJNgchKWrGzJ3SZ7qSnAy
+ FU6vYAYK6XeEWBnfZKLFmfseRuOVjVHJTjg6v3bqTpqUtuTyczYUjx7aJNgmFtBttTAS
+ vU7pvEUKqqo+zasWipX9wrJtlC+ibKPj/Uh2s65EnXASeK2JDUT5kevpfo0FLvjg9RMx
+ f2cg==
+X-Gm-Message-State: AOJu0YzvAeKs6sUa5syEnmMsg5PMB03C0tyYKCAOpUYvkoViiGCuitLQ
+ BszVKEezknnoHp2tvEvEZvP5WbhQCAoQ90kJREB7hPMzzZWBVY/mdDuI9eU1aplrH+X4JR7cuiL
+ qWTPpFyLLMtRvL07S0bI2FakCOdufRY81v/+iPpqJaGXCdtPUPBJH
+X-Received: by 2002:ae9:c217:0:b0:781:d911:7869 with SMTP id
+ j23-20020ae9c217000000b00781d9117869mr1755536qkg.111.1706282067536; 
+ Fri, 26 Jan 2024 07:14:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGvZksAWEhiP/+LCyVTIXZ66+hEuffrofVPdWqjL5TLNF8/fQODjIBV4H8F1yCtjCiGtLQp9Q==
+X-Received: by 2002:ae9:c217:0:b0:781:d911:7869 with SMTP id
+ j23-20020ae9c217000000b00781d9117869mr1755473qkg.111.1706282067281; 
+ Fri, 26 Jan 2024 07:14:27 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
+ [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
+ r14-20020a05620a03ce00b00783255108d5sm639751qkm.50.2024.01.26.07.14.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jan 2024 07:14:26 -0800 (PST)
+Message-ID: <4acd6d32-acf1-4b2b-b535-fb5082d4fe4c@redhat.com>
+Date: Fri, 26 Jan 2024 16:14:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 25/46] hw/net/smc91c111: use qemu_configure_nic_device()
+Content-Language: en-US
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
+ <gaosong@loongson.cn>, Thomas Huth <huth@tuxfamily.org>,
+ Laurent Vivier <laurent@vivier.eu>, Huacai Chen <chenhuacai@kernel.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jason Wang <jasowang@redhat.com>,
+ Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Bin Meng
+ <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, David Woodhouse <dwmw@amazon.co.uk>
+References: <20240108204909.564514-1-dwmw2@infradead.org>
+ <20240108204909.564514-26-dwmw2@infradead.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240108204909.564514-26-dwmw2@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,479 +187,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-
-> We introduce a cpu local storage, automatically managed (and extended)
-> by QEMU itself. Plugin allocate a scoreboard, and don't have to deal
-> with how many cpus are launched.
->
-> This API will be used by new inline functions but callbacks can benefit
-> from this as well. This way, they can operate without a global lock for
-> simple operations.
->
-> New functions:
-> - qemu_plugin_scoreboard_free
-> - qemu_plugin_scoreboard_get
-> - qemu_plugin_scoreboard_new
-> - qemu_plugin_scoreboard_size
->
-> In more, we define a qemu_plugin_u64_t, which is a simple struct holding
-> a pointer to a scoreboard, and a given offset.
-> This allows to have a scoreboard containing structs, without having to
-> bring offset for all operations on a specific field.
->
-> Since most of the plugins are simply collecting a sum of per-cpu values,
-> qemu_plugin_u64_t directly support this operation as well.
->
-> New functions:
-> - qemu_plugin_u64_get
-> - qemu_plugin_u64_sum
-> New macros:
-> - qemu_plugin_u64
-> - qemu_plugin_u64_struct
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 08/01/2024 21.26, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> Some callers instantiate the device unconditionally, others will do so only
+> if there is a NICInfo to go with it. This appears to be fairly random, but
+> preserve the existing behaviour for now.
+> 
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->  include/qemu/plugin.h        |  7 +++
->  include/qemu/qemu-plugin.h   | 75 ++++++++++++++++++++++++++++
->  plugins/api.c                | 39 +++++++++++++++
->  plugins/core.c               | 97 ++++++++++++++++++++++++++++++++++++
->  plugins/plugin.h             |  8 +++
->  plugins/qemu-plugins.symbols |  6 +++
->  6 files changed, 232 insertions(+)
->
-> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-> index 9346249145d..5f340192e56 100644
-> --- a/include/qemu/plugin.h
-> +++ b/include/qemu/plugin.h
-> @@ -115,6 +115,13 @@ struct qemu_plugin_insn {
->      bool mem_only;
->  };
->=20=20
-> +/* A scoreboard is an array of values, indexed by vcpu_index */
-> +struct qemu_plugin_scoreboard {
-> +    GArray *data;
-> +    size_t size;
+...
+> diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+> index 49b7c26102..702d0e8e83 100644
+> --- a/hw/net/smc91c111.c
+> +++ b/hw/net/smc91c111.c
+> @@ -818,14 +818,13 @@ static void smc91c111_register_types(void)
+>   
+>   /* Legacy helper function.  Should go away when machine config files are
+>      implemented.  */
+> -void smc91c111_init(NICInfo *nd, uint32_t base, qemu_irq irq)
+> +void smc91c111_init(uint32_t base, qemu_irq irq)
+>   {
+>       DeviceState *dev;
+>       SysBusDevice *s;
+>   
+> -    qemu_check_nic_model(nd, "smc91c111");
+>       dev = qdev_new(TYPE_SMC91C111);
+> -    qdev_set_nic_properties(dev, nd);
+> +    qemu_configure_nic_device(dev, true, NULL);
 
-Can we get size from GArray->len itself?
+Wouldn't it be possible to use qemu_create_nic_device() here, too?
 
-> +    size_t element_size;
-> +};
-> +
->  /*
->   * qemu_plugin_insn allocate and cleanup functions. We don't expect to
->   * cleanup many of these structures. They are reused for each fresh
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 2c1930e7e45..934059d64c2 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -220,6 +220,23 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin=
-_id_t id,
->  struct qemu_plugin_tb;
->  /** struct qemu_plugin_insn - Opaque handle for a translated instruction=
- */
->  struct qemu_plugin_insn;
-> +/**
-> + * struct qemu_plugin_scoreboard - Opaque handle for a scoreboard
-> + *
-> + * A scoreboard is an array of data, indexed by vcpu_index.
-> + **/
-
-stray *'s - I think this is what trips up kdoc.
-
-> +struct qemu_plugin_scoreboard;
-> +
-> +/**
-> + * qemu_plugin_u64_t - uint64_t member of an entry in a scoreboard
-
-We generally reserve lower_case_with_underscores_ending_with_a_t for
-scalar types. Its also a little generic. Maybe qemu_plugin_scoreboard_ref?
-
-> + *
-> + * This field allows to access a specific uint64_t member in one given e=
-ntry,
-> + * located at a specified offset. Inline operations expect this as entry.
-> + */
-> +typedef struct qemu_plugin_u64 {
-
-I don't think you need the forward declaration here (which clashes later
-on).
-
-> +    struct qemu_plugin_scoreboard *score;
-> +    size_t offset;
-> +} qemu_plugin_u64_t;
->=20=20
->  /**
->   * enum qemu_plugin_cb_flags - type of callback
-> @@ -754,5 +771,63 @@ int qemu_plugin_read_register(unsigned int vcpu,
->                                struct qemu_plugin_register *handle,
->                                GByteArray *buf);
->=20=20
-> +/**
-> + * qemu_plugin_scoreboard_new() - alloc a new scoreboard
-> + *
-> + * Returns a pointer to a new scoreboard. It must be freed using
-> + * qemu_plugin_scoreboard_free.
-> + */
-> +QEMU_PLUGIN_API
-> +struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element=
-_size);
-> +
-> +/**
-> + * qemu_plugin_scoreboard_free() - free a scoreboard
-> + * @score: scoreboard to free
-> + */
-> +QEMU_PLUGIN_API
-> +void qemu_plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
-> +
-> +/**
-> + * qemu_plugin_scoreboard_size() - return size of a scoreboard
-> + * @score: scoreboard to query
-> + */
-> +QEMU_PLUGIN_API
-> +size_t qemu_plugin_scoreboard_size(struct qemu_plugin_scoreboard
-> *score);
-
-Is this actually host memory size related? The use case in the plugins
-seems to be a proxy for num_cpus and I'm note sure we want it used that
-way. We are making the contract that it will always be big enough for
-the number of vcpus created - maybe that is the helper we need?
-
-> +
-> +/**
-> + * qemu_plugin_scoreboard_get() - access value from a scoreboard
-> + * @score: scoreboard to query
-> + * @vcpu_index: entry index
-> + *
-> + * Returns address of entry of a scoreboard matching a given vcpu_index.=
- This
-> + * address can be modified later if scoreboard is resized.
-> + */
-> +QEMU_PLUGIN_API
-> +void *qemu_plugin_scoreboard_get(struct qemu_plugin_scoreboard *score,
-> +                                 unsigned int vcpu_index);
-> +
-> +/* Macros to define a qemu_plugin_u64_t */
-> +#define qemu_plugin_u64(score) \
-> +    (qemu_plugin_u64_t){score, 0}
-> +#define qemu_plugin_u64_struct(score, type, member) \
-> +    (qemu_plugin_u64_t){score, offsetof(type, member)}
-
-qemu_plugin_val_ref and qemu_plugin_struct_ref?
-
-> +
-> +/**
-> + * qemu_plugin_u64_get() - access specific uint64_t in a scoreboard
-> + * @entry: entry to query
-> + * @vcpu_index: entry index
-> + *
-> + * Returns address of a specific member in a scoreboard entry, matching =
-a given
-> + * vcpu_index.
-> + */
-> +QEMU_PLUGIN_API
-> +uint64_t *qemu_plugin_u64_get(qemu_plugin_u64_t entry, unsigned int vcpu=
-_index);
-> +
-> +/**
-> + * qemu_plugin_u64_sum() - return sum of all values in a scoreboard
-> + * @entry: entry to sum
-> + */
-> +QEMU_PLUGIN_API
-> +uint64_t qemu_plugin_u64_sum(qemu_plugin_u64_t entry);
->=20=20
->  #endif /* QEMU_QEMU_PLUGIN_H */
-> diff --git a/plugins/api.c b/plugins/api.c
-> index e777eb4e9fc..4de94e798c6 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -547,3 +547,42 @@ static void __attribute__((__constructor__)) qemu_ap=
-i_init(void)
->      qemu_mutex_init(&reg_handle_lock);
->=20=20
->  }
-> +
-> +struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element=
-_size)
-> +{
-> +    return plugin_scoreboard_new(element_size);
-> +}
-> +
-> +void qemu_plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
-> +{
-> +    plugin_scoreboard_free(score);
-> +}
-> +
-> +size_t qemu_plugin_scoreboard_size(struct qemu_plugin_scoreboard *score)
-> +{
-> +    return score->size;
-
-So this would be score->data->len
-
-> +}
-> +
-> +void *qemu_plugin_scoreboard_get(struct qemu_plugin_scoreboard *score,
-> +                                 unsigned int vcpu_index)
-> +{
-> +    g_assert(vcpu_index < qemu_plugin_scoreboard_size(score));
-> +    char *ptr =3D score->data->data;
-> +    return ptr + vcpu_index * score->element_size;
-
-GArray has accesses functions for this:
-
-       return &g_array_index(score->data,
-                             g_array_get_element_size(score->data),
-                             vcpu_index);
-=20=20
-> +}
-> +
-> +uint64_t *qemu_plugin_u64_get(qemu_plugin_u64_t entry,
-> +                                         unsigned int vcpu_index)
-> +{
-> +    char *ptr =3D (char *) qemu_plugin_scoreboard_get(entry.score, vcpu_=
-index);
-> +    return (uint64_t *)(ptr + entry.offset);
-
-Not sure whats going with the casting here but I wonder if we are giving
-the user too much rope. Why not to return the value itself? In fact why
-do we treat things as an offset rather than an index of uint64_t.
-
-The qemu_plugin_scoreboard_get can return uint64_t * and the individual
-get becomes:
+Anyway:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
-  uint64_t *qemu_plugin_scoreboard_get(struct qemu_plugin_scoreboard *score,
-                                       unsigned int vcpu_index)
-  {
-      g_assert(vcpu_index < qemu_plugin_scoreboard_size(score));
-      return &g_array_index(score->data, score->element_size, vcpu_index);
-  }
+>       s = SYS_BUS_DEVICE(dev);
+>       sysbus_realize_and_unref(s, &error_fatal);
+>       sysbus_mmio_map(s, 0, base);
 
-  uint64_t qemu_plugin_u64_get(struct qemu_plugin_scoreboard *score,
-                                unsigned int vcpu_index, unsigned int score=
-_index)
-  {
-      g_assert(score_index < score->num_elements);
-      uint64_t *sb =3D qemu_plugin_scoreboard_get(score, vcpu_index);
-      return sb[score_index];
-  }
-
-> +}
-> +
-> +uint64_t qemu_plugin_u64_sum(qemu_plugin_u64_t entry)
-> +{
-> +    uint64_t total =3D 0;
-> +    for (int i =3D 0; i < qemu_plugin_scoreboard_size(entry.score); ++i)=
- {
-> +        total +=3D *qemu_plugin_u64_get(entry, i);
-> +    }
-> +    return total;
-> +}
-> diff --git a/plugins/core.c b/plugins/core.c
-> index e07b9cdf229..0286a127810 100644
-> --- a/plugins/core.c
-> +++ b/plugins/core.c
-> @@ -209,6 +209,71 @@ plugin_register_cb_udata(qemu_plugin_id_t id, enum q=
-emu_plugin_event ev,
->      do_plugin_register_cb(id, ev, func, udata);
->  }
->=20=20
-> +struct resize_scoreboard_args {
-> +    size_t new_alloc_size;
-> +    size_t new_size;
-> +};
-> +
-> +static void plugin_resize_one_scoreboard(gpointer key,
-> +                                         gpointer value,
-> +                                         gpointer user_data)
-> +{
-> +    struct qemu_plugin_scoreboard *score =3D
-> +        (struct qemu_plugin_scoreboard *) value;
-> +    struct resize_scoreboard_args *args =3D
-> +        (struct resize_scoreboard_args *) user_data;
-> +    if (score->data->len !=3D args->new_alloc_size) {
-> +        g_array_set_size(score->data, args->new_alloc_size);
-> +    }
-> +    score->size =3D args->new_size;
-
-I think you have this in len so if you skip the extra field you can just
-do:
-
-  new_size =3D GPOINTER_TO_UINT(user_data);
-
-> +}
-> +
-> +static void plugin_grow_scoreboards__locked(CPUState *cpu)
-> +{
-> +    if (cpu->cpu_index < plugin.scoreboard_size) {
-> +        return;
-> +    }
-> +
-> +    bool need_realloc =3D FALSE;
-> +    while (cpu->cpu_index >=3D plugin.scoreboard_alloc_size) {
-> +        plugin.scoreboard_alloc_size *=3D 2;
-
-I suspect for USER this makes sense, if we every end up doing system
-expansion then it would just be +1 at a time. In fact given glib does:
-
-      gsize want_alloc =3D g_nearest_pow (g_array_elt_len (array, want_len)=
-);
-
-maybe we just do a simple increment and leave it up glib to handle the
-exponential growth?
-
-
-> +        need_realloc =3D TRUE;
-> +    }
-> +    plugin.scoreboard_size =3D cpu->cpu_index + 1;
-> +    g_assert(plugin.scoreboard_size <=3D plugin.scoreboard_alloc_size);
-> +
-> +    if (g_hash_table_size(plugin.scoreboards) =3D=3D 0) {
-> +        /* nothing to do, we just updated sizes for future scoreboards */
-> +        return;
-> +    }
-> +
-> +    if (need_realloc) {
-> +#ifdef CONFIG_USER_ONLY
-> +        /**
-> +         * cpus must be stopped, as some tb might still use an existing
-> +         * scoreboard.
-> +         */
-> +        start_exclusive();
-> +#endif
-
-Hmm this seems wrong to be USER_ONLY. While we don't expect to resize in
-system mode if we did we certainly want to do it during exclusive
-periods.
-
-> +    }
-> +
-> +    struct resize_scoreboard_args args =3D {
-> +        .new_alloc_size =3D plugin.scoreboard_alloc_size,
-> +        .new_size =3D plugin.scoreboard_size
-> +    };
-> +    g_hash_table_foreach(plugin.scoreboards,
-> +                         &plugin_resize_one_scoreboard,
-> +                         &args);
-
-This can just be g_hash_table_foreach(plugin.scoreboards,
-                                      &plugin_resize_one_scoreboard,
-                                      GUINT_TO_POINTER(plugin.scoreboard_al=
-loc_size))
-
-> +
-> +    if (need_realloc) {
-> +        /* force all tb to be flushed, as scoreboard pointers were chang=
-ed. */
-> +        tb_flush(cpu);
-> +#ifdef CONFIG_USER_ONLY
-> +        end_exclusive();
-> +#endif
-> +    }
-> +}
-> +
->  void qemu_plugin_vcpu_init_hook(CPUState *cpu)
->  {
->      bool success;
-> @@ -218,6 +283,7 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
->      success =3D g_hash_table_insert(plugin.cpu_ht, &cpu->cpu_index,
->                                    &cpu->cpu_index);
->      g_assert(success);
-> +    plugin_grow_scoreboards__locked(cpu);
->      qemu_rec_mutex_unlock(&plugin.lock);
->=20=20
->      plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_INIT);
-> @@ -576,8 +642,39 @@ static void __attribute__((__constructor__)) plugin_=
-init(void)
->      qemu_rec_mutex_init(&plugin.lock);
->      plugin.id_ht =3D g_hash_table_new(g_int64_hash, g_int64_equal);
->      plugin.cpu_ht =3D g_hash_table_new(g_int_hash, g_int_equal);
-> +    plugin.scoreboards =3D g_hash_table_new(g_int64_hash, g_int64_equal);
-> +    plugin.scoreboard_size =3D 1;
-> +    plugin.scoreboard_alloc_size =3D 16; /* avoid frequent reallocation =
-*/
->      QTAILQ_INIT(&plugin.ctxs);
->      qht_init(&plugin.dyn_cb_arr_ht, plugin_dyn_cb_arr_cmp, 16,
->               QHT_MODE_AUTO_RESIZE);
->      atexit(qemu_plugin_atexit_cb);
->  }
-> +
-> +struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size)
-> +{
-> +    struct qemu_plugin_scoreboard *score =3D
-> +        g_malloc0(sizeof(struct qemu_plugin_scoreboard));
-> +    score->data =3D g_array_new(FALSE, TRUE, element_size);
-> +    g_array_set_size(score->data, plugin.scoreboard_alloc_size);
-> +    score->size =3D plugin.scoreboard_size;
-> +    score->element_size =3D element_size;
-> +
-> +    qemu_rec_mutex_lock(&plugin.lock);
-> +    bool inserted =3D g_hash_table_insert(plugin.scoreboards, score, sco=
-re);
-> +    g_assert(inserted);
-> +    qemu_rec_mutex_unlock(&plugin.lock);
-> +
-> +    return score;
-> +}
-> +
-> +void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
-> +{
-> +    qemu_rec_mutex_lock(&plugin.lock);
-> +    bool removed =3D g_hash_table_remove(plugin.scoreboards, score);
-> +    g_assert(removed);
-> +    qemu_rec_mutex_unlock(&plugin.lock);
-> +
-> +    g_array_free(score->data, TRUE);
-> +    g_free(score);
-> +}
-> diff --git a/plugins/plugin.h b/plugins/plugin.h
-> index 2c278379b70..99829c40886 100644
-> --- a/plugins/plugin.h
-> +++ b/plugins/plugin.h
-> @@ -31,6 +31,10 @@ struct qemu_plugin_state {
->       * but with the HT we avoid adding a field to CPUState.
->       */
->      GHashTable *cpu_ht;
-> +    /* Scoreboards, indexed by their addresses. */
-> +    GHashTable *scoreboards;
-> +    size_t scoreboard_size;
-> +    size_t scoreboard_alloc_size;
->      DECLARE_BITMAP(mask, QEMU_PLUGIN_EV_MAX);
->      /*
->       * @lock protects the struct as well as ctx->uninstalling.
-> @@ -99,4 +103,8 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
->=20=20
->  void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index);
->=20=20
-> +struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size=
-);
-> +
-> +void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
-> +
->  #endif /* PLUGIN_H */
-> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-> index 6963585c1ea..93866d1b5f2 100644
-> --- a/plugins/qemu-plugins.symbols
-> +++ b/plugins/qemu-plugins.symbols
-> @@ -38,10 +38,16 @@
->    qemu_plugin_register_vcpu_tb_exec_inline;
->    qemu_plugin_register_vcpu_tb_trans_cb;
->    qemu_plugin_reset;
-> +  qemu_plugin_scoreboard_free;
-> +  qemu_plugin_scoreboard_get;
-> +  qemu_plugin_scoreboard_new;
-> +  qemu_plugin_scoreboard_size;
->    qemu_plugin_start_code;
->    qemu_plugin_tb_get_insn;
->    qemu_plugin_tb_n_insns;
->    qemu_plugin_tb_vaddr;
-> +  qemu_plugin_u64_get;
-> +  qemu_plugin_u64_sum;
->    qemu_plugin_uninstall;
->    qemu_plugin_vcpu_for_each;
->  };
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
