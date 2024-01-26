@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96ABBC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2303C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMK3-00033Z-Mt; Fri, 26 Jan 2024 08:32:43 -0500
+	id 1rTMKI-0004Dw-5O; Fri, 26 Jan 2024 08:32:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMJu-0002Xg-2R; Fri, 26 Jan 2024 08:32:34 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ id 1rTMKC-0003zF-Mq; Fri, 26 Jan 2024 08:32:52 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMJr-0007wu-Cm; Fri, 26 Jan 2024 08:32:33 -0500
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzBx2XL4z4wc3;
- Sat, 27 Jan 2024 00:32:25 +1100 (AEDT)
+ id 1rTMKA-00080i-A8; Fri, 26 Jan 2024 08:32:52 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCP0wBDz4x80;
+ Sat, 27 Jan 2024 00:32:49 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzBw0bzVz4wbp;
- Sat, 27 Jan 2024 00:32:23 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzCM2bwpz4wny;
+ Sat, 27 Jan 2024 00:32:47 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 00/17] aspeed queue
-Date: Fri, 26 Jan 2024 14:31:59 +0100
-Message-ID: <20240126133217.996306-1-clg@kaod.org>
+Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 10/17] hw/fsi: Introduce IBM's fsi-slave model
+Date: Fri, 26 Jan 2024 14:32:09 +0100
+Message-ID: <20240126133217.996306-11-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240126133217.996306-1-clg@kaod.org>
+References: <20240126133217.996306-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,95 +65,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e029fe22caad9b75c7ab69bd4e84853c11fb71e0:
+From: Ninad Palsule <ninad@linux.ibm.com>
 
-  Merge tag 'pull-qapi-2024-01-26' of https://repo.or.cz/qemu/armbru into staging (2024-01-26 10:21:27 +0000)
+This is a part of patchset where IBM's Flexible Service Interface is
+introduced.
 
-are available in the Git repository at:
+The FSI slave: The slave is the terminal point of the FSI bus for
+FSI symbols addressed to it. Slaves can be cascaded off of one
+another. The slave's configuration registers appear in address space
+of the CFAM to which it is attached.
 
-  https://github.com/legoater/qemu/ tags/pull-aspeed-20240126
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+---
+ include/hw/fsi/fsi.h | 18 ++++++++++
+ hw/fsi/fsi.c         | 84 ++++++++++++++++++++++++++++++++++++++++++--
+ hw/fsi/trace-events  |  2 ++
+ 3 files changed, 102 insertions(+), 2 deletions(-)
 
-for you to fetch changes up to b40769f4b49d15485ffaaa7acade3e3593ee6daa:
+diff --git a/include/hw/fsi/fsi.h b/include/hw/fsi/fsi.h
+index 50e8f5c888f1..e00f6ef078c8 100644
+--- a/include/hw/fsi/fsi.h
++++ b/include/hw/fsi/fsi.h
+@@ -7,7 +7,13 @@
+ #ifndef FSI_FSI_H
+ #define FSI_FSI_H
+ 
++#include "exec/memory.h"
+ #include "hw/qdev-core.h"
++#include "hw/fsi/lbus.h"
++#include "qemu/bitops.h"
++
++/* Bitwise operations at the word level. */
++#define BE_GENMASK(hb, lb)  MAKE_64BIT_MASK((lb), ((hb) - (lb) + 1))
+ 
+ #define TYPE_FSI_BUS "fsi.bus"
+ OBJECT_DECLARE_SIMPLE_TYPE(FSIBus, FSI_BUS)
+@@ -16,4 +22,16 @@ typedef struct FSIBus {
+     BusState bus;
+ } FSIBus;
+ 
++#define TYPE_FSI_SLAVE "fsi.slave"
++OBJECT_DECLARE_SIMPLE_TYPE(FSISlaveState, FSI_SLAVE)
++
++#define FSI_SLAVE_CONTROL_NR_REGS ((0x40 >> 2) + 1)
++
++typedef struct FSISlaveState {
++    DeviceState parent;
++
++    MemoryRegion iomem;
++    uint32_t regs[FSI_SLAVE_CONTROL_NR_REGS];
++} FSISlaveState;
++
+ #endif /* FSI_FSI_H */
+diff --git a/hw/fsi/fsi.c b/hw/fsi/fsi.c
+index 60cb03f7a24e..9a5f4e616f16 100644
+--- a/hw/fsi/fsi.c
++++ b/hw/fsi/fsi.c
+@@ -5,18 +5,98 @@
+  * IBM Flexible Service Interface
+  */
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/log.h"
++#include "trace.h"
+ 
+ #include "hw/fsi/fsi.h"
+ 
++#define TO_REG(x)                               ((x) >> 2)
++
+ static const TypeInfo fsi_bus_info = {
+     .name = TYPE_FSI_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(FSIBus),
+ };
+ 
+-static void fsi_bus_register_types(void)
++static uint64_t fsi_slave_read(void *opaque, hwaddr addr, unsigned size)
++{
++    FSISlaveState *s = FSI_SLAVE(opaque);
++    int reg = TO_REG(addr);
++
++    trace_fsi_slave_read(addr, size);
++
++    if (reg >= FSI_SLAVE_CONTROL_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out of bounds read: 0x%"HWADDR_PRIx" for %u\n",
++                      __func__, addr, size);
++        return 0;
++    }
++
++    return s->regs[reg];
++}
++
++static void fsi_slave_write(void *opaque, hwaddr addr, uint64_t data,
++                                 unsigned size)
++{
++    FSISlaveState *s = FSI_SLAVE(opaque);
++    int reg = TO_REG(addr);
++
++    trace_fsi_slave_write(addr, size, data);
++
++    if (reg >= FSI_SLAVE_CONTROL_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out of bounds write: 0x%"HWADDR_PRIx" for %u\n",
++                      __func__, addr, size);
++        return;
++    }
++
++    s->regs[reg] = data;
++}
++
++static const struct MemoryRegionOps fsi_slave_ops = {
++    .read = fsi_slave_read,
++    .write = fsi_slave_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
++static void fsi_slave_reset(DeviceState *dev)
++{
++    FSISlaveState *s = FSI_SLAVE(dev);
++
++    /* Initialize registers */
++    memset(s->regs, 0, sizeof(s->regs));
++}
++
++static void fsi_slave_init(Object *o)
++{
++    FSISlaveState *s = FSI_SLAVE(o);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &fsi_slave_ops,
++                          s, TYPE_FSI_SLAVE, 0x400);
++}
++
++static void fsi_slave_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->bus_type = TYPE_FSI_BUS;
++    dc->desc = "FSI Slave";
++    dc->reset = fsi_slave_reset;
++}
++
++static const TypeInfo fsi_slave_info = {
++    .name = TYPE_FSI_SLAVE,
++    .parent = TYPE_DEVICE,
++    .instance_init = fsi_slave_init,
++    .instance_size = sizeof(FSISlaveState),
++    .class_init = fsi_slave_class_init,
++};
++
++static void fsi_register_types(void)
+ {
+     type_register_static(&fsi_bus_info);
++    type_register_static(&fsi_slave_info);
+ }
+ 
+-type_init(fsi_bus_register_types);
++type_init(fsi_register_types);
+diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
+index c5753e27910a..8f29adb7df92 100644
+--- a/hw/fsi/trace-events
++++ b/hw/fsi/trace-events
+@@ -1,2 +1,4 @@
+ fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
+ fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
++fsi_slave_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
++fsi_slave_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
+-- 
+2.43.0
 
-  hw/fsi: Update MAINTAINER list (2024-01-26 14:22:08 +0100)
-
-----------------------------------------------------------------
-aspeed queue:
-
-* Update of buildroot images to 2023.11 (6.6.3 kernel)
-* Check of the valid CPU type supported by aspeed machines
-* Simplified models for the IBM's FSI bus and the Aspeed
-  controller bridge
-
-----------------------------------------------------------------
-Cédric Le Goater (1):
-      tests/avocado/machine_aspeed.py: Update buildroot images to 2023.11
-
-Ninad Palsule (11):
-      hw/fsi: Introduce IBM's Local bus
-      hw/fsi: Introduce IBM's scratchpad device
-      hw/fsi: Introduce IBM's FSI Bus
-      hw/fsi: Introduce IBM's fsi-slave model
-      hw/fsi: Introduce IBM's cfam
-      hw/fsi: Introduce IBM's FSI master
-      hw/fsi: Aspeed APB2OPB & On-chip peripheral bus
-      hw/arm: Hook up FSI module in AST2600
-      hw/fsi: Added qtest
-      hw/fsi: Added FSI documentation
-      hw/fsi: Update MAINTAINER list
-
-Philippe Mathieu-Daudé (5):
-      hw/arm/aspeed: Remove dead code
-      hw/arm/aspeed: Set default CPU count using aspeed_soc_num_cpus()
-      hw/arm/aspeed: Init CPU defaults in a common helper
-      hw/arm/aspeed: Introduce aspeed_soc_cpu_type() helper
-      hw/arm/aspeed: Check for CPU types in machine_run_board_init()
-
- MAINTAINERS                     |   9 ++
- docs/specs/fsi.rst              | 122 +++++++++++++++
- docs/specs/index.rst            |   1 +
- meson.build                     |   1 +
- hw/fsi/trace.h                  |   1 +
- include/hw/arm/aspeed_soc.h     |   8 +-
- include/hw/fsi/aspeed_apb2opb.h |  46 ++++++
- include/hw/fsi/cfam.h           |  34 +++++
- include/hw/fsi/fsi-master.h     |  32 ++++
- include/hw/fsi/fsi.h            |  37 +++++
- include/hw/fsi/lbus.h           |  43 ++++++
- hw/arm/aspeed.c                 |  70 ++++-----
- hw/arm/aspeed_ast10x0.c         |   8 +-
- hw/arm/aspeed_ast2400.c         |  15 +-
- hw/arm/aspeed_ast2600.c         |  28 +++-
- hw/arm/aspeed_soc_common.c      |   8 +
- hw/fsi/aspeed_apb2opb.c         | 329 ++++++++++++++++++++++++++++++++++++++++
- hw/fsi/cfam.c                   | 168 ++++++++++++++++++++
- hw/fsi/fsi-master.c             | 170 +++++++++++++++++++++
- hw/fsi/fsi.c                    | 102 +++++++++++++
- hw/fsi/lbus.c                   | 117 ++++++++++++++
- tests/qtest/aspeed-fsi-test.c   | 205 +++++++++++++++++++++++++
- hw/Kconfig                      |   1 +
- hw/arm/Kconfig                  |   1 +
- hw/fsi/Kconfig                  |   7 +
- hw/fsi/meson.build              |   2 +
- hw/fsi/trace-events             |  13 ++
- hw/meson.build                  |   1 +
- tests/avocado/machine_aspeed.py |  18 +--
- tests/qtest/meson.build         |   1 +
- 30 files changed, 1540 insertions(+), 58 deletions(-)
- create mode 100644 docs/specs/fsi.rst
- create mode 100644 hw/fsi/trace.h
- create mode 100644 include/hw/fsi/aspeed_apb2opb.h
- create mode 100644 include/hw/fsi/cfam.h
- create mode 100644 include/hw/fsi/fsi-master.h
- create mode 100644 include/hw/fsi/fsi.h
- create mode 100644 include/hw/fsi/lbus.h
- create mode 100644 hw/fsi/aspeed_apb2opb.c
- create mode 100644 hw/fsi/cfam.c
- create mode 100644 hw/fsi/fsi-master.c
- create mode 100644 hw/fsi/fsi.c
- create mode 100644 hw/fsi/lbus.c
- create mode 100644 tests/qtest/aspeed-fsi-test.c
- create mode 100644 hw/fsi/Kconfig
- create mode 100644 hw/fsi/meson.build
- create mode 100644 hw/fsi/trace-events
 
