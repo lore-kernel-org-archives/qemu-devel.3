@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF500C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB732C47DDF
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTUJW-0007Mm-I8; Fri, 26 Jan 2024 17:04:42 -0500
+	id 1rTUYK-0006U5-Vf; Fri, 26 Jan 2024 17:20:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUJV-0007M5-4W
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:04:41 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTUYI-0006TG-8a
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:19:58 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUJQ-0003TV-Lx
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:04:40 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a277339dcf4so76719966b.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:04:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706306674; x=1706911474; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vZRGd7bldk8q+PytOQG4zQL+je/AXd973w95qInnP0Y=;
- b=Uo8/h+hYe/OucHNYUvgbf05pgDuN4KgNu0dGYvXwkxtCHkT+Al1dkvwLhWcrGe791e
- hPRTBHarqVdTNw2Lw+xAR+D7RxVjmO/Ib7ZJZ8EH+cKyaqbClnI0DhfQheRZRiDyxJBg
- cMEm5iqHKyrzIMEqkNTO/rSupJaaevrqK4l0OwJfkkog6PkyYwdsLz29r0f0dxa/X3QL
- uzHkmfy6R2YAu8LrAILLkd5RngdvzQ+Fyz5IsvBq5hi81vbKnIB9P1SZFOUB93Wi6pOS
- 8VlYHmTZBu4rne4iaB3ZWT1Kt5v76Gp/uzNiAy2oTO+B94P/+cglT5Lu72ouDwA1OU7q
- Nbuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706306674; x=1706911474;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vZRGd7bldk8q+PytOQG4zQL+je/AXd973w95qInnP0Y=;
- b=Gl+VF+ALVs+oXcWT4pG54Xl2vzrk77JmfMtnASbFAANK2jQfqulqo88ncsV1qOHH+u
- +nfN4Cg1nK1VWkCAfNwqblETU5wJQXvc0+U6Aej82mb50jmNLZqEy/a0rNo9B/zBbCx7
- Qw+NCiKMurjf7cpFbVYiEkGWoBCDBXewDkMT71L/iJKo5pysZ/i5gZoi0Dd/Y+jg2aTN
- bNlqKZK4tTKIavlQccpiPPpJMQqmGLWpjNX0MBDDaawWEt5xmFv+dhGXSWtc5mIBOWSm
- hOsgT1+7Z1tvs9kUWWgiXor+qL0U5C6YeU2/FBXQSrQaTMlmbRMKwVz57G+nP/EjyNPv
- CPYg==
-X-Gm-Message-State: AOJu0Yzs+akAXgbO3ZIFZH4CeFW3SWUQKWkP0m8DL+kTt5RaV0wnOvoe
- pohoyvlwVDZe/2kpYjCMA5FKOY7UOhFu5yrMPHfFqbDDDD64dHyiPilzDM+cd1UWo2aGrPtwH5x
- c
-X-Google-Smtp-Source: AGHT+IHapGDMMDIR7ZT70/oBeOow7jZoQYe16jS+urcOsV4oetXblAiel6wHpVfPQA9ZXN8WFwidGw==
-X-Received: by 2002:a17:906:adcb:b0:a2f:15b8:cbcd with SMTP id
- lb11-20020a170906adcb00b00a2f15b8cbcdmr203155ejb.8.1706306674546; 
- Fri, 26 Jan 2024 14:04:34 -0800 (PST)
-Received: from m1x-phil.lan ([176.176.142.39])
- by smtp.gmail.com with ESMTPSA id
- k25-20020a17090646d900b00a316490ddbbsm1039815ejs.200.2024.01.26.14.04.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 26 Jan 2024 14:04:34 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTUYE-00021x-7A
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:19:57 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 129CE1F899;
+ Fri, 26 Jan 2024 22:19:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706307588; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eQajHzT1DkQVKtwboR/g1iq6rctr37kaU6l3q0j7J9I=;
+ b=oEdCLOvDFKm0kjnHnh3bRm9MWi0lugsnzXbVwXuynnTxkDWhYJipXmckxagm7ZlLKujQVp
+ 6koLTZRVK6WrV0DzqISyx4P1rtKWSRUqE4cr4EKQlKp7IGFkoGC4gJL7B/poccuzfBY1Pj
+ r9tO2l/OjsppVs948xAz9mZvioxE8O8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706307588;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eQajHzT1DkQVKtwboR/g1iq6rctr37kaU6l3q0j7J9I=;
+ b=P5dkZOXIZ63abXJI023Ai+ed/tvOu+UJtSDfA/j06KDV1tcZFUHxHylYFHeE3TBAy/3gX5
+ 2BjAdbVxjhSw0PAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706307588; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eQajHzT1DkQVKtwboR/g1iq6rctr37kaU6l3q0j7J9I=;
+ b=oEdCLOvDFKm0kjnHnh3bRm9MWi0lugsnzXbVwXuynnTxkDWhYJipXmckxagm7ZlLKujQVp
+ 6koLTZRVK6WrV0DzqISyx4P1rtKWSRUqE4cr4EKQlKp7IGFkoGC4gJL7B/poccuzfBY1Pj
+ r9tO2l/OjsppVs948xAz9mZvioxE8O8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706307588;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eQajHzT1DkQVKtwboR/g1iq6rctr37kaU6l3q0j7J9I=;
+ b=P5dkZOXIZ63abXJI023Ai+ed/tvOu+UJtSDfA/j06KDV1tcZFUHxHylYFHeE3TBAy/3gX5
+ 2BjAdbVxjhSw0PAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7719713A22;
+ Fri, 26 Jan 2024 22:19:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id rQO+DwIwtGWScwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 26 Jan 2024 22:19:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- qemu-riscv@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 04/23] target/alpha: Prefer fast cpu_env() over slower CPU
- QOM cast macro
-Date: Fri, 26 Jan 2024 23:03:46 +0100
-Message-ID: <20240126220407.95022-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240126220407.95022-1-philmd@linaro.org>
-References: <20240126220407.95022-1-philmd@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>, Hao Xiang <hao.xiang@bytedance.com>,
+ Yuan Liu <yuan1.liu@intel.com>, Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: [PATCH 0/5] migration/multifd: Prerequisite cleanups for ongoing work
+Date: Fri, 26 Jan 2024 19:19:38 -0300
+Message-Id: <20240126221943.26628-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [4.90 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MID_CONTAINS_FROM(1.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,190 +107,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mechanical patch produced running the command documented
-in scripts/coccinelle/cpu_env.cocci_template header.
+Hi,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/alpha/cpu.c        | 31 +++++++------------------------
- target/alpha/gdbstub.c    |  6 ++----
- target/alpha/helper.c     | 12 ++++--------
- target/alpha/mem_helper.c | 11 +++--------
- 4 files changed, 16 insertions(+), 44 deletions(-)
+Here are two cleanups that are prerequiste for the fixed-ram work, but
+also affect the other series on the list at the moment, so I want to
+make sure it works for everyone:
 
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index b8ed29e343..e21a8936c7 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -130,40 +130,27 @@ static ObjectClass *alpha_cpu_class_by_name(const char *cpu_model)
- 
- static void ev4_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->implver = IMPLVER_2106x;
-+    cpu_env(CPU(obj))->implver = IMPLVER_2106x;
- }
- 
- static void ev5_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->implver = IMPLVER_21164;
-+    cpu_env(CPU(obj))->implver = IMPLVER_21164;
- }
- 
- static void ev56_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->amask |= AMASK_BWX;
-+    cpu_env(CPU(obj))->amask |= AMASK_BWX;
- }
- 
- static void pca56_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->amask |= AMASK_MVI;
-+    cpu_env(CPU(obj))->amask |= AMASK_MVI;
- }
- 
- static void ev6_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(CPU(obj));
- 
-     env->implver = IMPLVER_21264;
-     env->amask = AMASK_BWX | AMASK_FIX | AMASK_MVI | AMASK_TRAP;
-@@ -171,16 +158,12 @@ static void ev6_cpu_initfn(Object *obj)
- 
- static void ev67_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->amask |= AMASK_CIX | AMASK_PREFETCH;
-+    cpu_env(CPU(obj))->amask |= AMASK_CIX | AMASK_PREFETCH;
- }
- 
- static void alpha_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(CPU(obj));
- 
-     env->lock_addr = -1;
- #if defined(CONFIG_USER_ONLY)
-diff --git a/target/alpha/gdbstub.c b/target/alpha/gdbstub.c
-index 0f8fa150f8..13694fd321 100644
---- a/target/alpha/gdbstub.c
-+++ b/target/alpha/gdbstub.c
-@@ -23,8 +23,7 @@
- 
- int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     uint64_t val;
-     CPU_DoubleU d;
- 
-@@ -59,8 +58,7 @@ int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int alpha_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     target_ulong tmp = ldtul_p(mem_buf);
-     CPU_DoubleU d;
- 
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 970c869771..eeed874e5a 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -298,8 +298,7 @@ bool alpha_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-                         MMUAccessType access_type, int mmu_idx,
-                         bool probe, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     target_ulong phys;
-     int prot, fail;
- 
-@@ -325,8 +324,7 @@ bool alpha_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
- 
- void alpha_cpu_do_interrupt(CPUState *cs)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     int i = cs->exception_index;
- 
-     if (qemu_loglevel_mask(CPU_LOG_INT)) {
-@@ -435,8 +433,7 @@ void alpha_cpu_do_interrupt(CPUState *cs)
- 
- bool alpha_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     int idx = -1;
- 
-     /* We never take interrupts while in PALmode.  */
-@@ -487,8 +484,7 @@ void alpha_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-         "a0",  "a1",  "a2", "a3",  "a4", "a5", "t8", "t9",
-         "t10", "t11", "ra", "t12", "at", "gp", "sp"
-     };
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     int i;
- 
-     qemu_fprintf(f, "PC      " TARGET_FMT_lx " PS      %02x\n",
-diff --git a/target/alpha/mem_helper.c b/target/alpha/mem_helper.c
-index a39b52c5dd..872955f5e7 100644
---- a/target/alpha/mem_helper.c
-+++ b/target/alpha/mem_helper.c
-@@ -42,18 +42,14 @@ static void do_unaligned_access(CPUAlphaState *env, vaddr addr, uintptr_t retadd
- void alpha_cpu_record_sigbus(CPUState *cs, vaddr addr,
-                              MMUAccessType access_type, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
--
--    do_unaligned_access(env, addr, retaddr);
-+    do_unaligned_access(cpu_env(cs), addr, retaddr);
- }
- #else
- void alpha_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                    MMUAccessType access_type,
-                                    int mmu_idx, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
- 
-     do_unaligned_access(env, addr, retaddr);
-     cs->exception_index = EXCP_UNALIGN;
-@@ -67,8 +63,7 @@ void alpha_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-                                      int mmu_idx, MemTxAttrs attrs,
-                                      MemTxResult response, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
- 
-     env->trap_arg0 = addr;
-     env->trap_arg1 = access_type == MMU_DATA_STORE ? 1 : 0;
+1) Separate multifd_ops from compression. The multifd_ops are
+   currently coupled with the multifd_compression parameter.
+
+We're adding new multifd_ops in the fixed-ram work and adding new
+compression ops in the compression work.
+
+2) Add a new send hook. The multifd_send_thread code currently does
+   some twists to support zero copy, which is a socket-only feature.
+
+This might affect the zero page and DSA work which add code to
+multifd_send_thread.
+
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/1154332360
+
+(I also tested zero copy locally. We cannot add a test for it because
+it needs root due to memory locking limits)
+
+Fabiano Rosas (5):
+  migration/multifd: Separate compression ops from non-compression
+  migration/multifd: Move multifd_socket_ops to socket.c
+  migration/multifd: Add multifd_ops->send
+  migration/multifd: Simplify zero copy send
+  migration/multifd: Move zero copy flag into multifd_socket_setup
+
+ migration/multifd-zlib.c |   9 ++-
+ migration/multifd-zstd.c |   9 ++-
+ migration/multifd.c      | 164 +++++----------------------------------
+ migration/multifd.h      |   6 +-
+ migration/socket.c       |  90 ++++++++++++++++++++-
+ 5 files changed, 128 insertions(+), 150 deletions(-)
+
 -- 
-2.41.0
+2.35.3
 
 
