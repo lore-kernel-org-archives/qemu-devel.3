@@ -4,76 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE25C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99297C47DDF
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNPi-0003sb-CL; Fri, 26 Jan 2024 09:42:38 -0500
+	id 1rTNQR-0005PY-Oy; Fri, 26 Jan 2024 09:43:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rTNPg-0003nD-5b
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:36 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rTNQQ-0005Og-Es
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:43:22 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rTNPe-0001Sb-Dg
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:42:35 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-55817a12ad8so341684a12.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:42:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rTNQM-0001kl-EV
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:43:21 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-40eacb6067dso9506745e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:43:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706280152; x=1706884952; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YRomrCy8IeTekhDJYOH7WoAUevPbXUg88RTgcJFKTB0=;
- b=nGyEa9rat7slr0PqpIaTxu2aSdLe2/7gdhpdqTCFz4UEBU3nK96In4bky7ID9gi4T5
- zQMigDNmbtrrKI7XM8Sr/4DbzwOmYWZXZalwXh51cqM+5wRkn96UikIEcKgrwLq7OS7q
- 38aanHYry38udct9SmriWhxlkxUabIf8fOhI97ckp5nAU/eeRi2EQt5SOMi7M2KUtRp9
- MgYfrxy083C00lV0ItRbZOfJOxFLVJJMvgH5qaZh79vglledSuw6BlklW50Sq0aaaS+D
- 2bUIm97U3wiskRAT357SBRJWK2UqKYpjWnuTrIT1XGpN643hAluvx7JjTfVuYmN7/M9W
- W62g==
+ d=linaro.org; s=google; t=1706280196; x=1706884996; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EhLQSD7+BW8XOT2H7obLO80KK16iLrWUr/ASvWBkRuk=;
+ b=BMZGQSvzoOeTntngJ/IEvyrBpzW0wApmUBmM12jDwRt3BGnFKaI06PDYlOd5vD1yuO
+ OJBN7PAJTozEyAiPyXM/YVkLbpcnZD5Bs6SZ2nsD1olS6yHCqt2W0V3fKYzL6j3K7w6b
+ w4Qceuc56ThSGxmXWtxHE/h+LldImVlgCHEpkOjXX0QVHbbzyOUOJ9BnnSSdBBF0aNko
+ rtg8LuapCA+O2M3ue1JCAy4+JW0f5iYQtV3+F20dhzMBFf04JxgKOUxFveChxBo5gmZm
+ /gkPONYYvL5h4FbJzV1JQf+WIsHo2jx0gkmuAMsL0sBF2PCNytzkwHtLPWWXB3aTft8p
+ Jh1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706280152; x=1706884952;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YRomrCy8IeTekhDJYOH7WoAUevPbXUg88RTgcJFKTB0=;
- b=r9MC0bIYrAfAKDeFYqGZ9pDCjqp//FmYdmBOteDn9CY+hg6JAUftTOVaIQwM4UYuTm
- nEKhqU1iN3o5VkFoxOoILQ9WPZ1pWhR5Spw1qPhGnLcL7IG3TZSsh04ZrW+35L5Ml1XA
- 1wrx8tOyRoQt4xXu2Inx5EgqtCFgrJqua293boy8A+aUBNHjlsGijoaFxyqninojQ8eB
- AfdzmUHYH2mvO3PtgjbzfxrmnTGqpFWIPMS2AwIOueOJ785Umm2ZCkk2HeoMtQ3RDzYT
- YIlmnY5Fg2TNmTuuW1LyA9TdHUCcH2sGq4kFuL8LLaEdqsGGshKYsILFlT6l5ssYI2C+
- YX8g==
-X-Gm-Message-State: AOJu0YwbVE7QjF8rU+rWciMI9zHAGBfQg+yarjW/yU3Wz1Uf/8R3FM5p
- SErxgmBwz67gfVHefXseKFGQ4NpmW+evtSbu+cacRqSQiEJzINgFNMxOhMlu1rchNK1kjAFQfS8
- ALIA=
-X-Google-Smtp-Source: AGHT+IHNIWgmlYJeROz+iV92mYwBMd78GXiTOKu5EbTU6koJT/9Gh88Sg3EDtSfD9Ar2GzY/JenQ+w==
-X-Received: by 2002:a17:906:7fd5:b0:a30:a9bc:5a15 with SMTP id
- r21-20020a1709067fd500b00a30a9bc5a15mr907517ejs.20.1706280152018; 
- Fri, 26 Jan 2024 06:42:32 -0800 (PST)
-Received: from localhost.localdomain (adsl-114.109.242.225.tellas.gr.
- [109.242.225.114]) by smtp.gmail.com with ESMTPSA id
- ox27-20020a170907101b00b00a3221b95ce8sm699168ejb.77.2024.01.26.06.42.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:42:31 -0800 (PST)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>
-Subject: [PATCH v1 3/3] virtio-gpu-rutabaga.c: override resource_destroy method
-Date: Fri, 26 Jan 2024 16:41:50 +0200
-Message-Id: <5dc2d365fa4f88c7b5761f1032e1ea505d6b7e86.1706279540.git.manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
-References: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
+ d=1e100.net; s=20230601; t=1706280196; x=1706884996;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EhLQSD7+BW8XOT2H7obLO80KK16iLrWUr/ASvWBkRuk=;
+ b=j8dk9sNPLpITX8tS6mdKuOJHw7Meu6SxTuhbgLhNLmljCgnxh5fpjr8Ey/0r87bnXy
+ 5Lh0fXtTE8Bgmxm3SGtooIa1OmR1+8eZ7eg+Cuh8AiBicJXXSv4RnAbBSpLV2Trp8PLg
+ HUua1OXlddZ6pWtJb3YpUL4tgdU/l2uckp9ZxJeoAZDqnlY40mFuNtiqA0jrGWzaGV6E
+ Y6M+utBlis3LYOU3T/84squzRJRShqrysUfgv2NOuUOzoyDRLkLgj/ZppFUMymm0DQlz
+ GyjTykl6xWUYTfTIM/Ku3KkfFVt3c0UEbiVgMxzwqi1hoLTazXW9PjcGlXAb4nt1Bt9m
+ y2hw==
+X-Gm-Message-State: AOJu0YxTrnCbrx9c4dkHbdEI2CBGujh4YgQzMz/qx8A7tx3X871kXslX
+ c4C9S1wmTrvF39Qgbt4g8eubyaPGbNwIHbyfTgFkiuaBIxg+pEysxIktyHdToESRhx2U8DTdRuY
+ U5O6u18mV5LuyJMF+AVpUFR3Du+bo1h+95LbvQQ==
+X-Google-Smtp-Source: AGHT+IGgFYkEGapICfD+7OZIAc7B1qLYTLJlzePH6Kestx1lg5b0pP5KESins2khUNkI4Y7yAyfKuXsSzxAbztCM8KU=
+X-Received: by 2002:a05:600c:1992:b0:40e:5577:189 with SMTP id
+ t18-20020a05600c199200b0040e55770189mr568615wmq.147.1706280196041; Fri, 26
+ Jan 2024 06:43:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
+References: <20240108204909.564514-1-dwmw2@infradead.org>
+ <20240108204909.564514-2-dwmw2@infradead.org>
+In-Reply-To: <20240108204909.564514-2-dwmw2@infradead.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 26 Jan 2024 14:43:05 +0000
+Message-ID: <CAFEAcA8JtnXezmo-h-rFZcbqsN_-CnOYCTUfLfd_q=F0702U9g@mail.gmail.com>
+Subject: Re: [PATCH v3 01/46] net: add qemu_{configure, create}_nic_device(),
+ qemu_find_nic_info()
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, 
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao <gaosong@loongson.cn>, 
+ Thomas Huth <huth@tuxfamily.org>, Laurent Vivier <laurent@vivier.eu>, 
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jason Wang <jasowang@redhat.com>, Jia Liu <proljc@gmail.com>, 
+ Stafford Horne <shorne@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Bin Meng <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, 
+ Paul Durrant <paul@xen.org>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-arm@nongnu.org, 
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org, 
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,85 +135,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the Rutabaga GPU device frees resources, it calls
-rutabaga_resource_unref for that resource_id. However, when the generic
-VirtIOGPU functions destroys resources, it only removes the
-virtio_gpu_simple_resource from the device's VirtIOGPU->reslist list.
-The rutabaga resource associated with that resource_id is then leaked.
+On Mon, 8 Jan 2024 at 20:49, David Woodhouse <dwmw2@infradead.org> wrote:
+>
+> From: David Woodhouse <dwmw@amazon.co.uk>
+>
+> Most code which directly accesses nd_table[] and nb_nics uses them for
+> one of two things. Either "I have created a NIC device and I'd like a
+> configuration for it", or "I will create a NIC device *if* there is a
+> configuration for it".  With some variants on the theme around whether
+> they actually *check* if the model specified in the configuration is
+> the right one.
+>
+> Provide functions which perform both of those, allowing platforms to
+> be a little more consistent and as a step towards making nd_table[]
+> and nb_nics private to the net code.
+>
+> Also export the qemu_find_nic_info() helper, as some platforms have
+> special cases they need to handle.
+>
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> Reviewed-by: Paul Durrant <paul@xen.org>
+> ---
+>  include/net/net.h |  7 ++++++-
+>  net/net.c         | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 57 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/net/net.h b/include/net/net.h
+> index ffbd2c8d56..25ea83fd12 100644
+> --- a/include/net/net.h
+> +++ b/include/net/net.h
+> @@ -207,7 +207,12 @@ int qemu_show_nic_models(const char *arg, const char *const *models);
+>  void qemu_check_nic_model(NICInfo *nd, const char *model);
+>  int qemu_find_nic_model(NICInfo *nd, const char * const *models,
+>                          const char *default_model);
+> -
+> +NICInfo *qemu_find_nic_info(const char *typename, bool match_default,
+> +                            const char *alias);
+> +bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
+> +                               const char *alias);
+> +DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
+> +                                    const char *alias);
 
-This commit overrides the resource_destroy class method introduced in
-the previous commit to fix this.
+Could we have doc comments that document the purpose and API
+for these new global functions, please?
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- hw/display/virtio-gpu-rutabaga.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
-
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 9e67f9bd51..66b5a115ac 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -147,6 +147,24 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
- }
- 
-+static int32_t
-+virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,
-+                                   struct virtio_gpu_simple_resource *res)
-+{
-+    int32_t result;
-+    VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
-+
-+    result = rutabaga_resource_unref(vr->rutabaga, res->resource_id);
-+
-+    if (res->image) {
-+        pixman_image_unref(res->image);
-+    }
-+
-+    QTAILQ_REMOVE(&g->reslist, res, next);
-+    g_free(res);
-+    return result;
-+}
-+
- static void
- rutabaga_cmd_resource_unref(VirtIOGPU *g,
-                             struct virtio_gpu_ctrl_command *cmd)
-@@ -155,8 +173,6 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,
-     struct virtio_gpu_simple_resource *res;
-     struct virtio_gpu_resource_unref unref;
- 
--    VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
--
-     VIRTIO_GPU_FILL_CMD(unref);
- 
-     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
-@@ -164,15 +180,8 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,
-     res = virtio_gpu_find_resource(g, unref.resource_id);
-     CHECK(res, cmd);
- 
--    result = rutabaga_resource_unref(vr->rutabaga, unref.resource_id);
-+    result = virtio_gpu_rutabaga_resource_unref(g, res);
-     CHECK(!result, cmd);
--
--    if (res->image) {
--        pixman_image_unref(res->image);
--    }
--
--    QTAILQ_REMOVE(&g->reslist, res, next);
--    g_free(res);
- }
- 
- static void
-@@ -1099,7 +1108,7 @@ static void virtio_gpu_rutabaga_class_init(ObjectClass *klass, void *data)
-     vgc->handle_ctrl = virtio_gpu_rutabaga_handle_ctrl;
-     vgc->process_cmd = virtio_gpu_rutabaga_process_cmd;
-     vgc->update_cursor_data = virtio_gpu_rutabaga_update_cursor;
--
-+    vgc->resource_destroy = virtio_gpu_rutabaga_resource_unref;
-     vdc->realize = virtio_gpu_rutabaga_realize;
-     device_class_set_props(dc, virtio_gpu_rutabaga_properties);
- }
--- 
-γαῖα πυρί μιχθήτω
-
+thanks
+-- PMM
 
