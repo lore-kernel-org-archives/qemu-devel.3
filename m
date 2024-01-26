@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30C9C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1909C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNi9-0007zY-29; Fri, 26 Jan 2024 10:01:41 -0500
+	id 1rTNkU-00016Z-5U; Fri, 26 Jan 2024 10:04:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNi7-0007yV-1o
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:01:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNkR-00015a-TV
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:04:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNi5-0007t2-Ip
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:01:38 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rTNkP-0008De-PY
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:04:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706281297;
+ s=mimecast20190719; t=1706281440;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EbNcwVBZv62t2eZQbR8WW8dRh6LxCWHbZzQZlODZakg=;
- b=iWo8VfxkZGcLUyz6+rtWJ5ZOsXRA43ZEMzFOl93hnIbAFlbPORe09/sEH4xuXH2yln1GKs
- wkoGhXFu+byoC2PQTXTMRvCDa0HBOx4KNor0l7wxS0pwthoiwRmBUiaBZOUkDZKwfijutm
- 3yuFKlPreJdenVh5IDxBtm3olIolo84=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KQqM4d2OnomnUxb6KTJuQsFHZEeo84Y4P4Rfq+HD90I=;
+ b=Wzi7dz+GRDwl8Wvut82aD0jgj0svCj7kZ+WZIRnzIGF7BI2iWkK63A+KuO4C0QjTpGbmeR
+ 4Io97XPry1fYgFhvYMsJ8vlGdRzH744B4YgkeFs8gW75ngJ1AhoB4fE1wl/BSzMDyYs5aD
+ rvw+a3fcF7ZlP7I36ufchr042zE0ZkI=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-mdBN8VwZNnG8661JsMlGzg-1; Fri, 26 Jan 2024 10:01:30 -0500
-X-MC-Unique: mdBN8VwZNnG8661JsMlGzg-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-68058b0112cso12486686d6.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 07:01:30 -0800 (PST)
+ us-mta-437--VFU2d5vPPiqCWHuT1GkSw-1; Fri, 26 Jan 2024 10:03:58 -0500
+X-MC-Unique: -VFU2d5vPPiqCWHuT1GkSw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-680139b1990so13177026d6.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 07:03:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706281289; x=1706886089;
+ d=1e100.net; s=20230601; t=1706281437; x=1706886237;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EbNcwVBZv62t2eZQbR8WW8dRh6LxCWHbZzQZlODZakg=;
- b=CZnOJyTCtE3qI92waCRnD36q+vGPoZkef+j1Ptk9Y5Ie65JxChzpek7woY/l6eE/+U
- BkIESr8iNJOlzCvZ51gWU+6iyJlNTR0TArJ3SZG5kZrmei7BkjDoFbZJbvUT3rE59tT9
- ZlqvoxprT545+2/vIFJu822OyZhAdU9uywhl1XAjUjFr/3I1my0LQ9kl6S/vSG1gJo9P
- Soo3BmKCYv62M9qIPgGROEiange3ByMUxM0W4OxhO7/dNedHr+ewjo+A6p3zIFoMKyeq
- 3IQ71wz9pSYnYqRsZW8jGyawvxJdySNC30+P7M6mWzdnWlN/cwgRIcUHmzMvkd3lEa1a
- AatA==
-X-Gm-Message-State: AOJu0Yw/OQotPd9pqA0zUyKyg0x2VQCDxtoWNE89ugv8frXgaS6rrrtX
- oSJV1Z5T4IYeaipZgs9tPtJxnTzdgMAY4/S9vxBLKYoMpEMTczaqTwFCkEc5oGD5L9+gHkxvM4+
- j8F3P5TpPRBzE5o7jMegbBbOgZdENkcylpnLn7eotr86FIRAEM+cw
-X-Received: by 2002:a05:6214:27cf:b0:681:7963:11ca with SMTP id
- ge15-20020a05621427cf00b00681796311camr1259246qvb.126.1706281289486; 
- Fri, 26 Jan 2024 07:01:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG0TSMt5SE6umiBnggBV8q9V2CroUkiPAVESFjnEb2hogjXelQ48Knhr7xIlXxGywknkkILkw==
-X-Received: by 2002:a05:6214:27cf:b0:681:7963:11ca with SMTP id
- ge15-20020a05621427cf00b00681796311camr1259231qvb.126.1706281288904; 
- Fri, 26 Jan 2024 07:01:28 -0800 (PST)
+ bh=KQqM4d2OnomnUxb6KTJuQsFHZEeo84Y4P4Rfq+HD90I=;
+ b=XuVHH0W/nv7uMS5xx4cELREsy/HwPkhTy4sfihiaL6PbHMh7mjQBf0Ydu10EEr/Wnv
+ nfX/lwQknI7ytG2QUdC6vWZe3AfRySPbCsqgsD76GUIRUS+AHPUpOz6Ivn0k3dZAQncL
+ gHz36ZNWDKPNn23iNFbiYhRkjqcOi0BYeZ7eGqrgth8THz/z3tRXrJhgkVOt4Uy1zRFz
+ lKhwF1qdeej1RKygVBvEljfuxAb9Cp1jTiYe3cMvjralZwyZ18+y2BbXSSqRXizpNYwR
+ tFWgd+DAYp0cz63BWG+j76XL9O5N60gBtwr8XrRwSWN9N5M69us62D0LGyH7btQyFRNh
+ sl9Q==
+X-Gm-Message-State: AOJu0YwdYDNyWnYzOa0mhN08Kvme7eIbRdhANOQvZIRjE4Vz7Wwf+MJS
+ sjy3GSR6I+GaYQCzfit3Dk8IQOg/QRumy7JSn2wiWEpPT0EXp6wVaIRrQD8v3CE0GGcdXr9Is9Z
+ 6LXLlXISsjKppfo4kosfwegGvW3iKMpJLRnoEfyTKAoSJXZIaB8ey
+X-Received: by 2002:ad4:5ca8:0:b0:686:ae74:ae2f with SMTP id
+ q8-20020ad45ca8000000b00686ae74ae2fmr1650320qvh.92.1706281437560; 
+ Fri, 26 Jan 2024 07:03:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlDnoaSkmDdqflr//ologr4NxBixnunpbBUG7PQIfQkbQZPakwu5o7KULp4EAfPHmp/262vg==
+X-Received: by 2002:ad4:5ca8:0:b0:686:ae74:ae2f with SMTP id
+ q8-20020ad45ca8000000b00686ae74ae2fmr1650309qvh.92.1706281437313; 
+ Fri, 26 Jan 2024 07:03:57 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
  [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- nc7-20020a0562142dc700b00686ad7daabesm566907qvb.28.2024.01.26.07.01.26
+ ol9-20020a0562143d0900b006817d42eac6sm576258qvb.53.2024.01.26.07.03.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 07:01:27 -0800 (PST)
-Message-ID: <acbab626-204c-4f79-a59f-543d07c90cfc@redhat.com>
-Date: Fri, 26 Jan 2024 16:01:23 +0100
+ Fri, 26 Jan 2024 07:03:56 -0800 (PST)
+Message-ID: <fd570ec7-68c0-4f7e-a17e-ac5825c805ff@redhat.com>
+Date: Fri, 26 Jan 2024 16:03:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 23/46] hw/arm/exynos4: use qemu_create_nic_device()
+Subject: Re: [PATCH v3 24/46] hw/arm/fsl: use qemu_configure_nic_device()
 Content-Language: en-US
 To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Beniamino Galvani <b.galvani@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, qemu-arm@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jason Wang <jasowang@redhat.com>, David Woodhouse <dwmw@amazon.co.uk>
 References: <20240108204909.564514-1-dwmw2@infradead.org>
- <20240108204909.564514-24-dwmw2@infradead.org>
+ <20240108204909.564514-25-dwmw2@infradead.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,18 +125,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240108204909.564514-24-dwmw2@infradead.org>
+In-Reply-To: <20240108204909.564514-25-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,26 +158,64 @@ On 08/01/2024 21.26, David Woodhouse wrote:
 > 
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/arm/exynos4_boards.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+>   hw/arm/fsl-imx25.c  | 2 +-
+>   hw/arm/fsl-imx6.c   | 2 +-
+>   hw/arm/fsl-imx6ul.c | 2 +-
+>   hw/arm/fsl-imx7.c   | 2 +-
+>   4 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/arm/exynos4_boards.c b/hw/arm/exynos4_boards.c
-> index b0e13eb4f0..003992189b 100644
-> --- a/hw/arm/exynos4_boards.c
-> +++ b/hw/arm/exynos4_boards.c
-> @@ -76,10 +76,8 @@ static void lan9215_init(uint32_t base, qemu_irq irq)
->       SysBusDevice *s;
+> diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
+> index 9d2fb75a68..a24fa7b443 100644
+> --- a/hw/arm/fsl-imx25.c
+> +++ b/hw/arm/fsl-imx25.c
+> @@ -170,7 +170,7 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
 >   
->       /* This should be a 9215 but the 9118 is close enough */
-> -    if (nd_table[0].used) {
-> -        qemu_check_nic_model(&nd_table[0], "lan9118");
-> -        dev = qdev_new(TYPE_LAN9118);
-> -        qdev_set_nic_properties(dev, &nd_table[0]);
-> +    dev = qemu_create_nic_device(TYPE_LAN9118, true, NULL);
-> +    if (dev) {
->           qdev_prop_set_uint32(dev, "mode_16bit", 1);
->           s = SYS_BUS_DEVICE(dev);
->           sysbus_realize_and_unref(s, &error_fatal);
+>       object_property_set_uint(OBJECT(&s->fec), "phy-num", s->phy_num,
+>                                &error_abort);
+> -    qdev_set_nic_properties(DEVICE(&s->fec), &nd_table[0]);
+> +    qemu_configure_nic_device(DEVICE(&s->fec), true, NULL);
+>   
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->fec), errp)) {
+>           return;
+> diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+> index b2153022c0..02f3024090 100644
+> --- a/hw/arm/fsl-imx6.c
+> +++ b/hw/arm/fsl-imx6.c
+> @@ -380,7 +380,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+>   
+>       object_property_set_uint(OBJECT(&s->eth), "phy-num", s->phy_num,
+>                                &error_abort);
+> -    qdev_set_nic_properties(DEVICE(&s->eth), &nd_table[0]);
+> +    qemu_configure_nic_device(DEVICE(&s->eth), true, NULL);
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->eth), errp)) {
+>           return;
+>       }
+> diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
+> index e37b69a5e1..ca3dd439ec 100644
+> --- a/hw/arm/fsl-imx6ul.c
+> +++ b/hw/arm/fsl-imx6ul.c
+> @@ -442,7 +442,7 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
+>                                    s->phy_num[i], &error_abort);
+>           object_property_set_uint(OBJECT(&s->eth[i]), "tx-ring-num",
+>                                    FSL_IMX6UL_ETH_NUM_TX_RINGS, &error_abort);
+> -        qdev_set_nic_properties(DEVICE(&s->eth[i]), &nd_table[i]);
+> +        qemu_configure_nic_device(DEVICE(&s->eth[i]), true, NULL);
+>           sysbus_realize(SYS_BUS_DEVICE(&s->eth[i]), &error_abort);
+>   
+>           sysbus_mmio_map(SYS_BUS_DEVICE(&s->eth[i]), 0,
+> diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
+> index 474cfdc87c..1acbe065db 100644
+> --- a/hw/arm/fsl-imx7.c
+> +++ b/hw/arm/fsl-imx7.c
+> @@ -446,7 +446,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+>                                    s->phy_num[i], &error_abort);
+>           object_property_set_uint(OBJECT(&s->eth[i]), "tx-ring-num",
+>                                    FSL_IMX7_ETH_NUM_TX_RINGS, &error_abort);
+> -        qdev_set_nic_properties(DEVICE(&s->eth[i]), &nd_table[i]);
+> +        qemu_configure_nic_device(DEVICE(&s->eth[i]), true, NULL);
+>           sysbus_realize(SYS_BUS_DEVICE(&s->eth[i]), &error_abort);
+>   
+>           sysbus_mmio_map(SYS_BUS_DEVICE(&s->eth[i]), 0, FSL_IMX7_ENETn_ADDR[i]);
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
