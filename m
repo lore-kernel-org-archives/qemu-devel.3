@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A00C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 08:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE23C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 08:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTHOi-0004yW-41; Fri, 26 Jan 2024 03:17:12 -0500
+	id 1rTHPp-00063A-RC; Fri, 26 Jan 2024 03:18:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rTHOf-0004rs-NX
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 03:17:10 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rTHPi-00062C-C5; Fri, 26 Jan 2024 03:18:14 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rTHOd-0002Ig-0D
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 03:17:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706257027; x=1737793027;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=8V3NMygngn2hS6xZCvOV5AkRiszSP+ebpxnEuRx4sK8=;
- b=Brktsd4U7WS4UjwS7YyyBZ2xbRUT4SsdjzqD3quBT9tLO0vEUDlDBT7c
- 5gGEd706aOEpKOG2q5A+jrx7MkXHQnhTwkcO+3Jr5Pd4Kzz8WWrTTZyLX
- 7+htpIvbmxEY89dHkplmHv1/KHAFcv2Kkmq9/+iH8l4t39LyD2HpZ+ii3
- d6YiE91cjd3ZV9l7cYdJ5Gm+UQeQcT7VPNC3YK9J+qV7rJ0XyIMIE2SBm
- WrIS3WyGeeMNzHEgmQZJsTuDQt6oXCcJUpNRktE51OTwRRgC1e/armzNq
- Rbam0VU/F7rFc50JgcbBxjga4lYWJlopHBepiy7RYgJrNnV66BHmIg9FZ Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="9098190"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="9098190"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jan 2024 00:17:03 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="960143920"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="960143920"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.93.33.17])
- ([10.93.33.17])
- by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jan 2024 00:17:01 -0800
-Message-ID: <846644e9-27c5-4d7a-b2ec-7d94ba2dcc19@intel.com>
-Date: Fri, 26 Jan 2024 16:16:57 +0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rTHPf-0002bi-Cn; Fri, 26 Jan 2024 03:18:13 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6352647710;
+ Fri, 26 Jan 2024 11:18:55 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 17E256BD9B;
+ Fri, 26 Jan 2024 11:18:09 +0300 (MSK)
+Message-ID: <287c0f15-e191-4e38-a76f-fcdbecf8df05@tls.msk.ru>
+Date: Fri, 26 Jan 2024 11:18:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Why invtsc (CPUID_APM_INVTSC) is unmigratable?
+Subject: Re: [PATCH v2] mailmap: Fix Stefan Weil email
 Content-Language: en-US
-To: Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Lei Wang <lei4.wang@intel.com>
-References: <825f29d7-9112-45a2-b4a3-7d3b54c3c0a2@intel.com>
- <Zaqf839r8TXvkIAf@tpad> <b6950a34-0ef6-4945-9e50-5a47e86490e1@intel.com>
- <Za/doRj6sEibC64y@tpad> <e34d49cc-b743-4df1-9a31-96c987dc2ad3@intel.com>
- <ZbGJnbo1CJyAk61y@tpad>
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <ZbGJnbo1CJyAk61y@tpad>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Stefan Weil <sw@weilnetz.de>, qemu-trivial@nongnu.org
+References: <20240123082104.36208-1-philmd@linaro.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240123082104.36208-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,92 +85,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/25/2024 6:05 AM, Marcelo Tosatti wrote:
-> On Wed, Jan 24, 2024 at 10:52:46PM +0800, Xiaoyao Li wrote:
->> On 1/23/2024 11:39 PM, Marcelo Tosatti wrote:
->>> On Sat, Jan 20, 2024 at 05:44:07PM +0800, Xiaoyao Li wrote:
->>>> On 1/20/2024 12:14 AM, Marcelo Tosatti wrote:
->>>>> On Fri, Jan 19, 2024 at 02:46:22PM +0800, Xiaoyao Li wrote:
->>>>>> I'm wondering why CPUID_APM_INVTSC is set as unmigratable_flags. Could
->>>>>> anyone explain it?
->>>>>
->>>>>
->>>>> commit 68bfd0ad4a1dcc4c328d5db85dc746b49c1ec07e
->>>>> Author: Marcelo Tosatti <mtosatti@redhat.com>
->>>>> Date:   Wed May 14 16:30:09 2014 -0300
->>>>>
->>>>>        target-i386: block migration and savevm if invariant tsc is exposed
->>>>>        Invariant TSC documentation mentions that "invariant TSC will run at a
->>>>>        constant rate in all ACPI P-, C-. and T-states".
->>>>>        This is not the case if migration to a host with different TSC frequency
->>>>>        is allowed, or if savevm is performed. So block migration/savevm.
->>>>>
->>>>> So the rationale here was that without ensuring the destination host
->>>>> has the same TSC clock frequency, we can't migrate.
->>>>
->>>> It seems to me the concept of invtsc was extended to "tsc freq will not
->>>> change even after the machine is live migrated". I'm not sure it is correct
->>>> to extend the concept of invtsc.
->>>>
->>>> The main reason of introducing invtsc is to tell the tsc hardware keeps
->>>> counting (at the same rate) even at deep C state, so long as other states.
->>>>
->>>> For example, a guest is created on machine A with X GHz tsc, and invtsc
->>>> exposed (machine A can ensure the guest's tsc counts at X GHz at any state).
->>>> If the guest is migrated to machine B with Y GHz tsc, and machine B can also
->>>> ensure the invtsc of its guest, i.e., the guest's tsc counts at Y GHz at any
->>>> state. IMHO, in this case, the invtsc is supported at both src and dest,
->>>> which means it is a migratable feature. However, the migration itself fails,
->>>> due to mismatched/different configuration of tsc freq, not due to invtsc.
->>>>
->>>>> However, this was later extended to allow invtsc migratioon when setting
->>>>> tsc-khz explicitly:
->>>>>
->>>>> commit d99569d9d8562c480e0befab601756b0b7b5d0e0
->>>>> Author: Eduardo Habkost <ehabkost@redhat.com>
->>>>> Date:   Sun Jan 8 15:32:34 2017 -0200
->>>>>
->>>>>        kvm: Allow invtsc migration if tsc-khz is set explicitly
->>>>>        We can safely allow a VM to be migrated with invtsc enabled if
->>>>>        tsc-khz is set explicitly, because:
->>>>>        * QEMU already refuses to start if it can't set the TSC frequency
->>>>>          to the configured value.
->>>>>        * Management software is already required to keep device
->>>>>          configuration (including CPU configuration) the same on
->>>>>          migration source and destination.
->>>>>        Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
->>>>>        Message-Id: <20170108173234.25721-3-ehabkost@redhat.com>
->>>>>        Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
->>>>
->>>> But in the case that user doesn't set tsc freq explicitly, the live
->>>> migration is likely to fail or have issues even without invtsc exposed to
->>>> guest,
->>>
->>> Depends on how the guest is using the TSC, but yes.
->>>
->>>> if the destination host has a different tsc frequency than src host.
->>>>
->>>> So why bother checking invtsc only?
->>>
->>> Well, if invtsc is exposed to the guest, then it might use the TSC for
->>> timekeeping purposes.
->>>
->>> Therefore you don't want to fail (on the invtsc clock characteristics)
->>> otherwise timekeeping in the guest might be problematic.
->>>
->>> But this are all just heuristics.
->>>
->>> Do you have a suggestion for different behaviour?
->>
->> I think we need to block live migration when user doesn't specify a certain
->> tsc frequency explicitly, regardless of invtsc.
+23.01.2024 11:21, Philippe Mathieu-Daudé:
+> Commit 5204b499a6 ("mailmap: Fix Stefan Weil author email")
+> corrected authorship for patch received at qemu-devel@nongnu.org,
+> correct now for patch received at qemu-trivial@nongnu.org.
 > 
-> Problem is if that guest is using kvmclock for timekeeping, then live migration
-> is safe (kvmclock logic will update the tsc frequency of the destination
-> host upon migration).
-> 
+> Update other authorship email for Stefan's commits.
 
-It surprises me kvmclock can do it. Cloud you please elaborate it a bit 
-how kvmclock achieve it during migration or point me to some codes in 
-Linux?
+Applied to trivial-patches, thanks!
+
+mailmap becomes a spelling fixer/filter, sort of :)
+
+/mjt
 
