@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D422C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D6CC47DDF
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNHJ-0002MC-4z; Fri, 26 Jan 2024 09:33:57 -0500
+	id 1rTNHC-0002Es-Fg; Fri, 26 Jan 2024 09:33:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHG-0002Jd-V9
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:54 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1rTNHA-0002E2-PQ
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:48 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHE-0007wX-Aa
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:54 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-337cf4eabc9so530805f8f.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:51 -0800 (PST)
+ id 1rTNH8-0007rm-Fo
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:48 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3394b892691so284537f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706279631; x=1706884431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706279625; x=1706884425; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=REDIbkefaHLl5VHtlOjlhfc4RzzdVkDK80vRRwWKuZc=;
- b=IfNhhx5q8HfdM8X7V5D1BVrn5s4fHkr9+i9Q2XPZdBNq7IZIq2FAcywdQ5cJvKsy/q
- pxJsrFPGBMvuItpbSJkU+Bo8d8HKbxxwEZJoD5W1FiBS82qFxgGUcaT+LC8iwMH1R2tO
- ubr4zaSyLTl3dLwuzQpmARf97s5+Lrp0Jh2uRrhtk1bDJm0QJYp0LkV0ogvIR7zRSp/j
- PBnsO6XfYAx8iYWtkmIsbJOxItvZ2kOzieCPSm4vBFy0z/HlXvxRa5ZDN92L5VBOfJe6
- kAu1O9fNSt6U35JDmkC6j9S6U7okmOeFPJeZUf9IM5wYaoXK117lBi8jUw40lYTVnbdu
- dH6w==
+ :reply-to; bh=Vu5+mTBX8rW6qLHNzt1OhoCL6zzW3Ic3LDbMk8svH4c=;
+ b=xLV76L0ZlCnlIIn2vYMAbdPAU2eF3kQEIxSVQtrT4MImawa8urMkhxLDQiZZ0X2J5J
+ F62xto0ZJBEKeKIrjVz/FjwrgjQozSc2J6Fn2cQbcGR3pG4B5xu11GVFLVORrt2vANo9
+ mxu2IoMXs3QPRt02DxlYMaJkXJ/q7nnojjNSWK1xoQ7LVNYkpWs1gXVL/SjALhK9rKnR
+ qyHGqpMZ6hfLQdvS3FDgJGI84CI1M7A68h5QhEUYPh/LdGWzRqY8pzM9nnqI4q/Y4hqE
+ j8pIl6JTahfhewSfj2xcRc16kYRMSp/eDyTwhKzFYmOFfqE+2XYQRr2VuKWompzfZ3st
+ nzbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706279631; x=1706884431;
+ d=1e100.net; s=20230601; t=1706279625; x=1706884425;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=REDIbkefaHLl5VHtlOjlhfc4RzzdVkDK80vRRwWKuZc=;
- b=ioWmd7g9KC903VjVxL3mEo6QK18hQQ77XKKlQSF82F99SCihMfRd6XlTo9ZHd75nkW
- Mx3V1rS+RkntUQJqfG6om3nykaFp527nvGlVjDlNbuXxfrxGYdKHhs+OErXMRRykuZxp
- BVvhVQN+L65wlY0wYKKTP4RL5eh6hH0W+Z1M+EzfadopP1qig9437NekJuSw2/MaykdX
- GYtCXI6fKWFeC1IEB4mK3g46DWzU+oaz78zMiRvE1cJ7wZ/r1DvIbCzhrB/KenMST7iq
- STr1t0cz5456jJl2wWmIi2Y6+GFe7lY2w60Qpa9pbT5lzBe/6p82NymqgUQEC6UZGyye
- UG2g==
-X-Gm-Message-State: AOJu0YyxGUaLuTpeiZfhWAPhqYeEVZYzFNKuEU5en3de5gX/zsoWi1Za
- zgA5D8h+vxy9Im0IgRGe+U0V4eZrPEe6GarpSSPHNOZy3tNqB4M0rpCg1XgAFwuFq2HrNb+g/Qu
- s
-X-Google-Smtp-Source: AGHT+IEvOQJ/vsG+Xzc79qS1kUH+Htbk/BG6NHSjSTEIr9T+0yCJnlJvTaif+wGC/2vziqW8FicwUA==
-X-Received: by 2002:adf:ee46:0:b0:336:68dd:c7e2 with SMTP id
- w6-20020adfee46000000b0033668ddc7e2mr992707wro.27.1706279631022; 
- Fri, 26 Jan 2024 06:33:51 -0800 (PST)
+ bh=Vu5+mTBX8rW6qLHNzt1OhoCL6zzW3Ic3LDbMk8svH4c=;
+ b=ianeDiFhm19f06b9GlP0CEItMEpGLCS/PHSyQlG8AdnKjZ0X+s5SNMj6ux9kOCQzCB
+ mH19R0LlOd/bt5mpT49ppdCVzStqUQ1wcYTYGWi0yx1u3oFnE5PzYE7D5sdfonfMghmt
+ A0Q86DsNQK34ctFNX/GGa+eB62mgdzgC+3ok6vXuIAJ4YP71l/EMck1aDCNpTJuJdMSO
+ LiYeLROSF8Zl9XHMrcaIGW0RsQ0bqWD6BFAaM7X03VBnjG4E1xpiKk5mJnZFlDuoa6zQ
+ 4OTLbNXopEOOv/Ui2mkK8r8MPs5M2mlE37/HUm8Dl3hzWouuBGSn2sPlOxCadQLRXQ4y
+ zlvw==
+X-Gm-Message-State: AOJu0YywbZJDg9h5dHhJXb7TqSgb7V8TdFGjsmtXI74AOxy/MRKlilnU
+ jKf/vFFikQu3SME+cJPMV5+E0y4GcFCv4ADhoHl6QLVHLqhIVygTyangx6tT6/gOvBT504TltAS
+ F
+X-Google-Smtp-Source: AGHT+IGSpBAopCijh62thggyhIvqVDqZbQVke8A9WRn+bhR7trijqZ1bHS7S8gHtUgnlfG/v83w62Q==
+X-Received: by 2002:a5d:5748:0:b0:337:b74b:6f1f with SMTP id
+ q8-20020a5d5748000000b00337b74b6f1fmr582892wrw.22.1706279625123; 
+ Fri, 26 Jan 2024 06:33:45 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.50
+ n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:33:50 -0800 (PST)
+ Fri, 26 Jan 2024 06:33:44 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/36] target/arm: Declare ARM_CPU_TYPE_NAME/SUFFIX in
- 'cpu-qom.h'
-Date: Fri, 26 Jan 2024 14:33:25 +0000
-Message-Id: <20240126143341.2101237-21-peter.maydell@linaro.org>
+Subject: [PULL 06/36] hw/arm/nseries: Unconditionally map the TUSB6010 USB
+ Host controller
+Date: Fri, 26 Jan 2024 14:33:11 +0000
+Message-Id: <20240126143341.2101237-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
 References: <20240126143341.2101237-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,44 +97,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Missed in commit 2d56be5a29 ("target: Declare
-FOO_CPU_TYPE_NAME/SUFFIX in 'cpu-qom.h'"). See
-it for more details.
+The TUSB6010 USB controller is soldered on the N800 and N810
+tablets, thus is always present.
+
+This is a migration compatibility break for the n800/n810
+machines started with the '-usb none' option.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240118200643.29037-12-philmd@linaro.org
+Message-id: 20240119215106.45776-3-philmd@linaro.org
+[PMM: fixed commit message typo]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-qom.h | 3 +++
- target/arm/cpu.h     | 2 --
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ hw/arm/nseries.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
-index 02b914c8767..f795994135f 100644
---- a/target/arm/cpu-qom.h
-+++ b/target/arm/cpu-qom.h
-@@ -33,4 +33,7 @@ typedef struct AArch64CPUClass AArch64CPUClass;
- DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
-                        TYPE_AARCH64_CPU)
+diff --git a/hw/arm/nseries.c b/hw/arm/nseries.c
+index 35aff46b4b4..35deb74f655 100644
+--- a/hw/arm/nseries.c
++++ b/hw/arm/nseries.c
+@@ -1353,9 +1353,7 @@ static void n8x0_init(MachineState *machine,
+     n8x0_spi_setup(s);
+     n8x0_dss_setup(s);
+     n8x0_cbus_setup(s);
+-    if (machine_usb(machine)) {
+-        n8x0_usb_setup(s);
+-    }
++    n8x0_usb_setup(s);
  
-+#define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
-+#define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
-+
- #endif
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index cecac4c0a12..41659d0ef15 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2837,8 +2837,6 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
- #define ARM_CPUID_TI915T      0x54029152
- #define ARM_CPUID_TI925T      0x54029252
- 
--#define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
--#define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
- #define CPU_RESOLVING_TYPE TYPE_ARM_CPU
- 
- #define TYPE_ARM_HOST_CPU "host-" TYPE_ARM_CPU
+     if (machine->kernel_filename) {
+         /* Or at the linux loader.  */
 -- 
 2.34.1
 
