@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6BFC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3061BC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNHJ-0002NE-Pr; Fri, 26 Jan 2024 09:33:57 -0500
+	id 1rTNHH-0002Kq-Tr; Fri, 26 Jan 2024 09:33:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHH-0002K6-9L
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1rTNHB-0002EK-Ic
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:49 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHE-0007wO-1n
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-33ade380b9fso569673f8f.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:51 -0800 (PST)
+ id 1rTNH9-0007s9-EQ
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:49 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-33adec41b55so143127f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706279630; x=1706884430; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706279626; x=1706884426; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gl5mdL8o4tkULNtVB7E10+lX7Lfh3f3aHXrBpGvFwCw=;
- b=l2qwh0WBfH1JVfdtAgS3H8IvDTYxbqBXhwxQTZhL1EGY3JHnYq0CzGNH3O/xq6lV8h
- L5UDeQc9psbER8/uK2yxms8xzU50oqOa1utlvOuiBxZ9SU1aw/mflvTO5WfdBSN58LXr
- NyhiQ2vJ16e7uc+vvQCHWSU8BzZIz76nCHKubreRpopNoqC12YNvbzNhg028Qe2N5RWs
- IRETHdHAJthE8yUTlYF+FpXz9ClC9kLXBpcbjokpzF/EuIvf2J/FpyoXj8OJH5tPozhp
- kNmDpOjVQyVB5r2c/+bdbzpUfM1Hi5VOcptOAhsSttOsZD7xdgEy/XzE7eKY2c+02Iqs
- fUAg==
+ :reply-to; bh=HEc7i4Xgpnf10j5Y5ryc8bAt0O15wFZx7gUBthUTBOc=;
+ b=LXA1JhHa3XiDCcf2Ag33XakAXiFH3/5L77zXh9XF6B9y2TnfvLKruwOo7PbAxy4+cS
+ DOSS7/WvIG8AVnHPZkkeDlOQd7o4+AclbjTvEmz+cR1SJ01V0LtOJK1o8b/1yiS3uS86
+ G4ncAFKWxj/InLsZf6JwCl3HGXLgtmcxK351Xp+6ERknTOfDxQE7U5Lx/BpyuRw5BWRV
+ j3Gi637W0KL/aOKLkEZapokxHaru5TXRjuL5Tom35S3H3eUXUvG3QNnQBZjoWfDDYRJf
+ 6JbtvATgGVUbOt8PCw6T9EAEwtB4bd40GzBWcq7X66k2DZKHdp3kR/px1gYo2p4a1ftU
+ xEJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706279630; x=1706884430;
+ d=1e100.net; s=20230601; t=1706279626; x=1706884426;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gl5mdL8o4tkULNtVB7E10+lX7Lfh3f3aHXrBpGvFwCw=;
- b=itMiomyeHM9kfKqkde5nHgcG7x8uMc1N4PIT5A0YV9BehfWWkTVpYxPjjbEaNYXueW
- lRrDszUphC7oHQbOdYV4Vz6B78Fh3C+F6hUnueRYEZ6BgRk6r1KN2foPtoZOcLE+k2aO
- h6Kmf+DMfBsOMLLrZHCc+LV+affJCIQJZVr+4rE9jJU4HPTpQogIuW+gvggsvLN9yTdx
- BBcsPx17M4Bb9O7Vyv/59QHWxZFY4iw+JdvjZUBn/WGHujGgTXaWtpKEfxDg3XlejVND
- KqfPGZ1AKXOsez+p2VhA5Qjiq31e7shd1TqOS7gV5cBjA/mjlDd+U93y2Pao5OVET4+O
- 6Piw==
-X-Gm-Message-State: AOJu0Yy3MA5x2MaK5T2fi9nblIiWBVmKRU1uZn0E7efGqTFOt8+qX0OM
- B73rUU8e3Mw05jkc6h08zWW8eiSS8FPAsfDb2Or2yJCogVLWkYhMP9mzntCuKMSw0O094syugOF
- W
-X-Google-Smtp-Source: AGHT+IHFOH8mAEtP2w4qdoPCzIcRF+mw7DSaZ9w2IKxVNs+hBYdzxSgMfELwBgP0ZZLMoBMqsf0R7Q==
-X-Received: by 2002:adf:ee8a:0:b0:337:b74b:492c with SMTP id
- b10-20020adfee8a000000b00337b74b492cmr486377wro.234.1706279630638; 
- Fri, 26 Jan 2024 06:33:50 -0800 (PST)
+ bh=HEc7i4Xgpnf10j5Y5ryc8bAt0O15wFZx7gUBthUTBOc=;
+ b=T9jwgG1RKoi+kq+svpELbW3VNVDTx4BetfCMeOwmwHjZMwWYFedhjE6P4bHBGyKKT/
+ W7WmIJVjI5o5NyowGFKW9WX5Dmmn4nl/8DRZ9QoIFsKws9qS2F9SidB2PEzqcPNv7QA/
+ cbiECSnJWzYW25FHvzUvNb7FDoGBlbjOYgUdNQm1eAsqivt7pjwjA7EHMdhPCSPJ0o4U
+ fiMhWHPq7xSZxTjhZUyIl+OXD8YREu9uCbc7EnAeAOTVj7ZrJ5kZgZWmBzzf2dCLFa5d
+ GVD902/jERynqPWrt7u+Q6xiEHe5T1hw1Dug1SVclTwbNoHbPO74JeKnTrxcCoSYwCOb
+ Gcxg==
+X-Gm-Message-State: AOJu0YyLGdD5PFMfjcNRIUAJMJgK7AIOgLUFxdFoRAMXng19Xy6ZGQ+i
+ DuNvqisTkhtVZrxxavbndtActctTKVfI38VL1Ueo8GVJnnfq4YQ5lIvTyCes0HkHc2YDgUX+qEq
+ M
+X-Google-Smtp-Source: AGHT+IEBJsVcIccN1l8L3fD3K33Rqts/LmE+VB4VNCA563ESrfAyEp/c3IMlV7XWuGRjZdhk6LG3MQ==
+X-Received: by 2002:adf:ca8d:0:b0:337:aa92:7835 with SMTP id
+ r13-20020adfca8d000000b00337aa927835mr701798wrh.43.1706279626005; 
+ Fri, 26 Jan 2024 06:33:46 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.50
+ n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:33:50 -0800 (PST)
+ Fri, 26 Jan 2024 06:33:45 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/36] target/arm: Expose arm_cpu_mp_affinity() in
- 'multiprocessing.h' header
-Date: Fri, 26 Jan 2024 14:33:24 +0000
-Message-Id: <20240126143341.2101237-20-peter.maydell@linaro.org>
+Subject: [PULL 08/36] hw/arm: Add AHCI/SATA controller to Allwinner R40 and
+ Bananapi board
+Date: Fri, 26 Jan 2024 14:33:13 +0000
+Message-Id: <20240126143341.2101237-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
 References: <20240126143341.2101237-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,181 +95,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-Declare arm_cpu_mp_affinity() prototype in the new
- "target/arm/multiprocessing.h" header so units in
-hw/arm/ can use it without having to include the huge
-target-specific "cpu.h".
+Allwinner R40 supports an AHCI compliant SATA controller.
+Add support for it.
 
-File list to include the new header generated using:
-
-  $ git grep -lw arm_cpu_mp_affinity
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240118200643.29037-11-philmd@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Message-id: 20240115182757.1095012-3-linux@roeck-us.net
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h             |  6 +-----
- target/arm/multiprocessing.h | 16 ++++++++++++++++
- hw/arm/virt-acpi-build.c     |  1 +
- hw/arm/virt.c                |  1 +
- hw/arm/xlnx-versal-virt.c    |  1 +
- hw/misc/xlnx-versal-crl.c    |  1 +
- target/arm/arm-powerctl.c    |  1 +
- target/arm/cpu.c             |  5 +++++
- target/arm/hvf/hvf.c         |  1 +
- target/arm/tcg/psci.c        |  1 +
- 10 files changed, 29 insertions(+), 5 deletions(-)
- create mode 100644 target/arm/multiprocessing.h
+ docs/system/arm/bananapi_m2u.rst |  1 +
+ include/hw/arm/allwinner-r40.h   |  3 +++
+ hw/arm/allwinner-r40.c           | 12 +++++++++++-
+ hw/arm/Kconfig                   |  1 +
+ 4 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index d1584bdb3b5..cecac4c0a12 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -26,6 +26,7 @@
- #include "cpu-qom.h"
- #include "exec/cpu-defs.h"
- #include "qapi/qapi-types-common.h"
-+#include "target/arm/multiprocessing.h"
+diff --git a/docs/system/arm/bananapi_m2u.rst b/docs/system/arm/bananapi_m2u.rst
+index e77c425e2cb..542310591d6 100644
+--- a/docs/system/arm/bananapi_m2u.rst
++++ b/docs/system/arm/bananapi_m2u.rst
+@@ -22,6 +22,7 @@ The Banana Pi M2U machine supports the following devices:
+  * EMAC ethernet
+  * GMAC ethernet
+  * Clock Control Unit
++ * SATA
+  * TWI (I2C)
+  * USB 2.0
  
- /* ARM processors have a weak memory model */
- #define TCG_GUEST_DEFAULT_MO      (0)
-@@ -1173,11 +1174,6 @@ void arm_cpu_post_init(Object *obj);
+diff --git a/include/hw/arm/allwinner-r40.h b/include/hw/arm/allwinner-r40.h
+index ae82822d424..c589fcc1c15 100644
+--- a/include/hw/arm/allwinner-r40.h
++++ b/include/hw/arm/allwinner-r40.h
+@@ -22,6 +22,7 @@
  
- uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz);
- 
--static inline uint64_t arm_cpu_mp_affinity(ARMCPU *cpu)
--{
--    return cpu->mp_affinity;
--}
--
- #ifndef CONFIG_USER_ONLY
- extern const VMStateDescription vmstate_arm_cpu;
- 
-diff --git a/target/arm/multiprocessing.h b/target/arm/multiprocessing.h
-new file mode 100644
-index 00000000000..81715d345c2
---- /dev/null
-+++ b/target/arm/multiprocessing.h
-@@ -0,0 +1,16 @@
-+/*
-+ * ARM multiprocessor CPU helpers
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
-+
-+#ifndef TARGET_ARM_MULTIPROCESSING_H
-+#define TARGET_ARM_MULTIPROCESSING_H
-+
-+#include "target/arm/cpu-qom.h"
-+
-+uint64_t arm_cpu_mp_affinity(ARMCPU *cpu);
-+
-+#endif
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 2127778c1ea..43ccc60f43c 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -59,6 +59,7 @@
- #include "hw/acpi/ghes.h"
- #include "hw/acpi/viot.h"
- #include "hw/virtio/virtio-acpi.h"
-+#include "target/arm/multiprocessing.h"
- 
- #define ARM_SPI_BASE 32
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index b3592798ea9..1e0df6ea3ad 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -74,6 +74,7 @@
- #include "hw/arm/smmuv3.h"
- #include "hw/acpi/acpi.h"
- #include "target/arm/internals.h"
-+#include "target/arm/multiprocessing.h"
- #include "hw/mem/pc-dimm.h"
- #include "hw/mem/nvdimm.h"
- #include "hw/acpi/generic_event_device.h"
-diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-index 841ef69df66..29f4d2c2dce 100644
---- a/hw/arm/xlnx-versal-virt.c
-+++ b/hw/arm/xlnx-versal-virt.c
-@@ -20,6 +20,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/arm/xlnx-versal.h"
- #include "hw/arm/boot.h"
-+#include "target/arm/multiprocessing.h"
  #include "qom/object.h"
+ #include "hw/timer/allwinner-a10-pit.h"
++#include "hw/ide/ahci.h"
+ #include "hw/intc/arm_gic.h"
+ #include "hw/sd/allwinner-sdhost.h"
+ #include "hw/misc/allwinner-r40-ccu.h"
+@@ -46,6 +47,7 @@ enum {
+     AW_R40_DEV_MMC1,
+     AW_R40_DEV_MMC2,
+     AW_R40_DEV_MMC3,
++    AW_R40_DEV_AHCI,
+     AW_R40_DEV_EHCI1,
+     AW_R40_DEV_OHCI1,
+     AW_R40_DEV_EHCI2,
+@@ -112,6 +114,7 @@ struct AwR40State {
+     const hwaddr *memmap;
+     AwSRAMCState sramc;
+     AwA10PITState timer;
++    AllwinnerAHCIState sata;
+     AwSdHostState mmc[AW_R40_NUM_MMCS];
+     EHCISysBusState ehci[AW_R40_NUM_USB];
+     OHCISysBusState ohci[AW_R40_NUM_USB];
+diff --git a/hw/arm/allwinner-r40.c b/hw/arm/allwinner-r40.c
+index 2e8943eff74..534be4a735d 100644
+--- a/hw/arm/allwinner-r40.c
++++ b/hw/arm/allwinner-r40.c
+@@ -46,6 +46,7 @@ const hwaddr allwinner_r40_memmap[] = {
+     [AW_R40_DEV_MMC1]       = 0x01c10000,
+     [AW_R40_DEV_MMC2]       = 0x01c11000,
+     [AW_R40_DEV_MMC3]       = 0x01c12000,
++    [AW_R40_DEV_AHCI]       = 0x01c18000,
+     [AW_R40_DEV_EHCI1]      = 0x01c19000,
+     [AW_R40_DEV_OHCI1]      = 0x01c19400,
+     [AW_R40_DEV_EHCI2]      = 0x01c1c000,
+@@ -93,7 +94,6 @@ static struct AwR40Unimplemented r40_unimplemented[] = {
+     { "usb0-host",  0x01c14000, 4 * KiB },
+     { "crypto",     0x01c15000, 4 * KiB },
+     { "spi2",       0x01c17000, 4 * KiB },
+-    { "sata",       0x01c18000, 4 * KiB },
+     { "usb1-phy",   0x01c19800, 2 * KiB },
+     { "sid",        0x01c1b000, 4 * KiB },
+     { "usb2-phy",   0x01c1c800, 2 * KiB },
+@@ -186,6 +186,7 @@ enum {
+     AW_R40_GIC_SPI_MMC2      = 34,
+     AW_R40_GIC_SPI_MMC3      = 35,
+     AW_R40_GIC_SPI_EMAC      = 55,
++    AW_R40_GIC_SPI_AHCI      = 56,
+     AW_R40_GIC_SPI_OHCI1     = 64,
+     AW_R40_GIC_SPI_OHCI2     = 65,
+     AW_R40_GIC_SPI_EHCI1     = 76,
+@@ -285,6 +286,8 @@ static void allwinner_r40_init(Object *obj)
+                                 TYPE_AW_SDHOST_SUN50I_A64);
+     }
  
- #define TYPE_XLNX_VERSAL_VIRT_MACHINE MACHINE_TYPE_NAME("xlnx-versal-virt")
-diff --git a/hw/misc/xlnx-versal-crl.c b/hw/misc/xlnx-versal-crl.c
-index 9bfa9baa157..1f1762ef163 100644
---- a/hw/misc/xlnx-versal-crl.c
-+++ b/hw/misc/xlnx-versal-crl.c
-@@ -19,6 +19,7 @@
- #include "hw/resettable.h"
- 
- #include "target/arm/arm-powerctl.h"
-+#include "target/arm/multiprocessing.h"
- #include "hw/misc/xlnx-versal-crl.h"
- 
- #ifndef XLNX_VERSAL_CRL_ERR_DEBUG
-diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
-index 6c86e901028..2b2055c6acc 100644
---- a/target/arm/arm-powerctl.c
-+++ b/target/arm/arm-powerctl.c
-@@ -16,6 +16,7 @@
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "sysemu/tcg.h"
-+#include "target/arm/multiprocessing.h"
- 
- #ifndef DEBUG_ARM_POWERCTL
- #define DEBUG_ARM_POWERCTL 0
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 5b5af7d4e1e..04296f2928f 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1314,6 +1314,11 @@ uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
-     return (Aff1 << ARM_AFF1_SHIFT) | Aff0;
- }
- 
-+uint64_t arm_cpu_mp_affinity(ARMCPU *cpu)
-+{
-+    return cpu->mp_affinity;
-+}
++    object_initialize_child(obj, "sata", &s->sata, TYPE_ALLWINNER_AHCI);
 +
- static void arm_cpu_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 659401e12c7..71a26db1886 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -28,6 +28,7 @@
- #include "arm-powerctl.h"
- #include "target/arm/cpu.h"
- #include "target/arm/internals.h"
-+#include "target/arm/multiprocessing.h"
- #include "trace/trace-target_arm_hvf.h"
- #include "migration/vmstate.h"
+     for (size_t i = 0; i < AW_R40_NUM_USB; i++) {
+         object_initialize_child(obj, "ehci[*]", &s->ehci[i],
+                                 TYPE_PLATFORM_EHCI);
+@@ -423,6 +426,13 @@ static void allwinner_r40_realize(DeviceState *dev, Error **errp)
+     sysbus_realize(SYS_BUS_DEVICE(&s->ccu), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->ccu), 0, s->memmap[AW_R40_DEV_CCU]);
  
-diff --git a/target/arm/tcg/psci.c b/target/arm/tcg/psci.c
-index 50d4b23d26b..51d2ca3d30d 100644
---- a/target/arm/tcg/psci.c
-+++ b/target/arm/tcg/psci.c
-@@ -24,6 +24,7 @@
- #include "sysemu/runstate.h"
- #include "internals.h"
- #include "arm-powerctl.h"
-+#include "target/arm/multiprocessing.h"
- 
- bool arm_is_psci_call(ARMCPU *cpu, int excp_type)
- {
++    /* SATA / AHCI */
++    sysbus_realize(SYS_BUS_DEVICE(&s->sata), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sata), 0,
++                    allwinner_r40_memmap[AW_R40_DEV_AHCI]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sata), 0,
++                       qdev_get_gpio_in(DEVICE(&s->gic), AW_R40_GIC_SPI_AHCI));
++
+     /* USB */
+     for (size_t i = 0; i < AW_R40_NUM_USB; i++) {
+         g_autofree char *bus = g_strdup_printf("usb-bus.%zu", i);
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 4a2a5fca974..704517edd4f 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -408,6 +408,7 @@ config ALLWINNER_H3
+ config ALLWINNER_R40
+     bool
+     default y if TCG && ARM
++    select AHCI
+     select ALLWINNER_SRAMC
+     select ALLWINNER_A10_PIT
+     select AXP2XX_PMU
 -- 
 2.34.1
 
