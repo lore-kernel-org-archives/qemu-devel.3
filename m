@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE681C47422
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D19C47DDB
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQ5B-0008B7-IF; Fri, 26 Jan 2024 12:33:37 -0500
+	id 1rTQ4p-0007UA-2r; Fri, 26 Jan 2024 12:33:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rTQ59-000898-JK; Fri, 26 Jan 2024 12:33:35 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1rTQ4e-0007A6-HD; Fri, 26 Jan 2024 12:33:04 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rTQ57-0001cT-T0; Fri, 26 Jan 2024 12:33:35 -0500
+ <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1rTQ4c-0001jK-Hv; Fri, 26 Jan 2024 12:33:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
+ d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=naEYB+jSEP7+OXxDQs3WhFqyYITtE2y0vubPL3hIMXY=; b=LXa7z8onC4XELkebk7mstMSFNz
- E89f6kjIfZ9IGzPF/oa7YGF+kwE7zTt2D/EQQwe+sHNG02KPSo1BZeUUSTMsaCMCDoIEmh6ymJDPI
- DdsHwfajWEQbadMy8M6KScyk18HIJjiA/lIsaOvbAJrjul7CVduVWjwqE3lMaowPTk7UukG5TAUmS
- /W/Yr9imQpqSah+onhT4MZ2egm+d3/kIx6DLCy8ZWacG89c9LF8G80s4zmEHs+q1gQEajYWK+rzEu
- gNiR6+5hlTaRGDTuDN74aqTy4BmRs0/0pjpquju6zylRF49bR/RK9fMf3XzUlOVz2SLzt88GfGTB6
- RxFJaYjQ==;
+ bh=2ubrN4oKcp3fWb93Q0tjoR8b5IYsXS/VmIXPL3JTbJk=; b=LrceqBBJSdW/kK/qN2+T1UJNGV
+ 4eZmzXeUHz6Kps4XzYzbrBC0LgblYD6SGxfeMGn58XRmCgYkVf3tccHfaeokAEgtUMrqb6it+Loct
+ IDk/xgzOoJigKtO63j2PTv7SRnb62odAgexzeluCbu2ug/9XC5+ZMkkJ7rUoN2iD2WssBa0Lhab7h
+ O3aLibpVcUl2Owr8afgU7qs8BpHHyz4P9qAwTRzDqpyQ+a4ZqX68MTH49ItWG2xHklmttlWhipwGL
+ N/P6vzPo67Xu6rGBer+iYv8GvwxrwsSsXb3AtbPaz3T3lM2kmrh2AKLfFm/9IiZo8iQUGEkBJMJQC
+ NXJhGxxw==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTQ48-0000000EKUR-2WVo; Fri, 26 Jan 2024 17:32:34 +0000
+ by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1rTQ4A-000000069Uq-1wWa; Fri, 26 Jan 2024 17:32:35 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rTQ49-00000001emz-1aGM;
+ Hat Linux)) id 1rTQ49-00000001en7-2QRW;
  Fri, 26 Jan 2024 17:32:33 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
@@ -84,21 +84,20 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v4 27/47] hw/arm/highbank: use qemu_create_nic_device()
-Date: Fri, 26 Jan 2024 17:25:04 +0000
-Message-ID: <20240126173228.394202-28-dwmw2@infradead.org>
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PATCH v4 29/47] hw/arm/stellaris: use qemu_find_nic_info()
+Date: Fri, 26 Jan 2024 17:25:06 +0000
+Message-ID: <20240126173228.394202-30-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126173228.394202-1-dwmw2@infradead.org>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+7caeb094913322f6f00d+7460+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -123,41 +122,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- hw/arm/highbank.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+Rather than just using qemu_configure_nic_device(), populate the MAC
+address in the system-registers device by peeking at the NICInfo before
+it's assigned to the device.
 
-diff --git a/hw/arm/highbank.c b/hw/arm/highbank.c
-index c21e18d08f..6a0e20e58d 100644
---- a/hw/arm/highbank.c
-+++ b/hw/arm/highbank.c
-@@ -296,19 +296,17 @@ static void calxeda_init(MachineState *machine, enum cxmachines machine_id)
+Generate the MAC address early, if there is no matching -nic option.
+Otherwise the MAC address wouldn't be generated until net_client_init1()
+runs.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+---
+ hw/arm/stellaris.c | 30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
+
+diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
+index d18b1144af..34c5a86ac2 100644
+--- a/hw/arm/stellaris.c
++++ b/hw/arm/stellaris.c
+@@ -1028,7 +1028,8 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     DeviceState *ssys_dev;
+     int i;
+     int j;
+-    const uint8_t *macaddr;
++    NICInfo *nd;
++    MACAddr mac;
  
-     sysbus_create_simple(TYPE_SYSBUS_AHCI, 0xffe08000, pic[83]);
- 
--    if (nd_table[0].used) {
--        qemu_check_nic_model(&nd_table[0], "xgmac");
--        dev = qdev_new("xgmac");
--        qdev_set_nic_properties(dev, &nd_table[0]);
-+    dev = qemu_create_nic_device("xgmac", true, NULL);
-+    if (dev) {
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xfff50000);
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[77]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 1, pic[78]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 2, pic[79]);
+     MemoryRegion *sram = g_new(MemoryRegion, 1);
+     MemoryRegion *flash = g_new(MemoryRegion, 1);
+@@ -1051,12 +1052,22 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+      * need its sysclk output.
+      */
+     ssys_dev = qdev_new(TYPE_STELLARIS_SYS);
+-    /* Most devices come preprogrammed with a MAC address in the user data. */
+-    macaddr = nd_table[0].macaddr.a;
++
++    /*
++     * Most devices come preprogrammed with a MAC address in the user data.
++     * Generate a MAC address now, if there isn't a matching -nic for it.
++     */
++    nd = qemu_find_nic_info("stellaris_enet", true, "stellaris");
++    if (nd) {
++        memcpy(mac.a, nd->macaddr.a, sizeof(mac.a));
++    } else {
++        qemu_macaddr_default_if_unset(&mac);
 +    }
++
+     qdev_prop_set_uint32(ssys_dev, "user0",
+-                         macaddr[0] | (macaddr[1] << 8) | (macaddr[2] << 16));
++                         mac.a[0] | (mac.a[1] << 8) | (mac.a[2] << 16));
+     qdev_prop_set_uint32(ssys_dev, "user1",
+-                         macaddr[3] | (macaddr[4] << 8) | (macaddr[5] << 16));
++                         mac.a[3] | (mac.a[4] << 8) | (mac.a[5] << 16));
+     qdev_prop_set_uint32(ssys_dev, "did0", board->did0);
+     qdev_prop_set_uint32(ssys_dev, "did1", board->did1);
+     qdev_prop_set_uint32(ssys_dev, "dc0", board->dc0);
+@@ -1269,10 +1280,13 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     if (board->dc4 & (1 << 28)) {
+         DeviceState *enet;
  
--        qemu_check_nic_model(&nd_table[1], "xgmac");
--        dev = qdev_new("xgmac");
--        qdev_set_nic_properties(dev, &nd_table[1]);
-+    dev = qemu_create_nic_device("xgmac", true, NULL);
-+    if (dev) {
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xfff51000);
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[80]);
+-        qemu_check_nic_model(&nd_table[0], "stellaris");
+-
+         enet = qdev_new("stellaris_enet");
+-        qdev_set_nic_properties(enet, &nd_table[0]);
++        if (nd) {
++            qdev_set_nic_properties(enet, nd);
++        } else {
++            qdev_prop_set_macaddr(enet, "mac", mac.a);
++        }
++
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(enet), &error_fatal);
+         sysbus_mmio_map(SYS_BUS_DEVICE(enet), 0, 0x40048000);
+         sysbus_connect_irq(SYS_BUS_DEVICE(enet), 0, qdev_get_gpio_in(nvic, 42));
 -- 
 2.43.0
 
