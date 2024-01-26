@@ -4,74 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F8BC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACEBC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTJig-0001rV-2h; Fri, 26 Jan 2024 05:45:59 -0500
+	id 1rTJnX-0004m9-UB; Fri, 26 Jan 2024 05:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rTJiV-0001km-RT; Fri, 26 Jan 2024 05:45:47 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
+ id 1rTJn1-0004Yk-Q3; Fri, 26 Jan 2024 05:50:27 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rTJiS-0003RP-CG; Fri, 26 Jan 2024 05:45:46 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 73E9F47832;
- Fri, 26 Jan 2024 13:46:26 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E77346BEA6;
- Fri, 26 Jan 2024 13:45:39 +0300 (MSK)
-Message-ID: <dbb90f22-d17d-4c40-8684-58ec976a014e@tls.msk.ru>
-Date: Fri, 26 Jan 2024 13:45:39 +0300
+ (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
+ id 1rTJmy-00068R-AF; Fri, 26 Jan 2024 05:50:27 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40QAlNeT016904; Fri, 26 Jan 2024 10:50:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=gytrUlfFJFBs659QKOtPZ4lJ13+baI6s6eg+lrAyw/w=;
+ b=QU0qJ7wqFcryOr/vfqvd3cZr+2ZRe+yqD0HBa13Fu1+DDFy5Me7osuJxhIdzofvYT8jZ
+ ZzQE4xO2xjh2BAy20Sq6/r3jjynMSCbIYnOfTPvpjTYAi1HtpvSFVV/JyLYkJOKK9Rfa
+ 996Iq1U3dRHw4MksMDfm/83gu8zG7MUvJ9SLM8YFQeBTpmFlqkN+wrZtR1mf9cMTLOWZ
+ QTbkXbSRGN3ggoQQJH7XKQjsoAkW6T0II2Y0k+5j/uxIqgFIv1IpO2hQfrYFP37uEWez
+ 6to1rIIGahwu5ZH0cME/JGLL5ygD0xOokxCb0VeTzlQ2P8OfKuzJ949lSUbgCerXuD90 XA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vvb9ug1hk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Jan 2024 10:50:05 +0000
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40QAo4NO024350;
+ Fri, 26 Jan 2024 10:50:04 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vvb9ug1h3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Jan 2024 10:50:04 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40Q86Tgx010854; Fri, 26 Jan 2024 10:50:04 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vrrw0ab7d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 26 Jan 2024 10:50:04 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40QAo2su4391920
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 26 Jan 2024 10:50:03 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DA9F558053;
+ Fri, 26 Jan 2024 10:50:02 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 00D9258043;
+ Fri, 26 Jan 2024 10:50:02 +0000 (GMT)
+Received: from gfwa153.aus.stglabs.ibm.com (unknown [9.3.84.127])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 26 Jan 2024 10:50:01 +0000 (GMT)
+From: Ninad Palsule <ninad@linux.ibm.com>
+To: qemu-devel@nongnu.org, clg@kaod.org, peter.maydell@linaro.org,
+ andrew@codeconstruct.com.au, joel@jms.id.au, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
+ philmd@linaro.org, lvivier@redhat.com
+Cc: Ninad Palsule <ninad@linux.ibm.com>, qemu-arm@nongnu.org,
+ Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH v12 03/11] hw/fsi: Introduce IBM's FSI Bus
+Date: Fri, 26 Jan 2024 04:49:48 -0600
+Message-Id: <20240126104956.74126-4-ninad@linux.ibm.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240126104956.74126-1-ninad@linux.ibm.com>
+References: <20240126104956.74126-1-ninad@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial 1/2] close_all_open_fd(): move to oslib-posix.c
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, QEMU Trivial <qemu-trivial@nongnu.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-References: <cover.1706221377.git.mjt@tls.msk.ru>
- <94fcee0d7595865b3a6fab744982ad47715e5faf.1706221377.git.mjt@tls.msk.ru>
- <ffc002d5-f648-43b8-b938-011a4a92cf5e@vivier.eu>
- <ZbN2DhQ4GeKc-aaX@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <ZbN2DhQ4GeKc-aaX@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: cSr6B80ZalOHi3CgdvSikvjJSLtPysbb
+X-Proofpoint-GUID: Qd9bKOwph5cWBQKS35EkNeZjFaTbD5gI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ mlxlogscore=605 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2401260078
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=ninad@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,52 +117,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.01.2024 12:06, Daniel P. Berrangé wrote:
-> On Fri, Jan 26, 2024 at 08:44:13AM +0100, Laurent Vivier wrote:
->> Le 25/01/2024 à 23:29, Michael Tokarev a écrit :
+This is a part of patchset where FSI bus is introduced.
 
+The FSI bus is a simple bus where FSI master is attached.
 
->> I think the way using sysconf(_SC_OPEN_MAX) is more portable, simpler and
->> cleaner than the one using /proc/self/fd.
-> 
-> A fallback that uses _SC_OPEN_MAX is good for portability, but it is
-> should not be considered a replacement for iterating over /proc/self/fd,
-> rather an additional fallback for non-Linux, or when /proc is not mounted.
-> It is not uncommon for _SC_OPEN_MAX to be *exceedingly* high
-> 
->    $ podman run -it quay.io/centos/centos:stream9
->    [root@4a440d62935c /]# ulimit -n
->    524288
-> 
-> Iterating over 1/2 a million FDs is a serious performance penalty that
-> we don't want to have, so _SC_OPEN_MAX should always be the last resort.
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+[ clg: - removed include/hw/fsi/engine-scratchpad.h and
+       	 hw/fsi/engine-scratchpad.c
+       - dropped FSI_SCRATCHPAD
+       - included FSIBus definition
+       - dropped hw/fsi/trace-events changes ]
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
+---
+v11:
+  - Split the patch.
+---
+ include/hw/fsi/fsi.h | 19 +++++++++++++++++++
+ hw/fsi/fsi.c         | 22 ++++++++++++++++++++++
+ hw/fsi/meson.build   |  2 +-
+ 3 files changed, 42 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/fsi/fsi.h
+ create mode 100644 hw/fsi/fsi.c
 
- From yesterday conversation in IRC which started this:
+diff --git a/include/hw/fsi/fsi.h b/include/hw/fsi/fsi.h
+new file mode 100644
+index 0000000000..50e8f5c888
+--- /dev/null
++++ b/include/hw/fsi/fsi.h
+@@ -0,0 +1,19 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (C) 2024 IBM Corp.
++ *
++ * IBM Flexible Service Interface
++ */
++#ifndef FSI_FSI_H
++#define FSI_FSI_H
++
++#include "hw/qdev-core.h"
++
++#define TYPE_FSI_BUS "fsi.bus"
++OBJECT_DECLARE_SIMPLE_TYPE(FSIBus, FSI_BUS)
++
++typedef struct FSIBus {
++    BusState bus;
++} FSIBus;
++
++#endif /* FSI_FSI_H */
+diff --git a/hw/fsi/fsi.c b/hw/fsi/fsi.c
+new file mode 100644
+index 0000000000..60cb03f7a2
+--- /dev/null
++++ b/hw/fsi/fsi.c
+@@ -0,0 +1,22 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (C) 2024 IBM Corp.
++ *
++ * IBM Flexible Service Interface
++ */
++#include "qemu/osdep.h"
++
++#include "hw/fsi/fsi.h"
++
++static const TypeInfo fsi_bus_info = {
++    .name = TYPE_FSI_BUS,
++    .parent = TYPE_BUS,
++    .instance_size = sizeof(FSIBus),
++};
++
++static void fsi_bus_register_types(void)
++{
++    type_register_static(&fsi_bus_info);
++}
++
++type_init(fsi_bus_register_types);
+diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
+index 93ba19dd04..574f5f9289 100644
+--- a/hw/fsi/meson.build
++++ b/hw/fsi/meson.build
+@@ -1 +1 @@
+-system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c'))
++system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c'))
+-- 
+2.39.2
 
-  <mmlb> open files          (-n) 1073741816
-
-(it is a docker container)
-They weren't able to start qemu.. :)
-
-Sanity of such setting is questionable, but ok.
-
-Not only linux implement close_range(2) syscall, it is also
-available on some *BSDs.
-
-And the most important point is, - we should aim at using O_CLOEXEC
-everywhere, without this need to close each FD at exec time.  I think
-qemu is the only software with such paranoid closing when just running
-an interface setup script..
-
-So yes, loop though all FDs is okay too as a last resort but..
-For scripts in net/tap.c, this isn't necessary at all.  I want to take
-a look at all open(2)/socket(2)/etc calls in qemu to ensure they're all
-using O_CLOEXEC or are closed promptly, after which this code can be
-removed entirely, hopefully.  Maybe this patch wont be needed after
-that (so only async-teardown will need that code since it doesn't
-do exec()).
-
-Thanks,
-
-/mjt
 
