@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0607DC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C918C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTO8W-0003q2-En; Fri, 26 Jan 2024 10:28:56 -0500
+	id 1rTOA1-0006mx-6J; Fri, 26 Jan 2024 10:30:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rTO8V-0003om-Mo; Fri, 26 Jan 2024 10:28:55 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ id 1rTO9y-0006iD-9A; Fri, 26 Jan 2024 10:30:26 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rTO8U-00058n-13; Fri, 26 Jan 2024 10:28:55 -0500
+ id 1rTO9w-0005XU-Ii; Fri, 26 Jan 2024 10:30:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706282934; x=1737818934;
+ t=1706283024; x=1737819024;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=+ovD/oGfxB4K5wtszDrc6qT35DYU4vw2pL36d6+0Uyg=;
- b=O0czLiHPuNihgykh6OGxd6f5aSlGLdyRQRQu/QMDoHr8o0fkMjwSQQyd
- HCTi/wx7hnVciJUx3CgRgDnWH8N19Kz/Mq6FrPY2mR4ziFuqFtubgZdQ3
- 5M6ieEK8xFYby1BIIS68vlYfjNOoAL+LE731PHHsiiJcoPBKY1lJ+1NKz
- CxKDxlgkgtGmFm5DWDq8a3xqDnCK7ZaIZ/vhuZc8v92u/RYdBlxvFfmtr
- aSa4ViflkWXzJhqyZoN8Sv8sdtL3re8Cy/SVtg32tqD191KIYLDETHvmU
- Z47Oyb2CFs79oU5fQT8ZWOnm0EqW2m96fegCt1xHOriJXsHhM3iowYI5H A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="16024085"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="16024085"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jan 2024 07:28:50 -0800
+ bh=McUKHkMlnU0JiR7+M/tnoNjT6O5GTPjhOSszx7cJHEI=;
+ b=T0wlDbl8l+yt2X8MCALzSAsIAo4+B+CioK1ZvNnjrqMGBn5zyPRRsL1z
+ dIG+4gh4QZL8wQ0y5pgofcM1Sgmh4DRdpWLymf7t9HeGvpwukMgPNfjIR
+ KVPOChqZKbliM6i3tx5LgFG5astDHpx0M45pVz5CjE05Qqq5ZRJmP0jms
+ 0lk/HyqHXJS78mH2aPQHO9H4/mVZHrpAnR5PnzmU0GV7LQqgzax0nBuMQ
+ D0hrYHeNIbQlXweN2EgtRzNehgWoiDj9fX9nFvCu9KqfKWO53u9Iy/d+z
+ VsWRvh/aQ/4m6xzusSAWy8IRiGCREXYNLFw+ScaSmPbim+WstpOzcNiXF A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="9153735"
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
+   d="scan'208";a="9153735"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2024 07:30:22 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="28858589"
+X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="821174498"
+X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; d="scan'208";a="821174498"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa002.jf.intel.com with ESMTP; 26 Jan 2024 07:28:49 -0800
-Date: Fri, 26 Jan 2024 23:41:52 +0800
+ by orsmga001.jf.intel.com with ESMTP; 26 Jan 2024 07:30:21 -0800
+Date: Fri, 26 Jan 2024 23:43:24 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Subject: Re: [PATCH 08/10] cxl: Clean up includes
-Message-ID: <ZbPSwMopXfEi0IX6@intel.com>
+Subject: Re: [PATCH 07/10] include: Clean up includes
+Message-ID: <ZbPTHGpHIf0JKepg@intel.com>
 References: <20240125163408.1595135-1-peter.maydell@linaro.org>
- <20240125163408.1595135-9-peter.maydell@linaro.org>
+ <20240125163408.1595135-8-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240125163408.1595135-9-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240125163408.1595135-8-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -76,13 +78,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 25, 2024 at 04:34:06PM +0000, Peter Maydell wrote:
-> Date: Thu, 25 Jan 2024 16:34:06 +0000
+On Thu, Jan 25, 2024 at 04:34:05PM +0000, Peter Maydell wrote:
+> Date: Thu, 25 Jan 2024 16:34:05 +0000
 > From: Peter Maydell <peter.maydell@linaro.org>
-> Subject: [PATCH 08/10] cxl: Clean up includes
+> Subject: [PATCH 07/10] include: Clean up includes
 > X-Mailer: git-send-email 2.34.1
 > 
-> This commit was created with scripts/clean-includes.
+> This commit was created with scripts/clean-includes:
+>  ./scripts/clean-includes --git include include/*/*.h include/*/*/*.h
 > 
 > All .c should include qemu/osdep.h first.  The script performs three
 > related cleanups:
@@ -95,29 +98,93 @@ On Thu, Jan 25, 2024 at 04:34:06PM +0000, Peter Maydell wrote:
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  hw/cxl/cxl-events.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+> I hand-checked that all these headers are included only by .c
+> files which already have osdep.h included.
+> ---
+>  include/hw/arm/raspberrypi-fw-defs.h | 1 -
+>  include/hw/mem/memory-device.h       | 1 -
+>  include/hw/ppc/spapr_nested.h        | 1 -
+>  include/hw/xen/xen-hvm-common.h      | 1 -
+>  include/qemu/qtree.h                 | 1 -
+>  include/ui/rect.h                    | 2 --
+>  6 files changed, 7 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 > 
-> diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-> index bee6dfaf148..affcf8a34dd 100644
-> --- a/hw/cxl/cxl-events.c
-> +++ b/hw/cxl/cxl-events.c
-> @@ -7,11 +7,9 @@
->   * COPYING file in the top-level directory.
->   */
+> diff --git a/include/hw/arm/raspberrypi-fw-defs.h b/include/hw/arm/raspberrypi-fw-defs.h
+> index 4551fe7450d..579cf0d5546 100644
+> --- a/include/hw/arm/raspberrypi-fw-defs.h
+> +++ b/include/hw/arm/raspberrypi-fw-defs.h
+> @@ -10,7 +10,6 @@
+>  #ifndef INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_
+>  #define INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_
+>  
+> -#include "qemu/osdep.h"
+>  
+>  enum rpi_firmware_property_tag {
+>      RPI_FWREQ_PROPERTY_END =                           0,
+> diff --git a/include/hw/mem/memory-device.h b/include/hw/mem/memory-device.h
+> index a1d62cc551a..e0571c8a319 100644
+> --- a/include/hw/mem/memory-device.h
+> +++ b/include/hw/mem/memory-device.h
+> @@ -14,7 +14,6 @@
+>  #define MEMORY_DEVICE_H
+>  
+>  #include "hw/qdev-core.h"
+> -#include "qemu/typedefs.h"
+>  #include "qapi/qapi-types-machine.h"
+>  #include "qom/object.h"
+>  
+> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+> index d3834864764..d312a5d61da 100644
+> --- a/include/hw/ppc/spapr_nested.h
+> +++ b/include/hw/ppc/spapr_nested.h
+> @@ -1,7 +1,6 @@
+>  #ifndef HW_SPAPR_NESTED_H
+>  #define HW_SPAPR_NESTED_H
+>  
+> -#include "qemu/osdep.h"
+>  #include "target/ppc/cpu.h"
+>  
+>  /*
+> diff --git a/include/hw/xen/xen-hvm-common.h b/include/hw/xen/xen-hvm-common.h
+> index 4e9904f1a65..4b1d728f35c 100644
+> --- a/include/hw/xen/xen-hvm-common.h
+> +++ b/include/hw/xen/xen-hvm-common.h
+> @@ -1,7 +1,6 @@
+>  #ifndef HW_XEN_HVM_COMMON_H
+>  #define HW_XEN_HVM_COMMON_H
+>  
+> -#include "qemu/osdep.h"
+>  #include "qemu/units.h"
+>  
+>  #include "cpu.h"
+> diff --git a/include/qemu/qtree.h b/include/qemu/qtree.h
+> index 69fe74b50d0..dc2b14d2582 100644
+> --- a/include/qemu/qtree.h
+> +++ b/include/qemu/qtree.h
+> @@ -42,7 +42,6 @@
+>  #ifndef QEMU_QTREE_H
+>  #define QEMU_QTREE_H
+>  
+> -#include "qemu/osdep.h"
+>  
+>  #ifdef HAVE_GLIB_WITH_SLICE_ALLOCATOR
+>  
+> diff --git a/include/ui/rect.h b/include/ui/rect.h
+> index 68f05d78a8e..7ebf47ebcdc 100644
+> --- a/include/ui/rect.h
+> +++ b/include/ui/rect.h
+> @@ -4,8 +4,6 @@
+>  #ifndef QEMU_RECT_H
+>  #define QEMU_RECT_H
 >  
 > -#include <stdint.h>
-> -
->  #include "qemu/osdep.h"
-> +
->  #include "qemu/bswap.h"
-> -#include "qemu/typedefs.h"
->  #include "qemu/error-report.h"
->  #include "hw/pci/msi.h"
->  #include "hw/pci/msix.h"
+> -#include <stdbool.h>
+>  
+>  typedef struct QemuRect {
+>      int16_t x;
 > -- 
 > 2.34.1
 > 
