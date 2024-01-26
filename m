@@ -4,105 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF8FC47258
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 02:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6137BC47258
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 03:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTBtE-0001iC-E9; Thu, 25 Jan 2024 21:24:20 -0500
+	id 1rTCb5-0005wF-Td; Thu, 25 Jan 2024 22:09:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTBtC-0001hW-SO; Thu, 25 Jan 2024 21:24:18 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTCb3-0005vl-W4
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 22:09:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTBtA-0005F2-8B; Thu, 25 Jan 2024 21:24:18 -0500
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q2Ff23013790; Fri, 26 Jan 2024 02:23:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=7+9uKUxs5zcDFJ/i1yJt1HRGPqg6F7VQcSPisQb3l2k=;
- b=E017FOw2+VYHte2VKDAocYwO1b9dBnQleGqfsmk5E+t1FnHaxLjGEoEkxHx3T4FeWs/J
- JprWmp8NaEXKlhZRMMYQZ55rmxaN1akdsUD/ZIObeZ68xhvU0Yyix0WttpnwQSiJ6bMr
- Vg6Voj+E7MdCbal0m7U8TK8GBuImHHzwi1kiM2kcNm4jU+ghUi4j1ppJZPI9O83h6QHE
- ftIn6j56KTmk/2BikU8USuA/0DAYBIvucBRxAsFQU9fUsK3dp+NrjKes3Ppyd5qVwYPJ
- On/sqYZi8HLgfDiEHGZYgnCG4tajqi0aPY4zpQlH9yjUVUlEH3BIRrLj4/cYn7HqOqCZ 2w== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv2v498ak-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 02:23:54 +0000
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40Q2FhmS014112;
- Fri, 26 Jan 2024 02:23:54 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv2v498a9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 02:23:54 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q0JKYv026505; Fri, 26 Jan 2024 02:23:53 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrrgtrexh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 02:23:53 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40Q2NqPt20513402
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jan 2024 02:23:52 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5E1035804E;
- Fri, 26 Jan 2024 02:23:52 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCA285803F;
- Fri, 26 Jan 2024 02:23:50 +0000 (GMT)
-Received: from [9.61.160.70] (unknown [9.61.160.70])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Jan 2024 02:23:50 +0000 (GMT)
-Message-ID: <bac265f2-1a16-4631-be94-4e31541b82e1@linux.ibm.com>
-Date: Thu, 25 Jan 2024 20:23:50 -0600
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTCb2-0003nM-Ec
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 22:09:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706238574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DQ6aU0hBhJsSBKI4V+8lS/22slOoEFPlO+42UiaJ0+A=;
+ b=N0EA3CnbyRQs4IuOq9QpeTevLYxHhEe6/jP0NQ30punT0QGifhy5X8B9cWwjT4AGNRb/aY
+ asAo1cwctG3EURxn/p1ajUXQ2w1UqXFZLbCOPPXMnPrSRFN1NssciPlfX8R1ncFy097BL7
+ TYBxEe6OyEU05Bn9R2lKKBr63Ix1VuQ=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-k7YXVQRsMDmMk_zd68pXKw-1; Thu, 25 Jan 2024 22:09:31 -0500
+X-MC-Unique: k7YXVQRsMDmMk_zd68pXKw-1
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-6dea8b7e74aso2237970a34.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jan 2024 19:09:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706238571; x=1706843371;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DQ6aU0hBhJsSBKI4V+8lS/22slOoEFPlO+42UiaJ0+A=;
+ b=ML1q1oXmfVYm0UTzhwp6kzTPQraKLMOHI0Mq/FJrRd4BL4jmcleEwuU2Ywo55LY0h8
+ kMxbfWqXzvwf2P/c+HC3myjYjR0YyETeCCk4rGAgeqypS5ffmEEWrLb0h/o0yUPuh9E5
+ X//djHe8GIyhqKzNGq4U7dYo1Qk6eRjIO2h6YgFGYRaaZXAaV86ESig0a8Mv+0UXY5qJ
+ I54Oo8sT+7mV9yvtkhxdv/yPRwp6uMKhzFuXmMcBEeFSYf9sD3p+cTuwLW4R/3mDrN7+
+ htH3++8PxQuPJHZOl0HttvQHoLOBJsqJ8fjH/sRmNdOF2xKFysuy9ktun3Jyesw0F8Py
+ QofA==
+X-Gm-Message-State: AOJu0Yz8TxbdhTHj0QhVcp+wNPMhNpgBRx+FcTNtPdQYIVVO0OMW9iNH
+ mmAwM9QFBuRyLLOosPFM6lwotASHJfDmm6SrupCO8mduru/plfP1cA4SYiGb+Ox4l6Q0G1n1D0S
+ BuTewK3VuENSuSyiMxpU7GgIwXRwoA4qyhPCfVkBkzr0A6gCvR8qm
+X-Received: by 2002:a05:6870:a2ca:b0:214:c78e:b69c with SMTP id
+ w10-20020a056870a2ca00b00214c78eb69cmr1302867oak.0.1706238571098; 
+ Thu, 25 Jan 2024 19:09:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEEAtrkWdLn8hn/W3K32PR3OoXLoVxXzkd40MVOf9AQdgQ1gNy69V5x9Ls9UekaTOdq95w2ug==
+X-Received: by 2002:a05:6870:a2ca:b0:214:c78e:b69c with SMTP id
+ w10-20020a056870a2ca00b00214c78eb69cmr1302851oak.0.1706238570774; 
+ Thu, 25 Jan 2024 19:09:30 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ m1-20020a634c41000000b005cfd70edc1bsm239797pgl.7.2024.01.25.19.09.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jan 2024 19:09:30 -0800 (PST)
+Date: Fri, 26 Jan 2024 11:09:26 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 01/17] migration: Fix logic of channels and transport
+ compatibility check
+Message-ID: <ZbMiZgvrSpkw1PvW@x1n>
+References: <20240125162528.7552-1-avihaih@nvidia.com>
+ <20240125162528.7552-2-avihaih@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 5/9] hw/fsi: Aspeed APB2OPB interface, Onchip perif bus
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
- pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
-Cc: qemu-arm@nongnu.org, Andrew Jeffery <andrew@aj.id.au>
-References: <20240110231537.1654478-1-ninad@linux.ibm.com>
- <20240110231537.1654478-6-ninad@linux.ibm.com>
- <329ba3d9-f61a-40ed-b069-d8da7e42924e@kaod.org>
-From: Ninad Palsule <ninad@linux.ibm.com>
-In-Reply-To: <329ba3d9-f61a-40ed-b069-d8da7e42924e@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Gic8tqq2YLP5xIoMBLYAcHaMd72smnIP
-X-Proofpoint-ORIG-GUID: k41qrfFtaEZeG5iKj3pNpSX2ORvjwq-O
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- malwarescore=0 mlxlogscore=999 impostorscore=0 mlxscore=0 suspectscore=0
- priorityscore=1501 clxscore=1015 adultscore=0 spamscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2401260016
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=ninad@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240125162528.7552-2-avihaih@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,144 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Cedric,
+On Thu, Jan 25, 2024 at 06:25:12PM +0200, Avihai Horon wrote:
+> The commit in the fixes line mistakenly modified the channels and
+> transport compatibility check logic so it now checks multi-channel
+> support only for socket transport type.
+> 
+> Thus, running multifd migration using a transport other than socket that
+> is incompatible with multi-channels (such as "exec") would lead to a
+> segmentation fault instead of an error message.
+> For example:
+>   (qemu) migrate_set_capability multifd on
+>   (qemu) migrate -d "exec:cat > /tmp/vm_state"
+>   Segmentation fault (core dumped)
+> 
+> Fix it by checking multi-channel compatibility for all transport types.
+> 
+> Fixes: d95533e1cdcc ("migration: modify migration_channels_and_uri_compatible() for new QAPI syntax")
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
->>
->> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
->> Reviewed-by: Joel Stanley <joel@jms.id.au>
->
-> Nah. Joel you should re-review next respin :)
-Removed Joel's review tag.
->
->>
->> ---
->>   include/hw/misc/aspeed-apb2opb.h |  50 +++++
->>   hw/misc/aspeed-apb2opb.c         | 338 +++++++++++++++++++++++++++++++
->
-> As said in the cover letter, I think now that hw/fsi is a better place
-> for these files and should be compiled if CONSG_ASPEED_SOC. Sorry about
-> that. Also,please use 'aspeed_' for the file names.
-Transferred to the old location and rename with "aspeed_" prefix.
->
->>
->> +
->> +#define TYPE_OP_BUS "opb"
->> +OBJECT_DECLARE_SIMPLE_TYPE(OPBus, OP_BUS)
->> +
->> +typedef struct OPBus {
->> +        /*< private >*/
->
-> please remove the private and public comment.
-Removed.
->
->> +        BusState bus;
->> +
->> +        /*< public >*/
->> +        MemoryRegion mr;
->> +        AddressSpace as;
->
-> indent is wrong.
-Fixed indent.
->
->>
->> +static void fsi_aspeed_apb2opb_init(Object *o)
->> +{
->> +    AspeedAPB2OPBState *s = ASPEED_APB2OPB(o);
->> +    int i;
->> +
->> +    for (i = 0; i < ASPEED_FSI_NUM; i++) {
->> +        qbus_init(&s->opb[i], sizeof(s->opb[i]), TYPE_OP_BUS, 
->> DEVICE(s),
->> +                  NULL);
->
-> See comment in fsi_opb_init()
-Moved it to si_aspeed_apb2opb_realize(),
->
->> +    for (i = 0; i < ASPEED_FSI_NUM; i++) {
->> +        if (!qdev_realize(DEVICE(&s->fsi[i]), BUS(&s->opb[i]),
->> +                errp)) {
->
-> this could be a single line.
-Removed extra line.
->
-> Please remove the comments below, I am not sure they are valid
-> anymore.
-Removed the comment.
->
->> +        /*
->> +         * Avoid endianness issues by mapping each slave's memory 
->> region
->> +         * directly. Manually bridging multiple address-spaces 
->> causes endian
->> +         * swapping headaches as memory_region_dispatch_read() and
->> +         * memory_region_dispatch_write() correct the endianness 
->> based on the
->> +         * target machine endianness and not relative to the device 
->> endianness
->> +         * on either side of the bridge.
->> +         */
->> +        /*
->> +         * XXX: This is a bit hairy and will need to be fixed when I 
->> sort out
->> +         * the bus/slave relationship and any changes to the CFAM 
->> modelling
->> +         * (multiple slaves, LBUS)
->> +         */
->> +        memory_region_add_subregion(&s->opb[i].mr, 0xa0000000,
->> +                &s->fsi[i].opb2fsi);
->> +    }
->> +}
->>
->> +
->> +static void fsi_opb_init(Object *o)
->> +{
->> +    OPBus *opb = OP_BUS(o);
->> +
->> +    memory_region_init_io(&opb->mr, OBJECT(opb), NULL, opb,
->> +                          TYPE_FSI_OPB, UINT32_MAX);
->
-> This is better :
->
-> memory_region_init(&opb->mr, o, TYPE_OP_BUS, UINT32_MAX);
-Changed it as per your suggestion.
->
->
->> +    address_space_init(&opb->as, &opb->mr, TYPE_FSI_OPB);
->
-> This routine is problematic. If you run 'make check', you should see
-> test tests/qtest/device-introspect-test crash in weird way because of
-> a memory corruption. I didn't dig into the details but I suppose this
-> a use after free problem.
->
-> To solve, we should move qbus_init() done in fsi_aspeed_apb2opb_init()
-> under fsi_aspeed_apb2opb_realize(), or improve the model a litle more.
->
-> It seems we are lacking the OPB/FSI bridge :
->
-> typedef struct OPBFSIBridge {
->     DeviceState parent;
->
->     OPBus opb;
->     FSIMasterState fsi;
->     MemoryRegion mr;
->     AddressSpace as;
-> } OPBFSIBridge;
->
-> Something like that. It is difficult to understand the design from
-> the OpenFSI specs. The OPB bus seems overkill. It you could clarify
-> this aspect, it would be nice.
-
-For now moved qbus_init() to fsi_aspeed_apb2opb_realize(). I will run 
-make check.
-
-Thanks for the review.
-
-Regards,
-
-Ninad
-
+-- 
+Peter Xu
 
 
