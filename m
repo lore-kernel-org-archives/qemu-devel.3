@@ -4,85 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26C63C4828A
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D75AC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMIa-0000qD-Nq; Fri, 26 Jan 2024 08:31:12 -0500
+	id 1rTMK0-0002uD-Fu; Fri, 26 Jan 2024 08:32:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rTMIY-0000lW-1S
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:31:10 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rTMIU-0007bN-EE
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:31:09 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-40e72a567eeso12250355e9.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 05:31:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706275865; x=1706880665; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RVWt+St3Ao7R6IQtw+wm6ZjZD9uCy5mKNVtcNByTS0E=;
- b=IeQwgOQ7vBckQ0DNx8H9kA1oX7cu/N9QIfuBZneyUbbRGyeYHVlPAr4kdLntGCDyXI
- yeSMRFhSLrFbsDfyQWRIH/MCJfXn+MmuWCWzMRDqoxTt6GtIeQzzsVU8OFurNPXlgowZ
- RsV5FMoydVE1r0RHcWCES8x14AMIp/haRgI5QEUvE/tVG8jjAGG4fG+s7nPFOjA+E5qG
- hIzxIoWp7cBiZvY4rrOBGlDi/jXR12BoEBBNsb6pXB+Bks2kYTI6Sqc6E4ucXMJ2t5dh
- ZJAx+itjDoyuuwm4o1nrICmBZSYuPwPKJ9fAVTG8/0hXCD+CQJJTOxobAmFi4s4wQQXV
- dkIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706275865; x=1706880665;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RVWt+St3Ao7R6IQtw+wm6ZjZD9uCy5mKNVtcNByTS0E=;
- b=BXx1yMCmieq69X/xeI9r+iZYkoaSf887C1AWfM/sMvL7zz8ZCr69/KvCTIRzHmQuVu
- gn7/aFBRgBvAWcZo3TgzarfjJl0mihWe7Xit6rvF3APn5RCF8lQXvTryfwPJIqNJRJOs
- pqUBx3/KDMev0tDMLQPjKyFdIHpF6qdU/h0zwgzR9YH1CdEA4AAqqCVE9W7GOS6SAHzM
- fLJObSHtqWI/T5sbRCje/LCAcZf/vuJQEHQw8boZGVRovQoojSJXU1Fq1BGmgDJALQFK
- lTYVDg6PpdQK7fAQGCAJr8Nz44uhxyLOiCHGxn2pu276rR6b5ZtHas3G5fLj0vjcTYhQ
- Vf8Q==
-X-Gm-Message-State: AOJu0Yy7sO7lnChPZvgM0wS6klAeLk6r5xI2X1VsS5q3tZXowxJEEP6c
- m2/ml7jqNY/pU79kBVHsVMZ37SzC+fMdxYKJcImQcmImx1PSi+3pJjqIrvh60A13aDYTfMO5qzS
- u
-X-Google-Smtp-Source: AGHT+IHP6LQoTNmZHR2oodocUL7BmkJZvjTK5udXH74C2vxgw35NBxU+8nXWncJRB05FM+LlJS0KJg==
-X-Received: by 2002:a05:600c:3785:b0:40e:c7fc:a44d with SMTP id
- o5-20020a05600c378500b0040ec7fca44dmr547990wmr.355.1706275864754; 
- Fri, 26 Jan 2024 05:31:04 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- b26-20020a056402139a00b0055c4c97b1f2sm591166edv.91.2024.01.26.05.31.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 05:31:04 -0800 (PST)
-From: Andrew Jones <ajones@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- dbarboza@ventanamicro.com
-Subject: [PATCH v2 1/6] target/riscv/tcg: set 'mmu' with 'satp' in
- cpu_set_profile()
-Date: Fri, 26 Jan 2024 14:31:03 +0100
-Message-ID: <20240126133101.61344-9-ajones@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTMJw-0002iQ-D3; Fri, 26 Jan 2024 08:32:36 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
+ id 1rTMJu-0007zT-DO; Fri, 26 Jan 2024 08:32:35 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzC36c0Bz4wbp;
+ Sat, 27 Jan 2024 00:32:31 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzC2144Wz4wx5;
+ Sat, 27 Jan 2024 00:32:29 +1100 (AEDT)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Gavin Shan <gshan@redhat.com>
+Subject: [PULL 03/17] hw/arm/aspeed: Set default CPU count using
+ aspeed_soc_num_cpus()
+Date: Fri, 26 Jan 2024 14:32:02 +0100
+Message-ID: <20240126133217.996306-4-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240126133101.61344-8-ajones@ventanamicro.com>
-References: <20240126133101.61344-8-ajones@ventanamicro.com>
+In-Reply-To: <20240126133217.996306-1-clg@kaod.org>
+References: <20240126133217.996306-1-clg@kaod.org>
 MIME-Version: 1.0
-Content-type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,32 +68,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Recent changes in options handling removed the 'mmu' default the bare
-CPUs had, meaning that we must enable 'mmu' by hand when using the
-rva22s64 profile CPU.
+Since commit b7f1a0cb76 ("arm/aspeed: Compute the number
+of CPUs from the SoC definition") Aspeed machines use the
+aspeed_soc_num_cpus() helper to set the number of CPUs.
 
-Given that this profile is setting a satp mode, it already implies that
-we need a 'mmu'. Enable the 'mmu' in this case.
+Use it for the ast1030-evb (commit 356b230ed1 "aspeed/soc:
+Add AST1030 support") and supermicrox11-bmc (commit 40a38df55e
+"hw/arm/aspeed: Add board model for Supermicro X11 BMC") machines.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- target/riscv/tcg/tcg-cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/arm/aspeed.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index da437975b429..88f92d1c7d2c 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1107,6 +1107,7 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 4bc292ff84fc..5b01a4dd28f8 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1212,6 +1212,8 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
+     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
+     amc->i2c_init  = palmetto_bmc_i2c_init;
+     mc->default_ram_size = 256 * MiB;
++    mc->default_cpus = mc->min_cpus = mc->max_cpus =
++        aspeed_soc_num_cpus(amc->soc_name);
+ }
  
- #ifndef CONFIG_USER_ONLY
-     if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
-+        object_property_set_bool(obj, "mmu", true, NULL);
-         const char *satp_prop = satp_mode_str(profile->satp_mode,
-                                               riscv_cpu_is_32bit(cpu));
-         object_property_set_bool(obj, satp_prop, profile->enabled, NULL);
+ static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
+@@ -1586,11 +1588,12 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+     mc->init = aspeed_minibmc_machine_init;
+     amc->i2c_init = ast1030_evb_i2c_init;
+     mc->default_ram_size = 0;
+-    mc->default_cpus = mc->min_cpus = mc->max_cpus = 1;
+     amc->fmc_model = "sst25vf032b";
+     amc->spi_model = "sst25vf032b";
+     amc->num_cs = 2;
+     amc->macs_mask = 0;
++    mc->default_cpus = mc->min_cpus = mc->max_cpus =
++        aspeed_soc_num_cpus(amc->soc_name);
+ }
+ 
+ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
 -- 
 2.43.0
 
