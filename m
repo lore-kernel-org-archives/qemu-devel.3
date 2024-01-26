@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01FEAC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 04:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06916C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 04:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTDf9-0001kr-6S; Thu, 25 Jan 2024 23:17:55 -0500
+	id 1rTDfT-0001t3-OE; Thu, 25 Jan 2024 23:18:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDf7-0001kP-An
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDfR-0001ss-3i
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:18:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDf4-0004ps-IO
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:52 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDfN-0004zq-Ei
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:18:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706242669;
+ s=mimecast20190719; t=1706242688;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wpC3flOEeKNg7RiQbz7rs+mTBSJWZUS3FmJ01r0jr00=;
- b=LIR/cnONICGgNHMzZFiwQ8D881XNE3XVdvTU8BSjkyW98bXB+U6V5+1hxdbkEUdiyFUzm3
- jUdWqdK1Vf5KJiaWCDEnzo/IuM2m9osnHdYxI2wmZn5SHCQ46RRSadFNOcUXf7LN3lq/20
- iZ3OTGQJ3WHHp4kBuau3BUbCr64Hf6A=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-tqVxedu-MvqY8GhXH5ivWw-1; Thu,
- 25 Jan 2024 23:17:45 -0500
-X-MC-Unique: tqVxedu-MvqY8GhXH5ivWw-1
+ bh=ssSaIW3ahIip0O+ym1jhKD6aHZUz0kqQ0bfZMUBR5ng=;
+ b=Tx6z7F1zqIvtsU4YuTR/Cn7JR7LtMJ8MOKSzXQ1wRJ+TclRFnAfpAha+BpydcsUv4sg1T/
+ G6PmEqhKKCTyT0u+hZ0CA4tFknoO2Fk2WrN0ZnkJobUIbEA7J04XIJxFvdL2QNAvoaT5B5
+ V/ZrLswIgbfk1EOgi4NyXwhpx/6q9ks=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-98-I6VGExejMGOnVvyuvAHYkA-1; Thu, 25 Jan 2024 23:18:04 -0500
+X-MC-Unique: I6VGExejMGOnVvyuvAHYkA-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A0B8429AB3ED;
- Fri, 26 Jan 2024 04:17:45 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 73D6E85A58E;
+ Fri, 26 Jan 2024 04:18:03 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AAC62492BC6;
- Fri, 26 Jan 2024 04:17:43 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 64F05492BC6;
+ Fri, 26 Jan 2024 04:18:01 +0000 (UTC)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>,
 	peterx@redhat.com
-Subject: [PULL 05/15] analyze-migration.py: Remove trick on parsing ramblocks
-Date: Fri, 26 Jan 2024 12:17:15 +0800
-Message-ID: <20240126041725.124562-6-peterx@redhat.com>
+Subject: [PULL 11/15] migration: Take reference to migration state around
+ bg_migration_vm_start_bh
+Date: Fri, 26 Jan 2024 12:17:21 +0800
+Message-ID: <20240126041725.124562-12-peterx@redhat.com>
 In-Reply-To: <20240126041725.124562-1-peterx@redhat.com>
 References: <20240126041725.124562-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
 X-Spam_bar: ---
 X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.5,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,43 +81,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-RAM_SAVE_FLAG_MEM_SIZE contains the total length of ramblock idstr to know
-whether scanning of ramblocks is complete.  Drop the trick.
+We need to hold a reference to the current_migration object around
+async calls to avoid it been freed while still in use.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240117075848.139045-4-peterx@redhat.com
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20240119233922.32588-3-farosas@suse.de
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- scripts/analyze-migration.py | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ migration/migration.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index a39dfb8766..8a254a5b6a 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -151,17 +151,12 @@ def read(self):
-             addr &= ~(self.TARGET_PAGE_SIZE - 1)
+diff --git a/migration/migration.c b/migration/migration.c
+index cf17b68e57..b1213b59ce 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3382,6 +3382,7 @@ static void bg_migration_vm_start_bh(void *opaque)
  
-             if flags & self.RAM_SAVE_FLAG_MEM_SIZE:
--                while True:
-+                total_length = addr
-+                while total_length > 0:
-                     namelen = self.file.read8()
--                    # We assume that no RAM chunk is big enough to ever
--                    # hit the first byte of the address, so when we see
--                    # a zero here we know it has to be an address, not the
--                    # length of the next block.
--                    if namelen == 0:
--                        self.file.file.seek(-1, 1)
--                        break
-                     self.name = self.file.readstr(len = namelen)
-                     len = self.file.read64()
-+                    total_length -= len
-                     self.sizeinfo[self.name] = '0x%016x' % len
-                     if self.write_memory:
-                         print(self.name)
+     vm_resume(s->vm_old_state);
+     migration_downtime_end(s);
++    object_unref(OBJECT(s));
+ }
+ 
+ /**
+@@ -3486,6 +3487,7 @@ static void *bg_migration_thread(void *opaque)
+      * writes to virtio VQs memory which is in write-protected region.
+      */
+     s->vm_start_bh = qemu_bh_new(bg_migration_vm_start_bh, s);
++    object_ref(OBJECT(s));
+     qemu_bh_schedule(s->vm_start_bh);
+ 
+     bql_unlock();
 -- 
 2.43.0
 
