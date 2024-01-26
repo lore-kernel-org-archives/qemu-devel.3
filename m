@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59D75C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CFF1C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNcG-0004SR-MG; Fri, 26 Jan 2024 09:55:36 -0500
+	id 1rTNf0-0005i3-4j; Fri, 26 Jan 2024 09:58:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rTNcD-0004Ni-4v
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:55:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rTNev-0005hi-FO
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:58:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rTNcB-0005sX-JE
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:55:32 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rTNes-0006eQ-O7
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:58:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706280930;
+ s=mimecast20190719; t=1706281095;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=u+xutdsv8OQWpGIwPrCBB7COgMFnmUuub8Q23UENQOg=;
- b=Jz3Ei2wkrB3pidDB0MqtcAWgyXLxfAtyH/sdHM7OL5jdh2MdGyWHfRAZuqsNz/Ju1qqiS/
- MpRPKMMw+k2c2xBJKJCfyJNyJiGWR0ApdjDSNMLDE0QwN2AR6tlBNOzqosG4MFOxm/9yk9
- 5ET1GjvrwETk3UUx2rAIxer1ifN+0J0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UiMCoKLwNFlZXmg0/26CoeZ6ykuGiB8pBUG69g8yN6o=;
+ b=KDVsZZsGZGXWiSslhyEQkKPxw+puFAuJSfKmmDfybHBb6FfbQrPbKvHpEee9ILrp0LcT1n
+ LuwDuGoFL1n91ZwWyqHFZhDecqRF+ru+3OKXQs12deiPPsTBPoW+iDfRYRjiVNhzbHsFuD
+ m7CC2QuNmi1wQNQQonXx6Qvxld3dyoY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-Aclb5Kk_NM2xrFZI8AMMRg-1; Fri, 26 Jan 2024 09:55:29 -0500
-X-MC-Unique: Aclb5Kk_NM2xrFZI8AMMRg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-337d6024098so318674f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:55:28 -0800 (PST)
+ us-mta-215-zBkWdm9HN7KX0LH3nHFdIg-1; Fri, 26 Jan 2024 09:58:13 -0500
+X-MC-Unique: zBkWdm9HN7KX0LH3nHFdIg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3392c5e6dcdso773037f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:58:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706280928; x=1706885728;
+ d=1e100.net; s=20230601; t=1706281091; x=1706885891;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :references:cc:to:content-language:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u+xutdsv8OQWpGIwPrCBB7COgMFnmUuub8Q23UENQOg=;
- b=CF585guoTkhWIS/u3obgotu5MfcW3C593gkpyMlCEAuObXTOAIa4tpXNxnSRurYypG
- UO325rgmm99j5u29XW9oDSUkypaNPSozYrf9+nrnVmt7fa6+zdo/ZOyIQlrShr0a8gyo
- u7BhKcEms5pQnSAsOX9PDIJbfYhAUMA7vXk2RPdk/NZLCDA3UZC1rLWDkIDZi/J3d2eY
- B3bwsklwGKo4FxIm5Eqmsu06eGxEAG3hOG3QtXpsRKI44ZxBEy/jRvkzrf2J+2bXbRDn
- /k1uOyURWXN2pGIHZtxSFh0L/mX2aaqBYaI7epCkR8/7sjtRTIvfZ2ErkPAquoJtZ7sM
- MC0w==
-X-Gm-Message-State: AOJu0YyT4EzW7Hv/pqrhVHwF/DpR5AFU7FnVrWPB7tgh9fTHDzocBq0g
- 1beTIe9+BoEB/jN0SLz7nsgDaZpYsMajs013WoZ51A0thd6c6YeaDbFNWAxb84vNIL2a3UUXuqC
- S11/P+SKS/SFn3vPI9AUrB5d2DVQSGGeFALUJa3OMur7wctNcvo0Y
-X-Received: by 2002:a5d:408a:0:b0:337:6529:6cf6 with SMTP id
- o10-20020a5d408a000000b0033765296cf6mr986747wrp.88.1706280927691; 
- Fri, 26 Jan 2024 06:55:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEqEIvk2kFaWE+6p+67gNRCZPhINgR7+LGUFfyW/xO4tXwJIsC0Wenc4hkyI9a1wgdZVUMRiA==
-X-Received: by 2002:a5d:408a:0:b0:337:6529:6cf6 with SMTP id
- o10-20020a5d408a000000b0033765296cf6mr986731wrp.88.1706280927266; 
- Fri, 26 Jan 2024 06:55:27 -0800 (PST)
+ bh=UiMCoKLwNFlZXmg0/26CoeZ6ykuGiB8pBUG69g8yN6o=;
+ b=U0PMV3K5IZ9NWwN8JcBfcAMHk48t7V4uAm2mYXYvyeKDoTJS5gCrQMFBtdlSjj1/Rd
+ uth/FZkw5SHnOrrIqODR3g6JdAWPOwBn7HhtBiPvz+PmKrHbsuZ3BInS0xEG3aZ19Fh9
+ wOagRMbfyRxpf+Un2/h0RkResyUV2gR1u1qyesMi+1+0mb/+oQ0qlwln0PZBG64IxXz1
+ OkmgF8x8/rDvoVeE0qipQ3vQi4w8mjejyNKXK4Ymj+25g8FtF8aLobm1gmOqJpGI+zU4
+ Kc1BENDtSzVqgG/mHs6CAiBcw2iJPc8tCLK/cOwzeJ8FuqkriZVh3Ed2BXx5x8AAsdF8
+ xFkg==
+X-Gm-Message-State: AOJu0YyofwCML+VD2z/BU+IPvM15bQsnWR74/hJC+oKHxAA3ZUS4uaTT
+ 8J/hGZiroVDjvg24BBrOQu6fHC0qpeH7ZvFKOuh/0izBfmlBGPdd5/Uf6dJPNU20Gqb5mLWB3Ae
+ UL4EA8v239FI3hu/tfO3Xpy2Yrn7O/u6+revJBoY6r5FVIMyIHG8h
+X-Received: by 2002:a5d:4d4d:0:b0:337:d989:151b with SMTP id
+ a13-20020a5d4d4d000000b00337d989151bmr666975wru.23.1706281091684; 
+ Fri, 26 Jan 2024 06:58:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQFRdIn65agjeL9w6CHxSKXBYk6Io9/rYTWq/PbX3qs8RyyCnz2Zx7IpSOyx5LtcWOT1Zo8w==
+X-Received: by 2002:a5d:4d4d:0:b0:337:d989:151b with SMTP id
+ a13-20020a5d4d4d000000b00337d989151bmr666971wru.23.1706281091291; 
+ Fri, 26 Jan 2024 06:58:11 -0800 (PST)
 Received: from ?IPV6:2003:cb:c70a:5100:7e95:22ff:3f9b:1e92?
  (p200300cbc70a51007e9522ff3f9b1e92.dip0.t-ipconnect.de.
  [2003:cb:c70a:5100:7e95:22ff:3f9b:1e92])
  by smtp.gmail.com with ESMTPSA id
- cc9-20020a5d5c09000000b00339443be964sm171464wrb.91.2024.01.26.06.55.25
+ n12-20020a5d51cc000000b003392a486758sm1420832wrv.99.2024.01.26.06.58.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 06:55:26 -0800 (PST)
-Message-ID: <6bc40e34-7bef-46ea-8b28-2cc76780dc65@redhat.com>
-Date: Fri, 26 Jan 2024 15:55:25 +0100
+ Fri, 26 Jan 2024 06:58:10 -0800 (PST)
+Message-ID: <12d89ebd-3497-4e60-8900-7a7a1ffbd6e2@redhat.com>
+Date: Fri, 26 Jan 2024 15:58:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 45/66] memory: Introduce
- memory_region_init_ram_guest_memfd()
+Subject: Re: [PATCH v4 33/66] i386/tdx: Make memory type private by default
 Content-Language: en-US
 To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
@@ -88,7 +87,7 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Gerd Hoffmann <kraxel@redhat.com>, Isaku Yamahata
  <isaku.yamahata@gmail.com>, Chenyi Qiang <chenyi.qiang@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
- <20240125032328.2522472-46-xiaoyao.li@intel.com>
+ <20240125032328.2522472-34-xiaoyao.li@intel.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -135,17 +134,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240125032328.2522472-46-xiaoyao.li@intel.com>
+In-Reply-To: <20240125032328.2522472-34-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -163,63 +162,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.01.24 04:23, Xiaoyao Li wrote:
-> Introduce memory_region_init_ram_guest_memfd() to allocate private
-> guset memfd on the MemoryRegion initialization. It's for the use case of
-> TDVF, which must be private on TDX case.
+On 25.01.24 04:22, Xiaoyao Li wrote:
+> By default (due to the recent UPM change), restricted memory attribute is
+> shared.  Convert the memory region from shared to private at the memory
+> slot creation time.
 > 
+> add kvm region registering function to check the flag
+> and convert the region, and add memory listener to TDX guest code to set
+> the flag to the possible memory region.
+> 
+> Without this patch
+> - Secure-EPT violation on private area
+> - KVM_MEMORY_FAULT EXIT (kvm -> qemu)
+> - qemu converts the 4K page from shared to private
+> - Resume VCPU execution
+> - Secure-EPT violation again
+> - KVM resolves EPT Violation
+> This also prevents huge page because page conversion is done at 4K
+> granularity.  Although it's possible to merge 4K private mapping into
+> 2M large page, it slows guest boot.
+> 
+> With this patch
+> - After memory slot creation, convert the region from private to shared
+> - Secure-EPT violation on private area.
+> - KVM resolves EPT Violation
+> 
+> Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > ---
->   include/exec/memory.h |  6 ++++++
->   system/memory.c       | 27 +++++++++++++++++++++++++++
->   2 files changed, 33 insertions(+)
+>   include/exec/memory.h |  1 +
+>   target/i386/kvm/tdx.c | 20 ++++++++++++++++++++
+>   2 files changed, 21 insertions(+)
 > 
 > diff --git a/include/exec/memory.h b/include/exec/memory.h
-> index f25959f6d30f..3a7f41b030e8 100644
+> index 7229fcc0415f..f25959f6d30f 100644
 > --- a/include/exec/memory.h
 > +++ b/include/exec/memory.h
-> @@ -1607,6 +1607,12 @@ bool memory_region_init_ram(MemoryRegion *mr,
->                               uint64_t size,
->                               Error **errp);
+> @@ -850,6 +850,7 @@ struct IOMMUMemoryRegion {
+>   #define MEMORY_LISTENER_PRIORITY_MIN            0
+>   #define MEMORY_LISTENER_PRIORITY_ACCEL          10
+>   #define MEMORY_LISTENER_PRIORITY_DEV_BACKEND    10
+> +#define MEMORY_LISTENER_PRIORITY_ACCEL_HIGH     20
 >   
-> +bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
-> +                                        Object *owner,
-> +                                        const char *name,
-> +                                        uint64_t size,
-> +                                        Error **errp);
-> +
 >   /**
->    * memory_region_init_rom: Initialize a ROM memory region.
->    *
-> diff --git a/system/memory.c b/system/memory.c
-> index 74f647f2e56f..41049d3e4c9a 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -3619,6 +3619,33 @@ bool memory_region_init_ram(MemoryRegion *mr,
->       return true;
+>    * struct MemoryListener: callbacks structure for updates to the physical memory map
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 7b250d80bc1d..f892551821ce 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -19,6 +19,7 @@
+>   #include "standard-headers/asm-x86/kvm_para.h"
+>   #include "sysemu/kvm.h"
+>   #include "sysemu/sysemu.h"
+> +#include "exec/address-spaces.h"
+>   
+>   #include "hw/i386/x86.h"
+>   #include "kvm_i386.h"
+> @@ -621,6 +622,19 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>       return 0;
 >   }
 >   
-> +bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
-> +                                        Object *owner,
-> +                                        const char *name,
-> +                                        uint64_t size,
-> +                                        Error **errp)
+> +static void tdx_guest_region_add(MemoryListener *listener,
+> +                                 MemoryRegionSection *section)
 > +{
-> +    DeviceState *owner_dev;
-> +
-> +    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
-> +                                                RAM_GUEST_MEMFD, errp)) {
-> +        return false;
-> +    }
-> +
-> +    memory_region_set_default_private(mr);
+> +    memory_region_set_default_private(section->mr);
+> +}
 
-It would be much cleaner to just pass the flag when initializing the 
-memory region.
+That looks fishy. Why is TDX to decide what happens to other memory 
+regions it doesn't own?
 
-Ideally, we can get rid of memory_region_set_default_private().
+We should define that behavior when creating these memory region, and 
+TDX could sanity check that they have been setup properly.
 
-What you do in patch #33 feels like a layer violation.
+Let me ask differently: For which memory region where we have 
+RAM_GUEST_MEMFD set would we *not* want to set private as default right 
+from the start?
 
 -- 
 Cheers,
