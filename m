@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE2CC47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C830C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTUKb-0000ov-Tu; Fri, 26 Jan 2024 17:05:50 -0500
+	id 1rTULT-0003m9-7H; Fri, 26 Jan 2024 17:06:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKD-00082B-NI
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:05:26 -0500
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUL1-0002Fj-9e
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:06:20 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKA-00043L-PD
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:05:24 -0500
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-5100cb64e7dso1320421e87.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:05:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKw-0004V1-Lm
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:06:12 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-40ea5653f6bso15444235e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:06:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706306717; x=1706911517; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706306768; x=1706911568; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=woNcbihCgyljuhpYMr+Cr15jve2C8HR8mCIZjTtoatM=;
- b=gF2YX61PLXLmtfzxzgXb6aQWR5AHsmxVTZ49bZ8AvKD6/E31T5IhZnA9/U9mw5Chr+
- RYkiP2Mvn4c6tt0AwmDIUnnoXITvRxwpbKEm/glKzd/q2Vujzr2u7v5jvNCFjMmnHQpf
- uyj6NQ1ymF/rgN7nBu8jQrCJgPT5pIwZoApwik0RkV6nsBEySP6xWVpkWDOelvktMAxU
- SIwDBq+xR6yoFz9xqxKRAgm9JyNBOf3RuP52TA5X7J3kRfPoK3NDdaoklO1z33XnjgTU
- 7Ju5VFduRH+21+99hxDCIix4++9TS2vS8c/0dI2JxAhX94G4j3slrMjk42NeLR6SADYZ
- HUQg==
+ bh=zizmHElFAIvWicITNbOdvMqLrgaV6VK2Xkw5hMOGCk4=;
+ b=nFQXn2wn0su/2fhfH36G5CywlddMX3O2r6a3CmIWy4b3QVYIfaX7N3FdpIvlU7XQVr
+ QRlxGwmtqQLcCHcUUn5UpInwaaELgX72V5N0hfHS7E6824mn103VxaMrTcL/UNqhvbny
+ LL5ZEN3tejjoilawlIwmuGCZbJ6Opy/TojRMxsrlYzgNtsPdDnC4qjPsgmskl1VhIW+G
+ bLRR9TTL8x2KN2GKOytQ57kC3ugUJFQBY4kmrzGZZOYyhTBzKvuVxnIIZt32fTu7OVcB
+ ZZHAoY9/3IcFNORUQC+4Xju50iNpy5Cma2Jz/kfioUAYMO1VbXerxsH/exJ9kUGVLB2I
+ tS3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706306717; x=1706911517;
+ d=1e100.net; s=20230601; t=1706306768; x=1706911568;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=woNcbihCgyljuhpYMr+Cr15jve2C8HR8mCIZjTtoatM=;
- b=cBVwNzV/al3CMZccC9asUijXVh8jzhaOr81U5OT5p4nXq4q46wsaJQn/+oGxUBLeol
- gE0X+Y86KZ4XFFiq3ZCqjv/W/0WT21eq+Di8DKJuzX5A508BDmHshjFEa0e4ON5C8OLE
- YwWhK7LxJ3Vbp1yr4xxm7xBS11/JsK2Di6UcWPx0d63bWR7FDHAEhPllQ+RkIYh78yNA
- 3dTZF1x+iAEJas5454r8ncSZSFaB9Fuh9fPXUOD4l3UL+Y9Vy2RZNYbBAxxli8Ui4L2n
- OWVzhlczhyXrpj9bMSw1pCybp0KqRcsjTpxrVQBgZlahN67nfHT4WwKRdgIXhqESUp2n
- aOjw==
-X-Gm-Message-State: AOJu0YyM+Y+fDHHosF1wGcSzMuTYeUUfrY3EqnvucDvuZUxltROiAypq
- 0rEUH99cFsjlAllsL6Cq/iTx0SkJwbdhEMuBwsbnLucXSsuBXxffrosUKcj5lGth2gBp6Z2EE9b
- h
-X-Google-Smtp-Source: AGHT+IGEfUSbbgqMLQdvSJbtXPFqUYX6PGTjtPfy/2qbsLf9jCgJGYcSa5vmpQHmXErBdW8QamwwYA==
-X-Received: by 2002:a2e:8ed5:0:b0:2cc:e9e6:e451 with SMTP id
- e21-20020a2e8ed5000000b002cce9e6e451mr172509ljl.86.1706306717285; 
- Fri, 26 Jan 2024 14:05:17 -0800 (PST)
+ bh=zizmHElFAIvWicITNbOdvMqLrgaV6VK2Xkw5hMOGCk4=;
+ b=UYN8Sc0ZjPT6nHYYZ7Q/ij1Q6Hd8THo4YHyft0CLehMU7DEmJh5+Gd1fmm4AT6Qu/n
+ pOrf8I/6L1HxGX/CTuS1jYf4yLshclvs4OQFldpVN09l9tMZ1getkzmtLnGu6Zs2Nn+d
+ YMMw0Xc1HlwKkx0B9s0W54DsHSxtF83OINtQUkUO+JTPwYfGb0aiMTvcKI+FwPtwSDZ+
+ wccEPApNh81fgSzgT/BoJ32P4G1n9Xg0p+CjS2mTRG9Wk1TGbqwloVdlAVF3Xi8Webz9
+ nVkURJfAjoY3/FQhx+b4y+lRNEZu9abayzAPKlu5A86g5cVWQBh3cIm+v9l27CZGgo+H
+ HqTA==
+X-Gm-Message-State: AOJu0Yw8weDlCoQquRy3bTMkSRHFLJW2yYVaUep3KXoDRxEPa1RX/zvq
+ 1gcPg0ck6vghU4xQ5wPngLaIzhYmU3ZcNnRT2ba8Xq+6ZwOOYJFWmEJa+uIcLQ3XnAjWLqypPS2
+ s
+X-Google-Smtp-Source: AGHT+IENT++zTxGze1ZxY54yZNYP0exfgleA9HYNxNr2GozYuCeOr5aCqtrcjo6kkJDEzytT4sLd9g==
+X-Received: by 2002:a05:600c:a082:b0:40e:e703:b1ec with SMTP id
+ jh2-20020a05600ca08200b0040ee703b1ecmr307070wmb.24.1706306768281; 
+ Fri, 26 Jan 2024 14:06:08 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.142.39])
  by smtp.gmail.com with ESMTPSA id
- n1-20020a056402434100b0055d1d0b4a4asm1002967edc.18.2024.01.26.14.05.15
+ u16-20020a05600c19d000b0040e4733aecbsm2912892wmq.15.2024.01.26.14.06.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 26 Jan 2024 14:05:16 -0800 (PST)
+ Fri, 26 Jan 2024 14:06:07 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
@@ -66,19 +66,21 @@ Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 11/23] target/m68k: Prefer fast cpu_env() over slower CPU
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH v2 19/23] target/s390x: Prefer fast cpu_env() over slower CPU
  QOM cast macro
-Date: Fri, 26 Jan 2024 23:03:53 +0100
-Message-ID: <20240126220407.95022-12-philmd@linaro.org>
+Date: Fri, 26 Jan 2024 23:04:01 +0100
+Message-ID: <20240126220407.95022-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240126220407.95022-1-philmd@linaro.org>
 References: <20240126220407.95022-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,230 +108,140 @@ in scripts/coccinelle/cpu_env.cocci_template header.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/cpu.c       | 30 ++++++++++--------------------
- target/m68k/gdbstub.c   |  6 ++----
- target/m68k/helper.c    |  3 +--
- target/m68k/m68k-semi.c |  6 ++----
- target/m68k/op_helper.c | 11 +++--------
- target/m68k/translate.c |  3 +--
- 6 files changed, 19 insertions(+), 40 deletions(-)
+ target/s390x/cpu-dump.c        |  3 +--
+ target/s390x/gdbstub.c         |  6 ++----
+ target/s390x/helper.c          |  3 +--
+ target/s390x/kvm/kvm.c         |  6 ++----
+ target/s390x/tcg/excp_helper.c | 11 +++--------
+ target/s390x/tcg/translate.c   |  3 +--
+ 6 files changed, 10 insertions(+), 22 deletions(-)
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index 1421e77c2c..c122fd96fb 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -117,8 +117,7 @@ static ObjectClass *m68k_cpu_class_by_name(const char *cpu_model)
+diff --git a/target/s390x/cpu-dump.c b/target/s390x/cpu-dump.c
+index ffa9e94d84..69cc9f7746 100644
+--- a/target/s390x/cpu-dump.c
++++ b/target/s390x/cpu-dump.c
+@@ -27,8 +27,7 @@
  
- static void m5206_cpu_initfn(Object *obj)
+ void s390_cpu_dump_state(CPUState *cs, FILE *f, int flags)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
+     int i;
  
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_MOVEFROMSR_PRIV);
-@@ -127,8 +126,7 @@ static void m5206_cpu_initfn(Object *obj)
- /* Base feature set, including isns. for m68k family */
- static void m68000_cpu_initfn(Object *obj)
+     qemu_fprintf(f, "PSW=mask %016" PRIx64 " addr %016" PRIx64,
+diff --git a/target/s390x/gdbstub.c b/target/s390x/gdbstub.c
+index 6fbfd41bc8..f02fa316e5 100644
+--- a/target/s390x/gdbstub.c
++++ b/target/s390x/gdbstub.c
+@@ -30,8 +30,7 @@
+ 
+ int s390_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
  
-     m68k_set_feature(env, M68K_FEATURE_M68K);
-     m68k_set_feature(env, M68K_FEATURE_USP);
-@@ -141,8 +139,7 @@ static void m68000_cpu_initfn(Object *obj)
-  */
- static void m68010_cpu_initfn(Object *obj)
+     switch (n) {
+     case S390_PSWM_REGNUM:
+@@ -46,8 +45,7 @@ int s390_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int s390_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
+     target_ulong tmpl = ldtul_p(mem_buf);
  
-     m68000_cpu_initfn(obj);
-     m68k_set_feature(env, M68K_FEATURE_M68010);
-@@ -161,8 +158,7 @@ static void m68010_cpu_initfn(Object *obj)
-  */
- static void m68020_cpu_initfn(Object *obj)
+     switch (n) {
+diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+index d76c06381b..00d5d403f3 100644
+--- a/target/s390x/helper.c
++++ b/target/s390x/helper.c
+@@ -139,8 +139,7 @@ void do_restart_interrupt(CPUS390XState *env)
+ void s390_cpu_recompute_watchpoints(CPUState *cs)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
+     const int wp_flags = BP_CPU | BP_MEM_WRITE | BP_STOP_BEFORE_ACCESS;
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
  
-     m68010_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68010);
-@@ -192,8 +188,7 @@ static void m68020_cpu_initfn(Object *obj)
-  */
- static void m68030_cpu_initfn(Object *obj)
+     /* We are called when the watchpoints have changed. First
+        remove them all.  */
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 888d6c1a1c..4ce809c5d4 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -474,8 +474,7 @@ static int can_sync_regs(CPUState *cs, int regs)
+ 
+ int kvm_arch_put_registers(CPUState *cs, int level)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
+     struct kvm_fpu fpu = {};
+     int r;
+     int i;
+@@ -601,8 +600,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
  
-     m68020_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68020);
-@@ -219,8 +214,7 @@ static void m68030_cpu_initfn(Object *obj)
-  */
- static void m68040_cpu_initfn(Object *obj)
+ int kvm_arch_get_registers(CPUState *cs)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
+     struct kvm_fpu fpu;
+     int i, r;
  
-     m68030_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68030);
-@@ -240,8 +234,7 @@ static void m68040_cpu_initfn(Object *obj)
-  */
- static void m68060_cpu_initfn(Object *obj)
+diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
+index b875bf14e5..f1c33f7967 100644
+--- a/target/s390x/tcg/excp_helper.c
++++ b/target/s390x/tcg/excp_helper.c
+@@ -90,10 +90,7 @@ void HELPER(data_exception)(CPUS390XState *env, uint32_t dxc)
+ static G_NORETURN
+ void do_unaligned_access(CPUState *cs, uintptr_t retaddr)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68040_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68040);
-@@ -254,8 +247,7 @@ static void m68060_cpu_initfn(Object *obj)
- 
- static void m5208_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_APLUSC);
-@@ -267,8 +259,7 @@ static void m5208_cpu_initfn(Object *obj)
- 
- static void cfv4e_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_B);
-@@ -281,8 +272,7 @@ static void cfv4e_cpu_initfn(Object *obj)
- 
- static void any_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_B);
-diff --git a/target/m68k/gdbstub.c b/target/m68k/gdbstub.c
-index 1e5f033a12..15547e2313 100644
---- a/target/m68k/gdbstub.c
-+++ b/target/m68k/gdbstub.c
-@@ -23,8 +23,7 @@
- 
- int m68k_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
- 
-     if (n < 8) {
-         /* D0-D7 */
-@@ -50,8 +49,7 @@ int m68k_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int m68k_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
-     uint32_t tmp;
- 
-     tmp = ldl_p(mem_buf);
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 14508dfa11..85f3cd1680 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -894,8 +894,7 @@ txfail:
- 
- hwaddr m68k_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
-     hwaddr phys_addr;
-     int prot;
-     int access_type;
-diff --git a/target/m68k/m68k-semi.c b/target/m68k/m68k-semi.c
-index b4ffb70f8b..546cff2246 100644
---- a/target/m68k/m68k-semi.c
-+++ b/target/m68k/m68k-semi.c
-@@ -77,8 +77,7 @@ static int host_to_gdb_errno(int err)
- 
- static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
- 
-     target_ulong args = env->dregs[1];
-     if (put_user_u32(ret, args) ||
-@@ -95,8 +94,7 @@ static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
- 
- static void m68k_semi_u64_cb(CPUState *cs, uint64_t ret, int err)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
- 
-     target_ulong args = env->dregs[1];
-     if (put_user_u32(ret >> 32, args) ||
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index 1ce850bbc5..851cca640d 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -441,10 +441,7 @@ static void do_interrupt_all(CPUM68KState *env, int is_hw)
- 
- void m68k_cpu_do_interrupt(CPUState *cs)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
 -
--    do_interrupt_all(env, 0);
-+    do_interrupt_all(cpu_env(cs), 0);
+-    tcg_s390_program_interrupt(env, PGM_SPECIFICATION, retaddr);
++    tcg_s390_program_interrupt(cpu_env(cs), PGM_SPECIFICATION, retaddr);
  }
  
- static inline void do_interrupt_m68k_hardirq(CPUM68KState *env)
-@@ -457,8 +454,7 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
-                                  int mmu_idx, MemTxAttrs attrs,
-                                  MemTxResult response, uintptr_t retaddr)
+ #if defined(CONFIG_USER_ONLY)
+@@ -146,8 +143,7 @@ bool s390_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                        MMUAccessType access_type, int mmu_idx,
+                        bool probe, uintptr_t retaddr)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
+     target_ulong vaddr, raddr;
+     uint64_t asc, tec;
+     int prot, excp;
+@@ -600,8 +596,7 @@ bool s390_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  
-     cpu_restore_state(cs, retaddr);
- 
-@@ -511,8 +507,7 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
- 
- bool m68k_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ void s390x_cpu_debug_excp_handler(CPUState *cs)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
+     CPUWatchpoint *wp_hit = cs->watchpoint_hit;
  
-     if (interrupt_request & CPU_INTERRUPT_HARD
-         && ((env->sr & SR_I) >> SR_I_SHIFT) < env->pending_level) {
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 4a0b0b2703..9688476a7b 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -6108,8 +6108,7 @@ static double floatx80_to_double(CPUM68KState *env, uint16_t high, uint64_t low)
- 
- void m68k_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     if (wp_hit && wp_hit->flags & BP_CPU) {
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 8df00b7df9..9995689bc8 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -6558,8 +6558,7 @@ void s390x_restore_state_to_opc(CPUState *cs,
+                                 const TranslationBlock *tb,
+                                 const uint64_t *data)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
-     int i;
-     uint16_t sr;
-     for (i = 0; i < 8; i++) {
+-    S390CPU *cpu = S390_CPU(cs);
+-    CPUS390XState *env = &cpu->env;
++    CPUS390XState *env = cpu_env(cs);
+     int cc_op = data[1];
+ 
+     env->psw.addr = data[0];
 -- 
 2.41.0
 
