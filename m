@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 255B5C48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6D3C47DDF
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNHF-0002HQ-4a; Fri, 26 Jan 2024 09:33:53 -0500
+	id 1rTNHJ-0002M8-2A; Fri, 26 Jan 2024 09:33:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHC-0002Eu-Ga
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:50 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1rTNHH-0002K9-BU
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHA-0007sf-FY
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:50 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33922d2cb92so650785f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:48 -0800 (PST)
+ id 1rTNHE-0007wt-Tn
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3392291b21bso634144f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706279627; x=1706884427; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706279631; x=1706884431; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PQlpwttdu93pWOUx8f8ZpRO+tP7SjE8rg5GEXBoZTSo=;
- b=seGSi7NnkrNRe7w71GD2OVmjB1BCv5HjLtsVd6FS85WtfafRWb01v+7W7HVgf3kgRj
- sOGHF7N+UiZ+jfl+mikfAib7i0FxzqP2xkBfAviMAf3HV3jbMp0m2upeTH71k5N54qkf
- Vg7SJBnPTsKrJRlPFWzGglqtgyvYmlmgwNp73w6ZhxDX4pRPyHL6yGGlTQGUUsnHWuMv
- XHwoO4LWsuKJJQw5r5Fh+2o7Ih/l3DQS7w2R9lWgxPBdbUU9pEDmU4C6VPKk/WjEJAJ8
- Yz75fCQ+QYQhqoEOAovg8zB6CsKii1FP9zA7yNcju6jK6QRZcHIXqhyJWUMlrcBSuiJ5
- KyLw==
+ :reply-to; bh=8W6Dmg/Z15G38A2ANLX0PCG/NULptGOn1F3YALWfvag=;
+ b=fkEx0EjjHRzF3rvznw7+RqB3EJFj9s6om0y4h137cxnTPcjhjbuATTUIOSsqWrcku8
+ mtufP+rbCoJdlWs5RVX6n+fYKRnYYiOEmQfe6PZYD0g/Zo2B6naQJR1X2qbr+Uopt72w
+ 0tmlUG7Npzno68sfDbxP+zKRu2CvhgXpmvGH8yBp/wZYJvn4rAzipZhRgQwRuHYZUr3l
+ 9Yguqo8be9o2xbdzlyVl1o0KP8n7g5Hv3PCTN/PvmACp1U+ZqaOFt/ZlKwxen1SJ4EHP
+ 8smtBXJUIYUu4+okXQJqTj0DEQiU7QBDJuzxXHaASW9+Cr0GBUNMWCfGTP5AMElRPPL2
+ E16g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706279627; x=1706884427;
+ d=1e100.net; s=20230601; t=1706279631; x=1706884431;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PQlpwttdu93pWOUx8f8ZpRO+tP7SjE8rg5GEXBoZTSo=;
- b=tmgaf6S93km5ZMVqcy/2BVPXjHZjVIP2MyskX69fwl3mwcgx/gF1UqqM3mUiNgcr+4
- EJJoJNybep0rUkGipFyh5b6WyT+C/1lLrUM+vkIPKPJfxd2hDHqfkfAuwtCRMeEcwGfe
- 47BZuSaElsozRVMUQJkoxoYOzn+KJ1553d4Wimz1RfMeF0Y89ud6ywzY30lJqH9hxu0D
- CooChHRrFRUlLKgoGQte67/wCm45E9Fp7kX8RaHsrRjDIjlmki3xmrLiJvD76LPxZRFm
- BpGjLJjVsHooqWNw6Xp+phnTAHpKm6FWWq+UGk+OxRsApyOiihuvA1mV0CTwxByyDVNv
- sL4w==
-X-Gm-Message-State: AOJu0Yzt+GLzOsecWHz9ccbXFmTa5/q9nP4oIO1JOb/rn1yKbLIvPnEh
- ihC1UUOoOZWQFKi+Q4lGzZvlL9LaGC5UfadQW4fjbTU4ZRv1gQNJB2Jy0rGXGOVOSkUwHJvzSD+
- l
-X-Google-Smtp-Source: AGHT+IGuBCfmCEmJaHUcfVSPNBDGHt1VP1D8fr6a+qLf7wsrg+sWOuft+daQEJYCbDZC25qzk3/o3Q==
-X-Received: by 2002:adf:eac9:0:b0:33a:ea1:538f with SMTP id
- o9-20020adfeac9000000b0033a0ea1538fmr736911wrn.121.1706279627192; 
- Fri, 26 Jan 2024 06:33:47 -0800 (PST)
+ bh=8W6Dmg/Z15G38A2ANLX0PCG/NULptGOn1F3YALWfvag=;
+ b=IOBaDbz5SZDeSoASO0zLxrRExCKf4sFrayV3pFG3I6oTzX1quiesA6G3G8eZhtpZvT
+ MWplpQI2VEamu93eR6Kl7Tg3FfD2a8CvR7NBMPSLIwi+Ba8nD7ro1NyylNYCYbiscj7s
+ 3Xr3IUNFZa7L07CHYx+KI7lgNzWVJazbLQukwVsBhfVhzQ1eMQzH0qTITrHpmnND3whx
+ WyAG6oSNHtze2Vci71lQ/XS2/Hoh4RJowrfKq1RVoZo14M9kFFcjV/viGp+zdz4kIsWP
+ 0pcxNathGRhf9DJ8Xg6fBXgOJiT1+fzFQ6LA1X55kPtLgEq+8j0qduGfVbn1SMs/WKM1
+ OTXA==
+X-Gm-Message-State: AOJu0YxYEcTr23t2LLxyRvFhvmc8bbWleJiZ8hp+oQO/LDGOYgylT+H5
+ r7qkOPNMHNA0gNX8zH59wN+tAIeHfqFV1303ZM5eXn3M9bq2X2jo/Ep5hu+Xt74XvbCsvnY00Zm
+ V
+X-Google-Smtp-Source: AGHT+IF9uk3c1ASXF2iTrylbz01F2lZILul21p0dTjJY97LbAxFj3xdLDYkfRD/yqN8e6kmrAfG4gQ==
+X-Received: by 2002:a5d:6303:0:b0:337:9b58:6b8d with SMTP id
+ i3-20020a5d6303000000b003379b586b8dmr926115wru.112.1706279631407; 
+ Fri, 26 Jan 2024 06:33:51 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.46
+ n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:33:47 -0800 (PST)
+ Fri, 26 Jan 2024 06:33:51 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/36] hw/arm/xilinx_zynq: Include missing 'exec/tswap.h' header
-Date: Fri, 26 Jan 2024 14:33:16 +0000
-Message-Id: <20240126143341.2101237-12-peter.maydell@linaro.org>
+Subject: [PULL 21/36] hw/cpu/a9mpcore: Build it only once
+Date: Fri, 26 Jan 2024 14:33:26 +0000
+Message-Id: <20240126143341.2101237-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
 References: <20240126143341.2101237-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,35 +96,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-hw/arm/xilinx_zynq.c calls tswap32() which is declared
-in "exec/tswap.h". Include it in order to avoid when
-refactoring unrelated headers:
-
-  hw/arm/xilinx_zynq.c:103:31: error: call to undeclared function 'tswap32';
-  ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-          board_setup_blob[n] = tswap32(board_setup_blob[n]);
-                                ^
+hw/cpu/a9mpcore.c doesn't require "cpu.h" anymore.
+By removing it, the unit become target agnostic:
+we can build it once. Update meson.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240118200643.29037-3-philmd@linaro.org
+Message-id: 20240118200643.29037-13-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/xilinx_zynq.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/cpu/a9mpcore.c  | 2 +-
+ hw/cpu/meson.build | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index dbb9793aa13..d4c817ecdc0 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -37,6 +37,7 @@
- #include "hw/qdev-clock.h"
- #include "sysemu/reset.h"
- #include "qom/object.h"
-+#include "exec/tswap.h"
+diff --git a/hw/cpu/a9mpcore.c b/hw/cpu/a9mpcore.c
+index d03f57e579b..c30ef72c669 100644
+--- a/hw/cpu/a9mpcore.c
++++ b/hw/cpu/a9mpcore.c
+@@ -15,7 +15,7 @@
+ #include "hw/irq.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/core/cpu.h"
+-#include "cpu.h"
++#include "target/arm/cpu-qom.h"
  
- #define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
- OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
+ #define A9_GIC_NUM_PRIORITY_BITS    5
+ 
+diff --git a/hw/cpu/meson.build b/hw/cpu/meson.build
+index 6d319947ca0..38cdcfbe572 100644
+--- a/hw/cpu/meson.build
++++ b/hw/cpu/meson.build
+@@ -2,5 +2,5 @@ system_ss.add(files('core.c', 'cluster.c'))
+ 
+ system_ss.add(when: 'CONFIG_ARM11MPCORE', if_true: files('arm11mpcore.c'))
+ system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview_mpcore.c'))
+-specific_ss.add(when: 'CONFIG_A9MPCORE', if_true: files('a9mpcore.c'))
++system_ss.add(when: 'CONFIG_A9MPCORE', if_true: files('a9mpcore.c'))
+ specific_ss.add(when: 'CONFIG_A15MPCORE', if_true: files('a15mpcore.c'))
 -- 
 2.34.1
 
