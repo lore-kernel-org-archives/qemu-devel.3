@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4ACAC48286
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C098CC47422
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 04:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTDfF-0001mX-Ml; Thu, 25 Jan 2024 23:18:01 -0500
+	id 1rTDf3-0001k4-MN; Thu, 25 Jan 2024 23:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDfE-0001m2-HZ
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:18:00 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDf2-0001ja-9g
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDfC-0004st-DL
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:18:00 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDf0-0004pb-Kj
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706242677;
+ s=mimecast20190719; t=1706242665;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u9E9ZiyB8lolyP1h8HTT4gHWB7P2p+lbkjksyMOxvG8=;
- b=WxQ4Ant3ogBf2EX00LImQ1/Q71mRjek7KNcyefH+g54U4KrkqOR9uWpNL3habxK1Q+I/L+
- sXFFyD4neluXnxYdvELxLBUPR5jdu8wFgFdNWLu/yybZgNL2BDaLQrE2dxAqFQxHWJIkwx
- 3l9mgNmm5Rq8BJ2zsHvLTddmSJAT6A8=
+ bh=yOIHVYyv54egdlVoMdUVLVFk4lzZ/xlT1WvDt+htyXc=;
+ b=H/L8B6CDo6mCUnCsoGj2c8DU2vEyq9W9SvrxIPD5Fh1QQbB9yCheuAmhPnxOrVe4MOK8ly
+ szYgFXwBOdXx47Ef9r3X0XPbDAGH12FGG7LTBjAaaGbeOcJux+wNDo6SXcMP0nbrK67zGu
+ jOikKgmMaxKi6JtjTnN3A678RDDwPy4=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-6-sCae4bOGGg6_SeUIahjw-1; Thu,
- 25 Jan 2024 23:17:52 -0500
-X-MC-Unique: 6-sCae4bOGGg6_SeUIahjw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-1j3nIyv_Pci_P4-hYm_S3A-1; Thu,
+ 25 Jan 2024 23:17:43 -0500
+X-MC-Unique: 1j3nIyv_Pci_P4-hYm_S3A-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9A48929AB3E4;
- Fri, 26 Jan 2024 04:17:52 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DA4961C07F2B;
+ Fri, 26 Jan 2024 04:17:42 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8923B492BC6;
- Fri, 26 Jan 2024 04:17:50 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id CBF83492BC6;
+ Fri, 26 Jan 2024 04:17:40 +0000 (UTC)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>,
 	peterx@redhat.com
-Subject: [PULL 07/15] ci: Add a migration compatibility test job
-Date: Fri, 26 Jan 2024 12:17:17 +0800
-Message-ID: <20240126041725.124562-8-peterx@redhat.com>
+Subject: [PULL 04/15] migration: Drop unnecessary check in ram's
+ pending_exact()
+Date: Fri, 26 Jan 2024 12:17:14 +0800
+Message-ID: <20240126041725.124562-5-peterx@redhat.com>
 In-Reply-To: <20240126041725.124562-1-peterx@redhat.com>
 References: <20240126041725.124562-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -80,109 +81,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Peter Xu <peterx@redhat.com>
 
-The migration tests have support for being passed two QEMU binaries to
-test migration compatibility.
+When the migration frameworks fetches the exact pending sizes, it means
+this check:
 
-Add a CI job that builds the lastest release of QEMU and another job
-that uses that version plus an already present build of the current
-version and run the migration tests with the two, both as source and
-destination. I.e.:
+  remaining_size < s->threshold_size
 
- old QEMU (n-1) -> current QEMU (development tree)
- current QEMU (development tree) -> old QEMU (n-1)
+Must have been done already, actually at migration_iteration_run():
 
-The purpose of this CI job is to ensure the code we're about to merge
-will not cause a migration compatibility problem when migrating the
-next release (which will contain that code) to/from the previous
-release.
+    if (must_precopy <= s->threshold_size) {
+        qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
 
-The version of migration-test used will be the one matching the older
-QEMU. That way we can avoid special-casing new tests that wouldn't be
-compatible with the older QEMU.
+That should be after one round of ram_state_pending_estimate().  It makes
+the 2nd check meaningless and can be dropped.
 
-Note: for user forks, the version tags need to be pushed to gitlab
-otherwise it won't be able to checkout a different version.
+To say it in another way, when reaching ->state_pending_exact(), we
+unconditionally sync dirty bits for precopy.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240118164951.30350-3-farosas@suse.de
+Then we can drop migrate_get_current() there too.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20240117075848.139045-3-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 60 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ migration/ram.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index e1c7801598..f0b0edc634 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -167,6 +167,66 @@ build-system-centos:
-       x86_64-softmmu rx-softmmu sh4-softmmu nios2-softmmu
-     MAKE_CHECK_ARGS: check-build
+diff --git a/migration/ram.c b/migration/ram.c
+index c0cdcccb75..d5b7cd5ac2 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3213,21 +3213,20 @@ static void ram_state_pending_estimate(void *opaque, uint64_t *must_precopy,
+ static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
+                                     uint64_t *can_postcopy)
+ {
+-    MigrationState *s = migrate_get_current();
+     RAMState **temp = opaque;
+     RAMState *rs = *temp;
++    uint64_t remaining_size;
  
-+# Previous QEMU release. Used for cross-version migration tests.
-+build-previous-qemu:
-+  extends: .native_build_job_template
-+  artifacts:
-+    when: on_success
-+    expire_in: 2 days
-+    paths:
-+      - build-previous
-+    exclude:
-+      - build-previous/**/*.p
-+      - build-previous/**/*.a.p
-+      - build-previous/**/*.fa.p
-+      - build-previous/**/*.c.o
-+      - build-previous/**/*.c.o.d
-+      - build-previous/**/*.fa
-+  needs:
-+    job: amd64-opensuse-leap-container
-+  variables:
-+    IMAGE: opensuse-leap
-+    TARGETS: x86_64-softmmu aarch64-softmmu
-+  before_script:
-+    - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
-+    - git checkout $QEMU_PREV_VERSION
-+  after_script:
-+    - mv build build-previous
+-    uint64_t remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+-
+-    if (!migration_in_postcopy() && remaining_size < s->threshold_size) {
++    if (!migration_in_postcopy()) {
+         bql_lock();
+         WITH_RCU_READ_LOCK_GUARD() {
+             migration_bitmap_sync_precopy(rs, false);
+         }
+         bql_unlock();
+-        remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+     }
+ 
++    remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
 +
-+.migration-compat-common:
-+  extends: .common_test_job_template
-+  needs:
-+    - job: build-previous-qemu
-+    - job: build-system-opensuse
-+  # The old QEMU could have bugs unrelated to migration that are
-+  # already fixed in the current development branch, so this test
-+  # might fail.
-+  allow_failure: true
-+  variables:
-+    IMAGE: opensuse-leap
-+    MAKE_CHECK_ARGS: check-build
-+  script:
-+    # Use the migration-tests from the older QEMU tree. This avoids
-+    # testing an old QEMU against new features/tests that it is not
-+    # compatible with.
-+    - cd build-previous
-+    # old to new
-+    - QTEST_QEMU_BINARY_SRC=./qemu-system-${TARGET}
-+          QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
-+    # new to old
-+    - QTEST_QEMU_BINARY_DST=./qemu-system-${TARGET}
-+          QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
-+
-+migration-compat-aarch64:
-+  extends: .migration-compat-common
-+  variables:
-+    TARGET: aarch64
-+
-+migration-compat-x86_64:
-+  extends: .migration-compat-common
-+  variables:
-+    TARGET: x86_64
-+
- check-system-centos:
-   extends: .native_test_job_template
-   needs:
+     if (migrate_postcopy_ram()) {
+         /* We can do postcopy, and all the data is postcopiable */
+         *can_postcopy += remaining_size;
 -- 
 2.43.0
 
