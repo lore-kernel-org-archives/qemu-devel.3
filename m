@@ -4,108 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD29CC48285
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF726C47DDB
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTUYL-0006Ub-HN; Fri, 26 Jan 2024 17:20:02 -0500
+	id 1rTUYM-0006VO-G8; Fri, 26 Jan 2024 17:20:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTUYJ-0006To-Mb
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:19:59 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTUYI-0006TH-AE
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:19:58 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTUYH-000255-U6
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:19:59 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTUYF-00022o-JW
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:19:58 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5E53521E8C;
- Fri, 26 Jan 2024 22:19:56 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2A03C21E19;
+ Fri, 26 Jan 2024 22:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706307596; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706307591; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=weoGmuMmeEmjz6+XoAkNw0Ykac9ldZ1plj3K+C6V79Q=;
- b=2Nap9DlCSpyUpcNtA890L+XDR5Ktksqu0VPpRmqHim0oWxaPKa9Nes7VkqUbTREnUj7hbM
- KVD1LT0L3H3y19nHoh1X655HkLDkOQSdFdWhDsQBMr8n50nq7eTK9zKixvZhgdb1itQbP4
- 88Tln+hlBfhsZckrY5rGWVkuKxia8gM=
+ bh=SLj0d2ggXJhET2C/cGBlDaztn6eBWzQ6qnAVThFbbgU=;
+ b=zEzPqECrNw2vT5RHltnvvSF/fd9GrVhwRXQFiKNez7kGDa9komtSo9wG7+P0/asCtiHI8S
+ 9lkPlQ4BZ2YsrJejumQvwE/2XPIV/mLrJ+FKr/1RHo9RJ94H5aqOPXtkpqcO/PVT1ukWDC
+ g51FVWR6xlCai0Ms2rko0Sp0+cGEDXA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706307596;
+ s=susede2_ed25519; t=1706307591;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=weoGmuMmeEmjz6+XoAkNw0Ykac9ldZ1plj3K+C6V79Q=;
- b=zRygeCR+4xTGuJ82nKK5yhIPFUhJXKk3a6dtt8Jn6jgmVdt52OBb9egrum3d0T5OZTYRH2
- /BShtXY/h8Pmq9Cw==
+ bh=SLj0d2ggXJhET2C/cGBlDaztn6eBWzQ6qnAVThFbbgU=;
+ b=behNosajZdoU4IdulD2U/i7t0VlIKPy6tprwTztuotrILKQE2YmlWby5UettUHAvD8ZDyZ
+ 8Vh+7OJwVx/FiUDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706307596; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706307590; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=weoGmuMmeEmjz6+XoAkNw0Ykac9ldZ1plj3K+C6V79Q=;
- b=2Nap9DlCSpyUpcNtA890L+XDR5Ktksqu0VPpRmqHim0oWxaPKa9Nes7VkqUbTREnUj7hbM
- KVD1LT0L3H3y19nHoh1X655HkLDkOQSdFdWhDsQBMr8n50nq7eTK9zKixvZhgdb1itQbP4
- 88Tln+hlBfhsZckrY5rGWVkuKxia8gM=
+ bh=SLj0d2ggXJhET2C/cGBlDaztn6eBWzQ6qnAVThFbbgU=;
+ b=YfZEIj3Tn8VrYR+KLJsiXwkija3HbcaauGJFhKPBLcj//+5eDQToZb1Vjz9/qrSzyb2taF
+ 5TpKVv9SJvQxBYZGgu3Y+ht59NdrcTnWImfMU2yRWKF34aFi1xr0XEvIXqigQ1trklJTOQ
+ 3DDvOTcU0ZiDU5gDv6JAvcXOmC3DBsA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706307596;
+ s=susede2_ed25519; t=1706307590;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=weoGmuMmeEmjz6+XoAkNw0Ykac9ldZ1plj3K+C6V79Q=;
- b=zRygeCR+4xTGuJ82nKK5yhIPFUhJXKk3a6dtt8Jn6jgmVdt52OBb9egrum3d0T5OZTYRH2
- /BShtXY/h8Pmq9Cw==
+ bh=SLj0d2ggXJhET2C/cGBlDaztn6eBWzQ6qnAVThFbbgU=;
+ b=cwSelqHCuyasE+bx7Z3ZqTuzAdARlxcdAdw0Nln+fPI8Zc5/c1+Rg5O8AId6mozz63pBF6
+ noN87pzkDZr8DpBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C1E2113A22;
- Fri, 26 Jan 2024 22:19:54 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8A81513A22;
+ Fri, 26 Jan 2024 22:19:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CHcTIgowtGWScwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 26 Jan 2024 22:19:54 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uGFKFAQwtGWScwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 26 Jan 2024 22:19:48 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Hao Xiang <hao.xiang@bytedance.com>,
  Yuan Liu <yuan1.liu@intel.com>, Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH 4/5] migration/multifd: Simplify zero copy send
-Date: Fri, 26 Jan 2024 19:19:42 -0300
-Message-Id: <20240126221943.26628-5-farosas@suse.de>
+Subject: [PATCH 1/5] migration/multifd: Separate compression ops from
+ non-compression
+Date: Fri, 26 Jan 2024 19:19:39 -0300
+Message-Id: <20240126221943.26628-2-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240126221943.26628-1-farosas@suse.de>
 References: <20240126221943.26628-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=2Nap9DlC;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=zRygeCR+
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [0.49 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCPT_COUNT_FIVE(0.00)[5]; NEURAL_HAM_LONG(-1.00)[-1.000];
- RCVD_COUNT_THREE(0.00)[3];
+	none
+X-Spamd-Result: default: False [0.70 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[5];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
-X-Rspamd-Queue-Id: 5E53521E8C
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -128,136 +120,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During the multifd send phase, the multifd packet header is included
-as the first element of the iovec, except in the special case of a
-socket migration with zero copy enabled. In that case the packet
-header is sent separately. To avoid the first position of the iovec
-being empty, we play with the p->iovs_num value to make sure
-send_prepare() fills the iovec from the correct position depending on
-whether the header is at the first position or not.
+For multifd we currently choose exclusively between migration using
+compression or migration without compression. The compression method
+is chosen via the multifd_compression parameter (none, zlib,
+zstd). We've been using the 'none' value to mean the regular socket
+migration.
 
-This is confusing at first sight and could be made simpler if we
-always put the header at the first position in the iovec and advance
-the iovec pointer when sending with zero copy. That way we can keep
-that logic restricted to the socket code.
+Rename the 'multifd_ops' array to 'multifd_compression_ops' and move
+the 'nocomp_multifd_ops' out of it. We don't need to have the
+non-compression methods in an array because they are not registered
+dynamically and cannot be compiled out like the compression code.
+
+Rename the 'nocomp' functions to 'multifd_socket' and remove the
+comments which are useless IMHO. Next patch moves the functions into a
+socket specific file.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd-zlib.c |  3 ---
- migration/multifd-zstd.c |  3 ---
- migration/multifd.c      | 11 +++++------
- migration/socket.c       | 19 +++++++++++--------
- 4 files changed, 16 insertions(+), 20 deletions(-)
+ migration/multifd-zlib.c |   2 +-
+ migration/multifd-zstd.c |   2 +-
+ migration/multifd.c      | 109 +++++++++++----------------------------
+ migration/multifd.h      |   3 +-
+ 4 files changed, 34 insertions(+), 82 deletions(-)
 
 diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 0859efa60f..af6ef96670 100644
+index 37ce48621e..d89163e975 100644
 --- a/migration/multifd-zlib.c
 +++ b/migration/multifd-zlib.c
-@@ -176,9 +176,6 @@ static int zlib_send_prepare(MultiFDSendParams *p, Error **errp)
+@@ -319,7 +319,7 @@ static MultiFDMethods multifd_zlib_ops = {
  
- static int zlib_send(MultiFDSendParams *p, Error **errp)
+ static void multifd_zlib_register(void)
  {
--    p->iov[0].iov_len = p->packet_len;
--    p->iov[0].iov_base = p->packet;
--
-     return qio_channel_writev_full_all(p->c, p->iov, p->iovs_num, NULL,
-                                        0, p->write_flags, errp);
+-    multifd_register_ops(MULTIFD_COMPRESSION_ZLIB, &multifd_zlib_ops);
++    multifd_register_compression(MULTIFD_COMPRESSION_ZLIB, &multifd_zlib_ops);
  }
+ 
+ migration_init(multifd_zlib_register);
 diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index ca0fc79fdd..6d533eaa54 100644
+index b471daadcd..a90788540e 100644
 --- a/migration/multifd-zstd.c
 +++ b/migration/multifd-zstd.c
-@@ -165,9 +165,6 @@ static int zstd_send_prepare(MultiFDSendParams *p, Error **errp)
+@@ -310,7 +310,7 @@ static MultiFDMethods multifd_zstd_ops = {
  
- static int zstd_send(MultiFDSendParams *p, Error **errp)
+ static void multifd_zstd_register(void)
  {
--    p->iov[0].iov_len = p->packet_len;
--    p->iov[0].iov_base = p->packet;
--
-     return qio_channel_writev_full_all(p->c, p->iov, p->iovs_num, NULL,
-                                        0, p->write_flags, errp);
+-    multifd_register_ops(MULTIFD_COMPRESSION_ZSTD, &multifd_zstd_ops);
++    multifd_register_compression(MULTIFD_COMPRESSION_ZSTD, &multifd_zstd_ops);
  }
+ 
+ migration_init(multifd_zstd_register);
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 9f509699c2..358a4dbf8f 100644
+index 25cbc6dc6b..2968649500 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -171,6 +171,9 @@ static void multifd_send_fill_packet(MultiFDSendParams *p)
+@@ -45,48 +45,17 @@ typedef struct {
+     uint64_t unused2[4];    /* Reserved for future use */
+ } __attribute__((packed)) MultiFDInit_t;
  
-         packet->offset[i] = cpu_to_be64(temp);
-     }
-+
-+    p->iov[0].iov_len = p->packet_len;
-+    p->iov[0].iov_base = p->packet;
- }
- 
- static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-@@ -546,7 +549,6 @@ static void *multifd_send_thread(void *opaque)
-     MigrationThread *thread = NULL;
-     Error *local_err = NULL;
-     int ret = 0;
--    bool use_zero_copy_send = migrate_zero_copy_send();
- 
-     thread = migration_threads_add(p->name, qemu_get_thread_id());
- 
-@@ -574,11 +576,8 @@ static void *multifd_send_thread(void *opaque)
-             uint32_t flags;
-             p->normal_num = 0;
- 
--            if (use_zero_copy_send) {
--                p->iovs_num = 0;
--            } else {
--                p->iovs_num = 1;
--            }
-+            /* The header is always added to the vector */
-+            p->iovs_num = 1;
- 
-             for (int i = 0; i < p->pages->num; i++) {
-                 p->normal[p->normal_num] = p->pages->offset[i];
-diff --git a/migration/socket.c b/migration/socket.c
-index 608f30975e..af22ff7cc4 100644
---- a/migration/socket.c
-+++ b/migration/socket.c
-@@ -16,6 +16,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
-+#include "qemu/iov.h"
- #include "exec/ramblock.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-@@ -230,22 +231,24 @@ static int multifd_socket_send_prepare(MultiFDSendParams *p, Error **errp)
- 
- static int multifd_socket_send(MultiFDSendParams *p, Error **errp)
+-/* Multifd without compression */
+-
+-/**
+- * nocomp_send_setup: setup send side
+- *
+- * For no compression this function does nothing.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
++static int multifd_socket_send_setup(MultiFDSendParams *p, Error **errp)
  {
-+    struct iovec *iov = p->iov;
-     int ret;
- 
-     if (migrate_zero_copy_send()) {
--        /* Send header first, without zerocopy */
--        ret = qio_channel_write_all(p->c, (void *)p->packet, p->packet_len,
--                                    errp);
-+        /*
-+         * The first iovec element is always the header. Sent it first
-+         * without zerocopy.
-+         */
-+        ret = qio_channel_writev_all(p->c, iov, 1, errp);
-         if (ret) {
-             return ret;
-         }
--    } else {
--        /* Send header using the same writev call */
--        p->iov[0].iov_len = p->packet_len;
--        p->iov[0].iov_base = p->packet;
-+
-+        /* header sent, discard it */
-+        iov_discard_front(&iov, &p->iovs_num, iov[0].iov_len);
-     }
- 
--    return qio_channel_writev_full_all(p->c, p->iov, p->iovs_num, NULL,
-+    return qio_channel_writev_full_all(p->c, iov, p->iovs_num, NULL,
-                                        0, p->write_flags, errp);
+     return 0;
  }
  
+-/**
+- * nocomp_send_cleanup: cleanup send side
+- *
+- * For no compression this function does nothing.
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
++static void multifd_socket_send_cleanup(MultiFDSendParams *p, Error **errp)
+ {
+     return;
+ }
+ 
+-/**
+- * nocomp_send_prepare: prepare date to be able to send
+- *
+- * For no compression we just have to calculate the size of the
+- * packet.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
++static int multifd_socket_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+     MultiFDPages_t *pages = p->pages;
+ 
+@@ -101,43 +70,16 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+     return 0;
+ }
+ 
+-/**
+- * nocomp_recv_setup: setup receive side
+- *
+- * For no compression this function does nothing.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
++static int multifd_socket_recv_setup(MultiFDRecvParams *p, Error **errp)
+ {
+     return 0;
+ }
+ 
+-/**
+- * nocomp_recv_cleanup: setup receive side
+- *
+- * For no compression this function does nothing.
+- *
+- * @p: Params for the channel that we are using
+- */
+-static void nocomp_recv_cleanup(MultiFDRecvParams *p)
++static void multifd_socket_recv_cleanup(MultiFDRecvParams *p)
+ {
+ }
+ 
+-/**
+- * nocomp_recv_pages: read the data from the channel into actual pages
+- *
+- * For no compression we just need to read things into the correct place.
+- *
+- * Returns 0 for success or -1 for error
+- *
+- * @p: Params for the channel that we are using
+- * @errp: pointer to an error
+- */
+-static int nocomp_recv_pages(MultiFDRecvParams *p, Error **errp)
++static int multifd_socket_recv_pages(MultiFDRecvParams *p, Error **errp)
+ {
+     uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
+ 
+@@ -153,23 +95,34 @@ static int nocomp_recv_pages(MultiFDRecvParams *p, Error **errp)
+     return qio_channel_readv_all(p->c, p->iov, p->normal_num, errp);
+ }
+ 
+-static MultiFDMethods multifd_nocomp_ops = {
+-    .send_setup = nocomp_send_setup,
+-    .send_cleanup = nocomp_send_cleanup,
+-    .send_prepare = nocomp_send_prepare,
+-    .recv_setup = nocomp_recv_setup,
+-    .recv_cleanup = nocomp_recv_cleanup,
+-    .recv_pages = nocomp_recv_pages
++static MultiFDMethods multifd_socket_ops = {
++    .send_setup = multifd_socket_send_setup,
++    .send_cleanup = multifd_socket_send_cleanup,
++    .send_prepare = multifd_socket_send_prepare,
++    .recv_setup = multifd_socket_recv_setup,
++    .recv_cleanup = multifd_socket_recv_cleanup,
++    .recv_pages = multifd_socket_recv_pages
+ };
+ 
+-static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {
+-    [MULTIFD_COMPRESSION_NONE] = &multifd_nocomp_ops,
+-};
++static MultiFDMethods *multifd_compression_ops[MULTIFD_COMPRESSION__MAX] = {0};
++
++static MultiFDMethods *multifd_get_ops(void)
++{
++    MultiFDCompression comp = migrate_multifd_compression();
++
++    assert(comp < MULTIFD_COMPRESSION__MAX);
++
++    if (comp != MULTIFD_COMPRESSION_NONE) {
++        return multifd_compression_ops[comp];
++    }
++
++    return &multifd_socket_ops;
++}
+ 
+-void multifd_register_ops(int method, MultiFDMethods *ops)
++void multifd_register_compression(int method, MultiFDMethods *ops)
+ {
+     assert(0 < method && method < MULTIFD_COMPRESSION__MAX);
+-    multifd_ops[method] = ops;
++    multifd_compression_ops[method] = ops;
+ }
+ 
+ static int multifd_send_initial_packet(MultiFDSendParams *p, Error **errp)
+@@ -915,7 +868,7 @@ int multifd_save_setup(Error **errp)
+     multifd_send_state->pages = multifd_pages_init(page_count);
+     qemu_sem_init(&multifd_send_state->channels_ready, 0);
+     qatomic_set(&multifd_send_state->exiting, 0);
+-    multifd_send_state->ops = multifd_ops[migrate_multifd_compression()];
++    multifd_send_state->ops = multifd_get_ops();
+ 
+     for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+@@ -1171,7 +1124,7 @@ int multifd_load_setup(Error **errp)
+     multifd_recv_state->params = g_new0(MultiFDRecvParams, thread_count);
+     qatomic_set(&multifd_recv_state->count, 0);
+     qemu_sem_init(&multifd_recv_state->sem_sync, 0);
+-    multifd_recv_state->ops = multifd_ops[migrate_multifd_compression()];
++    multifd_recv_state->ops = multifd_get_ops();
+ 
+     for (i = 0; i < thread_count; i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 35d11f103c..4630baccd4 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -204,7 +204,6 @@ typedef struct {
+     int (*recv_pages)(MultiFDRecvParams *p, Error **errp);
+ } MultiFDMethods;
+ 
+-void multifd_register_ops(int method, MultiFDMethods *ops);
++void multifd_register_compression(int method, MultiFDMethods *ops);
+ 
+ #endif
+-
 -- 
 2.35.3
 
