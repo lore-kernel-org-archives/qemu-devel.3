@@ -4,59 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE26C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A38DC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 15:23:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTO1G-0003CX-En; Fri, 26 Jan 2024 10:21:26 -0500
+	id 1rTO2f-0004Qw-JX; Fri, 26 Jan 2024 10:22:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rTO1E-0003BT-Tk
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:21:24 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rTO1B-0003h5-DA
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:21:24 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TM1Xz4BQcz688d6;
- Fri, 26 Jan 2024 23:18:11 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 7CA2C140516;
- Fri, 26 Jan 2024 23:21:17 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Fri, 26 Jan
- 2024 15:21:17 +0000
-Date: Fri, 26 Jan 2024 15:21:16 +0000
-To: Ira Weiny <ira.weiny@intel.com>
-CC: <nifan.cxl@gmail.com>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>, <dan.j.williams@intel.com>,
- <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
- <nifan@outlook.com>, <jim.harris@samsung.com>
-Subject: Re: [PATCH v3 0/9] Enabling DCD emulation support in Qemu
-Message-ID: <20240126152116.00001dd3@Huawei.com>
-In-Reply-To: <6556af1fc8791_1a4bd32947e@iweiny-mobl.notmuch>
-References: <20231107180907.553451-1-nifan.cxl@gmail.com>
- <6556af1fc8791_1a4bd32947e@iweiny-mobl.notmuch>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTO2d-0004Nb-Ie
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:22:51 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTO2X-0003s5-6F
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 10:22:51 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-33ade380b9fso674362f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 07:22:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706282561; x=1706887361; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rDOh4Y5UMc3IdZmX4VDDoFn51Oj5Dy07qT4wPSSp1Yw=;
+ b=JF3RiJVjxLh1mlUSNejvADTmU3TclPzFdDexsedHY+GtakipM3NjMM9QKTmchl/B3D
+ NNk/RdisLVJYITp5nvPh4o6ddzFMQdNEWM81M521cq2+tUkazyJ3QqtuvxMacyFghWQd
+ g3mt8nqiklHPjHs8Rk2tbJrllhwDtSRR0OZrOfTeS19Lw8zZSsZYQ6w4/vBB16Afa/dl
+ TqixBY0W0vyS1AnI1AIEOdOaUcYNnQZLZ5VO/qQqwYRp9P4YTBGBQ5QX69Ef3HbXTPmT
+ Z1aMIgV23Q7gC9RPCicZWBu3xG1wiKWtKPsmOaRauJy/2q3tDzewKXXW3i5ZqTwJMEf+
+ svcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706282561; x=1706887361;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rDOh4Y5UMc3IdZmX4VDDoFn51Oj5Dy07qT4wPSSp1Yw=;
+ b=HNrxaFWQ9jJsuLaY2QcFxsVaz5LBoo0ZEX3VK+lvgwyh/AgtGfdjv2znmCk/mNsjcm
+ 04x0bvX5G7MqaumsFBnR48+0MEp3at07x5Q/HuoZtOmSTnW1cVrqs49r2bb98dctsJFf
+ 6kPGDjJ2w1Rp2c+2nSk+nVNhbuvc1rTpAtmJ36T7Y+oUgBgb1+F3p6DXFtf+8L96luNh
+ WzlHPfz4ZxCX2eUEGJuaG+zz32+98qnpv9nRDUK0J7hqQYzrWcLsRsNXK6D7WVa9rTOP
+ 1jzcr9JGwWePo74fE+v/XPXNyBznNVuktVMAVL2LI5xNF55MHySGtxLqR5n+6sq4nX+n
+ g0Aw==
+X-Gm-Message-State: AOJu0Ywz6wWx5niRdpjIIkTu1ICfki3PJCTfXncTrzkQMaQMpbq8/k2D
+ gMZNDiDB9DB+YhjIMThfIYhravPPC7MwNZjM27AEn9gIX1Kf/j8QnzkDjvt5IaU=
+X-Google-Smtp-Source: AGHT+IGGsupsUFdXVZmnL6DzGJ1QLHoewDvX/zUR1ABl8nfD4fTTBIjyDcQPj6RA2Lg4YOCJ6X0wPQ==
+X-Received: by 2002:adf:cd84:0:b0:337:62d7:21d2 with SMTP id
+ q4-20020adfcd84000000b0033762d721d2mr609440wrj.133.1706282561118; 
+ Fri, 26 Jan 2024 07:22:41 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.142.39])
+ by smtp.gmail.com with ESMTPSA id
+ r15-20020adfda4f000000b00337d9a717bcsm1474067wrl.52.2024.01.26.07.22.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jan 2024 07:22:40 -0800 (PST)
+Message-ID: <b99352e9-efd2-42a3-b6de-a87832bb007c@linaro.org>
+Date: Fri, 26 Jan 2024 16:22:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] virtio-gpu.c: add resource_destroy class method
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>
+References: <cover.1706279540.git.manos.pitsidianakis@linaro.org>
+ <c123808b760f4d8d743c4fd4a04e730005ff673e.1706279540.git.manos.pitsidianakis@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c123808b760f4d8d743c4fd4a04e730005ff673e.1706279540.git.manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,155 +92,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Nov 2023 16:09:03 -0800
-Ira Weiny <ira.weiny@intel.com> wrote:
+Hi Manos,
 
-> nifan.cxl@ wrote:
-> > From: Fan Ni <nifan.cxl@gmail.com>
-> > 
-> > 
-> > The patch series are based on Jonathan's branch cxl-2023-09-26.  
+On 26/1/24 15:41, Manos Pitsidianakis wrote:
+> When destroying/unrefing resources, devices such as virtio-gpu-rutabaga
+> need to do their own bookkeeping (free rutabaga resources that are
+> associated with the virtio_gpu_simple_resource).
 > 
-> Finally getting around to trying this new series and the patch series does not
-> seem to apply on top of this branch?
+> This commit adds a class method so that virtio-gpu-rutabaga can override
+> it in the next commit.
 > 
-> Just to verify is this the top commit this work was based on?
-> 
->    d4edf131bbac [jonathan/cxl-2023-09-26] cxl/vendor: SK hynix Niagara Multi-Headed SLD Device
-> 
-> I seem to have found some issue with CDAT checksumming[1] which I'm not quite
-> sure about.
-> 
-> I went ahead and pulled your latest work from:
-> 
->     https://github.com/moking/qemu-jic-clone.git dcd-dev
-> 
->     abe893944bb3  hw/mem/cxl_type3: Add dpa range validation for accesses to dc regions
-> 
-> It still has this same problem.
-> 
-
-> Before I dig into this, is this the latest dcd branch?
-I've pushed out a new tree, but it's definitely in a may eat babies form...
-
-gitlab.com/jic23/qemu cxl-2024-26-01-draft
-
-Only had the most basic of testing so far.  DCD rebase was messy as I've dragged
-it into the 'next to send upstream' location and various fixes including
-Ira's CDAT one have gone out already.
-
-I'm keen to try and land this in QEMU 9.0 which basically means we have until
-the end of Feb to shake out any problems.
-
-Some other work is at least somewhat built on top of this (because of the
-need to deal with DCD regions as well as pmem and volatile ones).
-
-Jonathan
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>   hw/display/virtio-gpu.c        | 19 ++++++++++++++++---
+>   include/hw/virtio/virtio-gpu.h |  2 ++
+>   2 files changed, 18 insertions(+), 3 deletions(-)
 
 
-> 
-> Has anything changed in how you specify DCD devices on the qemu command line
-> with this latest work?  Here is what I have:
-> 
-> ...
-> -device cxl-type3,bus=hb0rp0,memdev=cxl-mem0,num-dc-regions=2,nonvolatile-dc-memdev=cxl-dc-mem0,id=cxl-dev0,lsa=cxl-lsa0,sn=0
-> -device cxl-type3,bus=hb0rp1,memdev=cxl-mem1,num-dc-regions=2,nonvolatile-dc-memdev=cxl-dc-mem1,id=cxl-dev1,lsa=cxl-lsa1,sn=1
-> -device cxl-type3,bus=hb1rp0,memdev=cxl-mem2,num-dc-regions=2,nonvolatile-dc-memdev=cxl-dc-mem2,id=cxl-dev2,lsa=cxl-lsa2,sn=2
-> -device cxl-type3,bus=hb1rp1,memdev=cxl-mem3,num-dc-regions=2,nonvolatile-dc-memdev=cxl-dc-mem3,id=cxl-dev3,lsa=cxl-lsa3,sn=3
-> ...
-> 
-> 
-> Ira
-> 
-> [1] https://lore.kernel.org/all/20231116-fix-cdat-devm-free-v1-1-b148b40707d7@intel.com/
-> 
->  
-> > The main changes include,
-> > 1. Update cxl_find_dc_region to detect the case the range of the extent cross
-> >     multiple DC regions.
-> > 2. Add comments to explain the checks performed in function
-> >     cxl_detect_malformed_extent_list. (Jonathan)
-> > 3. Minimize the checks in cmd_dcd_add_dyn_cap_rsp.(Jonathan)
-> > 4. Update total_extent_count in add/release dynamic capacity response function.
-> >     (Ira and Jorgen Hansen).
-> > 5. Fix the logic issue in test_bits and renamed it to
-> >     test_any_bits_set to clear its function.
-> > 6. Add pending extent list for dc extent add event.
-> > 7. When add extent response is received, use the pending-to-add list to
-> >     verify the extents are valid.
-> > 8. Add test_any_bits_set and cxl_insert_extent_to_extent_list declaration to
-> >     cxl_device.h so it can be used in different files.
-> > 9. Updated ct3d_qmp_cxl_event_log_enc to include dynamic capacity event
-> >     log type.
-> > 10. Extract the functionality to delete extent from extent list to a helper
-> >     function.
-> > 11. Move the update of the bitmap which reflects which blocks are backed with
-> > dc extents from the moment when a dc extent is offered to the moment when it
-> > is accepted from the host.
-> > 12. Free dc_name after calling address_space_init to avoid memory leak when
-> >     returning early. (Nathan)
-> > 13. Add code to detect and reject QMP requests without any extents. (Jonathan)
-> > 14. Add code to detect and reject QMP requests where the extent len is 0.
-> > 15. Change the QMP interface and move the region-id out of extents and now
-> >     each command only takes care of extent add/release request in a single
-> >     region. (Jonathan)
-> > 16. Change the region bitmap length from decode_len to len.
-> > 17. Rename "dpa" to "offset" in the add/release dc extent qmp interface.
-> >     (Jonathan)
-> > 18. Block any dc extent release command if the exact extent is not already in
-> >     the extent list of the device.
-> > 
-> > The code is tested together with Ira's kernel DCD support:
-> > https://github.com/weiny2/linux-kernel/tree/dcd-v3-2023-10-30
-> > 
-> > Cover letter from v2 is here:
-> > https://lore.kernel.org/linux-cxl/20230724162313.34196-1-fan.ni@samsung.com/T/#m63039621087023691c9749a0af1212deb5549ddf
-> > 
-> > Last version (v2) is here:
-> > https://lore.kernel.org/linux-cxl/20230725183939.2741025-1-fan.ni@samsung.com/
-> > 
-> > More DCD related discussions are here:
-> > https://lore.kernel.org/linux-cxl/650cc29ab3f64_50d07294e7@iweiny-mobl.notmuch/
-> > 
-> > 
-> > 
-> > Fan Ni (9):
-> >   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
-> >     payload of identify memory device command
-> >   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
-> >     and mailbox command support
-> >   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
-> >     type3 memory devices
-> >   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
-> >     devices
-> >   hw/mem/cxl_type3: Add host backend and address space handling for DC
-> >     regions
-> >   hw/mem/cxl_type3: Add DC extent list representative and get DC extent
-> >     list mailbox support
-> >   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
-> >     dynamic capacity response
-> >   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
-> >     extents
-> >   hw/mem/cxl_type3: Add dpa range validation for accesses to dc regions
-> > 
-> >  hw/cxl/cxl-mailbox-utils.c  | 469 +++++++++++++++++++++++++++++-
-> >  hw/mem/cxl_type3.c          | 548 +++++++++++++++++++++++++++++++++---
-> >  hw/mem/cxl_type3_stubs.c    |  14 +
-> >  include/hw/cxl/cxl_device.h |  64 ++++-
-> >  include/hw/cxl/cxl_events.h |  15 +
-> >  qapi/cxl.json               |  60 +++-
-> >  6 files changed, 1123 insertions(+), 47 deletions(-)
-> > 
-> > -- 
-> > 2.42.0
-> >   
-> 
-> 
-> 
+>   static void virtio_gpu_resource_unref(VirtIOGPU *g,
+> @@ -1488,11 +1491,20 @@ static void virtio_gpu_device_unrealize(DeviceState *qdev)
+>   static void virtio_gpu_reset_bh(void *opaque)
+>   {
+>       VirtIOGPU *g = VIRTIO_GPU(opaque);
+> +    VirtIOGPUClass *vgc = VIRTIO_GPU_GET_CLASS(g);
+>       struct virtio_gpu_simple_resource *res, *tmp;
+> +    int32_t result, resource_id;
+>       int i = 0;
+>   
+>       QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+> -        virtio_gpu_resource_destroy(g, res);
+> +        resource_id = res->resource_id;
+> +        result = vgc->resource_destroy(g, res);
+> +        if (result) {
+> +            error_report("%s: %s resource_destroy"
+> +                         "for resource_id = %d failed with return value = %d;",
+
+'%d' is for 'int', for 'int32_t' you need 'PRId32'.
+
+But why return that type instead of 'int'?
+
+> +                         __func__, object_get_typename(OBJECT(g)), resource_id,
+> +                         result);
+> +        }
+>       }
+
+
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 584ba2ed73..5683354236 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -219,6 +219,8 @@ struct VirtIOGPUClass {
+>       void (*update_cursor_data)(VirtIOGPU *g,
+>                                  struct virtio_gpu_scanout *s,
+>                                  uint32_t resource_id);
+> +    int32_t (*resource_destroy)(VirtIOGPU *g,
+> +                                struct virtio_gpu_simple_resource *res);
+>   };
+>   
+>   struct VirtIOGPUGL {
 
 
