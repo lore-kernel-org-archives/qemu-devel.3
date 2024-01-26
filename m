@@ -4,77 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B55C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C767FC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTKxe-0005Ab-Tt; Fri, 26 Jan 2024 07:05:31 -0500
+	id 1rTKxx-0005mQ-QT; Fri, 26 Jan 2024 07:05:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rTKxZ-0004y3-M2; Fri, 26 Jan 2024 07:05:25 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rTKxm-0005eV-9R
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:05:38 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rTKxW-0001ml-Ub; Fri, 26 Jan 2024 07:05:25 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0A129478C3;
- Fri, 26 Jan 2024 15:06:07 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 62D836BF4F;
- Fri, 26 Jan 2024 15:05:20 +0300 (MSK)
-Message-ID: <f1196c95-865b-4799-952d-89a70b2a09e6@tls.msk.ru>
-Date: Fri, 26 Jan 2024 15:05:20 +0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rTKxk-0001tt-Kq
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:05:38 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TLxC92XTcz67pJF;
+ Fri, 26 Jan 2024 20:02:29 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id DBBEA140CF4;
+ Fri, 26 Jan 2024 20:05:34 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Fri, 26 Jan 2024 12:05:34 +0000
+To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Fan Ni
+ <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>
+CC: Ira Weiny <ira.weiny@intel.com>, Dave Jiang <dave.jiang@intel.com>,
+ <peter.maydell@linaro.org>, Davidlohr Bueso <dave@stgolabs.net>, Hyeonggon
+ Yoo <42.hyeyoo@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, Stefan
+ Hajnoczi <stefanha@gmail.com>, <linuxarm@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 08/12] hw/cxl: Pass NULL for a NULL MemoryRegionOps
+Date: Fri, 26 Jan 2024 12:01:28 +0000
+Message-ID: <20240126120132.24248-9-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240126120132.24248-1-Jonathan.Cameron@huawei.com>
+References: <20240126120132.24248-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial 1/2] close_all_open_fd(): move to oslib-posix.c
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Laurent Vivier <laurent@vivier.eu>, QEMU Trivial
- <qemu-trivial@nongnu.org>, QEMU Developers <qemu-devel@nongnu.org>
-References: <cover.1706221377.git.mjt@tls.msk.ru>
- <94fcee0d7595865b3a6fab744982ad47715e5faf.1706221377.git.mjt@tls.msk.ru>
- <ffc002d5-f648-43b8-b938-011a4a92cf5e@vivier.eu>
- <ZbN2DhQ4GeKc-aaX@redhat.com>
- <dbb90f22-d17d-4c40-8684-58ec976a014e@tls.msk.ru>
- <ZbOREEOcbSCwex15@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <ZbOREEOcbSCwex15@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,33 +69,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.01.2024 14:01, Daniel P. Berrangé:
-[]
-> We should try to use O_CLOEXEC everywhere, but at the same time QEMU
-> links to a large number of libraries, and we can't assume that they've
-> reliably used O_CLOEXEC. Non-QEMU owned code that is mapped in process
-> likely dwarfs QEMU owned code by a factor of x10.
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-There are quite a few points here.
+a NULL parameter is enough for a NULL MemoryRegionOps
 
-As I already mentioned, qemu is one of very few software out here which
-is this paranoid, - I know no other software which does this.  External
-libs are being fixed too, and that's the proper place to do that.
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ hw/cxl/cxl-component-utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Please note that currently we only close all files when executing scripts
-to setup/teardown tap interfaces, but not, say, when spawning a process
-to receive migration stream and in some other places, where such closing
-might be much more important.
-
-This close_all_open_fd() can check all FDs it finds open for O_CLOEXEC
-as a debugging aid, - maybe we missed something in qemu already.  After
-it's done, we'll have much better confidence already.
-
-And something else I forgot to mention :)
-
-/mjt
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index 9dfde6c0b3..5ddd47ed8d 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -197,7 +197,7 @@ void cxl_component_register_block_init(Object *obj,
+                        CXL2_COMPONENT_BLOCK_SIZE);
+ 
+     /* io registers controls link which we don't care about in QEMU */
+-    memory_region_init_io(&cregs->io, obj, NULL, cregs, ".io",
++    memory_region_init_io(&cregs->io, obj, NULL, NULL, ".io",
+                           CXL2_COMPONENT_IO_REGION_SIZE);
+     memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cstate,
+                           ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
+-- 
+2.39.2
 
 
