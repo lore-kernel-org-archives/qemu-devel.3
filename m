@@ -4,109 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6DCC47DDF
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59D75C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNbN-0003jz-NA; Fri, 26 Jan 2024 09:54:41 -0500
+	id 1rTNcG-0004SR-MG; Fri, 26 Jan 2024 09:55:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTNbL-0003jX-OP
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:54:39 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rTNbJ-0005Zj-R3
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:54:39 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DA83C1FD9F;
- Fri, 26 Jan 2024 14:54:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706280876; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YRHJ6/dT+GbZSJwEAdPKX0THiHz5n7eWwv37AoSeTEQ=;
- b=NyhaVtPvUp4wwfFhkVloOFKcpN9urX7Ekv2KtBcnhX+yAPEp33Ty8DRd+SECzR67d0vzOp
- Z7LShfvT0f5/f80GGC2tbLl4cWTandtQK7FArqu8SOVBhpvVhm/8Qu7uD1/aE12pBSElrn
- C8yDNmMCHdFWzg79THjov8QWa8cbfxw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706280876;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YRHJ6/dT+GbZSJwEAdPKX0THiHz5n7eWwv37AoSeTEQ=;
- b=mQ0GtpSy149kjHfweYI195CH8nvh7Y/I86secVMFb/TyV76TWRG5C78aMgEYi4gCjTtJ/x
- tg3dqmS9kGItkABw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706280875; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YRHJ6/dT+GbZSJwEAdPKX0THiHz5n7eWwv37AoSeTEQ=;
- b=tzkAh7uDEDWEzyhomxdbBbnMwHbTAZIJdadExmA9APanML8KbbJ8t6+u4DmfQj305yHCLW
- bML99q0RNZmKmdSEoyU2PmW3aaqEObxhTYI4PkJRspC2h0aFA3Sk7xgHsseI67WPlRARap
- e3IgiSxBHFgep61F97dtrx1FdT1C6PM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706280875;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YRHJ6/dT+GbZSJwEAdPKX0THiHz5n7eWwv37AoSeTEQ=;
- b=bBOTp7V8dLQqzYM9Hg29pAf7RnVxsotXH/LVm8PP4/AZ4bGi84EUFPGH20HBPaHndLfuXr
- Boqr+32gCUaYPhBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6790613A22;
- Fri, 26 Jan 2024 14:54:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id dFfpC6vHs2UieQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 26 Jan 2024 14:54:35 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: peterx@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PULL 06/15] tests/qtest/migration: Don't use -cpu max for aarch64
-In-Reply-To: <CAFEAcA-x4WqvPsN-KZOA3SPN0F=vvYi=NFZ2qom2iT7-CN0RSg@mail.gmail.com>
-References: <20240126041725.124562-1-peterx@redhat.com>
- <20240126041725.124562-7-peterx@redhat.com> <87le8c6u1d.fsf@suse.de>
- <CAFEAcA-x4WqvPsN-KZOA3SPN0F=vvYi=NFZ2qom2iT7-CN0RSg@mail.gmail.com>
-Date: Fri, 26 Jan 2024 11:54:32 -0300
-Message-ID: <87il3g6t7b.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rTNcD-0004Ni-4v
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:55:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rTNcB-0005sX-JE
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:55:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706280930;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=u+xutdsv8OQWpGIwPrCBB7COgMFnmUuub8Q23UENQOg=;
+ b=Jz3Ei2wkrB3pidDB0MqtcAWgyXLxfAtyH/sdHM7OL5jdh2MdGyWHfRAZuqsNz/Ju1qqiS/
+ MpRPKMMw+k2c2xBJKJCfyJNyJiGWR0ApdjDSNMLDE0QwN2AR6tlBNOzqosG4MFOxm/9yk9
+ 5ET1GjvrwETk3UUx2rAIxer1ifN+0J0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640-Aclb5Kk_NM2xrFZI8AMMRg-1; Fri, 26 Jan 2024 09:55:29 -0500
+X-MC-Unique: Aclb5Kk_NM2xrFZI8AMMRg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-337d6024098so318674f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:55:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706280928; x=1706885728;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :references:cc:to:content-language:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u+xutdsv8OQWpGIwPrCBB7COgMFnmUuub8Q23UENQOg=;
+ b=CF585guoTkhWIS/u3obgotu5MfcW3C593gkpyMlCEAuObXTOAIa4tpXNxnSRurYypG
+ UO325rgmm99j5u29XW9oDSUkypaNPSozYrf9+nrnVmt7fa6+zdo/ZOyIQlrShr0a8gyo
+ u7BhKcEms5pQnSAsOX9PDIJbfYhAUMA7vXk2RPdk/NZLCDA3UZC1rLWDkIDZi/J3d2eY
+ B3bwsklwGKo4FxIm5Eqmsu06eGxEAG3hOG3QtXpsRKI44ZxBEy/jRvkzrf2J+2bXbRDn
+ /k1uOyURWXN2pGIHZtxSFh0L/mX2aaqBYaI7epCkR8/7sjtRTIvfZ2ErkPAquoJtZ7sM
+ MC0w==
+X-Gm-Message-State: AOJu0YyT4EzW7Hv/pqrhVHwF/DpR5AFU7FnVrWPB7tgh9fTHDzocBq0g
+ 1beTIe9+BoEB/jN0SLz7nsgDaZpYsMajs013WoZ51A0thd6c6YeaDbFNWAxb84vNIL2a3UUXuqC
+ S11/P+SKS/SFn3vPI9AUrB5d2DVQSGGeFALUJa3OMur7wctNcvo0Y
+X-Received: by 2002:a5d:408a:0:b0:337:6529:6cf6 with SMTP id
+ o10-20020a5d408a000000b0033765296cf6mr986747wrp.88.1706280927691; 
+ Fri, 26 Jan 2024 06:55:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEqEIvk2kFaWE+6p+67gNRCZPhINgR7+LGUFfyW/xO4tXwJIsC0Wenc4hkyI9a1wgdZVUMRiA==
+X-Received: by 2002:a5d:408a:0:b0:337:6529:6cf6 with SMTP id
+ o10-20020a5d408a000000b0033765296cf6mr986731wrp.88.1706280927266; 
+ Fri, 26 Jan 2024 06:55:27 -0800 (PST)
+Received: from ?IPV6:2003:cb:c70a:5100:7e95:22ff:3f9b:1e92?
+ (p200300cbc70a51007e9522ff3f9b1e92.dip0.t-ipconnect.de.
+ [2003:cb:c70a:5100:7e95:22ff:3f9b:1e92])
+ by smtp.gmail.com with ESMTPSA id
+ cc9-20020a5d5c09000000b00339443be964sm171464wrb.91.2024.01.26.06.55.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jan 2024 06:55:26 -0800 (PST)
+Message-ID: <6bc40e34-7bef-46ea-8b28-2cc76780dc65@redhat.com>
+Date: Fri, 26 Jan 2024 15:55:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tzkAh7uD;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bBOTp7V8
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-6.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; RCVD_DKIM_ARC_DNSWL_HI(-1.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; BAYES_HAM(-3.00)[100.00%];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,linaro.org:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_IN_DNSWL_HI(-1.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Queue-Id: DA83C1FD9F
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 45/66] memory: Introduce
+ memory_region_init_ram_guest_memfd()
+Content-Language: en-US
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Michael Roth <michael.roth@amd.com>, Sean Christopherson
+ <seanjc@google.com>, Claudio Fontana <cfontana@suse.de>,
+ Gerd Hoffmann <kraxel@redhat.com>, Isaku Yamahata
+ <isaku.yamahata@gmail.com>, Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
+ <20240125032328.2522472-46-xiaoyao.li@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240125032328.2522472-46-xiaoyao.li@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,85 +163,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 25.01.24 04:23, Xiaoyao Li wrote:
+> Introduce memory_region_init_ram_guest_memfd() to allocate private
+> guset memfd on the MemoryRegion initialization. It's for the use case of
+> TDVF, which must be private on TDX case.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>   include/exec/memory.h |  6 ++++++
+>   system/memory.c       | 27 +++++++++++++++++++++++++++
+>   2 files changed, 33 insertions(+)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index f25959f6d30f..3a7f41b030e8 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -1607,6 +1607,12 @@ bool memory_region_init_ram(MemoryRegion *mr,
+>                               uint64_t size,
+>                               Error **errp);
+>   
+> +bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
+> +                                        Object *owner,
+> +                                        const char *name,
+> +                                        uint64_t size,
+> +                                        Error **errp);
+> +
+>   /**
+>    * memory_region_init_rom: Initialize a ROM memory region.
+>    *
+> diff --git a/system/memory.c b/system/memory.c
+> index 74f647f2e56f..41049d3e4c9a 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -3619,6 +3619,33 @@ bool memory_region_init_ram(MemoryRegion *mr,
+>       return true;
+>   }
+>   
+> +bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
+> +                                        Object *owner,
+> +                                        const char *name,
+> +                                        uint64_t size,
+> +                                        Error **errp)
+> +{
+> +    DeviceState *owner_dev;
+> +
+> +    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
+> +                                                RAM_GUEST_MEMFD, errp)) {
+> +        return false;
+> +    }
+> +
+> +    memory_region_set_default_private(mr);
 
-> On Fri, 26 Jan 2024 at 14:36, Fabiano Rosas <farosas@suse.de> wrote:
->>
->> peterx@redhat.com writes:
->>
->> > From: Fabiano Rosas <farosas@suse.de>
->> >
->> > The 'max' cpu is not expected to be stable in terms of features across
->> > QEMU versions, so it should not be expected to migrate.
->> >
->> > While the tests currently all pass with -cpu max, that is only because
->> > we're not testing across QEMU versions, which is the more common
->> > use-case for migration.
->> >
->> > We've recently introduced compatibility tests that use two different
->> > QEMU versions and the tests are now failing for aarch64. The next
->> > patch adds those tests to CI, so we cannot use the 'max' cpu
->> > anymore. Replace it with the 'neoverse-n1', which has a fixed set of
->> > features.
->> >
->> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> > Link: https://lore.kernel.org/r/20240118164951.30350-2-farosas@suse.de
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> > ---
->> >  tests/qtest/migration-test.c | 2 +-
->> >  1 file changed, 1 insertion(+), 1 deletion(-)
->> >
->> > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> > index 7675519cfa..15713f3666 100644
->> > --- a/tests/qtest/migration-test.c
->> > +++ b/tests/qtest/migration-test.c
->> > @@ -820,7 +820,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
->> >          memory_size = "150M";
->> >          machine_alias = "virt";
->> >          machine_opts = "gic-version=max";
->> > -        arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
->> > +        arch_opts = g_strdup_printf("-cpu neoverse-n1 -kernel %s", bootpath);
->> >          start_address = ARM_TEST_MEM_START;
->> >          end_address = ARM_TEST_MEM_END;
->> >      } else {
->>
->> This breaks the tests on an arm host with KVM support. We could drop
->> this patch from the PR, it doesn't affect anything else.
->>
->> Or squash in:
->>
->> -->8--
->> From b8aa5d8a2b33dcc28e4cd4ce2c4f4eacc3a3b845 Mon Sep 17 00:00:00 2001
->> From: Fabiano Rosas <farosas@suse.de>
->> Date: Fri, 26 Jan 2024 11:33:15 -0300
->> Subject: [PATCH] fixup! tests/qtest/migration: Don't use -cpu max for aarch64
->>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  tests/qtest/migration-test.c | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> index 15713f3666..2ba9cab684 100644
->> --- a/tests/qtest/migration-test.c
->> +++ b/tests/qtest/migration-test.c
->> @@ -820,7 +820,9 @@ static int test_migrate_start(QTestState **from, QTestState **to,
->>          memory_size = "150M";
->>          machine_alias = "virt";
->>          machine_opts = "gic-version=max";
->> -        arch_opts = g_strdup_printf("-cpu neoverse-n1 -kernel %s", bootpath);
->> +        arch_opts = g_strdup_printf("-cpu %s -kernel %s",
->> +                                    qtest_has_accel("kvm") ?
->> +                                    "host" : "neoverse-n1", bootpath);
->>          start_address = ARM_TEST_MEM_START;
->>          end_address = ARM_TEST_MEM_END;
->>      } else {
->
-> If you want to do that then a comment explaining why would be
-> helpful for future readers, I think.
+It would be much cleaner to just pass the flag when initializing the 
+memory region.
 
-Ok, let's drop this one then, I'll resend.
+Ideally, we can get rid of memory_region_set_default_private().
 
-Thanks
+What you do in patch #33 feels like a layer violation.
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
