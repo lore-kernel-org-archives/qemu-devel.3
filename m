@@ -4,63 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71392C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5101AC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 12:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTLJg-0004I5-Lz; Fri, 26 Jan 2024 07:28:24 -0500
+	id 1rTLQH-0007Ig-VW; Fri, 26 Jan 2024 07:35:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rTLIv-0004F0-HC
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:27:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rTLIq-0007vU-Tg
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:27:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706272043;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=7NLPlPPy0eADiZ8x6/oAdIl7VtdYPmKJZ8r4XucyrWM=;
- b=EAzNHjsFF/3AyB45B+uADLAQ4ECttqnuJgmRz5dFBkuDGQ27l6ExndTAbO7dwcZDTLxTDi
- jG745lbilgc9iMf33ki4Ip+FeIc9uSnLmwM2DeJMUXi20jeqiZ19pNcfzA987yZvVaKZbb
- opNb0Pfokz27CQxUePbrnry58Osv9YQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-RtPTRc6KNYCUaQFBAJz26g-1; Fri, 26 Jan 2024 07:27:20 -0500
-X-MC-Unique: RtPTRc6KNYCUaQFBAJz26g-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 678FE884341;
- Fri, 26 Jan 2024 12:27:20 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.39.193.108])
- by smtp.corp.redhat.com (Postfix) with ESMTP id D26D01C060AF;
- Fri, 26 Jan 2024 12:27:19 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL v3 00/18] Block layer patches
-Date: Fri, 26 Jan 2024 13:27:17 +0100
-Message-ID: <20240126122717.221575-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTLQF-0007HV-98
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:35:03 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTLQC-00018D-R4
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 07:35:02 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-40e76626170so4765415e9.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 04:35:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706272499; x=1706877299; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Gnw9dE/qole01E/zaRh07r7pSbqRWG5R2vAhV/iCxTA=;
+ b=AMrRTyjRdxA/xQtvnd9uXtBgCTPYqDc3AxgMSn8JzxvTmDly9pc9VjFwEQKLazaD3I
+ 7SyHKoVKLPPzbf5Sq4WE4I6uarMzQ0GVjFLQk/EYHtMA9tbBXtguDCR2H4oP7k3CFlvK
+ lpV77ioOb+UNI/lvAGLuIZZwG3NyFXT1bQNUwE5jBV4pY+yzzfdrzRB2nHgnJ+3gaMM4
+ St9S8FeT/K7WOYfV6MTtiwbchLajJXgREIMXQOMkyu7AWGh18sdwDLsHRg0kJmKfiC98
+ 6uNg/c3xK2nqIVAS9IJH3+fDMVB4cEQ1dAroQjneWyJqTMh6KNjAj8JkBZ8xh13Ju9jG
+ wJIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706272499; x=1706877299;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gnw9dE/qole01E/zaRh07r7pSbqRWG5R2vAhV/iCxTA=;
+ b=X7bYxfyssnND9Ebf9+44UhK8ueehQhx1P24v5x101txKoT/eFwRT9cny1FbqevxJWm
+ 1/RP1LpaknBp8iZhMv1DemLkAhQqyn6abgGtbufBz8xVbj79UlkVndKVkWxGtcieoMy0
+ nNJYqSuwdFL90C1QdXEQHlCEbhwhTTtlhlvDBQdSR0EoWqgVktU5nSTtFVuO2LZSrTJ5
+ n+OBZAKpkJSt2FC9Q2ZSmsoAs4uUyTW6v0QWvI7Tyi03z0WeLg3eLofwH897517TPd4l
+ It/Ab4xuuNqIfldFLY6QW+3pzBiFxw/A79FHs+kwXz31i3LFnb3BCfatYwnAkFDpmsXF
+ DBZQ==
+X-Gm-Message-State: AOJu0YwBhkRS2bpwh2EjCbRo/CNjLOh6AyI2BwApF25cCrbOPyiDmrSs
+ nkLB+Jppk7iYd+aiaVxz3R1quWYn8GJwOma4GJMpHP8HQ6+dMYRXeo7PdA0TaQE=
+X-Google-Smtp-Source: AGHT+IFb1Dh6nvR5vA2rw0cagWGL6rCaklfAD0plWhnLxeIn8Vx61sgM3FYm/VDvhxrfucmQkpTzFw==
+X-Received: by 2002:a05:600c:a41:b0:40e:b274:e80b with SMTP id
+ c1-20020a05600c0a4100b0040eb274e80bmr859583wmq.94.1706272499123; 
+ Fri, 26 Jan 2024 04:34:59 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.142.39])
+ by smtp.gmail.com with ESMTPSA id
+ t5-20020a05600c450500b0040e9d507424sm1773106wmo.5.2024.01.26.04.34.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jan 2024 04:34:58 -0800 (PST)
+Message-ID: <d739d778-c84e-4c72-bf55-21d4aa562d96@linaro.org>
+Date: Fri, 26 Jan 2024 13:34:56 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] scripts/coccinelle: Add cpu_env.cocci_template script
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+References: <20240125165648.49898-1-philmd@linaro.org>
+ <20240125165648.49898-2-philmd@linaro.org>
+ <1128019c-adca-4cd4-aa73-937001ad990a@linaro.org>
+ <CABgObfZuPwzVdPjgeLOOtjmNqUMGcK=ExsvVQOzLqnUABmmX-A@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfZuPwzVdPjgeLOOtjmNqUMGcK=ExsvVQOzLqnUABmmX-A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.313,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,120 +100,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5bab95dc74d43bbb28c6a96d24c810a664432057:
+On 26/1/24 12:24, Paolo Bonzini wrote:
+> On Fri, Jan 26, 2024 at 11:38 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> On 25/1/24 17:56, Philippe Mathieu-Daudé wrote:
+>>> Add a Coccinelle script to convert the following slow path
+>>> (due to the QOM cast macro):
+>>>
+>>>     &ARCH_CPU(..)->env
+>>>
+>>> to the following fast path:
+>>>
+>>>     cpu_env(..)
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>    MAINTAINERS                               |  1 +
+>>>    scripts/coccinelle/cpu_env.cocci_template | 60 +++++++++++++++++++++++
+>>>    2 files changed, 61 insertions(+)
+>>>    create mode 100644 scripts/coccinelle/cpu_env.cocci_template
+>>
+>>
+>>> diff --git a/scripts/coccinelle/cpu_env.cocci_template b/scripts/coccinelle/cpu_env.cocci_template
+>>> new file mode 100644
+>>> index 0000000000..53aa3a1fea
+>>> --- /dev/null
+>>> +++ b/scripts/coccinelle/cpu_env.cocci_template
+>>> @@ -0,0 +1,60 @@
+>>> +/*
+>>> +
+>>> + Convert &ARCH_CPU(..)->env to use cpu_env(..).
+>>> +
+>>> + Rationale: ARCH_CPU() might be slow, being a QOM cast macro.
+>>> +            cpu_env() is its fast equivalent.
+>>> +
+>>> + SPDX-License-Identifier: GPL-2.0-or-later
+>>> + SPDX-FileCopyrightText: Linaro Ltd 2024
+>>> + SPDX-FileContributor: Philippe Mathieu-Daudé
+>>> +
+>>> + Usage as of v8.2.0:
+>>> +
+>>> + $ for targetdir in target/*; do test -d $targetdir || continue; \
+>>> +       export target=${targetdir:7}; \
+>>> +       sed \
+>>> +           -e "s/__CPUArchState__/$( \
+>>> +               git grep -h --no-line-number '@env: #CPU.*State' \
+>>> +                   target/$target/cpu.h \
+>>> +               | sed -n -e 's/.*\(CPU.*State\).\?/\1/p')/g" \
+>>> +           -e "s/__ARCHCPU__/$( \
+>>> +               git grep -h --no-line-number OBJECT_DECLARE_CPU_TYPE.*CPU \
+>>> +                   target/$target/cpu-qom.h \
+>>> +               | sed -n -e 's/.*(\(.*\), .*, .*)/\1/p')/g" \
+>>> +           -e "s/__ARCH_CPU__/$( \
+>>> +               git grep -h --no-line-number OBJECT_DECLARE_CPU_TYPE.*CPU \
+>>> +                   target/$target/cpu-qom.h \
+>>> +               | sed -n -e 's/.*(.*, .*, \(.*\))/\1/p')/g" \
+>>> +       < scripts/coccinelle/cpu_env.cocci_template \
+>>> +       > $TMPDIR/cpu_env_$target.cocci; \
+>>> +       for dir in hw target/$target; do \
+>>> +           spatch --macro-file scripts/cocci-macro-file.h \
+>>> +                  --sp-file $TMPDIR/cpu_env_$target.cocci \
+>>> +                  --keep-comments \
+>>> +                  --dir $dir \
+>>> +                  --in-place; \
+>>> +       done; \
+>>> +   done
+>>> +
+>>> +*/
+>>> +
+>>> +@ CPUState_arg_used @
+>>> +CPUState *cs;
+>>> +identifier cpu;
+>>> +identifier env;
+>>> +@@
+>>> +-   __ARCHCPU__ *cpu = __ARCH_CPU__(cs);
+>>
+>> Here we remove ARCH_CPU(), ...
+>>
+>>> +-   __CPUArchState__ *env = &cpu->env;
+>>> ++   __CPUArchState__ *env = cpu_env(cs);
+>>> +    ... when != cpu
+>>> +
+>>> +@ depends on never CPUState_arg_used @
+>>> +identifier obj;
+>>> +identifier cpu;
+>>> +identifier env;
+>>> +@@
+>>> +-   __ARCHCPU__ *cpu = __ARCH_CPU__(obj);
+>>> +-   __CPUArchState__ *env = &cpu->env;
+>>> ++   __CPUArchState__ *env = cpu_env(CPU(obj));
+>>
+>> ... but here we just change it by a CPU() QOM call.
+>> So this 2nd change is just style cleanup.
+> 
+> Can you also add a hunk that is
+> 
+> CPUState *cs;
+> @@
+> -  CPU(cs)
+> + cs
+> 
+> to clean up on the second?  cpu_env(CPU(current_cpu)) is suboptimal
+> and also a bit ugly.
 
-  Merge tag 'pull-request-2024-01-24' of https://gitlab.com/thuth/qemu into staging (2024-01-25 12:33:42 +0000)
+These case should be cleaned because this is already a CPUState*:
 
-are available in the Git repository at:
++    CPUX86State *env = cpu_env(CPU(current_cpu));
 
-  https://repo.or.cz/qemu/kevin.git tags/for-upstream
++    CPUPPCState *env = cpu_env(CPU(first_cpu));
 
-for you to fetch changes up to acf2b9fce9f402b070a65bea584582df0378da9e:
+But these (instance_init and QOM visitors) can't, the argument
+isn't a CPUState*:
 
-  iotests/277: Use iotests.sock_dir for socket creation (2024-01-26 12:27:41 +0100)
+  static void ev4_cpu_initfn(Object *obj)
+  {
+-    AlphaCPU *cpu = ALPHA_CPU(obj);
+-    CPUAlphaState *env = &cpu->env;
++    CPUAlphaState *env = cpu_env(CPU(obj));
 
-----------------------------------------------------------------
-Block layer patches
+@@ -5186,8 +5179,7 @@ static char *x86_cpuid_get_vendor(Object *obj, 
+Error **errp)
+  static void x86_cpuid_set_vendor(Object *obj, const char *value,
+                                   Error **errp)
+  {
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
 
-- virtio-blk: Multiqueue fixes and cleanups
-- blklogwrites: Fixes for write_zeroes and superblock update races
-- commit/stream: Allow users to request only format driver names in
-  backing file format
-- monitor: only run coroutine commands in qemu_aio_context
-- Some iotest fixes
-
-----------------------------------------------------------------
-Andrey Drobyshev (2):
-      iotests/264: Use iotests.sock_dir for socket creation
-      iotests/277: Use iotests.sock_dir for socket creation
-
-Ari Sundholm (2):
-      block/blklogwrites: Fix a bug when logging "write zeroes" operations.
-      block/blklogwrites: Protect mutable driver state with a mutex.
-
-Kevin Wolf (3):
-      string-output-visitor: Fix (pseudo) struct handling
-      tests/unit: Bump test-replication timeout to 60 seconds
-      iotests/iothreads-stream: Use the right TimeoutError
-
-Peter Krempa (2):
-      commit: Allow users to request only format driver names in backing file format
-      stream: Allow users to request only format driver names in backing file format
-
-Stefan Hajnoczi (9):
-      iotests: add filter_qmp_generated_node_ids()
-      iotests: port 141 to Python for reliable QMP testing
-      monitor: only run coroutine commands in qemu_aio_context
-      virtio-blk: move dataplane code into virtio-blk.c
-      virtio-blk: rename dataplane create/destroy functions
-      virtio-blk: rename dataplane to ioeventfd
-      virtio-blk: restart s->rq reqs in vq AioContexts
-      virtio-blk: tolerate failure to set BlockBackend AioContext
-      virtio-blk: always set ioeventfd during startup
-
- qapi/block-core.json                          |  17 +-
- hw/block/dataplane/trace.h                    |   1 -
- hw/block/dataplane/virtio-blk.h               |  34 ---
- include/block/block-global-state.h            |   3 +-
- include/block/block_int-common.h              |   4 +-
- include/block/block_int-global-state.h        |   6 +
- include/hw/virtio/virtio-blk.h                |  16 +-
- block.c                                       |  37 ++-
- block/blklogwrites.c                          | 120 ++++++--
- block/commit.c                                |   6 +-
- block/monitor/block-hmp-cmds.c                |   2 +-
- block/stream.c                                |  10 +-
- blockdev.c                                    |  13 +
- hw/block/dataplane/virtio-blk.c               | 404 -------------------------
- hw/block/virtio-blk.c                         | 412 ++++++++++++++++++++++++--
- monitor/qmp.c                                 |  17 --
- qapi/qmp-dispatch.c                           |  24 +-
- qapi/string-output-visitor.c                  |  46 +++
- tests/unit/test-bdrv-drain.c                  |   3 +-
- tests/qemu-iotests/iotests.py                 |   7 +
- hw/block/dataplane/meson.build                |   1 -
- hw/block/dataplane/trace-events               |   5 -
- meson.build                                   |   1 -
- tests/qemu-iotests/060.out                    |   4 +-
- tests/qemu-iotests/071.out                    |   4 +-
- tests/qemu-iotests/081.out                    |  16 +-
- tests/qemu-iotests/087.out                    |  12 +-
- tests/qemu-iotests/108.out                    |   2 +-
- tests/qemu-iotests/109                        |   4 +-
- tests/qemu-iotests/109.out                    |  78 +++--
- tests/qemu-iotests/117.out                    |   2 +-
- tests/qemu-iotests/120.out                    |   2 +-
- tests/qemu-iotests/127.out                    |   2 +-
- tests/qemu-iotests/140.out                    |   2 +-
- tests/qemu-iotests/141                        | 307 ++++++++-----------
- tests/qemu-iotests/141.out                    | 200 +++----------
- tests/qemu-iotests/143.out                    |   2 +-
- tests/qemu-iotests/156.out                    |   2 +-
- tests/qemu-iotests/176.out                    |  16 +-
- tests/qemu-iotests/182.out                    |   2 +-
- tests/qemu-iotests/183.out                    |   4 +-
- tests/qemu-iotests/184.out                    |  32 +-
- tests/qemu-iotests/185                        |   6 +-
- tests/qemu-iotests/185.out                    |  45 ++-
- tests/qemu-iotests/191.out                    |  16 +-
- tests/qemu-iotests/195.out                    |  16 +-
- tests/qemu-iotests/223.out                    |  12 +-
- tests/qemu-iotests/227.out                    |  32 +-
- tests/qemu-iotests/247.out                    |   2 +-
- tests/qemu-iotests/264                        |   3 +-
- tests/qemu-iotests/273.out                    |   8 +-
- tests/qemu-iotests/277                        |   3 +-
- tests/qemu-iotests/308                        |   4 +-
- tests/qemu-iotests/308.out                    |   4 +-
- tests/qemu-iotests/tests/file-io-error        |   5 +-
- tests/qemu-iotests/tests/iothreads-resize.out |   2 +-
- tests/qemu-iotests/tests/iothreads-stream     |   3 +-
- tests/qemu-iotests/tests/qsd-jobs.out         |   4 +-
- tests/unit/meson.build                        |   3 +-
- 59 files changed, 1022 insertions(+), 1028 deletions(-)
- delete mode 100644 hw/block/dataplane/trace.h
- delete mode 100644 hw/block/dataplane/virtio-blk.h
- delete mode 100644 hw/block/dataplane/virtio-blk.c
- delete mode 100644 hw/block/dataplane/trace-events
-
+That said, these visitors take a Object* param because they implement
+the generic QOM visitor API, but we know the visitor are registered
+on classes/objects implementing CPUState, so QOM cast macro is
+redundant.
 
