@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE52C47422
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCB5C4828A
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMK8-0003e6-SL; Fri, 26 Jan 2024 08:32:49 -0500
+	id 1rTMKY-0004xl-2a; Fri, 26 Jan 2024 08:33:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMJz-0002uO-Nq; Fri, 26 Jan 2024 08:32:40 -0500
+ id 1rTMKR-0004ct-2I; Fri, 26 Jan 2024 08:33:07 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
  helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMJx-000803-1G; Fri, 26 Jan 2024 08:32:39 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzC636xFz4wx5;
- Sat, 27 Jan 2024 00:32:34 +1100 (AEDT)
+ id 1rTMKN-00089p-Q5; Fri, 26 Jan 2024 08:33:06 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCf5K8Wz4x7q;
+ Sat, 27 Jan 2024 00:33:02 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzC431ZWz4wny;
- Sat, 27 Jan 2024 00:32:32 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzCd1Rlyz4wny;
+ Sat, 27 Jan 2024 00:33:00 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Gavin Shan <gshan@redhat.com>
-Subject: [PULL 04/17] hw/arm/aspeed: Init CPU defaults in a common helper
-Date: Fri, 26 Jan 2024 14:32:03 +0100
-Message-ID: <20240126133217.996306-5-clg@kaod.org>
+Cc: Ninad Palsule <ninad@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 16/17] hw/fsi: Added FSI documentation
+Date: Fri, 26 Jan 2024 14:32:15 +0100
+Message-ID: <20240126133217.996306-17-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126133217.996306-1-clg@kaod.org>
 References: <20240126133217.996306-1-clg@kaod.org>
@@ -69,250 +66,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Ninad Palsule <ninad@linux.ibm.com>
 
-Rework aspeed_soc_num_cpus() as a new init_cpus_defaults()
-helper to reduce code duplication.
+Documentation for IBM FSI model.
 
+Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[ clg : - Removed source file list
+        - Fixed aspeed machine reference ]
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- hw/arm/aspeed.c | 71 +++++++++++++++++++------------------------------
- 1 file changed, 28 insertions(+), 43 deletions(-)
+ docs/specs/fsi.rst   | 122 +++++++++++++++++++++++++++++++++++++++++++
+ docs/specs/index.rst |   1 +
+ 2 files changed, 123 insertions(+)
+ create mode 100644 docs/specs/fsi.rst
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 5b01a4dd28f8..d2d490a6d142 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1141,10 +1141,14 @@ static void aspeed_machine_class_props_init(ObjectClass *oc)
-                                           "Change the SPI Flash model");
- }
- 
--static int aspeed_soc_num_cpus(const char *soc_name)
-+static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
- {
--   AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(soc_name));
--   return sc->num_cpus;
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(mc);
-+    AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
+diff --git a/docs/specs/fsi.rst b/docs/specs/fsi.rst
+new file mode 100644
+index 000000000000..af8782253152
+--- /dev/null
++++ b/docs/specs/fsi.rst
+@@ -0,0 +1,122 @@
++======================================
++IBM's Flexible Service Interface (FSI)
++======================================
 +
-+    mc->default_cpus = sc->num_cpus;
-+    mc->min_cpus = sc->num_cpus;
-+    mc->max_cpus = sc->num_cpus;
- }
- 
- static void aspeed_machine_class_init(ObjectClass *oc, void *data)
-@@ -1176,8 +1180,7 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 1;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
-     mc->default_ram_size       = 256 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc, void *data)
-@@ -1193,8 +1196,7 @@ static void aspeed_machine_quanta_q71l_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 1;
-     amc->i2c_init  = quanta_q71l_bmc_i2c_init;
-     mc->default_ram_size       = 128 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
- static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
-@@ -1212,8 +1214,7 @@ static void aspeed_machine_supermicrox11_bmc_class_init(ObjectClass *oc,
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
-     mc->default_ram_size = 256 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
- static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
-@@ -1231,8 +1232,7 @@ static void aspeed_machine_supermicro_x11spi_bmc_class_init(ObjectClass *oc,
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = palmetto_bmc_i2c_init;
-     mc->default_ram_size = 512 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
- static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc, void *data)
-@@ -1248,8 +1248,7 @@ static void aspeed_machine_ast2500_evb_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 1;
-     amc->i2c_init  = ast2500_evb_i2c_init;
-     mc->default_ram_size       = 512 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc, void *data)
-@@ -1266,8 +1265,7 @@ static void aspeed_machine_yosemitev2_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 2;
-     amc->i2c_init  = yosemitev2_bmc_i2c_init;
-     mc->default_ram_size       = 512 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_romulus_class_init(ObjectClass *oc, void *data)
-@@ -1283,8 +1281,7 @@ static void aspeed_machine_romulus_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 2;
-     amc->i2c_init  = romulus_bmc_i2c_init;
-     mc->default_ram_size       = 512 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_tiogapass_class_init(ObjectClass *oc, void *data)
-@@ -1301,8 +1298,7 @@ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 2;
-     amc->i2c_init  = tiogapass_bmc_i2c_init;
-     mc->default_ram_size       = 1 * GiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
-@@ -1318,8 +1314,7 @@ static void aspeed_machine_sonorapass_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 2;
-     amc->i2c_init  = sonorapass_bmc_i2c_init;
-     mc->default_ram_size       = 512 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_witherspoon_class_init(ObjectClass *oc, void *data)
-@@ -1335,8 +1330,7 @@ static void aspeed_machine_witherspoon_class_init(ObjectClass *oc, void *data)
-     amc->num_cs    = 2;
-     amc->i2c_init  = witherspoon_bmc_i2c_init;
-     mc->default_ram_size = 512 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc, void *data)
-@@ -1355,8 +1349,7 @@ static void aspeed_machine_ast2600_evb_class_init(ObjectClass *oc, void *data)
-                      ASPEED_MAC3_ON;
-     amc->i2c_init  = ast2600_evb_i2c_init;
-     mc->default_ram_size = 1 * GiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_tacoma_class_init(ObjectClass *oc, void *data)
-@@ -1374,8 +1367,7 @@ static void aspeed_machine_tacoma_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask  = ASPEED_MAC2_ON;
-     amc->i2c_init  = witherspoon_bmc_i2c_init; /* Same board layout */
-     mc->default_ram_size = 1 * GiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_g220a_class_init(ObjectClass *oc, void *data)
-@@ -1392,8 +1384,7 @@ static void aspeed_machine_g220a_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = g220a_bmc_i2c_init;
-     mc->default_ram_size = 1024 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc, void *data)
-@@ -1410,8 +1401,7 @@ static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
-     amc->i2c_init  = fp5280g2_bmc_i2c_init;
-     mc->default_ram_size = 512 * MiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
-@@ -1429,8 +1419,7 @@ static void aspeed_machine_rainier_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask  = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = rainier_bmc_i2c_init;
-     mc->default_ram_size = 1 * GiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- #define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-@@ -1451,8 +1440,7 @@ static void aspeed_machine_fuji_class_init(ObjectClass *oc, void *data)
-     amc->i2c_init = fuji_bmc_i2c_init;
-     amc->uart_default = ASPEED_DEV_UART1;
-     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- #define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-@@ -1472,8 +1460,7 @@ static void aspeed_machine_bletchley_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask = ASPEED_MAC2_ON;
-     amc->i2c_init  = bletchley_bmc_i2c_init;
-     mc->default_ram_size = BLETCHLEY_BMC_RAM_SIZE;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
- static void fby35_reset(MachineState *state, ShutdownCause reason)
-@@ -1515,6 +1502,7 @@ static void aspeed_machine_fby35_class_init(ObjectClass *oc, void *data)
-     amc->i2c_init  = fby35_i2c_init;
-     /* FIXME: Replace this macro with something more general */
-     mc->default_ram_size = FUJI_BMC_RAM_SIZE;
-+    aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
- #define AST1030_INTERNAL_FLASH_SIZE (1024 * 1024)
-@@ -1592,8 +1580,7 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-     amc->spi_model = "sst25vf032b";
-     amc->num_cs = 2;
-     amc->macs_mask = 0;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
- static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-@@ -1612,8 +1599,7 @@ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
-     mc->default_ram_size = 1 * GiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
-@@ -1632,8 +1618,7 @@ static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
-     amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
-     amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
-     mc->default_ram_size = 1 * GiB;
--    mc->default_cpus = mc->min_cpus = mc->max_cpus =
--        aspeed_soc_num_cpus(amc->soc_name);
-+    aspeed_machine_class_init_cpus_defaults(mc);
- };
- 
- static const TypeInfo aspeed_machine_types[] = {
++The QEMU FSI emulation implements hardware interfaces between ASPEED SOC, FSI
++master/slave and the end engine.
++
++FSI is a point-to-point two wire interface which is capable of supporting
++distances of up to 4 meters. FSI interfaces have been used successfully for
++many years in IBM servers to attach IBM Flexible Support Processors(FSP) to
++CPUs and IBM ASICs.
++
++FSI allows a service processor access to the internal buses of a host POWER
++processor to perform configuration or debugging. FSI has long existed in POWER
++processes and so comes with some baggage, including how it has been integrated
++into the ASPEED SoC.
++
++Working backwards from the POWER processor, the fundamental pieces of interest
++for the implementation are: (see the `FSI specification`_ for more details)
++
++1. The Common FRU Access Macro (CFAM), an address space containing various
++   "engines" that drive accesses on buses internal and external to the POWER
++   chip. Examples include the SBEFIFO and I2C masters. The engines hang off of
++   an internal Local Bus (LBUS) which is described by the CFAM configuration
++   block.
++
++2. The FSI slave: The slave is the terminal point of the FSI bus for FSI
++   symbols addressed to it. Slaves can be cascaded off of one another. The
++   slave's configuration registers appear in address space of the CFAM to
++   which it is attached.
++
++3. The FSI master: A controller in the platform service processor (e.g. BMC)
++   driving CFAM engine accesses into the POWER chip. At the hardware level
++   FSI is a bit-based protocol supporting synchronous and DMA-driven accesses
++   of engines in a CFAM.
++
++4. The On-Chip Peripheral Bus (OPB): A low-speed bus typically found in POWER
++   processors. This now makes an appearance in the ASPEED SoC due to tight
++   integration of the FSI master IP with the OPB, mainly the existence of an
++   MMIO-mapping of the CFAM address straight onto a sub-region of the OPB
++   address space.
++
++5. An APB-to-OPB bridge enabling access to the OPB from the ARM core in the
++   AST2600. Hardware limitations prevent the OPB from being directly mapped
++   into APB, so all accesses are indirect through the bridge.
++
++The LBUS is modelled to maintain the qdev bus hierarchy and to take advantages
++of the object model to automatically generate the CFAM configuration block.
++The configuration block presents engines in the order they are attached to the
++CFAM's LBUS. Engine implementations should subclass the LBusDevice and set the
++'config' member of LBusDeviceClass to match the engine's type.
++
++CFAM designs offer a lot of flexibility, for instance it is possible for a
++CFAM to be simultaneously driven from multiple FSI links. The modeling is not
++so complete; it's assumed that each CFAM is attached to a single FSI slave (as
++a consequence the CFAM subclasses the FSI slave).
++
++As for FSI, its symbols and wire-protocol are not modelled at all. This is not
++necessary to get FSI off the ground thanks to the mapping of the CFAM address
++space onto the OPB address space - the models follow this directly and map the
++CFAM memory region into the OPB's memory region.
++
++The following commands start the ``rainier-bmc`` machine with built-in FSI
++model. There are no model specific arguments. Please check this document to
++learn more about Aspeed ``rainier-bmc`` machine: (:doc:`../../system/arm/aspeed`)
++
++.. code-block:: console
++
++  qemu-system-arm -M rainier-bmc -nographic \
++  -kernel fitImage-linux.bin \
++  -dtb aspeed-bmc-ibm-rainier.dtb \
++  -initrd obmc-phosphor-initramfs.rootfs.cpio.xz \
++  -drive file=obmc-phosphor-image.rootfs.wic.qcow2,if=sd,index=2 \
++  -append "rootwait console=ttyS4,115200n8 root=PARTLABEL=rofs-a"
++
++The implementation appears as following in the qemu device tree:
++
++.. code-block:: console
++
++  (qemu) info qtree
++  bus: main-system-bus
++    type System
++    ...
++    dev: aspeed.apb2opb, id ""
++      gpio-out "sysbus-irq" 1
++      mmio 000000001e79b000/0000000000001000
++      bus: opb.1
++        type opb
++        dev: fsi.master, id ""
++          bus: fsi.bus.1
++            type fsi.bus
++            dev: cfam.config, id ""
++            dev: cfam, id ""
++              bus: lbus.1
++                type lbus
++                dev: scratchpad, id ""
++                  address = 0 (0x0)
++      bus: opb.0
++        type opb
++        dev: fsi.master, id ""
++          bus: fsi.bus.0
++            type fsi.bus
++            dev: cfam.config, id ""
++            dev: cfam, id ""
++              bus: lbus.0
++                type lbus
++                dev: scratchpad, id ""
++                  address = 0 (0x0)
++
++pdbg is a simple application to allow debugging of the host POWER processors
++from the BMC. (see the `pdbg source repository`_ for more details)
++
++.. code-block:: console
++
++  root@p10bmc:~# pdbg -a getcfam 0x0
++  p0: 0x0 = 0xc0022d15
++
++.. _FSI specification:
++   https://openpowerfoundation.org/specifications/fsi/
++
++.. _pdbg source repository:
++   https://github.com/open-power/pdbg
+diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+index b3f482b0aa58..1484e3e76077 100644
+--- a/docs/specs/index.rst
++++ b/docs/specs/index.rst
+@@ -24,6 +24,7 @@ guest hardware that is specific to QEMU.
+    acpi_erst
+    sev-guest-firmware
+    fw_cfg
++   fsi
+    vmw_pvscsi-spec
+    edu
+    ivshmem-spec
 -- 
 2.43.0
 
