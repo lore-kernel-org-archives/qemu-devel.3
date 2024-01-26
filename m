@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 679C9C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 04:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAAF7C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 04:20:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTDex-0001iq-TT; Thu, 25 Jan 2024 23:17:43 -0500
+	id 1rTDf2-0001jf-GZ; Thu, 25 Jan 2024 23:17:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDev-0001iJ-QK
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:41 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDf0-0001jQ-KS
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDet-0004n7-El
- for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:41 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rTDey-0004pQ-RL
+ for qemu-devel@nongnu.org; Thu, 25 Jan 2024 23:17:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706242657;
+ s=mimecast20190719; t=1706242664;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+jIxnbegQmvBVIO27FvAQrkVaPnZTYcNah9sLJ4uqLU=;
- b=GaVy34M81LAPZeJQdxFU4f3WYPsP32iQIX0v9dOOd1GAAWHLrklhqjcwLwNWfz/nT1aPSr
- eDz2GIGElZjbmEyqvZYQ6x0+Cgaho5BYM36U/EH80ZKCrgXGnXKuJNl2jpJMYftBXByyZV
- D956YLxKRJblzShhvjAH3F94x5DgHD4=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-unyXn0ZkP06WBaibgS5NbQ-1; Thu,
- 25 Jan 2024 23:17:34 -0500
-X-MC-Unique: unyXn0ZkP06WBaibgS5NbQ-1
+ bh=SPEhcTwJ0AuWD9aqtJLMzpzDrswD5mPYY/I9NmocRcc=;
+ b=bfEEXswIuDz25tXDGOJpZsGLPw593slonCPxu28iZAExQUhWBNIKbT/AWGDYooAaJglfgL
+ zA5hYeS/tBhZ+u3siGFN2cINdIVPmNH8CsJmUvPKAwxneSKOhfk8o9vYluzSskI2A0pLNw
+ gUHmJYFI0ErEbX1fCIgjUAfqiohKYNE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-321-83hsafeMOD-R2FcqkBA8Jw-1; Thu, 25 Jan 2024 23:17:40 -0500
+X-MC-Unique: 83hsafeMOD-R2FcqkBA8Jw-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A7417381259C;
- Fri, 26 Jan 2024 04:17:33 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 06700837229;
+ Fri, 26 Jan 2024 04:17:40 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id F3F74492BC6;
- Fri, 26 Jan 2024 04:17:30 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9FDE9492BC6;
+ Fri, 26 Jan 2024 04:17:37 +0000 (UTC)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/15] userfaultfd: use 1ULL to build ioctl masks
-Date: Fri, 26 Jan 2024 12:17:11 +0800
-Message-ID: <20240126041725.124562-2-peterx@redhat.com>
+Subject: [PULL 03/15] migration: Make threshold_size an uint64_t
+Date: Fri, 26 Jan 2024 12:17:13 +0800
+Message-ID: <20240126041725.124562-4-peterx@redhat.com>
 In-Reply-To: <20240126041725.124562-1-peterx@redhat.com>
 References: <20240126041725.124562-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -82,103 +81,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Peter Xu <peterx@redhat.com>
 
-There is no need to use the Linux-internal __u64 type, 1ULL is
-guaranteed to be wide enough.
+It's always used to compare against another uint64_t.  Make it always clear
+that it's never a negative.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20240117160313.175609-1-pbonzini@redhat.com
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20240117075848.139045-2-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/postcopy-ram.c                  | 16 +++++++---------
- subprojects/libvhost-user/libvhost-user.c |  2 +-
- tests/qtest/migration-test.c              |  4 ++--
- 3 files changed, 10 insertions(+), 12 deletions(-)
+ migration/migration.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 5408e028c6..893ec8fa89 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -102,11 +102,9 @@ void postcopy_thread_create(MigrationIncomingState *mis,
-  * are target OS specific.
-  */
- #if defined(__linux__)
--
- #include <poll.h>
- #include <sys/ioctl.h>
- #include <sys/syscall.h>
--#include <asm/types.h> /* for __u64 */
- #endif
+diff --git a/migration/migration.h b/migration/migration.h
+index 17972dac34..a589ae8650 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -296,7 +296,7 @@ struct MigrationState {
+      * this threshold; it's calculated from the requested downtime and
+      * measured bandwidth, or avail-switchover-bandwidth if specified.
+      */
+-    int64_t threshold_size;
++    uint64_t threshold_size;
  
- #if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
-@@ -272,8 +270,8 @@ static bool request_ufd_features(int ufd, uint64_t features)
-         return false;
-     }
- 
--    ioctl_mask = (__u64)1 << _UFFDIO_REGISTER |
--                 (__u64)1 << _UFFDIO_UNREGISTER;
-+    ioctl_mask = 1ULL << _UFFDIO_REGISTER |
-+                 1ULL << _UFFDIO_UNREGISTER;
-     if ((api_struct.ioctls & ioctl_mask) != ioctl_mask) {
-         error_report("Missing userfault features: %" PRIx64,
-                      (uint64_t)(~api_struct.ioctls & ioctl_mask));
-@@ -462,9 +460,9 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
-         goto out;
-     }
- 
--    feature_mask = (__u64)1 << _UFFDIO_WAKE |
--                   (__u64)1 << _UFFDIO_COPY |
--                   (__u64)1 << _UFFDIO_ZEROPAGE;
-+    feature_mask = 1ULL << _UFFDIO_WAKE |
-+                   1ULL << _UFFDIO_COPY |
-+                   1ULL << _UFFDIO_ZEROPAGE;
-     if ((reg_struct.ioctls & feature_mask) != feature_mask) {
-         error_setg(errp, "Missing userfault map features: %" PRIx64,
-                    (uint64_t)(~reg_struct.ioctls & feature_mask));
-@@ -733,11 +731,11 @@ static int ram_block_enable_notify(RAMBlock *rb, void *opaque)
-         error_report("%s userfault register: %s", __func__, strerror(errno));
-         return -1;
-     }
--    if (!(reg_struct.ioctls & ((__u64)1 << _UFFDIO_COPY))) {
-+    if (!(reg_struct.ioctls & (1ULL << _UFFDIO_COPY))) {
-         error_report("%s userfault: Region doesn't support COPY", __func__);
-         return -1;
-     }
--    if (reg_struct.ioctls & ((__u64)1 << _UFFDIO_ZEROPAGE)) {
-+    if (reg_struct.ioctls & (1ULL << _UFFDIO_ZEROPAGE)) {
-         qemu_ram_set_uf_zeroable(rb);
-     }
- 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 6684057370..a3b158c671 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -684,7 +684,7 @@ generate_faults(VuDev *dev) {
-                      dev->postcopy_ufd, strerror(errno));
-             return false;
-         }
--        if (!(reg_struct.ioctls & ((__u64)1 << _UFFDIO_COPY))) {
-+        if (!(reg_struct.ioctls & (1ULL << _UFFDIO_COPY))) {
-             vu_panic(dev, "%s Region (%d) doesn't support COPY",
-                      __func__, i);
-             return false;
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index d3066e119f..7675519cfa 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -104,8 +104,8 @@ static bool ufd_version_check(void)
-     }
-     uffd_feature_thread_id = api_struct.features & UFFD_FEATURE_THREAD_ID;
- 
--    ioctl_mask = (__u64)1 << _UFFDIO_REGISTER |
--                 (__u64)1 << _UFFDIO_UNREGISTER;
-+    ioctl_mask = 1ULL << _UFFDIO_REGISTER |
-+                 1ULL << _UFFDIO_UNREGISTER;
-     if ((api_struct.ioctls & ioctl_mask) != ioctl_mask) {
-         g_test_message("Skipping test: Missing userfault feature");
-         return false;
+     /* params from 'migrate-set-parameters' */
+     MigrationParameters parameters;
 -- 
 2.43.0
 
