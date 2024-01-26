@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD7FC47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 08:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE782C47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 08:34:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTHcX-0002YE-Di; Fri, 26 Jan 2024 03:31:29 -0500
+	id 1rTHeg-0004O1-JG; Fri, 26 Jan 2024 03:33:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTHcU-0002XZ-NP; Fri, 26 Jan 2024 03:31:26 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rTHee-0004Nk-FD; Fri, 26 Jan 2024 03:33:40 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTHcS-00072c-HQ; Fri, 26 Jan 2024 03:31:26 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLrWW2RWPz4x5r;
- Fri, 26 Jan 2024 19:31:19 +1100 (AEDT)
+ id 1rTHec-0007uu-BR; Fri, 26 Jan 2024 03:33:40 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLrZ54pZlz4x80;
+ Fri, 26 Jan 2024 19:33:33 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLrWQ68Rvz4wx5;
- Fri, 26 Jan 2024 19:31:14 +1100 (AEDT)
-Message-ID: <cc3daf3c-b6e0-42a9-9397-7171d1f63648@kaod.org>
-Date: Fri, 26 Jan 2024 09:31:12 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLrZ14WWJz4x5l;
+ Fri, 26 Jan 2024 19:33:29 +1100 (AEDT)
+Message-ID: <116910db-f8bf-40ed-85ea-aac76ef6e92a@kaod.org>
+Date: Fri, 26 Jan 2024 09:33:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 01/11] hw/fsi: Introduce IBM's Local bus
+Subject: Re: [PATCH v11 02/11] hw/fsi: Introduce IBM's scratchpad device
 Content-Language: en-US
 To: Ninad Palsule <ninad@linux.ibm.com>, qemu-devel@nongnu.org,
  peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
@@ -40,19 +40,20 @@ To: Ninad Palsule <ninad@linux.ibm.com>, qemu-devel@nongnu.org,
  thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
 Cc: qemu-arm@nongnu.org, Andrew Jeffery <andrew@aj.id.au>
 References: <20240126034026.31068-1-ninad@linux.ibm.com>
- <20240126034026.31068-2-ninad@linux.ibm.com>
+ <20240126034026.31068-3-ninad@linux.ibm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240126034026.31068-2-ninad@linux.ibm.com>
+In-Reply-To: <20240126034026.31068-3-ninad@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,19 +73,73 @@ On 1/26/24 04:40, Ninad Palsule wrote:
 > This is a part of patchset where IBM's Flexible Service Interface is
 > introduced.
 > 
-> The LBUS is modelled to maintain mapped memory for the devices. The
-> memory is mapped after CFAM config, peek table and FSI slave registers.
+> The scratchpad provides a set of non-functional registers. The firmware
+> is free to use them, hardware does not support any special management
+> support. The scratchpad registers can be read or written from LBUS
+> slave. The scratch pad is managed under FSI CFAM state.
 > 
 > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> [ clg: - removed lbus_add_device() bc unused
->         - removed lbus_create_device() bc used only once
->         - removed "address" property
->         - updated meson.build to build fsi dir
->         - included an empty hw/fsi/trace-events ]
+> [ clg: - moved object FSIScratchPad under FSICFAMState
+>         - moved FSIScratchPad code under cfam.c ]
 > Signed-off-by: Cédric Le Goater <clg@kaod.org>
 > Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
+> ---
+>   include/hw/fsi/lbus.h | 11 +++++++
+>   hw/fsi/lbus.c         | 69 +++++++++++++++++++++++++++++++++++++++++++
+>   hw/fsi/trace-events   |  2 ++
+>   3 files changed, 82 insertions(+)
+> 
+> diff --git a/include/hw/fsi/lbus.h b/include/hw/fsi/lbus.h
+> index e8a22e22a8..558268c013 100644
+> --- a/include/hw/fsi/lbus.h
+> +++ b/include/hw/fsi/lbus.h
+> @@ -29,4 +29,15 @@ typedef struct FSILBus {
+>       MemoryRegion mr;
+>   } FSILBus;
+>   
+> +#define TYPE_FSI_SCRATCHPAD "fsi.scratchpad"
+> +#define SCRATCHPAD(obj) OBJECT_CHECK(FSIScratchPad, (obj), TYPE_FSI_SCRATCHPAD)
+> +
+> +#define FSI_SCRATCHPAD_NR_REGS 4
+> +
+> +typedef struct FSIScratchPad {
+> +        FSILBusDevice parent;
+> +
+> +        uint32_t regs[FSI_SCRATCHPAD_NR_REGS];
+> +} FSIScratchPad;
+> +
+>   #endif /* FSI_LBUS_H */
+> diff --git a/hw/fsi/lbus.c b/hw/fsi/lbus.c
+> index 44d2319087..5ab7d0a741 100644
+> --- a/hw/fsi/lbus.c
+> +++ b/hw/fsi/lbus.c
+> @@ -13,6 +13,8 @@
+>   
+>   #include "trace.h"
+>   
+> +#define TO_REG(offset) ((offset) >> 2)
+> +
+>   static void fsi_lbus_init(Object *o)
+>   {
+>       FSILBus *lbus = FSI_LBUS(o);
+> @@ -34,10 +36,77 @@ static const TypeInfo fsi_lbus_device_type_info = {
+>       .abstract = true,
+>   };
+>   
+> +static uint64_t fsi_scratchpad_read(void *opaque, hwaddr addr, unsigned size)
+> +{
+> +    FSIScratchPad *s = SCRATCHPAD(opaque);
+> +    int reg = TO_REG(addr);
+> +
+> +    trace_fsi_scratchpad_read(addr, size);
+> +
+> +    if (reg >= FSI_SCRATCHPAD_NR_REGS) {
 
+usually, the model logs a GUEST_ERROR in such case, specially when the MMIO
+window is larger than the register set. Same comment for the write memop.
 
+with that,
+  
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
 Thanks,
@@ -92,179 +147,79 @@ Thanks,
 C.
 
 
-> ---
-> v9:
->    - Changed LBUS memory region to 1MB.
-> v11:
->    - Split lbus and scratchpad into separate patches.
->    - Added fsi_ prefix for all functions in lbus.
->    - Removed FSI_LBUS* typedefs.
->    - Replaced for loop with memset.
-> ---
->   meson.build           |  1 +
->   hw/fsi/trace.h        |  1 +
->   include/hw/fsi/lbus.h | 32 ++++++++++++++++++++++++++++++++
->   hw/fsi/lbus.c         | 43 +++++++++++++++++++++++++++++++++++++++++++
->   hw/Kconfig            |  1 +
->   hw/fsi/Kconfig        |  2 ++
->   hw/fsi/meson.build    |  1 +
->   hw/fsi/trace-events   |  0
->   hw/meson.build        |  1 +
->   9 files changed, 82 insertions(+)
->   create mode 100644 hw/fsi/trace.h
->   create mode 100644 include/hw/fsi/lbus.h
->   create mode 100644 hw/fsi/lbus.c
->   create mode 100644 hw/fsi/Kconfig
->   create mode 100644 hw/fsi/meson.build
->   create mode 100644 hw/fsi/trace-events
-> 
-> diff --git a/meson.build b/meson.build
-> index d0329966f1..7d926c6e82 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3290,6 +3290,7 @@ if have_system
->       'hw/char',
->       'hw/display',
->       'hw/dma',
-> +    'hw/fsi',
->       'hw/hyperv',
->       'hw/i2c',
->       'hw/i386',
-> diff --git a/hw/fsi/trace.h b/hw/fsi/trace.h
-> new file mode 100644
-> index 0000000000..ee67c7fb04
-> --- /dev/null
-> +++ b/hw/fsi/trace.h
-> @@ -0,0 +1 @@
-> +#include "trace/trace-hw_fsi.h"
-> diff --git a/include/hw/fsi/lbus.h b/include/hw/fsi/lbus.h
-> new file mode 100644
-> index 0000000000..e8a22e22a8
-> --- /dev/null
-> +++ b/include/hw/fsi/lbus.h
-> @@ -0,0 +1,32 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + * Copyright (C) 2024 IBM Corp.
-> + *
-> + * IBM Local bus and connected device structures.
-> + */
-> +#ifndef FSI_LBUS_H
-> +#define FSI_LBUS_H
+
+> +        return 0;
+> +    }
 > +
-> +#include "hw/qdev-core.h"
-> +#include "qemu/units.h"
-> +#include "exec/memory.h"
-> +
-> +#define TYPE_FSI_LBUS_DEVICE "fsi.lbus.device"
-> +OBJECT_DECLARE_SIMPLE_TYPE(FSILBusDevice, FSI_LBUS_DEVICE)
-> +
-> +typedef struct FSILBusDevice {
-> +    DeviceState parent;
-> +
-> +    MemoryRegion iomem;
-> +} FSILBusDevice;
-> +
-> +#define TYPE_FSI_LBUS "fsi.lbus"
-> +OBJECT_DECLARE_SIMPLE_TYPE(FSILBus, FSI_LBUS)
-> +
-> +typedef struct FSILBus {
-> +    BusState bus;
-> +
-> +    MemoryRegion mr;
-> +} FSILBus;
-> +
-> +#endif /* FSI_LBUS_H */
-> diff --git a/hw/fsi/lbus.c b/hw/fsi/lbus.c
-> new file mode 100644
-> index 0000000000..44d2319087
-> --- /dev/null
-> +++ b/hw/fsi/lbus.c
-> @@ -0,0 +1,43 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + * Copyright (C) 2024 IBM Corp.
-> + *
-> + * IBM Local bus where FSI slaves are connected
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "hw/fsi/lbus.h"
-> +
-> +#include "hw/qdev-properties.h"
-> +
-> +#include "trace.h"
-> +
-> +static void fsi_lbus_init(Object *o)
-> +{
-> +    FSILBus *lbus = FSI_LBUS(o);
-> +
-> +    memory_region_init(&lbus->mr, OBJECT(lbus), TYPE_FSI_LBUS, 1 * MiB);
+> +    return s->regs[reg];
 > +}
 > +
-> +static const TypeInfo fsi_lbus_info = {
-> +    .name = TYPE_FSI_LBUS,
-> +    .parent = TYPE_BUS,
-> +    .instance_init = fsi_lbus_init,
-> +    .instance_size = sizeof(FSILBus),
-> +};
-> +
-> +static const TypeInfo fsi_lbus_device_type_info = {
-> +    .name = TYPE_FSI_LBUS_DEVICE,
-> +    .parent = TYPE_DEVICE,
-> +    .instance_size = sizeof(FSILBusDevice),
-> +    .abstract = true,
-> +};
-> +
-> +static void fsi_lbus_register_types(void)
+> +static void fsi_scratchpad_write(void *opaque, hwaddr addr, uint64_t data,
+> +                                 unsigned size)
 > +{
-> +    type_register_static(&fsi_lbus_info);
-> +    type_register_static(&fsi_lbus_device_type_info);
+> +    FSIScratchPad *s = SCRATCHPAD(opaque);
+> +
+> +    trace_fsi_scratchpad_write(addr, size, data);
+> +    int reg = TO_REG(addr);
+> +
+> +    if (reg >= FSI_SCRATCHPAD_NR_REGS) {
+> +        return;
+> +    }
+> +
+> +    s->regs[reg] = data;
 > +}
 > +
-> +type_init(fsi_lbus_register_types);
-> diff --git a/hw/Kconfig b/hw/Kconfig
-> index 9ca7b38c31..2c00936c28 100644
-> --- a/hw/Kconfig
-> +++ b/hw/Kconfig
-> @@ -9,6 +9,7 @@ source core/Kconfig
->   source cxl/Kconfig
->   source display/Kconfig
->   source dma/Kconfig
-> +source fsi/Kconfig
->   source gpio/Kconfig
->   source hyperv/Kconfig
->   source i2c/Kconfig
-> diff --git a/hw/fsi/Kconfig b/hw/fsi/Kconfig
-> new file mode 100644
-> index 0000000000..9c34a418d7
-> --- /dev/null
-> +++ b/hw/fsi/Kconfig
-> @@ -0,0 +1,2 @@
-> +config FSI
-> +    bool
-> diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
-> new file mode 100644
-> index 0000000000..93ba19dd04
-> --- /dev/null
-> +++ b/hw/fsi/meson.build
-> @@ -0,0 +1 @@
-> +system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c'))
-> diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
-> new file mode 100644
-> index 0000000000..e69de29bb2
-> diff --git a/hw/meson.build b/hw/meson.build
-> index f01fac4617..463d702683 100644
-> --- a/hw/meson.build
-> +++ b/hw/meson.build
-> @@ -44,6 +44,7 @@ subdir('virtio')
->   subdir('watchdog')
->   subdir('xen')
->   subdir('xenpv')
-> +subdir('fsi')
+> +static const struct MemoryRegionOps scratchpad_ops = {
+> +    .read = fsi_scratchpad_read,
+> +    .write = fsi_scratchpad_write,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+> +};
+> +
+> +static void fsi_scratchpad_realize(DeviceState *dev, Error **errp)
+> +{
+> +    FSILBusDevice *ldev = FSI_LBUS_DEVICE(dev);
+> +
+> +    memory_region_init_io(&ldev->iomem, OBJECT(ldev), &scratchpad_ops,
+> +                          ldev, TYPE_FSI_SCRATCHPAD, 0x400);
+> +}
+> +
+> +static void fsi_scratchpad_reset(DeviceState *dev)
+> +{
+> +    FSIScratchPad *s = SCRATCHPAD(dev);
+> +
+> +    memset(s->regs, 0, sizeof(s->regs));
+> +}
+> +
+> +static void fsi_scratchpad_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    dc->bus_type = TYPE_FSI_LBUS;
+> +    dc->realize = fsi_scratchpad_realize;
+> +    dc->reset = fsi_scratchpad_reset;
+> +}
+> +
+> +static const TypeInfo fsi_scratchpad_info = {
+> +    .name = TYPE_FSI_SCRATCHPAD,
+> +    .parent = TYPE_FSI_LBUS_DEVICE,
+> +    .instance_size = sizeof(FSIScratchPad),
+> +    .class_init = fsi_scratchpad_class_init,
+> +};
+> +
+>   static void fsi_lbus_register_types(void)
+>   {
+>       type_register_static(&fsi_lbus_info);
+>       type_register_static(&fsi_lbus_device_type_info);
+> +    type_register_static(&fsi_scratchpad_info);
+>   }
 >   
->   subdir('alpha')
->   subdir('arm')
+>   type_init(fsi_lbus_register_types);
+> diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
+> index e69de29bb2..c5753e2791 100644
+> --- a/hw/fsi/trace-events
+> +++ b/hw/fsi/trace-events
+> @@ -0,0 +1,2 @@
+> +fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
+> +fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
 
 
