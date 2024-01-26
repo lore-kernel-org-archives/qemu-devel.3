@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABBC5C47DDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 06:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 676ABC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 06:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTFhA-0005Ke-2U; Fri, 26 Jan 2024 01:28:08 -0500
+	id 1rTFhA-0005Kv-To; Fri, 26 Jan 2024 01:28:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rTFgz-0005Ce-Ck
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rTFgz-0005Cd-Cq
  for qemu-devel@nongnu.org; Fri, 26 Jan 2024 01:27:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rTFgt-0001ki-H0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rTFgu-0001ld-K7
  for qemu-devel@nongnu.org; Fri, 26 Jan 2024 01:27:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706250467;
+ s=mimecast20190719; t=1706250471;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FYew2ZaKFKV5e/lU7WHbyqAminN3XCJGghGyAxhULiU=;
- b=Aui2AZdPkIeaBXod+AO/93rjFdQJxAH3qT5HCL0Ab3gzBoPBivvOj4fTFCFBP3/9EuimHP
- 22NQKn3dTgsfh6K/6n3szCLFwj4RM1IKHKwVrlaTgm4/PHej3GL90fZ3iCP8UrDRsE4GjD
- oZMNpFLaW5FKZZev8vwYdvTRIVdcvVI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-VEuHcVvqOmqg_0aw_MHIbQ-1; Fri,
- 26 Jan 2024 01:27:46 -0500
-X-MC-Unique: VEuHcVvqOmqg_0aw_MHIbQ-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=PGX6mTbZvV1IOJ+Vc7ozbEGlpGGzvO1hyUMZSRhdwF8=;
+ b=jOurAZ0PpdD9yGU7naI6mz/eHNpVItB6pDGvsiZXusQeOshSzUTv4XHos/fLfnu2No2M88
+ N5M359yNn3qVf76qLB1q9vNue52UhTq1ViQK0fD3pbmHbXxp58U+Z7amYQnuF6a9DeK5it
+ rD2JuZb54ohkHJ7wkjnJb+oZOidsdkw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-433-d0bvaY9kNY6kzpWRru7c0w-1; Fri, 26 Jan 2024 01:27:47 -0500
+X-MC-Unique: d0bvaY9kNY6kzpWRru7c0w-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1485B1C06929;
- Fri, 26 Jan 2024 06:27:46 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 554D6185A783;
+ Fri, 26 Jan 2024 06:27:47 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id CA4B1492BC6;
- Fri, 26 Jan 2024 06:27:45 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 181282166B32;
+ Fri, 26 Jan 2024 06:27:47 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BF8A421E65C3; Fri, 26 Jan 2024 07:27:44 +0100 (CET)
+ id C85EB21E64D2; Fri, 26 Jan 2024 07:27:44 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
 	Eric Blake <eblake@redhat.com>
-Subject: [PULL 4/8] qapi: Fix dangling references to
- docs/devel/qapi-code-gen.txt
-Date: Fri, 26 Jan 2024 07:27:40 +0100
-Message-ID: <20240126062744.265588-5-armbru@redhat.com>
+Subject: [PULL 7/8] qapi: Indent tagged doc comment sections properly
+Date: Fri, 26 Jan 2024 07:27:43 +0100
+Message-ID: <20240126062744.265588-8-armbru@redhat.com>
 In-Reply-To: <20240126062744.265588-1-armbru@redhat.com>
 References: <20240126062744.265588-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
@@ -84,117 +83,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Conversion of docs/devel/qapi-code-gen.txt to ReST left several
-dangling references behind.  Fix them to point to
-docs/devel/qapi-code-gen.rst.
+docs/devel/qapi-code-gen demands that the "second and subsequent lines
+of sections other than "Example"/"Examples" should be indented".
+Commit a937b6aa739 (qapi: Reformat doc comments to conform to current
+conventions) missed a few instances, and a few more have crept in
+since.  Indent them.
 
-Fixes: f7aa076dbdfc (docs: convert qapi-code-gen.txt to ReST)
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240120095327.666239-4-armbru@redhat.com>
+Message-ID: <20240120095327.666239-7-armbru@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- docs/devel/writing-monitor-commands.rst | 2 +-
- qapi/introspect.json                    | 4 ++--
- include/qapi/visitor.h                  | 2 +-
- include/qemu/yank.h                     | 2 +-
- qapi/qapi-util.c                        | 2 +-
- util/yank.c                             | 2 +-
- scripts/qapi/parser.py                  | 2 +-
- 7 files changed, 8 insertions(+), 8 deletions(-)
+ qapi/char.json        |  4 ++--
+ qapi/machine.json     | 24 ++++++++++++------------
+ qapi/misc-target.json |  2 +-
+ qapi/misc.json        | 10 +++++-----
+ qapi/yank.json        |  4 ++--
+ 5 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
-index 3b3d5517a2..b6ee4fa063 100644
---- a/docs/devel/writing-monitor-commands.rst
-+++ b/docs/devel/writing-monitor-commands.rst
-@@ -8,7 +8,7 @@ This document doesn't discuss QMP protocol level details, nor does it dive
- into the QAPI framework implementation.
- 
- For an in-depth introduction to the QAPI framework, please refer to
--docs/devel/qapi-code-gen.txt.  For the QMP protocol, see the
-+:doc:`qapi-code-gen`.  For the QMP protocol, see the
- :doc:`/interop/qmp-spec`.
- 
- New commands may be implemented in QMP only.  New HMP commands should be
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index 9173e60fdd..ebc4e199d2 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -260,8 +260,8 @@
- # Additional SchemaInfo members for meta-type 'alternate'.
+diff --git a/qapi/char.json b/qapi/char.json
+index c1bab7b855..6c6ad3b10c 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -391,8 +391,8 @@
+ # @rows: console height, in chars
  #
- # @members: the alternate type's members, in no particular order.  The
--#     members' wire encoding is distinct, see
--#     docs/devel/qapi-code-gen.txt section Alternate types.
-+#     members' wire encoding is distinct, see :doc:`qapi-code-gen`
-+#     section Alternate types.
+ # Note: the options are only effective when the VNC or SDL graphical
+-# display backend is active. They are ignored with the GTK, Spice, VNC
+-# and D-Bus display backends.
++#     display backend is active.  They are ignored with the GTK,
++#     Spice, VNC and D-Bus display backends.
  #
- # On the wire, this can be any of the members.
+ # Since: 1.5
+ ##
+diff --git a/qapi/machine.json b/qapi/machine.json
+index b6d634b30d..aa99fa333f 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1059,10 +1059,10 @@
+ #     From it we have: balloon_size = vm_ram_size - @value
  #
-diff --git a/include/qapi/visitor.h b/include/qapi/visitor.h
-index d53a84c9ba..27b85d4700 100644
---- a/include/qapi/visitor.h
-+++ b/include/qapi/visitor.h
-@@ -39,7 +39,7 @@
-  * limitations; see the documentation for each visitor for more
-  * details on what it supports.  Also, see visitor-impl.h for the
-  * callback contracts implemented by each visitor, and
-- * docs/devel/qapi-code-gen.txt for more about the QAPI code
-+ * docs/devel/qapi-code-gen.rst for more about the QAPI code
-  * generator.
-  *
-  * All of the visitors are created via:
-diff --git a/include/qemu/yank.h b/include/qemu/yank.h
-index 1907150933..3d88af6996 100644
---- a/include/qemu/yank.h
-+++ b/include/qemu/yank.h
-@@ -45,7 +45,7 @@ void yank_unregister_instance(const YankInstance *instance);
-  * yank_register_function: Register a yank function
-  *
-  * This registers a yank function. All limitations of qmp oob commands apply
-- * to the yank function as well. See docs/devel/qapi-code-gen.txt under
-+ * to the yank function as well. See docs/devel/qapi-code-gen.rst under
-  * "An OOB-capable command handler must satisfy the following conditions".
-  *
-  * This function is thread-safe.
-diff --git a/qapi/qapi-util.c b/qapi/qapi-util.c
-index 63596e11c5..65a7d18437 100644
---- a/qapi/qapi-util.c
-+++ b/qapi/qapi-util.c
-@@ -112,7 +112,7 @@ bool qapi_bool_parse(const char *name, const char *value, bool *obj, Error **err
-  * It may be prefixed by __RFQDN_ (downstream extension), where RFQDN
-  * may contain only letters, digits, hyphen and period.
-  * The special exception for enumeration names is not implemented.
-- * See docs/devel/qapi-code-gen.txt for more on QAPI naming rules.
-+ * See docs/devel/qapi-code-gen.rst for more on QAPI naming rules.
-  * Keep this consistent with scripts/qapi-gen.py!
-  * If @complete, the parse fails unless it consumes @str completely.
-  * Return its length on success, -1 on failure.
-diff --git a/util/yank.c b/util/yank.c
-index abf47c346d..eaac50539c 100644
---- a/util/yank.c
-+++ b/util/yank.c
-@@ -35,7 +35,7 @@ typedef struct YankInstanceEntry YankInstanceEntry;
- /*
-  * This lock protects the yank_instance_list below. Because it's taken by
-  * OOB-capable commands, it must be "fast", i.e. it may only be held for a
-- * bounded, short time. See docs/devel/qapi-code-gen.txt for additional
-+ * bounded, short time. See docs/devel/qapi-code-gen.rst for additional
-  * information.
-  */
- static QemuMutex yank_lock;
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index bf31018aef..48cd55a38c 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -71,7 +71,7 @@ class QAPISchemaParser:
-     Parse QAPI schema source.
- 
-     Parse a JSON-esque schema file and process directives.  See
--    qapi-code-gen.txt section "Schema Syntax" for the exact syntax.
-+    qapi-code-gen.rst section "Schema Syntax" for the exact syntax.
-     Grammatical validation is handled later by `expr.check_exprs()`.
- 
-     :param fname: Source file name.
+ # Returns:
+-# - Nothing on success
+-# - If the balloon driver is enabled but not functional because the
+-#   KVM kernel module cannot support it, KVMMissingCap
+-# - If no balloon device is present, DeviceNotActive
++#     - Nothing on success
++#     - If the balloon driver is enabled but not functional because
++#       the KVM kernel module cannot support it, KVMMissingCap
++#     - If no balloon device is present, DeviceNotActive
+ #
+ # Notes: This command just issues a request to the guest.  When it
+ #     returns, the balloon size may not have changed.  A guest can
+@@ -1097,10 +1097,10 @@
+ # Return information about the balloon device.
+ #
+ # Returns:
+-# - @BalloonInfo on success
+-# - If the balloon driver is enabled but not functional because the
+-#   KVM kernel module cannot support it, KVMMissingCap
+-# - If no balloon device is present, DeviceNotActive
++#     - @BalloonInfo on success
++#     - If the balloon driver is enabled but not functional because
++#       the KVM kernel module cannot support it, KVMMissingCap
++#     - If no balloon device is present, DeviceNotActive
+ #
+ # Since: 0.14
+ #
+@@ -1161,10 +1161,10 @@
+ # message from the guest.
+ #
+ # Returns:
+-# - @HvBalloonInfo on success
+-# - If no hv-balloon device is present, guest memory status reporting
+-#   is not enabled or no guest memory status report received yet,
+-#   GenericError
++#     - @HvBalloonInfo on success
++#     - If no hv-balloon device is present, guest memory status
++#       reporting is not enabled or no guest memory status report
++#       received yet, GenericError
+ #
+ # Since: 8.2
+ #
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 88291453ba..9195e7d26b 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -475,7 +475,7 @@
+ # @port: The port number
+ #
+ # Returns:
+-# - Nothing on success.
++#     - Nothing on success.
+ #
+ # Since: 8.0
+ #
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 3622d98d01..2ca8c39874 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -344,9 +344,9 @@
+ # @opaque: A free-form string that can be used to describe the fd.
+ #
+ # Returns:
+-# - @AddfdInfo on success
+-# - If file descriptor was not received, GenericError
+-# - If @fdset-id is a negative value, GenericError
++#     - @AddfdInfo on success
++#     - If file descriptor was not received, GenericError
++#     - If @fdset-id is a negative value, GenericError
+ #
+ # Notes: The list of fd sets is shared by all monitor connections.
+ #
+@@ -374,8 +374,8 @@
+ # @fd: The file descriptor that is to be removed.
+ #
+ # Returns:
+-# - Nothing on success
+-# - If @fdset-id or @fd is not found, GenericError
++#     - Nothing on success
++#     - If @fdset-id or @fd is not found, GenericError
+ #
+ # Since: 1.2
+ #
+diff --git a/qapi/yank.json b/qapi/yank.json
+index 87ec7cab96..60eda20816 100644
+--- a/qapi/yank.json
++++ b/qapi/yank.json
+@@ -77,8 +77,8 @@
+ # Takes a list of @YankInstance as argument.
+ #
+ # Returns:
+-# - Nothing on success
+-# - @DeviceNotFound error, if any of the YankInstances doesn't exist
++#     - Nothing on success
++#     - @DeviceNotFound error, if any of the YankInstances doesn't exist
+ #
+ # Example:
+ #
 -- 
 2.43.0
 
