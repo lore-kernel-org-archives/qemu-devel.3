@@ -4,78 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39164C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 11:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A52CC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 11:43:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTKaM-0001Em-Pc; Fri, 26 Jan 2024 06:41:26 -0500
+	id 1rTKcN-0002oQ-64; Fri, 26 Jan 2024 06:43:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTKaL-0001C1-H1
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 06:41:25 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTKaJ-00040X-Rz
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 06:41:25 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-40ee6ff0c7dso2341255e9.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 03:41:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706269281; x=1706874081; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=smsoF7YI3d5cbf4R4RpQPesf7hMZC9hmlPQLc3Rlsus=;
- b=QjHcb1d8guduzezdwcEFlZhLXaYZFffaEu6XqwNh9MWe00MaQGq1FVtuQa7RgdCIpi
- 4WkC+XIWi8/KSo4LJyum3SiF6xuyLH1gn3oc80N9YMGUPIFIuvyqMjVJmpKMC73vbPWE
- GPjrjHWifsls59t1zXf3svyl6jbI5OpRYa42heZt0xsKE2PBuLBJxyt7JNCtLXZLdG5O
- qbSW9MnOHybBnxh5Vbt8ZeJBjBVNu9Esrrwlvijk/MNOQt2h0RXejyEqKWhZMNXeA45n
- +ByEVMIAfmPwgVsaqLJQAfCDZ1L/jXOIAl0fMChf2RGMd+O4DWMvF353CR7oHWeNdoGm
- leFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706269281; x=1706874081;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=smsoF7YI3d5cbf4R4RpQPesf7hMZC9hmlPQLc3Rlsus=;
- b=hTAc4t2w9YA4FragPZ3zYzIjXzb616Y/G1J7UHQCyNlwcieeR9WEDB1HeXxx8lXnSh
- jw+F5KUrq6w6GA+5H70PVkoP+9Rtk7PA0bqlgmHtzOsX5qLd5fYSeM4ZFedwIRa0eueT
- H44k5CMGZj/BiV1n536Vstig3gT/x616b4PWfkT2VrhtMXEltIk53It1iY+GAWG0ljD/
- 6eAo2Dn92bSTbY/zBqIjqj78g/eZ20MXsw12nPMfe46sZeX6fFlgoR4r+5cRk5YQSHfI
- 7bpntz8EjL3AzuTBMOaC2TWPifP5wkrkN6dXjwYZWujbMM35wJscyxqMM6Z9unpLStu1
- ENzQ==
-X-Gm-Message-State: AOJu0YwtwTgr+jx7Mq8JUofm89eLo9/DJYNdC9GWMsEK9RhueOrCNx/m
- jKQs2ynOQYd2ag7WE49IMPEUDybYcEQNU6M3YiS/ixa5CLA1fRE6eJw3+xeZlMPzDDLbEQObQRM
- qO15bjn979Y0QxRdSDH72353Mz21hW+gDVlOFeA==
-X-Google-Smtp-Source: AGHT+IFr6drvGpZQur6Q2sI20rzB38ahWfp3Lxx9sdbBlnsq2o0dYQhe74N0era3ClC2EWJfLgwDz+ac+9+2Sw1c9OE=
-X-Received: by 2002:a05:600c:354e:b0:40e:c71f:a92a with SMTP id
- i14-20020a05600c354e00b0040ec71fa92amr581460wmq.79.1706269280646; Fri, 26 Jan
- 2024 03:41:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rTKcK-0002oG-Of
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 06:43:28 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rTKcI-0004Gx-MA
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 06:43:28 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TLwjx0xpXz689rg;
+ Fri, 26 Jan 2024 19:40:37 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 73AA4140CF4;
+ Fri, 26 Jan 2024 19:43:17 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Fri, 26 Jan
+ 2024 11:43:17 +0000
+Date: Fri, 26 Jan 2024 11:43:16 +0000
+To: fan <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, Fan Ni
+ <fan.ni@samsung.com>, Michael Tsirkin <mst@redhat.com>, Davidlohr Bueso
+ <dave@stgolabs.net>, <linuxarm@huawei.com>, Philippe =?ISO-8859-1?Q?Mathieu?=
+ =?ISO-8859-1?Q?-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 5/5] hw/cxl: Standardize all references on CXL r3.1 and
+ minor updates
+Message-ID: <20240126114316.00006b9a@Huawei.com>
+In-Reply-To: <ZbF56-RHbxY9yAUv@debian>
+References: <20240124134814.8717-1-Jonathan.Cameron@huawei.com>
+ <20240124134814.8717-6-Jonathan.Cameron@huawei.com>
+ <ZbF56-RHbxY9yAUv@debian>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240125151931.83494-1-rayhan.faizel@gmail.com>
-In-Reply-To: <20240125151931.83494-1-rayhan.faizel@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 26 Jan 2024 11:41:09 +0000
-Message-ID: <CAFEAcA8vVP0ccBzLNguT4SJqVZL8a2CvPQTa6CZJqw=GH=8o0Q@mail.gmail.com>
-Subject: Re: [PATCH v4] hw/char/imx_serial: Implement receive FIFO and ageing
- timer for imx serial.
-To: Rayhan Faizel <rayhan.faizel@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:i.MX31 (kzm)" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,50 +71,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jan 2024 at 15:22, Rayhan Faizel <rayhan.faizel@gmail.com> wrote:
->
-> This patch implements a 32 half word FIFO as per imx serial device
-> specifications. If a non empty FIFO is below the trigger level, an ageing
-> timer will tick for a duration of 8 characters. On expiry, AGTIM will be set
-> triggering an interrupt. AGTIM timer resets when there is activity in
-> the receive FIFO.
->
-> Otherwise, RRDY is set when trigger level is
-> exceeded. The receive trigger level is 8 in newer kernel versions and 1 in
-> older ones.
->
-> This change will break migration compatibility.
->
-> [Changes in v4]
->
-> - Correct handling of fifo overflow including ORE and OVRRUN flag setting.
-> - Correct behaviour of empty FIFO popping.
-> - Remove unnecessary RRDYEN check in can_receive.
-> - In ageing timer restart function, use flag checks instead of directly
->   checking FIFO levels.
-> - Further fixes to code formatting.
->
-> [Changes in v3]
->
-> - Caught more whitespace changes that went overlooked
-> - Moved fifo and timer initialization to realize
->
-> [Changes in v2]
->
-> As per Peter Maydell's suggestions,
->
-> - Use generic FIFO32 implementation in place of handmade impl.
-> - Moved timer_init to serial init and use timer_del in reset
-> - Removed stray whitespaces
-> - Increment VMSTATE version
->
-> Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
+On Wed, 24 Jan 2024 12:58:19 -0800
+fan <nifan.cxl@gmail.com> wrote:
 
-Thanks for this respin -- I've applied it to target-arm.next,
-so it will get into upstream git by next week.
+> On Wed, Jan 24, 2024 at 01:48:14PM +0000, Jonathan Cameron wrote:
+> > Previously not all references mentioned any spec version at all.
+> > Given r3.1 is the current specification available for evaluation at
+> > www.computeexpresslink.org update references to refer to that.
+> > Hopefully this won't become a never ending job.
+> > 
+> > A few structure definitions have been updated to add new fields.
+> > Defaults of 0 and read only are valid choices for these new DVSEC
+> > registers so go with that for now.
+> > 
+> > There are additional error codes and some of the 'questions' in
+> > the comments are resolved now.
+> > 
+> > Update documentation reference to point to the CXL r3.1 specification
+> > with naming closer to what is on the cover.
+> > 
+> > For cases where there are structure version numbers, add defines
+> > so they can be found next to the register definitions.
+> > 
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > ---  
+> 
+> There are several references to the spec is incorrect, other than that
+> LGTM.
+> 
+> Search "Identify Memory Device (Opcode 4000h)" for inline comments.
+Thanks for ploughing through all this!
 
--- PMM
+
+> >      /* Store off everything to local variables so we can wipe out the payload */
+> > @@ -760,7 +757,7 @@ static CXLRetCode cmd_logs_get_log(const struct cxl_cmd *cmd,
+> >      return CXL_MBOX_SUCCESS;
+> >  }
+> >  
+> > -/* 8.2.9.5.1.1 */
+> > +/* CXL r3.1 Section 8.2.9.8.1.1: Identify Memory Device (Opcode 4000h) */  
+> 
+> Should be 8.2.9.9.1.1
+
+Oops. I think I had the 3.0 spec open by accident when doing some of these.
+Good catch - I'll fix these all up and send a v2.
+
 
