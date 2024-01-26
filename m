@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FF0C47DDF
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6BFC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 14:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTNHC-0002Er-FU; Fri, 26 Jan 2024 09:33:50 -0500
+	id 1rTNHJ-0002NE-Pr; Fri, 26 Jan 2024 09:33:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNHA-0002Dg-8m
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:48 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1rTNHH-0002K6-9L
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTNH8-0007rh-AP
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:47 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-339208f5105so571829f8f.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:45 -0800 (PST)
+ id 1rTNHE-0007wO-1n
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 09:33:55 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33ade380b9fso569673f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 06:33:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706279624; x=1706884424; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706279630; x=1706884430; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ul4GmzC0vbtgvuz9Q5o0fiW1gb75AZUpep615Cah9j8=;
- b=dik3LNKts1pbzovz2Jfmig3A3qg6U6X28L49TGqAr6A81o0TTfWwiH0SqD/EZsCZv4
- ANksVjGsQLsQP2egxSsX5O9QNcQCKoK8LmlgXy9m8L+6y26WPIUujqIyXiBeNuSIwGMo
- cgpGyC6yiC/HgboV9lnnF6CObp/sWlYSD3HfGZWSruluP+6YLTirVM48PHdggYsvv13u
- 8Glz0FlqnLuSvY0icQdWiGtMqo2xJkPNMcRNuPNWl1fLWZ6e0rNWzXBN+mkZe7Rlg1d7
- SYse1ndym0pOXtTrzMDUGbKOyr1AbbsbwTCVcin9giwoZxeeXfQ0xrVrAPKVhPSRVHOw
- Y9ZQ==
+ :reply-to; bh=gl5mdL8o4tkULNtVB7E10+lX7Lfh3f3aHXrBpGvFwCw=;
+ b=l2qwh0WBfH1JVfdtAgS3H8IvDTYxbqBXhwxQTZhL1EGY3JHnYq0CzGNH3O/xq6lV8h
+ L5UDeQc9psbER8/uK2yxms8xzU50oqOa1utlvOuiBxZ9SU1aw/mflvTO5WfdBSN58LXr
+ NyhiQ2vJ16e7uc+vvQCHWSU8BzZIz76nCHKubreRpopNoqC12YNvbzNhg028Qe2N5RWs
+ IRETHdHAJthE8yUTlYF+FpXz9ClC9kLXBpcbjokpzF/EuIvf2J/FpyoXj8OJH5tPozhp
+ kNmDpOjVQyVB5r2c/+bdbzpUfM1Hi5VOcptOAhsSttOsZD7xdgEy/XzE7eKY2c+02Iqs
+ fUAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706279624; x=1706884424;
+ d=1e100.net; s=20230601; t=1706279630; x=1706884430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ul4GmzC0vbtgvuz9Q5o0fiW1gb75AZUpep615Cah9j8=;
- b=Py39lWFc1oReNzvHNdRXUA6zE6Mgv6rsxuPH47tqK043/utPYY8YSae5W1qenTBOeJ
- Q4CXRJsKspgRaY2GOtwruBWDufwttOWNG117Bj9J7737WqOe1vtp1qAENC8kfznVURbK
- Ao8kFzO9cWPyHt8q3RDop5hpfvO8WpQlZOC099mhBoQyW7oZkxuwIEMvuXs6pjcb64AG
- hnuWPCef86eKzyFfyypl0iBDy6Cj7SlM2sGgSoS2+N1XYb1Tp+YrgIzKB6LeyXZP4hmO
- eWlQ9UrslGubJggPmg2w6CmFF+378QJLYxrr8j/loDHY64PS05dJwkLwECv/JgQVZZOK
- eJcQ==
-X-Gm-Message-State: AOJu0YzM0ETP21O2/yExfGZVrZgFwDEHm9wz9Bok9PEGl+cSkMYSXXxc
- cjRB8JP6Spyz3OIIH0QDIEgpPnhw6II7AhSLrJKpE55ztAjGFbjf2StFkcW6KIVOVCMNlF8OQDq
- a
-X-Google-Smtp-Source: AGHT+IHGS6q0AE2aKgPC9AuhhQ1kq31o1d5Y7N1/ZPkDDigp8xpiNzkzyJ00v8kfp/ZdMPpNsmJ1Sw==
-X-Received: by 2002:adf:e889:0:b0:337:c829:9838 with SMTP id
- d9-20020adfe889000000b00337c8299838mr744340wrm.69.1706279624730; 
- Fri, 26 Jan 2024 06:33:44 -0800 (PST)
+ bh=gl5mdL8o4tkULNtVB7E10+lX7Lfh3f3aHXrBpGvFwCw=;
+ b=itMiomyeHM9kfKqkde5nHgcG7x8uMc1N4PIT5A0YV9BehfWWkTVpYxPjjbEaNYXueW
+ lRrDszUphC7oHQbOdYV4Vz6B78Fh3C+F6hUnueRYEZ6BgRk6r1KN2foPtoZOcLE+k2aO
+ h6Kmf+DMfBsOMLLrZHCc+LV+affJCIQJZVr+4rE9jJU4HPTpQogIuW+gvggsvLN9yTdx
+ BBcsPx17M4Bb9O7Vyv/59QHWxZFY4iw+JdvjZUBn/WGHujGgTXaWtpKEfxDg3XlejVND
+ KqfPGZ1AKXOsez+p2VhA5Qjiq31e7shd1TqOS7gV5cBjA/mjlDd+U93y2Pao5OVET4+O
+ 6Piw==
+X-Gm-Message-State: AOJu0Yy3MA5x2MaK5T2fi9nblIiWBVmKRU1uZn0E7efGqTFOt8+qX0OM
+ B73rUU8e3Mw05jkc6h08zWW8eiSS8FPAsfDb2Or2yJCogVLWkYhMP9mzntCuKMSw0O094syugOF
+ W
+X-Google-Smtp-Source: AGHT+IHFOH8mAEtP2w4qdoPCzIcRF+mw7DSaZ9w2IKxVNs+hBYdzxSgMfELwBgP0ZZLMoBMqsf0R7Q==
+X-Received: by 2002:adf:ee8a:0:b0:337:b74b:492c with SMTP id
+ b10-20020adfee8a000000b00337b74b492cmr486377wro.234.1706279630638; 
+ Fri, 26 Jan 2024 06:33:50 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.44
+ n5-20020a5d4845000000b00337f722e5ccsm1396207wrs.65.2024.01.26.06.33.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jan 2024 06:33:44 -0800 (PST)
+ Fri, 26 Jan 2024 06:33:50 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/36] hw/arm/allwinner-a10: Unconditionally map the USB Host
- controllers
-Date: Fri, 26 Jan 2024 14:33:10 +0000
-Message-Id: <20240126143341.2101237-6-peter.maydell@linaro.org>
+Subject: [PULL 19/36] target/arm: Expose arm_cpu_mp_affinity() in
+ 'multiprocessing.h' header
+Date: Fri, 26 Jan 2024 14:33:24 +0000
+Message-Id: <20240126143341.2101237-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
 References: <20240126143341.2101237-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,92 +97,179 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The USB Controllers are part of the chipset, thus are
-always present and mapped in memory.
+Declare arm_cpu_mp_affinity() prototype in the new
+ "target/arm/multiprocessing.h" header so units in
+hw/arm/ can use it without having to include the huge
+target-specific "cpu.h".
 
-This is a migration compatibility break for the cubieboard
-machine started with the '-usb none' option.
+File list to include the new header generated using:
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
+  $ git grep -lw arm_cpu_mp_affinity
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Message-id: 20240119215106.45776-2-philmd@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240118200643.29037-11-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/allwinner-a10.c | 49 +++++++++++++++++-------------------------
- 1 file changed, 20 insertions(+), 29 deletions(-)
+ target/arm/cpu.h             |  6 +-----
+ target/arm/multiprocessing.h | 16 ++++++++++++++++
+ hw/arm/virt-acpi-build.c     |  1 +
+ hw/arm/virt.c                |  1 +
+ hw/arm/xlnx-versal-virt.c    |  1 +
+ hw/misc/xlnx-versal-crl.c    |  1 +
+ target/arm/arm-powerctl.c    |  1 +
+ target/arm/cpu.c             |  5 +++++
+ target/arm/hvf/hvf.c         |  1 +
+ target/arm/tcg/psci.c        |  1 +
+ 10 files changed, 29 insertions(+), 5 deletions(-)
+ create mode 100644 target/arm/multiprocessing.h
 
-diff --git a/hw/arm/allwinner-a10.c b/hw/arm/allwinner-a10.c
-index b0ea3f7f662..0135632996c 100644
---- a/hw/arm/allwinner-a10.c
-+++ b/hw/arm/allwinner-a10.c
-@@ -79,15 +79,10 @@ static void aw_a10_init(Object *obj)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index d1584bdb3b5..cecac4c0a12 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -26,6 +26,7 @@
+ #include "cpu-qom.h"
+ #include "exec/cpu-defs.h"
+ #include "qapi/qapi-types-common.h"
++#include "target/arm/multiprocessing.h"
  
-     object_initialize_child(obj, "i2c0", &s->i2c0, TYPE_AW_I2C);
+ /* ARM processors have a weak memory model */
+ #define TCG_GUEST_DEFAULT_MO      (0)
+@@ -1173,11 +1174,6 @@ void arm_cpu_post_init(Object *obj);
  
--    if (machine_usb(current_machine)) {
--        int i;
+ uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz);
+ 
+-static inline uint64_t arm_cpu_mp_affinity(ARMCPU *cpu)
+-{
+-    return cpu->mp_affinity;
+-}
 -
--        for (i = 0; i < AW_A10_NUM_USB; i++) {
--            object_initialize_child(obj, "ehci[*]", &s->ehci[i],
--                                    TYPE_PLATFORM_EHCI);
--            object_initialize_child(obj, "ohci[*]", &s->ohci[i],
--                                    TYPE_SYSBUS_OHCI);
--        }
-+    for (size_t i = 0; i < AW_A10_NUM_USB; i++) {
-+        object_initialize_child(obj, "ehci[*]", &s->ehci[i],
-+                                TYPE_PLATFORM_EHCI);
-+        object_initialize_child(obj, "ohci[*]", &s->ohci[i], TYPE_SYSBUS_OHCI);
-     }
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_arm_cpu;
  
-     object_initialize_child(obj, "mmc0", &s->mmc0, TYPE_AW_SDHOST_SUN4I);
-@@ -165,28 +160,24 @@ static void aw_a10_realize(DeviceState *dev, Error **errp)
-                    qdev_get_gpio_in(dev, 1),
-                    115200, serial_hd(0), DEVICE_NATIVE_ENDIAN);
+diff --git a/target/arm/multiprocessing.h b/target/arm/multiprocessing.h
+new file mode 100644
+index 00000000000..81715d345c2
+--- /dev/null
++++ b/target/arm/multiprocessing.h
+@@ -0,0 +1,16 @@
++/*
++ * ARM multiprocessor CPU helpers
++ *
++ *  Copyright (c) 2003 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++
++#ifndef TARGET_ARM_MULTIPROCESSING_H
++#define TARGET_ARM_MULTIPROCESSING_H
++
++#include "target/arm/cpu-qom.h"
++
++uint64_t arm_cpu_mp_affinity(ARMCPU *cpu);
++
++#endif
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 2127778c1ea..43ccc60f43c 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -59,6 +59,7 @@
+ #include "hw/acpi/ghes.h"
+ #include "hw/acpi/viot.h"
+ #include "hw/virtio/virtio-acpi.h"
++#include "target/arm/multiprocessing.h"
  
--    if (machine_usb(current_machine)) {
--        int i;
-+    for (size_t i = 0; i < AW_A10_NUM_USB; i++) {
-+        g_autofree char *bus = g_strdup_printf("usb-bus.%zu", i);
+ #define ARM_SPI_BASE 32
  
--        for (i = 0; i < AW_A10_NUM_USB; i++) {
--            g_autofree char *bus = g_strdup_printf("usb-bus.%d", i);
-+        object_property_set_bool(OBJECT(&s->ehci[i]), "companion-enable",
-+                                 true, &error_fatal);
-+        sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), &error_fatal);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->ehci[i]), 0,
-+                        AW_A10_EHCI_BASE + i * 0x8000);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[i]), 0,
-+                           qdev_get_gpio_in(dev, 39 + i));
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index b3592798ea9..1e0df6ea3ad 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -74,6 +74,7 @@
+ #include "hw/arm/smmuv3.h"
+ #include "hw/acpi/acpi.h"
+ #include "target/arm/internals.h"
++#include "target/arm/multiprocessing.h"
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/mem/nvdimm.h"
+ #include "hw/acpi/generic_event_device.h"
+diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
+index 841ef69df66..29f4d2c2dce 100644
+--- a/hw/arm/xlnx-versal-virt.c
++++ b/hw/arm/xlnx-versal-virt.c
+@@ -20,6 +20,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/arm/xlnx-versal.h"
+ #include "hw/arm/boot.h"
++#include "target/arm/multiprocessing.h"
+ #include "qom/object.h"
  
--            object_property_set_bool(OBJECT(&s->ehci[i]), "companion-enable",
--                                     true, &error_fatal);
--            sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), &error_fatal);
--            sysbus_mmio_map(SYS_BUS_DEVICE(&s->ehci[i]), 0,
--                            AW_A10_EHCI_BASE + i * 0x8000);
--            sysbus_connect_irq(SYS_BUS_DEVICE(&s->ehci[i]), 0,
--                               qdev_get_gpio_in(dev, 39 + i));
--
--            object_property_set_str(OBJECT(&s->ohci[i]), "masterbus", bus,
--                                    &error_fatal);
--            sysbus_realize(SYS_BUS_DEVICE(&s->ohci[i]), &error_fatal);
--            sysbus_mmio_map(SYS_BUS_DEVICE(&s->ohci[i]), 0,
--                            AW_A10_OHCI_BASE + i * 0x8000);
--            sysbus_connect_irq(SYS_BUS_DEVICE(&s->ohci[i]), 0,
--                               qdev_get_gpio_in(dev, 64 + i));
--        }
-+        object_property_set_str(OBJECT(&s->ohci[i]), "masterbus", bus,
-+                                &error_fatal);
-+        sysbus_realize(SYS_BUS_DEVICE(&s->ohci[i]), &error_fatal);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->ohci[i]), 0,
-+                        AW_A10_OHCI_BASE + i * 0x8000);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ohci[i]), 0,
-+                           qdev_get_gpio_in(dev, 64 + i));
-     }
+ #define TYPE_XLNX_VERSAL_VIRT_MACHINE MACHINE_TYPE_NAME("xlnx-versal-virt")
+diff --git a/hw/misc/xlnx-versal-crl.c b/hw/misc/xlnx-versal-crl.c
+index 9bfa9baa157..1f1762ef163 100644
+--- a/hw/misc/xlnx-versal-crl.c
++++ b/hw/misc/xlnx-versal-crl.c
+@@ -19,6 +19,7 @@
+ #include "hw/resettable.h"
  
-     /* SD/MMC */
+ #include "target/arm/arm-powerctl.h"
++#include "target/arm/multiprocessing.h"
+ #include "hw/misc/xlnx-versal-crl.h"
+ 
+ #ifndef XLNX_VERSAL_CRL_ERR_DEBUG
+diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+index 6c86e901028..2b2055c6acc 100644
+--- a/target/arm/arm-powerctl.c
++++ b/target/arm/arm-powerctl.c
+@@ -16,6 +16,7 @@
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "sysemu/tcg.h"
++#include "target/arm/multiprocessing.h"
+ 
+ #ifndef DEBUG_ARM_POWERCTL
+ #define DEBUG_ARM_POWERCTL 0
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 5b5af7d4e1e..04296f2928f 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1314,6 +1314,11 @@ uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz)
+     return (Aff1 << ARM_AFF1_SHIFT) | Aff0;
+ }
+ 
++uint64_t arm_cpu_mp_affinity(ARMCPU *cpu)
++{
++    return cpu->mp_affinity;
++}
++
+ static void arm_cpu_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 659401e12c7..71a26db1886 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -28,6 +28,7 @@
+ #include "arm-powerctl.h"
+ #include "target/arm/cpu.h"
+ #include "target/arm/internals.h"
++#include "target/arm/multiprocessing.h"
+ #include "trace/trace-target_arm_hvf.h"
+ #include "migration/vmstate.h"
+ 
+diff --git a/target/arm/tcg/psci.c b/target/arm/tcg/psci.c
+index 50d4b23d26b..51d2ca3d30d 100644
+--- a/target/arm/tcg/psci.c
++++ b/target/arm/tcg/psci.c
+@@ -24,6 +24,7 @@
+ #include "sysemu/runstate.h"
+ #include "internals.h"
+ #include "arm-powerctl.h"
++#include "target/arm/multiprocessing.h"
+ 
+ bool arm_is_psci_call(ARMCPU *cpu, int excp_type)
+ {
 -- 
 2.34.1
 
