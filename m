@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE13C47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE2CC47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 22:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTUJb-0007PX-7U; Fri, 26 Jan 2024 17:04:47 -0500
+	id 1rTUKb-0000ov-Tu; Fri, 26 Jan 2024 17:05:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUJZ-0007Nv-6R
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:04:45 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKD-00082B-NI
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:05:26 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUJW-0003WW-Ex
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:04:44 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a3122b70439so121977066b.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:04:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rTUKA-00043L-PD
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 17:05:24 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-5100cb64e7dso1320421e87.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 14:05:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706306681; x=1706911481; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706306717; x=1706911517; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Gp6DeXIBN6rItUvSYJmDDzKmD7zwVKQwnsgLGcelMOw=;
- b=VWFi4+5kUjuhgaYVrAyoAtphWF8Npe8oFRVRH1qukCZTmQkb56v9Svch73vI5hR9cx
- FCHZV6XRv0hCDE1xdZkwr2kRia7aImQVOMXZDwkXFcPr0w7zUZ1StWB++LkufD9rRXQ9
- z9XILXdvhsODuqOkdsXKX+24tlIrq3FvpKRtl5Rc68VPKFB+fqxAWnx01IkqC9YyqKHT
- 4UNmg7ZyilHBY4WQO+pjjWsYhnEgXOnmLz4N3Lppvz3J8FMPMuQ5Sot1Gw+/uqwpo1nV
- 0Zd7Zq1TBTQmqZdNBEiRpjP7d3F5ezX0l7eJYZ+0MQpFP9pRulVEP2zJ3iFlE2GHteLR
- hKKw==
+ bh=woNcbihCgyljuhpYMr+Cr15jve2C8HR8mCIZjTtoatM=;
+ b=gF2YX61PLXLmtfzxzgXb6aQWR5AHsmxVTZ49bZ8AvKD6/E31T5IhZnA9/U9mw5Chr+
+ RYkiP2Mvn4c6tt0AwmDIUnnoXITvRxwpbKEm/glKzd/q2Vujzr2u7v5jvNCFjMmnHQpf
+ uyj6NQ1ymF/rgN7nBu8jQrCJgPT5pIwZoApwik0RkV6nsBEySP6xWVpkWDOelvktMAxU
+ SIwDBq+xR6yoFz9xqxKRAgm9JyNBOf3RuP52TA5X7J3kRfPoK3NDdaoklO1z33XnjgTU
+ 7Ju5VFduRH+21+99hxDCIix4++9TS2vS8c/0dI2JxAhX94G4j3slrMjk42NeLR6SADYZ
+ HUQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706306681; x=1706911481;
+ d=1e100.net; s=20230601; t=1706306717; x=1706911517;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Gp6DeXIBN6rItUvSYJmDDzKmD7zwVKQwnsgLGcelMOw=;
- b=vRncKWSq110oonP0ndIHnbbFTjAi4MuQg+BvJER61nJTxudel2k/njMUVPuwd11H4N
- Lmkez1fhJL+3ZoVdSM2xIbK6uM+wStt3sWKhoh+YdB0eRgY8/91Tu2nzKvoKL/ptHfrF
- pQAg//7291LHiqKpdx2npE18VtqPFxhenkGw85oQro/jYuvGpMnUZCiY4pndMA+D746N
- VnluL7iZPpmV2HlTZqWEcrNnprNYLBqbr6FIyEZegHw+7sDy6WKdeRGdyzZfr6WXXkhH
- D9jY/nl27Mp8xVcLtlEDcfXrRvqzfaGiamZW0dzb6ljR8rK5GX/yXqqic3oBGblix9eb
- XIdw==
-X-Gm-Message-State: AOJu0YwcGTTlvNzanLHirAgcqvWLs+4VlHXnArGfN7pAYIZMes+HCSU6
- WeGF1SSnTfQJJXLo5G2oiyL2kGJHikudUlWVEp4ygP+GoWR+DeLzxA0a1oQXvTafIZO0QATGTN1
- c
-X-Google-Smtp-Source: AGHT+IG2UFJF/DHmCLVHGidwqpa4bW5tblCDTCxKG8kjUEapwEiqAT3tnzoWhQ5lLj+4IuvY3q++IA==
-X-Received: by 2002:a17:906:3c59:b0:a34:9a5e:e15e with SMTP id
- i25-20020a1709063c5900b00a349a5ee15emr400769ejg.28.1706306680752; 
- Fri, 26 Jan 2024 14:04:40 -0800 (PST)
+ bh=woNcbihCgyljuhpYMr+Cr15jve2C8HR8mCIZjTtoatM=;
+ b=cBVwNzV/al3CMZccC9asUijXVh8jzhaOr81U5OT5p4nXq4q46wsaJQn/+oGxUBLeol
+ gE0X+Y86KZ4XFFiq3ZCqjv/W/0WT21eq+Di8DKJuzX5A508BDmHshjFEa0e4ON5C8OLE
+ YwWhK7LxJ3Vbp1yr4xxm7xBS11/JsK2Di6UcWPx0d63bWR7FDHAEhPllQ+RkIYh78yNA
+ 3dTZF1x+iAEJas5454r8ncSZSFaB9Fuh9fPXUOD4l3UL+Y9Vy2RZNYbBAxxli8Ui4L2n
+ OWVzhlczhyXrpj9bMSw1pCybp0KqRcsjTpxrVQBgZlahN67nfHT4WwKRdgIXhqESUp2n
+ aOjw==
+X-Gm-Message-State: AOJu0YyM+Y+fDHHosF1wGcSzMuTYeUUfrY3EqnvucDvuZUxltROiAypq
+ 0rEUH99cFsjlAllsL6Cq/iTx0SkJwbdhEMuBwsbnLucXSsuBXxffrosUKcj5lGth2gBp6Z2EE9b
+ h
+X-Google-Smtp-Source: AGHT+IGEfUSbbgqMLQdvSJbtXPFqUYX6PGTjtPfy/2qbsLf9jCgJGYcSa5vmpQHmXErBdW8QamwwYA==
+X-Received: by 2002:a2e:8ed5:0:b0:2cc:e9e6:e451 with SMTP id
+ e21-20020a2e8ed5000000b002cce9e6e451mr172509ljl.86.1706306717285; 
+ Fri, 26 Jan 2024 14:05:17 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.142.39])
  by smtp.gmail.com with ESMTPSA id
- kq19-20020a170906abd300b00a29db9e8c84sm1051034ejb.220.2024.01.26.14.04.38
+ n1-20020a056402434100b0055d1d0b4a4asm1002967edc.18.2024.01.26.14.05.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 26 Jan 2024 14:04:40 -0800 (PST)
+ Fri, 26 Jan 2024 14:05:16 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
@@ -66,19 +66,19 @@ Cc: qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
-Subject: [PATCH v2 05/23] target/arm: Prefer fast cpu_env() over slower CPU
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH v2 11/23] target/m68k: Prefer fast cpu_env() over slower CPU
  QOM cast macro
-Date: Fri, 26 Jan 2024 23:03:47 +0100
-Message-ID: <20240126220407.95022-6-philmd@linaro.org>
+Date: Fri, 26 Jan 2024 23:03:53 +0100
+Message-ID: <20240126220407.95022-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240126220407.95022-1-philmd@linaro.org>
 References: <20240126220407.95022-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,291 +106,230 @@ in scripts/coccinelle/cpu_env.cocci_template header.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/arm_gicv3_cpuif_common.c |  5 +----
- target/arm/cpu.c                 | 19 +++++--------------
- target/arm/debug_helper.c        |  8 ++------
- target/arm/gdbstub.c             |  6 ++----
- target/arm/gdbstub64.c           |  6 ++----
- target/arm/helper.c              |  9 +++------
- target/arm/hvf/hvf.c             | 12 ++++--------
- target/arm/kvm.c                 |  3 +--
- target/arm/ptw.c                 |  3 +--
- target/arm/tcg/cpu32.c           |  3 +--
- 10 files changed, 22 insertions(+), 52 deletions(-)
+ target/m68k/cpu.c       | 30 ++++++++++--------------------
+ target/m68k/gdbstub.c   |  6 ++----
+ target/m68k/helper.c    |  3 +--
+ target/m68k/m68k-semi.c |  6 ++----
+ target/m68k/op_helper.c | 11 +++--------
+ target/m68k/translate.c |  3 +--
+ 6 files changed, 19 insertions(+), 40 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_cpuif_common.c b/hw/intc/arm_gicv3_cpuif_common.c
-index ff1239f65d..bab3c3cdbd 100644
---- a/hw/intc/arm_gicv3_cpuif_common.c
-+++ b/hw/intc/arm_gicv3_cpuif_common.c
-@@ -15,8 +15,5 @@
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 1421e77c2c..c122fd96fb 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -117,8 +117,7 @@ static ObjectClass *m68k_cpu_class_by_name(const char *cpu_model)
  
- void gicv3_set_gicv3state(CPUState *cpu, GICv3CPUState *s)
+ static void m5206_cpu_initfn(Object *obj)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
--
--    env->gicv3state = (void *)s;
-+    cpu_env(cpu)->gicv3state = (void *)s;
- };
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 593695b424..3970223f33 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -51,8 +51,7 @@
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
- static void arm_cpu_set_pc(CPUState *cs, vaddr value)
+     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
+     m68k_set_feature(env, M68K_FEATURE_MOVEFROMSR_PRIV);
+@@ -127,8 +126,7 @@ static void m5206_cpu_initfn(Object *obj)
+ /* Base feature set, including isns. for m68k family */
+ static void m68000_cpu_initfn(Object *obj)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
-     if (is_a64(env)) {
-         env->pc = value;
-@@ -65,8 +64,7 @@ static void arm_cpu_set_pc(CPUState *cs, vaddr value)
- 
- static vaddr arm_cpu_get_pc(CPUState *cs)
+     m68k_set_feature(env, M68K_FEATURE_M68K);
+     m68k_set_feature(env, M68K_FEATURE_USP);
+@@ -141,8 +139,7 @@ static void m68000_cpu_initfn(Object *obj)
+  */
+ static void m68010_cpu_initfn(Object *obj)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
-     if (is_a64(env)) {
-         return env->pc;
-@@ -994,19 +992,15 @@ static void arm_cpu_kvm_set_irq(void *opaque, int irq, int level)
- 
- static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+     m68000_cpu_initfn(obj);
+     m68k_set_feature(env, M68K_FEATURE_M68010);
+@@ -161,8 +158,7 @@ static void m68010_cpu_initfn(Object *obj)
+  */
+ static void m68020_cpu_initfn(Object *obj)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
--
-     cpu_synchronize_state(cs);
--    return arm_cpu_data_is_big_endian(env);
-+    return arm_cpu_data_is_big_endian(cpu_env(cs));
- }
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
- #endif
- 
- static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
+     m68010_cpu_initfn(obj);
+     m68k_unset_feature(env, M68K_FEATURE_M68010);
+@@ -192,8 +188,7 @@ static void m68020_cpu_initfn(Object *obj)
+  */
+ static void m68030_cpu_initfn(Object *obj)
  {
--    ARMCPU *ac = ARM_CPU(cpu);
--    CPUARMState *env = &ac->env;
-+    CPUARMState *env = cpu_env(cpu);
-     bool sctlr_b;
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
-     if (is_a64(env)) {
-@@ -2428,10 +2422,7 @@ static Property arm_cpu_properties[] = {
- 
- static const gchar *arm_gdb_arch_name(CPUState *cs)
+     m68020_cpu_initfn(obj);
+     m68k_unset_feature(env, M68K_FEATURE_M68020);
+@@ -219,8 +214,7 @@ static void m68030_cpu_initfn(Object *obj)
+  */
+ static void m68040_cpu_initfn(Object *obj)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
--
--    if (arm_feature(env, ARM_FEATURE_IWMMXT)) {
-+    if (arm_feature(cpu_env(cs), ARM_FEATURE_IWMMXT)) {
-         return "iwmmxt";
-     }
-     return "arm";
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 7d856acddf..7bd5467414 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -468,8 +468,7 @@ void arm_debug_excp_handler(CPUState *cs)
-      * Called by core code when a watchpoint or breakpoint fires;
-      * need to check which one and raise the appropriate exception.
-      */
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     CPUWatchpoint *wp_hit = cs->watchpoint_hit;
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
-     if (wp_hit) {
-@@ -757,9 +756,6 @@ void hw_breakpoint_update_all(ARMCPU *cpu)
- 
- vaddr arm_adjust_watchpoint_address(CPUState *cs, vaddr addr, int len)
+     m68030_cpu_initfn(obj);
+     m68k_unset_feature(env, M68K_FEATURE_M68030);
+@@ -240,8 +234,7 @@ static void m68040_cpu_initfn(Object *obj)
+  */
+ static void m68060_cpu_initfn(Object *obj)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
--
-     /*
-      * In BE32 system mode, target memory is stored byteswapped (on a
-      * little-endian host system), and by the time we reach here (via an
-@@ -767,7 +763,7 @@ vaddr arm_adjust_watchpoint_address(CPUState *cs, vaddr addr, int len)
-      * to account for that, which means that watchpoints will not match.
-      * Undo the adjustment here.
-      */
--    if (arm_sctlr_b(env)) {
-+    if (arm_sctlr_b(cpu_env(cs))) {
-         if (len == 1) {
-             addr ^= 3;
-         } else if (len == 2) {
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index 28f546a5ff..dc6c29669c 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -40,8 +40,7 @@ typedef struct RegisterSysregXmlParam {
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
- int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     m68040_cpu_initfn(obj);
+     m68k_unset_feature(env, M68K_FEATURE_M68040);
+@@ -254,8 +247,7 @@ static void m68060_cpu_initfn(Object *obj)
+ 
+ static void m5208_cpu_initfn(Object *obj)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
  
-     if (n < 16) {
-         /* Core integer register.  */
-@@ -61,8 +60,7 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
+     m68k_set_feature(env, M68K_FEATURE_CF_ISA_APLUSC);
+@@ -267,8 +259,7 @@ static void m5208_cpu_initfn(Object *obj)
  
- int arm_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ static void cfv4e_cpu_initfn(Object *obj)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
+ 
+     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
+     m68k_set_feature(env, M68K_FEATURE_CF_ISA_B);
+@@ -281,8 +272,7 @@ static void cfv4e_cpu_initfn(Object *obj)
+ 
+ static void any_cpu_initfn(Object *obj)
+ {
+-    M68kCPU *cpu = M68K_CPU(obj);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(CPU(obj));
+ 
+     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
+     m68k_set_feature(env, M68K_FEATURE_CF_ISA_B);
+diff --git a/target/m68k/gdbstub.c b/target/m68k/gdbstub.c
+index 1e5f033a12..15547e2313 100644
+--- a/target/m68k/gdbstub.c
++++ b/target/m68k/gdbstub.c
+@@ -23,8 +23,7 @@
+ 
+ int m68k_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
+ 
+     if (n < 8) {
+         /* D0-D7 */
+@@ -50,8 +49,7 @@ int m68k_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int m68k_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
      uint32_t tmp;
  
      tmp = ldl_p(mem_buf);
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index d7b79a6589..b9f29b0a60 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -24,8 +24,7 @@
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 14508dfa11..85f3cd1680 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -894,8 +894,7 @@ txfail:
  
- int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ hwaddr m68k_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
+     hwaddr phys_addr;
+     int prot;
+     int access_type;
+diff --git a/target/m68k/m68k-semi.c b/target/m68k/m68k-semi.c
+index b4ffb70f8b..546cff2246 100644
+--- a/target/m68k/m68k-semi.c
++++ b/target/m68k/m68k-semi.c
+@@ -77,8 +77,7 @@ static int host_to_gdb_errno(int err)
  
-     if (n < 31) {
-         /* Core integer register.  */
-@@ -45,8 +44,7 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int aarch64_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     uint64_t tmp;
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
  
-     tmp = ldq_p(mem_buf);
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index e068d35383..a504ed0612 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -10900,8 +10900,7 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
-      * PSTATE A/I/F masks are set based only on the SCR.EA/IRQ/FIQ values.
-      */
-     uint32_t addr, mask;
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+     target_ulong args = env->dregs[1];
+     if (put_user_u32(ret, args) ||
+@@ -95,8 +94,7 @@ static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
  
-     switch (cs->exception_index) {
-     case EXCP_UDEF:
-@@ -10979,8 +10978,7 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
- 
- static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
+ static void m68k_semi_u64_cb(CPUState *cs, uint64_t ret, int err)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     uint32_t addr;
-     uint32_t mask;
-     int new_mode;
-@@ -11479,8 +11477,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
- #ifdef CONFIG_TCG
- static void tcg_handle_semihosting(CPUState *cs)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
  
-     if (is_a64(env)) {
-         qemu_log_mask(CPU_LOG_INT,
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index a537a5bc94..69211d0a60 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1004,8 +1004,7 @@ void hvf_kick_vcpu_thread(CPUState *cpu)
- static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
-                                 uint32_t syndrome)
- {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
+     target_ulong args = env->dregs[1];
+     if (put_user_u32(ret >> 32, args) ||
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index 1ce850bbc5..851cca640d 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -441,10 +441,7 @@ static void do_interrupt_all(CPUM68KState *env, int is_hw)
  
-     cpu->exception_index = excp;
-     env->exception.target_el = 1;
-@@ -1483,8 +1482,7 @@ static bool hvf_sysreg_write_cp(CPUState *cpu, uint32_t reg, uint64_t val)
- 
- static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+ void m68k_cpu_do_interrupt(CPUState *cs)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
+-
+-    do_interrupt_all(env, 0);
++    do_interrupt_all(cpu_env(cs), 0);
+ }
  
-     trace_hvf_sysreg_write(reg,
-                            SYSREG_OP0(reg),
-@@ -2150,8 +2148,7 @@ static void hvf_put_gdbstub_debug_registers(CPUState *cpu)
-  */
- static void hvf_put_guest_debug_registers(CPUState *cpu)
+ static inline void do_interrupt_m68k_hardirq(CPUM68KState *env)
+@@ -457,8 +454,7 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+                                  int mmu_idx, MemTxAttrs attrs,
+                                  MemTxResult response, uintptr_t retaddr)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
-     hv_return_t r = HV_SUCCESS;
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
+ 
+     cpu_restore_state(cs, retaddr);
+ 
+@@ -511,8 +507,7 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+ 
+ bool m68k_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ {
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
+ 
+     if (interrupt_request & CPU_INTERRUPT_HARD
+         && ((env->sr & SR_I) >> SR_I_SHIFT) < env->pending_level) {
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 4a0b0b2703..9688476a7b 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -6108,8 +6108,7 @@ static double floatx80_to_double(CPUM68KState *env, uint16_t high, uint64_t low)
+ 
+ void m68k_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+-    M68kCPU *cpu = M68K_CPU(cs);
+-    CPUM68KState *env = &cpu->env;
++    CPUM68KState *env = cpu_env(cs);
      int i;
- 
-@@ -2205,8 +2202,7 @@ static void hvf_arch_set_traps(void)
- 
- void hvf_arch_update_guest_debug(CPUState *cpu)
- {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
- 
-     /* Check whether guest debugging is enabled */
-     cpu->accel->guest_debug_enabled = cpu->singlestep_enabled ||
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 8f52b211f9..9e97c847b3 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1957,8 +1957,7 @@ int kvm_arch_destroy_vcpu(CPUState *cs)
- /* Callers must hold the iothread mutex lock */
- static void kvm_inject_arm_sea(CPUState *c)
- {
--    ARMCPU *cpu = ARM_CPU(c);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(c);
-     uint32_t esr;
-     bool same_el;
- 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 5eb3577bcd..57a761ad68 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3528,8 +3528,7 @@ bool get_phys_addr(CPUARMState *env, target_ulong address,
- hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-                                          MemTxAttrs *attrs)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
-     ARMSecuritySpace ss = arm_security_space(env);
-     S1Translate ptw = {
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index d9e0e2a4dd..c11c5c85c4 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -102,8 +102,7 @@ void aa32_max_features(ARMCPU *cpu)
- static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
-     CPUClass *cc = CPU_GET_CLASS(cs);
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     bool ret = false;
- 
-     /*
+     uint16_t sr;
+     for (i = 0; i < 8; i++) {
 -- 
 2.41.0
 
