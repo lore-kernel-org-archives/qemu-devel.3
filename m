@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8C6C48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1F5C47422
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 10:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTJUA-00039z-AT; Fri, 26 Jan 2024 05:30:58 -0500
+	id 1rTJUM-0003PR-Te; Fri, 26 Jan 2024 05:31:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJTt-00030y-A6; Fri, 26 Jan 2024 05:30:51 -0500
+ id 1rTJUL-0003Nh-P9; Fri, 26 Jan 2024 05:31:09 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ninad@linux.ibm.com>)
- id 1rTJTj-0003qs-T1; Fri, 26 Jan 2024 05:30:39 -0500
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ id 1rTJUK-00047c-D2; Fri, 26 Jan 2024 05:31:09 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q85rJA006784; Fri, 26 Jan 2024 10:30:15 GMT
+ 40Q9m5oa030092; Fri, 26 Jan 2024 10:30:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
- bh=eZlaQeUpgthLjvi6UkRtZUPHOu2HwFyGFVnW+Ln2xmY=;
- b=IcYQrzOR9ApCX/maikweBPv/vxP/FLJ6CGZUd5iJQ0JBm/k387yTpX+jQQq6vPytbzHi
- GVVqeBQvGPoEbXTqSACmbbVOjREIqibPBMQDj3eNJfUpDP+aX2f73k4z/trd9WUmcRI7
- GZUvgOiJz8C6B+6kJJqLn88U64PopbXn5/RjPKgNg0P2BLakBPGvCHLzMmUBtODDv3ka
- CGa+BXWSGmJ9eetPHZNbpBLpNjR1KAN3w8yG26OtDTsnzQPcFvJkSXS9ckiCFBZPEGYu
- wC74XoR3lroXS8DKWeuTCkmNgoDgurSFC1UJr/4wfI7Fr0AinShY4I30s3ve4REPhxg5 cA== 
+ bh=nO1TGr4T0i/+/afwr16vaswH5GvOuQP6AMcInRnT4MU=;
+ b=hWGPKfxNptsZgCJcgOSq1a7KlJVoHJYbxbA+gywiwVHkDersOpwXHj/4uP1ytbwLTM5r
+ k8JxUJGRFtL/JKZ8jCq64OuzPl1pp9GiMKfP91+z0OEdRdSS7/G7m4TeVcc6wMxvgdgu
+ Is828y0SF28THQKr3jp1t5mSZyxsLfVG4UX9xFIjnVGtIBXlXPNPPwKTaPWi88tbWNsQ
+ QK+El+Q9NEjV9gj+c30Uq3sN0p02ZAxkZ7sp8KZNyggs/IypgOg0cqqZpohBpe25kLho
+ LJlzItVIED+oLz60SVUFF0HuH/Ue8VLlEmWgCYEcSvyLIDmGS6jNtflxsw7/WcQCAxmk 4g== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv89sv307-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vvadsru4n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:30:14 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40QAKoCV030001;
- Fri, 26 Jan 2024 10:30:14 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vv89sv2ys-1
+ Fri, 26 Jan 2024 10:30:59 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40QA0JZ7031109;
+ Fri, 26 Jan 2024 10:30:58 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vvadsru3s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:30:14 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40Q8xTiC022438; Fri, 26 Jan 2024 10:30:13 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vrt0mj0nu-1
+ Fri, 26 Jan 2024 10:30:58 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40Q9d7FS025298; Fri, 26 Jan 2024 10:30:57 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vrtqksu8j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jan 2024 10:30:13 +0000
+ Fri, 26 Jan 2024 10:30:57 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40QAUCfF20382374
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40QAUvxe15270618
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jan 2024 10:30:12 GMT
+ Fri, 26 Jan 2024 10:30:57 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D8F335805C;
- Fri, 26 Jan 2024 10:30:12 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 22E6A5805A;
+ Fri, 26 Jan 2024 10:30:57 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 827EC5805D;
- Fri, 26 Jan 2024 10:30:11 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5431258054;
+ Fri, 26 Jan 2024 10:30:56 +0000 (GMT)
 Received: from [9.61.160.70] (unknown [9.61.160.70])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Jan 2024 10:30:11 +0000 (GMT)
-Message-ID: <4ed4ce4e-6e8b-4790-808d-1d296cd1c0e3@linux.ibm.com>
-Date: Fri, 26 Jan 2024 04:30:11 -0600
+ Fri, 26 Jan 2024 10:30:56 +0000 (GMT)
+Message-ID: <f34c377c-67e0-40bd-89b2-8de4b5f89774@linux.ibm.com>
+Date: Fri, 26 Jan 2024 04:30:56 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 11/11] hw/fsi: Update MAINTAINER list
+Subject: Re: [PATCH v11 00/11] Introduce model for IBM's FSI
 Content-Language: en-US
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
  peter.maydell@linaro.org, andrew@codeconstruct.com.au, joel@jms.id.au,
@@ -77,24 +77,23 @@ To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
  thuth@redhat.com, philmd@linaro.org, lvivier@redhat.com
 Cc: qemu-arm@nongnu.org
 References: <20240126034026.31068-1-ninad@linux.ibm.com>
- <20240126034026.31068-12-ninad@linux.ibm.com>
- <4ec645e9-0fa7-46f5-ade0-847b3bdbb384@kaod.org>
+ <6a7c98da-c0de-4c59-9476-5b5fe17232c7@kaod.org>
 From: Ninad Palsule <ninad@linux.ibm.com>
-In-Reply-To: <4ec645e9-0fa7-46f5-ade0-847b3bdbb384@kaod.org>
+In-Reply-To: <6a7c98da-c0de-4c59-9476-5b5fe17232c7@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0dVVP_sQJ6WPfBku21hxcqmSbWuDnYwN
-X-Proofpoint-ORIG-GUID: HZ4MxueSm2KXHn7iR2t0_N4-lv7GA8qt
+X-Proofpoint-ORIG-GUID: OWE37i6-pZGPtI1eSt_VmZg25o_oP629
+X-Proofpoint-GUID: h5wMSI637DzOmxIQEi5WD3XqnIPFF5bK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-25_14,2024-01-25_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0
- bulkscore=0 mlxlogscore=724 priorityscore=1501 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2401260076
+ spamscore=0
+ priorityscore=1501 mlxscore=0 mlxlogscore=600 clxscore=1015
+ impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2401260076
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=ninad@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -121,19 +120,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hello Cedric,
 
-On 1/26/24 02:57, Cédric Le Goater wrote:
-> On 1/26/24 04:40, Ninad Palsule wrote:
->> Added maintainer for IBM FSI model
->>
->> Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
->> ---
->> v11:
->>   - Added Cedric as reviewer.
->
->
-> Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Added the tag. Thanks for the review.
+> I did some minor comments. v12 should be queued for upstream. I will
+> reorder the Signed-off (mine) trailers.
+
+Thanks a lot for detailed review.
 
 Regards,
 
