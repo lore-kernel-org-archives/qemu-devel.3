@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2417DC47422
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9014C47DDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 17:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTQ4q-0007W0-6l; Fri, 26 Jan 2024 12:33:16 -0500
+	id 1rTQ6i-0004S5-Ar; Fri, 26 Jan 2024 12:35:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ4f-0007Bq-Oi; Fri, 26 Jan 2024 12:33:05 -0500
+ id 1rTQ5R-00009d-0b; Fri, 26 Jan 2024 12:33:55 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+5cc348fc898a3f56ac6c+7460+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rTQ4c-0001jJ-HB; Fri, 26 Jan 2024 12:33:05 -0500
+ id 1rTQ5O-0001jX-FH; Fri, 26 Jan 2024 12:33:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=f4zhtWJwTDv/GTqQefyNMB0pZHdx/v1BNCZKPZQKYkE=; b=nSwxOvPfmxriQ/utFCd6E5uTgk
- zLRl3W9ZzxOKqxVeKHfIePMrsRsDgzhQob0ieitsWWAtWHoxaW/ddWelyJgrB6j43fCgZx4CfWKWo
- Jtz18hNYhD1A3V7taJd3cmQeJpm+sgEx4s7SJ+A7w3RGfK1faQT8DK58V5Zl3rCgJsNTSup6ChZRl
- 5zbnuTqtlRDWshBloZzpeVj6jD4ScFBWVJ6Q8sJX08c7z2Es93nvEn+66ltrPI8hM8b5C/++EVrqU
- 9XwrgCAONDTRJDXixzJBtRo6ZCM49mnTc0R0ZIYs2m6pjhjVoj7eKiK+d6DVc0muGuqz6H90aRRuc
- Z9ZupxNA==;
+ bh=EN2ajdy4otemmrb2xvygJan0iJiZe9osoit8g3Fryzw=; b=aw7QMl2FOdGpX2URBLKLY9O25Z
+ 3fyDarOFSCu7FdfGeuUOAHBmAb2tnUjAu1bvZwlYPeOiuB9dCADtk/Zr+m27jqS6HL6OjZw8gQQZP
+ r4sjI/LTm1A/7fFc9NzofOb06hUw+QpB1t8YvG5GoXnMSYESbIXvf/ywjcywXVL7vGlmeUw1ihIWl
+ uwq8gSP2SBn/pRnZhgiUyWWtV4e7Zee5sN55JOIfrWIqmxXqxOhO8zKI1DQT0mvjWte9Wp3eRFViS
+ E0/CngId3tP/sMw1tS4vVxhL56woaV745KBmd5NWmYRxdEL3aPBZ+NX3Nz2IxGGsComhCp/wkH14P
+ 6cZc8A+w==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rTQ4A-000000069Uk-1tKu; Fri, 26 Jan 2024 17:32:34 +0000
+ id 1rTQ4B-000000069Ut-2zDu; Fri, 26 Jan 2024 17:32:36 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rTQ47-00000001ele-2qm0;
- Fri, 26 Jan 2024 17:32:31 +0000
+ Hat Linux)) id 1rTQ4A-00000001enc-0lfJ;
+ Fri, 26 Jan 2024 17:32:34 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -84,11 +84,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v4 09/47] hw/arm/virt: use pci_init_nic_devices()
-Date: Fri, 26 Jan 2024 17:24:46 +0000
-Message-ID: <20240126173228.394202-10-dwmw2@infradead.org>
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PATCH v4 36/47] hw/mips/jazz: use qemu_find_nic_info()
+Date: Fri, 26 Jan 2024 17:25:13 +0000
+Message-ID: <20240126173228.394202-37-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240126173228.394202-1-dwmw2@infradead.org>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
@@ -124,26 +123,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: David Woodhouse <dwmw@amazon.co.uk>
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/arm/virt.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ hw/mips/jazz.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 5cbc69dff8..ad8e7edb8c 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1454,9 +1454,7 @@ static void create_pcie(VirtMachineState *vms)
-     pci->bypass_iommu = vms->default_bus_bypass_iommu;
-     vms->bus = pci->bus;
-     if (vms->bus) {
--        for (i = 0; i < nb_nics; i++) {
--            pci_nic_init_nofail(&nd_table[i], pci->bus, mc->default_nic, NULL);
--        }
-+        pci_init_nic_devices(pci->bus, mc->default_nic);
+diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
+index 0d2348aa5a..5bf3e328db 100644
+--- a/hw/mips/jazz.c
++++ b/hw/mips/jazz.c
+@@ -119,15 +119,19 @@ static const MemoryRegionOps dma_dummy_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static void mips_jazz_init_net(NICInfo *nd, IOMMUMemoryRegion *rc4030_dma_mr,
++static void mips_jazz_init_net(IOMMUMemoryRegion *rc4030_dma_mr,
+                                DeviceState *rc4030, MemoryRegion *dp8393x_prom)
+ {
+     DeviceState *dev;
+     SysBusDevice *sysbus;
+     int checksum, i;
+     uint8_t *prom;
++    NICInfo *nd;
+ 
+-    qemu_check_nic_model(nd, "dp83932");
++    nd = qemu_find_nic_info("dp8393x", true, "dp82932");
++    if (!nd) {
++        return;
++    }
+ 
+     dev = qdev_new("dp8393x");
+     qdev_set_nic_properties(dev, nd);
+@@ -324,12 +328,7 @@ static void mips_jazz_init(MachineState *machine,
      }
  
-     nodename = vms->pciehb_nodename = g_strdup_printf("/pcie@%" PRIx64, base);
+     /* Network controller */
+-    if (nb_nics == 1) {
+-        mips_jazz_init_net(&nd_table[0], rc4030_dma_mr, rc4030, dp8393x_prom);
+-    } else if (nb_nics > 1) {
+-        error_report("This machine only supports one NIC");
+-        exit(1);
+-    }
++    mips_jazz_init_net(rc4030_dma_mr, rc4030, dp8393x_prom);
+ 
+     /* SCSI adapter */
+     dev = qdev_new(TYPE_SYSBUS_ESP);
 -- 
 2.43.0
 
