@@ -4,52 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07D8C4828E
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB6FC47422
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jan 2024 13:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTMKF-0004BL-8Q; Fri, 26 Jan 2024 08:32:55 -0500
+	id 1rTML9-0006MX-HO; Fri, 26 Jan 2024 08:33:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMKA-0003nj-5p; Fri, 26 Jan 2024 08:32:50 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rTMKo-0005P1-Qd
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:33:35 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=5gEp=JE=kaod.org=clg@ozlabs.org>)
- id 1rTMK8-00080V-1S; Fri, 26 Jan 2024 08:32:49 -0500
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TLzCL67yGz4x5l;
- Sat, 27 Jan 2024 00:32:46 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TLzCK0jGMz4wny;
- Sat, 27 Jan 2024 00:32:44 +1100 (AEDT)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 09/17] hw/fsi: Introduce IBM's FSI Bus
-Date: Fri, 26 Jan 2024 14:32:08 +0100
-Message-ID: <20240126133217.996306-10-clg@kaod.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240126133217.996306-1-clg@kaod.org>
-References: <20240126133217.996306-1-clg@kaod.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rTMKl-0008Cn-TK
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 08:33:30 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 450DF4794E;
+ Fri, 26 Jan 2024 16:34:04 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 84D526BFF1;
+ Fri, 26 Jan 2024 16:33:17 +0300 (MSK)
+Message-ID: <c845093f-1fe0-477e-bf5e-db22c985241a@tls.msk.ru>
+Date: Fri, 26 Jan 2024 16:33:17 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=5gEp=JE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 05/13] linux-user: Use walk_memory_regions for
+ open_self_maps
+Content-Language: en-US
+To: Richard Purdie <richard.purdie@linuxfoundation.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>
+References: <20230901204251.137307-1-richard.henderson@linaro.org>
+ <20230901204251.137307-6-richard.henderson@linaro.org>
+ <9860cd401db66e6bf10e9e41df148b25ee6c73fd.camel@linuxfoundation.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <9860cd401db66e6bf10e9e41df148b25ee6c73fd.camel@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,90 +87,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ninad Palsule <ninad@linux.ibm.com>
+26.01.2024 16:03, Richard Purdie wrote:
+> Hi,
+> 
+> I've run into a problem with this change.
+> 
+> We (Yocto Project) upgraded to qemu 8.2.0 recently and after that we
+> started seeing errors cross compiling webkitgtk on x86_64 for x86_64
+> during the introspection code which runs under user mode qemu.
 
-This is a part of patchset where FSI bus is introduced.
+Hi Richard!
 
-The FSI bus is a simple bus where FSI master is attached.
+Besides your observations, please be aware there's quite a few issues in 8.2.0.
+Please take a look at https://gitlab.com/mjt0k/qemu/-/commits/staging-8.2/
+(and https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2/ which is updated
+less often) for fixes already queued up, if you haven't looked there already.
+8.2.1 stable/bugfix release is scheduled for the beginning of the next week.
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-[ clg: - removed include/hw/fsi/engine-scratchpad.h and
-       	 hw/fsi/engine-scratchpad.c
-       - dropped FSI_SCRATCHPAD
-       - included FSIBus definition
-       - dropped hw/fsi/trace-events changes ]
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
----
- include/hw/fsi/fsi.h | 19 +++++++++++++++++++
- hw/fsi/fsi.c         | 22 ++++++++++++++++++++++
- hw/fsi/meson.build   |  2 +-
- 3 files changed, 42 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/fsi/fsi.h
- create mode 100644 hw/fsi/fsi.c
+Thanks,
 
-diff --git a/include/hw/fsi/fsi.h b/include/hw/fsi/fsi.h
-new file mode 100644
-index 000000000000..50e8f5c888f1
---- /dev/null
-+++ b/include/hw/fsi/fsi.h
-@@ -0,0 +1,19 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2024 IBM Corp.
-+ *
-+ * IBM Flexible Service Interface
-+ */
-+#ifndef FSI_FSI_H
-+#define FSI_FSI_H
-+
-+#include "hw/qdev-core.h"
-+
-+#define TYPE_FSI_BUS "fsi.bus"
-+OBJECT_DECLARE_SIMPLE_TYPE(FSIBus, FSI_BUS)
-+
-+typedef struct FSIBus {
-+    BusState bus;
-+} FSIBus;
-+
-+#endif /* FSI_FSI_H */
-diff --git a/hw/fsi/fsi.c b/hw/fsi/fsi.c
-new file mode 100644
-index 000000000000..60cb03f7a24e
---- /dev/null
-+++ b/hw/fsi/fsi.c
-@@ -0,0 +1,22 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2024 IBM Corp.
-+ *
-+ * IBM Flexible Service Interface
-+ */
-+#include "qemu/osdep.h"
-+
-+#include "hw/fsi/fsi.h"
-+
-+static const TypeInfo fsi_bus_info = {
-+    .name = TYPE_FSI_BUS,
-+    .parent = TYPE_BUS,
-+    .instance_size = sizeof(FSIBus),
-+};
-+
-+static void fsi_bus_register_types(void)
-+{
-+    type_register_static(&fsi_bus_info);
-+}
-+
-+type_init(fsi_bus_register_types);
-diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
-index 93ba19dd0411..574f5f928903 100644
---- a/hw/fsi/meson.build
-+++ b/hw/fsi/meson.build
-@@ -1 +1 @@
--system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c'))
-+system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c'))
--- 
-2.43.0
-
+/mjt
 
