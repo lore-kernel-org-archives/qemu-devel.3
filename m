@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7DF4C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 22:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5291AC46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 22:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTqsK-0002ti-O2; Sat, 27 Jan 2024 17:10:08 -0500
+	id 1rTqwr-00042W-MT; Sat, 27 Jan 2024 17:14:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTqsI-0002tF-Uf
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 17:10:07 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1rTqwp-00040p-Ay
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 17:14:47 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTqsG-0008H3-4l
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 17:10:05 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-290b37bb7deso1495642a91.0
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 14:10:03 -0800 (PST)
+ id 1rTqwn-0000km-T6
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 17:14:47 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-5ff9adbf216so13563847b3.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 14:14:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706393401; x=1706998201; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ll/FDJoseyjepV4b3I7mrVDEfd5pJiXxkRfu0E9NRX4=;
- b=a1rMK9zZMEWAWdfGKPKh+yIMh9d8ah4O3Zvfnv8rK0kSaTtrdB2K7SnOTocKxGxRoi
- 2rpyp3qy8dR4VagUWNLB9LhmjHg/3a5LxApKWvYu+xCPqMwm+9O6nTOcYQO/6KehdLGN
- MxU10joIBIN6yuyX1BAQGAfs+gNMc53oZP8qVVzmnCY/N+6oOAyAJg33UbI7h0ofElSG
- cYFaetvbXB46ijcHCUpEcms4gDlqwxrlvt4WPgqQZrfyIKK3Czgowg1f8OuPn61de3ft
- KxMid8DxXht1Yf0o4DbaOI+Y18SddlYW72Sqv7Rf9QNLd90luWyIJx2zDlzmdmFNyNr1
- VRXA==
+ d=linaro.org; s=google; t=1706393685; x=1706998485; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+FtI5RqwkWf6PLu6Gu4IG6ekxpapz0gnsgVU84sNUv8=;
+ b=bHEKnbcyUUIWXPozoH1902g75ckMfEYu1cBuIXHYT7/o00Vm1d/qQxMj09WjG9JUe+
+ K3Ym4jUIQi+j6byYmFIgkjaOcW/IrB8RlmgyvgFUkuXF4+RaUpyLejkZDMO049NBb+wh
+ gGjUEnsZTKwK7jSA77nYiIkfp3Nz7SMiiphAM4Thd0ghhn9q3EgY72oBsZMfh3lqxHdS
+ JQAJvsC3v7W5/Yke97heJrjD/soUQQf9TfBV/ag3Gncl6RYcoP5OFRwm/b41Wp5sxGQr
+ GVm2QiMzyR+nOniur8dsdlwJlQP/RSnCUN93HUgI5Qoai7ByUoSLVsowy/BOfHhH4nBO
+ Cg6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706393401; x=1706998201;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1706393685; x=1706998485;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ll/FDJoseyjepV4b3I7mrVDEfd5pJiXxkRfu0E9NRX4=;
- b=Xr/sUbSS9wfpU1uVCCQ8hgYt/7uNJ4MSKo7B85D54ZzIgMQGiq8dlosPlodWe7StN5
- k8DBPMj0QGWPZEMutkbptTX1fxAqS9zI5pil4kByWbaxi0rvx8lxNilb08jO3DXwzDpk
- 3OhZ0VQ6pNTc3jPbN2mK8cVmlc2ltbnDkYafsYQUfF7abNIYwY1cpKtGrUgt3suHYbSb
- W11MCn86znxYXbXkWrmysugSHcf6Rf0U1oH+cmvts0nQtvmieTHfq+AybsGh6wQ+Mr1g
- fHgxovCZaFQszl2Gh4POsiaPgnD8z4bXnGhnkL4QKbygfX0YoTb4Og5wUrm9guol6PXy
- s5Pw==
-X-Gm-Message-State: AOJu0Yw8WYWRUyrvxLsgK5sXxM+9rAaJ3GulyByPbytBfLs7p21WMVjt
- kUoFArYswiJ/MZK6G7IJhO41W8YYOQqiZa0kn5OjvO6WE5aeJOv7ghaXFQ2w0j6YQa1l9X3h1q7
- 5gIAO9g==
-X-Google-Smtp-Source: AGHT+IGzizW1c5sHyWZ8sYQd0+BEC1RUZkW5cy52xNcFZ2cdCJ7JoMS5x5PcSqBk49vatWY9+IxTxw==
-X-Received: by 2002:a17:90a:9f0c:b0:290:cd3:a2d2 with SMTP id
- n12-20020a17090a9f0c00b002900cd3a2d2mr1414957pjp.3.1706393400964; 
- Sat, 27 Jan 2024 14:10:00 -0800 (PST)
+ bh=+FtI5RqwkWf6PLu6Gu4IG6ekxpapz0gnsgVU84sNUv8=;
+ b=MgwTpJXQ4wJULNrNVOlMX7UPMRz9cFdJeCOAa7Q80C4RW9fCC0OkuuABOS/dUryjou
+ Ib3r0A0WKALnMlqNHbo121Z8si0cctIpeRkT7oVtMq1Ur4QWv5RZSz5XFD4xmhmSz0T6
+ baGQb21TMDfcNm9JXOJK0DAL93MJkaxBW1iGRaBTT+8dkyQ6TcE08P3M1kzl/udpHL1O
+ bLHd+xaM9AW9OGnxCm0v2vQMr4uN+AlcX7SFcG2E/YgP4VqoiGi3LBB/j8TBHBiJcRAp
+ YpJJ+lfHE2ciWlqFQQBqHZL4ZR3/eMm69KNlLng0oJ3o3SZKot9PQBpTKSPx1aglqWv6
+ EiJQ==
+X-Gm-Message-State: AOJu0YxXhyit8qLwH/v+bk7R49YlmHH4qBVab++u27Kzr/VfY9NQFrO9
+ a8ykE/z7+f/SKbbMVfOkWr/zML9CeXzl1/cimS/iWP8uFnrQk8yD3kOpuMDxhOc90AWSQvy7V96
+ 2dOnfsQ==
+X-Google-Smtp-Source: AGHT+IE6whunSq/33H2+XcrrVmfxjw03Z6PYpR7totYKP7IQV1kwDDXXETZ463MEElWq+g3UnyQ1xw==
+X-Received: by 2002:a81:ce06:0:b0:602:cc01:81c6 with SMTP id
+ t6-20020a81ce06000000b00602cc0181c6mr2424868ywi.14.1706393684724; 
+ Sat, 27 Jan 2024 14:14:44 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:a829:f39c:2095:de50?
  ([2001:8003:c96c:3c00:a829:f39c:2095:de50])
  by smtp.gmail.com with ESMTPSA id
- nc13-20020a17090b37cd00b002927a36b7a0sm3334092pjb.23.2024.01.27.14.09.59
+ t19-20020a62d153000000b006dddd685bbesm3348905pfl.122.2024.01.27.14.14.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Jan 2024 14:10:00 -0800 (PST)
-Message-ID: <aea3d4c9-66ec-4e44-ba2b-e53632735a74@linaro.org>
-Date: Sun, 28 Jan 2024 08:09:56 +1000
+ Sat, 27 Jan 2024 14:14:44 -0800 (PST)
+Message-ID: <b18b9f43-dcf7-4eac-8e97-5a6f805b257a@linaro.org>
+Date: Sun, 28 Jan 2024 08:14:38 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/arm: fix exception syndrome for AArch32 bkpt
- insn
-To: =?UTF-8?Q?Jan_Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>,
- qemu-devel@nongnu.org
-References: <20240127202758.3326381-1-jan.kloetzke@kernkonzept.com>
+Subject: Re: [RFC PATCH 16/34] exec: [CPUTLB] Move cpu_*()/cpu_env() to common
+ header
 Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: ale@rev.ng, philmd@linaro.org
+References: <20240119144024.14289-1-anjo@rev.ng>
+ <20240119144024.14289-17-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240127202758.3326381-1-jan.kloetzke@kernkonzept.com>
+In-Reply-To: <20240119144024.14289-17-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,23 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/24 06:27, Jan Klötzke wrote:
-> Debug exceptions that target AArch32 Hyp mode are reported differently
-> than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
-> such exceptions need to be either converted to a prefetch abort
-> (breakpoints, vector catch) or a data abort (watchpoints).
-> 
-> Signed-off-by: Jan Klötzke<jan.kloetzke@kernkonzept.com>
-> ---
-> v2:
->   * Refactor watchpoint syndrome rewriting
->   * Drop ARM_EL_ISV from watchpoint syndrome
-> 
->   target/arm/helper.c   | 18 ++++++++++++++++++
->   target/arm/syndrome.h |  8 ++++++++
->   2 files changed, 26 insertions(+)
+On 1/20/24 00:40, Anton Johansson wrote:
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -347,4 +347,29 @@ G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
+>    */
+>   #define PAGE_PASSTHROUGH 0x0800
+>   
+> +/* accel/tcg/cpu-exec.c */
+> +int cpu_exec(CPUState *cpu);
+> +
+> +/**
+> + * env_archcpu(env)
+> + * @env: The architecture environment
+> + *
+> + * Return the ArchCPU associated with the environment.
+> + */
+> +static inline ArchCPU *env_archcpu(CPUArchState *env)
+> +{
+> +    return (void *)env - sizeof(CPUState);
+> +}
+> +
+> +/**
+> + * env_cpu(env)
+> + * @env: The architecture environment
+> + *
+> + * Return the CPUState associated with the environment.
+> + */
+> +static inline CPUState *env_cpu(CPUArchState *env)
+> +{
+> +    return (void *)env - sizeof(CPUState);
+> +}
+> +
+>   #endif /* CPU_COMMON_H */
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Missing include of hw/core/cpu.h, as far as I can see?
 
 
 r~
