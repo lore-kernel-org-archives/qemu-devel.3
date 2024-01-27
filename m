@@ -4,67 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D5E2C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 14:46:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28939C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 14:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTjvz-0000PP-CR; Sat, 27 Jan 2024 09:45:27 -0500
+	id 1rTk4q-00059w-ST; Sat, 27 Jan 2024 09:54:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rTjvo-0000Kz-3j; Sat, 27 Jan 2024 09:45:16 -0500
-Received: from zproxy4.enst.fr ([2001:660:330f:2::df])
+ id 1rTk4p-00059a-8x
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 09:54:35 -0500
+Received: from zproxy2.enst.fr ([2001:660:330f:2::dd])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rTjvj-0003bd-1H; Sat, 27 Jan 2024 09:45:14 -0500
+ id 1rTk4n-00051t-7i
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 09:54:35 -0500
 Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id D090220794;
- Sat, 27 Jan 2024 15:45:07 +0100 (CET)
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id D1H4M0vklaDs; Sat, 27 Jan 2024 15:45:07 +0100 (CET)
+ by zproxy2.enst.fr (Postfix) with ESMTP id 143DF807BB;
+ Sat, 27 Jan 2024 15:54:30 +0100 (CET)
+Received: from zproxy2.enst.fr ([IPv6:::1])
+ by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id G5rGlfWZPsXp; Sat, 27 Jan 2024 15:54:29 +0100 (CET)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 296FC20811;
- Sat, 27 Jan 2024 15:45:07 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 296FC20811
+ by zproxy2.enst.fr (Postfix) with ESMTP id 796E7807B1;
+ Sat, 27 Jan 2024 15:54:29 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr 796E7807B1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706366707;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706367269;
  bh=iqvodn8mGiS3d7eM1Ps4AodhRGeWTsf8TD6wnVXNtEA=;
  h=From:To:Date:Message-Id:MIME-Version;
- b=llSwKLuQjZEwYG2/HdeF2dMNnBzVEvZX+S4U2fnWz97BcLIwO6jIfx0R3rJQO+vUm
- Gz7U3895kGqTRHVJHqNBPkIGMCTamcynM0SE/j+BZgE1sgILYStqLRIRMldsPF0NfU
- t8bYalrsz+c1MDIAQFk1KkR9FY6B/5RQAg6atIFw=
+ b=4/ZrtUhy1hajF7FBG0xkpE3d9sqCEaIuyK6CpT7EFls5azGrdD4QTkJgve4IiXBVr
+ jJ6DJ5+sQtuyeQa9qtvt18A5+azI9qkXZhZGt6kUNiuTbWBrCiAXnAEc42jBicbACM
+ eE2ULo6NlL2tGdLf06VuZoe/qrVVxAV+y9hukK3c=
 X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id YsKvUiFK7b7J; Sat, 27 Jan 2024 15:45:06 +0100 (CET)
+Received: from zproxy2.enst.fr ([IPv6:::1])
+ by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id IzNkdyAjdFnj; Sat, 27 Jan 2024 15:54:29 +0100 (CET)
 Received: from AM-Inspiron-3585.numericable.fr (38.162.10.109.rev.sfr.net
  [109.10.162.38])
- by zproxy4.enst.fr (Postfix) with ESMTPSA id 857D22078D;
- Sat, 27 Jan 2024 15:45:06 +0100 (CET)
+ by zproxy2.enst.fr (Postfix) with ESMTPSA id 39E30807AB;
+ Sat, 27 Jan 2024 15:54:29 +0100 (CET)
 From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- =?UTF-8?q?Philipe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>
+Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 Subject: [PATCH v3 7/8] STM32L4x5: Use the RCC Sysclk
-Date: Sat, 27 Jan 2024 15:44:59 +0100
-Message-Id: <20240127144500.82071-2-arnaud.minier@telecom-paris.fr>
+Date: Sat, 27 Jan 2024 15:54:23 +0100
+Message-Id: <20240127145423.85517-1-arnaud.minier@telecom-paris.fr>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240127144500.82071-1-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240127143904.80187-1-arnaud.minier@telecom-paris.fr>
 References: <20240127143904.80187-1-arnaud.minier@telecom-paris.fr>
- <20240127144500.82071-1-arnaud.minier@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::df;
- envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy4.enst.fr
+Received-SPF: pass client-ip=2001:660:330f:2::dd;
+ envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy2.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
