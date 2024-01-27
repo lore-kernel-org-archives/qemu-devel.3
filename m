@@ -4,68 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6C1C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 15:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F01C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 19:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTkEI-0008U0-5H; Sat, 27 Jan 2024 10:04:22 -0500
+	id 1rTo65-00076L-TS; Sat, 27 Jan 2024 14:12:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rTkEB-0008Tm-37
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 10:04:17 -0500
-Received: from zproxy1.enst.fr ([2001:660:330f:2::dc])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rTkE6-0006ml-I9
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 10:04:14 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 6E35AC0DEB;
- Sat, 27 Jan 2024 16:04:07 +0100 (CET)
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id dFmJZw_k2QaA; Sat, 27 Jan 2024 16:04:06 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id DB86BC0D78;
- Sat, 27 Jan 2024 16:04:06 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr DB86BC0D78
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706367846;
- bh=mu2hOZHGN/vGpbFAHGGJCR5uM2pD7VU1oJyamH60faQ=;
- h=From:To:Date:Message-Id:MIME-Version;
- b=a+i3aJxhOELtGk0x/tAO698O5n9+AZ7LdqPEoCo623iJp/pO1rV323maADn33cRKT
- v5Xpa8WX29FuarDHVb+PWvrjeArRRMb9HQd2lHfQ89DbF38NfnXM+RVICLajzevw9A
- iaj/PM8c8oi6IJTiK5UWAlM+JSOTQB+aNgtY1bJ8=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id TF6jW0aNGpRz; Sat, 27 Jan 2024 16:04:06 +0100 (CET)
-Received: from AM-Inspiron-3585.numericable.fr (38.162.10.109.rev.sfr.net
- [109.10.162.38])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id A83E1C0D73;
- Sat, 27 Jan 2024 16:04:06 +0100 (CET)
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Subject: [PATCH v3 8/8] Add tests for the STM32L4x5_RCC
-Date: Sat, 27 Jan 2024 16:03:58 +0100
-Message-Id: <20240127150358.87082-1-arnaud.minier@telecom-paris.fr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240127143904.80187-1-arnaud.minier@telecom-paris.fr>
-References: <20240127143904.80187-1-arnaud.minier@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1rTo5z-000760-Dx; Sat, 27 Jan 2024 14:12:03 -0500
+Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1rTo5x-0005Gr-5D; Sat, 27 Jan 2024 14:12:03 -0500
+Received: by mail-oo1-xc30.google.com with SMTP id
+ 006d021491bc7-59a2f28ea59so39744eaf.2; 
+ Sat, 27 Jan 2024 11:11:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706382718; x=1706987518; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=peiO/kJX4daBXJe+AQREwFu4kiAYkIpVzu3PvN0udrU=;
+ b=muYSIAoVGZpUTZVMpOEwj6FSp+FQEaNkP3012SD63HlT0lTYEy1wbWUZH4qzATYWrq
+ UqXipr5mhSD1fxGuMaW48sQTzkCcniNX8SW9pqekI3ND0Ob3Z9n6dmEcyCaHH2dNZLhE
+ 2XMmI2E2Hy2EDaqcx8O/CTV22BXBR3WNHMxU8O0z0aJtoOzVTb6U8gtFX2asSGf4Kz/B
+ roKlN1Fi+PR9MhRJ6e1HNZXq4oZTOWFRNyymxkW9Z+bcXAFHCftcdBRZCzc1On34uej0
+ nMu2ij0mFyx0KL25jcGE2d7rUUp1Gxb8O9z/f6Hu7lyQpYbgXF+TceWimwtbUM+VP/xT
+ 9fNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706382718; x=1706987518;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=peiO/kJX4daBXJe+AQREwFu4kiAYkIpVzu3PvN0udrU=;
+ b=Pj33hGbpKLNaDrJKN53AclBJP/bwsknVWVh7d8GZWZwFe5OQvJEYBCgLxeYmzZ+4fs
+ WxEQmir3dtzjiGrGKI1fRgEQ1dX+1JInnOuH2/BB9nDzXv9wupNRgtPnmmaAl1rKu3Wa
+ pUhansoxgPdASy/rLC7IvW+7sE3HwIvowJp+0MIVX6fft4wj/WniTMtIOoiJMfGPunXA
+ ZpRqKSrQ2a5nGFFa62SIxl2X3MaRRrdCm3j4IcFSYr64R1nfK2oAo0ofiOi8N6HrQJCX
+ D47UOveDmK9wvoD79tl4nQzU08omsuHdf2yvJXkvQzYTfqqUw/3HuD6ga1zhgiU77Mzj
+ 2NBA==
+X-Gm-Message-State: AOJu0YxAZp+ijpYES7I0NM1hr7GUhpJq8+EPVnjLkxk1/xlJnNj3DvM6
+ 0YZMy6dMDYialhsYJ4TZh/3IPL7IsT7wFn2C+v22Tj+cWdvmJEaI
+X-Google-Smtp-Source: AGHT+IFJpnvjtP0uRl/QtoztDjaZ3KG3afOC3k0m25fx6kTYujgEkHVWtSkQv6ViMb197y+LXmhGHQ==
+X-Received: by 2002:a05:6358:725:b0:176:8a8e:213c with SMTP id
+ e37-20020a056358072500b001768a8e213cmr1604074rwj.3.1706382718132; 
+ Sat, 27 Jan 2024 11:11:58 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ bz11-20020a056a02060b00b005cdad153d84sm2609443pgb.90.2024.01.27.11.11.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 27 Jan 2024 11:11:57 -0800 (PST)
+Date: Sat, 27 Jan 2024 11:11:55 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Nikita Ostrenkov <n.ostrenkov@gmail.com>
+Cc: qemu-devel@nongnu.org, Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH v2] hw/arm: add PCIe to Freescale i.MX6
+Message-ID: <9ee6eee8-2135-48f3-99a3-d572699fa4f7@roeck-us.net>
+References: <20240108140325.1291-1-n.ostrenkov@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::dc;
- envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy1.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240108140325.1291-1-n.ostrenkov@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
+ envelope-from=groeck7@gmail.com; helo=mail-oo1-xc30.google.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.249, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ WEIRD_PORT=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,259 +94,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Again, troubles with my mail formatting. Sorry for the multiple mails of
-this patch you may have received.
+Hi,
 
-Tests:
-- the ability to change the sysclk of the device
-- the ability to enable/disable/configure the PLLs
-- if the clock multiplexers work
-- the register flags and the generation of irqs
+On Mon, Jan 08, 2024 at 02:03:25PM +0000, Nikita Ostrenkov wrote:
+> Signed-off-by: Nikita Ostrenkov <n.ostrenkov@gmail.com>
+> ---
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+This patch, with the "sabrelite" emulation and the Linux upstream kernel
+(v6.8-rc1, using imx_v6_v7_defconfig), results in:
+
+qemu-system-arm: ../system/memory.c:2750: memory_region_set_alias_offset: Assertion `mr->alias' failed.
+
+with the backtrace below. Any idea what might be wrong ?
+
+Thanks,
+Guenter
+
 ---
- tests/qtest/meson.build          |   3 +-
- tests/qtest/stm32l4x5_rcc-test.c | 207 +++++++++++++++++++++++++++++++
- 2 files changed, 209 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/stm32l4x5_rcc-test.c
-
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index a926af92f6..b0d9a8c2de 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -197,7 +197,8 @@ qtests_aspeed =3D \
-=20
- qtests_stm32l4x5 =3D \
-   ['stm32l4x5_exti-test',
--   'stm32l4x5_syscfg-test']
-+   'stm32l4x5_syscfg-test',
-+   'stm32l4x5_rcc-test']
-=20
- qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) =
-+ \
-diff --git a/tests/qtest/stm32l4x5_rcc-test.c b/tests/qtest/stm32l4x5_rcc=
--test.c
-new file mode 100644
-index 0000000000..4157291052
---- /dev/null
-+++ b/tests/qtest/stm32l4x5_rcc-test.c
-@@ -0,0 +1,207 @@
-+/*
-+ * QTest testcase for STM32L4x5_RCC
-+ *
-+ * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-+ * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/registerfields.h"
-+#include "libqtest-single.h"
-+#include "hw/misc/stm32l4x5_rcc_internals.h"
-+
-+#define RCC_BASE_ADDR 0x40021000
-+#define NVIC_ISER 0xE000E100
-+#define NVIC_ISPR 0xE000E200
-+#define NVIC_ICPR 0xE000E280
-+#define RCC_IRQ 5
-+
-+static void enable_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ISER, 1 << n);
-+}
-+
-+static void unpend_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ICPR, 1 << n);
-+}
-+
-+static bool check_nvic_pending(unsigned int n)
-+{
-+    return readl(NVIC_ISPR) & (1 << n);
-+}
-+
-+static bool qts_wait_for_flag(QTestState *qts, uint32_t event_addr,
-+                              uint32_t flag, uint32_t value)
-+{
-+    /* Wait at most 5 seconds */
-+    for (int i =3D 0; i < 5000; i++) {
-+        if ((qtest_readl(qts, event_addr) & flag) =3D=3D value) {
-+            return true;
-+        }
-+        g_usleep(1000);
-+    }
-+
-+    return false;
-+}
-+
-+static bool rcc_wait_for_flag(uint32_t event_addr, uint32_t flag,
-+                              uint32_t value)
-+{
-+    return qts_wait_for_flag(global_qtest, RCC_BASE_ADDR + event_addr, f=
-lag, value);
-+}
-+
-+static void rcc_writel(unsigned int offset, uint32_t value)
-+{
-+    writel(RCC_BASE_ADDR + offset, value);
-+}
-+
-+static uint32_t rcc_readl(unsigned int offset)
-+{
-+    return readl(RCC_BASE_ADDR + offset);
-+}
-+
-+static void test_init_msi(void)
-+{
-+    /* MSIRANGE can be set only when MSI is OFF or READY */
-+    rcc_writel(A_CR, R_CR_MSION_MASK);
-+    /* Wait until MSI is stable */
-+    g_assert_true(rcc_wait_for_flag(A_CR, R_CR_MSIRDY_MASK, R_CR_MSIRDY_=
-MASK));
-+    /* TODO find a way to test MSI value */
-+}
-+
-+static void test_set_msi_as_sysclk(void)
-+{
-+    /* Clocking from MSI, in case MSI was not the default source */
-+    rcc_writel(A_CFGR, 0);
-+    /* Wait until MSI is selected and stable */
-+    g_assert_true(rcc_wait_for_flag(A_CFGR, R_CFGR_SWS_MASK, 0));
-+}
-+
-+static void test_init_pll(void)
-+{
-+    uint32_t value;
-+
-+    /*
-+     * Update PLL and set MSI as the source clock.
-+     * PLLM =3D 1 --> 000
-+     * PLLN =3D 40 --> 40
-+     * PPLLR =3D 2 --> 00
-+     * PLLDIV =3D unused, PLLP =3D unused (SAI3), PLLQ =3D unused (48M1)
-+     * SRC =3D MSI --> 01
-+     */
-+    rcc_writel(A_PLLCFGR, R_PLLCFGR_PLLREN_MASK |
-+            (40 << R_PLLCFGR_PLLN_SHIFT) |
-+            (0b01 << R_PLLCFGR_PLLSRC_SHIFT));
-+
-+    /* PLL activation */
-+    value =3D rcc_readl(A_CR);
-+    rcc_writel(A_CR, value | R_CR_PLLON_MASK);
-+
-+    /* Waiting for PLL lock. */
-+    g_assert_true(rcc_wait_for_flag(A_CR, R_CR_PLLRDY_MASK, R_CR_PLLRDY_=
-MASK));
-+
-+    /* Switches on the PLL clock source */
-+    value =3D rcc_readl(A_CFGR);
-+    rcc_writel(A_CFGR, (value & ~R_CFGR_SW_MASK) |
-+        (0b11 << R_CFGR_SW_SHIFT));
-+
-+    /* Wait until SYSCLK is stable. */
-+    g_assert_true(rcc_wait_for_flag(A_CFGR, R_CFGR_SWS_MASK,
-+        (0b11 << R_CFGR_SWS_SHIFT)));
-+}
-+
-+static void test_activate_lse(void)
-+{
-+    /* LSE activation, no LSE Bypass */
-+    rcc_writel(A_BDCR, R_BDCR_LSEDRV_MASK | R_BDCR_LSEON_MASK);
-+    g_assert_true(rcc_wait_for_flag(A_BDCR, R_BDCR_LSERDY_MASK, R_BDCR_L=
-SERDY_MASK));
-+}
-+
-+static void test_irq(void)
-+{
-+    enable_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_LSIRDYIE_MASK);
-+    rcc_writel(A_CSR, R_CSR_LSION_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_LSIRDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_LSERDYIE_MASK);
-+    rcc_writel(A_BDCR, R_BDCR_LSEON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_LSERDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    /*
-+     * MSI has been enabled by previous tests,
-+     * shouln't generate an interruption.
-+     */
-+    rcc_writel(A_CIER, R_CIER_MSIRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_MSION_MASK);
-+    g_assert_false(check_nvic_pending(RCC_IRQ));
-+
-+    rcc_writel(A_CIER, R_CIER_HSIRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_HSION_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_HSIRDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_HSERDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_HSEON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_HSERDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    /*
-+     * PLL has been enabled by previous tests,
-+     * shouln't generate an interruption.
-+     */
-+    rcc_writel(A_CIER, R_CIER_PLLRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLON_MASK);
-+    g_assert_false(check_nvic_pending(RCC_IRQ));
-+
-+    rcc_writel(A_CIER, R_CIER_PLLSAI1RDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLSAI1ON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_PLLSAI1RDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_PLLSAI2RDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLSAI2ON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_PLLSAI2RDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_set_nonfatal_assertions();
-+    /*
-+     * These test separately that we can enable the plls, change the sys=
-clk,
-+     * and enable different devices.
-+     * They are dependent on one another.
-+     */
-+    qtest_add_func("stm32l4x5/rcc/init_msi", test_init_msi);
-+    qtest_add_func("stm32l4x5/rcc/set_msi_as_sysclk",
-+        test_set_msi_as_sysclk);
-+    qtest_add_func("stm32l4x5/rcc/activate_lse", test_activate_lse);
-+    qtest_add_func("stm32l4x5/rcc/init_pll", test_init_pll);
-+
-+    qtest_add_func("stm32l4x5/rcc/irq", test_irq);
-+
-+    qtest_start("-machine b-l475e-iot01a");
-+    ret =3D g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
---=20
-2.34.1
-
+#0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=140737237087808) at ./nptl/pthread_kill.c:44
+#1  __pthread_kill_internal (signo=6, threadid=140737237087808) at ./nptl/pthread_kill.c:78
+#2  __GI___pthread_kill (threadid=140737237087808, signo=signo@entry=6) at ./nptl/pthread_kill.c:89
+#3  0x00007ffff6242476 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#4  0x00007ffff62287f3 in __GI_abort () at ./stdlib/abort.c:79
+#5  0x00007ffff622871b in __assert_fail_base
+    (fmt=0x7ffff63dd130 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion=0x5555565712bd "mr->alias", file=0x555556570da4 "../system/memory.c", line=2750, function=<optimized out>)
+    at ./assert/assert.c:92
+#6  0x00007ffff6239e96 in __GI___assert_fail
+    (assertion=0x5555565712bd "mr->alias", file=0x555556570da4 "../system/memory.c", line=2750, function=0x555556571bf0 <__PRETTY_FUNCTION__.8> "memory_region_set_alias_offset")
+    at ./assert/assert.c:101
+#7  0x00005555560192ce in memory_region_set_alias_offset (mr=0x555557a77ce0, offset=286326784) at ../system/memory.c:2750
+#8  0x0000555555b8bc9f in designware_pcie_update_viewport (root=0x555557a74d50, viewport=0x555557a77bc0) at ../hw/pci-host/designware.c:280
+#9  0x0000555555b8c06d in designware_pcie_root_config_write (d=0x555557a74d50, address=2312, val=0, len=4) at ../hw/pci-host/designware.c:375
+#10 0x0000555555b78488 in pci_host_config_write_common (pci_dev=0x555557a74d50, addr=2312, limit=4096, val=0, len=4) at ../hw/pci/pci_host.c:96
+#11 0x0000555555b8c7ee in designware_pcie_host_mmio_write (opaque=0x555557a746c0, addr=2312, val=0, size=4) at ../hw/pci-host/designware.c:635
+#12 0x0000555556012388 in memory_region_write_accessor (mr=0x555557a780a0, addr=2312, value=0x7ffff105a628, size=4, shift=0, mask=4294967295, attrs=...) at ../system/memory.c:497
+#13 0x00005555560126c1 in access_with_adjusted_size
+     (addr=2312, value=0x7ffff105a628, size=4, access_size_min=4, access_size_max=4, access_fn=0x55555601228e <memory_region_write_accessor>, mr=0x555557a780a0, attrs=...) at ../system/memory.c:573
+#14 0x00005555560159cd in memory_region_dispatch_write (mr=0x555557a780a0, addr=2312, data=0, op=MO_32, attrs=...) at ../system/memory.c:1521
+#15 0x000055555607351f in int_st_mmio_leN (cpu=0x555557a47150, full=0x7fffe841fe80, val_le=0, addr=3500312840, size=4, mmu_idx=7, ra=140734908258821, mr=0x555557a780a0, mr_offset=2312)
+    at ../accel/tcg/cputlb.c:2545
+#16 0x0000555556073697 in do_st_mmio_leN (cpu=0x555557a47150, full=0x7fffe841fe80, val_le=0, addr=3500312840, size=4, mmu_idx=7, ra=140734908258821) at ../accel/tcg/cputlb.c:2581
+#17 0x0000555556073f14 in do_st_4 (cpu=0x555557a47150, p=0x7ffff105a7c0, val=0, mmu_idx=7, memop=1282, ra=140734908258821) at ../accel/tcg/cputlb.c:2758
+#18 0x00005555560742d7 in do_st4_mmu (cpu=0x555557a47150, addr=3500312840, val=0, oi=20519, ra=140734908258821) at ../accel/tcg/cputlb.c:2834
+#19 0x0000555556074df3 in helper_stl_mmu (env=0x555557a49910, addr=3500312840, val=0, oi=20519, retaddr=140734908258821) at ../accel/tcg/ldst_common.c.inc:100
+#20 0x00007fff6636da46 in code_gen_buffer ()
+#21 0x00005555560587e8 in cpu_tb_exec (cpu=0x555557a47150, itb=0x7fffa636d900, tb_exit=0x7ffff105adf0) at ../accel/tcg/cpu-exec.c:458
+#22 0x0000555556059565 in cpu_loop_exec_tb (cpu=0x555557a47150, tb=0x7fffa636d900, pc=3230581304, last_tb=0x7ffff105ae00, tb_exit=0x7ffff105adf0) at ../accel/tcg/cpu-exec.c:920
+#23 0x00005555560598da in cpu_exec_loop (cpu=0x555557a47150, sc=0x7ffff105ae80) at ../accel/tcg/cpu-exec.c:1041
+#24 0x00005555560599ab in cpu_exec_setjmp (cpu=0x555557a47150, sc=0x7ffff105ae80) at ../accel/tcg/cpu-exec.c:1058
+#25 0x0000555556059a47 in cpu_exec (cpu=0x555557a47150) at ../accel/tcg/cpu-exec.c:1084
+#26 0x00005555560838c2 in tcg_cpus_exec (cpu=0x555557a47150) at ../accel/tcg/tcg-accel-ops.c:76
+#27 0x000055555608403d in mttcg_cpu_thread_fn (arg=0x555557a47150) at ../accel/tcg/tcg-accel-ops-mttcg.c:95
+#28 0x00005555562b32d7 in qemu_thread_start (args=0x555557c06360) at ../util/qemu-thread-posix.c:541
+#29 0x00007ffff6294ac3 in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:442
+#30 0x00007ffff6326850 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
 
