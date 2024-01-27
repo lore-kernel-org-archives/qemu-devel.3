@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB19C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 20:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D7BC46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 22:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTpIa-0006bw-St; Sat, 27 Jan 2024 15:29:08 -0500
+	id 1rTqlS-0000p4-Pw; Sat, 27 Jan 2024 17:03:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kloetzke@kernkonzept.com>)
- id 1rTpIZ-0006bo-JQ
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 15:29:07 -0500
-Received: from serv1.kernkonzept.com ([2a01:4f8:1c1c:b490::2]
- helo=mx.kernkonzept.com)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rTqlR-0000oR-QP
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 17:03:01 -0500
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kloetzke@kernkonzept.com>)
- id 1rTpIW-00013M-GM
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 15:29:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:Content-Type:
- MIME-Version:Message-Id:Date:Subject:Cc:To:From:References:In-Reply-To:
- Reply-To:Content-ID:Content-Description;
- bh=1HIHiy7HMlvUkBbOEZVtp0yJrw7WkvidplMYQpfeo0g=; b=ZgEzhubJbhHWvDf2LyzhhcFC8j
- YNrgfABR3Xvz44v7jtg+aTgIjdQeitYVUVmTjFB+bKnqQ2zuJMFMVtCp29A4cldR5LbmitjOIM0pM
- mPi6bRqH29q4xbQMSfwYK+204Ufm9q9qlwUCduYUqSirC0BPBzn473IsTnVEhYHSS8f2fYMN0DL66
- 2PcuYzqGLCqUj07v5VaOm0oNp4m3Hh79AROf9mxoR6iyWMna2Nhgh/QLGv668mBJrcrKv003YTjYl
- ou2ZvDQK818O2hMZyIBBo8V9wpEqySQMCYnJVhWJVKmM/QTYdtz78Cdom7nNROrMJjQ+Ce2AmxdXe
- 22foXR1Q==;
-Received: from p578ec111.dip0.t-ipconnect.de ([87.142.193.17]
- helo=shark.dd1.int.kernkonzept.com)
- by mx.kernkonzept.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
- id 1rTpIS-0037zj-2P; Sat, 27 Jan 2024 21:29:00 +0100
-From: =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>
-Subject: [PATCH v2] target/arm: fix exception syndrome for AArch32 bkpt insn
-Date: Sat, 27 Jan 2024 21:27:58 +0100
-Message-Id: <20240127202758.3326381-1-jan.kloetzke@kernkonzept.com>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1rTqlQ-0007Sv-Bv
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 17:03:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1706392976;
+ bh=NBZ5aWv+hc3gmcjREXnGwkhdCZvTct4Wr1/zV3u4Bc8=;
+ h=From:To:Cc:Subject:Date:From;
+ b=J6OyYiH860FaLdfZo1Ngx+weoDMLxQlvd0ExpP2CqmnPuWB0QIuSv9reEzTaGsvir
+ gPNn/N9Rk4/yQ/DF+dAoEJrxOw/eFLU6FLna8n4qqAQFoqWCQs97Cc8pxrVVpCJ6jr
+ fSYvwuoox/B2qMbWJw60x+k8pqmjjxR1ug0OBGKUkU/UmLASsOpB50Sz0BGghb2NiN
+ VC+LUdfoaO3Ag06fdGVRsXojmWQRLcRGrXey0w2DiQKZT/C7A0AIUE/WSiZzu+MRCl
+ d4A3Bz6vSOHDgbjYSwMkrjRCto9a52SaCa3TtoRlreDo0oKkrz4f1F3U6YWjqqQLor
+ 2+4Z8rUHTk2SA==
+Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 3B7283780029;
+ Sat, 27 Jan 2024 22:02:56 +0000 (UTC)
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v1] virtio-gpu: Correct virgl_renderer_resource_get_info()
+ error check
+Date: Sun, 28 Jan 2024 00:52:53 +0300
+Message-ID: <20240127215253.227583-1-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f8:1c1c:b490::2;
- envelope-from=jan.kloetzke@kernkonzept.com; helo=mx.kernkonzept.com
+Received-SPF: pass client-ip=46.235.227.194;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -69,84 +71,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Debug exceptions that target AArch32 Hyp mode are reported differently
-than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
-such exceptions need to be either converted to a prefetch abort
-(breakpoints, vector catch) or a data abort (watchpoints).
+virgl_renderer_resource_get_info() returns errno and not -1 on error.
+Correct the return-value check.
 
-Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
-v2:
- * Refactor watchpoint syndrome rewriting
- * Drop ARM_EL_ISV from watchpoint syndrome
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- target/arm/helper.c   | 18 ++++++++++++++++++
- target/arm/syndrome.h |  8 ++++++++
- 2 files changed, 26 insertions(+)
-
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 945d8571a6..a0041aa0ec 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -11015,6 +11015,24 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
-     }
- 
-     if (env->exception.target_el == 2) {
-+        /* Debug exceptions are reported differently on AArch32 */
-+        switch (syn_get_ec(env->exception.syndrome)) {
-+        case EC_BREAKPOINT:
-+        case EC_BREAKPOINT_SAME_EL:
-+        case EC_AA32_BKPT:
-+        case EC_VECTORCATCH:
-+            env->exception.syndrome = syn_insn_abort(arm_current_el(env) == 2,
-+                                                     0, 0, 0x22);
-+            break;
-+        case EC_WATCHPOINT:
-+            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
-+                                                 EC_DATAABORT);
-+            break;
-+        case EC_WATCHPOINT_SAME_EL:
-+            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
-+                                                 EC_DATAABORT_SAME_EL);
-+            break;
-+        }
-         arm_cpu_do_interrupt_aarch32_hyp(cs);
-         return;
-     }
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 1a49767479..3244e0740d 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -25,6 +25,8 @@
- #ifndef TARGET_ARM_SYNDROME_H
- #define TARGET_ARM_SYNDROME_H
- 
-+#include "qemu/bitops.h"
-+
- /* Valid Syndrome Register EC field values */
- enum arm_exception_class {
-     EC_UNCATEGORIZED          = 0x00,
-@@ -80,6 +82,7 @@ typedef enum {
-     SME_ET_InactiveZA,
- } SMEExceptionType;
- 
-+#define ARM_EL_EC_LENGTH 6
- #define ARM_EL_EC_SHIFT 26
- #define ARM_EL_IL_SHIFT 25
- #define ARM_EL_ISV_SHIFT 24
-@@ -94,6 +97,11 @@ static inline uint32_t syn_get_ec(uint32_t syn)
-     return syn >> ARM_EL_EC_SHIFT;
- }
- 
-+static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
-+{
-+    return deposit32(syn, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH, ec);
-+}
-+
- /*
-  * Utility functions for constructing various kinds of syndrome value.
-  * Note that in general we follow the AArch64 syndrome values; in a
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 8bb7a2c21fe7..9f34d0e6619c 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -181,7 +181,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+         memset(&info, 0, sizeof(info));
+         ret = virgl_renderer_resource_get_info(ss.resource_id, &info);
+ #endif
+-        if (ret == -1) {
++        if (ret) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "%s: illegal resource specified %d\n",
+                           __func__, ss.resource_id);
 -- 
-2.39.2
+2.43.0
 
 
