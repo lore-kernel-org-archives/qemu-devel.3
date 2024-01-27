@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF7A2C47422
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 02:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2E1C47422
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 03:00:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTYpf-0005Cz-Nb; Fri, 26 Jan 2024 21:54:11 -0500
+	id 1rTYuj-0006Vp-Qe; Fri, 26 Jan 2024 21:59:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTYpd-0005Ci-Vy
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 21:54:10 -0500
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ id 1rTYuh-0006OO-Pz
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 21:59:23 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTYpc-0003rb-Ke
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 21:54:09 -0500
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-42a8af3c10cso2019611cf.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 18:54:07 -0800 (PST)
+ id 1rTYug-0004vj-8W
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 21:59:23 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-5ff9adbf216so8382067b3.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 18:59:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706324047; x=1706928847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706324360; x=1706929160; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JezE6Il07zY6FPlZ3ELzcCAPzDxW1RUnvMXwbQoq/yQ=;
- b=y2ScsAUjTs4B7YqHLYLqQmC0whQndVXaioGCS3ocA0d09HOSDbbnWQxrgUkKM2cbO1
- 57UJ2YmrZGUaFr+G3GHDtFTAnibRajFtshFANem4XPadU8b4ThzXJEFM9DMLujlymwHB
- W1RaQt7kx46Jnaj7NIWDkPvG+MsfW2OlFISUoS1oDXxY9hywncNXPlXHTkTR2aMFlujV
- IepAbFdmyPyxlZIXcoAZODZqQ4ELa0v11gZOGJu/n+Y2P1x5YOrFdr0EkG2j2i2R5geF
- y3biKx6d/q6zz4yus05r8anks9rekz8DTlI9rzPltjYHfqr1qcDdOIj4GVIY7I9ic9d9
- PXCw==
+ bh=oYwRDpU6v6JW6v0+Qz5m8bYUmGEYSlsRj2lSwurCDNs=;
+ b=szE0On9FSd6AQYpFz/rbWj2JQLQ8J8NutoVztNaLCr+aEMYwyIeierd0GbAYbIeJJL
+ 1KpYLKlGHCeefrBZtg36EqpLyDVmQhke5A8cGur7QPLMqgvBck4y4kNYieZHUgsy0tPq
+ RHJJZAtaSf3p5M3MC2mWkMzGPVcV2l9elD8UpMTmreWPCvzdI+1/lqspDHnkKi8rg7Yq
+ /g5VVCnLBZ8VpEe/gD4Z/42kQKA2tNiFreXIR8s9td/hl6NJrhtVEhiY+kMnrseOr0u6
+ xmxoSdD4RxbozSQHZKC/Tba+rd+PwGOVjQy0UGR4W78MiAqIjBRRzjJgBK53MHNPG03e
+ 91Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706324047; x=1706928847;
+ d=1e100.net; s=20230601; t=1706324360; x=1706929160;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JezE6Il07zY6FPlZ3ELzcCAPzDxW1RUnvMXwbQoq/yQ=;
- b=umDNgeJE8vQjvxAeVnaso9NqBubDOtHG6h5jgaIRtG7Z3BkIBx0fbsyctW2FKiZpMN
- vGHS71qaik8/NAbUNeMOFDw9QzDK/T4aQC69j9xn8Uk2y0idXjqb5bqv1p03adQLKwGg
- ewsVD5uj3Kmnm/r4itDf+NgL+Sr6gDndUHqUDBRRopyacXWzQ8roit0KIsT1t31kZc+5
- B6Kx+dnsNsExytRD2eh5my198GhGUmK2pC/8HwFOPmpncKmZBTxMwqLJLReJ8flYk4kE
- uQtK5MRbag/ZnhYB5UILuN04qVilKbVwvZAD5ZWqnNiHNEFAoxI+0i37xf2oCOlsWTF2
- IaHA==
-X-Gm-Message-State: AOJu0YwVtCz9lPfPteXuAGQOdc03LladiQTYu5haXXjlYevl7vUEBePH
- PBtZsGvYgyaiUJ6RRDd1SuPVlIvzXZOnl31ds6PItE7axPBdjBdfjyr+XZhNfyA=
-X-Google-Smtp-Source: AGHT+IGq2rPwCknd4Lk4eOloeYZg4IvbVLxiolmmb3go+5z3yC3uhnpFb5f+Nuc0m/PwxmliSnOysw==
-X-Received: by 2002:ac8:578d:0:b0:42a:5060:8e27 with SMTP id
- v13-20020ac8578d000000b0042a50608e27mr1056501qta.48.1706324047034; 
- Fri, 26 Jan 2024 18:54:07 -0800 (PST)
+ bh=oYwRDpU6v6JW6v0+Qz5m8bYUmGEYSlsRj2lSwurCDNs=;
+ b=Ch8vmqRNG7qkvWvsnPCpP/yVvRb4u/BB4vMMcoL6ntVuW3p0YusMBNnKIXr8lBvPU4
+ EP7cA+9gGZIkAN30/gdorns1XTEwWPPwjhhc7F7w2d7pZUuztKkMfR6r6bR6VPQWhgWq
+ hhKg0G+eCuGhW4/XXp3cUantaRsrVuV+ffJVpuv7ztEmWM+YGPBuVP+6u7ug1eX3uUXL
+ tefAIKdVP+1n566fRLd7ub1ThUEpMaAZnl6L2SDOWkj9PdmJrlTyDXCnWJr4Ae0qTlLt
+ P9GwRkLFRjCrI7e+6K2QN8J+OFMWsDtF+zchMpYV3Uswodf4CThfGQ3I+hcs6rVRbk1T
+ 4Jjg==
+X-Gm-Message-State: AOJu0Yzq9UtFrg0WgB9fZSBn/c/QHFVK+fk1VAm8vWt1XnTBP6YhEqoL
+ mPjUASN+eF8hZv5jaZvr3e6BUd2sjri6xeEF9lgjyfLBMDWGrgsdRRyurddX/0U=
+X-Google-Smtp-Source: AGHT+IE6npjZpa2TbAiGjEqYRZbHM2jlCISbGjqAt/wJg2/tq/++eQnJfirdtl/F2Ni7+NsbHPSnDw==
+X-Received: by 2002:a81:c444:0:b0:5ff:7e6d:f549 with SMTP id
+ s4-20020a81c444000000b005ff7e6df549mr938875ywj.27.1706324360707; 
+ Fri, 26 Jan 2024 18:59:20 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e?
  ([2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e])
  by smtp.gmail.com with ESMTPSA id
- su16-20020a17090b535000b00293851b198csm1852843pjb.56.2024.01.26.18.54.02
+ z17-20020a170903019100b001d89bce478bsm1571844plg.243.2024.01.26.18.59.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 18:54:06 -0800 (PST)
-Message-ID: <4ae2a522-78c0-495a-8126-c58e6f24093d@linaro.org>
-Date: Sat, 27 Jan 2024 12:53:59 +1000
+ Fri, 26 Jan 2024 18:59:20 -0800 (PST)
+Message-ID: <4d73dc67-d691-4a0c-a7fd-97fece4a46fb@linaro.org>
+Date: Sat, 27 Jan 2024 12:59:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/4] accel/tcg: Move perf and debuginfo support to tcg
+Subject: Re: [PATCH v2 1/2] target/s390x: Emulate CVDG
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240125054631.78867-1-philmd@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand
+ <david@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Ido Plat <Ido.Plat@ibm.com>
+References: <20240125123059.220131-1-iii@linux.ibm.com>
+ <20240125123059.220131-2-iii@linux.ibm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240125054631.78867-1-philmd@linaro.org>
+In-Reply-To: <20240125123059.220131-2-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x833.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,17 +98,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/25/24 15:46, Philippe Mathieu-Daudé wrote:
-> Since v5:
-> - Use v4 instead of v3...
-> - Rebased on commit 53e8868d69
->    ("meson: remove OS definitions from config_targetos")
+On 1/25/24 22:29, Ilya Leoshkevich wrote:
+> CVDG is the same as CVD, except that it converts 64 bits into 128,
+> rather than 32 into 64. Create a new helper, which uses Int128
+> wrappers.
 > 
-> Ilya Leoshkevich (4):
->    accel/tcg: Make use of qemu_target_page_mask() in perf.c
->    tcg: Make tb_cflags() usable from target-agnostic code
->    accel/tcg: Remove #ifdef TARGET_I386 from perf.c
->    accel/tcg: Move perf and debuginfo support to tcg/
+> Reported-by: Ido Plat<Ido.Plat@ibm.com>
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> ---
+>   target/s390x/helper.h            |  1 +
+>   target/s390x/tcg/insn-data.h.inc |  1 +
+>   target/s390x/tcg/int_helper.c    | 21 +++++++++++++++++++++
+>   target/s390x/tcg/translate.c     |  8 ++++++++
+>   4 files changed, 31 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
