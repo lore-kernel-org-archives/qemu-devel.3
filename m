@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30EDC46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 08:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66641C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 08:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTeJu-0004gm-Um; Sat, 27 Jan 2024 03:45:46 -0500
+	id 1rTeN6-0006AN-CC; Sat, 27 Jan 2024 03:49:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTeJt-0004gd-Ez
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 03:45:45 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rTeN5-0006AF-4O
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 03:49:03 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTeJq-0004jH-IP
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 03:45:45 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6ddfb0dac4dso940479b3a.1
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 00:45:42 -0800 (PST)
+ id 1rTeN3-0005TR-Kj
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 03:49:02 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1d51ba18e1bso12593765ad.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 00:49:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706345141; x=1706949941; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1706345339; x=1706950139; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=71jY0wFDdVZQzfXzMvGbI13tFXpmd3rBQRPij1mmVV4=;
- b=PURJkNVg0Rxy4Db6Afb2JJwvCAQFKsQFPJmUZqRR3iroMurADTaBTs0xP35mg2dkrJ
- gTkeBv6R+coF24M3UZaB7ZghYbzVTDb5ZnjMPHHtYzOBr97FyirJaSY2Bqup1y0nFGlh
- sROyTROnWH8Tbu1mXmCUYPegX4CEysfMYG+xbonNFd26rBesU5leXEl35OvYdbwUXNqB
- MHjdUWPG4qaofiZb1HimxKb5d8315rwUVjThuIIXHRf8rU0Lem5XE5dU5LpSmkbG3vys
- 0D/PoL+mRwhDpCmv68uSmbfbBDdGXOSztMafUl58/Hr6A7Qvy3RN/Ej6kCB1+cX3xkNI
- L2Bg==
+ bh=KP+auXGousriKv9OmgxJ+55g+vh0nJcLe3ophV5I028=;
+ b=nip1vtJDEXO+XueIl17LcxkN/OzZ2yQ6zgBMxtd3c/7Y7+fIJvszLarlCxSm/fdciu
+ FWgt60BX2jghBPbGzvbXLvA7qX6En7WAkp13XlIrMbWNV89mYnrsfvMEgt0AqaHDvbRk
+ 3Fj4V3ZQbCTwIYi9FmePEKhYJNnPQeuKdvxjqFK4JliOoUtdbBNsy9tBoM2FGaUnLPt7
+ 5j+wv8QdsuqKgol59luneEhQtcuj0vJTLsVzPjuyTnJJauYTwI+uBkTV6sFsg+w+pbOq
+ PagyfLvsTtlhcSPLm/gvi12NZ/Ne2moeS57WxfbKDwEvhyHgRYOkmwmkLR5Tf6LvKP/1
+ ovHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706345141; x=1706949941;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1706345339; x=1706950139;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=71jY0wFDdVZQzfXzMvGbI13tFXpmd3rBQRPij1mmVV4=;
- b=j+7T87acG1crbbUAaCWGIpxehUpmMHWr/VO33IoGdjwDCkQlxFQ7yrT+6a+eS56DCX
- PoQ6ePxxc/bsajAwJaD7kB7IC2n3meFcIyTnVC4kKwRdhhHew1D0dM+g6kQqSzAabsJP
- A+jZDADQnXafamvJ0/2OGQDuU3sHm5uwIxJRvnTR45tXwtIJNfKWSAG2YxAuIqE35mjf
- Njmk1LkyLjKvuOykNmLGGZtEWDXSMsqIdK9GsCFrz+4iZFRWwksmKLabgRGE6d3vqXRA
- lfygRf2uYAT4xHYKjPcqCYxWYyAOYgpy8kWZ2oSHgmMOQh20Vdr6LRtoS01vra3VgHr+
- MdqQ==
-X-Gm-Message-State: AOJu0YyFPy3F1QXGb6uCGc0rDAzKGzWQ1G9Fil1rkt2omUDoXb0q1wiS
- Wbf3/eSAeXQUn0wSoCpG5kxJAU8aR4vHLHO4Uha6MdhX8Wy5m+VrB9yc6f9iKgCzgEHsxIFyMIc
- 78oq8cQ==
-X-Google-Smtp-Source: AGHT+IHEuciEktiGohVYQFZj94axpOwnB0rEaYKJu2/x5oiJjRM2n7X3+c7vH76wxqn8sVTCsN2bOg==
-X-Received: by 2002:a05:6a00:6807:b0:6db:e366:53a8 with SMTP id
- hq7-20020a056a00680700b006dbe36653a8mr1148188pfb.12.1706345140979; 
- Sat, 27 Jan 2024 00:45:40 -0800 (PST)
+ bh=KP+auXGousriKv9OmgxJ+55g+vh0nJcLe3ophV5I028=;
+ b=mYcm9N8T0YsKfyJPxQMEHg4xdhe0ureuyjsHPKmE2S6NtVkiubCN6nc1puCY1hSIvx
+ H4ZXTJp48+JabxVL1OckhubK5A6RXJmOm0RaGlEycRFZEQ4tQ11btY00wXEz1dDuhCYW
+ NFxfx5F2hSy4oMgmaWbExshOZ5OZ4b1J4KMl4LH9Is33vsR5BWBF0/LfiMb5KCBnIuaU
+ P6O00M86mR3MnFkSOx8f5LsjqzFMDdTn8VpWDMmvLcwyaXXCrWoETt9NC2RdKd0ZHFmG
+ 7LUJY34vmEI4qxqKBJBXJb9eHvlXWM41me1SQaSxvM3KkZymFD78Cf7ndZJnhXqt7MDo
+ H0uw==
+X-Gm-Message-State: AOJu0Yxf4AJLfScWFk744svlFbON+RU0EsK1CJhVJVj14B63hNNKi5fZ
+ mCaREoZr5f4LMGZcQeOkicuJ+kmjKQXkxvIHuRD3JlJeKE1RO/vQyJW7AqmHwEU=
+X-Google-Smtp-Source: AGHT+IEvfKL0sWvfC7gN+FVOstxDMp3MyQzZsIK8Jzq9gLXQH1xhUqDbk7W2fZouCbUgCV1U8KMQqA==
+X-Received: by 2002:a17:902:dad1:b0:1d8:8aee:e53c with SMTP id
+ q17-20020a170902dad100b001d88aeee53cmr1229883plx.32.1706345339691; 
+ Sat, 27 Jan 2024 00:48:59 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:af6d:99b9:66ea:c79a?
  ([2001:8003:c96c:3c00:af6d:99b9:66ea:c79a])
  by smtp.gmail.com with ESMTPSA id
- lp17-20020a056a003d5100b006d9aa6592d0sm2310483pfb.82.2024.01.27.00.45.38
+ l6-20020a170903244600b001d78813c8a5sm2051755pls.49.2024.01.27.00.48.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Jan 2024 00:45:40 -0800 (PST)
-Message-ID: <17c1a380-4bac-49dd-aa49-a50adf93a8b5@linaro.org>
-Date: Sat, 27 Jan 2024 18:45:35 +1000
+ Sat, 27 Jan 2024 00:48:59 -0800 (PST)
+Message-ID: <98b5a940-1288-404e-8ea8-044188a9cb2b@linaro.org>
+Date: Sat, 27 Jan 2024 18:48:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 06/34] exec: [VADDR] Move vaddr defines to separate
- file
+Subject: Re: [RFC PATCH 07/34] hw/core: [VADDR] Include vaddr.h from cpu.h
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, philmd@linaro.org
 References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-7-anjo@rev.ng>
- <a88b1741-21df-424f-8ca5-56950d21032f@linaro.org>
-In-Reply-To: <a88b1741-21df-424f-8ca5-56950d21032f@linaro.org>
+ <20240119144024.14289-8-anjo@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240119144024.14289-8-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,32 +97,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/27/24 18:36, Richard Henderson wrote:
-> On 1/20/24 00:39, Anton Johansson wrote:
->> --- a/include/exec/cpu-common.h
->> +++ b/include/exec/cpu-common.h
->> @@ -14,18 +14,6 @@
->>   #define EXCP_YIELD      0x10004 /* cpu wants to yield timeslice to another */
->>   #define EXCP_ATOMIC     0x10005 /* stop-the-world and emulate atomic */
->> -/**
->> - * vaddr:
->> - * Type wide enough to contain any #target_ulong virtual address.
->> - */
->> -typedef uint64_t vaddr;
->> -#define VADDR_PRId PRId64
->> -#define VADDR_PRIu PRIu64
->> -#define VADDR_PRIo PRIo64
->> -#define VADDR_PRIx PRIx64
->> -#define VADDR_PRIX PRIX64
->> -#define VADDR_MAX UINT64_MAX
->> -
->>   /**
->>    * Variable page size macros
->>    *
+On 1/20/24 00:39, Anton Johansson wrote:
+> cpu-common.h is only needed for vaddr
 > 
-> This patch does not compile standalone, because the new header isn't included here.
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   include/hw/core/cpu.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Queued with fixes.
+Queued, thanks.
+
 
 r~
 
