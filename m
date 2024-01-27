@@ -4,65 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAA0C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 13:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F620C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 13:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTiIk-0005Tx-At; Sat, 27 Jan 2024 08:00:50 -0500
+	id 1rTiQI-0001N7-Vi; Sat, 27 Jan 2024 08:08:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTiIi-0005Ti-Uw
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 08:00:48 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1rTiQH-0001MG-DW
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 08:08:37 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rTiIh-0008W7-30
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 08:00:48 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-55c2c90c67dso935713a12.1
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 05:00:46 -0800 (PST)
+ id 1rTiQF-00023q-H2
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 08:08:37 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-40e7065b7bdso24206865e9.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 05:08:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706360445; x=1706965245; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CUYQ9FPbYSZb1yEmUq5n4Y3dMHXySccT4uPzWsxg0BM=;
- b=RAqp0ly3/w9wpbNj5aXrevqYDBcyxy4/qE7LIZjDRSGQNJh7vJG0PmIXDFYkAGlrKr
- CtfP60ADaip9mIkeAAQhfLZJYX497LTnZ5r6yCk6xDgt3S1u55HeRLCKHiB50VgaAQNK
- dlituF0WDqSLSBpmvrDMTRdvBBsxB1qo6k0kX5QSiv9dSW09Me0zgrUQNniQ9G/kfrZS
- on6mszEeFJUJUIqztViFIlH+BZaTRyqrMPXLBEQAAzgG8lFy7efmtb9iRAj7lvpbEZEU
- 6mSvyWNn5dDhiQhHKbpw0gzjBsHyBCuKcwpoCgdUJGSV0PRC1c2FXIGI6U/DCaCua2h2
- /mdA==
+ d=linaro.org; s=google; t=1706360914; x=1706965714; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1pgZK75SOarRa2avmbbV3uXh86OWA2x/LDn9R/KXW4o=;
+ b=V2gWyczwhKO1Bz+IkBVdrQlMF6A7/tQ229pCEip5224+dYlFVDndXssuFjZhPUb87G
+ Z/f8v7FHUa6wDTNfGh6bRDSe1iHpDfVnbM/beHg6/l90Cn6C49DjeucRFXN2lqy5rqAp
+ FuXrHFak/sVakKnDQZD2KJAM7zYonmBSDW/THnbcntU1+5tYCBFKx4yrHYMhYzSNb2R6
+ NB3lG2np7sZQ6u/Mf+viyPQFTKn996PvqbJ1o9xPBpoUBjzA+2ATSHfwz+xy+Li34rA8
+ el3OrxumrBAJdMaTbUH9df+viuIX/ya2AFD88LYWB1ErI1heDmJpiyYbZgeLCSxDb5/y
+ Pnog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706360445; x=1706965245;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CUYQ9FPbYSZb1yEmUq5n4Y3dMHXySccT4uPzWsxg0BM=;
- b=Cy3fS2pDnRd7AX+LHUii9ZG4YW3+oIBHx2Hayc72ULI/s9AtDqM/TJeFxxweHDzmzX
- 3B7QGit8oWUR3awBs8XYPFKalpbdWm0Ke/rnZMO47dp5ofx/49mOTGkyEPiWXThusPj6
- 6gVlyQivguBAXYL++FPEmcrIq8SRiiUwYdkiqJcCiNmLcYFA11nBCuGB+fvhejvSvlYH
- zCUOuxw8sSHu6hVSRLRt2JrtMD/cKQLJPYjQqynxSg5o9UZZk6+EHKGEDs/EMNGFPAyD
- Q1fULVR+nUfH64eWfoCLusFTmG36PWDcRO/HryOCC+KiIpJNzezyvJB+EblP07nOYc0p
- Qshw==
-X-Gm-Message-State: AOJu0YwFUEjCCDOZhUmzy9Mn4jEE0uAVlYleUYPrMjYIhxUOGncJGkyr
- 2rRa2XebvtAQg3GUPjnNIJ0Ikc1vF/RAA9wGlkhZVMbcHzcZtPTTlfH+GHJj7QChZ+pJnio1LiK
- 2jGUGhTlbTkAS6PS1lg/m+6/iAgNHNJYTCxsgIMmpOJyI4H9c
-X-Google-Smtp-Source: AGHT+IGW5pZxUE+CRfku+lOuO3LJipcUZZ5HgacYUWTF229nhZguOVDwxBmiW+c+8LhMKLMt2pj0gwhWZgpmnKxFz0w=
-X-Received: by 2002:a05:6402:70d:b0:55c:d5e3:9177 with SMTP id
- w13-20020a056402070d00b0055cd5e39177mr999491edx.30.1706360445396; Sat, 27 Jan
- 2024 05:00:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706360914; x=1706965714;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1pgZK75SOarRa2avmbbV3uXh86OWA2x/LDn9R/KXW4o=;
+ b=BvgQuJ07dTzCs1bdz4QjEPlDIn1B2bHr3yvq0z5fh0aAa8VQK3mq5THkK53g8z8Win
+ MwaNZy0sgfencGhQMGG2kbH1cj2odXoBu5oxZJUvPPdped3cUkDdkVgot+YmGPFFbnAs
+ Qpo5R2cWGKIFdxhUZ9aoNh1bKqVp6hSKXLwUP6QtfHNFUANEcc2jvPAUzJnIMOjfLMmC
+ a6wOi+I5hbW0VnvTpBjsFwCSbBATra/TgNlToKPUzjfdPfSb/MDD/L9CTjuc1uvODDmE
+ kx5QkOfktgUdr8HqbKq0ec3PQNUI0+UzkfAqh0Hzwdm9h4Kq+aha5ID5YXQRx0QsEoqp
+ acYg==
+X-Gm-Message-State: AOJu0YyR2V8H4e+edleIJjXt28Fl9tbpwhWvo/2wsJHrEZ4VGqiI2KEJ
+ 9oAZhTCaZsCAe23TiFibqghgzVrQ770ay0w6Lio+v+PBiZsuo6h3UIO50HPKODlTKXRiApNicd0
+ kf8WckwEfMQ5oLi77zABDtANDbBF0ArdwSUNGBQ==
+X-Google-Smtp-Source: AGHT+IGEd5/p/5CqwnAf6j4xSWV2gyBeX7CL1NOmiAF73chwVL81wQlrn3GjMgCu6qxhF5wphiCbpWxUgNHDtlsaMKY=
+X-Received: by 2002:a05:6000:88d:b0:337:c39a:1fbd with SMTP id
+ cs13-20020a056000088d00b00337c39a1fbdmr797511wrb.42.1706360913091; Sat, 27
+ Jan 2024 05:08:33 -0800 (PST)
 MIME-Version: 1.0
-References: <20240126143341.2101237-1-peter.maydell@linaro.org>
-In-Reply-To: <20240126143341.2101237-1-peter.maydell@linaro.org>
+References: <CAFEAcA_KjSgt-oC=d2m6WAdqoRsUcs1W_ji7Ng2fgVjxAWLZEw@mail.gmail.com>
+ <87le8byg5f.fsf@pond.sub.org>
+In-Reply-To: <87le8byg5f.fsf@pond.sub.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 27 Jan 2024 13:00:14 +0000
-Message-ID: <CAFEAcA8vMxX2SvuX5RhxUdeimKA_18vMZUDhuC8PJkd9Vi8sAw@mail.gmail.com>
-Subject: Re: [PULL 00/36] target-arm queue
-To: qemu-devel@nongnu.org
+Date: Sat, 27 Jan 2024 13:08:02 +0000
+Message-ID: <CAFEAcA-kTwM2U3VE0rX-hZt-5AAVPz7Vc-WEwwqndz+Liie=3Q@mail.gmail.com>
+Subject: Re: spapr watchdog vs watchdog_perform_action() / QMP
+ watchdog-set-action
+To: Markus Armbruster <armbru@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ qemu-ppc <qemu-ppc@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -85,46 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 26 Jan 2024 at 14:33, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Fri, 26 Jan 2024 at 20:49, Markus Armbruster <armbru@redhat.com> wrote:
 >
-> The following changes since commit 5bab95dc74d43bbb28c6a96d24c810a664432057:
+> Peter Maydell <peter.maydell@linaro.org> writes:
 >
->   Merge tag 'pull-request-2024-01-24' of https://gitlab.com/thuth/qemu into staging (2024-01-25 12:33:42 +0000)
+> > Hi; one of the "bitesized tasks" we have listed is to convert
+> > watchdog timers which directly call qemu_system_reset_request() on
+> > watchdog timeout to call watchdog_perform_action() instead. This
+> > means they honour the QMP commands that let the user specifiy
+> > the behaviour on watchdog expiry:
+> > https://www.qemu.org/docs/master/interop/qemu-qmp-ref.html#qapidoc-141
+> > https://www.qemu.org/docs/master/interop/qemu-qmp-ref.html#qapidoc-129
+> > (choices include reset, power off the system, do nothing, etc).
+> >
+> > There are only a few remaining watchdogs that don't use the
+> > watchdog_perform_action() function. In most cases the change
+> > is obvious and easy: just make them do that instead of calling
+> > qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET).
+> >
+> > However, the hw/watchdog/spapr_watchdog.c case is trickier. As
+> > far as I can tell from the sources, this is a watchdog set up via
+> > a hypercall, and the guest makes a choice of "power off, restart,
+> > or dump and restart" for its on-expiry action.
+> >
+> > What should this watchdog's interaction with the watchdog-set-action
+> > QMP command be? If the user says "do X" and the guest says "do Y",
+> > which do we do? (With the current code, we always honour what
+> > the guest asks for and ignore what the user asks for.)
 >
-> are available in the Git repository at:
->
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240126
->
-> for you to fetch changes up to 5e6be95ed1578c7cfac2082b39384d99fd912508:
->
->   hw/arm: add PCIe to Freescale i.MX6 (2024-01-26 12:23:04 +0000)
->
-> ----------------------------------------------------------------
-> target-arm queue:
->  * Fix VNCR fault detection logic
->  * Fix A64 scalar SQSHRN and SQRSHRN
->  * Fix incorrect aa64_tidcp1 feature check
->  * hw/arm/virt.c: Remove newline from error_report() string
->  * hw/arm/musicpal: Convert to qemu_add_kbd_event_handler()
->  * hw/arm/allwinner-a10: Unconditionally map the USB Host controllers
->  * hw/arm/nseries: Unconditionally map the TUSB6010 USB Host controller
->  * hw/arm: Add EHCI/OHCI controllers to Allwinner R40 and Bananapi board
->  * hw/arm: Add AHCI/SATA controller to Allwinner R40 and Bananapi board
->  * hw/arm: Add watchdog timer to Allwinner H40 and Bananapi board
->  * arm: various include header cleanups
->  * cleanups to allow some files to be built only once
->  * fsl-imx6ul: Add various missing unimplemented devices
->  * docs/system/arm/virt.rst: Add note on CPU features off by default
->  * hw/char/imx_serial: Implement receive FIFO and ageing timer
->  * target/xtensa: fix OOB TLB entry access
->  * bswap.h: Fix const_le64() macro
->  * hw/arm: add PCIe to Freescale i.MX6
+> Gut reaction: when the user says "do X", the guest should not get a say.
+> But one of the values of X could be "whatever the guest says".
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+Mmm. Slightly awkwardly, we don't currently distinguish between
+"action is reset because the user never expressed a preference"
+and "action is reset because the user specifically asked for that",
+but I guess in theory we could make that distinction. (Conveniently
+there is no QMP action for "query current watchdog-action state",
+so we don't need to worry about reflecting that distinction in the
+QMP interface if we make it.)
 
 -- PMM
 
