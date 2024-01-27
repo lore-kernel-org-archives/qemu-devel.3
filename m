@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2E1C47422
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 03:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8B8C47422
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 03:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTYuj-0006Vp-Qe; Fri, 26 Jan 2024 21:59:25 -0500
+	id 1rTZ4O-0002Sp-Gt; Fri, 26 Jan 2024 22:09:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTYuh-0006OO-Pz
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 21:59:23 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1rTZ4M-0002Rf-QQ
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 22:09:22 -0500
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTYug-0004vj-8W
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 21:59:23 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-5ff9adbf216so8382067b3.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 18:59:21 -0800 (PST)
+ id 1rTZ4L-0007Jc-3p
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 22:09:22 -0500
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-3bd6581bc66so935023b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 19:09:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706324360; x=1706929160; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1706324960; x=1706929760; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oYwRDpU6v6JW6v0+Qz5m8bYUmGEYSlsRj2lSwurCDNs=;
- b=szE0On9FSd6AQYpFz/rbWj2JQLQ8J8NutoVztNaLCr+aEMYwyIeierd0GbAYbIeJJL
- 1KpYLKlGHCeefrBZtg36EqpLyDVmQhke5A8cGur7QPLMqgvBck4y4kNYieZHUgsy0tPq
- RHJJZAtaSf3p5M3MC2mWkMzGPVcV2l9elD8UpMTmreWPCvzdI+1/lqspDHnkKi8rg7Yq
- /g5VVCnLBZ8VpEe/gD4Z/42kQKA2tNiFreXIR8s9td/hl6NJrhtVEhiY+kMnrseOr0u6
- xmxoSdD4RxbozSQHZKC/Tba+rd+PwGOVjQy0UGR4W78MiAqIjBRRzjJgBK53MHNPG03e
- 91Xg==
+ bh=brvN+T3G8ChesX+gJm3C8l7IDzprPjl4zysU1+vcnIw=;
+ b=UQGH34L3+wC+ATmetlZinYnv41wloRmNfWYvNKkxlhyElE3WpLgyXdyGJzibjjvhe0
+ eKorJH//UteQcDGV9oUd+DfvjB7eSSAhhsaWXAuazndS9sBG6RyDgQLXedBBqO6PFWJ2
+ PxO5Lt2aSDYkvqBeD5Q+JHBKRfrtoTGcneF5lct0mYTOpXiOQZfroHq3IjXyd02vDkoh
+ hCBZCBlRUxWTaGe3VjuOmt1DtAihHmScJZgSjOpz1GpZsD1h1WmyEv7ZSBWPs1Y7+1Ir
+ 2J3cNZosL8Ot7/6Q3RYkZ1NM8IpoNWO/Fbd1XBDEW3GMm0wbDgtAnEQrHSF48fNeq1nB
+ JuPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706324360; x=1706929160;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1706324960; x=1706929760;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oYwRDpU6v6JW6v0+Qz5m8bYUmGEYSlsRj2lSwurCDNs=;
- b=Ch8vmqRNG7qkvWvsnPCpP/yVvRb4u/BB4vMMcoL6ntVuW3p0YusMBNnKIXr8lBvPU4
- EP7cA+9gGZIkAN30/gdorns1XTEwWPPwjhhc7F7w2d7pZUuztKkMfR6r6bR6VPQWhgWq
- hhKg0G+eCuGhW4/XXp3cUantaRsrVuV+ffJVpuv7ztEmWM+YGPBuVP+6u7ug1eX3uUXL
- tefAIKdVP+1n566fRLd7ub1ThUEpMaAZnl6L2SDOWkj9PdmJrlTyDXCnWJr4Ae0qTlLt
- P9GwRkLFRjCrI7e+6K2QN8J+OFMWsDtF+zchMpYV3Uswodf4CThfGQ3I+hcs6rVRbk1T
- 4Jjg==
-X-Gm-Message-State: AOJu0Yzq9UtFrg0WgB9fZSBn/c/QHFVK+fk1VAm8vWt1XnTBP6YhEqoL
- mPjUASN+eF8hZv5jaZvr3e6BUd2sjri6xeEF9lgjyfLBMDWGrgsdRRyurddX/0U=
-X-Google-Smtp-Source: AGHT+IE6npjZpa2TbAiGjEqYRZbHM2jlCISbGjqAt/wJg2/tq/++eQnJfirdtl/F2Ni7+NsbHPSnDw==
-X-Received: by 2002:a81:c444:0:b0:5ff:7e6d:f549 with SMTP id
- s4-20020a81c444000000b005ff7e6df549mr938875ywj.27.1706324360707; 
- Fri, 26 Jan 2024 18:59:20 -0800 (PST)
+ bh=brvN+T3G8ChesX+gJm3C8l7IDzprPjl4zysU1+vcnIw=;
+ b=dFZwEIsdjZvtLTe1sfmpBwoWWJm6tfZtbQMmElKfVLUF1Il6sbDq41c3+Gj8UqHWZN
+ YGwTdJOttivYLrA23GnKpmj0/9x+ofM+28KJ20IN5BY2vBmZA0phvGsnPlJk8SmflKic
+ OAGxBsMpbENSLoWGkY6JkZ4v5YZ0Dcx7vsMvxfWBO2b1nAZ4pxbryKLERqfaSn6Js9f+
+ hd7B/6xuLLN4el8v/1cBuraI0i3U+HDO4RVcsBHmNk3fCyaNYSOQpw7vDEEMaqcUZUKD
+ mH2VivDWjJLolYrXgmokWmv4ftmbuoA/9DHS5fhz43FMW4iOTpHO7922WQmwjNMXzrNo
+ pvbA==
+X-Gm-Message-State: AOJu0YwmmkvN1gIqDjPD68ggKtz7lC/kuoIImQo8zubD40ZVOC1CxuS1
+ uDYpKXEgUkfwXgCzC8wckCobblzAkQPAl7+AIV2QSbL7Zdr8zkM4j9Q33XkKqfo=
+X-Google-Smtp-Source: AGHT+IGUQm1flWdoDuqIVD6/FEdvmgcbBpZvbJinDT+4r1th52gWtavzVeLR6QyUDKIZi0Z7G/I1TQ==
+X-Received: by 2002:a05:6808:1314:b0:3be:174c:1888 with SMTP id
+ y20-20020a056808131400b003be174c1888mr457260oiv.44.1706324959685; 
+ Fri, 26 Jan 2024 19:09:19 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e?
  ([2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e])
  by smtp.gmail.com with ESMTPSA id
- z17-20020a170903019100b001d89bce478bsm1571844plg.243.2024.01.26.18.59.16
+ jw16-20020a056a00929000b006d99056c4edsm1784168pfb.187.2024.01.26.19.09.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 18:59:20 -0800 (PST)
-Message-ID: <4d73dc67-d691-4a0c-a7fd-97fece4a46fb@linaro.org>
-Date: Sat, 27 Jan 2024 12:59:10 +1000
+ Fri, 26 Jan 2024 19:09:19 -0800 (PST)
+Message-ID: <87c249b0-8f08-40e6-91c1-1d3c970b567a@linaro.org>
+Date: Sat, 27 Jan 2024 13:09:13 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/s390x: Emulate CVDG
+Subject: Re: [PATCH] target/arm: Add ID_AA64ZFR0_EL1.B16B16 to the
+ exposed-to-userspace set
 Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand
- <david@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Ido Plat <Ido.Plat@ibm.com>
-References: <20240125123059.220131-1-iii@linux.ibm.com>
- <20240125123059.220131-2-iii@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240125134304.1470404-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240125123059.220131-2-iii@linux.ibm.com>
+In-Reply-To: <20240125134304.1470404-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,19 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/25/24 22:29, Ilya Leoshkevich wrote:
-> CVDG is the same as CVD, except that it converts 64 bits into 128,
-> rather than 32 into 64. Create a new helper, which uses Int128
-> wrappers.
+On 1/25/24 23:43, Peter Maydell wrote:
+> In kernel commit 5d5b4e8c2d9ec ("arm64/sve: Report FEAT_SVE_B16B16 to
+> userspace") Linux added ID_AA64ZFR0_el1.B16B16 to the set of ID
+> register fields which it exposes to userspace.  Update our
+> exported_bits mask to include this.
 > 
-> Reported-by: Ido Plat<Ido.Plat@ibm.com>
-> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> (This doesn't yet change any behaviour for us, because we don't yet
+> have any CPUs that implement this feature, which is part of SVE2.)
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/s390x/helper.h            |  1 +
->   target/s390x/tcg/insn-data.h.inc |  1 +
->   target/s390x/tcg/int_helper.c    | 21 +++++++++++++++++++++
->   target/s390x/tcg/translate.c     |  8 ++++++++
->   4 files changed, 31 insertions(+)
+> This is a loose end from last year: in commit 5f7b71fb99dc I
+> updated our mask values to match the kernel, and when I was
+> doing that I noticed that the kernel had forgotten to add
+> B16B16 to its report-to-userspace list when adding support
+> for that architectural feature. Now the kernel has fixed its
+> side, we can update again to match it.
+> ---
+>   target/arm/helper.c         | 1 +
+>   tests/tcg/aarch64/sysregs.c | 2 +-
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
