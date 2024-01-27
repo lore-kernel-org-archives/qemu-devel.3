@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F8AC46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 14:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6C1C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 15:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTk98-0006M9-1I; Sat, 27 Jan 2024 09:59:02 -0500
+	id 1rTkEI-0008U0-5H; Sat, 27 Jan 2024 10:04:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rTk96-0006M1-Ps
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 09:59:00 -0500
-Received: from zproxy2.enst.fr ([2001:660:330f:2::dd])
+ id 1rTkEB-0008Tm-37
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 10:04:17 -0500
+Received: from zproxy1.enst.fr ([2001:660:330f:2::dc])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rTk94-0005xR-Ow
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 09:59:00 -0500
+ id 1rTkE6-0006ml-I9
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 10:04:14 -0500
 Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id AA082807B9;
- Sat, 27 Jan 2024 15:58:57 +0100 (CET)
-Received: from zproxy2.enst.fr ([IPv6:::1])
- by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id bTgKRSuyWE_e; Sat, 27 Jan 2024 15:58:57 +0100 (CET)
+ by zproxy1.enst.fr (Postfix) with ESMTP id 6E35AC0DEB;
+ Sat, 27 Jan 2024 16:04:07 +0100 (CET)
+Received: from zproxy1.enst.fr ([IPv6:::1])
+ by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id dFmJZw_k2QaA; Sat, 27 Jan 2024 16:04:06 +0100 (CET)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id ECE8480780;
- Sat, 27 Jan 2024 15:58:56 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr ECE8480780
+ by zproxy1.enst.fr (Postfix) with ESMTP id DB86BC0D78;
+ Sat, 27 Jan 2024 16:04:06 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr DB86BC0D78
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706367537;
- bh=W4n5gdp+iP9OHsgLa+0BC0jp84G8pI/kA5BJVllwXKU=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706367846;
+ bh=mu2hOZHGN/vGpbFAHGGJCR5uM2pD7VU1oJyamH60faQ=;
  h=From:To:Date:Message-Id:MIME-Version;
- b=pgNLnjN5hyccrotZempRVpQsmX8i0WnElJLTb1+Kn/xxm4jvcepYPTh29jWf8PgNH
- wR/xfHAoXYVTnIubb9O6SVPiWZA9xtxRJFSY/m+2mxIqmEerUSJgndpceCpXHp2FRW
- jZUCmTIME5gawcSjY4X+wWuF8E48XHAMtjp3Tw3c=
+ b=a+i3aJxhOELtGk0x/tAO698O5n9+AZ7LdqPEoCo623iJp/pO1rV323maADn33cRKT
+ v5Xpa8WX29FuarDHVb+PWvrjeArRRMb9HQd2lHfQ89DbF38NfnXM+RVICLajzevw9A
+ iaj/PM8c8oi6IJTiK5UWAlM+JSOTQB+aNgtY1bJ8=
 X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy2.enst.fr ([IPv6:::1])
- by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id QgT5o-tZCJbN; Sat, 27 Jan 2024 15:58:56 +0100 (CET)
+Received: from zproxy1.enst.fr ([IPv6:::1])
+ by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id TF6jW0aNGpRz; Sat, 27 Jan 2024 16:04:06 +0100 (CET)
 Received: from AM-Inspiron-3585.numericable.fr (38.162.10.109.rev.sfr.net
  [109.10.162.38])
- by zproxy2.enst.fr (Postfix) with ESMTPSA id 82F328078B;
- Sat, 27 Jan 2024 15:58:56 +0100 (CET)
+ by zproxy1.enst.fr (Postfix) with ESMTPSA id A83E1C0D73;
+ Sat, 27 Jan 2024 16:04:06 +0100 (CET)
 From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
  =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Subject: [PATCH v3] Add tests for the STM32L4x5_RCC
-Date: Sat, 27 Jan 2024 15:58:50 +0100
-Message-Id: <20240127145850.86209-1-arnaud.minier@telecom-paris.fr>
+Subject: [PATCH v3 8/8] Add tests for the STM32L4x5_RCC
+Date: Sat, 27 Jan 2024 16:03:58 +0100
+Message-Id: <20240127150358.87082-1-arnaud.minier@telecom-paris.fr>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240127143904.80187-1-arnaud.minier@telecom-paris.fr>
 References: <20240127143904.80187-1-arnaud.minier@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::dd;
- envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy2.enst.fr
+Received-SPF: pass client-ip=2001:660:330f:2::dc;
+ envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy1.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -80,6 +80,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+Again, troubles with my mail formatting. Sorry for the multiple mails of
+this patch you may have received.
 
 Tests:
 - the ability to change the sysclk of the device
