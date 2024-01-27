@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB9BC46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 04:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE10C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 04:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTaRZ-0003KR-83; Fri, 26 Jan 2024 23:37:25 -0500
+	id 1rTaRz-0003gz-Jp; Fri, 26 Jan 2024 23:37:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTaRX-0003KG-QL
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:37:23 -0500
-Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ id 1rTaRw-0003cT-So
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:37:49 -0500
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTaRW-0007NX-7d
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:37:23 -0500
-Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-3bd4e6a7cb0so689237b6e.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 20:37:21 -0800 (PST)
+ id 1rTaRt-0007UZ-Sy
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:37:48 -0500
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-dc22597dbfeso1196818276.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 20:37:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706330241; x=1706935041; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706330264; x=1706935064; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cj8/9w34sekw9fqgeXEmZYVNBwa1Bhh4HEMqpuehIec=;
- b=sEBfZ6Lj5Xa4Diew//kLxl+2/x+hF8nbG26KSElKSh5fkPimy7Q3QHvZ1clfBxN+Rq
- VlcN/7bvKwEZfoO+5bi636w8c17oL6NSIB1W6a7z/HTJKw4YnLG6DgZRlpmtuvAQJVkp
- 7g7AnHCJ2/BSnw3SZy9gp5Ky6/xYHZfRac3uh79FIhgEFWF4QgNaBHRjDdf4dGC15rsB
- C9p4ME8WpjffQdT/MdB0OZ+7C+GnfpNChyJp9uKLcCT8Gao5GYZ51CqbFpO1HMETbMFe
- 39spyC49TgC0kRW2YzY1vocu3SnRuxPhxcci0uIAv3VfNDVrruV6ZOCluFISAlUgPggD
- mZEQ==
+ bh=5hbdei9OReJaocPGtRiymUPhArrmngfyyl47Zzb/uLM=;
+ b=Mxi+CpAKXuRc2o/8dVhOmkMLXOVnnS0xCyuPYmYkSm52UWLwWLF7SFfXbUe6DO3X5r
+ MTFqml6HjEFn7r5PPT5NbMqUM47qgXBE8Ur+SpixrvaqerixhySg6OrjMnnOiu7GESn0
+ OSMh8tp599a/dTSa942854qy382Qmx3Qvkzgt8uavCt+gr2rA525BPFPerbvyXOFMq07
+ BN0V1N6yLB3hRCzV0OYWIsIZEavnN8bTzTq0JVkYfX7dVCpAgGo5/783aZZpHJPlSDP+
+ vIwaWo2zUAJtFFBvPfrIVZs851VkdHbJkHGR/Oaupz/f7fAXURWHqxRbuQ8YvCwCrfkE
+ TvDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706330241; x=1706935041;
+ d=1e100.net; s=20230601; t=1706330264; x=1706935064;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cj8/9w34sekw9fqgeXEmZYVNBwa1Bhh4HEMqpuehIec=;
- b=CIx1SMfed1B4iSI/BJElZhen1BWkz6M0B4WefUJyvO4VSgpKLae3uJjTdM4UiQvyM7
- v/3/Fge0IsIUrBIEJrDzXWJ6DhZYTLqjdzaHeVjMkIuEGjLiam9U+ypJgO/WuSqCkaSh
- 6C4KPMbUKfcWFQT77uW4qLx7tXJMNm3UnWfsGYOGd78zAdMjayY0tRthfgKZQ3UXwQkc
- 19m/1BH40yDsylHVCR+cjkKdLXdsKgTFcmm0sHvgOVEM9aeTd1oo8knzzSYxISNnD0C8
- wLyz5pOwkyruHrB92w0Wm/iW4/a9R4s8xbpfYkkgO52pqU7vtcjO8leXvZYMdtgvg0p3
- TffQ==
-X-Gm-Message-State: AOJu0YyPLLxmkvD58XpKhsMjWD2zSZSasJWqoiDoxPIgEQTUmPwvaNcn
- 9umPqLxxP1lcHNP8mVCuItvDtZWWhc/VHKoM7x4aTLz3aat16+bpHqVEaY/11EI=
-X-Google-Smtp-Source: AGHT+IFLtwL3OJZ0vfjt1cv3+z+nsaNds2MO2tYqKmDJmrzC5RSFp8haTxthDiGgEgOpw5424ly/mA==
-X-Received: by 2002:a05:6808:1183:b0:3bd:e0bb:1d09 with SMTP id
- j3-20020a056808118300b003bde0bb1d09mr1270779oil.40.1706330240831; 
- Fri, 26 Jan 2024 20:37:20 -0800 (PST)
+ bh=5hbdei9OReJaocPGtRiymUPhArrmngfyyl47Zzb/uLM=;
+ b=r/AG33xmIN63rM+9WRHj/yWUb/Zsq1usRbSIZed0UkpBqLsvvgf3ayTihUUiLgXisU
+ GswfjqfTyz82fUVv3CWaGosfiMyK4WKtmj0lVvnaQIkGJrXU4IER/t4R7N5VXP2NDgzk
+ JNxsMJFucc/R/NDB9YyZGY68g8h/CJCz8yqK02aBqtQ6ii50dscFolq51mF0Ktjvf9XU
+ d15XCepnn2ErYubZXf8vQOIKPi4PQB2WuoV1YN0aEtsSQvYXiXZhpYKjxI3aK11DmD+H
+ 559BYxqXjwMyeexBbYjQ7U2sQMBH1QuV45kYbaUw+acfjuxSHZUJzDhfqggVfXGTQBfX
+ fbzw==
+X-Gm-Message-State: AOJu0YyEzimDHmV05qjHpKQRIAdT7YjQ4hi78Q6tjUiMFa9yWSSvS+qx
+ wC+prpaMYY44tujZG9MdE1ejv3Djtnm44i08r+FX/Pnx7ffZigPBsETcYuaIgEo=
+X-Google-Smtp-Source: AGHT+IEFVotpCptazpO7wrVGq6P/eN5J+QvNqIanTNtENSbuM8j0IOzsJ+6zkjwfGDjXwoTfvxsEWg==
+X-Received: by 2002:a25:6c55:0:b0:dc2:41de:b744 with SMTP id
+ h82-20020a256c55000000b00dc241deb744mr953894ybc.32.1706330263973; 
+ Fri, 26 Jan 2024 20:37:43 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e?
  ([2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e])
  by smtp.gmail.com with ESMTPSA id
- p30-20020aa79e9e000000b006ddd13c09c7sm1924769pfq.172.2024.01.26.20.37.19
+ p30-20020aa79e9e000000b006ddd13c09c7sm1924769pfq.172.2024.01.26.20.37.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 20:37:20 -0800 (PST)
-Message-ID: <64ecc73c-91f7-4729-959a-2ee763c44f6e@linaro.org>
-Date: Sat, 27 Jan 2024 14:37:18 +1000
+ Fri, 26 Jan 2024 20:37:43 -0800 (PST)
+Message-ID: <52d3f577-218c-4f3d-b099-ff423b986572@linaro.org>
+Date: Sat, 27 Jan 2024 14:37:41 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/23] target/nios2: Prefer fast cpu_env() over slower
- CPU QOM cast macro
+Subject: Re: [PATCH v2 15/23] target/openrisc: Prefer fast cpu_env() over
+ slower CPU QOM cast macro
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240126220407.95022-1-philmd@linaro.org>
- <20240126220407.95022-15-philmd@linaro.org>
+ <20240126220407.95022-16-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240126220407.95022-15-philmd@linaro.org>
+In-Reply-To: <20240126220407.95022-16-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,12 +104,13 @@ On 1/27/24 08:03, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/nios2/cpu.c        | 15 +++------------
->   target/nios2/helper.c     |  3 +--
->   target/nios2/nios2-semi.c |  6 ++----
->   3 files changed, 6 insertions(+), 18 deletions(-)
+>   target/openrisc/gdbstub.c   | 3 +--
+>   target/openrisc/interrupt.c | 6 ++----
+>   target/openrisc/translate.c | 3 +--
+>   3 files changed, 4 insertions(+), 8 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
