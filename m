@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A45C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 12:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE85C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 12:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rThUE-0002yS-I3; Sat, 27 Jan 2024 07:08:38 -0500
+	id 1rTiFy-0004Uw-Ba; Sat, 27 Jan 2024 07:57:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rThUC-0002xv-Sg; Sat, 27 Jan 2024 07:08:36 -0500
-Received: from mgamail.intel.com ([192.198.163.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rThU9-0006zk-Nc; Sat, 27 Jan 2024 07:08:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706357314; x=1737893314;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=3x780jZTGqOv7hVPrMhBFyVFEFi8QjUCScTBKCbV9CE=;
- b=df6/nqNHva3T5YPlXO6O22XXcq0O3QhKKmr/qsvq64JkkMKFpOtPmw7C
- PWId5bSQxbOHYQ/U0DrWe+w+/bPV9OXbyOqjyXkI9moN6wfSMMguE+EcZ
- fIbnCfm3XOIXghxngdNLxskR1pQERiIEiYxAjmlm7YJf3oDpXCyD/OuC1
- UgCwcnMcmDzjaL/h668jszLzu8PhbYr8VEDPiQ/yUTjbGEEqFi8ntCg0W
- uJwkV3x7m9NUxxr48g3nNPywE9274cJ5Z/ww51u9aLcIlu+IgzXU+I1oj
- eWn3pGGMPDNf49gfsdnUytLj2aNbSWJ8it1ae1xdp6nXJvttAPfotKx6e A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10964"; a="2506045"
-X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; 
-   d="scan'208";a="2506045"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Jan 2024 04:08:29 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,220,1701158400"; d="scan'208";a="29342189"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 27 Jan 2024 04:08:23 -0800
-Date: Sat, 27 Jan 2024 20:21:27 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- qemu-riscv@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>,
- Paul Durrant <paul@xen.org>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- David Woodhouse <dwmw2@infradead.org>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v2 10/23] target/i386: Prefer fast cpu_env() over slower
- CPU QOM cast macro
-Message-ID: <ZbT1R7impEw4whqP@intel.com>
-References: <20240126220407.95022-1-philmd@linaro.org>
- <20240126220407.95022-11-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rTiFw-0004UR-IV
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 07:57:56 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rTiFu-0007k2-QJ
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 07:57:56 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-55a45a453eeso2031514a12.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 04:57:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706360273; x=1706965073; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yn8R3cy5Wtt8RQQZsUIgIHunCiuYV+R0tlPr+SBOSsQ=;
+ b=zY84QXLKKzmkF540Tzl0P6C6fn2mV1sb+p/yblPLfi9fFolwOGIbGlXUX3QJoIHZCd
+ oEYYMzV8JPdtqGXlFJoVTcBhDwqb0OlQJcLJojtoo3V7wz7bsWO2Xj2DMDQQtG4T25KV
+ CvRzzZoVYhgDJxT9NQ7nhazOzl+JMVL9EUxHfFSQYYlktf3mkudLUCndbKUrXqYr/P58
+ MyYfZDiRLWc3pb+A7OTn7P5Z3Fk8K91B9fff4Q6nKmswnasTF2FGbjxQFlzazZcs3jii
+ gdkrCVtQx9uqUJXUB0hjnfSF+mksrZ3YFr4RxXVS1BcoGVy0QQMy+EQ47MX+j1EZlsu0
+ k0eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706360273; x=1706965073;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yn8R3cy5Wtt8RQQZsUIgIHunCiuYV+R0tlPr+SBOSsQ=;
+ b=aG72xS8qjJ4UXXLs5kskiQ6fHe68cKJLFABZNBOVjThFgUcQtVJL1JPc4B72yv4bNh
+ rpmHrizul0TlwesxYRO2mWn1kQwxa/VgP3kYNyC/y2G0i/WsL9UcQzHNBm8/NqzoLWUA
+ c2bH6PC1/mAGz8BeC9zIhZAUE4y21gBBnm//VPYxHj0FFdkPbapDdnoP64u0EHTHiRot
+ 7bFL6JdS3vCIC3tKeFWRSt445YfWd3IKwC9CgOVy7zl4lPc5gPIduVKCrOqjeco7HnOV
+ 9XdIwsc9SqLf3s1h6E6Bq2YOPdu+6p+tsyp6k6aq6oX6gyTw04GFYV470WMN6sq8aQGv
+ OlSg==
+X-Gm-Message-State: AOJu0YzxCViNkTJ7Ii4jG0Oa9IqOgLAFPEVQNTCEBc/nsqiikIx/YOPW
+ nVZv4/TpMIAgNYQheE3Nlkc34fMQKF4dTHPgB4uMQNPD7ew0oFE7VBq/6zSTnMB0C8+EFbAwYH+
+ 1oQUJa8N1WN1GyUMV3quOkjmPQBOLttdrTS7JrKp44GMnvm33
+X-Google-Smtp-Source: AGHT+IGZzxtoN/azVAOG3HPxX0rJ5kbi8wan50fkQr5g8TsRVXcOV0fIri08pNx3n0a2q7mMBBIK0X4sJERmAtHG7ZA=
+X-Received: by 2002:a05:6402:34cb:b0:55d:3ac8:b72 with SMTP id
+ w11-20020a05640234cb00b0055d3ac80b72mr1511205edc.3.1706360272731; Sat, 27 Jan
+ 2024 04:57:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240126220407.95022-11-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.282,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <7a25bd4ee1f8b06c7a51d20486aaa8bc8e1282ea.camel@amazon.co.uk>
+ <CAFEAcA-LTRnJqVcu=4VpgqjBeoi_ugGRrYOnajCzn49r3ijacw@mail.gmail.com>
+ <9c19c496699de2ff902a7c3df4bfa281cf98a444.camel@infradead.org>
+In-Reply-To: <9c19c496699de2ff902a7c3df4bfa281cf98a444.camel@infradead.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 27 Jan 2024 12:57:21 +0000
+Message-ID: <CAFEAcA8dFcKun9Lxvpd7T9qc9uC1-TDotrAMmYFrAA8ee7cC0A@mail.gmail.com>
+Subject: Re: [PATCH] doc/sphinx/hxtool.py: add optional label argument to SRST
+ directive
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,132 +90,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+On Sat, 27 Jan 2024 at 10:16, David Woodhouse <dwmw2@infradead.org> wrote:
+>
+> On Tue, 2023-12-12 at 15:04 +0000, Peter Maydell wrote:
+> >
+> > > --- a/docs/system/i386/xen.rst
+> > > +++ b/docs/system/i386/xen.rst
+> > > @@ -132,7 +132,7 @@ The example above provides the guest kernel command line after a separator
+> > >   (" ``--`` ") on the Xen command line, and does not provide the guest kernel
+> > >   with an actual initramfs, which would need to listed as a second multiboot
+> > >   module. For more complicated alternatives, see the command line
+> > > -documentation for the ``-initrd`` option.
+> > > +:ref:`documentation <initrd-reference-label>` for the ``-initrd`` option.
+> >
+> > I think we should include the hxfile basename in the label name
+> > we generate. We also don't need to say "label", it's implicitly a
+> > label. Then when we refer to things we can say
+> >    <qemu-options-initrd>
+> >    <hmp-commands-screendump>
+> >
+> > and it's fairly readable what we're referring back to.
+> >
+> > (We could alternatively have the emitrefs option take an argument
+> > for what to use in label names. I don't have a strong view on
+> > which would be better.)
+>
+> Hm, wait... I did this as you suggest in v2 but can I also use this
+> trick to eliminate the 'emitrefs' option altogether?
+>
+> Remember, the problem was that qemu-options.hx gets included *both*
+> from invocation.rst and from qemu-manpage.rst, so the label gets
+> emitted twice and is thus ambiguous. The 'emitrefs' option prevented it
+> from being emitted, but is one more hoop to jump through for the next
+> person who wants to use this facility. As I mentioned the 'emitrefs'
+> flag in the documentation, the "if it needs documenting, FIX IT"
+> instinct kicked in hard...
+>
+> What if we build the top-level filename into the label, e.g.
+>   invocation-qemu-options-initrd
+>
+> Then we don't need 'emitrefs' at all.
 
-On Fri, Jan 26, 2024 at 11:03:52PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Fri, 26 Jan 2024 23:03:52 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v2 10/23] target/i386: Prefer fast cpu_env() over slower
->  CPU QOM cast macro
-> X-Mailer: git-send-email 2.41.0
-> 
-> Mechanical patch produced running the command documented
-> in scripts/coccinelle/cpu_env.cocci_template header.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  target/i386/hvf/vmx.h               | 13 +++-------
->  hw/i386/vmmouse.c                   |  6 ++---
->  hw/i386/xen/xen-hvm.c               |  3 +--
->  target/i386/arch_memory_mapping.c   |  3 +--
->  target/i386/cpu-dump.c              |  3 +--
->  target/i386/cpu.c                   | 37 +++++++++------------------
->  target/i386/helper.c                | 39 ++++++++---------------------
->  target/i386/hvf/hvf.c               |  8 ++----
->  target/i386/hvf/x86.c               |  4 +--
->  target/i386/hvf/x86_emu.c           |  6 ++---
->  target/i386/hvf/x86_task.c          | 10 +++-----
->  target/i386/hvf/x86hvf.c            |  6 ++---
->  target/i386/kvm/kvm.c               |  6 ++---
->  target/i386/kvm/xen-emu.c           | 32 ++++++++---------------
->  target/i386/tcg/sysemu/bpt_helper.c |  3 +--
->  target/i386/tcg/tcg-cpu.c           | 14 +++--------
->  target/i386/tcg/user/excp_helper.c  |  3 +--
->  target/i386/tcg/user/seg_helper.c   |  3 +--
->  18 files changed, 59 insertions(+), 140 deletions(-)
-> 
+Yeah, that seems like a reasonable approach too: the label name
+gets a bit longer and clunkier but avoiding the need to have
+to say specifically "emit labels like this" is nice.
 
-[snip]
-
-> diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
-> index 3b1ef5f49a..1e7fd587fe 100644
-> --- a/target/i386/hvf/x86hvf.c
-> +++ b/target/i386/hvf/x86hvf.c
-> @@ -238,8 +238,7 @@ void hvf_get_msrs(CPUState *cs)
->  
->  int hvf_put_registers(CPUState *cs)
->  {
-> -    X86CPU *x86cpu = X86_CPU(cs);
-> -    CPUX86State *env = &x86cpu->env;
-> +    CPUX86State *env = cpu_env(cs);
->  
->      wreg(cs->accel->fd, HV_X86_RAX, env->regs[R_EAX]);
->      wreg(cs->accel->fd, HV_X86_RBX, env->regs[R_EBX]);
-> @@ -282,8 +281,7 @@ int hvf_put_registers(CPUState *cs)
->  
->  int hvf_get_registers(CPUState *cs)
->  {
-> -    X86CPU *x86cpu = X86_CPU(cs);
-> -    CPUX86State *env = &x86cpu->env;
-> +    CPUX86State *env = cpu_env(cs);
->  
->      env->regs[R_EAX] = rreg(cs->accel->fd, HV_X86_RAX);
->      env->regs[R_EBX] = rreg(cs->accel->fd, HV_X86_RBX);
-
-In this file, there's another corner case:
-
-diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
-index 3b1ef5f49a8a..9a145aa5aa4f 100644
---- a/target/i386/hvf/x86hvf.c
-+++ b/target/i386/hvf/x86hvf.c
-@@ -342,8 +342,7 @@ void vmx_clear_int_window_exiting(CPUState *cs)
-
- bool hvf_inject_interrupts(CPUState *cs)
- {
--    X86CPU *x86cpu = X86_CPU(cs);
--    CPUX86State *env = &x86cpu->env;
-+    CPUX86State *env = cpu_env(cs);
-
-     uint8_t vector;
-     uint64_t intr_type;
-@@ -408,7 +407,7 @@ bool hvf_inject_interrupts(CPUState *cs)
-     if (!(env->hflags & HF_INHIBIT_IRQ_MASK) &&
-         (cs->interrupt_request & CPU_INTERRUPT_HARD) &&
-         (env->eflags & IF_MASK) && !(info & VMCS_INTR_VALID)) {
--        int line = cpu_get_pic_interrupt(&x86cpu->env);
-+        int line = cpu_get_pic_interrupt(env);
-         cs->interrupt_request &= ~CPU_INTERRUPT_HARD;
-         if (line >= 0) {
-             wvmcs(cs->accel->fd, VMCS_ENTRY_INTR_INFO, line |
-
-
-For this special case, I'm not sure if the script can cover it as well,
-otherwise maybe it's OK to be cleaned up manually ;-).
-
-> diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/excp_helper.c
-> index b3bdb7831a..bfcae9f39e 100644
-> --- a/target/i386/tcg/user/excp_helper.c
-> +++ b/target/i386/tcg/user/excp_helper.c
-> @@ -26,8 +26,7 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
->                              MMUAccessType access_type,
->                              bool maperr, uintptr_t ra)
->  {
-> -    X86CPU *cpu = X86_CPU(cs);
-> -    CPUX86State *env = &cpu->env;
-> +    CPUX86State *env = cpu_env(cs);
->  
->      /*
->       * The error_code that hw reports as part of the exception frame
-
-In this file, there's another case:
-
-diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/excp_helper.c
-index b3bdb7831a7a..02fcd64fc080 100644
---- a/target/i386/tcg/user/excp_helper.c
-+++ b/target/i386/tcg/user/excp_helper.c
-@@ -52,6 +52,5 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
- void x86_cpu_record_sigbus(CPUState *cs, vaddr addr,
-                            MMUAccessType access_type, uintptr_t ra)
- {
--    X86CPU *cpu = X86_CPU(cs);
--    handle_unaligned_access(&cpu->env, addr, access_type, ra);
-+    handle_unaligned_access(cpu_env(cs), addr, access_type, ra);
- }
-
-[snip]
-
-LGTM.
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-
+-- PMM
 
