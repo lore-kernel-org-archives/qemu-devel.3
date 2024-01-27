@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C1D9C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 05:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A501AC46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 05:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTasz-00076b-GE; Sat, 27 Jan 2024 00:05:45 -0500
+	id 1rTauE-00005G-07; Sat, 27 Jan 2024 00:07:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTasx-00075h-Rr
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 00:05:43 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1rTauB-0008Ve-FK
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 00:06:59 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTasw-0003cc-BA
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 00:05:43 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-6e0ed26cc5eso666211a34.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 21:05:41 -0800 (PST)
+ id 1rTau8-0003mx-TO
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 00:06:58 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3bd562d17dcso789224b6e.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 21:06:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706331941; x=1706936741; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706332015; x=1706936815; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=weKuqzC9tp6/h7jatkkGZ0S6HamZ7GxJD+IJulFZky4=;
- b=JchK99UlXwNd4Mj5SIkGXTKjhGCNXpsx5qgENcOCQEKUMDzIgMbyHc9hPRqXwIyI4O
- 7jD+8WvCcHKL7uu6LKT+0bdFrrU0lzYVjf6jJQlM5txTdOtohO68sCVjQzIMQTO1BLS1
- 1CwEeZ0HL6y5Xf/fB7Kss92nZOvS7Obry6fmqjy6i3Cd3ZTZvmf6WpyFeqB1BAGoSsKJ
- AYWDVgVzaUz7xiLAzSHZg2euDvHApVBXqyKhLM597/FbLIeoe5tGH3686qwTNf/5Yjgk
- eIvvSzvU2j/z8AVbksK5uqlUkufBfbpwum258XQcHaxiWpRJwSWeb8Kg0a2xWaPUjpFD
- HJKw==
+ bh=1nJtLF0cT25q/gKi4XZWH3z/BW/zLAEPFHOyGYOPht0=;
+ b=CBwKjbTrcdoGFFP6RKfkwR1TR6KwL2QpMxK1QIv7dMr/VENAy9WMF3gr+DaKDexJea
+ tYVkmqmVcMC3AiH3C4tTahO3diXHYHeYcAiF7nUhWA5kaJriDmQaPsUGV51cVzuuqAJ4
+ rL6Ejmmj4+Bo+1cERYl5ny1HwNwnu0WyJN/LRSJlvQvAl6oISVTJqfChbbiruv5QxE84
+ 37/icmm39QefiDdz0hvNpqPq5GojDZrR9QzZZqVX6qI9cX5D7CfiBp1TJC737a3B2GvV
+ KOWrUM7hEZYLcMPcxgTGsIEKdxzi9Hf4c24S4n+t0hq7KJz8Nr00ynwvGVqjz9F7ooWX
+ FCHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706331941; x=1706936741;
+ d=1e100.net; s=20230601; t=1706332015; x=1706936815;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=weKuqzC9tp6/h7jatkkGZ0S6HamZ7GxJD+IJulFZky4=;
- b=T9aaXazpfxvTDsBFtaht0TWmOl4KtMd7T+kMyoNLMMRnXe3Jo0IqsZcwb+bVWzEmIb
- SenCrGWIXbLjji73cO4T+QbOQnvBCO35kE5tOWZoKXj/uhMlAkakpABLiYZZ3cmCG6Js
- 3bfXstUjX96PIC/50I14G9q/RbmyjM+9q2WJJaR6QJ4PU21O58Y2b4mLxqJXTyt9tVep
- gH19XvX6jgV0yqkZkGb8eieNoFlwHi8pVuV2CoCVmXja1SeKA14hGMD8MDx4kPXpvRik
- I8+wapby3NfGNZL/NJIOscra0xGWu/su0RjjEgpQfYKs+2TE1zpX9gZeplf1ry04EB++
- biMQ==
-X-Gm-Message-State: AOJu0YyfXMrGMDJ0JgmD9K8OQC/tGaG8ey71vYe2grYiyKHFPr3xxR9P
- sIJeQKHAPHLg26DHX51CGmRtqe4pPsWreOblCMj8Mtb2bKNtahsGrnGOP+r69Z8=
-X-Google-Smtp-Source: AGHT+IFJgSbso49Rd1Px9udkRJgMmwapp2zH5ljWTOkiLQ2G6L/M5zi3oIsq/tgotTicmt3C+JTHdQ==
-X-Received: by 2002:a9d:3e4d:0:b0:6dd:eebd:cd5f with SMTP id
- h13-20020a9d3e4d000000b006ddeebdcd5fmr959462otg.48.1706331941057; 
- Fri, 26 Jan 2024 21:05:41 -0800 (PST)
+ bh=1nJtLF0cT25q/gKi4XZWH3z/BW/zLAEPFHOyGYOPht0=;
+ b=VLF9UlgO1noey42c82/edHDwAAtl3Z57s7xmx0NnZNlppkKYQNTA6nO47n60FYh0qG
+ PLzBV32Yodr7dhm+VdIKIM2tliNlymIUsIZBw0gGDnRF5CzcMpHu9/E+hoC3y7M2u0gP
+ /sTsmbm5bqnZKj5KY1TiJpwwDZSQxFUwMEnnGs3RH379UZt+vIjjYCUj5K3Ln7b2n3EV
+ 9JlS+NMfGDEcwEo5g77Mw16JYTUrLgmqQlq18Z+5sSfEBR/FaZwzeJe8WYm473n6sekx
+ Q/mccn+mq66jsu2TNljaEtxzYs5s7HXlI4bnabizCXBVB/ueLAEZ44nFVYjQZuH0FuPf
+ XO6w==
+X-Gm-Message-State: AOJu0YwO2lUOgehXUInJHiXItmsNV1N56xT3lEpCbGIp/5HuCz3ayGZ5
+ xPLBFNZ940v+vx6xZamld66weIhxIRnXO9tAewcx/pmT7nZbr5JUhDa/6ydokag=
+X-Google-Smtp-Source: AGHT+IEzlKzdpYCfL5ewhOStpIO8bg8IUnbWYW69U16rzQ4lB3gLy8H7y5EJKXW5ISpFrvYhRZrI3A==
+X-Received: by 2002:a05:6808:13c6:b0:3bd:dd6a:b02 with SMTP id
+ d6-20020a05680813c600b003bddd6a0b02mr1348587oiw.48.1706332015508; 
+ Fri, 26 Jan 2024 21:06:55 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e?
  ([2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e])
  by smtp.gmail.com with ESMTPSA id
- d3-20020aa78683000000b006ddc14c416dsm1974542pfo.95.2024.01.26.21.05.39
+ d3-20020aa78683000000b006ddc14c416dsm1974542pfo.95.2024.01.26.21.06.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 21:05:40 -0800 (PST)
-Message-ID: <da1c3d20-2fa4-45d1-89e7-708b8437066e@linaro.org>
-Date: Sat, 27 Jan 2024 15:05:38 +1000
+ Fri, 26 Jan 2024 21:06:55 -0800 (PST)
+Message-ID: <08cf813f-f4c7-4b81-9de8-a8058e03e1a8@linaro.org>
+Date: Sat, 27 Jan 2024 15:06:52 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] aspeed: Clean up includes
+Subject: Re: [PATCH 05/10] acpi: Clean up includes
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
 References: <20240125163408.1595135-1-peter.maydell@linaro.org>
- <20240125163408.1595135-5-peter.maydell@linaro.org>
+ <20240125163408.1595135-6-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240125163408.1595135-5-peter.maydell@linaro.org>
+In-Reply-To: <20240125163408.1595135-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,7 +98,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/26/24 02:34, Peter Maydell wrote:
-> This commit was created with scripts/clean-includes.
+> This commit was created with scripts/clean-includes:
+>   ./scripts/clean-includes --git acpi include/hw/*/*acpi.h hw/*/*acpi.c
 > 
 > All .c should include qemu/osdep.h first.  The script performs three
 > related cleanups:
@@ -111,10 +112,11 @@ On 1/26/24 02:34, Peter Maydell wrote:
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   hw/arm/aspeed_eeprom.h     | 1 -
->   tests/qtest/qtest_aspeed.h | 2 --
->   hw/arm/aspeed_eeprom.c     | 1 +
->   3 files changed, 1 insertion(+), 3 deletions(-)
+>   include/hw/nvram/fw_cfg_acpi.h  | 1 -
+>   include/hw/virtio/virtio-acpi.h | 1 -
+>   hw/nvram/fw_cfg-acpi.c          | 1 +
+>   hw/virtio/virtio-acpi.c         | 1 +
+>   4 files changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
