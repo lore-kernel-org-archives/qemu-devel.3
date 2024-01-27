@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9DBC46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 03:56:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D99B2C47DA9
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 04:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTZmn-0006K9-7B; Fri, 26 Jan 2024 22:55:17 -0500
+	id 1rTZwd-00058I-C9; Fri, 26 Jan 2024 23:05:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTZml-0006Jm-0f
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 22:55:15 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1rTZwb-00057z-0K
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:05:25 -0500
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTZmj-00087w-DH
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 22:55:14 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5ca29c131ebso1272611a12.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 19:55:12 -0800 (PST)
+ id 1rTZwZ-0001qd-85
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:05:24 -0500
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-595d24ad466so781675eaf.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 20:05:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706327711; x=1706932511; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1706328322; x=1706933122; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QSFyf+dQHWq/uDnTL+ezQMCVKGeItK20rV9aVNH28FA=;
- b=TTHNPCQ4/mOs6WD6YwjaEIf5uXaMBwb/mwhilafESl9DXGPIsdQ9FyyTD+dEgDQtEn
- UvdkEfgUuBY9JX3oHXD0U9yxDPCDZcH3GyTlQXK66gpiX9j0VyHT75MBnZ0y50C81JKn
- zYxg5fjPfLkSUoiFLtIDrgERMxWG7br0+/lH5Q8RQOm2Ue2hagPdppToi8grpI7+udYY
- 9n7sPRopWY1417VycYUVpcoA43YpjqyYVo54vQkqM8yozAb8EF2ht3twfqGX15c1LJvv
- b+mcvFeFj1ctNtJKXVGFSC5kELQXu0UMKryXPL1IfVjtRYAOMtTpzroMBK+8Ha8BkT9n
- ZXhw==
+ bh=BAOsItuQ/gF3bbUxSX4LRTRNpXMVaHIAeAj7sbM1MNk=;
+ b=hzOmBU9fgaXylMAI1OXlvee8bwy5+Th3ZLHvxyXGoU9z4Hzo5bbqInZlzGQLLmCPDB
+ 4qH/mFZBvxumjOnm0zZ8SrjEJg9mWg81SFCZ/d/xhPQUw+h/lTIx/Xlq/tKeV52A5nmz
+ N/9c3uevDajP9iO9+UlpeXhqX4i0bpuh82u4EWpk7C0bofiRgK2CkWF1ebVEtxAHhx4w
+ 7upxwhibo8crHVdTswKvFW3TFYwl/1hkeS7GRjZ7JovlkM8wZeLsuTSTj4N2y/foOYqs
+ PWYBZzYYGvbLiKNJ1SFUm0qYoHLbB8cRAszay6mXhdE7FRKe1mQJoOnNVsly2u8C1qPe
+ tXDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706327711; x=1706932511;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1706328322; x=1706933122;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QSFyf+dQHWq/uDnTL+ezQMCVKGeItK20rV9aVNH28FA=;
- b=HV3q/CmDMJi+fErSAkG1J5cXhtLnpm4wy1gpHHjEp/88s8UnLTyuDTgQINgEhIqoHa
- fDIUUiaOrzOd24G6jS2Ffidr7E16EcMqnaaF4K1DaNHEzhkksNlnpAOOd5AHHmkQ1UmJ
- ze3kuaIhUNii5a2GrLdrs6u/HJR863EvBqbIQuFCIAbO+AP+DZReNMCY/z88VSsaVJtw
- virNZzs3jHTsIYljZe+HPwLtT3yszjSHBScGW1vDnwg9+iN+DxXHK3xAssSMr0ZhsDmu
- QSf+rBnblRJdJ1zzMeUzIRmbOF4yfUC9O/8br3Djln4NXFDLxTPuj7QsYyMLdR0OygBn
- WXzQ==
-X-Gm-Message-State: AOJu0YysnxtRAVtC7na7VvGdkWM+pWiwpvquoeVUvbTC3LqACUMvjqmu
- 0buwFV1ruyZj7F9oTte0JqATWcTtgf5Ydq+VlhE6wDJp2g9O4+7PUTlKfByc1+o=
-X-Google-Smtp-Source: AGHT+IEJnBm7RppAhbjrkkBhEccCK2ih7K+KgFCaqNhS1uRTvIaWGcbU0nJVzG2v624d+vYCgx5leQ==
-X-Received: by 2002:a05:6a20:a29b:b0:19a:fbd9:2651 with SMTP id
- a27-20020a056a20a29b00b0019afbd92651mr720628pzl.110.1706327711568; 
- Fri, 26 Jan 2024 19:55:11 -0800 (PST)
+ bh=BAOsItuQ/gF3bbUxSX4LRTRNpXMVaHIAeAj7sbM1MNk=;
+ b=L88ekj2HkMTJTx8qE9oECvuXNIr9Mlg+buIirqV7Vs8lO9Uh/smph+HTj0+uMuNNXn
+ YivzCAy+qetbLA6NspMEvgHCtHth8nBO8rBQl7ceyXRPPRV4paac44TxrLmCxLLhXQWb
+ 6jAeIdoIhnyKpTxhsif9esU0P+RF5YMQeZUbHCfCkOeyBQBwxqTQ4xOkVf2cUxyOyhJI
+ dVjXL9Hk5VdI4Qaw3Bo6gUg+kpYopDCH0XZ34stgA3JeD7Z0cEukCt+rG0jMiriJ9jcL
+ DyXpYz+hvzpSWoun8rjErz3mmNaELLbPActkNFwiPZIiq9Qa++qiCeb2EWwor210iQm1
+ 9oTg==
+X-Gm-Message-State: AOJu0Ywb6eaGD52E22wwdPq39wXOtKa213T+WtP7uJ4+RaisLrqeJe8q
+ PVuBuwLITSbw4suFQXyUEfXZQci1czFqcmYCHcWncZK1tpXDU3v4Rqy2u7e+iZg=
+X-Google-Smtp-Source: AGHT+IG7lUXva4PeItPC2qdP+DgNI0r/XCcoh/53FokkYryN1gw4mNiWW6IvJYRymZN6gv287ooprg==
+X-Received: by 2002:a05:6359:4c18:b0:175:5673:2694 with SMTP id
+ kj24-20020a0563594c1800b0017556732694mr881216rwc.44.1706328321744; 
+ Fri, 26 Jan 2024 20:05:21 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e?
  ([2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e])
  by smtp.gmail.com with ESMTPSA id
- p4-20020a62ab04000000b006ddc0c04d58sm1817099pff.110.2024.01.26.19.55.08
+ fa9-20020a056a002d0900b006d98505dacasm1814464pfb.132.2024.01.26.20.05.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 19:55:11 -0800 (PST)
-Message-ID: <9e74cf9e-9485-4e9e-ad1b-b593b562114f@linaro.org>
-Date: Sat, 27 Jan 2024 13:55:06 +1000
+ Fri, 26 Jan 2024 20:05:21 -0800 (PST)
+Message-ID: <96b28d3c-c35f-42f9-ae43-7b733043a7e5@linaro.org>
+Date: Sat, 27 Jan 2024 14:05:16 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] {linux,bsd}-user: Fail mmap() if size doesn't fit into
- host's size_t
+Subject: Re: [PATCH] target/arm: Reinstate "vfp" property on AArch32 CPUs
 Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Warner Losh <imp@bsdimp.com>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: Kyle Evans <kevans@freebsd.org>, qemu-devel@nongnu.org
-References: <20240125200731.2633-1-iii@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240126193432.2210558-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240125200731.2633-1-iii@linux.ibm.com>
+In-Reply-To: <20240126193432.2210558-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,48 +96,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/24 06:07, Ilya Leoshkevich wrote:
-> s390x's branch-relative-long test fails with the following error
-> message on 32-bit hosts:
+On 1/27/24 05:34, Peter Maydell wrote:
+> In commit 4315f7c614743 we restructured the logic for creating the
+> VFP related properties to avoid testing the aa32_simd_r32 feature on
+> AArch64 CPUs.  However in the process we accidentally stopped
+> exposing the "vfp" QOM property on AArch32 TCG CPUs.
 > 
->      qemu-s390x: ../accel/tcg/user-exec.c:493: page_set_flags: Assertion `last <= GUEST_ADDR_MAX' failed.
+> This mostly hasn't had any ill effects because not many people want
+> to disable VFP, but it wasn't intentional.  Reinstate the property.
 > 
-> The root cause is that the size passed to mmap() by this test does not
-> fit into 32 bits and gets truncated. Since there is no chance for such
-> mmap() to succeed, detect this condition and fail the mmap() right away.
-> 
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Cc:qemu-stable@nongnu.org
+> Fixes: 4315f7c614743 ("target/arm: Restructure has_vfp_d32 test")
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2098
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   bsd-user/mmap.c   | 4 ++++
->   linux-user/mmap.c | 4 ++++
->   2 files changed, 8 insertions(+)
-> 
-> diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-> index 3ef11b28079..5dc327d0ad3 100644
-> --- a/bsd-user/mmap.c
-> +++ b/bsd-user/mmap.c
-> @@ -256,6 +256,10 @@ static abi_ulong mmap_find_vma_aligned(abi_ulong start, abi_ulong size,
->   
->       size = HOST_PAGE_ALIGN(size);
->   
-> +    if (size != (size_t)size) {
-> +        return (abi_ulong)(-1);
-> +    }
-> +
-
-I have this same fix in
-
-https://lore.kernel.org/qemu-devel/20240102015808.132373-18-richard.henderson@linaro.org/
-
-so as far as that's concerned,
+>   target/arm/cpu.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-But perhaps you got cast your eye across the larger reorg,
-
-https://lore.kernel.org/qemu-devel/20240102015808.132373-1-richard.henderson@linaro.org/
-
-?
 
 r~
 
