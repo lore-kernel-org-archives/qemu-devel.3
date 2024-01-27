@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3C2C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 07:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F60FC46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 07:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTdMX-00078m-R0; Sat, 27 Jan 2024 02:44:26 -0500
+	id 1rTdVH-0000By-Oa; Sat, 27 Jan 2024 02:53:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTdMV-00078b-CI
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 02:44:23 -0500
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ id 1rTdVF-0000Bh-VE
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 02:53:25 -0500
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTdMT-0002q4-Pf
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 02:44:23 -0500
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3bd884146e9so1163225b6e.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 23:44:21 -0800 (PST)
+ id 1rTdVE-0004OH-DZ
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 02:53:25 -0500
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-59a1a03d09aso219209eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 23:53:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706341460; x=1706946260; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706342001; x=1706946801; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9tjdtIyVkA3JUWN2Inf1x3Gv+tBCx69AsE58Mh4GDgE=;
- b=UhMtOuoTvYmun3Q5cNilKFLEISL7pxVKP0v9NmchOHBEWx6nipfe/FIYMhfzfm131h
- Nt+21DHd/eshIjGA2DGx3jRWuY07EcMAGLfgtqxBk9tcD/fGw2+mZTqkOb+2feSuwwLG
- YSHlxO0issJNQMwtVNRgamUFSKetXVcVsKzpf491GRXbAEoPGkfdLjfOMA/xvOkaEGso
- eDAHv0gjx6xnGNTz0fJbiUmlTKUV0/XEsa0x8Fly9WifrC49pauLWP3KFDhAAS/cMeUA
- r2AQmYSd5nAkZMZms9dgkYPSkCV9u9lxHLI6U2+kdgIZDmnRPkSv5uHVTyk6a/a5dxFq
- sVdQ==
+ bh=+ZUnE7TqVuww37SKoytFpw6oZRw0KYssOrhOdlqgYKo=;
+ b=pfXSQyVpaXDgpLxBNcySV7BaDUjoej67UUK1YhFRzBctX4WAfKhitQGuGjG0Io4QJU
+ tcik2/zaluCBRR2FhUL09Vu51/5WZDk0YFvx/lAqNgJyQtgAFitZ9sxsPiAgiNb0SRGO
+ NCk016tboxl8OlOqAL6ifqJlCY8A1+tpjMgRRQB1jUVf5aaihvmD6lnT43n4FQntASom
+ bKl6fk0HZu9AyRok6jUPNwhhkIavZDHwjAoMVp569UES8ejKByL6w4gcsoXFFzW0lani
+ L3w3GysyFASMi6Bg2iutHciAJR+eGnw9xLU1m9UmoSwdVylBPbQMZOG91uuXNEsXIDq/
+ p9Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706341460; x=1706946260;
+ d=1e100.net; s=20230601; t=1706342001; x=1706946801;
  h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9tjdtIyVkA3JUWN2Inf1x3Gv+tBCx69AsE58Mh4GDgE=;
- b=oYIKi4wmkQAICWcgsOZ6Fl3zvPX2MtbiYzyfwukMynJ720yd4xr7xa1cIRinm5y9iH
- WYG4KnZ7bjU+T/RD/kM59opoooffyCSNNhGPmYI0c7flz/i6NrYpMEIX7fW60yNFO17J
- NnJdibO8+CWo2fiItShSQ+ZcxettA1vFWNupy9/BtkHl8ptdvjpPr/436izG7Y+VZReb
- hbLttcoNhkWVbK0VTRS0YYnuSQOZlcIy57jUNwlXudhy5J1uXB5Y1b5r9nuE48NyVRJF
- kYD5hzy9Y+B3BkXZjryCLyldRnSmR3pbZ9S6psGkus/7C4PpUY9vkz2CLvYjEIh05gf5
- t7zg==
-X-Gm-Message-State: AOJu0Yxbdzx6fQClfoXwzwd1dVpKYH9gdp7sekIMiNiOwLTGHEx/uAiE
- WaG8xljzHPkRu4KZU8AQRwIN92Mdyf/PBBXlA1CkFYQZac0rGYtwc3v/UbJbTTQ=
-X-Google-Smtp-Source: AGHT+IFcSRksM5epc10wkkkZQtGjYroRSmKvEDeeGm7r6VEMfPvgZBbuXCAiDB63GJ2M3VaadqbD8Q==
-X-Received: by 2002:a05:6808:16a4:b0:3bd:e2c1:a49b with SMTP id
- bb36-20020a05680816a400b003bde2c1a49bmr1464407oib.3.1706341460387; 
- Fri, 26 Jan 2024 23:44:20 -0800 (PST)
+ bh=+ZUnE7TqVuww37SKoytFpw6oZRw0KYssOrhOdlqgYKo=;
+ b=vBl5EbtOvUQA2nhK/pAnpVlQ4FvxMw3ER6vxO1K9h+xh1Y0ZKHy8Zv7rwTYfMdkm8D
+ jtyzl8YRbS8xIe6Ee0Id1iCPpojXpKVRjabRBMEj7aTI6WNgYHHyWk7Z8rXY9i8t/T/A
+ IGA7DigTXpVJFs9UGBXZtaduE7HZZojxDscm6EmupWxW+IuyIrsXX/mS9f9h0oTs5Iw8
+ RF/d0CvGZISSi9hyUh6/9FluFWAFH7Xo1tEQUI84JRyBfFW2SQpfwWSVLjPDqRVbqsYt
+ Hr6k9b84CogZXjrdoHbsD1/bSdjDJKdNuxF5XivZKO7MwfgiFcnNo9DKYQW/Al6jEsO0
+ 4K/g==
+X-Gm-Message-State: AOJu0Yzdy+Uv9D19mxLy76h94iUBvKjdp8gdXBYMPOBEFITN6T0moqN/
+ leXcRxK2KTDVOO/VmFNiiQJrQhos8jso0J4nOMJM/6cScjeRK1T0aTsH9oq/4GQ=
+X-Google-Smtp-Source: AGHT+IH8H7pXYWfZKjeafoqZ0aMvC/mCqCAFnPmBEQjHaP7L8zEwdQvMyWRDJT2zQRRPkoRKFMdaZA==
+X-Received: by 2002:a05:6358:524b:b0:176:569f:8921 with SMTP id
+ c11-20020a056358524b00b00176569f8921mr1163964rwa.56.1706342001557; 
+ Fri, 26 Jan 2024 23:53:21 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:f4e4:75ba:818d:188a?
  ([2001:8003:c96c:3c00:f4e4:75ba:818d:188a])
  by smtp.gmail.com with ESMTPSA id
- y3-20020a63de43000000b005cf9e59477esm2281878pgi.26.2024.01.26.23.44.18
+ nm13-20020a17090b19cd00b0029061498a18sm4359076pjb.24.2024.01.26.23.53.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 23:44:19 -0800 (PST)
-Message-ID: <8f1461c7-f378-4121-8176-2a7601f0a996@linaro.org>
-Date: Sat, 27 Jan 2024 17:43:58 +1000
+ Fri, 26 Jan 2024 23:53:21 -0800 (PST)
+Message-ID: <2c2aabef-d4e4-4c1c-a613-3c72d0a1be18@linaro.org>
+Date: Sat, 27 Jan 2024 17:53:15 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] cpu-exec: simplify jump cache management
+Subject: Re: [RFC PATCH 14/34] exec: [CPUTLB] Move PAGE_* macros to common
+ header
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org
-References: <20240122153409.351959-1-pbonzini@redhat.com>
- <d569042e-2c27-47f6-8636-f708b11814b4@linaro.org>
-In-Reply-To: <d569042e-2c27-47f6-8636-f708b11814b4@linaro.org>
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: ale@rev.ng, philmd@linaro.org
+References: <20240119144024.14289-1-anjo@rev.ng>
+ <20240119144024.14289-15-anjo@rev.ng>
+ <92ed19b0-b86f-4c5d-9b74-bcf1cdd7f3cf@linaro.org>
+In-Reply-To: <92ed19b0-b86f-4c5d-9b74-bcf1cdd7f3cf@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,28 +99,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/23/24 07:57, Richard Henderson wrote:
-> On 1/23/24 01:34, Paolo Bonzini wrote:
->> Unless I'm missing something egregious, the jmp cache is only every
->> populated with a valid entry by the same thread that reads the cache.
->> Therefore, the contents of any valid entry are always consistent and
->> there is no need for any acquire/release magic.
-> 
-> I think you're right, and I over-complicated this thinking about invalidations.
-> 
->> Because of this, there is really nothing to win in splitting the CF_PCREL
->> and !CF_PCREL paths.  It is easier to just always use the ->pc field in
->> the jump cache.
-> 
-> Once upon a time, PCREL was an ifdef, and the jump cache pc did not exist for !PCREL.  The 
-> split has not been addressed since then.
-> 
-> 
-> The cleanup looks good.
+On 1/24/24 09:54, Richard Henderson wrote:
+> On 1/20/24 00:40, Anton Johansson wrote:
+>> These don't vary across targets and are used in soon-to-be common code
+>> (cputlb.c).
+>>
+>> Signed-off-by: Anton Johansson<anjo@rev.ng>
+>> ---
+>>   include/exec/cpu-all.h    | 24 ------------------------
+>>   include/exec/cpu-common.h | 30 ++++++++++++++++++++++++++++++
+>>   2 files changed, 30 insertions(+), 24 deletions(-)
 > 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 Queued, thanks.
+
 
 r~
 
