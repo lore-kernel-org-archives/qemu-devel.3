@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02159C46CD2
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 04:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14436C46CD2
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jan 2024 04:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTaKP-00041G-Jn; Fri, 26 Jan 2024 23:30:01 -0500
+	id 1rTaM8-0004re-F2; Fri, 26 Jan 2024 23:31:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTaKN-00040v-Rv
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:29:59 -0500
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ id 1rTaM7-0004rW-3n
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:31:47 -0500
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTaKM-00066l-CS
- for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:29:59 -0500
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-783045e88a6so119532185a.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 20:29:57 -0800 (PST)
+ id 1rTaM5-0006Ut-Hw
+ for qemu-devel@nongnu.org; Fri, 26 Jan 2024 23:31:46 -0500
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3bd7c5b2439so792026b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jan 2024 20:31:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706329797; x=1706934597; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706329904; x=1706934704; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MbLptFGPqxACsHOGtPreDNvMr4whZ+p/UCgJdnz3PpU=;
- b=QKCHZhp3AKyZRXMvnoZtyoy/u6TNMH1GPZPulEB7X/SSqXSTugV7cejbAlYwsLDcaj
- Q6VZo36eg+CakUl+yDgxV73ZaIQvWbD6HRopMCodSDnah7CV2ZpfL5T8a9dB1HOosQA1
- 4ywDBLtnIAb7HaQTpwVdd7O6j9eOU8g1HwmmU+9fmTybR+yIAAnPIEbHzjTWwDhC+cxI
- NQcrJfWHsLo7xUKaLvcxE8EtG5P4NDKC4pdWaRat3b0/4ZkcOCHYg0I5mqUSeHnOvMD/
- NsKxJ7ZJ89DPu6KuOl1Yr8LAzpwcTLt/274A1mZ+Kxbzf8VMHypcEdyz2kuv62yMY48E
- uKEA==
+ bh=URTUPDqaB1KrQpHhXBiULwCn+DbvnbaVle4GLPY5KVw=;
+ b=Hig+ukVtN0HoMQ8QJTAYfn+32Cw4QQ9yjPgrO8wChWSqoAaKzzonRVJQqDAVN/rQO7
+ c1eQIF7rLTdkDjAjxM7i1k5SJuc46h0UaoORY0uzeOuZ6zmUKkeixdpV/7l8erEbQYMd
+ L6I5mGygCvqydExDgBeWvO66KmzJL8XVkPbPbsUOum64hzto89wBHZ4X9QaFlrGZe2XI
+ dR3DUgP16tBCFQrFFQYbEnZ29JyL55DeoeXA93JzO0HAwVtwTlOCCPk30FPDkcKerJ7D
+ QlDQNE9iuscemEMRvhpSGDHM5gLNI4G+ZstD/GQnxWKY0VPYZBBpbdAqdX7GiRGneA6d
+ UU/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706329797; x=1706934597;
+ d=1e100.net; s=20230601; t=1706329904; x=1706934704;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MbLptFGPqxACsHOGtPreDNvMr4whZ+p/UCgJdnz3PpU=;
- b=RV8BP67jk3cqIsTLv7BiQ4gXpsMSe7knb6fPZPZ33kel1VY/hbmoEhB4CJVEGh2rhq
- ST8of0RJL+vWX/HtsWyKFCxLt1GoU4al26vxUscy2zBH2GZEm6x3+wGYVA8//m5rBjYC
- NmHLKW/JvpRTx5R3wHomx7srfVrqMYy9Ua7cQzpQ3gPTrL+5XkXtysQroHilJCYEe5TT
- DR9bGDkOoiGP0Mk9n5nLlTfYo0Tki0zeMae20kibp/z1CxH2vJY6QQQzxrR1sqS14W7K
- +WyhEyW0ILbnjXwDwSLUO8VtUFpVxY9dJcq1x4VzkEsXKFXeVVLXBEl3v7ShEToGqn7S
- xVMw==
-X-Gm-Message-State: AOJu0YyP3CsreiaRaFmsjC087YUcszwzKmRFEeZ9LaPBhh/7XCjd8p2Z
- ABRGN3D0fomgQqomDQE5xdai0C1hVkHaHA+mFc4iTxy8LLUY/Ahz5nqbd/8GKowa5APkNvz7wCU
- 6XjA=
-X-Google-Smtp-Source: AGHT+IEdq2itzfB672c7ftdkSh1vyqDHcLpAS5QMpaab+qcal/9j0jEh3LNaaAT8/gRDRsk+HChaog==
-X-Received: by 2002:a05:620a:909:b0:783:e065:d434 with SMTP id
- v9-20020a05620a090900b00783e065d434mr958602qkv.29.1706329796990; 
- Fri, 26 Jan 2024 20:29:56 -0800 (PST)
+ bh=URTUPDqaB1KrQpHhXBiULwCn+DbvnbaVle4GLPY5KVw=;
+ b=B2l5uBMPDLPEkP2rmvk6XJa52RQvSjZEbVq98dtAfqV0V0zpHs2aW3u3tAVRhLpxfm
+ MDC6Le6d9kBLyXN/SDd7TU7PJAsBOHJr+gZPYx79eYsgEcbMvgjUZXHuRZpkm7H7Swta
+ OZgs5k/plbfVq2tTZeRHzVtUVfv5Hc1Fa7N6pMaQ2KQ55LUGo8cyVfqWNA3h7LVoRnw+
+ sDCndwdvZsaKBg+QUF72Vk0++k98XmL2+jd89QLcqvZPnRWFvqXqETFpWovlEZuna7X2
+ XEb9m1VOxQLqEGv1J34hxLnFsDyx8vqgdgR/Mq8WPU4tSKHmgbJsRjtLumaBdsuxPCQy
+ rf5Q==
+X-Gm-Message-State: AOJu0YxF64rrdilcbAcPWJQr9p1USp6i6IUVJP+mQ8MVsJe4meBpzlZJ
+ Sf1GgTzRIauYLqwB/rsjN4gWYJSwiMCoPl+mE7oz5wdb1l/AB0aguSRZJuWvFYI=
+X-Google-Smtp-Source: AGHT+IELtzs34k7ZBD+c2VqqUVHaI8WwYQaKUPxgxFv9eEp3Hh4mj3660AEsQf1EV2PYtLasmdB5PA==
+X-Received: by 2002:a05:6808:d4c:b0:3bd:ceef:804b with SMTP id
+ w12-20020a0568080d4c00b003bdceef804bmr1269073oik.12.1706329904329; 
+ Fri, 26 Jan 2024 20:31:44 -0800 (PST)
 Received: from ?IPV6:2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e?
  ([2001:8003:c96c:3c00:b5dc:ba0f:990f:fb9e])
  by smtp.gmail.com with ESMTPSA id
- gd17-20020a17090b0fd100b0028ffc524085sm4001781pjb.56.2024.01.26.20.29.55
+ s24-20020a056a00179800b006d9a6a9992dsm1864732pfg.123.2024.01.26.20.31.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jan 2024 20:29:56 -0800 (PST)
-Message-ID: <09dddcb6-a273-4e64-b1a7-31976b92a075@linaro.org>
-Date: Sat, 27 Jan 2024 14:29:54 +1000
+ Fri, 26 Jan 2024 20:31:43 -0800 (PST)
+Message-ID: <d041362d-ae22-40a7-868f-e91bc6ea7556@linaro.org>
+Date: Sat, 27 Jan 2024 14:31:39 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/23] target/i386/hvf: Use CPUState typedef
+Subject: Re: [PATCH v2 10/23] target/i386: Prefer fast cpu_env() over slower
+ CPU QOM cast macro
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240126220407.95022-1-philmd@linaro.org>
- <20240126220407.95022-10-philmd@linaro.org>
+ <20240126220407.95022-11-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240126220407.95022-10-philmd@linaro.org>
+In-Reply-To: <20240126220407.95022-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x72c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,19 +99,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/27/24 08:03, Philippe Mathieu-Daudé wrote:
-> QEMU coding style recommend using structure typedefs:
-> https://www.qemu.org/docs/master/devel/style.html#typedefs
+> Mechanical patch produced running the command documented
+> in scripts/coccinelle/cpu_env.cocci_template header.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/i386/hvf/x86.h       | 26 +++++++++++++-------------
->   target/i386/hvf/x86_descr.h | 14 +++++++-------
->   target/i386/hvf/x86_emu.h   |  4 ++--
->   target/i386/hvf/x86_mmu.h   |  6 +++---
->   target/i386/hvf/x86.c       | 26 +++++++++++++-------------
->   target/i386/hvf/x86_descr.c |  8 ++++----
->   target/i386/hvf/x86_mmu.c   | 14 +++++++-------
->   7 files changed, 49 insertions(+), 49 deletions(-)
+>   target/i386/hvf/vmx.h               | 13 +++-------
+>   hw/i386/vmmouse.c                   |  6 ++---
+>   hw/i386/xen/xen-hvm.c               |  3 +--
+>   target/i386/arch_memory_mapping.c   |  3 +--
+>   target/i386/cpu-dump.c              |  3 +--
+>   target/i386/cpu.c                   | 37 +++++++++------------------
+>   target/i386/helper.c                | 39 ++++++++---------------------
+>   target/i386/hvf/hvf.c               |  8 ++----
+>   target/i386/hvf/x86.c               |  4 +--
+>   target/i386/hvf/x86_emu.c           |  6 ++---
+>   target/i386/hvf/x86_task.c          | 10 +++-----
+>   target/i386/hvf/x86hvf.c            |  6 ++---
+>   target/i386/kvm/kvm.c               |  6 ++---
+>   target/i386/kvm/xen-emu.c           | 32 ++++++++---------------
+>   target/i386/tcg/sysemu/bpt_helper.c |  3 +--
+>   target/i386/tcg/tcg-cpu.c           | 14 +++--------
+>   target/i386/tcg/user/excp_helper.c  |  3 +--
+>   target/i386/tcg/user/seg_helper.c   |  3 +--
+>   18 files changed, 59 insertions(+), 140 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
