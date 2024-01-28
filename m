@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F4EC47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF7BC47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTx0o-0004wX-MX; Sat, 27 Jan 2024 23:43:18 -0500
+	id 1rTx1M-0006Hm-Eb; Sat, 27 Jan 2024 23:43:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0m-0004rG-R0
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:16 -0500
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ id 1rTx1C-0005qS-3o
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:42 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0l-0004NP-6w
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:16 -0500
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-42a8be32041so12058451cf.1
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:43:14 -0800 (PST)
+ id 1rTx1A-0004RA-GL
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:41 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-29065efa06fso1553948a91.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:43:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706416994; x=1707021794; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706417018; x=1707021818; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XRwZFjq4cQsQYmD6HoikyRyAnRDJPSlCSVsphAQE8HU=;
- b=JfHO/C6CexIZQrUYSOn3R/sQ43j985rFR7lFYvbNRffAS8XJhohfNwPid2Oo2/v77I
- rGjVkVG6eloxX2x4FIhd4eJOndd5Y6zhqS3VWKbzb7UdoBmNt2nFKWMrFt66uTgMb4/A
- 2waXY07cYvcqcqlznhL/gYYkFvZ7+pzNO6jKtyqGNBDr3qwUl8rJZgrwFCgNUWpnxKc3
- rqXm5g98E2/lP/SO7W1J2W0Q9lP7KgMNzP7KV2RYEgxQiKO8cBU+Ykgfcoj/tow3zG8W
- dINNOdmVUlWlhigZB8NwXbQgTf+Rad/or1IpK7F2gWlKvr9hF8LU4qXENpVtk5FXB0f2
- l3ng==
+ bh=LMqE9xBix0QLmyhH8Xqft/09pdbioiePfeACz0Kfp3o=;
+ b=yWyFvs5GLPW9XgHMsmDwAVGUO25QwbfifYhUo0UrG+4jTdK/Xp26ERHYL4Ywsig+63
+ CtK6V/N8P88Mjr2hHibPWBaEJr9k88sP67bnemrYmN0kGpc9mZ96bGqZ1pA3lmkDE5O3
+ mJkd1LKpS+8qoDTWCzxjKd/26mvUltaOU3yfp6lw82Y19H/99M4kpyOT81FwDqsnb9pv
+ s3wk6gxoe+2aMjEKv0x7RrhTkNMwQ0b1PHVZGeqNPPQMrILnqjlsnLQRkYXpZ33kTSxD
+ EepXEQiK0opgXFkTFnsrobAkajcR70EF2fdKK9fsQb8KM4Ghy4EZepYpJZuZgFKxSckR
+ mR9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706416994; x=1707021794;
+ d=1e100.net; s=20230601; t=1706417018; x=1707021818;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XRwZFjq4cQsQYmD6HoikyRyAnRDJPSlCSVsphAQE8HU=;
- b=M2pMoFT/G8uR7Tl+GaJVLSfxZw/f6x/x6mqsPjnOtmDIgiGjIiI3fNaL6te26M7nhv
- jpqRPLDA9JX557eulX2kK1K8i8GDowITEw/OKu0MRMTNCOqzagq9qgUffeT0ccsdxecJ
- FypAaP+ZfoDunXXWVaKXS0kEdHj26qVAcCHK5m+9Gu103QO3x0PSDJ19FNZNcxPwtQYY
- eY1XP1avnNxuUIbA+7M9kPcIwYdZmN8nB06Eu/lgsc46AGXi5lS6psEBn7k1Qskfgkkv
- uQ49vpqWBrQ5ZEk3oiGP1Rr05e/awljWS0LaOV64rBQLLN91FANQcdin4itNqHlX9COT
- H+Uw==
-X-Gm-Message-State: AOJu0YzPUQq5SyYYedd86xbfMMDVoV/OLXGMQVXhMRyc+IA0/MS59L1c
- 4nt3Qbrg/okG80/TPYulv3W97ugUVn5pLEmGsEk4lDMoCqBvdv+lr0B2iPEV3EQt+s2Gw3ZbOmx
- oeT96WA==
-X-Google-Smtp-Source: AGHT+IFf5VDv0qrWyaCdSk7ZrzOKkG8LZjY13R2JGKdb0BbdNiddE/J4+bBv8HK9sTNp/C4ifdGqHg==
-X-Received: by 2002:a05:622a:245:b0:42a:7092:c7fd with SMTP id
- c5-20020a05622a024500b0042a7092c7fdmr4739463qtx.135.1706416994099; 
- Sat, 27 Jan 2024 20:43:14 -0800 (PST)
+ bh=LMqE9xBix0QLmyhH8Xqft/09pdbioiePfeACz0Kfp3o=;
+ b=e61Cc6Sc65T0rvWijzouoisXMqQ1Ov+SxRgfCaU2Dw/3wXQsGOinnj/MUK2TIRU6+H
+ M5fg3Q/Kua5eq4+Z3cFyJ8vY/UKBliryjyHQmeg0GC4Zg2tMeufEy/jcN1GopHPj4yrb
+ J19ySOS93UqUEoX0tfHMKnDIiBrxaF0zaUvdzeXhlDvGm5+gfzVMYYl7l7gKnBhVDbLL
+ irFXFinUeUpAghJv24otlPGP02/BLdtzozQZwseheciQ7LzWGbIHQAGNmy1kgr9sxbyn
+ zIMr1UBBJKm91Vv2BxopS6hIi9ONIDLWnmpeNT475xrqVExbtXAOhVfzNzK5GAAHtCXA
+ W6oQ==
+X-Gm-Message-State: AOJu0YxtKVcnieCdgeTfwpyUd0caL8x582Yd4J9AhJQtkfdl8L3QXvkl
+ wIWapxKirohhGBSliHIQv+d6hPChsPybDTXZSj6AMjV17Kh5VCd2SlV1du+faAzM0Wz/ZCjGhV+
+ iT7eaWA==
+X-Google-Smtp-Source: AGHT+IEoTkgNygjlQX+xOaKcSFVmDunG/JqWg05qSiM3srH71iwE99c7dgHabEs9hukxMbJAfWZGTg==
+X-Received: by 2002:a17:90b:88c:b0:28c:ea35:44f8 with SMTP id
+ bj12-20020a17090b088c00b0028cea3544f8mr1631535pjb.79.1706417018287; 
+ Sat, 27 Jan 2024 20:43:38 -0800 (PST)
 Received: from stoup..
  (ppp121-45-131-89.bri-pow-que-bras31.tpg.internode.on.net. [121.45.131.89])
  by smtp.gmail.com with ESMTPSA id
- w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.43.11
+ w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.43.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Jan 2024 20:43:13 -0800 (PST)
+ Sat, 27 Jan 2024 20:43:37 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 22/33] accel/tcg: Rename tcg_ss[] -> tcg_specific_ss[] in meson
-Date: Sun, 28 Jan 2024 14:42:02 +1000
-Message-Id: <20240128044213.316480-23-richard.henderson@linaro.org>
+Subject: [PATCH 32/33] accel/tcg: Introduce TCGCPUOps::cpu_exec_halt() handler
+Date: Sun, 28 Jan 2024 14:42:12 +1000
+Message-Id: <20240128044213.316480-33-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x835.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,50 +99,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-tcg_ss[] source set contains target-specific units.
-Rename it as 'tcg_specific_ss[]' for clarity.
+In order to make accel/tcg/ target agnostic,
+introduce the cpu_exec_halt() handler.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240124101639.30056-2-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240124101639.30056-9-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/meson.build | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/hw/core/tcg-cpu-ops.h | 2 ++
+ accel/tcg/cpu-exec.c          | 5 +++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 46f7d53eeb..aef80de967 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -1,8 +1,8 @@
--tcg_ss = ss.source_set()
- common_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'cpu-exec-common.c',
- ))
--tcg_ss.add(files(
-+tcg_specific_ss = ss.source_set()
-+tcg_specific_ss.add(files(
-   'tcg-all.c',
-   'cpu-exec.c',
-   'tb-maint.c',
-@@ -11,12 +11,12 @@ tcg_ss.add(files(
-   'translate-all.c',
-   'translator.c',
- ))
--tcg_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
--tcg_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_false: files('user-exec-stub.c'))
-+tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
-+tcg_specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_false: files('user-exec-stub.c'))
- if get_option('plugins')
--  tcg_ss.add(files('plugin-gen.c'))
-+  tcg_specific_ss.add(files('plugin-gen.c'))
- endif
--specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_ss)
-+specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
- 
- specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
-   'cputlb.c',
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index 013867b890..bf8ff8e3ee 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -112,6 +112,8 @@ struct TCGCPUOps {
+     void (*do_interrupt)(CPUState *cpu);
+     /** @cpu_exec_interrupt: Callback for processing interrupts in cpu_exec */
+     bool (*cpu_exec_interrupt)(CPUState *cpu, int interrupt_request);
++    /** @cpu_exec_halt: Callback for handling halt in cpu_exec */
++    void (*cpu_exec_halt)(CPUState *cpu);
+     /**
+      * @tlb_fill: Handle a softmmu tlb miss
+      *
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 75f7ba7bed..82627b12b8 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -664,6 +664,8 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+ {
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->halted) {
++        const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
++
+ #if defined(TARGET_I386)
+         if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
+             X86CPU *x86_cpu = X86_CPU(cpu);
+@@ -673,6 +675,9 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+             bql_unlock();
+         }
+ #endif /* TARGET_I386 */
++        if (tcg_ops->cpu_exec_halt) {
++            tcg_ops->cpu_exec_halt(cpu);
++        }
+         if (!cpu_has_work(cpu)) {
+             return true;
+         }
 -- 
 2.34.1
 
