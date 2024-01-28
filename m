@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC47C47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55423C47DA9
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9GA-0005pE-3y; Sun, 28 Jan 2024 12:47:58 -0500
+	id 1rU9GX-0005ze-Vl; Sun, 28 Jan 2024 12:48:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9G7-0005o3-Km; Sun, 28 Jan 2024 12:47:55 -0500
+ id 1rU9GH-0005sw-Aj; Sun, 28 Jan 2024 12:48:05 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9G5-0000EI-35; Sun, 28 Jan 2024 12:47:55 -0500
+ id 1rU9GD-0000G7-6U; Sun, 28 Jan 2024 12:48:03 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4F2F1480DA;
- Sun, 28 Jan 2024 20:48:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 00096480DF;
+ Sun, 28 Jan 2024 20:48:43 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CFB4D6D4D3;
- Sun, 28 Jan 2024 20:47:47 +0300 (MSK)
-Received: (nullmailer pid 811297 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4C8F16D508;
+ Sun, 28 Jan 2024 20:47:52 +0300 (MSK)
+Received: (nullmailer pid 811314 invoked by uid 1000);
  Sun, 28 Jan 2024 17:47:47 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.9 v3 00/30] Patch Round-up for stable 7.2.9,
- frozen on 2024-01-27
-Date: Sun, 28 Jan 2024 20:47:33 +0300
-Message-Id: <qemu-stable-7.2.9-20240128204652@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ari Sundholm <ari@tuxera.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.9 25/30] block/blklogwrites: Fix a bug when logging
+ "write zeroes" operations.
+Date: Sun, 28 Jan 2024 20:47:38 +0300
+Message-Id: <20240128174747.811264-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-7.2.9-20240128204652@cover.tls.msk.ru>
+References: <qemu-stable-7.2.9-20240128204652@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,88 +62,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v7.2.9:
+From: Ari Sundholm <ari@tuxera.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+There is a bug in the blklogwrites driver pertaining to logging "write
+zeroes" operations, causing log corruption. This can be easily observed
+by setting detect-zeroes to something other than "off" for the driver.
 
-Patch freeze is 2024-01-27 (frozen), and the release is planned for 2024-01-29:
+The issue is caused by a concurrency bug pertaining to the fact that
+"write zeroes" operations have to be logged in two parts: first the log
+entry metadata, then the zeroed-out region. While the log entry
+metadata is being written by bdrv_co_pwritev(), another operation may
+begin in the meanwhile and modify the state of the blklogwrites driver.
+This is as intended by the coroutine-driven I/O model in QEMU, of
+course.
 
-  https://wiki.qemu.org/Planning/7.2
+Unfortunately, this specific scenario is mishandled. A short example:
+    1. Initially, in the current operation (#1), the current log sector
+number in the driver state is only incremented by the number of sectors
+taken by the log entry metadata, after which the log entry metadata is
+written. The current operation yields.
+    2. Another operation (#2) may start while the log entry metadata is
+being written. It uses the current log position as the start offset for
+its log entry. This is in the sector right after the operation #1 log
+entry metadata, which is bad!
+    3. After bdrv_co_pwritev() returns (#1), the current log sector
+number is reread from the driver state in order to find out the start
+offset for bdrv_co_pwrite_zeroes(). This is an obvious blunder, as the
+offset will be the sector right after the (misplaced) operation #2 log
+entry, which means that the zeroed-out region begins at the wrong
+offset.
+    4. As a result of the above, the log is corrupt.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Fix this by only reading the driver metadata once, computing the
+offsets and sizes in one go (including the optional zeroed-out region)
+and setting the log sector number to the appropriate value for the next
+operation in line.
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+Signed-off-by: Ari Sundholm <ari@tuxera.com>
+Cc: qemu-stable@nongnu.org
+Message-ID: <20240109184646.1128475-1-megari@gmx.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit a9c8ea95470c27a8a02062b67f9fa6940e828ab6)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Thanks!
+diff --git a/block/blklogwrites.c b/block/blklogwrites.c
+index cef9efe55d..ad589c4a2e 100644
+--- a/block/blklogwrites.c
++++ b/block/blklogwrites.c
+@@ -321,22 +321,39 @@ typedef struct {
+ static void coroutine_fn blk_log_writes_co_do_log(BlkLogWritesLogReq *lr)
+ {
+     BDRVBlkLogWritesState *s = lr->bs->opaque;
+-    uint64_t cur_log_offset = s->cur_log_sector << s->sectorbits;
+ 
+-    s->nr_entries++;
+-    s->cur_log_sector +=
+-            ROUND_UP(lr->qiov->size, s->sectorsize) >> s->sectorbits;
++    /*
++     * Determine the offsets and sizes of different parts of the entry, and
++     * update the state of the driver.
++     *
++     * This needs to be done in one go, before any actual I/O is done, as the
++     * log entry may have to be written in two parts, and the state of the
++     * driver may be modified by other driver operations while waiting for the
++     * I/O to complete.
++     */
++    const uint64_t entry_start_sector = s->cur_log_sector;
++    const uint64_t entry_offset = entry_start_sector << s->sectorbits;
++    const uint64_t qiov_aligned_size = ROUND_UP(lr->qiov->size, s->sectorsize);
++    const uint64_t entry_aligned_size = qiov_aligned_size +
++        ROUND_UP(lr->zero_size, s->sectorsize);
++    const uint64_t entry_nr_sectors = entry_aligned_size >> s->sectorbits;
+ 
+-    lr->log_ret = bdrv_co_pwritev(s->log_file, cur_log_offset, lr->qiov->size,
++    s->nr_entries++;
++    s->cur_log_sector += entry_nr_sectors;
++
++    /*
++     * Write the log entry. Note that if this is a "write zeroes" operation,
++     * only the entry header is written here, with the zeroing being done
++     * separately below.
++     */
++    lr->log_ret = bdrv_co_pwritev(s->log_file, entry_offset, lr->qiov->size,
+                                   lr->qiov, 0);
+ 
+     /* Logging for the "write zeroes" operation */
+     if (lr->log_ret == 0 && lr->zero_size) {
+-        cur_log_offset = s->cur_log_sector << s->sectorbits;
+-        s->cur_log_sector +=
+-                ROUND_UP(lr->zero_size, s->sectorsize) >> s->sectorbits;
++        const uint64_t zeroes_offset = entry_offset + qiov_aligned_size;
+ 
+-        lr->log_ret = bdrv_co_pwrite_zeroes(s->log_file, cur_log_offset,
++        lr->log_ret = bdrv_co_pwrite_zeroes(s->log_file, zeroes_offset,
+                                             lr->zero_size, 0);
+     }
+ 
+-- 
+2.39.2
 
-/mjt
-
---------------------------------------
-01* d3007d348ada Kevin Wolf:
-   block: Fix crash when loading snapshot on inactive node
-02* 5a7f21efaf99 Kevin Wolf:
-   vl: Improve error message for conflicting -incoming and -loadvm
-03* bb6e2511eb48 Kevin Wolf:
-   iotests: Basic tests for internal snapshots
-04* 5cb0e7abe163 Xu Lu:
-   target/riscv: Fix mcycle/minstret increment behavior
-05* 4ad87cd4b225 Michael Tokarev:
-   chardev/char.c: fix "abstract device type" error message
-06* 82a65e3188ab Peter Maydell:
-   hw/intc/arm_gicv3_cpuif: handle LPIs in in the list registers
-07* e358a25a97c7 Ilya Leoshkevich:
-   target/s390x: Fix LAE setting a wrong access register
-08* 52a21689cd82 Peter Maydell:
-   .gitlab-ci.d/buildtest.yml: Work around htags bug when environment is large
-09* 410c2a4d75f5 Anastasia Belova:
-   load_elf: fix iterator's type for elf file processing
-10* b5e0d5d22fbf Richard Henderson:
-   target/i386: Fix 32-bit wrapping of pc/eip computation
-11* a58506b748b8 Richard Henderson:
-   target/i386: Do not re-compute new pc with CF_PCREL
-12* 2926eab89699 guoguangyao:
-   target/i386: fix incorrect EIP in PC-relative translation blocks
-13* 729ba8e933f8 Paolo Bonzini:
-   target/i386: pcrel: store low bits of physical address in data[0]
-14* 3b14a555fdb6 Gerd Hoffmann:
-   hw/pflash: refactor pflash_data_write()
-15* 5dd58358a570 Gerd Hoffmann:
-   hw/pflash: use ldn_{be,le}_p and stn_{be,le}_p
-16* 284a7ee2e290 Gerd Hoffmann:
-   hw/pflash: implement update buffer for block writes
-17* 84a6835e004c Mark Cave-Ayland:
-   hw/scsi/esp-pci: use correct address register for PCI DMA transfers
-18* 6b41417d934b Mark Cave-Ayland:
-   hw/scsi/esp-pci: generate PCI interrupt from separate ESP and PCI sources
-19* 1e8e6644e063 Mark Cave-Ayland:
-   hw/scsi/esp-pci: synchronise setting of DMA_STAT_DONE with ESP completion 
-   interrupt
-20* c2d7de557d19 Mark Cave-Ayland:
-   hw/scsi/esp-pci: set DMA_STAT_BCMBLT when BLAST command issued
-21 b16a45bc5e0e Alex Bennée:
-   readthodocs: fully specify a build environment
-22 b67924a048 Paolo Bonzini:
-   accel/tcg: Revert mapping of PCREL translation block to multiple virtual 
-   addresses
-23 8a9be7992426 Fiona Ebner:
-   block/io: clear BDRV_BLOCK_RECURSE flag after recursing in 
-   bdrv_co_block_status
-24 2220e8189fb9 Jason Wang:
-   virtio-net: correctly copy vnet header when flushing TX
-25 a9c8ea95470c Ari Sundholm:
-   block/blklogwrites: Fix a bug when logging "write zeroes" operations.
-26 da62b507a205 Stefan Hajnoczi:
-   iotests: add filter_qmp_generated_node_ids()
-27 9ee2dd4c22a3 Stefan Hajnoczi:
-   iotests: port 141 to Python for reliable QMP testing
-28 effd60c87817 Stefan Hajnoczi:
-   monitor: only run coroutine commands in qemu_aio_context
-29 e8a12fe31f77 Daniel P. Berrangé:
-   qtest: bump aspeed_smc-test timeout to 6 minutes
-30 604927e357c2 Max Filippov:
-   target/xtensa: fix OOB TLB entry access
-
-(commit(s) marked with * were in previous series and are not resent)
 
