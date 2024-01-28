@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D99C47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB5AC47DDB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTx0U-0004nP-0z; Sat, 27 Jan 2024 23:42:58 -0500
+	id 1rTx05-0004gm-Kx; Sat, 27 Jan 2024 23:42:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0S-0004nG-SR
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:56 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1rTx04-0004gX-JX
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:32 -0500
+Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0Q-0004LT-4x
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:56 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2954b34ddd0so313455a91.0
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:53 -0800 (PST)
+ id 1rTx02-0004Hx-C7
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:32 -0500
+Received: by mail-qv1-xf32.google.com with SMTP id
+ 6a1803df08f44-686b389b5d6so16701316d6.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706416973; x=1707021773; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706416949; x=1707021749; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n3i8WIPnfJe6OJ/KMGjZPX6qT+eI0MPf6OW8gP6VkEI=;
- b=Eac12R1P1SS7QNLIlhoXAB2DrTLsmI3mNNHKhz2fC2aXwvJZsLSYgL7vYOnx+pCFC5
- opH6J4/nh6VL2J+/2hayD4cbYd+cg2IpyZvF2AkBC+mqeBtA62h8/yzb5P8pFUHY7fsN
- DLPw26vRRL/XMRgoPAXLtf6fTkSPXZMQxtUrR8Mjq4gGO2Ipj6WYvqhjeh59T8ORogjw
- KkzHjPdemJZ0hb8jmRhNrT8tT9WKWTondfPXUN7hs0ALAESP1A7cKTotbrxFSgEwYFMC
- Be56iirMIe2OPO/hwxrtZTGh408yQ3U7X8W0c8xk06fOqB12fNRL6XmXr9Xcv+xyWITz
- 7Jgg==
+ bh=9+/x34hZ0Savjf5fK/vjCGUP8dkpzXoOGlANXKjp7EA=;
+ b=WKz9Ie4mFLhbswDPhE5HzRw9zXcT4RQtK0038S770RxLBSjsVhg3MOb2Bf/3rDZg+f
+ wEl7lvW9fss8tqeELwDRSg4I7yzan6TW3NSa6LOb93jUr4rqRpeRphF3cwwsEz0r9oQA
+ bUOqBBEmGdOVDJBJa7utWVOEuXc5QthRYFZTUw1bM+NnP4xzljr320Dt/+47y8DlyZIk
+ Runu4xmjy+t/6YnGboc0VVVmklfN5kXHML166JvCTKyuvs6TMLnmVBfS36hC1nBhdzL5
+ gilANlcddAKCNSM7mefQy/SWEKrLOi7FJaR0NiGCqy8yEIVjuuVvAGv4B+J63RU9Pwig
+ 6hSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706416973; x=1707021773;
+ d=1e100.net; s=20230601; t=1706416949; x=1707021749;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n3i8WIPnfJe6OJ/KMGjZPX6qT+eI0MPf6OW8gP6VkEI=;
- b=l+2hnQawIk6CFp2vA8mud6BSyg511B/UZJY2U6pt0exXoXfMbdNlU1aIV6ZcDhb6Te
- ycQSpU0fkSTqTFooZjp2zogdUwLziICSliQN4/fffNIh8TOMZnnvT/Nb2B3cXa/fDrp7
- K/AcFlGg9pGnkIgkXJDW1SoeNBH1UwQ0eypfR3ixNsT7W6slK6onbbOGlwtEyMMlOAGp
- Lde9+zD6BHVNzUMJk9rT/6odj+uSheZle6mHhD8WVK7WzdDm/MhUg2xO/cTfQ+oWAKMr
- A4Rc0upBgGpm5kwhZqv0nnC+78tKXTuICE5d1EYEJvgBGb2mt7opJ++Ab6bRkIn6t9i6
- B5tg==
-X-Gm-Message-State: AOJu0YyIwMCgV9DX7lJgm30BqnRlHg/HYUxqCPJtnKpoKDac7vPJpP6R
- ZOWsAIDl6uWBO/YAA4AfreVqsgyp7fagerJhyOXYm0b500yd80hUm8wwlsu6M7gYMNLZkV3/8pJ
- 52vBZAw==
-X-Google-Smtp-Source: AGHT+IE1opL2eZ7d3MUOOou62+xihPi04M9omeaSYm9yLz4uRBTQENcKUkjFviVMb1LuF/VsQnXz6A==
-X-Received: by 2002:a17:90b:1d8a:b0:28f:f6fa:55a7 with SMTP id
- pf10-20020a17090b1d8a00b0028ff6fa55a7mr1661308pjb.2.1706416972788; 
- Sat, 27 Jan 2024 20:42:52 -0800 (PST)
+ bh=9+/x34hZ0Savjf5fK/vjCGUP8dkpzXoOGlANXKjp7EA=;
+ b=b2HaDo4ic6pdIQDmE08H8ovAudvt2F6eA28y/EcTUvKuzrH8+uDGSrwoUHRAJYNj6c
+ 6BX0MJ4Z6Ix/rJyhJkAPuRKpEUcDJYZT4dN7eQ+E6+UynF+u40xPnCxPq/vPCAVXXkcU
+ hebQkEoKfOA0UCYjnJiaEn/fprftnxc8QlAWw74gybLRi+uOPH5NMIg/e1mcFHzd8By5
+ MQ/Oy9GT/bB2hZwqOaeYCFTyiR73cu+8f+A9pUGGOaR5qV6duv64EWpa0Y6tfMaEVqbD
+ FUAEaiR7NZdyoq7MBE/LF3SCFxrq0hcH99P1Tgl4DUvR7QOxCzqfxOYlaFjMMpAr9DMX
+ YxoQ==
+X-Gm-Message-State: AOJu0YwERRlovn5E0AqxHqb5iub1meqnoDaYqd2iJS39R6ekTr3IYJYy
+ s0GTjadF78zgxYTMZBvh+BLj80V2K0MYzSKh/EdXP3jSg8TKgg7f6xcJWJkm9t00uoZRTcOozQO
+ 8YYBcOQ==
+X-Google-Smtp-Source: AGHT+IEupSSUlk4yg27uHfUYkhPqcWfJ22C93QRHdTPv/xEjJTi3MZj198hh62fO+U7wp6BVh9mMLA==
+X-Received: by 2002:a05:6214:5092:b0:68c:4a74:f65 with SMTP id
+ kk18-20020a056214509200b0068c4a740f65mr44845qvb.21.1706416948916; 
+ Sat, 27 Jan 2024 20:42:28 -0800 (PST)
 Received: from stoup..
  (ppp121-45-131-89.bri-pow-que-bras31.tpg.internode.on.net. [121.45.131.89])
  by smtp.gmail.com with ESMTPSA id
- w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.50
+ w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Jan 2024 20:42:52 -0800 (PST)
+ Sat, 27 Jan 2024 20:42:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 14/33] tests/tcg: Factor out gdbstub test functions
-Date: Sun, 28 Jan 2024 14:41:54 +1000
-Message-Id: <20240128044213.316480-15-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>
+Subject: [PATCH 04/33] target: Use vaddr in gen_intermediate_code
+Date: Sun, 28 Jan 2024 14:41:44 +1000
+Message-Id: <20240128044213.316480-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,761 +95,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Anton Johansson <anjo@rev.ng>
 
-Both the report() function as well as the initial gdbstub test sequence
-are copy-pasted into ~10 files with slight modifications. This
-indicates that they are indeed generic, so factor them out. While
-at it, add a few newlines to make the formatting closer to PEP-8.
+Makes gen_intermediate_code() signature target agnostic so the function
+can be called from accel/tcg/translate-all.c without target specifics.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240109230808.583012-3-iii@linux.ibm.com>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240119144024.14289-9-anjo@rev.ng>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/guest-debug/run-test.py                 |  7 ++-
- tests/guest-debug/test_gdbstub.py             | 56 +++++++++++++++++++
- tests/tcg/aarch64/gdbstub/test-sve-ioctl.py   | 34 +----------
- tests/tcg/aarch64/gdbstub/test-sve.py         | 33 +----------
- tests/tcg/multiarch/gdbstub/interrupt.py      | 47 ++--------------
- tests/tcg/multiarch/gdbstub/memory.py         | 39 +------------
- tests/tcg/multiarch/gdbstub/registers.py      | 41 ++------------
- tests/tcg/multiarch/gdbstub/sha1.py           | 38 ++-----------
- .../multiarch/gdbstub/test-proc-mappings.py   | 39 +------------
- .../multiarch/gdbstub/test-qxfer-auxv-read.py | 37 +-----------
- .../gdbstub/test-thread-breakpoint.py         | 37 +-----------
- tests/tcg/s390x/gdbstub/test-signals-s390x.py | 42 +-------------
- tests/tcg/s390x/gdbstub/test-svc.py           | 39 +------------
- 13 files changed, 94 insertions(+), 395 deletions(-)
- create mode 100644 tests/guest-debug/test_gdbstub.py
+ include/exec/translator.h        | 2 +-
+ target/alpha/translate.c         | 2 +-
+ target/arm/tcg/translate.c       | 2 +-
+ target/avr/translate.c           | 2 +-
+ target/cris/translate.c          | 2 +-
+ target/hexagon/translate.c       | 2 +-
+ target/hppa/translate.c          | 2 +-
+ target/i386/tcg/translate.c      | 2 +-
+ target/loongarch/tcg/translate.c | 2 +-
+ target/m68k/translate.c          | 2 +-
+ target/microblaze/translate.c    | 2 +-
+ target/mips/tcg/translate.c      | 2 +-
+ target/nios2/translate.c         | 2 +-
+ target/openrisc/translate.c      | 2 +-
+ target/ppc/translate.c           | 2 +-
+ target/riscv/translate.c         | 2 +-
+ target/rx/translate.c            | 2 +-
+ target/s390x/tcg/translate.c     | 2 +-
+ target/sh4/translate.c           | 2 +-
+ target/sparc/translate.c         | 2 +-
+ target/tricore/translate.c       | 2 +-
+ target/xtensa/translate.c        | 2 +-
+ 22 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
-index b13b27d4b1..368ff8a890 100755
---- a/tests/guest-debug/run-test.py
-+++ b/tests/guest-debug/run-test.py
-@@ -97,7 +97,12 @@ def log(output, msg):
-     sleep(1)
-     log(output, "GDB CMD: %s" % (gdb_cmd))
- 
--    result = subprocess.call(gdb_cmd, shell=True, stdout=output, stderr=stderr)
-+    gdb_env = dict(os.environ)
-+    gdb_pythonpath = gdb_env.get("PYTHONPATH", "").split(os.pathsep)
-+    gdb_pythonpath.append(os.path.dirname(os.path.realpath(__file__)))
-+    gdb_env["PYTHONPATH"] = os.pathsep.join(gdb_pythonpath)
-+    result = subprocess.call(gdb_cmd, shell=True, stdout=output, stderr=stderr,
-+                             env=gdb_env)
- 
-     # A result of greater than 128 indicates a fatal signal (likely a
-     # crash due to gdb internal failure). That's a problem for GDB and
-diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_gdbstub.py
-new file mode 100644
-index 0000000000..1bc4ed131f
---- /dev/null
-+++ b/tests/guest-debug/test_gdbstub.py
-@@ -0,0 +1,56 @@
-+"""Helper functions for gdbstub testing
-+
-+"""
-+from __future__ import print_function
-+import gdb
-+import sys
-+
-+fail_count = 0
-+
-+
-+def report(cond, msg):
-+    """Report success/fail of a test"""
-+    if cond:
-+        print("PASS: {}".format(msg))
-+    else:
-+        print("FAIL: {}".format(msg))
-+        global fail_count
-+        fail_count += 1
-+
-+
-+def main(test, expected_arch=None):
-+    """Run a test function
-+
-+    This runs as the script it sourced (via -x, via run-test.py)."""
-+    try:
-+        inferior = gdb.selected_inferior()
-+        arch = inferior.architecture()
-+        print("ATTACHED: {}".format(arch))
-+        if expected_arch is not None:
-+            report(arch.name() == expected_arch,
-+                   "connected to {}".format(expected_arch))
-+    except (gdb.error, AttributeError):
-+        print("SKIP: not connected")
-+        exit(0)
-+
-+    if gdb.parse_and_eval("$pc") == 0:
-+        print("SKIP: PC not set")
-+        exit(0)
-+
-+    try:
-+        test()
-+    except:
-+        print("GDB Exception: {}".format(sys.exc_info()[0]))
-+        global fail_count
-+        fail_count += 1
-+        import code
-+        code.InteractiveConsole(locals=globals()).interact()
-+        raise
-+
-+    try:
-+        gdb.execute("kill")
-+    except gdb.error:
-+        pass
-+
-+    print("All tests complete: %d failures".format(fail_count))
-+    exit(fail_count)
-diff --git a/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py b/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
-index ee8d467e59..a78a3a2514 100644
---- a/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
-+++ b/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
-@@ -8,19 +8,10 @@
- #
- 
- import gdb
--import sys
-+from test_gdbstub import main, report
- 
- initial_vlen = 0
--failcount = 0
- 
--def report(cond, msg):
--    "Report success/fail of test"
--    if cond:
--        print ("PASS: %s" % (msg))
--    else:
--        print ("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
- 
- class TestBreakpoint(gdb.Breakpoint):
-     def __init__(self, sym_name="__sve_ld_done"):
-@@ -64,26 +55,5 @@ def run_test():
- 
-     gdb.execute("c")
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    report(arch.name() == "aarch64", "connected to aarch64")
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
- 
--try:
--    # Run the actual tests
--    run_test()
--except:
--    print ("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    import code
--    code.InteractiveConsole(locals=globals()).interact()
--    raise
--
--print("All tests complete: %d failures" % failcount)
--exit(failcount)
-+main(run_test, expected_arch="aarch64")
-diff --git a/tests/tcg/aarch64/gdbstub/test-sve.py b/tests/tcg/aarch64/gdbstub/test-sve.py
-index afd8ece98d..84cdcd4a32 100644
---- a/tests/tcg/aarch64/gdbstub/test-sve.py
-+++ b/tests/tcg/aarch64/gdbstub/test-sve.py
-@@ -6,20 +6,10 @@
- #
- 
- import gdb
--import sys
-+from test_gdbstub import main, report
- 
- MAGIC = 0xDEADBEEF
- 
--failcount = 0
--
--def report(cond, msg):
--    "Report success/fail of test"
--    if cond:
--        print ("PASS: %s" % (msg))
--    else:
--        print ("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
- 
- def run_test():
-     "Run through the tests one by one"
-@@ -54,24 +44,5 @@ def run_test():
-             report(str(v.type) == "uint64_t", "size of %s" % (reg))
-             report(int(v) == MAGIC, "%s is 0x%x" % (reg, MAGIC))
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    report(arch.name() == "aarch64", "connected to aarch64")
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
- 
--try:
--    # Run the actual tests
--    run_test()
--except:
--    print ("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--
--print("All tests complete: %d failures" % failcount)
--
--exit(failcount)
-+main(run_test, expected_arch="aarch64")
-diff --git a/tests/tcg/multiarch/gdbstub/interrupt.py b/tests/tcg/multiarch/gdbstub/interrupt.py
-index c016e7afbb..90a45b5140 100644
---- a/tests/tcg/multiarch/gdbstub/interrupt.py
-+++ b/tests/tcg/multiarch/gdbstub/interrupt.py
-@@ -8,19 +8,7 @@
- #
- 
- import gdb
--import sys
--
--failcount = 0
--
--
--def report(cond, msg):
--    "Report success/fail of test"
--    if cond:
--        print("PASS: %s" % (msg))
--    else:
--        print("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
-+from test_gdbstub import main, report
- 
- 
- def check_interrupt(thread):
-@@ -59,6 +47,9 @@ def run_test():
-     Test if interrupting the code always lands us on the same thread when
-     running with scheduler-lock enabled.
-     """
-+    if len(gdb.selected_inferior().threads()) == 1:
-+        print("SKIP: set to run on a single thread")
-+        exit(0)
- 
-     gdb.execute("set scheduler-locking on")
-     for thread in gdb.selected_inferior().threads():
-@@ -66,32 +57,4 @@ def run_test():
-                "thread %d resumes correctly on interrupt" % thread.num)
- 
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    print("ATTACHED: %s" % arch.name())
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
--
--if gdb.parse_and_eval('$pc') == 0:
--    print("SKIP: PC not set")
--    exit(0)
--if len(gdb.selected_inferior().threads()) == 1:
--    print("SKIP: set to run on a single thread")
--    exit(0)
--
--try:
--    # Run the actual tests
--    run_test()
--except (gdb.error):
--    print("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    pass
--
--# Finally kill the inferior and exit gdb with a count of failures
--gdb.execute("kill")
--exit(failcount)
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/memory.py b/tests/tcg/multiarch/gdbstub/memory.py
-index fb1d06b7bb..532b92e7fb 100644
---- a/tests/tcg/multiarch/gdbstub/memory.py
-+++ b/tests/tcg/multiarch/gdbstub/memory.py
-@@ -9,18 +9,7 @@
- 
- import gdb
- import sys
--
--failcount = 0
--
--
--def report(cond, msg):
--    "Report success/fail of test"
--    if cond:
--        print("PASS: %s" % (msg))
--    else:
--        print("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
-+from test_gdbstub import main, report
- 
- 
- def check_step():
-@@ -99,29 +88,5 @@ def run_test():
- 
-     report(cbp.hit_count == 0, "didn't reach backstop")
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    print("ATTACHED: %s" % arch.name())
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
- 
--if gdb.parse_and_eval('$pc') == 0:
--    print("SKIP: PC not set")
--    exit(0)
--
--try:
--    # Run the actual tests
--    run_test()
--except (gdb.error):
--    print("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    pass
--
--# Finally kill the inferior and exit gdb with a count of failures
--gdb.execute("kill")
--exit(failcount)
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/registers.py b/tests/tcg/multiarch/gdbstub/registers.py
-index 688c061107..b3d13cb077 100644
---- a/tests/tcg/multiarch/gdbstub/registers.py
-+++ b/tests/tcg/multiarch/gdbstub/registers.py
-@@ -7,20 +7,11 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- import gdb
--import sys
- import xml.etree.ElementTree as ET
-+from test_gdbstub import main, report
-+
- 
- initial_vlen = 0
--failcount = 0
--
--def report(cond, msg):
--    "Report success/fail of test."
--    if cond:
--        print("PASS: %s" % (msg))
--    else:
--        print("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
- 
- 
- def fetch_xml_regmap():
-@@ -75,6 +66,7 @@ def fetch_xml_regmap():
- 
-     return reg_map
- 
-+
- def get_register_by_regnum(reg_map, regnum):
-     """
-     Helper to find a register from the map via its XML regnum
-@@ -84,6 +76,7 @@ def get_register_by_regnum(reg_map, regnum):
-             return entry
-     return None
- 
-+
- def crosscheck_remote_xml(reg_map):
-     """
-     Cross-check the list of remote-registers with the XML info.
-@@ -144,6 +137,7 @@ def crosscheck_remote_xml(reg_map):
-         elif "seen" not in x_reg:
-             print(f"{x_reg} wasn't seen in remote-registers")
- 
-+
- def initial_register_read(reg_map):
-     """
-     Do an initial read of all registers that we know gdb cares about
-@@ -214,27 +208,4 @@ def run_test():
-         complete_and_diff(reg_map)
- 
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    print("ATTACHED: %s" % arch.name())
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
--
--if gdb.parse_and_eval('$pc') == 0:
--    print("SKIP: PC not set")
--    exit(0)
--
--try:
--    run_test()
--except (gdb.error):
--    print ("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    pass
--
--print("All tests complete: %d failures" % failcount)
--exit(failcount)
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/sha1.py b/tests/tcg/multiarch/gdbstub/sha1.py
-index 416728415f..1ce711a402 100644
---- a/tests/tcg/multiarch/gdbstub/sha1.py
-+++ b/tests/tcg/multiarch/gdbstub/sha1.py
-@@ -7,19 +7,11 @@
- #
- 
- import gdb
--import sys
-+from test_gdbstub import main, report
-+
- 
- initial_vlen = 0
--failcount = 0
- 
--def report(cond, msg):
--    "Report success/fail of test"
--    if cond:
--        print("PASS: %s" % (msg))
--    else:
--        print("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
- 
- def check_break(sym_name):
-     "Setup breakpoint, continue and check we stopped."
-@@ -35,6 +27,7 @@ def check_break(sym_name):
- 
-     bp.delete()
- 
-+
- def run_test():
-     "Run through the tests one by one"
- 
-@@ -57,28 +50,5 @@ def run_test():
-     # finally check we don't barf inspecting registers
-     gdb.execute("info registers")
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    print("ATTACHED: %s" % arch.name())
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
- 
--if gdb.parse_and_eval('$pc') == 0:
--    print("SKIP: PC not set")
--    exit(0)
--
--try:
--    # Run the actual tests
--    run_test()
--except (gdb.error):
--    print ("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    pass
--
--print("All tests complete: %d failures" % failcount)
--exit(failcount)
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-index 04ec61d219..564613fabf 100644
---- a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-+++ b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-@@ -3,20 +3,7 @@
- This runs as a sourced script (via -x, via run-test.py)."""
- from __future__ import print_function
- import gdb
--import sys
--
--
--n_failures = 0
--
--
--def report(cond, msg):
--    """Report success/fail of a test"""
--    if cond:
--        print("PASS: {}".format(msg))
--    else:
--        print("FAIL: {}".format(msg))
--        global n_failures
--        n_failures += 1
-+from test_gdbstub import main, report
- 
- 
- def run_test():
-@@ -37,26 +24,4 @@ def run_test():
-     # report("/sha1" in mappings, "Found the test binary name in the mappings")
- 
- 
--def main():
--    """Prepare the environment and run through the tests"""
--    try:
--        inferior = gdb.selected_inferior()
--        print("ATTACHED: {}".format(inferior.architecture().name()))
--    except (gdb.error, AttributeError):
--        print("SKIPPING (not connected)")
--        exit(0)
--
--    if gdb.parse_and_eval('$pc') == 0:
--        print("SKIP: PC not set")
--        exit(0)
--
--    try:
--        # Run the actual tests
--        run_test()
--    except gdb.error:
--        report(False, "GDB Exception: {}".format(sys.exc_info()[0]))
--    print("All tests complete: %d failures" % n_failures)
--    exit(n_failures)
--
--
--main()
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py b/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
-index 926fa962b7..00c26ab4a9 100644
---- a/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
-+++ b/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
-@@ -6,18 +6,8 @@
- #
- 
- import gdb
--import sys
-+from test_gdbstub import main, report
- 
--failcount = 0
--
--def report(cond, msg):
--    "Report success/fail of test"
--    if cond:
--        print ("PASS: %s" % (msg))
--    else:
--        print ("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
- 
- def run_test():
-     "Run through the tests one by one"
-@@ -26,28 +16,5 @@ def run_test():
-     report(isinstance(auxv, str), "Fetched auxv from inferior")
-     report(auxv.find("sha1"), "Found test binary name in auxv")
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    print("ATTACHED: %s" % arch.name())
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
- 
--if gdb.parse_and_eval('$pc') == 0:
--    print("SKIP: PC not set")
--    exit(0)
--
--try:
--    # Run the actual tests
--    run_test()
--except (gdb.error):
--    print ("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    pass
--
--print("All tests complete: %d failures" % failcount)
--exit(failcount)
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py b/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
-index e57d2a8db8..4d6b6b9fbe 100644
---- a/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
-+++ b/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
-@@ -6,18 +6,8 @@
- #
- 
- import gdb
--import sys
-+from test_gdbstub import main, report
- 
--failcount = 0
--
--def report(cond, msg):
--    "Report success/fail of test"
--    if cond:
--        print ("PASS: %s" % (msg))
--    else:
--        print ("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
- 
- def run_test():
-     "Run through the tests one by one"
-@@ -29,28 +19,5 @@ def run_test():
-     frame = gdb.selected_frame()
-     report(str(frame.function()) == "thread1_func", "break @ %s"%frame)
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    print("ATTACHED: %s" % arch.name())
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
- 
--if gdb.parse_and_eval('$pc') == 0:
--    print("SKIP: PC not set")
--    exit(0)
--
--try:
--    # Run the actual tests
--    run_test()
--except (gdb.error):
--    print ("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    pass
--
--print("All tests complete: %d failures" % failcount)
--exit(failcount)
-+main(run_test)
-diff --git a/tests/tcg/s390x/gdbstub/test-signals-s390x.py b/tests/tcg/s390x/gdbstub/test-signals-s390x.py
-index ca2bbc0b03..b6b7b39fc4 100644
---- a/tests/tcg/s390x/gdbstub/test-signals-s390x.py
-+++ b/tests/tcg/s390x/gdbstub/test-signals-s390x.py
-@@ -7,19 +7,7 @@
- #
- 
- import gdb
--import sys
--
--failcount = 0
--
--
--def report(cond, msg):
--    """Report success/fail of test"""
--    if cond:
--        print("PASS: %s" % (msg))
--    else:
--        print("FAIL: %s" % (msg))
--        global failcount
--        failcount += 1
-+from test_gdbstub import main, report
- 
- 
- def run_test():
-@@ -42,31 +30,7 @@ def run_test():
-     gdb.Breakpoint("_exit")
-     gdb.execute("c")
-     status = int(gdb.parse_and_eval("$r2"))
--    report(status == 0, "status == 0");
-+    report(status == 0, "status == 0")
- 
- 
--#
--# This runs as the script it sourced (via -x, via run-test.py)
--#
--try:
--    inferior = gdb.selected_inferior()
--    arch = inferior.architecture()
--    print("ATTACHED: %s" % arch.name())
--except (gdb.error, AttributeError):
--    print("SKIPPING (not connected)", file=sys.stderr)
--    exit(0)
--
--if gdb.parse_and_eval("$pc") == 0:
--    print("SKIP: PC not set")
--    exit(0)
--
--try:
--    # Run the actual tests
--    run_test()
--except (gdb.error):
--    print("GDB Exception: %s" % (sys.exc_info()[0]))
--    failcount += 1
--    pass
--
--print("All tests complete: %d failures" % failcount)
--exit(failcount)
-+main(run_test)
-diff --git a/tests/tcg/s390x/gdbstub/test-svc.py b/tests/tcg/s390x/gdbstub/test-svc.py
-index 804705fede..17210b4e02 100644
---- a/tests/tcg/s390x/gdbstub/test-svc.py
-+++ b/tests/tcg/s390x/gdbstub/test-svc.py
-@@ -3,20 +3,7 @@
- This runs as a sourced script (via -x, via run-test.py)."""
- from __future__ import print_function
- import gdb
--import sys
--
--
--n_failures = 0
--
--
--def report(cond, msg):
--    """Report success/fail of a test"""
--    if cond:
--        print("PASS: {}".format(msg))
--    else:
--        print("FAIL: {}".format(msg))
--        global n_failures
--        n_failures += 1
-+from test_gdbstub import main, report
- 
- 
- def run_test():
-@@ -35,26 +22,4 @@ def run_test():
-     gdb.execute("si")
- 
- 
--def main():
--    """Prepare the environment and run through the tests"""
--    try:
--        inferior = gdb.selected_inferior()
--        print("ATTACHED: {}".format(inferior.architecture().name()))
--    except (gdb.error, AttributeError):
--        print("SKIPPING (not connected)")
--        exit(0)
--
--    if gdb.parse_and_eval('$pc') == 0:
--        print("SKIP: PC not set")
--        exit(0)
--
--    try:
--        # Run the actual tests
--        run_test()
--    except gdb.error:
--        report(False, "GDB Exception: {}".format(sys.exc_info()[0]))
--    print("All tests complete: %d failures" % n_failures)
--    exit(n_failures)
--
--
--main()
-+main(run_test)
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index 6d3f59d095..b0412ea6b6 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -33,7 +33,7 @@
+  * the target-specific DisasContext, and then invoke translator_loop.
+  */
+ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc);
++                           vaddr pc, void *host_pc);
+ 
+ /**
+  * DisasJumpType:
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index 32333081d8..134eb7225b 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -2971,7 +2971,7 @@ static const TranslatorOps alpha_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+     translator_loop(cpu, tb, max_insns, pc, host_pc, &alpha_tr_ops, &dc.base);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index b3660173d1..5fa8249723 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -9691,7 +9691,7 @@ static const TranslatorOps thumb_translator_ops = {
+ 
+ /* generate intermediate code for basic block 'tb'.  */
+ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc = { };
+     const TranslatorOps *ops = &arm_translator_ops;
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index cdffa04519..e5dd057799 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -2805,7 +2805,7 @@ static const TranslatorOps avr_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc = { };
+     translator_loop(cs, tb, max_insns, pc, host_pc, &avr_tr_ops, &dc.base);
+diff --git a/target/cris/translate.c b/target/cris/translate.c
+index b3974ba0bb..ee1402a9a3 100644
+--- a/target/cris/translate.c
++++ b/target/cris/translate.c
+@@ -3172,7 +3172,7 @@ static const TranslatorOps cris_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+     translator_loop(cs, tb, max_insns, pc, host_pc, &cris_tr_ops, &dc.base);
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 95579ae243..a14211cf68 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -1154,7 +1154,7 @@ static const TranslatorOps hexagon_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+ 
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 3ef39b1bd7..08d09d50d7 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -4631,7 +4631,7 @@ static const TranslatorOps hppa_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+     translator_loop(cs, tb, max_insns, pc, host_pc, &hppa_tr_ops, &ctx.base);
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index e193c74472..2808903661 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -7088,7 +7088,7 @@ static const TranslatorOps i386_tr_ops = {
+ 
+ /* generate intermediate code for basic block 'tb'.  */
+ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+ 
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 21f4db6fbd..235515c629 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -343,7 +343,7 @@ static const TranslatorOps loongarch_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+ 
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 4a0b0b2703..5ec88c5f0d 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -6088,7 +6088,7 @@ static const TranslatorOps m68k_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+     translator_loop(cpu, tb, max_insns, pc, host_pc, &m68k_tr_ops, &dc.base);
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 49bfb4a0ea..2e628647d1 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -1792,7 +1792,7 @@ static const TranslatorOps mb_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+     translator_loop(cpu, tb, max_insns, pc, host_pc, &mb_tr_ops, &dc.base);
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 13e43fa3b6..e10232738c 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -15554,7 +15554,7 @@ static const TranslatorOps mips_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+ 
+diff --git a/target/nios2/translate.c b/target/nios2/translate.c
+index e806623594..3078372b36 100644
+--- a/target/nios2/translate.c
++++ b/target/nios2/translate.c
+@@ -1036,7 +1036,7 @@ static const TranslatorOps nios2_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+     translator_loop(cs, tb, max_insns, pc, host_pc, &nios2_tr_ops, &dc.base);
+diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
+index ecff4412b7..d4cbc5eaea 100644
+--- a/target/openrisc/translate.c
++++ b/target/openrisc/translate.c
+@@ -1658,7 +1658,7 @@ static const TranslatorOps openrisc_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+ 
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 329da4d518..049f636927 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -7518,7 +7518,7 @@ static const TranslatorOps ppc_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+ 
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 071fbad7ef..ab18899122 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1287,7 +1287,7 @@ static const TranslatorOps riscv_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+ 
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index c6ce717a95..2265bd14ac 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -2266,7 +2266,7 @@ static const TranslatorOps rx_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+ 
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 8df00b7df9..a5fd9cccaa 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -6547,7 +6547,7 @@ static const TranslatorOps s390x_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc;
+ 
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 81f825f125..6a6d862b10 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -2317,7 +2317,7 @@ static const TranslatorOps sh4_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+ 
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 9387299559..97184fa403 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -5327,7 +5327,7 @@ static const TranslatorOps sparc_tr_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc = {};
+ 
+diff --git a/target/tricore/translate.c b/target/tricore/translate.c
+index 66553d1be0..f1156c39e7 100644
+--- a/target/tricore/translate.c
++++ b/target/tricore/translate.c
+@@ -8472,7 +8472,7 @@ static const TranslatorOps tricore_tr_ops = {
+ 
+ 
+ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext ctx;
+     translator_loop(cs, tb, max_insns, pc, host_pc,
+diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+index 87947236ca..e4772462b5 100644
+--- a/target/xtensa/translate.c
++++ b/target/xtensa/translate.c
+@@ -1239,7 +1239,7 @@ static const TranslatorOps xtensa_translator_ops = {
+ };
+ 
+ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+-                           target_ulong pc, void *host_pc)
++                           vaddr pc, void *host_pc)
+ {
+     DisasContext dc = {};
+     translator_loop(cpu, tb, max_insns, pc, host_pc,
 -- 
 2.34.1
 
