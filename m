@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9EB9C47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C78C47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:43:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTx09-0004hG-Td; Sat, 27 Jan 2024 23:42:37 -0500
+	id 1rTx0B-0004i2-4z; Sat, 27 Jan 2024 23:42:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx08-0004h1-I9
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:36 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1rTx09-0004hD-PV
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:37 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx07-0004IJ-2T
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:36 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2954b34ddd0so313366a91.0
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:34 -0800 (PST)
+ id 1rTx04-0004I6-CE
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:37 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-290b1e19101so2168702a91.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706416954; x=1707021754; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706416951; x=1707021751; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Abpnrf3mk/IImEiBxCwuY+1bvCj+UYnsd1PobWXi05Q=;
- b=DvHQdL7RtDp5fiwNd6IpYwISdNEuhL42GcWdh498Rp/aryiZssq2rrbzALLYd4HjjP
- wAWOxZsPLX1E6EyKi5dECOfcPddFvPtHWvleD27hThyh00iYVFJzyS9usmT0lpNybE89
- lH5/Fv+I1fbp5TzxyOERuufr+s6OdKtFSGnu4iFTeUrWK3Qdwk60jqnvfzNI7H59HYjB
- Be3j/9fWcJJnyETWs2ik+c1bjaeFwu7dWuMc6qyspdD2EUo4mVUv/vJdDkKFYtYWiJYd
- 1gteFDpL9sdBx3+VltnJPJqUaE+ul1E/TzegE4LccY9o/MbQBnkZ+kr/gKNpuqx2HsFL
- ipQA==
+ bh=8stgI+xO0LshRlV+dbOXjfDk9OWAAP8Iuj6nGWfVSvI=;
+ b=ZMeBH8qsYJ009dEw2e/IrqW9Za95sgIFtwbsh7LKXgAsEnP3RPIuNIzAM9TU1Csp2m
+ YsxAW8hxtbRTGr5VxiaXIPii/wb1eHa2Lb4f4zhbE5ahh5H7O9qXfHAnVSWU2n5xNYHE
+ tp+xb4+m9GOUC5EKQsjlCgR7zucKcO/rg4lIOHAV/4YYaCVu81J9WRvByY6a7eeYv0qW
+ ELRKRaW9CoCZnmxggguOx6HVGvEKmt7kj016ziKUW4UYYl42EDNql6fqrXp7Ve4Y17F8
+ KkeNj89h2Z6MdC/MiVQuMKGQp+IqlBSxKVj/z/oHbXEipl7JtiKtosRXh7K/oSfGs6TZ
+ BTbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706416954; x=1707021754;
+ d=1e100.net; s=20230601; t=1706416951; x=1707021751;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Abpnrf3mk/IImEiBxCwuY+1bvCj+UYnsd1PobWXi05Q=;
- b=gV43DT1iu6vII7+yNxyXr7koNSSUkEe7ZDS4jnCX39nyokYhLu7uMWds1BU1/Vz50d
- GqpSRO0Z9AY+3vPSjWQ/0aYqdlpoz2awyJUOTv5wYMySVi/TU9cIS+tWmESMKhQPNkPr
- Bc0PqLVa6Ls3fsZeb69yVZXPg33IlNild8TGh9rfg+purmdtIWzKKHJqnpIva4kwkzFq
- PxtnHGSWTKA9bTBf3kiNtVsS2OFypw23FDFocmD8JACB0h8+WD8BOH2vIC3Xed2ps6zM
- ZL4jLAl26WXTZa3A0OIctCuDFWceoPZghtztSw/W8Xtl0N8SZ4Q2CMQohiTG0HX48AUe
- fhxA==
-X-Gm-Message-State: AOJu0Yx9yYV4Z7QNG6k+iC58/540fCXTpC6kN5ZVKjVqUwzD2W+xbuFs
- ZvhbEd5vC12Xw6Peu/pBtUTOf3aZH9o0VND0nWeFLEee3xsJk0v/NrtLxI7qWHk35p5LMk2btNM
- xq0N6Sw==
-X-Google-Smtp-Source: AGHT+IEpoFNnLJgaHzROu/lUfkxEWLO/lsNJko8Ud3yiNdnTm202KvvGo/iFmaREBhwSLEJRNlM5Ig==
-X-Received: by 2002:a17:90a:dc0a:b0:28e:8937:7db0 with SMTP id
- i10-20020a17090adc0a00b0028e89377db0mr1668006pjv.65.1706416953673; 
- Sat, 27 Jan 2024 20:42:33 -0800 (PST)
+ bh=8stgI+xO0LshRlV+dbOXjfDk9OWAAP8Iuj6nGWfVSvI=;
+ b=FBXwDtAJAwx0UxQNY9W5n3IGR8MuSCHA5riR2b67DuZm4QHfxGrEQF+wU7L6pOcolt
+ h0zEP24LSRGJKGKIr3II6K5lVJz2Qtv2Vj871iAyy6rljMtXXT64/g9KHTkGkxzUQ2Yp
+ E3Fv/yjEtCkvlhttWtv3pyfFX8dw30vjPunlP4eiZQhMlR3CIqbNLpfsyhQEod7LNlz3
+ 4ic5fWQPPM7N5Tzjxf91NhyIFbTGsIFNad2QimsKJ6JCkfrTXxXsMu4ckwWEuqv7vaC4
+ /38s00izH51pUD6vo7KKAZfytPKyv9TnnViiH2rxYaZmKKlqsT/uhjDhcu/IQ2TQucTT
+ ASuA==
+X-Gm-Message-State: AOJu0YyY7SucVBHOwnD6nM7rEWmorJ+WP87fYzZHjUYRtQlyz/IHB3go
+ DLtOPjY3S7znTeDLtUl//V+6mGrRU3sHJCkDsqDCz6aOvJ3BYUTSZKW7Y9102jcbV+FgAam2rGO
+ mKSY+Og==
+X-Google-Smtp-Source: AGHT+IHoQHbXyGCIWkheEG2gDNNMGuSHWgbKewCc7D7o5WZRtSE7QjNYLJQkbTL2TBAU8cTbastYpg==
+X-Received: by 2002:a17:90a:6e4a:b0:290:58a7:1d65 with SMTP id
+ s10-20020a17090a6e4a00b0029058a71d65mr2371173pjm.49.1706416951073; 
+ Sat, 27 Jan 2024 20:42:31 -0800 (PST)
 Received: from stoup..
  (ppp121-45-131-89.bri-pow-que-bras31.tpg.internode.on.net. [121.45.131.89])
  by smtp.gmail.com with ESMTPSA id
- w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.31
+ w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Jan 2024 20:42:33 -0800 (PST)
+ Sat, 27 Jan 2024 20:42:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 06/33] include/exec: typedef abi_ptr to vaddr
-Date: Sun, 28 Jan 2024 14:41:46 +1000
-Message-Id: <20240128044213.316480-7-richard.henderson@linaro.org>
+Subject: [PATCH 05/33] include/exec: Use vaddr in DisasContextBase for virtual
+ addresses
+Date: Sun, 28 Jan 2024 14:41:45 +1000
+Message-Id: <20240128044213.316480-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,29 +98,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
+Updates target/ QEMU_LOG macros to use VADDR_PRIx for printing updated
+DisasContextBase fields.
+
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240119144024.14289-11-anjo@rev.ng>
+Message-Id: <20240119144024.14289-10-anjo@rev.ng>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/cpu_ldst.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/exec/translator.h   |  6 +++---
+ target/mips/tcg/translate.h |  3 ++-
+ target/hexagon/translate.c  |  3 ++-
+ target/m68k/translate.c     |  2 +-
+ target/mips/tcg/translate.c | 12 ++++++------
+ 5 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 6061e33ac9..eb8f3f0595 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -121,8 +121,8 @@ static inline bool guest_range_valid_untagged(abi_ulong start, abi_ulong len)
-     h2g_nocheck(x); \
- })
- #else
--typedef target_ulong abi_ptr;
--#define TARGET_ABI_FMT_ptr TARGET_FMT_lx
-+typedef vaddr abi_ptr;
-+#define TARGET_ABI_FMT_ptr VADDR_PRIx
- #endif
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index b0412ea6b6..51624feb10 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -79,8 +79,8 @@ typedef enum DisasJumpType {
+  */
+ typedef struct DisasContextBase {
+     TranslationBlock *tb;
+-    target_ulong pc_first;
+-    target_ulong pc_next;
++    vaddr pc_first;
++    vaddr pc_next;
+     DisasJumpType is_jmp;
+     int num_insns;
+     int max_insns;
+@@ -235,7 +235,7 @@ void translator_fake_ldb(uint8_t insn8, abi_ptr pc);
+  * Translators can use this to enforce the rule that only single-insn
+  * translation blocks are allowed to cross page boundaries.
+  */
+-static inline bool is_same_page(const DisasContextBase *db, target_ulong addr)
++static inline bool is_same_page(const DisasContextBase *db, vaddr addr)
+ {
+     return ((addr ^ db->pc_first) & TARGET_PAGE_MASK) == 0;
+ }
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index cffcfeab8c..93a78b8121 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -202,7 +202,8 @@ extern TCGv bcond;
+     do {                                                                      \
+         if (MIPS_DEBUG_DISAS) {                                               \
+             qemu_log_mask(CPU_LOG_TB_IN_ASM,                                  \
+-                          TARGET_FMT_lx ": %08x Invalid %s %03x %03x %03x\n", \
++                          "%016" VADDR_PRIx                                   \
++                          ": %08x Invalid %s %03x %03x %03x\n",               \
+                           ctx->base.pc_next, ctx->opcode, op,                 \
+                           ctx->opcode >> 26, ctx->opcode & 0x3F,              \
+                           ((ctx->opcode >> 16) & 0x1F));                      \
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index a14211cf68..f163eefe97 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -234,7 +234,8 @@ static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
+         g_assert(ctx->base.num_insns == 1);
+     }
  
- uint32_t cpu_ldub_data(CPUArchState *env, abi_ptr ptr);
+-    HEX_DEBUG_LOG("decode_packet: pc = 0x%x\n", ctx->base.pc_next);
++    HEX_DEBUG_LOG("decode_packet: pc = 0x%" VADDR_PRIx "\n",
++                  ctx->base.pc_next);
+     HEX_DEBUG_LOG("    words = { ");
+     for (int i = 0; i < nwords; i++) {
+         HEX_DEBUG_LOG("0x%x, ", words[i]);
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 5ec88c5f0d..f886190f88 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -1457,7 +1457,7 @@ DISAS_INSN(undef)
+      * for the 680x0 series, as well as those that are implemented
+      * but actually illegal for CPU32 or pre-68020.
+      */
+-    qemu_log_mask(LOG_UNIMP, "Illegal instruction: %04x @ %08x\n",
++    qemu_log_mask(LOG_UNIMP, "Illegal instruction: %04x @ %" VADDR_PRIx "\n",
+                   insn, s->base.pc_next);
+     gen_exception(s, s->base.pc_next, EXCP_ILLEGAL);
+ }
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index e10232738c..12094cc1e7 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -4585,8 +4585,8 @@ static void gen_compute_branch(DisasContext *ctx, uint32_t opc,
+ 
+     if (ctx->hflags & MIPS_HFLAG_BMASK) {
+ #ifdef MIPS_DEBUG_DISAS
+-        LOG_DISAS("Branch in delay / forbidden slot at PC 0x"
+-                  TARGET_FMT_lx "\n", ctx->base.pc_next);
++        LOG_DISAS("Branch in delay / forbidden slot at PC 0x%016"
++                  VADDR_PRIx "\n", ctx->base.pc_next);
+ #endif
+         gen_reserved_instruction(ctx);
+         goto out;
+@@ -9061,8 +9061,8 @@ static void gen_compute_branch1_r6(DisasContext *ctx, uint32_t op,
+ 
+     if (ctx->hflags & MIPS_HFLAG_BMASK) {
+ #ifdef MIPS_DEBUG_DISAS
+-        LOG_DISAS("Branch in delay / forbidden slot at PC 0x" TARGET_FMT_lx
+-                  "\n", ctx->base.pc_next);
++        LOG_DISAS("Branch in delay / forbidden slot at PC 0x%016"
++                  VADDR_PRIx "\n", ctx->base.pc_next);
+ #endif
+         gen_reserved_instruction(ctx);
+         return;
+@@ -11274,8 +11274,8 @@ static void gen_compute_compact_branch(DisasContext *ctx, uint32_t opc,
+ 
+     if (ctx->hflags & MIPS_HFLAG_BMASK) {
+ #ifdef MIPS_DEBUG_DISAS
+-        LOG_DISAS("Branch in delay / forbidden slot at PC 0x" TARGET_FMT_lx
+-                  "\n", ctx->base.pc_next);
++        LOG_DISAS("Branch in delay / forbidden slot at PC 0x%016"
++                  VADDR_PRIx "\n", ctx->base.pc_next);
+ #endif
+         gen_reserved_instruction(ctx);
+         return;
 -- 
 2.34.1
 
