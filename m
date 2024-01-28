@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3152C47DDB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C03EC48285
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTx03-0004gS-6S; Sat, 27 Jan 2024 23:42:31 -0500
+	id 1rTx0X-0004oJ-Gx; Sat, 27 Jan 2024 23:43:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx01-0004ft-Ah
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:29 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1rTx0W-0004oA-DF
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:00 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTwzz-0004He-Qr
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:29 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-5cdbc4334edso782591a12.3
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:27 -0800 (PST)
+ id 1rTx0U-0004Ls-Qy
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:00 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-29065efa06fso1553799a91.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706416946; x=1707021746; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706416977; x=1707021777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ADBUc3fCETku7gSMiSslG1Ep+CbDq8k+uqgwv8Xr0vk=;
- b=GxFUAyKyJ2o/erIMEZwWZ75wlqDokA1HmbgjqiQ1d8Rs7AtwVK8V2R4UtBvGiIV0mD
- abe372aoUmeTGm6vh4dWrfWdJDvKgSyjJIUHnukSChm1XmnzAHgS9m0f8d2XuM7ULPpL
- dqyCNd9XQ5w6MxP4JEQmo5kT1PmTOkHn7dbL4LLgIxHqiKH+NNYhXcwetFp0+7pM6ehP
- 3jZh0a0F9UIz8MAxtr91YHRcoETB0YM9Xi04BWdUKLJ+FRIqGps0FVnzOOaBexJKn9Eb
- n+0gHAAajbH/p0865xQqJSuQmjN0q6xCTbV68GMda7VQnXa6EuXqoUXT8yiGsoVNJGJO
- rNmA==
+ bh=p58dq3BNm1M9yORIAE2cQcXeCTaVjSrZcGgMOspnf2M=;
+ b=FFQcIL8r9e1BzlduKnXMpK2Odl/2g3YabMHMfV/DpnnSRAW1ZYRpzhfq7Mw5AveHwH
+ v4O8952/hjrwNgSFlvkzuiLP+Gsrm4Z2fAtJ9+BGvwyCkNWZPx6reep+kOd2DIME/865
+ SZzfXszBPrz54YeYGlitwcZyOOCb+KCLyJr/EYp33THU0PpA3rrbFc8IPKtqUlK1mB64
+ 2DSEVhzDH/ERcogPQZcu2RVVhlwptj7l934hE9g1L8Rke6vXXF7RXivE3pVGJtMrq8gm
+ vY/D2/5ImmvPrKRVy8qnH44PIh31c9vy+83/d3Gni9MlSmPpPot+IVcL0DYT4kU5kXKv
+ l0kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706416946; x=1707021746;
+ d=1e100.net; s=20230601; t=1706416977; x=1707021777;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ADBUc3fCETku7gSMiSslG1Ep+CbDq8k+uqgwv8Xr0vk=;
- b=Fi6ZO185nDedax49ceU3fMngMEKEBZKYETDubuDiA7BT2BDd5U/bn6st55I93uCpaZ
- AWwewMoV4il5qZA2myQlc8Z9QHET6XGC5L3MTuU90DW73y5wHUn/mzTSZJ83dtCai23V
- lT9PXZcyRKKEzJNVX3b8j0iNS4bDhhBwKxFgTSBu9qxJflNw0pQPvdPjIkwZMc1Gi96A
- FsuQFb/Vs1H33779Gkc1mC7J6lAC9WQ+JyE0eDXtT8kJcqyKm7sQ9GkOJaQ5eA5zHJfC
- fJ8g0tGjNmL33kKYyDGnhMg0lLxzmZg/Wmkb6yk/58yXQ9WgUXv4g1X2hutiSygk6YmN
- 3QwQ==
-X-Gm-Message-State: AOJu0YyNig+XlQ/f/oKHwjVBHiPqDVrPf3bhiQbL6CTXc93UnpmnVG1E
- jbiDRn5oKlXTVQXW/0MZxIdKUVAyTs/o87jSxizrPXaE3AgWgcDg8tLOmgYBJSTCATmugC7oulY
- oSV6jjA==
-X-Google-Smtp-Source: AGHT+IGni/2IOtdevUIzh4oxbadX3CrC8Oy9rUOG3cpQHcc43qMaTLhwe6RH33xjq2UFSIwZq96REA==
-X-Received: by 2002:a17:90b:4d8e:b0:290:3439:154f with SMTP id
- oj14-20020a17090b4d8e00b002903439154fmr877084pjb.83.1706416946468; 
- Sat, 27 Jan 2024 20:42:26 -0800 (PST)
+ bh=p58dq3BNm1M9yORIAE2cQcXeCTaVjSrZcGgMOspnf2M=;
+ b=MWPLEWzIS05OMcunCN4hSdZp94iJCJDJn8OF0wlFnbyWLcuWEHI1B9GqF1MBzKm9pD
+ +diRTJzhcuHgTrF3H9+5K20dEgSynFzBuwr2QQZEE+PMXJMgiRyOQ+NbtfrEXHBeLt1/
+ aIA9tbkA2bVNhT56z1ViY/2h7STLszbatX+Z2LYF39w2A0JrMXHhJYw4eTVJ1y5rQqWW
+ AHHJpKj4zgaFRhqbVEbDcjn7vaQy4oxWAMjzahAFDosn/+YTfqDw73R+PhBEMYvBagaf
+ ca4HzSM6KWJH/4MCL0WHpW5vkyKXczY4NFDBNDYIP9LhEZkysZ6eTC/9922j0vkFRFlZ
+ jdVQ==
+X-Gm-Message-State: AOJu0Yxnl+PnIUMKOh4ZhBMehxpXqtEdMWll1Uwz+npWkh7IbaWa9mj1
+ sy5q6jWrVOzuvMJxUDHc6/K+meSItARBBVG7p5Bp1WW2HVmSRG5XDP2MPjDzaFYD0UGTtRG3rlK
+ 3qS7hew==
+X-Google-Smtp-Source: AGHT+IGf3VxO1VhOTznnn69pllVLFyMmg4ojYaF58hz4yLlUxbJX7zc1k3sy4UU7CYZW2yWFLmow4Q==
+X-Received: by 2002:a17:90a:4bc6:b0:290:11a4:ec4b with SMTP id
+ u6-20020a17090a4bc600b0029011a4ec4bmr1603372pjl.61.1706416977455; 
+ Sat, 27 Jan 2024 20:42:57 -0800 (PST)
 Received: from stoup..
  (ppp121-45-131-89.bri-pow-que-bras31.tpg.internode.on.net. [121.45.131.89])
  by smtp.gmail.com with ESMTPSA id
- w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.24
+ w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Jan 2024 20:42:26 -0800 (PST)
+ Sat, 27 Jan 2024 20:42:57 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 03/33] hw/core: Include vaddr.h from cpu.h
-Date: Sun, 28 Jan 2024 14:41:43 +1000
-Message-Id: <20240128044213.316480-4-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 16/33] accel/tcg/cpu-exec: Use RCU_READ_LOCK_GUARD
+Date: Sun, 28 Jan 2024 14:41:56 +1000
+Message-Id: <20240128044213.316480-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,32 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-cpu-common.h is only needed for vaddr
+Replace the manual rcu_read_(un)lock calls in cpu_exec().
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240119144024.14289-8-anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240124074201.8239-2-philmd@linaro.org>
+[rth: Use RCU_READ_LOCK_GUARD not WITH_RCU_READ_LOCK_GUARD]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ accel/tcg/cpu-exec.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 238c02c05e..db58f12233 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -22,8 +22,8 @@
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 40c268bfa1..950dad63cb 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -1050,7 +1050,7 @@ int cpu_exec(CPUState *cpu)
+         return EXCP_HALTED;
+     }
  
- #include "hw/qdev-core.h"
- #include "disas/dis-asm.h"
--#include "exec/cpu-common.h"
- #include "exec/hwaddr.h"
-+#include "exec/vaddr.h"
- #include "exec/memattrs.h"
- #include "exec/tlb-common.h"
- #include "qapi/qapi-types-run-state.h"
+-    rcu_read_lock();
++    RCU_READ_LOCK_GUARD();
+     cpu_exec_enter(cpu);
+ 
+     /*
+@@ -1064,8 +1064,6 @@ int cpu_exec(CPUState *cpu)
+     ret = cpu_exec_setjmp(cpu, &sc);
+ 
+     cpu_exec_exit(cpu);
+-    rcu_read_unlock();
+-
+     return ret;
+ }
+ 
 -- 
 2.34.1
 
