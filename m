@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7C9C47DA9
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA5FC47DA9
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9Hg-0007QC-Km; Sun, 28 Jan 2024 12:49:32 -0500
+	id 1rU9KB-00068a-L0; Sun, 28 Jan 2024 12:52:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9H8-0006RY-JP; Sun, 28 Jan 2024 12:49:02 -0500
+ id 1rU9Jy-00055w-FD; Sun, 28 Jan 2024 12:51:55 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9H6-0000P0-5d; Sun, 28 Jan 2024 12:48:58 -0500
+ id 1rU9Jw-00012q-Rs; Sun, 28 Jan 2024 12:51:54 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2D2C0480EB;
- Sun, 28 Jan 2024 20:49:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0751F48111;
+ Sun, 28 Jan 2024 20:51:35 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9B02C6D512;
- Sun, 28 Jan 2024 20:48:48 +0300 (MSK)
-Received: (nullmailer pid 811705 invoked by uid 1000);
- Sun, 28 Jan 2024 17:48:46 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 90A686D52D;
+ Sun, 28 Jan 2024 20:50:43 +0300 (MSK)
+Received: (nullmailer pid 812443 invoked by uid 1000);
+ Sun, 28 Jan 2024 17:50:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Joseph Burt <caseorum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.1.5 28/36] tcg/arm: Fix SIGILL in tcg_out_qemu_st_direct
-Date: Sun, 28 Jan 2024 20:48:33 +0300
-Message-Id: <20240128174845.811654-4-mjt@tls.msk.ru>
+Subject: [Stable-8.2.1 68/71] qtest: bump aspeed_smc-test timeout to 6 minutes
+Date: Sun, 28 Jan 2024 20:50:31 +0300
+Message-Id: <20240128175035.812352-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
-References: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
+References: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,34 +65,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joseph Burt <caseorum@gmail.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-When tcg_out_qemu_st_{index,direct} were merged, the direct case for
-MO_64 was omitted, causing qemu_st_i64 to be encoded as 0xffffffff due
-to underflow when adding h.base and h.index.
+On a loaded system with --enable-debug, this test can take longer than
+5 minutes. Raising the timeout to 6 minutes gives greater headroom for
+such situations.
 
-Fixes: 1df6d611bdc2 ("tcg/arm: Introduce HostAddress")
-Signed-off-by: Joseph Burt <caseorum@gmail.com>
-Message-Id: <20240121211439.100829-1-caseorum@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 9f6523e8e4689cafdbed7c10b7cf7c775b5a607b)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+[thuth: Increase the timeout to 6 minutes for very loaded systems]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20231215070357.10888-11-thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+(cherry picked from commit e8a12fe31f776c60fec993513cd1b1e66c2b8e29)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: context fixup in tests/qtest/meson.build)
 
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index 83e286088f..1864b8054f 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -1667,6 +1667,9 @@ static void tcg_out_qemu_st_direct(TCGContext *s, MemOp opc, TCGReg datalo,
-             } else {
-                 tcg_out_strd_r(s, h.cond, datalo, h.base, h.index);
-             }
-+        } else if (h.index < 0) {
-+            tcg_out_st32_12(s, h.cond, datalo, h.base, 0);
-+            tcg_out_st32_12(s, h.cond, datahi, h.base, 4);
-         } else if (h.index_scratch) {
-             tcg_out_st32_rwb(s, h.cond, datalo, h.index, h.base);
-             tcg_out_st32_12(s, h.cond, datahi, h.index, 4);
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 47dabf91d0..fc14ae95a3 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -1,5 +1,6 @@
+ slow_qtests = {
+   'ahci-test' : 60,
++  'aspeed_smc-test': 360,
+   'bios-tables-test' : 120,
+   'boot-serial-test' : 60,
+   'migration-test' : 150,
 -- 
 2.39.2
 
