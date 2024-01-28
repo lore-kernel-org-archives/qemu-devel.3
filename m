@@ -4,66 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CE7C47DDF
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 10:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A139EC47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 11:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU2VR-0004ED-ES; Sun, 28 Jan 2024 05:35:18 -0500
+	id 1rU3T3-0007el-FZ; Sun, 28 Jan 2024 06:36:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
- id 1rU2VO-0004Dy-Rh; Sun, 28 Jan 2024 05:35:14 -0500
-Received: from zuban.uni-paderborn.de ([2001:638:502:c003::17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
- id 1rU2VA-0003da-Cb; Sun, 28 Jan 2024 05:35:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=mail.uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
- Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=vvIF26RBDLw+ldxcag6nMVV5Dto0lCR4pixmzH4okR8=; b=mtzig3qUEc29xOV48tBTafSouS
- kYOTxo1qfO1eb7PHNe7+5869tAjNjANki5CK7hOSu7tfylhpsS2P8/rOpbfXQcILECgiWXepxp8Q2
- tq6NqTcqAisc0R98LRRP3A+RjNTk4zdt50hyxYyw8X2VhXC3NE0/Hoe+69FX9vTAmFoo=;
-Date: Sun, 28 Jan 2024 11:34:48 +0100
-From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, 
- Eduardo Habkost <eduardo@habkost.net>, kvm@vger.kernel.org, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 21/23] target/tricore: Prefer fast cpu_env() over
- slower CPU QOM cast macro
-Message-ID: <mc67nwaoaqancyz63zt36awnsyzslgl24w3hnctaxzuycezixt@yvxaywvzntvb>
-References: <20240126220407.95022-1-philmd@linaro.org>
- <20240126220407.95022-22-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rU3T0-0007cm-Uh
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 06:36:50 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rU3Sz-00069x-1J
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 06:36:50 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1d7881b1843so17119365ad.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 03:36:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1706441807; x=1707046607;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kM9WFGy6NbvbGAvzzxR9vAHBKJx+VI6tCNuaTSRC++4=;
+ b=OjBPDQ725jQhf9+bG5rKTVuQ7Bvp/KTnTERIVUfSRnHh+eRGG/kJfZdcuqGbySnFK7
+ Z7OgDTh+XBWVPZlNpNEyHL0l6CAq8jWlTyewpgF5H5vO6cRSuL8qbbEBQPxpIWO9h4jb
+ 82OOnDBgHTQMbDRC1oYOg2znzK1CrWQWRXMFx7gv0c5igl5cOpprWGnPS10InvQozQ3l
+ wo4XWwgvwVSFtszwgjDt/Pro8X9V72r6zKJPSU+Q6xsVQGdU1jw8vSMb8R6nfiPA1IUO
+ nw5oCSXLUCsup+u7TsmLIpEwcFjs2vDnwRSF8hVhOCBOW9fnXST/cJruQaZa21S6iA2q
+ oGzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706441807; x=1707046607;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kM9WFGy6NbvbGAvzzxR9vAHBKJx+VI6tCNuaTSRC++4=;
+ b=bx7ZIjzeeK3R7ctSVphjqzL0HlfJ+Fii3xfE27cqzsVlTn11eCSzJLCUFpDPmDWe8i
+ svi6Vp56HbeA9JK2IG4d9J4+uENJ3gQWP4hpZsh5jWlM+/qtl9mWCCV5YodPvCScDmDh
+ TLo5STqPCGhavJgtOeSoua5W4R1jacJ6uwlDbgKnii1dlIML0X1lbCwu2WfxY7mMEJdr
+ 9Q+IvSvH3tvbHK+SythvqrelgIS82u3sJs15+ZjgvtotFdRQjVaKWKgVdbh9d42iq8h+
+ udlEXrACOUAimLBby897OgSDmXWPbCkF/BmiWMF7dGljpsH2p/wj/Ok/0GO/UhO93Pcm
+ 8JaA==
+X-Gm-Message-State: AOJu0YyOwJQyH9QXNdhbPInoE97HL+01Tpr3YvSb0MUiUXpW9KzA7WMa
+ jRrrnacbuiUyZExuBSGmYbpj/eSk8YHOMZeA+efhLnphMbtpqyI+IhE2MZlb0bk=
+X-Google-Smtp-Source: AGHT+IHV4pKf4ebx+YLHF6VmwLpEZdSZHqoez3BfM92btXKgU0w7baqzlmL4K4D9XspVQ54Bx+fESA==
+X-Received: by 2002:a17:903:184:b0:1d7:49a6:a0c8 with SMTP id
+ z4-20020a170903018400b001d749a6a0c8mr3827840plg.106.1706441806768; 
+ Sun, 28 Jan 2024 03:36:46 -0800 (PST)
+Received: from [157.82.200.138] ([157.82.200.138])
+ by smtp.gmail.com with ESMTPSA id
+ li14-20020a170903294e00b001d74048eb5dsm3580615plb.89.2024.01.28.03.36.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 28 Jan 2024 03:36:46 -0800 (PST)
+Message-ID: <caa6524d-8629-4978-b7bd-cf60f088d27d@daynix.com>
+Date: Sun, 28 Jan 2024 20:36:43 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240126220407.95022-22-philmd@linaro.org>
-X-IMT-Source: Extern
-X-IMT-rspamd-score: -25
-X-IMT-Spam-Score: 0.0 ()
-X-Sophos-SenderHistory: ip=84.184.59.80, fs=1716459, da=194047155, mc=2, sc=0,
- hc=2, sp=0, fso=1716459, re=0, sd=0, hd=0
-X-PMX-Version: 6.4.9.2830568, Antispam-Engine: 2.7.2.2107409,
- Antispam-Data: 2024.1.27.235115, AntiVirus-Engine: 6.0.2,
- AntiVirus-Data: 2024.1.26.602001
-X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
-Received-SPF: pass client-ip=2001:638:502:c003::17;
- envelope-from=kbastian@mail.uni-paderborn.de; helo=zuban.uni-paderborn.de
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] igb: fix link state on resume
+Content-Language: en-US
+To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang <jasowang@redhat.com>
+References: <20240124102904.334595-1-lvivier@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240124102904.334595-1-lvivier@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,20 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 26, 2024 at 11:04:03PM +0100, Philippe Mathieu-Daudé wrote:
-> Mechanical patch produced running the command documented
-> in scripts/coccinelle/cpu_env.cocci_template header.
+On 2024/01/24 19:29, Laurent Vivier wrote:
+> On resume igb_vm_state_change() always calls igb_autoneg_resume()
+> that sets link_down to false, and thus activates the link even
+> if we have disabled it.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> The problem can be reproduced starting qemu in paused state (-S) and
+> then set the link to down. When we resume the machine the link appears
+> to be up.
+> 
+> Reproducer:
+> 
+>     # qemu-system-x86_64 ... -device igb,netdev=netdev0,id=net0 -S
+> 
+>     {"execute": "qmp_capabilities" }
+>     {"execute": "set_link", "arguments": {"name": "net0", "up": false}}
+>     {"execute": "cont" }
+> 
+> To fix the problem, merge the content of igb_vm_state_change()
+> into igb_core_post_load() as e1000 does.
+> 
+> Buglink: https://issues.redhat.com/browse/RHEL-21867
+> Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
+> Cc: akihiko.odaki@daynix.com
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 > ---
->  target/tricore/cpu.c       | 20 ++++----------------
->  target/tricore/gdbstub.c   |  6 ++----
->  target/tricore/helper.c    |  3 +--
->  target/tricore/translate.c |  3 +--
->  4 files changed, 8 insertions(+), 24 deletions(-)
+> 
+> Notes:
+>      v2: Add Fixes: and a comment about igb_intrmgr_resume() purpose.
 
-Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-
-Cheers,
-Bastian
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
