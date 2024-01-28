@@ -4,35 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FBCC47DDB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE19C47258
 	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9GY-000605-LW; Sun, 28 Jan 2024 12:48:23 -0500
+	id 1rU9GS-0005xP-7h; Sun, 28 Jan 2024 12:48:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9GO-0005vH-Lu; Sun, 28 Jan 2024 12:48:13 -0500
+ id 1rU9GH-0005su-AW; Sun, 28 Jan 2024 12:48:05 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9GN-0000Gw-1V; Sun, 28 Jan 2024 12:48:12 -0500
+ id 1rU9GD-0000G8-6i; Sun, 28 Jan 2024 12:48:03 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E0EEC480E0;
- Sun, 28 Jan 2024 20:48:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EC2DC480DE;
+ Sun, 28 Jan 2024 20:48:42 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 493296D509;
- Sun, 28 Jan 2024 20:47:53 +0300 (MSK)
-Received: (nullmailer pid 811317 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 26A276D507;
+ Sun, 28 Jan 2024 20:47:51 +0300 (MSK)
+Received: (nullmailer pid 811311 invoked by uid 1000);
  Sun, 28 Jan 2024 17:47:47 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.9 26/30] iotests: add filter_qmp_generated_node_ids()
-Date: Sun, 28 Jan 2024 20:47:39 +0300
-Message-Id: <20240128174747.811264-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Xiao Lei <leixiao.nop@zju.edu.cn>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.9 24/30] virtio-net: correctly copy vnet header when
+ flushing TX
+Date: Sun, 28 Jan 2024 20:47:37 +0300
+Message-Id: <20240128174747.811264-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.9-20240128204652@cover.tls.msk.ru>
 References: <qemu-stable-7.2.9-20240128204652@cover.tls.msk.ru>
@@ -61,41 +64,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
 
-Add a filter function for QMP responses that contain QEMU's
-automatically generated node ids. The ids change between runs and must
-be masked in the reference output.
+When HASH_REPORT is negotiated, the guest_hdr_len might be larger than
+the size of the mergeable rx buffer header. Using
+virtio_net_hdr_mrg_rxbuf during the header swap might lead a stack
+overflow in this case. Fixing this by using virtio_net_hdr_v1_hash
+instead.
 
-The next commit will use this new function.
-
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20240118144823.1497953-2-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit da62b507a20510d819bcfbe8f5e573409b954006)
+Reported-by: Xiao Lei <leixiao.nop@zju.edu.cn>
+Cc: Yuri Benditovich <yuri.benditovich@daynix.com>
+Cc: qemu-stable@nongnu.org
+Cc: Mauro Matteo Cascella <mcascell@redhat.com>
+Fixes: CVE-2023-6693
+Fixes: e22f0603fb2f ("virtio-net: reference implementation of hash report")
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 2220e8189fb94068dbad333228659fbac819abb0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fix in tests/qemu-iotests/iotests.py due to
- v7.2.0-939-gbcc6777ad6 "iotests: Filter child node information")
 
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index da7d6637e1..6f7c3c0e44 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -642,6 +642,13 @@ def _filter(_key, value):
- def filter_generated_node_ids(msg):
-     return re.sub("#block[0-9]+", "NODE_NAME", msg)
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 06f35ac2d8..412cba4927 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -664,6 +664,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
  
-+def filter_qmp_generated_node_ids(qmsg):
-+    def _filter(_key, value):
-+        if is_str(value):
-+            return filter_generated_node_ids(value)
-+        return value
-+    return filter_qmp(qmsg, _filter)
-+
- def filter_img_info(output, filename):
-     lines = []
-     for line in output.split('\n'):
+     n->mergeable_rx_bufs = mergeable_rx_bufs;
+ 
++    /*
++     * Note: when extending the vnet header, please make sure to
++     * change the vnet header copying logic in virtio_net_flush_tx()
++     * as well.
++     */
+     if (version_1) {
+         n->guest_hdr_len = hash_report ?
+             sizeof(struct virtio_net_hdr_v1_hash) :
+@@ -2630,7 +2635,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+         ssize_t ret;
+         unsigned int out_num;
+         struct iovec sg[VIRTQUEUE_MAX_SIZE], sg2[VIRTQUEUE_MAX_SIZE + 1], *out_sg;
+-        struct virtio_net_hdr_mrg_rxbuf mhdr;
++        struct virtio_net_hdr_v1_hash vhdr;
+ 
+         elem = virtqueue_pop(q->tx_vq, sizeof(VirtQueueElement));
+         if (!elem) {
+@@ -2647,7 +2652,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+         }
+ 
+         if (n->has_vnet_hdr) {
+-            if (iov_to_buf(out_sg, out_num, 0, &mhdr, n->guest_hdr_len) <
++            if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
+                 n->guest_hdr_len) {
+                 virtio_error(vdev, "virtio-net header incorrect");
+                 virtqueue_detach_element(q->tx_vq, elem, 0);
+@@ -2655,8 +2660,8 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+                 return -EINVAL;
+             }
+             if (n->needs_vnet_hdr_swap) {
+-                virtio_net_hdr_swap(vdev, (void *) &mhdr);
+-                sg2[0].iov_base = &mhdr;
++                virtio_net_hdr_swap(vdev, (void *) &vhdr);
++                sg2[0].iov_base = &vhdr;
+                 sg2[0].iov_len = n->guest_hdr_len;
+                 out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1,
+                                    out_sg, out_num,
 -- 
 2.39.2
 
