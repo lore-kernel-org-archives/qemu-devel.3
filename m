@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8BBCC47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:52:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE299C47DA9
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9JB-0003CI-NU; Sun, 28 Jan 2024 12:51:06 -0500
+	id 1rU9Hp-0008UY-Nr; Sun, 28 Jan 2024 12:49:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9Ix-0002lh-ED; Sun, 28 Jan 2024 12:50:55 -0500
+ id 1rU9Hf-0007Kx-4p; Sun, 28 Jan 2024 12:49:31 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9Ir-0000mU-Ap; Sun, 28 Jan 2024 12:50:51 -0500
+ id 1rU9Hb-0000TX-4j; Sun, 28 Jan 2024 12:49:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8091E48104;
- Sun, 28 Jan 2024 20:51:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 70882480EF;
+ Sun, 28 Jan 2024 20:49:43 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 28A656D521;
- Sun, 28 Jan 2024 20:50:37 +0300 (MSK)
-Received: (nullmailer pid 812407 invoked by uid 1000);
- Sun, 28 Jan 2024 17:50:35 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id C92316D516;
+ Sun, 28 Jan 2024 20:48:51 +0300 (MSK)
+Received: (nullmailer pid 811717 invoked by uid 1000);
+ Sun, 28 Jan 2024 17:48:46 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.1 56/71] accel/tcg: Revert mapping of PCREL translation
- block to multiple virtual addresses
-Date: Sun, 28 Jan 2024 20:50:19 +0300
-Message-Id: <20240128175035.812352-2-mjt@tls.msk.ru>
+Subject: [Stable-8.1.5 32/36] iotests: port 141 to Python for reliable QMP
+ testing
+Date: Sun, 28 Jan 2024 20:48:37 +0300
+Message-Id: <20240128174845.811654-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
-References: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
+References: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -62,85 +63,581 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-This is causing regressions that have not been analyzed yet.  Revert the
-change on stable branches.
+The common.qemu bash functions allow tests to interact with the QMP
+monitor of a QEMU process. I spent two days trying to update 141 when
+the order of the test output changed, but found it would still fail
+occassionally because printf() and QMP events race with synchronous QMP
+communication.
 
-Cc: qemu-stable@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Related: https://gitlab.com/qemu-project/qemu/-/issues/2092
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+I gave up and ported 141 to the existing Python API for QMP tests. The
+Python API is less affected by the order in which QEMU prints output
+because it does not print all QMP traffic by default.
+
+The next commit changes the order in which QMP messages are received.
+Make 141 reliable first.
+
+Cc: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20240118144823.1497953-3-stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 9ee2dd4c22a3639c5462b3fc20df60c005c3de64)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index c938eb96f8..6a4af14d32 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -183,7 +183,7 @@ static bool tb_lookup_cmp(const void *p, const void *d)
-     const TranslationBlock *tb = p;
-     const struct tb_desc *desc = d;
+diff --git a/tests/qemu-iotests/141 b/tests/qemu-iotests/141
+index a37030ee17..a7d3985a02 100755
+--- a/tests/qemu-iotests/141
++++ b/tests/qemu-iotests/141
+@@ -1,9 +1,12 @@
+-#!/usr/bin/env bash
++#!/usr/bin/env python3
+ # group: rw auto quick
+ #
+ # Test case for ejecting BDSs with block jobs still running on them
+ #
+-# Copyright (C) 2016 Red Hat, Inc.
++# Originally written in bash by Hanna Czenczek, ported to Python by Stefan
++# Hajnoczi.
++#
++# Copyright Red Hat
+ #
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+@@ -19,177 +22,129 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
  
--    if ((tb_cflags(tb) & CF_PCREL || tb->pc == desc->pc) &&
-+    if (tb->pc == desc->pc &&
-         tb_page_addr0(tb) == desc->page_addr0 &&
-         tb->cs_base == desc->cs_base &&
-         tb->flags == desc->flags &&
-@@ -233,7 +233,7 @@ static TranslationBlock *tb_htable_lookup(CPUState *cpu, vaddr pc,
-         return NULL;
-     }
-     desc.page_addr0 = phys_pc;
--    h = tb_hash_func(phys_pc, (cflags & CF_PCREL ? 0 : pc),
-+    h = tb_hash_func(phys_pc, pc,
-                      flags, cs_base, cflags);
-     return qht_lookup_custom(&tb_ctx.htable, &desc, h, tb_lookup_cmp);
- }
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 3d2a896220..0d069a081e 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -47,7 +47,7 @@ static bool tb_cmp(const void *ap, const void *bp)
-     const TranslationBlock *a = ap;
-     const TranslationBlock *b = bp;
+-# creator
+-owner=hreitz@redhat.com
+-
+-seq="$(basename $0)"
+-echo "QA output created by $seq"
+-
+-status=1	# failure is the default!
+-
+-_cleanup()
+-{
+-    _cleanup_qemu
+-    _cleanup_test_img
+-    for img in "$TEST_DIR"/{b,m,o}.$IMGFMT; do
+-        _rm_test_img "$img"
+-    done
+-}
+-trap "_cleanup; exit \$status" 0 1 2 3 15
+-
+-# get standard environment, filters and checks
+-. ./common.rc
+-. ./common.filter
+-. ./common.qemu
+-
+-# Needs backing file and backing format support
+-_supported_fmt qcow2 qed
+-_supported_proto file
+-_supported_os Linux
+-
+-
+-test_blockjob()
+-{
+-    _send_qemu_cmd $QEMU_HANDLE \
+-        "{'execute': 'blockdev-add',
+-          'arguments': {
+-              'node-name': 'drv0',
+-              'driver': '$IMGFMT',
+-              'file': {
+-                  'driver': 'file',
+-                  'filename': '$TEST_IMG'
+-              }}}" \
+-        'return'
+-
+-    # If "$2" is an event, we may or may not see it before the
+-    # {"return": {}}.  Therefore, filter the {"return": {}} out both
+-    # here and in the next command.  (Naturally, if we do not see it
+-    # here, we will see it before the next command can be executed,
+-    # so it will appear in the next _send_qemu_cmd's output.)
+-    _send_qemu_cmd $QEMU_HANDLE \
+-        "$1" \
+-        "$2" \
+-        | _filter_img_create | _filter_qmp_empty_return
+-
+-    # We want this to return an error because the block job is still running
+-    _send_qemu_cmd $QEMU_HANDLE \
+-        "{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}" \
+-        'error' | _filter_generated_node_ids | _filter_qmp_empty_return
+-
+-    _send_qemu_cmd $QEMU_HANDLE \
+-        "{'execute': 'block-job-cancel',
+-          'arguments': {'device': 'job0'}}" \
+-        "$3"
+-
+-    _send_qemu_cmd $QEMU_HANDLE \
+-        "{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}" \
+-        'return'
+-}
+-
+-
+-TEST_IMG="$TEST_DIR/b.$IMGFMT" _make_test_img 1M
+-TEST_IMG="$TEST_DIR/m.$IMGFMT" _make_test_img -b "$TEST_DIR/b.$IMGFMT" -F $IMGFMT 1M
+-_make_test_img -b "$TEST_DIR/m.$IMGFMT" 1M -F $IMGFMT
+-
+-_launch_qemu -nodefaults
+-
+-_send_qemu_cmd $QEMU_HANDLE \
+-    "{'execute': 'qmp_capabilities'}" \
+-    'return'
+-
+-echo
+-echo '=== Testing drive-backup ==='
+-echo
+-
+-# drive-backup will not send BLOCK_JOB_READY by itself, and cancelling the job
+-# will consequently result in BLOCK_JOB_CANCELLED being emitted.
+-
+-test_blockjob \
+-    "{'execute': 'drive-backup',
+-      'arguments': {'job-id': 'job0',
+-                    'device': 'drv0',
+-                    'target': '$TEST_DIR/o.$IMGFMT',
+-                    'format': '$IMGFMT',
+-                    'sync': 'none'}}" \
+-    'return' \
+-    '"status": "null"'
+-
+-echo
+-echo '=== Testing drive-mirror ==='
+-echo
+-
+-# drive-mirror will send BLOCK_JOB_READY basically immediately, and cancelling
+-# the job will consequently result in BLOCK_JOB_COMPLETED being emitted.
+-
+-test_blockjob \
+-    "{'execute': 'drive-mirror',
+-      'arguments': {'job-id': 'job0',
+-                    'device': 'drv0',
+-                    'target': '$TEST_DIR/o.$IMGFMT',
+-                    'format': '$IMGFMT',
+-                    'sync': 'none'}}" \
+-    'BLOCK_JOB_READY' \
+-    '"status": "null"'
+-
+-echo
+-echo '=== Testing active block-commit ==='
+-echo
+-
+-# An active block-commit will send BLOCK_JOB_READY basically immediately, and
+-# cancelling the job will consequently result in BLOCK_JOB_COMPLETED being
+-# emitted.
+-
+-test_blockjob \
+-    "{'execute': 'block-commit',
+-      'arguments': {'job-id': 'job0', 'device': 'drv0'}}" \
+-    'BLOCK_JOB_READY' \
+-    '"status": "null"'
+-
+-echo
+-echo '=== Testing non-active block-commit ==='
+-echo
+-
+-# Give block-commit something to work on, otherwise it would be done
+-# immediately, send a BLOCK_JOB_COMPLETED and ejecting the BDS would work just
+-# fine without the block job still running.
+-
+-$QEMU_IO -c 'write 0 1M' "$TEST_DIR/m.$IMGFMT" | _filter_qemu_io
+-
+-test_blockjob \
+-    "{'execute': 'block-commit',
+-      'arguments': {'job-id': 'job0',
+-                    'device': 'drv0',
+-                    'top':    '$TEST_DIR/m.$IMGFMT',
+-                    'speed':  1}}" \
+-    'return' \
+-    '"status": "null"'
+-
+-echo
+-echo '=== Testing block-stream ==='
+-echo
+-
+-# Give block-stream something to work on, otherwise it would be done
+-# immediately, send a BLOCK_JOB_COMPLETED and ejecting the BDS would work just
+-# fine without the block job still running.
+-
+-$QEMU_IO -c 'write 0 1M' "$TEST_DIR/b.$IMGFMT" | _filter_qemu_io
+-
+-# With some data to stream (and @speed set to 1), block-stream will not complete
+-# until we send the block-job-cancel command.
+-
+-test_blockjob \
+-    "{'execute': 'block-stream',
+-      'arguments': {'job-id': 'job0',
+-                    'device': 'drv0',
+-                    'speed': 1}}" \
+-    'return' \
+-    '"status": "null"'
+-
+-_cleanup_qemu
+-
+-# success, all done
+-echo "*** done"
+-rm -f $seq.full
+-status=0
++import iotests
++
++# Common filters to mask values that vary in the test output
++QMP_FILTERS = [iotests.filter_qmp_testfiles, \
++               iotests.filter_qmp_imgfmt]
++
++
++class TestCase:
++    def __init__(self, name, vm, image_path, cancel_event):
++        self.name = name
++        self.vm = vm
++        self.image_path = image_path
++        self.cancel_event = cancel_event
++
++    def __enter__(self):
++        iotests.log(f'=== Testing {self.name} ===')
++        self.vm.qmp_log('blockdev-add', \
++                        node_name='drv0', \
++                        driver=iotests.imgfmt, \
++                        file={'driver': 'file', 'filename': self.image_path}, \
++                        filters=QMP_FILTERS)
++
++    def __exit__(self, *exc_details):
++        # This is expected to fail because the job still exists
++        self.vm.qmp_log('blockdev-del', node_name='drv0', \
++                        filters=[iotests.filter_qmp_generated_node_ids])
++
++        self.vm.qmp_log('block-job-cancel', device='job0')
++        event = self.vm.event_wait(self.cancel_event)
++        iotests.log(event, filters=[iotests.filter_qmp_event])
++
++        # This time it succeeds
++        self.vm.qmp_log('blockdev-del', node_name='drv0')
++
++        # Separate test cases in output
++        iotests.log('')
++
++
++def main() -> None:
++    with iotests.FilePath('bottom', 'middle', 'top', 'target') as \
++            (bottom_path, middle_path, top_path, target_path), \
++         iotests.VM() as vm:
++
++        iotests.log('Creating bottom <- middle <- top backing file chain...')
++        IMAGE_SIZE='1M'
++        iotests.qemu_img_create('-f', iotests.imgfmt, bottom_path, IMAGE_SIZE)
++        iotests.qemu_img_create('-f', iotests.imgfmt, \
++                                '-F', iotests.imgfmt, \
++                                '-b', bottom_path, \
++                                middle_path, \
++                                IMAGE_SIZE)
++        iotests.qemu_img_create('-f', iotests.imgfmt, \
++                                '-F', iotests.imgfmt, \
++                                '-b', middle_path, \
++                                top_path, \
++                                IMAGE_SIZE)
++
++        iotests.log('Starting VM...')
++        vm.add_args('-nodefaults')
++        vm.launch()
++
++        # drive-backup will not send BLOCK_JOB_READY by itself, and cancelling
++        # the job will consequently result in BLOCK_JOB_CANCELLED being
++        # emitted.
++        with TestCase('drive-backup', vm, top_path, 'BLOCK_JOB_CANCELLED'):
++            vm.qmp_log('drive-backup', \
++                       job_id='job0', \
++                       device='drv0', \
++                       target=target_path, \
++                       format=iotests.imgfmt, \
++                       sync='none', \
++                       filters=QMP_FILTERS)
++
++        # drive-mirror will send BLOCK_JOB_READY basically immediately, and
++        # cancelling the job will consequently result in BLOCK_JOB_COMPLETED
++        # being emitted.
++        with TestCase('drive-mirror', vm, top_path, 'BLOCK_JOB_COMPLETED'):
++            vm.qmp_log('drive-mirror', \
++                       job_id='job0', \
++                       device='drv0', \
++                       target=target_path, \
++                       format=iotests.imgfmt, \
++                       sync='none', \
++                       filters=QMP_FILTERS)
++            event = vm.event_wait('BLOCK_JOB_READY')
++            assert event is not None # silence mypy
++            iotests.log(event, filters=[iotests.filter_qmp_event])
++
++        # An active block-commit will send BLOCK_JOB_READY basically
++        # immediately, and cancelling the job will consequently result in
++        # BLOCK_JOB_COMPLETED being emitted.
++        with TestCase('active block-commit', vm, top_path, \
++                      'BLOCK_JOB_COMPLETED'):
++            vm.qmp_log('block-commit', \
++                       job_id='job0', \
++                       device='drv0')
++            event = vm.event_wait('BLOCK_JOB_READY')
++            assert event is not None # silence mypy
++            iotests.log(event, filters=[iotests.filter_qmp_event])
++
++        # Give block-commit something to work on, otherwise it would be done
++        # immediately, send a BLOCK_JOB_COMPLETED and ejecting the BDS would
++        # work just fine without the block job still running.
++        iotests.qemu_io(middle_path, '-c', f'write 0 {IMAGE_SIZE}')
++        with TestCase('non-active block-commit', vm, top_path, \
++                      'BLOCK_JOB_CANCELLED'):
++            vm.qmp_log('block-commit', \
++                       job_id='job0', \
++                       device='drv0', \
++                       top=middle_path, \
++                       speed=1, \
++                       filters=[iotests.filter_qmp_testfiles])
++
++        # Give block-stream something to work on, otherwise it would be done
++        # immediately, send a BLOCK_JOB_COMPLETED and ejecting the BDS would
++        # work just fine without the block job still running.
++        iotests.qemu_io(bottom_path, '-c', f'write 0 {IMAGE_SIZE}')
++        with TestCase('block-stream', vm, top_path, 'BLOCK_JOB_CANCELLED'):
++            vm.qmp_log('block-stream', \
++                       job_id='job0', \
++                       device='drv0', \
++                       speed=1)
++
++if __name__ == '__main__':
++    iotests.script_main(main, supported_fmts=['qcow2', 'qed'],
++                        supported_protocols=['file'])
+diff --git a/tests/qemu-iotests/141.out b/tests/qemu-iotests/141.out
+index 63203d9944..91b7ba50af 100644
+--- a/tests/qemu-iotests/141.out
++++ b/tests/qemu-iotests/141.out
+@@ -1,179 +1,69 @@
+-QA output created by 141
+-Formatting 'TEST_DIR/b.IMGFMT', fmt=IMGFMT size=1048576
+-Formatting 'TEST_DIR/m.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/b.IMGFMT backing_fmt=IMGFMT
+-Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/m.IMGFMT backing_fmt=IMGFMT
+-{'execute': 'qmp_capabilities'}
+-{"return": {}}
+-
++Creating bottom <- middle <- top backing file chain...
++Starting VM...
+ === Testing drive-backup ===
+-
+-{'execute': 'blockdev-add',
+-          'arguments': {
+-              'node-name': 'drv0',
+-              'driver': 'IMGFMT',
+-              'file': {
+-                  'driver': 'file',
+-                  'filename': 'TEST_DIR/t.IMGFMT'
+-              }}}
+-{"return": {}}
+-{'execute': 'drive-backup',
+-'arguments': {'job-id': 'job0',
+-'device': 'drv0',
+-'target': 'TEST_DIR/o.IMGFMT',
+-'format': 'IMGFMT',
+-'sync': 'none'}}
+-Formatting 'TEST_DIR/o.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT backing_fmt=IMGFMT
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "paused", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"execute": "blockdev-add", "arguments": {"driver": "IMGFMT", "file": {"driver": "file", "filename": "TEST_DIR/PID-top"}, "node-name": "drv0"}}
++{"return": {}}
++{"execute": "drive-backup", "arguments": {"device": "drv0", "format": "IMGFMT", "job-id": "job0", "sync": "none", "target": "TEST_DIR/PID-target"}}
++{"return": {}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"error": {"class": "GenericError", "desc": "Node 'drv0' is busy: node is used as backing hd of 'NODE_NAME'"}}
+-{'execute': 'block-job-cancel',
+-          'arguments': {'device': 'job0'}}
++{"execute": "block-job-cancel", "arguments": {"device": "job0"}}
+ {"return": {}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "aborting", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_CANCELLED", "data": {"device": "job0", "len": 1048576, "offset": 0, "speed": 0, "type": "backup"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"data": {"device": "job0", "len": 1048576, "offset": 0, "speed": 0, "type": "backup"}, "event": "BLOCK_JOB_CANCELLED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"return": {}}
  
--    return ((tb_cflags(a) & CF_PCREL || a->pc == b->pc) &&
-+    return (a->pc == b->pc &&
-             a->cs_base == b->cs_base &&
-             a->flags == b->flags &&
-             (tb_cflags(a) & ~CF_INVALID) == (tb_cflags(b) & ~CF_INVALID) &&
-@@ -916,7 +916,7 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
+ === Testing drive-mirror ===
+-
+-{'execute': 'blockdev-add',
+-          'arguments': {
+-              'node-name': 'drv0',
+-              'driver': 'IMGFMT',
+-              'file': {
+-                  'driver': 'file',
+-                  'filename': 'TEST_DIR/t.IMGFMT'
+-              }}}
+-{"return": {}}
+-{'execute': 'drive-mirror',
+-'arguments': {'job-id': 'job0',
+-'device': 'drv0',
+-'target': 'TEST_DIR/o.IMGFMT',
+-'format': 'IMGFMT',
+-'sync': 'none'}}
+-Formatting 'TEST_DIR/o.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT backing_fmt=IMGFMT
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "mirror"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"execute": "blockdev-add", "arguments": {"driver": "IMGFMT", "file": {"driver": "file", "filename": "TEST_DIR/PID-top"}, "node-name": "drv0"}}
++{"return": {}}
++{"execute": "drive-mirror", "arguments": {"device": "drv0", "format": "IMGFMT", "job-id": "job0", "sync": "none", "target": "TEST_DIR/PID-target"}}
++{"return": {}}
++{"data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"error": {"class": "GenericError", "desc": "Node 'drv0' is busy: block device is in use by block job: mirror"}}
+-{'execute': 'block-job-cancel',
+-          'arguments': {'device': 'job0'}}
++{"execute": "block-job-cancel", "arguments": {"device": "job0"}}
+ {"return": {}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_COMPLETED", "data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "mirror"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"return": {}}
  
-     /* remove the TB from the hash list */
-     phys_pc = tb_page_addr0(tb);
--    h = tb_hash_func(phys_pc, (orig_cflags & CF_PCREL ? 0 : tb->pc),
-+    h = tb_hash_func(phys_pc, tb->pc,
-                      tb->flags, tb->cs_base, orig_cflags);
-     if (!qht_remove(&tb_ctx.htable, tb, h)) {
-         return;
-@@ -983,7 +983,7 @@ TranslationBlock *tb_link_page(TranslationBlock *tb)
-     tb_record(tb);
+ === Testing active block-commit ===
+-
+-{'execute': 'blockdev-add',
+-          'arguments': {
+-              'node-name': 'drv0',
+-              'driver': 'IMGFMT',
+-              'file': {
+-                  'driver': 'file',
+-                  'filename': 'TEST_DIR/t.IMGFMT'
+-              }}}
+-{"return": {}}
+-{'execute': 'block-commit',
+-'arguments': {'job-id': 'job0', 'device': 'drv0'}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "commit"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"execute": "blockdev-add", "arguments": {"driver": "IMGFMT", "file": {"driver": "file", "filename": "TEST_DIR/PID-top"}, "node-name": "drv0"}}
++{"return": {}}
++{"execute": "block-commit", "arguments": {"device": "drv0", "job-id": "job0"}}
++{"return": {}}
++{"data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "commit"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"error": {"class": "GenericError", "desc": "Node 'drv0' is busy: block device is in use by block job: commit"}}
+-{'execute': 'block-job-cancel',
+-          'arguments': {'device': 'job0'}}
++{"execute": "block-job-cancel", "arguments": {"device": "job0"}}
+ {"return": {}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_COMPLETED", "data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "commit"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"data": {"device": "job0", "len": 0, "offset": 0, "speed": 0, "type": "commit"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"return": {}}
  
-     /* add in the hash table */
--    h = tb_hash_func(tb_page_addr0(tb), (tb->cflags & CF_PCREL ? 0 : tb->pc),
-+    h = tb_hash_func(tb_page_addr0(tb), tb->pc,
-                      tb->flags, tb->cs_base, tb->cflags);
-     qht_insert(&tb_ctx.htable, tb, h, &existing_tb);
+ === Testing non-active block-commit ===
+-
+-wrote 1048576/1048576 bytes at offset 0
+-1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-{'execute': 'blockdev-add',
+-          'arguments': {
+-              'node-name': 'drv0',
+-              'driver': 'IMGFMT',
+-              'file': {
+-                  'driver': 'file',
+-                  'filename': 'TEST_DIR/t.IMGFMT'
+-              }}}
+-{"return": {}}
+-{'execute': 'block-commit',
+-'arguments': {'job-id': 'job0',
+-'device': 'drv0',
+-'top':    'TEST_DIR/m.IMGFMT',
+-'speed':  1}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"execute": "blockdev-add", "arguments": {"driver": "IMGFMT", "file": {"driver": "file", "filename": "TEST_DIR/PID-top"}, "node-name": "drv0"}}
++{"return": {}}
++{"execute": "block-commit", "arguments": {"device": "drv0", "job-id": "job0", "speed": 1, "top": "TEST_DIR/PID-middle"}}
++{"return": {}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"error": {"class": "GenericError", "desc": "Node 'drv0' is busy: block device is in use by block job: commit"}}
+-{'execute': 'block-job-cancel',
+-          'arguments': {'device': 'job0'}}
++{"execute": "block-job-cancel", "arguments": {"device": "job0"}}
+ {"return": {}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "aborting", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_CANCELLED", "data": {"device": "job0", "len": 1048576, "offset": 524288, "speed": 1, "type": "commit"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"data": {"device": "job0", "len": 1048576, "offset": 524288, "speed": 1, "type": "commit"}, "event": "BLOCK_JOB_CANCELLED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"return": {}}
  
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 79a88f5fb7..c1708afcb0 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -327,9 +327,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
- 
-     gen_code_buf = tcg_ctx->code_gen_ptr;
-     tb->tc.ptr = tcg_splitwx_to_rx(gen_code_buf);
--    if (!(cflags & CF_PCREL)) {
--        tb->pc = pc;
--    }
-+    tb->pc = pc;
-     tb->cs_base = cs_base;
-     tb->flags = flags;
-     tb->cflags = cflags;
+ === Testing block-stream ===
+-
+-wrote 1048576/1048576 bytes at offset 0
+-1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-{'execute': 'blockdev-add',
+-          'arguments': {
+-              'node-name': 'drv0',
+-              'driver': 'IMGFMT',
+-              'file': {
+-                  'driver': 'file',
+-                  'filename': 'TEST_DIR/t.IMGFMT'
+-              }}}
+-{"return": {}}
+-{'execute': 'block-stream',
+-'arguments': {'job-id': 'job0',
+-'device': 'drv0',
+-'speed': 1}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"execute": "blockdev-add", "arguments": {"driver": "IMGFMT", "file": {"driver": "file", "filename": "TEST_DIR/PID-top"}, "node-name": "drv0"}}
++{"return": {}}
++{"execute": "block-stream", "arguments": {"device": "drv0", "job-id": "job0", "speed": 1}}
++{"return": {}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"error": {"class": "GenericError", "desc": "Node 'drv0' is busy: block device is in use by block job: stream"}}
+-{'execute': 'block-job-cancel',
+-          'arguments': {'device': 'job0'}}
++{"execute": "block-job-cancel", "arguments": {"device": "job0"}}
+ {"return": {}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "aborting", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_CANCELLED", "data": {"device": "job0", "len": 1048576, "offset": 524288, "speed": 1, "type": "stream"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job0"}}
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job0"}}
+-{'execute': 'blockdev-del',
+-          'arguments': {'node-name': 'drv0'}}
++{"data": {"device": "job0", "len": 1048576, "offset": 524288, "speed": 1, "type": "stream"}, "event": "BLOCK_JOB_CANCELLED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
++{"execute": "blockdev-del", "arguments": {"node-name": "drv0"}}
+ {"return": {}}
+-*** done
++
 -- 
 2.39.2
 
