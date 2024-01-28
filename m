@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 657A2C47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:47:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C908C47DDB
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTx1M-0006G0-77; Sat, 27 Jan 2024 23:43:52 -0500
+	id 1rTx0a-0004on-31; Sat, 27 Jan 2024 23:43:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx19-0005nk-DN
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:41 -0500
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ id 1rTx0Y-0004oZ-Vg
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:02 -0500
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx17-0004Qq-8Q
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:39 -0500
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5957ede4deaso1180498eaf.1
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:43:36 -0800 (PST)
+ id 1rTx0X-0004MI-BG
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:02 -0500
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-59502aa878aso892602eaf.1
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:43:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706417016; x=1707021816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706416980; x=1707021780; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2hwCZNX7r6WcP/DB6F59Yv2bYfXzcZik2wXoCrV2EBg=;
- b=ygmUA1MPOgZvcj7ShkZRqbtk+9pD/mRZOryQzNEM7C2sBf2QlrQh8I8pamh5pWXMoo
- vuJ9HC3SP8etWsKPvPjxZ945ieB//y3k3y72Y8DtxYF2hYMU1sHM/Jg3xOGsN9kpzE+C
- 0p8Hgj3zUqTxyrsP/WCBxL9PQcrxzyiMAQkMm3mOzKUMLathDxlf57+iwvd7QdVAdzha
- j2gsYJe4eq71zXVoVX9BLylsA403KBaWq98ql36hUSb7NtFkvS9CXQ9y4EGDgeibpavL
- VDPM7iIKvcbQPL76CGjX4VybqsOui6DWdJEZB1r8c9H+xMvD2Clk2DBKR2ztqt9BzJMG
- oKhg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5Gt1CNQckx8yO7WR3bedyoAfBxjm8E850nOtIhoFZIA=;
+ b=WJdnCzucKZBV4towWVl24R5F++q0UC7aooRKRVdEr1NrI1SIwOPwOwnsSTa/8bsqgw
+ idc5cJdzLWbUjiLmxd9QG4KIMNpVtFFFSXu+Wvvz1KnxbjZq/yGSNIudUGr9MwVFl3C4
+ v9x7huVVhm1wo/Pvo/3IQ4AVydOgxH8boYalJXeXAWg9vF5oRBolMslBNW/1YxEhgWto
+ 2RSdg2Fhysh7ixasKRJ4yyhqE0EyKIXKrm+qtprToll1urUAIyhVlMQ6ypVxshbity8u
+ 82mNg0ze2JUAJ4dcPkqGLeK23L2ZrcpJMB1CJBLepEYUghlZ9Mz7qTZZ5RdeoMRavWIw
+ n48g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706417016; x=1707021816;
+ d=1e100.net; s=20230601; t=1706416980; x=1707021780;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2hwCZNX7r6WcP/DB6F59Yv2bYfXzcZik2wXoCrV2EBg=;
- b=JcDxzh6mQOaMeQieuIVI73KqGniN36IxvxdfbWBLj2NeyUZ/0jfrs+NvJuvbRwfwcR
- AtDUe34iypB8CW9/caqmOyNCVHawcBDlJ9QTjgNcJkJ1+oWiTi+qNR/bqWyZmAMeelvr
- yPAPxxIj6dgbI5cOzHaA7yx69zuaAYSTX3Opy8vIHP8GtUDE92kZbp8iSGt0pOCG++et
- Ff5uYJJvcQitrruFW4aH40Hj1p2W5eycFm/Mq1z/APe9pt2DUKyCP7W3lu2ZibsBFRro
- GcZ8qb2W2u3vQcmMyMbFMNP8BS0XMq97ecy018AgY/g6JdZ1C49SuVKrh0JSGVfdIDdq
- sBLw==
-X-Gm-Message-State: AOJu0Yx6Lf9DGIXmE0XIAL0oPvqaLIC0uouI/sogZdA5SOMH4Lq1GMku
- aSwUKLTzHz/VTHtOnds+h79+3jxthQQSGyNFnY8q9S2xSjzW6dw58QN3vboELdFy/Nae231Vcqz
- vlV9LVQ==
-X-Google-Smtp-Source: AGHT+IF2Jhs9mUI8/9R/u+kbEOba5QAX5NNEr/vODx0Z4cNsu0PqqO1+Z6c2I5eNm7yuiK9V0Bv7sw==
-X-Received: by 2002:a05:6358:52c7:b0:174:f48c:3871 with SMTP id
- z7-20020a05635852c700b00174f48c3871mr3059615rwz.43.1706417015729; 
- Sat, 27 Jan 2024 20:43:35 -0800 (PST)
+ bh=5Gt1CNQckx8yO7WR3bedyoAfBxjm8E850nOtIhoFZIA=;
+ b=nkWsa+9IKszQZLk6mo4uYAcVAaS7g0rQMs8d2mJvcb7BHVD99fpoWzsidAEJE30PCw
+ I3NlwkxqqtBBAGPTrPPB6luDUry/x4haGMp0TYsgcJp95lnZeeNH5ROXxUVaI6TBeu/t
+ 7NzHyTlUEoyQYphiDNUomtGXoXDDfDFpmDns/v8iLz+rn7falL+R5jTNr3Giqv/6n97U
+ 4bbNDTKmxNEHZ4JepQQnaXXPRzmZQnU2QvDwktzjc9TZHWcc6tB/qT4aoZRXHluHy8X6
+ J6ckEXBjUNP93XSMDQmHUjSUqDpdIw014N0gumdyI1NsrBBEhIc0v5UG6mu+zB4+e+Nm
+ l8kQ==
+X-Gm-Message-State: AOJu0YxEP28HXgZt9AZIWeNnujV1PrCTMYjYxOPGDoMarNPVyhcDmDph
+ 68nDD+n5t1Ne6gfUDbyS8VdOO8g915XB8OYlEghnFWDTy/okxmhYE13c3+gmEVe2s8p2sRxiStD
+ tig5Dvw==
+X-Google-Smtp-Source: AGHT+IHKOjdAhCfbPIdMghraXMGmP3LDCEbjqUjU9s7DX1xYeJcB3q1unkvroBBod6ZpguoBSarosA==
+X-Received: by 2002:a05:6358:cc1b:b0:176:b6fe:db88 with SMTP id
+ gx27-20020a056358cc1b00b00176b6fedb88mr2148763rwb.64.1706416979988; 
+ Sat, 27 Jan 2024 20:42:59 -0800 (PST)
 Received: from stoup..
  (ppp121-45-131-89.bri-pow-que-bras31.tpg.internode.on.net. [121.45.131.89])
  by smtp.gmail.com with ESMTPSA id
- w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.43.34
- for <qemu-devel@nongnu.org>
+ w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Jan 2024 20:43:35 -0800 (PST)
+ Sat, 27 Jan 2024 20:42:59 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 31/33] accel/tcg: Inline need_replay_interrupt
-Date: Sun, 28 Jan 2024 14:42:11 +1000
-Message-Id: <20240128044213.316480-32-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 17/33] target: Make qemu_target_page_mask() available for
+ *-user
+Date: Sun, 28 Jan 2024 14:41:57 +1000
+Message-Id: <20240128044213.316480-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,49 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function is now trivial, and with inlining we can
-re-use the calling function's tcg_ops variable.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
+Currently qemu_target_page_mask() is usable only from the softmmu
+code. Make it possible to use it from the *-user code as well.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20231208003754.3688038-2-iii@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240124075609.14756-2-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+[rth: Split out change to accel/tcg/perf.c]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cpu-exec.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ system/physmem.c       |  5 -----
+ target/target-common.c | 10 ++++++++++
+ target/meson.build     |  2 ++
+ 3 files changed, 12 insertions(+), 5 deletions(-)
+ create mode 100644 target/target-common.c
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 2eacd694ea..75f7ba7bed 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -765,20 +765,6 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-     return false;
+diff --git a/system/physmem.c b/system/physmem.c
+index cc68a79763..5e66d9ae36 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3431,11 +3431,6 @@ size_t qemu_target_page_size(void)
+     return TARGET_PAGE_SIZE;
  }
  
--#ifndef CONFIG_USER_ONLY
--/*
-- * CPU_INTERRUPT_POLL is a virtual event which gets converted into a
-- * "real" interrupt event later. It does not need to be recorded for
-- * replay purposes.
-- */
--static inline bool need_replay_interrupt(CPUState *cpu, int interrupt_request)
+-int qemu_target_page_mask(void)
 -{
--    const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
--    return !tcg_ops->need_replay_interrupt
--           || tcg_ops->need_replay_interrupt(interrupt_request);
+-    return TARGET_PAGE_MASK;
 -}
--#endif /* !CONFIG_USER_ONLY */
 -
- static inline bool icount_exit_request(CPUState *cpu)
+ int qemu_target_page_bits(void)
  {
-     if (!icount_enabled()) {
-@@ -862,7 +848,8 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
- 
-             if (tcg_ops->cpu_exec_interrupt &&
-                 tcg_ops->cpu_exec_interrupt(cpu, interrupt_request)) {
--                if (need_replay_interrupt(cpu, interrupt_request)) {
-+                if (!tcg_ops->need_replay_interrupt ||
-+                    tcg_ops->need_replay_interrupt(interrupt_request)) {
-                     replay_interrupt();
-                 }
-                 /*
+     return TARGET_PAGE_BITS;
+diff --git a/target/target-common.c b/target/target-common.c
+new file mode 100644
+index 0000000000..903b10cfe4
+--- /dev/null
++++ b/target/target-common.c
+@@ -0,0 +1,10 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "qemu/osdep.h"
++
++#include "cpu.h"
++#include "exec/target_page.h"
++
++int qemu_target_page_mask(void)
++{
++    return TARGET_PAGE_MASK;
++}
+diff --git a/target/meson.build b/target/meson.build
+index a53a60486f..dee2ac47e0 100644
+--- a/target/meson.build
++++ b/target/meson.build
+@@ -19,3 +19,5 @@ subdir('sh4')
+ subdir('sparc')
+ subdir('tricore')
+ subdir('xtensa')
++
++specific_ss.add(files('target-common.c'))
 -- 
 2.34.1
 
