@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB99C47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8BBCC47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9Hh-0007Xk-VG; Sun, 28 Jan 2024 12:49:34 -0500
+	id 1rU9JB-0003CI-NU; Sun, 28 Jan 2024 12:51:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9H8-0006Ra-KY; Sun, 28 Jan 2024 12:49:02 -0500
+ id 1rU9Ix-0002lh-ED; Sun, 28 Jan 2024 12:50:55 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9H6-0000PC-FO; Sun, 28 Jan 2024 12:48:58 -0500
+ id 1rU9Ir-0000mU-Ap; Sun, 28 Jan 2024 12:50:51 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E6F25480EC;
- Sun, 28 Jan 2024 20:49:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8091E48104;
+ Sun, 28 Jan 2024 20:51:28 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5B27F6D513;
- Sun, 28 Jan 2024 20:48:49 +0300 (MSK)
-Received: (nullmailer pid 811708 invoked by uid 1000);
- Sun, 28 Jan 2024 17:48:46 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 28A656D521;
+ Sun, 28 Jan 2024 20:50:37 +0300 (MSK)
+Received: (nullmailer pid 812407 invoked by uid 1000);
+ Sun, 28 Jan 2024 17:50:35 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Xiao Lei <leixiao.nop@zju.edu.cn>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- Mauro Matteo Cascella <mcascell@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.1.5 29/36] virtio-net: correctly copy vnet header when
- flushing TX
-Date: Sun, 28 Jan 2024 20:48:34 +0300
-Message-Id: <20240128174845.811654-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.1 56/71] accel/tcg: Revert mapping of PCREL translation
+ block to multiple virtual addresses
+Date: Sun, 28 Jan 2024 20:50:19 +0300
+Message-Id: <20240128175035.812352-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
-References: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
+References: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -64,70 +62,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jason Wang <jasowang@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-When HASH_REPORT is negotiated, the guest_hdr_len might be larger than
-the size of the mergeable rx buffer header. Using
-virtio_net_hdr_mrg_rxbuf during the header swap might lead a stack
-overflow in this case. Fixing this by using virtio_net_hdr_v1_hash
-instead.
+This is causing regressions that have not been analyzed yet.  Revert the
+change on stable branches.
 
-Reported-by: Xiao Lei <leixiao.nop@zju.edu.cn>
-Cc: Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: qemu-stable@nongnu.org
-Cc: Mauro Matteo Cascella <mcascell@redhat.com>
-Fixes: CVE-2023-6693
-Fixes: e22f0603fb2f ("virtio-net: reference implementation of hash report")
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 2220e8189fb94068dbad333228659fbac819abb0)
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Related: https://gitlab.com/qemu-project/qemu/-/issues/2092
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9a93a2df01..fbed66e6ca 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -667,6 +667,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index c938eb96f8..6a4af14d32 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -183,7 +183,7 @@ static bool tb_lookup_cmp(const void *p, const void *d)
+     const TranslationBlock *tb = p;
+     const struct tb_desc *desc = d;
  
-     n->mergeable_rx_bufs = mergeable_rx_bufs;
+-    if ((tb_cflags(tb) & CF_PCREL || tb->pc == desc->pc) &&
++    if (tb->pc == desc->pc &&
+         tb_page_addr0(tb) == desc->page_addr0 &&
+         tb->cs_base == desc->cs_base &&
+         tb->flags == desc->flags &&
+@@ -233,7 +233,7 @@ static TranslationBlock *tb_htable_lookup(CPUState *cpu, vaddr pc,
+         return NULL;
+     }
+     desc.page_addr0 = phys_pc;
+-    h = tb_hash_func(phys_pc, (cflags & CF_PCREL ? 0 : pc),
++    h = tb_hash_func(phys_pc, pc,
+                      flags, cs_base, cflags);
+     return qht_lookup_custom(&tb_ctx.htable, &desc, h, tb_lookup_cmp);
+ }
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index 3d2a896220..0d069a081e 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -47,7 +47,7 @@ static bool tb_cmp(const void *ap, const void *bp)
+     const TranslationBlock *a = ap;
+     const TranslationBlock *b = bp;
  
-+    /*
-+     * Note: when extending the vnet header, please make sure to
-+     * change the vnet header copying logic in virtio_net_flush_tx()
-+     * as well.
-+     */
-     if (version_1) {
-         n->guest_hdr_len = hash_report ?
-             sizeof(struct virtio_net_hdr_v1_hash) :
-@@ -2674,7 +2679,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         ssize_t ret;
-         unsigned int out_num;
-         struct iovec sg[VIRTQUEUE_MAX_SIZE], sg2[VIRTQUEUE_MAX_SIZE + 1], *out_sg;
--        struct virtio_net_hdr_mrg_rxbuf mhdr;
-+        struct virtio_net_hdr_v1_hash vhdr;
+-    return ((tb_cflags(a) & CF_PCREL || a->pc == b->pc) &&
++    return (a->pc == b->pc &&
+             a->cs_base == b->cs_base &&
+             a->flags == b->flags &&
+             (tb_cflags(a) & ~CF_INVALID) == (tb_cflags(b) & ~CF_INVALID) &&
+@@ -916,7 +916,7 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
  
-         elem = virtqueue_pop(q->tx_vq, sizeof(VirtQueueElement));
-         if (!elem) {
-@@ -2691,7 +2696,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         }
+     /* remove the TB from the hash list */
+     phys_pc = tb_page_addr0(tb);
+-    h = tb_hash_func(phys_pc, (orig_cflags & CF_PCREL ? 0 : tb->pc),
++    h = tb_hash_func(phys_pc, tb->pc,
+                      tb->flags, tb->cs_base, orig_cflags);
+     if (!qht_remove(&tb_ctx.htable, tb, h)) {
+         return;
+@@ -983,7 +983,7 @@ TranslationBlock *tb_link_page(TranslationBlock *tb)
+     tb_record(tb);
  
-         if (n->has_vnet_hdr) {
--            if (iov_to_buf(out_sg, out_num, 0, &mhdr, n->guest_hdr_len) <
-+            if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
-                 n->guest_hdr_len) {
-                 virtio_error(vdev, "virtio-net header incorrect");
-                 virtqueue_detach_element(q->tx_vq, elem, 0);
-@@ -2699,8 +2704,8 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-                 return -EINVAL;
-             }
-             if (n->needs_vnet_hdr_swap) {
--                virtio_net_hdr_swap(vdev, (void *) &mhdr);
--                sg2[0].iov_base = &mhdr;
-+                virtio_net_hdr_swap(vdev, (void *) &vhdr);
-+                sg2[0].iov_base = &vhdr;
-                 sg2[0].iov_len = n->guest_hdr_len;
-                 out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1,
-                                    out_sg, out_num,
+     /* add in the hash table */
+-    h = tb_hash_func(tb_page_addr0(tb), (tb->cflags & CF_PCREL ? 0 : tb->pc),
++    h = tb_hash_func(tb_page_addr0(tb), tb->pc,
+                      tb->flags, tb->cs_base, tb->cflags);
+     qht_insert(&tb_ctx.htable, tb, h, &existing_tb);
+ 
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 79a88f5fb7..c1708afcb0 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -327,9 +327,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
+ 
+     gen_code_buf = tcg_ctx->code_gen_ptr;
+     tb->tc.ptr = tcg_splitwx_to_rx(gen_code_buf);
+-    if (!(cflags & CF_PCREL)) {
+-        tb->pc = pc;
+-    }
++    tb->pc = pc;
+     tb->cs_base = cs_base;
+     tb->flags = flags;
+     tb->cflags = cflags;
 -- 
 2.39.2
 
