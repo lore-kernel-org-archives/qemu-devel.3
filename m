@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB323C47DDB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2A4C47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:46:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTx0r-00051U-Em; Sat, 27 Jan 2024 23:43:21 -0500
+	id 1rTx0M-0004kS-4m; Sat, 27 Jan 2024 23:42:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0p-0004yE-ON
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:19 -0500
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ id 1rTx0K-0004kI-Pg
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:48 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0o-0004No-67
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:19 -0500
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-59a146e8c85so791279eaf.0
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:43:17 -0800 (PST)
+ id 1rTx0J-0004JL-9j
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:48 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-290483f8c7bso1322954a91.3
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706416996; x=1707021796; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706416966; x=1707021766; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IeBfHlDAifxu4F1/UNQzzGCEUArq4HbYf2mScaRZKZ4=;
- b=f7FzQJha1UfDYDFRCNrnaD3VeweiPjO/5FeGsz/F+3eUdoWLc2ZRvzz4JcaQFkywXy
- MWw7ae606x3e9OId4KlSfF7a/h+mZfKvtY+PxKOHEelY4llYIoxq6SxqSUd6tNm10S6m
- unbWAalSfDwgtPgbjMEmwOahddDDb0yVy7lexXmpHxXfhvixYXhrsxfb9v1geXqOah3X
- 34EVUO2gpmYoj/M+GRD3wRB9kSWyR+3xnuKS+ExKHdikRZG4aCmFEER/VUpcd+2WqhsJ
- fHpQgFbjtwdfqdsYq14mO8Bbb2+ZQvPi3CQJYW8SUh07KkQR13xuJEFZ32ZlZRmDVEMl
- LvXQ==
+ bh=0IsJCYKuWrursPA6kPyaSh6Iig/if/7dsXp1H2oDJMs=;
+ b=BaOPrRv980yaVACOJTE4DnWzuGl/0lVF+rWL52lIIC7JNOGVEee0Ckvz8Kl7p5tjxh
+ Itd9ZlY6pC3z0bdp63LBFXwa7jIpHQYBjuAoFpiDBq5W28cB099b4Zo/H8AiJdyuzV/x
+ Ilq0T/BDp2Eq7w0DvxhfhZe2WFrgNBlXgXG8fos3ZEQJwSjuusqQUG4GqIa5ajjBVKfs
+ u2oyhz7iJ8wZw4wSyRBC2hZCvzWzYNNZIsc4VENuaqkqhdDBIZSxtW9hjYHxIPRigt2D
+ /MjpzO5m2bgEBzhtgwgfPlcUJ8TQlg2LJq+8j3bgaSrm9aOfAvJnP/etTPx9keNBcnyK
+ 46wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706416996; x=1707021796;
+ d=1e100.net; s=20230601; t=1706416966; x=1707021766;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IeBfHlDAifxu4F1/UNQzzGCEUArq4HbYf2mScaRZKZ4=;
- b=RXfF5z0FCuy7TXP6qjVy8UmT4Qghp1oXgDpfYOoawDsDFqHH/oxnNoS3U43t5sGd2T
- JD1B0WJITGgjsc5TPVoQKN4hOQaNfXlKlenldC+5SqikOB3i/rhNQryKgNZvC2U5mvkG
- zf/9n2045WYnfIS+43xit3EbDkT//H99Suuu9oocDkIGR5MSvHS3lWG6t9VA9vR0j7UI
- 6nPD9/w/N2xobWPRZUEVDwP4TSdCcMrLkzK6MMMyHHAASYpX74/hMwYF3GvFkk4KPMII
- QxLRUObBC76ZlfMqd6jwbuqleZZYKYdTKAZuFT3c54Cw7mcoQk0sQl7bxqYwhVrL1D3s
- oU/w==
-X-Gm-Message-State: AOJu0YzBeobvUNyDjV9iLFXMDY0G9nhNNDQDTDE2Dw3WmIx5PUmzqaor
- q9tMxww7epTZNZ6/+aCQTOMDHDW3cQXK+L7my5KuCeD6mivA94sz7YYB0yiaBebdMh4xSr+oqYh
- p6e12+w==
-X-Google-Smtp-Source: AGHT+IFIsbMAm27bHgb/fNYmCECZyibW1Is462S9l3popKVjMfdcT4tGfggiA1O1MgCZiQc5lq2ePg==
-X-Received: by 2002:a05:6358:3a14:b0:176:cf6e:51fc with SMTP id
- g20-20020a0563583a1400b00176cf6e51fcmr3089000rwe.53.1706416996717; 
- Sat, 27 Jan 2024 20:43:16 -0800 (PST)
+ bh=0IsJCYKuWrursPA6kPyaSh6Iig/if/7dsXp1H2oDJMs=;
+ b=qX17bqvGgCKkkKlIbA0TkwsMHItEifTGm64THynG/Lul+ELT+1AL6Ymcj76CcLczhA
+ kwwDfw9GrJjMOO7oEF0nIeOec6lo0myeLyNlXSqzZemZVJryibDX++OQ95XfbBiDoJEQ
+ 0fo5vf31hNxXXAtkJ4InllqLb7vJ7QGxGbb48glPr1IRP3vf61yMJm7Auky54U+0dauc
+ lWjs+3qJOLKVhpg+MTillGcOqqyG21N3tWDhYDAU7nCSYAQWRPN+PbsdN5qTkna4l/WP
+ zx8Z5QhOM5vc6PyRJePOlcPvEVk7jLXnZJd0PV2ar9bj2cmHJvP2j+fr/PRloQcuWyd2
+ 0kAQ==
+X-Gm-Message-State: AOJu0YzH2gntopdIEUkwUKMohly5kzSC4Alf77DF8v8i+ub29+iQUFuG
+ 1Z3bSC9XMtC+QSXxeNo5JQgDpk/4jifQ9aasJY5cCN6uKA4pHWmMJFPVN1IN5V+n3hUpJO11TuW
+ 6KIEsrg==
+X-Google-Smtp-Source: AGHT+IGDsF25tuBpf3hP1SjogbVqRI7bd1LE/jHwl5HLdeowmtarHEL465tLSaCdsLT6mrc7Wfwr+w==
+X-Received: by 2002:a17:90a:5d07:b0:293:e0bf:39ae with SMTP id
+ s7-20020a17090a5d0700b00293e0bf39aemr1659675pji.59.1706416965937; 
+ Sat, 27 Jan 2024 20:42:45 -0800 (PST)
 Received: from stoup..
  (ppp121-45-131-89.bri-pow-que-bras31.tpg.internode.on.net. [121.45.131.89])
  by smtp.gmail.com with ESMTPSA id
- w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.43.14
+ w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Jan 2024 20:43:16 -0800 (PST)
+ Sat, 27 Jan 2024 20:42:45 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 23/33] accel/tcg: Rename tcg_cpus_destroy() ->
- tcg_cpu_destroy()
-Date: Sun, 28 Jan 2024 14:42:03 +1000
-Message-Id: <20240128044213.316480-24-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>
+Subject: [PATCH 11/33] include/hw/core: Move do_interrupt in TCGCPUOps
+Date: Sun, 28 Jan 2024 14:41:51 +1000
+Message-Id: <20240128044213.316480-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,75 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Anton Johansson <anjo@rev.ng>
 
-tcg_cpus_destroy() operates on a single vCPU, rename it
-as 'tcg_cpu_destroy'.
+The ifdef out of which it is moved is not quite right: do_interrupt is
+only needed for system mode.  Move it to the top of a different ifdef
+block, which preserves its position within the structure for that case.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240124101639.30056-3-philmd@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240119144024.14289-18-anjo@rev.ng>
+[rth: Split from a larger patch and simplified.]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tcg-accel-ops.h       | 2 +-
- accel/tcg/tcg-accel-ops-mttcg.c | 2 +-
- accel/tcg/tcg-accel-ops-rr.c    | 2 +-
- accel/tcg/tcg-accel-ops.c       | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ include/hw/core/tcg-cpu-ops.h | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
-index f9bc6330e2..17c7ed00eb 100644
---- a/accel/tcg/tcg-accel-ops.h
-+++ b/accel/tcg/tcg-accel-ops.h
-@@ -14,7 +14,7 @@
- 
- #include "sysemu/cpus.h"
- 
--void tcg_cpus_destroy(CPUState *cpu);
-+void tcg_cpu_destroy(CPUState *cpu);
- int tcg_cpus_exec(CPUState *cpu);
- void tcg_handle_interrupt(CPUState *cpu, int mask);
- void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index af7307013a..bcba314a65 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -118,7 +118,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
-         qemu_wait_io_event(cpu);
-     } while (!cpu->unplug || cpu_can_run(cpu));
- 
--    tcg_cpus_destroy(cpu);
-+    tcg_cpu_destroy(cpu);
-     bql_unlock();
-     rcu_remove_force_rcu_notifier(&force_rcu.notifier);
-     rcu_unregister_thread();
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 3208035d85..0617f66b5b 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -131,7 +131,7 @@ static void rr_deal_with_unplugged_cpus(void)
- 
-     CPU_FOREACH(cpu) {
-         if (cpu->unplug && !cpu_can_run(cpu)) {
--            tcg_cpus_destroy(cpu);
-+            tcg_cpu_destroy(cpu);
-             break;
-         }
-     }
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 813065c0ec..9b84b84218 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -63,7 +63,7 @@ void tcg_cpu_init_cflags(CPUState *cpu, bool parallel)
-     cpu->tcg_cflags |= cflags;
- }
- 
--void tcg_cpus_destroy(CPUState *cpu)
-+void tcg_cpu_destroy(CPUState *cpu)
- {
-     cpu_thread_signal_destroyed(cpu);
- }
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index 479713a36e..d6fe55d471 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -58,11 +58,6 @@ struct TCGCPUOps {
+      * cpu execution loop (hack for x86 user mode).
+      */
+     void (*fake_user_interrupt)(CPUState *cpu);
+-#else
+-    /**
+-     * @do_interrupt: Callback for interrupt handling.
+-     */
+-    void (*do_interrupt)(CPUState *cpu);
+ #endif /* !CONFIG_USER_ONLY || !TARGET_I386 */
+ #ifdef CONFIG_USER_ONLY
+     /**
+@@ -114,6 +109,8 @@ struct TCGCPUOps {
+     void (*record_sigbus)(CPUState *cpu, vaddr addr,
+                           MMUAccessType access_type, uintptr_t ra);
+ #else
++    /** @do_interrupt: Callback for interrupt handling.  */
++    void (*do_interrupt)(CPUState *cpu);
+     /** @cpu_exec_interrupt: Callback for processing interrupts in cpu_exec */
+     bool (*cpu_exec_interrupt)(CPUState *cpu, int interrupt_request);
+     /**
 -- 
 2.34.1
 
