@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0352AC47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 16:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67EABC47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 16:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU82c-0005pb-TG; Sun, 28 Jan 2024 11:29:54 -0500
+	id 1rU835-0006Rl-Sa; Sun, 28 Jan 2024 11:30:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rU82a-0005pQ-UA
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 11:29:52 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rU832-0006IY-9Z
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 11:30:20 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rU82U-0003FN-FZ
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 11:29:51 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a35899ed8d3so50799566b.0
- for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 08:29:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rU82y-0003U9-MU
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 11:30:19 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a33735d22fcso142871466b.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 08:30:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706459385; x=1707064185; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1706459414; x=1707064214; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gIMK+fj3xdLSqa25THsmAJhBs7ihf8MjAonKo1mKIbA=;
- b=Vhiv/k/eT9fxPPESPwlmznIKAQb11tJJqlYn0F2lYj+1sRvXuuQwSjXRx9qYbeW7q9
- amxMqd5HkW8XpN/YmoLfg+WPBTneoFfA1hScXVtJ3kFrc/SEOye7/JXj9UFWnkICZZ8n
- bHo/MTqMLZPWmbd/W78k19mlnNXBYrEI0vIG0yH2Spv9RfqcPt1M4DMuuQAnFyH3hy1E
- ZesQuPKjOH2Z/1NPruB5dOhaunY4l82bjZE2iR4HGkvWcWofMvumMZKxx/4mfXDkHAqN
- +17oUlD3bfez7TNsV8ocHuq9l4ZrZuNaLd7m1oCIephi7AajHJOUeCiRpsQHaiFrB3cs
- NOUA==
+ bh=a5rOXLlprbmBpgjE2OvyWMyBFiMFYe6qOSmPyh+H0bM=;
+ b=UwVfiVRiYAR5K2HTldrg0AmY4nPP+1IX7KkAyhPXAI9ek65RWozeBLiQ8EFUIFXmFI
+ 3QHAcaymW4FNYClVduDvugmUW9SNRg2yeiQ9Jt0cu6g8lZTVqSoJ1ozgLN7vs6vwXqXS
+ 9TnaoXsCBboy2iuZ6GToE2x7sCUh6d1UGvX2w8day0Snv9gM8+Uymj9dJznvdAp6cnT2
+ PpvDmO2Tuuo2/iXFK25PEx+ZxGOwY1ZA1KzCPRzkpOyxZrFtdfyHw6K3G7/9j0zd6xb2
+ OBWtMEaZ7vg21wjTQCNedYqd+lT3g/hm7yNa4e6qRW/n2cJTPe2wafOhrdgArHiPQi5p
+ 2M0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706459385; x=1707064185;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1706459414; x=1707064214;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gIMK+fj3xdLSqa25THsmAJhBs7ihf8MjAonKo1mKIbA=;
- b=T3j33rrRqrKlATogoEAYwBLccS5SMx+U1tPIgpVxJaPnGBsYBtEJWAlWT+nxseCcF7
- Ygzfe1p9JK6I5cqHnXCzN0+7rOBYzNdYhlhYjT2XKzZoz/PrtuuDKdowsgGiEvABC5Uf
- GuD6BiB7GtDcZz1PrZ6LFC7QZD3QDEXDJm955Rp0+2CaUx35ZjZ06MrballZzCiY+PQC
- a9lA8h5+Qccgl0O31yX+GuaHTvxPUtSzDZk0HSFvkGV8OlOrDqH/Ks/hfVqqF0WZsDxA
- npv/alpDrkrKkbH+O8ylWmjx8BescudoF9azpF2YBUKS4BITuN3iP+tCj0aDlpXGMuwH
- Io4g==
-X-Gm-Message-State: AOJu0Yxkhupd0HhIZcV9kTVF7LmTOptRZlXF6CKfYdUHYyP2KlaIPWyi
- 4HenUKkOX9gPYdOGVOAie9YJRmsyodKAEWpaTXgxR8XcL9L4cmzzSFWeFRosL9e0RHQA7GSvAM7
- u
-X-Google-Smtp-Source: AGHT+IFjCn2Ycey6+s0Qvjb3cVLPeWhhd7eOOJf3/dcqaNjFdt3MLeIGKzpuMrJ9f6be5gcez+i3SA==
-X-Received: by 2002:a17:906:6d44:b0:a35:4664:8830 with SMTP id
- a4-20020a1709066d4400b00a3546648830mr2503231ejt.0.1706459384791; 
- Sun, 28 Jan 2024 08:29:44 -0800 (PST)
+ bh=a5rOXLlprbmBpgjE2OvyWMyBFiMFYe6qOSmPyh+H0bM=;
+ b=hAHE0fsd/1oa0wRwcwcU5aT/jtCOUIk9LGHHA6DFCy3f6FuV2NVKG6XI0c4RSRzCWl
+ u5JkhxUX3X28knAxJyaXsqFjK6wEfYsjUWW3qtjD1JeKFKmIY9y7dJeYZA2fA/+/Z2OL
+ J09gPsYbziaJGlUb/INuMbSl/IUREhDbKq1hKu7MLr6/Ajbc0OpUxPot+bpj3V9xitJD
+ URGRnTBtG4N9QKsMCZEEKk0tZkN6k+4kHckaoyrUZSo0kOjaNVH3D+V4PqLFObsNapMD
+ HmZU5iFgMfoyZkCH6hPvqGRJ0jj9WqsqahDIwFT+GR+VipctlNmVGk9o0LpLAN/yIO+d
+ Hmgg==
+X-Gm-Message-State: AOJu0YxbdLECeVLn5MOIPCpG0yzi7iuRYmPmOOguoewgEWsqQnWHL4n2
+ 6LYcuKbIWWsF+UGhLA4WljlsjL/6Tlz47C3EdQg4r1FR1QLRbbLCK4afLiVziOI=
+X-Google-Smtp-Source: AGHT+IEgd9VzB0phgPG1I/Nv940z2RzV2fhHYJM9jx6GsemKUPnUpjOIDytciZyT8wfZUdaFq92GuA==
+X-Received: by 2002:a17:906:168a:b0:a31:9b4:aa2 with SMTP id
+ s10-20020a170906168a00b00a3109b40aa2mr2869229ejd.51.1706459414650; 
+ Sun, 28 Jan 2024 08:30:14 -0800 (PST)
 Received: from [192.168.69.100] (sev93-h02-176-184-17-196.dsl.sta.abo.bbox.fr.
  [176.184.17.196]) by smtp.gmail.com with ESMTPSA id
- vh5-20020a170907d38500b00a3517d26918sm2440504ejc.107.2024.01.28.08.29.43
+ vh5-20020a170907d38500b00a3517d26918sm2440504ejc.107.2024.01.28.08.30.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Jan 2024 08:29:44 -0800 (PST)
-Message-ID: <5b95f541-d46a-49c2-9315-246601b4c6bf@linaro.org>
-Date: Sun, 28 Jan 2024 17:29:42 +0100
+ Sun, 28 Jan 2024 08:30:14 -0800 (PST)
+Message-ID: <c1f4af18-9af0-4833-8610-a58e69e6583a@linaro.org>
+Date: Sun, 28 Jan 2024 17:30:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/33] include/exec: Move cpu_*()/cpu_env() to common
- header
+Subject: Re: [PATCH 00/33] tcg patch queue, pre-pull
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
- <20240128044213.316480-11-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240128044213.316480-11-richard.henderson@linaro.org>
+In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,19 +93,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/1/24 05:41, Richard Henderson wrote:
-> From: Anton Johansson <anjo@rev.ng>
+> Collect some patch sets, cherry-pick from others, with a few
+> changes of my own.  Patches that lack review:
 > 
-> Functions are target independent.
+>    26-include-qemu-Add-TCGCPUOps-typedef-to-typedefs.h.patch
+>    27-target-loongarch-Constify-loongarch_tcg_ops.patch
+>    28-accel-tcg-Use-CPUState.cc-instead-of-CPU_GET_CLASS-i.patch
+>    31-accel-tcg-Inline-need_replay_interrupt.patch
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Message-Id: <20240119144024.14289-17-anjo@rev.ng>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/exec/cpu-all.h    | 25 -------------------------
->   include/exec/cpu-common.h | 26 ++++++++++++++++++++++++++
->   2 files changed, 26 insertions(+), 25 deletions(-)
+> 
+> r~
+> 
+> 
+> Anton Johansson (11):
+>    include/exec: Move vaddr defines to separate file
+>    hw/core: Include vaddr.h from cpu.h
+>    target: Use vaddr in gen_intermediate_code
+>    include/exec: Use vaddr in DisasContextBase for virtual addresses
+>    include/exec: typedef abi_ptr to vaddr
+>    target: Uninline cpu_mmu_index()
+>    target: Uninline cpu_get_tb_cpu_state()
+>    include/exec: Move PAGE_* macros to common header
+>    include/exec: Move cpu_*()/cpu_env() to common header
+>    include/hw/core: Move do_interrupt in TCGCPUOps
+>    include/hw/core: Remove i386 conditional on fake_user_interrupt
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Nitpick: preferably s/^include\// in subject :)
 
