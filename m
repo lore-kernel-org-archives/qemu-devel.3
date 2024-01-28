@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57963C47DA9
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E03DAC47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9Gn-00067K-Fw; Sun, 28 Jan 2024 12:48:37 -0500
+	id 1rU9Hl-00086d-R0; Sun, 28 Jan 2024 12:49:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9GU-0005ye-ON; Sun, 28 Jan 2024 12:48:18 -0500
+ id 1rU9HZ-00077D-Au; Sun, 28 Jan 2024 12:49:27 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9GS-0000Jg-N8; Sun, 28 Jan 2024 12:48:17 -0500
+ id 1rU9HT-0000Pl-Vc; Sun, 28 Jan 2024 12:49:22 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 12F1E480E3;
- Sun, 28 Jan 2024 20:48:48 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 960D4480EE;
+ Sun, 28 Jan 2024 20:49:42 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5F8046D50C;
- Sun, 28 Jan 2024 20:47:56 +0300 (MSK)
-Received: (nullmailer pid 811326 invoked by uid 1000);
- Sun, 28 Jan 2024 17:47:47 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 161EE6D515;
+ Sun, 28 Jan 2024 20:48:51 +0300 (MSK)
+Received: (nullmailer pid 811714 invoked by uid 1000);
+ Sun, 28 Jan 2024 17:48:46 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.9 29/30] qtest: bump aspeed_smc-test timeout to 6 minutes
-Date: Sun, 28 Jan 2024 20:47:42 +0300
-Message-Id: <20240128174747.811264-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.1.5 31/36] iotests: add filter_qmp_generated_node_ids()
+Date: Sun, 28 Jan 2024 20:48:36 +0300
+Message-Id: <20240128174845.811654-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.9-20240128204652@cover.tls.msk.ru>
-References: <qemu-stable-7.2.9-20240128204652@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
+References: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,33 +61,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-On a loaded system with --enable-debug, this test can take longer than
-5 minutes. Raising the timeout to 6 minutes gives greater headroom for
-such situations.
+Add a filter function for QMP responses that contain QEMU's
+automatically generated node ids. The ids change between runs and must
+be masked in the reference output.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-[thuth: Increase the timeout to 6 minutes for very loaded systems]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20231215070357.10888-11-thuth@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit e8a12fe31f776c60fec993513cd1b1e66c2b8e29)
+The next commit will use this new function.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20240118144823.1497953-2-stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit da62b507a20510d819bcfbe8f5e573409b954006)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup in tests/qtest/meson.build)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index c07a5b1a5f..c00b92b89a 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -6,6 +6,7 @@ endif
+diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
+index ef66fbd62b..1dd41e68ee 100644
+--- a/tests/qemu-iotests/iotests.py
++++ b/tests/qemu-iotests/iotests.py
+@@ -646,6 +646,13 @@ def _filter(_key, value):
+ def filter_generated_node_ids(msg):
+     return re.sub("#block[0-9]+", "NODE_NAME", msg)
  
- slow_qtests = {
-   'ahci-test' : 60,
-+  'aspeed_smc-test': 360,
-   'bios-tables-test' : 120,
-   'boot-serial-test' : 60,
-   'migration-test' : 150,
++def filter_qmp_generated_node_ids(qmsg):
++    def _filter(_key, value):
++        if is_str(value):
++            return filter_generated_node_ids(value)
++        return value
++    return filter_qmp(qmsg, _filter)
++
+ def filter_img_info(output: str, filename: str,
+                     drop_child_info: bool = True) -> str:
+     lines = []
 -- 
 2.39.2
 
