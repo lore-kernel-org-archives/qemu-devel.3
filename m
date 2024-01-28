@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E13ABC47DDB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB99C47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9Ht-0000j6-OF; Sun, 28 Jan 2024 12:49:45 -0500
+	id 1rU9Hh-0007Xk-VG; Sun, 28 Jan 2024 12:49:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9Hi-0007h8-FY; Sun, 28 Jan 2024 12:49:34 -0500
+ id 1rU9H8-0006Ra-KY; Sun, 28 Jan 2024 12:49:02 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9Hg-0000U0-Hx; Sun, 28 Jan 2024 12:49:34 -0500
+ id 1rU9H6-0000PC-FO; Sun, 28 Jan 2024 12:48:58 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 165A2480F1;
- Sun, 28 Jan 2024 20:49:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E6F25480EC;
+ Sun, 28 Jan 2024 20:49:40 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 871186D518;
- Sun, 28 Jan 2024 20:48:53 +0300 (MSK)
-Received: (nullmailer pid 811723 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 5B27F6D513;
+ Sun, 28 Jan 2024 20:48:49 +0300 (MSK)
+Received: (nullmailer pid 811708 invoked by uid 1000);
  Sun, 28 Jan 2024 17:48:46 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.1.5 34/36] qtest: bump aspeed_smc-test timeout to 6 minutes
-Date: Sun, 28 Jan 2024 20:48:39 +0300
-Message-Id: <20240128174845.811654-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Xiao Lei <leixiao.nop@zju.edu.cn>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.1.5 29/36] virtio-net: correctly copy vnet header when
+ flushing TX
+Date: Sun, 28 Jan 2024 20:48:34 +0300
+Message-Id: <20240128174845.811654-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
 References: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,32 +64,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
 
-On a loaded system with --enable-debug, this test can take longer than
-5 minutes. Raising the timeout to 6 minutes gives greater headroom for
-such situations.
+When HASH_REPORT is negotiated, the guest_hdr_len might be larger than
+the size of the mergeable rx buffer header. Using
+virtio_net_hdr_mrg_rxbuf during the header swap might lead a stack
+overflow in this case. Fixing this by using virtio_net_hdr_v1_hash
+instead.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-[thuth: Increase the timeout to 6 minutes for very loaded systems]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20231215070357.10888-11-thuth@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit e8a12fe31f776c60fec993513cd1b1e66c2b8e29)
+Reported-by: Xiao Lei <leixiao.nop@zju.edu.cn>
+Cc: Yuri Benditovich <yuri.benditovich@daynix.com>
+Cc: qemu-stable@nongnu.org
+Cc: Mauro Matteo Cascella <mcascell@redhat.com>
+Fixes: CVE-2023-6693
+Fixes: e22f0603fb2f ("virtio-net: reference implementation of hash report")
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 2220e8189fb94068dbad333228659fbac819abb0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup in tests/qtest/meson.build)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index b071d400b3..f9e77bbd26 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -1,5 +1,6 @@
- slow_qtests = {
-   'ahci-test' : 60,
-+  'aspeed_smc-test': 360,
-   'bios-tables-test' : 120,
-   'boot-serial-test' : 60,
-   'migration-test' : 150,
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9a93a2df01..fbed66e6ca 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -667,6 +667,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+ 
+     n->mergeable_rx_bufs = mergeable_rx_bufs;
+ 
++    /*
++     * Note: when extending the vnet header, please make sure to
++     * change the vnet header copying logic in virtio_net_flush_tx()
++     * as well.
++     */
+     if (version_1) {
+         n->guest_hdr_len = hash_report ?
+             sizeof(struct virtio_net_hdr_v1_hash) :
+@@ -2674,7 +2679,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+         ssize_t ret;
+         unsigned int out_num;
+         struct iovec sg[VIRTQUEUE_MAX_SIZE], sg2[VIRTQUEUE_MAX_SIZE + 1], *out_sg;
+-        struct virtio_net_hdr_mrg_rxbuf mhdr;
++        struct virtio_net_hdr_v1_hash vhdr;
+ 
+         elem = virtqueue_pop(q->tx_vq, sizeof(VirtQueueElement));
+         if (!elem) {
+@@ -2691,7 +2696,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+         }
+ 
+         if (n->has_vnet_hdr) {
+-            if (iov_to_buf(out_sg, out_num, 0, &mhdr, n->guest_hdr_len) <
++            if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
+                 n->guest_hdr_len) {
+                 virtio_error(vdev, "virtio-net header incorrect");
+                 virtqueue_detach_element(q->tx_vq, elem, 0);
+@@ -2699,8 +2704,8 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+                 return -EINVAL;
+             }
+             if (n->needs_vnet_hdr_swap) {
+-                virtio_net_hdr_swap(vdev, (void *) &mhdr);
+-                sg2[0].iov_base = &mhdr;
++                virtio_net_hdr_swap(vdev, (void *) &vhdr);
++                sg2[0].iov_base = &vhdr;
+                 sg2[0].iov_len = n->guest_hdr_len;
+                 out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1,
+                                    out_sg, out_num,
 -- 
 2.39.2
 
