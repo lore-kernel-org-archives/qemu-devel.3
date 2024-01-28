@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03E27C47DDF
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 08:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2785C4828A
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 08:29:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU0W6-0004SB-47; Sun, 28 Jan 2024 03:27:50 -0500
+	id 1rU0WM-0004Zi-Gt; Sun, 28 Jan 2024 03:28:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rU0W4-0004S0-G3
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 03:27:48 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ id 1rU0WJ-0004YA-45
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 03:28:03 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rU0W2-00079O-AE
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 03:27:48 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3be4cf37c14so38539b6e.0
- for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 00:27:45 -0800 (PST)
+ id 1rU0WH-0007FP-JO
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 03:28:02 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1d780a392fdso14068425ad.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 00:28:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1706430464; x=1707035264;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1706430480; x=1707035280;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MJ/JtCayd5oT7ympEH9TIQ53/Lmd99ySh4obNvOPLBo=;
- b=UTl3fNCArmbf0bIK+w24lOMPnmkAB3dQqqKVEyeFQbebozEzN8Re/CQI0gg7OVersw
- NfKAImFzVW7n+hi6oxTqRj7GvEAqKwATXP81G6Nw66MiIHBh/9NfoNr3FlQdEfnYnhG1
- Q2wPjeDYNhoocut0J6zkxnK5ghjLH9EesWdUeMDGOwHDhcRU+dCbEuOAaapwRYKT3wyP
- QnxG1W+b5U6eMZWUsLn1Wfr6dtMBwAEZ0tDnKgj/aBBuwDHfXogTG1dUwzdQMDPFkpKv
- jpxH4QvRWBG+k8VXZcygS4Uy1j12OQORnqVJO9sitwIfE3XOwOl8Mzrkyt3YK2vygHia
- W8Pw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=OSaYglwzeOCnqtXdeYAE5QlmXuvdakxdKkKIO+iGRFE=;
+ b=X51Xv5y57tG++HSiAxINcm8f8SoZtlhSxmhnvCpHPhbsmvgVrUrVK6CXDjOevkKUHD
+ 8KGLUJcJG0R3MO4vxcFPyJ+WSteX9NJvWqr5dwIroA17gR5H1WM1B2rD7XXx9LY9pxxM
+ 2QEslxidSaa9lRl/N5WCqWbPP9iyHtBrG5A6R+e47XSoSfSlvhnHmXMO5C7k97b3TULj
+ sXAGCjOKNDpMvBTD7fwjh4KAfvp0wbP3/b2en6tOmDeJ2uyUzuA7K7/4dqGkfla5a5VM
+ TWChCHz58xHhNgrcpZahJrxPx8gbJUwvfvhPShC6YNenhSltay592xIslSgPihW6FV4E
+ mC/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706430464; x=1707035264;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MJ/JtCayd5oT7ympEH9TIQ53/Lmd99ySh4obNvOPLBo=;
- b=dg2dCPlf7wc9b0+LhMHi4ahiPxIHIWugSS14/kGtW3eDh5cgnq0RvisTWAeoPlVFYS
- RjuI2tuBLGdauXGipdFljUC+QF1KfHE5+/uysPwqsrn/JNtdldxu10NrpSXKBgRuztBl
- EVA7F43n/HM+IMZtOEkS+EFnA5KB8Gx99RXYssJoUQI8Nek3djDLxPTbKiGY4uokMnd7
- 0mX/9wgNXtf5Ox6an6SsjkxLzxVIzPZSRxFtmTT0eobZmY40wF7pt6on3goe7MJbSU83
- yecXreECkebkC+bW1sflKZfAbS6TN5zr44S6Zw7sZP/+AruBhZh4Z+xOZYSRFGgXkQsI
- zhrw==
-X-Gm-Message-State: AOJu0Ywrm7qf6GLFC3RPvqkDO2KP1H0S/zJ0QPe0CCsZqrBmtAR+8q1b
- wafFNfiCopaxC0x2ivfwNHTWwL6w5jFKfpALIKPv7rRygHIGRjTzXwi2hvDuMoY=
-X-Google-Smtp-Source: AGHT+IFL/Ja0ymH8koosqEl18njhnl9BB51Q+tRqFFEvlFUsF+xaQ5iGbnP2IkmRpwKV0ItzaCLYWA==
-X-Received: by 2002:a05:6808:1314:b0:3be:174c:1888 with SMTP id
- y20-20020a056808131400b003be174c1888mr3512996oiv.44.1706430464626; 
- Sun, 28 Jan 2024 00:27:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706430480; x=1707035280;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OSaYglwzeOCnqtXdeYAE5QlmXuvdakxdKkKIO+iGRFE=;
+ b=Ckhg16z953V8XPI7mjbpwzYPqjEggzzBHsD1/BgVNjaffJ5zx5qIScI9DFs1F70h/k
+ QdpYW56xZeIEP0HAa/xSfyUf+UpxjxYFB0bBC8tjZ+zzNtCejQWC5idUpR8t5cW3eg37
+ k53CJ5ap8lOx7Gf/6H1joB9jIrw4SqQu76kjF6gXyHNwEdeQwHbMT7WCJp3a+X8jq5QX
+ EKy38C7L5t1wAM7MgAZP/XgUDFFvzamrqKZWjBBXg5izeNN3+gL9cJZeS/kkgLJ2LnFF
+ csoKIrRj4csifgX4vfztd58EFlE1hr6T8TIkpRLhh91gYcMDE1qdO2Rqsapayx/b4US4
+ pDEw==
+X-Gm-Message-State: AOJu0Yydy5INkRvwRceN7f5J2soMxkdLJltl+Z3MQkvQEyn/ZY/Rji4q
+ WXiVnnNff0mtQ76lK2jLq/x4rPa6YvUAMXKkI6mKH3zjsAGEfTaurx7OqRDYVS0=
+X-Google-Smtp-Source: AGHT+IHxSxY35KYqzbIGm3oyyCwSFXonE+wUMmJdPw6XE+fMG672SGzRgmczGsGDDjYFxp99hlun7A==
+X-Received: by 2002:a17:902:c409:b0:1d8:d745:85a8 with SMTP id
+ k9-20020a170902c40900b001d8d74585a8mr340089plk.93.1706430480174; 
+ Sun, 28 Jan 2024 00:28:00 -0800 (PST)
 Received: from localhost ([157.82.200.138])
  by smtp.gmail.com with UTF8SMTPSA id
- p51-20020a056a0026f300b006dde10a12b6sm3754204pfw.211.2024.01.28.00.27.41
+ y19-20020a170902ed5300b001d8b0750940sm2129923plb.175.2024.01.28.00.27.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Jan 2024 00:27:44 -0800 (PST)
+ Sun, 28 Jan 2024 00:27:59 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v10 0/3] gdbstub and TCG plugin improvements
-Date: Sun, 28 Jan 2024 17:27:38 +0900
-Message-Id: <20240128-riscv-v10-0-fdbe593976e9@daynix.com>
+Date: Sun, 28 Jan 2024 17:27:41 +0900
+Subject: [PATCH v10 3/3] target/riscv: Validate misa_mxl_max only once
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPoPtmUC/2XMTQ6DIBCG4as0rEvDgAp01Xs0XeAAlUW1gYZoj
- Hcvmpj0Zzlf5nlnklwMLpHzYSbR5ZDC0JcD2PFAsDP93dFgy0A44wI4CBpDwkw9om4qplWDnpT
- fZ3Q+jFvoeit3F9JriNPWzXJdfwtZUkaNbBjUjRFC+os1Ux/GEw4Psiay+mRqZ6ow1K3nLdSKW
- /nH9M4qBlDvTBfmPUhwYJxF9cWWZXkDCLriaQoBAAA=
+Message-Id: <20240128-riscv-v10-3-fdbe593976e9@daynix.com>
+References: <20240128-riscv-v10-0-fdbe593976e9@daynix.com>
+In-Reply-To: <20240128-riscv-v10-0-fdbe593976e9@daynix.com>
 To: Palmer Dabbelt <palmer@dabbelt.com>, 
  Alistair Francis <alistair.francis@wdc.com>, 
  Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
@@ -82,8 +80,8 @@ To: Palmer Dabbelt <palmer@dabbelt.com>,
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::235;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x235.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::634;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -106,75 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series extracts fixes and refactorings that can be applied
-independently from "[PATCH v9 00/23] plugins: Allow to read registers".
-
-The patch "target/riscv: Move MISA limits to class" was replaced with
-patch "target/riscv: Move misa_mxl_max to class" since I found instances
-may have different misa_ext_mask.
-
-V6 -> V7:
-  Rebased.
-
-V5 -> V6:
-  Added patch "default-configs: Add TARGET_XML_FILES definition".
-  Rebased.
-
-V4 -> V5:
-  Added patch "hw/riscv: Use misa_mxl instead of misa_mxl_max".
-
-V3 -> V4:
-  Added patch "gdbstub: Check if gdb_regs is NULL".
-
-V2 -> V3:
-  Restored patch sets from the previous version.
-  Rebased to commit 800485762e6564e04e2ab315132d477069562d91.
-
-V1 -> V2:
-  Added patch "target/riscv: Do not allow MXL_RV32 for TARGET_RISCV64".
-  Added patch "target/riscv: Initialize gdb_core_xml_file only once".
-  Dropped patch "target/riscv: Remove misa_mxl validation".
-  Dropped patch "target/riscv: Move misa_mxl_max to class".
-  Dropped patch "target/riscv: Validate misa_mxl_max only once".
+misa_mxl_max is now a class member and initialized only once for each
+class. This also moves the initialization of gdb_core_xml_file which
+will be referenced before realization in the future.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
-Changes in v10:
-- Dropped patch "hw/riscv: Use misa_mxl instead of misa_mxl_max" due to
-  invalid assumption that the relevant code is only used for kernel
-  loading.
-- Link to v9: https://lore.kernel.org/r/20240115-riscv-v9-0-ff171e1aedc8@daynix.com
+ target/riscv/cpu.c         | 21 +++++++++++++++++++++
+ target/riscv/tcg/tcg-cpu.c | 23 -----------------------
+ 2 files changed, 21 insertions(+), 23 deletions(-)
 
-Changes in v9:
-- Rebased to commit 977542ded7e6b28d2bc077bcda24568c716e393c.
-- Link to v8: https://lore.kernel.org/r/20231218-riscv-v8-0-c9bf2b1582d7@daynix.com
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 4b742901e76e..4425bee1275e 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1292,6 +1292,26 @@ static const MISAExtInfo misa_ext_info_arr[] = {
+     MISA_EXT_INFO(RVG, "g", "General purpose (IMAFD_Zicsr_Zifencei)"),
+ };
+ 
++static void riscv_cpu_validate_misa_mxl(RISCVCPUClass *mcc)
++{
++    CPUClass *cc = CPU_CLASS(mcc);
++
++    /* Validate that MISA_MXL is set properly. */
++    switch (mcc->misa_mxl_max) {
++#ifdef TARGET_RISCV64
++    case MXL_RV64:
++    case MXL_RV128:
++        cc->gdb_core_xml_file = "riscv-64bit-cpu.xml";
++        break;
++#endif
++    case MXL_RV32:
++        cc->gdb_core_xml_file = "riscv-32bit-cpu.xml";
++        break;
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static int riscv_validate_misa_info_idx(uint32_t bit)
+ {
+     int idx;
+@@ -1833,6 +1853,7 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
+     RISCVCPUClass *mcc = RISCV_CPU_CLASS(c);
+ 
+     mcc->misa_mxl_max = (uint32_t)(uintptr_t)data;
++    riscv_cpu_validate_misa_mxl(mcc);
+ }
+ 
+ static void riscv_isa_string_ext(RISCVCPU *cpu, char **isa_str,
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 20062acd0f0b..df198ee3a312 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -268,27 +268,6 @@ static void riscv_cpu_validate_misa_priv(CPURISCVState *env, Error **errp)
+     }
+ }
+ 
+-static void riscv_cpu_validate_misa_mxl(RISCVCPU *cpu)
+-{
+-    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
+-    CPUClass *cc = CPU_CLASS(mcc);
+-
+-    /* Validate that MISA_MXL is set properly. */
+-    switch (mcc->misa_mxl_max) {
+-#ifdef TARGET_RISCV64
+-    case MXL_RV64:
+-    case MXL_RV128:
+-        cc->gdb_core_xml_file = "riscv-64bit-cpu.xml";
+-        break;
+-#endif
+-    case MXL_RV32:
+-        cc->gdb_core_xml_file = "riscv-32bit-cpu.xml";
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+ static void riscv_cpu_validate_priv_spec(RISCVCPU *cpu, Error **errp)
+ {
+     CPURISCVState *env = &cpu->env;
+@@ -935,8 +914,6 @@ static bool tcg_cpu_realize(CPUState *cs, Error **errp)
+         return false;
+     }
+ 
+-    riscv_cpu_validate_misa_mxl(cpu);
+-
+ #ifndef CONFIG_USER_ONLY
+     CPURISCVState *env = &cpu->env;
+     Error *local_err = NULL;
 
-Changes in v8:
-- Added a more detailed explanation for patch "hw/riscv: Use misa_mxl
-  instead of misa_mxl_max". (Alistair Francis)
-- Link to v7: https://lore.kernel.org/r/20231213-riscv-v7-0-a760156a337f@daynix.com
-
----
-Akihiko Odaki (3):
-      target/riscv: Remove misa_mxl validation
-      target/riscv: Move misa_mxl_max to class
-      target/riscv: Validate misa_mxl_max only once
-
- target/riscv/cpu.h         |   4 +-
- hw/riscv/boot.c            |   3 +-
- target/riscv/cpu.c         | 183 ++++++++++++++++++++++++++-------------------
- target/riscv/gdbstub.c     |  12 ++-
- target/riscv/kvm/kvm-cpu.c |  10 +--
- target/riscv/machine.c     |   7 +-
- target/riscv/tcg/tcg-cpu.c |  44 ++---------
- target/riscv/translate.c   |   3 +-
- 8 files changed, 135 insertions(+), 131 deletions(-)
----
-base-commit: 977542ded7e6b28d2bc077bcda24568c716e393c
-change-id: 20231213-riscv-fcc9640986cf
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.43.0
 
 
