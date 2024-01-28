@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A9CC47DA9
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7C9C47DA9
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 17:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU9KB-00068j-LD; Sun, 28 Jan 2024 12:52:07 -0500
+	id 1rU9Hg-0007QC-Km; Sun, 28 Jan 2024 12:49:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9J3-0002z9-SC; Sun, 28 Jan 2024 12:51:00 -0500
+ id 1rU9H8-0006RY-JP; Sun, 28 Jan 2024 12:49:02 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rU9J2-0000ov-8T; Sun, 28 Jan 2024 12:50:57 -0500
+ id 1rU9H6-0000P0-5d; Sun, 28 Jan 2024 12:48:58 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A0D2F4810A;
- Sun, 28 Jan 2024 20:51:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2D2C0480EB;
+ Sun, 28 Jan 2024 20:49:40 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 315C26D526;
- Sun, 28 Jan 2024 20:50:40 +0300 (MSK)
-Received: (nullmailer pid 812422 invoked by uid 1000);
- Sun, 28 Jan 2024 17:50:35 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 9B02C6D512;
+ Sun, 28 Jan 2024 20:48:48 +0300 (MSK)
+Received: (nullmailer pid 811705 invoked by uid 1000);
+ Sun, 28 Jan 2024 17:48:46 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Vineet Gupta <vineetg@rivosinc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.1 61/71] linux-user/riscv: Adjust vdso signal frame cfa
- offsets
-Date: Sun, 28 Jan 2024 20:50:24 +0300
-Message-Id: <20240128175035.812352-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Joseph Burt <caseorum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.1.5 28/36] tcg/arm: Fix SIGILL in tcg_out_qemu_st_direct
+Date: Sun, 28 Jan 2024 20:48:33 +0300
+Message-Id: <20240128174845.811654-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
-References: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
+References: <qemu-stable-8.1.5-20240128204753@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,48 +62,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Joseph Burt <caseorum@gmail.com>
 
-A typo in sizeof_reg put the registers at the wrong offset.
+When tcg_out_qemu_st_{index,direct} were merged, the direct case for
+MO_64 was omitted, causing qemu_st_i64 to be encoded as 0xffffffff due
+to underflow when adding h.base and h.index.
 
-Simplify the expressions to use positive addresses from the
-start of uc_mcontext instead of negative addresses from the
-end of uc_mcontext.
-
-Reported-by: Vineet Gupta <vineetg@rivosinc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Fixes: 1df6d611bdc2 ("tcg/arm: Introduce HostAddress")
+Signed-off-by: Joseph Burt <caseorum@gmail.com>
+Message-Id: <20240121211439.100829-1-caseorum@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 1b21fe27e75a59bfe2513f5abcc6a18cfc35cfc8)
+(cherry picked from commit 9f6523e8e4689cafdbed7c10b7cf7c775b5a607b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/riscv/vdso-32.so b/linux-user/riscv/vdso-32.so
-index 1ad1e5cbbb..c2ce2a4757 100755
-Binary files a/linux-user/riscv/vdso-32.so and b/linux-user/riscv/vdso-32.so differ
-diff --git a/linux-user/riscv/vdso-64.so b/linux-user/riscv/vdso-64.so
-index 83992bebe6..ae49f5b043 100755
-Binary files a/linux-user/riscv/vdso-64.so and b/linux-user/riscv/vdso-64.so differ
-diff --git a/linux-user/riscv/vdso.S b/linux-user/riscv/vdso.S
-index a86d8fc488..c37275233a 100644
---- a/linux-user/riscv/vdso.S
-+++ b/linux-user/riscv/vdso.S
-@@ -101,12 +101,12 @@ endf __vdso_flush_icache
- 	.cfi_startproc simple
- 	.cfi_signal_frame
- 
--#define sizeof_reg	(__riscv_xlen / 4)
-+#define sizeof_reg	(__riscv_xlen / 8)
- #define sizeof_freg	8
--#define B_GR	(offsetof_uc_mcontext - sizeof_rt_sigframe)
--#define B_FR	(offsetof_uc_mcontext - sizeof_rt_sigframe + offsetof_freg0)
-+#define B_GR	0
-+#define B_FR	offsetof_freg0
- 
--	.cfi_def_cfa	2, sizeof_rt_sigframe
-+	.cfi_def_cfa	2, offsetof_uc_mcontext
- 
- 	/* Return address */
- 	.cfi_return_column 64
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index 83e286088f..1864b8054f 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -1667,6 +1667,9 @@ static void tcg_out_qemu_st_direct(TCGContext *s, MemOp opc, TCGReg datalo,
+             } else {
+                 tcg_out_strd_r(s, h.cond, datalo, h.base, h.index);
+             }
++        } else if (h.index < 0) {
++            tcg_out_st32_12(s, h.cond, datalo, h.base, 0);
++            tcg_out_st32_12(s, h.cond, datahi, h.base, 4);
+         } else if (h.index_scratch) {
+             tcg_out_st32_rwb(s, h.cond, datalo, h.index, h.base);
+             tcg_out_st32_12(s, h.cond, datahi, h.index, 4);
 -- 
 2.39.2
 
