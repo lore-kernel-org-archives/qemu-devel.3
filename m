@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75447C47DDB
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C387C47258
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 04:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rTx0V-0004o9-U4; Sat, 27 Jan 2024 23:42:59 -0500
+	id 1rTx0i-0004qW-4x; Sat, 27 Jan 2024 23:43:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0U-0004nQ-31
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:58 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ id 1rTx0h-0004q4-Bu
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:11 -0500
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rTx0S-0004La-FY
- for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:42:57 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-6e11cda9f6fso320121a34.2
- for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:42:56 -0800 (PST)
+ id 1rTx0f-0004Ms-TM
+ for qemu-devel@nongnu.org; Sat, 27 Jan 2024 23:43:11 -0500
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-59a146e8c85so791257eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Jan 2024 20:43:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706416975; x=1707021775; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706416989; x=1707021789; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s84QwsvJ4FUEfSYgoD2xLjKpOUhTXQHsXWR0Okjxs+g=;
- b=esJ/DG5QHYlz2RF+C3L4+gDhtW4weBNIESMy+VH73gs4fqs3DIiqGV8v1a0MnXenqM
- r01sw0vlhje4nemCojnzakN3R/wtOVIsM5CQVAVRWIP5vHS/vrkHKQjjkARmx19rTtzH
- vSElKnvVTzJcUAg/vtps7NDm3K92HDF7ps3S1h8VDYxTNfr3wYbRRUgDLdMuTRJSSAvk
- s1lHa1EMS5dkZsGDJAUlpSEaHXkVe+XLp1rh2rn4k1GON1AbcJ4fN9YH+qCGixCXfWBL
- LeA7op+40LLJ0cKfp4EeQFzQXxnNGKS2LM6LfAwMsSOod6hJwr/yR6kTIBPc04wutNOO
- 2ZFw==
+ bh=TByYFDCUWCaxnnHjASz8MJMk4paFqdDSnL+kqN7t/Zk=;
+ b=eXVbQFpA+LwlZFCaBQFGeO7sBbwOFpHC+n0fqfHlnsGsrCQorVgeKYt3/KczxMixdM
+ wrGi1d7xPh+MwKQoMQ5pMDYBOFBxUf/fHe/PAInQdvqZbJJveiEITSnUPZ3mfoDbQyMG
+ QCsjiT5ljWld1z3cHeLY7fQTlxMUlsFqlJ01CzyBYlP3YDsOcRdkf632C1oJjeS5j41m
+ G2zo3xWKbK5bmPbcMmvEgHp8THlNXwMiAQX/+e9mZivYEZxn5/7bjvL0FMVtvXgmqYkO
+ pDZTaWEueUb+0ANvDCulyAlqORr65MSCizDjhb5CC7z44OW4276hLB//cC4PibsgNKEb
+ eYCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706416975; x=1707021775;
+ d=1e100.net; s=20230601; t=1706416989; x=1707021789;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s84QwsvJ4FUEfSYgoD2xLjKpOUhTXQHsXWR0Okjxs+g=;
- b=oUhPt28u/rNlgUHrnmec/MhZZuHYnbr7+QYOuusVrVN0BOxLwTxCxOQbKGZE+6j07L
- 3uLdI0FSJw97t2vRW4/O29jyilmG9ccsQmP0+Oc/1cxUtaEJrgD+3Kzvmiexh/pjMGBV
- RuBrWHWCJS618n5gMF1L9bM5iFC5FeiluSs6hHffzlbjpaIuQeB3d3KRyf+nqvB2TICd
- tyyo+YL9ahkq/WHq1TyxGEQghsbol7bpvrgRM0l3F1cZJkOnVJis2XkdVS4MaMFfRGS6
- Bel2sYAJhcTVEUPDRDMjO2L9t2756IHSKdHborIXJ718x/VIC77hXTrdBQ5bs1DR7+8Q
- cUUg==
-X-Gm-Message-State: AOJu0YzhjSxeY93QGH+zvwO+0Z1zB3HxqkAdHIV0WuROVeTKAHqBg8AC
- PeqCeGXiSqUCbznDEA55NqXyBuV4sFdRiDWRaFRD8JqqW1/NT9wIyLxzfUyIzBIKvDCzFSxBk0T
- MCfSuBA==
-X-Google-Smtp-Source: AGHT+IFjOJsDxai7Yqjd+IMqWSxpXCgee7cKN31LdGejTnFIbhjTt+jtXs/xsTE4PIV0sYEgB8/RWw==
-X-Received: by 2002:a05:6358:2826:b0:175:7a57:81ed with SMTP id
- k38-20020a056358282600b001757a5781edmr3127610rwb.23.1706416975133; 
- Sat, 27 Jan 2024 20:42:55 -0800 (PST)
+ bh=TByYFDCUWCaxnnHjASz8MJMk4paFqdDSnL+kqN7t/Zk=;
+ b=UsSrDRgdVtNrp6lWlo+EOKnp8scB87+c2gHEgDQvkKLtn7oHST8quLMTHDaFlnMLCT
+ MAErvj5zGoLJaVM/CmN+QK8AQ8+fKwYeTR+sMYPjo+JrLRk+NaQzfpcnYhcoR4MwzzSa
+ SAdtyNUewBcEGJ4SKjM74JIlZBU8tpeuYAIfFTvi7ksTLYqrWjs9Z9Q4VHcixZI/AXSg
+ 40N+Fld5kpTOMnJuDsfdcZGzuf+T4DcM69nWOXl9VDyd2eXaTA2kITowPcGWAkatsurC
+ NoWpQSY0M2zI0CgQwj01snN0b/cMlO/L0hBcLBe1BEO5ZFGC/dz0eEVD9nBTdzpa86ac
+ m2kA==
+X-Gm-Message-State: AOJu0YwFHCfr1LkDdYN6A3OzvA0g+ix0uNW9Ydq3zL6OznsnSvRus8qX
+ yzFHDU7aspjK0EGMawzMDM33dzdETwCIxN9sOdevW070nkUY85YfiE4GmW6TwNTfzsW2h1OmVDY
+ /2j3MGQ==
+X-Google-Smtp-Source: AGHT+IEGpw6L5swsr+ZUjpZfyryp3qm5R51U2sJW0Yl9+Ko5BkDSoHjb+W9SM5aSwGMBgov3iRSJUQ==
+X-Received: by 2002:a05:6358:7e9a:b0:175:cc50:56dc with SMTP id
+ o26-20020a0563587e9a00b00175cc5056dcmr3369287rwn.58.1706416988777; 
+ Sat, 27 Jan 2024 20:43:08 -0800 (PST)
 Received: from stoup..
  (ppp121-45-131-89.bri-pow-que-bras31.tpg.internode.on.net. [121.45.131.89])
  by smtp.gmail.com with ESMTPSA id
- w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.42.53
+ w24-20020a17090aaf9800b002906e09e1d1sm5631873pjq.18.2024.01.27.20.43.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 27 Jan 2024 20:42:54 -0800 (PST)
+ Sat, 27 Jan 2024 20:43:08 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 15/33] tests/tcg: Add the PROT_NONE gdbstub test
-Date: Sun, 28 Jan 2024 14:41:55 +1000
-Message-Id: <20240128044213.316480-16-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 20/33] accel/tcg: Remove #ifdef TARGET_I386 from perf.c
+Date: Sun, 28 Jan 2024 14:42:00 +1000
+Message-Id: <20240128044213.316480-21-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240128044213.316480-1-richard.henderson@linaro.org>
 References: <20240128044213.316480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,120 +99,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Make sure that qemu gdbstub, like gdbserver, allows reading from and
-writing to PROT_NONE pages.
+Preparation for moving perf.c to tcg/.
 
+This affects only profiling guest code, which has code in a non-0 based
+segment, e.g., 16-bit code, which is not particularly important.
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240109230808.583012-4-iii@linux.ibm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20231212003837.64090-4-iii@linux.ibm.com>
+Message-Id: <20240125054631.78867-4-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/multiarch/prot-none.c          | 40 ++++++++++++++++++++++++
- tests/tcg/multiarch/Makefile.target      |  9 +++++-
- tests/tcg/multiarch/gdbstub/prot-none.py | 22 +++++++++++++
- 3 files changed, 70 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/multiarch/prot-none.c
- create mode 100644 tests/tcg/multiarch/gdbstub/prot-none.py
+ accel/tcg/perf.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/tests/tcg/multiarch/prot-none.c b/tests/tcg/multiarch/prot-none.c
-new file mode 100644
-index 0000000000..dc56aadb3c
---- /dev/null
-+++ b/tests/tcg/multiarch/prot-none.c
-@@ -0,0 +1,40 @@
-+/*
-+ * Test that GDB can access PROT_NONE pages.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/mman.h>
-+#include <unistd.h>
-+
-+void break_here(void *q)
-+{
-+}
-+
-+int main(void)
-+{
-+    long pagesize = sysconf(_SC_PAGESIZE);
-+    void *p, *q;
-+    int err;
-+
-+    p = mmap(NULL, pagesize * 2, PROT_READ | PROT_WRITE,
-+             MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    assert(p != MAP_FAILED);
-+    q = p + pagesize - 1;
-+    strcpy(q, "42");
-+
-+    err = mprotect(p, pagesize * 2, PROT_NONE);
-+    assert(err == 0);
-+
-+    break_here(q);
-+
-+    err = mprotect(p, pagesize * 2, PROT_READ);
-+    assert(err == 0);
-+    if (getenv("PROT_NONE_PY")) {
-+        assert(strcmp(q, "24") == 0);
-+    }
-+
-+    return EXIT_SUCCESS;
-+}
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index d31ba8d6ae..315a2e1358 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -101,13 +101,20 @@ run-gdbstub-registers: sha512
- 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/registers.py, \
- 	checking register enumeration)
- 
-+run-gdbstub-prot-none: prot-none
-+	$(call run-test, $@, env PROT_NONE_PY=1 $(GDB_SCRIPT) \
-+		--gdb $(GDB) \
-+		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-+		--bin $< --test $(MULTIARCH_SRC)/gdbstub/prot-none.py, \
-+	accessing PROT_NONE memory)
-+
- else
- run-gdbstub-%:
- 	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst -%,,$(TARGET_NAME)) support")
- endif
- EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
- 	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
--	      run-gdbstub-registers
-+	      run-gdbstub-registers run-gdbstub-prot-none
- 
- # ARM Compatible Semi Hosting Tests
- #
-diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
-new file mode 100644
-index 0000000000..f1f1dd82cb
---- /dev/null
-+++ b/tests/tcg/multiarch/gdbstub/prot-none.py
-@@ -0,0 +1,22 @@
-+"""Test that GDB can access PROT_NONE pages.
-+
-+This runs as a sourced script (via -x, via run-test.py).
-+
-+SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+from test_gdbstub import main, report
-+
-+
-+def run_test():
-+    """Run through the tests one by one"""
-+    gdb.Breakpoint("break_here")
-+    gdb.execute("continue")
-+    val = gdb.parse_and_eval("*(char[2] *)q").string()
-+    report(val == "42", "{} == 42".format(val))
-+    gdb.execute("set *(char[3] *)q = \"24\"")
-+    gdb.execute("continue")
-+    exitcode = int(gdb.parse_and_eval("$_exitcode"))
-+    report(exitcode == 0, "{} == 0".format(exitcode))
-+
-+
-+main(run_test)
+diff --git a/accel/tcg/perf.c b/accel/tcg/perf.c
+index ba75c1bbe4..68a46b1b52 100644
+--- a/accel/tcg/perf.c
++++ b/accel/tcg/perf.c
+@@ -337,10 +337,6 @@ void perf_report_code(uint64_t guest_pc, TranslationBlock *tb,
+         q[insn].address = gen_insn_data[insn * start_words + 0];
+         if (tb_cflags(tb) & CF_PCREL) {
+             q[insn].address |= (guest_pc & qemu_target_page_mask());
+-        } else {
+-#if defined(TARGET_I386)
+-            q[insn].address -= tb->cs_base;
+-#endif
+         }
+         q[insn].flags = DEBUGINFO_SYMBOL | (jitdump ? DEBUGINFO_LINE : 0);
+     }
 -- 
 2.34.1
 
