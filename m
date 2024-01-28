@@ -4,134 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F009BC47258
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 15:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FBBC47DA9
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jan 2024 16:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rU7P9-0002dh-O4; Sun, 28 Jan 2024 10:49:07 -0500
+	id 1rU7pj-0000Tz-Rf; Sun, 28 Jan 2024 11:16:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rU7P8-0002dZ-9F
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 10:49:06 -0500
-Received: from mail-dm3nam02on2053.outbound.protection.outlook.com
- ([40.107.95.53] helo=NAM02-DM3-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rU7P6-0004Im-2j
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 10:49:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Rv7tT1FPM4N33eXzCAuH0qxUZfuQQU5Itpwz9xmLFWKWt3cvIXJ7jpu3n+BG9YW/aF11Et7TlWSADvEhayV3vhBxlOocPnDWUIR4YvSwekFOgOQs2R/etxeNEVizeTvOUuwSoDhgxf3MSTrjXs3qQQA8gqkmVbE5D0C7Yk/gStrFF8DpIC+osmTmUlQ+eOx4WRNSZRW96e8EmdADnR1Gd13ZNMu41NbNBnnFTPhYtCUAWchKmP0jS6F8Q4ZfKd4vQKh/y+f3PGxVDLHiOe9e770+H+5gmOJ+WYUtsRRE36g7fDjqH754CNhwB8chvstuYfm3qJs22zwM8nSa5B+kWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gv0f0cpegR2r7S9RCUQEsqz6kpJaOHmBGMqtANkw5C4=;
- b=V5a3GNun1eJJv1NMtAsQeaH4s5j01FXoIMxgs1FqIXqaMWCImUFcskZ/ITwUrFRvexTLvAuzeR3BMaW7c/r7sCGqdFtJsyzFbGhxPfgqoBMMd7eYAhcgU/m4WpwgTfcZRBgrq35MfmjotYUSpvzJuNiCZyx0TcLHirEtwdXJck6frX2OATK0p5oTfrKGHvEn16pUfmbVFXApa6oftMNF6sP/eztTUDo/UIXyWvtSzD+zyGuBjePIFg/2Xh+S8r4heoWGP38kurG1xIYbY4DwKs+O1X7mxAcFRdabPTpj4gRU6Iu29EccF7Hz1OQG+tUNxLMNYZ9zJ01QZGyZ9FWq4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gv0f0cpegR2r7S9RCUQEsqz6kpJaOHmBGMqtANkw5C4=;
- b=Amapv3A0Hy+XAWyhF3DmX4sreHKihzyCJg86kaEhPUe12O+eEifDUdcQOLiVE/MWgDTrfnjNcfEckajcCdmzPZ0NrtcolCqZxsvZH8CpCCC983BVpg1dNl4m5Qyn63iTiQY+zbhimXjntZeCq1jZLJrwdCraj0Dk0wkICzVhzhWh2r0UmJ3CVMDYmbW4820KOUqh7ESeHPYkLpP7F8Pl9JmGDkI2bqKSOa1zZPeVLQ585e63GZcrP2Brdoc9ht8y/UQIyE75H2i+76EaqIN8KXOI6ooA0I9W5jBKCKn5gMRbd3njn6OEKBTcUgKubAhh0KT6FwYo76UatjNe65tyow==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by CY5PR12MB6058.namprd12.prod.outlook.com (2603:10b6:930:2d::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.31; Sun, 28 Jan
- 2024 15:43:57 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::c444:5cde:d19a:c73e]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::c444:5cde:d19a:c73e%7]) with mapi id 15.20.7228.029; Sun, 28 Jan 2024
- 15:43:57 +0000
-Message-ID: <78fa90f7-d062-4f23-8035-841a0ffef8af@nvidia.com>
-Date: Sun, 28 Jan 2024 17:43:52 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/17] migration/multifd: Set p->running = true in the
- right place
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-References: <20240125162528.7552-1-avihaih@nvidia.com>
- <20240125162528.7552-5-avihaih@nvidia.com> <87a5otw2ps.fsf@suse.de>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <87a5otw2ps.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0434.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:1a9::7) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rU7pg-0000T0-6U
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 11:16:32 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rU7pc-0000wu-7i
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 11:16:30 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33aeb088324so318311f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 08:16:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706458583; x=1707063383; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nNQ1mZG/MGqiJb02NhZJ31w2Qw5Q82nN33CYLr2cWWo=;
+ b=njBaFUI93VnNXzvsR6it6qggFRGKnH6UuwJKumCOaFTinmVetiQfwSUX8ki9fB/Hvz
+ /xka1q6B4cahMXLzTC4S18RTWRLOi0bVmVGe4xpy9sc4CDIVbf234Sh767rEM682Lx74
+ qhalorx0q1ol59ZHSLVO5K+C4+4mup5FysSZ0rbliuvBShpSHGgl9QNkESAPqqOmyh8X
+ Klr0u+4TGFWn5R6axUT9LjHCEGBIarcFNa2d1BssFBkUKzACfoweyuhjd88NwKLwyPpV
+ MTHffvsZlYD7m60elcebWlAAQky905Z8HUlWFGoyAOIIFhVg8Jt+AV6+TspuHfAyN3rO
+ bUnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706458583; x=1707063383;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nNQ1mZG/MGqiJb02NhZJ31w2Qw5Q82nN33CYLr2cWWo=;
+ b=fyQ40BMJGkybyZMtYw1Afd+jdts3885RHWG3TcVawdoh/Lh6Q+OInjiMlkM77P8R/T
+ ylzqNn5aNrdi5jsrYPSm0KyBIKjEi0FEbgB6UQgWK+EMhR85tq38Agf3CbYYR0IAiEE5
+ 0zfR9mN+mv6tjOvdVPukWoJVMAfSKoxHPc0qn164OlAnFSN3n350cZ2zN6J+qjMiv6BF
+ NRlkUXhQz9o7cke9mAtjRawv4BLFH3/Mzi2tdeAuU1AIZvYiNExPDIYYEIlr3cxIwvFu
+ qL6EcJO4XUFWWqbFdeqMO6pNL1AUI90g0s97DrhB9hNHsYnMuElmHztOhlExDO3/ghng
+ DkBQ==
+X-Gm-Message-State: AOJu0Ywkq/u+5fNZwj9woUMGqYcqBdASE5hzVdRuh8xaf3rgh72fmYA+
+ Lw1EPrhtAwNMo0RM65OKzQIDyGrRR6lmIL7PMNzZVZjwJ/z6S6Wgtx7o68PF8hU=
+X-Google-Smtp-Source: AGHT+IEZiXHH6VkkxIr4855VrA6mlwRi5ZK5DAlf4ThQoy+yRYfRVJ2hAzogGQOYO0OnwUHdVFeDqg==
+X-Received: by 2002:a5d:604c:0:b0:33a:e5e5:163c with SMTP id
+ j12-20020a5d604c000000b0033ae5e5163cmr1763182wrt.71.1706458583105; 
+ Sun, 28 Jan 2024 08:16:23 -0800 (PST)
+Received: from [192.168.69.100] (sev93-h02-176-184-17-196.dsl.sta.abo.bbox.fr.
+ [176.184.17.196]) by smtp.gmail.com with ESMTPSA id
+ ch19-20020a5d5d13000000b00337b47ae539sm5942414wrb.42.2024.01.28.08.16.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 28 Jan 2024 08:16:22 -0800 (PST)
+Message-ID: <d7c11962-07c0-4c26-83e1-8b0a3d1e43d0@linaro.org>
+Date: Sun, 28 Jan 2024 17:16:19 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|CY5PR12MB6058:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3890e384-254d-4905-b86f-08dc2017f066
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: KzRN24aqZOOujL28PPQzF0ifskrNr9YktDvAG05rkDD7XEYFXJM94AuryUxqD6My0izkVf2YQq22PHTUMb/7QVCrdaBZJSOet3RtrivtsTRugaVdJRhaz+xr5Z3zStwMumeCp9DlkLRXtp8fzF4iP2g7YlWMSZpPpXWX/bMZHWfA5fXoFbvQXdtyu/fYWOtLK0ByUHnMdUIub2AyJMMAwLE0rxPv2Toqsily2to/jdZdvcAIHExRsZv2IlAkCL7AK+bgWuG4PjzzRb2RcxJY+AF8Yc3K2JX16x/vZ3Bntvhi5tJiAn50fl2mi41KFZIkkTRTDJLDFAlr5C1oodV0wq5y/VgLHkWqflWMh/CA7oVIoqG2Z+Qa/wygUmjvz9lInaQvOPIr0Kinq/duh1GZk/tcnZQ9ptVK38fMon987+5ZtzrEhd58qVwD633/0cG4WI8ESgcJ2WZNA1N7sQZoUuZ5jAiVt2tVHMchKVyG0UD+f/0DK5j0zmkcxtfzCnVINjD1RBWB7G5PdVi2rjh8//h5LXJVp6HngOTJu4j4D84dis7cdaEud4YABANx4qmNSjzDHb7Aw9hXfL0b3k2wZbUFZ3WD1aid/2nhfOnEpLIpq7Vrte2GVeAf3NXfuGKfnshh+h2pF/lXyEVijicXUQc2VVUeUvMjcWi4fHxfC2yQJFa6n+6a/e6qNB4MOUqV
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376002)(346002)(396003)(136003)(366004)(39860400002)(230922051799003)(230173577357003)(230273577357003)(1800799012)(451199024)(186009)(64100799003)(83380400001)(6512007)(2616005)(38100700002)(26005)(8676002)(8936002)(5660300002)(4326008)(2906002)(478600001)(966005)(6486002)(6506007)(53546011)(66476007)(66556008)(66946007)(6666004)(316002)(41300700001)(31696002)(86362001)(36756003)(31686004)(43740500002)(45980500001);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dm1iSDI3Uk5Ddzdxc0ZrR0Vpcnpzd3d5OXJGZktzNHdTV2xWZlBWazM1bjMv?=
- =?utf-8?B?WlBtcFBIa09TaU1uR0ZWZUNwQkw3UjRDNlBtdFJuSWtjSEZveVVHVWRxdjhJ?=
- =?utf-8?B?OWtrZzR5NWtQYjdKNFBjYU9JTmVQRVZPZ0MxUmJJN3dxU1RINFNGUTNVSDlM?=
- =?utf-8?B?MFVsbEZlYU5UQnEwOExldGhsa2psaVVubngweEJocnZCNFo3K0dOajhDYWhz?=
- =?utf-8?B?bExjZW1CQUdENjRIRStIeWFqWlA3Vi9KQWZ2VW9EeS93WmxYR2R0aE5CSnc3?=
- =?utf-8?B?b2RTV09UTTl5d2hEcWp0T3VWelNpcU5iTjhvSnlkNnk4dHhvSGtNOUhPRzhN?=
- =?utf-8?B?R3lPd1RBR1NDaEFBVnZsRXpUS3k2dXMxK0NreHorV0tycmNPQzB6V0xJVUJQ?=
- =?utf-8?B?eFgzdFpUZE1FZzlkN21YZThNTkdkQkNWZk12dVdkeE5pdzdOdlJyQ2dTRWZ1?=
- =?utf-8?B?czVoMFk1ajlld09ES05haWplQnZmVzd3OVk0aGZpQktKYkYzbkJic2czbC8x?=
- =?utf-8?B?dWdqTGQwSXFWWUYzOExRbVJUUThpVjYzWU1PVlF2VEpCc1NWb0hpQlJMWW5Z?=
- =?utf-8?B?QUppU0lWOGxBNCtDc3RpTWVZdkJWV0kvaEpUZ2R0MURDRnM5cWJUN0hVTm1t?=
- =?utf-8?B?VktzdldNQ0RrVzMyLzVwQ0Y3YWc3Yk9iMGRUdzVIMlJQQVJodnZlQ3liWUs4?=
- =?utf-8?B?VnhIWTY4dy84L1oySHFQL3NPQVpmbWpLdFIrbGFkcHpaTkZGRVl6N1Zpd2J0?=
- =?utf-8?B?dzIzWU5pNnpUclFVZllXeGFnOGtyVHhzYmZaQVVTQ0RUMmpkZ3NNU29VTkFQ?=
- =?utf-8?B?OWsyLzdLZnc0RXhjTlhzTWI2cGoxOUttRzViSHkzYkJBdUZWQ0IraXYyVXYw?=
- =?utf-8?B?NDNGWW5vWnBDSXQ2b0JUdmFHMDRVUEZDN3J1NDNvRGY1RVlvNXZZNjllWTNL?=
- =?utf-8?B?bVRuMFpuOExGQkE0UHROVk0wUGpyZ1N5YW1qOFRDNExldVZ0U3JtYlI2eURn?=
- =?utf-8?B?cU1XMzMwQ3VVYXNkMWRkY0tLMEU3SGJZb29mNm52aHBCbWZxWDVTYmRRU2VQ?=
- =?utf-8?B?RWRTRTB6cHRFNDNFYlI0Vm1CMGZOTzBtZVhML3UyNkpnSnc0cW9oUTVTZEk3?=
- =?utf-8?B?ZGIxS3Z1L3d4QUtjQUgvdCtUWWpvU0dYSkl1MndDNzhkRGU0dXFyeGpqOVJ4?=
- =?utf-8?B?dlRNMS9KcUZaNGp5REk1NCsyZ01BcXlvZUNKVWh2SFBPeUI2SVdvUDF2dHFv?=
- =?utf-8?B?c0grazdxcXF5YnFncTdoRHp2T0hzOExqTG5LUWFMNFAzYlJDV1UvbDA1ZERD?=
- =?utf-8?B?UHVjS2pFdFNhV3psYW1xZFloQThyc2hTLzJybFcvdVFjc2FLVFN1VUdpTk9w?=
- =?utf-8?B?OTdOcndsZmRud1V0NXJCVzJFNGM5bFJGSFA4YjZ2dEF2VmJ1R1FYcEF3ZWg3?=
- =?utf-8?B?aXdadW4yNFV0ZjhyTFpRaUNoaFZXUzBWWmM4UUloU3ZKMkYyQ2xDZ3IrNTFF?=
- =?utf-8?B?djBON2NFbGg5M1VXWU53b0ZoVmpmNjh6Q3Z2UmZWYW5NcndSTzVxRk5hb20z?=
- =?utf-8?B?QnczTkZ3MFc0SGE2N0x5ZklVbkladEdFMVpnVzJzbEx2TnhVNTFnZ1ZlTE5F?=
- =?utf-8?B?TzF5ckFwRkRoYmdKVmNJV2NkQm4rVitSZCs0M3hlZVBMVmhTcEljNTk2ai9i?=
- =?utf-8?B?Zk5ucDNxaXdWYzlGUDRjNUZwdmgxQWVSVmxpYUFWcndvVXorNVVYdTFZWFgy?=
- =?utf-8?B?Y3lZRDB4ek1hcjUyTzBLeFdaZlU1Y0NnUzViWjN2OWhCWVZRWDIwVDRYcXhj?=
- =?utf-8?B?bzU3Y1dZRlJDQS9UdXFGMTNMSmVlWktyaVZ5Qnhyc0MzdlBzNk5xVktRdzE4?=
- =?utf-8?B?b3NodlJ2cTc1N240NXFhOURZWmxKckUzTkI4Q05RWFVoMUZla0dVdzB6RlJV?=
- =?utf-8?B?RTVOMGVWRWNhZVFvNVpEd3ZnekM5T2wwUlFrSFJRdW1RYksrdkxuRzVDTW1D?=
- =?utf-8?B?RnFOZjJFL2hsVUNRNkJTdnBZVUZ5UlNYVXdINmhhTGN5SkZmbDN2dmVScE9Q?=
- =?utf-8?B?Sm5tUWxLcllZWHljYkZMV25xUXU5dFI5L3c1UUUyY2lKZGFueVZOc0owaytl?=
- =?utf-8?Q?3RqBf3tvYafgoLELXLZyta1br?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3890e384-254d-4905-b86f-08dc2017f066
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2024 15:43:57.1665 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: j9OJbfyBUlowNLM1GWgokRK0HomDOpaSI03z8jBB0CkptYWQjrVrJNtM6rfz4g6hEm6PPJa+jVahDIgKEQqMqA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6058
-Received-SPF: softfail client-ip=40.107.95.53; envelope-from=avihaih@nvidia.com;
- helo=NAM02-DM3-obe.outbound.protection.outlook.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/23] target/i386: Prefer fast cpu_env() over slower
+ CPU QOM cast macro
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, David Woodhouse
+ <dwmw2@infradead.org>, xen-devel@lists.xenproject.org
+References: <20240126220407.95022-1-philmd@linaro.org>
+ <20240126220407.95022-11-philmd@linaro.org> <ZbT1R7impEw4whqP@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZbT1R7impEw4whqP@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,54 +106,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 25/01/2024 22:57, Fabiano Rosas wrote:
-> External email: Use caution opening links or attachments
->
->
-> Avihai Horon <avihaih@nvidia.com> writes:
->
->> The commit in the fixes line moved multifd thread creation to a
->> different location, but forgot to move the p->running = true assignment
->> as well. Thus, p->running is set to true before multifd thread is
->> actually created.
+On 27/1/24 13:21, Zhao Liu wrote:
+> Hi Philippe,
+> 
+> On Fri, Jan 26, 2024 at 11:03:52PM +0100, Philippe Mathieu-Daudé wrote:
+>> Date: Fri, 26 Jan 2024 23:03:52 +0100
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Subject: [PATCH v2 10/23] target/i386: Prefer fast cpu_env() over slower
+>>   CPU QOM cast macro
+>> X-Mailer: git-send-email 2.41.0
 >>
->> p->running is used in multifd_save_cleanup() to decide whether to join
->> the multifd thread or not.
+>> Mechanical patch produced running the command documented
+>> in scripts/coccinelle/cpu_env.cocci_template header.
 >>
->> With TLS, an error in multifd_tls_channel_connect() can lead to a
->> segmentation fault because p->running is true but p->thread is never
->> initialized, so multifd_save_cleanup() tries to join an uninitialized
->> thread.
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/i386/hvf/vmx.h               | 13 +++-------
+>>   hw/i386/vmmouse.c                   |  6 ++---
+>>   hw/i386/xen/xen-hvm.c               |  3 +--
+>>   target/i386/arch_memory_mapping.c   |  3 +--
+>>   target/i386/cpu-dump.c              |  3 +--
+>>   target/i386/cpu.c                   | 37 +++++++++------------------
+>>   target/i386/helper.c                | 39 ++++++++---------------------
+>>   target/i386/hvf/hvf.c               |  8 ++----
+>>   target/i386/hvf/x86.c               |  4 +--
+>>   target/i386/hvf/x86_emu.c           |  6 ++---
+>>   target/i386/hvf/x86_task.c          | 10 +++-----
+>>   target/i386/hvf/x86hvf.c            |  6 ++---
+>>   target/i386/kvm/kvm.c               |  6 ++---
+>>   target/i386/kvm/xen-emu.c           | 32 ++++++++---------------
+>>   target/i386/tcg/sysemu/bpt_helper.c |  3 +--
+>>   target/i386/tcg/tcg-cpu.c           | 14 +++--------
+>>   target/i386/tcg/user/excp_helper.c  |  3 +--
+>>   target/i386/tcg/user/seg_helper.c   |  3 +--
+>>   18 files changed, 59 insertions(+), 140 deletions(-)
 >>
->> Fix it by moving p->running = true assignment right after multifd thread
->> creation. Also move qio_channel_set_delay() to there, as this is where
->> it used to be originally.
->>
->> Fixes: 29647140157a ("migration/tls: add support for multifd tls-handshake")
->> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> Just for context, I haven't looked at this patch yet, but we were
-> planning to remove p->running altogether:
->
-> https://lore.kernel.org/r/20231110200241.20679-1-farosas@suse.de
+> 
+> [snip]
+> 
+>> diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+>> index 3b1ef5f49a..1e7fd587fe 100644
+>> --- a/target/i386/hvf/x86hvf.c
+>> +++ b/target/i386/hvf/x86hvf.c
+>> @@ -238,8 +238,7 @@ void hvf_get_msrs(CPUState *cs)
+>>   
+>>   int hvf_put_registers(CPUState *cs)
+>>   {
+>> -    X86CPU *x86cpu = X86_CPU(cs);
+>> -    CPUX86State *env = &x86cpu->env;
+>> +    CPUX86State *env = cpu_env(cs);
+>>   
+>>       wreg(cs->accel->fd, HV_X86_RAX, env->regs[R_EAX]);
+>>       wreg(cs->accel->fd, HV_X86_RBX, env->regs[R_EBX]);
+>> @@ -282,8 +281,7 @@ int hvf_put_registers(CPUState *cs)
+>>   
+>>   int hvf_get_registers(CPUState *cs)
+>>   {
+>> -    X86CPU *x86cpu = X86_CPU(cs);
+>> -    CPUX86State *env = &x86cpu->env;
+>> +    CPUX86State *env = cpu_env(cs);
+>>   
+>>       env->regs[R_EAX] = rreg(cs->accel->fd, HV_X86_RAX);
+>>       env->regs[R_EBX] = rreg(cs->accel->fd, HV_X86_RBX);
+> 
+> In this file, there's another corner case:
+> 
+> diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+> index 3b1ef5f49a8a..9a145aa5aa4f 100644
+> --- a/target/i386/hvf/x86hvf.c
+> +++ b/target/i386/hvf/x86hvf.c
+> @@ -342,8 +342,7 @@ void vmx_clear_int_window_exiting(CPUState *cs)
+> 
+>   bool hvf_inject_interrupts(CPUState *cs)
+>   {
+> -    X86CPU *x86cpu = X86_CPU(cs);
+> -    CPUX86State *env = &x86cpu->env;
+> +    CPUX86State *env = cpu_env(cs);
+> 
+>       uint8_t vector;
+>       uint64_t intr_type;
+> @@ -408,7 +407,7 @@ bool hvf_inject_interrupts(CPUState *cs)
+>       if (!(env->hflags & HF_INHIBIT_IRQ_MASK) &&
+>           (cs->interrupt_request & CPU_INTERRUPT_HARD) &&
+>           (env->eflags & IF_MASK) && !(info & VMCS_INTR_VALID)) {
+> -        int line = cpu_get_pic_interrupt(&x86cpu->env);
+> +        int line = cpu_get_pic_interrupt(env);
+>           cs->interrupt_request &= ~CPU_INTERRUPT_HARD;
+>           if (line >= 0) {
+>               wvmcs(cs->accel->fd, VMCS_ENTRY_INTR_INFO, line |
+> 
+> 
+> For this special case, I'm not sure if the script can cover it as well,
+> otherwise maybe it's OK to be cleaned up manually ;-).
 
-Thanks for putting me in the picture.
-I see that there has been a discussion about the multifd 
-creation/treadown flow.
-In light of this discussion, I can already see a few problems in my 
-series that I didn't notice before (such as the TLS handshake thread leak).
-The thread you mentioned here and some of my patches point out some 
-problems in multifd creation/treardown. I guess we can discuss it and 
-see what's the best way to solve them.
-
-Regarding this patch, your solution indeed solves the bug that this 
-patch addresses, so maybe this could be dropped (or only noted in your 
-patch).
-
-Maybe I should also put you (and Peter) in context for this whole series 
--- I am writing it as preparation for adding a separate migration 
-channel for VFIO device migration, so VFIO devices could be migrated in 
-parallel.
-So this series tries to lay down some foundations to facilitate it.
-
+BTW I forgot to mention I had to skip target/i386/tcg/translate.c
+(7100 LoC) because it is too complex for Coccinelle.
 
