@@ -4,84 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3956CC47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 09:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B0FFC47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 09:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUNzp-00011e-6K; Mon, 29 Jan 2024 04:32:05 -0500
+	id 1rUO29-00026v-DV; Mon, 29 Jan 2024 04:34:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rUNzm-00011V-Nt
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:32:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1rUO26-00025V-Is; Mon, 29 Jan 2024 04:34:26 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rUNzk-00087U-QU
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:32:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706520719;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6S88MYTq/jM4Z3WtQ5AVZMrM5wW7noNLAgUsQ1FPFZk=;
- b=N0GEwwgvN/l7nSQ4sR3OpAztcQHzvYhgbkAiq8kTeuWn1aAtfLGeGm88NqTmvewA+BvLaT
- frlMQejaF+hZ58/mRTJhBlCEpVr4cHsXx1YKsmVLLQjcYk6XM2S33kf/v0qtK65qHnWjTr
- SSY5ylu16TbpEXH5LSJIn3UdExerytU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-hbVcXaTBMzuhohKvvwOtiA-1; Mon, 29 Jan 2024 04:31:54 -0500
-X-MC-Unique: hbVcXaTBMzuhohKvvwOtiA-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D77E685CBA3;
- Mon, 29 Jan 2024 09:31:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 78309492BE2;
- Mon, 29 Jan 2024 09:31:51 +0000 (UTC)
-Date: Mon, 29 Jan 2024 09:31:49 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 1/2] docs: introduce dedicated page about code provenance
- / sign-off
-Message-ID: <ZbdwhR6h6T97vR8J@redhat.com>
-References: <20231123114026.3589272-1-berrange@redhat.com>
- <20231123114026.3589272-2-berrange@redhat.com>
- <ZbUU6CTgxgCLG0a9@intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1rUO23-0008SX-OG; Mon, 29 Jan 2024 04:34:26 -0500
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40T85Obw023580; Mon, 29 Jan 2024 09:34:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : content-transfer-encoding : mime-version; s=pp1;
+ bh=Uo/P5DOfd/mC752ox9LxZ0KMLZd6oY1pK+x7qsIkXEY=;
+ b=JcrhZhziQPcEz9G4bR4I38kWwu6xhNIdVZxnQCLh9+cUxeEgJekBINWbarWRMZ59UmNT
+ n5Fpeqcj3MfkxK+jox2Tfo75cbFYIK5bxku3yWG0jeTcqMBgkB5Jh5L+Y1O+A3kpeWvz
+ kQy4XEi4jmxbE++wl+RDsMccHkLdDSQIPlVb+AfKdJhPf4vcppLeZrlUyQBUr4f3XgLW
+ x4ETdWLcxoG/XWQUcqd9m6+1O1MUew/nrTR8Uk9oFXskMd3KKX9xpz6O5dsUxuTwtpDP
+ 6IBKv4pUYvrVWAFqb8J2h/30+8PVl8nGVFEsRklr/X7v0MIg8tG75FmwFM6d0A+4RNIF GA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vx86vsvtm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jan 2024 09:34:19 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 40T8u7ck028262;
+ Mon, 29 Jan 2024 09:34:18 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vx86vsvtf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jan 2024 09:34:18 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40T8UkVU010535; Mon, 29 Jan 2024 09:34:17 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwd5nfarg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jan 2024 09:34:17 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40T9YFAT48300434
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Jan 2024 09:34:15 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B764120040;
+ Mon, 29 Jan 2024 09:34:15 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2B5D22004B;
+ Mon, 29 Jan 2024 09:34:15 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.179.7.240])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 29 Jan 2024 09:34:15 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v4 0/3] linux-user: Allow gdbstub to ignore page protection
+Date: Mon, 29 Jan 2024 10:32:13 +0100
+Message-ID: <20240129093410.3151-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: zGjFIcyXJaG8wQvH2S_g3kG3RCTnkLbV
+X-Proofpoint-ORIG-GUID: 1r95fTB8Mnr8Fz80ZUVuKMhTv8NHiDgL
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZbUU6CTgxgCLG0a9@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_05,2024-01-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0
+ mlxlogscore=829 mlxscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2401290068
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,131 +113,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 27, 2024 at 10:36:24PM +0800, Zhao Liu wrote:
-> Hi Daniel,
-> 
-> On Thu, Nov 23, 2023 at 11:40:25AM +0000, Daniel P. Berrangé wrote:
-> > +Multiple authorship
-> > +~~~~~~~~~~~~~~~~~~~
-> > +
-> > +It is not uncommon for a patch to have contributions from multiple
-> > +authors. In such a scenario, a git commit will usually be expected
-> > +to have a ``Signed-off-by`` line for each contributor involved in
-> > +creatin of the patch. Some edge cases:
-> > +
-> > +  * The non-primary author's contributions were so trivial that
-> > +    they can be considered not subject to copyright. In this case
-> > +    the secondary authors need not include a ``Signed-off-by``.
-> > +
-> > +    This case most commonly applies where QEMU reviewers give short
-> > +    snippets of code as suggested fixes to a patch. The reviewers
-> > +    don't need to have their own ``Signed-off-by`` added unless
-> > +    their code suggestion was unusually large.
-> > +
-> > +  * Both contributors work for the same employer and the employer
-> > +    requires copyright assignment.
-> > +
-> > +    It can be said that in this case a ``Signed-off-by`` is indicating
-> > +    that the person has permission to contributeo from their employer
-> > +    who is the copyright holder. 
-> 
-> For this case, maybe it needs the "Co-developed-by"?
+v3: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02907.html
+v3 -> v4: Hide InteractiveConsole behind QEMU_TEST_INTERACTIVE (Alex).
+          Probe /proc/self/mem in the PROT_NONE test.
 
-If you're going to go to the trouble of adding multiple tags
-to the commit for each author who participated, then IMHO they
-should all be Signed-off-by. IOW, either just have S-o-B from
-the main author within a company, or have S-o-B for every
-author. Co-developed-by doesn't have value IMHO.
+v2: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg01592.html
+v2 -> v3: Add Richard's R-b on [1/3].
+          Fix printing the architecture name and the number of failures
+          in test_gdbstub.py.
+          Patches that need review: [2/3] and [3/3].
 
-> > It is none the less still preferrable
-> > +    to include a ``Signed-off-by`` for each contributor, as in some
-> > +    countries employees are not able to assign copyright to their
-> > +    employer, and it also covers any time invested outside working
-> > +    hours.
-> > +
-> > +Other commit tags
-> > +~~~~~~~~~~~~~~~~~
-> > +
-> > +While the ``Signed-off-by`` tag is mandatory, there are a number of
-> > +other tags that are commonly used during QEMU development
-> > +
-> > + * **``Reviewed-by``**: when a QEMU community member reviews a patch
-> > +   on the mailing list, if they consider the patch acceptable, they
-> > +   should send an email reply containing a ``Reviewed-by`` tag.
-> 
-> Maybe just a question, the people should drop the Reviewed/ACKed/Tested
-> tags that have been obtained if he make the any code changes (including
-> function/variable renaming) as well as commit message changes during
-> the patch refresh process, am I understand correctly? ;-)
+v1: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg01314.html
+v1 -> v2: Use /proc/self/mem as a fallback. Handle TB invalidation
+          (Richard).
+          Test cross-page accesses.
 
-It is a judgement call as to whether a Reviewed-by/etc should be
-kept or dropped. It depends on the scale of the changes that
-were made to the commit since the Reviewed-by/etc was first given.
+RFC: https://lists.gnu.org/archive/html/qemu-devel/2023-12/msg02044.html
+RFC -> v1: Use /proc/self/mem and accept that this will not work
+           without /proc.
+           Factor out a couple functions for gdbstub testing.
+           Add a test.
 
-> > +   NB: a subsystem maintainer sending a pull request would replace
-> > +   their own ``Reviewed-by`` with another ``Signed-off-by``
-> > +
-> > + * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch
-> > +   that touches their subsystem, but intends to allow a different
-> > +   maintainer to queue it and send a pull request, they would send
-> > +   a mail containing a ``Acked-by`` tag.
-> > +   
-> > + * **``Tested-by``**: when a QEMU community member has functionally
-> > +   tested the behaviour of the patch in some manner, they should
-> > +   send an email reply conmtaning a ``Tested-by`` tag.
-> 
-> Is there any requirement for the order of tags?
-> 
-> My previous understanding was that if the Reviewed-by/Tested-by tags
-> were obtained by the author within his company, then those tags should
-> be placed before the signed-off-by of the author. If the Reviewed-by/
-> Tested-by were acquired in the community, then they should be placed
-> after the author's signed-off-by, right?
+Hi,
 
-Common practice is for Signed-off-by tags to be kept in time order
-from earliest author to latest author / maintainer. Common case is
-2 S-o-B, the first from the patch author, and the last from the
-sub-system maintainer who sends the pull request.
+I've noticed that gdbstub behaves differently from gdbserver in that it
+doesn't allow reading non-readable pages. This series improves the
+situation by using the same mechanism as gdbserver: /proc/self/mem.
 
-For other tags I don't see any broadly acceptable pattern. Some people
-add Reviewed-by before the S-o-B, others add Reviewed-by after the
-S-o-B. Either is fine IMHO.
+Best regards,
+Ilya
 
+Ilya Leoshkevich (3):
+  linux-user: Allow gdbstub to ignore page protection
+  tests/tcg: Factor out gdbstub test functions
+  tests/tcg: Add the PROT_NONE gdbstub test
 
-> > +Re-starting abandoned work
-> > +~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > +
-> > +For a variety of reasons there are some patches that get submitted to
-> > +QEMU but never merged. An unrelated contributor may decide (months or
-> > +years later) to continue working from the abandoned patch and re-submit
-> > +it with extra changes.
-> > +
-> > +If the abandoned patch already had a ``Signed-off-by`` from the original
-> > +author this **must** be preserved.
-> 
-> I find some people added Originally-by, e.g., 8e86851bd6b9.
-> 
-> I guess if the code has been changed very significantly, or if the
-> original implementation has just been referenced and significantly
-> refactored, then Originally-by should be preferred instead of
-> Signed-off-by from the original author, right?
+ cpu-target.c                                  | 78 +++++++++++++++----
+ tests/guest-debug/run-test.py                 |  7 +-
+ tests/guest-debug/test_gdbstub.py             | 60 ++++++++++++++
+ tests/tcg/aarch64/gdbstub/test-sve-ioctl.py   | 34 +-------
+ tests/tcg/aarch64/gdbstub/test-sve.py         | 33 +-------
+ tests/tcg/multiarch/Makefile.target           |  9 ++-
+ tests/tcg/multiarch/gdbstub/interrupt.py      | 47 ++---------
+ tests/tcg/multiarch/gdbstub/memory.py         | 41 +---------
+ tests/tcg/multiarch/gdbstub/prot-none.py      | 36 +++++++++
+ tests/tcg/multiarch/gdbstub/registers.py      | 41 ++--------
+ tests/tcg/multiarch/gdbstub/sha1.py           | 40 ++--------
+ .../multiarch/gdbstub/test-proc-mappings.py   | 39 +---------
+ .../multiarch/gdbstub/test-qxfer-auxv-read.py | 37 +--------
+ .../gdbstub/test-thread-breakpoint.py         | 37 +--------
+ tests/tcg/multiarch/prot-none.c               | 40 ++++++++++
+ tests/tcg/s390x/gdbstub/test-signals-s390x.py | 42 +---------
+ tests/tcg/s390x/gdbstub/test-svc.py           | 39 +---------
+ 17 files changed, 247 insertions(+), 413 deletions(-)
+ create mode 100644 tests/guest-debug/test_gdbstub.py
+ create mode 100644 tests/tcg/multiarch/gdbstub/prot-none.py
+ create mode 100644 tests/tcg/multiarch/prot-none.c
 
-If patch submitted still contains any code that can be considered
-copyrightable (ie anything non-trivial) from the original author,
-then I would expect the original authors Signed-off-by to be retained.
-
-I think the cases where it is ok to use Originally-by, without a
-Signed-off-by, would be exceedingly.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
