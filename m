@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43FDC47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 13:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24583C47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 13:31:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rURfV-0002lr-Kx; Mon, 29 Jan 2024 08:27:21 -0500
+	id 1rURih-0004cY-8n; Mon, 29 Jan 2024 08:30:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rURfU-0002ld-4p
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:27:20 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rURiQ-0004an-7x
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:30:23 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rURfS-0005Qh-Ek
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:27:19 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-33ae74e5394so729581f8f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:27:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rURiN-0006UJ-Ja
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:30:21 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-40ef6da20feso5274885e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:30:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706534837; x=1707139637; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706535018; x=1707139818; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MVLiCylvxDCbitczUXNP0NJd41XUW+Rx3bSfLrZKRGU=;
- b=oZRvo3TyMqQf4oa4oMFwXypF8L9YSSbqp3e9sAfE5bnhSeTLDUKcpp7atiVQYCjSWT
- uAsfhxtEhJo7dMiIzrqk6VYgHkgwi1MPD/k8gizMpJ57eUfkH+by+KtHt+14lfaFp5kz
- 8yov+QEZ6z0ZlA9Lm/BV/LHBqkE7O4/jvQRqlFu+tkhoICsKFflpyQxHUPiwUuKCknHn
- 2QN54gQDNCk9SVkVotwmd0T0g7TzOlGyTPpezge0JLXFWQsqIiamdNPYlQi730ZJ+YX4
- AdmhcbgfGdeJByHWFDjfgEtIUsLXIK8tzsCBmIRx93/FCgVctHZ1B1p8h8342+XudPYq
- b3FQ==
+ bh=gXv1lhsL8KWFPXR9Pj2Y2q5V/Kj5zTAXYDK+dOgZ0f0=;
+ b=t1ony6vDLVfz8VW0+wuNl6w2oD6HypL8Q8U592bmelNMyMGIC2iKDXcVxPcRm4nBT9
+ WPOShwEo464jaxUzHu3OM5wPtovWF1dkcdCj6siQDsLAhOCQgMycnwlINbFkqL2cdymX
+ I6g8HuT8qstsCnEsoh0iSFGIVujiiyX9V2L2Tw7TuYWJ8/yPoZcv2nRHn62RgQsmL1rb
+ XfKZrLHu+HkbCN2dkqMPTs8NI1N9X550br3Zh7rg5l5dD0xw7iXzMOeyYxix+8Tp2THW
+ K+XmD60y97jaQ34ugBO1cuC5hxh7d21+8ccn4o5YI8wPibZCxDCgeFPQTkElAIseFNB5
+ dmzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706534837; x=1707139637;
+ d=1e100.net; s=20230601; t=1706535018; x=1707139818;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MVLiCylvxDCbitczUXNP0NJd41XUW+Rx3bSfLrZKRGU=;
- b=VDxHyI8WLqUUAfTZTdZDI93hIOBjeEsdNPiQTpjs54NjtPQsesbCxrDP+2I3uEp9/j
- GPgsaPqecFA+XSvQfq8S9pyIpiaQRarcQ9F+5xC3HtFdXJhK1YUtKD8sb4buRpNdjem7
- rHrlKFnxjLicsxjMXfXh1Fh1kWtOWlt/EZ+bVOVSjwUBDj8o3dqQNIVAxLHkWsTvjQ78
- BJDWz7nfMbSS4gQqX/6X9aXWSPQ53+0SWWWXZBB6LNoWCFTmUnhrPbFrtO9O3hGFZWUO
- xbulZ8DX7+XWiuX6sAkvM4i8kENWvLpOani1bxh0SS9/H7PJP9XOg5Dsrl39R/ApEJLu
- Gq/w==
-X-Gm-Message-State: AOJu0YwcORlTT644ba3+312KQrd/yfzhtgsssxRiH2gaA5cFRfO4D3/b
- d0+NCQgtuy7f2rEBHLx+4Jh9ULzO4EwK7v9OoIZgpKnubq0jg86tbYklfmfqEpE=
-X-Google-Smtp-Source: AGHT+IGodC3SlzWnBs1kKER1rX6zvIhwZPBmNvs2m0Q3o64PAIw6gFfBaS6uyViRl5mY2Vf0gYsFvw==
-X-Received: by 2002:a5d:47c3:0:b0:33a:f1f4:f4b9 with SMTP id
- o3-20020a5d47c3000000b0033af1f4f4b9mr1476764wrc.57.1706534836903; 
- Mon, 29 Jan 2024 05:27:16 -0800 (PST)
+ bh=gXv1lhsL8KWFPXR9Pj2Y2q5V/Kj5zTAXYDK+dOgZ0f0=;
+ b=Gj3pBkzwnYgTbEHnlUqP8kvt465CF1/dg+iQAP+5Df+Vr3ZLV39JudWKJPDbFzOOYm
+ 7T6uLf1G3FHbG4SH4gNEwfvZ77zEwmZspDV2Wcnr3kn/mtVDRnEzwv2sN5MUTGobCEgs
+ 9cs8DY80EEvCamE6tXxr3ngIQvo6gyWFmbSlzJovE9LNC6LNeBa9E3Z92L/3pbCdsIWj
+ j/Oq6bcJN61tWlhb6ZQcp+3lvs6S0AJTfMnrB1AnFXCBIcz9EPGWBjaxxjTBdGhIh62M
+ qyvjg7GDe+ywR9VrjY0uXMTh/+zbtcgId9XRj7A52uZkSTS0CjI0DiC9NZ0G8W73jlpf
+ hU6A==
+X-Gm-Message-State: AOJu0Yz5rwVV7mAcG8sYOi07sd/zxK9PPnuKPdWuk/vaPLOfQ0AACC1x
+ w/UJN+l52XYWUZSMi34Ebs4YKw3Uv15xmnv8W1d4SxKa5URYzmFRngkdPahlDqg=
+X-Google-Smtp-Source: AGHT+IEY1RMiAm0uaFOkafXH1ErOzzBYFw1jKXwmOT8Hhzt3fn2++zvdSz/MK8ztDDuLXTSCrfziLw==
+X-Received: by 2002:a05:600c:1384:b0:40d:92c8:2cf5 with SMTP id
+ u4-20020a05600c138400b0040d92c82cf5mr3951017wmf.20.1706535018118; 
+ Mon, 29 Jan 2024 05:30:18 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- d5-20020adffbc5000000b0033aedaea1b2sm2671161wrs.30.2024.01.29.05.27.16
+ f19-20020a05600c155300b0040e541ddcb1sm10247532wmg.33.2024.01.29.05.30.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jan 2024 05:27:16 -0800 (PST)
-Message-ID: <f30a3fbd-2e11-4c36-8107-014f23b6bb95@linaro.org>
-Date: Mon, 29 Jan 2024 14:27:15 +0100
+ Mon, 29 Jan 2024 05:30:17 -0800 (PST)
+Message-ID: <1ff4b856-352b-4eb0-944e-67ab75474be8@linaro.org>
+Date: Mon, 29 Jan 2024 14:30:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mips: remove unnecessary "select PTIMER"
+Subject: Re: [PATCH] mips: allow compiling out CONFIG_MIPS_ITU
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240129115811.1039965-1-pbonzini@redhat.com>
+References: <20240129121312.1057281-1-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240129115811.1039965-1-pbonzini@redhat.com>
+In-Reply-To: <20240129121312.1057281-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,16 +92,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/1/24 12:58, Paolo Bonzini wrote:
-> There is no use of ptimer functions in mips_cps.c or any other related
-> code.
-> 
+Hi Paolo,
+
+On 29/1/24 13:13, Paolo Bonzini wrote:
+> itu_reconfigure() is referenced from TCG, provide a stub if needed.
+
+s/itu_reconfigure/itc_reconfigure/
+
+What are you trying to achieve?
+
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/mips/Kconfig | 1 -
->   1 file changed, 1 deletion(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+>   hw/mips/mips_itu-stub.c | 26 ++++++++++++++++++++++++++
+>   hw/mips/meson.build     |  1 +
+>   2 files changed, 27 insertions(+)
+>   create mode 100644 hw/mips/mips_itu-stub.c
+> 
+> diff --git a/hw/mips/mips_itu-stub.c b/hw/mips/mips_itu-stub.c
+> new file mode 100644
+> index 00000000000..4cc82b8461f
+> --- /dev/null
+> +++ b/hw/mips/mips_itu-stub.c
+> @@ -0,0 +1,26 @@
+> +/*
+> + * Inter-Thread Communication Unit emulation.
+> + *
+> + * Copyright (c) 2016 Imagination Technologies
+> + *
+> + * This library is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU Lesser General Public
+> + * License as published by the Free Software Foundation; either
+> + * version 2.1 of the License, or (at your option) any later version.
+> + *
+> + * This library is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> + * Lesser General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU Lesser General Public
+> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/misc/mips_itu.h"
+> +
+> +void itc_reconfigure(MIPSITUState *tag)
+> +{
+> +    abort();
+> +}
+> diff --git a/hw/mips/meson.build b/hw/mips/meson.build
+> index f06d88f3430..2b1b96147a6 100644
+> --- a/hw/mips/meson.build
+> +++ b/hw/mips/meson.build
+> @@ -4,6 +4,7 @@ mips_ss.add(when: 'CONFIG_FW_CFG_MIPS', if_true: files('fw_cfg.c'))
+>   mips_ss.add(when: 'CONFIG_LOONGSON3V', if_true: files('loongson3_bootp.c', 'loongson3_virt.c'))
+>   mips_ss.add(when: 'CONFIG_MALTA', if_true: files('malta.c'))
+>   mips_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('cps.c'))
+> +mips_ss.add(when: 'CONFIG_MIPS_ITU', if_false: files('mips_itu-stub.c'))
+>   
+>   if 'CONFIG_TCG' in config_all_accel
+>   mips_ss.add(when: 'CONFIG_JAZZ', if_true: files('jazz.c'))
 
 
