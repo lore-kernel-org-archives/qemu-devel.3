@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B9FC47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB53C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:05:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUag9-0008KA-Ic; Mon, 29 Jan 2024 18:04:41 -0500
+	id 1rUadQ-0005yG-7D; Mon, 29 Jan 2024 18:01:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUae4-0006qE-Je
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:29 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ id 1rUadP-0005xq-0c
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:47 -0500
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUae2-0008W5-My
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:28 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3bda741ad7dso2953502b6e.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:26 -0800 (PST)
+ id 1rUadM-0008Oq-W9
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:46 -0500
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-6ddf26eba3cso2121606a34.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569345; x=1707174145; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569304; x=1707174104; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h0D5wvbqCBKDS3PIRJ2u8mID+Ysdp5Zl/usWtkQWmMI=;
- b=v20khRcTMp+4YR+Pd6g9IL+U3udxDQlZopse4FOoCtSicqb8mDYE+/mzleN3qbJ3UE
- ziPUjcChU9QSQgmxRk35uB9SLkmJtvnJ9rQwXEYd0DD68O1bjouDupLSr86AnE+pVvwo
- toHp64IaEttiurUQeTU283ln7zGwcYVKFosqIZ44NOsVyaWZ0YYKzNFoPzKUqVGSKunP
- IpL3HRLCPoFFzZQSSckHEMeS+t4MmMB9AozId9vjZF3o9HStkq+AGpd/5epCq0woqqWS
- TtB+tTm/ebqSdqfL88QbRdvvWqgOwLhilayTx2DtV2vtnLX8SL7VVWGy+r3U21bO39WI
- yYkw==
+ bh=blFzc6YcDRkiR8B9Edly+GRoesCmaBH2nX316LvuRkc=;
+ b=KCjk9Luj2kwf1EnQVSxcIkrXxyH/tKdy/egGxxDPQbThu5IOqzJ1XtOm933Veg5I38
+ ZOs0ToLj3oN4yoSerUuPTXlUau3n1LpAFzVUQK95eR/NR4fgdx8MuaJYmq+AOZrdMCaI
+ H/DrJtXmZiPa5RzVRGe1EEvs9iNYug0DAdYTd4JndeGfZX+84v4t2sPMsu46h+OQ9sDG
+ bdqvup+A9sMOO/z5GRDZkf0S9s3O7ByRZu5vkZOkvJVkUAVGwsjbRe59284gaWy5mOQD
+ PFYs0IX7b69BbXGzt2rbqirwb1KbVGwfWtSmTjTDjsIUuHfaPVse9lNoJ/5SxEBqAfuN
+ sq5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569345; x=1707174145;
+ d=1e100.net; s=20230601; t=1706569304; x=1707174104;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h0D5wvbqCBKDS3PIRJ2u8mID+Ysdp5Zl/usWtkQWmMI=;
- b=I5+BCFfUPA6YtTcK+tveHKGxmcz/hOrhS5/ZMKJBWwVJL3p8GoOpG3lg1LgrMLXnER
- mjeJw3tpu6vaPf9qeuuPt4lJ0nyckKbScAK6FSfcednedE4MTPzf9W31gYc37MxR+sZj
- K0jfaRDArLiGm6pvmXR32KR2vaw4uj+Y5/uTxlSU/5pOH+wPSm6dzvNL1Ird+G6ORoND
- JDZwFw2VDoqOEWaS/YU9lm8TSfZSsKi8XFKpsSmMikZoS71YY/mVOCZXcpotibwsYBsX
- yx0HuW8XCffkOIr25Wfusc8YoQMKjrsjCPAojiSOIJbc1q6ASbVxI2nWyXN9RbIoZdZG
- bN0Q==
-X-Gm-Message-State: AOJu0YyQ0C6TlDVggzHHYAb5+vWBjYRpKHlHCR+RT2ELjCE1hbDKAEo1
- lMifhXZ4o/04DsGtzvSvx7YJIJ5iQMyuf0sWqx9j/kyeqpzpm+aofJCqNuQohH8UYMTnkAtZXSk
- vyio=
-X-Google-Smtp-Source: AGHT+IE0qaf2IhZyAm/EP38aegeAxmpymypqC8H7cQ3lVwyTV/eFIY5am23rtwZ7RS/4ozXMSEqyrg==
-X-Received: by 2002:a05:6808:1983:b0:3be:31d5:6dda with SMTP id
- bj3-20020a056808198300b003be31d56ddamr787551oib.10.1706569345527; 
- Mon, 29 Jan 2024 15:02:25 -0800 (PST)
+ bh=blFzc6YcDRkiR8B9Edly+GRoesCmaBH2nX316LvuRkc=;
+ b=Kst6v1iEIUNVaV2wSdx9IRwHqp7Ol2Yz80sH/E5H+BxHttL5BqZ/ub1AmlcoX9ppwy
+ xyl+XJRbGWNhtVr3erHGtjydNhEMNsgZBqdnPGUZuLIadmXmQuDpSp81r3Hm16BurvY0
+ PyKsH4mGUled/wtVrUm6PQrSuZFadsS/TVCdpzCW/fUHNgj9nR0Oc46ACEuSq+xRXYaJ
+ +ZN9pL/N8qs86AwZrW8rx8SHmC1VJpqGZI503w5gtE0LRI+2d31jjkdavc70k7OSe0W/
+ p/TyEFAf6H+Zf24ObEOeDNzXNjV1kQ41R0EhByzt2ECqzZNHPI2wqnHcVP5VLSHQu3B7
+ goDA==
+X-Gm-Message-State: AOJu0YyDSnfC+/SeWVGwlK302/7nWLdE/0WmuABEHZQwiPxFnhARvoe1
+ FISlw5ntyTFvzFnrktggxn8q5lBaTGYSfiUheoryOtvS5V7XmzRkiDlx4k/IbgPPk4ctptaQTNV
+ ExsU=
+X-Google-Smtp-Source: AGHT+IF7pWujJumVMn2IoJ2nvf83N6fpWpLtQiwiO6wZuUaxCSc0KBf/tIVhUbpU/p4JD+IJp3oLKw==
+X-Received: by 2002:a05:6358:4b4e:b0:178:7d95:2913 with SMTP id
+ ks14-20020a0563584b4e00b001787d952913mr2074311rwc.34.1706569303886; 
+ Mon, 29 Jan 2024 15:01:43 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.22
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:02:24 -0800 (PST)
+ Mon, 29 Jan 2024 15:01:43 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [PULL 22/31] accel/tcg: Rename tcg_cpus_exec() -> tcg_cpu_exec()
-Date: Tue, 30 Jan 2024 09:01:12 +1000
-Message-Id: <20240129230121.8091-23-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 08/31] include/exec: Move cpu_*()/cpu_env() to common header
+Date: Tue, 30 Jan 2024 09:00:58 +1000
+Message-Id: <20240129230121.8091-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,75 +95,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Anton Johansson <anjo@rev.ng>
 
-tcg_cpus_exec() operates on a single vCPU, rename it
-as 'tcg_cpu_exec'.
+Functions are target independent.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240119144024.14289-17-anjo@rev.ng>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240124101639.30056-4-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tcg-accel-ops.h       | 2 +-
- accel/tcg/tcg-accel-ops-mttcg.c | 2 +-
- accel/tcg/tcg-accel-ops-rr.c    | 2 +-
- accel/tcg/tcg-accel-ops.c       | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ include/exec/cpu-all.h    | 25 -------------------------
+ include/exec/cpu-common.h | 26 ++++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
-index 17c7ed00eb..44c4079972 100644
---- a/accel/tcg/tcg-accel-ops.h
-+++ b/accel/tcg/tcg-accel-ops.h
-@@ -15,7 +15,7 @@
- #include "sysemu/cpus.h"
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index edee87d3f4..8501a33dbf 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -384,33 +384,8 @@ static inline bool tlb_hit(uint64_t tlb_addr, vaddr addr)
  
- void tcg_cpu_destroy(CPUState *cpu);
--int tcg_cpus_exec(CPUState *cpu);
-+int tcg_cpu_exec(CPUState *cpu);
- void tcg_handle_interrupt(CPUState *cpu, int mask);
- void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
+ #endif /* !CONFIG_USER_ONLY */
  
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index bcba314a65..c552b45b8e 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -92,7 +92,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
-         if (cpu_can_run(cpu)) {
-             int r;
-             bql_unlock();
--            r = tcg_cpus_exec(cpu);
-+            r = tcg_cpu_exec(cpu);
-             bql_lock();
-             switch (r) {
-             case EXCP_DEBUG:
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 0617f66b5b..894e73e52c 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -258,7 +258,7 @@ static void *rr_cpu_thread_fn(void *arg)
-                 if (icount_enabled()) {
-                     icount_prepare_for_run(cpu, cpu_budget);
-                 }
--                r = tcg_cpus_exec(cpu);
-+                r = tcg_cpu_exec(cpu);
-                 if (icount_enabled()) {
-                     icount_process_data(cpu);
-                 }
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 9b84b84218..9c957f421c 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -68,7 +68,7 @@ void tcg_cpu_destroy(CPUState *cpu)
-     cpu_thread_signal_destroyed(cpu);
- }
+-/* accel/tcg/cpu-exec.c */
+-int cpu_exec(CPUState *cpu);
+-
+ /* Validate correct placement of CPUArchState. */
+ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
+ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
  
--int tcg_cpus_exec(CPUState *cpu)
-+int tcg_cpu_exec(CPUState *cpu)
- {
-     int ret;
-     assert(tcg_enabled());
+-/**
+- * env_archcpu(env)
+- * @env: The architecture environment
+- *
+- * Return the ArchCPU associated with the environment.
+- */
+-static inline ArchCPU *env_archcpu(CPUArchState *env)
+-{
+-    return (void *)env - sizeof(CPUState);
+-}
+-
+-/**
+- * env_cpu(env)
+- * @env: The architecture environment
+- *
+- * Return the CPUState associated with the environment.
+- */
+-static inline CPUState *env_cpu(CPUArchState *env)
+-{
+-    return (void *)env - sizeof(CPUState);
+-}
+-
+ #endif /* CPU_ALL_H */
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 608708ea48..dcbd5f5783 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -7,6 +7,7 @@
+ #ifndef CONFIG_USER_ONLY
+ #include "exec/hwaddr.h"
+ #endif
++#include "hw/core/cpu.h"
+ 
+ #define EXCP_INTERRUPT  0x10000 /* async interruption */
+ #define EXCP_HLT        0x10001 /* hlt instruction reached */
+@@ -236,4 +237,29 @@ G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
+  */
+ #define PAGE_PASSTHROUGH 0x0800
+ 
++/* accel/tcg/cpu-exec.c */
++int cpu_exec(CPUState *cpu);
++
++/**
++ * env_archcpu(env)
++ * @env: The architecture environment
++ *
++ * Return the ArchCPU associated with the environment.
++ */
++static inline ArchCPU *env_archcpu(CPUArchState *env)
++{
++    return (void *)env - sizeof(CPUState);
++}
++
++/**
++ * env_cpu(env)
++ * @env: The architecture environment
++ *
++ * Return the CPUState associated with the environment.
++ */
++static inline CPUState *env_cpu(CPUArchState *env)
++{
++    return (void *)env - sizeof(CPUState);
++}
++
+ #endif /* CPU_COMMON_H */
 -- 
 2.34.1
 
