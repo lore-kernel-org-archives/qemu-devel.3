@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50F0C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B9FC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadp-0006Dn-V6; Mon, 29 Jan 2024 18:02:15 -0500
+	id 1rUag9-0008KA-Ic; Mon, 29 Jan 2024 18:04:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadc-00062g-Ee
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:03 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1rUae4-0006qE-Je
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:29 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUada-0008PU-AN
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:59 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-5cf2d73a183so3262050a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:48 -0800 (PST)
+ id 1rUae2-0008W5-My
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:28 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3bda741ad7dso2953502b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569308; x=1707174108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569345; x=1707174145; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o1cRBtAgGqadhUih0VNs9If35/tfCXiaB3lrOMREblM=;
- b=i5a9rgVDIiTJH2x6Zna+rMGZ9ry3IYVk12yXaZjqkGd0ipwbh1qz+uFM8ikkt1K3sW
- rvfwg71e/nnRRbyAS6SWY0cNaUuQQvJuDloXw4Hsbl3y/t0JYlkXFmPYRGvJSl88fAT8
- iYFd7gcPg2MLycCgTnWudsY0X0bnVBUIDIVU3M1mJInUUoE+XWCV1PzglwHNpECPnUR1
- z1eZR4oNZlhuO2X50GB+V2jttHlE4Vq7GcRcostcFnwkqfNj63QmVHiJcgJmCMSaQ0dw
- JP/yQTPjvgy8zJiv+aP+QqMQ2Ba6PetblYCYEnJs/NXdWMYbJDJS+RftkrG9b5MRMus3
- nlDA==
+ bh=h0D5wvbqCBKDS3PIRJ2u8mID+Ysdp5Zl/usWtkQWmMI=;
+ b=v20khRcTMp+4YR+Pd6g9IL+U3udxDQlZopse4FOoCtSicqb8mDYE+/mzleN3qbJ3UE
+ ziPUjcChU9QSQgmxRk35uB9SLkmJtvnJ9rQwXEYd0DD68O1bjouDupLSr86AnE+pVvwo
+ toHp64IaEttiurUQeTU283ln7zGwcYVKFosqIZ44NOsVyaWZ0YYKzNFoPzKUqVGSKunP
+ IpL3HRLCPoFFzZQSSckHEMeS+t4MmMB9AozId9vjZF3o9HStkq+AGpd/5epCq0woqqWS
+ TtB+tTm/ebqSdqfL88QbRdvvWqgOwLhilayTx2DtV2vtnLX8SL7VVWGy+r3U21bO39WI
+ yYkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569308; x=1707174108;
+ d=1e100.net; s=20230601; t=1706569345; x=1707174145;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o1cRBtAgGqadhUih0VNs9If35/tfCXiaB3lrOMREblM=;
- b=MkWhUQ5n5y4gDbJlbB6LUNTBjL7RbsZUihdsAXLFXfHrU38EGShHfNxtLW3JUIzZTr
- Oym42LFrMsjdLif66MjU4E3lhU+AaTtqY3uzgEgRndmEuoZgQog/0CmCmF/2MBhDyLno
- vHymHKGL2NDJ4GQoiZh7z6HuY8NjDAlluYcgksHGFreCvxe2pCU95983hXJAlA10pBio
- wKLhVWZPxglebM4bcQjWkPtv6BjYqr6jN8taElK81lI/dj90APhOdcO4GpBANsl3MWkA
- sXrAVssRqjwdlE8Vs9m4IbjlyaORsSy/SlcbhD7rsWlKxUryvD+cyK405XK3Styaiu7Y
- d6Tw==
-X-Gm-Message-State: AOJu0YwEsjiyec9x6D1l0Gt9Daf1qObvIG5usxGRoAaoYK99tzVHoL/i
- 62kvPVr52yKNtAENESqNKhwILycjIz1jDn3fCJ7J4V/r4Q+ttEl67ZvHir3t2e9OvR38RoMpj+2
- mciQ=
-X-Google-Smtp-Source: AGHT+IF5hjK4eLfBJDqxqEY2kQrCH8RgQJ+bIVa1n6TDVT3tEbSY3KYWxOIyJua5WeEe6segQxYqkA==
-X-Received: by 2002:a05:6a20:144e:b0:19d:e644:7c9 with SMTP id
- a14-20020a056a20144e00b0019de64407c9mr37092pzi.22.1706569307936; 
- Mon, 29 Jan 2024 15:01:47 -0800 (PST)
+ bh=h0D5wvbqCBKDS3PIRJ2u8mID+Ysdp5Zl/usWtkQWmMI=;
+ b=I5+BCFfUPA6YtTcK+tveHKGxmcz/hOrhS5/ZMKJBWwVJL3p8GoOpG3lg1LgrMLXnER
+ mjeJw3tpu6vaPf9qeuuPt4lJ0nyckKbScAK6FSfcednedE4MTPzf9W31gYc37MxR+sZj
+ K0jfaRDArLiGm6pvmXR32KR2vaw4uj+Y5/uTxlSU/5pOH+wPSm6dzvNL1Ird+G6ORoND
+ JDZwFw2VDoqOEWaS/YU9lm8TSfZSsKi8XFKpsSmMikZoS71YY/mVOCZXcpotibwsYBsX
+ yx0HuW8XCffkOIr25Wfusc8YoQMKjrsjCPAojiSOIJbc1q6ASbVxI2nWyXN9RbIoZdZG
+ bN0Q==
+X-Gm-Message-State: AOJu0YyQ0C6TlDVggzHHYAb5+vWBjYRpKHlHCR+RT2ELjCE1hbDKAEo1
+ lMifhXZ4o/04DsGtzvSvx7YJIJ5iQMyuf0sWqx9j/kyeqpzpm+aofJCqNuQohH8UYMTnkAtZXSk
+ vyio=
+X-Google-Smtp-Source: AGHT+IE0qaf2IhZyAm/EP38aegeAxmpymypqC8H7cQ3lVwyTV/eFIY5am23rtwZ7RS/4ozXMSEqyrg==
+X-Received: by 2002:a05:6808:1983:b0:3be:31d5:6dda with SMTP id
+ bj3-20020a056808198300b003be31d56ddamr787551oib.10.1706569345527; 
+ Mon, 29 Jan 2024 15:02:25 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.46
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:47 -0800 (PST)
+ Mon, 29 Jan 2024 15:02:24 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PULL 10/31] include/hw/core: Remove i386 conditional on
- fake_user_interrupt
-Date: Tue, 30 Jan 2024 09:01:00 +1000
-Message-Id: <20240129230121.8091-11-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [PULL 22/31] accel/tcg: Rename tcg_cpus_exec() -> tcg_cpu_exec()
+Date: Tue, 30 Jan 2024 09:01:12 +1000
+Message-Id: <20240129230121.8091-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,43 +95,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Always include fake_user_interrupt in user-only build, despite
-only being used for i386.  This will enable cpu-exec.c to be
-compiled only once.
+tcg_cpus_exec() operates on a single vCPU, rename it
+as 'tcg_cpu_exec'.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-ID: <20240119144024.14289-18-anjo@rev.ng>
-[rth: Split out of a larger patch; remove TARGET_I386 conditional.]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240124101639.30056-4-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/tcg-cpu-ops.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ accel/tcg/tcg-accel-ops.h       | 2 +-
+ accel/tcg/tcg-accel-ops-mttcg.c | 2 +-
+ accel/tcg/tcg-accel-ops-rr.c    | 2 +-
+ accel/tcg/tcg-accel-ops.c       | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
-index d6fe55d471..3ed279836f 100644
---- a/include/hw/core/tcg-cpu-ops.h
-+++ b/include/hw/core/tcg-cpu-ops.h
-@@ -50,7 +50,7 @@ struct TCGCPUOps {
-     void (*debug_excp_handler)(CPUState *cpu);
+diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
+index 17c7ed00eb..44c4079972 100644
+--- a/accel/tcg/tcg-accel-ops.h
++++ b/accel/tcg/tcg-accel-ops.h
+@@ -15,7 +15,7 @@
+ #include "sysemu/cpus.h"
  
- #ifdef NEED_CPU_H
--#if defined(CONFIG_USER_ONLY) && defined(TARGET_I386)
-+#ifdef CONFIG_USER_ONLY
-     /**
-      * @fake_user_interrupt: Callback for 'fake exception' handling.
-      *
-@@ -58,8 +58,7 @@ struct TCGCPUOps {
-      * cpu execution loop (hack for x86 user mode).
-      */
-     void (*fake_user_interrupt)(CPUState *cpu);
--#endif /* !CONFIG_USER_ONLY || !TARGET_I386 */
--#ifdef CONFIG_USER_ONLY
-+
-     /**
-      * record_sigsegv:
-      * @cpu: cpu context
+ void tcg_cpu_destroy(CPUState *cpu);
+-int tcg_cpus_exec(CPUState *cpu);
++int tcg_cpu_exec(CPUState *cpu);
+ void tcg_handle_interrupt(CPUState *cpu, int mask);
+ void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
+ 
+diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
+index bcba314a65..c552b45b8e 100644
+--- a/accel/tcg/tcg-accel-ops-mttcg.c
++++ b/accel/tcg/tcg-accel-ops-mttcg.c
+@@ -92,7 +92,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
+         if (cpu_can_run(cpu)) {
+             int r;
+             bql_unlock();
+-            r = tcg_cpus_exec(cpu);
++            r = tcg_cpu_exec(cpu);
+             bql_lock();
+             switch (r) {
+             case EXCP_DEBUG:
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 0617f66b5b..894e73e52c 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -258,7 +258,7 @@ static void *rr_cpu_thread_fn(void *arg)
+                 if (icount_enabled()) {
+                     icount_prepare_for_run(cpu, cpu_budget);
+                 }
+-                r = tcg_cpus_exec(cpu);
++                r = tcg_cpu_exec(cpu);
+                 if (icount_enabled()) {
+                     icount_process_data(cpu);
+                 }
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 9b84b84218..9c957f421c 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -68,7 +68,7 @@ void tcg_cpu_destroy(CPUState *cpu)
+     cpu_thread_signal_destroyed(cpu);
+ }
+ 
+-int tcg_cpus_exec(CPUState *cpu)
++int tcg_cpu_exec(CPUState *cpu)
+ {
+     int ret;
+     assert(tcg_enabled());
 -- 
 2.34.1
 
