@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC896C47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F8CEC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUnr-0003WK-0l; Mon, 29 Jan 2024 11:48:17 -0500
+	id 1rUUnY-0002BT-V2; Mon, 29 Jan 2024 11:47:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUms-0008Dw-Nq
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:10 -0500
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmi-0007pM-NY
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:03 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmp-00046X-FN
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:10 -0500
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2d0512f6e32so9054151fa.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:47:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmc-00043m-Dd
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:59 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-40e8fec0968so38560325e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706546824; x=1707151624; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706546812; x=1707151612; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ijxQ2ToounQ2YPXKuEdEzzYCdzKOr5SyszX4l6rPtX0=;
- b=pRUaHsaLfYCa993As447YsVWb8bgI9iiAV1nRGt33cXUVQqRPTTW55OdyNGMhltpTK
- n8sjLXHIYGOGjw8UOVW/yvhDZ+ycuzAIOycs/fKlsRSf5OwbNswjoRxmdpdY0X5W9acq
- BNGJi2BRYyhGHa5EXqvOXCZjOWBMdxpuby+Hyezjk8puvZur0doVFP5Ia33FYLW1V7aI
- UFqrKmAg/x+CEkWjOklBiLgYmEm6ZN0EfxlfMqeFRR/PdaqB0ZZZM8rcPvGiUlNRWBDg
- sPu7Tw2vFVD7Kd3rlckCOEGXayaB5hCT0VcjRcCPzPVHkF/VBPozgr3siasfK0XzGuM2
- SKsw==
+ bh=5eD6rKTwh3BPZg727azmGQxnUXfJqHRnwiaNdsPFdAo=;
+ b=IQNQux8KZiEAu9rtijkzINfhVZwKZDXwAUvMdrHHZCfYn0CguSAQU0IhJXls1eCR9O
+ Q7/L2NoJOm2nCwAZxoG3bxd2qfTEHrqT2sqDKVRiahsPV1iNvQlvbh4aVyLepnf7xp7L
+ c3N0M6zktsV/k6f3ez9ELiWf8PProfFx+l7eaDTXcgTQLaBENNrnhz2e05WMjy+NRvMI
+ vEX1R6PWm/1G/e/KPu6EvZIYSvUwWoEIdfLUO9pB3/nJzb3ieYBW3nfjRQrAQOz/vPGE
+ 8MexGvd5WX9Gh6/QATKdP2DG9TnLXpyyqKxBPoJKNcgYAJVhRnJM+RafLXX/EC1W3RwS
+ Kjrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706546824; x=1707151624;
+ d=1e100.net; s=20230601; t=1706546812; x=1707151612;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ijxQ2ToounQ2YPXKuEdEzzYCdzKOr5SyszX4l6rPtX0=;
- b=EmL6bB156rihzHjn6EYWyfEJvy5DXWvxsUStchQKtXYV8foaYq2UHV2hhqe7/SQnBW
- gjIugzTvOHu2x9f1PMAlp8haA5JzGaPOPupFFAAVHwafaOUYaNzxjxdF9i7C+WF8FD/T
- A/TQNS+1eKCaBf6NeFScB/GTEYAw/P/e/O1MIa3+HQtsJvvLU45+jCLnVywOjUmsNaIY
- z7rg93OHSWiP89kG62qmWulTijFmitD4q/bqIIVVlMhGTSTjtaf7FLF6/+str6oElLi6
- jh5BXDzo/IhXVDWI8Gn2aQQmGbgJPssY7fEPynarEA8P60ve4bjMO6w6rI5xbtbOel/b
- 4/Ag==
-X-Gm-Message-State: AOJu0Yxz4gv0ckxTaHjjWBcO9hrxIUzDDOEZesZs0RZoUWh3xtKk4qUJ
- c/+jg1pagHZXGXfVs7DYDnHBtsQH3DcHzjHH4le3/ZxXlbsoJSIYmVosyWlKsCBv0cY04mNgkQ0
- H
-X-Google-Smtp-Source: AGHT+IGXacHRaZvQM48taNZT74NjPJR9kzPP7y3LZ/4p0pddoEr1gt2fuS3L5Ce3XavmaRSix5iy+w==
-X-Received: by 2002:a05:651c:151:b0:2cf:2a82:7871 with SMTP id
- c17-20020a05651c015100b002cf2a827871mr4062986ljd.26.1706546823949; 
- Mon, 29 Jan 2024 08:47:03 -0800 (PST)
+ bh=5eD6rKTwh3BPZg727azmGQxnUXfJqHRnwiaNdsPFdAo=;
+ b=Km1sLwcYj45KJcG3Ycppuwq52YqtSKhMkI9Ts8Cz4iBixlc4nQCc5cCXGCbIoY9klX
+ NYKTH+5C3rFhXaG24XD4y9ChtC3tIj8W+8O5EeyP3K9ch6p5Mk++5X9TiiAzlntCL5/w
+ D4slrUHq7qvJFN+tStgoooz+c9cBL5qYuWFgsreN9n9SgpNtdLu9TMvbZy9ICi9kN8BC
+ CkcIIoEgxyr2mdCtygBqZUXyZQYNBNYHrERjMJjMDYEgXeddpMJ2/2zROkaqCUMDywK4
+ Oy6ejlEgOb5t5qKoUG0cFd0iBzNz9CVf1IRqO9jD14felZDGgBbWVmPBGv2tqgujNrTy
+ dpHg==
+X-Gm-Message-State: AOJu0YxRSR6Iixh4u9gNEirNy3a5kP5dfiZLEhk4SgjUymlQvcKQhi63
+ l92r3s+gf71mDDUTV6bror6a/S61zQ74mCRWGNveT4p+N/U5PubD91jCtmLgVRqvz7ginczEAHQ
+ Y
+X-Google-Smtp-Source: AGHT+IHBLDlJBXdJdBjv54vRycwUyR6fXctiBoUoT2EH8P3suLNCBO+YYLhkJyYaixVb8cTSMM0ujw==
+X-Received: by 2002:a5d:4988:0:b0:33a:e544:eccb with SMTP id
+ r8-20020a5d4988000000b0033ae544eccbmr3934226wrq.1.1706546812465; 
+ Mon, 29 Jan 2024 08:46:52 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- l6-20020a5d4806000000b003392ae3aee8sm8502273wrq.97.2024.01.29.08.47.02
+ c17-20020a5d5291000000b00337d980a68asm6158372wrv.106.2024.01.29.08.46.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 08:47:03 -0800 (PST)
+ Mon, 29 Jan 2024 08:46:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
@@ -64,19 +64,19 @@ Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH v3 17/29] target/microblaze: Prefer fast cpu_env() over slower
+ Song Gao <gaosong@loongson.cn>
+Subject: [PATCH v3 15/29] target/loongarch: Prefer fast cpu_env() over slower
  CPU QOM cast macro
-Date: Mon, 29 Jan 2024 17:44:59 +0100
-Message-ID: <20240129164514.73104-18-philmd@linaro.org>
+Date: Mon, 29 Jan 2024 17:44:57 +0100
+Message-ID: <20240129164514.73104-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,74 +102,306 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Mechanical patch produced running the command documented
 in scripts/coccinelle/cpu_env.cocci_template header.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/microblaze/gdbstub.c   | 3 +--
- target/microblaze/helper.c    | 3 +--
- target/microblaze/translate.c | 6 ++----
- 3 files changed, 4 insertions(+), 8 deletions(-)
+ target/loongarch/cpu.c            | 39 ++++++++---------------------
+ target/loongarch/gdbstub.c        |  6 ++---
+ target/loongarch/kvm/kvm.c        | 41 +++++++++----------------------
+ target/loongarch/tcg/tlb_helper.c |  6 ++---
+ 4 files changed, 26 insertions(+), 66 deletions(-)
 
-diff --git a/target/microblaze/gdbstub.c b/target/microblaze/gdbstub.c
-index 29ac6e9c0f..98660ed950 100644
---- a/target/microblaze/gdbstub.c
-+++ b/target/microblaze/gdbstub.c
-@@ -113,9 +113,8 @@ int mb_cpu_gdb_read_stack_protect(CPUMBState *env, GByteArray *mem_buf, int n)
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 3094bbc0d9..d1c907b2a7 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -91,18 +91,12 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
  
- int mb_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ static void loongarch_cpu_set_pc(CPUState *cs, vaddr value)
  {
--    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
-     CPUClass *cc = CPU_GET_CLASS(cs);
--    CPUMBState *env = &cpu->env;
-+    CPUMBState *env = cpu_env(cs);
-     uint32_t tmp;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
+-
+-    set_pc(env, value);
++    set_pc(cpu_env(cs), value);
+ }
  
-     if (n > cc->gdb_num_core_regs) {
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index 98bdb82de8..bf955dd425 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -253,8 +253,7 @@ hwaddr mb_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
- 
- bool mb_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ static vaddr loongarch_cpu_get_pc(CPUState *cs)
  {
--    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
--    CPUMBState *env = &cpu->env;
-+    CPUMBState *env = cpu_env(cs);
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
+-
+-    return env->pc;
++    return cpu_env(cs)->pc;
+ }
  
-     if ((interrupt_request & CPU_INTERRUPT_HARD)
-         && (env->msr & MSR_IE)
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 49bfb4a0ea..354897c4a2 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -1630,7 +1630,6 @@ static void mb_tr_insn_start(DisasContextBase *dcb, CPUState *cs)
- static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+ #ifndef CONFIG_USER_ONLY
+@@ -157,8 +151,7 @@ static inline bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
+ #ifndef CONFIG_USER_ONLY
+ static void loongarch_cpu_do_interrupt(CPUState *cs)
  {
-     DisasContext *dc = container_of(dcb, DisasContext, base);
--    CPUMBState *env = cpu_env(cs);
-     uint32_t ir;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+     bool update_badinstr = 1;
+     int cause = -1;
+     const char *name;
+@@ -308,8 +301,7 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+                                                 MemTxResult response,
+                                                 uintptr_t retaddr)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
  
-     /* TODO: This should raise an exception, not terminate qemu. */
-@@ -1641,7 +1640,7 @@ static void mb_tr_translate_insn(DisasContextBase *dcb, CPUState *cs)
+     if (access_type == MMU_INST_FETCH) {
+         do_raise_exception(env, EXCCODE_ADEF, retaddr);
+@@ -321,8 +313,7 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ static bool loongarch_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ {
+     if (interrupt_request & CPU_INTERRUPT_HARD) {
+-        LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-        CPULoongArchState *env = &cpu->env;
++        CPULoongArchState *env = cpu_env(cs);
  
-     dc->tb_flags_to_set = 0;
+         if (cpu_loongarch_hw_interrupts_enabled(env) &&
+             cpu_loongarch_hw_interrupts_pending(env)) {
+@@ -339,21 +330,15 @@ static bool loongarch_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ static void loongarch_cpu_synchronize_from_tb(CPUState *cs,
+                                               const TranslationBlock *tb)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
+-
+     tcg_debug_assert(!(cs->tcg_cflags & CF_PCREL));
+-    set_pc(env, tb->pc);
++    set_pc(cpu_env(cs), tb->pc);
+ }
  
--    ir = cpu_ldl_code(env, dc->base.pc_next);
-+    ir = cpu_ldl_code(cpu_env(cs), dc->base.pc_next);
-     if (!decode(dc, ir)) {
-         trap_illegal(dc, true);
+ static void loongarch_restore_state_to_opc(CPUState *cs,
+                                            const TranslationBlock *tb,
+                                            const uint64_t *data)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
+-
+-    set_pc(env, data[0]);
++    set_pc(cpu_env(cs), data[0]);
+ }
+ #endif /* CONFIG_TCG */
+ 
+@@ -362,12 +347,10 @@ static bool loongarch_cpu_has_work(CPUState *cs)
+ #ifdef CONFIG_USER_ONLY
+     return true;
+ #else
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
+     bool has_work = false;
+ 
+     if ((cs->interrupt_request & CPU_INTERRUPT_HARD) &&
+-        cpu_loongarch_hw_interrupts_pending(env)) {
++        cpu_loongarch_hw_interrupts_pending(cpu_env(cs))) {
+         has_work = true;
      }
-@@ -1800,8 +1799,7 @@ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
  
- void mb_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+@@ -499,9 +482,8 @@ static void loongarch_max_initfn(Object *obj)
+ static void loongarch_cpu_reset_hold(Object *obj)
  {
--    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
--    CPUMBState *env = &cpu->env;
-+    CPUMBState *env = cpu_env(cs);
-     uint32_t iflags;
+     CPUState *cs = CPU(obj);
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+     LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     if (lacc->parent_phases.hold) {
+         lacc->parent_phases.hold(obj);
+@@ -684,8 +666,7 @@ static ObjectClass *loongarch_cpu_class_by_name(const char *cpu_model)
+ 
+ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
      int i;
  
+     qemu_fprintf(f, " PC=%016" PRIx64 " ", env->pc);
+diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
+index 5fc2f19e96..91a16183b0 100644
+--- a/target/loongarch/gdbstub.c
++++ b/target/loongarch/gdbstub.c
+@@ -33,8 +33,7 @@ void write_fcc(CPULoongArchState *env, uint64_t val)
+ 
+ int loongarch_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+     uint64_t val;
+ 
+     if (0 <= n && n < 32) {
+@@ -60,8 +59,7 @@ int loongarch_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int loongarch_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+     target_ulong tmp;
+     int read_length;
+     int length = 0;
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index c19978a970..df5e199860 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -38,8 +38,7 @@ static int kvm_loongarch_get_regs_core(CPUState *cs)
+     int ret = 0;
+     int i;
+     struct kvm_regs regs;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     /* Get the current register set as KVM seems it */
+     ret = kvm_vcpu_ioctl(cs, KVM_GET_REGS, &regs);
+@@ -62,8 +61,7 @@ static int kvm_loongarch_put_regs_core(CPUState *cs)
+     int ret = 0;
+     int i;
+     struct kvm_regs regs;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     /* Set the registers based on QEMU's view of things */
+     for (i = 0; i < 32; i++) {
+@@ -82,8 +80,7 @@ static int kvm_loongarch_put_regs_core(CPUState *cs)
+ static int kvm_loongarch_get_csr(CPUState *cs)
+ {
+     int ret = 0;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CRMD),
+                            &env->CSR_CRMD);
+@@ -253,8 +250,7 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+ static int kvm_loongarch_put_csr(CPUState *cs, int level)
+ {
+     int ret = 0;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CRMD),
+                            &env->CSR_CRMD);
+@@ -430,9 +426,7 @@ static int kvm_loongarch_get_regs_fp(CPUState *cs)
+ {
+     int ret, i;
+     struct kvm_fpu fpu;
+-
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     ret = kvm_vcpu_ioctl(cs, KVM_GET_FPU, &fpu);
+     if (ret < 0) {
+@@ -456,9 +450,7 @@ static int kvm_loongarch_put_regs_fp(CPUState *cs)
+ {
+     int ret, i;
+     struct kvm_fpu fpu;
+-
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     fpu.fcsr = env->fcsr0;
+     fpu.fcc = 0;
+@@ -487,8 +479,7 @@ static int kvm_loongarch_get_mpstate(CPUState *cs)
+ {
+     int ret = 0;
+     struct kvm_mp_state mp_state;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     if (cap_has_mp_state) {
+         ret = kvm_vcpu_ioctl(cs, KVM_GET_MP_STATE, &mp_state);
+@@ -505,12 +496,8 @@ static int kvm_loongarch_get_mpstate(CPUState *cs)
+ static int kvm_loongarch_put_mpstate(CPUState *cs)
+ {
+     int ret = 0;
+-
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
+-
+     struct kvm_mp_state mp_state = {
+-        .mp_state = env->mp_state
++        .mp_state = cpu_env(cs)->mp_state
+     };
+ 
+     if (cap_has_mp_state) {
+@@ -527,8 +514,7 @@ static int kvm_loongarch_get_cpucfg(CPUState *cs)
+ {
+     int i, ret = 0;
+     uint64_t val;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     for (i = 0; i < 21; i++) {
+         ret = kvm_get_one_reg(cs, KVM_IOC_CPUCFG(i), &val);
+@@ -549,8 +535,7 @@ static int kvm_check_cpucfg2(CPUState *cs)
+         .attr = 2,
+         .addr = (uint64_t)&val,
+     };
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+ 
+     ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
+ 
+@@ -575,8 +560,7 @@ static int kvm_check_cpucfg2(CPUState *cs)
+ static int kvm_loongarch_put_cpucfg(CPUState *cs)
+ {
+     int i, ret = 0;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+     uint64_t val;
+ 
+     for (i = 0; i < 21; i++) {
+@@ -758,8 +742,7 @@ bool kvm_arch_cpu_check_are_resettable(void)
+ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+ {
+     int ret = 0;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+     MemTxAttrs attrs = {};
+ 
+     attrs.requester_id = env_cpu(env)->cpu_index;
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 449043c68b..2df0bced4c 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -235,8 +235,7 @@ static int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+ 
+ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+     hwaddr phys_addr;
+     int prot;
+ 
+@@ -679,8 +678,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                             MMUAccessType access_type, int mmu_idx,
+                             bool probe, uintptr_t retaddr)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+-    CPULoongArchState *env = &cpu->env;
++    CPULoongArchState *env = cpu_env(cs);
+     hwaddr physical;
+     int prot;
+     int ret;
 -- 
 2.41.0
 
