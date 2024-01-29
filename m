@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A1EC48285
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:56:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 588D7C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUnW-0001xV-Pn; Mon, 29 Jan 2024 11:47:50 -0500
+	id 1rUUnn-0003Tl-Vz; Mon, 29 Jan 2024 11:48:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUm0-0006Kd-OK
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:18 -0500
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUma-0007hS-M4
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:55 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUlx-0003qW-4W
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:16 -0500
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2cf4fafa386so30698681fa.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmW-000429-J1
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:52 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-33ae51f8111so1387637f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706546770; x=1707151570; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706546806; x=1707151606; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ULT/g8UQ/ZTfsw6fPM1iTJdiFqLqeAPLwCS8P07bPHA=;
- b=EHmDXhiOJ5FKe5kCzbk7jGb3j+rTMakIi17lF4W753fwCYl1Md0elLLVCcm+MH/w7G
- A8eOoJX3Nr5bKUzf5fkk+5DsO2kmHwpTtdURFBXebrwfjLdgAW1MR7Sc2YXXpbj8Tqpo
- PYBI5LUXgSrRXIscT4Iu6gPWU1zdSXY5xMYR2fpH6IkDATgB3zhIiRgzwsz5TXuA4QZg
- rJ08dc1zmYbZw1s18rhl0bRXcfsMMDrGhbEdGvhZImNjtgH/9xlJtUW/NvgELvz7aNSv
- wiP3sC3jy02TMog/6mi9diMxT4COAn+iUMcHpLtdIk/osg0h0qgsX6wqXXo38bmxMfqd
- P33g==
+ bh=lpXGLN2/IW24ZmgFDsSJNzcKsXfzg0OW+1h+hViDXfI=;
+ b=oYM0ZWC9xycwlnnhD0BJyeDBErXhsPNkaZTukodbGIklu63M7J8BWqzBVrlpAsoUrT
+ Ep8Vc4twMWsgqafKo3yFeWS5xV9Ag5Apex0sRzMO4HcYWr1TtE9/TTmZjLNYyr/uXFGW
+ GZ9nAanQ3Ab5GoZYU2SzxUmgkZyUlsP3bXGwLMmYUv8XkIi5Io/V9Aqyo64vNRyYceCR
+ Tj0U8LpbLtt31OzMCqCD4pL3ftnYfua47RJd71PCqTPEOBd7Sc/jgY22v+57IPGdVnXX
+ 6Ox+des2ZCNp0WCC+kidCNpJTVP/QQkTrzCXHhSDue9viGjq8IuBJO5WvHCSTNpQ9dpp
+ QIPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706546770; x=1707151570;
+ d=1e100.net; s=20230601; t=1706546806; x=1707151606;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ULT/g8UQ/ZTfsw6fPM1iTJdiFqLqeAPLwCS8P07bPHA=;
- b=TxWop/CGmsXVG0IvMNCi9quMLjGyfB02WPg2v7EJ9WsjIpkqmZseRkDp8+BkZWqCBx
- KvVBXdI2isX6LfAWyS7LOIK04kMN4VqflV5YXc8uROdgLfozArmErw36KTEdZ97gdDBM
- UfhsgXYa9Kma4mEjTF5Jg5SWJ3J0BKpcRTiU5o79tCCQgDE9t9GH6PMVu3WOKVWxFGHC
- TPCJ1tznuduqGYblKc6ZBL/e+0fG0Ge/YuVDcZaQ6h+Z2oEPeKVmy1sxVvlnQUWl79dG
- VMopfZCFe/q8WlSMLmAxjSeY3GAwxGZ706O1Dv01QpofbOqlXlU8hXihPQv01cRNXVej
- C5nw==
-X-Gm-Message-State: AOJu0YyTODGSSukNkvvMNZmARC3eItmexG6+ViFOwvXLdHSC2ZRtE6mC
- 3ixmoErWv7+lRDOhUrMYtVxiCzdFJJkpuUCMH83XmU5PE1V4pG+m4ZnQ7C9e3lLYhdN/iHPePYo
+ bh=lpXGLN2/IW24ZmgFDsSJNzcKsXfzg0OW+1h+hViDXfI=;
+ b=oYa4s4nRCrLr7TJxBAoyi/+36o5SJikyyKHi54f0KE6ztryMH8xxq7q/E1ihKuyLaq
+ 4bXjdHcBmxNLtUrVtYeHCm/99uqQIgDXwUbP0TPifKzon/fxrgifCHqre+j5lbnkSsCd
+ d7TmJZwf5ixm223dzXbFT53zyUNtkpl8XiR6muoXCDw1mTeWG1EhT7aP7GaGJQeAtlAZ
+ 6LeNwYnDcd49hwHOXye3bIcug9zipJJDuyb4J5/WkcA62i1jB8SseV0QVYBvjutXc2TJ
+ RVp0Ma7uN33KchMbX/RhO+z1vqDfhjORphl+dtEvdYfv7I/E83eWjDGrlvxenURvPblG
+ KD8Q==
+X-Gm-Message-State: AOJu0YzrnHgOhkoULvRU4mJRMNizbfkHbQdMNcqqTwoU9Dona6lI5uFj
+ WRmHc5Sy+FA8qch3GqV3Ded7TfTdVegAYZz/+F4T+GIviEljzZz4ab6A7gB7HL4Tg5+Q76SA0ru
  U
-X-Google-Smtp-Source: AGHT+IEP4UUSkCYVYnu7yKq5e9HVmSRrLQNLZdSXiqwEcOfMM8lHE3iH5My9oVWcYdTSOti8rn8rZg==
-X-Received: by 2002:a2e:b8c2:0:b0:2cf:274c:caaa with SMTP id
- s2-20020a2eb8c2000000b002cf274ccaaamr5080107ljp.4.1706546769995; 
- Mon, 29 Jan 2024 08:46:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHYP78wTun1efbdPT3m4ED9+tbNOVo7TfxCjm+JiqqtOKQrQXroDflnsjZz5SiBtFeBKbp9LA==
+X-Received: by 2002:adf:fdd0:0:b0:33a:df56:1f02 with SMTP id
+ i16-20020adffdd0000000b0033adf561f02mr4447265wrs.13.1706546806131; 
+ Mon, 29 Jan 2024 08:46:46 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- eo6-20020a056000428600b0033af5086c2dsm1068171wrb.58.2024.01.29.08.46.08
+ t18-20020adfe112000000b0033ade19da41sm7770957wrz.76.2024.01.29.08.46.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 08:46:09 -0800 (PST)
+ Mon, 29 Jan 2024 08:46:45 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
@@ -64,19 +64,26 @@ Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
-Subject: [PATCH v3 08/29] target/arm: Prefer fast cpu_env() over slower CPU
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>, xen-devel@lists.xenproject.org
+Subject: [PATCH v3 14/29] target/i386: Prefer fast cpu_env() over slower CPU
  QOM cast macro
-Date: Mon, 29 Jan 2024 17:44:50 +0100
-Message-ID: <20240129164514.73104-9-philmd@linaro.org>
+Date: Mon, 29 Jan 2024 17:44:56 +0100
+Message-ID: <20240129164514.73104-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,354 +111,811 @@ in scripts/coccinelle/cpu_env.cocci_template header.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/arm_gicv3_cpuif.c        |  7 ++-----
- hw/intc/arm_gicv3_cpuif_common.c |  5 +----
- target/arm/cpu.c                 | 19 +++++--------------
- target/arm/debug_helper.c        |  8 ++------
- target/arm/gdbstub.c             |  6 ++----
- target/arm/gdbstub64.c           |  6 ++----
- target/arm/helper.c              |  9 +++------
- target/arm/hvf/hvf.c             | 12 ++++--------
- target/arm/kvm.c                 |  3 +--
- target/arm/ptw.c                 |  3 +--
- target/arm/tcg/cpu32.c           |  4 +---
- target/arm/tcg/translate.c       |  3 +--
- 12 files changed, 25 insertions(+), 60 deletions(-)
+ target/i386/hvf/vmx.h                | 13 ++-------
+ hw/i386/fw_cfg.c                     |  3 +-
+ hw/i386/vmmouse.c                    |  6 ++--
+ hw/i386/xen/xen-hvm.c                |  3 +-
+ target/i386/arch_dump.c              | 11 ++------
+ target/i386/arch_memory_mapping.c    |  3 +-
+ target/i386/cpu-dump.c               |  3 +-
+ target/i386/cpu.c                    | 37 ++++++++----------------
+ target/i386/helper.c                 | 42 ++++++++--------------------
+ target/i386/hvf/hvf.c                |  8 ++----
+ target/i386/hvf/x86.c                |  4 +--
+ target/i386/hvf/x86_emu.c            |  6 ++--
+ target/i386/hvf/x86_task.c           | 10 ++-----
+ target/i386/hvf/x86hvf.c             |  9 ++----
+ target/i386/kvm/kvm.c                |  6 ++--
+ target/i386/kvm/xen-emu.c            | 32 +++++++--------------
+ target/i386/tcg/sysemu/bpt_helper.c  |  3 +-
+ target/i386/tcg/sysemu/excp_helper.c |  3 +-
+ target/i386/tcg/tcg-cpu.c            | 14 +++-------
+ target/i386/tcg/user/excp_helper.c   |  6 ++--
+ target/i386/tcg/user/seg_helper.c    |  3 +-
+ 21 files changed, 67 insertions(+), 158 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index e1a60d8c15..80f64a5154 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -182,8 +182,6 @@ static int hppvi_index(GICv3CPUState *cs)
-      * priority than the highest priority list register at every
-      * callsite of HighestPriorityVirtualInterrupt; we check it here.)
-      */
--    ARMCPU *cpu = ARM_CPU(cs->cpu);
--    CPUARMState *env = &cpu->env;
-     int idx = -1;
-     int i;
-     /* Note that a list register entry with a priority of 0xff will
-@@ -230,7 +228,7 @@ static int hppvi_index(GICv3CPUState *cs)
-      * fails the priority check here. vLPIs are only considered
-      * when we are in Non-Secure state.
-      */
--    if (cs->hppvlpi.prio < prio && !arm_is_secure(env)) {
-+    if (cs->hppvlpi.prio < prio && !arm_is_secure(cpu_env(cs->cpu))) {
-         if (cs->hppvlpi.grp == GICV3_G0) {
-             if (cs->ich_vmcr_el2 & ICH_VMCR_EL2_VENG0) {
-                 return HPPVI_INDEX_VLPI;
-@@ -931,8 +929,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
-     /* Tell the CPU about its highest priority pending interrupt */
-     int irqlevel = 0;
-     int fiqlevel = 0;
--    ARMCPU *cpu = ARM_CPU(cs->cpu);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs->cpu);
+diff --git a/target/i386/hvf/vmx.h b/target/i386/hvf/vmx.h
+index 0fffcfa46c..1ad042269b 100644
+--- a/target/i386/hvf/vmx.h
++++ b/target/i386/hvf/vmx.h
+@@ -175,8 +175,7 @@ static inline void macvm_set_cr4(hv_vcpuid_t vcpu, uint64_t cr4)
  
-     g_assert(bql_locked());
- 
-diff --git a/hw/intc/arm_gicv3_cpuif_common.c b/hw/intc/arm_gicv3_cpuif_common.c
-index ff1239f65d..bab3c3cdbd 100644
---- a/hw/intc/arm_gicv3_cpuif_common.c
-+++ b/hw/intc/arm_gicv3_cpuif_common.c
-@@ -15,8 +15,5 @@
- 
- void gicv3_set_gicv3state(CPUState *cpu, GICv3CPUState *s)
+ static inline void macvm_set_rip(CPUState *cpu, uint64_t rip)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
++    CPUX86State *env = cpu_env(cpu);
+     uint64_t val;
+ 
+     /* BUG, should take considering overlap.. */
+@@ -196,10 +195,7 @@ static inline void macvm_set_rip(CPUState *cpu, uint64_t rip)
+ 
+ static inline void vmx_clear_nmi_blocking(CPUState *cpu)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
 -
--    env->gicv3state = (void *)s;
-+    cpu_env(cpu)->gicv3state = (void *)s;
- };
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index e5deb5195b..23f4de127f 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -53,8 +53,7 @@
+-    env->hflags2 &= ~HF2_NMI_MASK;
++    cpu_env(cpu)->hflags2 &= ~HF2_NMI_MASK;
+     uint32_t gi = (uint32_t) rvmcs(cpu->accel->fd, VMCS_GUEST_INTERRUPTIBILITY);
+     gi &= ~VMCS_INTERRUPTIBILITY_NMI_BLOCKING;
+     wvmcs(cpu->accel->fd, VMCS_GUEST_INTERRUPTIBILITY, gi);
+@@ -207,10 +203,7 @@ static inline void vmx_clear_nmi_blocking(CPUState *cpu)
  
- static void arm_cpu_set_pc(CPUState *cs, vaddr value)
+ static inline void vmx_set_nmi_blocking(CPUState *cpu)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
- 
-     if (is_a64(env)) {
-         env->pc = value;
-@@ -67,8 +66,7 @@ static void arm_cpu_set_pc(CPUState *cs, vaddr value)
- 
- static vaddr arm_cpu_get_pc(CPUState *cs)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
- 
-     if (is_a64(env)) {
-         return env->pc;
-@@ -996,19 +994,15 @@ static void arm_cpu_kvm_set_irq(void *opaque, int irq, int level)
- 
- static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
 -
-     cpu_synchronize_state(cs);
--    return arm_cpu_data_is_big_endian(env);
-+    return arm_cpu_data_is_big_endian(cpu_env(cs));
+-    env->hflags2 |= HF2_NMI_MASK;
++    cpu_env(cpu)->hflags2 |= HF2_NMI_MASK;
+     uint32_t gi = (uint32_t)rvmcs(cpu->accel->fd, VMCS_GUEST_INTERRUPTIBILITY);
+     gi |= VMCS_INTERRUPTIBILITY_NMI_BLOCKING;
+     wvmcs(cpu->accel->fd, VMCS_GUEST_INTERRUPTIBILITY, gi);
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 7362daa45a..5239cd40fa 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -155,8 +155,7 @@ FWCfgState *fw_cfg_arch_create(MachineState *ms,
+ 
+ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg)
+ {
+-    X86CPU *cpu = X86_CPU(ms->possible_cpus->cpus[0].cpu);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(ms->possible_cpus->cpus[0].cpu);
+     uint32_t unused, ebx, ecx, edx;
+     uint64_t feature_control_bits = 0;
+     uint64_t *val;
+diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
+index a8d014d09a..f292a14a15 100644
+--- a/hw/i386/vmmouse.c
++++ b/hw/i386/vmmouse.c
+@@ -74,8 +74,7 @@ struct VMMouseState {
+ 
+ static void vmmouse_get_data(uint32_t *data)
+ {
+-    X86CPU *cpu = X86_CPU(current_cpu);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(current_cpu);
+ 
+     data[0] = env->regs[R_EAX]; data[1] = env->regs[R_EBX];
+     data[2] = env->regs[R_ECX]; data[3] = env->regs[R_EDX];
+@@ -84,8 +83,7 @@ static void vmmouse_get_data(uint32_t *data)
+ 
+ static void vmmouse_set_data(const uint32_t *data)
+ {
+-    X86CPU *cpu = X86_CPU(current_cpu);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(current_cpu);
+ 
+     env->regs[R_EAX] = data[0]; env->regs[R_EBX] = data[1];
+     env->regs[R_ECX] = data[2]; env->regs[R_EDX] = data[3];
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index f42621e674..61e5060117 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -487,8 +487,7 @@ static void regs_to_cpu(vmware_regs_t *vmport_regs, ioreq_t *req)
+ 
+ static void regs_from_cpu(vmware_regs_t *vmport_regs)
+ {
+-    X86CPU *cpu = X86_CPU(current_cpu);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(current_cpu);
+ 
+     vmport_regs->ebx = env->regs[R_EBX];
+     vmport_regs->ecx = env->regs[R_ECX];
+diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
+index c290910a04..8939ff9fa9 100644
+--- a/target/i386/arch_dump.c
++++ b/target/i386/arch_dump.c
+@@ -203,7 +203,6 @@ int x86_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+ int x86_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
+                              int cpuid, DumpState *s)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+     x86_elf_prstatus prstatus;
+     Elf32_Nhdr *note;
+     char *buf;
+@@ -211,7 +210,7 @@ int x86_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
+     const char *name = "CORE";
+     int ret;
+ 
+-    x86_fill_elf_prstatus(&prstatus, &cpu->env, cpuid);
++    x86_fill_elf_prstatus(&prstatus, cpu_env(cs), cpuid);
+     descsz = sizeof(x86_elf_prstatus);
+     note_size = ELF_NOTE_SIZE(sizeof(Elf32_Nhdr), name_size, descsz);
+     note = g_malloc0(note_size);
+@@ -381,17 +380,13 @@ static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
+ int x86_cpu_write_elf64_qemunote(WriteCoreDumpFunction f, CPUState *cs,
+                                  DumpState *s)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-
+-    return cpu_write_qemu_note(f, &cpu->env, s, 1);
++    return cpu_write_qemu_note(f, cpu_env(cs), s, 1);
  }
  
- #endif
- 
- static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
+ int x86_cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cs,
+                                  DumpState *s)
  {
--    ARMCPU *ac = ARM_CPU(cpu);
--    CPUARMState *env = &ac->env;
-+    CPUARMState *env = cpu_env(cpu);
-     bool sctlr_b;
- 
-     if (is_a64(env)) {
-@@ -2435,10 +2429,7 @@ static Property arm_cpu_properties[] = {
- 
- static const gchar *arm_gdb_arch_name(CPUState *cs)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
+-    X86CPU *cpu = X86_CPU(cs);
 -
--    if (arm_feature(env, ARM_FEATURE_IWMMXT)) {
-+    if (arm_feature(cpu_env(cs), ARM_FEATURE_IWMMXT)) {
-         return "iwmmxt";
-     }
-     return "arm";
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 7d856acddf..7bd5467414 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -468,8 +468,7 @@ void arm_debug_excp_handler(CPUState *cs)
-      * Called by core code when a watchpoint or breakpoint fires;
-      * need to check which one and raise the appropriate exception.
-      */
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     CPUWatchpoint *wp_hit = cs->watchpoint_hit;
+-    return cpu_write_qemu_note(f, &cpu->env, s, 0);
++    return cpu_write_qemu_note(f, cpu_env(cs), s, 0);
+ }
  
-     if (wp_hit) {
-@@ -757,9 +756,6 @@ void hw_breakpoint_update_all(ARMCPU *cpu)
- 
- vaddr arm_adjust_watchpoint_address(CPUState *cs, vaddr addr, int len)
+ int cpu_get_dump_info(ArchDumpInfo *info,
+diff --git a/target/i386/arch_memory_mapping.c b/target/i386/arch_memory_mapping.c
+index d1ff659128..c0604d5956 100644
+--- a/target/i386/arch_memory_mapping.c
++++ b/target/i386/arch_memory_mapping.c
+@@ -269,8 +269,7 @@ static void walk_pml5e(MemoryMappingList *list, AddressSpace *as,
+ bool x86_cpu_get_memory_mapping(CPUState *cs, MemoryMappingList *list,
+                                 Error **errp)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
--
-     /*
-      * In BE32 system mode, target memory is stored byteswapped (on a
-      * little-endian host system), and by the time we reach here (via an
-@@ -767,7 +763,7 @@ vaddr arm_adjust_watchpoint_address(CPUState *cs, vaddr addr, int len)
-      * to account for that, which means that watchpoints will not match.
-      * Undo the adjustment here.
-      */
--    if (arm_sctlr_b(env)) {
-+    if (arm_sctlr_b(cpu_env(cs))) {
-         if (len == 1) {
-             addr ^= 3;
-         } else if (len == 2) {
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index 28f546a5ff..dc6c29669c 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -40,8 +40,7 @@ typedef struct RegisterSysregXmlParam {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     int32_t a20_mask;
  
- int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     if (!cpu_paging_enabled(cs)) {
+diff --git a/target/i386/cpu-dump.c b/target/i386/cpu-dump.c
+index 40697064d9..5459d84abd 100644
+--- a/target/i386/cpu-dump.c
++++ b/target/i386/cpu-dump.c
+@@ -343,8 +343,7 @@ void x86_cpu_dump_local_apic_state(CPUState *cs, int flags)
+ 
+ void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
- 
-     if (n < 16) {
-         /* Core integer register.  */
-@@ -61,8 +60,7 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int arm_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     int eflags, i, nb;
+     char cc_op_name[32];
+     static const char *seg_name[6] = { "ES", "CS", "SS", "DS", "FS", "GS" };
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 66345c204a..5d7a266d27 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5062,8 +5062,7 @@ static void x86_cpuid_version_get_family(Object *obj, Visitor *v,
+                                          const char *name, void *opaque,
+                                          Error **errp)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     uint32_t tmp;
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     int64_t value;
  
-     tmp = ldl_p(mem_buf);
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index d7b79a6589..b9f29b0a60 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -24,8 +24,7 @@
- 
- int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     value = (env->cpuid_version >> 8) & 0xf;
+@@ -5077,8 +5076,7 @@ static void x86_cpuid_version_set_family(Object *obj, Visitor *v,
+                                          const char *name, void *opaque,
+                                          Error **errp)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
- 
-     if (n < 31) {
-         /* Core integer register.  */
-@@ -45,8 +44,7 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int aarch64_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     const int64_t min = 0;
+     const int64_t max = 0xff + 0xf;
+     int64_t value;
+@@ -5104,8 +5102,7 @@ static void x86_cpuid_version_get_model(Object *obj, Visitor *v,
+                                         const char *name, void *opaque,
+                                         Error **errp)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     uint64_t tmp;
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     int64_t value;
  
-     tmp = ldq_p(mem_buf);
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 945d8571a6..a9d2c23df2 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -10902,8 +10902,7 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
-      * PSTATE A/I/F masks are set based only on the SCR.EA/IRQ/FIQ values.
-      */
-     uint32_t addr, mask;
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
- 
-     switch (cs->exception_index) {
-     case EXCP_UDEF:
-@@ -10981,8 +10980,7 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
- 
- static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
+     value = (env->cpuid_version >> 4) & 0xf;
+@@ -5117,8 +5114,7 @@ static void x86_cpuid_version_set_model(Object *obj, Visitor *v,
+                                         const char *name, void *opaque,
+                                         Error **errp)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     uint32_t addr;
-     uint32_t mask;
-     int new_mode;
-@@ -11481,8 +11479,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
- #ifdef CONFIG_TCG
- static void tcg_handle_semihosting(CPUState *cs)
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     const int64_t min = 0;
+     const int64_t max = 0xff;
+     int64_t value;
+@@ -5140,11 +5136,9 @@ static void x86_cpuid_version_get_stepping(Object *obj, Visitor *v,
+                                            const char *name, void *opaque,
+                                            Error **errp)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
+     int64_t value;
  
-     if (is_a64(env)) {
-         qemu_log_mask(CPU_LOG_INT,
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index e5f0f60093..849f0772e6 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1006,8 +1006,7 @@ void hvf_kick_vcpu_thread(CPUState *cpu)
- static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
-                                 uint32_t syndrome)
+-    value = env->cpuid_version & 0xf;
++    value = cpu_env(CPU(obj))->cpuid_version & 0xf;
+     visit_type_int(v, name, &value, errp);
+ }
+ 
+@@ -5152,8 +5146,7 @@ static void x86_cpuid_version_set_stepping(Object *obj, Visitor *v,
+                                            const char *name, void *opaque,
+                                            Error **errp)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     const int64_t min = 0;
+     const int64_t max = 0xf;
+     int64_t value;
+@@ -5173,8 +5166,7 @@ static void x86_cpuid_version_set_stepping(Object *obj, Visitor *v,
  
-     cpu->exception_index = excp;
-     env->exception.target_el = 1;
-@@ -1485,8 +1484,7 @@ static bool hvf_sysreg_write_cp(CPUState *cpu, uint32_t reg, uint64_t val)
- 
- static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+ static char *x86_cpuid_get_vendor(Object *obj, Error **errp)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     char *value;
  
-     trace_hvf_sysreg_write(reg,
-                            SYSREG_OP0(reg),
-@@ -2152,8 +2150,7 @@ static void hvf_put_gdbstub_debug_registers(CPUState *cpu)
-  */
- static void hvf_put_guest_debug_registers(CPUState *cpu)
+     value = g_malloc(CPUID_VENDOR_SZ + 1);
+@@ -5186,8 +5178,7 @@ static char *x86_cpuid_get_vendor(Object *obj, Error **errp)
+ static void x86_cpuid_set_vendor(Object *obj, const char *value,
+                                  Error **errp)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
-     hv_return_t r = HV_SUCCESS;
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
      int i;
  
-@@ -2207,8 +2204,7 @@ static void hvf_arch_set_traps(void)
+     if (strlen(value) != CPUID_VENDOR_SZ) {
+@@ -5208,8 +5199,7 @@ static void x86_cpuid_set_vendor(Object *obj, const char *value,
  
- void hvf_arch_update_guest_debug(CPUState *cpu)
+ static char *x86_cpuid_get_model_id(Object *obj, Error **errp)
  {
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
-+    CPUARMState *env = cpu_env(cpu);
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     char *value;
+     int i;
  
-     /* Check whether guest debugging is enabled */
-     cpu->accel->guest_debug_enabled = cpu->singlestep_enabled ||
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index ab85d628a8..cccb512f23 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1958,8 +1958,7 @@ int kvm_arch_destroy_vcpu(CPUState *cs)
- /* Callers must hold the iothread mutex lock */
- static void kvm_inject_arm_sea(CPUState *c)
+@@ -5224,8 +5214,7 @@ static char *x86_cpuid_get_model_id(Object *obj, Error **errp)
+ static void x86_cpuid_set_model_id(Object *obj, const char *model_id,
+                                    Error **errp)
  {
--    ARMCPU *cpu = ARM_CPU(c);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(c);
-     uint32_t esr;
-     bool same_el;
+-    X86CPU *cpu = X86_CPU(obj);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(CPU(obj));
+     int c, len, i;
  
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 5eb3577bcd..57a761ad68 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3528,8 +3528,7 @@ bool get_phys_addr(CPUARMState *env, target_ulong address,
- hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
+     if (model_id == NULL) {
+@@ -7673,8 +7662,7 @@ static vaddr x86_cpu_get_pc(CPUState *cs)
+ 
+ int x86_cpu_pending_interrupt(CPUState *cs, int interrupt_request)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+ #if !defined(CONFIG_USER_ONLY)
+     if (interrupt_request & CPU_INTERRUPT_POLL) {
+@@ -7722,8 +7710,7 @@ static bool x86_cpu_has_work(CPUState *cs)
+ 
+ static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     info->mach = (env->hflags & HF_CS64_MASK ? bfd_mach_x86_64
+                   : env->hflags & HF_CS32_MASK ? bfd_mach_i386_i386
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 2070dd0dda..4c11ef70f0 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -230,8 +230,7 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
+ hwaddr x86_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
                                           MemTxAttrs *attrs)
  {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
-     ARMSecuritySpace ss = arm_security_space(env);
-     S1Translate ptw = {
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index d9e0e2a4dd..e96f1119c0 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -102,8 +102,6 @@ void aa32_max_features(ARMCPU *cpu)
- static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     target_ulong pde_addr, pte_addr;
+     uint64_t pte;
+     int32_t a20_mask;
+@@ -373,8 +372,7 @@ static void emit_guest_memory_failure(MemoryFailureAction action, bool ar,
+ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
  {
-     CPUClass *cc = CPU_GET_CLASS(cs);
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-     bool ret = false;
+     MCEInjectionParams *params = data.host_ptr;
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *cenv = &cpu->env;
++    CPUX86State *cenv = cpu_env(cs);
+     uint64_t *banks = cenv->mce_banks + 4 * params->bank;
+     g_autofree char *msg = NULL;
+     bool need_reset = false;
+@@ -625,9 +623,7 @@ void cpu_load_efer(CPUX86State *env, uint64_t val)
+ 
+ uint8_t x86_ldub_phys(CPUState *cs, hwaddr addr)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     return address_space_ldub(as, addr, attrs, NULL);
+@@ -635,9 +631,7 @@ uint8_t x86_ldub_phys(CPUState *cs, hwaddr addr)
+ 
+ uint32_t x86_lduw_phys(CPUState *cs, hwaddr addr)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     return address_space_lduw(as, addr, attrs, NULL);
+@@ -645,9 +639,7 @@ uint32_t x86_lduw_phys(CPUState *cs, hwaddr addr)
+ 
+ uint32_t x86_ldl_phys(CPUState *cs, hwaddr addr)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     return address_space_ldl(as, addr, attrs, NULL);
+@@ -655,9 +647,7 @@ uint32_t x86_ldl_phys(CPUState *cs, hwaddr addr)
+ 
+ uint64_t x86_ldq_phys(CPUState *cs, hwaddr addr)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     return address_space_ldq(as, addr, attrs, NULL);
+@@ -665,9 +655,7 @@ uint64_t x86_ldq_phys(CPUState *cs, hwaddr addr)
+ 
+ void x86_stb_phys(CPUState *cs, hwaddr addr, uint8_t val)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     address_space_stb(as, addr, val, attrs, NULL);
+@@ -675,9 +663,7 @@ void x86_stb_phys(CPUState *cs, hwaddr addr, uint8_t val)
+ 
+ void x86_stl_phys_notdirty(CPUState *cs, hwaddr addr, uint32_t val)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     address_space_stl_notdirty(as, addr, val, attrs, NULL);
+@@ -685,9 +671,7 @@ void x86_stl_phys_notdirty(CPUState *cs, hwaddr addr, uint32_t val)
+ 
+ void x86_stw_phys(CPUState *cs, hwaddr addr, uint32_t val)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     address_space_stw(as, addr, val, attrs, NULL);
+@@ -695,9 +679,7 @@ void x86_stw_phys(CPUState *cs, hwaddr addr, uint32_t val)
+ 
+ void x86_stl_phys(CPUState *cs, hwaddr addr, uint32_t val)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     address_space_stl(as, addr, val, attrs, NULL);
+@@ -705,9 +687,7 @@ void x86_stl_phys(CPUState *cs, hwaddr addr, uint32_t val)
+ 
+ void x86_stq_phys(CPUState *cs, hwaddr addr, uint64_t val)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-    MemTxAttrs attrs = cpu_get_mem_attrs(env);
++    MemTxAttrs attrs = cpu_get_mem_attrs(cpu_env(cs));
+     AddressSpace *as = cpu_addressspace(cs, attrs);
+ 
+     address_space_stq(as, addr, val, attrs, NULL);
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 11ffdd4c69..772578e3f4 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -159,10 +159,7 @@ static bool ept_emulation_fault(hvf_slot *slot, uint64_t gpa, uint64_t ept_qual)
+ 
+ void hvf_arch_vcpu_destroy(CPUState *cpu)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
+-
+-    g_free(env->hvf_mmio_buf);
++    g_free(cpu_env(cpu)->hvf_mmio_buf);
+ }
+ 
+ static void init_tsc_freq(CPUX86State *env)
+@@ -313,8 +310,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+ 
+ static void hvf_store_events(CPUState *cpu, uint32_t ins_len, uint64_t idtvec_info)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
++    CPUX86State *env = cpu_env(cpu);
+ 
+     env->exception_nr = -1;
+     env->exception_pending = 0;
+diff --git a/target/i386/hvf/x86.c b/target/i386/hvf/x86.c
+index 80e36136d0..932635232b 100644
+--- a/target/i386/hvf/x86.c
++++ b/target/i386/hvf/x86.c
+@@ -128,9 +128,7 @@ bool x86_is_real(CPUState *cpu)
+ 
+ bool x86_is_v8086(CPUState *cpu)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
+-    return x86_is_protected(cpu) && (env->eflags & VM_MASK);
++    return x86_is_protected(cpu) && (cpu_env(cpu)->eflags & VM_MASK);
+ }
+ 
+ bool x86_is_long_mode(CPUState *cpu)
+diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
+index 3a3f0a50d0..0d13b32f91 100644
+--- a/target/i386/hvf/x86_emu.c
++++ b/target/i386/hvf/x86_emu.c
+@@ -1419,8 +1419,7 @@ static void init_cmd_handler()
+ 
+ void load_regs(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     int i = 0;
+     RRX(env, R_EAX) = rreg(cs->accel->fd, HV_X86_RAX);
+@@ -1442,8 +1441,7 @@ void load_regs(CPUState *cs)
+ 
+ void store_regs(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     int i = 0;
+     wreg(cs->accel->fd, HV_X86_RAX, RAX(env));
+diff --git a/target/i386/hvf/x86_task.c b/target/i386/hvf/x86_task.c
+index f09bfbdda5..c173e9d883 100644
+--- a/target/i386/hvf/x86_task.c
++++ b/target/i386/hvf/x86_task.c
+@@ -33,8 +33,7 @@
+ // TODO: taskswitch handling
+ static void save_state_to_tss32(CPUState *cpu, struct x86_tss_segment32 *tss)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
++    CPUX86State *env = cpu_env(cpu);
+ 
+     /* CR3 and ldt selector are not saved intentionally */
+     tss->eip = (uint32_t)env->eip;
+@@ -58,8 +57,7 @@ static void save_state_to_tss32(CPUState *cpu, struct x86_tss_segment32 *tss)
+ 
+ static void load_state_from_tss32(CPUState *cpu, struct x86_tss_segment32 *tss)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
++    CPUX86State *env = cpu_env(cpu);
+ 
+     wvmcs(cpu->accel->fd, VMCS_GUEST_CR3, tss->cr3);
+ 
+@@ -128,9 +126,7 @@ void vmx_handle_task_switch(CPUState *cpu, x68_segment_selector tss_sel, int rea
+     uint32_t desc_limit;
+     struct x86_call_gate task_gate_desc;
+     struct vmx_segment vmx_seg;
+-
+-    X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
++    CPUX86State *env = cpu_env(cpu);
+ 
+     x86_read_segment_descriptor(cpu, &next_tss_desc, tss_sel);
+     x86_read_segment_descriptor(cpu, &curr_tss_desc, old_tss_sel);
+diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+index be2c46246e..10f79849b3 100644
+--- a/target/i386/hvf/x86hvf.c
++++ b/target/i386/hvf/x86hvf.c
+@@ -238,8 +238,7 @@ void hvf_get_msrs(CPUState *cs)
+ 
+ int hvf_put_registers(CPUState *cs)
+ {
+-    X86CPU *x86cpu = X86_CPU(cs);
+-    CPUX86State *env = &x86cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     wreg(cs->accel->fd, HV_X86_RAX, env->regs[R_EAX]);
+     wreg(cs->accel->fd, HV_X86_RBX, env->regs[R_EBX]);
+@@ -282,8 +281,7 @@ int hvf_put_registers(CPUState *cs)
+ 
+ int hvf_get_registers(CPUState *cs)
+ {
+-    X86CPU *x86cpu = X86_CPU(cs);
+-    CPUX86State *env = &x86cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     env->regs[R_EAX] = rreg(cs->accel->fd, HV_X86_RAX);
+     env->regs[R_EBX] = rreg(cs->accel->fd, HV_X86_RBX);
+@@ -342,8 +340,7 @@ void vmx_clear_int_window_exiting(CPUState *cs)
+ 
+ bool hvf_inject_interrupts(CPUState *cs)
+ {
+-    X86CPU *x86cpu = X86_CPU(cs);
+-    CPUX86State *env = &x86cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     uint8_t vector;
+     uint64_t intr_type;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 76a66246eb..e4f1c62888 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -754,8 +754,7 @@ static inline bool freq_within_bounds(int freq, int target_freq)
+ 
+ static int kvm_arch_set_tsc_khz(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     int r, cur_freq;
+     bool set_ioctl = false;
+ 
+@@ -5369,8 +5368,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+ 
+ bool kvm_arch_stop_on_emulation_error(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     kvm_cpu_synchronize_state(cs);
+     return !(env->cr[0] & CR0_PE_MASK) ||
+diff --git a/target/i386/kvm/xen-emu.c b/target/i386/kvm/xen-emu.c
+index fc2c2321ac..10350a22d1 100644
+--- a/target/i386/kvm/xen-emu.c
++++ b/target/i386/kvm/xen-emu.c
+@@ -313,10 +313,7 @@ static int kvm_xen_set_vcpu_callback_vector(CPUState *cs)
+ 
+ static void do_set_vcpu_callback_vector(CPUState *cs, run_on_cpu_data data)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-
+-    env->xen_vcpu_callback_vector = data.host_int;
++    cpu_env(cs)->xen_vcpu_callback_vector = data.host_int;
+ 
+     if (kvm_xen_has_cap(EVTCHN_SEND)) {
+         kvm_xen_set_vcpu_callback_vector(cs);
+@@ -325,8 +322,7 @@ static void do_set_vcpu_callback_vector(CPUState *cs, run_on_cpu_data data)
+ 
+ static int set_vcpu_info(CPUState *cs, uint64_t gpa)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     MemoryRegionSection mrs = { .mr = NULL };
+     void *vcpu_info_hva = NULL;
+     int ret;
+@@ -362,8 +358,7 @@ static int set_vcpu_info(CPUState *cs, uint64_t gpa)
+ 
+ static void do_set_vcpu_info_default_gpa(CPUState *cs, run_on_cpu_data data)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     env->xen_vcpu_info_default_gpa = data.host_ulong;
+ 
+@@ -375,8 +370,7 @@ static void do_set_vcpu_info_default_gpa(CPUState *cs, run_on_cpu_data data)
+ 
+ static void do_set_vcpu_info_gpa(CPUState *cs, run_on_cpu_data data)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     env->xen_vcpu_info_gpa = data.host_ulong;
+ 
+@@ -479,8 +473,7 @@ void kvm_xen_inject_vcpu_callback_vector(uint32_t vcpu_id, int type)
+ /* Must always be called with xen_timers_lock held */
+ static int kvm_xen_set_vcpu_timer(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     struct kvm_xen_vcpu_attr va = {
+         .type = KVM_XEN_VCPU_ATTR_TYPE_TIMER,
+@@ -527,8 +520,7 @@ int kvm_xen_set_vcpu_virq(uint32_t vcpu_id, uint16_t virq, uint16_t port)
+ 
+ static void do_set_vcpu_time_info_gpa(CPUState *cs, run_on_cpu_data data)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     env->xen_vcpu_time_info_gpa = data.host_ulong;
+ 
+@@ -538,8 +530,7 @@ static void do_set_vcpu_time_info_gpa(CPUState *cs, run_on_cpu_data data)
+ 
+ static void do_set_vcpu_runstate_gpa(CPUState *cs, run_on_cpu_data data)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     env->xen_vcpu_runstate_gpa = data.host_ulong;
+ 
+@@ -549,8 +540,7 @@ static void do_set_vcpu_runstate_gpa(CPUState *cs, run_on_cpu_data data)
+ 
+ static void do_vcpu_soft_reset(CPUState *cs, run_on_cpu_data data)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     env->xen_vcpu_info_gpa = INVALID_GPA;
+     env->xen_vcpu_info_default_gpa = INVALID_GPA;
+@@ -1813,8 +1803,7 @@ uint16_t kvm_xen_get_evtchn_max_pirq(void)
+ 
+ int kvm_put_xen_state(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     uint64_t gpa;
+     int ret;
+ 
+@@ -1887,8 +1876,7 @@ int kvm_put_xen_state(CPUState *cs)
+ 
+ int kvm_get_xen_state(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     uint64_t gpa;
+     int ret;
+ 
+diff --git a/target/i386/tcg/sysemu/bpt_helper.c b/target/i386/tcg/sysemu/bpt_helper.c
+index 4d96a48a3c..90d6117497 100644
+--- a/target/i386/tcg/sysemu/bpt_helper.c
++++ b/target/i386/tcg/sysemu/bpt_helper.c
+@@ -208,8 +208,7 @@ bool check_hw_breakpoints(CPUX86State *env, bool force_dr6_update)
+ 
+ void breakpoint_handler(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     if (cs->watchpoint_hit) {
+         if (cs->watchpoint_hit->flags & BP_CPU) {
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 5b86f439ad..1afa177551 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -639,6 +639,5 @@ G_NORETURN void x86_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+                                             MMUAccessType access_type,
+                                             int mmu_idx, uintptr_t retaddr)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    handle_unaligned_access(&cpu->env, vaddr, access_type, retaddr);
++    handle_unaligned_access(cpu_env(cs), vaddr, access_type, retaddr);
+ }
+diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
+index e1405b7be9..8f8fd6529d 100644
+--- a/target/i386/tcg/tcg-cpu.c
++++ b/target/i386/tcg/tcg-cpu.c
+@@ -29,8 +29,7 @@
+ 
+ static void x86_cpu_exec_enter(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     CC_SRC = env->eflags & (CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C);
+     env->df = 1 - (2 * ((env->eflags >> 10) & 1));
+@@ -40,8 +39,7 @@ static void x86_cpu_exec_enter(CPUState *cs)
+ 
+ static void x86_cpu_exec_exit(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+ 
+     env->eflags = cpu_compute_eflags(env);
+ }
+@@ -65,8 +63,7 @@ static void x86_restore_state_to_opc(CPUState *cs,
+                                      const TranslationBlock *tb,
+                                      const uint64_t *data)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
+     int cc_op = data[1];
+     uint64_t new_pc;
+ 
+@@ -96,11 +93,8 @@ static void x86_restore_state_to_opc(CPUState *cs,
+ #ifndef CONFIG_USER_ONLY
+ static bool x86_debug_check_breakpoint(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
+-
+     /* RF disables all architectural breakpoints. */
+-    return !(env->eflags & RF_MASK);
++    return !(cpu_env(cs)->eflags & RF_MASK);
+ }
+ #endif
+ 
+diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/excp_helper.c
+index b3bdb7831a..9ea5566149 100644
+--- a/target/i386/tcg/user/excp_helper.c
++++ b/target/i386/tcg/user/excp_helper.c
+@@ -26,8 +26,7 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
+                             MMUAccessType access_type,
+                             bool maperr, uintptr_t ra)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
  
      /*
-@@ -115,7 +113,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-      * currently active exception).
-      */
-     if (interrupt_request & CPU_INTERRUPT_HARD
--        && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
-+        && (armv7m_nvic_can_take_pending_exception(cpu_env(cs)->nvic))) {
-         cs->exception_index = EXCP_IRQ;
-         cc->tcg_ops->do_interrupt(cs);
-         ret = true;
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index b3660173d1..ab73250f04 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -9326,7 +9326,6 @@ static void arm_post_translate_insn(DisasContext *dc)
- static void arm_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+      * The error_code that hw reports as part of the exception frame
+@@ -52,6 +51,5 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
+ void x86_cpu_record_sigbus(CPUState *cs, vaddr addr,
+                            MMUAccessType access_type, uintptr_t ra)
  {
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
--    CPUARMState *env = cpu_env(cpu);
-     uint32_t pc = dc->base.pc_next;
-     unsigned int insn;
+-    X86CPU *cpu = X86_CPU(cs);
+-    handle_unaligned_access(&cpu->env, addr, access_type, ra);
++    handle_unaligned_access(cpu_env(cs), addr, access_type, ra);
+ }
+diff --git a/target/i386/tcg/user/seg_helper.c b/target/i386/tcg/user/seg_helper.c
+index c45f2ac2ba..2f89dbb51e 100644
+--- a/target/i386/tcg/user/seg_helper.c
++++ b/target/i386/tcg/user/seg_helper.c
+@@ -78,8 +78,7 @@ static void do_interrupt_user(CPUX86State *env, int intno, int is_int,
  
-@@ -9356,7 +9355,7 @@ static void arm_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     }
+ void x86_cpu_do_interrupt(CPUState *cs)
+ {
+-    X86CPU *cpu = X86_CPU(cs);
+-    CPUX86State *env = &cpu->env;
++    CPUX86State *env = cpu_env(cs);
  
-     dc->pc_curr = pc;
--    insn = arm_ldl_code(env, &dc->base, pc, dc->sctlr_b);
-+    insn = arm_ldl_code(cpu_env(cpu), &dc->base, pc, dc->sctlr_b);
-     dc->insn = insn;
-     dc->base.pc_next = pc + 4;
-     disas_arm_insn(dc, insn);
+     /* if user mode only, we simulate a fake exception
+        which will be handled outside the cpu execution
 -- 
 2.41.0
 
