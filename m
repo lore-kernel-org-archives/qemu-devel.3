@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8877C48286
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48579C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUads-0006HS-Fk; Mon, 29 Jan 2024 18:02:17 -0500
+	id 1rUadP-0005y4-VK; Mon, 29 Jan 2024 18:01:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUada-00060q-Is
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:02 -0500
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ id 1rUadN-0005wV-18
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:45 -0500
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadQ-0008P5-1Q
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:49 -0500
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-59a0fb8a802so1709592eaf.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:47 -0800 (PST)
+ id 1rUadL-0008OZ-2C
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:44 -0500
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-3be44e0a7a5so779286b6e.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569306; x=1707174106; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569301; x=1707174101; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0IsJCYKuWrursPA6kPyaSh6Iig/if/7dsXp1H2oDJMs=;
- b=DKQq7lvvL04mHhcWP2tZAhBMd10a3cTJRG9kx+4f2yCSWEBy5h++ZJ8KVCPCzKM/Hw
- HfanTbXsiJDTlCJ/TWtD7c5PfwdyMmiDS8M78Exa9+Tvc6yp29rXDA9m402+JiBY5MkW
- x26ddsW+HI3vNLjdl3ptvz426emQoemm0VMGq+04vpYMK+kyEVNGDT6d7cexVQ69sQZi
- qTpsAMnziISpHwtMPhdoH1s8Hj3ig3iwXilkZ0hFAyw3YT53lwefrGX4h1EUZ4t8ZxI5
- 3xR35rCIWevH7b5Whlv+iq+AnO8oMFUKJIZ/aWCDr8G5kmwpmLprbJrOmQlI1WwxnE6v
- vyeg==
+ bh=rGwTnZnscqahFsCYdn6DyT5/GdGMGcaavMpKxhe75qA=;
+ b=QZABSXPqjeBP0DhEvvMmD718jfKE1Vra1hpOD73C+aJW4jYg+9RpCwyhljWByvTi+k
+ q0kwh/TWiYER+QKePMqu7wHzq1ZmzmX+Uyc3TlzUO7VLbYeiOcXtcF6x93//pDzRdwc0
+ F9HHCGJJ4PfHNhx+5T4kTY0I2ndoc2rnLYMRV77D9uaVb3rr/g8PYzuMuKILRNNHP2Pe
+ EvZySRYUiQoobalOMeKE03Rjr4TspZiOtfdtHdNCxc3TYP1XwOqdK7+oveB85rqje9i8
+ JiJ7RfD7m2n/ufoooyX59eqgSmHhdw4NWWgsehcQZh8zLSQHK2La7RziQoywvYscr6FN
+ lZlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569306; x=1707174106;
+ d=1e100.net; s=20230601; t=1706569301; x=1707174101;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0IsJCYKuWrursPA6kPyaSh6Iig/if/7dsXp1H2oDJMs=;
- b=FpLsGvzbpSwpoGbd4YMpss2K35KHKcvEy7IQZc4CRwWdqhB6oiuAUZbTW8qhBR/wh+
- C6OqlwpdQ6gwUntCY129lv/7bYTzm8JFUTzqA9SzwVm677/AIYIWWbMMCWUL5RAIUCu6
- Nf40m5LHgAOviDhhRDmKl3gH8UfKaZXq5BMMA2W/r+d42BSVX5rL1oo7siTKBp94ELbo
- KPhRQRxUSmulRzwIY8L53uikFEm/XXr/4gm14FtZmGCelHpmfN9YbV1i/Bc5y35i5D0B
- R0+w8/rEHk8GY5ywsOpDEDG16GJgakATRdNS8lQgOd35aqiOjIQ39MULCr51XXJ5goaG
- F6sQ==
-X-Gm-Message-State: AOJu0YyLeArIT4GGpdX7ex1jv8nh5maPDqW9l7uzz7vXpgywvobZWd86
- GC4FujDlX0jGpsU98t9rnwzekakM6qeKx/fPTDIUgk58Rq/iggInobzFr9WorMha7zERCrCClC3
- GaMY=
-X-Google-Smtp-Source: AGHT+IHIPKf9PzEMlhSDLryiovNY3w5s4jjNWpPoBC0npz4kFb7fhMwRlORNMpUcizD7qMaStlBu7g==
-X-Received: by 2002:a05:6358:4425:b0:176:81c5:f377 with SMTP id
- z37-20020a056358442500b0017681c5f377mr6922383rwc.36.1706569305919; 
- Mon, 29 Jan 2024 15:01:45 -0800 (PST)
+ bh=rGwTnZnscqahFsCYdn6DyT5/GdGMGcaavMpKxhe75qA=;
+ b=L14AodzEojSPtOIlFtN2jNiJL8Sb/AMtR7dzuZ5BLrSd8Q7T81UuJsp4ZSAV4quTk6
+ iX4i+X0zwkDhWi3I6gP0c5a4m2ZC3XqdObU6G8LaJJt3onhtYpGnpm+gb8Nezi2bYWpi
+ ycY8QrcHdHs3vWT0hIqZJGNQWHUwEC9n9WMvRTczsA8OSFIGWUr+cPVIlQ/Bi/4kwM3m
+ /1NWBNCrtweYZxWw4oIplB9o/axtYPmyLlIv9909BC8GLbNIkYWFHMtkx5Sz27D3HXEF
+ 7Vq7P32xduy+McEmxPtLTRnmO/MgZkxE0h41UZ3zFQa8mPxy0Of064bmT5PtOB7VM/9Z
+ T/Hw==
+X-Gm-Message-State: AOJu0Yxo7e7wypgqIwry5ow1I7X8HaJtow/tPPMd/COSgy0cT8P/YWpU
+ dE5fDsM2GcoX0cUxc2iLI1R1jlYc2Doe9bBFjK2Mj42M79QUh89LMDLoCgobwLUULhkRjo43m0x
+ ND4Y=
+X-Google-Smtp-Source: AGHT+IFpPy6dD6/hHj6+lY9rJOFOMfZHIGpdqBnBPdtEXUY9yU3Fn5Xgsq9FdwsNnC/Xzdcvrov4oQ==
+X-Received: by 2002:a05:6358:725:b0:176:8a8e:213c with SMTP id
+ e37-20020a056358072500b001768a8e213cmr4980535rwj.3.1706569301498; 
+ Mon, 29 Jan 2024 15:01:41 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.44
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:45 -0800 (PST)
+ Mon, 29 Jan 2024 15:01:41 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PULL 09/31] include/hw/core: Move do_interrupt in TCGCPUOps
-Date: Tue, 30 Jan 2024 09:00:59 +1000
-Message-Id: <20240129230121.8091-10-richard.henderson@linaro.org>
+Subject: [PULL 07/31] include/exec: Move PAGE_* macros to common header
+Date: Tue, 30 Jan 2024 09:00:57 +1000
+Message-Id: <20240129230121.8091-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,43 +95,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
-The ifdef out of which it is moved is not quite right: do_interrupt is
-only needed for system mode.  Move it to the top of a different ifdef
-block, which preserves its position within the structure for that case.
+These don't vary across targets and are used in soon-to-be common code
+(cputlb.c).
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240119144024.14289-18-anjo@rev.ng>
-[rth: Split from a larger patch and simplified.]
+Message-Id: <20240119144024.14289-15-anjo@rev.ng>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/tcg-cpu-ops.h | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/exec/cpu-all.h    | 24 ------------------------
+ include/exec/cpu-common.h | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 24 deletions(-)
 
-diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
-index 479713a36e..d6fe55d471 100644
---- a/include/hw/core/tcg-cpu-ops.h
-+++ b/include/hw/core/tcg-cpu-ops.h
-@@ -58,11 +58,6 @@ struct TCGCPUOps {
-      * cpu execution loop (hack for x86 user mode).
-      */
-     void (*fake_user_interrupt)(CPUState *cpu);
--#else
--    /**
--     * @do_interrupt: Callback for interrupt handling.
--     */
--    void (*do_interrupt)(CPUState *cpu);
- #endif /* !CONFIG_USER_ONLY || !TARGET_I386 */
- #ifdef CONFIG_USER_ONLY
-     /**
-@@ -114,6 +109,8 @@ struct TCGCPUOps {
-     void (*record_sigbus)(CPUState *cpu, vaddr addr,
-                           MMUAccessType access_type, uintptr_t ra);
- #else
-+    /** @do_interrupt: Callback for interrupt handling.  */
-+    void (*do_interrupt)(CPUState *cpu);
-     /** @cpu_exec_interrupt: Callback for processing interrupts in cpu_exec */
-     bool (*cpu_exec_interrupt)(CPUState *cpu, int interrupt_request);
-     /**
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 5340907cfd..edee87d3f4 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -171,34 +171,10 @@ extern const TargetPageBits target_page;
+ 
+ #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
+ 
+-/* same as PROT_xxx */
+-#define PAGE_READ      0x0001
+-#define PAGE_WRITE     0x0002
+-#define PAGE_EXEC      0x0004
+-#define PAGE_BITS      (PAGE_READ | PAGE_WRITE | PAGE_EXEC)
+-#define PAGE_VALID     0x0008
+-/*
+- * Original state of the write flag (used when tracking self-modifying code)
+- */
+-#define PAGE_WRITE_ORG 0x0010
+-/*
+- * Invalidate the TLB entry immediately, helpful for s390x
+- * Low-Address-Protection. Used with PAGE_WRITE in tlb_set_page_with_attrs()
+- */
+-#define PAGE_WRITE_INV 0x0020
+-/* For use with page_set_flags: page is being replaced; target_data cleared. */
+-#define PAGE_RESET     0x0040
+-/* For linux-user, indicates that the page is MAP_ANON. */
+-#define PAGE_ANON      0x0080
+-
+ #if defined(CONFIG_BSD) && defined(CONFIG_USER_ONLY)
+ /* FIXME: Code that sets/uses this is broken and needs to go away.  */
+ #define PAGE_RESERVED  0x0100
+ #endif
+-/* Target-specific bits that will be used via page_get_flags().  */
+-#define PAGE_TARGET_1  0x0200
+-#define PAGE_TARGET_2  0x0400
+-
+ /*
+  * For linux-user, indicates that the page is mapped with the same semantics
+  * in both guest and host.
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 3109c6b67d..608708ea48 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -206,4 +206,34 @@ G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc);
+ G_NORETURN void cpu_loop_exit(CPUState *cpu);
+ G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
+ 
++/* same as PROT_xxx */
++#define PAGE_READ      0x0001
++#define PAGE_WRITE     0x0002
++#define PAGE_EXEC      0x0004
++#define PAGE_BITS      (PAGE_READ | PAGE_WRITE | PAGE_EXEC)
++#define PAGE_VALID     0x0008
++/*
++ * Original state of the write flag (used when tracking self-modifying code)
++ */
++#define PAGE_WRITE_ORG 0x0010
++/*
++ * Invalidate the TLB entry immediately, helpful for s390x
++ * Low-Address-Protection. Used with PAGE_WRITE in tlb_set_page_with_attrs()
++ */
++#define PAGE_WRITE_INV 0x0020
++/* For use with page_set_flags: page is being replaced; target_data cleared. */
++#define PAGE_RESET     0x0040
++/* For linux-user, indicates that the page is MAP_ANON. */
++#define PAGE_ANON      0x0080
++
++/* Target-specific bits that will be used via page_get_flags().  */
++#define PAGE_TARGET_1  0x0200
++#define PAGE_TARGET_2  0x0400
++
++/*
++ * For linux-user, indicates that the page is mapped with the same semantics
++ * in both guest and host.
++ */
++#define PAGE_PASSTHROUGH 0x0800
++
+ #endif /* CPU_COMMON_H */
 -- 
 2.34.1
 
