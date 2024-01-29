@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 231AFC47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 09:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3956CC47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 09:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUNyS-00007I-Lm; Mon, 29 Jan 2024 04:30:40 -0500
+	id 1rUNzp-00011e-6K; Mon, 29 Jan 2024 04:32:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rUNyH-0008Si-D2
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:30:31 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rUNyF-0007rV-8u
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:30:29 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a35e9161b8cso31349266b.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 01:30:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706520625; x=1707125425; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=sK6gVJD2kWFzpoOZocWDbhfqKKWceHInB+a4B39Yxdk=;
- b=hyeWvJZkdEghrbmGF2PewarsnUVJZ3kY945GukK4ezxpTnVooUT0IWYcv2qIIhWXp8
- k9NnjsxEymlbi3tJ1JoDN1BCbBGpPiC6v23m+oe+4yIq0x3Zjd8Nfsi0qiQUnf4eUoOm
- qxXYgiOz2/S9vIjcvMENYBWkC+Gg5yaS51VsYqDYYuQcH7jnGSD75ag3llA1x/xQONzO
- 1EQ8tfc0tS/VwEwnigiPtLFQT/yvevt/FEZlOgGGav3s6rmlpporIULQKMteIJly3Q1U
- FmIGU+yydcTdLxQoGrFjmEm9Vw7txqSUIY7a+zt5CDQInqfLYPQ7dPgXFgjMdVG00Gbk
- tXIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706520625; x=1707125425;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sK6gVJD2kWFzpoOZocWDbhfqKKWceHInB+a4B39Yxdk=;
- b=Jeehdqo8g0WE8+lFfJ0ReNdgDSxXGa40I1kNdiQCWHpxznzxwOG4VGJFYlOueaxmd3
- 4s5tqzLmBKaE2X2f1f8Z/N+J5UfVqzOHSf9JAuoENdtGmU2QbJbXRFxAbKgl4uqXi1/D
- eZSMiOlkiGnZBC3cI5sCpgbj08jUwcR4kSiYkbyDSpXfRo0XHWPTN8g1uawvIdVNEFPy
- /2qDCwij9XhvZrMkrAgIVLdbKy5c7elQmuS+k2Ex1BWcv4tvMR1bIplP3rBU1JVxu8a7
- Rqr3zh2QDNRyEkB+dPGRYb5vpIPA2TL3zZ2KrC57v+grPxAwDKrcnCXyaUliler+y3S7
- 4IGw==
-X-Gm-Message-State: AOJu0YwZ32nq6qedgeVeT2ymQ441gMyb2YqhkgvU+kPQJI1ZzZQGIkbz
- MSkG4PFNAEJCfpEy7BWfCPVF8nlj4uWZPIvsjt57okjFUc5x2uT9R16ly0QIPY7Ob1uZotf7+Wi
- N
-X-Google-Smtp-Source: AGHT+IGNn5GTknneHFSsSx6J/e06gNywvUbQ4wiSXFS07tf3RKwTnvLIUFYuQOP3MJETaGredbFhJg==
-X-Received: by 2002:a17:906:4157:b0:a35:f46b:6e50 with SMTP id
- l23-20020a170906415700b00a35f46b6e50mr25815ejk.35.1706520625379; 
- Mon, 29 Jan 2024 01:30:25 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- w24-20020a17090652d800b00a3193a5556csm3717337ejn.189.2024.01.29.01.30.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 01:30:25 -0800 (PST)
-Date: Mon, 29 Jan 2024 10:30:24 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Vadim Shakirov <vadim.shakirov@syntacore.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: Re: [PATCH v2] target/riscv: mcountinhibit, mcounteren and
- scounteren always 32-bit
-Message-ID: <20240129-01580d76b59950a405002ea7@orel>
-References: <20240129084728.48311-1-vadim.shakirov@syntacore.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rUNzm-00011V-Nt
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:32:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rUNzk-00087U-QU
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:32:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706520719;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6S88MYTq/jM4Z3WtQ5AVZMrM5wW7noNLAgUsQ1FPFZk=;
+ b=N0GEwwgvN/l7nSQ4sR3OpAztcQHzvYhgbkAiq8kTeuWn1aAtfLGeGm88NqTmvewA+BvLaT
+ frlMQejaF+hZ58/mRTJhBlCEpVr4cHsXx1YKsmVLLQjcYk6XM2S33kf/v0qtK65qHnWjTr
+ SSY5ylu16TbpEXH5LSJIn3UdExerytU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-hbVcXaTBMzuhohKvvwOtiA-1; Mon, 29 Jan 2024 04:31:54 -0500
+X-MC-Unique: hbVcXaTBMzuhohKvvwOtiA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D77E685CBA3;
+ Mon, 29 Jan 2024 09:31:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 78309492BE2;
+ Mon, 29 Jan 2024 09:31:51 +0000 (UTC)
+Date: Mon, 29 Jan 2024 09:31:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 1/2] docs: introduce dedicated page about code provenance
+ / sign-off
+Message-ID: <ZbdwhR6h6T97vR8J@redhat.com>
+References: <20231123114026.3589272-1-berrange@redhat.com>
+ <20231123114026.3589272-2-berrange@redhat.com>
+ <ZbUU6CTgxgCLG0a9@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240129084728.48311-1-vadim.shakirov@syntacore.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZbUU6CTgxgCLG0a9@intel.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,73 +95,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 29, 2024 at 11:47:28AM +0300, Vadim Shakirov wrote:
-> mcountinhibit, mcounteren and scounteren must always be 32-bit by
-> privileged spec
+On Sat, Jan 27, 2024 at 10:36:24PM +0800, Zhao Liu wrote:
+> Hi Daniel,
+> 
+> On Thu, Nov 23, 2023 at 11:40:25AM +0000, Daniel P. Berrangé wrote:
+> > +Multiple authorship
+> > +~~~~~~~~~~~~~~~~~~~
+> > +
+> > +It is not uncommon for a patch to have contributions from multiple
+> > +authors. In such a scenario, a git commit will usually be expected
+> > +to have a ``Signed-off-by`` line for each contributor involved in
+> > +creatin of the patch. Some edge cases:
+> > +
+> > +  * The non-primary author's contributions were so trivial that
+> > +    they can be considered not subject to copyright. In this case
+> > +    the secondary authors need not include a ``Signed-off-by``.
+> > +
+> > +    This case most commonly applies where QEMU reviewers give short
+> > +    snippets of code as suggested fixes to a patch. The reviewers
+> > +    don't need to have their own ``Signed-off-by`` added unless
+> > +    their code suggestion was unusually large.
+> > +
+> > +  * Both contributors work for the same employer and the employer
+> > +    requires copyright assignment.
+> > +
+> > +    It can be said that in this case a ``Signed-off-by`` is indicating
+> > +    that the person has permission to contributeo from their employer
+> > +    who is the copyright holder. 
+> 
+> For this case, maybe it needs the "Co-developed-by"?
 
-We should also change hcounteren.
+If you're going to go to the trouble of adding multiple tags
+to the commit for each author who participated, then IMHO they
+should all be Signed-off-by. IOW, either just have S-o-B from
+the main author within a company, or have S-o-B for every
+author. Co-developed-by doesn't have value IMHO.
 
-Thanks,
-drew
+> > It is none the less still preferrable
+> > +    to include a ``Signed-off-by`` for each contributor, as in some
+> > +    countries employees are not able to assign copyright to their
+> > +    employer, and it also covers any time invested outside working
+> > +    hours.
+> > +
+> > +Other commit tags
+> > +~~~~~~~~~~~~~~~~~
+> > +
+> > +While the ``Signed-off-by`` tag is mandatory, there are a number of
+> > +other tags that are commonly used during QEMU development
+> > +
+> > + * **``Reviewed-by``**: when a QEMU community member reviews a patch
+> > +   on the mailing list, if they consider the patch acceptable, they
+> > +   should send an email reply containing a ``Reviewed-by`` tag.
+> 
+> Maybe just a question, the people should drop the Reviewed/ACKed/Tested
+> tags that have been obtained if he make the any code changes (including
+> function/variable renaming) as well as commit message changes during
+> the patch refresh process, am I understand correctly? ;-)
 
+It is a judgement call as to whether a Reviewed-by/etc should be
+kept or dropped. It depends on the scale of the changes that
+were made to the commit since the Reviewed-by/etc was first given.
+
+> > +   NB: a subsystem maintainer sending a pull request would replace
+> > +   their own ``Reviewed-by`` with another ``Signed-off-by``
+> > +
+> > + * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch
+> > +   that touches their subsystem, but intends to allow a different
+> > +   maintainer to queue it and send a pull request, they would send
+> > +   a mail containing a ``Acked-by`` tag.
+> > +   
+> > + * **``Tested-by``**: when a QEMU community member has functionally
+> > +   tested the behaviour of the patch in some manner, they should
+> > +   send an email reply conmtaning a ``Tested-by`` tag.
 > 
-> Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
-> ---
->  target/riscv/cpu.h     |  6 +++---
->  target/riscv/machine.c | 10 +++++-----
->  2 files changed, 8 insertions(+), 8 deletions(-)
+> Is there any requirement for the order of tags?
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 5138187727..2236a55bf1 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -334,10 +334,10 @@ struct CPUArchState {
->       */
->      bool two_stage_indirect_lookup;
->  
-> -    target_ulong scounteren;
-> -    target_ulong mcounteren;
-> +    uint32_t scounteren;
-> +    uint32_t mcounteren;
->  
-> -    target_ulong mcountinhibit;
-> +    uint32_t mcountinhibit;
->  
->      /* PMU counter state */
->      PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 72fe2374dc..6bf013054d 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -354,8 +354,8 @@ static const VMStateDescription vmstate_jvt = {
->  
->  const VMStateDescription vmstate_riscv_cpu = {
->      .name = "cpu",
-> -    .version_id = 9,
-> -    .minimum_version_id = 9,
-> +    .version_id = 10,
-> +    .minimum_version_id = 10,
->      .post_load = riscv_cpu_post_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> @@ -398,9 +398,9 @@ const VMStateDescription vmstate_riscv_cpu = {
->          VMSTATE_UINTTL(env.mtval, RISCVCPU),
->          VMSTATE_UINTTL(env.miselect, RISCVCPU),
->          VMSTATE_UINTTL(env.siselect, RISCVCPU),
-> -        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
-> +        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
->          VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
->                               vmstate_pmu_ctr_state, PMUCTRState),
->          VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
-> -- 
-> 2.34.1
+> My previous understanding was that if the Reviewed-by/Tested-by tags
+> were obtained by the author within his company, then those tags should
+> be placed before the signed-off-by of the author. If the Reviewed-by/
+> Tested-by were acquired in the community, then they should be placed
+> after the author's signed-off-by, right?
+
+Common practice is for Signed-off-by tags to be kept in time order
+from earliest author to latest author / maintainer. Common case is
+2 S-o-B, the first from the patch author, and the last from the
+sub-system maintainer who sends the pull request.
+
+For other tags I don't see any broadly acceptable pattern. Some people
+add Reviewed-by before the S-o-B, others add Reviewed-by after the
+S-o-B. Either is fine IMHO.
+
+
+> > +Re-starting abandoned work
+> > +~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > +
+> > +For a variety of reasons there are some patches that get submitted to
+> > +QEMU but never merged. An unrelated contributor may decide (months or
+> > +years later) to continue working from the abandoned patch and re-submit
+> > +it with extra changes.
+> > +
+> > +If the abandoned patch already had a ``Signed-off-by`` from the original
+> > +author this **must** be preserved.
 > 
+> I find some people added Originally-by, e.g., 8e86851bd6b9.
 > 
+> I guess if the code has been changed very significantly, or if the
+> original implementation has just been referenced and significantly
+> refactored, then Originally-by should be preferred instead of
+> Signed-off-by from the original author, right?
+
+If patch submitted still contains any code that can be considered
+copyrightable (ie anything non-trivial) from the original author,
+then I would expect the original authors Signed-off-by to be retained.
+
+I think the cases where it is ok to use Originally-by, without a
+Signed-off-by, would be exceedingly.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
