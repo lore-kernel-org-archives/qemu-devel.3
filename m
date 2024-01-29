@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 217A0C47258
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 03:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D84DC47DDF
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 03:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUHwe-0003h0-RP; Sun, 28 Jan 2024 22:04:24 -0500
+	id 1rUHwr-0004Cx-TD; Sun, 28 Jan 2024 22:04:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHwc-0003bi-Oa
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:23 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHwp-00049Y-T6
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHwZ-0002Zv-Cr
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:20 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHwo-0002cV-5R
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706497458;
+ s=mimecast20190719; t=1706497473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+jIxnbegQmvBVIO27FvAQrkVaPnZTYcNah9sLJ4uqLU=;
- b=FeYl8X5CzfMrsMqDvvcQrG9C2BWe5/8YG1zjjTlbf18WofTwpSTSL+fi5jJhFA1ALVZxFT
- 5JQgtxvafNTI1db5qKSeUBrYy0ISmLOQeLH5zKkZYJxQB4KGXWpk4JJZPT3YGi0K/aPxOP
- nrzYCVM2T54R6qGuXp31fj8wxU8ffJE=
+ bh=u9E9ZiyB8lolyP1h8HTT4gHWB7P2p+lbkjksyMOxvG8=;
+ b=S7oZenHb+iOT2j9rI11Jpr+RjKL8TJ0Be8RzfSFlh5DxbSp0ZLu2B690m9nBcBnxmQYCel
+ oQ2I4WkmhE9Wz6k5VFOua0Dihh+o/GN9aCTPM4dmEG6XFQTcfPH+lDpHnGsb0u3arMPwAc
+ yH81D7RqY9Z+UqKDoH+jTohylV16Qig=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137--Du5DmQhMgm0oRrgyCCQgg-1; Sun, 28 Jan 2024 22:04:15 -0500
-X-MC-Unique: -Du5DmQhMgm0oRrgyCCQgg-1
+ us-mta-613-5q5G6M94PzmVEF4qItCVuQ-1; Sun, 28 Jan 2024 22:04:31 -0500
+X-MC-Unique: 5q5G6M94PzmVEF4qItCVuQ-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 99FFF85A589;
- Mon, 29 Jan 2024 03:04:14 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 80D8485A589;
+ Mon, 29 Jan 2024 03:04:31 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5246C1121306;
- Mon, 29 Jan 2024 03:04:10 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0C8521121306;
+ Mon, 29 Jan 2024 03:04:28 +0000 (UTC)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/14] userfaultfd: use 1ULL to build ioctl masks
-Date: Mon, 29 Jan 2024 11:03:52 +0800
-Message-ID: <20240129030405.177100-2-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+	peterx@redhat.com
+Subject: [PULL 06/14] ci: Add a migration compatibility test job
+Date: Mon, 29 Jan 2024 11:03:57 +0800
+Message-ID: <20240129030405.177100-7-peterx@redhat.com>
 In-Reply-To: <20240129030405.177100-1-peterx@redhat.com>
 References: <20240129030405.177100-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -83,103 +81,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-There is no need to use the Linux-internal __u64 type, 1ULL is
-guaranteed to be wide enough.
+The migration tests have support for being passed two QEMU binaries to
+test migration compatibility.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20240117160313.175609-1-pbonzini@redhat.com
+Add a CI job that builds the lastest release of QEMU and another job
+that uses that version plus an already present build of the current
+version and run the migration tests with the two, both as source and
+destination. I.e.:
+
+ old QEMU (n-1) -> current QEMU (development tree)
+ current QEMU (development tree) -> old QEMU (n-1)
+
+The purpose of this CI job is to ensure the code we're about to merge
+will not cause a migration compatibility problem when migrating the
+next release (which will contain that code) to/from the previous
+release.
+
+The version of migration-test used will be the one matching the older
+QEMU. That way we can avoid special-casing new tests that wouldn't be
+compatible with the older QEMU.
+
+Note: for user forks, the version tags need to be pushed to gitlab
+otherwise it won't be able to checkout a different version.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20240118164951.30350-3-farosas@suse.de
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/postcopy-ram.c                  | 16 +++++++---------
- subprojects/libvhost-user/libvhost-user.c |  2 +-
- tests/qtest/migration-test.c              |  4 ++--
- 3 files changed, 10 insertions(+), 12 deletions(-)
+ .gitlab-ci.d/buildtest.yml | 60 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 5408e028c6..893ec8fa89 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -102,11 +102,9 @@ void postcopy_thread_create(MigrationIncomingState *mis,
-  * are target OS specific.
-  */
- #if defined(__linux__)
--
- #include <poll.h>
- #include <sys/ioctl.h>
- #include <sys/syscall.h>
--#include <asm/types.h> /* for __u64 */
- #endif
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index e1c7801598..f0b0edc634 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -167,6 +167,66 @@ build-system-centos:
+       x86_64-softmmu rx-softmmu sh4-softmmu nios2-softmmu
+     MAKE_CHECK_ARGS: check-build
  
- #if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
-@@ -272,8 +270,8 @@ static bool request_ufd_features(int ufd, uint64_t features)
-         return false;
-     }
- 
--    ioctl_mask = (__u64)1 << _UFFDIO_REGISTER |
--                 (__u64)1 << _UFFDIO_UNREGISTER;
-+    ioctl_mask = 1ULL << _UFFDIO_REGISTER |
-+                 1ULL << _UFFDIO_UNREGISTER;
-     if ((api_struct.ioctls & ioctl_mask) != ioctl_mask) {
-         error_report("Missing userfault features: %" PRIx64,
-                      (uint64_t)(~api_struct.ioctls & ioctl_mask));
-@@ -462,9 +460,9 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
-         goto out;
-     }
- 
--    feature_mask = (__u64)1 << _UFFDIO_WAKE |
--                   (__u64)1 << _UFFDIO_COPY |
--                   (__u64)1 << _UFFDIO_ZEROPAGE;
-+    feature_mask = 1ULL << _UFFDIO_WAKE |
-+                   1ULL << _UFFDIO_COPY |
-+                   1ULL << _UFFDIO_ZEROPAGE;
-     if ((reg_struct.ioctls & feature_mask) != feature_mask) {
-         error_setg(errp, "Missing userfault map features: %" PRIx64,
-                    (uint64_t)(~reg_struct.ioctls & feature_mask));
-@@ -733,11 +731,11 @@ static int ram_block_enable_notify(RAMBlock *rb, void *opaque)
-         error_report("%s userfault register: %s", __func__, strerror(errno));
-         return -1;
-     }
--    if (!(reg_struct.ioctls & ((__u64)1 << _UFFDIO_COPY))) {
-+    if (!(reg_struct.ioctls & (1ULL << _UFFDIO_COPY))) {
-         error_report("%s userfault: Region doesn't support COPY", __func__);
-         return -1;
-     }
--    if (reg_struct.ioctls & ((__u64)1 << _UFFDIO_ZEROPAGE)) {
-+    if (reg_struct.ioctls & (1ULL << _UFFDIO_ZEROPAGE)) {
-         qemu_ram_set_uf_zeroable(rb);
-     }
- 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 6684057370..a3b158c671 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -684,7 +684,7 @@ generate_faults(VuDev *dev) {
-                      dev->postcopy_ufd, strerror(errno));
-             return false;
-         }
--        if (!(reg_struct.ioctls & ((__u64)1 << _UFFDIO_COPY))) {
-+        if (!(reg_struct.ioctls & (1ULL << _UFFDIO_COPY))) {
-             vu_panic(dev, "%s Region (%d) doesn't support COPY",
-                      __func__, i);
-             return false;
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index d3066e119f..7675519cfa 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -104,8 +104,8 @@ static bool ufd_version_check(void)
-     }
-     uffd_feature_thread_id = api_struct.features & UFFD_FEATURE_THREAD_ID;
- 
--    ioctl_mask = (__u64)1 << _UFFDIO_REGISTER |
--                 (__u64)1 << _UFFDIO_UNREGISTER;
-+    ioctl_mask = 1ULL << _UFFDIO_REGISTER |
-+                 1ULL << _UFFDIO_UNREGISTER;
-     if ((api_struct.ioctls & ioctl_mask) != ioctl_mask) {
-         g_test_message("Skipping test: Missing userfault feature");
-         return false;
++# Previous QEMU release. Used for cross-version migration tests.
++build-previous-qemu:
++  extends: .native_build_job_template
++  artifacts:
++    when: on_success
++    expire_in: 2 days
++    paths:
++      - build-previous
++    exclude:
++      - build-previous/**/*.p
++      - build-previous/**/*.a.p
++      - build-previous/**/*.fa.p
++      - build-previous/**/*.c.o
++      - build-previous/**/*.c.o.d
++      - build-previous/**/*.fa
++  needs:
++    job: amd64-opensuse-leap-container
++  variables:
++    IMAGE: opensuse-leap
++    TARGETS: x86_64-softmmu aarch64-softmmu
++  before_script:
++    - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
++    - git checkout $QEMU_PREV_VERSION
++  after_script:
++    - mv build build-previous
++
++.migration-compat-common:
++  extends: .common_test_job_template
++  needs:
++    - job: build-previous-qemu
++    - job: build-system-opensuse
++  # The old QEMU could have bugs unrelated to migration that are
++  # already fixed in the current development branch, so this test
++  # might fail.
++  allow_failure: true
++  variables:
++    IMAGE: opensuse-leap
++    MAKE_CHECK_ARGS: check-build
++  script:
++    # Use the migration-tests from the older QEMU tree. This avoids
++    # testing an old QEMU against new features/tests that it is not
++    # compatible with.
++    - cd build-previous
++    # old to new
++    - QTEST_QEMU_BINARY_SRC=./qemu-system-${TARGET}
++          QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
++    # new to old
++    - QTEST_QEMU_BINARY_DST=./qemu-system-${TARGET}
++          QTEST_QEMU_BINARY=../build/qemu-system-${TARGET} ./tests/qtest/migration-test
++
++migration-compat-aarch64:
++  extends: .migration-compat-common
++  variables:
++    TARGET: aarch64
++
++migration-compat-x86_64:
++  extends: .migration-compat-common
++  variables:
++    TARGET: x86_64
++
+ check-system-centos:
+   extends: .native_test_job_template
+   needs:
 -- 
 2.43.0
 
