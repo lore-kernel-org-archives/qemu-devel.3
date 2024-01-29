@@ -4,84 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FAE6C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E107FC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rURot-00017p-CB; Mon, 29 Jan 2024 08:37:03 -0500
+	id 1rURst-0006pO-Ml; Mon, 29 Jan 2024 08:41:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rURoo-00017Q-AE
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:36:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rURsr-0006oh-Gv
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:41:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rURom-0000Zx-Mx
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:36:58 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rURsq-0001Zj-0V
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:41:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706535416;
+ s=mimecast20190719; t=1706535666;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ZlayBfl1lG092L3t/mfKlmWwcPTs55S8i54HXtLS20E=;
- b=I1PsP8qcrhDa8vTjOmuOD94c94ESgMLWKomHBpHMTiFPGxHztFn5JO+6Zz/1RDyEVrw6/O
- m4lCqI9I9jnRDvMmVt2z2tnuw44VyOPJOgAjfQU6pUSLJ5BKz8ZVf8X57mqE5Q9puTwW8B
- 5g7Sl0yifvgunD0o9siTu5XupQ5MH74=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fLzvBC1ItfeI7tQYjMJiKxczon02tbJO9HHIC6Ywm90=;
+ b=XwpwXvOVlCPCh6qLy3461lNp04a9z62fL/KkjJGtgX3bk1MfXGCLnuhigpxWNN0SGZLodT
+ uZHvyy3VlZtpJTEnZ92D0todMIpFDOkxvsTFSYwlZAWaxJ2XKtwAwxdPOxqdne867uSdK2
+ IxOyicbG8pN8EFBnPX7BqsSob6pBkqk=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-SLkDQHaQOvGnar9oF0EBDA-1; Mon, 29 Jan 2024 08:36:54 -0500
-X-MC-Unique: SLkDQHaQOvGnar9oF0EBDA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a34a22e09ccso72653966b.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:36:54 -0800 (PST)
+ us-mta-451-Lj5o2pgHNZKAHD64R_ZQUg-1; Mon, 29 Jan 2024 08:41:05 -0500
+X-MC-Unique: Lj5o2pgHNZKAHD64R_ZQUg-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-5101e826a3dso2135799e87.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:41:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706535413; x=1707140213;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZlayBfl1lG092L3t/mfKlmWwcPTs55S8i54HXtLS20E=;
- b=Y/WmD98f2UIkoUw50aX6xUKKfF5p/858buStaITFhaYjRijTzdRkJeLXofMxEuBpY2
- WcRAIMoC3EFOZsOOrQmK5zqlTGuDd+RbQtuaoda91FpbDqru3jSavIJdw1wN99kFe8Ie
- kptyAq+EhnRnCwRtUBlB7s7dmVZTee90dn9v+9enyuFTygnlgcVZpeGfJ9w4jt2c1X1i
- gQ4Z0bNORRbhGuxZEHC3FXp5EjXcQE7/QG0WhO0hP4TG1OUmFceSgCVH59UJXG5qeKsd
- MuQ6uZnUBZUSm3ItBXwyox6FAXSNG6mQlXIXCZVyQ5azQ6gwwvr/94jCvPLBVV9PpmhR
- hfOQ==
-X-Gm-Message-State: AOJu0YwoRPmCElOujoxIAf1PQol7on2A+Z8ge6kF2XG3GrPUEmHHzcF/
- WmEnhyAQ3USO5lZLya+e7fOz2dogEJIWiqzOcsRRhtGML7ny4DjxiQYrt4i4jI8NbmmuW6WqdWW
- +X4Fdz+81uSdefQ+PSmzjMqxS4r6NnWp8X417CQ+KTTqd7K1idCuPaT/oSzNzEzZ/pZJ6lRPn+0
- slVphp/B+gbpM2HpMRCBJsN18iTFkQ9B5054sx
-X-Received: by 2002:a17:906:a013:b0:a32:b376:48d8 with SMTP id
- p19-20020a170906a01300b00a32b37648d8mr4244195ejy.18.1706535413088; 
- Mon, 29 Jan 2024 05:36:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH8uEvS9nYL7ZxJZ9fEgiR7N3wuRPAz1exeePoNiCvbi1qkbsOYqISGx64wZFy7S40f/bKY3w==
-X-Received: by 2002:a17:906:a013:b0:a32:b376:48d8 with SMTP id
- p19-20020a170906a01300b00a32b37648d8mr4244183ejy.18.1706535412698; 
- Mon, 29 Jan 2024 05:36:52 -0800 (PST)
-Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ d=1e100.net; s=20230601; t=1706535664; x=1707140464;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :references:cc:to:content-language:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fLzvBC1ItfeI7tQYjMJiKxczon02tbJO9HHIC6Ywm90=;
+ b=LAE+1IKRDH5SMoRWOSehn5643LOlX5qSACCd7Htdaoj5JlId12xncVJ8WKOsSgt/39
+ s/q8r0vpvy3dnYKmofd7ZpkaSnJ2ohsnVnuxC7RpFAzyGKJVh0ag2XH7N061I1tW4TH4
+ B0pXZymL/6xBqLgFR/bDWJUtDFfwWEEdb029LHH2XIGLud9YxvcqmkhPGHoeh3x1vr1t
+ C0ZN6tC4fIUej0F1j5owCrl0ItoVCGBFZwpNkH6/t/FG2LgxDswN6oiwYAzt4Xi0DKFP
+ bgwXbGyDY4rg3Ji132O8qsxluO4jrPs62CW2mJN7s6gW0+KNNGhAeaX5ZcurEhOra91y
+ LrQg==
+X-Gm-Message-State: AOJu0Yy1//zU3k4dcOkCFP/JqWTXeIF6R3HNgf+3vNQAloTyT8JgX10y
+ QqfcPo3P+MIyNvz8mHftLil5ZwQvUDcP08pxfoHsAy409Bz55DFpyttVEl9UPs/EJdBz/GhTizO
+ H1tKF0Lmk1Zup7FJX37H/vmR7QFgvu9f/8yu+PoSoqij86LxyZaYz
+X-Received: by 2002:a05:6512:20d2:b0:50e:7aaf:ec53 with SMTP id
+ u18-20020a05651220d200b0050e7aafec53mr3440133lfr.12.1706535664046; 
+ Mon, 29 Jan 2024 05:41:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH5p6h2yW/oSws5NK2kFwxfm28FBwdwSoMrr9i/A1BHJzqkIffGJeEndc89U1/SwulA2fObfg==
+X-Received: by 2002:a05:6512:20d2:b0:50e:7aaf:ec53 with SMTP id
+ u18-20020a05651220d200b0050e7aafec53mr3440123lfr.12.1706535663667; 
+ Mon, 29 Jan 2024 05:41:03 -0800 (PST)
+Received: from ?IPV6:2003:cb:c721:aa00:3221:f685:1200:6d03?
+ (p200300cbc721aa003221f68512006d03.dip0.t-ipconnect.de.
+ [2003:cb:c721:aa00:3221:f685:1200:6d03])
  by smtp.gmail.com with ESMTPSA id
- gx13-20020a1709068a4d00b00a2cf537042asm3880670ejc.192.2024.01.29.05.36.51
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 05:36:52 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] configure: do not create legacy symlinks
-Date: Mon, 29 Jan 2024 14:36:51 +0100
-Message-ID: <20240129133651.1106552-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.0
+ ay13-20020a05600c1e0d00b0040efca80ee1sm67626wmb.16.2024.01.29.05.41.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jan 2024 05:41:03 -0800 (PST)
+Message-ID: <7f42dae1-a859-4d78-afd3-916db5ed009f@redhat.com>
+Date: Mon, 29 Jan 2024 14:41:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Initialize backend memory objects in parallel
+Content-Language: en-US
+To: Mark Kanda <mark.kanda@oracle.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, berrange@redhat.com
+References: <20240122153219.2885749-1-mark.kanda@oracle.com>
+ <57f6c99b-cdbc-4d4d-9988-e6e1fa307e4d@oracle.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <57f6c99b-cdbc-4d4d-9988-e6e1fa307e4d@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,43 +150,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With more than three years since Meson was introduced in the build system, people
-have had quite some time to move away from the foo-softmmu/qemu-system-* and
-foo-linux-user/qemu-* symbolic links.  Remove them, and with them another
-instance of the "softmmu" name for system emulators.
+On 29.01.24 14:39, Mark Kanda wrote:
+> Ping.
+> 
+> Any comments?
+> 
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- configure | 10 ----------
- 1 file changed, 10 deletions(-)
+Sorry, fell through the cracks, will review this soonish.
 
-diff --git a/configure b/configure
-index ff058d6c486..9cdb5a6818b 100755
---- a/configure
-+++ b/configure
-@@ -1605,21 +1605,11 @@ echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
- echo "MESON=$meson" >> $config_host_mak
- echo "NINJA=$ninja" >> $config_host_mak
- echo "EXESUF=$EXESUF" >> $config_host_mak
--
- # use included Linux headers for KVM architectures
- if test "$host_os" = "linux" && test -n "$linux_arch"; then
-   symlink "$source_path/linux-headers/asm-$linux_arch" linux-headers/asm
- fi
- 
--for target in $target_list; do
--    target_dir="$target"
--    target_name=$(echo $target | cut -d '-' -f 1)$EXESUF
--    case $target in
--        *-user) symlink "../qemu-$target_name" "$target_dir/qemu-$target_name" ;;
--        *) symlink "../qemu-system-$target_name" "$target_dir/qemu-system-$target_name" ;;
--    esac
--done
--
- if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
- fi
 -- 
-2.43.0
+Cheers,
+
+David / dhildenb
 
 
