@@ -4,45 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1D1C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 20:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C16C48286
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 20:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUYB4-0002xf-Nv; Mon, 29 Jan 2024 15:24:22 -0500
+	id 1rUYC6-0003wD-Sx; Mon, 29 Jan 2024 15:25:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rUYB1-0002wk-F1; Mon, 29 Jan 2024 15:24:20 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>)
+ id 1rUYC0-0003po-7v; Mon, 29 Jan 2024 15:25:22 -0500
+Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rUYAy-0008Kg-As; Mon, 29 Jan 2024 15:24:18 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ECC9748733;
- Mon, 29 Jan 2024 23:25:07 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8E0866E60C;
- Mon, 29 Jan 2024 23:24:14 +0300 (MSK)
-Received: (nullmailer pid 1289104 invoked by uid 1000);
- Mon, 29 Jan 2024 20:24:14 -0000
-Subject: [ANNOUNCE] QEMU 8.2.1 Stable released
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>)
+ id 1rUYBx-0000Df-TP; Mon, 29 Jan 2024 15:25:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+ t=1706559910; x=1707164710; i=deller@gmx.de;
+ bh=t4y5O2v80/N1buYxN57NYKAZ0Bev0mKEYyc3wQDHke4=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+ In-Reply-To;
+ b=mRsgy2nT6qg8doTPKWg4MJ8aGSLokAoS9T4Eafl/q8XtDYcMDg3532PQD++oGrRT
+ 3AraDvWUJgRR5EjTogtJZeR0z4N+pI1HP9KfPf45tGRecBwuxqaseu/JylHEtUBln
+ OFyiA4eAxAnR8T5H72f2blTcWuaqIGYEgGWsjLt+6Yka3+0J9JXgnKdvfQKf2EKw2
+ +4RD6EVxuZzZl0Eoq2dKa3VSHuDqtmXZ/xgyYWZYwp+7Bim704xg3pwU3lk4P24Zp
+ 3QQ0yEQbeGNnQtqjlCRm1XkFFSTEVv3yn41ussPVuQm5k15VaV/1H5k1P7XVXF7aN
+ h3py3MQZrEHfAwSeLA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([94.134.155.171]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlw3N-1qnYBx1vRz-00j11b; Mon, 29
+ Jan 2024 21:25:10 +0100
+Message-ID: <9c2e60fa-7a23-496d-bf81-8826810e6351@gmx.de>
+Date: Mon, 29 Jan 2024 21:25:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Mon, 29 Jan 2024 23:24:14 +0300
-Message-Id: <1706559854.271610.1289098.nullmailer@tls.msk.ru>
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 12/29] target/hppa: Prefer fast cpu_env() over slower
+ CPU QOM cast macro
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240129164514.73104-1-philmd@linaro.org>
+ <20240129164514.73104-13-philmd@linaro.org>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20240129164514.73104-13-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:xCtZ4NVqvrToy67dRKju7QMLsPslL2OSiWJVmyiAeOUiyCESqoD
+ utHKpaNLSE25RvMViB2HhD3ifvw/it1fJE+hDZOweA1JBACyRGeRvLOD7qfBYGjQwipvsWQ
+ LpwzihaLy0Y59ZL29TDPSaLRld7pGiLOH5/p+OPlYQdLGEpPB3auOcwJ5yPiy4zf5BzDZna
+ z5wQQw5llbjlnpHDsgVmQ==
+UI-OutboundReport: notjunk:1;M01:P0:5RFp/sdB+cw=;jxsVH2MuGrETdaV8Hb4NfNGRGdm
+ d9Ev6uyc5cnRIlJVbZ2yPy1Go/1UwnYnLQval1/SlifLvYoTlAwtLNbaWioe0arMG7tQUvDos
+ N3s7vntWS4eKrcUxpI1U3rvrEDX8fZrilxMnnvsfnyIlSQJdTmVQ6MRoge/LbAbP+t1t//HKa
+ roDskNom3sAoaDmCp0768gnn+O7zLtpgKtBt0JKWHM05b7bLBctGSeFXdccPG3lZ6jj/0OMpL
+ h45ywtHk1zn6ddZxKYxo5vy/LZ+i1BKpRt5gTxYaDCV2rRZb6XIKYDQRDcsGVBd2VEpyANT2M
+ ORG27OEppDmWfmPhkKamrzqbvlHk/lk/lDrA3GN+JC+o4+H7HY0C0UDsRwXlTSgWbAmu28/yS
+ uQ7IsdItn/B1X6mNsRktror78EvMNlT+Lf2pHtwkEvFB1O9tNhoP+DpwHZ9JQ1yJitFRJEgbF
+ FaYFY3GkfVU2fbv6b61h2NQfOnoKx3MPwLTaFkoMxGx24gbc02aXqmfm3m7nU1mQ43tYmHS5i
+ 488JLHtL8NOxI977NG5u0RYU3JbzjjTpfcrepr1w4dvt22bHr6d2xXAET8BHthDXm+uxBwCDW
+ xHn0Conl74rKt/FURDX+jnX2AsVLE/qJG10EXHpBI89/I+JeqIKcyy4AdTHMTD6xLrXrtsjMy
+ etlpA6Lcd62djZdAVtlI+t1kVg3j5ExSb9EYC6agW7ZAmxjkQEGulVt661/egM2HP9sQm4gJu
+ MhobtE97chh1d8+G5Hb7HgKavWGGv7rIUxZleDOzg+zmfMsimZBYBPtUhoAE8RVgSoEkhHUsW
+ vgdRYfaWZjIjUesSwyQczew5YX9qMA577tdTzziJLb/kg3a7ucr1f9KV/Tqn+VSHHxAn86Igt
+ C7FuC1HDzr8Ac65/Fp5HESPIIbi5el9xbRc7wHS5asptW0Mz3VWtCr2m29OB5Oh9B+1e9cQ6i
+ ZOQmCq4eJE3vzgQemJJVoxW8DQQ=
+Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,185 +138,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 1/29/24 17:44, Philippe Mathieu-Daud=C3=A9 wrote:
+> Mechanical patch produced running the command documented
+> in scripts/coccinelle/cpu_env.cocci_template header.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/hppa/cpu.c        | 8 ++------
+>   target/hppa/int_helper.c | 8 ++------
+>   target/hppa/mem_helper.c | 3 +--
+>   3 files changed, 5 insertions(+), 14 deletions(-)
+>
+> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+> index 14e17fa9aa..3200de0998 100644
+> --- a/target/hppa/cpu.c
+> +++ b/target/hppa/cpu.c
+> @@ -106,11 +106,8 @@ void hppa_cpu_do_unaligned_access(CPUState *cs, vad=
+dr addr,
+>                                     MMUAccessType access_type, int mmu_i=
+dx,
+>                                     uintptr_t retaddr)
+>   {
+> -    HPPACPU *cpu =3D HPPA_CPU(cs);
+> -    CPUHPPAState *env =3D &cpu->env;
+> -
+>       cs->exception_index =3D EXCP_UNALIGN;
+> -    hppa_set_ior_and_isr(env, addr, MMU_IDX_MMU_DISABLED(mmu_idx));
+> +    hppa_set_ior_and_isr(cpu_env(cs), addr, MMU_IDX_MMU_DISABLED(mmu_id=
+x));
+>
+>       cpu_loop_exit_restore(cs, retaddr);
+>   }
+> @@ -145,8 +142,7 @@ static void hppa_cpu_realizefn(DeviceState *dev, Err=
+or **errp)
+>   static void hppa_cpu_initfn(Object *obj)
+>   {
+>       CPUState *cs =3D CPU(obj);
+> -    HPPACPU *cpu =3D HPPA_CPU(obj);
+> -    CPUHPPAState *env =3D &cpu->env;
+> +    CPUHPPAState *env =3D cpu_env(CPU(obj));
 
-Hi everyone,
+Here it can become cpu_env(cs) too.
 
-The QEMU v8.2.1 stable release is now available.
+The rest looks ok, so with that changed:
+Reviewed-by: Helge Deller <deller@gmx.de>
 
-You can grab the tarball from our download page here:
+Helge
 
-  https://www.qemu.org/download/#source
-
-  https://download.qemu.org/qemu-8.2.1.tar.xz
-  https://download.qemu.org/qemu-8.2.1.tar.xz.sig (signature)
-
-v8.2.1 is now tagged in the official qemu.git repository, and the
-stable-8.2 branch has been updated accordingly:
-
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-8.2?ref_type=heads
-
-Thank you everyone who has been involved and helped with the stable series!
-
-/mjt
-
-Changelog (stable-8.2-hash master-hash Author Name: Commmit-Subject):
-
-f48c205fb4 Michael Tokarev:
- Update version for 8.2.1 release
-45b3ce5e83 ee0a2e3c9d Peter Maydell:
- target/arm: Fix incorrect aa64_tidcp1 feature check
-570e624426 6fffc83785 Peter Maydell:
- target/arm: Fix A64 scalar SQSHRN and SQRSHRN
-553e53b442 604927e357 Max Filippov:
- target/xtensa: fix OOB TLB entry access
-ce34d02f91 e8a12fe31f Daniel P. Berrangé:
- qtest: bump aspeed_smc-test timeout to 6 minutes
-f389309d29 effd60c878 Stefan Hajnoczi:
- monitor: only run coroutine commands in qemu_aio_context
-823892d19f 9ee2dd4c22 Stefan Hajnoczi:
- iotests: port 141 to Python for reliable QMP testing
-d7a64c4517 da62b507a2 Stefan Hajnoczi:
- iotests: add filter_qmp_generated_node_ids()
-cf70966523 a9c8ea9547 Ari Sundholm:
- block/blklogwrites: Fix a bug when logging "write zeroes" operations.
-939a09575f 2220e8189f Jason Wang:
- virtio-net: correctly copy vnet header when flushing TX
-6f6492ab07 9f6523e8e4 Joseph Burt:
- tcg/arm: Fix SIGILL in tcg_out_qemu_st_direct
-1e0f028de7 1b21fe27e7 Richard Henderson:
- linux-user/riscv: Adjust vdso signal frame cfa offsets
-8bdd3abcf1 6d913158b5 Robbin Ehn:
- linux-user: Fixed cpu restore with pc 0 on SIGBUS
-99dd4a1563 8a9be79924 Fiona Ebner:
- block/io: clear BDRV_BLOCK_RECURSE flag after recursing in bdrv_co_block_status
-f413f9fcc9 d9945ccda0 Akihiko Odaki:
- coroutine-ucontext: Save fake stack for pooled coroutine
-005d7236db c1ddc18f37 Richard Henderson:
- tcg/s390x: Fix encoding of VRIc, VRSa, VRSc insns
-ef74024b76 Paolo Bonzini:
- accel/tcg: Revert mapping of PCREL translation block to multiple virtual addresses
-5e4e438f9d 7ef4c41e91 Ani Sinha:
- acpi/tests/avocado/bits: wait for 200 seconds for SHUTDOWN event from bits VM
-003d0c7eb4 68c691ca99 Matthew Rosato:
- s390x/pci: drive ISM reset from subsystem reset
-c2985e38d8 30e35258e2 Matthew Rosato:
- s390x/pci: refresh fh before disabling aif
-9d6dd12b1d 07b2c8e034 Matthew Rosato:
- s390x/pci: avoid double enable/disable of aif
-164e6f7d66 c2d7de557d Mark Cave-Ayland:
- hw/scsi/esp-pci: set DMA_STAT_BCMBLT when BLAST command issued
-06a28b783b 1e8e6644e0 Mark Cave-Ayland:
- hw/scsi/esp-pci: synchronise setting of DMA_STAT_DONE with ESP completion interrupt
-d8e0533c94 6b41417d93 Mark Cave-Ayland:
- hw/scsi/esp-pci: generate PCI interrupt from separate ESP and PCI sources
-2d81285db1 84a6835e00 Mark Cave-Ayland:
- hw/scsi/esp-pci: use correct address register for PCI DMA transfers
-3f675950df 44ce1b5d2f Nick Briggs:
- migration/rdma: define htonll/ntohll only if not predefined
-1fc277a0e8 284a7ee2e2 Gerd Hoffmann:
- hw/pflash: implement update buffer for block writes
-143d230d51 5dd58358a5 Gerd Hoffmann:
- hw/pflash: use ldn_{be,le}_p and stn_{be,le}_p
-731783ff1e 3b14a555fd Gerd Hoffmann:
- hw/pflash: refactor pflash_data_write()
-a4daea6f9f 484aecf2d3 Philippe Mathieu-Daudé:
- backends/cryptodev: Do not ignore throttle/backends Errors
-c46f68bd7d 729ba8e933 Paolo Bonzini:
- target/i386: pcrel: store low bits of physical address in data[0]
-652c34cbb2 2926eab896 guoguangyao:
- target/i386: fix incorrect EIP in PC-relative translation blocks
-6e8e580e39 a58506b748 Richard Henderson:
- target/i386: Do not re-compute new pc with CF_PCREL
-72dd722370 410c2a4d75 Anastasia Belova:
- load_elf: fix iterator's type for elf file processing
-872377f264 4bda8224fa Helge Deller:
- target/hppa: Update SeaBIOS-hppa to version 15
-067aa95c47 31efbe72c6 Helge Deller:
- target/hppa: Fix IOR and ISR on error in probe
-abf489be5a 910ada0225 Helge Deller:
- target/hppa: Fix IOR and ISR on unaligned access trap
-4b3064ec90 3824e0d643 Helge Deller:
- target/hppa: Export function hppa_set_ior_and_isr()
-27cdd0ce47 5915b67013 Helge Deller:
- target/hppa: Avoid accessing %gr0 when raising exception
-0f5fb24fd7 ed35afcb33 Helge Deller:
- hw/hppa: Move software power button address back into PDC
-aeee512d17 6ce18d5306 Helge Deller:
- target/hppa: Fix PDC address translation on PA2.0 with PSW.W=0
-ad70198043 3b57c15f02 Helge Deller:
- hw/pci-host/astro: Add missing astro & elroy registers for NetBSD
-4e68f4124f d8a3220005 Helge Deller:
- hw/hppa/machine: Disable default devices with --nodefaults option
-de64580f07 92039f61af Helge Deller:
- hw/hppa/machine: Allow up to 3840 MB total memory
-35623388b0 b16a45bc5e Alex Bennée:
- readthodocs: fully specify a build environment
-32ade2abef 52a21689cd Peter Maydell:
- .gitlab-ci.d/buildtest.yml: Work around htags bug when environment is large
-08b37c90e6 e358a25a97 Ilya Leoshkevich:
- target/s390x: Fix LAE setting a wrong access register
-0b27f20d6a c98873ee4a Samuel Tardieu:
- tests/qtest/virtio-ccw: Fix device presence checking
-2dd8fdfe49 704f7cad51 Gerd Hoffmann:
- tests/acpi: disallow tests/data/acpi/virt/SSDT.memhp changes
-19144a80c9 55abfc1ffb Gerd Hoffmann:
- tests/acpi: update expected data files
-02b01b3925 5058720151 Gerd Hoffmann:
- edk2: update binaries to git snapshot
-3b1b25cdaa 6f79fa5f09 Gerd Hoffmann:
- edk2: update build config, set PcdUninstallMemAttrProtocol = TRUE.
-62aef3312e c366741258 Gerd Hoffmann:
- edk2: update to git snapshot
-4e875df3b6 ca8b0cc8e9 Gerd Hoffmann:
- tests/acpi: allow tests/data/acpi/virt/SSDT.memhp changes
-9ee4603a86 1d513e06d9 Natanael Copa:
- util: fix build with musl libc on ppc64le
-b881910859 ca5bed07d0 Richard Henderson:
- tcg/ppc: Use new registers for LQ destination
-a68fc9dbde 82a65e3188 Peter Maydell:
- hw/intc/arm_gicv3_cpuif: handle LPIs in in the list registers
-ae59465866 9353b6da43 Volker Rümelin:
- hw/vfio: fix iteration over global VFIODevice list
-5f64bed67c 213ae3ffda Cédric Le Goater:
- vfio/container: Replace basename with g_path_get_basename
-0bf355e6ca 2c5107e1b4 Max Erenberg:
- edu: fix DMA range upper bound check
-6e3cfd598c 0c7ffc9771 Bin Meng:
- hw/net: cadence_gem: Fix MDIO_OP_xxx values
-5713d6dd76 09a36158c2 Michael Tokarev:
- audio/audio.c: remove trailing newline in error_setg
-0965e5eda5 4ad87cd4b2 Michael Tokarev:
- chardev/char.c: fix "abstract device type" error message
-882950efd2 5cb0e7abe1 Xu Lu:
- target/riscv: Fix mcycle/minstret increment behavior
-7b57e6d434 25145a7d77 Pavel Pisa:
- hw/net/can/sja1000: fix bug for single acceptance filter and standard frame
-e649de10d5 2196157404 Paolo Bonzini:
- target/i386: the sgx_epc_get_section stub is reachable
-bb28ee11c2 007531586a Paolo Bonzini:
- configure: use a native non-cross compiler for linux-user
-a331dc62ad 9d5b42beb6 Elen Avan:
- include/ui/rect.h: fix qemu_rect_init() mis-assignment
-7d6a2ce8cf d424db2354 Natanael Copa:
- target/riscv/kvm: do not use non-portable strerrorname_np()
-11b0730d60 bb6e2511eb Kevin Wolf:
- iotests: Basic tests for internal snapshots
-64537ff11f 5a7f21efaf Kevin Wolf:
- vl: Improve error message for conflicting -incoming and -loadvm
-e2e01b3a77 d3007d348a Kevin Wolf:
- block: Fix crash when loading snapshot on inactive node
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEe3O61ovnosKJMUsicBtPaxppPlkFAmW4CW4ACgkQcBtPaxpp
-PlnAnAgAnbenGCN+SPT60sGGHrztS7sdCSxvF3ZFsJCKMse2jwtid+vx+b3kyhTy
-X/4MGtIL4628icE5X9yEHW1gFYt/K0BlJv71I/yUUqlXif0qtuosDzAR1KRjXQ2R
-phBFyUcIxpvEv2CZEIXjbqk/wYZxnbnLxHs+ZcI4+xHuMg6Z66+u6GS47VEkvWVb
-YyfznfUW7COte6QPJ/QswUMKYKPbFWVNIBtFChtAL32GgwlAWS2CY51fRIvpzFtD
-hoM7SjpSXsIzVbItiCRJ3nobGCB2XMfYqFMiL7/LbBUYph5j3F6MABzHOfGzTt66
-4PX83ZmILAia53gMvl/N1PpLQsAmvA==
-=kPM7
------END PGP SIGNATURE-----
 
