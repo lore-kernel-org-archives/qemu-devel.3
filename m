@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D53FC47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC9CC47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUTPD-00073W-Iq; Mon, 29 Jan 2024 10:18:39 -0500
+	id 1rUTPj-0007dU-Or; Mon, 29 Jan 2024 10:19:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTPA-0006yS-Bt
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:18:36 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTPf-0007YX-8r
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:19:07 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTP8-0007Pa-BT
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:18:36 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5100cb238bcso5004022e87.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 07:18:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTPd-0007T4-Fh
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:19:07 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-33926ccbc80so1804999f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 07:19:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706541512; x=1707146312; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oz+zTTfGm1MKa4a97HFk11IR2+Bank2vY+LpKIqyLck=;
- b=pfqxMy28pDWE244/PIe9tpSb1jXdcq6Y0PkLBLQKe2VRKLac706aog4AWxt5L4vgW5
- 7agX3055VPSRQHentic8SS8iJa/9WY4arv93MU+Z5YcTAYoVNvROVw63MDMNxZXxUi+t
- 5LZze8NEEsdBMZ32DEmD7FS7eM/1c3//BZn5nH6VjeZmRWwlIkmgZuj2PIMVbk9+XRHy
- E4CZLqahWCl4sMtR6RLUmNic94nTsHdMLo7dLG0xkqZhOPJWp4w4i2Tzar2qZFeFDHll
- 37Dci8FUhJPanD5uRYZy6DYFkE8PPPxxY4NvfkpaY8xBdi0Uahy9QtoxxrEZTuSF6iX+
- tuBA==
+ d=linaro.org; s=google; t=1706541543; x=1707146343; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qv6tmFjUz5yI+ezdbTnOo4SrqA0F8CpD3AVMoPUpbVM=;
+ b=AKdcK66moimxa0Nec18f+dSiuB/7oZ7PcWFBK7fF1/d9gZtmbw4wWVqQopNASGe+Rd
+ fqtQn893YFb7bKlIKkqZgK/X42p8BYP9LW27dI4btauKk75xb8EtDja6P1TfQ4X0lMrX
+ +sTfx244hMciaqFxSW8ZBFpe6OE5hEUDur/X2Wz3oFLZQpryswYtd6CwSX/eODejsibu
+ lcH1alMFEvZp49yzoM6E5A8yjR+OCJvXogo7qD47Zg+9ykrhXNvYtCPfFkbx8SNbOV3x
+ QWT8kbIpchhjkiHqeLykE/O+bpxP7T2Ob06qDgopZMKY8Une/G/nz3cFGswnkctnUggT
+ wD1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706541512; x=1707146312;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oz+zTTfGm1MKa4a97HFk11IR2+Bank2vY+LpKIqyLck=;
- b=s5aVPe0G37jFHgF+DJ7dVOtIS+j2GNIJUb9GH/OFUF+9vF2hJLIlHWD2ZPvqvIE2st
- rx9zpemTLO9Uguw/Vx/ZwaObDX5DP8wQLEcaIQxM4RlRFztIKKc/C+dIHcfcY3af0IU6
- dMjf6jVpWkWJkhxUlQ5fLdQKMjLQuwxKW4ganGZaK4xPxW8oLCfZr4xJ/dcqBwIofQxb
- vopuqplgr/MxxwnXxvP223yxjPQiAsmuM+WJb5nRXvUSITzPIWW6O2Xx3CMxssrIBNY3
- QXVkYnnp7bytwEQmFa5Tc5GwVzleNHp3i+xte1gLzUacnocb5soXulH4M7LArSg7yFtk
- +vRA==
-X-Gm-Message-State: AOJu0YwChFePnC5BGhmYLx1aO3cgi1iFcShCbDReUfv+k2KJ5w8sWayk
- mkfWHPZneUcn8EBW1HdqkYKqxei9UlPcQhMwZAbaIt1Q1351tvfB3g9Py3zGGLWsMBFjeEV5bkF
- K
-X-Google-Smtp-Source: AGHT+IE0eIR3XDm29LRt/ScifzFOIdBA1dWVj2tZnTVrHxrcd1Y0dbC3sWfeg3UxMpAhvtTuzYjH1A==
-X-Received: by 2002:a05:6512:10c2:b0:510:1487:bcb with SMTP id
- k2-20020a05651210c200b0051014870bcbmr4624283lfg.64.1706541512038; 
- Mon, 29 Jan 2024 07:18:32 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706541543; x=1707146343;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qv6tmFjUz5yI+ezdbTnOo4SrqA0F8CpD3AVMoPUpbVM=;
+ b=K3fmuw6dAAvgiHM1mmp1kJkoJgRGo5JXq9NvFY1KZFzVGDuyQTpva7MY+xbuhI495Q
+ 6VuSQDMBub+1ppIwxcvUuyQ41jwsfxWHrhzDOfISghcyWT5/yPU3tehN/SnEZaSa8MLJ
+ PG/FQ7GppUkPKcSLtxYIB8mTpdg6o5QD4N9muqrjL4kzCeZrMy8J2BKHwpBVLmzongIj
+ AMvu/C/ByXoFXwnucEYvktIlY4TOiaoaMUFCW8p9+5ViY+DbvEGLsLTuZSgmmct7FKsk
+ lMkafx04y052+f6OeOKg++wVjbBOjM3+e0qZjqKNUUEu0pqL9zyg+lWj53ENjXAa8gRy
+ I6GQ==
+X-Gm-Message-State: AOJu0YywS94Zw7lmMwddB03Jiviw1tWqG/+Wu2LWyVG3FF1ruhEFKGxj
+ fprzyHRd0QjPqtvwGvd31sPl/ITIEDE2xT2Qm8uflAzonwCzaPxpJiZlavCEXvdnL91ccUCiuDM
+ A
+X-Google-Smtp-Source: AGHT+IHiDZpeQNPziYqNwMV9zzVoZ0IsryPvguDHX5fqz6IcziphZDLrVSgpLVWKctRvo+Q7Gb2PFw==
+X-Received: by 2002:a5d:64ed:0:b0:33a:e39a:1590 with SMTP id
+ g13-20020a5d64ed000000b0033ae39a1590mr5380182wri.53.1706541543479; 
+ Mon, 29 Jan 2024 07:19:03 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- v3-20020a05600c444300b0040ebfbff33csm14445952wmn.36.2024.01.29.07.18.30
+ bo18-20020a056000069200b0033af3aec393sm1623351wrb.38.2024.01.29.07.19.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 07:18:31 -0800 (PST)
+ Mon, 29 Jan 2024 07:19:02 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
@@ -64,16 +65,20 @@ Cc: qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
  Igor Mitsyanko <i.mitsyanko@gmail.com>, Hao Wu <wuhaotsh@google.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, Rob Herring <robh@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 0/9] hw/arm: Check for CPU types in machine_run_board_init()
-Date: Mon, 29 Jan 2024 16:18:19 +0100
-Message-ID: <20240129151828.59544-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v3 5/9] hw/arm/msf2: Simplify setting
+ MachineClass::valid_cpu_types[]
+Date: Mon, 29 Jan 2024 16:18:24 +0100
+Message-ID: <20240129151828.59544-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240129151828.59544-1-philmd@linaro.org>
+References: <20240129151828.59544-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,46 +101,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Series fully reviewed.
+The M2Sxxx SoC family can only be used with Cortex-M3.
+Propagating the CPU type from the board level is pointless.
 
-Since v2:
-- Rebased
-- Remove default_cpu_type (Richard)
-- Added R-b tags
+Hard-code the CPU type at the SoC level.
+Remove the now ignored MachineClass::default_cpu_type field.
 
-Since v1:
-- Add missing QOM parent for CPU cores
-- Dropped Aspeed changes (Cédric)
+Use the common code introduced in commit c9cf636d48 ("machine: Add
+a valid_cpu_types property") to check for valid CPU type at the
+board level.
 
-Following Gavin recent CPU type enforcement cleanups,
-restrict more single-CPU ARM machines.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/arm/msf2-soc.h | 3 ---
+ hw/arm/msf2-soc.c         | 3 +--
+ hw/arm/msf2-som.c         | 4 ----
+ 3 files changed, 1 insertion(+), 9 deletions(-)
 
-Supersedes: <20240123222508.13826-1-philmd@linaro.org>
-
-Philippe Mathieu-Daudé (9):
-  hw/arm/exynos: Add missing QOM parent for CPU cores
-  hw/arm/exynos: Check for CPU types in machine_run_board_init()
-  hw/arm/highbank: Add missing QOM parent for CPU cores
-  hw/arm/highbank: Check for CPU types in machine_run_board_init()
-  hw/arm/msf2: Simplify setting MachineClass::valid_cpu_types[]
-  hw/arm/musca: Simplify setting MachineClass::valid_cpu_types[]
-  hw/arm/npcm7xx_boards: Simplify setting
-    MachineClass::valid_cpu_types[]
-  hw/arm/vexpress: Check for CPU types in machine_run_board_init()
-  hw/arm/zynq: Check for CPU types in machine_run_board_init()
-
- include/hw/arm/msf2-soc.h |  3 ---
- hw/arm/exynos4210.c       |  1 +
- hw/arm/exynos4_boards.c   |  8 ++++++++
- hw/arm/highbank.c         | 11 +++++++++++
- hw/arm/msf2-soc.c         |  3 +--
- hw/arm/msf2-som.c         |  4 ----
- hw/arm/musca.c            |  1 -
- hw/arm/npcm7xx_boards.c   |  1 -
- hw/arm/vexpress.c         | 12 ++++++++++--
- hw/arm/xilinx_zynq.c      |  6 +++++-
- 10 files changed, 36 insertions(+), 14 deletions(-)
-
+diff --git a/include/hw/arm/msf2-soc.h b/include/hw/arm/msf2-soc.h
+index ce417a6266..9300664e8e 100644
+--- a/include/hw/arm/msf2-soc.h
++++ b/include/hw/arm/msf2-soc.h
+@@ -47,13 +47,10 @@ OBJECT_DECLARE_SIMPLE_TYPE(MSF2State, MSF2_SOC)
+ #define MSF2_NUM_TIMERS       2
+ 
+ struct MSF2State {
+-    /*< private >*/
+     SysBusDevice parent_obj;
+-    /*< public >*/
+ 
+     ARMv7MState armv7m;
+ 
+-    char *cpu_type;
+     char *part_name;
+     uint64_t envm_size;
+     uint64_t esram_size;
+diff --git a/hw/arm/msf2-soc.c b/hw/arm/msf2-soc.c
+index b5fe9f364d..d6eb9ec9ac 100644
+--- a/hw/arm/msf2-soc.c
++++ b/hw/arm/msf2-soc.c
+@@ -134,7 +134,7 @@ static void m2sxxx_soc_realize(DeviceState *dev_soc, Error **errp)
+ 
+     armv7m = DEVICE(&s->armv7m);
+     qdev_prop_set_uint32(armv7m, "num-irq", 81);
+-    qdev_prop_set_string(armv7m, "cpu-type", s->cpu_type);
++    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m3"));
+     qdev_prop_set_bit(armv7m, "enable-bitband", true);
+     qdev_connect_clock_in(armv7m, "cpuclk", s->m3clk);
+     qdev_connect_clock_in(armv7m, "refclk", s->refclk);
+@@ -231,7 +231,6 @@ static Property m2sxxx_soc_properties[] = {
+      * part name specifies the type of SmartFusion2 device variant(this
+      * property is for information purpose only.
+      */
+-    DEFINE_PROP_STRING("cpu-type", MSF2State, cpu_type),
+     DEFINE_PROP_STRING("part-name", MSF2State, part_name),
+     DEFINE_PROP_UINT64("eNVM-size", MSF2State, envm_size, MSF2_ENVM_MAX_SIZE),
+     DEFINE_PROP_UINT64("eSRAM-size", MSF2State, esram_size,
+diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
+index a269cf044b..5c415abe85 100644
+--- a/hw/arm/msf2-som.c
++++ b/hw/arm/msf2-som.c
+@@ -47,7 +47,6 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
+     DeviceState *dev;
+     DeviceState *spi_flash;
+     MSF2State *soc;
+-    MachineClass *mc = MACHINE_GET_CLASS(machine);
+     DriveInfo *dinfo = drive_get(IF_MTD, 0, 0);
+     qemu_irq cs_line;
+     BusState *spi_bus;
+@@ -62,8 +61,6 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
+     dev = qdev_new(TYPE_MSF2_SOC);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+     qdev_prop_set_string(dev, "part-name", "M2S010");
+-    qdev_prop_set_string(dev, "cpu-type", mc->default_cpu_type);
+-
+     qdev_prop_set_uint64(dev, "eNVM-size", M2S010_ENVM_SIZE);
+     qdev_prop_set_uint64(dev, "eSRAM-size", M2S010_ESRAM_SIZE);
+ 
+@@ -108,7 +105,6 @@ static void emcraft_sf2_machine_init(MachineClass *mc)
+ 
+     mc->desc = "SmartFusion2 SOM kit from Emcraft (M2S010)";
+     mc->init = emcraft_sf2_s2s010_init;
+-    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-m3");
+     mc->valid_cpu_types = valid_cpu_types;
+ }
+ 
 -- 
 2.41.0
 
