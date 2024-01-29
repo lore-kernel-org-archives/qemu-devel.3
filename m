@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FBAEC47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECFAC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUSry-0008Cq-Tf; Mon, 29 Jan 2024 09:44:19 -0500
+	id 1rUSt4-0000gi-Fj; Mon, 29 Jan 2024 09:45:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUSrw-0008CM-4N
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:44:16 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUSt1-0000Z0-Kl
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:45:23 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUSru-00005D-40
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:44:15 -0500
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUSt0-0000Qz-0F
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:45:23 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40TEcU1K012493; Mon, 29 Jan 2024 14:44:12 GMT
+ 40TEWQ7l030364; Mon, 29 Jan 2024 14:45:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to :
+ h=date : from : to : cc :
  subject : message-id : references : mime-version : content-type :
- in-reply-to; s=pp1; bh=XKx8Liwe0+ORdCSWPexhJ5DRRoj7+aPdcf+SG4BzbCY=;
- b=cQQWpj5CnPrvZD/AMSG0yrQ24Q9sg6cK1qRru/xmWbE86SyvEYGP0SoA1aaHRRcGiw5c
- S9IrCQ526dSrScKUY/8UkmWiMB6tsMoyjwe1sJVfe7HYATljBitB3cvt9JTCq9WIhCWH
- OjQ+spOeNqkC/HZQvmpkscyqowHyc3+DcKhJVVFAhojT0DboCzXNkrHQ694D7ovpNVz6
- INX2l6fckkY+Ew2r/y75E7TNl6NBI1LG7ujQptcGyB4ZtupBrAKMl7GDj5/tTIAWgjRP
- FjIplh9o/zMXyR8iZ80G0/4fENeK+etFWBeJukwbWw5gLu8esohpf3Keb1hJnRAVwWeE yQ== 
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxdy304c8-1
+ content-transfer-encoding : in-reply-to; s=pp1;
+ bh=O/vNnniXFsbI7val+KvE2PNmzhyZOtxm8BqlMJRvS60=;
+ b=YnBdAWH/IxhAmDMyxyI7vNkEypYKqjcJZoyDVDbx8K65iYLy5vJH1nOSFJHF9ejNrpG2
+ LY0AHPiYnV2rXn7m1NiBKx78sD4M2wEEJsA77nb45sCIeJ9BYkncY9wVIGpcpy3DCW1J
+ 9Ica7stzKgS3t+gi/R5lV1LvUkCQxyJoDVMaDv3rfzTkjmKrp7/+p2unM4G+IKw27trj
+ eCs/WRh8I8AcwJCpfX12VQ5ZGHzEMBRr/x58ikUnVw5zVvTstBGbaEQNJZGHOS55R+kn
+ bgToq6XCag+TsYuOi8+uYJMOIOR8JL0bW9a5o5YEPsqvZGBXHUVgB0Xex8GvQH3YK9kX uw== 
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxdv7gcrw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jan 2024 14:44:11 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40TDPrFm007179; Mon, 29 Jan 2024 14:44:11 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwev20aj0-1
+ Mon, 29 Jan 2024 14:45:19 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40TDkZmd017793; Mon, 29 Jan 2024 14:45:17 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwchygy69-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jan 2024 14:44:10 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40TEi9RD17236522
+ Mon, 29 Jan 2024 14:45:17 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40TEjFjJ18678436
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jan 2024 14:44:09 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3B05A20043;
- Mon, 29 Jan 2024 14:44:09 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADD5A20040;
- Mon, 29 Jan 2024 14:44:08 +0000 (GMT)
+ Mon, 29 Jan 2024 14:45:16 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DF6A920049;
+ Mon, 29 Jan 2024 14:45:15 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4E03020040;
+ Mon, 29 Jan 2024 14:45:15 +0000 (GMT)
 Received: from heavy (unknown [9.155.200.166])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Jan 2024 14:44:08 +0000 (GMT)
-Date: Mon, 29 Jan 2024 15:44:07 +0100
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 29 Jan 2024 14:45:15 +0000 (GMT)
+Date: Mon, 29 Jan 2024 15:45:13 +0100
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 15/33] linux-user: Remove qemu_host_page_size from main
-Message-ID: <knkjwavknsn6xz7u6nxcmzrzm2i22n46kbzxmhswqmo5dwj4qk@3jfifd6lupoz>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 16/33] linux-user: Split out target_mmap__locked
+Message-ID: <e7rekiw6yhxogpd6hgtytprzmd5i3frgxlkfvs4u6fn3xkm52x@mbvfvynde3xx>
 References: <20240102015808.132373-1-richard.henderson@linaro.org>
- <20240102015808.132373-16-richard.henderson@linaro.org>
+ <20240102015808.132373-17-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240102015808.132373-16-richard.henderson@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240102015808.132373-17-richard.henderson@linaro.org>
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 4weYGu-DIWHkD_kEKaH5QP2x4ZW4PchO
-X-Proofpoint-GUID: 4weYGu-DIWHkD_kEKaH5QP2x4ZW4PchO
+X-Proofpoint-GUID: mmJNgcHDirlSY-Z-Txmx4XVFp281ptcw
+X-Proofpoint-ORIG-GUID: mmJNgcHDirlSY-Z-Txmx4XVFp281ptcw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-29_07,2024-01-29_01,2023-05-22_02
+ definitions=2024-01-29_09,2024-01-29_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0 suspectscore=0
- clxscore=1015 mlxlogscore=911 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311290000 definitions=main-2401290107
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ mlxscore=0 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 mlxlogscore=553 suspectscore=0
+ clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2401290108
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -104,37 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 02, 2024 at 12:57:50PM +1100, Richard Henderson wrote:
-> Use qemu_real_host_page_size() instead.
+On Tue, Jan 02, 2024 at 12:57:51PM +1100, Richard Henderson wrote:
+> All "goto fail" may be transformed to "return -1".
 > 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  linux-user/main.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index 0cdaf30d34..5f217cc2a8 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-
-[...]
-
-> @@ -806,8 +806,10 @@ int main(int argc, char **argv, char **envp)
->       */
->      max_reserved_va = MAX_RESERVED_VA(cpu);
->      if (reserved_va != 0) {
-> -        if ((reserved_va + 1) % qemu_host_page_size) {
-> -            char *s = size_to_str(qemu_host_page_size);
-> +        int host_page_size = qemu_real_host_page_size();
-> +
-> +        if ((reserved_va + 1) % host_page_size) {
-> +            char *s = size_to_str(host_page_size);
-
-Does it make sense to allow values not divisible by TARGET_PAGE_SIZE
-here? It's probably not a big deal, since in the worst case we'll
-only waste a few bytes, so:
+>  linux-user/mmap.c | 62 ++++++++++++++++++++++++++---------------------
+>  1 file changed, 35 insertions(+), 27 deletions(-)
 
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-
-[...]
 
