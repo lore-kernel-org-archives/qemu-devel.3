@@ -4,87 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F78C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08642C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUXGT-0002rd-Gi; Mon, 29 Jan 2024 14:25:53 -0500
+	id 1rUXJ4-0003hJ-57; Mon, 29 Jan 2024 14:28:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUXGR-0002qy-BL
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:25:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rUXIy-0003gb-6u
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:28:28 -0500
+Received: from todd.t-8ch.de ([2a01:4f8:c010:41de::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUXGL-0003BL-IM
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:25:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706556343;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1a5lq3tGezRxBJk/+LVp2UFAB6jyIEd+6CeAHZ7V4hk=;
- b=c2b3FxTKMt7u0Os7rzLcTV4NGH+kZAITAph/3qkWQo9m5u/5ezHzS+mv89Gr7McbIgZjr7
- se3XIa6js9S20/HmXff62YoTX1FQWL9u6X9MKEwdcwcelFJiQTXCKhYgDMk/aMVzqOi1Xp
- 0EJB5qndze1QIm4BltTxDlbBNDdcM4I=
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
- [209.85.217.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-512-9MmrefunNZWNMbDCYgjBpg-1; Mon, 29 Jan 2024 14:25:42 -0500
-X-MC-Unique: 9MmrefunNZWNMbDCYgjBpg-1
-Received: by mail-vs1-f70.google.com with SMTP id
- ada2fe7eead31-46b4fe9f352so206072137.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 11:25:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706556341; x=1707161141;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1a5lq3tGezRxBJk/+LVp2UFAB6jyIEd+6CeAHZ7V4hk=;
- b=E6ecJm0+sZGzCthuTc7JYq0Zjp6UfACDRfTLYRbapmiudtco5oxSOn4cVCduxCLtLC
- Mt9vxqVCQjkU64ToIHTJMhUIwGAwLqhGMIPvLDLqVcS5Cf/d0ivYtweKEZ/s+gIxu0bI
- 3+lHM5WH/XUJHOZEy4FTCZpNfqe2/9qAAcqbwBBQLSeWvEJZ7kAmuWEgJAvvNprac9ET
- gHU10qXgbzwSON0eZZPvQmBMyFBrv9hoeytSy9oMxKV1SQ7ioATS7JNaFMdi2aOG4QwY
- BUFXCxtVAdRCpUhB4yOKFdpjoOog7zlUTm3jxhIqEoaLTlBh83fAITrokLrz+b7VmsCn
- kV4w==
-X-Gm-Message-State: AOJu0Yx7w9hccu55sOjqP5dMga4WtPu+CFgbqP7/bUF8j/nkDva/MmVD
- DhyRT10eIs1nFsuPUhBJu27UNJPGffTEDlHtLAjuIkuSYZhOcidVr3CWjGTMTH0ye9P9MTe21kB
- SLWr6RulZyiEyywRQLuP/e3k9sTg36N6t5bWie4IJgwFj+LOCF93iuRue7w+V7Uyj2WlVqpkbP2
- fwRNUG9n477p0xI66lqzKASTedvnA=
-X-Received: by 2002:a05:6102:d8f:b0:46b:5e9d:9a9f with SMTP id
- d15-20020a0561020d8f00b0046b5e9d9a9fmr1764887vst.10.1706556341520; 
- Mon, 29 Jan 2024 11:25:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFvPdGGuT874QLT7+ArfLxsB3CXun/zgAKBd7efUmi4Sz4+zcEw95/qD9gvuUgnn6D6JO/WIHFaJzLNdn+Fp2U=
-X-Received: by 2002:a05:6102:d8f:b0:46b:5e9d:9a9f with SMTP id
- d15-20020a0561020d8f00b0046b5e9d9a9fmr1764876vst.10.1706556341269; Mon, 29
- Jan 2024 11:25:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rUXIv-0003Ol-Ul
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:28:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
+ t=1706556501; bh=74QhrVR/63+4QItElafq1F3na7ckc/nS7arttH/g2h8=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=itwmbLeGnEl5aWJTUb7h459e8cUzqRDzPugVWwoNWBMNMYHsEWJiJiq8bnQG5QhcK
+ jv76xMPh/Rm+YBEZiZwwsqzW9/Vpr5RI6Qh4P3Wddn2FzRbh7V+EeQjGgtCmgCF9oa
+ bmG64Pd1URYSVXlX+xRhRLKqEB/hot8U9lt2pMg8=
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+Date: Mon, 29 Jan 2024 20:28:11 +0100
+Subject: [PATCH v5 3/6] tests/qtest/pvpanic: use centralized definition of
+ supported events
 MIME-Version: 1.0
-References: <20240125072214.318382-1-aharivel@redhat.com>
- <20240125072214.318382-2-aharivel@redhat.com>
- <ZbKOZpi0v3sdKV8q@redhat.com>
-In-Reply-To: <ZbKOZpi0v3sdKV8q@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 29 Jan 2024 20:25:29 +0100
-Message-ID: <CABgObfYbGHS_2drz31kGd_KbQKNwaFVSL4TxoE=AJj-W6jqAAg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] qio: add support for SO_PEERCRED for socket channel
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Anthony Harivel <aharivel@redhat.com>, mtosatti@redhat.com,
- qemu-devel@nongnu.org, vchundur@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240129-pvpanic-shutdown-v5-3-f5a060b87c74@t-8ch.de>
+References: <20240129-pvpanic-shutdown-v5-0-f5a060b87c74@t-8ch.de>
+In-Reply-To: <20240129-pvpanic-shutdown-v5-0-f5a060b87c74@t-8ch.de>
+To: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706556500; l=2303;
+ i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
+ bh=74QhrVR/63+4QItElafq1F3na7ckc/nS7arttH/g2h8=;
+ b=RtsUIaM+FWOnK8O5KZbeeNLbXlbqG27bvxzdVHuL4FwtJOQwLiNXzUY7zVmDxyFdV6PtULuXI
+ q8UH7mOSkguDWM5v3F91Ng8sYkmRpbHHfH41EUa1yuY5EBB5dNik/mi
+X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
+ pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
+Received-SPF: pass client-ip=2a01:4f8:c010:41de::1;
+ envelope-from=thomas@t-8ch.de; helo=todd.t-8ch.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,37 +71,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 25, 2024 at 5:38=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
-> > +static void
-> > +qio_channel_socket_get_peerpid(QIOChannel *ioc,
-> > +                               unsigned int *pid,
-> > +                               Error **errp)
-> > +{
-> > +#ifdef CONFIG_LINUX
-> > +    QIOChannelSocket *sioc =3D QIO_CHANNEL_SOCKET(ioc);
-> > +    Error *err =3D NULL;
-> > +    socklen_t len =3D sizeof(struct ucred);
-> > +
-> > +    struct ucred cred;
-> > +    if (getsockopt(sioc->fd,
-> > +               SOL_SOCKET, SO_PEERCRED,
-> > +               &cred, &len) =3D=3D -1) {
-> > +        error_setg_errno(&err, errno, "Unable to get peer credentials"=
-);
-> > +        error_propagate(errp, err);
-> > +    }
-> > +    *pid =3D (unsigned int)cred.pid;
-> > +#else
-> > +    *pid =3D 0;
->
-> Defaulting 'pid' to 0 is potentially unsafe, because to a caller it
-> now appears that the remote party is 'root' and thus implied to be
-> a privileged account.
+Avoid the necessity to update all tests when new events are added
+to the device.
 
-This is a pid, so 0 cannot be confused; however, I agree that
-returning an error is better.
+Acked-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+---
+ tests/qtest/pvpanic-pci-test.c | 5 +++--
+ tests/qtest/pvpanic-test.c     | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-Paolo
+diff --git a/tests/qtest/pvpanic-pci-test.c b/tests/qtest/pvpanic-pci-test.c
+index 2c05b376ba72..b372caf41dc0 100644
+--- a/tests/qtest/pvpanic-pci-test.c
++++ b/tests/qtest/pvpanic-pci-test.c
+@@ -16,6 +16,7 @@
+ #include "qapi/qmp/qdict.h"
+ #include "libqos/pci.h"
+ #include "libqos/pci-pc.h"
++#include "hw/misc/pvpanic.h"
+ #include "hw/pci/pci_regs.h"
+ 
+ static void test_panic_nopause(void)
+@@ -34,7 +35,7 @@ static void test_panic_nopause(void)
+     bar = qpci_iomap(dev, 0, NULL);
+ 
+     qpci_memread(dev, bar, 0, &val, sizeof(val));
+-    g_assert_cmpuint(val, ==, 3);
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
+ 
+     val = 1;
+     qpci_memwrite(dev, bar, 0, &val, sizeof(val));
+@@ -67,7 +68,7 @@ static void test_panic(void)
+     bar = qpci_iomap(dev, 0, NULL);
+ 
+     qpci_memread(dev, bar, 0, &val, sizeof(val));
+-    g_assert_cmpuint(val, ==, 3);
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
+ 
+     val = 1;
+     qpci_memwrite(dev, bar, 0, &val, sizeof(val));
+diff --git a/tests/qtest/pvpanic-test.c b/tests/qtest/pvpanic-test.c
+index 78f1cf8186b0..ccc603472f5d 100644
+--- a/tests/qtest/pvpanic-test.c
++++ b/tests/qtest/pvpanic-test.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "libqtest.h"
+ #include "qapi/qmp/qdict.h"
++#include "hw/misc/pvpanic.h"
+ 
+ static void test_panic_nopause(void)
+ {
+@@ -20,7 +21,7 @@ static void test_panic_nopause(void)
+     qts = qtest_init("-device pvpanic -action panic=none");
+ 
+     val = qtest_inb(qts, 0x505);
+-    g_assert_cmpuint(val, ==, 3);
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
+ 
+     qtest_outb(qts, 0x505, 0x1);
+ 
+@@ -43,7 +44,7 @@ static void test_panic(void)
+     qts = qtest_init("-device pvpanic -action panic=pause");
+ 
+     val = qtest_inb(qts, 0x505);
+-    g_assert_cmpuint(val, ==, 3);
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
+ 
+     qtest_outb(qts, 0x505, 0x1);
+ 
+
+-- 
+2.43.0
 
 
