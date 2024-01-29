@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE3E6C48285
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:56:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E016DC47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUnT-0001Qw-0U; Mon, 29 Jan 2024 11:47:47 -0500
+	id 1rUUoT-0006Xe-7K; Mon, 29 Jan 2024 11:48:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUls-00069O-8G
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:09 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUnQ-00019h-0q
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:44 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUlp-0003kX-CT
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:07 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-40e7065b692so34905495e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUnN-0004NV-M2
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:43 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-40ef6f10b56so8563665e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:47:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706546764; x=1707151564; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706546860; x=1707151660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LGNKA1+F8sOT+wzzeFuDW0MVJl/ad3LJJb3kfzi1Tuw=;
- b=C9yIKRPdxAyM+3tu3pip8Fx4SlVfzY34ZnLVNLZcpxVM+pXKDQGAi1wpBjSJ0oRhFE
- a6VKTGEYUHdbHccgfjKgqxuY4k7BVy1cwDpwnp9NHkOYQP81vdx9ueAtpq3iZxbSlQYr
- cgnR8q5C1xNzmkHqKxdJ8euVYymr2YW9/4pvqM+CJV89MRxIKpQOaSs79Osf/xbWnIZM
- bTkH/UlmHqCdLn2Tuq6wSbrEJf9put2IhGfP9ttkHBy41DNMaCk0g9HirlfvIH5WBG4+
- tZGmiGLtBfqAkaB3a7Lm1u/xVKnOG6QK4To9720PY4sAAKA4fp7OFQDZXCXOeNJUO6kt
- x9cw==
+ bh=hwuuHYCScnVvYP7kr484+mrpPVY1E/98uP6CY+N7AAI=;
+ b=RFKg3vCoowrAkLTqnIIURrSNTlEJlBXG3vjNksP7QymPt35OO3QJo2y1p51b0RVrRy
+ Y40fLgxd36wiD2lyFhcC9Q85rlHi303u3Gb/ZWEnwoB4Y1+4XTz5SEns+4wKlLKYLBka
+ iArpWMGOgRmiQoqTh42tmoumr7JRTp0NIsDaaOYLZ8btVNJJGWLCzzIuv79jS1hfiZG1
+ zm0HVCivE9gGaEKnRU0uxxLgLhiBobMmaKtCwQ0LlbYBkbJdSIMQnR0P1ROs0bwdN0yU
+ t8u14cGanoeIOLrfN7MdA8does6j5FSL3WEXmULzUgR4lXet0laqbvpbIug2Ta/3HBOP
+ mhGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706546764; x=1707151564;
+ d=1e100.net; s=20230601; t=1706546860; x=1707151660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LGNKA1+F8sOT+wzzeFuDW0MVJl/ad3LJJb3kfzi1Tuw=;
- b=IwaIbg0MfPaHXoqQCe5JoTUvjUujfWUqlsEIAMlhQA4yEB+b8tFdam7FyD8lvf0oEY
- KKjzdksgDGMQRNJhCo1BzxjeEfTm8r4Eokitzkvf8ge7Nouicq0LJxIe6jjeqYcfyqek
- HlSIkcJg/IYKmxFC2aEn7dLZv9STDEmusCIcc0T0QmbS38JjhiSMohPCMKdADk7IVtgi
- vfIid5uyUv2C4ECax/IUddQc95aeDxZMz+Tg5M/hpHABBZcvc/jWBCLVke09ILJbzsU/
- KeR0wQwvyUqFFQAE32aBiFkkimX8vrOQQ0eOL/do05CExbQUd7c6wAy1028q21LrhaQv
- gYtg==
-X-Gm-Message-State: AOJu0Yzm6jcNloOy25i9a5BRcqOUOPIXnUB01yk7z7DmpY4hJpfq9+Su
- yGbscZJvJvpImvDHjyFlgJKRw0nGurNZSIjq6pJWI6memASqMgSPmhlMIiD6tXPA3XeiLTAzNWe
- g
-X-Google-Smtp-Source: AGHT+IEXV3Ki5IWCz4nhNivs20Xtm4D5RCIZtFll/A9SeJ2KRGM2dIq81Jsin9IhV9P3C8GFjfF1yg==
-X-Received: by 2002:a5d:5f96:0:b0:33a:e724:63fb with SMTP id
- dr22-20020a5d5f96000000b0033ae72463fbmr3905171wrb.20.1706546763809; 
- Mon, 29 Jan 2024 08:46:03 -0800 (PST)
+ bh=hwuuHYCScnVvYP7kr484+mrpPVY1E/98uP6CY+N7AAI=;
+ b=kpgvnyNsLrJfO64arIH5J4VAYgJDM0U2pPUThAcWhk0hL/onLw39qw8q6JXyjdd4WE
+ AubFN6YKTAJ2hCtvvAurPzd3OPlpYUZaZckLC6sCcw01rryoKF06JTx8E+4Ub2bSvRLn
+ sfFmcWm8UwjGvWsDJi/P9j6BUzdKLVM1Vrg6KfTxMjMqTV8LmGjurLPIV0cN6Bk4NyNM
+ BqcLBp5XybQZaFwVkQcCqjjVNKwiyeIrpwCR2l6ov7aTJ3+oO7JDjemDWHo2a1gh4zoh
+ zEpSfCHBy6U2g1UMil4dxc4sPWV29V8v8ObM+4ixhfE0oa4T1+aCKYFhShlvdR0VXuq4
+ DoGw==
+X-Gm-Message-State: AOJu0YwTq3KOsykhnPnDcTYtFwbwMt/ejGAhtbtsmCOVxqTXypcNlJdJ
+ Mb4aJdczMDyyjPPPsS1rnlf9tqSRL24RjEfhb0glq+FiKo8Gx0W3YVr7W+UDakvj/ObSiSQJSgy
+ s
+X-Google-Smtp-Source: AGHT+IFTnZ+wzzZWUdYzzOHHXq5N3vCTRzXyKyUR2LVbswqDwUPsHfY3FzalsZVCFAgzuwGQbmEO1g==
+X-Received: by 2002:adf:f310:0:b0:33a:eae2:11a6 with SMTP id
+ i16-20020adff310000000b0033aeae211a6mr2615980wro.37.1706546860049; 
+ Mon, 29 Jan 2024 08:47:40 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- v7-20020a5d4a47000000b0033aef37ec94sm2523940wrs.113.2024.01.29.08.46.02
+ v9-20020adff689000000b0033af5c43155sm657193wrp.56.2024.01.29.08.47.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 08:46:03 -0800 (PST)
+ Mon, 29 Jan 2024 08:47:39 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 07/29] target/alpha: Prefer fast cpu_env() over slower CPU
- QOM cast macro
-Date: Mon, 29 Jan 2024 17:44:49 +0100
-Message-ID: <20240129164514.73104-8-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH v3 23/29] target/rx: Prefer fast cpu_env() over slower CPU QOM
+ cast macro
+Date: Mon, 29 Jan 2024 17:45:05 +0100
+Message-ID: <20240129164514.73104-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,216 +102,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Mechanical patch produced running the command documented
 in scripts/coccinelle/cpu_env.cocci_template header.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/alpha/cpu.c        | 31 +++++++------------------------
- target/alpha/gdbstub.c    |  6 ++----
- target/alpha/helper.c     | 15 +++++----------
- target/alpha/mem_helper.c | 11 +++--------
- target/alpha/translate.c  |  4 ++--
- 5 files changed, 19 insertions(+), 48 deletions(-)
+ target/rx/cpu.c       | 4 ++--
+ target/rx/gdbstub.c   | 6 ++----
+ target/rx/helper.c    | 6 ++----
+ target/rx/translate.c | 3 +--
+ 4 files changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index b8ed29e343..e21a8936c7 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -130,40 +130,27 @@ static ObjectClass *alpha_cpu_class_by_name(const char *cpu_model)
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 58ca26184d..4689587fa9 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -66,9 +66,9 @@ static bool rx_cpu_has_work(CPUState *cs)
  
- static void ev4_cpu_initfn(Object *obj)
+ static void rx_cpu_reset_hold(Object *obj)
  {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->implver = IMPLVER_2106x;
-+    cpu_env(CPU(obj))->implver = IMPLVER_2106x;
- }
+-    RXCPU *cpu = RX_CPU(obj);
++    CPUState *cs = CPU(obj);
+     RXCPUClass *rcc = RX_CPU_GET_CLASS(obj);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     uint32_t *resetvec;
  
- static void ev5_cpu_initfn(Object *obj)
+     if (rcc->parent_phases.hold) {
+diff --git a/target/rx/gdbstub.c b/target/rx/gdbstub.c
+index d7e0e6689b..f222bf003b 100644
+--- a/target/rx/gdbstub.c
++++ b/target/rx/gdbstub.c
+@@ -21,8 +21,7 @@
+ 
+ int rx_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->implver = IMPLVER_21164;
-+    cpu_env(CPU(obj))->implver = IMPLVER_21164;
- }
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
  
- static void ev56_cpu_initfn(Object *obj)
+     switch (n) {
+     case 0 ... 15:
+@@ -53,8 +52,7 @@ int rx_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int rx_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->amask |= AMASK_BWX;
-+    cpu_env(CPU(obj))->amask |= AMASK_BWX;
- }
- 
- static void pca56_cpu_initfn(Object *obj)
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     uint32_t psw;
+     switch (n) {
+     case 0 ... 15:
+diff --git a/target/rx/helper.c b/target/rx/helper.c
+index dad5fb4976..80912e8dcb 100644
+--- a/target/rx/helper.c
++++ b/target/rx/helper.c
+@@ -45,8 +45,7 @@ void rx_cpu_unpack_psw(CPURXState *env, uint32_t psw, int rte)
+ #define INT_FLAGS (CPU_INTERRUPT_HARD | CPU_INTERRUPT_FIR)
+ void rx_cpu_do_interrupt(CPUState *cs)
  {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->amask |= AMASK_MVI;
-+    cpu_env(CPU(obj))->amask |= AMASK_MVI;
- }
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     int do_irq = cs->interrupt_request & INT_FLAGS;
+     uint32_t save_psw;
  
- static void ev6_cpu_initfn(Object *obj)
+@@ -122,8 +121,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
+ 
+ bool rx_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(CPU(obj));
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
+     int accept = 0;
+     /* hardware interrupt (Normal) */
+     if ((interrupt_request & CPU_INTERRUPT_HARD) &&
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 1829a0b1cd..26aaf7a6b5 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -131,8 +131,7 @@ static int bdsp_s(DisasContext *ctx, int d)
  
-     env->implver = IMPLVER_21264;
-     env->amask = AMASK_BWX | AMASK_FIX | AMASK_MVI | AMASK_TRAP;
-@@ -171,16 +158,12 @@ static void ev6_cpu_initfn(Object *obj)
- 
- static void ev67_cpu_initfn(Object *obj)
+ void rx_cpu_dump_state(CPUState *cs, FILE *f, int flags)
  {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
--
--    env->amask |= AMASK_CIX | AMASK_PREFETCH;
-+    cpu_env(CPU(obj))->amask |= AMASK_CIX | AMASK_PREFETCH;
- }
- 
- static void alpha_cpu_initfn(Object *obj)
- {
--    AlphaCPU *cpu = ALPHA_CPU(obj);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(CPU(obj));
- 
-     env->lock_addr = -1;
- #if defined(CONFIG_USER_ONLY)
-diff --git a/target/alpha/gdbstub.c b/target/alpha/gdbstub.c
-index 0f8fa150f8..13694fd321 100644
---- a/target/alpha/gdbstub.c
-+++ b/target/alpha/gdbstub.c
-@@ -23,8 +23,7 @@
- 
- int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     uint64_t val;
-     CPU_DoubleU d;
- 
-@@ -59,8 +58,7 @@ int alpha_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int alpha_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     target_ulong tmp = ldtul_p(mem_buf);
-     CPU_DoubleU d;
- 
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 970c869771..d6d4353edd 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -286,11 +286,10 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
- 
- hwaddr alpha_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
-     target_ulong phys;
-     int prot, fail;
- 
--    fail = get_physical_address(&cpu->env, addr, 0, 0, &phys, &prot);
-+    fail = get_physical_address(cpu_env(cs), addr, 0, 0, &phys, &prot);
-     return (fail >= 0 ? -1 : phys);
- }
- 
-@@ -298,8 +297,7 @@ bool alpha_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-                         MMUAccessType access_type, int mmu_idx,
-                         bool probe, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     target_ulong phys;
-     int prot, fail;
- 
-@@ -325,8 +323,7 @@ bool alpha_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
- 
- void alpha_cpu_do_interrupt(CPUState *cs)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     int i = cs->exception_index;
- 
-     if (qemu_loglevel_mask(CPU_LOG_INT)) {
-@@ -435,8 +432,7 @@ void alpha_cpu_do_interrupt(CPUState *cs)
- 
- bool alpha_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
-     int idx = -1;
- 
-     /* We never take interrupts while in PALmode.  */
-@@ -487,8 +483,7 @@ void alpha_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-         "a0",  "a1",  "a2", "a3",  "a4", "a5", "t8", "t9",
-         "t10", "t11", "ra", "t12", "at", "gp", "sp"
-     };
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
+-    RXCPU *cpu = RX_CPU(cs);
+-    CPURXState *env = &cpu->env;
++    CPURXState *env = cpu_env(cs);
      int i;
+     uint32_t psw;
  
-     qemu_fprintf(f, "PC      " TARGET_FMT_lx " PS      %02x\n",
-diff --git a/target/alpha/mem_helper.c b/target/alpha/mem_helper.c
-index a39b52c5dd..872955f5e7 100644
---- a/target/alpha/mem_helper.c
-+++ b/target/alpha/mem_helper.c
-@@ -42,18 +42,14 @@ static void do_unaligned_access(CPUAlphaState *env, vaddr addr, uintptr_t retadd
- void alpha_cpu_record_sigbus(CPUState *cs, vaddr addr,
-                              MMUAccessType access_type, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
--
--    do_unaligned_access(env, addr, retaddr);
-+    do_unaligned_access(cpu_env(cs), addr, retaddr);
- }
- #else
- void alpha_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                    MMUAccessType access_type,
-                                    int mmu_idx, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
- 
-     do_unaligned_access(env, addr, retaddr);
-     cs->exception_index = EXCP_UNALIGN;
-@@ -67,8 +63,7 @@ void alpha_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-                                      int mmu_idx, MemTxAttrs attrs,
-                                      MemTxResult response, uintptr_t retaddr)
- {
--    AlphaCPU *cpu = ALPHA_CPU(cs);
--    CPUAlphaState *env = &cpu->env;
-+    CPUAlphaState *env = cpu_env(cs);
- 
-     env->trap_arg0 = addr;
-     env->trap_arg1 = access_type == MMU_DATA_STORE ? 1 : 0;
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index 32333081d8..d1188194ba 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -2917,8 +2917,8 @@ static void alpha_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
- static void alpha_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
--    CPUAlphaState *env = cpu_env(cpu);
--    uint32_t insn = translator_ldl(env, &ctx->base, ctx->base.pc_next);
-+    uint32_t insn = translator_ldl(cpu_env(cpu), &ctx->base,
-+                                   ctx->base.pc_next);
- 
-     ctx->base.pc_next += 4;
-     ctx->base.is_jmp = translate_one(ctx, insn);
 -- 
 2.41.0
 
