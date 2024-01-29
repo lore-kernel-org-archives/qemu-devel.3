@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06865C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC80C47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUS0J-0004MA-FP; Mon, 29 Jan 2024 08:48:51 -0500
+	id 1rUSFn-00013N-Ll; Mon, 29 Jan 2024 09:04:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUS08-0004Dy-IM
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:48:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUS06-0003u0-W9
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:48:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706536118;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Y0vzfbHXilb01T3/y9Yp7fe4MdRpSzgLBkIF+oIPoKM=;
- b=TR4A/U2kHhD74ChVVO/5msKKkRMOOtrn3H/to5x2g78z5rQq0nsBH4KH4s1A58kuuU2rHP
- akPtLV3Nkue1W8rGjsaSqPA0WOdD4+xHlJttIXC5uqiA7o5c2M7Gy/eMn+HPnfyq4+2uVK
- mxFktqBblmr7vUM2rFCyqagF2eS/UHI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-597-ynEDgLeQO42jwJR0mjmylg-1; Mon, 29 Jan 2024 08:48:36 -0500
-X-MC-Unique: ynEDgLeQO42jwJR0mjmylg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a30f9374db7so440136866b.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:48:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xiaobo55x@gmail.com>)
+ id 1rUPxH-0001D0-Sd; Mon, 29 Jan 2024 06:37:35 -0500
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xiaobo55x@gmail.com>)
+ id 1rUPxF-0002dB-Dv; Mon, 29 Jan 2024 06:37:35 -0500
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-510221ab3ebso3373924e87.1; 
+ Mon, 29 Jan 2024 03:37:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706528250; x=1707133050; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HKXuOTmPQIT5ilguHC+Z35QQSxFntSutB+C3yQegR+A=;
+ b=CPZUfcOUj2t8BJqGoB/clFxOtN1YR968YHpWYxOnisIqFR3XFdcCiQta0BsRn2fCTm
+ 8nCrulPpu7tViLaiat4ltTq9TehyO/WBdFwB85RA0JgRXjoLoOGVFOmkyWDGEb0h0v9s
+ 7oU9jjM1iiavCqi53XTdO2Enms5kLIAa0sPurS/T9MruruQGhGwx9JaXi41lfymteXDG
+ I/Xyli7tRAiYhkYBsK6OUI8IvgAN+NlLsjGntGCMuQDyMUdDqC7OnyHokwZ+vosqDgFd
+ NpUJT+PAaTRo9jsemxF3Fe1GLC+o/xGulShBUDGrm8xiMaF95YVbGjZkitPzokV0Ne0q
+ aQIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706536115; x=1707140915;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y0vzfbHXilb01T3/y9Yp7fe4MdRpSzgLBkIF+oIPoKM=;
- b=Y7Tnh63PhzAMQmrhPg8Lw/kNk6RNRcYE/2eX9YP9CFf8AZImxbrS2oaXYbF1CszLgO
- 1qYGX/94sg1NmPHkcCTcE98PyLMPYAW5mXq5HVN1Npqw6kr9BVZI5k/5zucm+okmTkKe
- ff+AXuwweIWTOAhSsO7glB3TaCne7vk9mhwwaAIsp7ZTQnvfszTbN4NFhd6lKKZCLqSn
- fvgTqbWAv1zJm+PBBACW62pQukq88L48vfLMRxohw98VfAxNcn/UTCxQ57wRFwInZu/M
- OBy3muNCpiPaa+70jTMiaJl7P8vhZS6eMJXKGcHm1yRiG9gphZavIGPTJ6p7x2HCsgyj
- gQFg==
-X-Gm-Message-State: AOJu0Ywk8a2mc5hKc7y84axyejYtSAUJJjtZDL0/yM90aG89B5mqpUuA
- Lka+BJCfcH2OIW+bqADB37U+jPA/wERRI+Ghivt/OV7hf0/BrojQiyJ4xuMtkCh7dW0IU4IwR6s
- z55xeYLp/Gpco0eJ8VT9EjhDHd8vHrcEV6Oq/HPjsb8y7sHpYYTMSdtsVgobXA58gB6aXvZhVPj
- +lzZV7yFKz82I7fubm6ENTiKr9htR1vjU+enQP
-X-Received: by 2002:a17:906:f14d:b0:a2d:a38c:7b7f with SMTP id
- gw13-20020a170906f14d00b00a2da38c7b7fmr6877236ejb.19.1706536114820; 
- Mon, 29 Jan 2024 05:48:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHmEuWC73g8nX2LLBX17Zg+rr3ZdUlMmofQtCAhsxyMoYJgaim2D5spqsJtABfepMIN2Ve15g==
-X-Received: by 2002:a17:906:f14d:b0:a2d:a38c:7b7f with SMTP id
- gw13-20020a170906f14d00b00a2da38c7b7fmr6877216ejb.19.1706536114408; 
- Mon, 29 Jan 2024 05:48:34 -0800 (PST)
-Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
- by smtp.gmail.com with ESMTPSA id
- my28-20020a1709065a5c00b00a28fa7838a1sm3995566ejc.172.2024.01.29.05.48.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 05:48:33 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com
-Subject: [PATCH] configure: put all symlink creation together
-Date: Mon, 29 Jan 2024 14:48:32 +0100
-Message-ID: <20240129134832.1108726-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1706528250; x=1707133050;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HKXuOTmPQIT5ilguHC+Z35QQSxFntSutB+C3yQegR+A=;
+ b=JkMduL4yxnUoXyLop1X9wBarcPjuv9vWY0UVeZg0EjRW5ka61jiwKqmI+CYvq4v6uz
+ lJ+f7x68hDlFKTWzx+IuJQdTeGwgqHJcuR9bgWAHGGAPFT3vlNzRblZ4qjBjhl3LhUP3
+ 3Mf9ONbGtmqJroJ3uX1L4stCElLnCaaXhIs/lNnOqRDCM6stPYAfBK6d/jjVEbJqu9wD
+ A6Lp5mhCoqCh0wYn8YwLKyj5l2+CTxD0BHsOzdYGgLS08/ilCRi+Usn5AfJspT0vQAQD
+ 11jCu8gAlIs47Rso7vcSkfzTy5vwrAlHVn/anESWln0I0eTGYebNwsIEelCxWiJJVxvl
+ mpKg==
+X-Gm-Message-State: AOJu0YzsV28QL2ayDyTxHXTrSGFNUmPVYnjJSQImiiy3j/9SQhvBuSyl
+ KZC/Cj6xn56fs0fhDbS3EIAK1ocOT+S5ud1uIGI4ViebB4OPUL6kYdg9Jst3Osdlg/EDYty/JQJ
+ v1YxvKXAkaPkZU5YwO+oXTbaakKpAZkrc
+X-Google-Smtp-Source: AGHT+IFb3HKf5n14KmQqA3vzJM4csTyyNThQW7+iKaHO7tSjP4eKoI/akgyahV4DdOnOb99Gr2IQ1WQkctF3xV25MNM=
+X-Received: by 2002:ac2:42c2:0:b0:510:f47:b3f1 with SMTP id
+ n2-20020ac242c2000000b005100f47b3f1mr3034432lfl.16.1706528249457; Mon, 29 Jan
+ 2024 03:37:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240129094200.3581037-1-haibo1.xu@intel.com>
+ <20240129-57c26b01f7115ac2706d7c8d@orel>
+In-Reply-To: <20240129-57c26b01f7115ac2706d7c8d@orel>
+From: Haibo Xu <xiaobo55x@gmail.com>
+Date: Mon, 29 Jan 2024 19:37:17 +0800
+Message-ID: <CAJve8onHNCDx_QZKi=AtvpAJjnEWu+X==GrmXb30a=+e=WOLbg@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/virt-acpi-build.c: Add SRAT and SLIT ACPI tables
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: Haibo Xu <haibo1.xu@intel.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ sunilvl@ventanamicro.com, palmer@dabbelt.com, bin.meng@windriver.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=xiaobo55x@gmail.com; helo=mail-lf1-x12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 29 Jan 2024 09:04:47 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,41 +92,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: <20240129133651.1106552-1-pbonzini@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- configure | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+On Mon, Jan 29, 2024 at 5:47=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
+om> wrote:
+>
+> On Mon, Jan 29, 2024 at 05:42:00PM +0800, Haibo Xu wrote:
+> > Enable ACPI NUMA support by adding the following 2 ACPI tables:
+> > SRAT: provides the association for memory/Harts and Proximity Domains
+> > SLIT: provides the relative distance between Proximity Domains
+> >
+> > The SRAT RINTC Affinity Structure definition[1] was based on the recent=
+ly
+> > approved ACPI CodeFirst ECR[2].
+> >
+> > [1] https://github.com/riscv-non-isa/riscv-acpi/issues/25
+> > [2] https://mantis.uefi.org/mantis/view.php?id=3D2433
+> >
+> > Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
+> > ---
+> >  hw/riscv/virt-acpi-build.c | 60 ++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 60 insertions(+)
+> >
+> > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> > index 26c7e4482d..f0a6b61747 100644
+> > --- a/hw/riscv/virt-acpi-build.c
+> > +++ b/hw/riscv/virt-acpi-build.c
+> > @@ -528,11 +528,61 @@ static void build_madt(GArray *table_data,
+> >      acpi_table_end(linker, &table);
+> >  }
+> >
+> > +/*
+> > + * ACPI spec, Revision 6.5+
+> > + * 5.2.16 System Resource Affinity Table (SRAT)
+> > + * REF: https://github.com/riscv-non-isa/riscv-acpi/issues/25
+> > + *      https://drive.google.com/file/d/1YTdDx2IPm5IeZjAW932EYU-tUtgS0=
+8tX/view
+> > + */
+> > +static void
+> > +build_srat(GArray *table_data, BIOSLinker *linker, RISCVVirtState *vms=
+)
+> > +{
+> > +    int i;
+> > +    uint64_t mem_base;
+> > +    MachineClass *mc =3D MACHINE_GET_CLASS(vms);
+> > +    MachineState *ms =3D MACHINE(vms);
+> > +    const CPUArchIdList *cpu_list =3D mc->possible_cpu_arch_ids(ms);
+> > +    AcpiTable table =3D { .sig =3D "SRAT", .rev =3D 3, .oem_id =3D vms=
+->oem_id,
+> > +                        .oem_table_id =3D vms->oem_table_id };
+> > +
+> > +    acpi_table_begin(&table, table_data);
+> > +    build_append_int_noprefix(table_data, 1, 4); /* Reserved */
+> > +    build_append_int_noprefix(table_data, 0, 8); /* Reserved */
+> > +
+> > +    for (i =3D 0; i < cpu_list->len; ++i) {
+> > +        uint32_t nodeid =3D cpu_list->cpus[i].props.node_id;
+> > +        /*
+> > +         * 5.2.16.8 RINTC Affinity Structure
+> > +         */
+> > +        build_append_int_noprefix(table_data, 7, 1);      /* Type */
+> > +        build_append_int_noprefix(table_data, 20, 1);     /* Length */
+> > +        build_append_int_noprefix(table_data, 0, 2);        /* Reserve=
+d */
+> > +        build_append_int_noprefix(table_data, nodeid, 4); /* Proximity=
+ Domain */
+> > +        build_append_int_noprefix(table_data, i, 4); /* ACPI Processor=
+ UID */
+> > +        /* Flags, Table 5-70 */
+> > +        build_append_int_noprefix(table_data, 1 /* Flags: Enabled */, =
+4);
+> > +        build_append_int_noprefix(table_data, 0, 4); /* Clock Domain *=
+/
+> > +    }
+> > +
+> > +    mem_base =3D vms->memmap[VIRT_DRAM].base;
+> > +    for (i =3D 0; i < ms->numa_state->num_nodes; ++i) {
+> > +        if (ms->numa_state->nodes[i].node_mem > 0) {
+> > +            build_srat_memory(table_data, mem_base,
+> > +                              ms->numa_state->nodes[i].node_mem, i,
+> > +                              MEM_AFFINITY_ENABLED);
+> > +            mem_base +=3D ms->numa_state->nodes[i].node_mem;
+> > +        }
+> > +    }
+> > +
+> > +    acpi_table_end(linker, &table);
+> > +}
+> > +
+> >  static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables=
+)
+> >  {
+> >      GArray *table_offsets;
+> >      unsigned dsdt, xsdt;
+> >      GArray *tables_blob =3D tables->table_data;
+> > +    MachineState *ms =3D MACHINE(s);
+> >
+> >      table_offsets =3D g_array_new(false, true,
+> >                                  sizeof(uint32_t));
+> > @@ -565,6 +615,16 @@ static void virt_acpi_build(RISCVVirtState *s, Acp=
+iBuildTables *tables)
+> >                     s->oem_table_id);
+> >      }
+> >
+> > +    if (ms->numa_state->num_nodes > 0) {
+> > +        acpi_add_table(table_offsets, tables_blob);
+> > +        build_srat(tables_blob, tables->linker, s);
+> > +        if (ms->numa_state->have_numa_distance) {
+> > +            acpi_add_table(table_offsets, tables_blob);
+> > +            build_slit(tables_blob, tables->linker, ms, s->oem_id,
+> > +                       s->oem_table_id);
+> > +        }
+> > +    }
+> > +
+> >      /* XSDT is pointed to by RSDP */
+> >      xsdt =3D tables_blob->len;
+> >      build_xsdt(tables_blob, tables->linker, table_offsets, s->oem_id,
+> > --
+> > 2.34.1
+> >
+> >
+>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
-diff --git a/configure b/configure
-index 9cdb5a6818b..3cd736b139f 100755
---- a/configure
-+++ b/configure
-@@ -1538,6 +1538,11 @@ for f in $LINKS ; do
-     fi
- done
- 
-+# use included Linux headers for KVM architectures
-+if test "$host_os" = "linux" && test -n "$linux_arch"; then
-+  symlink "$source_path/linux-headers/asm-$linux_arch" linux-headers/asm
-+fi
-+
- echo "# Automatically generated by configure - do not modify" > Makefile.prereqs
- 
- # Mac OS X ships with a broken assembler
-@@ -1605,11 +1610,6 @@ echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
- echo "MESON=$meson" >> $config_host_mak
- echo "NINJA=$ninja" >> $config_host_mak
- echo "EXESUF=$EXESUF" >> $config_host_mak
--# use included Linux headers for KVM architectures
--if test "$host_os" = "linux" && test -n "$linux_arch"; then
--  symlink "$source_path/linux-headers/asm-$linux_arch" linux-headers/asm
--fi
--
- if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
- fi
--- 
-2.43.0
-
+Thanks for the review, Andrew!
 
