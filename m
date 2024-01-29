@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBFEAC47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 21:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5376C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 21:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUZWN-0003fg-OM; Mon, 29 Jan 2024 16:50:31 -0500
+	id 1rUZa4-0005GO-TA; Mon, 29 Jan 2024 16:54:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rUZWH-0003cx-Uu
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 16:50:21 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rUZWF-00037d-V1
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 16:50:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=jQgjNvRGRGDM5LkhF/S3dEUBcrd1gPoQNP8KSIgg4Qc=; b=G4DOKqYcKkV3C38k37eGcxz670
- DyZNsRjntn5P8yCPvyBRQPlP1vHna5iH8NVBLai2uHTNlydhhF53jtMLfdweqTRrkOmJ+6Rkg9Eg4
- sp1ux3teB5ewxBWC4ZmtZKisWRFBdKOTr8o7aEp3QfzOWYp8bPQvRZxj/Nfbmh0iE5khYcKtJ1rfP
- pLH8AB0Es3gOfzCfe/MVo/eaOg2yuG16qHkna4yXbxYGrvL6Ca/AomBRX+5d+VCfXVAYeQt4XaJyr
- ZkR4OP7gk6UEVmwkoKT7EoRDDf1xkGJi7Ef5Am637uxPenfkFLQQlXRtXBKkdr3ACPuuTg4pIPEPE
- bsVJ7su/ah2rvsXXRcQ8jwZPixkee3WHa9u5sPpPKllEy9SOJfEVEvSfNLyhPKEtDsVPxFP1bMEOe
- omrZ3obXq7VwrmByJdq+1aEZ6DFG58S9Lf2CUFU4iOrNeyMRZWWAnhgLRvakqfOm+pXYMf4hXDh+M
- q1Kx9tfkhCd6+j8o2EChkA9BM1j5mq1G0LrT20DyP7rKyyT8MIK/CtYnaNOpmhftOiOklVXcxz/Ud
- DZzxEV0ppKVBni8NDQW96hC2apNuW8mqRt16lwqvbg2quw/yGRsyJhHV5K9IolVRpnAdcQeCiRxKE
- reP2z7HP4PxNSIzsVFfmFB7SM92v5z9X5WxgkUmwc=;
-Received: from [2a00:23c4:8bb2:a00:c9b9:c424:5b7e:9d9f]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rUZVa-0004q3-Kx; Mon, 29 Jan 2024 21:49:42 +0000
-Message-ID: <cc4b0d24-1bc6-48ed-9e6a-dfdee7883404@ilande.co.uk>
-Date: Mon, 29 Jan 2024 21:50:12 +0000
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rUZZz-0005Fi-V4
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 16:54:11 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rUZZt-0003kA-Vy
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 16:54:10 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6ddc0c02665so1264535b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 13:53:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1706565236; x=1707170036; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vT/LCBfD/SStU7mQwAr6SlF2BMbRDBjqWwgGqBB0M+s=;
+ b=e6Q4EaeWI/+L5zTHFY2Zm83beU2PUgTKMsvg+HnpSQtz/nV5brLmXKJSrfi1PhgNIP
+ mnbhraP6jcLcuLB+uNd3+0CxkBFN4sX/ot8v2cJs6WjD4RCauPDHguL6Fpg1ietgSwJX
+ nPAsBLF2ui1IT3GMkDIZnPV9AURmQtvY9LluGvYOrBO4ycPuulXGyPL7ZIYJXzKP79Rp
+ jgS+iqU60m1SXJwz4myKTFho3Qw/Hs9VSJeVMdV1KW4xKzscDMpRjLJ9JWIY0T5I4Jyx
+ yIIE5G/oJzuknQ5yWQe0ttl/u75L5WRT7B+3gEEqEGwb/4475sC/SYazVCeoYsupQRC+
+ pLXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706565236; x=1707170036;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vT/LCBfD/SStU7mQwAr6SlF2BMbRDBjqWwgGqBB0M+s=;
+ b=TG+cxt3apB0ckJhBHmzfEqo+FrCGKApXN3v858xLv4YUsnqvIG+hKQpmjlYOqf4h4j
+ NlzQ7i1BTYer8n7qhd0UWGrnfn/w2V5kIINsXJVkwxHOkiRQH4WThmsrNN1Zl8Pb5M5w
+ BvSbTBy5dE7fKR4obPaeMIqzD9ub08UVZcKA9Ujg+NfYlMEtRtAfB++vHrTuJWbZg3GQ
+ tTewarwywGDL47E6EEHEUapMSYHci8XFF7CHyfkrBqUIGqSat/87HdaSZDLFP1HZEtee
+ 9Fnzv2N3HkRsI8CPqV7OOrG9JGeaLUVNqVkbsMBPpg7zNss5AzsGr4ufsMTvKPIs7hhJ
+ Ng8A==
+X-Gm-Message-State: AOJu0Yx86vlInherDzXQelW2EWw/a/3zm24t5goy3HuGI4Pka79QHCLf
+ LL1bBCaWY5z25B83ZGPDOe+tFZR/c7JGAYRlu7CGYA3wA0UUo0h1+9t6Kl43WlU=
+X-Google-Smtp-Source: AGHT+IG2YNCyL39+d+IUn66nQPZlLHYGsM9u3ZWAcq7d8ZeqiOwJqHW9KSw5ZwqnvLe+ERpzzA+hlg==
+X-Received: by 2002:a62:b601:0:b0:6d9:af69:b704 with SMTP id
+ j1-20020a62b601000000b006d9af69b704mr3349943pff.13.1706565236028; 
+ Mon, 29 Jan 2024 13:53:56 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ y190-20020a6364c7000000b005bd2b3a03eesm6753681pgb.6.2024.01.29.13.53.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jan 2024 13:53:55 -0800 (PST)
+Message-ID: <c1604184-d470-43ef-9530-cb8c0e5c8901@ventanamicro.com>
+Date: Mon, 29 Jan 2024 18:53:50 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 22/29] target/riscv: Prefer fast cpu_env() over slower
+ CPU QOM cast macro
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240129164514.73104-1-philmd@linaro.org>
+ <20240129164514.73104-23-philmd@linaro.org>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20231103173841.33651-1-richard.henderson@linaro.org>
- <a96a571b-55b7-46b4-a793-bb405ef10467@linaro.org>
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <a96a571b-55b7-46b4-a793-bb405ef10467@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240129164514.73104-23-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:a00:c9b9:c424:5b7e:9d9f
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 00/22] target/sparc: floating-point cleanup
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,75 +105,331 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/01/2024 06:49, Richard Henderson wrote:
+Hey Phil,
 
-> On 11/4/23 03:38, Richard Henderson wrote:
->> Major changes:
->>
->> (1) Get rid of the env->qt[01] temporaries and use TCGv_i128 for float128.
->> (2) Perform ieee exception check within the helpers, before any writeback
->>      to the floating point registers.
->> (3) Split env->fsr into pieces to simplify update, especially compares.
->>
->>
->> r~
->>
->>
->> Based-on: 20231101041132.174501-1-richard.henderson@linaro.org
->> ("[PATCH v2 00/21] target/sparc: Cleanup condition codes etc")
+This patch is giving me a conflict in target/riscv/cpu_helper.c when applying
+on top of master. Not sure if I'm missing any dependency.
+
+It's a trivial conflict though, just a FYI. As for the patch:
+
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+On 1/29/24 13:45, Philippe Mathieu-Daudé wrote:
+> Mechanical patch produced running the command documented
+> in scripts/coccinelle/cpu_env.cocci_template header.
 > 
-> Ping.
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/riscv/arch_dump.c   |  6 ++----
+>   target/riscv/cpu.c         | 17 +++++------------
+>   target/riscv/cpu_helper.c  | 17 +++++------------
+>   target/riscv/debug.c       |  9 +++------
+>   target/riscv/gdbstub.c     |  6 ++----
+>   target/riscv/kvm/kvm-cpu.c | 11 +++--------
+>   target/riscv/tcg/tcg-cpu.c | 10 +++-------
+>   target/riscv/translate.c   |  6 ++----
+>   8 files changed, 25 insertions(+), 57 deletions(-)
 > 
-> Prerequisites are upstream, and it rebases cleanly on master.
-> For reference,
-> 
->    https://gitlab.com/rth7680/qemu/-/commits/tgt-sparc-fp
->  
-> r~
-
-Oops looks like I forgot about this series. I'm not sure I have any images that 
-explicitly test floating point operations, but I can at least run it through my 
-OpenBIOS test images and check for regressions over the next couple of days.
-
->> Richard Henderson (22):
->>    target/sparc: Use tcg_gen_qemu_{ld,st}_i128 for ASI_M_BCOPY
->>    target/sparc: Use tcg_gen_qemu_{ld,st}_i128 for ASI_M_BFILL
->>    target/sparc: Remove gen_dest_fpr_F
->>    target/sparc: Introduce gen_{load,store}_fpr_Q
->>    target/sparc: Inline FNEG, FABS
->>    target/sparc: Use i128 for FSQRTq
->>    target/sparc: Use i128 for FADDq, FSUBq, FMULq, FDIVq
->>    target/sparc: Use i128 for FqTOs, FqTOi
->>    target/sparc: Use i128 for FqTOd, FqTOx
->>    target/sparc: Use i128 for FCMPq, FCMPEq
->>    target/sparc: Use i128 for FsTOq, FiTOq
->>    target/sparc: Use i128 for FdTOq, FxTOq
->>    target/sparc: Use i128 for Fdmulq
->>    target/sparc: Remove qt0, qt1 temporaries
->>    target/sparc: Introduce cpu_get_fsr, cpu_put_fsr
->>    target/split: Split ver from env->fsr
->>    target/sparc: Clear cexc and ftt in do_check_ieee_exceptions
->>    target/sparc: Merge check_ieee_exceptions with FPop helpers
->>    target/sparc: Split cexc and ftt from env->fsr
->>    target/sparc: Remove cpu_fsr
->>    target/sparc: Split fcc out of env->fsr
->>    target/sparc: Remove FSR_FTT_NMASK, FSR_FTT_CEXC_NMASK
->>
->>   target/sparc/cpu.h          |  39 +-
->>   target/sparc/helper.h       | 116 ++----
->>   linux-user/sparc/cpu_loop.c |   2 +-
->>   linux-user/sparc/signal.c   |  14 +-
->>   target/sparc/cpu.c          |  32 +-
->>   target/sparc/fop_helper.c   | 510 +++++++++++++----------
->>   target/sparc/gdbstub.c      |   8 +-
->>   target/sparc/ldst_helper.c  |   3 -
->>   target/sparc/machine.c      |  38 +-
->>   target/sparc/translate.c    | 799 ++++++++++++------------------------
->>   10 files changed, 680 insertions(+), 881 deletions(-)
-
-
-ATB,
-
-Mark.
-
+> diff --git a/target/riscv/arch_dump.c b/target/riscv/arch_dump.c
+> index 434c8a3dbb..994709647f 100644
+> --- a/target/riscv/arch_dump.c
+> +++ b/target/riscv/arch_dump.c
+> @@ -68,8 +68,7 @@ int riscv_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>                                  int cpuid, DumpState *s)
+>   {
+>       struct riscv64_note note;
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       int ret, i = 0;
+>       const char name[] = "CORE";
+>   
+> @@ -137,8 +136,7 @@ int riscv_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
+>                                  int cpuid, DumpState *s)
+>   {
+>       struct riscv32_note note;
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       int ret, i;
+>       const char name[] = "CORE";
+>   
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 1bd99bc5c6..8af4f7a088 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -419,8 +419,7 @@ static void riscv_any_cpu_init(Object *obj)
+>   
+>   static void riscv_max_cpu_init(Object *obj)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(obj);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(CPU(obj));
+>       RISCVMXL mlx = MXL_RV64;
+>   
+>   #ifdef TARGET_RISCV32
+> @@ -828,8 +827,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>   
+>   static void riscv_cpu_set_pc(CPUState *cs, vaddr value)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>   
+>       if (env->xl == MXL_RV32) {
+>           env->pc = (int32_t)value;
+> @@ -840,8 +838,7 @@ static void riscv_cpu_set_pc(CPUState *cs, vaddr value)
+>   
+>   static vaddr riscv_cpu_get_pc(CPUState *cs)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>   
+>       /* Match cpu_get_tb_cpu_state. */
+>       if (env->xl == MXL_RV32) {
+> @@ -853,8 +850,7 @@ static vaddr riscv_cpu_get_pc(CPUState *cs)
+>   static bool riscv_cpu_has_work(CPUState *cs)
+>   {
+>   #ifndef CONFIG_USER_ONLY
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       /*
+>        * Definition of the WFI instruction requires it to ignore the privilege
+>        * mode and delegation registers, but respect individual enables
+> @@ -1642,10 +1638,7 @@ static void rva22s64_profile_cpu_init(Object *obj)
+>   
+>   static const gchar *riscv_gdb_arch_name(CPUState *cs)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> -
+> -    switch (riscv_cpu_mxl(env)) {
+> +    switch (riscv_cpu_mxl(cpu_env(cs))) {
+>       case MXL_RV32:
+>           return "riscv:rv32";
+>       case MXL_RV64:
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 791435d628..01b32a3f83 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -493,9 +493,7 @@ static int riscv_cpu_local_irq_pending(CPURISCVState *env)
+>   bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+>   {
+>       if (interrupt_request & CPU_INTERRUPT_HARD) {
+> -        RISCVCPU *cpu = RISCV_CPU(cs);
+> -        CPURISCVState *env = &cpu->env;
+> -        int interruptno = riscv_cpu_local_irq_pending(env);
+> +        int interruptno = riscv_cpu_local_irq_pending(cpu_env(cs));
+>           if (interruptno >= 0) {
+>               cs->exception_index = RISCV_EXCP_INT_FLAG | interruptno;
+>               riscv_cpu_do_interrupt(cs);
+> @@ -1196,8 +1194,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+>   
+>   hwaddr riscv_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       hwaddr phys_addr;
+>       int prot;
+>       int mmu_idx = cpu_mmu_index(env, false);
+> @@ -1223,8 +1220,7 @@ void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+>                                        int mmu_idx, MemTxAttrs attrs,
+>                                        MemTxResult response, uintptr_t retaddr)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>   
+>       if (access_type == MMU_DATA_STORE) {
+>           cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
+> @@ -1244,8 +1240,7 @@ void riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+>                                      MMUAccessType access_type, int mmu_idx,
+>                                      uintptr_t retaddr)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       switch (access_type) {
+>       case MMU_INST_FETCH:
+>           cs->exception_index = RISCV_EXCP_INST_ADDR_MIS;
+> @@ -1631,9 +1626,7 @@ static target_ulong riscv_transformed_insn(CPURISCVState *env,
+>   void riscv_cpu_do_interrupt(CPUState *cs)
+>   {
+>   #if !defined(CONFIG_USER_ONLY)
+> -
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       bool write_gva = false;
+>       uint64_t s;
+>   
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index 4945d1a1f2..c8df9812be 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -757,8 +757,7 @@ target_ulong tinfo_csr_read(CPURISCVState *env)
+>   
+>   void riscv_cpu_debug_excp_handler(CPUState *cs)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>   
+>       if (cs->watchpoint_hit) {
+>           if (cs->watchpoint_hit->flags & BP_CPU) {
+> @@ -773,8 +772,7 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
+>   
+>   bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       CPUBreakpoint *bp;
+>       target_ulong ctrl;
+>       target_ulong pc;
+> @@ -832,8 +830,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+>   
+>   bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       target_ulong ctrl;
+>       target_ulong addr;
+>       int trigger_type;
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index 58b3ace0fe..999d815b34 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -49,8 +49,7 @@ static const struct TypeSize vec_lanes[] = {
+>   
+>   int riscv_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       target_ulong tmp;
+>   
+>       if (n < 32) {
+> @@ -75,8 +74,7 @@ int riscv_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+>   
+>   int riscv_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       int length = 0;
+>       target_ulong tmp;
+>   
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 680a729cd8..563b371ec9 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -171,9 +171,7 @@ static void kvm_cpu_get_misa_ext_cfg(Object *obj, Visitor *v,
+>   {
+>       KVMCPUConfig *misa_ext_cfg = opaque;
+>       target_ulong misa_bit = misa_ext_cfg->offset;
+> -    RISCVCPU *cpu = RISCV_CPU(obj);
+> -    CPURISCVState *env = &cpu->env;
+> -    bool value = env->misa_ext_mask & misa_bit;
+> +    bool value = cpu_env(CPU(obj))->misa_ext_mask & misa_bit;
+>   
+>       visit_type_bool(v, name, &value, errp);
+>   }
+> @@ -184,15 +182,13 @@ static void kvm_cpu_set_misa_ext_cfg(Object *obj, Visitor *v,
+>   {
+>       KVMCPUConfig *misa_ext_cfg = opaque;
+>       target_ulong misa_bit = misa_ext_cfg->offset;
+> -    RISCVCPU *cpu = RISCV_CPU(obj);
+> -    CPURISCVState *env = &cpu->env;
+>       bool value, host_bit;
+>   
+>       if (!visit_type_bool(v, name, &value, errp)) {
+>           return;
+>       }
+>   
+> -    host_bit = env->misa_ext_mask & misa_bit;
+> +    host_bit = cpu_env(CPU(obj))->misa_ext_mask & misa_bit;
+>   
+>       if (value == host_bit) {
+>           return;
+> @@ -1583,10 +1579,9 @@ static void kvm_cpu_instance_init(CPUState *cs)
+>    */
+>   static bool kvm_cpu_realize(CPUState *cs, Error **errp)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+>       int ret;
+>   
+> -    if (riscv_has_ext(&cpu->env, RVV)) {
+> +    if (riscv_has_ext(cpu_env(cs), RVV)) {
+>           ret = prctl(PR_RISCV_V_SET_CONTROL, PR_RISCV_V_VSTATE_CTRL_ON);
+>           if (ret) {
+>               error_setg(errp, "Error in prctl PR_RISCV_V_SET_CONTROL, code: %s",
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 994ca1cdf9..e0f05d898c 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -92,8 +92,7 @@ static void riscv_cpu_synchronize_from_tb(CPUState *cs,
+>                                             const TranslationBlock *tb)
+>   {
+>       if (!(tb_cflags(tb) & CF_PCREL)) {
+> -        RISCVCPU *cpu = RISCV_CPU(cs);
+> -        CPURISCVState *env = &cpu->env;
+> +        CPURISCVState *env = cpu_env(cs);
+>           RISCVMXL xl = FIELD_EX32(tb->flags, TB_FLAGS, XL);
+>   
+>           tcg_debug_assert(!(cs->tcg_cflags & CF_PCREL));
+> @@ -110,8 +109,7 @@ static void riscv_restore_state_to_opc(CPUState *cs,
+>                                          const TranslationBlock *tb,
+>                                          const uint64_t *data)
+>   {
+> -    RISCVCPU *cpu = RISCV_CPU(cs);
+> -    CPURISCVState *env = &cpu->env;
+> +    CPURISCVState *env = cpu_env(cs);
+>       RISCVMXL xl = FIELD_EX32(tb->flags, TB_FLAGS, XL);
+>       target_ulong pc;
+>   
+> @@ -1030,11 +1028,9 @@ static void cpu_get_misa_ext_cfg(Object *obj, Visitor *v, const char *name,
+>   {
+>       const RISCVCPUMisaExtConfig *misa_ext_cfg = opaque;
+>       target_ulong misa_bit = misa_ext_cfg->misa_bit;
+> -    RISCVCPU *cpu = RISCV_CPU(obj);
+> -    CPURISCVState *env = &cpu->env;
+>       bool value;
+>   
+> -    value = env->misa_ext & misa_bit;
+> +    value = cpu_env(CPU(obj))->misa_ext & misa_bit;
+>   
+>       visit_type_bool(v, name, &value, errp);
+>   }
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 071fbad7ef..24db9f3882 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1074,9 +1074,8 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+>   {
+>       DisasContext *ctx = container_of(dcbase, DisasContext, base);
+>       CPUState *cpu = ctx->cs;
+> -    CPURISCVState *env = cpu_env(cpu);
+>   
+> -    return cpu_ldl_code(env, pc);
+> +    return cpu_ldl_code(cpu_env(cpu), pc);
+>   }
+>   
+>   /* Include insn module translation function */
+> @@ -1265,8 +1264,7 @@ static void riscv_tr_disas_log(const DisasContextBase *dcbase,
+>                                  CPUState *cpu, FILE *logfile)
+>   {
+>   #ifndef CONFIG_USER_ONLY
+> -    RISCVCPU *rvcpu = RISCV_CPU(cpu);
+> -    CPURISCVState *env = &rvcpu->env;
+> +    CPURISCVState *env = cpu_env(cpu);
+>   #endif
+>   
+>       fprintf(logfile, "IN: %s\n", lookup_symbol(dcbase->pc_first));
 
