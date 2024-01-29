@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F3F8C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 20:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87495C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 20:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUYD8-000584-It; Mon, 29 Jan 2024 15:26:30 -0500
+	id 1rUYHd-0006Ed-EP; Mon, 29 Jan 2024 15:31:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUYD4-00057k-RG
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 15:26:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rUYHR-0006ED-NF; Mon, 29 Jan 2024 15:30:58 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUYD2-0000TH-5s
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 15:26:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706559983;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=T8wfH9WJ2SufXEVzuXR5nICU+TxvvQdTuY/dQcfgBHY=;
- b=Xvk7TXPtN4vl27s/RGNB+5PMMNWpi1WhlKp4bERyF/scQ78CMhJwnoTASn3pRcF+HCPz1c
- IdPpUHxaj3CczdRDhSSKkF9c0mm0zh82cL0Z82QdjxR1iuzvZla0BvKNDIBvWzpTJslC2G
- kXwcbGseLYniXaZeE9cL+Kz5PjtZl8M=
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-lNNuaTlNMN61hOMKVTSwdw-1; Mon, 29 Jan 2024 15:26:21 -0500
-X-MC-Unique: lNNuaTlNMN61hOMKVTSwdw-1
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-46b33bc35fbso676498137.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 12:26:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706559980; x=1707164780;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=T8wfH9WJ2SufXEVzuXR5nICU+TxvvQdTuY/dQcfgBHY=;
- b=p03xY45fBuX3F0G2uarHdaJUJ2kOHFT+Q5yvb3FYvf93YbeZ4LelAN6wTSXhXr7b1s
- NaqELGP5iAIgpOLJuWFC03ujnReXQvmnrRS5FEZBiAMIvWGTZQQ38CfT4gGDln2/z+5B
- rtrGelozFebJplgUWF0rejukruTJG/xmGGV3sYN7yEEgc2Al17Q/9ZHQJwCc5j36+tcW
- 89KMqK2yX7GQYqeiN+zp7XAIBf1VU0WKsvXGOBW4qAP+UxrptiG1qbNAXphWanGHEv53
- JsZD3HMVIp9U2UdezX33WEG7AOz9PGaa7lJp7pvU124UwCMDzPtrtOm0B/EAdvH4feGu
- CphQ==
-X-Gm-Message-State: AOJu0YzIF9opEYoZXH98ouiIvY37dKXRFPh1LJYZnlp5JMQtXAflt17b
- 0VjX17+fxU8oosxYg2rsJIW6ou4/H/HJtEZkh+GfcykDOQfe52yoxuT16RXEa95WAmd18qDOb7h
- Nyd8hJUll8ATYBYP8d1/34AofPwztdHMa7gmRP1AXhhARQQDzelHMHPnL6duVAc7l6mD40iCTZs
- d8rrCSBMYPYkt+ACAgILrAlfzLjNA=
-X-Received: by 2002:a05:6102:41a0:b0:467:fb8c:6ee5 with SMTP id
- cd32-20020a05610241a000b00467fb8c6ee5mr3330948vsb.49.1706559980790; 
- Mon, 29 Jan 2024 12:26:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGM74nyv7RpmtyUBGQ6dhogwrMkqKDO1qiF5hi2E4WMNIeixCbB5Zpg2Ba3advItzY4exI4AzJs8VTymHyRItQ=
-X-Received: by 2002:a05:6102:41a0:b0:467:fb8c:6ee5 with SMTP id
- cd32-20020a05610241a000b00467fb8c6ee5mr3330945vsb.49.1706559980561; Mon, 29
- Jan 2024 12:26:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rUYHP-0001Vt-Jp; Mon, 29 Jan 2024 15:30:57 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BF6F14873E;
+ Mon, 29 Jan 2024 23:31:46 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4BF556E616;
+ Mon, 29 Jan 2024 23:30:53 +0300 (MSK)
+Message-ID: <1023dde3-4de0-4ec1-85a6-238ed8e16454@tls.msk.ru>
+Date: Mon, 29 Jan 2024 23:30:53 +0300
 MIME-Version: 1.0
-References: <20240129133751.1106716-1-pbonzini@redhat.com>
- <20240129133751.1106716-3-pbonzini@redhat.com>
- <AE14AC8A-AA67-4F69-8D45-640C93217935@gmail.com>
-In-Reply-To: <AE14AC8A-AA67-4F69-8D45-640C93217935@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 29 Jan 2024 21:26:09 +0100
-Message-ID: <CABgObfYe8DNifSra_42L06bJ_ACuoTZ_yxNjUUkyuqROypiZNA@mail.gmail.com>
-Subject: Re: [PATCH 2/4] isa: extract FDC37M81X to a separate file
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Make 'uri' optional for migrate QAPI
+Content-Language: en-US
+To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, berrange@redhat.com, farosas@suse.de,
+ armbru@redhat.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20240123064219.40514-1-het.gala@nutanix.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240123064219.40514-1-het.gala@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,15 +85,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 29, 2024 at 8:49=E2=80=AFPM Bernhard Beschow <shentey@gmail.com=
-> wrote:
-> Don't we prefer a macro for below code? While touching the code we could =
-use it. (Sorry I can't recall its name from the top of my head and I don't =
-have access to the code right now).
+23.01.2024 09:42, Het Gala:
+> 'uri' argument should be optional, as 'uri' and 'channels'
+> arguments are mutally exclusive in nature.
+> 
+> Fixes: 074dbce5fcce (migration: New migrate and
+> migrate-incoming argument 'channels')
+> Signed-off-by: Het Gala <het.gala@nutanix.com>
+> ---
+>   qapi/migration.json | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index eb2f883513..197d3faa43 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -1757,7 +1757,7 @@
+>   #
+>   ##
+>   { 'command': 'migrate',
+> -  'data': {'uri': 'str',
+> +  'data': {'*uri': 'str',
+>              '*channels': [ 'MigrationChannel' ],
+>              '*blk': { 'type': 'bool', 'features': [ 'deprecated' ] },
+>              '*inc': { 'type': 'bool', 'features': [ 'deprecated' ] },
 
-Ah yeah, OBJECT_DEFINE_TYPE. Not sure it's much of a win because
-neither finalize or instance_init are required here.
+This seems like a stable material too, - please let me know if it is not.
 
-Paolo
+Thanks,
 
+/mjt
 
