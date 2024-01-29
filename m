@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF7D8C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 17:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A34C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 17:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUVL7-0001RV-2f; Mon, 29 Jan 2024 12:22:33 -0500
+	id 1rUVLM-0001Xk-V1; Mon, 29 Jan 2024 12:22:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUVL5-0001QF-Ud
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 12:22:31 -0500
+ id 1rUVLH-0001Vd-8E
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 12:22:43 -0500
 Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUVL4-0003CG-6n
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 12:22:31 -0500
+ id 1rUVLE-0003Ic-Vc
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 12:22:42 -0500
 Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-55f279dca99so877059a12.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 09:22:29 -0800 (PST)
+ 4fb4d7f45d1cf-55f0367b15fso1547386a12.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 09:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706548948; x=1707153748; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vdx245a1vgE4AGunjQpjIS/RiPaYsU1U/uhLXNcAFeU=;
- b=FLGgsTCfqvEFtcRng+ABU0WEIjZSk75wuMGCAE2fANE3Ma2x71p7hlJly6kuP9dV1j
- h2PC/6AMhj3NAVKH629d1SEfZJvWGxd8+jFFDMM6trYiTqbSGraEORUVQFT20arEkFex
- uybTZHZB348YNd3q8CYbpewTmnINcsDRtM8oIuNP/scPxZFKBKJcz6UCWUzvOu+bSLYb
- ESWvhAvXdSuBiULcEQTtrH/x+wDtaHZj3mRL1r3UMlLue5p7B6fk19V84eo/JSqM8SuO
- LH404gYnYihHWjEmBYDY2v4Z093zeitZL1xN5xw2LpUC/g4u7OPRIDmt3VVwxdGmYgH/
- nwYg==
+ d=linaro.org; s=google; t=1706548959; x=1707153759; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=arpamylKw5ifaFOeLHJXkO74r6cEYhnLuAcH21BRXas=;
+ b=Q+ND4cp3JOpzs52tQlnCN/wnuxz2PPGc4bkORbeySv1JsOmSQ/ucOd0oFkSkKqY4Dm
+ 3NceFe6azcCfznZUWvSGzK3fQ1whw8t9aWUjQeX3fzOCEDLyoWL9Qdky5A98zXYJMkC4
+ d1lZzOakP/PMDX04Mkfp5ed5p7hTpch4OlUGZw7tHqrJduhxyTaItFM+Xq5od7l1vC9I
+ B03golEVrleeUGAFiTP9tMHFkyCpg1HccD+y9A2/qWEUMkotMX0cntGhyHeeZJbDyWhg
+ Uo9vvoEZSdBbbK1tswKeMNSOEExhg2UEKtK33Ql3sB6WbFmyfyBg6CXkOAvmR8Q8d2Yn
+ Lhlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706548948; x=1707153748;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vdx245a1vgE4AGunjQpjIS/RiPaYsU1U/uhLXNcAFeU=;
- b=MR0oydX2KiJhpnHTHnShy9CcgtVYBvQGho3hOogoDp3bk/f0Oq1FooMIMib3iyxa0l
- /3Fuc2zLRYEyLx1H0A8efKz5A7Oufa5lBWi4viG1HLUzdOk526dTmxA91EVSmg92JAdg
- 7jBUkvJglR3dhkgduoe+PBUiUPL24sQlyhCxC/ysjaEbAHd1Q7vJYQDNMLuWNRCnGadI
- P4I692EFyNVpRzRPRVwsyYwfuFN67gvPaYxAdZT1QT67mwoj3HesiyN98JXNA8GFdVH/
- mJmT6cPi8R0XOEXMMEeg7ExLhV9Pcmxivi2BVO7fZhSbeJeMPSIEbJFTFchqHfEqM72H
- +qOQ==
-X-Gm-Message-State: AOJu0YzUuFFB385LJ6CIuPPxWT1F4c93LzttWqm2EqLt4yuHvVn45zDK
- /BFWD/YiCw53HjHRhaFq1VJP05uKbSEIVQ+KVYAPWXUCk80RlG1qn5JTyMHG5ZplTHw/K5f9F53
- 3/0ALlhR4syB+eZMqcrc67tJrbmMUaldPrSYr7w==
-X-Google-Smtp-Source: AGHT+IEabPcbPV+hO8NqC9m/wpsd09fBp/iJiZwAXi0qdVvK0ILkLjdN5GbES/hQ7KQJ1OYbtKt+5ph/QHSjIeXCAF4=
-X-Received: by 2002:a05:6402:b05:b0:55f:4bc:a747 with SMTP id
- bm5-20020a0564020b0500b0055f04bca747mr1920108edb.1.1706548948446; Mon, 29 Jan
- 2024 09:22:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706548959; x=1707153759;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=arpamylKw5ifaFOeLHJXkO74r6cEYhnLuAcH21BRXas=;
+ b=OCmDjiz0pDoXodLDF+SOhZcyqvY3WXqdMA4Rl2lu8u+YD5/FnHiffj1goBtzYGQXMf
+ nwgY9wRqygfbgvqtm3xLNf4E2jpjraQ1/Zogua/LYX3A80ZYod7YM3s3Twh/d/xRKs9F
+ WtZ5I64f2H31eeOK1ouvwXvCnokzOvwQsmkUufdYp29qdVfqpeSWygPzMtfOPaH4ziN3
+ VZdy/zM7tMQRczX+oCgbdP7kvkHhOnnz5C4fivHCKBJZVd5ruXmfdiMFRyshCKFHoQzn
+ kO8Hx/oIiXVPY4FSCBDVIBl2f9Jz/MiIF7lk4G4nuBOaGMT54ykAvIa8yxU/mn+Sfcip
+ k6lQ==
+X-Gm-Message-State: AOJu0YwQAePlQvEx6byW7bKCuSWQO9iLX1Efv3Aky5mZ7aVrG08nsjmv
+ jIG7nLyMaD76g4y1pRlBcmV4C3cgK51JMYQcPEyPfJWIzF951GVf/bR88kv6nL3YJw4ajvefmR4
+ PtOKyJZAUDWlY65Fw8bMx3C3SUSTrkG2acdPeAQ==
+X-Google-Smtp-Source: AGHT+IHjd7qQiLzeW/mL51TO4zNiKjqM9DWbZqqXXOTNG6cKD/ZF4RC9/CC4ePAM5GNp/Tw3+PnQKFmTW86OQEvISG4=
+X-Received: by 2002:a05:6402:430b:b0:55c:7ab7:d349 with SMTP id
+ m11-20020a056402430b00b0055c7ab7d349mr4707956edc.3.1706548959744; Mon, 29 Jan
+ 2024 09:22:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20240129030405.177100-1-peterx@redhat.com>
-In-Reply-To: <20240129030405.177100-1-peterx@redhat.com>
+References: <20240129084150.134050-1-clg@redhat.com>
+In-Reply-To: <20240129084150.134050-1-clg@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jan 2024 17:22:17 +0000
-Message-ID: <CAFEAcA-xqCJRiOXaWL54UxDtijZizv3zS03AGH4o-Jc07VC=KQ@mail.gmail.com>
-Subject: Re: [PULL 00/14] Migration 20240126 patches
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Date: Mon, 29 Jan 2024 17:22:29 +0000
+Message-ID: <CAFEAcA8aChxJ9nPZwPY+ERFmWiXd34Z5BZ=vs1mKJroTTGs2SQ@mail.gmail.com>
+Subject: Re: [PULL 0/2] vfio queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2a00:1450:4864:20::532;
  envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
@@ -87,34 +89,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jan 2024 at 03:04, <peterx@redhat.com> wrote:
+On Mon, 29 Jan 2024 at 08:42, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 >
-> From: Peter Xu <peterx@redhat.com>
+> The following changes since commit 7a1dc45af581d2b643cdbf33c01fd96271616f=
+bd:
 >
-> The following changes since commit 7a1dc45af581d2b643cdbf33c01fd96271616fbd:
->
->   Merge tag 'pull-target-arm-20240126' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-01-26 18:16:35 +0000)
+>   Merge tag 'pull-target-arm-20240126' of https://git.linaro.org/people/p=
+maydell/qemu-arm into staging (2024-01-26 18:16:35 +0000)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/peterx/qemu.git tags/migration-20240126-pull-request
+>   https://github.com/legoater/qemu/ tags/pull-vfio-20240129
 >
-> for you to fetch changes up to 57fd4b4e10756448acd6c90ce041ba8dc9313efc:
+> for you to fetch changes up to d2b668fca5652760b435ce812a743bba03d2f316:
 >
->   Make 'uri' optional for migrate QAPI (2024-01-29 11:02:12 +0800)
+>   vfio/pci: Clear MSI-X IRQ index always (2024-01-29 08:26:25 +0100)
 >
 > ----------------------------------------------------------------
-> Migration Pull
+> vfio queue:
 >
-> [dropped fabiano's patch on modifying cpu model for arm migration tests for
->  now]
->
-> - Fabiano's patchset to fix migration state references in BHs
-> - Fabiano's new 'n-1' migration test for CI
-> - Het's fix on making "uri" optional in QMP migrate cmd
-> - Markus's HMP leak fix reported by Coverity
-> - Paolo's cleanup on uffd to replace u64 usage
-> - Peter's small migration cleanup series all over the places
+> * Array type cleanup
+> * Fix for IRQ enablement
 >
 > ----------------------------------------------------------------
 
