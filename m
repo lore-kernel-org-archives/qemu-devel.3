@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F15C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14D6C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadM-0005wG-Lg; Mon, 29 Jan 2024 18:01:44 -0500
+	id 1rUafU-0007e1-MJ; Mon, 29 Jan 2024 18:04:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadF-0005uf-Fs
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:38 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1rUaeJ-00071n-OS
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:03:00 -0500
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadC-0008NU-Np
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:37 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6ddb1115e82so2245937b3a.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:34 -0800 (PST)
+ id 1rUaeI-00006g-4N
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:43 -0500
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3be62ccda4bso738160b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569293; x=1707174093; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569361; x=1707174161; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ADBUc3fCETku7gSMiSslG1Ep+CbDq8k+uqgwv8Xr0vk=;
- b=RMgObZ+duwuBfwDffDR4r9TalTdjrZ0NbSqyMPUvSv9gqX+3ewKskilUw968Y+5AZg
- iJBz2uLa7ya/xMH1qXXDxaBIyTGEVqmFJETu0KgXCh2fKZMlzORrs+pROuObQ3XlaLj6
- 9dDgfPmNjFZbbobYTJ+aa1elqQk/+xbHa253qUJwmcKTYGuvMwUgRayHncpA2+cbWPdB
- 1VhbNzjo29mbhrHrVFQeJP7Nz+yYMF88TXvpFxjBERg0AXasUhmjLVqyXnPZWsZmNdXj
- HbpcaGhaOYgif4sL6+SsuuiSUE7+ZyARLGmq6J5YItZP5UOcIfYXRkv5ALSeDwhCpdf5
- InJg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=2hwCZNX7r6WcP/DB6F59Yv2bYfXzcZik2wXoCrV2EBg=;
+ b=CdT4eWumuD93e7Xp9Np0/b9qZ0wYgOLGpKeLbNRcMI4XOWDpLbfdi9bb9nhlrGzgjL
+ +UdtBPmakmeEpaN9JN9oeNbFV0spiCSCa2PmFjRzAt41a09p9w3z2xbEiHZMdTprqCgt
+ awgg7GBGSDGDmNS8vafpu00wbo0FAlytcoaRt6fdZVILutS47wfQhJioWEOIHwfGN2iA
+ fMxHGAT0NoB2bRRz820wbgIUhjUYOlEQHkyKCS0rsr7F2VBev5fap0GboL7IWv9LZes/
+ +/upB8V5KqA69IqEP+OCSQL6GH12QvXeKhlHwSemUFyGCQ495QcpNI11kh1v/vrES1/N
+ 79mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569293; x=1707174093;
+ d=1e100.net; s=20230601; t=1706569361; x=1707174161;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ADBUc3fCETku7gSMiSslG1Ep+CbDq8k+uqgwv8Xr0vk=;
- b=ed9ONIywGT9jlM2RgYpbcRVPqxs7YGqY08UQk+W5giDaXtsNTFpPU4SqPQA1ZIjQz5
- qZT/eeelft6Vz+sMhlF0vzL2GORf950MEZSaVQXOl+bmcapRJ+OBdviaCOJM2auUh7nl
- VCzS3Z0FjtaT5cOo75mRCbFTWwsid5n+qeJXcfVIF8xmFrbUguucp6cKpbMY6B2Ep1b+
- M9Hg4n3QlOdhc/K1iutD3Qg8IqcJc9TNAGiQH251zfGjVESSGAcrk42i20QhjqCNa7kN
- pjoPerv9ekHe0ZJzVw14jt2IbBVeaCxdWDEVpxcZD4WyzVCU6FMOXoRUcMz21C2nEWoK
- LIWw==
-X-Gm-Message-State: AOJu0YyzWeH3HJ2D+7rQ1MziiMcMkI2+t90NxNVu71Q100mwbDDcyXBk
- rKJmDj2lsC0hUvMKJqL9IlaAOiiUNIjysTU0yln0POpbvn2/Mbd+D4ta6HG9siClvhfADF18Vop
- XVLs=
-X-Google-Smtp-Source: AGHT+IFptAI+2J+nBhbOdEYFzh067vlo7/8VVtRTRMDgkL3n7e9lb9P/13CRj/F7NerldqMJKkbE/g==
-X-Received: by 2002:a05:6a00:c8e:b0:6dd:c35c:e7c5 with SMTP id
- a14-20020a056a000c8e00b006ddc35ce7c5mr7121237pfv.18.1706569293306; 
- Mon, 29 Jan 2024 15:01:33 -0800 (PST)
+ bh=2hwCZNX7r6WcP/DB6F59Yv2bYfXzcZik2wXoCrV2EBg=;
+ b=OIV9b4Q4Ubq9z0cPHWSIcYfgWNAlj7W2CWUXoqtEO9jToIn8ys3jt2exG35b3BT5/U
+ 8tHaLi6sM9DqXEtlqcCxZ6FRX8gGGnDkOzu+ekYRDaRlOUNshBFsr/bj3zZ63z6uTeju
+ CKWE///a5ob5Q3LZj10SV+CbdYcdXkflfGp0HL0t/3ibFUt5z6nUh5xWlqctFJAnP9CJ
+ x8dD8tvXSGPxEnuFoj+zzthuFtken1Maxf7Xbcb/4Iuc84SFgS7FDEuJfHMfvNUzIE6E
+ fLs9x6lOdgUADc11usi+mNfIPdDtWkYjuoTeO8RBBa/U4iNVKPUYnFtY2R9LiCA/X9IM
+ 4tow==
+X-Gm-Message-State: AOJu0Yy8FPn29RXHH5KCuJDAD+g8RXSBM1d6B3UKfzNV9nbBAt73SSo4
+ mlPTeAcBPm/pxCjBXGCsvKUlYSKRHEZtsA7Cv6jDBJ/855f2sS/yaI+Po4pKAzOwCz307xi029V
+ aXnM=
+X-Google-Smtp-Source: AGHT+IHA/Y5g49IFO+MhSt5OayanC5SuKfj4hRJbbi7ZUZDlKhrhV3YTNZx3yXfFitcmzqSwN8WU3A==
+X-Received: by 2002:a05:6808:1b08:b0:3be:7667:4eef with SMTP id
+ bx8-20020a0568081b0800b003be76674eefmr1963750oib.27.1706569360793; 
+ Mon, 29 Jan 2024 15:02:40 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.31
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.39
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:32 -0800 (PST)
+ Mon, 29 Jan 2024 15:02:40 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PULL 03/31] hw/core: Include vaddr.h from cpu.h
-Date: Tue, 30 Jan 2024 09:00:53 +1000
-Message-Id: <20240129230121.8091-4-richard.henderson@linaro.org>
+Subject: [PULL 29/31] accel/tcg: Inline need_replay_interrupt
+Date: Tue, 30 Jan 2024 09:01:19 +1000
+Message-Id: <20240129230121.8091-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,32 +92,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+The function is now trivial, and with inlining we can
+re-use the calling function's tcg_ops variable.
 
-cpu-common.h is only needed for vaddr
-
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240119144024.14289-8-anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ accel/tcg/cpu-exec.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 238c02c05e..db58f12233 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -22,8 +22,8 @@
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 2eacd694ea..75f7ba7bed 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -765,20 +765,6 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
+     return false;
+ }
  
- #include "hw/qdev-core.h"
- #include "disas/dis-asm.h"
--#include "exec/cpu-common.h"
- #include "exec/hwaddr.h"
-+#include "exec/vaddr.h"
- #include "exec/memattrs.h"
- #include "exec/tlb-common.h"
- #include "qapi/qapi-types-run-state.h"
+-#ifndef CONFIG_USER_ONLY
+-/*
+- * CPU_INTERRUPT_POLL is a virtual event which gets converted into a
+- * "real" interrupt event later. It does not need to be recorded for
+- * replay purposes.
+- */
+-static inline bool need_replay_interrupt(CPUState *cpu, int interrupt_request)
+-{
+-    const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+-    return !tcg_ops->need_replay_interrupt
+-           || tcg_ops->need_replay_interrupt(interrupt_request);
+-}
+-#endif /* !CONFIG_USER_ONLY */
+-
+ static inline bool icount_exit_request(CPUState *cpu)
+ {
+     if (!icount_enabled()) {
+@@ -862,7 +848,8 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+ 
+             if (tcg_ops->cpu_exec_interrupt &&
+                 tcg_ops->cpu_exec_interrupt(cpu, interrupt_request)) {
+-                if (need_replay_interrupt(cpu, interrupt_request)) {
++                if (!tcg_ops->need_replay_interrupt ||
++                    tcg_ops->need_replay_interrupt(interrupt_request)) {
+                     replay_interrupt();
+                 }
+                 /*
 -- 
 2.34.1
 
