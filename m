@@ -4,70 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5F1C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 09:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A710BC47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 09:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUNtP-0006d9-PM; Mon, 29 Jan 2024 04:25:27 -0500
+	id 1rUNvK-0007SN-Pc; Mon, 29 Jan 2024 04:27:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rUNtO-0006d1-BV
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:25:26 -0500
-Received: from mgamail.intel.com ([134.134.136.31])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rUNvA-0007Rd-Qb
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:27:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rUNtM-0006ty-KL
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:25:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706520324; x=1738056324;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=9WdcqUwjRi3wIoR35Zr6lodufDuKrUhN0sPD3ZVLcQM=;
- b=VF1BXYOYZPOMDYa4SU0YlFeQITwaWa0IEtz1BgRRooeXKK4NSBR9eACn
- 2urIpbHYpgfxdlnKd94vhoePGD+gMqkR6H92+1sh1PFr6Of1rbpUSq2yh
- 2/KLVtvrocKLi/yBLNSCfMQiQ/VK6oZAbfL4wIskZVQCaW1z1eUiIMu3r
- EUiiUaqMptc/H8Oc/55a1ULLeQZgyCi9q2CGN8OPjJNoxvwIbsySqwqLH
- Z0xWFBe/56SIhjCTE4WCpPO8QOzOMqBqLZZqDxt/3tpiL7ZWesZ/aq/hT
- dZHtfpwb89Wn9V5BDBsSDhrJ28gq3B3n9cO93Z5hesqBG8qxMkVQJyXFU Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10967"; a="467164876"
-X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; d="scan'208";a="467164876"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jan 2024 01:25:22 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10967"; a="1118881570"
-X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; d="scan'208";a="1118881570"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmsmga005.fm.intel.com with ESMTP; 29 Jan 2024 01:25:20 -0800
-Date: Mon, 29 Jan 2024 17:38:24 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Cc: qemu-devel@nongnu.org, Xiaoling Song <xiaoling.song@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 0/8] tests/unit/test-smp-parse.c: Add more CPU topology
- test cases
-Message-ID: <ZbdyEDhz/pjuZNVE@intel.com>
-References: <20240118144857.2124034-1-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rUNv6-0007HI-JY
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 04:27:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706520429;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=K4rBKjYoq2OHKWxux/xqgcQp7u8QdtmguCttHiRkjus=;
+ b=SKmuGPJQtgNkhkzkydDqtf3vb0e9KlBatM9qMADnvddy/TnfFFODt34l7ctp0/kwp8LtFS
+ hzukp2UmdGuGaCeICSvNDl4Wn1mlW5QkBkE70+bHROs8C8LB2oXEGgxPhA44Ht+XZwtKes
+ NT2qldeDl+tFlZGNguv71BZcDCge1E0=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-155-VEHwfChmMOGYcMJ3uLyzLQ-1; Mon, 29 Jan 2024 04:27:08 -0500
+X-MC-Unique: VEHwfChmMOGYcMJ3uLyzLQ-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-68c4f4411f8so10805996d6.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 01:27:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706520427; x=1707125227;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K4rBKjYoq2OHKWxux/xqgcQp7u8QdtmguCttHiRkjus=;
+ b=Cx10JqWAkk5Ad7OghBwRs5xIGP1uZntGVaQRqSEfjHeNeBGNaqs4lML5XDsseS5dtp
+ trzELMcPFCkPgTtP8RMquGykeyRhejcjdA4zTFmt1vFaC2C2wtDhJZPLGCjb7Hmvsoi7
+ SJibreI+kUln6+NIS6qYOTprY8nGBfTxRr0Zp3jAOPkTQ/KrVZMwvAkX97dRQ3I97W/N
+ JDXyGbuZCzyEHiCSN7qNlOOyyiF4bNGeXBfwgqdaJKFKh46FwHVzRjk7X4SHkDC/eyjl
+ 82A2hTTUjnJSU2gcRRpow4Zxa0x85ePrz4BsehKKL9Wdwb2k9Oiu1ompdw777WejIS89
+ y+MA==
+X-Gm-Message-State: AOJu0YyRYB5YQHSyWosYS0k2TxHnoF7bxz+XbVyge7fowgQibuEhjf7Z
+ l0aKsTtnPhYdpGfkCS2ZqELNg35GbpLcjR+fCJQgaVvb4DWT0S/0VBtw6Pvdo6Yu/HuRHD9JtPl
+ cZsYuhdVVCoXirlHtAYptaFnMAbF+4Hn5+vWc0O5DKSXrWTs3aQal
+X-Received: by 2002:ad4:5d6c:0:b0:685:a5d2:b4f2 with SMTP id
+ fn12-20020ad45d6c000000b00685a5d2b4f2mr6857595qvb.1.1706520427620; 
+ Mon, 29 Jan 2024 01:27:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG6RxMwHaGv/FSR1RYxtAb8lqsc9gqbc/EUCZMw4LGZL9d7oCQGYQYd/hVQE2x1V6zxrogT+A==
+X-Received: by 2002:ad4:5d6c:0:b0:685:a5d2:b4f2 with SMTP id
+ fn12-20020ad45d6c000000b00685a5d2b4f2mr6857578qvb.1.1706520427407; 
+ Mon, 29 Jan 2024 01:27:07 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ oj15-20020a056214440f00b0068c38fd4582sm2601504qvb.10.2024.01.29.01.27.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jan 2024 01:27:06 -0800 (PST)
+Message-ID: <ee99d75b-705e-4ba3-adac-f4798b0a0d6c@redhat.com>
+Date: Mon, 29 Jan 2024 10:27:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240118144857.2124034-1-zhao1.liu@linux.intel.com>
-Received-SPF: none client-ip=134.134.136.31;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -67
-X-Spam_score: -6.8
-X-Spam_bar: ------
-X-Spam_report: (-6.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Two minor fixes on virtio-iommu and smmu
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: jean-philippe@linaro.org, alex.williamson@redhat.com, clg@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20240125073706.339369-1-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240125073706.339369-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,63 +106,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+Hi Zhenzhong,
 
-A kindly ping.
+On 1/25/24 08:37, Zhenzhong Duan wrote:
+> Hi,
+>
+> PATCH1 fixes a potential issue with vfio devices when reboot to a
+> different OS which set bus number differently from previous OS.
+> I didn't reproduce the issue in reality, but it's still possible
+> in theory. VTD doesn't have same issue as it use some verify logic
+> to ensure right iommu MR is picked.
+>
+> PATCH2 does same thing for smmu.
+>
+> v2:
+> - Remove redundant memset in realize (Cédric)
+> - Add a patch for smmu (Eric)
+> - Drop the patch to support PCI device alias for now, as it's tricky in
+>   using two different IOMMU MRs and Eric already sent a smarter fix.
 
-Thanks,
-Zhao
+For the series:
 
-On Thu, Jan 18, 2024 at 10:48:49PM +0800, Zhao Liu wrote:
-> Date: Thu, 18 Jan 2024 22:48:49 +0800
-> From: Zhao Liu <zhao1.liu@linux.intel.com>
-> Subject: [PATCH 0/8] tests/unit/test-smp-parse.c: Add more CPU topology
->  test cases
-> X-Mailer: git-send-email 2.34.1
-> 
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Hi list,
-> 
-> Currently, test-smp-parse lacks the following cases:
-> * The case to cover drawer and book parameters parsing in -smp.
-> * The case to cover the full topology (with total 7 levels) to ensure
->   that the topology-related calculations are correct.
-> * The case to check smp_props.has_clusters of MachineClass.
-> 
-> Thus, add the above cases to improve test coverage.
-> 
-> In addition, people is trying to bump max_cpus to 4096 for PC machine
-> [1]. Without considering other changes, it's only a matter of time
-> before the maximum CPUs is raised. Therefore, aslo bump max_cpus to 4096
-> in -smp related test cases as a start.
-> 
-> [1]: https://lore.kernel.org/qemu-devel/20231208122611.32311-1-anisinha@redhat.com/
-> 
-> Regards,
-> Zhao
-> 
-> ---
-> Zhao Liu (8):
->   tests/unit/test-smp-parse.c: Use CPU number macros in invalid topology
->     case
->   tests/unit/test-smp-parse.c: Bump max_cpus to 4096
->   tests/unit/test-smp-parse.c: Make test cases aware of the book/drawer
->   tests/unit/test-smp-parse.c: Test "books" parameter in -smp
->   tests/unit/test-smp-parse.c: Test "drawers" parameter in -smp
->   tests/unit/test-smp-parse.c: Test "drawers" and "books" combination
->     case
->   tests/unit/test-smp-parse.c: Test the full 7-levels topology hierarchy
->   tests/unit/test-smp-parse.c: Test smp_props.has_clusters
-> 
->  tests/unit/test-smp-parse.c | 515 ++++++++++++++++++++++++++++++++++--
->  1 file changed, 494 insertions(+), 21 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
-> 
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+
+Thanks
+
+Eric
+
+>
+>
+> Thanks
+> Zhenzhong
+>
+> Zhenzhong Duan (2):
+>   virtio_iommu: Clear IOMMUPciBus pointer cache when system reset
+>   smmu: Clear SMMUPciBus pointer cache when system reset
+>
+>  hw/arm/smmu-common.c     | 2 ++
+>  hw/virtio/virtio-iommu.c | 4 ++--
+>  2 files changed, 4 insertions(+), 2 deletions(-)
+>
+
 
