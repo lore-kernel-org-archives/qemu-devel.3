@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A563BC47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C66C47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUsx-0002sQ-RZ; Mon, 29 Jan 2024 11:53:29 -0500
+	id 1rUUp5-0007vR-41; Mon, 29 Jan 2024 11:49:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUst-0002fx-6b
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:53:23 -0500
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUnv-00047j-UZ
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:48:18 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUsk-0005mB-RR
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:53:22 -0500
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5110d0b1af7so2042473e87.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:53:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUns-0004aw-Cq
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:48:15 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-5100ed2b33dso4624187e87.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:48:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706547190; x=1707151990; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7zYf6iUNFHrfxMQpPNj1mXN6dt+LxrDt3+/kg2hLKwo=;
- b=Vwp/kM1sp7UetpiN+Fm1hczwoUYJRqIn5TyOjRBDa6tFqlCFY2nc+DJUsiKI/OyOlR
- YrlV1w0N9Gljto29Qcu9ByvweL4d+KJCEOxbiqPytEuy6+QuEYisq17h5yX1mxAhEwff
- MCdulEpQ2DWYJMOjyAnJYuyL6R92Xzl5qhnr6boRWqlKU+xXmi8JqhBEoPxOWiALo5iB
- COFbxQLHf7PwonGm4HovCZlLQ1JhyFa22m/9bAL1uuoGoLzJHH2j9LSEKhoHBT8Mta1V
- 7HDoKaDcVgvg4/OvCI9aRWzPC9npeIEmS2FxveEZBfyrKRULlV+HpZvWFh+5gNMXcmF0
- Pjrw==
+ d=linaro.org; s=google; t=1706546890; x=1707151690; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rfR8cC6O+BWQhQkWXGdZ7PfclWjDr/hbLCsaxnqdy8k=;
+ b=DIy2XmezmVWtAyc6E0HEtvM82wc7b721PmBqh1IBwU8IPrVX7fpTILo90rjNGg/r43
+ 2rqD8e19qtA9DIHeCLfJN+JV8897o0iyy53tMcImva577Fz3eimvHetpWbhTQdJx4vSS
+ 5xJeMPPqGAB9QlrAlfnfJG8konzHaA99KcA6DyxyoqqujYoK46QkLmfJ+zLJ1PIyTYLh
+ PQ65ZYbL649vT8p84waBfenoetVqnaEYE0fYgvyLPM30YZi8wwwoC3eyffkdmHwE2xCG
+ j0Lcevkwkc4+jcxM1Sr0bkyNpKTyYuYEHp9QKl848v/LMYHPcvg+eEInNnGQIR/0Zmm7
+ 4yPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706547190; x=1707151990;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7zYf6iUNFHrfxMQpPNj1mXN6dt+LxrDt3+/kg2hLKwo=;
- b=fovge9jeq374wZd41qgOoXsYDGQGUoEavGcZGQTaTEGChODx4TJEEuCNHhh6nlS6pf
- DDcRdMVodZ242xdGmoEd39wbJ0MezNHZ4kfdxYowu+0zhdJ9kR00cFx8/IZ2bEd7cWcJ
- d1ADP38Pzf3lwOX/lV33PZtOqyf6TG5Y6S8bDtcPKyNsoa7aP+DofihEzmpgddu3Ud2e
- b55h3sEEZCt6fFbUTWaxTwFNC4t4ZYPZSZJaZaQsJqcF2LrEZkj05xK0fO5mpCcUfeCk
- VnBiF34psSgeBb2pb+GQGOUbL2UD6n259P1muVKHKhTWDyf1MONCLwU6YV38sRWM0sNG
- RTSg==
-X-Gm-Message-State: AOJu0Yx0I1MBzSPTabbD35UjgP2e/hcy6TMRjlyLBIy5Fzhn7RiBPPlJ
- GPE6ejQd+/nOcpX5akHJ616gNgiME6U+W3B22L6wKnq7KepQtH5D4hagwVW7RgNDFa12X13WTd1
- T
-X-Google-Smtp-Source: AGHT+IFqDbBCw7yz5nV9RcvTZBX8s1a0hQpdUqa06QWgXja+MJAioJfvQM63rBkNoCDgx4FWDHSl3w==
-X-Received: by 2002:a05:6512:1082:b0:50e:75ee:ec4c with SMTP id
- j2-20020a056512108200b0050e75eeec4cmr5201521lfg.11.1706547190625; 
- Mon, 29 Jan 2024 08:53:10 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.219.39])
+ d=1e100.net; s=20230601; t=1706546890; x=1707151690;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rfR8cC6O+BWQhQkWXGdZ7PfclWjDr/hbLCsaxnqdy8k=;
+ b=dovS8Snbvm2gNC1CDmQLCw7xDzt3++ZpLWyrzX8uESc57ZwfNoYx4+4lWzQwDaXaiC
+ V2UBchmMdkHaVYtU4ZFsRcB73y2VMqJUDdxINO9/xyrboROEN3k+pcXpCtx6sMeVXhqf
+ dcODwcUIuS3yeB4cE24fLGXFe7hOZkF7X3PFqx3bAaEulp+uUEpjZ2Cx5PdXtlhBcIZ0
+ reapY8MIwdnHYCHzWUSsnoe7WE8nmUAbnKT4mYCVaEEzl+IWpbCudwV1P0+Y9XDuRepU
+ fIcJX1fcjzoh9c+YctOpblVhTcwRGBiIF0NT+CfVcet3m0GVIGgHlHIp5AYFPSdxRKyM
+ wyHg==
+X-Gm-Message-State: AOJu0YwhNmaD77tCPFjlA+MDFhyTE1bTqxcHqY1vwJX8UzB5vhF14TCR
+ piJpUaqBeKjrMPqS5hBBPu6uPGpMgWyFs/Jv5Ige27GNKLXkHy4KybWDeT4gbpDyCx0OhJtn3mk
+ r
+X-Google-Smtp-Source: AGHT+IFdYBYX+YhuXRJ5ebXXB5wSuyFUDmegmoCsIRNXBDPunLZRwNY2MqJbCauv7QOv9aYvnOjo7g==
+X-Received: by 2002:ac2:4e08:0:b0:510:1b81:ac2f with SMTP id
+ e8-20020ac24e08000000b005101b81ac2fmr4708425lfr.62.1706546890079; 
+ Mon, 29 Jan 2024 08:48:10 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- g8-20020a05600c310800b0040e703ad630sm14516047wmo.22.2024.01.29.08.53.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jan 2024 08:53:09 -0800 (PST)
-Message-ID: <bb4ed4c6-ecbb-45a6-af3b-caa4fe04afb8@linaro.org>
-Date: Mon, 29 Jan 2024 17:53:08 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/29] scripts/coccinelle: Add cpu_env.cocci script
-Content-Language: en-US
-To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+ u11-20020a056000038b00b0033aed5feea4sm3296936wrf.54.2024.01.29.08.48.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 29 Jan 2024 08:48:09 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-ppc@nongnu.org, qemu-arm@nongnu.org
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH v3 28/29] target/xtensa: Prefer fast cpu_env() over slower CPU
+ QOM cast macro
+Date: Mon, 29 Jan 2024 17:45:10 +0100
+Message-ID: <20240129164514.73104-29-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
- <20240129164514.73104-6-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240129164514.73104-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,149 +99,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/1/24 17:44, Philippe Mathieu-Daudé wrote:
-> Add a Coccinelle script to convert the following slow path
-> (due to the QOM cast macro):
-> 
->    &ARCH_CPU(..)->env
-> 
-> to the following fast path:
-> 
->    cpu_env(..)
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
+Mechanical patch produced running the command documented
+in scripts/coccinelle/cpu_env.cocci_template header.
 
-Changes since v2:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/xtensa/cpu.c        | 3 +--
+ target/xtensa/dbg_helper.c | 3 +--
+ target/xtensa/exc_helper.c | 3 +--
+ target/xtensa/gdbstub.c    | 6 ++----
+ target/xtensa/helper.c     | 9 +++------
+ target/xtensa/translate.c  | 6 ++----
+ 6 files changed, 10 insertions(+), 20 deletions(-)
 
-- Avoid templates by using coccinelle generic types
-- Deal with uaccess API (by skipping functions using it)
-
->   MAINTAINERS                      |   1 +
->   scripts/coccinelle/cpu_env.cocci | 100 +++++++++++++++++++++++++++++++
->   2 files changed, 101 insertions(+)
->   create mode 100644 scripts/coccinelle/cpu_env.cocci
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index dfaca8323e..ca3c8c18ab 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -157,6 +157,7 @@ F: accel/tcg/
->   F: accel/stubs/tcg-stub.c
->   F: util/cacheinfo.c
->   F: util/cacheflush.c
-> +F: scripts/coccinelle/cpu_env.cocci
->   F: scripts/decodetree.py
->   F: docs/devel/decodetree.rst
->   F: docs/devel/tcg*
-> diff --git a/scripts/coccinelle/cpu_env.cocci b/scripts/coccinelle/cpu_env.cocci
-> new file mode 100644
-> index 0000000000..5a70c2211a
-> --- /dev/null
-> +++ b/scripts/coccinelle/cpu_env.cocci
-> @@ -0,0 +1,100 @@
-> +/*
-> + * Convert &ARCH_CPU(..)->env to use cpu_env(..).
-> + *
-> + * Rationale: ARCH_CPU() might be slow, being a QOM cast macro.
-> + *            cpu_env() is its fast equivalent.
-> + *            CPU() macro is a no-op.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + * SPDX-FileCopyrightText: Linaro Ltd 2024
-> + * SPDX-FileContributor: Philippe Mathieu-Daudé
-> + */
-> +
-> +@@
-> +type ArchCPU =~ "CPU$";
-> +identifier cpu;
-> +type CPUArchState =~ "^CPU";
-> +identifier env;
-> +@@
-> +     ArchCPU *cpu;
-> +     ...
-> +     CPUArchState *env = &cpu->env;
-> +     <...
-> +-    &cpu->env
-> ++    env
-> +     ...>
-> +
-> +
-> +/*
-> + * Due to commit 8ce5c64499 ("semihosting: Return failure from
-> + * softmmu-uaccess.h functions"), skip functions using softmmu-uaccess.h
-> + * macros (they don't pass 'env' as argument).
-> + */
-> +@ uaccess_api_used exists @
-> +identifier semihosting_func =~ "^(put|get)_user_[us](al|8|16|32)$";
-> +@@
-> +      semihosting_func(...)
-
-Hmm, s/semihosting/uaccess/
-
-> +
-> +
-> +/*
-> + * Argument is CPUState*
-> + */
-> +@ cpustate_arg depends on !uaccess_api_used @
-> +identifier cpu;
-> +type ArchCPU =~ "CPU$";
-> +type CPUArchState;
-> +identifier ARCH_CPU =~ "CPU$";
-> +identifier env;
-> +CPUState *cs;
-> +@@
-> +-    ArchCPU *cpu = ARCH_CPU(cs);
-> +     ...
-> +-    CPUArchState *env = &cpu->env;
-> ++    CPUArchState *env = cpu_env(cs);
-> +     ... when != cpu
-> +
-> +
-> +/*
-> + * Argument is not CPUState* but a related QOM object.
-> + * CPU() is not a QOM macro but a cast (See commit 0d6d1ab499).
-> + */
-> +@ depends on !uaccess_api_used  && !cpustate_arg @
-> +identifier cpu;
-> +type ArchCPU =~ "CPU$";
-> +type CPUArchState;
-> +identifier ARCH_CPU =~ "CPU$";
-> +identifier env;
-> +expression cs;
-> +@@
-> +-    ArchCPU *cpu = ARCH_CPU(cs);
-> +     ...
-> +-    CPUArchState *env = &cpu->env;
-> ++    CPUArchState *env = cpu_env(CPU(cs));
-> +     ... when != cpu
-> +
-> +
-> +/* When single use of 'env', call cpu_env() in place */
-> +@ depends on !uaccess_api_used @
-> +type CPUArchState;
-> +identifier env;
-> +expression cs;
-> +@@
-> +-    CPUArchState *env = cpu_env(cs);
-> +     ... when != env
-> +-     env
-> ++     cpu_env(cs)
-> +     ... when != env
-> +
-> +
-> +/* Both first_cpu/current_cpu are extern CPUState* */
-> +@@
-> +symbol first_cpu;
-> +symbol current_cpu;
-> +@@
-> +(
-> +-    CPU(first_cpu)
-> ++    first_cpu
-> +|
-> +-    CPU(current_cpu)
-> ++    current_cpu
-> +)
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index ce044466ad..47fd7c7ca9 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -91,9 +91,8 @@ bool xtensa_abi_call0(void)
+ static void xtensa_cpu_reset_hold(Object *obj)
+ {
+     CPUState *cs = CPU(obj);
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+     XtensaCPUClass *xcc = XTENSA_CPU_GET_CLASS(obj);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+     bool dfpu = xtensa_option_enabled(env->config,
+                                       XTENSA_OPTION_DFP_COPROCESSOR);
+ 
+diff --git a/target/xtensa/dbg_helper.c b/target/xtensa/dbg_helper.c
+index 497dafca71..5546c82ecd 100644
+--- a/target/xtensa/dbg_helper.c
++++ b/target/xtensa/dbg_helper.c
+@@ -66,8 +66,7 @@ void HELPER(wsr_ibreaka)(CPUXtensaState *env, uint32_t i, uint32_t v)
+ 
+ bool xtensa_debug_check_breakpoint(CPUState *cs)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+     unsigned int i;
+ 
+     if (xtensa_get_cintlevel(env) >= env->config->debug_level) {
+diff --git a/target/xtensa/exc_helper.c b/target/xtensa/exc_helper.c
+index 168419a505..0514c2c1f3 100644
+--- a/target/xtensa/exc_helper.c
++++ b/target/xtensa/exc_helper.c
+@@ -205,8 +205,7 @@ static void handle_interrupt(CPUXtensaState *env)
+ /* Called from cpu_handle_interrupt with BQL held */
+ void xtensa_cpu_do_interrupt(CPUState *cs)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+ 
+     if (cs->exception_index == EXC_IRQ) {
+         qemu_log_mask(CPU_LOG_INT,
+diff --git a/target/xtensa/gdbstub.c b/target/xtensa/gdbstub.c
+index 4b3bfb7e59..4748fb6532 100644
+--- a/target/xtensa/gdbstub.c
++++ b/target/xtensa/gdbstub.c
+@@ -65,8 +65,7 @@ void xtensa_count_regs(const XtensaConfig *config,
+ 
+ int xtensa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+     const XtensaGdbReg *reg = env->config->gdb_regmap.reg + n;
+ #ifdef CONFIG_USER_ONLY
+     int num_regs = env->config->gdb_regmap.num_core_regs;
+@@ -120,8 +119,7 @@ int xtensa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int xtensa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+     uint32_t tmp;
+     const XtensaGdbReg *reg = env->config->gdb_regmap.reg + n;
+ #ifdef CONFIG_USER_ONLY
+diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
+index a9f8907083..ca214b948a 100644
+--- a/target/xtensa/helper.c
++++ b/target/xtensa/helper.c
+@@ -217,8 +217,7 @@ static uint32_t check_hw_breakpoints(CPUXtensaState *env)
+ 
+ void xtensa_breakpoint_handler(CPUState *cs)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+ 
+     if (cs->watchpoint_hit) {
+         if (cs->watchpoint_hit->flags & BP_CPU) {
+@@ -266,8 +265,7 @@ bool xtensa_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                          MMUAccessType access_type, int mmu_idx,
+                          bool probe, uintptr_t retaddr)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+     uint32_t paddr;
+     uint32_t page_size;
+     unsigned access;
+@@ -297,8 +295,7 @@ void xtensa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+                                       int mmu_idx, MemTxAttrs attrs,
+                                       MemTxResult response, uintptr_t retaddr)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+ 
+     cpu_restore_state(cs, retaddr);
+     HELPER(exception_cause_vaddr)(env, env->pc,
+diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+index 87947236ca..e646e016df 100644
+--- a/target/xtensa/translate.c
++++ b/target/xtensa/translate.c
+@@ -1127,10 +1127,9 @@ static void xtensa_tr_init_disas_context(DisasContextBase *dcbase,
+                                          CPUState *cpu)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    CPUXtensaState *env = cpu_env(cpu);
+     uint32_t tb_flags = dc->base.tb->flags;
+ 
+-    dc->config = env->config;
++    dc->config = cpu_env(cpu)->config;
+     dc->pc = dc->base.pc_first;
+     dc->ring = tb_flags & XTENSA_TBFLAG_RING_MASK;
+     dc->cring = (tb_flags & XTENSA_TBFLAG_EXCM) ? 0 : dc->ring;
+@@ -1248,8 +1247,7 @@ void gen_intermediate_code(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+ 
+ void xtensa_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+-    XtensaCPU *cpu = XTENSA_CPU(cs);
+-    CPUXtensaState *env = &cpu->env;
++    CPUXtensaState *env = cpu_env(cs);
+     xtensa_isa isa = env->config->isa;
+     int i, j;
+ 
+-- 
+2.41.0
 
 
