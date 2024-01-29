@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E6B0C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940E9C47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUb6O-0005xG-FV; Mon, 29 Jan 2024 18:31:44 -0500
+	id 1rUb64-0005aT-41; Mon, 29 Jan 2024 18:31:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUb6L-0005wR-L6
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:31:42 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1rUb5d-0005Qh-UK
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:30:57 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUb6K-00058W-00
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:31:41 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-29026523507so2726957a91.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:31:39 -0800 (PST)
+ id 1rUb5c-00050j-Aj
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:30:57 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6ddd19552e6so1586018b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:30:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706571098; x=1707175898; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706571055; x=1707175855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w0VyFnxuloTGEbgz18a76FD3rClrdXq5QXu0ykcKSCs=;
- b=dDu5Fzmg1m1j4TMzpFO5oBgSfAeYER55EUWsAP6AISz4GNTuOXsNLEQOpxBOjxfVeh
- OFKxHY1Dg9jM8v15c6yBNB4TqCnWHfZOAbkqsu3vQanHP7dydAWjulusS7ejuuEXj+fE
- tNMwJdjjIEzFzc1lzGc8M9N1tOlOuMLKvj2DNy2U53ahCPvDMiKJ9V0c70/bV3JXH8Hw
- lQ5hiurd1PYyXBZ0g7sx3HUeW3HlSU34NvcI6OIFnyeadNpNeeWBt3kvFBxBvWP3lkWr
- cr1kFYBK8mNfHm7+DkL5lR9iP3/rAuOeLaOhyCR04qt2IL1YePOFxEyhWnQXLqWu8Kpl
- faQw==
+ bh=rY4TKU6Y4tdsleFZysMCIHaTnyMqTWQ/l8+rNabU+ew=;
+ b=IwLV4zBz4H2//2udtKcwdrNdrBxQK22U+ZEJcqF6Mg6tc49xDTsW6yOcouTcLYR4ON
+ tObBRAZY6ehsHk7F+5baPb2oAsNpjQjGVL0b0qh/y/yDRbBpPVHVLKOrL7930slQlYyX
+ 4OadKOXCS22u6RFMYDzHLHjUiLut4CwZFw2ftSL1aRkA4oa7Ld0vyyo3AsnZ/srxMZMr
+ BnYJCNqTjOH2FuVqgSzqPn77mWwV+TLm5RMe3pF8e9LKW6x1aBeli0vq/DdfopaozJ6I
+ +fPL8VGqqZJazvXcYOG9k1uWk5rf+A15YdhMpR2kZd5Y0p8zyqAoWEksPA7RVjBWDI3a
+ vKbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706571098; x=1707175898;
+ d=1e100.net; s=20230601; t=1706571055; x=1707175855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w0VyFnxuloTGEbgz18a76FD3rClrdXq5QXu0ykcKSCs=;
- b=cg5nFdDobEIhj72E4H9kAOnOyrYHog9rQxh8NjowidbtGZKDtQpUfpjGG1Aiamk4fK
- DoK6lTFFSR9nq11sNGNNvfqWJgYcnsZGFYYGKaIvTSXIW8n9hU/i+vcNCXJpnhZxc9hb
- l5QyDCcl9k3p2XAEsdLyOabt+BF6Stmp+/Sw+ye3gFX6muvM3Ao1Piizyf5Q1twkAuQ5
- Wthmb1R4eVqSvNrLuhqK961JKaPE2Bf4/Yw1s8poBIA5KkfOfebszP8ifEBoXOWY+NXp
- Q4Ezi1T9Lq/E80lFLDnkucqrbMv23uqvxoiP7gGdGKr3f6lmDNaa7ctl72c4no6sojYg
- dmMw==
-X-Gm-Message-State: AOJu0YzhbFPMEF0QYYWVhD6nI8Gw2jutirZQqxoZymkeAjmwHSwhCc/a
- 2wb2rCuKsblDL4PA44HnclfWkEFwRopt5D1iDlDBX5xy5m0TQMrV7pXfDErgwEa74Vdb9Jg73cP
- 2+A8=
-X-Google-Smtp-Source: AGHT+IGw/8CG5ZBjwIZcWvlYi4Oa4Q3VTp3fsYs80/zzCxy2X/R2NxoC0sTGvcNQ4Ui7N9tQnWA/bw==
-X-Received: by 2002:a17:90a:a512:b0:290:6c4:ad45 with SMTP id
- a18-20020a17090aa51200b0029006c4ad45mr4216647pjq.39.1706571098448; 
- Mon, 29 Jan 2024 15:31:38 -0800 (PST)
+ bh=rY4TKU6Y4tdsleFZysMCIHaTnyMqTWQ/l8+rNabU+ew=;
+ b=XWEtOqaaaypIkpXLgmCiEWA++MYvJD7UDKSYaCixnAQlc5pdDb5r6NzPpnQZywhnCw
+ zMCUq3rd1k9FmzsCnz3D1eCcF65SahtEDsfviPFnDo3uRki4JU7C4d4k/yvdHx+WS0+c
+ L5C+eetpRtbTJJZ7YJzUxMJDETOwCJmr4zjNCt3jgN1zLJaDvxBKms+2Z/pXCjl/0fl4
+ 4Zi4Mgq6vdCDLJMteM79HqtfShmkBKjKcZWtiseUtFdM9wBqt+TcgaMdl5B8v7JGMzC1
+ AvRh+XeOVaIMmi6muLggFaz/nvrRcU1FgRLQGxfK/1vc+Q9dLmAtEEK97hBKCoQPVFSs
+ n4Dg==
+X-Gm-Message-State: AOJu0Yx9axRX6dvtbAnomqVRCmo9R9AIqfuL45nzK3+fybwmVacp59fZ
+ SYVyaW68sPTaO/a08cet3gJ2CaICKDxjwqKHHwe/cj3PH/b0iqit8Z7S43D1zRGgn3LpXeJUWo3
+ yP3c=
+X-Google-Smtp-Source: AGHT+IFpjlox4aJ857gXV0gbqg1nNAMaVFyGKuKc6PGxXnHKKiTMuXks7/hOyBQXx7VYlSYI2PqTJw==
+X-Received: by 2002:a17:903:110d:b0:1d7:6c77:a6e7 with SMTP id
+ n13-20020a170903110d00b001d76c77a6e7mr5432405plh.109.1706571054861; 
+ Mon, 29 Jan 2024 15:30:54 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- l6-20020a170902eb0600b001d8dbb867b1sm2710591plb.179.2024.01.29.15.31.36
+ l6-20020a170902eb0600b001d8dbb867b1sm2710591plb.179.2024.01.29.15.30.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:31:38 -0800 (PST)
+ Mon, 29 Jan 2024 15:30:54 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	anjo@rev.ng
-Subject: [PATCH 22/33] target/riscv: Rename riscv_cpu_mmu_index to
- riscv_env_mmu_index
-Date: Tue, 30 Jan 2024 09:30:32 +1000
-Message-Id: <20240129233043.34558-23-richard.henderson@linaro.org>
+Subject: [PATCH 03/33] target/alpha: Populate CPUClass.mmu_index
+Date: Tue, 30 Jan 2024 09:30:13 +1000
+Message-Id: <20240129233043.34558-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129233043.34558-1-richard.henderson@linaro.org>
 References: <20240129233043.34558-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,50 +94,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Free up the riscv_cpu_mmu_index name for other usage;
-emphasize that the argument is 'env'.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu.h        | 4 ++--
- target/riscv/cpu_helper.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ target/alpha/cpu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5f3955c38d..9c825c7b51 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -498,7 +498,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
- void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
- bool riscv_cpu_vector_enabled(CPURISCVState *env);
- void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
--int riscv_cpu_mmu_index(CPURISCVState *env, bool ifetch);
-+int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
- G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                                MMUAccessType access_type,
-                                                int mmu_idx, uintptr_t retaddr);
-@@ -507,7 +507,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                         bool probe, uintptr_t retaddr);
- char *riscv_isa_string(RISCVCPU *cpu);
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index de705c3703..bf70173a25 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -64,6 +64,11 @@ static bool alpha_cpu_has_work(CPUState *cs)
+                                     | CPU_INTERRUPT_MCHK);
+ }
  
--#define cpu_mmu_index riscv_cpu_mmu_index
-+#define cpu_mmu_index riscv_env_mmu_index
- 
- #ifndef CONFIG_USER_ONLY
- void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index c7cc7eb423..15f87ecdb0 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -33,7 +33,7 @@
- #include "debug.h"
- #include "tcg/oversized-guest.h"
- 
--int riscv_cpu_mmu_index(CPURISCVState *env, bool ifetch)
-+int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
++static int alpha_cpu_mmu_index(CPUState *cs, bool ifetch)
++{
++    return alpha_env_mmu_index(cpu_env(cs));
++}
++
+ static void alpha_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
  {
- #ifdef CONFIG_USER_ONLY
-     return 0;
+     info->mach = bfd_mach_alpha_ev6;
+@@ -230,6 +235,7 @@ static void alpha_cpu_class_init(ObjectClass *oc, void *data)
+ 
+     cc->class_by_name = alpha_cpu_class_by_name;
+     cc->has_work = alpha_cpu_has_work;
++    cc->mmu_index = alpha_cpu_mmu_index;
+     cc->dump_state = alpha_cpu_dump_state;
+     cc->set_pc = alpha_cpu_set_pc;
+     cc->get_pc = alpha_cpu_get_pc;
 -- 
 2.34.1
 
