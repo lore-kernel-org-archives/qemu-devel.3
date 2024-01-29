@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51423C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 11:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5056C47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 11:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUQ9d-0004IS-RM; Mon, 29 Jan 2024 06:50:21 -0500
+	id 1rUQ9f-0004JW-9P; Mon, 29 Jan 2024 06:50:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rUQ9a-0004Go-0j
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rUQ9a-0004Gs-5F
  for qemu-devel@nongnu.org; Mon, 29 Jan 2024 06:50:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rUQ9X-0005EO-BX
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rUQ9X-0005Ep-VZ
  for qemu-devel@nongnu.org; Mon, 29 Jan 2024 06:50:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706529014;
+ s=mimecast20190719; t=1706529015;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pGdUsUnbEy3JNxMMv0OslAob2ajcoIuhX9HMXPICg98=;
- b=MHftfld70SAGaESJwYrZIylCcjAJEGHJF79+Tc6MTVNxic/VhyGKIaMWnSl3ZqoFjJ86Io
- f8MR/qAitHRRWuzXrBH6O11s63zqxDWYAYiwlEQ3LflyCX/Quq+u5e69wYHH0mo9rqBz+i
- oKf6TMAph/UdSMX5RWq7SLlzmX2FQDo=
+ bh=+kcEvoff+jTyOQdBhEG/nEvCT90idC2WnDofHp91FZs=;
+ b=a27jUE1MJXe8Njd5LDvjv/zrCI2az4DCMWAKZKTAEyWk8NJapH2nv/GzQ5vJdbQaVEBB7o
+ biVdZFwWr8FCI1fajZSb+yBaoHbOeCoZhsfMVApgzUe40FGL7JpDiXL0ub5NiPwiu2MeUd
+ b4uPVC4eztbwyCq+UEbJh8oHGffR1lw=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-98-DRuzPmNzOvq7BsQD5qM2Fw-1; Mon, 29 Jan 2024 06:50:10 -0500
-X-MC-Unique: DRuzPmNzOvq7BsQD5qM2Fw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ us-mta-623-qY5dycqCNFO5JdQdfj4_7w-1; Mon, 29 Jan 2024 06:50:10 -0500
+X-MC-Unique: qY5dycqCNFO5JdQdfj4_7w-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A35F286EB23;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A3A6910651E0;
  Mon, 29 Jan 2024 11:50:09 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 84110111E9;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 83EDEC2E180;
  Mon, 29 Jan 2024 11:50:09 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8C26821E66F2; Mon, 29 Jan 2024 12:50:08 +0100 (CET)
+ id 890D721E66E6; Mon, 29 Jan 2024 12:50:08 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: eblake@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
  michael.roth@amd.com, kkostiuk@redhat.com, qemu-block@nongnu.org
-Subject: [PATCH 2/5] qapi: Drop redundant documentation of conditional
-Date: Mon, 29 Jan 2024 12:50:05 +0100
-Message-ID: <20240129115008.674248-3-armbru@redhat.com>
+Subject: [PATCH 1/5] qapi: Drop redundant documentation of inherited members
+Date: Mon, 29 Jan 2024 12:50:04 +0100
+Message-ID: <20240129115008.674248-2-armbru@redhat.com>
 In-Reply-To: <20240129115008.674248-1-armbru@redhat.com>
 References: <20240129115008.674248-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,39 +83,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Documentation generated for dump-skeys contains
+Documentation generated for SchemaInfo looks like
 
-    This command is only supported on s390 architecture.
+    The members of "SchemaInfoBuiltin" when "meta-type" is ""builtin""
+    The members of "SchemaInfoEnum" when "meta-type" is ""enum""
+    The members of "SchemaInfoArray" when "meta-type" is ""array""
+    The members of "SchemaInfoObject" when "meta-type" is ""object""
+    The members of "SchemaInfoAlternate" when "meta-type" is ""alternate""
+    The members of "SchemaInfoCommand" when "meta-type" is ""command""
+    The members of "SchemaInfoEvent" when "meta-type" is ""event""
+    Additional members depend on the value of "meta-type".
 
-and
+The last line became redundant when commit 88f63467c57 (qapi2texi:
+Generate reference to base type members) added the lines preceding it.
+Drop it.
 
-    If
-    ~~
+BlockdevOptions has the same issue.  Drop
 
-    "TARGET_S390X"
-
-The former became redundant in commit 901a34a400a (qapi: add 'If:'
-section to generated documentation) added the latter.  Drop the
-former.
+    Remaining options are determined by the block driver.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/misc-target.json | 2 --
- 1 file changed, 2 deletions(-)
+ qapi/block-core.json | 2 --
+ qapi/introspect.json | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-index 9195e7d26b..03e83c053f 100644
---- a/qapi/misc-target.json
-+++ b/qapi/misc-target.json
-@@ -237,8 +237,6 @@
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 48c181e55d..530c4af50f 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -4665,8 +4665,6 @@
+ # @force-share: force share all permission on added nodes.  Requires
+ #     read-only=true.  (Since 2.10)
  #
- # @filename: the path to the file to dump to
+-# Remaining options are determined by the block driver.
+-#
+ # Since: 2.9
+ ##
+ { 'union': 'BlockdevOptions',
+diff --git a/qapi/introspect.json b/qapi/introspect.json
+index 8df1ce85ed..b041b02ba8 100644
+--- a/qapi/introspect.json
++++ b/qapi/introspect.json
+@@ -93,8 +93,6 @@
+ #     particular order.  (since 4.1 for object types, 4.2 for
+ #     commands, 5.0 for the rest)
  #
--# This command is only supported on s390 architecture.
+-# Additional members depend on the value of @meta-type.
 -#
  # Since: 2.5
- #
- # Example:
+ ##
+ { 'union': 'SchemaInfo',
 -- 
 2.43.0
 
