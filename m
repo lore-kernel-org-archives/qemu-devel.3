@@ -4,122 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 176A3C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 10:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0F8C47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 10:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUP56-0003y4-Cd; Mon, 29 Jan 2024 05:41:36 -0500
+	id 1rUP6T-0006Ir-OI; Mon, 29 Jan 2024 05:43:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
- id 1rUP4q-0003v3-Mr; Mon, 29 Jan 2024 05:41:22 -0500
-Received: from mail-bjschn02on20616.outbound.protection.partner.outlook.cn
- ([2406:e500:4440:2::616]
- helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUP6Q-00068K-85
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 05:42:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeeheng.sia@starfivetech.com>)
- id 1rUP4m-0005iY-3b; Mon, 29 Jan 2024 05:41:18 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HXXV8g1XseaqQB/75iEEVaLF/U1w/9c0SGI+kr5T9N5mT+eL9KUrhxHKhksTK/oY11CQmgyk09edjXAXv/DQxDOgaiNsJxVPwyB/ksP/NcZ50etRGe2SDo2ybheN0FPH3rJXspnPNkSwkN4lW1/8HGvcb+Di4gLEtZkqigj88kXBX9n0NIZAAj/XUcmpKdUIL14h/C2pZ5IlfF2aid9i0wGnnA30Mscw8Labgk3UBkPrS7vzOlfQXkegUHAydH8ff+5lD8E7Go4kM4jdBs9QMagQsCqy+FUpHyn+iZsv22UZD9NkRRlMAcffa00JQq/5YP38LenYpl7v0QXLYkwdMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w7VCP15G1BvqWTdQRPP3FfBZvOzet9rpsAoH/InIbt8=;
- b=RRNAFGsHZ1Zv/VV3IQm7TucH+GiK1PRW6WxdPd4iaCPvGzobo7B4tofWxLy0dFZlzhKbxhjHCResZR2sQ9rlHhn5CNtJk8dkyM1/Uk3thkKgwmmptK2IdNPK/qU25fxxWvfjGxhjhZeIWKyCwBl0NcwHKRYGg8XiTUjA4aIP5y4hoPD5Hf0UUp2DhZgMqfT+chEZQctA/YOC88wvci7nW8II5Tk75tQ+RWSQkDxYW/SrV4lHQJqESxzUOAySRg+5jgfpseOTsQFlpfE3wVZSJgSFqJELt3q1yNscAftFQUhQRt9BdKnEzMD1lT5kaZNTMk06kSIiYRcqW4hbz/3vmw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=starfivetech.com; dmarc=pass action=none
- header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=starfivetech.com;
-Received: from BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c211:f::16) by BJSPR01MB0594.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c211:f::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.32; Mon, 29 Jan
- 2024 10:41:06 +0000
-Received: from BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn
- ([fe80::3862:65b4:c857:c4a6]) by
- BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn ([fe80::3862:65b4:c857:c4a6%4])
- with mapi id 15.20.7228.029; Mon, 29 Jan 2024 10:41:06 +0000
-From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- shannon.zhaosl@gmail.com, jeeheng.sia@starfivetech.com,
- peter.maydell@linaro.org, sunilvl@ventanamicro.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
-Subject: [RESEND RFC 2/3] hw/riscv/virt-acpi-build.c: Generate PPTT table
-Date: Mon, 29 Jan 2024 02:40:38 -0800
-Message-Id: <20240129104039.117671-3-jeeheng.sia@starfivetech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240129104039.117671-1-jeeheng.sia@starfivetech.com>
-References: <20240129104039.117671-1-jeeheng.sia@starfivetech.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BJSPR01CA0004.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c211:c::16) To BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c211:f::16)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUP6N-0006Hk-Vw
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 05:42:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706524974;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pgzS9bU17lbNxvB9ESVquzlxf1k4SIquYvMMtxs74aY=;
+ b=gG0bBKqLN55gVtfkSJ0AID/YzzfcyP8Gspm/Zz/2SJw7pjojjUZY5L04E7KmHn7L3YvVOo
+ PJ3ctBrsONv+IeV+ind36g4sONDNrsN0DaGz6rV+AJ2dJ75bwPPRFza0paQGdoR2Dz1DEL
+ MmRKSwBrZ7aShiazJgNMIuJwZukQ4yw=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-382-9reFVveJM1qUkcjCYh50yg-1; Mon, 29 Jan 2024 05:42:52 -0500
+X-MC-Unique: 9reFVveJM1qUkcjCYh50yg-1
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-5cfccde4a54so994454a12.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 02:42:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706524971; x=1707129771;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pgzS9bU17lbNxvB9ESVquzlxf1k4SIquYvMMtxs74aY=;
+ b=YsSy3ENyFNj1YSn0R4/b9saT/c77MNOTv40PzVmcts64OMzZu4zjy/LAtZV8oEqzeK
+ juGlQPx4RENm9qDwEDAFImYnRZtqwUlpK2vJCoQQ3ydBxxNIxHlgk3KsiPbO41ECvLQf
+ 2v1+mW3NCPEu0zzJ3h1ZLRkDj/twe1xJ1/F5QcsgoffoC1eTwghFB6MKgUeLJcChOnDM
+ h681nrQ7pwKNIiAqcid4tdxDKWXJ7gLhQlCjjf/GXePX2BViUqdCwZFELPN/x9H80hWH
+ z6r7V3R8zM6tDqtsCvSndrnqFK1CBdpJZipIjnltiYdEbs+MUednuX9hokYyQUC5CLmX
+ Kzow==
+X-Gm-Message-State: AOJu0YwSdG+QZUPJqqg8Z4LfKi62FzvsnXSv7a5FH8ar+GSJME58ecQk
+ jgTeek19V3Wlu53mlxLuAIqTACJEyOg1NDSX01/0DKBiRpJ+bhn+k5hcQ8mHUoPsbaurV1HRfbf
+ QJHBl/1UJcaRr0FbuT6oy23VXE2j8C6xJ0W34OoJ70HkCQnOFCLkJQmTnRC0UUzY=
+X-Received: by 2002:a17:90a:d157:b0:290:239b:8f8e with SMTP id
+ t23-20020a17090ad15700b00290239b8f8emr6210546pjw.4.1706524970850; 
+ Mon, 29 Jan 2024 02:42:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJ3L3JtEQN49oRbatoeNN7MifzTAejPK9MdsBs+/p923n/DgVSUkzceTUgNSDBPs9yhoaGsw==
+X-Received: by 2002:a17:90a:d157:b0:290:239b:8f8e with SMTP id
+ t23-20020a17090ad15700b00290239b8f8emr6210535pjw.4.1706524970462; 
+ Mon, 29 Jan 2024 02:42:50 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ q14-20020a17090a68ce00b00290b9694e81sm7851688pjj.1.2024.01.29.02.42.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jan 2024 02:42:49 -0800 (PST)
+Date: Mon, 29 Jan 2024 18:42:44 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Yuan Liu <yuan1.liu@intel.com>
+Cc: farosas@suse.de, leobras@redhat.com, qemu-devel@nongnu.org,
+ nanhai.zou@intel.com
+Subject: Re: [PATCH v3 0/4] Live Migration Acceleration with IAA Compression
+Message-ID: <ZbeBJEDlqX51dlBN@x1n>
+References: <20240103112851.908082-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BJSPR01MB0561:EE_|BJSPR01MB0594:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9ef9589a-0228-4d00-9edd-08dc20b6cc3e
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lQGDoRwvyRYOpb9lR9RsX9n0/lVBNRKIlyQtREe5n9gkb6xR9aG+cvuXOeTrw8tK2Yobb7iP4TMotVrR0yT99ii8InBe/zKg8nz5g8VKuN2M1NzR4XueCgj/q8adYEkJd/sP48k3Vze5YaJu6DwENII2R1FK6+8qUKK7pLQPmgr7E7Wadw7nFyu3k/9jkac9xpiRflQ8dOIHNzwQAPCurBf+uVcE2KZr2W+4cZTcjDNDsg9DvJekfE8UlygB/2bqwb4Gyf00Q90FuRkfBpZspj82YMCz14rnXxHMJtw/fTfusrIQg7oW5at4xBNyhHl99KBB8NeJvDYMPKMKcVZuDIsAztjrj72aVQsMzvlUqWS98G9YPjdET3qx0uRwGJ/1Ib1avNHYovIDnNYZjLEwYBI1pMnatLJmTb5ZcbZLd3XxWE+huWJfNTfIFHUPOi6jmhaKV4wXcsMBlfF3IqjX+UvVQTyvfynXGIv+TnBc8+NF6QWYrk94PK9d0M9PihqjavsyVlU08KInw+kFDrtbu3dXrOkMxXpp19iqc2gXnJ3qu68CRLZcfYlTnykr0hSf
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn; PTR:;
- CAT:NONE;
- SFS:(13230031)(366004)(136003)(346002)(396003)(39830400003)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(38350700005)(41320700001)(2616005)(2906002)(52116002)(5660300002)(6666004)(7416002)(66946007)(66556008)(4326008)(26005)(1076003)(66476007)(8676002)(8936002)(38100700002)(83380400001)(508600001)(41300700001)(40180700001)(86362001)(40160700002)(36756003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?fmYyUEZkAyx95G1afj6YhupAyyFNeDmgEanGKNFXZKi2QvM5dYKwv6YgIRVe?=
- =?us-ascii?Q?UkWT86t5wP7kS0UNUgYtGTVIL1UAemE8Y3bOPYYoxD9cKkwA1okPStasj20Q?=
- =?us-ascii?Q?9T4aTfAJUxNjpQtacBz2rcc55uQQxJPYV7rsCuQZ+uy4cjF0JSwksx3Kqtig?=
- =?us-ascii?Q?8oqjmFlp6EA8T1Wo/gfwGfkfV6W7Ax060kGCwdN5yHyLBOOTEXOnJV1W9TD4?=
- =?us-ascii?Q?/TQ+MoUajzdfMvsEsf1Y4w/+rxk0Ym8FMgUe6dQMdP5EMFZnm36Nok4kxLbL?=
- =?us-ascii?Q?TX8loUFZytr5Vx3tb2Kt8C1GcmKD7VA5TXrAFAtelR4oKII4KJe+Cz6zB0Vy?=
- =?us-ascii?Q?1YNcxiSLQbmIhe60j1632xbV3O9D7p9ykx6O8I4Rp6la/964v0vNl9jGY19f?=
- =?us-ascii?Q?sLgQX2OakgTss2fhNBLA/Rsd9/Xkl2KGK4mRfJRWYX7CmEzPCa3fFRFP0AOq?=
- =?us-ascii?Q?T9kA/RQbdlRIttaq9Dlm7Sxv3f7Nla+aaXKFzaWaF9TetkmaRhS40rl7b8dC?=
- =?us-ascii?Q?uWDky04jrxVaQvpMer6zg8qq4PAQ6CG0oiCG8gzlqfnBikjFLFQOlYeAIute?=
- =?us-ascii?Q?wBVFlfW0MQdPxLKYZ4Zg5AuFbqdPyb9pm0anPR+uL5a0EqQIuJSP7+rUWFrB?=
- =?us-ascii?Q?lzqOLvQyjJvg6UXyY/DEUXY0K1SGlbRmtEHj5OuXJtO/W/YirYCG18dwP9d2?=
- =?us-ascii?Q?gwt2DBhc6Q0DGuTH/hQF1eEdgQeDIDaaBym/WT3ebZJnmnYu3YXJTOgATAxx?=
- =?us-ascii?Q?zCTMZl4iIHHSpHiZYRxj7CdbKBfZ3DYeouCFy82rTHubVKAxPOFu3q4VvPqH?=
- =?us-ascii?Q?BzRPRK3pH1RUWdxxxuCGB/rEkdYb8fJ3ZydtQRW2iqUI4xu0x3tX+gBOxQRC?=
- =?us-ascii?Q?itxJ9GHCddxAtaZ9bFQlbpu9670vuMtNMMmHUavBDSeioXPipFw2VnKdTnWv?=
- =?us-ascii?Q?yzstHc51XiD9sw2hwgg20atav02Pc/Oafhi9+MMJfjxX0re64fFxQQJ7rq6G?=
- =?us-ascii?Q?iO18MIfxmFwtDHBrtdp8VARFVzE2N6BfJQ9yVRtMYLiN7JXnRDQ5lb3eZKtv?=
- =?us-ascii?Q?+IAONULpuPBPTFBQHmmElT0IzrNLumgy2VQRidrPy7J279KWPE2wl65JMxRd?=
- =?us-ascii?Q?J6TPYU2LNpg3mzC+mJSYWMVpnfuQ3NSkBbfPird2ep1B5eET+HxKhcsIfc5O?=
- =?us-ascii?Q?hVKEnyZAP2i0T2pHvBbFoj70zXTB1fm63mX8e5ysjyJFe3VtfkXwK+dZvB/X?=
- =?us-ascii?Q?t6C9l4IxmvaZficH5e3OZv0Kk/O2e/SqGyC8+UyaxkpKOssMHCE8HdUpvwgB?=
- =?us-ascii?Q?cGVJr+3ieDjUAYn/kqnecCbj1MSZZbki5zGpgfNLfl2D9k/3Mn2Dl7qGL3x7?=
- =?us-ascii?Q?JpUYmtrcug41EsbKMECGr5BCOYrBEhhUgW6a0wotO+MveY7hEEFNbBVWlFYI?=
- =?us-ascii?Q?WWjqTtzpkfjqXQ2fEbrkn5mgcMfSij2Lln9HMybyOgVDwwQ6mVtGqg7KqxYT?=
- =?us-ascii?Q?36rTV4gA/hxnIBeoMKlkU7PmIPEAvVJOK843dbJNmiIYi9lxTyWWOz8f+Yzc?=
- =?us-ascii?Q?orWEGH2wIFz9TlIKxq3WS9uDjAcr/QOG/sx/AAXz56W2cyIwFj6uP6aK4yuq?=
- =?us-ascii?Q?wg=3D=3D?=
-X-OriginatorOrg: starfivetech.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9ef9589a-0228-4d00-9edd-08dc20b6cc3e
-X-MS-Exchange-CrossTenant-AuthSource: BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jan 2024 10:41:06.5652 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rvFX3C1K0rXLTcIiMkm0of+3og/Sl3cJtmEkxF1E9zf21jfYP8kWCL5/rdaYGPjvHa1H7SNRnFEHwKqqX+lrrMQQlE3Hw3byzswr7odBNUI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BJSPR01MB0594
-Received-SPF: pass client-ip=2406:e500:4440:2::616;
- envelope-from=jeeheng.sia@starfivetech.com;
- helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240103112851.908082-1-yuan1.liu@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,108 +98,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generate the Processor Properties Topology Table (PPTT) with a
-cache type 1 structure for RISC-V virtual machine. A 3-layer
-cache topology is used.
+On Wed, Jan 03, 2024 at 07:28:47PM +0800, Yuan Liu wrote:
+> Hi,
 
-Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
----
- hw/riscv/virt-acpi-build.c | 49 +++++++++++++++++++++++++++++++++++++-
- hw/riscv/virt.c            |  1 +
- 2 files changed, 49 insertions(+), 1 deletion(-)
+Hi, Yuan,
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 26c7e4482d..d95ae1cf01 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -38,6 +38,7 @@
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "qemu/units.h"
- #include "sysemu/reset.h"
- 
- #define ACPI_BUILD_TABLE_SIZE             0x20000
-@@ -528,12 +529,54 @@ static void build_madt(GArray *table_data,
-     acpi_table_end(linker, &table);
- }
- 
-+static void pptt_setup(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-+                       const char *oem_id, const char *oem_table_id)
-+{
-+    CPUCaches default_cache_info = {
-+        .l1d_cache = &(CPUCacheInfo) {
-+            .type = DATA_CACHE,
-+            .size = 64 * KiB,
-+            .line_size = 64,
-+            .associativity = 4,
-+            .sets = 256,
-+            .attributes = 0x02,
-+        },
-+        .l1i_cache = &(CPUCacheInfo) {
-+            .type = INSTRUCTION_CACHE,
-+            .size = 64 * KiB,
-+            .line_size = 64,
-+            .associativity = 4,
-+            .sets = 256,
-+            .attributes = 0x04,
-+        },
-+        .l2_cache = &(CPUCacheInfo) {
-+            .type = UNIFIED_CACHE,
-+            .size = 2048 * KiB,
-+            .line_size = 64,
-+            .associativity = 8,
-+            .sets = 4096,
-+            .attributes = 0x0a,
-+        },
-+        .l3_cache = &(CPUCacheInfo) {
-+            .type = UNIFIED_CACHE,
-+            .size = 4096 * KiB,
-+            .line_size = 64,
-+            .associativity = 8,
-+            .sets = 8192,
-+            .attributes = 0x0a,
-+        },
-+    };
-+
-+    build_pptt(table_data, linker, ms, oem_id, oem_table_id,
-+               &default_cache_info);
-+}
-+
- static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
- {
-     GArray *table_offsets;
-     unsigned dsdt, xsdt;
-     GArray *tables_blob = tables->table_data;
--
-+    MachineState *ms = MACHINE(s);
-     table_offsets = g_array_new(false, true,
-                                 sizeof(uint32_t));
- 
-@@ -555,6 +598,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
-     acpi_add_table(table_offsets, tables_blob);
-     build_rhct(tables_blob, tables->linker, s);
- 
-+    acpi_add_table(table_offsets, tables_blob);
-+    pptt_setup(tables_blob, tables->linker, ms,
-+               s->oem_id, s->oem_table_id);
-+
-     acpi_add_table(table_offsets, tables_blob);
-     {
-         AcpiMcfgInfo mcfg = {
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index f9fd1341fc..a6f468fc22 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1710,6 +1710,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-     mc->cpu_index_to_instance_props = riscv_numa_cpu_index_to_props;
-     mc->get_default_cpu_node_id = riscv_numa_get_default_cpu_node_id;
-     mc->numa_mem_supported = true;
-+    mc->smp_props.clusters_supported = true;
-     /* platform instead of architectural choice */
-     mc->cpu_cluster_has_numa_boundary = true;
-     mc->default_ram_id = "riscv_virt_board.ram";
+I have a few comments and questions.  Many of them can be pure questions as
+I don't know enough on these new technologies.
+
+> 
+> I am writing to submit a code change aimed at enhancing live migration
+> acceleration by leveraging the compression capability of the Intel
+> In-Memory Analytics Accelerator (IAA).
+> 
+> The implementation of the IAA (de)compression code is based on Intel Query
+> Processing Library (QPL), an open-source software project designed for
+> IAA high-level software programming. https://github.com/intel/qpl
+> 
+> In the last version, there was some discussion about whether to
+> introduce a new compression algorithm for IAA. Because the compression
+> algorithm of IAA hardware is based on deflate, and QPL already supports
+> Zlib, so in this version, I implemented IAA as an accelerator for the
+> Zlib compression method. However, due to some reasons, QPL is currently
+> not compatible with the existing Zlib method that Zlib compressed data
+> can be decompressed by QPl and vice versa.
+> 
+> I have some concerns about the existing Zlib compression
+>   1. Will you consider supporting one channel to support multi-stream
+>      compression? Of course, this may lead to a reduction in compression
+>      ratio, but it will allow the hardware to process each stream 
+>      concurrently. We can have each stream process multiple pages,
+>      reducing the loss of compression ratio. For example, 128 pages are
+>      divided into 16 streams for independent compression. I will provide
+>      the a early performance data in the next version(v4).
+
+I think Juan used to ask similar question: how much this can help if
+multifd can already achieve some form of concurrency over the pages?
+Couldn't the user specify more multifd channels if they want to grant more
+cpu resource for comp/decomp purpose?
+
+IOW, how many concurrent channels QPL can provide?  What is the suggested
+concurrency channels there?
+
+> 
+>   2. Will you consider using QPL/IAA as an independent compression
+>      algorithm instead of an accelerator? In this way, we can better
+>      utilize hardware performance and some features, such as IAA's
+>      canned mode, which can be dynamically generated by some statistics
+>      of data. A huffman table to improve the compression ratio.
+
+Maybe one more knob will work?  If it's not compatible with the deflate
+algo maybe it should never be the default.  IOW, the accelerators may be
+extended into this (based on what you already proposed):
+
+  - auto ("qpl" first, "none" second; never "qpl-optimized")
+  - none (old zlib)
+  - qpl (qpl compatible)
+  - qpl-optimized (qpl uncompatible)
+
+Then "auto"/"none"/"qpl" will always be compatible, only the last doesn't,
+user can select it explicit, but only on both sides of QEMU.
+
+> 
+> Test condition:
+>   1. Host CPUs are based on Sapphire Rapids, and frequency locked to 3.4G
+>   2. VM type, 16 vCPU and 64G memory
+>   3. The Idle workload means no workload is running in the VM 
+>   4. The Redis workload means YCSB workloadb + Redis Server are running
+>      in the VM, about 20G or more memory will be used.
+>   5. Source side migartion configuration commands
+>      a. migrate_set_capability multifd on
+>      b. migrate_set_parameter multifd-channels 2/4/8
+>      c. migrate_set_parameter downtime-limit 300
+>      d. migrate_set_parameter multifd-compression zlib
+>      e. migrate_set_parameter multifd-compression-accel none/qpl
+>      f. migrate_set_parameter max-bandwidth 100G
+>   6. Desitination side migration configuration commands
+>      a. migrate_set_capability multifd on
+>      b. migrate_set_parameter multifd-channels 2/4/8
+>      c. migrate_set_parameter multifd-compression zlib
+>      d. migrate_set_parameter multifd-compression-accel none/qpl
+>      e. migrate_set_parameter max-bandwidth 100G
+
+How is zlib-level setup?  Default (1)?
+
+Btw, it seems both zlib/zstd levels are not even working right now to be
+configured.. probably overlooked in migrate_params_apply().
+
+> 
+> Early migration result, each result is the average of three tests
+>  +--------+-------------+--------+--------+---------+----+-----+
+>  |        | The number  |total   |downtime|network  |pages per |
+>  |        | of channels |time(ms)|(ms)    |bandwidth|second    |
+>  |        | and mode    |        |        |(mbps)   |          |
+>  |        +-------------+-----------------+---------+----------+
+>  |        | 2 chl, Zlib | 20647  | 22     | 195     | 137767   |
+>  |        +-------------+--------+--------+---------+----------+
+>  | Idle   | 2 chl, IAA  | 17022  | 36     | 286     | 460289   |
+>  |workload+-------------+--------+--------+---------+----------+
+>  |        | 4 chl, Zlib | 18835  | 29     | 241     | 299028   |
+>  |        +-------------+--------+--------+---------+----------+
+>  |        | 4 chl, IAA  | 16280  | 32     | 298     | 652456   |
+>  |        +-------------+--------+--------+---------+----------+
+>  |        | 8 chl, Zlib | 17379  | 32     | 275     | 470591   |
+>  |        +-------------+--------+--------+---------+----------+
+>  |        | 8 chl, IAA  | 15551  | 46     | 313     | 1315784  |
+
+The number is slightly confusing to me.  If IAA can send 3x times more
+pages per-second, shouldn't the total migration time 1/3 of the other if
+the guest is idle?  But the total times seem to be pretty close no matter N
+of channels. Maybe I missed something?
+
+>  +--------+-------------+--------+--------+---------+----------+
+> 
+>  +--------+-------------+--------+--------+---------+----+-----+
+>  |        | The number  |total   |downtime|network  |pages per |
+>  |        | of channels |time(ms)|(ms)    |bandwidth|second    |
+>  |        | and mode    |        |        |(mbps)   |          |
+>  |        +-------------+-----------------+---------+----------+
+>  |        | 2 chl, Zlib | 100% failure, timeout is 120s        |
+>  |        +-------------+--------+--------+---------+----------+
+>  | Redis  | 2 chl, IAA  | 62737  | 115    | 4547    | 387911   |
+>  |workload+-------------+--------+--------+---------+----------+
+>  |        | 4 chl, Zlib | 30% failure, timeout is 120s         |
+>  |        +-------------+--------+--------+---------+----------+
+>  |        | 4 chl, IAA  | 54645  | 177    | 5382    | 656865   |
+>  |        +-------------+--------+--------+---------+----------+
+>  |        | 8 chl, Zlib | 93488  | 74     | 1264    | 129486   |
+>  |        +-------------+--------+--------+---------+----------+
+>  |        | 8 chl, IAA  | 24367  | 303    | 6901    | 964380   |
+>  +--------+-------------+--------+--------+---------+----------+
+
+The redis results look much more preferred on using IAA comparing to the
+idle tests.  Does it mean that IAA works less good with zero pages in
+general (assuming that'll be the majority in idle test)?
+
+From the manual, I see that IAA also supports encryption/decryption.  Would
+it be able to accelerate TLS?
+
+How should one consider IAA over QAT?  What is the major difference?  I see
+that IAA requires IOMMU scalable mode, why?  Is it because the IAA HW is
+something attached to the pcie bus (assume QAT the same)?
+
+Thanks,
+
 -- 
-2.34.1
+Peter Xu
 
 
