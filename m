@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14695C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F15C47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUagT-0008Up-HO; Mon, 29 Jan 2024 18:05:00 -0500
+	id 1rUadM-0005wG-Lg; Mon, 29 Jan 2024 18:01:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUaeB-0006xo-7v
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:39 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1rUadF-0005uf-Fs
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:38 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUae9-00005H-Lm
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:34 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6ddc0c02593so1489575b3a.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:33 -0800 (PST)
+ id 1rUadC-0008NU-Np
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:37 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6ddb1115e82so2245937b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569352; x=1707174152; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569293; x=1707174093; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mOPcVGQzJ6S800tkZazccfXJHRzcbDUG6SoAa/uVeRg=;
- b=utIwoHYBZ2XpeKrSNphEJ/8P7a+iq70nO4oAQitxwzJtWvzxPlWUmeYCi0qGy/QaWi
- sLQKtkbaTgyThnTp+U0pJXF1um47feB2kp63nZX7d0l7Y/nwXfU6fKU/JFT0wW4C/6NU
- NS2h0NtsJc8U6avH6YefOPJZwcHA+JCEhjqjVtdg2+m4mDKYMUVO1CIFzls3NILlaDLk
- Pz+8u4+HYA5jNuwMKUxgHVMRLfn2ctL2c2XqQ6TF/shchAxSKQ0r/8kmuh0FRhfEVOCt
- 0CxOoeplMqPDoj4r+raZg/o9nqhymYTSLtR5QVTZL/76VsPxgrlpDsYoXgDgIBkL753R
- xXVQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ADBUc3fCETku7gSMiSslG1Ep+CbDq8k+uqgwv8Xr0vk=;
+ b=RMgObZ+duwuBfwDffDR4r9TalTdjrZ0NbSqyMPUvSv9gqX+3ewKskilUw968Y+5AZg
+ iJBz2uLa7ya/xMH1qXXDxaBIyTGEVqmFJETu0KgXCh2fKZMlzORrs+pROuObQ3XlaLj6
+ 9dDgfPmNjFZbbobYTJ+aa1elqQk/+xbHa253qUJwmcKTYGuvMwUgRayHncpA2+cbWPdB
+ 1VhbNzjo29mbhrHrVFQeJP7Nz+yYMF88TXvpFxjBERg0AXasUhmjLVqyXnPZWsZmNdXj
+ HbpcaGhaOYgif4sL6+SsuuiSUE7+ZyARLGmq6J5YItZP5UOcIfYXRkv5ALSeDwhCpdf5
+ InJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569352; x=1707174152;
+ d=1e100.net; s=20230601; t=1706569293; x=1707174093;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mOPcVGQzJ6S800tkZazccfXJHRzcbDUG6SoAa/uVeRg=;
- b=qCcJ87UUx8BdBmIkqj3nQyieDOa+JdSvyhbeo2dXQRx2CHESjaQQeKpUxvREidw4TD
- i+8GFWoRudPhtpxHBeO5IuTVuuX3PAHUIwfW8GnQKSbhsjlK3DF+nNTG+kNj2moNpuqo
- yp5y9z+mca0cuGmWkazl+3QoZr0JVymmxkvsfS1QeEUCfkiX0dfWme92bIGaeLoCm9Hx
- LGDjuwgdEP/RXNS6HzPSCc7jMkO55PY1AE4ce1us5rS5wE79exyBb+QY3Yb6NjoUBIOR
- PDCDrWJIBnKi8RsXiD4/zhFNHVAzISCXcv4qLI6sMZWCxz6nIx5YCqIGCXND9G0VwJ5P
- tXBQ==
-X-Gm-Message-State: AOJu0YxTikyOc2qRcqGH4C2hyAYb5fwjG3xVYJ+Cy5Ow9wE9dVYwHVoj
- N9B4kLaPZ3LlPheT3pnn42XKLEl1Occt/KnQTQES2TVh4s4uxsuX32GuCGlHSCkTTzsoJTGETnk
- XhWo=
-X-Google-Smtp-Source: AGHT+IEOs4hYoxBzj6NRdLGYBdhNm+09r6c0rK57T204LDDquNjtMyBvBPTJaK8Wuf+yPKji2GoXFQ==
-X-Received: by 2002:a05:6a00:2f13:b0:6dd:b12f:c394 with SMTP id
- fe19-20020a056a002f1300b006ddb12fc394mr2848911pfb.32.1706569352011; 
- Mon, 29 Jan 2024 15:02:32 -0800 (PST)
+ bh=ADBUc3fCETku7gSMiSslG1Ep+CbDq8k+uqgwv8Xr0vk=;
+ b=ed9ONIywGT9jlM2RgYpbcRVPqxs7YGqY08UQk+W5giDaXtsNTFpPU4SqPQA1ZIjQz5
+ qZT/eeelft6Vz+sMhlF0vzL2GORf950MEZSaVQXOl+bmcapRJ+OBdviaCOJM2auUh7nl
+ VCzS3Z0FjtaT5cOo75mRCbFTWwsid5n+qeJXcfVIF8xmFrbUguucp6cKpbMY6B2Ep1b+
+ M9Hg4n3QlOdhc/K1iutD3Qg8IqcJc9TNAGiQH251zfGjVESSGAcrk42i20QhjqCNa7kN
+ pjoPerv9ekHe0ZJzVw14jt2IbBVeaCxdWDEVpxcZD4WyzVCU6FMOXoRUcMz21C2nEWoK
+ LIWw==
+X-Gm-Message-State: AOJu0YyzWeH3HJ2D+7rQ1MziiMcMkI2+t90NxNVu71Q100mwbDDcyXBk
+ rKJmDj2lsC0hUvMKJqL9IlaAOiiUNIjysTU0yln0POpbvn2/Mbd+D4ta6HG9siClvhfADF18Vop
+ XVLs=
+X-Google-Smtp-Source: AGHT+IFptAI+2J+nBhbOdEYFzh067vlo7/8VVtRTRMDgkL3n7e9lb9P/13CRj/F7NerldqMJKkbE/g==
+X-Received: by 2002:a05:6a00:c8e:b0:6dd:c35c:e7c5 with SMTP id
+ a14-20020a056a000c8e00b006ddc35ce7c5mr7121237pfv.18.1706569293306; 
+ Mon, 29 Jan 2024 15:01:33 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.30
- for <qemu-devel@nongnu.org>
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:02:31 -0800 (PST)
+ Mon, 29 Jan 2024 15:01:32 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/31] target/loongarch: Constify loongarch_tcg_ops
-Date: Tue, 30 Jan 2024 09:01:15 +1000
-Message-Id: <20240129230121.8091-26-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>
+Subject: [PULL 03/31] hw/core: Include vaddr.h from cpu.h
+Date: Tue, 30 Jan 2024 09:00:53 +1000
+Message-Id: <20240129230121.8091-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,24 +93,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Anton Johansson <anjo@rev.ng>
+
+cpu-common.h is only needed for vaddr
+
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240119144024.14289-8-anjo@rev.ng>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/loongarch/cpu.c | 2 +-
+ include/hw/core/cpu.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index dd3e46a726..fb8dde7def 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -734,7 +734,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- #ifdef CONFIG_TCG
- #include "hw/core/tcg-cpu-ops.h"
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 238c02c05e..db58f12233 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -22,8 +22,8 @@
  
--static TCGCPUOps loongarch_tcg_ops = {
-+static const TCGCPUOps loongarch_tcg_ops = {
-     .initialize = loongarch_translate_init,
-     .synchronize_from_tb = loongarch_cpu_synchronize_from_tb,
-     .restore_state_to_opc = loongarch_restore_state_to_opc,
+ #include "hw/qdev-core.h"
+ #include "disas/dis-asm.h"
+-#include "exec/cpu-common.h"
+ #include "exec/hwaddr.h"
++#include "exec/vaddr.h"
+ #include "exec/memattrs.h"
+ #include "exec/tlb-common.h"
+ #include "qapi/qapi-types-run-state.h"
 -- 
 2.34.1
 
