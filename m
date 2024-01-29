@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77707C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13976C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUnS-0001Qi-Ut; Mon, 29 Jan 2024 11:47:47 -0500
+	id 1rUUpA-0008KV-NS; Mon, 29 Jan 2024 11:49:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmP-0007O1-FT
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:42 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUnk-0003Af-JG
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:48:04 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmM-0003yy-VB
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:40 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40ef6c471d5so10101295e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUnf-0004Vf-CS
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:48:04 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-33ae7ae9ec5so979776f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:47:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706546793; x=1707151593; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706546877; x=1707151677; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8fRIZrJNpcnOiODb5mhhkKtvMpcISUpGajS0aMN6lEM=;
- b=gku0dkQMgLTlxeDCD6S7HS+yJM2k1H2BFXwRNKUkkEATbXMbz+9Pp25VTCACbOTRq7
- hFSvymlv32/0JFTWDSztrcgaJM9xfXsun8TvvCr9wAsCW7ist7vUOLDugdbfUa5pmnm2
- uqAxn1q3Ff9SCX26Jcvo1TfyvwXyF4oT0Zc6LGEK2xCdr6CRMODAQO6T64OgcWKvo1mj
- 4A0sJeQf87AKslF2twT3lpTm9hz3a2FUN6VVy79zAzOrAnFeyTzZqBCgbQtSQOAgGXOF
- 0nUOMZzsiqGKuMd9USxjwGzlTBnwXj+wH1qhSO2ktQUAV/E/fMwrOi3Ad2/NxnI13z0S
- nV2A==
+ bh=nDyOJncTz/gz39l44d2jGwByTaW/KG4k2gJ/GNswNnI=;
+ b=zF2HpAqjvSq0m0KzUV8Hs2RJ3Ceq+etm4TrzfpUOzNV6gXqzGGcRn7XENC65KK1SPh
+ UFkk60YM4MSGBkMUL82Ngbl6YooTb0gmrceFs8XvnHFanImtpxwlpxXvirEzlrxnGPrT
+ GkBxCWexNJF9hMmkjgCHMbEtigVn5mM1Ql/s4SQY4ID4X1u06euUWobCcKXQlapz9K6B
+ 7uKY70DO5osnApoFIERH67Ck8IHC4LCPdtQdJU6Hr+Bj2NK51equJgvm3zNUau4DCpL6
+ d9RDR4CV57ZNRT+WjuK3itOf3O+GTTg89nX/IJmktZjswAIC3NeHkLucdGHmMl9ezxZT
+ mOVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706546793; x=1707151593;
+ d=1e100.net; s=20230601; t=1706546877; x=1707151677;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8fRIZrJNpcnOiODb5mhhkKtvMpcISUpGajS0aMN6lEM=;
- b=Xez1OC7vaj4wwvpXI4IHGrB20/vINbwEPSbRWi5s+wclrs2VfJST5COdx3uile+3Bb
- Rgo3smmn1jY37h/kBQO0MN0+fvKP4J36d3IiglqmeTYcEPbt0VVfb+M3XWK/HUGXFj3i
- N34UYiAkIch5/IHkbeeUiWZKsQ+klo5Oul0o7Aqn2kjUHhU9qljSGViiR76Oy5a1471J
- flD6KvuGFn91eni55m6m1g11GX3uoIiz2zoa5M+igNqlzwhrdUUDc8ZfB18UjoJSMjVy
- fEazZKp0O67jn6KdgKdhu6GycIT6hVG/OkEZP9KzmIJd3KgofbfijkLrNxNtKTuDccDA
- 2Pmg==
-X-Gm-Message-State: AOJu0Yy1pOu/YCOw36MQXa0pbql2RUOADuQEZq5+7GzV03FEYrx6u35S
- BSXHksPSbgveBGnbXd8IHF2bmTA3wW/Ne5S5yCuO57YI0D4cjSwgnNNlLvt1I/InCwCoyzf3lmH
- Z
-X-Google-Smtp-Source: AGHT+IH/9F8cyyKVNSFyJK/XuxhMwJqDVtIMy6daRNXg1ZJWGMneBXNSLk4RtK2/569lG7qwYgQxgQ==
-X-Received: by 2002:a05:600c:1986:b0:40e:e97c:e71 with SMTP id
- t6-20020a05600c198600b0040ee97c0e71mr6257966wmq.1.1706546793662; 
- Mon, 29 Jan 2024 08:46:33 -0800 (PST)
+ bh=nDyOJncTz/gz39l44d2jGwByTaW/KG4k2gJ/GNswNnI=;
+ b=btQ1IQ5axkPN76+IgJJh462izp0MJQrGtM7uU81fyh6b9bwEVLQBCHiz4x2gH2sLXe
+ zl2yA3DuD9kdT5uoAtrqQdhQs84EqRWzHaTlAx+CXd8POvZwVygixH93X/NM4VBw7nQu
+ e5z52y5ERl7aVsblvAqkEo4RWC7Wh0URsZWaI5vT72pJMktM67iit49nM+2ULRwSRfmh
+ ieG5M7KcTxFTywtV4wP/OnMBpIpZ5z1FrMKYitRgjI3YiFr7SyuDvTaRMm6qX/g7Lte1
+ sZvMkKHXonendVjH352fJiCeD81xJmKCr6CTqr5RLJBHD66ny+dPVMqdBmzP40wuZbf1
+ 2RcA==
+X-Gm-Message-State: AOJu0YxAIeWoMt1aUrCRb1toy8RLRVJVA3yJSB4rRmgKwzvtPK8ve1fs
+ SQr7RzlXhGZVts2B1Uc590cc7l1ICeAkd979KGy68vRuLhFHbJdUI5R3sfCYj6lGC8/k6Trq41e
+ n
+X-Google-Smtp-Source: AGHT+IGpSP62XxzQ6ZDTlpeFHsIrctZ9h8BZDrmsx+XYzXCe3dEYoh7yTLPt/V9X39N+RCxRJF1Yww==
+X-Received: by 2002:a5d:6812:0:b0:33a:e75e:281c with SMTP id
+ w18-20020a5d6812000000b0033ae75e281cmr3295951wru.5.1706546877555; 
+ Mon, 29 Jan 2024 08:47:57 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- w18-20020a05600c475200b0040e9f7308f4sm10656778wmo.10.2024.01.29.08.46.31
+ a15-20020a056000100f00b0033aee3bfac5sm2738967wrx.16.2024.01.29.08.47.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 08:46:32 -0800 (PST)
+ Mon, 29 Jan 2024 08:47:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 12/29] target/hppa: Prefer fast cpu_env() over slower CPU
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH v3 26/29] target/sparc: Prefer fast cpu_env() over slower CPU
  QOM cast macro
-Date: Mon, 29 Jan 2024 17:44:54 +0100
-Message-ID: <20240129164514.73104-13-philmd@linaro.org>
+Date: Mon, 29 Jan 2024 17:45:08 +0100
+Message-ID: <20240129164514.73104-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,88 +103,237 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Mechanical patch produced running the command documented
 in scripts/coccinelle/cpu_env.cocci_template header.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/hppa/cpu.c        | 8 ++------
- target/hppa/int_helper.c | 8 ++------
- target/hppa/mem_helper.c | 3 +--
- 3 files changed, 5 insertions(+), 14 deletions(-)
+ target/sparc/cpu.c          | 17 +++++------------
+ target/sparc/gdbstub.c      |  3 +--
+ target/sparc/int32_helper.c |  3 +--
+ target/sparc/int64_helper.c |  3 +--
+ target/sparc/ldst_helper.c  |  6 ++----
+ target/sparc/mmu_helper.c   | 15 +++++----------
+ target/sparc/translate.c    |  9 +++------
+ 7 files changed, 18 insertions(+), 38 deletions(-)
 
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 14e17fa9aa..3200de0998 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -106,11 +106,8 @@ void hppa_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                   MMUAccessType access_type, int mmu_idx,
-                                   uintptr_t retaddr)
- {
--    HPPACPU *cpu = HPPA_CPU(cs);
--    CPUHPPAState *env = &cpu->env;
--
-     cs->exception_index = EXCP_UNALIGN;
--    hppa_set_ior_and_isr(env, addr, MMU_IDX_MMU_DISABLED(mmu_idx));
-+    hppa_set_ior_and_isr(cpu_env(cs), addr, MMU_IDX_MMU_DISABLED(mmu_idx));
- 
-     cpu_loop_exit_restore(cs, retaddr);
- }
-@@ -145,8 +142,7 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
- static void hppa_cpu_initfn(Object *obj)
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 152bee4f81..72a9b9a285 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -32,9 +32,8 @@
+ static void sparc_cpu_reset_hold(Object *obj)
  {
      CPUState *cs = CPU(obj);
--    HPPACPU *cpu = HPPA_CPU(obj);
--    CPUHPPAState *env = &cpu->env;
-+    CPUHPPAState *env = cpu_env(CPU(obj));
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+     SPARCCPUClass *scc = SPARC_CPU_GET_CLASS(obj);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
  
-     cs->exception_index = -1;
-     cpu_hppa_loaded_fr0(env);
-diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
-index efe638b36e..d072ad2af7 100644
---- a/target/hppa/int_helper.c
-+++ b/target/hppa/int_helper.c
-@@ -99,8 +99,7 @@ void HELPER(write_eiem)(CPUHPPAState *env, target_ulong val)
- 
- void hppa_cpu_do_interrupt(CPUState *cs)
+     if (scc->parent_phases.hold) {
+         scc->parent_phases.hold(obj);
+@@ -83,8 +82,7 @@ static void sparc_cpu_reset_hold(Object *obj)
+ static bool sparc_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  {
--    HPPACPU *cpu = HPPA_CPU(cs);
--    CPUHPPAState *env = &cpu->env;
-+    CPUHPPAState *env = cpu_env(cs);
-     int i = cs->exception_index;
-     uint64_t old_psw;
+     if (interrupt_request & CPU_INTERRUPT_HARD) {
+-        SPARCCPU *cpu = SPARC_CPU(cs);
+-        CPUSPARCState *env = &cpu->env;
++        CPUSPARCState *env = cpu_env(cs);
  
-@@ -268,9 +267,6 @@ void hppa_cpu_do_interrupt(CPUState *cs)
+         if (cpu_interrupts_enabled(env) && env->interrupt_index > 0) {
+             int pil = env->interrupt_index & 0xf;
+@@ -613,8 +611,7 @@ static void cpu_print_cc(FILE *f, uint32_t cc)
  
- bool hppa_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ static void sparc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
  {
--    HPPACPU *cpu = HPPA_CPU(cs);
--    CPUHPPAState *env = &cpu->env;
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     int i, x;
+ 
+     qemu_fprintf(f, "pc: " TARGET_FMT_lx "  npc: " TARGET_FMT_lx "\n", env->pc,
+@@ -711,11 +708,8 @@ static void sparc_cpu_synchronize_from_tb(CPUState *cs,
+ 
+ static bool sparc_cpu_has_work(CPUState *cs)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
 -
-     if (interrupt_request & CPU_INTERRUPT_NMI) {
-         /* Raise TOC (NMI) interrupt */
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_NMI);
-@@ -280,7 +276,7 @@ bool hppa_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-     }
+     return (cs->interrupt_request & CPU_INTERRUPT_HARD) &&
+-           cpu_interrupts_enabled(env);
++           cpu_interrupts_enabled(cpu_env(cs));
+ }
  
-     /* If interrupts are requested and enabled, raise them.  */
--    if ((env->psw & PSW_I) && (interrupt_request & CPU_INTERRUPT_HARD)) {
-+    if ((cpu_env(cs)->psw & PSW_I) && (interrupt_request & CPU_INTERRUPT_HARD)) {
-         cs->exception_index = EXCP_EXT_INTERRUPT;
-         hppa_cpu_do_interrupt(cs);
-         return true;
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index bb85962d50..7e73b80788 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -357,8 +357,7 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-                        MMUAccessType type, int mmu_idx,
-                        bool probe, uintptr_t retaddr)
+ static char *sparc_cpu_type_name(const char *cpu_model)
+@@ -749,8 +743,7 @@ static void sparc_cpu_realizefn(DeviceState *dev, Error **errp)
+     CPUState *cs = CPU(dev);
+     SPARCCPUClass *scc = SPARC_CPU_GET_CLASS(dev);
+     Error *local_err = NULL;
+-    SPARCCPU *cpu = SPARC_CPU(dev);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+ 
+ #if defined(CONFIG_USER_ONLY)
+     /* We are emulating the kernel, which will trap and emulate float128. */
+diff --git a/target/sparc/gdbstub.c b/target/sparc/gdbstub.c
+index a1c8fdc4d5..5257c49a0d 100644
+--- a/target/sparc/gdbstub.c
++++ b/target/sparc/gdbstub.c
+@@ -29,8 +29,7 @@
+ 
+ int sparc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    HPPACPU *cpu = HPPA_CPU(cs);
--    CPUHPPAState *env = &cpu->env;
-+    CPUHPPAState *env = cpu_env(cs);
-     HPPATLBEntry *ent;
-     int prot, excp, a_prot;
-     hwaddr phys;
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+ 
+     if (n < 8) {
+         /* g0..g7 */
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index 058dd712b5..6b7d65b031 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -99,8 +99,7 @@ void cpu_check_irqs(CPUSPARCState *env)
+ 
+ void sparc_cpu_do_interrupt(CPUState *cs)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     int cwp, intno = cs->exception_index;
+ 
+     if (qemu_loglevel_mask(CPU_LOG_INT)) {
+diff --git a/target/sparc/int64_helper.c b/target/sparc/int64_helper.c
+index 27df9dba89..bd14c7a0db 100644
+--- a/target/sparc/int64_helper.c
++++ b/target/sparc/int64_helper.c
+@@ -130,8 +130,7 @@ void cpu_check_irqs(CPUSPARCState *env)
+ 
+ void sparc_cpu_do_interrupt(CPUState *cs)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     int intno = cs->exception_index;
+     trap_state *tsptr;
+ 
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 09066d5487..203441bfb2 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -421,8 +421,7 @@ static void sparc_raise_mmu_fault(CPUState *cs, hwaddr addr,
+                                   bool is_write, bool is_exec, int is_asi,
+                                   unsigned size, uintptr_t retaddr)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     int fault_type;
+ 
+ #ifdef DEBUG_UNASSIGNED
+@@ -483,8 +482,7 @@ static void sparc_raise_mmu_fault(CPUState *cs, hwaddr addr,
+                                   bool is_write, bool is_exec, int is_asi,
+                                   unsigned size, uintptr_t retaddr)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+ 
+ #ifdef DEBUG_UNASSIGNED
+     printf("Unassigned mem access to " HWADDR_FMT_plx " from " TARGET_FMT_lx
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 453498c670..a05ee22315 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -206,8 +206,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                         MMUAccessType access_type, int mmu_idx,
+                         bool probe, uintptr_t retaddr)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     CPUTLBEntryFull full = {};
+     target_ulong vaddr;
+     int error_code = 0, access_index;
+@@ -391,8 +390,7 @@ void dump_mmu(CPUSPARCState *env)
+ int sparc_cpu_memory_rw_debug(CPUState *cs, vaddr address,
+                               uint8_t *buf, int len, bool is_write)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     target_ulong addr = address;
+     int i;
+     int len1;
+@@ -759,8 +757,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                         MMUAccessType access_type, int mmu_idx,
+                         bool probe, uintptr_t retaddr)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     CPUTLBEntryFull full = {};
+     int error_code = 0, access_index;
+ 
+@@ -898,8 +895,7 @@ hwaddr cpu_get_phys_page_nofault(CPUSPARCState *env, target_ulong addr,
+ 
+ hwaddr sparc_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     hwaddr phys_addr;
+     int mmu_idx = cpu_mmu_index(env, false);
+ 
+@@ -916,8 +912,7 @@ G_NORETURN void sparc_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+                                               int mmu_idx,
+                                               uintptr_t retaddr)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+ 
+ #ifdef TARGET_SPARC64
+     env->dmmu.sfsr = build_sfsr(env, mmu_idx, access_type);
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 9387299559..769418d6b0 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -5154,13 +5154,12 @@ TRANS(FCMPEq, ALL, do_fcmpq, a, true)
+ static void sparc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    CPUSPARCState *env = cpu_env(cs);
+     int bound;
+ 
+     dc->pc = dc->base.pc_first;
+     dc->npc = (target_ulong)dc->base.tb->cs_base;
+     dc->mem_idx = dc->base.tb->flags & TB_FLAG_MMU_MASK;
+-    dc->def = &env->def;
++    dc->def = &cpu_env(cs)->def;
+     dc->fpu_enabled = tb_fpu_enabled(dc->base.tb->flags);
+     dc->address_mask_32bit = tb_am_enabled(dc->base.tb->flags);
+ #ifndef CONFIG_USER_ONLY
+@@ -5210,10 +5209,9 @@ static void sparc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ static void sparc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    CPUSPARCState *env = cpu_env(cs);
+     unsigned int insn;
+ 
+-    insn = translator_ldl(env, &dc->base, dc->pc);
++    insn = translator_ldl(cpu_env(cs), &dc->base, dc->pc);
+     dc->base.pc_next += 4;
+ 
+     if (!decode(dc, insn)) {
+@@ -5406,8 +5404,7 @@ void sparc_restore_state_to_opc(CPUState *cs,
+                                 const TranslationBlock *tb,
+                                 const uint64_t *data)
+ {
+-    SPARCCPU *cpu = SPARC_CPU(cs);
+-    CPUSPARCState *env = &cpu->env;
++    CPUSPARCState *env = cpu_env(cs);
+     target_ulong pc = data[0];
+     target_ulong npc = data[1];
+ 
 -- 
 2.41.0
 
