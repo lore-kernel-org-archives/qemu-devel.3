@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3C0C47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7D4C47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUTPj-0007d1-7H; Mon, 29 Jan 2024 10:19:11 -0500
+	id 1rUTX7-0008UF-6Z; Mon, 29 Jan 2024 10:26:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTPa-0007Xd-Gl
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:19:04 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTPW-0007ST-G3
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:19:00 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-51028fadfe2so3118860e87.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 07:18:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706541536; x=1707146336; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dcxTw0DrdmCPot2iJuF6Ul0G9M2q8XR4FUwWiq3hCFw=;
- b=Kx01oTFgCyTWmyW3LEUdvqAl4WHKUbrvMjaEyiZxNW9xIsriFzf2PLjvdPlLLSQlmW
- 78lEMjdO6StqJ9vk7H3fV9RuO8LF2yVPTEDuR0Mzum6AcWsO5ZdllN+6LYoW69f7u8y3
- 1O32nSXOpPAZgy0cHk9pVoJhB+hVJA4AbaVuuYhK0DpuRfKi41rGXYxp1H7jBdroGosh
- qCytnTWqtiT6WbsrU0x3lKVox6cXMuK8kGJfCN6g0Rk8zDJzhDwasmIem6cxf+7XxHB9
- 6HdViVIuQAygjZGFbeqwr/6B8C0UlyemGje84RU7EajvOHgSZdfzZjgkr8PzQOT2bqlm
- xqCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706541536; x=1707146336;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dcxTw0DrdmCPot2iJuF6Ul0G9M2q8XR4FUwWiq3hCFw=;
- b=OYLUsrOU3agbSPsP1POF546o8n/QG2+xMvc2FbLhBaC7FoCvX47yIqgQrzQd0yIgaY
- BTUnkQsb1MXYDds3y3nE025AhCQwkJHagEDwD7FMiMcw3Itc28dbCrKUlNCbZkUAUq9H
- 3ki3tLpcYz4IEotOVcyYRc2QeifPu1pl0dKDwk8raCjfRFjoeVB+t+F5SGtphmKxgmNo
- Age7MLJqjaBGPHyjHDQ6pWnSBvBttIfaQXBQer6jjiqgXhWgGCCtmbFlpTKPEl/zd1sF
- Scp6QT1AIm7AZ+39xtf5H7+maLumpnoI4ihltSmp8MrCmCFjjWsHUaVkH/USX5eV3K28
- Km2A==
-X-Gm-Message-State: AOJu0YzrNfKpdoBmvMUbWcmWBJabPRgTgvzJ0TGsweuSn2tCcw72ZRVb
- 1PnjXsDAZelzwyoNZujjZCkYyaaXi6Ru+aVimBwLANSQdi657ibdJbv/sG6Y2Wicx9JX1QRdQnr
- 9
-X-Google-Smtp-Source: AGHT+IGJ+K2soQbrnFpE0uHIy3dUelT8wTnsBiwb6mjdWdSQoGzDAWhvlSaahpYUovWRPHn8Lfw8Vg==
-X-Received: by 2002:a05:6512:1194:b0:511:f63:142d with SMTP id
- g20-20020a056512119400b005110f63142dmr2403017lfr.29.1706541536685; 
- Mon, 29 Jan 2024 07:18:56 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.219.39])
- by smtp.gmail.com with ESMTPSA id
- fa7-20020a05600c518700b0040ec6d7420csm14208710wmb.14.2024.01.29.07.18.54
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 07:18:55 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, Hao Wu <wuhaotsh@google.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Rob Herring <robh@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Gavin Shan <gshan@redhat.com>
-Subject: [PATCH v3 4/9] hw/arm/highbank: Check for CPU types in
- machine_run_board_init()
-Date: Mon, 29 Jan 2024 16:18:23 +0100
-Message-ID: <20240129151828.59544-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240129151828.59544-1-philmd@linaro.org>
-References: <20240129151828.59544-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUTX4-0008U4-Qy
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:26:46 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUTX2-0000mc-Su
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:26:46 -0500
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40TFCS8f006760; Mon, 29 Jan 2024 15:26:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=date : from : to :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=pp1; bh=4CnSOlmJgM2kEWYWncPNst85EqVWUky/63X2kdH10Ro=;
+ b=GWtNVow1pDp9zpFrj1Bp9TwxFsYWUHTivkEcEh+wIPDNiqYfIuzgyLFVabYqKS9h0k5m
+ q7MjsVHiEUXWnx+URvgHFTYTB1+OtpkCkN0AaY886DaGva2XKWiZSJIYosOvc+Ya3AM4
+ uqeTqAccTVa7TD4JkZEhTAFQkIKQbRsUv0VlHaMN+N1oFOdj3QlYdkZTLAONqiHHTcKJ
+ I6ZJGs1kD4cjUB1kgUnzUQJigLS98dIG39i9qEYpy77CUiFgtqXMj1XOzG25ghiaO+aN
+ NgbMbt/uS1uEhZM/XQUEHhDt5nWvTIv0YdKO73e7jDjZ6J6QstxcsUSrD1PArzJRCcB2 jw== 
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxdy319kv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jan 2024 15:26:42 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40TD3L7G010858; Mon, 29 Jan 2024 15:26:41 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vweck8mwc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jan 2024 15:26:41 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40TFQdZL30933570
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Jan 2024 15:26:39 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2D622004E;
+ Mon, 29 Jan 2024 15:26:39 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B81DE20043;
+ Mon, 29 Jan 2024 15:26:39 +0000 (GMT)
+Received: from heavy (unknown [9.155.200.166])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 29 Jan 2024 15:26:39 +0000 (GMT)
+Date: Mon, 29 Jan 2024 16:26:38 +0100
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 22/33] linux-user: Split out mmap_h_lt_g
+Message-ID: <ogglz7yhvelvrnmfyhvpx7hjdl5rgl5gh3iioomtagi3mlckcd@qaa6w4javinb>
+References: <20240102015808.132373-1-richard.henderson@linaro.org>
+ <20240102015808.132373-23-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240102015808.132373-23-richard.henderson@linaro.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: iOAiOz6qB7mLKmL5xIGcleKUjveSyOBq
+X-Proofpoint-GUID: iOAiOz6qB7mLKmL5xIGcleKUjveSyOBq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_10,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 impostorscore=0
+ priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ clxscore=1015 mlxlogscore=697 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2401290113
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,68 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict MachineClass::valid_cpu_types[] to the single
-valid CPU types.
+On Tue, Jan 02, 2024 at 12:57:57PM +1100, Richard Henderson wrote:
+> Work much harder to get alignment and mapping beyond the end
+> of the file correct.  Both of which are excercised by our
+> test-mmap for alpha (8k pages) on any 4k page host.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/mmap.c | 156 +++++++++++++++++++++++++++++++++++++---------
+>  1 file changed, 125 insertions(+), 31 deletions(-)
 
-Instead of ignoring invalid CPU type requested by the user:
+[...]
 
-  $ qemu-system-arm -M midway -cpu cortex-a7 -S -monitor stdio
-  QEMU 8.2.50 monitor - type 'help' for more information
-  (qemu) info qom-tree
-  /machine (midway-machine)
-    /cpu[0] (cortex-a15-arm-cpu)
-    ...
+> +        if (fileend_adj) {
+> +            void *t = mmap(p, len - fileend_adj, host_prot,
+> +                           (flags & ~MAP_FIXED_NOREPLACE) | MAP_FIXED,
+> +                           fd, offset);
+> +            assert(t != MAP_FAILED);
 
-we now display an error:
+Is it possible to recover here? Of course, we are remapping the memory
+we've mapped a few lines earlier, but asserting the syscall result
+looks a bit odd.
 
-  $ qemu-system-arm -M midway -cpu cortex-a7
-  qemu-system-arm: Invalid CPU model: cortex-a7
-  The only valid type is: cortex-a15
+[...]
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
----
- hw/arm/highbank.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+> +        if (!(flags & MAP_ANONYMOUS)) {
+> +            void *t = mmap(p, len - fileend_adj, host_prot,
+> +                           flags | MAP_FIXED, fd, offset);
+> +            assert(t != MAP_FAILED);
 
-diff --git a/hw/arm/highbank.c b/hw/arm/highbank.c
-index b8d702c82c..0367050697 100644
---- a/hw/arm/highbank.c
-+++ b/hw/arm/highbank.c
-@@ -345,10 +345,15 @@ static void midway_init(MachineState *machine)
- 
- static void highbank_class_init(ObjectClass *oc, void *data)
- {
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-a9"),
-+        NULL
-+    };
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
-     mc->desc = "Calxeda Highbank (ECX-1000)";
-     mc->init = highbank_init;
-+    mc->valid_cpu_types = valid_cpu_types;
-     mc->block_default_type = IF_IDE;
-     mc->units_per_default_bus = 1;
-     mc->max_cpus = 4;
-@@ -364,10 +369,15 @@ static const TypeInfo highbank_type = {
- 
- static void midway_class_init(ObjectClass *oc, void *data)
- {
-+    static const char * const valid_cpu_types[] = {
-+        ARM_CPU_TYPE_NAME("cortex-a15"),
-+        NULL
-+    };
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
-     mc->desc = "Calxeda Midway (ECX-2000)";
-     mc->init = midway_init;
-+    mc->valid_cpu_types = valid_cpu_types;
-     mc->block_default_type = IF_IDE;
-     mc->units_per_default_bus = 1;
-     mc->max_cpus = 4;
--- 
-2.41.0
-
+Same here.
 
