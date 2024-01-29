@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C32C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 13:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43FDC47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 13:27:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rURdA-0008OC-D9; Mon, 29 Jan 2024 08:24:56 -0500
+	id 1rURfV-0002lr-Kx; Mon, 29 Jan 2024 08:27:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rURd3-0008NP-CP
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:24:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rURcz-0004dP-Ig
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:24:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706534656;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lEY/03v+aSw42tIRGuHD6+WMpVoHm4K6M49mhh/iPpw=;
- b=FPviiG/vBuZqetAseT++sDo8Qm4CTBmCTPjhJX0yLH4EuBS4cLuX+LOGb+ernLZbOO7GAl
- u8iDbMnl18vG3GHzwz2S2euC1vX/GWu56QFB2qlXtFq6OdhCCW92Y0B1y1sy4FYrB47ux2
- 8kyNeyKeObBQbMQoBLM8XVhkDnaZ350=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-FBVqc_YOMgW6oLj1xT54Hw-1; Mon,
- 29 Jan 2024 08:24:15 -0500
-X-MC-Unique: FBVqc_YOMgW6oLj1xT54Hw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DA7763CBDF60;
- Mon, 29 Jan 2024 13:24:14 +0000 (UTC)
-Received: from eperezma.remote.csb (unknown [10.39.194.130])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 65AC1488;
- Mon, 29 Jan 2024 13:24:13 +0000 (UTC)
-From: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
-To: qemu-devel@nongnu.org,
-	mst@redhat.com
-Cc: si-wei.liu@oracle.com, leiyang@redhat.com, yajunw@nvidia.com,
- Ani Sinha <anisinha@redhat.com>, Jason Wang <jasowang@redhat.com>,
- dtatulea@nvidia.com, mcoqueli@redhat.com
-Subject: [PATCH 2/2] net: move backend cleanup to NIC cleanup
-Date: Mon, 29 Jan 2024 14:24:07 +0100
-Message-Id: <20240129132407.1474202-3-eperezma@redhat.com>
-In-Reply-To: <20240129132407.1474202-1-eperezma@redhat.com>
-References: <20240129132407.1474202-1-eperezma@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rURfU-0002ld-4p
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:27:20 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rURfS-0005Qh-Ek
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:27:19 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-33ae74e5394so729581f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:27:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706534837; x=1707139637; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MVLiCylvxDCbitczUXNP0NJd41XUW+Rx3bSfLrZKRGU=;
+ b=oZRvo3TyMqQf4oa4oMFwXypF8L9YSSbqp3e9sAfE5bnhSeTLDUKcpp7atiVQYCjSWT
+ uAsfhxtEhJo7dMiIzrqk6VYgHkgwi1MPD/k8gizMpJ57eUfkH+by+KtHt+14lfaFp5kz
+ 8yov+QEZ6z0ZlA9Lm/BV/LHBqkE7O4/jvQRqlFu+tkhoICsKFflpyQxHUPiwUuKCknHn
+ 2QN54gQDNCk9SVkVotwmd0T0g7TzOlGyTPpezge0JLXFWQsqIiamdNPYlQi730ZJ+YX4
+ AdmhcbgfGdeJByHWFDjfgEtIUsLXIK8tzsCBmIRx93/FCgVctHZ1B1p8h8342+XudPYq
+ b3FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706534837; x=1707139637;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MVLiCylvxDCbitczUXNP0NJd41XUW+Rx3bSfLrZKRGU=;
+ b=VDxHyI8WLqUUAfTZTdZDI93hIOBjeEsdNPiQTpjs54NjtPQsesbCxrDP+2I3uEp9/j
+ GPgsaPqecFA+XSvQfq8S9pyIpiaQRarcQ9F+5xC3HtFdXJhK1YUtKD8sb4buRpNdjem7
+ rHrlKFnxjLicsxjMXfXh1Fh1kWtOWlt/EZ+bVOVSjwUBDj8o3dqQNIVAxLHkWsTvjQ78
+ BJDWz7nfMbSS4gQqX/6X9aXWSPQ53+0SWWWXZBB6LNoWCFTmUnhrPbFrtO9O3hGFZWUO
+ xbulZ8DX7+XWiuX6sAkvM4i8kENWvLpOani1bxh0SS9/H7PJP9XOg5Dsrl39R/ApEJLu
+ Gq/w==
+X-Gm-Message-State: AOJu0YwcORlTT644ba3+312KQrd/yfzhtgsssxRiH2gaA5cFRfO4D3/b
+ d0+NCQgtuy7f2rEBHLx+4Jh9ULzO4EwK7v9OoIZgpKnubq0jg86tbYklfmfqEpE=
+X-Google-Smtp-Source: AGHT+IGodC3SlzWnBs1kKER1rX6zvIhwZPBmNvs2m0Q3o64PAIw6gFfBaS6uyViRl5mY2Vf0gYsFvw==
+X-Received: by 2002:a5d:47c3:0:b0:33a:f1f4:f4b9 with SMTP id
+ o3-20020a5d47c3000000b0033af1f4f4b9mr1476764wrc.57.1706534836903; 
+ Mon, 29 Jan 2024 05:27:16 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.219.39])
+ by smtp.gmail.com with ESMTPSA id
+ d5-20020adffbc5000000b0033aedaea1b2sm2671161wrs.30.2024.01.29.05.27.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jan 2024 05:27:16 -0800 (PST)
+Message-ID: <f30a3fbd-2e11-4c36-8107-014f23b6bb95@linaro.org>
+Date: Mon, 29 Jan 2024 14:27:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mips: remove unnecessary "select PTIMER"
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240129115811.1039965-1-pbonzini@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240129115811.1039965-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,102 +92,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
-structures if peer nic is present") effectively delayed the backend
-cleanup, allowing the frontend or the guest to access it resources as
-long as the frontend is still visible to the guest.
+On 29/1/24 12:58, Paolo Bonzini wrote:
+> There is no use of ptimer functions in mips_cps.c or any other related
+> code.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   hw/mips/Kconfig | 1 -
+>   1 file changed, 1 deletion(-)
 
-However it does not clean up the resources until the qemu process is
-over.  This causes an effective leak if the device is deleted with
-device_del, as there is no way to close the vdpa device.  This makes
-impossible to re-add that device to this or other QEMU instances until
-the first instance of QEMU is finished.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Move the cleanup from qemu_cleanup to the NIC deletion.
-
-Fixes: a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net structures if peer nic is present")
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reported-by: Lei Yang <leiyang@redhat.com>
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
----
-Carring the Acked-by Jason as it was given when I proposed this one year
-ago to qemu-security@nongnu.org off list, trying to solve CVE-2023-3301.
----
- net/net.c        | 19 +++++++++++++------
- net/vhost-vdpa.c |  8 --------
- 2 files changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/net/net.c b/net/net.c
-index 11e19d3bed..fb6e130c62 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -422,7 +422,13 @@ void qemu_del_net_client(NetClientState *nc)
-         object_unparent(OBJECT(nf));
-     }
- 
--    /* If there is a peer NIC, delete and cleanup client, but do not free. */
-+    /*
-+     * If there is a peer NIC, transfer ownership to it.  Delete the client
-+     * from net_client list but do not cleanup nor free.  This way NIC can
-+     * still access to members of the backend.
-+     *
-+     * The cleanup and free will be done when the NIC is free.
-+     */
-     if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_NIC) {
-         NICState *nic = qemu_get_nic(nc->peer);
-         if (nic->peer_deleted) {
-@@ -432,16 +438,13 @@ void qemu_del_net_client(NetClientState *nc)
- 
-         for (i = 0; i < queues; i++) {
-             ncs[i]->peer->link_down = true;
-+            QTAILQ_REMOVE(&net_clients, ncs[i], next);
-         }
- 
-         if (nc->peer->info->link_status_changed) {
-             nc->peer->info->link_status_changed(nc->peer);
-         }
- 
--        for (i = 0; i < queues; i++) {
--            qemu_cleanup_net_client(ncs[i], true);
--        }
--
-         return;
-     }
- 
-@@ -459,8 +462,12 @@ void qemu_del_nic(NICState *nic)
- 
-     for (i = 0; i < queues; i++) {
-         NetClientState *nc = qemu_get_subqueue(nic, i);
--        /* If this is a peer NIC and peer has already been deleted, free it now. */
-+        /*
-+         * If this is a peer NIC and peer has already been deleted, clean it up
-+         * and free it now.
-+         */
-         if (nic->peer_deleted) {
-+            qemu_cleanup_net_client(nc->peer, false);
-             qemu_free_net_client(nc->peer);
-         } else if (nc->peer) {
-             /* if there are RX packets pending, complete them */
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 3726ee5d67..64825136a3 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -221,14 +221,6 @@ static void vhost_vdpa_cleanup(NetClientState *nc)
- {
-     VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
- 
--    /*
--     * If a peer NIC is attached, do not cleanup anything.
--     * Cleanup will happen as a part of qemu_cleanup() -> net_cleanup()
--     * when the guest is shutting down.
--     */
--    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_NIC) {
--        return;
--    }
-     munmap(s->cvq_cmd_out_buffer, vhost_vdpa_net_cvq_cmd_page_len());
-     munmap(s->status, vhost_vdpa_net_cvq_cmd_page_len());
-     if (s->vhost_net) {
--- 
-2.39.3
 
 
