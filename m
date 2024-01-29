@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB53C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66797C47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadQ-0005yG-7D; Mon, 29 Jan 2024 18:01:48 -0500
+	id 1rUae3-0006nS-1h; Mon, 29 Jan 2024 18:02:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadP-0005xq-0c
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:47 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1rUadx-0006W5-9D
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:22 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadM-0008Oq-W9
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:46 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-6ddf26eba3cso2121606a34.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:44 -0800 (PST)
+ id 1rUadv-0008US-2b
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:20 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6de24201aa6so1057966b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569304; x=1707174104; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569338; x=1707174138; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=blFzc6YcDRkiR8B9Edly+GRoesCmaBH2nX316LvuRkc=;
- b=KCjk9Luj2kwf1EnQVSxcIkrXxyH/tKdy/egGxxDPQbThu5IOqzJ1XtOm933Veg5I38
- ZOs0ToLj3oN4yoSerUuPTXlUau3n1LpAFzVUQK95eR/NR4fgdx8MuaJYmq+AOZrdMCaI
- H/DrJtXmZiPa5RzVRGe1EEvs9iNYug0DAdYTd4JndeGfZX+84v4t2sPMsu46h+OQ9sDG
- bdqvup+A9sMOO/z5GRDZkf0S9s3O7ByRZu5vkZOkvJVkUAVGwsjbRe59284gaWy5mOQD
- PFYs0IX7b69BbXGzt2rbqirwb1KbVGwfWtSmTjTDjsIUuHfaPVse9lNoJ/5SxEBqAfuN
- sq5A==
+ bh=MmzrBNQK2eDwb+/K0EzCDtsTU1SD4iiHNXZIgeBMj8o=;
+ b=xlIilcGnalkvK4ddm6B/XB0qAKs/G7/V1tgYnRoWzuOI6wewrCXd0qHsZcgleuCB90
+ RQ6H5alWmJA+zCToARsRR6NSLGanS7sEMsutkNUT34iWA5AnoL+Q80kt5iaVlVkqOpe2
+ L++uMONxgylKGps1M9om1IP2XKi/GUjD1X9ZQsWHRtLMMavP3hv7XLaaBlfRprhaZzh+
+ ABJqcjOf5fFY7SOg+e+mryslldmx8KTANpFbPJNlahNiIRrVr2xklYGxAgho13ZipfAF
+ FpGt2sv4SRKQsDjoyuEgNOYy4XtTaviFuf4fyux+m05VwOPF5rfR8jW7/gZjC8Kyr2Uz
+ ligw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569304; x=1707174104;
+ d=1e100.net; s=20230601; t=1706569338; x=1707174138;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=blFzc6YcDRkiR8B9Edly+GRoesCmaBH2nX316LvuRkc=;
- b=Kst6v1iEIUNVaV2wSdx9IRwHqp7Ol2Yz80sH/E5H+BxHttL5BqZ/ub1AmlcoX9ppwy
- xyl+XJRbGWNhtVr3erHGtjydNhEMNsgZBqdnPGUZuLIadmXmQuDpSp81r3Hm16BurvY0
- PyKsH4mGUled/wtVrUm6PQrSuZFadsS/TVCdpzCW/fUHNgj9nR0Oc46ACEuSq+xRXYaJ
- +ZN9pL/N8qs86AwZrW8rx8SHmC1VJpqGZI503w5gtE0LRI+2d31jjkdavc70k7OSe0W/
- p/TyEFAf6H+Zf24ObEOeDNzXNjV1kQ41R0EhByzt2ECqzZNHPI2wqnHcVP5VLSHQu3B7
- goDA==
-X-Gm-Message-State: AOJu0YyDSnfC+/SeWVGwlK302/7nWLdE/0WmuABEHZQwiPxFnhARvoe1
- FISlw5ntyTFvzFnrktggxn8q5lBaTGYSfiUheoryOtvS5V7XmzRkiDlx4k/IbgPPk4ctptaQTNV
- ExsU=
-X-Google-Smtp-Source: AGHT+IF7pWujJumVMn2IoJ2nvf83N6fpWpLtQiwiO6wZuUaxCSc0KBf/tIVhUbpU/p4JD+IJp3oLKw==
-X-Received: by 2002:a05:6358:4b4e:b0:178:7d95:2913 with SMTP id
- ks14-20020a0563584b4e00b001787d952913mr2074311rwc.34.1706569303886; 
- Mon, 29 Jan 2024 15:01:43 -0800 (PST)
+ bh=MmzrBNQK2eDwb+/K0EzCDtsTU1SD4iiHNXZIgeBMj8o=;
+ b=kw19q5Rh5Jxuo6PbXFXLwSvAI4MN/kIuVHrqPt4HOzTWnj8beMyo8dk9ABjvX9CFvZ
+ E+Eotng7COpU4LUncYVSnys3akmTsMOW8GmGQPpfkrTXVwQKKNyoIJ8uW/XtlhbASAU3
+ gjqbtT0pIDTtvZVQtDlj0RW0RRuTtSSQoOVczz2JlxVpAs0TLEnXc3ANLiSaETBhPIAy
+ TITWZU4aFwHnmSaQm7Lmf08odxfRJJg9Y9wOfurR2rEtBuscrPoRK73ku3SH8+y0rsTj
+ rjSWrbLcektrRO10YLJRsgHr8Uj+mx3BQijX4QWYR0wGZ/gwMBHtmRM6TPkM9Q5hte8m
+ H0tw==
+X-Gm-Message-State: AOJu0Yzc/GtqLFAHVaICG+k/WNJ6l9plgBQ/PslnX5/bgJel+SLe0Azw
+ LXvZz2lOFZqHw8ervl/y7+gP891FWvNBX1ZnaSLxNsjzT5vNw3t8ZzFoGgIP2/WLaOea9Q7XEes
+ Ufhc=
+X-Google-Smtp-Source: AGHT+IGkxkirXd/IyFRi4AgJLEbEwLJbjBz7WWsgqnY4gkifuj1lV0YtGWPwZgoomyKUEh/ReSf/Pg==
+X-Received: by 2002:a05:6a00:1798:b0:6db:d5b5:e380 with SMTP id
+ s24-20020a056a00179800b006dbd5b5e380mr5067325pfg.24.1706569337663; 
+ Mon, 29 Jan 2024 15:02:17 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.41
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:43 -0800 (PST)
+ Mon, 29 Jan 2024 15:02:17 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/31] include/exec: Move cpu_*()/cpu_env() to common header
-Date: Tue, 30 Jan 2024 09:00:58 +1000
-Message-Id: <20240129230121.8091-9-richard.henderson@linaro.org>
+Subject: [PULL 19/31] accel/tcg: Move perf and debuginfo support to tcg/
+Date: Tue, 30 Jan 2024 09:01:09 +1000
+Message-Id: <20240129230121.8091-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,100 +95,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Functions are target independent.
+tcg/ should not depend on accel/tcg/, but perf and debuginfo
+support provided by the latter are being used by tcg/tcg.c.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240119144024.14289-17-anjo@rev.ng>
+Since that's the only user, move both to tcg/.
+
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20231212003837.64090-5-iii@linux.ibm.com>
+Message-Id: <20240125054631.78867-5-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/cpu-all.h    | 25 -------------------------
- include/exec/cpu-common.h | 26 ++++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 25 deletions(-)
+ {accel => include}/tcg/debuginfo.h | 4 ++--
+ {accel => include}/tcg/perf.h      | 4 ++--
+ accel/tcg/translate-all.c          | 2 +-
+ hw/core/loader.c                   | 2 +-
+ linux-user/elfload.c               | 2 +-
+ linux-user/exit.c                  | 2 +-
+ linux-user/main.c                  | 2 +-
+ system/vl.c                        | 2 +-
+ {accel/tcg => tcg}/debuginfo.c     | 3 +--
+ {accel/tcg => tcg}/perf.c          | 7 +++----
+ tcg/tcg.c                          | 2 +-
+ accel/tcg/meson.build              | 4 ----
+ tcg/meson.build                    | 5 +++++
+ 13 files changed, 20 insertions(+), 21 deletions(-)
+ rename {accel => include}/tcg/debuginfo.h (96%)
+ rename {accel => include}/tcg/perf.h (95%)
+ rename {accel/tcg => tcg}/debuginfo.c (98%)
+ rename {accel/tcg => tcg}/perf.c (99%)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index edee87d3f4..8501a33dbf 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -384,33 +384,8 @@ static inline bool tlb_hit(uint64_t tlb_addr, vaddr addr)
- 
- #endif /* !CONFIG_USER_ONLY */
- 
--/* accel/tcg/cpu-exec.c */
--int cpu_exec(CPUState *cpu);
--
- /* Validate correct placement of CPUArchState. */
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
- 
--/**
-- * env_archcpu(env)
-- * @env: The architecture environment
-- *
-- * Return the ArchCPU associated with the environment.
-- */
--static inline ArchCPU *env_archcpu(CPUArchState *env)
--{
--    return (void *)env - sizeof(CPUState);
--}
--
--/**
-- * env_cpu(env)
-- * @env: The architecture environment
-- *
-- * Return the CPUState associated with the environment.
-- */
--static inline CPUState *env_cpu(CPUArchState *env)
--{
--    return (void *)env - sizeof(CPUState);
--}
--
- #endif /* CPU_ALL_H */
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 608708ea48..dcbd5f5783 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -7,6 +7,7 @@
- #ifndef CONFIG_USER_ONLY
- #include "exec/hwaddr.h"
- #endif
-+#include "hw/core/cpu.h"
- 
- #define EXCP_INTERRUPT  0x10000 /* async interruption */
- #define EXCP_HLT        0x10001 /* hlt instruction reached */
-@@ -236,4 +237,29 @@ G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
+diff --git a/accel/tcg/debuginfo.h b/include/tcg/debuginfo.h
+similarity index 96%
+rename from accel/tcg/debuginfo.h
+rename to include/tcg/debuginfo.h
+index f064e1c144..858535b5da 100644
+--- a/accel/tcg/debuginfo.h
++++ b/include/tcg/debuginfo.h
+@@ -4,8 +4,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
   */
- #define PAGE_PASSTHROUGH 0x0800
  
-+/* accel/tcg/cpu-exec.c */
-+int cpu_exec(CPUState *cpu);
+-#ifndef ACCEL_TCG_DEBUGINFO_H
+-#define ACCEL_TCG_DEBUGINFO_H
++#ifndef TCG_DEBUGINFO_H
++#define TCG_DEBUGINFO_H
+ 
+ #include "qemu/bitops.h"
+ 
+diff --git a/accel/tcg/perf.h b/include/tcg/perf.h
+similarity index 95%
+rename from accel/tcg/perf.h
+rename to include/tcg/perf.h
+index f92dd52c69..c96b5920a3 100644
+--- a/accel/tcg/perf.h
++++ b/include/tcg/perf.h
+@@ -4,8 +4,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#ifndef ACCEL_TCG_PERF_H
+-#define ACCEL_TCG_PERF_H
++#ifndef TCG_PERF_H
++#define TCG_PERF_H
+ 
+ #if defined(CONFIG_TCG) && defined(CONFIG_LINUX)
+ /* Start writing perf-<pid>.map. */
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 1737bb3da5..1c695efe02 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -63,7 +63,7 @@
+ #include "tb-context.h"
+ #include "internal-common.h"
+ #include "internal-target.h"
+-#include "perf.h"
++#include "tcg/perf.h"
+ #include "tcg/insn-start-words.h"
+ 
+ TBContext tb_ctx;
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index e7a9b3775b..b8e52f3fb0 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -62,7 +62,7 @@
+ #include "hw/boards.h"
+ #include "qemu/cutils.h"
+ #include "sysemu/runstate.h"
+-#include "accel/tcg/debuginfo.h"
++#include "tcg/debuginfo.h"
+ 
+ #include <zlib.h>
+ 
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index daf7ef8435..b8eef893d0 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -22,7 +22,7 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "target_signal.h"
+-#include "accel/tcg/debuginfo.h"
++#include "tcg/debuginfo.h"
+ 
+ #ifdef TARGET_ARM
+ #include "target/arm/cpu-features.h"
+diff --git a/linux-user/exit.c b/linux-user/exit.c
+index 50266314e0..1ff8fe4f07 100644
+--- a/linux-user/exit.c
++++ b/linux-user/exit.c
+@@ -17,7 +17,7 @@
+  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
+ #include "qemu/osdep.h"
+-#include "accel/tcg/perf.h"
++#include "tcg/perf.h"
+ #include "gdbstub/syscalls.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+diff --git a/linux-user/main.c b/linux-user/main.c
+index c9470eeccf..74b2fbb393 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -54,7 +54,7 @@
+ #include "signal-common.h"
+ #include "loader.h"
+ #include "user-mmap.h"
+-#include "accel/tcg/perf.h"
++#include "tcg/perf.h"
+ 
+ #ifdef CONFIG_SEMIHOSTING
+ #include "semihosting/semihost.h"
+diff --git a/system/vl.c b/system/vl.c
+index 788d88ea03..60fd1e56b6 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -96,7 +96,7 @@
+ #endif
+ #include "sysemu/qtest.h"
+ #ifdef CONFIG_TCG
+-#include "accel/tcg/perf.h"
++#include "tcg/perf.h"
+ #endif
+ 
+ #include "disas/disas.h"
+diff --git a/accel/tcg/debuginfo.c b/tcg/debuginfo.c
+similarity index 98%
+rename from accel/tcg/debuginfo.c
+rename to tcg/debuginfo.c
+index 71c66d04d1..3753f7ef67 100644
+--- a/accel/tcg/debuginfo.c
++++ b/tcg/debuginfo.c
+@@ -6,11 +6,10 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/lockable.h"
++#include "tcg/debuginfo.h"
+ 
+ #include <elfutils/libdwfl.h>
+ 
+-#include "debuginfo.h"
+-
+ static QemuMutex lock;
+ static Dwfl *dwfl;
+ static const Dwfl_Callbacks dwfl_callbacks = {
+diff --git a/accel/tcg/perf.c b/tcg/perf.c
+similarity index 99%
+rename from accel/tcg/perf.c
+rename to tcg/perf.c
+index 68a46b1b52..412a987d95 100644
+--- a/accel/tcg/perf.c
++++ b/tcg/perf.c
+@@ -11,13 +11,12 @@
+ #include "qemu/osdep.h"
+ #include "elf.h"
+ #include "exec/target_page.h"
+-#include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "qemu/timer.h"
++#include "tcg/debuginfo.h"
++#include "tcg/perf.h"
+ #include "tcg/tcg.h"
+ 
+-#include "debuginfo.h"
+-#include "perf.h"
+-
+ static FILE *safe_fopen_w(const char *path)
+ {
+     int saved_errno;
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index e2c38f6d11..eeff4c1d51 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -55,7 +55,7 @@
+ #include "tcg/tcg-ldst.h"
+ #include "tcg/tcg-temp-internal.h"
+ #include "tcg-internal.h"
+-#include "accel/tcg/perf.h"
++#include "tcg/perf.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "exec/user/guest-base.h"
+ #endif
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index c15ac9ac8f..46f7d53eeb 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -16,10 +16,6 @@ tcg_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_false: files('user-exec-stub.c'))
+ if get_option('plugins')
+   tcg_ss.add(files('plugin-gen.c'))
+ endif
+-tcg_ss.add(when: libdw, if_true: files('debuginfo.c'))
+-if host_os == 'linux'
+-  tcg_ss.add(files('perf.c'))
+-endif
+ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_ss)
+ 
+ specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
+diff --git a/tcg/meson.build b/tcg/meson.build
+index 5afdec1e1a..8251589fd4 100644
+--- a/tcg/meson.build
++++ b/tcg/meson.build
+@@ -22,6 +22,11 @@ if get_option('tcg_interpreter')
+   tcg_ss.add(files('tci.c'))
+ endif
+ 
++tcg_ss.add(when: libdw, if_true: files('debuginfo.c'))
++if host_os == 'linux'
++  tcg_ss.add(files('perf.c'))
++endif
 +
-+/**
-+ * env_archcpu(env)
-+ * @env: The architecture environment
-+ *
-+ * Return the ArchCPU associated with the environment.
-+ */
-+static inline ArchCPU *env_archcpu(CPUArchState *env)
-+{
-+    return (void *)env - sizeof(CPUState);
-+}
-+
-+/**
-+ * env_cpu(env)
-+ * @env: The architecture environment
-+ *
-+ * Return the CPUState associated with the environment.
-+ */
-+static inline CPUState *env_cpu(CPUArchState *env)
-+{
-+    return (void *)env - sizeof(CPUState);
-+}
-+
- #endif /* CPU_COMMON_H */
+ tcg_ss = tcg_ss.apply({})
+ 
+ libtcg_user = static_library('tcg_user',
 -- 
 2.34.1
 
