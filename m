@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57EAEC47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDADC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUTux-00089H-77; Mon, 29 Jan 2024 10:51:27 -0500
+	id 1rUU1Q-0002rH-As; Mon, 29 Jan 2024 10:58:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUTuu-00088u-AB
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:51:24 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1rUU1P-0002qx-2T
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:58:07 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUTur-0006Wa-Rh
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:51:24 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-55eece07a75so1700469a12.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 07:51:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1rUU1N-0008Ks-E5
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:58:06 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1d8dd580f3dso3888905ad.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 07:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706543479; x=1707148279; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=YOHrhrtWvSSQBnWW7AYsrDCygVBx4ub6007RWrUVjEw=;
- b=lKuXC8p1aOQKsf88SBl1ovq5kuEVta1loQVyRBcP1Ova0fAiaEOTZ3C8w33QKnY3iq
- jVqbID/wVZ4jhBIe6yNKr2fAf6YCpb6hIdguq+6eAHnk6ixn4lpcdmxfKqCGVMtalsMQ
- 9vCwLOWXRgG5Hs0sdr0bWa00Ie+zMrWn61cOad3p1d31eXx9YvfW1yMHlZhiORPv2+XM
- 8o8KXoIXN7yz825A7EYJlpwRk7MECOidUYd7LtVWgshnjH5hGFhGXYqOgQ+tfBLDXZYf
- e7EbspxvaRJdjT9oz8A+G+pBffChv9GcMl79g8rItBZxWcrSRF4FiySCgTXkQB/MyFeo
- VU/g==
+ d=gmail.com; s=20230601; t=1706543884; x=1707148684; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hOTTH6nrrocKdYrOWl6KvQ7eQwW7Ni2LFEsyt7wBAPM=;
+ b=cb/hnjffs/PkgELJNxIyqJ9J1r7/PJec7kKeClY4IpF01hiRh2Mze+lKN9pYdPn6/R
+ MOhhLrIchpDx0yEb5xMiSGgcAwW2vzA77Al6xfWKb8UCqeR8DSALhgkji6rTzgyu82Pg
+ /Ci4hqdq1tQX31NDDTwyYjB5gQfno8uurkGzQ8h58VUqvKpFL+hG0hj8kagPtHKsZEeK
+ gy5UDlG6f4Pvn+ID0UJyi2lVi5ZuTnVmwpmKClQIepmtMeS9OSsZwjEKfDQkUXKpUh1A
+ UYCneFhaN3QklUli7v8MjWYioB/imP9O+lJenZ0sjokdE8DACqkIjQ7tASYscAMWSMR6
+ 9xxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706543479; x=1707148279;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1706543884; x=1707148684;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YOHrhrtWvSSQBnWW7AYsrDCygVBx4ub6007RWrUVjEw=;
- b=FZHoVU3C7zMIYIOM1uJjpu9R/T/Fd5JzuAxNs7lYP8iAsHQve4JwbWob2Mqo2DM4Ac
- eWPpSm0+gZw7PLRa2CikVtlX8L/SnMUlxukIyDFhaG0krvUrr/fi++VZ2nuTXI6LCq1M
- MS5eLvqXhm3BwaB68rm81/MY1PX7jAgqejCn9lW1cAy1ZkiUfBIvSkDHJHfPmdNIav/5
- VPEPZINSGJrDvOtqpVKTO6htuVYpwkQhxxfpC0T5naWlUTS6uxzBifAVmioZjQA82UoL
- kYK9BF0mfAvf4hkn6bUc66QlFHkeupCtxz23po9OBsKbXTW5u6/52tDblWOjAuQZZwHH
- QgQg==
-X-Gm-Message-State: AOJu0YyMwkbQDfHO+cwLTUmE2B3ayRWfeCYuOMg1RIhPKPIZepsybr48
- G1stJ+qjapPyheX65Y2BzSDDA4eEnisxnGTOGdBlO88jHvRtOiOjzsF2GxR8yCNz7SNJpTdPM2d
- X6m8mgWfO1Rf/f4dfnGtx95mwtELXypsPKkNmkQ==
-X-Google-Smtp-Source: AGHT+IHNNeP6vDGib2KxrGcIvqHL3I45NdMd00cVrT79zHu+xPLh9uNma++3iySvhJZJh/KeTXHXrb1tvAZI9dzZr6k=
-X-Received: by 2002:a05:6402:27d0:b0:55e:dba9:45d with SMTP id
- c16-20020a05640227d000b0055edba9045dmr3251285ede.39.1706543479625; Mon, 29
- Jan 2024 07:51:19 -0800 (PST)
+ bh=hOTTH6nrrocKdYrOWl6KvQ7eQwW7Ni2LFEsyt7wBAPM=;
+ b=a4ZV+fJk3UhtCo8Bpp9DiAS0dOCUg+L+hDDAzOyjb82pOHd113jXvqyf8pTg4oWoSA
+ K0Unyy1tulglK/LJa0ZzVIrVMu5p/aEGjILPGJ6Elj8cgLzmFr/5IfcSzPL6tXzb1Z6g
+ 1/jyFfPBJwaZXhfqsTzfySUdpyGAx932zKbyM74MSseyavj/sKeNR8fHRQ+XhVTnkmph
+ ZkZvpn44+OIAQDN6gzt0e/hstZohfpSfx16b6SbyJEm6vUpQBRbtlqRU6BbXXz0hBrEG
+ tnGdpv0nKrFx5nFZq3KcQthGzR2UHYeYoZTtjaFWKU4q0s4ppij5H/hAqoSEG9fsy2jf
+ 4ePA==
+X-Gm-Message-State: AOJu0YwqlG8SX16acJBYoE7js31OtpeVcEUztc4fpNkP8AXtPGzOeZkH
+ AOJQTZ3rK+vfPVvIO3n3FgmnMJqfIgxCoZyYnffF9slwMMW8tdLxTBBwC3xWefA=
+X-Google-Smtp-Source: AGHT+IF0S+T2zZm5Y37AetgoURSx9Bl65Gb26APZ/U//t2U3vwXSl63qR3s4Zy5fpiQGk2Wx7sAeTg==
+X-Received: by 2002:a17:903:2b0c:b0:1d4:c7d5:3587 with SMTP id
+ mc12-20020a1709032b0c00b001d4c7d53587mr3305135plb.9.1706543883742; 
+ Mon, 29 Jan 2024 07:58:03 -0800 (PST)
+Received: from localhost.localdomain ([49.47.195.100])
+ by smtp.gmail.com with ESMTPSA id
+ e14-20020a170902cf4e00b001d8ffeb53dbsm100955plg.77.2024.01.29.07.58.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jan 2024 07:58:03 -0800 (PST)
+From: Rayhan Faizel <rayhan.faizel@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Rayhan Faizel <rayhan.faizel@gmail.com>
+Subject: [PATCH v2 0/2] Add BCM2835-SPI0 to BCM2835
+Date: Mon, 29 Jan 2024 21:25:42 +0530
+Message-Id: <20240129155541.2767068-1-rayhan.faizel@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240122070600.16681-1-peterx@redhat.com> <87plxtgyxx.fsf@suse.de>
- <Za81vJgTjFSGT56r@x1n> <87frygdzjl.fsf@suse.de>
- <CAFEAcA_uzJKuvY=iTnbG-xAjLn0zHRevzvjoyhjqqiBThveO3Q@mail.gmail.com>
- <87a5oodv7k.fsf@suse.de>
-In-Reply-To: <87a5oodv7k.fsf@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jan 2024 15:51:07 +0000
-Message-ID: <CAFEAcA9Yzihj1dds3H=fmQZZ24ERDwGPkrxinb4tQHw2Ev5nYw@mail.gmail.com>
-Subject: Re: [PATCH] migration/docs: Explain two solutions for VMSD
- compatibility
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,77 +90,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jan 2024 at 15:18, Fabiano Rosas <farosas@suse.de> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > On Mon, 29 Jan 2024 at 13:45, Fabiano Rosas <farosas@suse.de> wrote:
-> >>
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> > Fundamentally, IMHO it's because QEMU as a project is used both in
-> >> > enterprise and personal emulations.  I think it might be too strict to
-> >> > always request backward migration capability if we know some device / arch
-> >> > is only used for personal, or educational, purposes.
-> >>
-> >> Do we need migration support tiers? =)
-> >
-> > We already have them. The tier list is:
->
-> Ah that's good. Thanks, Peter.
->
-> >
-> >  * if the machine type is a versioned one, then we maintain
-> >    forwards compatibility for the versioned machine
-> >    (i.e. can migrate machine-X.Y of QEMU A.B to the
-> >     machine-X.Y of a QEMU C.D which is newer than A.B).
-> >  * if the machine type is not versioned, then we do not make
-> >    any guarantee of migration compatibility across QEMU versions.
-> >    Instead the aim is that if the user tries it it either works
-> >    or gives an error message that the migration failed
-> >    (e.g. because the version field in a VMState struct was bumped).
-> >    Migration breaks are generally called out in commit messages.
-> >    Often for machines in this tier the user is really interested
-> >    in state-save snapshots for debugging purposes, rather than
-> >    in a true cross-host-machine migration.
-> >  * some machine types do not support migration/savevm/loadvm
-> >    at all, because of devices missing VMState structs. This
-> >    is not desirable, and for new machine models we try to
-> >    ensure that they have vmstate structs as part of the minimum
-> >    quality bar, but it is true of some legacy machine types.
->
-> Hm, does this mean in some cases we're requiring new models to have
-> vmstate only to never look at them again? Or do you mean some versioned
-> machines are currently broken?
+This patch series implements the SPI controller for BCM2835 boards.
 
-New device models have vmstate; we don't actively test that
-savevm/loadvm works, but as with most device models we fix bugs
-if anybody reports them. Some older device models simply omit
-the vmstate struct completely (which results in the guest not
-behaving right after savevm/loadvm); a few at least register a
-migration blocker. Usually if somebody's doing a refactoring
-and cleanup of an old device they'll add the vmstate while they're
-doing it.
+[Changes in v2]
+- Accidentally forgot to CC maintainers
+- Signed cover letter
 
-Any device which is used by a versioned machine type is supposed
-to have the vmstate support.
+Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
 
-> > AIUI we, in the sense of the upstream project, do not support
-> > backwards migration compatibility (i.e. migrating a machine-X.Y
-> > from QEMU C.D to QEMU A.B where A.B is an older version than C.D);
-> > though some downstreams (read: RedHat) may do so.
->
-> Here we still need to make a distinction between migration code and
-> vmstate. If we simply ignore backwards migration then it might become
-> impossible for downstreams to provide it without major
-> modifications. But luckily this is the easy case.
+Rayhan Faizel (2):
+  hw/ssi: Implement BCM2835 SPI Controller
+  hw/arm: Connect SPI Controller to BCM2835
 
-Yeah, there's no reason for us to make our downstreams' lives
-harder; the "not supported upstream" part is a mix of
-(a) we don't test it so it probably doesn't work and
-(b) we're not going to insist on patch submitters tying themselves
-in knots over trying to implement a level of compatibility for
-a device when we don't advertise that it's supposed to work
+ docs/system/arm/raspi.rst            |   3 +-
+ hw/arm/Kconfig                       |   1 +
+ hw/arm/bcm2835_peripherals.c         |  17 +-
+ hw/ssi/Kconfig                       |   4 +
+ hw/ssi/bcm2835_spi.c                 | 288 +++++++++++++++++++++++++++
+ hw/ssi/meson.build                   |   1 +
+ include/hw/arm/bcm2835_peripherals.h |   3 +-
+ include/hw/ssi/bcm2835_spi.h         |  81 ++++++++
+ 8 files changed, 392 insertions(+), 6 deletions(-)
+ create mode 100644 hw/ssi/bcm2835_spi.c
+ create mode 100644 include/hw/ssi/bcm2835_spi.h
 
-thanks
--- PMM
+-- 
+2.34.1
+
 
