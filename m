@@ -4,69 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 262A2C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0314BC47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUXbD-000748-73; Mon, 29 Jan 2024 14:47:19 -0500
+	id 1rUXb4-0006qs-Hz; Mon, 29 Jan 2024 14:47:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rUXb5-0006tu-Sf
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:47:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rUXan-0006cj-Rh; Mon, 29 Jan 2024 14:46:57 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rUXb3-00079w-UN
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:47:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706557629;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bv7ZPrL2DdnvWdsg1TBLPZCfANlgz6Ea2C/j7MmvWUU=;
- b=iKmB1zOjYU+PjFCpY0Vu6leOMVRWdKiuW1Py8AoT8Lpnyj1vbreG1xOugUDdRXT8HT/AIM
- LppZXxZRKm/Sp93awok2A9jZx0lnE16vvM5ud5eTY9DjMZx4Haw7dIGZ8MJZneJFsGWE/S
- B9nCrIOmXmqopynH4QmTZw4bRJ7Zj6M=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-P8y-ieREPiqSx4TkuztnvA-1; Mon,
- 29 Jan 2024 14:47:05 -0500
-X-MC-Unique: P8y-ieREPiqSx4TkuztnvA-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 51CDC280D201;
- Mon, 29 Jan 2024 19:47:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.68])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B5D02492BE2;
- Mon, 29 Jan 2024 19:47:04 +0000 (UTC)
-Date: Mon, 29 Jan 2024 13:47:03 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com, 
- michael.roth@amd.com, kkostiuk@redhat.com, qemu-block@nongnu.org
-Subject: Re: [PATCH 2/5] qapi: Drop redundant documentation of conditional
-Message-ID: <lmy7tadhdotpatdebwj5yfnl66ufi2i5ensvfsnjkqtsukqnvb@i6oenibtes7q>
-References: <20240129115008.674248-1-armbru@redhat.com>
- <20240129115008.674248-3-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rUXak-00078K-HT; Mon, 29 Jan 2024 14:46:52 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9FB514E6012;
+ Mon, 29 Jan 2024 20:46:43 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id JX1PHC9kVR1W; Mon, 29 Jan 2024 20:46:41 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 99D024E6006; Mon, 29 Jan 2024 20:46:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 966427456B4;
+ Mon, 29 Jan 2024 20:46:41 +0100 (CET)
+Date: Mon, 29 Jan 2024 20:46:41 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org, 
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ =?ISO-8859-15?Q?Fr=E9d=E9ric_Barrat?= <fbarrat@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, mzamazal@redhat.com, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
+ Laurent Vivier <laurent@vivier.eu>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v3 01/29] bulk: Access existing variables initialized to
+ &S->F when available
+In-Reply-To: <20240129164514.73104-2-philmd@linaro.org>
+Message-ID: <fd790685-a98f-9cd5-c117-dac96564a71b@eik.bme.hu>
+References: <20240129164514.73104-1-philmd@linaro.org>
+ <20240129164514.73104-2-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240129115008.674248-3-armbru@redhat.com>
-User-Agent: NeoMutt/20231221
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1985250681-1706557601=:22604"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,32 +88,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 29, 2024 at 12:50:05PM +0100, Markus Armbruster wrote:
-> Documentation generated for dump-skeys contains
-> 
->     This command is only supported on s390 architecture.
-> 
-> and
-> 
->     If
->     ~~
-> 
->     "TARGET_S390X"
-> 
-> The former became redundant in commit 901a34a400a (qapi: add 'If:'
-> section to generated documentation) added the latter.  Drop the
-> former.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-1985250681-1706557601=:22604
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Mon, 29 Jan 2024, Philippe Mathieu-Daudé wrote:
+> When a variable is initialized to &struct->field, use it
+> in place. Rationale: while this makes the code more concise,
+> this also helps static analyzers.
+>
+> Mechanical change using the following Coccinelle spatch script:
+>
+> @@
+> type S, F;
+> identifier s, m, v;
+> @@
+>      S *s;
+>      ...
+>      F *v = &s->m;
+>      <+...
+> -    &s->m
+> +    v
+>      ...+>
+>
+> Inspired-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  qapi/misc-target.json | 2 --
->  1 file changed, 2 deletions(-)
+> hw/display/ati.c              |  2 +-
+> hw/misc/macio/pmu.c           |  2 +-
+> hw/misc/pvpanic-pci.c         |  2 +-
+> hw/pci-bridge/cxl_root_port.c |  2 +-
+> hw/ppc/pnv.c                  | 20 ++++++++++----------
+> hw/virtio/vhost-user-gpio.c   |  8 ++++----
+> hw/virtio/vhost-user-scmi.c   |  6 +++---
+> hw/virtio/virtio-pci.c        |  2 +-
+> hw/xen/xen_pt.c               |  6 +++---
+> migration/multifd-zlib.c      |  2 +-
+> target/arm/cpu.c              |  4 ++--
+> target/arm/kvm.c              |  2 +-
+> target/arm/machine.c          |  6 +++---
+> target/i386/hvf/x86hvf.c      |  2 +-
+> target/m68k/helper.c          |  2 +-
+> target/ppc/kvm.c              |  8 ++++----
+> target/riscv/cpu_helper.c     |  2 +-
+> 17 files changed, 39 insertions(+), 39 deletions(-)
+>
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 569b8f6165..8d2501bd82 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -991,7 +991,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+>     }
+>     vga_init(vga, OBJECT(s), pci_address_space(dev),
+>              pci_address_space_io(dev), true);
+> -    vga->con = graphic_console_init(DEVICE(s), 0, s->vga.hw_ops, &s->vga);
+> +    vga->con = graphic_console_init(DEVICE(s), 0, s->vga.hw_ops, vga);
+>     if (s->cursor_guest_mode) {
+>         vga->cursor_invalidate = ati_cursor_invalidate;
+>         vga->cursor_draw_line = ati_cursor_draw_line;
+> diff --git a/hw/misc/macio/pmu.c b/hw/misc/macio/pmu.c
+> index e9a90da88f..7fe1c4e517 100644
+> --- a/hw/misc/macio/pmu.c
+> +++ b/hw/misc/macio/pmu.c
+> @@ -737,7 +737,7 @@ static void pmu_realize(DeviceState *dev, Error **errp)
+>     timer_mod(s->one_sec_timer, s->one_sec_target);
+>
+>     if (s->has_adb) {
+> -        qbus_init(&s->adb_bus, sizeof(s->adb_bus), TYPE_ADB_BUS,
+> +        qbus_init(adb_bus, sizeof(s->adb_bus), TYPE_ADB_BUS,
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Probably should change to use sizeof(*adb_bus) too. Although the next line 
+is the only place the adb_bus local is used so maybe can drop the local 
+and chnage next line to use &s->adb_bus instead.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Regards,
+BALATON Zoltan
 
+>                   dev, "adb.0");
+>         adb_register_autopoll_callback(adb_bus, pmu_adb_poll, s);
+>     }
+--3866299591-1985250681-1706557601=:22604--
 
