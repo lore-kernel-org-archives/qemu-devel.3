@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EFE7C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 08:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDCBC47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 08:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUNDZ-0008HS-HU; Mon, 29 Jan 2024 03:42:13 -0500
+	id 1rUNDd-0008If-L1; Mon, 29 Jan 2024 03:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=2aNT=JH=redhat.com=clg@ozlabs.org>)
- id 1rUNDV-0008H1-PZ
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 03:42:09 -0500
+ id 1rUNDX-0008HH-BL
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 03:42:11 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=2aNT=JH=redhat.com=clg@ozlabs.org>)
- id 1rUNDT-000537-UI
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 03:42:09 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TNhcQ5j1Qz4wxx;
- Mon, 29 Jan 2024 19:41:58 +1100 (AEDT)
+ id 1rUNDT-00053V-UL
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 03:42:10 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TNhcV6MTjz4x1s;
+ Mon, 29 Jan 2024 19:42:02 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TNhcP5BWMz4wby;
- Mon, 29 Jan 2024 19:41:57 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TNhcT0RVlz4wby;
+ Mon, 29 Jan 2024 19:42:00 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 0/2] vfio queue
-Date: Mon, 29 Jan 2024 09:41:48 +0100
-Message-ID: <20240129084150.134050-1-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jing Liu <jing2.liu@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: [PULL 2/2] vfio/pci: Clear MSI-X IRQ index always
+Date: Mon, 29 Jan 2024 09:41:50 +0100
+Message-ID: <20240129084150.134050-3-clg@redhat.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240129084150.134050-1-clg@redhat.com>
+References: <20240129084150.134050-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,32 +68,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7a1dc45af581d2b643cdbf33c01fd96271616fbd:
+When doing device assignment of a physical device, MSI-X can be
+enabled with no vectors enabled and this sets the IRQ index to
+VFIO_PCI_MSIX_IRQ_INDEX. However, when MSI-X is disabled, the IRQ
+index is left untouched if no vectors are in use. Then, when INTx
+is enabled, the IRQ index value is considered incompatible (set to
+MSI-X) and VFIO_DEVICE_SET_IRQS fails. QEMU complains with :
 
-  Merge tag 'pull-target-arm-20240126' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-01-26 18:16:35 +0000)
+qemu-system-x86_64: vfio 0000:08:00.0: Failed to set up TRIGGER eventfd signaling for interrupt INTX-0: VFIO_DEVICE_SET_IRQS failure: Invalid argument
 
-are available in the Git repository at:
+To avoid that, unconditionaly clear the IRQ index when MSI-X is
+disabled.
 
-  https://github.com/legoater/qemu/ tags/pull-vfio-20240129
+Buglink: https://issues.redhat.com/browse/RHEL-21293
+Fixes: 5ebffa4e87e7 ("vfio/pci: use an invalid fd to enable MSI-X")
+Cc: Jing Liu <jing2.liu@intel.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/pci.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-for you to fetch changes up to d2b668fca5652760b435ce812a743bba03d2f316:
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index d7fe06715c4b9cde66a68c31aaf405315921b0d6..4fa387f0430d62ca2ba1b5ae5b7037f8f06b33f9 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -826,9 +826,11 @@ static void vfio_msix_disable(VFIOPCIDevice *vdev)
+         }
+     }
+ 
+-    if (vdev->nr_vectors) {
+-        vfio_disable_irqindex(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
+-    }
++    /*
++     * Always clear MSI-X IRQ index. A PF device could have enabled
++     * MSI-X with no vectors. See vfio_msix_enable().
++     */
++    vfio_disable_irqindex(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
+ 
+     vfio_msi_disable_common(vdev);
+     vfio_intx_enable(vdev, &err);
+-- 
+2.43.0
 
-  vfio/pci: Clear MSI-X IRQ index always (2024-01-29 08:26:25 +0100)
-
-----------------------------------------------------------------
-vfio queue:
-
-* Array type cleanup
-* Fix for IRQ enablement
-
-----------------------------------------------------------------
-Cédric Le Goater (1):
-      vfio/pci: Clear MSI-X IRQ index always
-
-Paolo Bonzini (1):
-      vfio: use matching sizeof type
-
- hw/vfio/common.c | 2 +-
- hw/vfio/pci.c    | 8 +++++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
 
