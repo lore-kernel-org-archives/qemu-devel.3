@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A929C47DDB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A1EC48285
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUoL-0005gX-R7; Mon, 29 Jan 2024 11:48:42 -0500
+	id 1rUUnW-0001xV-Pn; Mon, 29 Jan 2024 11:47:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUn5-00009p-3q
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:28 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUm0-0006Kd-OK
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:18 -0500
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUn1-0004Ay-2g
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:22 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-40e5afc18f5so34956315e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:47:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUlx-0003qW-4W
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:16 -0500
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2cf4fafa386so30698681fa.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706546836; x=1707151636; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706546770; x=1707151570; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a+WHgRt8aoFwU9PH4yyhsDxrOBo9TuwHJWddMcT5sv4=;
- b=PSiux/CnR2ucLc4rXWhKj7NH0VoLrYvuHpWajN4yWMJWzM0/IKYr2psYdM7V+1+5K8
- lF4GQzoSeXMJSLcALNb73RgtKH4BpD2DTmf7bcSaLSWjfUv+gPiPCaToqfHi+TRzPabb
- TrA8ZnObYxiG7L/GGW6Ux4rWg8h/4NHj/3f7W7R7IDuYSOZpTwN/SndwnHDuHFwPkTFe
- mGS8/LxWdsa7NzejwU2ZZYtZ4xz2znITLZIic7+TvJDt5VQA3QrGeZzwkI26DO8yrpjm
- XkZsl+s47tX8AoVhYQyCkmccZxkqVkYwTs9/SFaI+pMaJD21iGJChpsTX+sp5Kw8DXCG
- 7luA==
+ bh=ULT/g8UQ/ZTfsw6fPM1iTJdiFqLqeAPLwCS8P07bPHA=;
+ b=EHmDXhiOJ5FKe5kCzbk7jGb3j+rTMakIi17lF4W753fwCYl1Md0elLLVCcm+MH/w7G
+ A8eOoJX3Nr5bKUzf5fkk+5DsO2kmHwpTtdURFBXebrwfjLdgAW1MR7Sc2YXXpbj8Tqpo
+ PYBI5LUXgSrRXIscT4Iu6gPWU1zdSXY5xMYR2fpH6IkDATgB3zhIiRgzwsz5TXuA4QZg
+ rJ08dc1zmYbZw1s18rhl0bRXcfsMMDrGhbEdGvhZImNjtgH/9xlJtUW/NvgELvz7aNSv
+ wiP3sC3jy02TMog/6mi9diMxT4COAn+iUMcHpLtdIk/osg0h0qgsX6wqXXo38bmxMfqd
+ P33g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706546836; x=1707151636;
+ d=1e100.net; s=20230601; t=1706546770; x=1707151570;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a+WHgRt8aoFwU9PH4yyhsDxrOBo9TuwHJWddMcT5sv4=;
- b=Dc5eSotOxYpPCkcVRjGHvilcxbfP39WEx4LILieYLsXi7AmXFnSLgtn4ib3ku9BV4u
- Lm7Iy6Ob0fqiULX7ZHpS3iFNu7xab4wDduJkQZyt/xf1zDK/1+Td+/DYYkFf0uQ11mqG
- O/HpnDVI5h5ijKodn07FFgZTuqmhjt+n7vlgM0E8YELJkkdm77ff2T0io9jPhmRBLgso
- Ue5pUEdr4mKz9Px/9lLLxu8LeBWvFWdd2Bjokrrte4ufJ7TEhsE3w19Nm4zfUn1x1hkU
- cMVTEYPUaomN7+tUjr8N62pdGLdlYZMnverJdkIW66CLZ9NNTTVRXKPkGwNdI6W0NbOn
- nHKA==
-X-Gm-Message-State: AOJu0Yz4t6+hE0zirrzeDOtOVOJKdn/SkM6Mw3LltlNX+0jVM6rqMtKM
- Dk+9GQyvJEy+IFhEKWrrGTe6t311eUmIFxr2x8HE/WXP4QYEvi+t57qpfsr8Fl9CU2UZreTYnp2
- a
-X-Google-Smtp-Source: AGHT+IGYhnGe776oZg8Nf+XW6qyKWUfG5CSd+AahADH4rgW9WuZbEKC9nCTJSkL02Ck+OeTkF8tuTg==
-X-Received: by 2002:a05:600c:4689:b0:40d:5575:a197 with SMTP id
- p9-20020a05600c468900b0040d5575a197mr5396356wmo.12.1706546836062; 
- Mon, 29 Jan 2024 08:47:16 -0800 (PST)
+ bh=ULT/g8UQ/ZTfsw6fPM1iTJdiFqLqeAPLwCS8P07bPHA=;
+ b=TxWop/CGmsXVG0IvMNCi9quMLjGyfB02WPg2v7EJ9WsjIpkqmZseRkDp8+BkZWqCBx
+ KvVBXdI2isX6LfAWyS7LOIK04kMN4VqflV5YXc8uROdgLfozArmErw36KTEdZ97gdDBM
+ UfhsgXYa9Kma4mEjTF5Jg5SWJ3J0BKpcRTiU5o79tCCQgDE9t9GH6PMVu3WOKVWxFGHC
+ TPCJ1tznuduqGYblKc6ZBL/e+0fG0Ge/YuVDcZaQ6h+Z2oEPeKVmy1sxVvlnQUWl79dG
+ VMopfZCFe/q8WlSMLmAxjSeY3GAwxGZ706O1Dv01QpofbOqlXlU8hXihPQv01cRNXVej
+ C5nw==
+X-Gm-Message-State: AOJu0YyTODGSSukNkvvMNZmARC3eItmexG6+ViFOwvXLdHSC2ZRtE6mC
+ 3ixmoErWv7+lRDOhUrMYtVxiCzdFJJkpuUCMH83XmU5PE1V4pG+m4ZnQ7C9e3lLYhdN/iHPePYo
+ U
+X-Google-Smtp-Source: AGHT+IEP4UUSkCYVYnu7yKq5e9HVmSRrLQNLZdSXiqwEcOfMM8lHE3iH5My9oVWcYdTSOti8rn8rZg==
+X-Received: by 2002:a2e:b8c2:0:b0:2cf:274c:caaa with SMTP id
+ s2-20020a2eb8c2000000b002cf274ccaaamr5080107ljp.4.1706546769995; 
+ Mon, 29 Jan 2024 08:46:09 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- l29-20020a05600c1d1d00b0040ef8aa4822sm2704220wms.38.2024.01.29.08.47.14
+ eo6-20020a056000428600b0033af5086c2dsm1068171wrb.58.2024.01.29.08.46.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 08:47:15 -0800 (PST)
+ Mon, 29 Jan 2024 08:46:09 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
@@ -64,19 +64,19 @@ Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chris Wulff <crwulff@gmail.com>, Marek Vasut <marex@denx.de>
-Subject: [PATCH v3 19/29] target/nios2: Prefer fast cpu_env() over slower CPU
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
+Subject: [PATCH v3 08/29] target/arm: Prefer fast cpu_env() over slower CPU
  QOM cast macro
-Date: Mon, 29 Jan 2024 17:45:01 +0100
-Message-ID: <20240129164514.73104-20-philmd@linaro.org>
+Date: Mon, 29 Jan 2024 17:44:50 +0100
+Message-ID: <20240129164514.73104-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,110 +102,356 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Mechanical patch produced running the command documented
 in scripts/coccinelle/cpu_env.cocci_template header.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/nios2/cpu.c        | 15 +++------------
- target/nios2/helper.c     |  3 +--
- target/nios2/nios2-semi.c |  6 ++----
- target/nios2/translate.c  |  3 +--
- 4 files changed, 7 insertions(+), 20 deletions(-)
+ hw/intc/arm_gicv3_cpuif.c        |  7 ++-----
+ hw/intc/arm_gicv3_cpuif_common.c |  5 +----
+ target/arm/cpu.c                 | 19 +++++--------------
+ target/arm/debug_helper.c        |  8 ++------
+ target/arm/gdbstub.c             |  6 ++----
+ target/arm/gdbstub64.c           |  6 ++----
+ target/arm/helper.c              |  9 +++------
+ target/arm/hvf/hvf.c             | 12 ++++--------
+ target/arm/kvm.c                 |  3 +--
+ target/arm/ptw.c                 |  3 +--
+ target/arm/tcg/cpu32.c           |  4 +---
+ target/arm/tcg/translate.c       |  3 +--
+ 12 files changed, 25 insertions(+), 60 deletions(-)
 
-diff --git a/target/nios2/cpu.c b/target/nios2/cpu.c
-index 09b122e24d..b5b3773fb8 100644
---- a/target/nios2/cpu.c
-+++ b/target/nios2/cpu.c
-@@ -28,28 +28,19 @@
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index e1a60d8c15..80f64a5154 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -182,8 +182,6 @@ static int hppvi_index(GICv3CPUState *cs)
+      * priority than the highest priority list register at every
+      * callsite of HighestPriorityVirtualInterrupt; we check it here.)
+      */
+-    ARMCPU *cpu = ARM_CPU(cs->cpu);
+-    CPUARMState *env = &cpu->env;
+     int idx = -1;
+     int i;
+     /* Note that a list register entry with a priority of 0xff will
+@@ -230,7 +228,7 @@ static int hppvi_index(GICv3CPUState *cs)
+      * fails the priority check here. vLPIs are only considered
+      * when we are in Non-Secure state.
+      */
+-    if (cs->hppvlpi.prio < prio && !arm_is_secure(env)) {
++    if (cs->hppvlpi.prio < prio && !arm_is_secure(cpu_env(cs->cpu))) {
+         if (cs->hppvlpi.grp == GICV3_G0) {
+             if (cs->ich_vmcr_el2 & ICH_VMCR_EL2_VENG0) {
+                 return HPPVI_INDEX_VLPI;
+@@ -931,8 +929,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+     /* Tell the CPU about its highest priority pending interrupt */
+     int irqlevel = 0;
+     int fiqlevel = 0;
+-    ARMCPU *cpu = ARM_CPU(cs->cpu);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs->cpu);
  
- static void nios2_cpu_set_pc(CPUState *cs, vaddr value)
+     g_assert(bql_locked());
+ 
+diff --git a/hw/intc/arm_gicv3_cpuif_common.c b/hw/intc/arm_gicv3_cpuif_common.c
+index ff1239f65d..bab3c3cdbd 100644
+--- a/hw/intc/arm_gicv3_cpuif_common.c
++++ b/hw/intc/arm_gicv3_cpuif_common.c
+@@ -15,8 +15,5 @@
+ 
+ void gicv3_set_gicv3state(CPUState *cpu, GICv3CPUState *s)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
 -
--    env->pc = value;
-+    cpu_env(cs)->pc = value;
+-    env->gicv3state = (void *)s;
++    cpu_env(cpu)->gicv3state = (void *)s;
+ };
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index e5deb5195b..23f4de127f 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -53,8 +53,7 @@
+ 
+ static void arm_cpu_set_pc(CPUState *cs, vaddr value)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+ 
+     if (is_a64(env)) {
+         env->pc = value;
+@@ -67,8 +66,7 @@ static void arm_cpu_set_pc(CPUState *cs, vaddr value)
+ 
+ static vaddr arm_cpu_get_pc(CPUState *cs)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+ 
+     if (is_a64(env)) {
+         return env->pc;
+@@ -996,19 +994,15 @@ static void arm_cpu_kvm_set_irq(void *opaque, int irq, int level)
+ 
+ static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
+-
+     cpu_synchronize_state(cs);
+-    return arm_cpu_data_is_big_endian(env);
++    return arm_cpu_data_is_big_endian(cpu_env(cs));
  }
  
- static vaddr nios2_cpu_get_pc(CPUState *cs)
+ #endif
+ 
+ static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
+-    ARMCPU *ac = ARM_CPU(cpu);
+-    CPUARMState *env = &ac->env;
++    CPUARMState *env = cpu_env(cpu);
+     bool sctlr_b;
+ 
+     if (is_a64(env)) {
+@@ -2435,10 +2429,7 @@ static Property arm_cpu_properties[] = {
+ 
+ static const gchar *arm_gdb_arch_name(CPUState *cs)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
 -
--    return env->pc;
-+    return cpu_env(cs)->pc;
- }
+-    if (arm_feature(env, ARM_FEATURE_IWMMXT)) {
++    if (arm_feature(cpu_env(cs), ARM_FEATURE_IWMMXT)) {
+         return "iwmmxt";
+     }
+     return "arm";
+diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
+index 7d856acddf..7bd5467414 100644
+--- a/target/arm/debug_helper.c
++++ b/target/arm/debug_helper.c
+@@ -468,8 +468,7 @@ void arm_debug_excp_handler(CPUState *cs)
+      * Called by core code when a watchpoint or breakpoint fires;
+      * need to check which one and raise the appropriate exception.
+      */
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+     CPUWatchpoint *wp_hit = cs->watchpoint_hit;
  
- static void nios2_restore_state_to_opc(CPUState *cs,
-                                        const TranslationBlock *tb,
-                                        const uint64_t *data)
+     if (wp_hit) {
+@@ -757,9 +756,6 @@ void hw_breakpoint_update_all(ARMCPU *cpu)
+ 
+ vaddr arm_adjust_watchpoint_address(CPUState *cs, vaddr addr, int len)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
 -
--    env->pc = data[0];
-+    cpu_env(cs)->pc = data[0];
- }
+     /*
+      * In BE32 system mode, target memory is stored byteswapped (on a
+      * little-endian host system), and by the time we reach here (via an
+@@ -767,7 +763,7 @@ vaddr arm_adjust_watchpoint_address(CPUState *cs, vaddr addr, int len)
+      * to account for that, which means that watchpoints will not match.
+      * Undo the adjustment here.
+      */
+-    if (arm_sctlr_b(env)) {
++    if (arm_sctlr_b(cpu_env(cs))) {
+         if (len == 1) {
+             addr ^= 3;
+         } else if (len == 2) {
+diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+index 28f546a5ff..dc6c29669c 100644
+--- a/target/arm/gdbstub.c
++++ b/target/arm/gdbstub.c
+@@ -40,8 +40,7 @@ typedef struct RegisterSysregXmlParam {
  
- static bool nios2_cpu_has_work(CPUState *cs)
-diff --git a/target/nios2/helper.c b/target/nios2/helper.c
-index bb3b09e5a7..ac57121afc 100644
---- a/target/nios2/helper.c
-+++ b/target/nios2/helper.c
-@@ -287,8 +287,7 @@ void nios2_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                    MMUAccessType access_type,
-                                    int mmu_idx, uintptr_t retaddr)
+ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
-+    CPUNios2State *env = cpu_env(cs);
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
  
-     env->ctrl[CR_BADADDR] = addr;
-     cs->exception_index = EXCP_UNALIGN;
-diff --git a/target/nios2/nios2-semi.c b/target/nios2/nios2-semi.c
-index 0b84fcb6b6..420702e293 100644
---- a/target/nios2/nios2-semi.c
-+++ b/target/nios2/nios2-semi.c
-@@ -75,8 +75,7 @@ static int host_to_gdb_errno(int err)
+     if (n < 16) {
+         /* Core integer register.  */
+@@ -61,8 +60,7 @@ int arm_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  
- static void nios2_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
+ int arm_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
-+    CPUNios2State *env = cpu_env(cs);
-     target_ulong args = env->regs[R_ARG1];
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+     uint32_t tmp;
  
-     if (put_user_u32(ret, args) ||
-@@ -93,8 +92,7 @@ static void nios2_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
+     tmp = ldl_p(mem_buf);
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index d7b79a6589..b9f29b0a60 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -24,8 +24,7 @@
  
- static void nios2_semi_u64_cb(CPUState *cs, uint64_t ret, int err)
+ int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    Nios2CPU *cpu = NIOS2_CPU(cs);
--    CPUNios2State *env = &cpu->env;
-+    CPUNios2State *env = cpu_env(cs);
-     target_ulong args = env->regs[R_ARG1];
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
  
-     if (put_user_u32(ret >> 32, args) ||
-diff --git a/target/nios2/translate.c b/target/nios2/translate.c
-index e806623594..30beb303f9 100644
---- a/target/nios2/translate.c
-+++ b/target/nios2/translate.c
-@@ -970,7 +970,6 @@ static void nios2_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
- static void nios2_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+     if (n < 31) {
+         /* Core integer register.  */
+@@ -45,8 +44,7 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int aarch64_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+     uint64_t tmp;
+ 
+     tmp = ldq_p(mem_buf);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 945d8571a6..a9d2c23df2 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -10902,8 +10902,7 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
+      * PSTATE A/I/F masks are set based only on the SCR.EA/IRQ/FIQ values.
+      */
+     uint32_t addr, mask;
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+ 
+     switch (cs->exception_index) {
+     case EXCP_UDEF:
+@@ -10981,8 +10980,7 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
+ 
+ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+     uint32_t addr;
+     uint32_t mask;
+     int new_mode;
+@@ -11481,8 +11479,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+ #ifdef CONFIG_TCG
+ static void tcg_handle_semihosting(CPUState *cs)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+ 
+     if (is_a64(env)) {
+         qemu_log_mask(CPU_LOG_INT,
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index e5f0f60093..849f0772e6 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1006,8 +1006,7 @@ void hvf_kick_vcpu_thread(CPUState *cpu)
+ static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
+                                 uint32_t syndrome)
+ {
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
++    CPUARMState *env = cpu_env(cpu);
+ 
+     cpu->exception_index = excp;
+     env->exception.target_el = 1;
+@@ -1485,8 +1484,7 @@ static bool hvf_sysreg_write_cp(CPUState *cpu, uint32_t reg, uint64_t val)
+ 
+ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+ {
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
++    CPUARMState *env = cpu_env(cpu);
+ 
+     trace_hvf_sysreg_write(reg,
+                            SYSREG_OP0(reg),
+@@ -2152,8 +2150,7 @@ static void hvf_put_gdbstub_debug_registers(CPUState *cpu)
+  */
+ static void hvf_put_guest_debug_registers(CPUState *cpu)
+ {
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
++    CPUARMState *env = cpu_env(cpu);
+     hv_return_t r = HV_SUCCESS;
+     int i;
+ 
+@@ -2207,8 +2204,7 @@ static void hvf_arch_set_traps(void)
+ 
+ void hvf_arch_update_guest_debug(CPUState *cpu)
+ {
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
++    CPUARMState *env = cpu_env(cpu);
+ 
+     /* Check whether guest debugging is enabled */
+     cpu->accel->guest_debug_enabled = cpu->singlestep_enabled ||
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index ab85d628a8..cccb512f23 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1958,8 +1958,7 @@ int kvm_arch_destroy_vcpu(CPUState *cs)
+ /* Callers must hold the iothread mutex lock */
+ static void kvm_inject_arm_sea(CPUState *c)
+ {
+-    ARMCPU *cpu = ARM_CPU(c);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(c);
+     uint32_t esr;
+     bool same_el;
+ 
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 5eb3577bcd..57a761ad68 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3528,8 +3528,7 @@ bool get_phys_addr(CPUARMState *env, target_ulong address,
+ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
+                                          MemTxAttrs *attrs)
+ {
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
++    CPUARMState *env = cpu_env(cs);
+     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
+     ARMSecuritySpace ss = arm_security_space(env);
+     S1Translate ptw = {
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index d9e0e2a4dd..e96f1119c0 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -102,8 +102,6 @@ void aa32_max_features(ARMCPU *cpu)
+ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ {
+     CPUClass *cc = CPU_GET_CLASS(cs);
+-    ARMCPU *cpu = ARM_CPU(cs);
+-    CPUARMState *env = &cpu->env;
+     bool ret = false;
+ 
+     /*
+@@ -115,7 +113,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+      * currently active exception).
+      */
+     if (interrupt_request & CPU_INTERRUPT_HARD
+-        && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
++        && (armv7m_nvic_can_take_pending_exception(cpu_env(cs)->nvic))) {
+         cs->exception_index = EXCP_IRQ;
+         cc->tcg_ops->do_interrupt(cs);
+         ret = true;
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index b3660173d1..ab73250f04 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -9326,7 +9326,6 @@ static void arm_post_translate_insn(DisasContext *dc)
+ static void arm_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
  {
      DisasContext *dc = container_of(dcbase, DisasContext, base);
--    CPUNios2State *env = cpu_env(cs);
-     const Nios2Instruction *instr;
-     uint32_t code, pc;
-     uint8_t op;
-@@ -980,7 +979,7 @@ static void nios2_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+-    CPUARMState *env = cpu_env(cpu);
+     uint32_t pc = dc->base.pc_next;
+     unsigned int insn;
+ 
+@@ -9356,7 +9355,7 @@ static void arm_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     }
+ 
+     dc->pc_curr = pc;
+-    insn = arm_ldl_code(env, &dc->base, pc, dc->sctlr_b);
++    insn = arm_ldl_code(cpu_env(cpu), &dc->base, pc, dc->sctlr_b);
+     dc->insn = insn;
      dc->base.pc_next = pc + 4;
- 
-     /* Decode an instruction */
--    code = cpu_ldl_code(env, pc);
-+    code = cpu_ldl_code(cpu_env(cs), pc);
-     op = get_opcode(code);
- 
-     if (unlikely(op >= ARRAY_SIZE(i_type_instructions))) {
+     disas_arm_insn(dc, insn);
 -- 
 2.41.0
 
