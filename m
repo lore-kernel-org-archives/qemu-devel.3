@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F4AC47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDB1C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUT0R-0004KN-3h; Mon, 29 Jan 2024 09:53:04 -0500
+	id 1rUT4q-0006E3-2P; Mon, 29 Jan 2024 09:57:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUT0H-00048o-G5
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:52:55 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUT4o-0006Dv-5f
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:57:34 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUT0F-0001jQ-LG
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:52:53 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUT4m-0002YL-NG
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:57:33 -0500
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40TEkmwg029312; Mon, 29 Jan 2024 14:52:49 GMT
+ 40TEsQ21025801; Mon, 29 Jan 2024 14:57:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to : cc :
+ h=date : from : to :
  subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=pp1;
- bh=xN2IgVg9pFwumyp7dr9eYrXgOXRbT/gf0UNUQz6ivk0=;
- b=c1CxEBrR8wsLWP0VC42rz3Lixxlt92uvZ+56m31IjpKO3oPM9CT1ainUIi05ST00Zw5g
- pPtnNqNBU9Sgn+/nksLyPbM95GoSY5cn2kjzUr8VM3Wp4OSybrJX95LETjh0NLetM/LX
- grB/faYiorvm95iU55uU3voNoiX5wbs7CqKkgoj6Ue3+/NXsG4/4fm5M8e90hbq3btHz
- XIzwkt2lv/tjkT0Ek74Y8JNTtb9A5FVfsoiYH80v6vC1PTRikddfJU9wImF528+r5BCY
- IegcWZe13+nS3ZQnsiqtbacg1z88dzRYyYPV/vj5s5L0E6V7E6WR0ClxQQvL1KlOdox3 XA== 
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxe34g7f1-1
+ in-reply-to; s=pp1; bh=4yL2dGvkHaw8Xq53LURcQ9t+GrGBlNtYTZQPwHJk90Y=;
+ b=gvsGphFpJQnmWUNFIAD/N1IxJiMwuO9y856tawgZoinRWV0Wx3d4gQCKXGDTRDLGE9UC
+ 5rcXWn5eZcigRnpjtj4KDMX8WuIbGxXlCUB9lABHn8jN9bsHmd2OrkAp/i5jLxF6tB5R
+ tE+spV6bYNPiW9J8ZKQiEPEa97VCejG5x+mopjWMdWPA5XwdvRtiQlz4CNdLDoelamtA
+ 0FWahl6hJAOondKIXuZBrT1rvPqhlpXao6UPyZ7mkuFWo6RlmhCjKEXfZg+J2G0iIoW3
+ TIcBP86vYU3u57WueexxQWHivsUCHOqqFUFCHyWerSIqnej81PvONRP13sYLTnDFiVl8 pg== 
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxdy30dr0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jan 2024 14:52:49 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40TDabNP002319; Mon, 29 Jan 2024 14:52:48 GMT
+ Mon, 29 Jan 2024 14:57:29 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40TDvgHD017712; Mon, 29 Jan 2024 14:57:08 GMT
 Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwc5t13gr-1
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwchyh0v4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jan 2024 14:52:48 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
+ Mon, 29 Jan 2024 14:57:08 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
  by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40TEqkXT35520804
+ 40TEv6EN43581954
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jan 2024 14:52:46 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 91F392004B;
- Mon, 29 Jan 2024 14:52:46 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79A3020043;
- Mon, 29 Jan 2024 14:52:46 +0000 (GMT)
+ Mon, 29 Jan 2024 14:57:06 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1851E20043;
+ Mon, 29 Jan 2024 14:57:06 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F175920040;
+ Mon, 29 Jan 2024 14:57:05 +0000 (GMT)
 Received: from heavy (unknown [9.155.200.166])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Jan 2024 14:52:46 +0000 (GMT)
-Date: Mon, 29 Jan 2024 15:52:45 +0100
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 29 Jan 2024 14:57:05 +0000 (GMT)
+Date: Mon, 29 Jan 2024 15:57:04 +0100
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 17/33] linux-user: Move some mmap checks outside the
- lock
-Message-ID: <att66ghmazgiuhxlcj6p4534fuhvx3otey3nsd3nfjbuhtoikn@rqdkeon4tots>
+Subject: Re: [PATCH v3 18/33] linux-user: Fix sub-host-page mmap
+Message-ID: <en5ret64vxt3pyok5efftdlrrs5hpncewushr5sxrrwukv4552@tik2k4sp3imb>
 References: <20240102015808.132373-1-richard.henderson@linaro.org>
- <20240102015808.132373-18-richard.henderson@linaro.org>
+ <20240102015808.132373-19-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240102015808.132373-18-richard.henderson@linaro.org>
+In-Reply-To: <20240102015808.132373-19-richard.henderson@linaro.org>
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 05LoS8JGeT9RpAO-vcDKSnL8FmmFJ3g5
-X-Proofpoint-ORIG-GUID: 05LoS8JGeT9RpAO-vcDKSnL8FmmFJ3g5
+X-Proofpoint-ORIG-GUID: 6oE2XObEa_AobjRV9WU6Q7VaExOvOFke
+X-Proofpoint-GUID: 6oE2XObEa_AobjRV9WU6Q7VaExOvOFke
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-29_09,2024-01-29_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- mlxlogscore=793 mlxscore=0 malwarescore=0 phishscore=0 impostorscore=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2401290108
+ malwarescore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 impostorscore=0
+ priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ clxscore=1015 mlxlogscore=927 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2401290110
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -108,52 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 02, 2024 at 12:57:52PM +1100, Richard Henderson wrote:
-> Basic validation of operands does not require the lock.
-> Hoist them from target_mmap__locked back into target_mmap.
+On Tue, Jan 02, 2024 at 12:57:53PM +1100, Richard Henderson wrote:
+> We cannot skip over the_end1 to the_end, because we fail to
+> record the validity of the guest page with the interval tree.
+> Remove "the_end" and rename "the_end1" to "the_end".
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  linux-user/mmap.c | 107 +++++++++++++++++++++++-----------------------
->  1 file changed, 53 insertions(+), 54 deletions(-)
-> 
-> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-> index b4c3cc65aa..fbaea832c5 100644
-> --- a/linux-user/mmap.c
-> +++ b/linux-user/mmap.c
-
-[...]
-
-> @@ -778,13 +726,64 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
->                       int flags, int fd, off_t offset)
->  {
->      abi_long ret;
-> +    int page_flags;
->  
->      trace_target_mmap(start, len, target_prot, flags, fd, offset);
-> +
-> +    if (!len) {
-> +        errno = EINVAL;
-> +        return -1;
-> +    }
-> +
-> +    page_flags = validate_prot_to_pageflags(target_prot);
-> +    if (!page_flags) {
-> +        errno = EINVAL;
-> +        return -1;
-> +    }
-> +
-> +    /* Also check for overflows... */
-> +    len = TARGET_PAGE_ALIGN(len);
-> +    if (!len || len != (size_t)len) {
-> +        errno = ENOMEM;
-> +        return -1;
-> +    }
-
-The overflow fix is probably worth mentioning in the commit message (or
-even deserves a separate commit, for backporting into stable).
-Regardless:
+>  linux-user/mmap.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
