@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2206C47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9275AC47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUnh-0002sN-I9; Mon, 29 Jan 2024 11:48:01 -0500
+	id 1rUUna-0002M8-B3; Mon, 29 Jan 2024 11:47:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmn-0007yD-Q9
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:06 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmB-0006nz-1E
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:28 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUmi-00044x-EV
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:05 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-40ef6442d60so10427425e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUm7-0003vx-HI
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:46:26 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-40e8d3b29f2so39658085e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:46:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706546818; x=1707151618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706546781; x=1707151581; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ib12xEQ9cS3zFPlxG0XK1YK2Htrv2nPGlK1Cf6JOxPw=;
- b=hajbdEajDl8ARAyj6nzsp5XigyqBzoXrRx/1vIrORkcQIdV4bxJn1xIxqQL/ht6LIo
- GnIZOQ+TyZ5Y44UIQJMhUT4vmMrQOcKxmLzb3lRKY72rG821MMdcxGRiSc434eByY9n+
- cNuQwJTKhuxBrByZqdSSB7ZAP9+Y2HER5LW4E1HK0Drbrb9jkatZMnG77jvV6SH+LNlK
- MkI1T/7P9Wsp94SNshqa+sVVjKKDlBmxzMsWjh5gPc5RzyZ0Wc8ozKvfQ27nPD3f0zQS
- IsT7n/5rXRCvbFpeEmPwx97o5bqoUxQqETgdNHgsByYpfij6gQJOmsJF9U2R+8RlO+Tm
- JexA==
+ bh=qs1q2hIX1TKLXUzvNhNiLBWs7dxyWeQLrsbzeUj/euM=;
+ b=Ch/RCi0UXz1xSC3fxQT+A46De1e0aXvbw/pYhIKaOG0qH70b332S4wYXOG2ek1X64m
+ qQ7rRkXx8umBulrwASA7MWVRq6vGLP3HU8Jo+agzO/ki8bDk3qmEM7STdGe/6JNacMMF
+ EsthOmf6zaWzQowJP6N7A1xx0VopO7/KSKfVxERP94S+y2gKp0lxuYcYBxyfdJY7rMRr
+ 8+f/IxMZ2alhQQhJFztpiFUYAkc2B43aEfnKpNYG6iJQc15HRTqgfYstXSfmMgzeWBym
+ lGoKYB296krBDtPyoQ9ADZ8Ux26nHZ4SPtgK5E3YeRmesUhd2sxK6wNn7FzdPL/uCEqy
+ PoWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706546818; x=1707151618;
+ d=1e100.net; s=20230601; t=1706546781; x=1707151581;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ib12xEQ9cS3zFPlxG0XK1YK2Htrv2nPGlK1Cf6JOxPw=;
- b=IEZVArQyDUVwQYix74/ILwoSLvir92/nllSHvmJJSkemky0TG7d/SGj8XPvBddIla3
- QjPX1StcF03Cpzqy9AgJan72g2CdALhBLrKhw64zfhF3xvlkZsNhejDcGtA3Qxgto25/
- Jhy39gzdl6KX1bF8RdiOVmXims2TCxMNJFiLvOq6pYPOAOH5I/TSK8TEImPPh81U+FpH
- bCY2TBAhn6qyIdRYyCm3sVdPZKV1QZf9QzRF+8fNXD89l55En4gcXtub4lM13ffxqryo
- 7vAThWVeDdNd7/cMFRb47s0Okt0RQv3QCL09zQyOwscg12VNfvEZjmtG/GF+YeFZRAs4
- wGFw==
-X-Gm-Message-State: AOJu0YxHS/dbLES17WpDYpI70rFHcNRZGJXBtcTUkvxpsIM+63JYq0lo
- Du1gM+Z86ULOlQ7PYGuZe/kWsC/bLDGwn6lNvMFJiGE9nVs33Qj1ndBCCvCEE1EsQZqRpQv/3mQ
- H
-X-Google-Smtp-Source: AGHT+IGVfe+WC+EmpdEquqGJQEaGbV4DU6mu7M5n0LNuNCmfmZ9Sf9Syv280bcWHDh3dOmHki1e+SQ==
-X-Received: by 2002:a05:600c:1396:b0:40e:d425:85a with SMTP id
- u22-20020a05600c139600b0040ed425085amr6002839wmf.17.1706546818295; 
- Mon, 29 Jan 2024 08:46:58 -0800 (PST)
+ bh=qs1q2hIX1TKLXUzvNhNiLBWs7dxyWeQLrsbzeUj/euM=;
+ b=rVYQkpkxm5rdoY1cpJsZC4L9Od+vem2LOx3Ng8/goYNfxq0ifTMqH2ZAx8rrBwCNDs
+ GFJl/BGRsIOSKrUrgCSnsW6G7onO0VVVcPiNBy4d1/IjCAv/cImJmugqWWyt9w90GmXk
+ oxxf2GM9Yi0AYZKeDQVCLudo0zNHDlpNZ99urvnhUTKbyPwUELrF2TkmoS2qgNlWN/aS
+ R7NM9ZNjANU1wFTLQeJR8h0RPZwx5vNynk0zfFSivhC+cS5z09OWpaypHogqFyazrOwO
+ P9N2w8DjBGi9afO4cAYr9Jierd71Gi1gPbrbSZstxgquDY3STDM95rlRYmIlIoApzxry
+ v+9Q==
+X-Gm-Message-State: AOJu0YzB2ombMWUt8nOZj6J1qyVTHLyEK2od+Z9QnR38/J78UNdsz0qK
+ thzwmkknc6v1j37ANAql7HDXTX4JqVGiY7KQUg2K7l667dCApjPVVWH/xoZbG05qigfiYO18QsQ
+ e
+X-Google-Smtp-Source: AGHT+IFCSjt586qMBuxNZypsApcZ+VC1FCZxUMqaBfFfPBMsHNMjn2msv5U3H1M4DbXITkHOuF5KTQ==
+X-Received: by 2002:a05:6000:402a:b0:33a:e525:b15 with SMTP id
+ cp42-20020a056000402a00b0033ae5250b15mr4721457wrb.19.1706546781551; 
+ Mon, 29 Jan 2024 08:46:21 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- bu25-20020a056000079900b0033ae4f2edb0sm6145102wrb.37.2024.01.29.08.46.56
+ bh5-20020a05600005c500b0033aed46956csm3386579wrb.80.2024.01.29.08.46.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 08:46:57 -0800 (PST)
+ Mon, 29 Jan 2024 08:46:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
@@ -64,19 +64,19 @@ Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v3 16/29] target/m68k: Prefer fast cpu_env() over slower CPU
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH v3 10/29] target/cris: Prefer fast cpu_env() over slower CPU
  QOM cast macro
-Date: Mon, 29 Jan 2024 17:44:58 +0100
-Message-ID: <20240129164514.73104-17-philmd@linaro.org>
+Date: Mon, 29 Jan 2024 17:44:52 +0100
+Message-ID: <20240129164514.73104-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,254 +103,152 @@ Mechanical patch produced running the command documented
 in scripts/coccinelle/cpu_env.cocci_template header.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/cpu.c       | 33 +++++++++++----------------------
- target/m68k/gdbstub.c   |  6 ++----
- target/m68k/helper.c    |  6 ++----
- target/m68k/m68k-semi.c |  6 ++----
- target/m68k/op_helper.c | 11 +++--------
- target/m68k/translate.c |  3 +--
- 6 files changed, 21 insertions(+), 44 deletions(-)
+ target/cris/cpu.c       | 10 +++-------
+ target/cris/gdbstub.c   |  9 +++------
+ target/cris/helper.c    | 12 ++++--------
+ target/cris/translate.c |  6 ++----
+ 4 files changed, 12 insertions(+), 25 deletions(-)
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index 4d14d04c33..4be0f0f33a 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -69,9 +69,8 @@ static void m68k_unset_feature(CPUM68KState *env, int feature)
- static void m68k_cpu_reset_hold(Object *obj)
+diff --git a/target/cris/cpu.c b/target/cris/cpu.c
+index 4187e0ef3c..122071f142 100644
+--- a/target/cris/cpu.c
++++ b/target/cris/cpu.c
+@@ -58,10 +58,9 @@ static bool cris_cpu_has_work(CPUState *cs)
+ 
+ static void cris_cpu_reset_hold(Object *obj)
  {
-     CPUState *cs = CPU(obj);
--    M68kCPU *cpu = M68K_CPU(cs);
-     M68kCPUClass *mcc = M68K_CPU_GET_CLASS(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
-     floatx80 nan = floatx80_default_nan(NULL);
-     int i;
+-    CPUState *s = CPU(obj);
+-    CRISCPU *cpu = CRIS_CPU(s);
++    CPUState *cs = CPU(obj);
+     CRISCPUClass *ccc = CRIS_CPU_GET_CLASS(obj);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
+     uint32_t vr;
  
-@@ -117,8 +116,7 @@ static ObjectClass *m68k_cpu_class_by_name(const char *cpu_model)
+     if (ccc->parent_phases.hold) {
+@@ -142,10 +141,7 @@ static void cris_cpu_set_irq(void *opaque, int irq, int level)
  
- static void m5206_cpu_initfn(Object *obj)
+ static void cris_disas_set_info(CPUState *cpu, disassemble_info *info)
  {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_MOVEFROMSR_PRIV);
-@@ -127,8 +125,7 @@ static void m5206_cpu_initfn(Object *obj)
- /* Base feature set, including isns. for m68k family */
- static void m68000_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_M68K);
-     m68k_set_feature(env, M68K_FEATURE_USP);
-@@ -141,8 +138,7 @@ static void m68000_cpu_initfn(Object *obj)
-  */
- static void m68010_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68000_cpu_initfn(obj);
-     m68k_set_feature(env, M68K_FEATURE_M68010);
-@@ -161,8 +157,7 @@ static void m68010_cpu_initfn(Object *obj)
-  */
- static void m68020_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68010_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68010);
-@@ -192,8 +187,7 @@ static void m68020_cpu_initfn(Object *obj)
-  */
- static void m68030_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68020_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68020);
-@@ -219,8 +213,7 @@ static void m68030_cpu_initfn(Object *obj)
-  */
- static void m68040_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68030_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68030);
-@@ -240,8 +233,7 @@ static void m68040_cpu_initfn(Object *obj)
-  */
- static void m68060_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68040_cpu_initfn(obj);
-     m68k_unset_feature(env, M68K_FEATURE_M68040);
-@@ -254,8 +246,7 @@ static void m68060_cpu_initfn(Object *obj)
- 
- static void m5208_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_APLUSC);
-@@ -267,8 +258,7 @@ static void m5208_cpu_initfn(Object *obj)
- 
- static void cfv4e_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_B);
-@@ -281,8 +271,7 @@ static void cfv4e_cpu_initfn(Object *obj)
- 
- static void any_cpu_initfn(Object *obj)
- {
--    M68kCPU *cpu = M68K_CPU(obj);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(CPU(obj));
- 
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_A);
-     m68k_set_feature(env, M68K_FEATURE_CF_ISA_B);
-diff --git a/target/m68k/gdbstub.c b/target/m68k/gdbstub.c
-index 1e5f033a12..15547e2313 100644
---- a/target/m68k/gdbstub.c
-+++ b/target/m68k/gdbstub.c
+-    CRISCPU *cc = CRIS_CPU(cpu);
+-    CPUCRISState *env = &cc->env;
+-
+-    if (env->pregs[PR_VR] != 32) {
++    if (cpu_env(cpu)->pregs[PR_VR] != 32) {
+         info->mach = bfd_mach_cris_v0_v10;
+         info->print_insn = print_insn_crisv10;
+     } else {
+diff --git a/target/cris/gdbstub.c b/target/cris/gdbstub.c
+index 25c0ca33a5..9e87069da8 100644
+--- a/target/cris/gdbstub.c
++++ b/target/cris/gdbstub.c
 @@ -23,8 +23,7 @@
  
- int m68k_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ int crisv10_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
  
-     if (n < 8) {
-         /* D0-D7 */
-@@ -50,8 +49,7 @@ int m68k_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     if (n < 15) {
+         return gdb_get_reg32(mem_buf, env->regs[n]);
+@@ -55,8 +54,7 @@ int crisv10_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  
- int m68k_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ int cris_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
+     uint8_t srs;
+ 
+     srs = env->pregs[PR_SRS];
+@@ -90,8 +88,7 @@ int cris_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
+ int cris_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
      uint32_t tmp;
  
-     tmp = ldl_p(mem_buf);
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index a812f328a1..3ec835293a 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -894,8 +894,7 @@ txfail:
- 
- hwaddr m68k_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
-     hwaddr phys_addr;
-     int prot;
-     int access_type;
-@@ -943,8 +942,7 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                        MMUAccessType qemu_access_type, int mmu_idx,
+     if (n > 49) {
+diff --git a/target/cris/helper.c b/target/cris/helper.c
+index c0bf987e3e..1c3f86876f 100644
+--- a/target/cris/helper.c
++++ b/target/cris/helper.c
+@@ -53,8 +53,7 @@ bool cris_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                        MMUAccessType access_type, int mmu_idx,
                         bool probe, uintptr_t retaddr)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
-     hwaddr physical;
-     int prot;
-     int access_type;
-diff --git a/target/m68k/m68k-semi.c b/target/m68k/m68k-semi.c
-index b4ffb70f8b..546cff2246 100644
---- a/target/m68k/m68k-semi.c
-+++ b/target/m68k/m68k-semi.c
-@@ -77,8 +77,7 @@ static int host_to_gdb_errno(int err)
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
+     struct cris_mmu_result res;
+     int prot, miss;
+     target_ulong phy;
+@@ -97,8 +96,7 @@ bool cris_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
  
- static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
+ void crisv10_cpu_do_interrupt(CPUState *cs)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
+     int ex_vec = -1;
  
-     target_ulong args = env->dregs[1];
-     if (put_user_u32(ret, args) ||
-@@ -95,8 +94,7 @@ static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
+     D_LOG("exception index=%d interrupt_req=%d\n",
+@@ -159,8 +157,7 @@ void crisv10_cpu_do_interrupt(CPUState *cs)
  
- static void m68k_semi_u64_cb(CPUState *cs, uint64_t ret, int err)
+ void cris_cpu_do_interrupt(CPUState *cs)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
+     int ex_vec = -1;
  
-     target_ulong args = env->dregs[1];
-     if (put_user_u32(ret >> 32, args) ||
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index 1ce850bbc5..851cca640d 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -441,10 +441,7 @@ static void do_interrupt_all(CPUM68KState *env, int is_hw)
- 
- void m68k_cpu_do_interrupt(CPUState *cs)
+     D_LOG("exception index=%d interrupt_req=%d\n",
+@@ -262,8 +259,7 @@ hwaddr cris_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+ bool cris_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
--
--    do_interrupt_all(env, 0);
-+    do_interrupt_all(cpu_env(cs), 0);
- }
- 
- static inline void do_interrupt_m68k_hardirq(CPUM68KState *env)
-@@ -457,8 +454,7 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
-                                  int mmu_idx, MemTxAttrs attrs,
-                                  MemTxResult response, uintptr_t retaddr)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
- 
-     cpu_restore_state(cs, retaddr);
- 
-@@ -511,8 +507,7 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
- 
- bool m68k_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+     CPUClass *cc = CPU_GET_CLASS(cs);
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
+     bool ret = false;
  
      if (interrupt_request & CPU_INTERRUPT_HARD
-         && ((env->sr & SR_I) >> SR_I_SHIFT) < env->pending_level) {
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 4a0b0b2703..9688476a7b 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -6108,8 +6108,7 @@ static double floatx80_to_double(CPUM68KState *env, uint16_t high, uint64_t low)
- 
- void m68k_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+diff --git a/target/cris/translate.c b/target/cris/translate.c
+index b3974ba0bb..5213db820b 100644
+--- a/target/cris/translate.c
++++ b/target/cris/translate.c
+@@ -3006,7 +3006,6 @@ static void cris_tr_insn_start(DisasContextBase *dcbase, CPUState *cpu)
+ static void cris_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
  {
--    M68kCPU *cpu = M68K_CPU(cs);
--    CPUM68KState *env = &cpu->env;
-+    CPUM68KState *env = cpu_env(cs);
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
+-    CPUCRISState *env = cpu_env(cs);
+     unsigned int insn_len;
+ 
+     /* Pretty disas.  */
+@@ -3014,7 +3013,7 @@ static void cris_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+ 
+     dc->clear_x = 1;
+ 
+-    insn_len = dc->decoder(env, dc);
++    insn_len = dc->decoder(cpu_env(cs), dc);
+     dc->ppc = dc->pc;
+     dc->pc += insn_len;
+     dc->base.pc_next += insn_len;
+@@ -3180,8 +3179,7 @@ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+ 
+ void cris_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+-    CRISCPU *cpu = CRIS_CPU(cs);
+-    CPUCRISState *env = &cpu->env;
++    CPUCRISState *env = cpu_env(cs);
+     const char * const *regnames;
+     const char * const *pregnames;
      int i;
-     uint16_t sr;
-     for (i = 0; i < 8; i++) {
 -- 
 2.41.0
 
