@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06947C47258
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 02:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45AF0C47258
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 02:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUHEH-0000Mc-Dc; Sun, 28 Jan 2024 21:18:33 -0500
+	id 1rUHJZ-0001IU-Fi; Sun, 28 Jan 2024 21:24:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rUHEF-0000MK-3f
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 21:18:31 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
+ id 1rUHJX-0001IL-2f
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 21:23:59 -0500
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rUHED-0003B2-2U
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 21:18:30 -0500
+ id 1rUHJV-0003pV-6y
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 21:23:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706494710; x=1738030710;
+ t=1706495037; x=1738031037;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=7Ckr2Cq+5wBZxzyfGfy82+8eibA0jeCeuSZAZYN+s44=;
- b=bW8buqTBTL2xOdINu0fXKtfcyFTcHJEd4ZXpFMjtY9EyV5HmQpcZGyOL
- PRjM04TeuEP/BDvYxcFpIXPuWq65fOqkNKSwbMrXxhAWZWsgMtJZXSqu3
- IgDPKJ8Evumn3oR0UxREQ7pvH84JirfYDUwSHh6bE/fDkwL26eceuliNd
- 5fwTUZbPRVk35RYvZ/KIvdESUmb3tb8ZJgPRUxU/ftPN/UDMTF2iE7Q1r
- qYSjEcFvifi51VLRwHdgv53Z4TwI6EMTpC5cYCugARKZQBpNMMcRuOlQp
- Dhu23P5vXc3Z8JhTrPZKfib2m25kHpWPWIGzrWBV3S9tTIS+dPg4drjKo g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10967"; a="10216687"
-X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; d="scan'208";a="10216687"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2024 18:18:21 -0800
+ bh=orAmYn8pMaJxl8CsOhFgwF/0wRPX8swPuGuvQx5fGAo=;
+ b=WamNKXNbAPginP0RP9UeKl8ZQ/FEUAWY1uNTA+Rut/Yvkw1iyn/iuXC/
+ P7+n4ENUgalv7Z+AmyaMrwMWJ+PUaa6Rq9FcqvqK3vE+osXfcIQBRZ9LW
+ Gd26wt/W4RibmdfWx4O7ak4AC26FwAj8Ryb2lhxawr8p3vkx91LiGiclc
+ P8vxxC1aqFEIh2ZsoZPmgYdTVz7DmW29MW0gT6g2g0ho7ObOQ4ayIdR0y
+ uj5D7Mfd2ojB7XWIgiy3wHzX+GmwNnHahE2nZls+wUL9K9oFt2w/YAWRN
+ bj9Ng0E6K3JzMTwhrSjam0kv2/y6b1M6HCXICs7RPaGUHEjYmvcxUFz3O A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10967"; a="16188455"
+X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; d="scan'208";a="16188455"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2024 18:23:54 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10967"; a="737241304"
-X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; d="scan'208";a="737241304"
+X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; 
+   d="scan'208";a="3206435"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.93.33.17])
  ([10.93.33.17])
- by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2024 18:18:14 -0800
-Message-ID: <86cda9fa-3921-458f-9930-d73d247ccaa1@intel.com>
-Date: Mon, 29 Jan 2024 10:18:09 +0800
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2024 18:23:48 -0800
+Message-ID: <28570a5f-a989-496d-b347-b75763c4ac69@intel.com>
+Date: Mon, 29 Jan 2024 10:23:44 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 33/66] i386/tdx: Make memory type private by default
+Subject: Re: [PATCH v4 02/66] RAMBlock: Add support of KVM private guest memfd
+Content-Language: en-US
 To: David Hildenbrand <david@redhat.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -65,14 +66,13 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Gerd Hoffmann <kraxel@redhat.com>, Isaku Yamahata
  <isaku.yamahata@gmail.com>, Chenyi Qiang <chenyi.qiang@intel.com>
 References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
- <20240125032328.2522472-34-xiaoyao.li@intel.com>
- <12d89ebd-3497-4e60-8900-7a7a1ffbd6e2@redhat.com>
-Content-Language: en-US
+ <20240125032328.2522472-3-xiaoyao.li@intel.com>
+ <504fca4f-89a1-4f92-a2f0-f64b04473ec4@redhat.com>
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <12d89ebd-3497-4e60-8900-7a7a1ffbd6e2@redhat.com>
+In-Reply-To: <504fca4f-89a1-4f92-a2f0-f64b04473ec4@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -96,104 +96,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/2024 10:58 PM, David Hildenbrand wrote:
-> On 25.01.24 04:22, Xiaoyao Li wrote:
->> By default (due to the recent UPM change), restricted memory attribute is
->> shared.  Convert the memory region from shared to private at the memory
->> slot creation time.
->>
->> add kvm region registering function to check the flag
->> and convert the region, and add memory listener to TDX guest code to set
->> the flag to the possible memory region.
->>
->> Without this patch
->> - Secure-EPT violation on private area
->> - KVM_MEMORY_FAULT EXIT (kvm -> qemu)
->> - qemu converts the 4K page from shared to private
->> - Resume VCPU execution
->> - Secure-EPT violation again
->> - KVM resolves EPT Violation
->> This also prevents huge page because page conversion is done at 4K
->> granularity.  Although it's possible to merge 4K private mapping into
->> 2M large page, it slows guest boot.
->>
->> With this patch
->> - After memory slot creation, convert the region from private to shared
->> - Secure-EPT violation on private area.
->> - KVM resolves EPT Violation
->>
->> Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   include/exec/memory.h |  1 +
->>   target/i386/kvm/tdx.c | 20 ++++++++++++++++++++
->>   2 files changed, 21 insertions(+)
->>
->> diff --git a/include/exec/memory.h b/include/exec/memory.h
->> index 7229fcc0415f..f25959f6d30f 100644
->> --- a/include/exec/memory.h
->> +++ b/include/exec/memory.h
->> @@ -850,6 +850,7 @@ struct IOMMUMemoryRegion {
->>   #define MEMORY_LISTENER_PRIORITY_MIN            0
->>   #define MEMORY_LISTENER_PRIORITY_ACCEL          10
->>   #define MEMORY_LISTENER_PRIORITY_DEV_BACKEND    10
->> +#define MEMORY_LISTENER_PRIORITY_ACCEL_HIGH     20
->>   /**
->>    * struct MemoryListener: callbacks structure for updates to the 
->> physical memory map
->> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
->> index 7b250d80bc1d..f892551821ce 100644
->> --- a/target/i386/kvm/tdx.c
->> +++ b/target/i386/kvm/tdx.c
->> @@ -19,6 +19,7 @@
->>   #include "standard-headers/asm-x86/kvm_para.h"
->>   #include "sysemu/kvm.h"
->>   #include "sysemu/sysemu.h"
->> +#include "exec/address-spaces.h"
->>   #include "hw/i386/x86.h"
->>   #include "kvm_i386.h"
->> @@ -621,6 +622,19 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
->>       return 0;
->>   }
->> +static void tdx_guest_region_add(MemoryListener *listener,
->> +                                 MemoryRegionSection *section)
->> +{
->> +    memory_region_set_default_private(section->mr);
->> +}
+On 1/26/2024 9:57 PM, David Hildenbrand wrote:
+>>   uint8_t memory_region_get_dirty_log_mask(MemoryRegion *mr)
+>>   {
+>>       uint8_t mask = mr->dirty_log_mask;
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index c1b22bac77c2..4735b0462ed9 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -1841,6 +1841,17 @@ static void ram_block_add(RAMBlock *new_block, 
+>> Error **errp)
+>>           }
+>>       }
+>> +    if (kvm_enabled() && (new_block->flags & RAM_GUEST_MEMFD) &&
+>> +        new_block->guest_memfd < 0) {
 > 
-> That looks fishy. Why is TDX to decide what happens to other memory 
-> regions it doesn't own?
+> How could we have a guest_memfd already at this point? Smells more like 
+> an assert(new_block->guest_memfd < 0);
+
+you are right. I will change it to the assert()
+
+>> +        /* TODO: to decide if KVM_GUEST_MEMFD_ALLOW_HUGEPAGE is 
+>> supported */
 > 
-> We should define that behavior when creating these memory region, and 
-> TDX could sanity check that they have been setup properly.
+> I suggest dropping that completely. As long as it's not upstream, not 
+> even the name of that thing is stable.
+
+OK
+
+>> +        new_block->guest_memfd = 
+>> kvm_create_guest_memfd(new_block->max_length,
+>> +                                                        0, errp);
+>> +        if (new_block->guest_memfd < 0) {
+>> +            qemu_mutex_unlock_ramlist();
+>> +            return;
+>> +        }
+>> +    }
+>> +
 > 
-> Let me ask differently: For which memory region where we have 
-> RAM_GUEST_MEMFD set would we *not* want to set private as default right 
-> from the start?
+> 
+> In general, LGTM. With the two nits above:
+> 
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> 
 
-All memory regions have RAM_GUEST_MEMFD set will benefit from being 
-private as default, for TDX guest.
-
-I will update the implementation to set RAM_DEFAULT_PRIVATE flag when 
-guest_memfd is created successfully, like
-
-diff --git a/system/physmem.c b/system/physmem.c
-index fc59470191ef..60676689c807 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1850,6 +1850,8 @@ static void ram_block_add(RAMBlock *new_block, 
-Error **errp)
-              qemu_mutex_unlock_ramlist();
-              return;
-          }
-+
-+        new_block->flags |= RAM_DEFAULT_PRIVATE;
-      }
-
-then this patch can be dropped, and the calling of 
-memory_region_set_default_private(mr) of Patch 45 can be dropped too.
-
-I think this is what you suggested, right?
+Thanks!
 
 
 
