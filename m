@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00FC8C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:05:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50F0C47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadz-0006c0-N3; Mon, 29 Jan 2024 18:02:23 -0500
+	id 1rUadp-0006Dn-V6; Mon, 29 Jan 2024 18:02:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadt-0006JG-Kt
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:17 -0500
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ id 1rUadc-00062g-Ee
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:03 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadr-0008Sg-Gb
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:17 -0500
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-595ac2b6c59so2334399eaf.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:13 -0800 (PST)
+ id 1rUada-0008PU-AN
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:59 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-5cf2d73a183so3262050a12.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569333; x=1707174133; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569308; x=1707174108; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4bfmq9Mg4HxfU53OW0oPle9hQIH8zXg09YsWAHRVD1c=;
- b=vxmA47zgQ8yDI+I2G/5AmpdpGf63Sxab1fvJKowqrbuapwXFfZMXbUKuyrzNgWG181
- k1zazv2daTAIjTiGjAfcwRC8bx8H38LaMYCDdfWv5N1js1u41RsRwpTUuUr9p4jAAHNF
- 5K4mNsi8MRh+XisYA+Hn4zPOOE0T+n2F2WFXUZG0F1ZJPk6vBF3psIv5unMDEGwATYJ8
- aSeekEtFOIo3h+gzKErjkx801293DD1yZyGIELetTihrdhF4dtB/YbufE6EBB0hHfJHw
- nyC6kOkj1GWwE/Pqy44jBL6Om5HSAyVMiPMqAgRNO4NnET3izmTKezC0RSeiaCeSzWlI
- VCLA==
+ bh=o1cRBtAgGqadhUih0VNs9If35/tfCXiaB3lrOMREblM=;
+ b=i5a9rgVDIiTJH2x6Zna+rMGZ9ry3IYVk12yXaZjqkGd0ipwbh1qz+uFM8ikkt1K3sW
+ rvfwg71e/nnRRbyAS6SWY0cNaUuQQvJuDloXw4Hsbl3y/t0JYlkXFmPYRGvJSl88fAT8
+ iYFd7gcPg2MLycCgTnWudsY0X0bnVBUIDIVU3M1mJInUUoE+XWCV1PzglwHNpECPnUR1
+ z1eZR4oNZlhuO2X50GB+V2jttHlE4Vq7GcRcostcFnwkqfNj63QmVHiJcgJmCMSaQ0dw
+ JP/yQTPjvgy8zJiv+aP+QqMQ2Ba6PetblYCYEnJs/NXdWMYbJDJS+RftkrG9b5MRMus3
+ nlDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569333; x=1707174133;
+ d=1e100.net; s=20230601; t=1706569308; x=1707174108;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4bfmq9Mg4HxfU53OW0oPle9hQIH8zXg09YsWAHRVD1c=;
- b=p00PBofq3XLl1mRQoE5SlG/N8+nQXGncWXiU+9NMoG6co8b3+0HE5b366HaBuygPFo
- 0acBCzsuAm+rI6g/5yN/reW/AfSYo//9FvD0NjTBCV7ESK5OBiJbTW4ks6HioHqctq8V
- pd1jT1R98AuimHzBMfBtViFWrV6Qpxzfpg1yhLdb6igJWozwa1olS9q4q1r91usnSy6V
- xUPx4NVjCLbAlNwXNaZfLW8OfcmZBRMHqKCxZ8H7XYacr0LE+Q/KHPQXbSrfVuzqS5YO
- xkLh1BivvIgJbaej2JQinL92usnLS00ZGYLV4baS5H2HgHJsVODiuHxoC4KIo6KZxzZu
- uiMQ==
-X-Gm-Message-State: AOJu0YyLkgKA2qj21WtfDTIAV018OAbzHOCro2LS9Y13szI3YNX8n7kQ
- TfGKYT8WJqCtFeU+daXXPU70B5eFP2PhKcZlkvWlki6J5NTBzWWfWpVuYtbkeijl22W6UBGpaqX
- aAUI=
-X-Google-Smtp-Source: AGHT+IHoDrW7QWN9H/tLJDH3NN+mFr2kdUnYWJKqusufGCdPb7aEMGCN5RK8WyFxWBDUOsaT36AJwA==
-X-Received: by 2002:a05:6358:5913:b0:178:77cc:a0f1 with SMTP id
- g19-20020a056358591300b0017877cca0f1mr2072515rwf.48.1706569332896; 
- Mon, 29 Jan 2024 15:02:12 -0800 (PST)
+ bh=o1cRBtAgGqadhUih0VNs9If35/tfCXiaB3lrOMREblM=;
+ b=MkWhUQ5n5y4gDbJlbB6LUNTBjL7RbsZUihdsAXLFXfHrU38EGShHfNxtLW3JUIzZTr
+ Oym42LFrMsjdLif66MjU4E3lhU+AaTtqY3uzgEgRndmEuoZgQog/0CmCmF/2MBhDyLno
+ vHymHKGL2NDJ4GQoiZh7z6HuY8NjDAlluYcgksHGFreCvxe2pCU95983hXJAlA10pBio
+ wKLhVWZPxglebM4bcQjWkPtv6BjYqr6jN8taElK81lI/dj90APhOdcO4GpBANsl3MWkA
+ sXrAVssRqjwdlE8Vs9m4IbjlyaORsSy/SlcbhD7rsWlKxUryvD+cyK405XK3Styaiu7Y
+ d6Tw==
+X-Gm-Message-State: AOJu0YwEsjiyec9x6D1l0Gt9Daf1qObvIG5usxGRoAaoYK99tzVHoL/i
+ 62kvPVr52yKNtAENESqNKhwILycjIz1jDn3fCJ7J4V/r4Q+ttEl67ZvHir3t2e9OvR38RoMpj+2
+ mciQ=
+X-Google-Smtp-Source: AGHT+IF5hjK4eLfBJDqxqEY2kQrCH8RgQJ+bIVa1n6TDVT3tEbSY3KYWxOIyJua5WeEe6segQxYqkA==
+X-Received: by 2002:a05:6a20:144e:b0:19d:e644:7c9 with SMTP id
+ a14-20020a056a20144e00b0019de64407c9mr37092pzi.22.1706569307936; 
+ Mon, 29 Jan 2024 15:01:47 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.10
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:02:12 -0800 (PST)
+ Mon, 29 Jan 2024 15:01:47 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 17/31] tcg: Make tb_cflags() usable from target-agnostic code
-Date: Tue, 30 Jan 2024 09:01:07 +1000
-Message-Id: <20240129230121.8091-18-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>
+Subject: [PULL 10/31] include/hw/core: Remove i386 conditional on
+ fake_user_interrupt
+Date: Tue, 30 Jan 2024 09:01:00 +1000
+Message-Id: <20240129230121.8091-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,54 +94,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Anton Johansson <anjo@rev.ng>
 
-Currently tb_cflags() is defined in exec-all.h, which is not usable
-from target-agnostic code. Move it to translation-block.h, which is.
+Always include fake_user_interrupt in user-only build, despite
+only being used for i386.  This will enable cpu-exec.c to be
+compiled only once.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20231212003837.64090-3-iii@linux.ibm.com>
-Message-Id: <20240125054631.78867-3-philmd@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Message-ID: <20240119144024.14289-18-anjo@rev.ng>
+[rth: Split out of a larger patch; remove TARGET_I386 conditional.]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/exec-all.h          | 6 ------
- include/exec/translation-block.h | 6 ++++++
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ include/hw/core/tcg-cpu-ops.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index df3d93a2e2..ce36bb10d4 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -459,12 +459,6 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index d6fe55d471..3ed279836f 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -50,7 +50,7 @@ struct TCGCPUOps {
+     void (*debug_excp_handler)(CPUState *cpu);
  
- #endif
- 
--/* Hide the qatomic_read to make code a little easier on the eyes */
--static inline uint32_t tb_cflags(const TranslationBlock *tb)
--{
--    return qatomic_read(&tb->cflags);
--}
--
- static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
- {
- #ifdef CONFIG_USER_ONLY
-diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-index e2b26e16da..48211c890a 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -145,4 +145,10 @@ struct TranslationBlock {
- /* The alignment given to TranslationBlock during allocation. */
- #define CODE_GEN_ALIGN  16
- 
-+/* Hide the qatomic_read to make code a little easier on the eyes */
-+static inline uint32_t tb_cflags(const TranslationBlock *tb)
-+{
-+    return qatomic_read(&tb->cflags);
-+}
+ #ifdef NEED_CPU_H
+-#if defined(CONFIG_USER_ONLY) && defined(TARGET_I386)
++#ifdef CONFIG_USER_ONLY
+     /**
+      * @fake_user_interrupt: Callback for 'fake exception' handling.
+      *
+@@ -58,8 +58,7 @@ struct TCGCPUOps {
+      * cpu execution loop (hack for x86 user mode).
+      */
+     void (*fake_user_interrupt)(CPUState *cpu);
+-#endif /* !CONFIG_USER_ONLY || !TARGET_I386 */
+-#ifdef CONFIG_USER_ONLY
 +
- #endif /* EXEC_TRANSLATION_BLOCK_H */
+     /**
+      * record_sigsegv:
+      * @cpu: cpu context
 -- 
 2.34.1
 
