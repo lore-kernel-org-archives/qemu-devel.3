@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B737DC47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6ACC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadK-0005vY-Ts; Mon, 29 Jan 2024 18:01:42 -0500
+	id 1rUadJ-0005v7-B9; Mon, 29 Jan 2024 18:01:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadE-0005ue-H5
+ id 1rUadC-0005uY-U8
  for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:38 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadC-0008N1-MZ
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:36 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5d8b276979aso1294555a12.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:32 -0800 (PST)
+ id 1rUad8-0008Md-TW
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:33 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-290ec261a61so1815127a91.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569291; x=1707174091; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569289; x=1707174089; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M8UjEMO1j2vm3/2aeEMHpkVHZcyY+4Tl4SZGy9Fx+X8=;
- b=A5lTa/SJuGD45c6dyta1F29CneQKXnpI65VRqxIV+cV1lFna0Pttcttkdhhi//XFPd
- LITsH7nK/9BvFoxCDWe5amtNDMHkL03rjOCdmEGLmxOEnqcFkRz1LiqtOg3c7WIGkziN
- ha8zD1llWJoZTtlbW4kSDB0Ia+FdnJ8f68SDMI3SdMYtVuNwe2WihnTCDvMkZv4guhTr
- +8e1meSYyIoh+sDgMSrBef8SkpUGRLmJt4TKTt6OPhHgO3pKkA20L9sVWVLoipQWpjnp
- UXWdgJbw+AEwoT5t1jtw5niEmoxn9OQgkmhvG/3lPsoJ8cGMP+pYsMO5hRCell73snn7
- ilUw==
+ bh=qYS/soxWe3h+ML5uFbbfcdAcoE+eOI+G62ajUSGtp3A=;
+ b=fRCfdjhZNLeHGxftzyGomW7hJ8q7o5RZyH9eyOaAbs+yTn+mXsSntVdZ7Nr0BZGGfi
+ fduN9gh79kDtD/fV7qntQ1KExr7MlyijAuJlAhNgSalZqqzqy1uW/cpeTExXdVuJsDoE
+ 6v9GqszrkQAmd9Xj9aOahM9082FSHsJeg/rcZaJYiryRx44DP+wzWIvblIgNYlDUXZUK
+ 8KnoWtQtfU3jIwfHBPsOdHyLH/dx2V43kyO4g803k/jEGeONin3LpXrCKy/FXsGeyLLY
+ sICrRGYI6ZcAYBH9i6HsPANet2tzCzhKSUF5Q+sWsKzGw7WLGYB+WHD+q3KjsLcAfM19
+ +eWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569291; x=1707174091;
+ d=1e100.net; s=20230601; t=1706569289; x=1707174089;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M8UjEMO1j2vm3/2aeEMHpkVHZcyY+4Tl4SZGy9Fx+X8=;
- b=TdXDZVEd3+g37Kpox+XNRcq/8UBkc3WUoH9C2ok6G8mzoXTZ376mzMtQqyUffcAXc2
- eoNJu9PK2ot2K7GBrtcMwV3kp9LlPt2lMRRD/QmaVrmyZpBwmKxMc5dqAO5wtyK7yATX
- ijiFpOtQ62WXCnjjqQR73L71ILNKSjmBU7hammviNK8yl5K3Vz4ms7oWMiDItZS0Lpo6
- EFe9leNTinUZEQKLkDv4XPy/PqZPPqUPff8ckOqFW8GaiY4UaxSmZxRo2UEdW7Rl3FVz
- Y8wfjiK3/3T8WuMsJD/IL0QR9qDDu/JUzw3Lqc9bJBZYR6SfqONiWnAlLRaWZVfKQabx
- YXVg==
-X-Gm-Message-State: AOJu0YzLPyaWGYSS/h94hA97zx6rpb2g4oMfX0OYhOW8oFxVMjAqyf9D
- LCr1RARiZRPipuAcQCxo5kPZ1EP2cxtI6XBEkU3gT2sxWpfBORI17c3gx7dORXBAMKnT2n7yCY3
- 8auc=
-X-Google-Smtp-Source: AGHT+IHPhJt8i7vtlXplm8sf40EHpIqlYEZV0xie0de3YXpi5eEPjwrD8a75z1R9KBTGbk9Kr10afg==
-X-Received: by 2002:a05:6a20:252e:b0:19c:8fa7:66da with SMTP id
- j46-20020a056a20252e00b0019c8fa766damr2771537pzd.1.1706569291303; 
- Mon, 29 Jan 2024 15:01:31 -0800 (PST)
+ bh=qYS/soxWe3h+ML5uFbbfcdAcoE+eOI+G62ajUSGtp3A=;
+ b=cQNPZ4c0VckUmPgvqwnOGo94+7anAEPuSYrN7oZx61tPO4j4WfDT1NMWVkZsRtsC46
+ 1gtLP7Z/EU8c6br6GmSbq5ACl9fYSFZxAUehIz/0whhZPYAOZTYSgSqTRRNcF9m77Pzk
+ gnd1siL5tP3KR3amS+OAayN/gWM1iIYDZoM0NfjXodZ3QS3QWCozAmtMhiD4ZXz8zUF9
+ SFozaNs6V7fQgDzNLXlJ0xoODB42u7fLPnTKK3lkU5mgGzjWXS0n5mNG5Xy7j2WpTWXz
+ NMXH8lapS9eJB+L4v/GhNJkIDe2eo5j0vSs96u3goAjZNTvtCzcHSkS+FzKc43rcmOQs
+ naHg==
+X-Gm-Message-State: AOJu0Ywie9ME66Ojjv1v99Xuqhfr29++FWDdCa3YTOidVhAQcfT8VaXj
+ h0vQfqNOpcKBTuR+bdlzRIy4WVuIbvbBzldyIZRN3n+peilSUlUk4r6csr6AR2NKlotu3B5anCK
+ IC+c=
+X-Google-Smtp-Source: AGHT+IGE6xkRhpJSI4MC1CfLpR+fDXbchjjPRPG4ziPrbNjOmEtdul3EBPYmgx/QRmZ4SlVejC9F3Q==
+X-Received: by 2002:a17:902:d50a:b0:1d7:5f1b:49f3 with SMTP id
+ b10-20020a170902d50a00b001d75f1b49f3mr4750928plg.120.1706569289265; 
+ Mon, 29 Jan 2024 15:01:29 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.29
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:30 -0800 (PST)
+ Mon, 29 Jan 2024 15:01:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PULL 02/31] include/exec: Move vaddr defines to separate file
-Date: Tue, 30 Jan 2024 09:00:52 +1000
-Message-Id: <20240129230121.8091-3-richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 01/31] cpu-exec: simplify jump cache management
+Date: Tue, 30 Jan 2024 09:00:51 +1000
+Message-Id: <20240129230121.8091-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,81 +95,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Needed to work around circular includes. vaddr is currently defined in
-cpu-common.h and needed by hw/core/cpu.h, but cpu-common.h also need
-cpu.h to know the size of the CPUState.
+Unless I'm missing something egregious, the jmp cache is only every
+populated with a valid entry by the same thread that reads the cache.
+Therefore, the contents of any valid entry are always consistent and
+there is no need for any acquire/release magic.
 
-[Maybe we can instead move parts of cpu-common.h w. hw/core/cpu.h to
-sort out the circular inclusion.]
+Indeed ->tb has to be accessed with atomics, because concurrent
+invalidations would otherwise cause data races.  But ->pc is only ever
+accessed by one thread, and accesses to ->tb and ->pc within tb_lookup
+can never race with another tb_lookup.  While the TranslationBlock
+(especially the flags) could be modified by a concurrent invalidation,
+store-release and load-acquire operations on the cache entry would
+not add any additional ordering beyond what you get from performing
+the accesses within a single thread.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240119144024.14289-7-anjo@rev.ng>
+Because of this, there is really nothing to win in splitting the CF_PCREL
+and !CF_PCREL paths.  It is easier to just always use the ->pc field in
+the jump cache.
+
+I noticed this while working on splitting commit 8ed558ec0cb
+("accel/tcg: Introduce TARGET_TB_PCREL", 2022-10-04) into multiple
+pieces, for the sake of finding a more fine-grained bisection
+result for https://gitlab.com/qemu-project/qemu/-/issues/2092.
+It does not (and does not intend to) fix that issue; therefore
+it may make sense to not commit it until the root cause
+of issue #2092 is found.
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-[rth: Add include of vaddr.h into cpu-common.h]
+Message-Id: <20240122153409.351959-1-pbonzini@redhat.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/cpu-common.h | 13 +------------
- include/exec/vaddr.h      | 18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 12 deletions(-)
- create mode 100644 include/exec/vaddr.h
+ accel/tcg/tb-jmp-cache.h |  8 +++--
+ accel/tcg/cpu-exec.c     | 66 ++++++++++++++--------------------------
+ 2 files changed, 28 insertions(+), 46 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index fef3138d29..3109c6b67d 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -3,6 +3,7 @@
+diff --git a/accel/tcg/tb-jmp-cache.h b/accel/tcg/tb-jmp-cache.h
+index bb424c8a05..4ab8553afc 100644
+--- a/accel/tcg/tb-jmp-cache.h
++++ b/accel/tcg/tb-jmp-cache.h
+@@ -13,9 +13,11 @@
+ #define TB_JMP_CACHE_SIZE (1 << TB_JMP_CACHE_BITS)
  
- /* CPU interfaces that are target independent.  */
+ /*
+- * Accessed in parallel; all accesses to 'tb' must be atomic.
+- * For CF_PCREL, accesses to 'pc' must be protected by a
+- * load_acquire/store_release to 'tb'.
++ * Invalidated in parallel; all accesses to 'tb' must be atomic.
++ * A valid entry is read/written by a single CPU, therefore there is
++ * no need for qatomic_rcu_read() and pc is always consistent with a
++ * non-NULL value of 'tb'.  Strictly speaking pc is only needed for
++ * CF_PCREL, but it's used always for simplicity.
+  */
+ struct CPUJumpCache {
+     struct rcu_head rcu;
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 67eda9865e..40c268bfa1 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -253,43 +253,29 @@ static inline TranslationBlock *tb_lookup(CPUState *cpu, vaddr pc,
+     hash = tb_jmp_cache_hash_func(pc);
+     jc = cpu->tb_jmp_cache;
  
-+#include "exec/vaddr.h"
- #ifndef CONFIG_USER_ONLY
- #include "exec/hwaddr.h"
- #endif
-@@ -14,18 +15,6 @@
- #define EXCP_YIELD      0x10004 /* cpu wants to yield timeslice to another */
- #define EXCP_ATOMIC     0x10005 /* stop-the-world and emulate atomic */
- 
--/**
-- * vaddr:
-- * Type wide enough to contain any #target_ulong virtual address.
-- */
--typedef uint64_t vaddr;
--#define VADDR_PRId PRId64
--#define VADDR_PRIu PRIu64
--#define VADDR_PRIo PRIo64
--#define VADDR_PRIx PRIx64
--#define VADDR_PRIX PRIX64
--#define VADDR_MAX UINT64_MAX
+-    if (cflags & CF_PCREL) {
+-        /* Use acquire to ensure current load of pc from jc. */
+-        tb = qatomic_load_acquire(&jc->array[hash].tb);
 -
- void cpu_exec_init_all(void);
- void cpu_exec_step_atomic(CPUState *cpu);
+-        if (likely(tb &&
+-                   jc->array[hash].pc == pc &&
+-                   tb->cs_base == cs_base &&
+-                   tb->flags == flags &&
+-                   tb_cflags(tb) == cflags)) {
+-            return tb;
+-        }
+-        tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
+-        if (tb == NULL) {
+-            return NULL;
+-        }
+-        jc->array[hash].pc = pc;
+-        /* Ensure pc is written first. */
+-        qatomic_store_release(&jc->array[hash].tb, tb);
+-    } else {
+-        /* Use rcu_read to ensure current load of pc from *tb. */
+-        tb = qatomic_rcu_read(&jc->array[hash].tb);
+-
+-        if (likely(tb &&
+-                   tb->pc == pc &&
+-                   tb->cs_base == cs_base &&
+-                   tb->flags == flags &&
+-                   tb_cflags(tb) == cflags)) {
+-            return tb;
+-        }
+-        tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
+-        if (tb == NULL) {
+-            return NULL;
+-        }
+-        /* Use the pc value already stored in tb->pc. */
+-        qatomic_set(&jc->array[hash].tb, tb);
++    tb = qatomic_read(&jc->array[hash].tb);
++    if (likely(tb &&
++               jc->array[hash].pc == pc &&
++               tb->cs_base == cs_base &&
++               tb->flags == flags &&
++               tb_cflags(tb) == cflags)) {
++        goto hit;
+     }
  
-diff --git a/include/exec/vaddr.h b/include/exec/vaddr.h
-new file mode 100644
-index 0000000000..b9844afc77
---- /dev/null
-+++ b/include/exec/vaddr.h
-@@ -0,0 +1,18 @@
-+/* Define vaddr.  */
++    tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
++    if (tb == NULL) {
++        return NULL;
++    }
 +
-+#ifndef VADDR_H
-+#define VADDR_H
++    jc->array[hash].pc = pc;
++    qatomic_set(&jc->array[hash].tb, tb);
 +
-+/**
-+ * vaddr:
-+ * Type wide enough to contain any #target_ulong virtual address.
-+ */
-+typedef uint64_t vaddr;
-+#define VADDR_PRId PRId64
-+#define VADDR_PRIu PRIu64
-+#define VADDR_PRIo PRIo64
-+#define VADDR_PRIx PRIx64
-+#define VADDR_PRIX PRIX64
-+#define VADDR_MAX UINT64_MAX
-+
-+#endif
++hit:
++    /*
++     * As long as tb is not NULL, the contents are consistent.  Therefore,
++     * the virtual PC has to match for non-CF_PCREL translations.
++     */
++    assert((tb_cflags(tb) & CF_PCREL) || tb->pc == pc);
+     return tb;
+ }
+ 
+@@ -1012,14 +998,8 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+                  */
+                 h = tb_jmp_cache_hash_func(pc);
+                 jc = cpu->tb_jmp_cache;
+-                if (cflags & CF_PCREL) {
+-                    jc->array[h].pc = pc;
+-                    /* Ensure pc is written first. */
+-                    qatomic_store_release(&jc->array[h].tb, tb);
+-                } else {
+-                    /* Use the pc value already stored in tb->pc. */
+-                    qatomic_set(&jc->array[h].tb, tb);
+-                }
++                jc->array[h].pc = pc;
++                qatomic_set(&jc->array[h].tb, tb);
+             }
+ 
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.34.1
 
