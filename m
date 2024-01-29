@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7762AC47DDF
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 06:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0169AC47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 07:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rULAD-0004Zb-P9; Mon, 29 Jan 2024 01:30:37 -0500
+	id 1rULwC-0000C5-4Z; Mon, 29 Jan 2024 02:20:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rULA4-0004XG-Cd
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 01:30:35 -0500
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rULw0-0000BI-HF
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 02:20:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUL9x-0006Pm-Tu
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 01:30:25 -0500
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rULvx-0006Af-QO
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 02:19:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706509783;
+ s=mimecast20190719; t=1706512795;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jxAewBphiJIQDFeBOWYyiq35YfYIFCvoAwymHp2htBI=;
- b=HfzgZ7xE8MnrjkQPdS8/gxTt4vtQCZem4TuMAH8j39e26K1DVGmoQ3/ufThniuE2V56adC
- W+3VyWXhdcA/6cX5dip1YVjFYqKoZ0aNufUcWa/dlG9Y3km7u7mx8yutSthiPtrDZFbgf9
- 5DnaiTJLlhppDS1zSNOCE304/v9Q+mQ=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=He/wCGnhrhk+tilklckNJZ0qQj+M/ebV1MNUWGWbIr4=;
+ b=EqKURuOxvT1nstU0o/zlLLp4t3M4HTw8tJDbaqBp2687c3rus5JQ+pfVrupRoRaYwJo8RY
+ smIb0fnul6CtG8P0Y1247EvRqDX8Xvu4chY5gJ/GqW5R9QYkFyN4Ry6SzmKbneM5cAajsi
+ CJh7eUarf3HYP2ibavNTW0u4GA2nQFc=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-6XMSOEQiNs-R_-J4pCOQ6A-1; Mon, 29 Jan 2024 01:29:41 -0500
-X-MC-Unique: 6XMSOEQiNs-R_-J4pCOQ6A-1
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-59a10a15904so795007eaf.1
- for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 22:29:41 -0800 (PST)
+ us-mta-68-6mfvLS-XMMKaDlwzWmLNSQ-1; Mon, 29 Jan 2024 02:19:52 -0500
+X-MC-Unique: 6mfvLS-XMMKaDlwzWmLNSQ-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-558fe4c0c46so1417978a12.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 23:19:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706509781; x=1707114581;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jxAewBphiJIQDFeBOWYyiq35YfYIFCvoAwymHp2htBI=;
- b=Nd99gg+0HCeOrb9mMbFzQYCRdnwlXzSLe28OjwqOqgx0/5vczH/DrP6FAmA6GSmA5s
- 7PaQxF0/W86ZIDrYVXggEn4ob97zwkqgK4DP6DtFPTEbNI8nsF9PaewRe3PH7fb3uWZ0
- k6q1UnKSQhKB9RDs/NosE8CQ2MahomW+ryC7Jea7GLJiR9r8tW0yiDoSdEAvUeUocbF6
- 7rB2WKk4YL+tixSDBYDb9iOC2AjUnRbhxUqhFNJAuwA9X1MFO2C9Dte0es6emK1kU2Bj
- ZeUY+zK17WP5f2aGhE0Va8LU8Ii2Jrw8StKvbI8vCZ5sMeMxsaZdBHfyi9UlCNfT2PMz
- dfVg==
-X-Gm-Message-State: AOJu0YyR6rDBiV0WfQwsnA+OuWglMyBJimrjphNhMrehpod540uFqT0C
- NDFHLPTVC47h677CHIz9qWTE9KsRfk1czxOLf7LhFvaydUI8oJ9hG7eWruKLouVy/VsX+QuR6pi
- 4o6Dn+weQ3GNdOAvIrQYF/da8t2kL0iQ4PA7jZJLJqDk9MaZudqEg
-X-Received: by 2002:a05:6358:890:b0:176:c4fd:8f80 with SMTP id
- m16-20020a056358089000b00176c4fd8f80mr4745618rwj.3.1706509780892; 
- Sun, 28 Jan 2024 22:29:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGrPVT2CfNPk7ZkPfqf1ACwN3G8w+dqNN+8Alg5PeaX8m47daknRAHI+z0jyN1IIVzP7lSlpA==
-X-Received: by 2002:a05:6358:890:b0:176:c4fd:8f80 with SMTP id
- m16-20020a056358089000b00176c4fd8f80mr4745607rwj.3.1706509780413; 
- Sun, 28 Jan 2024 22:29:40 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- bz11-20020a056a02060b00b005cdad153d84sm4287944pgb.90.2024.01.28.22.29.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 28 Jan 2024 22:29:40 -0800 (PST)
-Date: Mon, 29 Jan 2024 14:29:32 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Hao Xiang <hao.xiang@bytedance.com>,
- Yuan Liu <yuan1.liu@intel.com>, Bryan Zhang <bryan.zhang@bytedance.com>,
- Avihai Horon <avihaih@nvidia.com>
-Subject: Re: [PATCH 1/5] migration/multifd: Separate compression ops from
- non-compression
-Message-ID: <ZbdFzFxysMg274Rw@x1n>
-References: <20240126221943.26628-1-farosas@suse.de>
- <20240126221943.26628-2-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1706512791; x=1707117591;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=He/wCGnhrhk+tilklckNJZ0qQj+M/ebV1MNUWGWbIr4=;
+ b=HlyGEnPFmEhDANI1lS7ZVZBPwf52DRKonVsTKf+3Ymzt1oo6FqRREr0YfeIdPXiZZX
+ wsrKmP2zxOyRudyjrl3M0Z+SBIO7Ql32tHOWCbcjOz0maO7m8cvPOiik+jyMrUmtrfdf
+ Yz4/y0p0cGGGqaoz2Awxe+CE8Xwyr49YTuqfEmu8JftM14arMIB/OA0tTCi/tR7rE23n
+ nSiQaxwffati0d7n11pgBxEl4lmOzCDtKt+FF1Mc/kNB7z56eYxq2nkP1j2C3H+Hgu40
+ NaUL8ZUHJHTZMa5NHrzxTYRCV+wquKampHgCY6iWWJKCYZWFpEp5bN/FeTtqyw+psPEg
+ LB5A==
+X-Gm-Message-State: AOJu0Yz5gyQx7g4fzhV/rlVAYJtBdKqbeKOmV6HCupTpb7K94rNJWtiE
+ IV22ulr1TKt6KgGVl/CDHgQrcrwlQDlSNPxsDKBIcvted2s2BKTWQJG1QCNnHRV4CR4tvjRwf5l
+ klAYVAy/jTYu9s8zPolCGNfXt3/WHZb9a1NTqGBIwu11cWtOIPSnKX2f1IDzqeiiIa3LcTaeGYh
+ +GL3yGJEpOqP1rWKeUZOh5D8jsb3M=
+X-Received: by 2002:a05:6402:615:b0:55f:1656:b918 with SMTP id
+ n21-20020a056402061500b0055f1656b918mr274725edv.14.1706512791685; 
+ Sun, 28 Jan 2024 23:19:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF+eCDQU+1Vl3T84KD0M4s0ERPXHdW3WSh19isgsKaJE6jGVXgax+fKX/V6fnqgrXQ3+9Z1BbwSQ3tjvEyQgzU=
+X-Received: by 2002:a05:6402:615:b0:55f:1656:b918 with SMTP id
+ n21-20020a056402061500b0055f1656b918mr274714edv.14.1706512791391; Sun, 28 Jan
+ 2024 23:19:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240126221943.26628-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20240127215253.227583-1-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240127215253.227583-1-dmitry.osipenko@collabora.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 29 Jan 2024 11:19:39 +0400
+Message-ID: <CAMxuvaxs24TUJuuR9EfG-keFhyUq8m8vLZRU8RossJAJOZUEzA@mail.gmail.com>
+Subject: Re: [PATCH v1] virtio-gpu: Correct virgl_renderer_resource_get_info()
+ error check
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -45
 X-Spam_score: -4.6
@@ -101,65 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 26, 2024 at 07:19:39PM -0300, Fabiano Rosas wrote:
-> +static MultiFDMethods multifd_socket_ops = {
-> +    .send_setup = multifd_socket_send_setup,
-> +    .send_cleanup = multifd_socket_send_cleanup,
-> +    .send_prepare = multifd_socket_send_prepare,
+On Sun, Jan 28, 2024 at 2:10=E2=80=AFAM Dmitry Osipenko
+<dmitry.osipenko@collabora.com> wrote:
+>
+> virgl_renderer_resource_get_info() returns errno and not -1 on error.
+> Correct the return-value check.
+>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Here it's named with "socket", however not all socket-based multifd
-migrations will go into this route, e.g., when zstd compression enabled it
-will not go via this route, even if zstd also uses sockets as transport.
-From that pov, this may be slightly confusing.  Maybe it suites more to be
-called "socket_plain" / "socket_no_comp"?
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-One step back, I had a feeling that the current proposal tried to provide a
-single ->ops to cover a model where we may need more than one layer of
-abstraction.
+Can you also correct the code in vhost-user-gpu ?
 
-Since it might be helpful to allow multifd send arbitrary data (e.g. for
-VFIO?  Avihai might have an answer there..), I'll try to even consider that
-into the picture.
-
-Let's consider the ultimate goal of multifd, where the simplest model could
-look like this in my mind (I'm only discussing sender side, but it'll be
-similar on recv side):
-
-               prepare()           send()
-  Input   ----------------> IOVs ------------> iochannels
-
-[I used prepare/send, but please think them as generic terms, not 100%
- aligned with what we have with existing multifd_ops, or what you proposed
- later]
-
-Here what are sure, IMHO, is:
-
-  - We always can have some input data to dump; I didn't use "guest pages"
-    just to say we may allow arbitrary data.  For any multifd user that
-    would like to dump arbitrary data, they can already provide IOVs, so
-    here input can be either "MultiFDPages_t" or "IOVs".
-
-  - We may always want to have IOVs to represent the buffers at some point,
-    no matter what the input it
-
-  - We always flush the IOVs to iochannels; basically I want to say we can
-    always assume the last layer is connecting to QIOChannel APIs, while I
-    don't think there's outliers here so far, even if the send() may differ.
-
-Then _maybe_ it's clearer that we can have two layers of OPs?
-
-  - prepare(): it tells how the "input" will be converted into a scatter
-    gatter list of buffers.  All compression methods fall into this afaiu.
-    This has _nothing_ to do on how the buffers will be sent.  For
-    arbitrary-typed input, this can already be a no-op since the IOVs
-    provided can already be passed over to send().
-
-  - send(): how to dump the IOVs to the iochannels.  AFAIU this is motly
-    only useful for fixed-ram migrations.
-
-Would this be clearer, rather than keep using a single multifd_ops?
-
--- 
-Peter Xu
+> ---
+>  hw/display/virtio-gpu-virgl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
+c
+> index 8bb7a2c21fe7..9f34d0e6619c 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -181,7 +181,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+>          memset(&info, 0, sizeof(info));
+>          ret =3D virgl_renderer_resource_get_info(ss.resource_id, &info);
+>  #endif
+> -        if (ret =3D=3D -1) {
+> +        if (ret) {
+>              qemu_log_mask(LOG_GUEST_ERROR,
+>                            "%s: illegal resource specified %d\n",
+>                            __func__, ss.resource_id);
+> --
+> 2.43.0
+>
 
 
