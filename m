@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA60C47DDF
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 03:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D640C47258
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 03:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUHx2-0004Gd-QA; Sun, 28 Jan 2024 22:04:48 -0500
+	id 1rUHx1-0004GJ-KY; Sun, 28 Jan 2024 22:04:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHx1-0004GE-Ci
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:47 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHx0-0004Fw-37
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHwz-0002d9-Ta
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:47 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUHwy-0002d3-ET
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 22:04:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706497485;
+ s=mimecast20190719; t=1706497483;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sa2/urw2imMu6/yzcBVCu0Uejg3i9taSytYM/VmmU4A=;
- b=YojnzWa02fTlHwxnHDUJExOzKF9REhyrhqHi8AsnN3AXo0VI7rf1PsAcPcsNsxcxfOFgFf
- OcK+nG9PE9A3buT3Dc+TZJBHhFbgLpcB9SP+zemGTRwipRx7sc8Ho+VolQGxZzq0wLt0UL
- 3UYgHXpVzD6XW0242D1zC0GFi4iqznw=
+ bh=C4ER0TJ1Vqgpct/whtoJPyK9n6HJ6571tM7r0VERKjg=;
+ b=YOJq0tjQIw2j/s1wBZ2hN5xdm0ydupBCJhPlXy2SJfddBlCJUPff2SmfN9HFmswFyQ7kYw
+ aY4rRLLgWybYQUHqcPYw9ykVbJ53p09848fRjjh/R/aG+1sWyp75IWF6tpiDwnl7sKtlmg
+ Hc7cK/3LVgSBSRy1+hFJsUjqiFahVuE=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-NT2wBNpLMtWLSWNbAirSAA-1; Sun, 28 Jan 2024 22:04:41 -0500
-X-MC-Unique: NT2wBNpLMtWLSWNbAirSAA-1
+ us-mta-209--JgfVpHCNGGBHe8bEeDkZA-1; Sun, 28 Jan 2024 22:04:38 -0500
+X-MC-Unique: -JgfVpHCNGGBHe8bEeDkZA-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 572A283BA82;
- Mon, 29 Jan 2024 03:04:41 +0000 (UTC)
-Received: from x1n.redhat.com (unknown [10.72.116.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 151891121306;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5E3E285A588;
  Mon, 29 Jan 2024 03:04:38 +0000 (UTC)
+Received: from x1n.redhat.com (unknown [10.72.116.11])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 93DA71121306;
+ Mon, 29 Jan 2024 03:04:35 +0000 (UTC)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
-	peterx@redhat.com
-Subject: [PULL 09/14] migration: Fix use-after-free of migration state object
-Date: Mon, 29 Jan 2024 11:04:00 +0800
-Message-ID: <20240129030405.177100-10-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 08/14] migration/yank: Use channel features
+Date: Mon, 29 Jan 2024 11:03:59 +0800
+Message-ID: <20240129030405.177100-9-peterx@redhat.com>
 In-Reply-To: <20240129030405.177100-1-peterx@redhat.com>
 References: <20240129030405.177100-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -83,49 +84,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fabiano Rosas <farosas@suse.de>
 
-We're currently allowing the process_incoming_migration_bh bottom-half
-to run without holding a reference to the 'current_migration' object,
-which leads to a segmentation fault if the BH is still live after
-migration_shutdown() has dropped the last reference to
-current_migration.
+Stop using outside knowledge about the io channels when registering
+yank functions. Query for features instead.
 
-In my system the bug manifests as migrate_multifd() returning true
-when it shouldn't and multifd_load_shutdown() calling
-multifd_recv_terminate_threads() which crashes due to an uninitialized
-multifd_recv_state.
+The yank method for all channels used with migration code currently is
+to call the qio_channel_shutdown() function, so query for
+QIO_CHANNEL_FEATURE_SHUTDOWN. We could add a separate feature in the
+future for indicating whether a channel supports yanking, but that
+seems overkill at the moment.
 
-Fix the issue by holding a reference to the object when scheduling the
-BH and dropping it before returning from the BH. The same is already
-done for the cleanup_bh at migrate_fd_cleanup_schedule().
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1969
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240119233922.32588-2-farosas@suse.de
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20230911171320.24372-9-farosas@suse.de
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 2 ++
- 1 file changed, 2 insertions(+)
+ migration/yank_functions.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 219447dea1..cf17b68e57 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -648,6 +648,7 @@ static void process_incoming_migration_bh(void *opaque)
-                       MIGRATION_STATUS_COMPLETED);
-     qemu_bh_delete(mis->bh);
-     migration_incoming_state_destroy();
-+    object_unref(OBJECT(migrate_get_current()));
+diff --git a/migration/yank_functions.c b/migration/yank_functions.c
+index d5a710a3f2..979e60c762 100644
+--- a/migration/yank_functions.c
++++ b/migration/yank_functions.c
+@@ -8,12 +8,9 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qapi/error.h"
+ #include "io/channel.h"
+ #include "yank_functions.h"
+ #include "qemu/yank.h"
+-#include "io/channel-socket.h"
+-#include "io/channel-tls.h"
+ #include "qemu-file.h"
+ 
+ void migration_yank_iochannel(void *opaque)
+@@ -26,8 +23,7 @@ void migration_yank_iochannel(void *opaque)
+ /* Return whether yank is supported on this ioc */
+ static bool migration_ioc_yank_supported(QIOChannel *ioc)
+ {
+-    return object_dynamic_cast(OBJECT(ioc), TYPE_QIO_CHANNEL_SOCKET) ||
+-        object_dynamic_cast(OBJECT(ioc), TYPE_QIO_CHANNEL_TLS);
++    return qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
  }
  
- static void coroutine_fn
-@@ -713,6 +714,7 @@ process_incoming_migration_co(void *opaque)
-     }
- 
-     mis->bh = qemu_bh_new(process_incoming_migration_bh, mis);
-+    object_ref(OBJECT(migrate_get_current()));
-     qemu_bh_schedule(mis->bh);
-     return;
- fail:
+ void migration_ioc_register_yank(QIOChannel *ioc)
 -- 
 2.43.0
 
