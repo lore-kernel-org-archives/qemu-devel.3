@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0314BC47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0BDC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUXb4-0006qs-Hz; Mon, 29 Jan 2024 14:47:10 -0500
+	id 1rUXdD-0001Cm-Qi; Mon, 29 Jan 2024 14:49:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rUXan-0006cj-Rh; Mon, 29 Jan 2024 14:46:57 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rUXak-00078K-HT; Mon, 29 Jan 2024 14:46:52 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9FB514E6012;
- Mon, 29 Jan 2024 20:46:43 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id JX1PHC9kVR1W; Mon, 29 Jan 2024 20:46:41 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 99D024E6006; Mon, 29 Jan 2024 20:46:41 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 966427456B4;
- Mon, 29 Jan 2024 20:46:41 +0100 (CET)
-Date: Mon, 29 Jan 2024 20:46:41 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org, 
- qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- =?ISO-8859-15?Q?Fr=E9d=E9ric_Barrat?= <fbarrat@linux.ibm.com>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, mzamazal@redhat.com, 
- Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
- Laurent Vivier <laurent@vivier.eu>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v3 01/29] bulk: Access existing variables initialized to
- &S->F when available
-In-Reply-To: <20240129164514.73104-2-philmd@linaro.org>
-Message-ID: <fd790685-a98f-9cd5-c117-dac96564a71b@eik.bme.hu>
-References: <20240129164514.73104-1-philmd@linaro.org>
- <20240129164514.73104-2-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rUXdB-0001Cc-VE
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:49:21 -0500
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rUXd9-0007SN-Lh
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:49:21 -0500
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-783d4b3a00bso293703385a.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 11:49:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706557757; x=1707162557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1FisFwHpxUgCQNixc4GJGk8RZ0MJsp73+zkbVKosq7M=;
+ b=GVMg0PjdT7ANUyu7M85KG0GbbDM4beCdA7M13fPtnJiwMvzTCNZ522aQwhUBngicpe
+ JTbKzX7bZ45LPaIpr7XS9Tf2B0/fWs1BhJVZUvk3LXoFWyJJra8IPVDhAMZHAwerSBfQ
+ G1yNDLrukAdr0mGQkvs4CGvY0x5Ni5ZRp7jIblzPw/YfVyxaST/jEnETXpsfhjQH7E8h
+ 6tJotNQRvB/rp+tqVT6yjCocbjmw2GGbpc8KFwHOHw89cIhaci63Wpst8LBXUzKzCzUi
+ zxBmB28E5sYgJk1DA7AEHvlSRYRKevnuHeLYYCnH2LWPoaLllAvfSscdET6mB6C804QZ
+ 2QPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706557757; x=1707162557;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1FisFwHpxUgCQNixc4GJGk8RZ0MJsp73+zkbVKosq7M=;
+ b=ojnTBBhfX18Ncqqj494Ta4BD0pNLn2Z8NVTQiQAKHXnwnCIV053JPxwkJ9DaV+EvF5
+ sll2o3v3Zbr0vqgaMlYUI/ndcR4BHduDsbUOWfEsvIoeP46Xa9oHUogkIU0bfyIUvx/2
+ 5BFYLsPhZhLYXZHbjDGSQIJ39rPGDrsCWZ19cgMPfgCVwOkmnTYQXaeXFKgW8UippdSc
+ gSARFywzcH4nbBXmsRinph+WRB8+8cr0gG2yknG/OVJgrhoWiV4UDiub56uFZRodmnge
+ ZVI553CdbwNFm702PRAE2uNiqE79cbokJpWFi4sBaadWrLKm9GhYM7t0rgOPneTNs8pF
+ 98Qg==
+X-Gm-Message-State: AOJu0YxQy0PkVBpPTjCt5QF2G0vpKUmUyw8CXfGxafJ9uLsuY25jb3Nq
+ P2xqvt7ZLpNh7ZjFtYesZMn/YVuoVyScrPkWQ3+xQiVKe0Tzxp6t+70jBlpB
+X-Google-Smtp-Source: AGHT+IFpvdvTGwTX3NhWKo4OxxAHKkXvibApuVwyqM2iRqw3hICIdFXi1hzazMwFARi0SpUarFSsVw==
+X-Received: by 2002:a05:620a:4081:b0:784:887:958d with SMTP id
+ f1-20020a05620a408100b007840887958dmr566370qko.11.1706557757160; 
+ Mon, 29 Jan 2024 11:49:17 -0800 (PST)
+Received: from [127.0.0.1] ([45.156.240.113]) by smtp.gmail.com with ESMTPSA id
+ x12-20020a05620a098c00b00783f6f7e4b2sm1719317qkx.41.2024.01.29.11.49.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jan 2024 11:49:16 -0800 (PST)
+Date: Mon, 29 Jan 2024 19:49:13 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+CC: philmd@linaro.org
+Subject: Re: [PATCH 2/4] isa: extract FDC37M81X to a separate file
+In-Reply-To: <20240129133751.1106716-3-pbonzini@redhat.com>
+References: <20240129133751.1106716-1-pbonzini@redhat.com>
+ <20240129133751.1106716-3-pbonzini@redhat.com>
+Message-ID: <AE14AC8A-AA67-4F69-8D45-640C93217935@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1985250681-1706557601=:22604"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=shentey@gmail.com; helo=mail-qk1-x72c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,87 +92,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-1985250681-1706557601=:22604
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
 
-On Mon, 29 Jan 2024, Philippe Mathieu-Daudé wrote:
-> When a variable is initialized to &struct->field, use it
-> in place. Rationale: while this makes the code more concise,
-> this also helps static analyzers.
+Am 29=2E Januar 2024 13:37:46 UTC schrieb Paolo Bonzini <pbonzini@redhat=
+=2Ecom>:
+>isa-superio=2Ec currently defines a SuperIO chip that depends on
+>CONFIG_IDE_ISA, but not all users of isa-superio=2Ec depend on that
+>symbol=2E  Extract the chip to a separate file so that there is an
+>obvious place to select IDE_ISA=2E
 >
-> Mechanical change using the following Coccinelle spatch script:
+>Signed-off-by: Paolo Bonzini <pbonzini@redhat=2Ecom>
+>---
+> hw/isa/fdc37m81x-superio=2Ec | 37 +++++++++++++++++++++++++++++++++++++
+> hw/isa/isa-superio=2Ec       | 19 -------------------
+> hw/isa/Kconfig             |  5 +++++
+> hw/isa/meson=2Ebuild         |  1 +
+> hw/mips/Kconfig            |  2 +-
+> 5 files changed, 44 insertions(+), 20 deletions(-)
+> create mode 100644 hw/isa/fdc37m81x-superio=2Ec
 >
-> @@
-> type S, F;
-> identifier s, m, v;
-> @@
->      S *s;
->      ...
->      F *v = &s->m;
->      <+...
-> -    &s->m
-> +    v
->      ...+>
->
-> Inspired-by: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> hw/display/ati.c              |  2 +-
-> hw/misc/macio/pmu.c           |  2 +-
-> hw/misc/pvpanic-pci.c         |  2 +-
-> hw/pci-bridge/cxl_root_port.c |  2 +-
-> hw/ppc/pnv.c                  | 20 ++++++++++----------
-> hw/virtio/vhost-user-gpio.c   |  8 ++++----
-> hw/virtio/vhost-user-scmi.c   |  6 +++---
-> hw/virtio/virtio-pci.c        |  2 +-
-> hw/xen/xen_pt.c               |  6 +++---
-> migration/multifd-zlib.c      |  2 +-
-> target/arm/cpu.c              |  4 ++--
-> target/arm/kvm.c              |  2 +-
-> target/arm/machine.c          |  6 +++---
-> target/i386/hvf/x86hvf.c      |  2 +-
-> target/m68k/helper.c          |  2 +-
-> target/ppc/kvm.c              |  8 ++++----
-> target/riscv/cpu_helper.c     |  2 +-
-> 17 files changed, 39 insertions(+), 39 deletions(-)
->
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index 569b8f6165..8d2501bd82 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -991,7 +991,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
->     }
->     vga_init(vga, OBJECT(s), pci_address_space(dev),
->              pci_address_space_io(dev), true);
-> -    vga->con = graphic_console_init(DEVICE(s), 0, s->vga.hw_ops, &s->vga);
-> +    vga->con = graphic_console_init(DEVICE(s), 0, s->vga.hw_ops, vga);
->     if (s->cursor_guest_mode) {
->         vga->cursor_invalidate = ati_cursor_invalidate;
->         vga->cursor_draw_line = ati_cursor_draw_line;
-> diff --git a/hw/misc/macio/pmu.c b/hw/misc/macio/pmu.c
-> index e9a90da88f..7fe1c4e517 100644
-> --- a/hw/misc/macio/pmu.c
-> +++ b/hw/misc/macio/pmu.c
-> @@ -737,7 +737,7 @@ static void pmu_realize(DeviceState *dev, Error **errp)
->     timer_mod(s->one_sec_timer, s->one_sec_target);
->
->     if (s->has_adb) {
-> -        qbus_init(&s->adb_bus, sizeof(s->adb_bus), TYPE_ADB_BUS,
-> +        qbus_init(adb_bus, sizeof(s->adb_bus), TYPE_ADB_BUS,
+>diff --git a/hw/isa/fdc37m81x-superio=2Ec b/hw/isa/fdc37m81x-superio=2Ec
+>new file mode 100644
+>index 00000000000=2E=2E5ad769b69e8
+>--- /dev/null
+>+++ b/hw/isa/fdc37m81x-superio=2Ec
+>@@ -0,0 +1,37 @@
+>+/*
+>+ * Generic ISA Super I/O
 
-Probably should change to use sizeof(*adb_bus) too. Although the next line 
-is the only place the adb_bus local is used so maybe can drop the local 
-and chnage next line to use &s->adb_bus instead.
+Replace this description=2E=2E=2E
 
-Regards,
-BALATON Zoltan
+>+ *
+>+ * Copyright (c) 2018 Philippe Mathieu-Daud=C3=A9
+>+ *
+>+ * This work is licensed under the terms of the GNU GPL, version 2 or la=
+ter=2E
+>+ * See the COPYING file in the top-level directory=2E
+>+ * SPDX-License-Identifier: GPL-2=2E0-or-later
+>+ */
+>+
+>+#include "qemu/osdep=2Eh"
+>+#include "hw/isa/superio=2Eh"
+>+
+>+/* SMS FDC37M817 Super I/O */
 
->                   dev, "adb.0");
->         adb_register_autopoll_callback(adb_bus, pmu_adb_poll, s);
->     }
---3866299591-1985250681-1706557601=:22604--
+=2E=2E=2E with this one?
+
+>+static void fdc37m81x_class_init(ObjectClass *klass, void *data)
+>+{
+>+    ISASuperIOClass *sc =3D ISA_SUPERIO_CLASS(klass);
+>+
+>+    sc->serial=2Ecount =3D 2; /* NS16C550A */
+>+    sc->parallel=2Ecount =3D 1;
+>+    sc->floppy=2Ecount =3D 1; /* SMSC 82077AA Compatible */
+>+    sc->ide=2Ecount =3D 0;
+>+}
+>+
+
+Don't we prefer a macro for below code? While touching the code we could u=
+se it=2E (Sorry I can't recall its name from the top of my head and I don't=
+ have access to the code right now)=2E
+
+Best regards,
+Bernhard
+
+>+static const TypeInfo fdc37m81x_type_info =3D {
+>+    =2Ename          =3D TYPE_FDC37M81X_SUPERIO,
+>+    =2Eparent        =3D TYPE_ISA_SUPERIO,
+>+    =2Einstance_size =3D sizeof(ISASuperIODevice),
+>+    =2Eclass_init    =3D fdc37m81x_class_init,
+>+};
+>+
+>+static void fdc37m81x_register_types(void)
+>+{
+>+    type_register_static(&fdc37m81x_type_info);
+>+}
+>+
+>+type_init(fdc37m81x_register_types)
+>diff --git a/hw/isa/isa-superio=2Ec b/hw/isa/isa-superio=2Ec
+>index 7dbfc374da3=2E=2E80e0c34652e 100644
+>--- a/hw/isa/isa-superio=2Ec
+>+++ b/hw/isa/isa-superio=2Ec
+>@@ -187,28 +187,9 @@ static const TypeInfo isa_superio_type_info =3D {
+>     =2Eclass_init =3D isa_superio_class_init,
+> };
+>=20
+>-/* SMS FDC37M817 Super I/O */
+>-static void fdc37m81x_class_init(ObjectClass *klass, void *data)
+>-{
+>-    ISASuperIOClass *sc =3D ISA_SUPERIO_CLASS(klass);
+>-
+>-    sc->serial=2Ecount =3D 2; /* NS16C550A */
+>-    sc->parallel=2Ecount =3D 1;
+>-    sc->floppy=2Ecount =3D 1; /* SMSC 82077AA Compatible */
+>-    sc->ide=2Ecount =3D 0;
+>-}
+>-
+>-static const TypeInfo fdc37m81x_type_info =3D {
+>-    =2Ename          =3D TYPE_FDC37M81X_SUPERIO,
+>-    =2Eparent        =3D TYPE_ISA_SUPERIO,
+>-    =2Einstance_size =3D sizeof(ISASuperIODevice),
+>-    =2Eclass_init    =3D fdc37m81x_class_init,
+>-};
+>-
+> static void isa_superio_register_types(void)
+> {
+>     type_register_static(&isa_superio_type_info);
+>-    type_register_static(&fdc37m81x_type_info);
+> }
+>=20
+> type_init(isa_superio_register_types)
+>diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
+>index 7884179d08b=2E=2Eaf856af052d 100644
+>--- a/hw/isa/Kconfig
+>+++ b/hw/isa/Kconfig
+>@@ -23,6 +23,11 @@ config ISA_SUPERIO
+>     # Some users of ISA_SUPERIO do not use it
+>     #select IDE_ISA
+>=20
+>+config FDC37M81X
+>+    bool
+>+    select ISA_BUS
+>+    select IDE_ISA
+>+
+> config PC87312
+>     bool
+>     select ISA_SUPERIO
+>diff --git a/hw/isa/meson=2Ebuild b/hw/isa/meson=2Ebuild
+>index 2ab99ce0c6b=2E=2Ef650b395071 100644
+>--- a/hw/isa/meson=2Ebuild
+>+++ b/hw/isa/meson=2Ebuild
+>@@ -4,6 +4,7 @@ system_ss=2Eadd(when: 'CONFIG_ISA_BUS', if_true: files('i=
+sa-bus=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_ISA_SUPERIO', if_true: files('isa-superio=
+=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_PC87312', if_true: files('pc87312=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_PIIX', if_true: files('piix=2Ec'))
+>+system_ss=2Eadd(when: 'CONFIG_FDC37M81X', if_true: files('fdc37m81x-supe=
+rio=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_SMC37C669', if_true: files('smc37c669-supe=
+rio=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_VT82C686', if_true: files('vt82c686=2Ec'))
+>=20
+>diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+>index ab61af209a0=2E=2E94b969c21db 100644
+>--- a/hw/mips/Kconfig
+>+++ b/hw/mips/Kconfig
+>@@ -1,7 +1,7 @@
+> config MALTA
+>     bool
+>+    select FDC37M81X
+>     select GT64120
+>-    select ISA_SUPERIO
+>     select PIIX
+>=20
+> config MIPSSIM
 
