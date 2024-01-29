@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1471C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9F6C47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUScS-0000Zi-SY; Mon, 29 Jan 2024 09:28:18 -0500
+	id 1rUSca-0000ak-PJ; Mon, 29 Jan 2024 09:28:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUScL-0000ZO-OO
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:28:11 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUScI-0004Zk-Au
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:28:08 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-55ad2a47b7aso2594129a12.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 06:28:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706538484; x=1707143284; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2056RyK7DW9Z8hzDKfi2jmdLFKNsbd3R/XFyHvCStuY=;
- b=pHGxRRyNWEwDSyibDxgYIezjXiDmO0kAEWRv60CrvriU/+B2oMBiR5rqHx+S0RkAL6
- 5E9UliqbIDj/QbwIf0m3Co5SajPU+Ih/MG8JCd5t50Iz2Gv3dCA+mrxJ2YuoE+E0lHcg
- fmCcLtMwe4DC2ZEezUH31hniIbZfWmGmuR+wEXYujYQCf6Cf6K+NuRRP1SF7WPlMXihD
- dEX93CrrjoAEZQuaLf6107qDV4eSQD8/mu2oDIMPk258RzNVWEQtXzlcuXdlw9U1vT1p
- S5Yjrbxse2BuAKzS6nwwgycTvkSQwmgGU+fQ2zf5e71C4/YMofmsVrPeJ403xLeIzmJ9
- gr+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706538484; x=1707143284;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2056RyK7DW9Z8hzDKfi2jmdLFKNsbd3R/XFyHvCStuY=;
- b=UVyEsLlXDjE4IrvK/sYMa+j5sGtiGei15gZcxGEZG/Yby+ngvivCVuyfR9sWbNK4oP
- zIF7ReYKrpYYbFVfsQxl3+MxyY2XbH9GWNtJNEr7Wie54h5N1Fo7OW6zVbJCehwuJPNz
- 7FQENvAbSAd6MR2Czm8tH5D7mSEH/31ktq0aIS8t42eSVtU382IpgnSNol+ZYOw7XTiU
- UHyoFYBdlXQ4eWRqRZvyzgxiKUdI0ckEOrfRum6craC2WZM7GkVtss9oSdcfGr6z3QAj
- vQCGudLME8wHefSdSWxx0hTDkuC39rKcsRibKNCNL3qvgRKWhEy2cmHWgOGglEcxzA+/
- 9Cnw==
-X-Gm-Message-State: AOJu0YyA5YF1010fPbBbbMsxjbyQkVthTzLVt80NFdzeO7dvI4+iPiBL
- KjsEsHhum7yn9uYPQgwsxwF876Fvb7nPbhszrViv5JQRGS8Z9QbZS97BmU3HH3DIPGQgSchHaN6
- VHRWHwCpVFv/LNapEHQFMyFjbNWP3t/20Q9mgpA==
-X-Google-Smtp-Source: AGHT+IELAj/+3iRYlGs+HNHv24ZGkRNC+vP7tVmYvSUBZB/jqZFBKT0QBhmnWff031scpFf7vCUUD1Y26zBDLYddWJ0=
-X-Received: by 2002:aa7:d95a:0:b0:558:252c:2776 with SMTP id
- l26-20020aa7d95a000000b00558252c2776mr3842620eds.16.1706538484408; Mon, 29
- Jan 2024 06:28:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUScV-0000a1-8l
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:28:20 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUScT-0004bs-25
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 09:28:18 -0500
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40TDsYpJ023630; Mon, 29 Jan 2024 14:28:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=date : from : to :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=pp1; bh=pzv3QgploxWsUMKNoNV4wDH1oXGr0xCgjk0/+J4flbI=;
+ b=LY+8rIRa/guXEydP1mgICC2rJx2MGD7accbzkGxywj5M7uvkPKkKqP5kWMHBEc+HDFQC
+ ZWntRsYvGxfkP7U6hMcLMSTo7KKYWVwniCBFQpGywk7KLguDxHS3VC9Yw6oIPqoDJtZa
+ jaQee2VKi0HcXClN0dZIHQqW6hvdAbYk3oH752NtI7NJ0p1snY6MyXTPf5UAUAlTinV8
+ sU7/tmNtQFZdpWPLTMUX2Jc09SKIsv0jZnFo2CmNcGPlbksHry57JkcLkb++8NQNRodI
+ ADrjWDdI3dkX2g2YzXICxawqY9xVTzYXrOhPCMM5dmvvsr5+A+M5yJb3FD2Rwe6SYXU/ CA== 
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxc8ktpfm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jan 2024 14:28:14 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40TE0Y3Z002220; Mon, 29 Jan 2024 14:28:13 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwc5t0ygx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jan 2024 14:28:13 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40TESBjY27656856
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 29 Jan 2024 14:28:11 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7AA5A20049;
+ Mon, 29 Jan 2024 14:28:11 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 569E720040;
+ Mon, 29 Jan 2024 14:28:11 +0000 (GMT)
+Received: from heavy (unknown [9.155.200.166])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 29 Jan 2024 14:28:11 +0000 (GMT)
+Date: Mon, 29 Jan 2024 15:28:10 +0100
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 13/33] softmmu/physmem: Remove qemu_host_page_size
+Message-ID: <73zrjhqiycu22rvhojuwuj6xjejevyvj6p7s6heqmslizapqgm@l7ogwi5fwfga>
+References: <20240102015808.132373-1-richard.henderson@linaro.org>
+ <20240102015808.132373-14-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20240122070600.16681-1-peterx@redhat.com> <87plxtgyxx.fsf@suse.de>
- <Za81vJgTjFSGT56r@x1n> <87frygdzjl.fsf@suse.de>
-In-Reply-To: <87frygdzjl.fsf@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jan 2024 14:27:53 +0000
-Message-ID: <CAFEAcA_uzJKuvY=iTnbG-xAjLn0zHRevzvjoyhjqqiBThveO3Q@mail.gmail.com>
-Subject: Re: [PATCH] migration/docs: Explain two solutions for VMSD
- compatibility
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240102015808.132373-14-richard.henderson@linaro.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: wbXcVbz0y-M-FZ8XasFBRNAHvzi3-zm1
+X-Proofpoint-GUID: wbXcVbz0y-M-FZ8XasFBRNAHvzi3-zm1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-29_07,2024-01-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0
+ priorityscore=1501 mlxlogscore=720 spamscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 clxscore=1015
+ phishscore=0 mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2401290106
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,42 +104,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jan 2024 at 13:45, Fabiano Rosas <farosas@suse.de> wrote:
->
-> Peter Xu <peterx@redhat.com> writes:
-> > Fundamentally, IMHO it's because QEMU as a project is used both in
-> > enterprise and personal emulations.  I think it might be too strict to
-> > always request backward migration capability if we know some device / arch
-> > is only used for personal, or educational, purposes.
->
-> Do we need migration support tiers? =)
+On Tue, Jan 02, 2024 at 12:57:48PM +1100, Richard Henderson wrote:
+> Use qemu_real_host_page_size() instead.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  system/physmem.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-We already have them. The tier list is:
-
- * if the machine type is a versioned one, then we maintain
-   forwards compatibility for the versioned machine
-   (i.e. can migrate machine-X.Y of QEMU A.B to the
-    machine-X.Y of a QEMU C.D which is newer than A.B).
- * if the machine type is not versioned, then we do not make
-   any guarantee of migration compatibility across QEMU versions.
-   Instead the aim is that if the user tries it it either works
-   or gives an error message that the migration failed
-   (e.g. because the version field in a VMState struct was bumped).
-   Migration breaks are generally called out in commit messages.
-   Often for machines in this tier the user is really interested
-   in state-save snapshots for debugging purposes, rather than
-   in a true cross-host-machine migration.
- * some machine types do not support migration/savevm/loadvm
-   at all, because of devices missing VMState structs. This
-   is not desirable, and for new machine models we try to
-   ensure that they have vmstate structs as part of the minimum
-   quality bar, but it is true of some legacy machine types.
-
-AIUI we, in the sense of the upstream project, do not support
-backwards migration compatibility (i.e. migrating a machine-X.Y
-from QEMU C.D to QEMU A.B where A.B is an older version than C.D);
-though some downstreams (read: RedHat) may do so.
-
-thanks
--- PMM
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
