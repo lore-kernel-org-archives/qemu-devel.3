@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27CA7C47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A929C47DDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 16:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUUoF-0005Bc-7B; Mon, 29 Jan 2024 11:48:35 -0500
+	id 1rUUoL-0005gX-R7; Mon, 29 Jan 2024 11:48:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUnA-0000BK-IC
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:34 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUn5-00009p-3q
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:28 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUn6-0004CY-9Y
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:27 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40eacb4bfa0so35016105e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:47:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUUn1-0004Ay-2g
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 11:47:22 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-40e5afc18f5so34956315e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 08:47:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706546842; x=1707151642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706546836; x=1707151636; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=81+lsllbL0HrT+oLcmb3UYRaeAjWMCareNwo8xEwpX8=;
- b=kYWcNNgnmIdoTW7yNmzdwoDFvIUYB3MOp09YkYcX63HGi1Clws3rZBiP3J3SEt76W0
- royFn75knaET8Ry8Rguw+pv4LXWLktNxZ1ZSQfoXiRuvVqZCCImzhafZ/zhqfGtxRy1N
- B54AkMhMgeeGItnBdQEhKhM0rsZJwalBkS9UBobQRavoVSqjOH9MLdXyOpcpg0D/dYVR
- lqp8JQ/Xrri69Ky7BFgs28etHgKyOzfQEeD+NQ2NAK+Ry4YRYL6slWDUF9R5zGwHF7RT
- vi4vgbvkLQs8KO54Zs2LzrbjGGh1D9xsihRNV09caDzWtCQfGBGIEDQCJUKU8p6pHWrb
- MfxA==
+ bh=a+WHgRt8aoFwU9PH4yyhsDxrOBo9TuwHJWddMcT5sv4=;
+ b=PSiux/CnR2ucLc4rXWhKj7NH0VoLrYvuHpWajN4yWMJWzM0/IKYr2psYdM7V+1+5K8
+ lF4GQzoSeXMJSLcALNb73RgtKH4BpD2DTmf7bcSaLSWjfUv+gPiPCaToqfHi+TRzPabb
+ TrA8ZnObYxiG7L/GGW6Ux4rWg8h/4NHj/3f7W7R7IDuYSOZpTwN/SndwnHDuHFwPkTFe
+ mGS8/LxWdsa7NzejwU2ZZYtZ4xz2znITLZIic7+TvJDt5VQA3QrGeZzwkI26DO8yrpjm
+ XkZsl+s47tX8AoVhYQyCkmccZxkqVkYwTs9/SFaI+pMaJD21iGJChpsTX+sp5Kw8DXCG
+ 7luA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706546842; x=1707151642;
+ d=1e100.net; s=20230601; t=1706546836; x=1707151636;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=81+lsllbL0HrT+oLcmb3UYRaeAjWMCareNwo8xEwpX8=;
- b=c5uUahg7vPIRKpa1YtOMvkRocdHtzwdb8b6VZIPUYnJajlClg4VBDgUS/tIWpDeEWz
- Az7+a/2JToSrxLNQu4x2wR3ClI3hGMQTtVJKHURKyvGAmkRpZf8JwrMv0T4eVvai/Baj
- yLE0gm4S4lmmlQMsakRU97lmYeWwzhtm9km7Q1hdU5tlbwzidXiMbI4/4HJ86QtQ/edP
- 3M5JTYfsjEma/IY9XI0O2gwGzwgnO1Oofwrnl5TB7vI9N+AFspOnBfWoNYERjeMtdJHR
- /+Zui/f/T+KZUixyxfv1VD3SEU/aVck3c97scbDpVSRPtHPTwo0xtDHj7CwQB9zEVmQE
- ECXg==
-X-Gm-Message-State: AOJu0YwOT9yXRgFvHv0oQN94LvEbTQEEBkisksIxEpRESFwgclklfOcc
- TxknWH8wPZk3ll3MKoWxlLYEG3D7Satmet+sQQ9if8jRnukB9h9qNJelAwBVki8wl/20kwupktO
- l
-X-Google-Smtp-Source: AGHT+IF84eaJDqu3xt4h++MvVzAifUXMdWy4p6XWOiZiCT5EhNKvbhRD8nzigVrNm+QsqfgoC8z5Ng==
-X-Received: by 2002:adf:fc46:0:b0:33a:eadb:f4cd with SMTP id
- e6-20020adffc46000000b0033aeadbf4cdmr2748018wrs.58.1706546841883; 
- Mon, 29 Jan 2024 08:47:21 -0800 (PST)
+ bh=a+WHgRt8aoFwU9PH4yyhsDxrOBo9TuwHJWddMcT5sv4=;
+ b=Dc5eSotOxYpPCkcVRjGHvilcxbfP39WEx4LILieYLsXi7AmXFnSLgtn4ib3ku9BV4u
+ Lm7Iy6Ob0fqiULX7ZHpS3iFNu7xab4wDduJkQZyt/xf1zDK/1+Td+/DYYkFf0uQ11mqG
+ O/HpnDVI5h5ijKodn07FFgZTuqmhjt+n7vlgM0E8YELJkkdm77ff2T0io9jPhmRBLgso
+ Ue5pUEdr4mKz9Px/9lLLxu8LeBWvFWdd2Bjokrrte4ufJ7TEhsE3w19Nm4zfUn1x1hkU
+ cMVTEYPUaomN7+tUjr8N62pdGLdlYZMnverJdkIW66CLZ9NNTTVRXKPkGwNdI6W0NbOn
+ nHKA==
+X-Gm-Message-State: AOJu0Yz4t6+hE0zirrzeDOtOVOJKdn/SkM6Mw3LltlNX+0jVM6rqMtKM
+ Dk+9GQyvJEy+IFhEKWrrGTe6t311eUmIFxr2x8HE/WXP4QYEvi+t57qpfsr8Fl9CU2UZreTYnp2
+ a
+X-Google-Smtp-Source: AGHT+IGYhnGe776oZg8Nf+XW6qyKWUfG5CSd+AahADH4rgW9WuZbEKC9nCTJSkL02Ck+OeTkF8tuTg==
+X-Received: by 2002:a05:600c:4689:b0:40d:5575:a197 with SMTP id
+ p9-20020a05600c468900b0040d5575a197mr5396356wmo.12.1706546836062; 
+ Mon, 29 Jan 2024 08:47:16 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.219.39])
  by smtp.gmail.com with ESMTPSA id
- p7-20020a5d4587000000b0033af670213dsm259833wrq.110.2024.01.29.08.47.20
+ l29-20020a05600c1d1d00b0040ef8aa4822sm2704220wms.38.2024.01.29.08.47.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 08:47:21 -0800 (PST)
+ Mon, 29 Jan 2024 08:47:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
@@ -64,19 +64,19 @@ Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stafford Horne <shorne@gmail.com>
-Subject: [PATCH v3 20/29] target/openrisc: Prefer fast cpu_env() over slower
- CPU QOM cast macro
-Date: Mon, 29 Jan 2024 17:45:02 +0100
-Message-ID: <20240129164514.73104-21-philmd@linaro.org>
+ Chris Wulff <crwulff@gmail.com>, Marek Vasut <marex@denx.de>
+Subject: [PATCH v3 19/29] target/nios2: Prefer fast cpu_env() over slower CPU
+ QOM cast macro
+Date: Mon, 29 Jan 2024 17:45:01 +0100
+Message-ID: <20240129164514.73104-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
 References: <20240129164514.73104-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,84 +105,107 @@ in scripts/coccinelle/cpu_env.cocci_template header.
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/openrisc/gdbstub.c   | 6 ++----
- target/openrisc/interrupt.c | 6 ++----
- target/openrisc/translate.c | 6 ++----
- 3 files changed, 6 insertions(+), 12 deletions(-)
+ target/nios2/cpu.c        | 15 +++------------
+ target/nios2/helper.c     |  3 +--
+ target/nios2/nios2-semi.c |  6 ++----
+ target/nios2/translate.c  |  3 +--
+ 4 files changed, 7 insertions(+), 20 deletions(-)
 
-diff --git a/target/openrisc/gdbstub.c b/target/openrisc/gdbstub.c
-index d1074a0581..c2a77d5d4d 100644
---- a/target/openrisc/gdbstub.c
-+++ b/target/openrisc/gdbstub.c
-@@ -23,8 +23,7 @@
+diff --git a/target/nios2/cpu.c b/target/nios2/cpu.c
+index 09b122e24d..b5b3773fb8 100644
+--- a/target/nios2/cpu.c
++++ b/target/nios2/cpu.c
+@@ -28,28 +28,19 @@
  
- int openrisc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ static void nios2_cpu_set_pc(CPUState *cs, vaddr value)
  {
--    OpenRISCCPU *cpu = OPENRISC_CPU(cs);
--    CPUOpenRISCState *env = &cpu->env;
-+    CPUOpenRISCState *env = cpu_env(cs);
+-    Nios2CPU *cpu = NIOS2_CPU(cs);
+-    CPUNios2State *env = &cpu->env;
+-
+-    env->pc = value;
++    cpu_env(cs)->pc = value;
+ }
  
-     if (n < 32) {
-         return gdb_get_reg32(mem_buf, cpu_get_gpr(env, n));
-@@ -48,9 +47,8 @@ int openrisc_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int openrisc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ static vaddr nios2_cpu_get_pc(CPUState *cs)
  {
--    OpenRISCCPU *cpu = OPENRISC_CPU(cs);
-     CPUClass *cc = CPU_GET_CLASS(cs);
--    CPUOpenRISCState *env = &cpu->env;
-+    CPUOpenRISCState *env = cpu_env(cs);
-     uint32_t tmp;
+-    Nios2CPU *cpu = NIOS2_CPU(cs);
+-    CPUNios2State *env = &cpu->env;
+-
+-    return env->pc;
++    return cpu_env(cs)->pc;
+ }
  
-     if (n > cc->gdb_num_core_regs) {
-diff --git a/target/openrisc/interrupt.c b/target/openrisc/interrupt.c
-index d4fdb8ce8e..b3b5b40577 100644
---- a/target/openrisc/interrupt.c
-+++ b/target/openrisc/interrupt.c
-@@ -29,8 +29,7 @@
- 
- void openrisc_cpu_do_interrupt(CPUState *cs)
+ static void nios2_restore_state_to_opc(CPUState *cs,
+                                        const TranslationBlock *tb,
+                                        const uint64_t *data)
  {
--    OpenRISCCPU *cpu = OPENRISC_CPU(cs);
--    CPUOpenRISCState *env = &cpu->env;
-+    CPUOpenRISCState *env = cpu_env(cs);
-     int exception = cs->exception_index;
+-    Nios2CPU *cpu = NIOS2_CPU(cs);
+-    CPUNios2State *env = &cpu->env;
+-
+-    env->pc = data[0];
++    cpu_env(cs)->pc = data[0];
+ }
  
-     env->epcr = env->pc;
-@@ -105,8 +104,7 @@ void openrisc_cpu_do_interrupt(CPUState *cs)
- 
- bool openrisc_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ static bool nios2_cpu_has_work(CPUState *cs)
+diff --git a/target/nios2/helper.c b/target/nios2/helper.c
+index bb3b09e5a7..ac57121afc 100644
+--- a/target/nios2/helper.c
++++ b/target/nios2/helper.c
+@@ -287,8 +287,7 @@ void nios2_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+                                    MMUAccessType access_type,
+                                    int mmu_idx, uintptr_t retaddr)
  {
--    OpenRISCCPU *cpu = OPENRISC_CPU(cs);
--    CPUOpenRISCState *env = &cpu->env;
-+    CPUOpenRISCState *env = cpu_env(cs);
-     int idx = -1;
+-    Nios2CPU *cpu = NIOS2_CPU(cs);
+-    CPUNios2State *env = &cpu->env;
++    CPUNios2State *env = cpu_env(cs);
  
-     if ((interrupt_request & CPU_INTERRUPT_HARD) && (env->sr & SR_IEE)) {
-diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-index ecff4412b7..12899c911d 100644
---- a/target/openrisc/translate.c
-+++ b/target/openrisc/translate.c
-@@ -1564,8 +1564,7 @@ static void openrisc_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
- static void openrisc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+     env->ctrl[CR_BADADDR] = addr;
+     cs->exception_index = EXCP_UNALIGN;
+diff --git a/target/nios2/nios2-semi.c b/target/nios2/nios2-semi.c
+index 0b84fcb6b6..420702e293 100644
+--- a/target/nios2/nios2-semi.c
++++ b/target/nios2/nios2-semi.c
+@@ -75,8 +75,7 @@ static int host_to_gdb_errno(int err)
+ 
+ static void nios2_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
+ {
+-    Nios2CPU *cpu = NIOS2_CPU(cs);
+-    CPUNios2State *env = &cpu->env;
++    CPUNios2State *env = cpu_env(cs);
+     target_ulong args = env->regs[R_ARG1];
+ 
+     if (put_user_u32(ret, args) ||
+@@ -93,8 +92,7 @@ static void nios2_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
+ 
+ static void nios2_semi_u64_cb(CPUState *cs, uint64_t ret, int err)
+ {
+-    Nios2CPU *cpu = NIOS2_CPU(cs);
+-    CPUNios2State *env = &cpu->env;
++    CPUNios2State *env = cpu_env(cs);
+     target_ulong args = env->regs[R_ARG1];
+ 
+     if (put_user_u32(ret >> 32, args) ||
+diff --git a/target/nios2/translate.c b/target/nios2/translate.c
+index e806623594..30beb303f9 100644
+--- a/target/nios2/translate.c
++++ b/target/nios2/translate.c
+@@ -970,7 +970,6 @@ static void nios2_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+ static void nios2_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
  {
      DisasContext *dc = container_of(dcbase, DisasContext, base);
--    OpenRISCCPU *cpu = OPENRISC_CPU(cs);
--    uint32_t insn = translator_ldl(&cpu->env, &dc->base, dc->base.pc_next);
-+    uint32_t insn = translator_ldl(cpu_env(cs), &dc->base, dc->base.pc_next);
+-    CPUNios2State *env = cpu_env(cs);
+     const Nios2Instruction *instr;
+     uint32_t code, pc;
+     uint8_t op;
+@@ -980,7 +979,7 @@ static void nios2_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+     dc->base.pc_next = pc + 4;
  
-     if (!decode(dc, insn)) {
-         gen_illegal_exception(dc);
-@@ -1668,8 +1667,7 @@ void gen_intermediate_code(CPUState *cs, TranslationBlock *tb, int *max_insns,
+     /* Decode an instruction */
+-    code = cpu_ldl_code(env, pc);
++    code = cpu_ldl_code(cpu_env(cs), pc);
+     op = get_opcode(code);
  
- void openrisc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- {
--    OpenRISCCPU *cpu = OPENRISC_CPU(cs);
--    CPUOpenRISCState *env = &cpu->env;
-+    CPUOpenRISCState *env = cpu_env(cs);
-     int i;
- 
-     qemu_fprintf(f, "PC=%08x\n", env->pc);
+     if (unlikely(op >= ARRAY_SIZE(i_type_instructions))) {
 -- 
 2.41.0
 
