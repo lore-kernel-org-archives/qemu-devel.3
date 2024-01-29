@@ -4,88 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B04C48285
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A34C4828C
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUTPs-0007mp-KK; Mon, 29 Jan 2024 10:19:20 -0500
+	id 1rUTP5-0006wW-2a; Mon, 29 Jan 2024 10:18:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTPq-0007lA-H0
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:19:18 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUTP4-0006ss-2T
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:18:30 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUTPo-0007Vw-V0
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:19:18 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5102b43035eso3444988e87.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 07:19:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706541555; x=1707146355; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MFN/VSnR85vSlwmoZKq2ZY9d+Yj3Zr7afXCJn+FdH7U=;
- b=ZuckoVuLyhw8hX5WxonFAIZb5MbI/q1oa5w/jpkjMyq3CRGeHEj3RBeO0RriWpWk8c
- C8ZuKghBmuCITAsEL2LT6geDyKHaf3u4yEP5pa8aDl7WBrJNCgxsMrjCM/pLC3wRWZcE
- AiA6n104kHvqySgSSVI9zdR8Tuo7HC1br7bO6oq3cfjU74YWNPvHNw8vGfpiT+Iqvkmx
- XBTOjaFDLz4rW8XXaoUpPd1BZAhgKrEyEAc9P37OP/WJvq8T0N+ZH0aoW359ZukWsT52
- 1kj1deIbD/NnEg8Bbo8Jhu2ciWbz52zDU3ouCFIXDECwFK1jeOMLbgo63nPhWjdCmBwy
- EFOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706541555; x=1707146355;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MFN/VSnR85vSlwmoZKq2ZY9d+Yj3Zr7afXCJn+FdH7U=;
- b=neXCv8WBAJcDTCuuWa8tL7IcQQOFkYuZG0NWpyoiu+/xyTGGffpMjtBJMBQIt9rjxR
- JR8bLv6rYeaKEh4XbonDSZ9rd7cj5U4fep3RHNpkAK5yKGLkugeA6DAskSwNO+UADc/8
- XInjKsMUEcPahFJfpOd4vohIKfS1+mraFELchKzAJNfuWtE2TKUZOuRYH9HcXzJ83IsC
- CfHO0gtH2Og3gjS4FDRvI1D9nbHTBBI6Hcxjxr01ChW86+2vNQZgnPjTHXuhtF8tNpiP
- ieHK40iFKfYfaXr+j7pp8JIWh3JsG7kGppzZO/UKDqox9eHWqFBFssM9MQqMFZH72WHd
- MgbA==
-X-Gm-Message-State: AOJu0YzIWlDKq7YUiI/XY0TUoWgaYEcDoxbFNLhwl8m5mym/pmp62EkH
- 4NgmiqW/te6uYJT1QNTOCPvSthGaxDX4+d/PEa5MnpFxsxtZxRiclgoUHRw6lQuDAv2qUzS37QP
- 7
-X-Google-Smtp-Source: AGHT+IFVV0TKqCJNa6I7lj2Gk/1zL0MV8sp6Y7+TPcMXX9GAGujPpkTpZ0hVA3T0rlkLk4WnRAFzGQ==
-X-Received: by 2002:a05:6512:2209:b0:50e:4098:3798 with SMTP id
- h9-20020a056512220900b0050e40983798mr4357536lfu.60.1706541555036; 
- Mon, 29 Jan 2024 07:19:15 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.219.39])
- by smtp.gmail.com with ESMTPSA id
- t20-20020a05600c199400b0040ef702a338sm3288794wmq.25.2024.01.29.07.19.13
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jan 2024 07:19:14 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, Hao Wu <wuhaotsh@google.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Rob Herring <robh@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 7/9] hw/arm/npcm7xx_boards: Simplify setting
- MachineClass::valid_cpu_types[]
-Date: Mon, 29 Jan 2024 16:18:26 +0100
-Message-ID: <20240129151828.59544-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240129151828.59544-1-philmd@linaro.org>
-References: <20240129151828.59544-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUTP2-0007P7-Ak
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:18:29 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 915B71FCF8;
+ Mon, 29 Jan 2024 15:18:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706541506; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+pRyooto8EQZj7xf5iNEWu1lZblYdYHJdC6Z8mmOfT8=;
+ b=EE2ICQHlm9PbRp3EMdulWOf/9x2fMI4FcsFqx2FUE0wQrVinjC6iZNDzeJN7Yr4s8YJR66
+ /7XibhI1YuY+x331cRRr7uZ5E9k/pvQXgYcw2slXWkRtrbaEIM8vBdcZG176VcqWtGflrp
+ TPRdXT+ntBHAleq/uqXKvMemU7DO9+4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706541506;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+pRyooto8EQZj7xf5iNEWu1lZblYdYHJdC6Z8mmOfT8=;
+ b=ey3qdZXA1va+edHiuMQolCdCOE2Lma8db1X0yJwpk/0rmtoU0a9xWwCZEd7vumTF+kQNME
+ cg0EvUiCIFC0HRDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706541506; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+pRyooto8EQZj7xf5iNEWu1lZblYdYHJdC6Z8mmOfT8=;
+ b=EE2ICQHlm9PbRp3EMdulWOf/9x2fMI4FcsFqx2FUE0wQrVinjC6iZNDzeJN7Yr4s8YJR66
+ /7XibhI1YuY+x331cRRr7uZ5E9k/pvQXgYcw2slXWkRtrbaEIM8vBdcZG176VcqWtGflrp
+ TPRdXT+ntBHAleq/uqXKvMemU7DO9+4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706541506;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+pRyooto8EQZj7xf5iNEWu1lZblYdYHJdC6Z8mmOfT8=;
+ b=ey3qdZXA1va+edHiuMQolCdCOE2Lma8db1X0yJwpk/0rmtoU0a9xWwCZEd7vumTF+kQNME
+ cg0EvUiCIFC0HRDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1CDB413647;
+ Mon, 29 Jan 2024 15:18:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ODMjNcHBt2V5QgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 29 Jan 2024 15:18:25 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] migration/docs: Explain two solutions for VMSD
+ compatibility
+In-Reply-To: <CAFEAcA_uzJKuvY=iTnbG-xAjLn0zHRevzvjoyhjqqiBThveO3Q@mail.gmail.com>
+References: <20240122070600.16681-1-peterx@redhat.com>
+ <87plxtgyxx.fsf@suse.de> <Za81vJgTjFSGT56r@x1n> <87frygdzjl.fsf@suse.de>
+ <CAFEAcA_uzJKuvY=iTnbG-xAjLn0zHRevzvjoyhjqqiBThveO3Q@mail.gmail.com>
+Date: Mon, 29 Jan 2024 12:18:23 -0300
+Message-ID: <87a5oodv7k.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=EE2ICQHl;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ey3qdZXA
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BAYES_HAM(-3.00)[100.00%];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 915B71FCF8
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,43 +122,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The npcm7xx Soc is created with a Cortex-A9 core, see in
-hw/arm/npcm7xx.c:
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-  static void npcm7xx_init(Object *obj)
-  {
-      NPCM7xxState *s = NPCM7XX(obj);
+> On Mon, 29 Jan 2024 at 13:45, Fabiano Rosas <farosas@suse.de> wrote:
+>>
+>> Peter Xu <peterx@redhat.com> writes:
+>> > Fundamentally, IMHO it's because QEMU as a project is used both in
+>> > enterprise and personal emulations.  I think it might be too strict to
+>> > always request backward migration capability if we know some device / arch
+>> > is only used for personal, or educational, purposes.
+>>
+>> Do we need migration support tiers? =)
+>
+> We already have them. The tier list is:
 
-      for (int i = 0; i < NPCM7XX_MAX_NUM_CPUS; i++) {
-          object_initialize_child(obj, "cpu[*]", &s->cpu[i],
-                                  ARM_CPU_TYPE_NAME("cortex-a9"));
-      }
+Ah that's good. Thanks, Peter.
 
-The MachineClass::default_cpu_type field is ignored: delete it.
+>
+>  * if the machine type is a versioned one, then we maintain
+>    forwards compatibility for the versioned machine
+>    (i.e. can migrate machine-X.Y of QEMU A.B to the
+>     machine-X.Y of a QEMU C.D which is newer than A.B).
+>  * if the machine type is not versioned, then we do not make
+>    any guarantee of migration compatibility across QEMU versions.
+>    Instead the aim is that if the user tries it it either works
+>    or gives an error message that the migration failed
+>    (e.g. because the version field in a VMState struct was bumped).
+>    Migration breaks are generally called out in commit messages.
+>    Often for machines in this tier the user is really interested
+>    in state-save snapshots for debugging purposes, rather than
+>    in a true cross-host-machine migration.
+>  * some machine types do not support migration/savevm/loadvm
+>    at all, because of devices missing VMState structs. This
+>    is not desirable, and for new machine models we try to
+>    ensure that they have vmstate structs as part of the minimum
+>    quality bar, but it is true of some legacy machine types.
 
-Use the common code introduced in commit c9cf636d48 ("machine: Add
-a valid_cpu_types property") to check for valid CPU type at the
-board level.
+Hm, does this mean in some cases we're requiring new models to have
+vmstate only to never look at them again? Or do you mean some versioned
+machines are currently broken?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/npcm7xx_boards.c | 1 -
- 1 file changed, 1 deletion(-)
+> AIUI we, in the sense of the upstream project, do not support
+> backwards migration compatibility (i.e. migrating a machine-X.Y
+> from QEMU C.D to QEMU A.B where A.B is an older version than C.D);
+> though some downstreams (read: RedHat) may do so.
 
-diff --git a/hw/arm/npcm7xx_boards.c b/hw/arm/npcm7xx_boards.c
-index 2999b8b96d..e229efb447 100644
---- a/hw/arm/npcm7xx_boards.c
-+++ b/hw/arm/npcm7xx_boards.c
-@@ -465,7 +465,6 @@ static void npcm7xx_machine_class_init(ObjectClass *oc, void *data)
-     mc->no_cdrom = 1;
-     mc->no_parallel = 1;
-     mc->default_ram_id = "ram";
--    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a9");
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--- 
-2.41.0
+Here we still need to make a distinction between migration code and
+vmstate. If we simply ignore backwards migration then it might become
+impossible for downstreams to provide it without major
+modifications. But luckily this is the easy case.
 
+>
+> thanks
+> -- PMM
 
