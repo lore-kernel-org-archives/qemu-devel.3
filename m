@@ -4,94 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31096C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 12:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E4FC47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 12:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUQgJ-00031T-Cc; Mon, 29 Jan 2024 07:24:07 -0500
+	id 1rUQyC-0007Eh-0o; Mon, 29 Jan 2024 07:42:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUQgF-0002tE-CR
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 07:24:03 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUQyA-0007EH-1h
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 07:42:34 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUQgD-0006Ap-G7
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 07:24:03 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUQy6-0002OJ-Ja
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 07:42:33 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 075AB1FCF7;
- Mon, 29 Jan 2024 12:23:58 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id BC28222037;
+ Mon, 29 Jan 2024 12:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706531038; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706532147; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WNjg0LVkC3lDbwt8241g+gFXDfd4wsfs9xmN5JR4ouI=;
- b=b/BTbBzc3n53yCYG2TzUJWQMOtpqeOcrtfvCBDOU6mUQrGn3JaBdKdYfrxW7bQ8ut+/bKI
- JRLHJLJuNmfDwRpg+kFZbmaJoTUwWXWj30aUBLEJeRwk8hW8W76nspjblMdsEz8Ytvoi2Z
- 3cBt/Xu7HxFZGJ4/42qyKsTtpyDML78=
+ bh=lbswseE10oqpvkR5U48dAkyoGQXkKZGwchA96CnOx0U=;
+ b=ktllmi0L4ABUkpuGI6Fc1nAyiJ+vmOd1ZR6wviaQq/E47y1DJfR/ZcZ1NAoDzLpQhE1V7d
+ 76VuUjJi+psZSLT1inbZVVCv1WZXy1VY92dk+Kk6p/ASvkZ52aWPjX78/F/dNf9mbLruzx
+ kDJaCJr1Mnr9KdVAMeA2dpmb8/zSY+A=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706531038;
+ s=susede2_ed25519; t=1706532147;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WNjg0LVkC3lDbwt8241g+gFXDfd4wsfs9xmN5JR4ouI=;
- b=JLwlDRRMw/+RkEDTOCa38RSP42JnwaZRbDEML/3l6jAE1y6IhUuraEpS7naccJw9ReTiKC
- +qe8gByxR1ChjyDg==
+ bh=lbswseE10oqpvkR5U48dAkyoGQXkKZGwchA96CnOx0U=;
+ b=a6GbjhijhtUcWVuBjyb2iQAzLkORzWiMIEwY4UJJuXthfO6EUZx1Ljc1Y/YbJsI1NWlNFu
+ gH79QbAQIDGmkZCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706531038; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706532147; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WNjg0LVkC3lDbwt8241g+gFXDfd4wsfs9xmN5JR4ouI=;
- b=b/BTbBzc3n53yCYG2TzUJWQMOtpqeOcrtfvCBDOU6mUQrGn3JaBdKdYfrxW7bQ8ut+/bKI
- JRLHJLJuNmfDwRpg+kFZbmaJoTUwWXWj30aUBLEJeRwk8hW8W76nspjblMdsEz8Ytvoi2Z
- 3cBt/Xu7HxFZGJ4/42qyKsTtpyDML78=
+ bh=lbswseE10oqpvkR5U48dAkyoGQXkKZGwchA96CnOx0U=;
+ b=ktllmi0L4ABUkpuGI6Fc1nAyiJ+vmOd1ZR6wviaQq/E47y1DJfR/ZcZ1NAoDzLpQhE1V7d
+ 76VuUjJi+psZSLT1inbZVVCv1WZXy1VY92dk+Kk6p/ASvkZ52aWPjX78/F/dNf9mbLruzx
+ kDJaCJr1Mnr9KdVAMeA2dpmb8/zSY+A=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706531038;
+ s=susede2_ed25519; t=1706532147;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WNjg0LVkC3lDbwt8241g+gFXDfd4wsfs9xmN5JR4ouI=;
- b=JLwlDRRMw/+RkEDTOCa38RSP42JnwaZRbDEML/3l6jAE1y6IhUuraEpS7naccJw9ReTiKC
- +qe8gByxR1ChjyDg==
+ bh=lbswseE10oqpvkR5U48dAkyoGQXkKZGwchA96CnOx0U=;
+ b=a6GbjhijhtUcWVuBjyb2iQAzLkORzWiMIEwY4UJJuXthfO6EUZx1Ljc1Y/YbJsI1NWlNFu
+ gH79QbAQIDGmkZCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 87F5012FF7;
- Mon, 29 Jan 2024 12:23:57 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3E05F12FF7;
+ Mon, 29 Jan 2024 12:42:27 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wBf1E92Yt2XzGAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 29 Jan 2024 12:23:57 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Tcb5ATOdt2UnHQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 29 Jan 2024 12:42:27 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 04/17] migration/multifd: Set p->running = true in the
- right place
-In-Reply-To: <Zbcm1nXzQ_r0eGG0@x1n>
-References: <20240125162528.7552-1-avihaih@nvidia.com>
- <20240125162528.7552-5-avihaih@nvidia.com> <87a5otw2ps.fsf@suse.de>
- <78fa90f7-d062-4f23-8035-841a0ffef8af@nvidia.com> <Zbcm1nXzQ_r0eGG0@x1n>
-Date: Mon, 29 Jan 2024 09:23:55 -0300
-Message-ID: <87plxke3ac.fsf@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Hao Xiang <hao.xiang@bytedance.com>, Yuan Liu
+ <yuan1.liu@intel.com>, Bryan Zhang <bryan.zhang@bytedance.com>, Avihai
+ Horon <avihaih@nvidia.com>
+Subject: Re: [PATCH 1/5] migration/multifd: Separate compression ops from
+ non-compression
+In-Reply-To: <ZbdFzFxysMg274Rw@x1n>
+References: <20240126221943.26628-1-farosas@suse.de>
+ <20240126221943.26628-2-farosas@suse.de> <ZbdFzFxysMg274Rw@x1n>
+Date: Mon, 29 Jan 2024 09:42:24 -0300
+Message-ID: <87mssoe2fj.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ktllmi0L;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=a6Gbjhij
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[nvidia.com:email];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ NEURAL_HAM_SHORT(-0.20)[-0.999];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+X-Rspamd-Queue-Id: BC28222037
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -116,70 +125,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> On Sun, Jan 28, 2024 at 05:43:52PM +0200, Avihai Horon wrote:
->> 
->> On 25/01/2024 22:57, Fabiano Rosas wrote:
->> > External email: Use caution opening links or attachments
->> > 
->> > 
->> > Avihai Horon <avihaih@nvidia.com> writes:
->> > 
->> > > The commit in the fixes line moved multifd thread creation to a
->> > > different location, but forgot to move the p->running = true assignment
->> > > as well. Thus, p->running is set to true before multifd thread is
->> > > actually created.
->> > > 
->> > > p->running is used in multifd_save_cleanup() to decide whether to join
->> > > the multifd thread or not.
->> > > 
->> > > With TLS, an error in multifd_tls_channel_connect() can lead to a
->> > > segmentation fault because p->running is true but p->thread is never
->> > > initialized, so multifd_save_cleanup() tries to join an uninitialized
->> > > thread.
->> > > 
->> > > Fix it by moving p->running = true assignment right after multifd thread
->> > > creation. Also move qio_channel_set_delay() to there, as this is where
->> > > it used to be originally.
->> > > 
->> > > Fixes: 29647140157a ("migration/tls: add support for multifd tls-handshake")
->> > > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
->> > Just for context, I haven't looked at this patch yet, but we were
->> > planning to remove p->running altogether:
->> > 
->> > https://lore.kernel.org/r/20231110200241.20679-1-farosas@suse.de
->> 
->> Thanks for putting me in the picture.
->> I see that there has been a discussion about the multifd creation/treadown
->> flow.
->> In light of this discussion, I can already see a few problems in my series
->> that I didn't notice before (such as the TLS handshake thread leak).
->> The thread you mentioned here and some of my patches point out some problems
->> in multifd creation/treardown. I guess we can discuss it and see what's the
->> best way to solve them.
->> 
->> Regarding this patch, your solution indeed solves the bug that this patch
->> addresses, so maybe this could be dropped (or only noted in your patch).
->> 
->> Maybe I should also put you (and Peter) in context for this whole series --
->> I am writing it as preparation for adding a separate migration channel for
->> VFIO device migration, so VFIO devices could be migrated in parallel.
->> So this series tries to lay down some foundations to facilitate it.
+> On Fri, Jan 26, 2024 at 07:19:39PM -0300, Fabiano Rosas wrote:
+>> +static MultiFDMethods multifd_socket_ops = {
+>> +    .send_setup = multifd_socket_send_setup,
+>> +    .send_cleanup = multifd_socket_send_cleanup,
+>> +    .send_prepare = multifd_socket_send_prepare,
 >
-> Avihai, is the throughput the only reason that VFIO would like to have a
-> separate channel?
+> Here it's named with "socket", however not all socket-based multifd
+> migrations will go into this route, e.g., when zstd compression enabled it
+> will not go via this route, even if zstd also uses sockets as transport.
+> From that pov, this may be slightly confusing.  Maybe it suites more to be
+> called "socket_plain" / "socket_no_comp"?
 >
-> I'm wondering if we can also use multifd threads to send vfio data at some
-> point.  Now multifd indeed is closely bound to ram pages but maybe it'll
-> change in the near future to take any load?
+> One step back, I had a feeling that the current proposal tried to provide a
+> single ->ops to cover a model where we may need more than one layer of
+> abstraction.
+>
+> Since it might be helpful to allow multifd send arbitrary data (e.g. for
+> VFIO?  Avihai might have an answer there..), I'll try to even consider that
+> into the picture.
+>
+> Let's consider the ultimate goal of multifd, where the simplest model could
+> look like this in my mind (I'm only discussing sender side, but it'll be
+> similar on recv side):
+>
+>                prepare()           send()
+>   Input   ----------------> IOVs ------------> iochannels
+>
+> [I used prepare/send, but please think them as generic terms, not 100%
+>  aligned with what we have with existing multifd_ops, or what you proposed
+>  later]
+>
+> Here what are sure, IMHO, is:
+>
+>   - We always can have some input data to dump; I didn't use "guest pages"
+>     just to say we may allow arbitrary data.  For any multifd user that
+>     would like to dump arbitrary data, they can already provide IOVs, so
+>     here input can be either "MultiFDPages_t" or "IOVs".
 
-We're not far away from it IMO. We just need to gradually kick the pages
-concept out of multifd.
+Or anything else, since the client code also has control over send(),
+no? So it could give multifd a pointer to some memory and then use
+send() to do whatever it wants with it. Multifd is just providing worker
+threads and "scheduling".
 
-Again, for context, I have played with this recently:
+Also note that multifd clients currently _do not_ provide IOVs. They
+merely provide data to multifd (p->pages) and then convert that data
+into IOVs at prepare(). This is different, because multifd currently
+holds that p->pages (and turns that into p->normal), which means the
+client code does not need to store the data across iterations (in the
+case of RAM which is iterative).
 
-https://gitlab.com/farosas/qemu/-/commits/multifd-packet-cleanups?ref_type=heads
+>
+>   - We may always want to have IOVs to represent the buffers at some point,
+>     no matter what the input it
+>
+>   - We always flush the IOVs to iochannels; basically I want to say we can
+>     always assume the last layer is connecting to QIOChannel APIs, while I
+>     don't think there's outliers here so far, even if the send() may differ.
+>
+> Then _maybe_ it's clearer that we can have two layers of OPs?
+>
+>   - prepare(): it tells how the "input" will be converted into a scatter
+>     gatter list of buffers.  All compression methods fall into this afaiu.
+>     This has _nothing_ to do on how the buffers will be sent.  For
+>     arbitrary-typed input, this can already be a no-op since the IOVs
+>     provided can already be passed over to send().
+>
+>   - send(): how to dump the IOVs to the iochannels.  AFAIU this is motly
+>     only useful for fixed-ram migrations.
+>
+> Would this be clearer, rather than keep using a single multifd_ops?
 
-I'd be happy with any solution that turns that p->pages into something
-opaque that multifd has no knowledge about.
-
+Sorry, I don't see how what you describe is any different than what we
+have. And I don't see how any of this would mean more than one
+multifd_ops. We already have multifd_ops->prepare() and
+multifd_ops->send(). What am I missing?
 
