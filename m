@@ -4,96 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B93C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA7DC47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rURpg-0001wy-H0; Mon, 29 Jan 2024 08:37:52 -0500
+	id 1rURq5-0002UJ-AD; Mon, 29 Jan 2024 08:38:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rURpY-0001m9-W9; Mon, 29 Jan 2024 08:37:46 -0500
-Received: from wout3-smtp.messagingengine.com ([64.147.123.19])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rURpu-0002GS-9w
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:38:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rURpW-0000iN-EO; Mon, 29 Jan 2024 08:37:44 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.west.internal (Postfix) with ESMTP id 9CF0032004AE;
- Mon, 29 Jan 2024 08:37:35 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Mon, 29 Jan 2024 08:37:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1706535455; x=
- 1706621855; bh=7G/q5eftMZJbKWoTuLpbhCIecgF2pjqJrVq5ekVhyeY=; b=U
- dVcise4Xd9emKdDy4JPApEc2rNke3DqOPwWJQMv+Yt3TdFHxMuEmuGJaVbaRnHCM
- seO1zgMs60p0qOgi20ihOUY0PRJP2ChG074WyFsCO+P4Ahl8oL12PJoWKCHPgTA7
- Qc3etctd30MRLoSNALeWPsPKvNluWJDoeQ/FfT/xeqqau2pd5C9TdwmMKxIPZK/y
- S6ggYo28vrWIsRUzwKuOXftHxN+MKec7zNyRdul2FpHMJszLlOQvKuEKE9q0mH2L
- JYUK9gpFv7pX23oxdBOGvBBpCEc1bRGJ22VALra9rjBnQM5Z2wlpm80ngTIkySQ5
- f9W/jn66O5fYDue/h9GJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1706535455; x=1706621855; bh=7G/q5eftMZJbKWoTuLpbhCIecgF2
- pjqJrVq5ekVhyeY=; b=BVECDSJ5uA7mGMHx1HYAeHEXMZZIuAHkwtTqyIZaw8aE
- YyIwLaoIUOszdnNamxHVTf3SaG27nYfJu/CZuJN/BuDOnEDdhrmZr2c+MfP+njkP
- vO3VobmPKiHbxcZ472cxhLNNL0gpaYr8fX99rIYQqPVqZPGB3NWNA8DjKhsPS3Y3
- g9XFWNus0rK7viPcYpXwaBzJnutGqmv5bXZz6ZSthSB8nSWSzW+8rsrFPX7k0aVr
- Z0zfczfUzuTeKk9w/SEgPnMDRkf1dJ/4L7KUHqWpZaa+ewBavlChXXunE1HUbZ+1
- kM9v4VWdM0YBnpxw3/7t3SdIqYzTMxpUV50M3UDOKQ==
-X-ME-Sender: <xms:Hqq3ZUHEefUIxI5BpSg3RAIA5D4XPoUSaDm030e29HAWEYOQ_23_Gg>
- <xme:Hqq3ZdURDX28OOQHwJY7_PaFLT4RtSkljKQw8_23DsctYxhaU3cpOpNQaEREKdF3_
- ZaFL6QG0B5wRTslHPA>
-X-ME-Received: <xmr:Hqq3ZeJNUhpT3ZbYwJdwJSGUYdpizj0pmeQoJr5xOmpvhXi6_1jXhUVbAoTsmw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtgedggeegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghu
- shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
- htvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffff
- jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
- htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:Hqq3ZWGhPzQJ4RKQnWdCVTp4E37hbEKViPT-KymUcGQGWIK1fGqBGg>
- <xmx:Hqq3ZaWgxIkuwEvWHHTKeP7ptOE9BojCGovQPFWiIW28pQjaG1kLpA>
- <xmx:Hqq3ZZNADwACx8ShDiXjHpRy2EywvM6JQ4-v7R72acJN7yURCgcMhQ>
- <xmx:H6q3ZepymJXizJrN-ZcmPwIP3m8--6roR42nQ-qCWMVYX48pZRFj0Q>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jan 2024 08:37:33 -0500 (EST)
-Date: Mon, 29 Jan 2024 14:37:28 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Damien Hedde <dhedde@kalrayinc.com>
-Cc: Hannes Reinecke <hare@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- qemu-devel <qemu-devel@nongnu.org>, Titouan Huard <thuard@kalrayinc.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: NVME hotplug support ?
-Message-ID: <ZbeqGMdCw2QlHccd@cormorant.local>
-References: <PR2P264MB0861AAF89D0B361A33710261D1742@PR2P264MB0861.FRAP264.PROD.OUTLOOK.COM>
- <499096d7-1b4d-471b-9abf-5b6f72bb7990@suse.de>
- <de06e322-37e9-4788-97a2-c9f16a68cd2e@linaro.org>
- <07625f96-4ca1-479f-b6b9-69c2a191de76@suse.de>
- <7e35528b-cc66-d2f1-e3e3-7dece5620c52@kalrayinc.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rURpq-0000lX-1W
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:38:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706535481;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/wLNrSOPwnwYcl0GYuXoPrwMHs3/ciQ0o966uZkfutc=;
+ b=TWY9lamWDgQMYaMCtb6Kd7iIHTmmYNrtHF7SWDIx1ww93ja03DG4JaqZCCcsH093+cE7FA
+ MnUdmOgIBMQ2Ub1OKUlwTCtxpSfpdDt3oG2tJtqKLsy5mvhndEGGd+qJgpuYC20vObSqBI
+ iVX3N75UvMVKvoGaN1asnslZ+67TZKI=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-54-_Xv7N__lMXq_0bLdFZMCnA-1; Mon, 29 Jan 2024 08:37:59 -0500
+X-MC-Unique: _Xv7N__lMXq_0bLdFZMCnA-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a2bc65005feso210045666b.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:37:59 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706535477; x=1707140277;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/wLNrSOPwnwYcl0GYuXoPrwMHs3/ciQ0o966uZkfutc=;
+ b=YJux8OayHzt0IbRBmDe0ydOGOiJwAaD4VSgCSCdcAbKxtGBvvO3q7OSb/QVsQTdE1d
+ zlfgY9tGI7F+po48iLiXPlG4CcJauxm1WxhdKTqtUbFrw7qvPEHJyHC00wwJaho7fB3x
+ NxFh7ziKa3rCAGwaTTRQQpAwDo/KX9UwBcMj0fjMBxFeOSPxYKwph+iq/EGNg6PSTE16
+ df5w3J+y6FRgs858Y/DyW9Qn9ZhwWwEZVILj4KAdrJ/Mx36/kthu7OFUSrv6xd7Hpuxm
+ ExE1gPeJ9rOne98SUdj2NztVbh0QwLKpS18v7TDUJIzYr7fPNw0HdvDo8XBEvHz0FGA8
+ smLQ==
+X-Gm-Message-State: AOJu0YzFHh/AC6CFFIK+oWxQwk36BkLzvKUZqUS7zOU5orKd44CHZRUD
+ Lsfp7yvyLnh+usd+m/nsPaDMS7cQjOD/+wqGHpR1EBzaVvExFJffdXgjfuqkpW/DIuYSp8CPJWH
+ j5SRsEr+XfYBVm8nX7gY185+38HB3LRaDSswjZgAa3HB7ty2omYdvvfg4Qmml6Dltqx+iW/TPMJ
+ Dz3rao5k+Hu8tN5VIGQYNnloGWVbgGsNumhLLH
+X-Received: by 2002:a17:906:f9c3:b0:a31:f7e:8a53 with SMTP id
+ lj3-20020a170906f9c300b00a310f7e8a53mr4631399ejb.26.1706535477451; 
+ Mon, 29 Jan 2024 05:37:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEdtblCbKuN4Wbe3IFW8vItLmP8PZX7ql7ctXhXJNyF9OCgjxRcfC7yvRbkKdjzGayyF/QEiQ==
+X-Received: by 2002:a17:906:f9c3:b0:a31:f7e:8a53 with SMTP id
+ lj3-20020a170906f9c300b00a310f7e8a53mr4631385ejb.26.1706535477038; 
+ Mon, 29 Jan 2024 05:37:57 -0800 (PST)
+Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ by smtp.gmail.com with ESMTPSA id
+ l5-20020a1709062a8500b00a35922ecbccsm1691638eje.203.2024.01.29.05.37.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jan 2024 05:37:56 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH 2/4] isa: extract FDC37M81X to a separate file
+Date: Mon, 29 Jan 2024 14:37:46 +0100
+Message-ID: <20240129133751.1106716-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240129133751.1106716-1-pbonzini@redhat.com>
+References: <20240129133751.1106716-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="lNgLd6U+E1lVc+C+"
-Content-Disposition: inline
-In-Reply-To: <7e35528b-cc66-d2f1-e3e3-7dece5620c52@kalrayinc.com>
-Received-SPF: pass client-ip=64.147.123.19; envelope-from=its@irrelevant.dk;
- helo=wout3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,158 +103,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+isa-superio.c currently defines a SuperIO chip that depends on
+CONFIG_IDE_ISA, but not all users of isa-superio.c depend on that
+symbol.  Extract the chip to a separate file so that there is an
+obvious place to select IDE_ISA.
 
---lNgLd6U+E1lVc+C+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/isa/fdc37m81x-superio.c | 37 +++++++++++++++++++++++++++++++++++++
+ hw/isa/isa-superio.c       | 19 -------------------
+ hw/isa/Kconfig             |  5 +++++
+ hw/isa/meson.build         |  1 +
+ hw/mips/Kconfig            |  2 +-
+ 5 files changed, 44 insertions(+), 20 deletions(-)
+ create mode 100644 hw/isa/fdc37m81x-superio.c
 
-On Jan 29 14:13, Damien Hedde wrote:
->=20
->=20
-> On 1/24/24 08:47, Hannes Reinecke wrote:
-> > On 1/24/24 07:52, Philippe Mathieu-Daud=C3=A9 wrote:
-> > > Hi Hannes,
-> > >=20
-> > > [+Markus as QOM/QDev rubber duck]
-> > >=20
-> > > On 23/1/24 13:40, Hannes Reinecke wrote:
-> > > > On 1/23/24 11:59, Damien Hedde wrote:
-> > > > > Hi all,
-> > > > >=20
-> > > > > We are currently looking into hotplugging nvme devices and
-> > > > > it is currently not possible:
-> > > > > When nvme was introduced 2 years ago, the feature was disabled.
-> > > > > > commit cc6fb6bc506e6c47ed604fcb7b7413dff0b7d845
-> > > > > > Author: Klaus Jensen
-> > > > > > Date:=C2=A0=C2=A0 Tue Jul 6 10:48:40 2021 +0200
-> > > > > >=20
-> > > > > > =C2=A0=C2=A0=C2=A0 hw/nvme: mark nvme-subsys non-hotpluggable
-> > > > > > =C2=A0=C2=A0=C2=A0 We currently lack the infrastructure to hand=
-le
-> > > > > > subsystem hotplugging, so
-> > > > > > =C2=A0=C2=A0=C2=A0 disable it.
-> > > > >=20
-> > > > > Do someone know what's lacking or anyone have some tips/idea
-> > > > > of what we should develop to add the support ?
-> > > > >=20
-> > > > Problem is that the object model is messed up. In qemu
-> > > > namespaces are attached to controllers, which in turn are
-> > > > children of the PCI device.
-> > > > There are subsystems, but these just reference the controller.
-> > > >=20
-> > > > So if you hotunplug the PCI device you detach/destroy the
-> > > > controller and detach the namespaces from the controller.
-> > > > But if you hotplug the PCI device again the NVMe controller will
-> > > > be attached to the PCI device, but the namespace are still be
-> > > > detached.
-> > > >=20
-> > > > Klaus said he was going to fix that, and I dimly remember some patc=
-hes
-> > > > floating around. But apparently it never went anywhere.
-> > > >=20
-> > > > Fundamental problem is that the NVMe hierarchy as per spec is
-> > > > incompatible with the qemu object model; qemu requires a strict
-> > > > tree model where every object has exactly _one_ parent.
-> > >=20
-> > > The modelling problem is not clear to me.
-> > > Do you have an example of how the NVMe hierarchy should be?
-> > >=20
-> > Sure.
-> >=20
-> > As per NVMe spec we have this hierarchy:
-> >=20
-> >  =C2=A0=C2=A0=C2=A0=C2=A0 --->=C2=A0 subsys ---
-> >  =C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |
-> >  =C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 V
-> > controller=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 namespaces
-> >=20
-> > There can be several controllers, and several
-> > namespaces.
-> > The initiator (ie the linux 'nvme' driver) connects
-> > to a controller, queries the subsystem for the attached
-> > namespaces, and presents each namespace as a block device.
-> >=20
-> > For Qemu we have the problem that every device _must_ be
-> > a direct descendant of the parent (expressed by the fact
-> > that each 'parent' object is embedded in the device object).
-> >=20
-> > So if we were to present a NVMe PCI device, the controller
-> > must be derived from the PCI device:
-> >=20
-> > pci -> controller
-> >=20
-> > but now we have to express the NVMe hierarchy, too:
-> >=20
-> > pci -> ctrl1 -> subsys1 -> namespace1
-> >=20
-> > which actually works.
-> > We can easily attach several namespaces:
-> >=20
-> > pci -> ctrl1 ->subsys1 -> namespace2
-> >=20
-> > For a single controller and a single subsystem.
-> > However, as mentioned above, there can be _several_
-> > controllers attached to the same subsystem.
-> > So we can express the second controller:
-> >=20
-> > pci -> ctrl2
-> >=20
-> > but we cannot attach the controller to 'subsys1'
-> > as then 'subsys1' would need to be derived from
-> > 'ctrl2', and not (as it is now) from 'ctrl1'.
-> >=20
-> > The most logical step would be to have 'subsystems'
-> > their own entity, independent of any controllers.
-> > But then the block devices (which are derived from
-> > the namespaces) could not be traced back
-> > to the PCI device, and a PCI hotplug would not
-> > 'automatically' disconnect the nvme block devices.
-> >=20
-> > Plus the subsystem would be independent from the NVMe
-> > PCI devices, so you could have a subsystem with
-> > no controllers attached. And one would wonder who
-> > should be responsible for cleaning up that.
-> >=20
->=20
-> Thanks for the details !
->=20
-> My use case is the simple one with no nvme subsystem/namespaces:
-> - hotplug a pci nvme device (nvme controller) as in the following CLI (wh=
-ich
-> automatically put the drive into a default namespace)
->=20
-> ./qemu-system-aarch64 -nographic -M virt \
->    -drive file=3Dnvme0.disk,if=3Dnone,id=3Dnvme-drive0 \
->    -device nvme,serial=3Dnvme0,id=3Dnvmedev0,drive=3Dnvme-drive0
->=20
+diff --git a/hw/isa/fdc37m81x-superio.c b/hw/isa/fdc37m81x-superio.c
+new file mode 100644
+index 00000000000..5ad769b69e8
+--- /dev/null
++++ b/hw/isa/fdc37m81x-superio.c
+@@ -0,0 +1,37 @@
++/*
++ * Generic ISA Super I/O
++ *
++ * Copyright (c) 2018 Philippe Mathieu-Daudé
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/isa/superio.h"
++
++/* SMS FDC37M817 Super I/O */
++static void fdc37m81x_class_init(ObjectClass *klass, void *data)
++{
++    ISASuperIOClass *sc = ISA_SUPERIO_CLASS(klass);
++
++    sc->serial.count = 2; /* NS16C550A */
++    sc->parallel.count = 1;
++    sc->floppy.count = 1; /* SMSC 82077AA Compatible */
++    sc->ide.count = 0;
++}
++
++static const TypeInfo fdc37m81x_type_info = {
++    .name          = TYPE_FDC37M81X_SUPERIO,
++    .parent        = TYPE_ISA_SUPERIO,
++    .instance_size = sizeof(ISASuperIODevice),
++    .class_init    = fdc37m81x_class_init,
++};
++
++static void fdc37m81x_register_types(void)
++{
++    type_register_static(&fdc37m81x_type_info);
++}
++
++type_init(fdc37m81x_register_types)
+diff --git a/hw/isa/isa-superio.c b/hw/isa/isa-superio.c
+index 7dbfc374da3..80e0c34652e 100644
+--- a/hw/isa/isa-superio.c
++++ b/hw/isa/isa-superio.c
+@@ -187,28 +187,9 @@ static const TypeInfo isa_superio_type_info = {
+     .class_init = isa_superio_class_init,
+ };
+ 
+-/* SMS FDC37M817 Super I/O */
+-static void fdc37m81x_class_init(ObjectClass *klass, void *data)
+-{
+-    ISASuperIOClass *sc = ISA_SUPERIO_CLASS(klass);
+-
+-    sc->serial.count = 2; /* NS16C550A */
+-    sc->parallel.count = 1;
+-    sc->floppy.count = 1; /* SMSC 82077AA Compatible */
+-    sc->ide.count = 0;
+-}
+-
+-static const TypeInfo fdc37m81x_type_info = {
+-    .name          = TYPE_FDC37M81X_SUPERIO,
+-    .parent        = TYPE_ISA_SUPERIO,
+-    .instance_size = sizeof(ISASuperIODevice),
+-    .class_init    = fdc37m81x_class_init,
+-};
+-
+ static void isa_superio_register_types(void)
+ {
+     type_register_static(&isa_superio_type_info);
+-    type_register_static(&fdc37m81x_type_info);
+ }
+ 
+ type_init(isa_superio_register_types)
+diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
+index 7884179d08b..af856af052d 100644
+--- a/hw/isa/Kconfig
++++ b/hw/isa/Kconfig
+@@ -23,6 +23,11 @@ config ISA_SUPERIO
+     # Some users of ISA_SUPERIO do not use it
+     #select IDE_ISA
+ 
++config FDC37M81X
++    bool
++    select ISA_BUS
++    select IDE_ISA
++
+ config PC87312
+     bool
+     select ISA_SUPERIO
+diff --git a/hw/isa/meson.build b/hw/isa/meson.build
+index 2ab99ce0c6b..f650b395071 100644
+--- a/hw/isa/meson.build
++++ b/hw/isa/meson.build
+@@ -4,6 +4,7 @@ system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('isa-bus.c'))
+ system_ss.add(when: 'CONFIG_ISA_SUPERIO', if_true: files('isa-superio.c'))
+ system_ss.add(when: 'CONFIG_PC87312', if_true: files('pc87312.c'))
+ system_ss.add(when: 'CONFIG_PIIX', if_true: files('piix.c'))
++system_ss.add(when: 'CONFIG_FDC37M81X', if_true: files('fdc37m81x-superio.c'))
+ system_ss.add(when: 'CONFIG_SMC37C669', if_true: files('smc37c669-superio.c'))
+ system_ss.add(when: 'CONFIG_VT82C686', if_true: files('vt82c686.c'))
+ 
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index ab61af209a0..94b969c21db 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -1,7 +1,7 @@
+ config MALTA
+     bool
++    select FDC37M81X
+     select GT64120
+-    select ISA_SUPERIO
+     select PIIX
+ 
+ config MIPSSIM
+-- 
+2.43.0
 
-AFAIK, you just need a pci root port to plug the device into.
-
-  -drive file=3Dnvme0.disk,if=3Dnone,id=3Dnvme-drive0 \
-  -device "pcie-root-port,id=3Dpcie_root_port0,chassis=3D1,slot=3D0" \
-  -device nvme,serial=3Dnvme0,id=3Dnvmedev0,drive=3Dnvme-drive0
-
-Then, you can use the qemu monitor to `device_del nvmedev0` and add it
-with `device_add nvme,serial=3Dnvme0,id=3Dnvmedev0,drive=3Dnvme-drive0`. The
-"drive" (blockdev) will stick around after the device_del.
-
---lNgLd6U+E1lVc+C+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmW3qhgACgkQTeGvMW1P
-DemO3wf9E6x9yr6IZenVktIsLssANisuFmLVe59EoivQyWrcylgp4MJSmCd4et5F
-NPddAIuNfCy/0RZMV+Yec2F/vwz91XpnLaXMMF96vDvcU2Yl4rVBjWkxICevcdwm
-E9SQjuip6buhiiRQm1CQtJpHzwwu8z5BLKjxgLxesNGkB8YOTd3V28SUmeFUwCEi
-k1xfvAXQRYDLSxb+oL9PxoywkBgArJ3xm9rhmUbezcZCImcOmupM31UXovDgBGZk
-S7KfiksSXSZPy0wsFmmqqdlT75pWzwWMvXDvZ0zv81IhddzLLx1qj9vMx16s7FaW
-zrVykjUdNHGy0gb5TV5VjeJLH+PeAw==
-=nXB6
------END PGP SIGNATURE-----
-
---lNgLd6U+E1lVc+C+--
 
