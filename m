@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A79C47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A695C47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUai2-0001Ph-9W; Mon, 29 Jan 2024 18:06:40 -0500
+	id 1rUady-0006Vs-2y; Mon, 29 Jan 2024 18:02:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUaeT-000750-Id
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:03:00 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1rUadp-0006BN-8r
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:13 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUaeN-00007H-9w
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:48 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1d8ef977f1eso6923735ad.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:46 -0800 (PST)
+ id 1rUadn-0008S0-Ju
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:12 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3be3753e002so805653b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569365; x=1707174165; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569330; x=1707174130; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T/uaC3GU2r5ag1NYLRtG0R3ws3tDO6FtLPMPWrHI/7I=;
- b=SmySVDk4CLGNNNDAGdf+kN3ViZI28aPf1/OUMu5YqX1fspLJMu8HxE8HeG6e4jJbkB
- uGz5Vg+zIZX8ZLRcqs5JfeLWhliaBqckfw/L8I6H13bzZXQdyV5p88Wx7XY2cl3u2LQ+
- v5gtJxr4LqOlMrTHAAY15Hs6UmzOIAPmVrHCe+OyqisGCAnps4RED/9cRCC/qBUo+tVx
- nYqAHUymJ4K3iuh9/Ld/6AUXSLpTU9IJm3rKwd/D0w8yWScIsREduRF3L4VGV5mof+6t
- 0mB9CF19pqBnGtSrJi0GPbvMo0x3pNMZ10BRbnRMDymN5+4e3ciZ0ZTjBM4U8St1roFO
- gUPg==
+ bh=qYcGKO9y7L+9nQKGBMKS98rrLGXyxY/fBFTDvtgcJC4=;
+ b=Rxl/VITV8Y/bXMaO62TtB9n2lta5ynEBH8WEs0TzcrqJtqdo83mATO85xHH1JjC7LQ
+ CXGDanNmnf1irhZdTXK+OR8tp7xcv9Ny1eXLyQePBUf3dRE9gzviL0EdQk0CJOSwU3v+
+ bBxylUcPKATNwpQSa0FlH6XzVhEP/UOO9Cb7DzjPmkb59HU1cAjE/gMgHnOGO3wekCH1
+ uWu+/i4slzpVeFWS2qCK67C7ghmBiJWgINBO5KGzvf9nsOQxeJz1U6O520ighJWhWtyP
+ gW4RkgDEVrgoOzHfdmSCCaCVU4OXoE/TFmhNKF1GV8oBoNQ0mnXep0fw+Wh84KIM+CCf
+ 2w5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569365; x=1707174165;
+ d=1e100.net; s=20230601; t=1706569330; x=1707174130;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T/uaC3GU2r5ag1NYLRtG0R3ws3tDO6FtLPMPWrHI/7I=;
- b=dQqcmMLsM8Tqol4WLRPCj+6mAeLeuoZtyc4pk0WhvyUZYibSowwGKaqBRKhG70buWp
- grwxHu0tHaQt3zwDBNiQnDUC8TsXt2Mp2k8Nt4rvyCC68h4PINhme90iI7LBzB7/1cTu
- /zGM4tzbvej/MZSF49I2ynL0nF4Cp8KMRUtI9AgxgddvMDjo7DvLaywp96+oB/aAXr66
- r6gnZMSkW0LhnXzEd2Sknj2b4YPmU9t2trvmtDoJR+qQxS0nbri78GpynWn5hePKDGd2
- Cw1kwz9mCeuEakVSiHySOXeTb3b+SP3hasT4EGtIZVUfSsnTK1QrmQiAvh7G/B5JuScm
- 8iKg==
-X-Gm-Message-State: AOJu0Yzole6WjA5uvlERdoGy5rk8LWagXvlj5JcOn45Wlq+epZeW/OZ/
- N1D007noIcojs/ACrsr0tJOrBEstU4MgBnXYmypOZUjqYUqmFnPaGh0pWybvKqQ2fzgFL9mom9q
- Jul8=
-X-Google-Smtp-Source: AGHT+IF2dmmVJC6HuYJkxe9w/Awo0+4xM3RYdghfxsA15ZbmrTFy+cTLpP+Gv8g3rLy1aw4xqG02sg==
-X-Received: by 2002:a05:6a20:b90a:b0:19c:a484:290e with SMTP id
- fe10-20020a056a20b90a00b0019ca484290emr1885572pzb.2.1706569365363; 
- Mon, 29 Jan 2024 15:02:45 -0800 (PST)
+ bh=qYcGKO9y7L+9nQKGBMKS98rrLGXyxY/fBFTDvtgcJC4=;
+ b=TRHrExM1hwxkZ1Uwdija4sxm9I6kGM3dhrSSLoesX9V7PqRNJ+CyEr9aB4SPsqgN6l
+ 1mIKwpDGqgtKwIIy1eqP5+ay5dSEKcS8E1poyrQC9XpwFAlNXLuV9rCRW3V/QlgBUHAT
+ QE+ZENSYdCWsRfaiEtACM3sE56378FfwibDATjbY2uDDT3PaOh9chmWAyNgyzyJANW5T
+ FPx+Z4UrDXbkh1h3HMrvr1LJQfgtWcS0uo4zCyNyKWfDPMrgCSemqMG6P5Ot3jkifWYK
+ xuMduXj05kqQTT+XbXpfoYPWGvqby6LKROrZQzr3SKyrLQ+k6NCO90CMYFXYQEwo7RB6
+ oJUQ==
+X-Gm-Message-State: AOJu0YwYBZBpcqp2xyd31WWiZSF9184rib8OirGjld2swhx2dzRWs1+v
+ GPkVuzNHnSQE3pXZwSZv2TJ4jCGnmlUVJ5E/5KI9vysWwmapOtelTHKye60c6B6GFWKKiL2SRe1
+ SDbA=
+X-Google-Smtp-Source: AGHT+IHO2vMWUCKwP+CKOFpiif7GKnI8W80zMD7g5F6kLh7XuphMOC2pV466UmncBTR9QKOAJaMCzg==
+X-Received: by 2002:a05:6808:144e:b0:3be:c63:adb7 with SMTP id
+ x14-20020a056808144e00b003be0c63adb7mr5908986oiv.38.1706569330243; 
+ Mon, 29 Jan 2024 15:02:10 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.43
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:02:45 -0800 (PST)
+ Mon, 29 Jan 2024 15:02:09 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [PULL 31/31] target/i386: Extract x86_cpu_exec_halt() from accel/tcg/
-Date: Tue, 30 Jan 2024 09:01:21 +1000
-Message-Id: <20240129230121.8091-32-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 16/31] accel/tcg: Make use of qemu_target_page_mask() in perf.c
+Date: Tue, 30 Jan 2024 09:01:06 +1000
+Message-Id: <20240129230121.8091-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,108 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Move this x86-specific code out of the generic accel/tcg/.
+Stop using TARGET_PAGE_MASK in order to make perf.c more
+target-agnostic.
 
-Reported-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20231212003837.64090-2-iii@linux.ibm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240124101639.30056-10-philmd@linaro.org>
+Message-Id: <20240125054631.78867-2-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/tcg/helper-tcg.h        |  1 +
- accel/tcg/cpu-exec.c                | 12 ------------
- target/i386/tcg/sysemu/seg_helper.c | 13 +++++++++++++
- target/i386/tcg/tcg-cpu.c           |  1 +
- 4 files changed, 15 insertions(+), 12 deletions(-)
+ accel/tcg/perf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index 253b1f561e..effc2c1c98 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -39,6 +39,7 @@ QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > TARGET_PHYS_ADDR_SPACE_BITS);
-  */
- void x86_cpu_do_interrupt(CPUState *cpu);
- #ifndef CONFIG_USER_ONLY
-+void x86_cpu_exec_halt(CPUState *cpu);
- bool x86_need_replay_interrupt(int interrupt_request);
- bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
- #endif
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 82627b12b8..977576ca14 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -30,9 +30,6 @@
- #include "qemu/rcu.h"
- #include "exec/log.h"
- #include "qemu/main-loop.h"
--#if defined(TARGET_I386) && !defined(CONFIG_USER_ONLY)
--#include "hw/i386/apic.h"
--#endif
- #include "sysemu/cpus.h"
- #include "exec/cpu-all.h"
- #include "sysemu/cpu-timers.h"
-@@ -666,15 +663,6 @@ static inline bool cpu_handle_halt(CPUState *cpu)
-     if (cpu->halted) {
-         const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
- 
--#if defined(TARGET_I386)
--        if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
--            X86CPU *x86_cpu = X86_CPU(cpu);
--            bql_lock();
--            apic_poll_irq(x86_cpu->apic_state);
--            cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
--            bql_unlock();
--        }
--#endif /* TARGET_I386 */
-         if (tcg_ops->cpu_exec_halt) {
-             tcg_ops->cpu_exec_halt(cpu);
-         }
-diff --git a/target/i386/tcg/sysemu/seg_helper.c b/target/i386/tcg/sysemu/seg_helper.c
-index e6f42282bb..2db8083748 100644
---- a/target/i386/tcg/sysemu/seg_helper.c
-+++ b/target/i386/tcg/sysemu/seg_helper.c
-@@ -20,6 +20,7 @@
+diff --git a/accel/tcg/perf.c b/accel/tcg/perf.c
+index cd1aa99a7e..ba75c1bbe4 100644
+--- a/accel/tcg/perf.c
++++ b/accel/tcg/perf.c
+@@ -10,6 +10,7 @@
  
  #include "qemu/osdep.h"
- #include "qemu/log.h"
-+#include "qemu/main-loop.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "exec/cpu_ldst.h"
-@@ -127,6 +128,18 @@ void x86_cpu_do_interrupt(CPUState *cs)
-     }
- }
- 
-+void x86_cpu_exec_halt(CPUState *cpu)
-+{
-+    if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
-+        X86CPU *x86_cpu = X86_CPU(cpu);
-+
-+        bql_lock();
-+        apic_poll_irq(x86_cpu->apic_state);
-+        cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
-+        bql_unlock();
-+    }
-+}
-+
- bool x86_need_replay_interrupt(int interrupt_request)
- {
-     /*
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index 5bdcf45199..cca19cd40e 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -119,6 +119,7 @@ static const TCGCPUOps x86_tcg_ops = {
- #else
-     .tlb_fill = x86_cpu_tlb_fill,
-     .do_interrupt = x86_cpu_do_interrupt,
-+    .cpu_exec_halt = x86_cpu_exec_halt,
-     .cpu_exec_interrupt = x86_cpu_exec_interrupt,
-     .do_unaligned_access = x86_cpu_do_unaligned_access,
-     .debug_excp_handler = breakpoint_handler,
+ #include "elf.h"
++#include "exec/target_page.h"
+ #include "exec/exec-all.h"
+ #include "qemu/timer.h"
+ #include "tcg/tcg.h"
+@@ -335,7 +336,7 @@ void perf_report_code(uint64_t guest_pc, TranslationBlock *tb,
+         /* FIXME: This replicates the restore_state_to_opc() logic. */
+         q[insn].address = gen_insn_data[insn * start_words + 0];
+         if (tb_cflags(tb) & CF_PCREL) {
+-            q[insn].address |= (guest_pc & TARGET_PAGE_MASK);
++            q[insn].address |= (guest_pc & qemu_target_page_mask());
+         } else {
+ #if defined(TARGET_I386)
+             q[insn].address -= tb->cs_base;
 -- 
 2.34.1
 
