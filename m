@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FDF9C47DDF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E189C47DA9
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUb5e-0005Qi-OT; Mon, 29 Jan 2024 18:31:05 -0500
+	id 1rUb62-0005SE-NC; Mon, 29 Jan 2024 18:31:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUb5a-0005O1-41
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:30:54 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1rUb5b-0005P6-JV
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:30:56 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUb5Y-0004zm-3f
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:30:53 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1d7858a469aso17975435ad.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:30:51 -0800 (PST)
+ id 1rUb5Z-000508-UW
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:30:55 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d8e7ebbbadso8416195ad.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:30:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706571050; x=1707175850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706571052; x=1707175852; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bMktE+uuI7KYrw4qy5OMTFd9gSBzokEqXN4YH9Doa28=;
- b=ulsLexn3B/5d3a8Xp39zbXVqYdQgHD5Tij3M3hEdNGa5oDKQfzpXESKjVcekJsXltE
- Y0jXw2eMG8qhl047OwZP07HBEsgRDpxcjO/199YPruHkikBkiX9dAiMm4ry2mkFhCJ9W
- oaAwkVd9sJqCyoQVxkiZ2H4Clqt3NYNw5iQX+n0qMPE+sDkpx58CtXK2yP8VpUE9eX6N
- J1SdD89Aqt9d46SpKBWFkVZueTOhrPpUyfvw41vtSiCZpi4+F3bD3dPxBZKq/EX1akoz
- hAM3oJqm61u4crRFuDvJ0XYHS14y2xniDSw2doqGiOg+IqjtG48Ufirbd1EehQZTRmsj
- Npxw==
+ bh=GuLjJD6Uv7AUoT7v/CmrWdMUNxFVKqK7N1yrIDiYHSI=;
+ b=Mjp+ErrdOjwvT1r7yE+NwAS617+jGXodN1iq92arzoP+Dj1D144MGeJTcZc4YWirAr
+ VOmXpwEdrrsHCo/n84Km2n5Zl3/k970dQEs0PAGD8FGnhnV4bz5ya7ONSdPznNNxWODc
+ yJG9rO9CrRovnH8FMafz87OjC2TwXNQOAae6c7rWCBGK652lYmXAOZlvaXlNXA0m9YiY
+ /Rt6F36fqaG2izT5LxTWnEcT36iDwtFiv5Nm16wjRoDB6izKkeifOIonr+dMp9/ASp1W
+ K+jIEkOlHMO4nnjudx6v31zgP6Vgj4nB9gSInYnuI01YO/b5Ie5JPs+SjH7aqi000O4K
+ TEbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706571050; x=1707175850;
+ d=1e100.net; s=20230601; t=1706571052; x=1707175852;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bMktE+uuI7KYrw4qy5OMTFd9gSBzokEqXN4YH9Doa28=;
- b=tdMwufN9NXQdVJjYkrMLBk/q9btK8UjUkvEShNm3Ezdhdf+8xtDQFWgvH9Of8JcK3u
- /Dlx4QNSNrtxstRAf5vCVDn8HJJgkOWOUR4+T9M18EiJ93+7FpvQ22WfaeeG+5OuMs7V
- aRFT70ZFl+sgZngMQ0/j06hfRlQ0yxeX04WJffKOM3wsUcBMpJhmAkWgcsQ292t0GuPZ
- Q24s5c/E7cwZppyji3fy4cgMZcjoqmZ0JWSqdO5TEy4M/ku9qC7/wiH+3Mft7TPCM6hZ
- IAsToEw8OqNNNkK+aOS77lG5akILWYcv+xA55+gZPh7Xo41iQG5ZCc61manzbEiLc6ph
- CFag==
-X-Gm-Message-State: AOJu0Yw2HENhipB11RNIjG865CFrypszYgIiluRg47/xTlxi4eXe5Bad
- 3PBlXitvfnDuO9Tu07f/f0YeIwe/NoGl1GpmaZCBPinRZJtJi1pbfllkEvCG9q/R5gKfviUmsbC
- F2I0=
-X-Google-Smtp-Source: AGHT+IF2OEHim5J36DDZTsSThCAeoJ3CorTTzEaa4zfC80fIH4p56KINqeDtOAORv82gksqUj2jK6Q==
-X-Received: by 2002:a17:902:7681:b0:1d6:ea58:f593 with SMTP id
- m1-20020a170902768100b001d6ea58f593mr3157454pll.9.1706571050282; 
- Mon, 29 Jan 2024 15:30:50 -0800 (PST)
+ bh=GuLjJD6Uv7AUoT7v/CmrWdMUNxFVKqK7N1yrIDiYHSI=;
+ b=BhiPrjxSthQhEK8tIXr58yaXbp3wzZmVnbh2dBbxBIhVotM1KpiMlJ6RFHPFiddgkB
+ 8ItXr/s6fRdsZdVY38LlZfArHnwjH0J7rsMQ0LeeS+7OhevrcjU5/eIUtIExGuKFaGzg
+ ldah/dh7ZO3aY4uaeO0GUkpkehhtYtMdVFEm302QUqhly3VXSP/JoUgw71WF4PwVKIlW
+ 3RjGSZw9v+fdzuB8DagsK5iJbqf1m4OxHh9aViR88Bn1P6/X9n59DsUe7Zq4e03H8E7i
+ itg+Jcv3m8SWyzTpYfIr+H1rGvrvFiRxuwLMYXCE7RxExpAg4paminFAwhlUJKAmONen
+ XHXA==
+X-Gm-Message-State: AOJu0Ywq1L0VRtikR4oj/LhsrDGNNeccuCxQxSmZVNTT6dNyTYL1U9hM
+ kEwwrs8hgfDtlUtoSrxYDjtlbP+ZpWyiM9+ahNXb3ZiDXkkNhHXGk8AQgA9r7dUQc77hk7AE6It
+ ICVc=
+X-Google-Smtp-Source: AGHT+IEktvo2+X+OHpoDfnI6CRxmWwjdpQaddSl7mclrMTwuxda8uAaYjYqpnDDWb3/HM698h6y/gA==
+X-Received: by 2002:a17:902:bc44:b0:1d8:fe1e:7c8a with SMTP id
+ t4-20020a170902bc4400b001d8fe1e7c8amr1370350plz.106.1706571052578; 
+ Mon, 29 Jan 2024 15:30:52 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- l6-20020a170902eb0600b001d8dbb867b1sm2710591plb.179.2024.01.29.15.30.48
+ l6-20020a170902eb0600b001d8dbb867b1sm2710591plb.179.2024.01.29.15.30.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:30:49 -0800 (PST)
+ Mon, 29 Jan 2024 15:30:52 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	anjo@rev.ng
-Subject: [PATCH 01/33] include/hw/core: Add mmu_index to CPUClass
-Date: Tue, 30 Jan 2024 09:30:11 +1000
-Message-Id: <20240129233043.34558-2-richard.henderson@linaro.org>
+Subject: [PATCH 02/33] target/alpha: Split out alpha_env_mmu_index
+Date: Tue, 30 Jan 2024 09:30:12 +1000
+Message-Id: <20240129233043.34558-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129233043.34558-1-richard.henderson@linaro.org>
 References: <20240129233043.34558-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,34 +94,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To be used after all targets have populated the hook.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h | 3 +++
- 1 file changed, 3 insertions(+)
+ target/alpha/cpu.h       | 7 ++++++-
+ target/alpha/translate.c | 2 +-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 2c284d6397..4385ce54c9 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -103,6 +103,8 @@ struct SysemuCPUOps;
-  * @parse_features: Callback to parse command line arguments.
-  * @reset_dump_flags: #CPUDumpFlags to use for reset logging.
-  * @has_work: Callback for checking if there is work to do.
-+ * @mmu_index: Callback for choosing softmmu mmu index;
-+ *       may be used internally by memory_rw_debug without TCG.
-  * @memory_rw_debug: Callback for GDB memory access.
-  * @dump_state: Callback for dumping state.
-  * @query_cpu_fast:
-@@ -150,6 +152,7 @@ struct CPUClass {
-     void (*parse_features)(const char *typename, char *str, Error **errp);
+diff --git a/target/alpha/cpu.h b/target/alpha/cpu.h
+index ce806587ca..3beff2738a 100644
+--- a/target/alpha/cpu.h
++++ b/target/alpha/cpu.h
+@@ -389,7 +389,7 @@ enum {
  
-     bool (*has_work)(CPUState *cpu);
-+    int (*mmu_index)(CPUState *cpu, bool ifetch);
-     int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
-                            uint8_t *buf, int len, bool is_write);
-     void (*dump_state)(CPUState *cpu, FILE *, int flags);
+ #define TB_FLAG_UNALIGN       (1u << 1)
+ 
+-static inline int cpu_mmu_index(CPUAlphaState *env, bool ifetch)
++static inline int alpha_env_mmu_index(CPUAlphaState *env)
+ {
+     int ret = env->flags & ENV_FLAG_PS_USER ? MMU_USER_IDX : MMU_KERNEL_IDX;
+     if (env->flags & ENV_FLAG_PAL_MODE) {
+@@ -398,6 +398,11 @@ static inline int cpu_mmu_index(CPUAlphaState *env, bool ifetch)
+     return ret;
+ }
+ 
++static inline int cpu_mmu_index(CPUAlphaState *env, bool ifetch)
++{
++    return alpha_env_mmu_index(env);
++}
++
+ enum {
+     IR_V0   = 0,
+     IR_T0   = 1,
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index 134eb7225b..4b464f8651 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -2875,7 +2875,7 @@ static void alpha_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
+     int64_t bound;
+ 
+     ctx->tbflags = ctx->base.tb->flags;
+-    ctx->mem_idx = cpu_mmu_index(env, false);
++    ctx->mem_idx = alpha_env_mmu_index(env);
+     ctx->implver = env->implver;
+     ctx->amask = env->amask;
+ 
 -- 
 2.34.1
 
