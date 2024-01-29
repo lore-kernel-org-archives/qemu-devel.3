@@ -4,136 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E107FC47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93AE7C47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 14:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rURst-0006pO-Ml; Mon, 29 Jan 2024 08:41:11 -0500
+	id 1rURwW-0001FY-KU; Mon, 29 Jan 2024 08:44:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rURsr-0006oh-Gv
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:41:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rURsq-0001Zj-0V
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:41:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706535666;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fLzvBC1ItfeI7tQYjMJiKxczon02tbJO9HHIC6Ywm90=;
- b=XwpwXvOVlCPCh6qLy3461lNp04a9z62fL/KkjJGtgX3bk1MfXGCLnuhigpxWNN0SGZLodT
- uZHvyy3VlZtpJTEnZ92D0todMIpFDOkxvsTFSYwlZAWaxJ2XKtwAwxdPOxqdne867uSdK2
- IxOyicbG8pN8EFBnPX7BqsSob6pBkqk=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-Lj5o2pgHNZKAHD64R_ZQUg-1; Mon, 29 Jan 2024 08:41:05 -0500
-X-MC-Unique: Lj5o2pgHNZKAHD64R_ZQUg-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-5101e826a3dso2135799e87.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 05:41:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706535664; x=1707140464;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fLzvBC1ItfeI7tQYjMJiKxczon02tbJO9HHIC6Ywm90=;
- b=LAE+1IKRDH5SMoRWOSehn5643LOlX5qSACCd7Htdaoj5JlId12xncVJ8WKOsSgt/39
- s/q8r0vpvy3dnYKmofd7ZpkaSnJ2ohsnVnuxC7RpFAzyGKJVh0ag2XH7N061I1tW4TH4
- B0pXZymL/6xBqLgFR/bDWJUtDFfwWEEdb029LHH2XIGLud9YxvcqmkhPGHoeh3x1vr1t
- C0ZN6tC4fIUej0F1j5owCrl0ItoVCGBFZwpNkH6/t/FG2LgxDswN6oiwYAzt4Xi0DKFP
- bgwXbGyDY4rg3Ji132O8qsxluO4jrPs62CW2mJN7s6gW0+KNNGhAeaX5ZcurEhOra91y
- LrQg==
-X-Gm-Message-State: AOJu0Yy1//zU3k4dcOkCFP/JqWTXeIF6R3HNgf+3vNQAloTyT8JgX10y
- QqfcPo3P+MIyNvz8mHftLil5ZwQvUDcP08pxfoHsAy409Bz55DFpyttVEl9UPs/EJdBz/GhTizO
- H1tKF0Lmk1Zup7FJX37H/vmR7QFgvu9f/8yu+PoSoqij86LxyZaYz
-X-Received: by 2002:a05:6512:20d2:b0:50e:7aaf:ec53 with SMTP id
- u18-20020a05651220d200b0050e7aafec53mr3440133lfr.12.1706535664046; 
- Mon, 29 Jan 2024 05:41:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH5p6h2yW/oSws5NK2kFwxfm28FBwdwSoMrr9i/A1BHJzqkIffGJeEndc89U1/SwulA2fObfg==
-X-Received: by 2002:a05:6512:20d2:b0:50e:7aaf:ec53 with SMTP id
- u18-20020a05651220d200b0050e7aafec53mr3440123lfr.12.1706535663667; 
- Mon, 29 Jan 2024 05:41:03 -0800 (PST)
-Received: from ?IPV6:2003:cb:c721:aa00:3221:f685:1200:6d03?
- (p200300cbc721aa003221f68512006d03.dip0.t-ipconnect.de.
- [2003:cb:c721:aa00:3221:f685:1200:6d03])
- by smtp.gmail.com with ESMTPSA id
- ay13-20020a05600c1e0d00b0040efca80ee1sm67626wmb.16.2024.01.29.05.41.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jan 2024 05:41:03 -0800 (PST)
-Message-ID: <7f42dae1-a859-4d78-afd3-916db5ed009f@redhat.com>
-Date: Mon, 29 Jan 2024 14:41:02 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rURwU-0001EO-Gx
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:44:54 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rURwR-0002t3-KH
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 08:44:54 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7863B21FB4;
+ Mon, 29 Jan 2024 13:44:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706535889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DFyftbgOZlHgCE5+OmaGiwtPLxz3dTGHKFOgM8pBxDw=;
+ b=lKkq9tLi27kwR99aDc5yNxUhPlxXM7K0Q9hhBEDrq3ODyrmVV7lSydon5CzfYmaUSxCCyK
+ Y27UN1Pf+VE7QO88pM/w/wbCSMG/oY1GuxzKKybwHsVFgmUVTRHAy3JUTdpfBtt3oUc2K/
+ el7hVvuMY3V/hr1bYbcopkQwrrDvnSQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706535889;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DFyftbgOZlHgCE5+OmaGiwtPLxz3dTGHKFOgM8pBxDw=;
+ b=P3P9I7K0WT7rtRicawD7j6JDssBOf72l0+mxiwP2NpG7prTQpg4f2AxW495vuxZOCnX0WM
+ ymCv9f17m5CqchAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706535889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DFyftbgOZlHgCE5+OmaGiwtPLxz3dTGHKFOgM8pBxDw=;
+ b=lKkq9tLi27kwR99aDc5yNxUhPlxXM7K0Q9hhBEDrq3ODyrmVV7lSydon5CzfYmaUSxCCyK
+ Y27UN1Pf+VE7QO88pM/w/wbCSMG/oY1GuxzKKybwHsVFgmUVTRHAy3JUTdpfBtt3oUc2K/
+ el7hVvuMY3V/hr1bYbcopkQwrrDvnSQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706535889;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DFyftbgOZlHgCE5+OmaGiwtPLxz3dTGHKFOgM8pBxDw=;
+ b=P3P9I7K0WT7rtRicawD7j6JDssBOf72l0+mxiwP2NpG7prTQpg4f2AxW495vuxZOCnX0WM
+ ymCv9f17m5CqchAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 04EE413A5D;
+ Mon, 29 Jan 2024 13:44:48 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1yt7L9Crt2VmKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 29 Jan 2024 13:44:48 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH] migration/docs: Explain two solutions for VMSD
+ compatibility
+In-Reply-To: <Za81vJgTjFSGT56r@x1n>
+References: <20240122070600.16681-1-peterx@redhat.com>
+ <87plxtgyxx.fsf@suse.de> <Za81vJgTjFSGT56r@x1n>
+Date: Mon, 29 Jan 2024 10:44:46 -0300
+Message-ID: <87frygdzjl.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Initialize backend memory objects in parallel
-Content-Language: en-US
-To: Mark Kanda <mark.kanda@oracle.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, berrange@redhat.com
-References: <20240122153219.2885749-1-mark.kanda@oracle.com>
- <57f6c99b-cdbc-4d4d-9988-e6e1fa307e4d@oracle.com>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <57f6c99b-cdbc-4d4d-9988-e6e1fa307e4d@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lKkq9tLi;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=P3P9I7K0
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BAYES_HAM(-3.00)[100.00%];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 7863B21FB4
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,17 +122,433 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.01.24 14:39, Mark Kanda wrote:
-> Ping.
-> 
-> Any comments?
-> 
+Peter Xu <peterx@redhat.com> writes:
 
-Sorry, fell through the cracks, will review this soonish.
+> On Mon, Jan 22, 2024 at 12:39:06PM -0300, Fabiano Rosas wrote:
+>> peterx@redhat.com writes:
+>> 
+>> > From: Peter Xu <peterx@redhat.com>
+>> >
+>> > The current article is not extremely easy to follow, and may contain too
+>> > much information for someone looking for solutions on VMSD compatibility
+>> > issues.  Meanwhile, VMSD versioning is not discussed.
+>> >
+>> > I'm not yet sure whether we should just obsolete VMSD versioning; it's
+>> > still used quite a lot.  And I had a feeling that for simple use cases
+>> > where backward migration is not strongly required, device developers can
+>> > still consider using it.  So in this patch I decided to keep it (anyway, we
+>> > can't drop it in the near future because of massive existing users), and we
+>> > can still allow user to use it in contexts where forward-only migration
+>> > might be enough.
+>> >
+>> > This doc patch does below changes:
+>> >
+>> >   - Rename the page from "Backward compatibility" to "Migration
+>> >   compatibility", to avoid using "backward" as a word (because we'll want
+>> >   to identify "forward" / "backward" migrations in the new doc)
+>> >
+>> >   - Add a TOC for this page for better indexing
+>> >
+>> >   - A new section to explain what is forward/backward migration
+>> >
+>> >   - A new small section for VMSD just to make things complete
+>> >
+>> >   - Explain the two ways to make VMSD compatible with old qemu binaries
+>> >
+>> >     For this one, I added a small section on how to use VMSD versioning for
+>> >     new fields just to start such documents.  Rename the old "How backwards
+>> >     compatibility works" section to "machine type based (forward+backward
+>> >     migration)" to be the 2nd solution (I called it machine type based
+>> >     solution). When at it, I provided a summary and a TODO for the 2nd
+>> >     solution.
+>> >
+>> >   - A new section to explain which solution to choose
+>> >
+>> >   - Moved the other two existing sections into "Extended readings", because
+>> >   they can be even further away to most device developers
+>> >
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  docs/devel/migration/compatibility.rst | 140 ++++++++++++++++++++++++-
+>> >  1 file changed, 137 insertions(+), 3 deletions(-)
+>> >
+>> > diff --git a/docs/devel/migration/compatibility.rst b/docs/devel/migration/compatibility.rst
+>> > index 5a5417ef06..ea9da201ef 100644
+>> > --- a/docs/devel/migration/compatibility.rst
+>> > +++ b/docs/devel/migration/compatibility.rst
+>> > @@ -1,8 +1,139 @@
+>> > -Backwards compatibility
+>> >  =======================
+>> > +Migration compatibility
+>> > +=======================
+>> > +
+>> > +Migration is a hard topic sometimes.  One of the major reason is that it
+>> > +has a strict compatibility requirement - a migration (live or not) can
+>> > +happen between two different versions of QEMUs, so QEMU needs to make sure
+>> 
+>> S/QEMUs/QEMU/
+>
+> I'll fix all these up that you suggested as English issues.
+>
+>> 
+>> > +the migration can work across different versions of QEMU binaries.
+>> > +
+>> > +This document majorly discusses the compatibility requirement of forward /
+>> 
+>> s/majorly/mainly/
+>> 
+>> > +backward migrations that QEMU need to maintain, and what QEMU developers
+>> 
+>> s/need/needs/
+>> 
+>> > +should do to achieve such compatibility requirements across different QEMU
+>> 
+>> maybe s/achieve/maintain/ ?
+>> 
+>> > +versions.
+>> > +
+>> > +.. contents::
+>> > +
+>> > +Types of migrations (forward / backward)
+>> > +========================================
+>> > +
+>> > +Let's firstly define the terms **forward migration** and **backward
+>> > +migration**.
+>> > +
+>> > +.. note::
+>> > +
+>> > +    To simplify the use case, we always discuss between two consecutive
+>> > +    versions of QEMU major releases (between QEMU version *N* and QEMU
+>> > +    version *N-1*).  But logically it applies to the case where the two
+>> > +    QEMU binaries involved contains more than one major version difference.
+>> > +
+>> > +.. _forward_migration:
+>> > +
+>> > +**Forward migration**: can be seen as the use case where a VM cluster can
+>> > +upgrade its nodes to a newer version of QEMU (version *N*) from an older
+>> > +version of QEMU (version *N-1*).
+>> > +
+>> > +.. _backward_migration:
+>> > +
+>> > +**Backward migration**: can be seen as the use case where a VM cluster
+>> > +would like to migrate from a newer version of QEMU (version *N*) back to an
+>> > +even older version of QEMU (version *N-1*).
+>> 
+>> I'd drop the VM cluster part from these. Define the terms in a more
+>> strict manner (QEMU versions, n/n-1, that's it). Then the parts below
+>> could be second paragraphs further detailing the use-cases of the two
+>> types of migration.
+>
+> OK.
+>
+>> 
+>> > +
+>> > +A forward migration is more common, where system upgrades are needed.  In
+>> > +this case, the upgrade can be done seamlessly by live migrating the old VMs
+>> > +to the new VMs with the new binaries.
+>> 
+>> I got a bit confused whether this was describing migration to a
+>> different host or within the same host. I suggest we spell it out some
+>> more:
+>
+> It can be same-host or across-host.
+>
+>> 
+>> "live migrating an existing VM that uses an old QEMU binary to another
+>> VM using the newly updated QEMU binary."
+>
+> Even though I don't see a major difference on how it was reworded.. but I
+> can use your version here.
+>
+>> 
+>> > +
+>> > +A backward migration can be less common OTOH, because downgrade is less
+>> > +common than upgrade for whatever reasons.  However for a production level
+>> > +system setup, this should also be allowed, because a cluster can contain
+>> > +different versions of QEMU binary.  It should be always allowed to migrate
+>> > +between old and new hosts as long as the machine type is supported across
+>> > +all the relevant hosts / nodes.
+>> > +
+>> > +VMState description data structure (VMSD)
+>> > +=========================================
+>> > +
+>> > +VMSD (or in the complete form, **VMStateDescription**) is the data
+>> > +structure that QEMU uses to describe data to be migrated for devices.
+>> > +Each device should provide its own VMSD structure to describe what it needs
+>> > +to be migrated when a VM live migration is requested.
+>> > +
+>> > +Device VMSD compatibility
+>> > +=========================
+>> > +
+>> > +Then if the VMSD structures need changing, how does the device maintain
+>> > +compatibilty?
+>> 
+>> s/compatibilty/compatibility/
+>> 
+>> Hm, there's a logical jump here from the _device_ changing to this
+>> requiring a change in the VMSD. Also the device is not the thing that
+>> maintains compatibility. Again we might need to spell it out:
+>> 
+>> "When a device data needs to change from one QEMU version to another,
+>> how to maintain compatibility?" ... or something like this
+>
+> OK.
+>
+>> 
+>> >  
+>> > -How backwards compatibility works
+>> > ----------------------------------
+>> > +Here we only discuss VMSD-based migrations.  If one device is not using
+>> > +VMSD to migrate its device data, it's considered part of "advanced users",
+>> > +then this document may not apply anymore.  If you're writting a new device,
+>> > +please always consider starting with VMSD-based migration model.
+>> > +
+>> > +Consider the case where a device can start to support a new feature in the
+>> > +current release, where it wasn't supported before.  The new feature may
+>> 
+>> s/, where it/ that/
+>> 
+>> > +require some new device states to be migrated (which can be new VMSD fields
+>> > +to be added, or new subsections).  The same question needs to be answered
+>> > +when one would like to modify an existing VMSD fields / layouts to fix a
+>> 
+>> s/an //
+>> 
+>> > +bug, and so on.
+>> > +
+>> > +Depending on the goal, the solution to this problem may vary.
+>> > +
+>> > +If one would like to provide a full support of migration between whatever
+>> > +versions, one can try to implement it using :ref:`machine_type_compat`
+>> > +solution.  If one would like to provide a fundamental upgrade-only
+>> > +compatibility, one could consider to use the simpler
+>> > +:ref:`vmsd_versioning_compat` solution.
+>> 
+>> Should this whole paragraph be put before mentioning VMSD? Otherwise
+>> here we are talking about machine type compat after having said: "Here
+>> we only discuss VMSD-based migrations".
+>
+> Note that even with the machine compat properties solution we mentioned
+> below, the device will still need some VMSD entry changes, and VMSD is
+> still the core of the problem.
+>
+> The difference is instead of using VMSD versioning, one may need to link
+> the VMSD entry to the machine compat properties via either:
+>
+>   - VMStateDescription.needed(), as a sub-vmsd or,
+>
+>   - VMStateField.field_exists() as a vmsd field.
+>
+> That's why I want to keep VMSD a separate section, because it's always the
+> core of the problem, no matter for either of the two solutions below.
+>
+>> 
+>> All in all this could be:
+>> 
+>> up top:
+>> Migration compatibility strategies
+>> ==================================
+>> 
+>> When a device data needs to change from one QEMU version to another, how
+>> to maintain compatibility?
+>> 
+>> Depending on the goal, the solution to this problem may vary.
+>> 
+>> If one would like to provide a full support of migration between
+>> arbitrary versions, one can try to implement it using
+>> :ref:`machine_type_compat` solution.  If one would like to provide a
+>> fundamental upgrade-only compatibility, one could consider to use the
+>> simpler :ref:`vmsd_versioning_compat` solution.
+>> 
+>> VMState description data structure (VMSD)
+>> -----------------------------------------
+>> 
+>> VMSD (or in the complete form, **VMStateDescription**) is the data ...
+>> ...
+>> 
+>> Machine type properties
+>> -----------------------
+>> 
+>> The QEMU machine type is versioned (-machine q35 resolves is equivalent
+>> to pc-q35-9.0) and has properties that can be set to different values
+>> across machine versions. Those can be used to enable/disable different
+>> parts of the code and can be used to help migration compatibility.
+>
+> Some statement on machine types may be good, but I'm afraid then we'll also
+> need to describe more on machine compat properties, which is IMHO even more
+> important.  That part is actually more or less covered by the old document
+> below (which is pretty long that Juan drafted just a while ago).  That's
+> why I didn't mention much on machine types here, leaving that for the rest.
+>
+> PS: I added a "TODO" though right below for a possible future rewrite [1].
+> The current explanation is, IMHO, too much, and not as clear.
+>
+> The major goal of this doc patch is adding vmsd versioning into the
+> picutre, and describe both solutions we can use, while in Juan's old
+> version there's no mention of VMSD versioning.  The ultimate goal is in the
+> future we can share the doc to other developers when asking similar
+> questions.
+>
+> Since we're at it, I would also like to know how you think about whether we
+> should still suggest people using VMSD versioning, as we know that it won't
+> work for backward migrations.
+>
+> My current thoughts is it is still fine, as it's easier to use, and it
+> should still be applicable to the cases where a strict migration semantics
+> are not required.  However it's hard to justify which device needs that
+> strictness.
 
--- 
-Cheers,
+I'd prefer if we kept things strict. However I don't think we can do
+that without having enough testing and specially, clear recipes on how
+to add compatibility back once it gets lost. Think of that recent thread
+were we discussed an old powerpc issue. How come we can see the fix
+today in the code but cannot tell which problem it was trying to solve?
+That's bonkers. Ideally every type of breakage would have a mapping into
+why it breaks and how to fix it.
 
-David / dhildenb
+So with testing to catch the issue early and a clear step-by-step on how
+to identify and fix compatibility, then we could require strict
+compatibility for every device.
 
+>
+> For example, any device to be used in migration-test must be forward +
+> backward migration compatible at least, because you just added the n-1
+> regression tests to cover both directions.  Said that, only a few devices
+> are involved because currently our migration-test qemu cmdline is pretty
+> simple.
+
+We might want to make a distinction between migration core vs. device
+state testing. I see n-1 testing more like migration core testing. It's
+bad to break migration, but it's really bad to break migration for
+everyone because we refactored something deep within migration/.
+
+I also wouldn't mind if we had some simple way for device developers to
+add migration tests that cover their code. Currently it's infeasible to
+edit migration-test with new command lines for every device of
+interest. Maybe we could have a little framework that takes a command
+line and spits a migration stream? Something really self-contained,
+behind the device's CONFIG in meson.
+
+>
+> Fundamentally, IMHO it's because QEMU as a project is used both in
+> enterprise and personal emulations.  I think it might be too strict to
+> always request backward migration capability if we know some device / arch
+> is only used for personal, or educational, purposes.
+
+Do we need migration support tiers? =)
+
+If a machine supports KVM, that's already a good indication that we will
+want to have migration working both ways.
+
+If the machine supports only TCG, then migration will probably be a nice
+to have for development, but no one would be relying on it in
+production. It might be ok to only support forward migration.
+
+Could that be a first filter to reason about this? That might narrow the
+list of devices enough.
+
+> The other reason is so far using machine compat properties can sometimes be
+> complicated, and I'm not sure whether it's worthwhile we keep requesting
+> that to device developers.  Maybe some day we can provide some VMSD macros
+> to make that even easier, then we can obsolete VMSD versionings.  But I
+> haven't really thought it through.
+>
+>> 
+>> Migration compatibility solutions
+>> =================================
+>> 
+>> VMSD versioning (forward migration only)
+>> ----------------------------------------
+>> ...
+>> 
+>> Machine type based (forward+backward migration)
+>> -----------------------------------------------
+>> ...
+>> 
+>> > +
+>> > +Solutions
+>> > +=========
+>> > +
+>> > +.. _vmsd_versioning_compat:
+>> > +
+>> > +VMSD versioning (forward migration only)
+>> > +----------------------------------------
+>> > +
+>> > +This is normally the simplest way to support cross-version QEMU live
+>> > +migration. The trade-off is backward migration will not be supported. It
+>> > +means migrations from new QEMU binaries to old QEMU binaries can fail. It's
+>> > +because even if the new QEMU can understand the old version of VMSD by
+>> > +proper versioning of the VMSD fields, the old QEMU will not be able to
+>> > +understand the new version of VMSD layout.  Then when someone migrates a VM
+>> > +using the new VMSD to an older version of QEMU, the old QEMU will not
+>> > +accept the new migration stream, reporting that the VSMD version too new.
+>> 
+>> But we still have _some_ form of backward compat for _some_ kinds of
+>> problems by using dummy fields in the VMSD for instance, right?
+>
+> Just to make sure we're on the same page: UNUSED is definitely needed for
+> forward migration, since if without those the old stream will still contain
+> the removed field, which on the new binary will be wrongly recognized as
+> the "next" field if ever existed, or "extra / unknown" fields, probably
+> messing up the next device state.
+>
+> For backward, I assume it only works if all-zero is a valid state first on
+> that field being removed on the old binary.  Otherwise it might still fail
+> in weird ways, afaiu.  For that, I'd say that shouldn't be stated as
+> supported either as a general approach.
+>
+>> 
+>> > +
+>> > +Please have a look at **include/migration/vmstate.h** for more information
+>> > +on how to use VMSD versioning.
+>> > +
+>> > +Taking an example of adding a new field for migration.  The change will
+>> > +need to at least contain two parts:
+>> > +
+>> > +  - Boost existing VMSD version.
+>> > +
+>> > +  - Add the new VMSD field with the boosted version, with specific
+>> > +    **VMSTATE_\*_V()** macros.  For example, **VMSTATE_UINT8_V()** will
+>> > +    define an uint8 typed VMSD field with version specified.
+>> > +
+>> > +.. _machine_type_compat:
+>> > +
+>> > +Machine type based (forward+backward migration)
+>> > +-----------------------------------------------
+>> > +
+>> > +QEMU developers can leverage machine type compatibile properties to provide
+>> 
+>> compatible
+>> 
+>> > +a fully migratable device / protocol, so the migration behavior will be
+>> > +defined by the machine type, no matter which QEMU binary will be used.  One
+>> > +can reference the entries defined in **hw_compat_\*** global properties for
+>> > +examples.
+>> > +
+>> > +Comparing to VMSD versioning approach above, this may require more code
+>> > +changes, but provide a higher level of compatibility that is bound to the
+>> > +machine type being used.  To be explicit, since the migration behavior is
+>> > +bound to machine type, it will support both forward migration and backward
+>> > +migration as long as the machine type is supported.
+>> > +
+>> > +.. note::
+>> > +
+>> > +   Currently this section is pretty long.  TODO: rewrite this section to
+>> > +   make it easier for QEMU developers to understand.
+>
+> [1]
+>
+>> >  
+>> >  When we do migration, we have two QEMU processes: the source and the
+>> >  target.  There are two cases, they are the same version or they are
+>> > @@ -217,6 +348,9 @@ machine types to have the right value::
+>> >           ...
+>> >       };
+>> >  
+>> > +Extended readings
+>> > +=================
+>> > +
+>> >  A device with different features on both sides
+>> >  ----------------------------------------------
+>> 
 
