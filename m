@@ -4,90 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7D4C47DDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:27:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDE7C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 15:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUTX7-0008UF-6Z; Mon, 29 Jan 2024 10:26:49 -0500
+	id 1rUTfX-0004YA-QX; Mon, 29 Jan 2024 10:35:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUTX4-0008U4-Qy
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:26:46 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUTX2-0000mc-Su
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 10:26:46 -0500
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40TFCS8f006760; Mon, 29 Jan 2024 15:26:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=pp1; bh=4CnSOlmJgM2kEWYWncPNst85EqVWUky/63X2kdH10Ro=;
- b=GWtNVow1pDp9zpFrj1Bp9TwxFsYWUHTivkEcEh+wIPDNiqYfIuzgyLFVabYqKS9h0k5m
- q7MjsVHiEUXWnx+URvgHFTYTB1+OtpkCkN0AaY886DaGva2XKWiZSJIYosOvc+Ya3AM4
- uqeTqAccTVa7TD4JkZEhTAFQkIKQbRsUv0VlHaMN+N1oFOdj3QlYdkZTLAONqiHHTcKJ
- I6ZJGs1kD4cjUB1kgUnzUQJigLS98dIG39i9qEYpy77CUiFgtqXMj1XOzG25ghiaO+aN
- NgbMbt/uS1uEhZM/XQUEHhDt5nWvTIv0YdKO73e7jDjZ6J6QstxcsUSrD1PArzJRCcB2 jw== 
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxdy319kv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jan 2024 15:26:42 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40TD3L7G010858; Mon, 29 Jan 2024 15:26:41 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vweck8mwc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jan 2024 15:26:41 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40TFQdZL30933570
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jan 2024 15:26:39 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D2D622004E;
- Mon, 29 Jan 2024 15:26:39 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B81DE20043;
- Mon, 29 Jan 2024 15:26:39 +0000 (GMT)
-Received: from heavy (unknown [9.155.200.166])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 29 Jan 2024 15:26:39 +0000 (GMT)
-Date: Mon, 29 Jan 2024 16:26:38 +0100
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 22/33] linux-user: Split out mmap_h_lt_g
-Message-ID: <ogglz7yhvelvrnmfyhvpx7hjdl5rgl5gh3iioomtagi3mlckcd@qaa6w4javinb>
-References: <20240102015808.132373-1-richard.henderson@linaro.org>
- <20240102015808.132373-23-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <hare@suse.de>)
+ id 1rUTfW-0004W1-0e; Mon, 29 Jan 2024 10:35:30 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hare@suse.de>)
+ id 1rUTfU-0002ff-1Q; Mon, 29 Jan 2024 10:35:29 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8C59D21BCE;
+ Mon, 29 Jan 2024 15:35:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706542523; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ROaIN1/NDYnBIQdgL4PdGWfWhOOOQVhq5bZggjuE0aU=;
+ b=BRQlvwGMhM6sRYLK60AUinMj0lISXjC1zKsmqT0/YUAvaCLfYbz39NeTbQNHPF4AiHnI6D
+ 8TsLKvoWOrLIcG5Qo+75f7Cy7pfFugmWsm3i4LvU1ojQh/Jtxx8QqeLZ7X76rJJLbV5Yid
+ cf3F4GPALZ99LOlyK5cUCy+tMHlb4bg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706542523;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ROaIN1/NDYnBIQdgL4PdGWfWhOOOQVhq5bZggjuE0aU=;
+ b=EoQXfALudXmNYX/DTYprvyNR7/QhguKkL4L5WX/yRawI5hoM4bAKSTVbNvrb9DtdwpE90L
+ ngXRJcVrMxvvorAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706542523; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ROaIN1/NDYnBIQdgL4PdGWfWhOOOQVhq5bZggjuE0aU=;
+ b=BRQlvwGMhM6sRYLK60AUinMj0lISXjC1zKsmqT0/YUAvaCLfYbz39NeTbQNHPF4AiHnI6D
+ 8TsLKvoWOrLIcG5Qo+75f7Cy7pfFugmWsm3i4LvU1ojQh/Jtxx8QqeLZ7X76rJJLbV5Yid
+ cf3F4GPALZ99LOlyK5cUCy+tMHlb4bg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706542523;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ROaIN1/NDYnBIQdgL4PdGWfWhOOOQVhq5bZggjuE0aU=;
+ b=EoQXfALudXmNYX/DTYprvyNR7/QhguKkL4L5WX/yRawI5hoM4bAKSTVbNvrb9DtdwpE90L
+ ngXRJcVrMxvvorAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B015D13647;
+ Mon, 29 Jan 2024 15:35:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YdkcJbrFt2WjRgAAD6G6ig
+ (envelope-from <hare@suse.de>); Mon, 29 Jan 2024 15:35:22 +0000
+Message-ID: <457e365b-99fe-47a9-88c2-9f3bd77b0443@suse.de>
+Date: Mon, 29 Jan 2024 16:35:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240102015808.132373-23-richard.henderson@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: iOAiOz6qB7mLKmL5xIGcleKUjveSyOBq
-X-Proofpoint-GUID: iOAiOz6qB7mLKmL5xIGcleKUjveSyOBq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-29_10,2024-01-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0 suspectscore=0
- clxscore=1015 mlxlogscore=697 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311290000 definitions=main-2401290113
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: NVME hotplug support ?
+Content-Language: en-US
+To: Damien Hedde <dhedde@kalrayinc.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org, Klaus Jensen <its@irrelevant.dk>,
+ Keith Busch <kbusch@kernel.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Titouan Huard <thuard@kalrayinc.com>, 
+ Markus Armbruster <armbru@redhat.com>
+References: <PR2P264MB0861AAF89D0B361A33710261D1742@PR2P264MB0861.FRAP264.PROD.OUTLOOK.COM>
+ <499096d7-1b4d-471b-9abf-5b6f72bb7990@suse.de>
+ <de06e322-37e9-4788-97a2-c9f16a68cd2e@linaro.org>
+ <07625f96-4ca1-479f-b6b9-69c2a191de76@suse.de>
+ <7e35528b-cc66-d2f1-e3e3-7dece5620c52@kalrayinc.com>
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <7e35528b-cc66-d2f1-e3e3-7dece5620c52@kalrayinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=BRQlvwGM;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=EoQXfALu
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.50 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ XM_UA_NO_VERSION(0.01)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]; MIME_GOOD(-0.10)[text/plain];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[8]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; SUBJECT_ENDS_QUESTION(1.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: 8C59D21BCE
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=hare@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,34 +134,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 02, 2024 at 12:57:57PM +1100, Richard Henderson wrote:
-> Work much harder to get alignment and mapping beyond the end
-> of the file correct.  Both of which are excercised by our
-> test-mmap for alpha (8k pages) on any 4k page host.
+On 1/29/24 14:13, Damien Hedde wrote:
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/mmap.c | 156 +++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 125 insertions(+), 31 deletions(-)
+> 
+> On 1/24/24 08:47, Hannes Reinecke wrote:
+>> On 1/24/24 07:52, Philippe Mathieu-Daudé wrote:
+>>> Hi Hannes,
+>>>
+>>> [+Markus as QOM/QDev rubber duck]
+>>>
+>>> On 23/1/24 13:40, Hannes Reinecke wrote:
+>>>> On 1/23/24 11:59, Damien Hedde wrote:
+>>>>> Hi all,
+>>>>>
+>>>>> We are currently looking into hotplugging nvme devices and it is 
+>>>>> currently not possible:
+>>>>> When nvme was introduced 2 years ago, the feature was disabled.
+>>>>>> commit cc6fb6bc506e6c47ed604fcb7b7413dff0b7d845
+>>>>>> Author: Klaus Jensen
+>>>>>> Date:   Tue Jul 6 10:48:40 2021 +0200
+>>>>>>
+>>>>>>     hw/nvme: mark nvme-subsys non-hotpluggable
+>>>>>>     We currently lack the infrastructure to handle subsystem 
+>>>>>> hotplugging, so
+>>>>>>     disable it.
+>>>>>
+>>>>> Do someone know what's lacking or anyone have some tips/idea of 
+>>>>> what we should develop to add the support ?
+>>>>>
+>>>> Problem is that the object model is messed up. In qemu namespaces 
+>>>> are attached to controllers, which in turn are children of the PCI 
+>>>> device.
+>>>> There are subsystems, but these just reference the controller.
+>>>>
+>>>> So if you hotunplug the PCI device you detach/destroy the controller 
+>>>> and detach the namespaces from the controller.
+>>>> But if you hotplug the PCI device again the NVMe controller will be 
+>>>> attached to the PCI device, but the namespace are still be detached.
+>>>>
+>>>> Klaus said he was going to fix that, and I dimly remember some patches
+>>>> floating around. But apparently it never went anywhere.
+>>>>
+>>>> Fundamental problem is that the NVMe hierarchy as per spec is 
+>>>> incompatible with the qemu object model; qemu requires a strict
+>>>> tree model where every object has exactly _one_ parent.
+>>>
+>>> The modelling problem is not clear to me.
+>>> Do you have an example of how the NVMe hierarchy should be?
+>>>
+>> Sure.
+>>
+>> As per NVMe spec we have this hierarchy:
+>>
+>>       --->  subsys ---
+>>      |                |
+>>      |                V
+>> controller      namespaces
+>>
+>> There can be several controllers, and several
+>> namespaces.
+>> The initiator (ie the linux 'nvme' driver) connects
+>> to a controller, queries the subsystem for the attached
+>> namespaces, and presents each namespace as a block device.
+>>
+>> For Qemu we have the problem that every device _must_ be
+>> a direct descendant of the parent (expressed by the fact
+>> that each 'parent' object is embedded in the device object).
+>>
+>> So if we were to present a NVMe PCI device, the controller
+>> must be derived from the PCI device:
+>>
+>> pci -> controller
+>>
+>> but now we have to express the NVMe hierarchy, too:
+>>
+>> pci -> ctrl1 -> subsys1 -> namespace1
+>>
+>> which actually works.
+>> We can easily attach several namespaces:
+>>
+>> pci -> ctrl1 ->subsys1 -> namespace2
+>>
+>> For a single controller and a single subsystem.
+>> However, as mentioned above, there can be _several_
+>> controllers attached to the same subsystem.
+>> So we can express the second controller:
+>>
+>> pci -> ctrl2
+>>
+>> but we cannot attach the controller to 'subsys1'
+>> as then 'subsys1' would need to be derived from
+>> 'ctrl2', and not (as it is now) from 'ctrl1'.
+>>
+>> The most logical step would be to have 'subsystems'
+>> their own entity, independent of any controllers.
+>> But then the block devices (which are derived from
+>> the namespaces) could not be traced back
+>> to the PCI device, and a PCI hotplug would not
+>> 'automatically' disconnect the nvme block devices.
+>>
+>> Plus the subsystem would be independent from the NVMe
+>> PCI devices, so you could have a subsystem with
+>> no controllers attached. And one would wonder who
+>> should be responsible for cleaning up that.
+>>
+> 
+> Thanks for the details !
+> 
+> My use case is the simple one with no nvme subsystem/namespaces:
+> - hotplug a pci nvme device (nvme controller) as in the following CLI 
+> (which automatically put the drive into a default namespace)
+> 
+> ./qemu-system-aarch64 -nographic -M virt \
+>     -drive file=nvme0.disk,if=none,id=nvme-drive0 \
+>     -device nvme,serial=nvme0,id=nvmedev0,drive=nvme-drive0
+> 
+> In the simple tree approach where subsystems and namespaces are not 
+> shared by controllers. We could delete the whole nvme hiearchy under the 
+> controller while unplugging it ?
+> 
+> In your first message, you said
+>   > So if you hotunplug the PCI device you detach/destroy the controller
+>   > and detach the namespaces from the controller.
+>   > But if you hotplug the PCI device again the NVMe controller will be
+>   > attached to the PCI device, but the namespace are still be detached.
+> 
+> Do you mean that if we unplug the pci device we HAVE to keep some nvme 
+> objects so that if we plug the device back we can recover them ?
+> Or just that it's hard to unplug nvme objects if they are not real qom 
+> children of pci device ?
+> 
+Key point for trying on PCI hotplug with qemu is to attach the PCI 
+device to it's own PCI root port. Cf the mail from Klaus Jensen for details.
 
-[...]
+Cheers,
 
-> +        if (fileend_adj) {
-> +            void *t = mmap(p, len - fileend_adj, host_prot,
-> +                           (flags & ~MAP_FIXED_NOREPLACE) | MAP_FIXED,
-> +                           fd, offset);
-> +            assert(t != MAP_FAILED);
+Hannes
+-- 
+Dr. Hannes Reinecke                Kernel Storage Architect
+hare@suse.de                              +49 911 74053 688
+SUSE Software Solutions GmbH, Maxfeldstr. 5, 90409 Nürnberg
+HRB 36809 (AG Nürnberg), GF: Ivo Totev, Andrew McDonald,
+Werner Knoblich
 
-Is it possible to recover here? Of course, we are remapping the memory
-we've mapped a few lines earlier, but asserting the syscall result
-looks a bit odd.
-
-[...]
-
-> +        if (!(flags & MAP_ANONYMOUS)) {
-> +            void *t = mmap(p, len - fileend_adj, host_prot,
-> +                           flags | MAP_FIXED, fd, offset);
-> +            assert(t != MAP_FAILED);
-
-Same here.
 
