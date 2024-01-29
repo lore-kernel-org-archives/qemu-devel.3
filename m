@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADA8C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 22:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7AE7C47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 22:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUa9U-0005bW-A5; Mon, 29 Jan 2024 17:30:52 -0500
+	id 1rUaQH-0002da-Hd; Mon, 29 Jan 2024 17:48:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUa9N-0005aw-6r
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 17:30:45 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1rUaQF-0002cz-Ef
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 17:48:11 -0500
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUa9L-0002vJ-M3
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 17:30:44 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6ddcfda697cso2560522b3a.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 14:30:43 -0800 (PST)
+ id 1rUaQB-0005kz-BV
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 17:48:11 -0500
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-5ceb3fe708eso1886413a12.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 14:48:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706567442; x=1707172242; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706568485; x=1707173285; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mAQxx5u61oREC8Oev2Xs+jBwT0C6mWWIvZdJgUBZXXU=;
- b=cYJ9IER+MkydQ3/G6+rHlY7NTnuWe6IrzABdu1RLjfirDjQ+3KgC1pzOZKtnNA/25M
- mX6La4ZzaNgKo9LTjUZl9IZrdAf51cF2iBKqzj2Cs9LwCb29+dLw1wudJW1c52mblFGi
- Qpdh4Qu13U1BCw8ePpxsZBrBVoK1l9/RFqZLqgd1FoWjqb3EftgAkOhtdSi5wJPhf1nT
- diXq7yEYSHETRz3x64xCwYfMy4Gf/orZMhCw5eHzOl8K0zBfC5DX68KBCSFrh0O6JepK
- FaNHh6j+HS9xphQwaPld058PHBy0BhLqp1eqKlDFNApg4dtjcfaUQqTnXkdnwEmzJBLy
- 9I+w==
+ bh=0Jwr6rwK11cTf5xxmEGIzOjgYNqW4oVhNbXojQiD15g=;
+ b=to6rpGrqyqpKGDmDMR+KGJhue4hAt9dDefa2VfeAnoRjPjC2TQa+zXglZV5tesPqxz
+ 5tyN3qCkStBepdXCpLt852HWDWqxIsTGwetNZabsafU40DmKwHK/z/oYFqwTmHCcm1cX
+ EK8gh3oy88rjalVwP6m0T8rCFP536MId7CC2+y3NYLCP9G7BrEvBwic3W5NH424wjtDT
+ It5B45VIvoD0xWnuFRDymhqorzgpc56UekVRcBAy3x0u53yvj1VT0rbw1mIGhCWT8Qex
+ KEF6mtfrPLnxzR5ddNViFAN2vJl/cbeMXvJzmKbY0WnLtP8+OzFOoLqhKYB5tSjTRbdG
+ YdHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706567442; x=1707172242;
+ d=1e100.net; s=20230601; t=1706568485; x=1707173285;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mAQxx5u61oREC8Oev2Xs+jBwT0C6mWWIvZdJgUBZXXU=;
- b=KlPyCeK6ydLQnBcLr0FEu5/Tz6T+Fp7mFABqAHaNBqZQ+j9cZsOb54YZXsiTgDX0zN
- 528l1aYjw5qawmuzAhZTznePMRr+IaH5Sih/d8s1pL3/QGmHKn6RAuaDN0PgwG4a4gj5
- 088nLdWaMpXa+A4LeNW5Z6fw8BTJwxXHaFTsyJ0xHHuSOD/HkDYueLa9qOS31aZA0+pe
- DYOwR84knLzIwSMfpj77VPVUYy+TqXdBSl5B43OzvDjz9XjYkb4tkwsMNRF2KRw5xWkQ
- PfZfeBcrNBvZ6igIvacFqdaX+a9b4Q70G0slDDDEZ4H9jhK/tEATVt7OsE9inohjYrdr
- U7Kw==
-X-Gm-Message-State: AOJu0YzO7vUjL6B9nt5jqg1qNCPZTlTb31l6knmCr0A9hd0ueDVWyZYP
- qmOl/HbAnxfjlnoGbXzKvK1vULaG//87+m8piOyjAbNtDBA/kMk1bBBPyK4pDFU=
-X-Google-Smtp-Source: AGHT+IEdXa1/3fWCVaOQnW3+O2f+yROhEHhpH/QV2QISf0CGIo5ldpGlbsX3n90fVNr5/9F1PBD1+Q==
-X-Received: by 2002:a05:6a20:491e:b0:19c:8447:1c41 with SMTP id
- ft30-20020a056a20491e00b0019c84471c41mr5906593pzb.44.1706567442083; 
- Mon, 29 Jan 2024 14:30:42 -0800 (PST)
+ bh=0Jwr6rwK11cTf5xxmEGIzOjgYNqW4oVhNbXojQiD15g=;
+ b=qvGZZGBalQkqHHkCNmQWfs7aS3+DaIYsJzkx6NMM+c49J83nH6g05JBviifnCl6O38
+ MnD/KttQoCFBFHEe8YIj5A5UC5FnqcY5aywjgPcIE0GrNrwXIdAjnrhxG39V/H1M9ur0
+ oy8cXYzoFjkQj3hDoEJYNNGERMXWtDyqYO1RKnBpaVPiE580CLpSPeZnkFYsElHfZsdg
+ mhcI3WDuP7wNWEGGXyuZq/Fq8iBgvm19JTpXG8ZiyTF/7UBFnerpNRUBy8HnTmZxfPR8
+ FGPGTDfdIYUsN6H2GeVXm5+LtZZDw8TrbG4ccG98v7jGUgL6c3su/hKbUcrr7BV0+tq8
+ ec7w==
+X-Gm-Message-State: AOJu0YzgTbwghXZ9Q2hvz0Z3NgBwLmoIRcIchL6kx6zO8lsRf+l2oKij
+ H/pkIPbKA0VJKI6fQyyZhMSRmZbLN8jny4DXAef/jatomWs7yxm/er5DMWcapXg=
+X-Google-Smtp-Source: AGHT+IFlo4O6DWF8V3uQrSiNv+oND85B/Z2B9W4cPLnrqfo23bPn1IE1TE7XjK4pyXJBM64/wZ5fZA==
+X-Received: by 2002:a17:902:dac2:b0:1d8:fb06:b8f2 with SMTP id
+ q2-20020a170902dac200b001d8fb06b8f2mr1772038plx.0.1706568485483; 
+ Mon, 29 Jan 2024 14:48:05 -0800 (PST)
 Received: from [192.168.0.103] ([103.210.27.218])
  by smtp.gmail.com with ESMTPSA id
- jj9-20020a170903048900b001d8c9f23518sm3368963plb.206.2024.01.29.14.30.40
+ w18-20020a170903311200b001d8d3b94404sm2980468plc.137.2024.01.29.14.48.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jan 2024 14:30:41 -0800 (PST)
-Message-ID: <ca943aff-5485-4d18-97ce-6daf24d95ca0@linaro.org>
-Date: Tue, 30 Jan 2024 08:30:36 +1000
+ Mon, 29 Jan 2024 14:48:05 -0800 (PST)
+Message-ID: <34f79da6-739c-4a64-9598-7d1337cc3be2@linaro.org>
+Date: Tue, 30 Jan 2024 08:47:59 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] usb: inline device creation functions
+Subject: Re: [PATCH v4 0/3] linux-user: Allow gdbstub to ignore page protection
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-References: <20240129133751.1106716-1-pbonzini@redhat.com>
- <20240129133751.1106716-4-pbonzini@redhat.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org
+References: <20240129093410.3151-1-iii@linux.ibm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240129133751.1106716-4-pbonzini@redhat.com>
+In-Reply-To: <20240129093410.3151-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,20 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/24 23:37, Paolo Bonzini wrote:
-> Allow boards to use the device creation functions even if USB itself
-> is not available; of course the functions will fail inexorably, but
-> this can be okay if the calls are conditional on the existence of
-> some USB host controller device.  This is for example the case for
-> hw/mips/loongson3_virt.c.
+On 1/29/24 19:32, Ilya Leoshkevich wrote:
+> v3:https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02907.html
+> v3 -> v4: Hide InteractiveConsole behind QEMU_TEST_INTERACTIVE (Alex).
+>            Probe /proc/self/mem in the PROT_NONE test.
 > 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   include/hw/usb.h | 26 +++++++++++++++++++++++---
->   hw/usb/bus.c     | 23 -----------------------
->   2 files changed, 23 insertions(+), 26 deletions(-)
+> v2:https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg01592.html
+> v2 -> v3: Add Richard's R-b on [1/3].
+>            Fix printing the architecture name and the number of failures
+>            in test_gdbstub.py.
+>            Patches that need review: [2/3] and [3/3].
+> 
+> v1:https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg01314.html
+> v1 -> v2: Use /proc/self/mem as a fallback. Handle TB invalidation
+>            (Richard).
+>            Test cross-page accesses.
+> 
+> RFC:https://lists.gnu.org/archive/html/qemu-devel/2023-12/msg02044.html
+> RFC -> v1: Use /proc/self/mem and accept that this will not work
+>             without /proc.
+>             Factor out a couple functions for gdbstub testing.
+>             Add a test.
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks, updated tcg-next with this replacement.
+
 
 r~
 
