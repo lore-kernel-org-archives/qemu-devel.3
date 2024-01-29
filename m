@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D1E6C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291FBC47DA9
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 19:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUXO1-0001Cg-Ew; Mon, 29 Jan 2024 14:33:41 -0500
+	id 1rUXUC-00031G-GJ; Mon, 29 Jan 2024 14:40:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUXNz-0001CQ-Vs
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:33:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rUXNy-00049A-4G
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:33:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706556817;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cvjp/yv9MYfjpaVuky1mjuSiNYHOhRxYQGVGB0DiLGU=;
- b=LER5kHd1YetRTdtIFyB3sZngk++qH2UZZnxnCxWJUF2LFBLd2TkafSNlIJBDc1S6KlwxLb
- m19tpx5rAQ8Lk2mGfYmvVk/kbdOD/7e5JMzcMbZJ44NvgrNQXU9KIKAyT7lSCc++Cs71o4
- GNoEkpW5IlA+1BGPkG58n2mpPlBk54g=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-473-kr9j9sigMkiP34foFQNnDw-1; Mon, 29 Jan 2024 14:33:35 -0500
-X-MC-Unique: kr9j9sigMkiP34foFQNnDw-1
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-7cede81ecf8so1550469241.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 11:33:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rUXUA-00030k-DQ
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:40:02 -0500
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rUXU8-0005cz-FU
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 14:40:02 -0500
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-6ddf26eba3cso2025152a34.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 11:39:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706557198; x=1707161998; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zEICr1QmXRFmGfhgJTC8MTvyADukMO2VuiYXvG5FET8=;
+ b=Pi70bAlAdbw0tt5wJFjMWB5+gH3e9INbwkUZ8RDtK5HFIGID0B/vaP1lqMV4AAPanK
+ C8M2zDNzYhJvqDzqdvppz7s3HoCDlbWWA7iaOJGWIIm9ctYRHVrbMY1DyU6YtBHKtwju
+ zXMmXxi3l/KSy6BdWvbxyHc/hvZzTmWa1wdbRAKxfHlCbt+yd8GQ2bVdrV1iNryKdNZ9
+ 7K1l+rOP3QwrifS75XEhaTyXjMlhnQNXVoIjlcujh70nrfBJTklTfwZ0r73LmniFx6P/
+ RUAwpwj5FVvzTmEVJVHq/cTyFSK/rgrViUeGKTPtbApbAJgPQH3kkyR81MjRQg/hvisZ
+ ZCnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706556815; x=1707161615;
+ d=1e100.net; s=20230601; t=1706557198; x=1707161998;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cvjp/yv9MYfjpaVuky1mjuSiNYHOhRxYQGVGB0DiLGU=;
- b=cWYToXtNU2wsPXMuHlLGKgcOP52/KOMfHgiT+KKiAzsQGCYeCGqiw1art/8PcnRpN6
- ifByKEjraH8GZo1i1r5EWoZmQj3Wa1Ien5FrefEiF+0c2f0msBVIB+TFs3SsqUFGEFMz
- G/+YM360Z0+M6h5N/Gipk2xI4hZZBFtwO1kWC9SO+R2rVKXvu5AJr+amjCrk1oEzeNFB
- dwne+xkx8SPtXEJIdO6vSDc9oCSf6gXp5sbj54MpVo5Adu5qhkPgyUPzGtRTdoAYUYLA
- TA3/pL5U/lHILwSbV1PICaE5P8hVGRdJHKIhn7jCCdG3+nDxbAc4cScj7v1QkAaIxzAG
- 7QfQ==
-X-Gm-Message-State: AOJu0YzS3l3qCVSelXaAjuEEx7LGkl90unbAu2P837q3VBky4ucdS8Rw
- up31WQYAEZap9TaBgbLVlTXf1PbGXm9K4PhSnO1XTBrx2bTh6Otb6o2o0kqazh+pOqutD1ZhxBA
- dcDbGTn1kpvtRyATtZdlQry7TGURif8EvOw9bOSfoEAr4Q1fsN4Of5ZSuMw2Hoha5izDez8dIVw
- wqOrBA03ZWcXtpjbk+u2LCKSQTS64=
-X-Received: by 2002:a05:6102:1177:b0:46a:ff40:e036 with SMTP id
- k23-20020a056102117700b0046aff40e036mr3946830vsg.21.1706556815220; 
- Mon, 29 Jan 2024 11:33:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF9XYJ08yUlfz2lKKVGPg7pcu9LttCivrvtq/SOT1j/EJyYGwNKTv7YcsMwvbOi01iOLVEP7ikc/r2VBuPfzkk=
-X-Received: by 2002:a05:6102:1177:b0:46a:ff40:e036 with SMTP id
- k23-20020a056102117700b0046aff40e036mr3946755vsg.21.1706556813483; Mon, 29
- Jan 2024 11:33:33 -0800 (PST)
+ bh=zEICr1QmXRFmGfhgJTC8MTvyADukMO2VuiYXvG5FET8=;
+ b=vBrsccLTlffALFlf5cxqXIdVsOBj2PnMehpd7z9tshbjYVzNzUunlyFPb8AAT/x9e5
+ Ah8lYx9cr083+TYlPGCImWgYPkD9zMJZB/8nHB3zWpWpNLu0tdiQW5clNMQFPM2apx+V
+ 6C00niiKpS+MlVIfUm5CbmdKRr9Ib5oHVJJs6/ZsIOs9JdLH7auR2uz1au1vlRSkJh5N
+ 0Bx0fCVrPyGTNky7nSEW6n9nffmpvrp/0M5f2w+MMVNzgkQzNnJszSrSUCo6kAAI+oIq
+ HNvzR2t5OC0aBLQoEAUesOhLBYZqflQMfkxB5x38yRXLhN+COTApvhX+sTeLkxCMiI2P
+ HnOw==
+X-Gm-Message-State: AOJu0YwnG7FNs65Wr4V3Zi8tJCC9N6EqW/XyJRemT/lpUStFLBqUVdT4
+ 4tVunmPkOspHxZXdaDUkFunqGh/BIrfgmUfJpenmiZJtf05AIdHIgnr0asmm7ZXUyHVe0osD5ll
+ d+2/CQPU7sypSpGi/EF7iD4KXNrA=
+X-Google-Smtp-Source: AGHT+IGrqlz3fxhPT8BNhS56XLZfowmZNWfb6WVzUXdMMpDIIupZxON6sLvwqAbUGsBHFsIUXDgnRRjBZyFAaFLq7Yo=
+X-Received: by 2002:a05:6870:4341:b0:218:6ff5:a190 with SMTP id
+ x1-20020a056870434100b002186ff5a190mr4369413oah.39.1706557198088; Mon, 29 Jan
+ 2024 11:39:58 -0800 (PST)
 MIME-Version: 1.0
-References: <20240125072214.318382-1-aharivel@redhat.com>
- <20240125072214.318382-3-aharivel@redhat.com>
- <Zbf0Fbhmg0tvMbxK@redhat.com>
-In-Reply-To: <Zbf0Fbhmg0tvMbxK@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 29 Jan 2024 20:33:21 +0100
-Message-ID: <CABgObfaRGL8eOs6NRBjEMjTa_7UGyAn+Pic2GP=XbE+Qg-oBCQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] tools: build qemu-vmsr-helper
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Anthony Harivel <aharivel@redhat.com>, mtosatti@redhat.com,
- qemu-devel@nongnu.org, vchundur@redhat.com
+References: <CAJSP0QX9TQ-=PD7apOamXvGW29VwJPfVNN2X5BsFLFoP2g6USg@mail.gmail.com>
+ <CAJaqyWdMNP3V=JL6C8SSbXV5AP_2O9SNJLUS+Go7AjVsrT1FdQ@mail.gmail.com>
+In-Reply-To: <CAJaqyWdMNP3V=JL6C8SSbXV5AP_2O9SNJLUS+Go7AjVsrT1FdQ@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 29 Jan 2024 14:39:45 -0500
+Message-ID: <CAJSP0QXMJiRQFJh6383tnCOXyLwAbBYM7ff-mtregO3MKAEC1A@mail.gmail.com>
+Subject: Re: Call for GSoC/Outreachy internship project ideas
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Alberto Faria <afaria@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ German Maglione <gmaglione@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Richard W.M. Jones" <rjones@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, Song Gao <gaosong@loongson.cn>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Bernhard Beschow <shentey@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Sean Christopherson <seanjc@google.com>,
+ Marc Zyngier <maz@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=stefanha@gmail.com; helo=mail-ot1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,94 +102,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 29, 2024 at 7:53=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
-> > diff --git a/meson.build b/meson.build
-> > index d0329966f1b4..93fc233b0891 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -4015,6 +4015,11 @@ if have_tools
-> >                 dependencies: [authz, crypto, io, qom, qemuutil,
-> >                                libcap_ng, mpathpersist],
-> >                 install: true)
-> > +
-> > +    executable('qemu-vmsr-helper', files('tools/i386/qemu-vmsr-helper.=
-c'),
+On Mon, 29 Jan 2024 at 13:53, Eugenio Perez Martin <eperezma@redhat.com> wr=
+ote:
 >
-> I'd suggest 'tools/x86/' since this works fine on 64-bit too
-
-QEMU tends to use i386 in the source to mean both 32- and 64-bit.
-Either is fine by me though.
-
-> > +               dependencies: [authz, crypto, io, qom, qemuutil,
-> > +                              libcap_ng, mpathpersist],
-> > +               install: true)
+> On Mon, Jan 15, 2024 at 5:33=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.c=
+om> wrote:
+> >
+> > Dear QEMU and KVM communities,
+> > QEMU will apply for the Google Summer of Code and Outreachy internship
+> > programs again this year. Regular contributors can submit project
+> > ideas that they'd like to mentor by replying to this email before
+> > January 30th.
+> >
 >
-> Shouldn't this executable() call be conditional though, so this
-> is only built for x86 host targets.
-
-Yes. Also should be 32- and 64-bit (careful because Meson uses 'x86' for
-32-bit).
-
-
-> > +static void compute_default_paths(void)
-> > +{
-> > +    socket_path =3D g_build_filename("/run", "qemu-vmsr-helper.sock", =
-NULL);
-> > +    pidfile =3D g_build_filename("/run", "qemu-vmsr-helper.pid", NULL)=
-;
-> > +}
 >
-> We shouldn't be hardcoding /run, we need to honour --prefix and
-> --localstatedir args given to configure.  /var/run is a symlink
-> to /run so the end result ends up the same AFAIK
+> =3D=3D=3D Add packed virtqueue to Shadow Virtqueue =3D=3D=3D
 
-Indeed; just copy from scsi/qemu-pr-helper.c.
+Yes! I'm a fan of packed virtqueues, so I'm excited to see this project ide=
+a :).
 
-> You never answered my question from the previous posting of this
+> Summary: Add the packed virtqueue format support to QEMU's Shadow Virtque=
+ue.
 >
-> This check is merely validating the the thread ID in the message
-> is a child of the process ID connected to the socket. Any process
-> on the entire host can satisfy this requirement.
+> To perform a virtual machine live migration with an external device to
+> qemu, qemu needs a way to know which memory the device modifies so it
+> is able to resend it. Otherwise the guest would resume with invalid /
+> outdated memory in the destination.
 >
-> I don't see what is limiting this to only QEMU as claimed by the
-> commit message, unless you're expecting the UNIX socket permissions
-> to be such that only processes under the qemu:qemu user:group pair
-> can access to the socket ? That would be a libvirt based permissions
-> assumption though.
-
-Yes, this is why the systemd socket uses 600, like
-contrib/systemd/qemu-pr-helper.socket. The socket can be passed via
-SCM_RIGHTS by libvirt, or its permissions can be changed (e.g. 660 and
-root:kvm would make sense on a Debian system), or a separate helper
-can be started by libvirt.
-
-Either way, the policy is left to the user rather than embedding it in
-the provided systemd unit.
-
-> > +    if (capng_update(CAPNG_ADD, CAPNG_EFFECTIVE | CAPNG_PERMITTED,
-> > +                     CAP_SYS_RAWIO) < 0) {
-> > +        return -1;
-> > +    }
-> > +
-> > +    /*
-> > +     * Change user/group id, retaining the capabilities.
-> > +     * Because file descriptors are passed via SCM_RIGHTS,
-> > +     * we don't need supplementary groups (and in fact the helper
-> > +     * can run as "nobody").
-> > +     */
-> > +    if (capng_change_id(uid !=3D -1 ? uid : getuid(),
-> > +                        gid !=3D -1 ? gid : getgid(),
-> > +                        CAPNG_DROP_SUPP_GRP | CAPNG_CLEAR_BOUNDING)) {
-> > +        return -1;
-> > +    }
+> This is especially hard with passthrough hardware devices, as
+> transports like PCI imposes a few security and performance challenges.
+> As a method to overcome this for virtio devices, qemu can offer an
+> emulated virtqueue to the device, called Shadow Virtqueue (SVQ),
+> instead of allowing the device to communicate directly with the guest.
+> SVQ will then forward the writes to the guest, being the effective
+> writer in the guest memory and knowing when a portion of it needs to
+> be resent.
 >
-> Does this actually work ?  IIUC, the file that requires privileges
-> is /dev/cpu/%u/msr, and we're opening that fresh on every request,
-> so how can this run as anything other than root ?
+> Compared with original Split Virtqueues, already supported by Shadow
+> Virtqueue, Packed virtqueue is a more compact representation that uses
+> less memory size and allows both devices and drivers to exchange the
+> same amount of information with less memory operations.
+>
+> The task is to complete the packed virtqueue support for SVQ, using
+> the kernel virtio ring driver as a reference. There is already a setup
+> that can be used to test the changes.
+>
+> Links:
+> * https://www.redhat.com/en/blog/virtio-devices-and-drivers-overview-head=
+jack-and-phone
+> * https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-trav=
+els
+> * https://www.redhat.com/en/blog/packed-virtqueue-how-reduce-overhead-vir=
+tio
+> * https://www.youtube.com/watch?v=3Dx9ARoNVzS04
+>
+> Details:
+> * Skill level: Intermediate
+> * Language: C
 
-Agreed, the capabilities can be dropped but the uid and gid cannot.
+I have added this project idea to the wiki. I made minor edits (e.g.
+consistently using "guest" instead of both "virtual machine" and
+"guest" to minimize the amount of terminology). I also added a link to
+the vhost-shadow-virtqueue.c source code so applicants have a starting
+point for researching the code.
 
-Paolo
+https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
 
+Please edit the page to clarify the following:
+- Project size: 90 (small), 175 (medium), or 350 (large) hours
+- A list of suggested tasks for the coding period that applicants can
+research and refine for their project plan
+
+Possible stretch goals if the intern completes packed svq support
+early or maybe you have your own ideas:
+- Split/rename vhost-shadow-virtqueue.c into a VIRTIO driver-side
+virtqueue API (which could be used by any other feature that acts as a
+VIRTIO driver, like vhost-user clients) and shadow virtqueue logic
+- Implement packed virtqueue support in other components where it is
+not yet supported (like kernel vhost)
+
+Stefan
 
