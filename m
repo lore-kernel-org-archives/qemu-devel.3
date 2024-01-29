@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96848C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0187DC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUb75-0007BB-Gs; Mon, 29 Jan 2024 18:32:27 -0500
+	id 1rUb6f-00066v-Fx; Mon, 29 Jan 2024 18:32:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUb6g-0006BQ-DF
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:32:09 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1rUb6P-0005xW-SJ
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:31:45 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUb6e-0005BT-8f
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:32:02 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1d7393de183so15236855ad.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:31:59 -0800 (PST)
+ id 1rUb6O-00059i-AY
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:31:45 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d75ea3a9b6so27845845ad.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:31:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706571119; x=1707175919; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706571103; x=1707175903; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SgwxZ+7gYByz1ukIozRlYZNVczP1+9iCeAmnhFmDKhE=;
- b=WhsdKq738X8cuF0MVSD6Sk+GSiR5qckCgRfnFzFormDAWg6B3sjEEPsyZGLWUy+hKj
- QLrgJkkO8FK/hoe7JM8o/PcmQJGa2P4Z2MFOoq7oqPc41Mbj8ejPd5ocYAH2IzbNWRuj
- ofbFsfiJbiUlkn5p5jHsjoArJHSQeYrffYOqpWDjGQspFOg8HCXIgHXirpVkF2qyBcZm
- lysMOiTp1o8O58qqL0wzhcJMaWT9J9NsfwMURLXEiUhGMgtnN6EN7SXTTAYAt3+Sr+kA
- Cz59ZwwyJzJ7L7+2BK5lnBLDnYt+So2HOBHQsw21mQFzDWTx4P+RkBtDXk5PgFEZPpA5
- 2zbg==
+ bh=dNwfRTTrdrAUpr+OQpuLtBNdAMOm0+6sMEpzpDqnRE0=;
+ b=n5sHElQ4PLIWR/+atVIL/xX1sQuRrYINqO5x0AgsfMCVYJwjUCQY3HOWGYJc/lXFdt
+ IbW/35COovD6HuJsIdgY4ElVNWoLXTI9Wyvjr28NOAOvWqdchS7N44BOSiD1W5su+KMN
+ is5RmrQ167qBrsUWOHpKO/zGaYO/g0G8iqAkSjSe4NfQaPgw3FVA7hImdPIFpQ8rum9j
+ 0JpCptU5dfJl6/kydCi0hCqvKHKdY0pmtJ4IICMGXcazoiKbuq3awVskfRUPvInK6tZk
+ Pkh9f884P2mp1i2mdWKjrjz2G0hqrOg7kfq5NYQpMMjo/NAzTQKX2u9ueAbURmYyWYTx
+ x5Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706571119; x=1707175919;
+ d=1e100.net; s=20230601; t=1706571103; x=1707175903;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SgwxZ+7gYByz1ukIozRlYZNVczP1+9iCeAmnhFmDKhE=;
- b=RWZ/7ANXDuOoYPwd7V0+u/RTEQrSXrHWtrvlBwVqnXuWbKRYMdnRWs8nur65U7WCxT
- 4+SY71G5o8GjbPQBEn2VFW7Dqvm7XIiVlWDPj+mBQICDhcI4eF4eC+8qzNgcaBK2eUZM
- 5AAyqiHUYx4H6ynTRc+8ISbPxBdDRWjDeGzfboz7Xynr+VU3v3F8jzlUd3CDtYIA13oj
- Qeg1bKpG6d9ASYRXeXp0tSvEt38d6o8X56lHXjHhC+RLOIsIdugPxtlL9pe5y5Y52hEy
- sAPva2WbNOARGkUe3h4QuHX9rHdSodWQQOIXt06Lc0iyR8vq545fPPWO491dhrZqoYS/
- mpDQ==
-X-Gm-Message-State: AOJu0YxFBlSmbOEP/R9KcMNK1j6dw/Mw3hGXmKFXGGQoc9PxKZ3jREwi
- 7lcGNgL2D20eVyYjV2qrCyxY7q+VZpcYp/yncvq+8VWhwsi6kIrvNpwIMH8g+LkOUzW7phP591c
- 9dQ8=
-X-Google-Smtp-Source: AGHT+IH88gzlwmP3zEpvFx2u6Nc5G3cPUR0cntO3vMp616r3xWyP117B3A5XYG3l2V1vwGOQ4mdsPg==
-X-Received: by 2002:a17:903:230a:b0:1d7:3121:ffd1 with SMTP id
- d10-20020a170903230a00b001d73121ffd1mr4385544plh.13.1706571119112; 
- Mon, 29 Jan 2024 15:31:59 -0800 (PST)
+ bh=dNwfRTTrdrAUpr+OQpuLtBNdAMOm0+6sMEpzpDqnRE0=;
+ b=RdC8Hf3uYvuW4y2wdV1L4P31tkDSCeJB7AO/cQXmK3XYA2zslLdGeOUjheZO9qc2KS
+ nz4gg4YRQK0HHJ21A725nfcMtYablE0nTVLlSYWiHg+AvkG4rqywjtOAfcIL1cAhJu5T
+ 7IFf311WsnESblNRTOOktpZsInCY9Y3a2JOKGby7pTNTtGER4JD1xzESyfaB0/XXFhpe
+ wgCn4XWRcDv8vQ4j/JWV5vLpu6gincILfmEST9l5s2cZLruruxM5FDDojDGHDI9PHd8v
+ SjfVwcxY65RqQQss/Te3eUyAjYubmv6Ow2hoT7nhtJwTIphXlVvkM9n9sorEHvfTv93T
+ w1Xg==
+X-Gm-Message-State: AOJu0Yyok+8Y7uVEBBrU2OC+4KqoyA0uqoW2CryKueUdkfXUH/7meKOr
+ fU4e5k1ohpE8QLh28ijAX9VrSpxjdnvOjFo2YCzLQEFg7v7Z3XZ42Ul3DUL1+iz6YaOWUwYKlej
+ z5NU=
+X-Google-Smtp-Source: AGHT+IFMIM2WFkNe9Wg3ScIMB6i6g03+Ak193/Hy5UUMxHgWOPoGb4aq0I/AaWPt3pBqAjsxMx/zlA==
+X-Received: by 2002:a17:902:da82:b0:1d8:ffce:e9ed with SMTP id
+ j2-20020a170902da8200b001d8ffcee9edmr1304068plx.65.1706571102986; 
+ Mon, 29 Jan 2024 15:31:42 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- l6-20020a170902eb0600b001d8dbb867b1sm2710591plb.179.2024.01.29.15.31.56
+ l6-20020a170902eb0600b001d8dbb867b1sm2710591plb.179.2024.01.29.15.31.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:31:58 -0800 (PST)
+ Mon, 29 Jan 2024 15:31:42 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	anjo@rev.ng
-Subject: [PATCH 31/33] target/xtensa: Populate CPUClass.mmu_index
-Date: Tue, 30 Jan 2024 09:30:41 +1000
-Message-Id: <20240129233043.34558-32-richard.henderson@linaro.org>
+Subject: [PATCH 24/33] target/riscv: Populate CPUClass.mmu_index
+Date: Tue, 30 Jan 2024 09:30:34 +1000
+Message-Id: <20240129233043.34558-25-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129233043.34558-1-richard.henderson@linaro.org>
 References: <20240129233043.34558-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,33 +96,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/xtensa/cpu.c | 6 ++++++
+ target/riscv/cpu.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index 62020b1f33..79f91819df 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -74,6 +74,11 @@ static bool xtensa_cpu_has_work(CPUState *cs)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 8cbfc7e781..be21fa09c6 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -867,6 +867,11 @@ static bool riscv_cpu_has_work(CPUState *cs)
  #endif
  }
  
-+static int xtensa_cpu_mmu_index(CPUState *cs, bool ifetch)
++static int riscv_cpu_mmu_index(CPUState *cs, bool ifetch)
 +{
-+    return xtensa_get_cring(cpu_env(cs));
++    return riscv_env_mmu_index(cpu_env(cs), ifetch);
 +}
 +
- #ifdef CONFIG_USER_ONLY
- static bool abi_call0;
+ static void riscv_cpu_reset_hold(Object *obj)
+ {
+ #ifndef CONFIG_USER_ONLY
+@@ -1810,6 +1815,7 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
  
-@@ -252,6 +257,7 @@ static void xtensa_cpu_class_init(ObjectClass *oc, void *data)
- 
-     cc->class_by_name = xtensa_cpu_class_by_name;
-     cc->has_work = xtensa_cpu_has_work;
-+    cc->mmu_index = xtensa_cpu_mmu_index;
-     cc->dump_state = xtensa_cpu_dump_state;
-     cc->set_pc = xtensa_cpu_set_pc;
-     cc->get_pc = xtensa_cpu_get_pc;
+     cc->class_by_name = riscv_cpu_class_by_name;
+     cc->has_work = riscv_cpu_has_work;
++    cc->mmu_index = riscv_cpu_mmu_index;
+     cc->dump_state = riscv_cpu_dump_state;
+     cc->set_pc = riscv_cpu_set_pc;
+     cc->get_pc = riscv_cpu_get_pc;
 -- 
 2.34.1
 
