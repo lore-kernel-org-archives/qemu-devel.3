@@ -4,132 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83301C47422
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 04:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE31C47422
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 04:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUJ4E-0001SR-0j; Sun, 28 Jan 2024 23:16:18 -0500
+	id 1rUJ5Z-0002Ja-Pn; Sun, 28 Jan 2024 23:17:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rUJ49-0001RK-1P
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 23:16:14 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUJ5X-0002JP-SL
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 23:17:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rUJ47-0006pm-52
- for qemu-devel@nongnu.org; Sun, 28 Jan 2024 23:16:12 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUJ5W-00072Z-4P
+ for qemu-devel@nongnu.org; Sun, 28 Jan 2024 23:17:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706501767;
+ s=mimecast20190719; t=1706501857;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lFPxgHkaZtgEfDEjW//7KcL+n/pHQxld1NiHJnZUE5A=;
- b=BswSC7vpLtDJeNfOk0l6ivY+30JdWZ6IyW2I3u0Ufsy5ERP4IIOMqy+rgZtW7bI7yGLayR
- 5s10BdeBAXrCnenIO1BdrD3RDQJhZew0LE9YA7fOoXzJ87I4B+XUajFqysm5uBuWbcjDZ8
- f+uz8j9sKtBLc6t/a+YQGrTi+ESq5S0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=JTMV91v9LkcgRcFdl8lxDs8wyJTP2kqgnxaBBDnuxzE=;
+ b=W7klD9r7uZaY+22CAMxN+5tZb8J6MQnlGy2uwd4AlUYH41CPx0LEXFnuE8D6eUNfs+qQBu
+ h4508/1PLsOvU9ehCU+fBnSJJeUxS0gRO4BgdOUGBxy1aoG01Kw2qwfdrNzuFWHfp8vHTC
+ I5abCs2zDQBZHpAmFzwGyPRCIt12/00=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-zljvvsyNM32RYTEcHu_c5g-1; Sun, 28 Jan 2024 23:16:05 -0500
-X-MC-Unique: zljvvsyNM32RYTEcHu_c5g-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-68c46abd598so11846816d6.0
- for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 20:16:05 -0800 (PST)
+ us-mta-517-NoKFWcXbN_iaNNuZKXNpnw-1; Sun, 28 Jan 2024 23:17:35 -0500
+X-MC-Unique: NoKFWcXbN_iaNNuZKXNpnw-1
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-6da4d130a82so717002b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 28 Jan 2024 20:17:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706501765; x=1707106565;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1706501854; x=1707106654;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lFPxgHkaZtgEfDEjW//7KcL+n/pHQxld1NiHJnZUE5A=;
- b=vDR5HUc07MGQzgF0usvPnzoo8FZPMdFtqt0GgRtiyDjlDCuOa5Ddc8nQHhx0rwNXp/
- 1HrYxuxgSSu8o+o0rmxJ/TuqxmhhjSxdJgRxOAdIBZ2m2AXkuNjMotemCJVt4zmv5+vL
- 9CFj5UwqoXkdILNTjo+BWxuw7R4+yfw6otDcjDN7Ax9HyF0s30AZhbM5rtcTN5sGpF+3
- 9PY2ODX37SbxHgEOoT4z2wXh+xFY4dYRox5CfL667IM1uCjZypKQj6O6JwdIm+/iKx88
- ZRaigk3dJYfLoWYO1kCzb4h8KLfpEEbKaxAPBGahnI/48osmztm7MgVeED3f1qgBVd59
- x1lA==
-X-Gm-Message-State: AOJu0YwacUWcC3xMnkMuE6kS0M02uE1g3PShOQhecV7dzTYQJuOBM0Io
- OIdiS+m7w3wAEW9/SiC5gbv9XcPcEajqUxwB+Qzh8Tzzz5gSUgAwZgaOnGcitxXPPQR+7XZt4Cj
- GJMYhHsbl0jEvqfxit2VO5P0iU0kyoJ4gEGLi1MFokT12mXNpBU5x
-X-Received: by 2002:ad4:5c46:0:b0:68c:44f6:c858 with SMTP id
- a6-20020ad45c46000000b0068c44f6c858mr4692917qva.86.1706501764824; 
- Sun, 28 Jan 2024 20:16:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGcdeKL2O/4zY1zTF5Jrx5JHFzhjG775WhJu44UiAHK5WHdkKOszyvDJkT2jn4+QVAyvKf1aw==
-X-Received: by 2002:ad4:5c46:0:b0:68c:44f6:c858 with SMTP id
- a6-20020ad45c46000000b0068c44f6c858mr4692900qva.86.1706501764568; 
- Sun, 28 Jan 2024 20:16:04 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-176-119.web.vodafone.de.
- [109.43.176.119]) by smtp.gmail.com with ESMTPSA id
- kr5-20020a0562142b8500b0068c3aeb4213sm2196347qvb.57.2024.01.28.20.16.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Jan 2024 20:16:04 -0800 (PST)
-Message-ID: <a7ee1d55-f550-4ad9-9907-f9dd13600aa0@redhat.com>
-Date: Mon, 29 Jan 2024 05:16:00 +0100
+ bh=JTMV91v9LkcgRcFdl8lxDs8wyJTP2kqgnxaBBDnuxzE=;
+ b=JbUnQM39pPB2iB66HjOod2hs2/HM+Zye1h6tpktP93AO2LilaEIqZwGLM+mzdOi/vs
+ ps5O09KSvGsZB2KtX0I2fJrGf0JbilaJ3fc+ltMk66r1GUyIHiby8zpNYH51W0RQPuWV
+ eT9zyqCFmPfA2Sal1iWI8ZEntI3OyiWelOv+XtbHtii3NWyatPHcJ5ai2jLIP/TYDF0q
+ DMlte25GQm/zhdsnQC+e/UFoB00zEoK7jq0lv3cVqgwduLO8mt7gSAmVuCEW3/6kv47m
+ 9J7uPTmrXcBeR7b4suB5h880T7jX+eYlk3U2OTGi5kL8tzzSazG3GlHOFYn8ZJ6MWeKD
+ A4sg==
+X-Gm-Message-State: AOJu0YzjhRVcpk00iWYwIQZ3gd+KGxqqMB9z0ScV/WgJbKBwCHCfEF/8
+ uewsa3IM4JIjdEXqa+Z4H6hJ6OMdO8Xs5FW4MfXTNRZc5EB9UIMje7Rha+5bG8mW94SsGsn9OmG
+ cIKYu/Es5rGvs0RVlxQRqhAhzUDKw/lR7BzVLdYm/V/zAOwnwfydi7fDFCpqIQNg=
+X-Received: by 2002:a05:6a20:a10f:b0:19c:b055:b2b with SMTP id
+ q15-20020a056a20a10f00b0019cb0550b2bmr834521pzk.0.1706501854355; 
+ Sun, 28 Jan 2024 20:17:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEv0uUatopXb++43OOgFCN1MdTeWl4vKSZpFxMvhL1IstxJ/Jx/QyJm6XM9nhR12Oz8oKKl5g==
+X-Received: by 2002:a05:6a20:a10f:b0:19c:b055:b2b with SMTP id
+ q15-20020a056a20a10f00b0019cb0550b2bmr834516pzk.0.1706501854023; 
+ Sun, 28 Jan 2024 20:17:34 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ pl14-20020a17090b268e00b002906a444b2esm5123300pjb.7.2024.01.28.20.17.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 28 Jan 2024 20:17:33 -0800 (PST)
+Date: Mon, 29 Jan 2024 12:17:26 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 04/17] migration/multifd: Set p->running = true in the
+ right place
+Message-ID: <Zbcm1nXzQ_r0eGG0@x1n>
+References: <20240125162528.7552-1-avihaih@nvidia.com>
+ <20240125162528.7552-5-avihaih@nvidia.com> <87a5otw2ps.fsf@suse.de>
+ <78fa90f7-d062-4f23-8035-841a0ffef8af@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/scsi/lsi53c895a: add missing decrement of reentrancy
- counter
-To: Sven Schnelle <svens@stackframe.org>, Fam Zheng <fam@euphon.net>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, deller@gmx.de, Alexander Bulekov <alxndr@bu.edu>
-References: <20240128202214.2644768-1-svens@stackframe.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240128202214.2644768-1-svens@stackframe.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <78fa90f7-d062-4f23-8035-841a0ffef8af@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.485,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,39 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/01/2024 21.22, Sven Schnelle wrote:
-> When the maximum count of SCRIPTS instructions is reached, the code
-> stops execution and returns, but fails to decrement the reentrancy
-> counter. This effectively renders the SCSI controller unusable
-> because on next entry the reentrancy counter is still above the limit.
+On Sun, Jan 28, 2024 at 05:43:52PM +0200, Avihai Horon wrote:
 > 
-> This bug was seen on HP-UX 10.20 which seems to trigger SCRIPTS
-> loops.
-
-Out of curiosity: What happened there before we introduced the 
-reentrancy_level fix? Did it end up in an endless loop, or was it finishing 
-at one point? In the latter case, we might need to adjust the 
-"reentrancy_level > 8" to allow deeper nesting.
-
-> Fixes: b987718bbb ("hw/scsi/lsi53c895a: Fix reentrancy issues in the LSI controller (CVE-2023-0330)")
-> Signed-off-by: Sven Schnelle <svens@stackframe.org>
-> ---
->   hw/scsi/lsi53c895a.c | 1 +
->   1 file changed, 1 insertion(+)
+> On 25/01/2024 22:57, Fabiano Rosas wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > Avihai Horon <avihaih@nvidia.com> writes:
+> > 
+> > > The commit in the fixes line moved multifd thread creation to a
+> > > different location, but forgot to move the p->running = true assignment
+> > > as well. Thus, p->running is set to true before multifd thread is
+> > > actually created.
+> > > 
+> > > p->running is used in multifd_save_cleanup() to decide whether to join
+> > > the multifd thread or not.
+> > > 
+> > > With TLS, an error in multifd_tls_channel_connect() can lead to a
+> > > segmentation fault because p->running is true but p->thread is never
+> > > initialized, so multifd_save_cleanup() tries to join an uninitialized
+> > > thread.
+> > > 
+> > > Fix it by moving p->running = true assignment right after multifd thread
+> > > creation. Also move qio_channel_set_delay() to there, as this is where
+> > > it used to be originally.
+> > > 
+> > > Fixes: 29647140157a ("migration/tls: add support for multifd tls-handshake")
+> > > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> > Just for context, I haven't looked at this patch yet, but we were
+> > planning to remove p->running altogether:
+> > 
+> > https://lore.kernel.org/r/20231110200241.20679-1-farosas@suse.de
 > 
-> diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-> index 34e3b89287..d607a5f9fb 100644
-> --- a/hw/scsi/lsi53c895a.c
-> +++ b/hw/scsi/lsi53c895a.c
-> @@ -1159,6 +1159,7 @@ again:
->           lsi_script_scsi_interrupt(s, LSI_SIST0_UDC, 0);
->           lsi_disconnect(s);
->           trace_lsi_execute_script_stop();
-> +        reentrancy_level--;
->           return;
->       }
->       insn = read_dword(s, s->dsp);
+> Thanks for putting me in the picture.
+> I see that there has been a discussion about the multifd creation/treadown
+> flow.
+> In light of this discussion, I can already see a few problems in my series
+> that I didn't notice before (such as the TLS handshake thread leak).
+> The thread you mentioned here and some of my patches point out some problems
+> in multifd creation/treardown. I guess we can discuss it and see what's the
+> best way to solve them.
+> 
+> Regarding this patch, your solution indeed solves the bug that this patch
+> addresses, so maybe this could be dropped (or only noted in your patch).
+> 
+> Maybe I should also put you (and Peter) in context for this whole series --
+> I am writing it as preparation for adding a separate migration channel for
+> VFIO device migration, so VFIO devices could be migrated in parallel.
+> So this series tries to lay down some foundations to facilitate it.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Avihai, is the throughput the only reason that VFIO would like to have a
+separate channel?
+
+I'm wondering if we can also use multifd threads to send vfio data at some
+point.  Now multifd indeed is closely bound to ram pages but maybe it'll
+change in the near future to take any load?
+
+Multifd is for solving the throughput issue already. If vfio has the same
+goal, IMHO it'll be good to keep them using the same thread model, instead
+of managing different threads in different places.  With that, any user
+setting (for example, multifd-n-threads) will naturally apply to all
+components, rather than relying on yet-another vfio-migration-threads-num
+parameter.
+
+-- 
+Peter Xu
 
 
