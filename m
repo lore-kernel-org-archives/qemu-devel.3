@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09458C47DA9
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B737DC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadG-0005uy-Rw; Mon, 29 Jan 2024 18:01:39 -0500
+	id 1rUadK-0005vY-Ts; Mon, 29 Jan 2024 18:01:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadA-0005u3-Ho
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:33 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1rUadE-0005ue-H5
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:38 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUad7-0008MH-A9
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:32 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6da202aa138so2066079b3a.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:28 -0800 (PST)
+ id 1rUadC-0008N1-MZ
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:36 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-5d8b276979aso1294555a12.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569287; x=1707174087; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=nMJc6rnh2YFv7ccKB5cB0/QZvK1NoJrnABL8bZIM6R0=;
- b=dGFb6laTRQBpWpRiar0gXsFG3w7/BboR7GzgTJSsFqjI+soq3k65lK8DOSmXaXVC9z
- Ze7+X91ar1ti2ieDAKXz7T2iMFgBqac7ow3YyX3s9cljymmE9BAA1JfPDsgdSOL8odW1
- /73SclA2swwESQ+vvwd4W0Pm9KL6lm4X2dy2y2tdOiVto2dCPac8IeAPxuM871v2w/8U
- c+l3nyMvj4Qc4KGXA7QQ9DaSngTR8gHe1bITjF/Fz4U1pxxvXLVqw3hNalTt+ZEcDPNO
- dXXWbhDv6L3C8XlIgdX2Ak1iWqoYgiCQBd5l/iI3pmAPqFPbVCspvuhfb7BDYKMsfz/0
- TgdQ==
+ d=linaro.org; s=google; t=1706569291; x=1707174091; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M8UjEMO1j2vm3/2aeEMHpkVHZcyY+4Tl4SZGy9Fx+X8=;
+ b=A5lTa/SJuGD45c6dyta1F29CneQKXnpI65VRqxIV+cV1lFna0Pttcttkdhhi//XFPd
+ LITsH7nK/9BvFoxCDWe5amtNDMHkL03rjOCdmEGLmxOEnqcFkRz1LiqtOg3c7WIGkziN
+ ha8zD1llWJoZTtlbW4kSDB0Ia+FdnJ8f68SDMI3SdMYtVuNwe2WihnTCDvMkZv4guhTr
+ +8e1meSYyIoh+sDgMSrBef8SkpUGRLmJt4TKTt6OPhHgO3pKkA20L9sVWVLoipQWpjnp
+ UXWdgJbw+AEwoT5t1jtw5niEmoxn9OQgkmhvG/3lPsoJ8cGMP+pYsMO5hRCell73snn7
+ ilUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569287; x=1707174087;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nMJc6rnh2YFv7ccKB5cB0/QZvK1NoJrnABL8bZIM6R0=;
- b=tyzXwWAZyfcMLAbz2eniqqFrDDoVZFO8KE+5l/GNeunOSOoTvsy76KjDV0cQVp6egh
- ycNyeZyex9hmThh3tBA7KLYxoZqw/4zbndvw3FhiPHjhTngzjnHZS37KlExtks3npRxB
- kYn2EaUBNJI+ThV2eMkIQlJle05GuS0LxBnOh6JT4GiNnW1G2GUbBXbwmqEPF2h1L5YV
- ikHwZawqpjwtlmAnSO9vQYN+sAgNwo3ucyuvseWhCZWLt47PwiMINRC0givk23Y2dmOx
- 2h43GYyM9kYvJYTckHH/X27/I2xFCIcNPIBsefrbR1yUw7Gp9G4bK2VoFtviZELB+vPz
- GxSw==
-X-Gm-Message-State: AOJu0YxGOjPLMNea8qFnpac8Mv6lpmesBGIBcJjyX9kqOey5RHqCZ/gw
- 6WLSvFHDCmPoTJYsQK9X97IvuKhdbTrEeUPARTLCX6lKSJGON/QElxA03htISCZWS6hVrCON3MT
- F+jE=
-X-Google-Smtp-Source: AGHT+IHYvGGaa+21njjdeUzJzdysrrUOw/imDzWr6WMadczZPTPAxGVQVb/4zUoqFuYB/9NUJfy7/Q==
-X-Received: by 2002:a05:6a00:809:b0:6de:3833:425a with SMTP id
- m9-20020a056a00080900b006de3833425amr2232339pfk.5.1706569286916; 
- Mon, 29 Jan 2024 15:01:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706569291; x=1707174091;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M8UjEMO1j2vm3/2aeEMHpkVHZcyY+4Tl4SZGy9Fx+X8=;
+ b=TdXDZVEd3+g37Kpox+XNRcq/8UBkc3WUoH9C2ok6G8mzoXTZ376mzMtQqyUffcAXc2
+ eoNJu9PK2ot2K7GBrtcMwV3kp9LlPt2lMRRD/QmaVrmyZpBwmKxMc5dqAO5wtyK7yATX
+ ijiFpOtQ62WXCnjjqQR73L71ILNKSjmBU7hammviNK8yl5K3Vz4ms7oWMiDItZS0Lpo6
+ EFe9leNTinUZEQKLkDv4XPy/PqZPPqUPff8ckOqFW8GaiY4UaxSmZxRo2UEdW7Rl3FVz
+ Y8wfjiK3/3T8WuMsJD/IL0QR9qDDu/JUzw3Lqc9bJBZYR6SfqONiWnAlLRaWZVfKQabx
+ YXVg==
+X-Gm-Message-State: AOJu0YzLPyaWGYSS/h94hA97zx6rpb2g4oMfX0OYhOW8oFxVMjAqyf9D
+ LCr1RARiZRPipuAcQCxo5kPZ1EP2cxtI6XBEkU3gT2sxWpfBORI17c3gx7dORXBAMKnT2n7yCY3
+ 8auc=
+X-Google-Smtp-Source: AGHT+IHPhJt8i7vtlXplm8sf40EHpIqlYEZV0xie0de3YXpi5eEPjwrD8a75z1R9KBTGbk9Kr10afg==
+X-Received: by 2002:a05:6a20:252e:b0:19c:8fa7:66da with SMTP id
+ j46-20020a056a20252e00b0019c8fa766damr2771537pzd.1.1706569291303; 
+ Mon, 29 Jan 2024 15:01:31 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.25
- for <qemu-devel@nongnu.org>
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:26 -0800 (PST)
+ Mon, 29 Jan 2024 15:01:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/31] tcg patch queue
-Date: Tue, 30 Jan 2024 09:00:50 +1000
-Message-Id: <20240129230121.8091-1-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>
+Subject: [PULL 02/31] include/exec: Move vaddr defines to separate file
+Date: Tue, 30 Jan 2024 09:00:52 +1000
+Message-Id: <20240129230121.8091-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
+References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,170 +93,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7a1dc45af581d2b643cdbf33c01fd96271616fbd:
+From: Anton Johansson <anjo@rev.ng>
 
-  Merge tag 'pull-target-arm-20240126' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-01-26 18:16:35 +0000)
+Needed to work around circular includes. vaddr is currently defined in
+cpu-common.h and needed by hw/core/cpu.h, but cpu-common.h also need
+cpu.h to know the size of the CPUState.
 
-are available in the Git repository at:
+[Maybe we can instead move parts of cpu-common.h w. hw/core/cpu.h to
+sort out the circular inclusion.]
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240130
-
-for you to fetch changes up to ec1d32af123e7f13d98754a72bcaa7aa8c8e9d27:
-
-  target/i386: Extract x86_cpu_exec_halt() from accel/tcg/ (2024-01-29 21:04:10 +1000)
-
-----------------------------------------------------------------
-linux-user: Allow gdbstub to ignore page protection
-cpu-exec: simplify jump cache management
-include/exec: Cleanups toward building accel/tcg once
-
-----------------------------------------------------------------
-Anton Johansson (9):
-      include/exec: Move vaddr defines to separate file
-      hw/core: Include vaddr.h from cpu.h
-      target: Use vaddr in gen_intermediate_code
-      include/exec: Use vaddr in DisasContextBase for virtual addresses
-      include/exec: typedef abi_ptr to vaddr
-      include/exec: Move PAGE_* macros to common header
-      include/exec: Move cpu_*()/cpu_env() to common header
-      include/hw/core: Move do_interrupt in TCGCPUOps
-      include/hw/core: Remove i386 conditional on fake_user_interrupt
-
-Ilya Leoshkevich (8):
-      linux-user: Allow gdbstub to ignore page protection
-      tests/tcg: Factor out gdbstub test functions
-      tests/tcg: Add the PROT_NONE gdbstub test
-      target: Make qemu_target_page_mask() available for *-user
-      accel/tcg: Make use of qemu_target_page_mask() in perf.c
-      tcg: Make tb_cflags() usable from target-agnostic code
-      accel/tcg: Remove #ifdef TARGET_I386 from perf.c
-      accel/tcg: Move perf and debuginfo support to tcg/
-
-Paolo Bonzini (1):
-      cpu-exec: simplify jump cache management
-
-Philippe Mathieu-Daudé (9):
-      accel/tcg/cpu-exec: Use RCU_READ_LOCK_GUARD
-      accel/tcg: Rename tcg_ss[] -> tcg_specific_ss[] in meson
-      accel/tcg: Rename tcg_cpus_destroy() -> tcg_cpu_destroy()
-      accel/tcg: Rename tcg_cpus_exec() -> tcg_cpu_exec()
-      accel/tcg: Un-inline icount_exit_request() for clarity
-      accel/tcg: Introduce TCGCPUOps::need_replay_interrupt() handler
-      target/i386: Extract x86_need_replay_interrupt() from accel/tcg/
-      accel/tcg: Introduce TCGCPUOps::cpu_exec_halt() handler
-      target/i386: Extract x86_cpu_exec_halt() from accel/tcg/
-
-Richard Henderson (4):
-      include/qemu: Add TCGCPUOps typedef to typedefs.h
-      target/loongarch: Constify loongarch_tcg_ops
-      accel/tcg: Use CPUState.cc instead of CPU_GET_CLASS in cpu-exec.c
-      accel/tcg: Inline need_replay_interrupt
-
- accel/tcg/tb-jmp-cache.h                           |   8 +-
- accel/tcg/tcg-accel-ops.h                          |   4 +-
- include/exec/cpu-all.h                             |  49 -----
- include/exec/cpu-common.h                          |  69 +++++--
- include/exec/cpu_ldst.h                            |   4 +-
- include/exec/exec-all.h                            |   6 -
- include/exec/translation-block.h                   |   6 +
- include/exec/translator.h                          |   8 +-
- include/exec/vaddr.h                               |  18 ++
- include/hw/core/cpu.h                              |   7 +-
- include/hw/core/tcg-cpu-ops.h                      |  19 +-
- include/qemu/typedefs.h                            |   1 +
- {accel => include}/tcg/debuginfo.h                 |   4 +-
- {accel => include}/tcg/perf.h                      |   4 +-
- target/i386/tcg/helper-tcg.h                       |   2 +
- target/mips/tcg/translate.h                        |   3 +-
- accel/tcg/cpu-exec.c                               | 223 +++++++++------------
- accel/tcg/tcg-accel-ops-mttcg.c                    |   4 +-
- accel/tcg/tcg-accel-ops-rr.c                       |   4 +-
- accel/tcg/tcg-accel-ops.c                          |   4 +-
- accel/tcg/translate-all.c                          |   2 +-
- bsd-user/signal.c                                  |   4 +-
- cpu-target.c                                       |  78 +++++--
- hw/core/loader.c                                   |   2 +-
- linux-user/elfload.c                               |   2 +-
- linux-user/exit.c                                  |   2 +-
- linux-user/main.c                                  |   2 +-
- linux-user/signal.c                                |   4 +-
- system/physmem.c                                   |   5 -
- system/vl.c                                        |   2 +-
- target/alpha/cpu.c                                 |   2 +-
- target/alpha/translate.c                           |   2 +-
- target/arm/cpu.c                                   |   2 +-
- target/arm/tcg/cpu32.c                             |   2 +-
- target/arm/tcg/translate.c                         |   2 +-
- target/avr/cpu.c                                   |   2 +-
- target/avr/translate.c                             |   2 +-
- target/cris/cpu.c                                  |   4 +-
- target/cris/translate.c                            |   2 +-
- target/hexagon/cpu.c                               |   2 +-
- target/hexagon/translate.c                         |   5 +-
- target/hppa/cpu.c                                  |   2 +-
- target/hppa/translate.c                            |   2 +-
- target/i386/tcg/sysemu/seg_helper.c                |  23 +++
- target/i386/tcg/tcg-cpu.c                          |   4 +-
- target/i386/tcg/translate.c                        |   2 +-
- target/loongarch/cpu.c                             |   2 +-
- target/loongarch/tcg/translate.c                   |   2 +-
- target/m68k/cpu.c                                  |   2 +-
- target/m68k/translate.c                            |   4 +-
- target/microblaze/cpu.c                            |   2 +-
- target/microblaze/translate.c                      |   2 +-
- target/mips/cpu.c                                  |   2 +-
- target/mips/tcg/translate.c                        |  14 +-
- target/nios2/cpu.c                                 |   2 +-
- target/nios2/translate.c                           |   2 +-
- target/openrisc/cpu.c                              |   2 +-
- target/openrisc/translate.c                        |   2 +-
- target/ppc/cpu_init.c                              |   2 +-
- target/ppc/translate.c                             |   2 +-
- target/riscv/tcg/tcg-cpu.c                         |   2 +-
- target/riscv/translate.c                           |   2 +-
- target/rx/cpu.c                                    |   2 +-
- target/rx/translate.c                              |   2 +-
- target/s390x/cpu.c                                 |   2 +-
- target/s390x/tcg/translate.c                       |   2 +-
- target/sh4/cpu.c                                   |   2 +-
- target/sh4/translate.c                             |   2 +-
- target/sparc/cpu.c                                 |   2 +-
- target/sparc/translate.c                           |   2 +-
- target/target-common.c                             |  10 +
- target/tricore/cpu.c                               |   2 +-
- target/tricore/translate.c                         |   2 +-
- target/xtensa/cpu.c                                |   2 +-
- target/xtensa/translate.c                          |   2 +-
- {accel/tcg => tcg}/debuginfo.c                     |   3 +-
- {accel/tcg => tcg}/perf.c                          |  14 +-
- tcg/tcg.c                                          |   2 +-
- tests/tcg/multiarch/prot-none.c                    |  40 ++++
- accel/tcg/meson.build                              |  16 +-
- target/meson.build                                 |   2 +
- tcg/meson.build                                    |   5 +
- tests/guest-debug/run-test.py                      |   7 +-
- tests/guest-debug/test_gdbstub.py                  |  60 ++++++
- tests/tcg/aarch64/gdbstub/test-sve-ioctl.py        |  34 +---
- tests/tcg/aarch64/gdbstub/test-sve.py              |  33 +--
- tests/tcg/multiarch/Makefile.target                |   9 +-
- tests/tcg/multiarch/gdbstub/interrupt.py           |  47 +----
- tests/tcg/multiarch/gdbstub/memory.py              |  39 +---
- tests/tcg/multiarch/gdbstub/prot-none.py           |  36 ++++
- tests/tcg/multiarch/gdbstub/registers.py           |  41 +---
- tests/tcg/multiarch/gdbstub/sha1.py                |  38 +---
- tests/tcg/multiarch/gdbstub/test-proc-mappings.py  |  39 +---
- .../tcg/multiarch/gdbstub/test-qxfer-auxv-read.py  |  37 +---
- .../multiarch/gdbstub/test-thread-breakpoint.py    |  37 +---
- tests/tcg/s390x/gdbstub/test-signals-s390x.py      |  42 +---
- tests/tcg/s390x/gdbstub/test-svc.py                |  39 +---
- 97 files changed, 580 insertions(+), 730 deletions(-)
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20240119144024.14289-7-anjo@rev.ng>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+[rth: Add include of vaddr.h into cpu-common.h]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/exec/cpu-common.h | 13 +------------
+ include/exec/vaddr.h      | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 12 deletions(-)
  create mode 100644 include/exec/vaddr.h
- rename {accel => include}/tcg/debuginfo.h (96%)
- rename {accel => include}/tcg/perf.h (95%)
- create mode 100644 target/target-common.c
- rename {accel/tcg => tcg}/debuginfo.c (98%)
- rename {accel/tcg => tcg}/perf.c (97%)
- create mode 100644 tests/tcg/multiarch/prot-none.c
- create mode 100644 tests/guest-debug/test_gdbstub.py
- create mode 100644 tests/tcg/multiarch/gdbstub/prot-none.py
+
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index fef3138d29..3109c6b67d 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -3,6 +3,7 @@
+ 
+ /* CPU interfaces that are target independent.  */
+ 
++#include "exec/vaddr.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "exec/hwaddr.h"
+ #endif
+@@ -14,18 +15,6 @@
+ #define EXCP_YIELD      0x10004 /* cpu wants to yield timeslice to another */
+ #define EXCP_ATOMIC     0x10005 /* stop-the-world and emulate atomic */
+ 
+-/**
+- * vaddr:
+- * Type wide enough to contain any #target_ulong virtual address.
+- */
+-typedef uint64_t vaddr;
+-#define VADDR_PRId PRId64
+-#define VADDR_PRIu PRIu64
+-#define VADDR_PRIo PRIo64
+-#define VADDR_PRIx PRIx64
+-#define VADDR_PRIX PRIX64
+-#define VADDR_MAX UINT64_MAX
+-
+ void cpu_exec_init_all(void);
+ void cpu_exec_step_atomic(CPUState *cpu);
+ 
+diff --git a/include/exec/vaddr.h b/include/exec/vaddr.h
+new file mode 100644
+index 0000000000..b9844afc77
+--- /dev/null
++++ b/include/exec/vaddr.h
+@@ -0,0 +1,18 @@
++/* Define vaddr.  */
++
++#ifndef VADDR_H
++#define VADDR_H
++
++/**
++ * vaddr:
++ * Type wide enough to contain any #target_ulong virtual address.
++ */
++typedef uint64_t vaddr;
++#define VADDR_PRId PRId64
++#define VADDR_PRIu PRIu64
++#define VADDR_PRIo PRIo64
++#define VADDR_PRIx PRIx64
++#define VADDR_PRIX PRIX64
++#define VADDR_MAX UINT64_MAX
++
++#endif
+-- 
+2.34.1
+
 
