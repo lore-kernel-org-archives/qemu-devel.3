@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C23C47DDF
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1575AC48286
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadR-0005yl-Hz; Mon, 29 Jan 2024 18:01:49 -0500
+	id 1rUaj8-0002Uz-Ci; Mon, 29 Jan 2024 18:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadJ-0005vX-M4
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:42 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1rUaeI-00071f-CF
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:03:00 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadH-0008O3-Rs
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:41 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6ddc5faeb7fso2586105b3a.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:38 -0800 (PST)
+ id 1rUaeD-000063-NJ
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:39 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6ddb1115e82so2246348b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:02:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569297; x=1707174097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569356; x=1707174156; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8stgI+xO0LshRlV+dbOXjfDk9OWAAP8Iuj6nGWfVSvI=;
- b=iDnS4hClWK/DxvqZ9MMgNP6ExE3IpFdVbNi+JPAXdyK08gWF8TEqlH35qJqYy+nvHZ
- zRWG+xKYzRWrJsKFjKRlpCOOJMpAYEdG9gJ398/Ra1PablQT4A3qDSvjfDw6dQ58C/Zv
- YXfuGsKM2ZyXMJvLZTbsAjzJTqwYE7c7SQRsBZdD/8AMS/Rajlst/HBtr+v6khySf+Aq
- Q2Qr6Iu+DJr67otHW1ET96jZ53Nk3UvyndJk7FYtdpJGDU5M5H5+AyHq+HthPnmmgCBJ
- KJy0pdOfZwWmauc7nIQRqMXIPovuc7bKfMzOt7bWIvfVvpzLNa40CGaNCspPnbl6xCle
- 1sag==
+ bh=Qg3ZIcWG7UYKvaB8+csAeQhagpxbl+IqGiAj8oTWzCY=;
+ b=PSQjnajTyl9ULQX7bFv2kBA1oMwHCivUIbTfGCN2gAe+oMFDAzSeoTZLhmA7mRUvTP
+ I5sPwSbOFvbB/rf21bJ+r2dpTf2Zf78qKRukIV8T8CR6vh/C4yKx75txJYPrcGxWMlek
+ O5WBYp1kHgfGNSc1M5km9Yul/yht7Xy5HWQ3g+g+/2B7F3t1fRO/e6y1g1tLtKIrthjH
+ uuS2BPVY8NYnrr1FH2TnaoRX91mEH9a7vjgDjWa9WQ7r+uQTzOgSpaHwtfu2sVYZGlMu
+ v74Cdng3e+o7+Hldny/aYRDtfkO+YJBxIVKFVRq44S3W+e1ZSHBgF5HPqpByCydMFTse
+ So1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569297; x=1707174097;
+ d=1e100.net; s=20230601; t=1706569356; x=1707174156;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8stgI+xO0LshRlV+dbOXjfDk9OWAAP8Iuj6nGWfVSvI=;
- b=f/xh5e0INHpwavyztFy9uobO85vx5tjklXGeHxCPwzsVGrmd9kqIuqd2EZGtn3fwU2
- o8kvfL/aDpZyyZ8rGW2A1KxWGS0XLK8iWXZmBrDf5HOMOQfSZTi9aIpU5tO/Bp7EUnEM
- vBD7wMC28fb81vH2HHLtnUPi1WqDYuBp80vx3lwtgyd8GP14vLsDwOR4Wqdp57FXDP+E
- qF67gNzZ8/eNaBFo5CSpycnFnjRY+roruuluIiamFPXPOYa0L5qFvqXnBJXZHVCnnM6L
- Za0/b3oNVmUJy43XHZ9vmgEQtUTL+jIG7A78Y71SvSC2ZqAPFvlL218X82iJMZHDuTZB
- 9xiA==
-X-Gm-Message-State: AOJu0Yz7kqQ+T8wHOIA9/PUIRuuRQ+JJBmEyNGTp9cgVHUvleO1xLEK7
- MU3DHHbyrF/cxxNL58d0qcV9yRWyLn6IQp6JunsyQ1YY15BlM3pyg0XSObAuP0vyNDQWneAYm60
- BKWE=
-X-Google-Smtp-Source: AGHT+IGgMFErPY/vdQjdjE2ZD7eumBf+/6RgbeeCKTCcjWSpd5sC0qlJeMBhOErl3KvnRrYT1BzRYg==
-X-Received: by 2002:a05:6a00:4e58:b0:6d9:c201:66f0 with SMTP id
- gu24-20020a056a004e5800b006d9c20166f0mr4561881pfb.27.1706569297431; 
- Mon, 29 Jan 2024 15:01:37 -0800 (PST)
+ bh=Qg3ZIcWG7UYKvaB8+csAeQhagpxbl+IqGiAj8oTWzCY=;
+ b=GWxNwhFCBARH/ZQ5496YhRx0+61ILRZI2YbvCANQVx8ylxem9/67IohZfglSP6OQ1Q
+ JAHn1iv8G5sgpWxpjgnUO+GdGzI5TmfCLazEWVwN8wcagoRM4ztPDZkjhNquGRLDBQSg
+ 9O02DhsIlBzE4Lq33cqlIVwb5HOLGo4uTmBUscZm7GqGk3ZXwN0Pd7uGWaHotJIRZfMu
+ F9ub3wmbgr2WG8h2PZY767bHHMLqZe4UPxpldI+Ap2/2vplIe8Jf2umGqcoEfVAvJJ4u
+ 5phhX/qjWxIQe6xoSX84dNrEUriDPiUZ1Ix/a2FOsmk7OTf1fJhObzvMjq7B+ZXgb3dB
+ JSlA==
+X-Gm-Message-State: AOJu0YwP/1PbJqqecYOrwqYimzi8QdAdeiDRSO49VotfjNF3TDgaFgrQ
+ 1WK9wqY3FqzQQfhOwlbS/coLwkM4x1ezx7GO/Ei6oWk4SlrhHo+7Pn5OutUW1yaWeroRRgiIJJh
+ DmgI=
+X-Google-Smtp-Source: AGHT+IHOwt5Y2iUxnaANB/q8/PiNJll6Q7FnOty1Wca9G4vtbnbzVhPN/gwYjg70gOfbPxFk2ej/xQ==
+X-Received: by 2002:a62:61c4:0:b0:6de:3b41:2877 with SMTP id
+ v187-20020a6261c4000000b006de3b412877mr1265863pfb.25.1706569356416; 
+ Mon, 29 Jan 2024 15:02:36 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.35
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.02.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:37 -0800 (PST)
+ Mon, 29 Jan 2024 15:02:36 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PULL 05/31] include/exec: Use vaddr in DisasContextBase for virtual
- addresses
-Date: Tue, 30 Jan 2024 09:00:55 +1000
-Message-Id: <20240129230121.8091-6-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Subject: [PULL 27/31] accel/tcg: Introduce TCGCPUOps::need_replay_interrupt()
+ handler
+Date: Tue, 30 Jan 2024 09:01:17 +1000
+Message-Id: <20240129230121.8091-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,125 +96,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Updates target/ QEMU_LOG macros to use VADDR_PRIx for printing updated
-DisasContextBase fields.
+In order to make accel/tcg/ target agnostic,
+introduce the need_replay_interrupt() handler.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20240119144024.14289-10-anjo@rev.ng>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Message-Id: <20240124101639.30056-7-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/translator.h   |  6 +++---
- target/mips/tcg/translate.h |  3 ++-
- target/hexagon/translate.c  |  3 ++-
- target/m68k/translate.c     |  2 +-
- target/mips/tcg/translate.c | 12 ++++++------
- 5 files changed, 14 insertions(+), 12 deletions(-)
+ include/hw/core/tcg-cpu-ops.h | 5 +++++
+ accel/tcg/cpu-exec.c          | 8 +++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index b0412ea6b6..51624feb10 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -79,8 +79,8 @@ typedef enum DisasJumpType {
-  */
- typedef struct DisasContextBase {
-     TranslationBlock *tb;
--    target_ulong pc_first;
--    target_ulong pc_next;
-+    vaddr pc_first;
-+    vaddr pc_next;
-     DisasJumpType is_jmp;
-     int num_insns;
-     int max_insns;
-@@ -235,7 +235,7 @@ void translator_fake_ldb(uint8_t insn8, abi_ptr pc);
-  * Translators can use this to enforce the rule that only single-insn
-  * translation blocks are allowed to cross page boundaries.
-  */
--static inline bool is_same_page(const DisasContextBase *db, target_ulong addr)
-+static inline bool is_same_page(const DisasContextBase *db, vaddr addr)
- {
-     return ((addr ^ db->pc_first) & TARGET_PAGE_MASK) == 0;
- }
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index cffcfeab8c..93a78b8121 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -202,7 +202,8 @@ extern TCGv bcond;
-     do {                                                                      \
-         if (MIPS_DEBUG_DISAS) {                                               \
-             qemu_log_mask(CPU_LOG_TB_IN_ASM,                                  \
--                          TARGET_FMT_lx ": %08x Invalid %s %03x %03x %03x\n", \
-+                          "%016" VADDR_PRIx                                   \
-+                          ": %08x Invalid %s %03x %03x %03x\n",               \
-                           ctx->base.pc_next, ctx->opcode, op,                 \
-                           ctx->opcode >> 26, ctx->opcode & 0x3F,              \
-                           ((ctx->opcode >> 16) & 0x1F));                      \
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index a14211cf68..f163eefe97 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -234,7 +234,8 @@ static int read_packet_words(CPUHexagonState *env, DisasContext *ctx,
-         g_assert(ctx->base.num_insns == 1);
-     }
- 
--    HEX_DEBUG_LOG("decode_packet: pc = 0x%x\n", ctx->base.pc_next);
-+    HEX_DEBUG_LOG("decode_packet: pc = 0x%" VADDR_PRIx "\n",
-+                  ctx->base.pc_next);
-     HEX_DEBUG_LOG("    words = { ");
-     for (int i = 0; i < nwords; i++) {
-         HEX_DEBUG_LOG("0x%x, ", words[i]);
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 5ec88c5f0d..f886190f88 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -1457,7 +1457,7 @@ DISAS_INSN(undef)
-      * for the 680x0 series, as well as those that are implemented
-      * but actually illegal for CPU32 or pre-68020.
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index 3ed279836f..013867b890 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -166,6 +166,11 @@ struct TCGCPUOps {
       */
--    qemu_log_mask(LOG_UNIMP, "Illegal instruction: %04x @ %08x\n",
-+    qemu_log_mask(LOG_UNIMP, "Illegal instruction: %04x @ %" VADDR_PRIx "\n",
-                   insn, s->base.pc_next);
-     gen_exception(s, s->base.pc_next, EXCP_ILLEGAL);
+     bool (*io_recompile_replay_branch)(CPUState *cpu,
+                                        const TranslationBlock *tb);
++    /**
++     * @need_replay_interrupt: Return %true if @interrupt_request
++     * needs to be recorded for replay purposes.
++     */
++    bool (*need_replay_interrupt)(int interrupt_request);
+ #endif /* !CONFIG_USER_ONLY */
+ #endif /* NEED_CPU_H */
+ 
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 3aebf46849..34d10eb173 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -771,12 +771,14 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
+  * "real" interrupt event later. It does not need to be recorded for
+  * replay purposes.
+  */
+-static inline bool need_replay_interrupt(int interrupt_request)
++static inline bool need_replay_interrupt(CPUState *cpu, int interrupt_request)
+ {
+ #if defined(TARGET_I386)
+     return !(interrupt_request & CPU_INTERRUPT_POLL);
+ #else
+-    return true;
++    const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
++    return !tcg_ops->need_replay_interrupt
++           || tcg_ops->need_replay_interrupt(interrupt_request);
+ #endif
  }
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index e10232738c..12094cc1e7 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -4585,8 +4585,8 @@ static void gen_compute_branch(DisasContext *ctx, uint32_t opc,
+ #endif /* !CONFIG_USER_ONLY */
+@@ -864,7 +866,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
  
-     if (ctx->hflags & MIPS_HFLAG_BMASK) {
- #ifdef MIPS_DEBUG_DISAS
--        LOG_DISAS("Branch in delay / forbidden slot at PC 0x"
--                  TARGET_FMT_lx "\n", ctx->base.pc_next);
-+        LOG_DISAS("Branch in delay / forbidden slot at PC 0x%016"
-+                  VADDR_PRIx "\n", ctx->base.pc_next);
- #endif
-         gen_reserved_instruction(ctx);
-         goto out;
-@@ -9061,8 +9061,8 @@ static void gen_compute_branch1_r6(DisasContext *ctx, uint32_t op,
- 
-     if (ctx->hflags & MIPS_HFLAG_BMASK) {
- #ifdef MIPS_DEBUG_DISAS
--        LOG_DISAS("Branch in delay / forbidden slot at PC 0x" TARGET_FMT_lx
--                  "\n", ctx->base.pc_next);
-+        LOG_DISAS("Branch in delay / forbidden slot at PC 0x%016"
-+                  VADDR_PRIx "\n", ctx->base.pc_next);
- #endif
-         gen_reserved_instruction(ctx);
-         return;
-@@ -11274,8 +11274,8 @@ static void gen_compute_compact_branch(DisasContext *ctx, uint32_t opc,
- 
-     if (ctx->hflags & MIPS_HFLAG_BMASK) {
- #ifdef MIPS_DEBUG_DISAS
--        LOG_DISAS("Branch in delay / forbidden slot at PC 0x" TARGET_FMT_lx
--                  "\n", ctx->base.pc_next);
-+        LOG_DISAS("Branch in delay / forbidden slot at PC 0x%016"
-+                  VADDR_PRIx "\n", ctx->base.pc_next);
- #endif
-         gen_reserved_instruction(ctx);
-         return;
+             if (tcg_ops->cpu_exec_interrupt &&
+                 tcg_ops->cpu_exec_interrupt(cpu, interrupt_request)) {
+-                if (need_replay_interrupt(interrupt_request)) {
++                if (need_replay_interrupt(cpu, interrupt_request)) {
+                     replay_interrupt();
+                 }
+                 /*
 -- 
 2.34.1
 
