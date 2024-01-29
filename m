@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6ACC47DB3
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87AFC47DB3
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jan 2024 23:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUadJ-0005v7-B9; Mon, 29 Jan 2024 18:01:42 -0500
+	id 1rUae0-0006es-AG; Mon, 29 Jan 2024 18:02:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUadC-0005uY-U8
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:38 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1rUade-00062w-Ff
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:04 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUad8-0008Md-TW
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:01:33 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-290ec261a61so1815127a91.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:30 -0800 (PST)
+ id 1rUada-0008Pd-B3
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 18:02:01 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6ddcfbc5a5fso2733087b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 15:01:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706569289; x=1707174089; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706569310; x=1707174110; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qYS/soxWe3h+ML5uFbbfcdAcoE+eOI+G62ajUSGtp3A=;
- b=fRCfdjhZNLeHGxftzyGomW7hJ8q7o5RZyH9eyOaAbs+yTn+mXsSntVdZ7Nr0BZGGfi
- fduN9gh79kDtD/fV7qntQ1KExr7MlyijAuJlAhNgSalZqqzqy1uW/cpeTExXdVuJsDoE
- 6v9GqszrkQAmd9Xj9aOahM9082FSHsJeg/rcZaJYiryRx44DP+wzWIvblIgNYlDUXZUK
- 8KnoWtQtfU3jIwfHBPsOdHyLH/dx2V43kyO4g803k/jEGeONin3LpXrCKy/FXsGeyLLY
- sICrRGYI6ZcAYBH9i6HsPANet2tzCzhKSUF5Q+sWsKzGw7WLGYB+WHD+q3KjsLcAfM19
- +eWA==
+ bh=5lOMiA1d/7RQJUfbMVKZZ3ZFzC3WxOo3rdXkjjDSQz4=;
+ b=XT0LggRzRrIApt+Q7m9N/WWu60TPCq1L7O0GtBJTPAYi1w4K5MZJvzQLKVeBZ4q32C
+ QnoNfYpvsb3+2fgXUFwZZY90Kb1idoZjW1K2MiygHx9Q5zap3YyzjwoVsqp9Xi3X2sIJ
+ Qq+6r6+0L7SnQYqMwaLeZNSc9DvtL/DhCTigYQ/opvKzLKAoroIcw87bws5l1vMAsk8V
+ yB9i1GtMmNRPOdSMsTYLoH5x50LrZJTKNZAQkPr3GilKjbFp2vQlqioxFS7i/D992IKb
+ dS0OX8/2z5aIVBYO5853YLNytKoitBBqPEC0Haosa09dTu7snCm5pNH+HzDgc89rR2G1
+ o8ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706569289; x=1707174089;
+ d=1e100.net; s=20230601; t=1706569310; x=1707174110;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qYS/soxWe3h+ML5uFbbfcdAcoE+eOI+G62ajUSGtp3A=;
- b=cQNPZ4c0VckUmPgvqwnOGo94+7anAEPuSYrN7oZx61tPO4j4WfDT1NMWVkZsRtsC46
- 1gtLP7Z/EU8c6br6GmSbq5ACl9fYSFZxAUehIz/0whhZPYAOZTYSgSqTRRNcF9m77Pzk
- gnd1siL5tP3KR3amS+OAayN/gWM1iIYDZoM0NfjXodZ3QS3QWCozAmtMhiD4ZXz8zUF9
- SFozaNs6V7fQgDzNLXlJ0xoODB42u7fLPnTKK3lkU5mgGzjWXS0n5mNG5Xy7j2WpTWXz
- NMXH8lapS9eJB+L4v/GhNJkIDe2eo5j0vSs96u3goAjZNTvtCzcHSkS+FzKc43rcmOQs
- naHg==
-X-Gm-Message-State: AOJu0Ywie9ME66Ojjv1v99Xuqhfr29++FWDdCa3YTOidVhAQcfT8VaXj
- h0vQfqNOpcKBTuR+bdlzRIy4WVuIbvbBzldyIZRN3n+peilSUlUk4r6csr6AR2NKlotu3B5anCK
- IC+c=
-X-Google-Smtp-Source: AGHT+IGE6xkRhpJSI4MC1CfLpR+fDXbchjjPRPG4ziPrbNjOmEtdul3EBPYmgx/QRmZ4SlVejC9F3Q==
-X-Received: by 2002:a17:902:d50a:b0:1d7:5f1b:49f3 with SMTP id
- b10-20020a170902d50a00b001d75f1b49f3mr4750928plg.120.1706569289265; 
- Mon, 29 Jan 2024 15:01:29 -0800 (PST)
+ bh=5lOMiA1d/7RQJUfbMVKZZ3ZFzC3WxOo3rdXkjjDSQz4=;
+ b=Ybhyh6WF0tm8a44AGbwdM7QXdH7iXvK+X7xzFPb4SFTb8omErxNiFMS2/I9opV0k3D
+ Jjg3ydL8yevWYkhIoZWtlUcgoMC8s3xNVCS8GKOb0wbRCndd9WcezB1BjqokI/SZvRdn
+ 6AGMpaHJvYr+MUdO4VIjidux6xm+aZPSboFSf/ZdggwLQu/4FfjtbAzXdQKCbuXrtE2s
+ wIWTgRhMdwpxm4VSbPWz1qzMgA2h2fK400VOn+YqZmySdP2HuDWcsSnslTC9k/v0ss9/
+ LTs+b3CWH3WTmsVLfXLXmvH7LZ6eBT4NyAswvxS6KaIwwbnKEqMYWw7iGJ53YessrK+e
+ o28g==
+X-Gm-Message-State: AOJu0YyrcesB8GPkFUfAxLCYHG/koeyWJCTZebbK4B7uBgTlcDDYzZCl
+ D/ZWqdi+F0vgapSIMsLJ5zNFiTJ00wNgwvDdNZm6GJUTaJ5ePCIYKph9AqWKLKUX1FXouqkXhjK
+ rKAM=
+X-Google-Smtp-Source: AGHT+IEYRSgt4QIqIk2YlDG5pBQVSzxajexuIaxrEM8kcEqjTdGQ8Omq4HfvL7JHkp+DGQ6MaAI6lw==
+X-Received: by 2002:a62:cdcd:0:b0:6db:ca49:9ce3 with SMTP id
+ o196-20020a62cdcd000000b006dbca499ce3mr5257249pfg.6.1706569310012; 
+ Mon, 29 Jan 2024 15:01:50 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.27
+ r10-20020aa78b8a000000b006ddcf56fb78sm6419368pfd.62.2024.01.29.15.01.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 15:01:28 -0800 (PST)
+ Mon, 29 Jan 2024 15:01:49 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 01/31] cpu-exec: simplify jump cache management
-Date: Tue, 30 Jan 2024 09:00:51 +1000
-Message-Id: <20240129230121.8091-2-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 11/31] linux-user: Allow gdbstub to ignore page protection
+Date: Tue, 30 Jan 2024 09:01:01 +1000
+Message-Id: <20240129230121.8091-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240129230121.8091-1-richard.henderson@linaro.org>
 References: <20240129230121.8091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,150 +93,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Unless I'm missing something egregious, the jmp cache is only every
-populated with a valid entry by the same thread that reads the cache.
-Therefore, the contents of any valid entry are always consistent and
-there is no need for any acquire/release magic.
+gdbserver ignores page protection by virtue of using /proc/$pid/mem.
+Teach qemu gdbstub to do this too. This will not work if /proc is not
+mounted; accept this limitation.
 
-Indeed ->tb has to be accessed with atomics, because concurrent
-invalidations would otherwise cause data races.  But ->pc is only ever
-accessed by one thread, and accesses to ->tb and ->pc within tb_lookup
-can never race with another tb_lookup.  While the TranslationBlock
-(especially the flags) could be modified by a concurrent invalidation,
-store-release and load-acquire operations on the cache entry would
-not add any additional ordering beyond what you get from performing
-the accesses within a single thread.
+One alternative is to temporarily grant the missing PROT_* bit, but
+this is inherently racy. Another alternative is self-debugging with
+ptrace(POKE), which will break if QEMU itself is being debugged - a
+much more severe limitation.
 
-Because of this, there is really nothing to win in splitting the CF_PCREL
-and !CF_PCREL paths.  It is easier to just always use the ->pc field in
-the jump cache.
-
-I noticed this while working on splitting commit 8ed558ec0cb
-("accel/tcg: Introduce TARGET_TB_PCREL", 2022-10-04) into multiple
-pieces, for the sake of finding a more fine-grained bisection
-result for https://gitlab.com/qemu-project/qemu/-/issues/2092.
-It does not (and does not intend to) fix that issue; therefore
-it may make sense to not commit it until the root cause
-of issue #2092 is found.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240122153409.351959-1-pbonzini@redhat.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20240129093410.3151-2-iii@linux.ibm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tb-jmp-cache.h |  8 +++--
- accel/tcg/cpu-exec.c     | 66 ++++++++++++++--------------------------
- 2 files changed, 28 insertions(+), 46 deletions(-)
+ cpu-target.c | 78 ++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 63 insertions(+), 15 deletions(-)
 
-diff --git a/accel/tcg/tb-jmp-cache.h b/accel/tcg/tb-jmp-cache.h
-index bb424c8a05..4ab8553afc 100644
---- a/accel/tcg/tb-jmp-cache.h
-+++ b/accel/tcg/tb-jmp-cache.h
-@@ -13,9 +13,11 @@
- #define TB_JMP_CACHE_SIZE (1 << TB_JMP_CACHE_BITS)
+diff --git a/cpu-target.c b/cpu-target.c
+index f6e07c3deb..958d63e882 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -382,6 +382,9 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+     vaddr l, page;
+     void * p;
+     uint8_t *buf = ptr;
++    ssize_t written;
++    int ret = -1;
++    int fd = -1;
  
- /*
-- * Accessed in parallel; all accesses to 'tb' must be atomic.
-- * For CF_PCREL, accesses to 'pc' must be protected by a
-- * load_acquire/store_release to 'tb'.
-+ * Invalidated in parallel; all accesses to 'tb' must be atomic.
-+ * A valid entry is read/written by a single CPU, therefore there is
-+ * no need for qatomic_rcu_read() and pc is always consistent with a
-+ * non-NULL value of 'tb'.  Strictly speaking pc is only needed for
-+ * CF_PCREL, but it's used always for simplicity.
-  */
- struct CPUJumpCache {
-     struct rcu_head rcu;
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 67eda9865e..40c268bfa1 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -253,43 +253,29 @@ static inline TranslationBlock *tb_lookup(CPUState *cpu, vaddr pc,
-     hash = tb_jmp_cache_hash_func(pc);
-     jc = cpu->tb_jmp_cache;
- 
--    if (cflags & CF_PCREL) {
--        /* Use acquire to ensure current load of pc from jc. */
--        tb = qatomic_load_acquire(&jc->array[hash].tb);
--
--        if (likely(tb &&
--                   jc->array[hash].pc == pc &&
--                   tb->cs_base == cs_base &&
--                   tb->flags == flags &&
--                   tb_cflags(tb) == cflags)) {
--            return tb;
--        }
--        tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
--        if (tb == NULL) {
--            return NULL;
--        }
--        jc->array[hash].pc = pc;
--        /* Ensure pc is written first. */
--        qatomic_store_release(&jc->array[hash].tb, tb);
--    } else {
--        /* Use rcu_read to ensure current load of pc from *tb. */
--        tb = qatomic_rcu_read(&jc->array[hash].tb);
--
--        if (likely(tb &&
--                   tb->pc == pc &&
--                   tb->cs_base == cs_base &&
--                   tb->flags == flags &&
--                   tb_cflags(tb) == cflags)) {
--            return tb;
--        }
--        tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
--        if (tb == NULL) {
--            return NULL;
--        }
--        /* Use the pc value already stored in tb->pc. */
--        qatomic_set(&jc->array[hash].tb, tb);
-+    tb = qatomic_read(&jc->array[hash].tb);
-+    if (likely(tb &&
-+               jc->array[hash].pc == pc &&
-+               tb->cs_base == cs_base &&
-+               tb->flags == flags &&
-+               tb_cflags(tb) == cflags)) {
-+        goto hit;
+     while (len > 0) {
+         page = addr & TARGET_PAGE_MASK;
+@@ -389,30 +392,75 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+         if (l > len)
+             l = len;
+         flags = page_get_flags(page);
+-        if (!(flags & PAGE_VALID))
+-            return -1;
++        if (!(flags & PAGE_VALID)) {
++            goto out_close;
++        }
+         if (is_write) {
+-            if (!(flags & PAGE_WRITE))
+-                return -1;
++            if (flags & PAGE_WRITE) {
++                /* XXX: this code should not depend on lock_user */
++                p = lock_user(VERIFY_WRITE, addr, l, 0);
++                if (!p) {
++                    goto out_close;
++                }
++                memcpy(p, buf, l);
++                unlock_user(p, addr, l);
++            } else {
++                /* Bypass the host page protection using ptrace. */
++                if (fd == -1) {
++                    fd = open("/proc/self/mem", O_WRONLY);
++                    if (fd == -1) {
++                        goto out;
++                    }
++                }
++                /*
++                 * If there is a TranslationBlock and we weren't bypassing the
++                 * host page protection, the memcpy() above would SEGV,
++                 * ultimately leading to page_unprotect(). So invalidate the
++                 * translations manually. Both invalidation and pwrite() must
++                 * be under mmap_lock() in order to prevent the creation of
++                 * another TranslationBlock in between.
++                 */
++                mmap_lock();
++                tb_invalidate_phys_range(addr, addr + l - 1);
++                written = pwrite(fd, buf, l,
++                                 (off_t)(uintptr_t)g2h_untagged(addr));
++                mmap_unlock();
++                if (written != l) {
++                    goto out_close;
++                }
++            }
++        } else if (flags & PAGE_READ) {
+             /* XXX: this code should not depend on lock_user */
+-            if (!(p = lock_user(VERIFY_WRITE, addr, l, 0)))
+-                return -1;
+-            memcpy(p, buf, l);
+-            unlock_user(p, addr, l);
+-        } else {
+-            if (!(flags & PAGE_READ))
+-                return -1;
+-            /* XXX: this code should not depend on lock_user */
+-            if (!(p = lock_user(VERIFY_READ, addr, l, 1)))
+-                return -1;
++            p = lock_user(VERIFY_READ, addr, l, 1);
++            if (!p) {
++                goto out_close;
++            }
+             memcpy(buf, p, l);
+             unlock_user(p, addr, 0);
++        } else {
++            /* Bypass the host page protection using ptrace. */
++            if (fd == -1) {
++                fd = open("/proc/self/mem", O_RDONLY);
++                if (fd == -1) {
++                    goto out;
++                }
++            }
++            if (pread(fd, buf, l,
++                      (off_t)(uintptr_t)g2h_untagged(addr)) != l) {
++                goto out_close;
++            }
+         }
+         len -= l;
+         buf += l;
+         addr += l;
      }
- 
-+    tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
-+    if (tb == NULL) {
-+        return NULL;
+-    return 0;
++    ret = 0;
++out_close:
++    if (fd != -1) {
++        close(fd);
 +    }
-+
-+    jc->array[hash].pc = pc;
-+    qatomic_set(&jc->array[hash].tb, tb);
-+
-+hit:
-+    /*
-+     * As long as tb is not NULL, the contents are consistent.  Therefore,
-+     * the virtual PC has to match for non-CF_PCREL translations.
-+     */
-+    assert((tb_cflags(tb) & CF_PCREL) || tb->pc == pc);
-     return tb;
++out:
++    return ret;
  }
+ #endif
  
-@@ -1012,14 +998,8 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-                  */
-                 h = tb_jmp_cache_hash_func(pc);
-                 jc = cpu->tb_jmp_cache;
--                if (cflags & CF_PCREL) {
--                    jc->array[h].pc = pc;
--                    /* Ensure pc is written first. */
--                    qatomic_store_release(&jc->array[h].tb, tb);
--                } else {
--                    /* Use the pc value already stored in tb->pc. */
--                    qatomic_set(&jc->array[h].tb, tb);
--                }
-+                jc->array[h].pc = pc;
-+                qatomic_set(&jc->array[h].tb, tb);
-             }
- 
- #ifndef CONFIG_USER_ONLY
 -- 
 2.34.1
 
