@@ -4,102 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD60C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 13:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6D0C47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 14:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUodR-0008Qf-UB; Tue, 30 Jan 2024 08:58:45 -0500
+	id 1rUomM-00033k-9P; Tue, 30 Jan 2024 09:07:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUodE-0008OQ-EY
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:58:32 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1rUomK-00031b-NB
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 09:07:56 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUodC-0003jp-Ci
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:58:32 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3D8F21F852;
- Tue, 30 Jan 2024 13:58:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706623107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
- b=WMdca9JCYzSCF3XC+Mu2EF+elK36tYkmxdk7SA0R0cJ+ThAGwk5BApuymim8Fyk7xKp6Tp
- Hyk/NENj6TWq7q+5kWobD5myXz7xHrc0h4t9LNMpwh/2MneyMXadJcRvfFsUT1BLvToZYZ
- 7s2H2+4FuiBt6SDjxybiutwHANocOrs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706623107;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
- b=jq/DbpSoqxBEQlRMzm/DLSVCKTT80vAoA8YROb/gAjzCfxBwKwygQQgOvbZ9Ynn36rnWav
- QTxieqVGYlSQb7BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706623107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
- b=WMdca9JCYzSCF3XC+Mu2EF+elK36tYkmxdk7SA0R0cJ+ThAGwk5BApuymim8Fyk7xKp6Tp
- Hyk/NENj6TWq7q+5kWobD5myXz7xHrc0h4t9LNMpwh/2MneyMXadJcRvfFsUT1BLvToZYZ
- 7s2H2+4FuiBt6SDjxybiutwHANocOrs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706623107;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
- b=jq/DbpSoqxBEQlRMzm/DLSVCKTT80vAoA8YROb/gAjzCfxBwKwygQQgOvbZ9Ynn36rnWav
- QTxieqVGYlSQb7BQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B8E1F13A66;
- Tue, 30 Jan 2024 13:58:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id XmOgH4IAuWWEYwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 30 Jan 2024 13:58:26 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH] migration/docs: Explain two solutions for VMSD
- compatibility
-In-Reply-To: <Zbh7zAqS4_9KnATk@x1n>
-References: <20240122070600.16681-1-peterx@redhat.com>
- <87plxtgyxx.fsf@suse.de> <Za81vJgTjFSGT56r@x1n> <87frygdzjl.fsf@suse.de>
- <Zbh7zAqS4_9KnATk@x1n>
-Date: Tue, 30 Jan 2024 10:58:24 -0300
-Message-ID: <875xzaditb.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1rUomI-0005Yn-Eh
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 09:07:56 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1d911dac3dcso3389045ad.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 06:07:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=adacore.com; s=google; t=1706623673; x=1707228473; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jWn6HVS1jzdsFr5YAvimxHBQvWBr9yrhv0FolGw2rZE=;
+ b=jSNIa4QAFfwgkR2E0FSSIAwdiz2qDWAaFx79kDLxj8ALbITI1+1/rygiqjgSM3g4D8
+ gKGU0K3dZlr19QKoo8p0XQz5EiTGBxTC9aMjogZKm5KpQlaAaukZAS//E31rBQeLo4eE
+ ITuIg6MU+7zLLSWk5yehT6k70HcMW+3ZzH1UeUmGiP3aVs+GVClrUNqbCKmwfEfzDZf0
+ am3j6VrMnPkXCAUXizfpNGi/WKHIQp87DMI951b7GtLyGIbAKuZC5SVV6cTSehg1G3nt
+ oErMOdef2ON/G4hQiMGhYwcmCKJiG+pF1u+KsxZ5p/0Gsgi0Hg39MmfHornlMiAlBFYC
+ pLfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706623673; x=1707228473;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jWn6HVS1jzdsFr5YAvimxHBQvWBr9yrhv0FolGw2rZE=;
+ b=mb5JyW3xrB49BHaCXrfLnMW1uJFzSCGvKhSrm5lJhIgnrDG034e7fGdl6naQXRZ0kE
+ Hn2IYlWHazLh9zdI6LfuWedtaeqMXvEZbRELiBKwxrHlkD/e6U7NHDRdOOG2rmUuU3Tp
+ ufsXnMn9ci5I5cEmHHb0xKcIqhLcNfPSbwHIu8ZGu6ynzzP4qum6896EgIhAtYqasldd
+ FZV8PXPe+6iPUHYgnEh6DudWJM3vJcVkUDgNdCKBCnVQ7SPCgbAj57nZCHX6ZCZcJQSh
+ uKpKawhyvQnZGXnRDYmOOtUK9mcLWIjkMHD5HMe2gDEqw5hqcZyvqOeR7ZKfaVgyb2ve
+ T1Qw==
+X-Gm-Message-State: AOJu0YyHlffB0AbEcuZi1Nq8W5452TUUI4yYUkT1g0nHlGZI7GMFpMXw
+ wvKt+vHv6cnYr5pj8I/gSEGSnuqPEe9kPWn78qG5MLkOYxyAb5xx2FKyTPyAvcnFba+XiDnQJ+J
+ +1xAq+Xvwf/V0GT84nJWGUYFBV6mauRQ2vD5X
+X-Google-Smtp-Source: AGHT+IERhZleRYPfIZc9kFFfBYhKWAqnrCM94+5VeQAPHaJYYdk7NA5EEyUeD+2s2twV+YzyGNzx2yDEXkZcxe0OR9k=
+X-Received: by 2002:a17:90a:9283:b0:295:2982:2bbb with SMTP id
+ n3-20020a17090a928300b0029529822bbbmr1462623pjo.24.1706623672703; Tue, 30 Jan
+ 2024 06:07:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240116130213.172358-1-chigot@adacore.com>
+ <20240116130213.172358-7-chigot@adacore.com>
+ <42f8556d-a094-4448-9183-b158ac12e650@linaro.org>
+In-Reply-To: <42f8556d-a094-4448-9183-b158ac12e650@linaro.org>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Tue, 30 Jan 2024 15:07:41 +0100
+Message-ID: <CAJ307EgrGcFveMyq+HxLsOS_0VRW_q3nVu6zgknxPbBzymc=QQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] leon3: implement multiprocessor
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Frederic Konrad <konrad.frederic@yahoo.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=chigot@adacore.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,139 +91,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Mon, Jan 29, 2024 at 10:44:46AM -0300, Fabiano Rosas wrote:
->> > Since we're at it, I would also like to know how you think about whether we
->> > should still suggest people using VMSD versioning, as we know that it won't
->> > work for backward migrations.
->> >
->> > My current thoughts is it is still fine, as it's easier to use, and it
->> > should still be applicable to the cases where a strict migration semantics
->> > are not required.  However it's hard to justify which device needs that
->> > strictness.
->> 
->> I'd prefer if we kept things strict. However I don't think we can do
->> that without having enough testing and specially, clear recipes on how
->> to add compatibility back once it gets lost. Think of that recent thread
+On Tue, Jan 30, 2024 at 12:43=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> If it was broken, IMHO we should just fix it and backport to stable.
-
-(tangent)
-Sure, but I'm talking about how do we instruct device developers on
-fixing migration bugs. We cannot simply yell "regression!" and expect
-people to care.
-
-Once something breaks there's no easy way to determine what's the right
-fix. It will always involve copying the migration maintainers and some
-back and forth with the device people before we reach an agreement on
-what's even broken.
-
-When I say "clear recipes" what I mean is we'd have a "catalogue" of
-types of failures that could happen. Those would be both documented in
-plain english and also have some instrumentation in the code to produce
-a clear error/message.
-
-  E.g.: "Device 'foo' failed to migrate because of error type X: the src
-  machine provided more state than the dst was expecting around the
-  value Y".
-
-And that "error type X" would come with some docs listing examples of
-other similar errors and what strategies we suggest do deal with them.
-
-Currently most migration failures are just a completely helpless:
-"blergh, error -5". And the only thing we can say about it upfront is
-"well, something must have changed in the stream".
-
-Real migration failures I have seen recently (all fixed already):
-
-1- Some feature bit was mistakenly removed from an arm cpu. Migration
-   complains about a 'length' field being different.
-
-2- A group of devices was moved from the machine init to the cpu init on
-   pseries. Migration spews some nonsense about an "index".
-
-3- Recent (invalid) bug on -cpu max on arm, a couple of bits were set in
-   a register. Migration barfs incomprehensibly with: "error while
-   loading state for instance 0x0 of device 'cpu', Operation not
-   permitted".
-
-So I bet we could improve these error cases to be a bit more predictable
-and that would help device developers to be able to maintain migration
-compatibility without making it seem like an arbitrary, hard to achieve
-requirement.
-(/tangent)
-
+> Hi Cl=C3=A9ment,
 >
-> I think Juan used to worry on what happens if someone already used an old
-> version of old release, e.g., someone using 8.2.0 may not be able to
-> migrate to 8.2.1 if we fix that breakage in 9.0 and backport that to 8.2.1.
-> My take is that maybe that's overcomplicated, and maybe we should simply
-> only maintain the latest stable version, rather than all.  In this case,
-> IMHO it will be less burden if we only guarantee 8.2.1 will be working,
-> e.g., when migrating from 8.1.z -> 8.2.1.  Then we should just state a
-> known issue in 8.2.0 that it is broken, and both:
+> On 16/1/24 14:02, Cl=C3=A9ment Chigot wrote:
+> > This allows to register more than one CPU on the leon3_generic machine.
+> >
+> > Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
+> > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+> > ---
+> >   hw/sparc/leon3.c | 106 +++++++++++++++++++++++++++++++++-------------=
+-
+> >   1 file changed, 74 insertions(+), 32 deletions(-)
+> >
+> > diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+> > index 7866f0a049..eacd85ee4f 100644
+> > --- a/hw/sparc/leon3.c
+> > +++ b/hw/sparc/leon3.c
+> > @@ -54,6 +54,8 @@
+> >   #define LEON3_PROM_OFFSET    (0x00000000)
+> >   #define LEON3_RAM_OFFSET     (0x40000000)
+> >
+> > +#define MAX_CPUS  4
+> > +
+> >   #define LEON3_UART_OFFSET  (0x80000100)
+> >   #define LEON3_UART_IRQ     (3)
+> >
+> > @@ -67,9 +69,12 @@
+> >   #define LEON3_AHB_PNP_OFFSET (0xFFFFF000)
+> >
+> >   typedef struct ResetData {
+> > -    SPARCCPU *cpu;
+> > -    uint32_t  entry;            /* save kernel entry in case of reset =
+*/
+> > -    target_ulong sp;            /* initial stack pointer */
+> > +    struct CPUResetData {
+> > +        int id;
+> > +        SPARCCPU *cpu;
+> > +        target_ulong sp;  /* initial stack pointer */
+> > +    } info[MAX_CPUS];
+> > +    uint32_t entry;             /* save kernel entry in case of reset =
+*/
+> >   } ResetData;
+> >
+> >   static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t =
+val)
+> > @@ -125,18 +130,19 @@ static void write_bootloader(CPUSPARCState *env, =
+uint8_t *base,
+> >       stl_p(p++, 0x01000000); /* nop */
+> >   }
+> >
+> > -static void main_cpu_reset(void *opaque)
+> > +static void leon3_cpu_reset(void *opaque)
+> >   {
+> > -    ResetData *s   =3D (ResetData *)opaque;
+> > -    CPUState *cpu =3D CPU(s->cpu);
+> > -    CPUSPARCState  *env =3D &s->cpu->env;
+> > +    struct CPUResetData *info =3D (struct CPUResetData *) opaque;
+> > +    int id =3D info->id;
+> > +    ResetData *s =3D (ResetData *)DO_UPCAST(ResetData, info[id], info)=
+;
+> > +    CPUState *cpu =3D CPU(s->info[id].cpu);
+> > +    CPUSPARCState *env =3D cpu_env(cpu);
+> >
+> >       cpu_reset(cpu);
+> > -
+> > -    cpu->halted =3D 0;
+> > -    env->pc     =3D s->entry;
+> > -    env->npc    =3D s->entry + 4;
+> > -    env->regbase[6] =3D s->sp;
+> > +    cpu->halted =3D cpu->cpu_index !=3D 0;
+> > +    env->pc =3D s->entry;
+> > +    env->npc =3D s->entry + 4;
+> > +    env->regbase[6] =3D s->info[id].sp;
 >
->   (1) 8.1.z -> 8.2.0, and
-
-Fair enough.
-
->   (2) 8.2.0 -> 8.2.1
-
-Do you think we may not be able to always ensure that the user can get
-out of the broken version? Or do you simply think that's too much work?
-
-I think I agree with you. It's better to have a clear statement of what
-we support and make sure that works, rather than having _some_ scenarios
-where the user _may_ need to shutdown the VM and _some_ where they _may_
-be able to migrate out of the situation. It creates a confusing message
-that I imagine would just cause people to avoid using migration
-altogether.
-
-> will expect to fail.
+> You take care to initialize with different stack, ...
 >
->> were we discussed an old powerpc issue. How come we can see the fix
->> today in the code but cannot tell which problem it was trying to solve?
->> That's bonkers. Ideally every type of breakage would have a mapping into
->> why it breaks and how to fix it.
->> 
->> So with testing to catch the issue early and a clear step-by-step on how
->> to identify and fix compatibility, then we could require strict
->> compatibility for every device.
+> >   }
+> >
+> >   static void leon3_cache_control_int(CPUSPARCState *env)
+> > @@ -170,8 +176,8 @@ static void leon3_cache_control_int(CPUSPARCState *=
+env)
+> >
+> >   static void leon3_irq_ack(CPUSPARCState *env, int intno)
+> >   {
+> > -    /* No SMP support yet, only CPU #0 available so far.  */
+> > -    grlib_irqmp_ack(env->irq_manager, 0, intno);
+> > +    CPUState *cpu =3D CPU(env_cpu(env));
+> > +    grlib_irqmp_ack(env->irq_manager, cpu->cpu_index, intno);
+> >   }
+> >
+> >   /*
+> > @@ -213,6 +219,20 @@ static void leon3_set_pil_in(void *opaque, int n, =
+int level)
+> >       }
+> >   }
+> >
+> > +static void leon3_start_cpu_async_work(CPUState *cpu, run_on_cpu_data =
+data)
+> > +{
+> > +    cpu->halted =3D 0;
+> > +}
+> > +
+> > +static void leon3_start_cpu(void *opaque, int n, int level)
+> > +{
+> > +    CPUState *cs =3D CPU(opaque);
+> > +
+> > +    if (level) {
+> > +        async_run_on_cpu(cs, leon3_start_cpu_async_work, RUN_ON_CPU_NU=
+LL);
+> > +    }
+> > +}
+> > +
+> >   static void leon3_irq_manager(CPUSPARCState *env, int intno)
+> >   {
+> >       leon3_irq_ack(env, intno);
+> > @@ -238,17 +258,21 @@ static void leon3_generic_hw_init(MachineState *m=
+achine)
+> >       AHBPnp *ahb_pnp;
+> >       APBPnp *apb_pnp;
+> >
+> > -    /* Init CPU */
+> > -    cpu =3D SPARC_CPU(cpu_create(machine->cpu_type));
+> > -    env =3D &cpu->env;
+> > +    reset_info =3D g_malloc0(sizeof(ResetData));
+> >
+> > -    cpu_sparc_set_id(env, 0);
+> > +    for (i =3D 0; i < machine->smp.cpus; i++) {
+> > +        /* Init CPU */
+> > +        cpu =3D SPARC_CPU(cpu_create(machine->cpu_type));
+> > +        env =3D &cpu->env;
+> >
+> > -    /* Reset data */
+> > -    reset_info        =3D g_new0(ResetData, 1);
+> > -    reset_info->cpu   =3D cpu;
+> > -    reset_info->sp    =3D LEON3_RAM_OFFSET + ram_size;
+> > -    qemu_register_reset(main_cpu_reset, reset_info);
+> > +        cpu_sparc_set_id(env, i);
+> > +
+> > +        /* Reset data */
+> > +        reset_info->info[i].id =3D i;
+> > +        reset_info->info[i].cpu =3D cpu;
+> > +        reset_info->info[i].sp =3D LEON3_RAM_OFFSET + ram_size;
 >
-> I don't think we can guarantee no bug there, but indeed we can do better on
-> providing some test framework for device VMSDs.
->
->> 
->> >
->> > For example, any device to be used in migration-test must be forward +
->> > backward migration compatible at least, because you just added the n-1
->> > regression tests to cover both directions.  Said that, only a few devices
->> > are involved because currently our migration-test qemu cmdline is pretty
->> > simple.
->> 
->> We might want to make a distinction between migration core vs. device
->> state testing. I see n-1 testing more like migration core testing. It's
->> bad to break migration, but it's really bad to break migration for
->> everyone because we refactored something deep within migration/.
->> 
->> I also wouldn't mind if we had some simple way for device developers to
->> add migration tests that cover their code. Currently it's infeasible to
->> edit migration-test with new command lines for every device of
->> interest. Maybe we could have a little framework that takes a command
->> line and spits a migration stream? Something really self-contained,
->> behind the device's CONFIG in meson.
->
-> I added one more todo:
->
-> https://wiki.qemu.org/ToDo/LiveMigration#Device_migration_stream_test_framework
->
-> How's that look?  Feel free to modify on your will.
+> ... but all CPUs are initialized with the same stack. Is this
+> expected?
 
-Looks good.
+Indeed, I've just blindly updated the existing code.
+The official doc (see [1] =C2=A74.2.15) does not mention anything about SP
+when a reset occurs. The program loaded should take care of their
+initialization.
+I'll remove that. Thanks for the notice.
 
-The point about the guest behavior influence is something that Juan has
-mentioned as a blocker for testing with static data. I don't think it
-would be impossible to have some unit testing at the vmstate with some
-artificial values, but it might be too much work to be worth it.
+[1] https://gaisler.com/doc/gr712rc-usermanual.pdf
+
+> > +        qemu_register_reset(leon3_cpu_reset, &reset_info->info[i]);
+> > +    }
+> >
+> >       ahb_pnp =3D GRLIB_AHB_PNP(qdev_new(TYPE_GRLIB_AHB_PNP));
+> >       sysbus_realize_and_unref(SYS_BUS_DEVICE(ahb_pnp), &error_fatal);
+> > @@ -266,14 +290,28 @@ static void leon3_generic_hw_init(MachineState *m=
+achine)
+> >
+> >       /* Allocate IRQ manager */
+> >       irqmpdev =3D qdev_new(TYPE_GRLIB_IRQMP);
+> > +    object_property_set_int(OBJECT(irqmpdev), "ncpus", machine->smp.cp=
+us,
+> > +                            &error_fatal);
+> >       sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
+> > -    qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil_in,
+> > -                                        env, "pil", 1);
+> > -    qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", 0,
+> > -                                qdev_get_gpio_in_named(DEVICE(cpu), "p=
+il", 0));
+> > +
+> > +    for (i =3D 0; i < machine->smp.cpus; i++) {
+> > +        cpu =3D reset_info->info[i].cpu;
+> > +        env =3D &cpu->env;
+> > +        qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_start_c=
+pu,
+> > +                                            cpu, "start_cpu", 1);
+> > +        qdev_connect_gpio_out_named(irqmpdev, "grlib-start-cpu", i,
+> > +                                    qdev_get_gpio_in_named(DEVICE(cpu)=
+,
+> > +                                                           "start_cpu"=
+, 0));
+> > +        qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil=
+_in,
+> > +                                            env, "pil", 1);
+> > +        qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", i,
+> > +                                    qdev_get_gpio_in_named(DEVICE(cpu)=
+,
+> > +                                                           "pil", 0));
+> > +        env->irq_manager =3D irqmpdev;
+> > +        env->qemu_irq_ack =3D leon3_irq_manager;
+> > +    }
+> > +
+> >       sysbus_mmio_map(SYS_BUS_DEVICE(irqmpdev), 0, LEON3_IRQMP_OFFSET);
+> > -    env->irq_manager =3D irqmpdev;
+> > -    env->qemu_irq_ack =3D leon3_irq_manager;
+> >       grlib_apb_pnp_add_entry(apb_pnp, LEON3_IRQMP_OFFSET, 0xFFF,
+> >                               GRLIB_VENDOR_GAISLER, GRLIB_IRQMP_DEV,
+> >                               2, 0, GRLIB_APBIO_AREA);
+> > @@ -347,10 +385,13 @@ static void leon3_generic_hw_init(MachineState *m=
+achine)
+> >               uint8_t *bootloader_entry;
+> >
+> >               bootloader_entry =3D memory_region_get_ram_ptr(prom);
+> > -            write_bootloader(env, bootloader_entry, entry);
+> > -            env->pc =3D LEON3_PROM_OFFSET;
+> > -            env->npc =3D LEON3_PROM_OFFSET + 4;
+> > +            write_bootloader(&reset_info->info[0].cpu->env, bootloader=
+_entry,
+> > +                             entry);
+> >               reset_info->entry =3D LEON3_PROM_OFFSET;
+> > +            for (i =3D 0; i < machine->smp.cpus; i++) {
+> > +                reset_info->info[i].cpu->env.pc =3D LEON3_PROM_OFFSET;
+> > +                reset_info->info[i].cpu->env.npc =3D LEON3_PROM_OFFSET=
+ + 4;
+> > +            }
+> >           }
+> >       }
+> >
+> > @@ -389,6 +430,7 @@ static void leon3_generic_machine_init(MachineClass=
+ *mc)
+> >       mc->init =3D leon3_generic_hw_init;
+> >       mc->default_cpu_type =3D SPARC_CPU_TYPE_NAME("LEON3");
+> >       mc->default_ram_id =3D "leon3.ram";
+> > +    mc->max_cpus =3D MAX_CPUS;
+> >   }
+> >
+> >   DEFINE_MACHINE("leon3_generic", leon3_generic_machine_init)
+>
 
