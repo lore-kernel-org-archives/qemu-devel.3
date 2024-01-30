@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8268DC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 17:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04411C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 17:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUrdz-0003Cu-RW; Tue, 30 Jan 2024 12:11:31 -0500
+	id 1rUreV-0004BB-23; Tue, 30 Jan 2024 12:12:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rUrdj-0002wZ-EB
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 12:11:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rUreT-00046I-S4
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 12:12:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rUrdc-0003Uc-P3
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 12:11:15 -0500
+ id 1rUreR-0003f5-3j
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 12:12:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706634664;
+ s=mimecast20190719; t=1706634717;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EDpf39m9/K8wpY2UV02GGHmrme+FZzgNAG9ovgKJupE=;
- b=HIrZcKKD3euqIFbGOzrgf4wZynZRIzywCxN5G+pLEb8VWjW3qc6+frv4490qmyrGdtYcCp
- 0Vf+3H5dxErSLSOV33sI/ADjumICK2M3OOwFtoGipNJQh9MR61YRvgaJmUWTLEyz4MlJWi
- OyS3fNwqPs65w2yCyB0Vi/ejxTNDatM=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R06aqEIOEXWCLhaarYTxa85WehQ4KktiwtrZ5hjYt9I=;
+ b=A1ZyEGweUkIYIkysVwMxChka6d3/lM8kgud2ubIQHcqD5dcwVwKiujWJixRTazo/E4S0lE
+ Pb73XL3Q2ZCrkxM7/32bBMGs7uiOxPPkvy3yYAtctKx6EXPmL5mBUzWb5LSDcmOTKFstc5
+ +76V2i5Q9D41XWsqPg5/mhfqa51qFeo=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-i91_Q_NlPZi13gTo6BxjLA-1; Tue, 30 Jan 2024 12:11:02 -0500
-X-MC-Unique: i91_Q_NlPZi13gTo6BxjLA-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-5cf35636346so2312382a12.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 09:11:02 -0800 (PST)
+ us-mta-311-C1cNPsooNwibN5va1uAkPg-1; Tue, 30 Jan 2024 12:11:55 -0500
+X-MC-Unique: C1cNPsooNwibN5va1uAkPg-1
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-6ddb12934f9so2089728b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 09:11:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706634661; x=1707239461;
+ d=1e100.net; s=20230601; t=1706634715; x=1707239515;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EDpf39m9/K8wpY2UV02GGHmrme+FZzgNAG9ovgKJupE=;
- b=JjRhycDBHNJbPSRpYF5h7UEn3W3rIzGkRpTVgsovn30jLkgFMiSBu8mmN/WiKnZmZX
- 69NgXXnIyetMTk0dE7w2lHdlWBx0nOlTS9Hr+i+RwldQwEAMxOGrwnlco3ryEoOXaYTU
- su+XPJplDSCj6f7gmyShGaIwtCUaxF4EWpTtEPZEURKfJWLseCxFJ0AvPKrp9LDGniP6
- 3Ps9lLzMhXTFWY3g2SdUoXGII2oCH8PoHXIAHphgpqbSSDmeiN1Ipyrr+mtvdR/YvdF1
- YHN1qofzqqiXQKsGx25SoMP1CoBJGyrwBJzFaDo/Y3DOJnrCG2MLU+Zlce5ZcBgrAAk2
- JsXQ==
-X-Gm-Message-State: AOJu0YwEWnVW/e9uzHZgR6iAWfo8mPSq9tWMxJqFN/uCsvWGv8UVGFlx
- BFlb3zysWUOxL9E9g1ZWigr7GnjszXqd2vDt18zUziCQ6POgb4xUMYfOjLO/jEwUonAISI8JhCH
- sy9XDGEZhvQ/N2O90V77JVPQwran5RBiYM2P/IyDdLPe0kr75p0UOyjzlKKKw
-X-Received: by 2002:a05:6a21:61e:b0:19c:7c49:4e6 with SMTP id
- ll30-20020a056a21061e00b0019c7c4904e6mr4568341pzb.51.1706634661188; 
- Tue, 30 Jan 2024 09:11:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG0e3Rk42JtixLJLTZ9zbSdmdWx+en0/sXAdE9BlCALwZ1qtT4CgPBYPMxmN3fie6hNZRJTuQ==
-X-Received: by 2002:a05:6a21:61e:b0:19c:7c49:4e6 with SMTP id
- ll30-20020a056a21061e00b0019c7c4904e6mr4568322pzb.51.1706634660854; 
- Tue, 30 Jan 2024 09:11:00 -0800 (PST)
+ bh=R06aqEIOEXWCLhaarYTxa85WehQ4KktiwtrZ5hjYt9I=;
+ b=Z40ywZSuIBJZSIo1nPPTyoeeqAI7QsygL0QiwazddN0b4ckVLpRncWv2nMSg5OAQn+
+ jfnAhqiypEYJHBOUdPBtj7dVzdiYaFERCKOcEQKcB+EzfaX3WnhHakTuwRCqAbnr3IMi
+ 3+FmmrV47Dbu77+ok/Z6cjQs1lONr9v16aGFrPZeptr8vfBMu2jg0t5Ag8sx4qe0L8F9
+ Fwv61Vrp9EkB1Eal3z/cTREx3GA/FYnjVTkdh++WWd96sfnz0qx3TyN61NsQvUWwXLKi
+ QkkPXSnb1stPV5GzTWNPWCRQa3djJW4pkaeqPpvgbLMktOlg0Idxc6Sf3trRomu3xMxf
+ yyCA==
+X-Gm-Message-State: AOJu0Ywjhz9xaPbyaB/vmCedKv7mY2KG0nbloBd7u653njrybA20sj3A
+ Lxxt5RgeXgVe/JTnxigCDrWF1WIIeHEwwHKJ0JeLwPuA3ZSUmITozBHrw8P4G2blogOZp/YUD+v
+ /X4LgZm3cN87GhG9ShJEW4pSN4THkaUl9ouLTsFXlY5JJPlXSLbhJ
+X-Received: by 2002:a05:6a00:4503:b0:6db:605c:b9e4 with SMTP id
+ cw3-20020a056a00450300b006db605cb9e4mr6316435pfb.31.1706634714940; 
+ Tue, 30 Jan 2024 09:11:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHd/cH+0BEPRj09ztEkWsYZ0Xc6/rc4GdQJcBQmZHGqZ7wJ9SPmeo6/59Ho7nARr5ddZ/vdVA==
+X-Received: by 2002:a05:6a00:4503:b0:6db:605c:b9e4 with SMTP id
+ cw3-20020a056a00450300b006db605cb9e4mr6316408pfb.31.1706634714604; 
+ Tue, 30 Jan 2024 09:11:54 -0800 (PST)
 Received: from smtpclient.apple ([115.96.128.50])
  by smtp.gmail.com with ESMTPSA id
- d2-20020aa78682000000b006ddc5d8ecd7sm8002030pfo.32.2024.01.30.09.10.56
+ d2-20020aa78682000000b006ddc5d8ecd7sm8002030pfo.32.2024.01.30.09.11.50
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 30 Jan 2024 09:11:00 -0800 (PST)
+ Tue, 30 Jan 2024 09:11:54 -0800 (PST)
 Content-Type: text/plain;
 	charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Re: [PATCH v2 3/3] hw/arm: Add `\n` to hint message
+Subject: Re: [PATCH v2 2/3] hw/loongarch: Add `\n` to hint message
 From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20240130163741.145925-4-groug@kaod.org>
-Date: Tue, 30 Jan 2024 22:40:45 +0530
+In-Reply-To: <20240130163741.145925-3-groug@kaod.org>
+Date: Tue, 30 Jan 2024 22:41:39 +0530
 Cc: QEMU Developers <qemu-devel@nongnu.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -82,20 +82,20 @@ Cc: QEMU Developers <qemu-devel@nongnu.org>,
  Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <93A9587D-E34E-4EB3-924D-6CDC64E1812F@redhat.com>
+Message-Id: <65A9DB8A-66E8-4F60-AE26-2CD73DDA440B@redhat.com>
 References: <20240130163741.145925-1-groug@kaod.org>
- <20240130163741.145925-4-groug@kaod.org>
+ <20240130163741.145925-3-groug@kaod.org>
 To: Greg Kurz <groug@kaod.org>
 X-Mailer: Apple Mail (2.3774.400.31)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,23 +123,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
 > ---
-> hw/arm/virt-acpi-build.c | 2 +-
+> hw/loongarch/acpi-build.c | 2 +-
 > 1 file changed, 1 insertion(+), 1 deletion(-)
 >=20
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 17aeec7a6f56..48febde1ccd1 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -1008,7 +1008,7 @@ void virt_acpi_build(VirtMachineState *vms, =
-AcpiBuildTables *tables)
+> diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+> index 730bc4a748c4..a1c419874123 100644
+> --- a/hw/loongarch/acpi-build.c
+> +++ b/hw/loongarch/acpi-build.c
+> @@ -509,7 +509,7 @@ static void acpi_build(AcpiBuildTables *tables, =
+MachineState *machine)
 >                     " migration may not work",
 >                     tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
 >         error_printf("Try removing CPUs, NUMA nodes, memory slots"
 > -                     " or PCI bridges.");
 > +                     " or PCI bridges.\n");
 >     }
->     acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
 >=20
+>     acpi_align_size(tables->linker->cmd_blob, ACPI_BUILD_ALIGN_SIZE);
 > --=20
 > 2.43.0
 >=20
