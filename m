@@ -4,117 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2C4DC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 13:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD60C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 13:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUobW-0007gM-9H; Tue, 30 Jan 2024 08:56:46 -0500
+	id 1rUodR-0008Qf-UB; Tue, 30 Jan 2024 08:58:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkale@nvidia.com>) id 1rUkwM-0002mO-IO
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:02:02 -0500
-Received: from mail-co1nam11on2061.outbound.protection.outlook.com
- ([40.107.220.61] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkale@nvidia.com>) id 1rUkwK-0002fl-5h
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:02:02 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kXTwW6VPmYElmeYq9wHxjBCT2VPsX7IR0ZOVBIo1HqfKTl8csOHo/ukrKL71neBE50Gm4U7hcscYS4nn+iCsrr35pE/OGC1fzRohxhdPmcXu3U3KSekLnGP0qDm/3tYoTED+pUlvc5QcrvfgZrSkKOXagN/LjApFvJ7QMP9W99pg/noaYSUHpPIyqldIkNUcJSwTQ9acFj6V0YSbfIpiOfvUq1/x6Pv2Oa0SRMKC8hgfOmXD51C2V4QOqpRyzv+f6yaz4d2y1YJG8EqSoGTielb65bcSWdPnQ79+8mStacv8o+tHe/+BMwiZlojoOMms9TtMoG5j86TdI6Q/axKiEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xypyhnSkwSedbMVvCIjthXC8xlimfYnCCpPwbFol3cI=;
- b=f4cl+SdMvmimxg0TIDSg6gPB8eUdiUL2wr+hmNAh0G/O6vc6eNn++PEKoOyY4gN+/TIJDou9RaQEgx4DGT60UbOmEywuxFmp2jNyRyBRIi5kkrovUcEQ5dw+vPaNOBTUvl864Fmxsfwvt30wAf21WqdbwBbMi3RJTFbBB5h4RBoMJyBtsiI+Hl4jShQSxszk7Aw+Ay8vVAun3fJ7yQMege87L0kCs263yb4/fIoIaN3+CMqN0qZR95mC47wrzD3IscEOFwQ/hgCWVG/i05K17fNwRDAN2eaPkJlM0sYOLhGH5NyWOM1Uze97GftK2L8J4aCm4OGJ38eO8TjnaJXOWA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xypyhnSkwSedbMVvCIjthXC8xlimfYnCCpPwbFol3cI=;
- b=NiTGqL/9Jv4PzGyTksSBdyTLoWwEFzT+LToz/vOtLvmZUjLNPlQkVNsI2pbKjtisvj5iPTRn7Ny8Wjjjn/BL6xeq36c28Cb4/I2IE/MkwJa8PETmjgX4pCuyF0YSBL89l+FTnAeX5WTxzVewIqT1bMcwOUzPj6EdkiDtKtF5PElubgAW3fe4O2ui1GrN6aTRvVanLvpCIkNGHI4PIs4rtIG+7PLePuJvbLEFBE2I2F5XSTFw315nQyjoMnpwLv3irGbj+HI/GR2Pb19jrheVqgl3LiqUdpaNjqcoyykPL2cBdeKoTQ6zDH+TqGgmOOdn8zmWIlVT9fla4tXfxiKCig==
-Received: from BYAPR05CA0059.namprd05.prod.outlook.com (2603:10b6:a03:74::36)
- by CH3PR12MB8726.namprd12.prod.outlook.com (2603:10b6:610:17b::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.34; Tue, 30 Jan
- 2024 09:56:52 +0000
-Received: from MWH0EPF000989E7.namprd02.prod.outlook.com
- (2603:10b6:a03:74:cafe::81) by BYAPR05CA0059.outlook.office365.com
- (2603:10b6:a03:74::36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.22 via Frontend
- Transport; Tue, 30 Jan 2024 09:56:51 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- MWH0EPF000989E7.mail.protection.outlook.com (10.167.241.134) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7249.19 via Frontend Transport; Tue, 30 Jan 2024 09:56:51 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 30 Jan
- 2024 01:56:33 -0800
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 30 Jan
- 2024 01:56:32 -0800
-Received: from vkale-dev-linux.nvidia.com (10.127.8.10) by mail.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
- Transport; Tue, 30 Jan 2024 01:56:30 -0800
-From: Vinayak Kale <vkale@nvidia.com>
-To: <qemu-devel@nongnu.org>
-CC: <targupta@nvidia.com>, <cjia@nvidia.com>, <acurrid@nvidia.com>,
- <zhiw@nvidia.com>, Vinayak Kale <vkale@nvidia.com>
-Subject: [PATCH] hw/pci: migration: Skip config space check for vendor
- specific capability during restore/load
-Date: Tue, 30 Jan 2024 15:26:17 +0530
-Message-ID: <20240130095617.31661-1-vkale@nvidia.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUodE-0008OQ-EY
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:58:32 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUodC-0003jp-Ci
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:58:32 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3D8F21F852;
+ Tue, 30 Jan 2024 13:58:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706623107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
+ b=WMdca9JCYzSCF3XC+Mu2EF+elK36tYkmxdk7SA0R0cJ+ThAGwk5BApuymim8Fyk7xKp6Tp
+ Hyk/NENj6TWq7q+5kWobD5myXz7xHrc0h4t9LNMpwh/2MneyMXadJcRvfFsUT1BLvToZYZ
+ 7s2H2+4FuiBt6SDjxybiutwHANocOrs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706623107;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
+ b=jq/DbpSoqxBEQlRMzm/DLSVCKTT80vAoA8YROb/gAjzCfxBwKwygQQgOvbZ9Ynn36rnWav
+ QTxieqVGYlSQb7BQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706623107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
+ b=WMdca9JCYzSCF3XC+Mu2EF+elK36tYkmxdk7SA0R0cJ+ThAGwk5BApuymim8Fyk7xKp6Tp
+ Hyk/NENj6TWq7q+5kWobD5myXz7xHrc0h4t9LNMpwh/2MneyMXadJcRvfFsUT1BLvToZYZ
+ 7s2H2+4FuiBt6SDjxybiutwHANocOrs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706623107;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KogRVjeNmwwJpd83FOu7dnf5rb1a8h1QvFo4fbD2VL0=;
+ b=jq/DbpSoqxBEQlRMzm/DLSVCKTT80vAoA8YROb/gAjzCfxBwKwygQQgOvbZ9Ynn36rnWav
+ QTxieqVGYlSQb7BQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B8E1F13A66;
+ Tue, 30 Jan 2024 13:58:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id XmOgH4IAuWWEYwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 30 Jan 2024 13:58:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH] migration/docs: Explain two solutions for VMSD
+ compatibility
+In-Reply-To: <Zbh7zAqS4_9KnATk@x1n>
+References: <20240122070600.16681-1-peterx@redhat.com>
+ <87plxtgyxx.fsf@suse.de> <Za81vJgTjFSGT56r@x1n> <87frygdzjl.fsf@suse.de>
+ <Zbh7zAqS4_9KnATk@x1n>
+Date: Tue, 30 Jan 2024 10:58:24 -0300
+Message-ID: <875xzaditb.fsf@suse.de>
 MIME-Version: 1.0
-X-NVConfidentiality: public
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000989E7:EE_|CH3PR12MB8726:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8b68c212-fec1-4998-c14c-08dc2179c88a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: XSjgvLI2vhhe53HSgqzVMX1DHp8c5G1EUy5+0DP5qAtprTlHMx7GEqwtlvG/hmFHP6OfFOEE/7g8O2L+Jp5cQa+Jf6/Nffr1a5ldFJ0X9znOfziMoRNWKLk67GFzV+HbLbR/xyKtwCA3gyeozUEh1SR+vCZ9EaOAXaZKABVz5YbeGbdzaySfJHmJJmPokmupMWrPL8HkwK31iz2yq/iGSozieXxcpLI7bOEPADQwJx/WxTMMaVgo9koACRHLfKEUTFY4Ipuw0jtb8MyFyxJqKoKOPK8ZmCIaOJF4E5SO+oETDMlZ6pI/IPAunBZetVPk/sQI81FkUHfEc1flYpI+dFFXanzwXlf7Vwz5S9/NGooMEluoNeE2GaoOVWr5yxEPCWoJKl+Mf3TBnXFtOscF7GdNhIig+sr3aueN0Xg7ikMUwpK636cG8LhKxqs6JKXeyIxuG18HCBRVperN81GQJNXuD8woIRIgDN5fYxWwTDE2U44d9I/imqfeAtGYpiJXxDrYNs1hlN6yNWuf97F0BBG/p7MfHbL4wa/p8kFBPsAcfLkfiMDC2XZ+gyuv5k2XHyTRWegute6CHdH2J6H5S4RJskED278bf2oi50DmUghEfyBUWFqo6noXNOxrGnb0OfzQPaBx7kjkdrvSktrkeXt69Stp/WMn84d7Ya3y+7r+Sg7ZatFYOVtpdhlDj0JF8sRfWDrAiQDNsiRUgu9j8P3+R2jAAMW5aIpy2BiaFtp/otFmdiznr5337EUQF/WQ
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230031)(4636009)(39860400002)(346002)(136003)(376002)(396003)(230922051799003)(64100799003)(451199024)(82310400011)(1800799012)(186009)(40470700004)(36840700001)(46966006)(336012)(66899024)(316002)(54906003)(36860700001)(47076005)(36756003)(82740400003)(8936002)(41300700001)(356005)(83380400001)(86362001)(478600001)(7636003)(4326008)(70586007)(426003)(26005)(6916009)(70206006)(2616005)(1076003)(6666004)(2906002)(7696005)(5660300002)(8676002)(107886003)(40460700003)(40480700001);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2024 09:56:51.7501 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b68c212-fec1-4998-c14c-08dc2179c88a
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000989E7.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8726
-Received-SPF: softfail client-ip=40.107.220.61; envelope-from=vkale@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 30 Jan 2024 08:56:43 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -129,38 +116,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case of migration, during restore operation, qemu checks the config space of the pci device with the config space
-in the migration stream captured during save operation. In case of config space data mismatch, restore operation is failed.
+Peter Xu <peterx@redhat.com> writes:
 
-config space check is done in function get_pci_config_device(). By default VSC (vendor-specific-capability) in config space is checked.
+> On Mon, Jan 29, 2024 at 10:44:46AM -0300, Fabiano Rosas wrote:
+>> > Since we're at it, I would also like to know how you think about whether we
+>> > should still suggest people using VMSD versioning, as we know that it won't
+>> > work for backward migrations.
+>> >
+>> > My current thoughts is it is still fine, as it's easier to use, and it
+>> > should still be applicable to the cases where a strict migration semantics
+>> > are not required.  However it's hard to justify which device needs that
+>> > strictness.
+>> 
+>> I'd prefer if we kept things strict. However I don't think we can do
+>> that without having enough testing and specially, clear recipes on how
+>> to add compatibility back once it gets lost. Think of that recent thread
+>
+> If it was broken, IMHO we should just fix it and backport to stable.
 
-Ideally qemu should not check VSC during restore/load. This patch skips the check by not setting pdev->cmask[] for VSC offsets in pci_add_capability().
-If cmask[] is not set for an offset, then qemu skips config space check for that offset.
+(tangent)
+Sure, but I'm talking about how do we instruct device developers on
+fixing migration bugs. We cannot simply yell "regression!" and expect
+people to care.
 
-Signed-off-by: Vinayak Kale <vkale@nvidia.com>
----
- hw/pci/pci.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Once something breaks there's no easy way to determine what's the right
+fix. It will always involve copying the migration maintainers and some
+back and forth with the device people before we reach an agreement on
+what's even broken.
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 76080af580..32429109df 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2485,8 +2485,11 @@ int pci_add_capability(PCIDevice *pdev, uint8_t cap_id,
-     memset(pdev->used + offset, 0xFF, QEMU_ALIGN_UP(size, 4));
-     /* Make capability read-only by default */
-     memset(pdev->wmask + offset, 0, size);
--    /* Check capability by default */
--    memset(pdev->cmask + offset, 0xFF, size);
-+
-+    if (cap_id != PCI_CAP_ID_VNDR) {
-+        /* Check non-vendor specific capability by default */
-+        memset(pdev->cmask + offset, 0xFF, size);
-+    }
-     return offset;
- }
- 
--- 
-2.34.1
+When I say "clear recipes" what I mean is we'd have a "catalogue" of
+types of failures that could happen. Those would be both documented in
+plain english and also have some instrumentation in the code to produce
+a clear error/message.
 
+  E.g.: "Device 'foo' failed to migrate because of error type X: the src
+  machine provided more state than the dst was expecting around the
+  value Y".
+
+And that "error type X" would come with some docs listing examples of
+other similar errors and what strategies we suggest do deal with them.
+
+Currently most migration failures are just a completely helpless:
+"blergh, error -5". And the only thing we can say about it upfront is
+"well, something must have changed in the stream".
+
+Real migration failures I have seen recently (all fixed already):
+
+1- Some feature bit was mistakenly removed from an arm cpu. Migration
+   complains about a 'length' field being different.
+
+2- A group of devices was moved from the machine init to the cpu init on
+   pseries. Migration spews some nonsense about an "index".
+
+3- Recent (invalid) bug on -cpu max on arm, a couple of bits were set in
+   a register. Migration barfs incomprehensibly with: "error while
+   loading state for instance 0x0 of device 'cpu', Operation not
+   permitted".
+
+So I bet we could improve these error cases to be a bit more predictable
+and that would help device developers to be able to maintain migration
+compatibility without making it seem like an arbitrary, hard to achieve
+requirement.
+(/tangent)
+
+>
+> I think Juan used to worry on what happens if someone already used an old
+> version of old release, e.g., someone using 8.2.0 may not be able to
+> migrate to 8.2.1 if we fix that breakage in 9.0 and backport that to 8.2.1.
+> My take is that maybe that's overcomplicated, and maybe we should simply
+> only maintain the latest stable version, rather than all.  In this case,
+> IMHO it will be less burden if we only guarantee 8.2.1 will be working,
+> e.g., when migrating from 8.1.z -> 8.2.1.  Then we should just state a
+> known issue in 8.2.0 that it is broken, and both:
+>
+>   (1) 8.1.z -> 8.2.0, and
+
+Fair enough.
+
+>   (2) 8.2.0 -> 8.2.1
+
+Do you think we may not be able to always ensure that the user can get
+out of the broken version? Or do you simply think that's too much work?
+
+I think I agree with you. It's better to have a clear statement of what
+we support and make sure that works, rather than having _some_ scenarios
+where the user _may_ need to shutdown the VM and _some_ where they _may_
+be able to migrate out of the situation. It creates a confusing message
+that I imagine would just cause people to avoid using migration
+altogether.
+
+> will expect to fail.
+>
+>> were we discussed an old powerpc issue. How come we can see the fix
+>> today in the code but cannot tell which problem it was trying to solve?
+>> That's bonkers. Ideally every type of breakage would have a mapping into
+>> why it breaks and how to fix it.
+>> 
+>> So with testing to catch the issue early and a clear step-by-step on how
+>> to identify and fix compatibility, then we could require strict
+>> compatibility for every device.
+>
+> I don't think we can guarantee no bug there, but indeed we can do better on
+> providing some test framework for device VMSDs.
+>
+>> 
+>> >
+>> > For example, any device to be used in migration-test must be forward +
+>> > backward migration compatible at least, because you just added the n-1
+>> > regression tests to cover both directions.  Said that, only a few devices
+>> > are involved because currently our migration-test qemu cmdline is pretty
+>> > simple.
+>> 
+>> We might want to make a distinction between migration core vs. device
+>> state testing. I see n-1 testing more like migration core testing. It's
+>> bad to break migration, but it's really bad to break migration for
+>> everyone because we refactored something deep within migration/.
+>> 
+>> I also wouldn't mind if we had some simple way for device developers to
+>> add migration tests that cover their code. Currently it's infeasible to
+>> edit migration-test with new command lines for every device of
+>> interest. Maybe we could have a little framework that takes a command
+>> line and spits a migration stream? Something really self-contained,
+>> behind the device's CONFIG in meson.
+>
+> I added one more todo:
+>
+> https://wiki.qemu.org/ToDo/LiveMigration#Device_migration_stream_test_framework
+>
+> How's that look?  Feel free to modify on your will.
+
+Looks good.
+
+The point about the guest behavior influence is something that Juan has
+mentioned as a blocker for testing with static data. I don't think it
+would be impossible to have some unit testing at the vmstate with some
+artificial values, but it might be too much work to be worth it.
 
