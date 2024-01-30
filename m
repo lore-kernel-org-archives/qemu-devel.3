@@ -4,71 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C60EC47DA9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 09:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05172C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 09:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUkBf-0004yi-GL; Tue, 30 Jan 2024 04:13:47 -0500
+	id 1rUkCq-0005GV-Gp; Tue, 30 Jan 2024 04:15:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rUkBd-0004yW-DC
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:13:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
+ id 1rUkCm-0005GI-6q; Tue, 30 Jan 2024 04:14:56 -0500
+Received: from mail-vi1eur02on2072a.outbound.protection.outlook.com
+ ([2a01:111:f400:fe16::72a]
+ helo=EUR02-VI1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rUkBa-0002yZ-LY
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:13:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706606020;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=MeiNZrlBeHrioeyvY8MCLe0LjB51hI5B1pBEOLgd/C4=;
- b=bl45VtZ/gZtN8fI5g0sqOz/Hfp9ql4tXJzpiv0BIE4pZJxq4ccuL6TOcSenPvVEwLmU1Hg
- Mw3YCd7GjW0MeXU5Xw5nzjc6sEwNgpo/LlQdugUqlcqSjhDcimUPaOBBLaf1+lmOV/ajS8
- D+g5dhrRVb84TpTCI/w06f6wuN1ZK7k=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-VljiyWlTOvuX_YYV99h_Kw-1; Tue,
- 30 Jan 2024 04:13:38 -0500
-X-MC-Unique: VljiyWlTOvuX_YYV99h_Kw-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7F1C4386914A
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 09:13:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 204B72166B31;
- Tue, 30 Jan 2024 09:13:36 +0000 (UTC)
-Date: Tue, 30 Jan 2024 09:13:34 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Anthony Harivel <aharivel@redhat.com>
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
- vchundur@redhat.com
-Subject: Re: [PATCH v3 3/3] Add support for RAPL MSRs in KVM/Qemu
-Message-ID: <Zbi9vjPCsia58LG4@redhat.com>
-References: <20240125072214.318382-1-aharivel@redhat.com>
- <20240125072214.318382-4-aharivel@redhat.com>
+ (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
+ id 1rUkCk-00031q-1v; Tue, 30 Jan 2024 04:14:55 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=X7YUTrtIefZRy5LV5jBr2sE/rZrKXwMpapHBX3QFqOh9r0fFiweReaMo1RhJ7AzfRmU5EAWWiUkWyTKAmGDD6xq+aUr62fJLVtRTumAJXzW0Cfs06QmtLAdGMJ2Hblw8adTJ4z3Fomi7nB1uP2ZAr8cHxyiotsVzcsmnbtFyRo0UH/mD+nxhRptXIPdA+/O5XN5x9Z/jXwE1qUYYj38oTFowxhbdO3/n3O3oBYksCCjC6GMvec8iGLKk1bkegc482YwA28SY3f4jlUtQ2ngW7DG+B3lkjfc3dU1PFgMCtqpNQBIkDhKUHdZ40xxtq5NzL1tx3Sh5IvUrKm9t95uKXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FMmx+r2TjpCB5oQS0w+GjyQw2qxEvy1syDcYI1Wj0ww=;
+ b=EcplK+rLHlyYTqN9/BDudE8yweuup6GkMk/daNC6NTBasASYm6uqAMivlv7ke2sjMISd6dFUCmz48s+xnwEuWy/Zd1V10IhM77xCNnWW4cK0AG0n8vtgCqQP4avgjzRXqLQKLO2gauvujx9iaAbTMSyIH7s3efM3O66isRW/f89yXuHaamn5D+sat+Lnu5PFb0erwi5kWLY5HeZ9hJjkYdF8bbXYMF2+f8Kv9347CNOdrY+nAQAv7gcFR1khqetcEHSWzWC0JzV5zqLSL6sJ7/KzteaxkN3PC3JpZMxFPrVUipnDrhmLyVAoZhdzAen9AK3IhMjNzUBW4kf+EYYpvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FMmx+r2TjpCB5oQS0w+GjyQw2qxEvy1syDcYI1Wj0ww=;
+ b=0cb5Ya8V+M4d0n2iP3Y2E7TDt7RHHnLuoIdrQ8LkxAdxOFR4kZ9bn3JZVFrpMdgsbXuq98UQv01scqlbP1UIBInnb4AGxcgseg/jaHEL85z8SGrUGs96ztkcmwwfwGn7CY8rPWVPxBu3YoIDq39JwKBP1FduEmyvywYAdSTvPHo98gnyI5aqi2JQNQdLQBCaeOWcyup+Eee7V9bnXIrKHHu18NncOyKTuHvpcY/2JFq85VRh9Om61HhQLZHywjx+bIzXTpLFsXcznGHpsTtNeznWecv2K9XcN/YCL9YjkQ7nzl9wXsM6RnF2SIEVsqngpdrd9Wzkx9hc/GqdmT1Srw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
+ (2603:10a6:800:205::19) by PR3PR08MB5644.eurprd08.prod.outlook.com
+ (2603:10a6:102:86::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.34; Tue, 30 Jan
+ 2024 09:14:48 +0000
+Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
+ ([fe80::567e:e2db:3928:5839]) by VI0PR08MB10743.eurprd08.prod.outlook.com
+ ([fe80::567e:e2db:3928:5839%7]) with mapi id 15.20.7228.029; Tue, 30 Jan 2024
+ 09:14:47 +0000
+From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
+ jsnow@redhat.com, vsementsov@yandex-team.ru, kwolf@redhat.com,
+ hreitz@redhat.com
+Subject: [PATCH v3] blockcommit: Reopen base image as RO after abort
+Date: Tue, 30 Jan 2024 10:14:40 +0100
+Message-Id: <20240130091440.2346274-1-alexander.ivanov@virtuozzo.com>
+X-Mailer: git-send-email 2.40.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: VI1PR06CA0214.eurprd06.prod.outlook.com
+ (2603:10a6:802:2c::35) To VI0PR08MB10743.eurprd08.prod.outlook.com
+ (2603:10a6:800:205::19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240125072214.318382-4-aharivel@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|PR3PR08MB5644:EE_
+X-MS-Office365-Filtering-Correlation-Id: 68d9e432-8faf-4a66-6e39-08dc2173e7e5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 8TN3D0zJClE+SUhNGHiNhIjsoumu/NJ7HDHIzw4t3RiTRRDSkMsdZem32mLMHbBFcW6BwuoRPSky/7wnHDw6G7m5NgQjRYm4oUXJuIGmu2Bjoe3uqvTh3IUvi46g6UZr0qJtmJxGlILIoxnf0544yduWUdeP2bYk6HOMxnyCGkPJGrzEqEYQfDOeVrXjBJUp/Fc8eLiW7HtesUpznT2JbLPsU1CUJyLMOP8fCtneIsH+6kinFUkAl95IpqvkzFzP0MPGNkpMI+1UDUFPQK+n8GKoCalVU0sm1zmFRSU560esuucdnveSi9OM0DB0zFplhYTE15E0yECiPIhwFXU4yhy4hGVJnLbluvUJRx3QvIsNN3yErMFwPQL+ud6KguBg90pSudPb/vi9+Ux9cDZ1MduQi5yf82M8RP0GmowLdONhN/uVAHIB1hMqxEY8+NtjW7Cqfi3ofbLUeYq5EnGmddQTcuUs76QTxX4WnJOZKGZZmvIN01Gllgdld/GWTch8+Oh18jLQQTumeTmCkXUdDxTsMXKCdsQbqXgHyTx8NIluBWm4GULG7Do8e15Yt2+h98QM60+Fgqfz9JSkW1496LONQPeu4qEwiZ0IFP4Euy+fSvJbGRXYEwXrazFjYc8H
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366004)(396003)(376002)(136003)(346002)(39850400004)(230922051799003)(451199024)(186009)(1800799012)(64100799003)(26005)(38350700005)(5660300002)(44832011)(86362001)(2906002)(8676002)(4326008)(8936002)(6916009)(66476007)(66556008)(66946007)(6512007)(316002)(52116002)(1076003)(36756003)(2616005)(6486002)(478600001)(6666004)(6506007)(41300700001)(83380400001)(38100700002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?f6+DtPFzkO3covgroE8JoyrEH4NvDOSfXSD9AlZi8138iyCCYn3ks7+LGt4P?=
+ =?us-ascii?Q?E0nfU+leTYbt6pGODnhBjvSVbD7IaRUrBTGBdEM7kCG9i14F0sDA9ba6kPAw?=
+ =?us-ascii?Q?qZ6Hi+b6hbgXWRdty4dZ7g8w/qspdSKaTABcJlPFJktVgo6K5qWO63yzHE0D?=
+ =?us-ascii?Q?zhEMkvDaF9SeGAMdnDcPKJUjKRyo1XG7Nq9qgtt6LVRSzOiR7KhnA5POuAGh?=
+ =?us-ascii?Q?qFyvIp5sOwJo5kjjpfotH1C05yUqrEVlquvZNm8L/QQJ6g84kz6DGjqAbRl5?=
+ =?us-ascii?Q?YH8OKuPih5Zgamanjm0UJuz50SPRsebOc3DZWoaRirrY+Am6iO60wDJgKccQ?=
+ =?us-ascii?Q?ujQJDg4qHbdzy49rJv3yCwn4Ibybazb27B0b+G7crTKv8Jy+35ilcogkikyC?=
+ =?us-ascii?Q?+PEGEOW0YUPMbR7k4rfqBNJA3J1bZaJPM5R8e2S6jSzc0niysgk+Om8Yqaro?=
+ =?us-ascii?Q?6dwuUN9JHBObt5jZGVsyFCqTpN1tR74h76ybyhJV+B92EzFRuqLLcNiY4+VR?=
+ =?us-ascii?Q?bxeUFxYlflS9c5iVNqckXRXF3ApGWrd5yjpBLcI+YsHT2T/5DOON9PgDjQKF?=
+ =?us-ascii?Q?HOZklX2/+kLDFX8i1KioAlMhdu7GPHle7pz1bP4c+PpD+kt7SPmLvvywvGow?=
+ =?us-ascii?Q?Q6rJ7V7/2rR7t5HKualPOa2DMKeggyN5u7YAMIg5SRS7K1Y8wjXsYVw0oS/b?=
+ =?us-ascii?Q?KD9uE7/1C+N5To5LHaKjmOfKSVa3zY0DDG1ynEaOfhva8YBY2X0U3o57JVWt?=
+ =?us-ascii?Q?imp8P/b2Q+uV5t384Du+9EWkUkLjhf33BSMnnvV1Wl6rDTAmBJya3KiQyIUh?=
+ =?us-ascii?Q?21jrsQpG7WUUHVkF4JP7hm+il3++TErOpRYGcHsTCu3p1FG7Fx9UDZBHy1ZR?=
+ =?us-ascii?Q?hyyITCos4VK+TlJPEC0qp/dtYPBBvTebzYPSqtRXw3hQAN0Y7m6nWwiWTKxD?=
+ =?us-ascii?Q?yHc82u89f00bJ3X34LrgnCE4q588u5qAw65C544GtgrUr6BBoO9EgXM2mn2O?=
+ =?us-ascii?Q?HsOjvPvvh+1Lc1QfTKiwbM79AOx2jUFdbY3lUKFpXyGW85JUjQdR7BigTvNg?=
+ =?us-ascii?Q?/nwmI0JDIfovDSDsdr0Ca6YkqrxQSXkvcRqjXq9I5v5ZVoFBVGVFE8Gf/aRb?=
+ =?us-ascii?Q?xxxi7jcORw8Nc3l+OU8jJJxus5mCE/P7eqJdI2bG3vjYsUGBYDxLgLXMwoZd?=
+ =?us-ascii?Q?VRvFJ7TG2lNLCmiGV5DrfR7oWcf9qmNVwDHGJZ/wV5TQQFLoBEtDmVntqQjQ?=
+ =?us-ascii?Q?zIfaX7PSoF3CvcndhwBtF3TDUgn3MWfH2n0Rs/KnisKS6qdGPjsSdWtH7vp3?=
+ =?us-ascii?Q?H/4u3UFnH4DqT50YM1qMN82DvI7u0IGCBq+MF5ZrfSBEX6RKAu2hB5pQjPkh?=
+ =?us-ascii?Q?DSk9B1HblIMngoIEdJtr4RRNb3B3/bu0Q6q9N6APsz46P3fpjHyhsvuopdB5?=
+ =?us-ascii?Q?TUTNuGNDKnV1H5AmpBER7BTUNHps/HrByHSi6GOQ6dYdlHSBBp/jMyr+C9AG?=
+ =?us-ascii?Q?lTXkOxKim/A/TqV3c1DPbb5OlbyTORe3DuA29Bc4cifQhMuL+e6B3X8fCnVX?=
+ =?us-ascii?Q?nt80NUetchmpeItnBxW+h7aJKdHMjZ6qP4Droy35XdBSuZnoY7e0BL6jNd34?=
+ =?us-ascii?Q?MpZ66OQofFpQvDiAwfEC3PA=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68d9e432-8faf-4a66-6e39-08dc2173e7e5
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2024 09:14:47.6844 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DA8gQs0un7wykpf3wgqYKVwE8DRX73BlCqf2EwJyDWG2k9xQdVT+LiK68SvIVvO1DB2ESE8CqqFRcKa1dH+dnOir2UIaOMBupF/XYNlXguM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR08MB5644
+Received-SPF: pass client-ip=2a01:111:f400:fe16::72a;
+ envelope-from=alexander.ivanov@virtuozzo.com;
+ helo=EUR02-VI1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,308 +132,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 25, 2024 at 08:22:14AM +0100, Anthony Harivel wrote:
-> Starting with the "Sandy Bridge" generation, Intel CPUs provide a RAPL
-> interface (Running Average Power Limit) for advertising the accumulated
-> energy consumption of various power domains (e.g. CPU packages, DRAM,
-> etc.).
-> 
-> The consumption is reported via MSRs (model specific registers) like
-> MSR_PKG_ENERGY_STATUS for the CPU package power domain. These MSRs are
-> 64 bits registers that represent the accumulated energy consumption in
-> micro Joules. They are updated by microcode every ~1ms.
-> 
-> For now, KVM always returns 0 when the guest requests the value of
-> these MSRs. Use the KVM MSR filtering mechanism to allow QEMU handle
-> these MSRs dynamically in userspace.
-> 
-> To limit the amount of system calls for every MSR call, create a new
-> thread in QEMU that updates the "virtual" MSR values asynchronously.
-> 
-> Each vCPU has its own vMSR to reflect the independence of vCPUs. The
-> thread updates the vMSR values with the ratio of energy consumed of
-> the whole physical CPU package the vCPU thread runs on and the
-> thread's utime and stime values.
-> 
-> All other non-vCPU threads are also taken into account. Their energy
-> consumption is evenly distributed among all vCPUs threads running on
-> the same physical CPU package.
-> 
-> To overcome the problem that reading the RAPL MSR requires priviliged
-> access, a socket communication between QEMU and the qemu-vmsr-helper is
-> mandatory. You can specified the socket path in the parameter.
-> 
-> This feature is activated with -accel kvm,rapl=true,path=/path/sock.sock
-> 
-> Actual limitation:
-> - Works only on Intel host CPU because AMD CPUs are using different MSR
->   adresses.
-> 
-> - Only the Package Power-Plane (MSR_PKG_ENERGY_STATUS) is reported at
->   the moment.
-> 
-> Signed-off-by: Anthony Harivel <aharivel@redhat.com>
-> ---
->  accel/kvm/kvm-all.c           |  27 +++
->  docs/specs/index.rst          |   1 +
->  docs/specs/rapl-msr.rst       | 133 +++++++++++++
->  include/sysemu/kvm_int.h      |  17 ++
->  target/i386/cpu.h             |   8 +
->  target/i386/kvm/kvm.c         | 348 ++++++++++++++++++++++++++++++++++
->  target/i386/kvm/meson.build   |   1 +
->  target/i386/kvm/vmsr_energy.c | 295 ++++++++++++++++++++++++++++
->  target/i386/kvm/vmsr_energy.h |  87 +++++++++
->  9 files changed, 917 insertions(+)
->  create mode 100644 docs/specs/rapl-msr.rst
->  create mode 100644 target/i386/kvm/vmsr_energy.c
->  create mode 100644 target/i386/kvm/vmsr_energy.h
-> 
+If a blockcommit is aborted the base image remains in RW mode, that leads
+to a fail of subsequent live migration.
 
-> diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
-> index 882e37e12c5b..ee2fe8817833 100644
-> --- a/include/sysemu/kvm_int.h
-> +++ b/include/sysemu/kvm_int.h
-> @@ -14,6 +14,8 @@
->  #include "qemu/accel.h"
->  #include "qemu/queue.h"
->  #include "sysemu/kvm.h"
-> +#include "hw/boards.h"
-> +#include "hw/i386/topology.h"
->  
->  typedef struct KVMSlot
->  {
-> @@ -48,6 +50,20 @@ typedef struct KVMMemoryListener {
->  
->  #define KVM_MSI_HASHTAB_SIZE    256
->  
-> +struct KVMMsrEnergy {
-> +    bool enable;
-> +    char *socket_path;
-> +    QemuThread msr_thr;
-> +    unsigned int cpus;
-> +    unsigned int sockets;
-> +    X86CPUTopoInfo topo_info;
-> +    const CPUArchIdList *cpu_list;
-> +    uint64_t *msr_value;
-> +    uint64_t msr_unit;
-> +    uint64_t msr_limit;
-> +    uint64_t msr_info;
-> +};
-> +
->  enum KVMDirtyRingReaperState {
->      KVM_DIRTY_RING_REAPER_NONE = 0,
->      /* The reaper is sleeping */
-> @@ -114,6 +130,7 @@ struct KVMState
->      bool kvm_dirty_ring_with_bitmap;
->      uint64_t kvm_eager_split_size;  /* Eager Page Splitting chunk size */
->      struct KVMDirtyRingReaper reaper;
-> +    struct KVMMsrEnergy msr_energy;
->      NotifyVmexitOption notify_vmexit;
->      uint32_t notify_window;
->      uint32_t xen_version;
+How to reproduce:
+  $ virsh snapshot-create-as vm snp1 --disk-only
 
-> @@ -2509,6 +2558,265 @@ static void register_smram_listener(Notifier *n, void *unused)
->                                   &smram_address_space, 1, "kvm-smram");
->  }
->  
-> +static void *kvm_msr_energy_thread(void *data)
-> +{
-> +    KVMState *s = data;
-> +    struct KVMMsrEnergy *vmsr = &s->msr_energy;
-> +
-> +    g_autofree package_energy_stat *pkg_stat = NULL;
-> +    g_autofree thread_stat *thd_stat = NULL;
-> +    g_autofree pid_t *thread_ids = NULL;
-> +    g_autofree CPUState *cpu = NULL;
-> +    unsigned int maxpkgs, maxcpus, maxticks;
-> +    g_autofree unsigned int *vpkgs_energy_stat = NULL;
-> +    unsigned int num_threads = 0;
-> +    unsigned int tmp_num_threads = 0;
-> +    pid_t pid;
-> +
-> +    X86CPUTopoIDs topo_ids;
-> +
-> +
-> +    rcu_register_thread();
-> +
-> +    /* Get QEMU PID*/
-> +    pid = getpid();
-> +
-> +    /* Nb of CPUS per packages */
-> +    maxcpus = vmsr_get_maxcpus(0);
-> +
-> +    /* Nb of Physical Packages on the system */
-> +    maxpkgs = vmsr_get_max_physical_package(maxcpus);
-> +
-> +    /* Those MSR values should not change as well */
-> +    vmsr->msr_unit  = vmsr_read_msr(MSR_RAPL_POWER_UNIT, 0, pid,
-> +                                    s->msr_energy.socket_path);
-> +    vmsr->msr_limit = vmsr_read_msr(MSR_PKG_POWER_LIMIT, 0, pid,
-> +                                    s->msr_energy.socket_path);
-> +    vmsr->msr_info  = vmsr_read_msr(MSR_PKG_POWER_INFO, 0, pid,
-> +                                    s->msr_energy.socket_path);
-> +
-> +    /* Allocate memory for each package energy status */
-> +    pkg_stat = (package_energy_stat *)
-> +        g_new0(package_energy_stat, maxpkgs);
-> +
-> +    /* Pre-allocate memory for thread stats */
-> +    thd_stat = g_new0(thread_stat, 1);
-> +
-> +    /* Pre-allocate memory for holding Virtual Package Energy counter */
-> +    vpkgs_energy_stat = g_new0(unsigned int, vmsr->sockets);
-> +
-> +    /*
-> +     * Max numbers of ticks per package
-> +     * time in second * number of ticks/second * Number of cores / package
-> +     * ex: for 100 ticks/second/CPU, 12 CPUs per Package gives 1200 ticks max
-> +     */
-> +    maxticks = (MSR_ENERGY_THREAD_SLEEP_US / 1000000)
-> +                    * sysconf(_SC_CLK_TCK) * maxcpus;
-> +
-> +    while (true) {
-> +        /* Get all qemu threads id */
-> +        thread_ids = vmsr_get_thread_ids(pid, &num_threads);
+  *** write something to the disk inside the guest ***
 
-This is allolcating thread_ids
+  $ virsh blockcommit vm vda --active --shallow && virsh blockjob vm vda --abort
+  $ lsof /vzt/vm.qcow2
+  COMMAND      PID USER   FD   TYPE DEVICE   SIZE/OFF NODE NAME
+  qemu-syst 433203 root   45u   REG  253,0 1724776448  133 /vzt/vm.qcow2
+  $ cat /proc/433203/fdinfo/45
+  pos:    0
+  flags:  02140002 <==== The last 2 means RW mode
 
-> +
-> +        if (thread_ids == NULL) {
-> +            goto clean;
-> +        }
-> +
-> +        if (tmp_num_threads < num_threads) {
-> +            thd_stat = g_renew(thread_stat, thd_stat, num_threads);
-> +        }
-> +
-> +        tmp_num_threads = num_threads;
-> +
-> +        /* Populate all the thread stats */
-> +        for (int i = 0; i < num_threads; i++) {
-> +            thd_stat[i].utime = g_new0(unsigned long long, 2);
-> +            thd_stat[i].stime = g_new0(unsigned long long, 2);
-> +            thd_stat[i].thread_id = thread_ids[i];
-> +            vmsr_read_thread_stat(&thd_stat[i], pid, 0);
-> +            thd_stat[i].numa_node_id = numa_node_of_cpu(thd_stat[i].cpu_id);
-> +        }
+If the base image is in RW mode at the end of blockcommit and was in RO
+mode before blockcommit, check if src BDS has refcnt > 1. If so, the BDS
+will not be removed after blockcommit, and we should make the base image
+RO. Otherwise check recursively if there is a parent BDS of src BDS and
+reopen the base BDS in RO in this case.
 
-This loop is allocating memory for utime & stime..
+Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+---
+ block/mirror.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-> +
-> +        /* Zero out the memory */
-> +        for (int i = 0; i < num_threads; i++) {
-> +            memset(thd_stat[i].utime, 0, 2 * sizeof(unsigned long long));
-> +            memset(thd_stat[i].stime, 0, 2 * sizeof(unsigned long long));
-> +        }
-> +        memset(thd_stat, 0, num_threads * sizeof(thread_stat));
-
-..and here we're just wiping the thd_stat pointer, so this is surey a
-memory leak of the stime & utime fields.
-
-
-> +        memset(thread_ids, 0, sizeof(pid_t));
-
-Nothing is free'ing thread_ids which was allocated earlier in the
-loop.
-
-> +    }
-> +
-> +clean:
-> +    rcu_unregister_thread();
-> +    return NULL;
-> +}
-> +
-> +static int kvm_msr_energy_thread_init(KVMState *s, MachineState *ms)
-> +{
-> +    struct KVMMsrEnergy *r = &s->msr_energy;
-> +
-> +    vmsr_init_topo_info(&r->topo_info, ms);
-> +
-> +    /* Retrieve the number of vCPU */
-> +    r->cpus = ms->smp.cpus;
-> +
-> +    /* Retrieve the number of sockets */
-> +    r->sockets = ms->smp.sockets;
-> +
-> +    /* Allocate register memory (MSR_PKG_STATUS) for each vCPU */
-> +    r->msr_value = g_new0(uint64_t, r->cpus);
-> +
-> +    /* Retrieve the CPUArchIDlist */
-> +    r->x86_cpu_list = x86_possible_cpu_arch_ids(ms);
-> +
-> +    qemu_thread_create(&r->msr_thr, "kvm-msr",
-> +                       kvm_msr_energy_thread,
-> +                       s, QEMU_THREAD_JOINABLE);
-> +
-> +    return 0;
-> +}
-> +
->  int kvm_arch_get_default_type(MachineState *ms)
->  {
->      return 0;
-> @@ -2711,6 +3019,46 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->                           strerror(-ret));
->              exit(1);
->          }
-> +
-> +        if (s->msr_energy.enable == true) {
-
-This looks to be where we need to check that both the host CPU
-vendor is intel, and the guest CPU vendor is intel, and that
-the host CPU has the RAPL feature we're using.
-
-> +
-> +            r = kvm_filter_msr(s, MSR_RAPL_POWER_UNIT,
-> +                               kvm_rdmsr_rapl_power_unit, NULL);
-> +            if (!r) {
-> +                error_report("Could not install MSR_RAPL_POWER_UNIT \
-> +                                handler: %s",
-> +                             strerror(-ret));
-> +                exit(1);
-> +            }
-> +
-> +            r = kvm_filter_msr(s, MSR_PKG_POWER_LIMIT,
-> +                               kvm_rdmsr_pkg_power_limit, NULL);
-> +            if (!r) {
-> +                error_report("Could not install MSR_PKG_POWER_LIMIT \
-> +                                handler: %s",
-> +                             strerror(-ret));
-> +                exit(1);
-> +            }
-> +
-> +            r = kvm_filter_msr(s, MSR_PKG_POWER_INFO,
-> +                               kvm_rdmsr_pkg_power_info, NULL);
-> +            if (!r) {
-> +                error_report("Could not install MSR_PKG_POWER_INFO \
-> +                                handler: %s",
-> +                             strerror(-ret));
-> +                exit(1);
-> +            }
-> +            r = kvm_filter_msr(s, MSR_PKG_ENERGY_STATUS,
-> +                               kvm_rdmsr_pkg_energy_status, NULL);
-> +            if (!r) {
-> +                error_report("Could not install MSR_PKG_ENERGY_STATUS \
-> +                                handler: %s",
-> +                             strerror(-ret));
-> +                exit(1);
-> +            } else {
-> +                kvm_msr_energy_thread_init(s, ms);
-> +            }
-> +        }
->      }
->  
->      return 0;
-
-
-With regards,
-Daniel
+diff --git a/block/mirror.c b/block/mirror.c
+index 5145eb53e1..52a7fee75e 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -93,6 +93,7 @@ typedef struct MirrorBlockJob {
+     int64_t active_write_bytes_in_flight;
+     bool prepared;
+     bool in_drain;
++    bool base_ro;
+ } MirrorBlockJob;
+ 
+ typedef struct MirrorBDSOpaque {
+@@ -652,6 +653,32 @@ static void coroutine_fn mirror_wait_for_all_io(MirrorBlockJob *s)
+     }
+ }
+ 
++/*
++ * Check recursively if there is a parent BDS referenced more than
++ * min_refcnt times. This argument is needed because at the first
++ * call there is a bds referenced in blockcommit.
++ */
++static bool bdrv_chain_has_significant_parent(BlockDriverState *bs)
++{
++    BdrvChild *parent;
++    BlockDriverState *parent_bs;
++
++    QLIST_FOREACH(parent, &bs->parents, next) {
++        if (!(parent->klass->parent_is_bds)) {
++            continue;
++        }
++        parent_bs = parent->opaque;
++        if (parent_bs->drv && !parent_bs->drv->is_filter) {
++            return true;
++        }
++        if (bdrv_chain_has_significant_parent(parent_bs)) {
++            return true;
++        }
++    }
++
++    return false;
++}
++
+ /**
+  * mirror_exit_common: handle both abort() and prepare() cases.
+  * for .prepare, returns 0 on success and -errno on failure.
+@@ -793,6 +820,11 @@ static int mirror_exit_common(Job *job)
+     bdrv_drained_end(target_bs);
+     bdrv_unref(target_bs);
+ 
++    if (s->base_ro && !bdrv_is_read_only(target_bs) &&
++        (src->refcnt > 1 || bdrv_chain_has_significant_parent(src))) {
++        bdrv_reopen_set_read_only(target_bs, true, NULL);
++    }
++
+     bs_opaque->job = NULL;
+ 
+     bdrv_drained_end(src);
+@@ -1715,6 +1747,7 @@ static BlockJob *mirror_start_job(
+                              bool is_none_mode, BlockDriverState *base,
+                              bool auto_complete, const char *filter_node_name,
+                              bool is_mirror, MirrorCopyMode copy_mode,
++                             bool base_ro,
+                              Error **errp)
+ {
+     MirrorBlockJob *s;
+@@ -1798,6 +1831,7 @@ static BlockJob *mirror_start_job(
+     bdrv_unref(mirror_top_bs);
+ 
+     s->mirror_top_bs = mirror_top_bs;
++    s->base_ro = base_ro;
+ 
+     /* No resize for the target either; while the mirror is still running, a
+      * consistent read isn't necessarily possible. We could possibly allow
+@@ -2027,7 +2061,7 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
+                      speed, granularity, buf_size, backing_mode, zero_target,
+                      on_source_error, on_target_error, unmap, NULL, NULL,
+                      &mirror_job_driver, is_none_mode, base, false,
+-                     filter_node_name, true, copy_mode, errp);
++                     filter_node_name, true, copy_mode, false, errp);
+ }
+ 
+ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
+@@ -2056,7 +2090,7 @@ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
+                      on_error, on_error, true, cb, opaque,
+                      &commit_active_job_driver, false, base, auto_complete,
+                      filter_node_name, false, MIRROR_COPY_MODE_BACKGROUND,
+-                     errp);
++                     base_read_only, errp);
+     if (!job) {
+         goto error_restore_flags;
+     }
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.40.1
 
 
