@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65323C47DDF
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE4E0C47DA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:36:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUjWZ-0003kA-Cl; Tue, 30 Jan 2024 03:31:19 -0500
+	id 1rUjaY-0004y3-W3; Tue, 30 Jan 2024 03:35:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjWS-0003jX-ON
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:31:13 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjaQ-0004wT-R3
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:35:19 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjWM-0003sj-AU
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:31:11 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-40e8fec0968so43974595e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:31:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjaH-0004rr-Bp
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:35:14 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-33ae3be1c37so1378595f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:35:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706603463; x=1707208263; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706603706; x=1707208506; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cxVszLHp8FDNbJNY/mf3ia485nZl1e2+jY4i4I+6OVU=;
- b=KotUov3hy/joLtNXFqo8RNmBOdAbnnkiye/V4eNmJQqhS6U2g1vJcGU9dwNOQZpXCm
- IpwTZiNRkiwOFKVwzRn4j/zXq7n0jRYzCHFc+34EjuT83My2oDZgVYHKoKPH3+nLwNmZ
- 5Yy/pTjaO+aTkMgYR9Vn+WyRvN+l9JtQa16Z8Gu2AgVVgLQm0QAizPVvZpBPbhfIBT9c
- B7QSXW6uQV2wKUdRzXo3I5fnOcvG13sUVI8orFFftk74IpCmHk3W9FMqGSQKmGM65eaF
- Hh6fUpa4h5e8YFiHkFC/65LnMMpbJg5WieINvO5fHRXTgsTLupvdW5hGUw+vTqJUHyDw
- 4VUA==
+ bh=+oxqw9LaaR4ABwL+8F2feAdaVXYVhFV1aHt0UfCnPH4=;
+ b=vY2WOk0xFC7U5jzwyR81U0g/E4uVWcLoX4zKMeBVLjN5sZNXqIzw8tfkxGJo/FYw4f
+ gnJ0W9P4HoiOzmPDGaNx8VMQPG1Q6by+raR7x9e4OjIZm0UjPfTmwk8w1RARpgrERVjd
+ HI+rHaUEBw9KWgFJxVEgJBU+yO4GAxok5I8znykhwmBAal2MPBw3biCptFC17n4T/XFM
+ s0WwPimuDKRtVdCtVxW8e8TfcCHWq+28bb3rRD1FhelBnEMhYScmF6oWHhJtFU78zy0C
+ xaUVZohKW4iU4ApkGq7lHXLsCoLjxRThHH1HCa3NdVDhQLYpaVkaEcwW6VerYknb9yXH
+ nAtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706603463; x=1707208263;
+ d=1e100.net; s=20230601; t=1706603706; x=1707208506;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cxVszLHp8FDNbJNY/mf3ia485nZl1e2+jY4i4I+6OVU=;
- b=W9DU7dWHZANhwWrLHxrqVeRvA/Dem9RM0rsv1fciYAk5ukN5CRwC2yfdtIVCY0uxls
- ZIEWuelentQb53l8nNS63zo4V8iBg1FsbNJ97gA1cXm9+i0ZUJ89uO6VXHHZiw86rxIw
- kbhr2G7mBqLnMfuGr3dZntp5k4iCnif+dga5GCyPG+dFCUlaD+LJsfAiP6ZcblHTYj7b
- 4m22UgbNSRBgZVg1QJ5lp0mDrB+9YcHAq7XQyYxK093tlHoRtnCzL8tNtGq2Ef4EcXZa
- bvO/p7nsGVg+u8TADr42hRc7QETN1OAX+LD6PZyVjgDmMywHDV2lOwyiBCBXL2nbbAKK
- nCkg==
-X-Gm-Message-State: AOJu0YxpN9frSn9hOQE4/8fM/GYnEVJ0UwiP7isZ2y4TM83KeDLWqmru
- FKFS/c6Pyq56OMcTID10z358NCFhAc56eh0wIZTVPLpp7ZIPxj1DT5fmi0MKzZo=
-X-Google-Smtp-Source: AGHT+IFgDQSZYS5xJZG8e5E7Fkd5LoE5NrieGmNZZyqED57aOktYazg6vuC6KmRkM/qj3PAioUiCPQ==
-X-Received: by 2002:adf:e58f:0:b0:33a:f4ba:d5ee with SMTP id
- l15-20020adfe58f000000b0033af4bad5eemr2368411wrm.23.1706603463027; 
- Tue, 30 Jan 2024 00:31:03 -0800 (PST)
+ bh=+oxqw9LaaR4ABwL+8F2feAdaVXYVhFV1aHt0UfCnPH4=;
+ b=MpQyqhxu2/eNaWG4wMFYp8vFqpJDB5dZ9BR+cbFFfGvpeRtu91nTw9irogfXXNXpjV
+ J1ICDJC668K4EQDiixzFtDQwus2r9Z5wCW7g3InlBGSF8qJSLzEYdHN74XFHEIXfXIp0
+ ms+6DHrCMvOhej9jd2Q3SH9+PVD6OwTMWThaKcSf77J3irW5wcknFOipI4KjS/vueU8T
+ D9jDzokIeFut4UCCLvpB3XxcWYrFY5RGD4oWVhjHTld12wnr20g1GJ9DY9p/KuCbUW7S
+ FOgB8f/i+6LLk8RxIzQknctaYTLITlAS3qk42RsTPf6jBpqHHMB7YwAyf+baZkmjifBE
+ WnTg==
+X-Gm-Message-State: AOJu0YzKr8KstxPWAda7FpsxVsZWiacCYg9Bt50TDHonidtrlwBnsDgs
+ py6BB4kZ9jk+g7kI06A8asLZOhDblshWIHGoGJuiAxwWzhB8ZkwvBToq6ZYDOXMqYieM94iLG34
+ n
+X-Google-Smtp-Source: AGHT+IFinhriq9opApucFygFCf8/r8RCnbLlR0s9lHOzuLUuW/wPS37EuxVFbEZYu/F6pHaMYxSF/g==
+X-Received: by 2002:a05:6000:12ca:b0:33a:d28c:222c with SMTP id
+ l10-20020a05600012ca00b0033ad28c222cmr723780wrx.11.1706603706469; 
+ Tue, 30 Jan 2024 00:35:06 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- u15-20020a056000038f00b0033afd6551b2sm219513wrf.96.2024.01.30.00.31.01
+ o4-20020a05600c510400b0040ef7186b7esm5150644wms.29.2024.01.30.00.35.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 00:31:02 -0800 (PST)
-Message-ID: <f9d910e7-6b65-481e-abd9-f289eacacc88@linaro.org>
-Date: Tue, 30 Jan 2024 09:31:00 +0100
+ Tue, 30 Jan 2024 00:35:06 -0800 (PST)
+Message-ID: <1d4cc1d0-7230-4654-b534-339de480a5a2@linaro.org>
+Date: Tue, 30 Jan 2024 09:35:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pflash: fix sectors vs bytes confusion in
- blk_pread_nonzeroes()
+Subject: Re: [PATCH v3 22/29] target/riscv: Prefer fast cpu_env() over slower
+ CPU QOM cast macro
 Content-Language: en-US
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Xiang Zheng <zhengxiang9@huawei.com>
-References: <20240130002712.257815-1-stefanha@redhat.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240129164514.73104-1-philmd@linaro.org>
+ <20240129164514.73104-23-philmd@linaro.org>
+ <c1604184-d470-43ef-9530-cb8c0e5c8901@ventanamicro.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240130002712.257815-1-stefanha@redhat.com>
+In-Reply-To: <c1604184-d470-43ef-9530-cb8c0e5c8901@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,36 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/1/24 01:27, Stefan Hajnoczi wrote:
-> The following expression is incorrect because blk_pread_nonzeroes()
-> deals in units of bytes, not sectors:
+On 29/1/24 22:53, Daniel Henrique Barboza wrote:
+> Hey Phil,
 > 
->    bytes = MIN(size - offset, BDRV_REQUEST_MAX_SECTORS)
->                                                ^^^^^^^
-> 
-> BDRV_REQUEST_MAX_BYTES is the appropriate constant.
-> 
-> Fixes: a4b15a8b9ef2 ("pflash: Only read non-zero parts of backend image")
-> Cc: Xiang Zheng <zhengxiang9@huawei.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->   hw/block/block.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/block/block.c b/hw/block/block.c
-> index 9f52ee6e72..ff503002aa 100644
-> --- a/hw/block/block.c
-> +++ b/hw/block/block.c
-> @@ -30,7 +30,7 @@ static int blk_pread_nonzeroes(BlockBackend *blk, hwaddr size, void *buf)
->       BlockDriverState *bs = blk_bs(blk);
->   
->       for (;;) {
-> -        bytes = MIN(size - offset, BDRV_REQUEST_MAX_SECTORS);
-> +        bytes = MIN(size - offset, BDRV_REQUEST_MAX_BYTES);
->           if (bytes <= 0) {
->               return 0;
->           }
+> This patch is giving me a conflict in target/riscv/cpu_helper.c when 
+> applying
+> on top of master. Not sure if I'm missing any dependency.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+My 'master' was commit 7a1dc45af5.
+
+> It's a trivial conflict though, just a FYI. As for the patch:
+> 
+> 
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+Thanks!
 
 
