@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB0CC47DA9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 01:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E402FC47DA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 01:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUcbF-0003Be-L0; Mon, 29 Jan 2024 20:07:41 -0500
+	id 1rUceU-0004u9-Ng; Mon, 29 Jan 2024 20:11:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcb9-00037S-2u; Mon, 29 Jan 2024 20:07:35 -0500
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
+ id 1rUceT-0004rz-86; Mon, 29 Jan 2024 20:11:01 -0500
+Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcb5-0006JT-He; Mon, 29 Jan 2024 20:07:34 -0500
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-7d5bbbe57bbso653369241.1; 
- Mon, 29 Jan 2024 17:07:30 -0800 (PST)
+ id 1rUceR-0006zJ-6Z; Mon, 29 Jan 2024 20:11:00 -0500
+Received: by mail-vk1-xa2c.google.com with SMTP id
+ 71dfb90a1353d-4bddb27e832so641983e0c.0; 
+ Mon, 29 Jan 2024 17:10:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706576850; x=1707181650; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706577058; x=1707181858; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MxIR6OEGMEbKL8U+r+WD/8cvPu6yW/CWULi2X0C8L/Q=;
- b=KDYzaVCbC5bloh2PnLBfwI5PYPuUezwB0uNSoT/idhOO6aoXCG/ZoeNWv9bpELYlrs
- oOLhZM+/zD2GRbGbXT1gJ9YiSVyFTQsGiqhtILV9gVak09aZ3NCApAa/FbgDOrvQaLM8
- oWyUlRRt8M5nEJ3SO/PpbK84rhEwLUnIkeL66HXJTvijfUGv289/LGjojJ8aC1MUQGRZ
- 2UegKNyjvyINEtpCRl5NK8UDNOB+r/ANU6bPpBD0swX9aPCFllv4Eiwuvpb1IoDNO4sm
- VeeET34rUSxSAR0/i5MIyRYCbW1igCZsrDzv/sGFKRZIYcxjB9Le6bM9UsH9nH8ilmeW
- HENw==
+ bh=R3VubPsSFNsoGb6IT4tjxLCgDTp4ID39cxhGZ/Camr0=;
+ b=gYnN5BVJ2MJO5oJtNhStosXDSqJEJm0e5e52sWjSTstEMrLQNlGd+LIKGTi++KfvPT
+ MhoDBpTQI9kI7+eOkEyEPND7mZuIGS52D7Odh6wRrz2xCQsXlbpX3GcQjPKQTI0FjA+3
+ r682mVwHTcr3dMi6WoV6NIXzZubnYlXKnxepUkGOav+wsmGpKPdjHX1QdP2Ea+u7bYDS
+ CG9IShju03NWT/5W+vkwJpGqGTNfVb00V80QmfCzJtpYG4srhhfCbIkYd85h3T0xszTk
+ LFmO1rY3HI0xUAmqhyF9oJwI42/GOvnn1p52wbjSGxn+vJkMag9f4RhtGt+9YN/6qH9d
+ voaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706576850; x=1707181650;
+ d=1e100.net; s=20230601; t=1706577058; x=1707181858;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MxIR6OEGMEbKL8U+r+WD/8cvPu6yW/CWULi2X0C8L/Q=;
- b=H8B+4/r3dHUccV6uTQJtSWbTrSeqeAkDDX3GkPd/ih13P1mB8GsaW2gTtiFprZ8yqB
- flBnl18C08pjRihvGWYz42TdstNkuaBMKNp2/Nhn4B/ZC7vyU4TS1ZVtaeqmslwC814r
- iik4Zer/ns0jg/UZkeKdKjRSXDE81VjatrluDznPnzjEcR0sHHtkfMtwt9cEcBoMhuOz
- KL5j9aBhDWFdgb6Flsiemt4kgSrTIlRFEpPfwwwTDV1ulhLgd/ezvnSSTs+pDk5ZNVDU
- F5zZQDOnrMHNViBb6T7KfBoz4aHgC2zZ5PwE5r4hq3o6Z6giiPtYQNv3nmtx/5QWDP0G
- iU2g==
-X-Gm-Message-State: AOJu0YxXHwp7g2OGIi+TGmbIXMgsyALthaBxn9cfMgVwJjlDPMNUml44
- jhWsq2taK04+ug4EAUtR0/vTC71ivL8nUGPtLIKmcXwiiJosfeLwfRkvkK0OT1KoqUx1a/OzfRL
- wmmLhI81f6RPWrXM57CrrLyE8LUE=
-X-Google-Smtp-Source: AGHT+IFIMKbU2fayWGK8Pol0gYRLcL31PZY6bNfPRm81y3qB24gpqSmU6fTEjsBKABRt5FFIJ+Wiwnaz8QhKhrTQn5s=
-X-Received: by 2002:a05:6102:3133:b0:46b:2bb:6936 with SMTP id
- f19-20020a056102313300b0046b02bb6936mr2731790vsh.33.1706576849693; Mon, 29
- Jan 2024 17:07:29 -0800 (PST)
+ bh=R3VubPsSFNsoGb6IT4tjxLCgDTp4ID39cxhGZ/Camr0=;
+ b=K/K9lq69JSoiReZzPg2Q4m9vuhR/9V6nio2gkktzkH+O3u4GLiobksmQXAB42VBN9b
+ XwN7KyBLFGx+F0jd/CpDWhSXyGjiYd3R+FLGoVCaY+gTy+qN418WZbuS/HesomeDW0XR
+ Qbl9A6ws7r4fHgCLvkltkVkVYZtbUgx6a7oX/8omxRI3j0SwFnZA4RwRLtIcpuqSebxD
+ HErp5OExT5Avnu6zMgvndOahgOHRCbr6WRyFZ63P20XixycM451V6eAQmPe0o3+YuGA4
+ PRkfF09XH05xrV5ij3K/FVNi2fntrYCYDN5Xu4oFsurCEuiELbldGZADwskEW2gzzRnj
+ I0qw==
+X-Gm-Message-State: AOJu0YxyGB8xq0SLNtYlIPh3fR6d3feyKRpdy/CrrX1k2AiTElqK8PlK
+ LOsQUDc7LvGA6lehMx/JR511I4oHanleWtICbF2PDlihTyqf29Kb2lIDnm+WlBq05OfsBah4ySE
+ 4BlYV65l2LGPa2EBycVCKme+I6oo=
+X-Google-Smtp-Source: AGHT+IGW3GV3QMG4Rdd2Kd1CxvtsOVqUsqn44I0G53SfuLNTL6k0q6E76A5wXUByF4xgiBm202pgtACWfOrnQwltzgo=
+X-Received: by 2002:a05:6122:2013:b0:4bd:5cd5:f494 with SMTP id
+ l19-20020a056122201300b004bd5cd5f494mr3579142vkd.28.1706577057620; Mon, 29
+ Jan 2024 17:10:57 -0800 (PST)
 MIME-Version: 1.0
 References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
- <20240125195319.329181-3-dbarboza@ventanamicro.com>
-In-Reply-To: <20240125195319.329181-3-dbarboza@ventanamicro.com>
+ <20240125195319.329181-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20240125195319.329181-4-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 30 Jan 2024 11:07:03 +1000
-Message-ID: <CAKmqyKPqeZwfbJxONB1CA+vjFkJOrvVRZ=aN0rTFNUuZD_-Fow@mail.gmail.com>
-Subject: Re: [PATCH 2/6] target/riscv: add riscv,isa to named features
+Date: Tue, 30 Jan 2024 11:10:31 +1000
+Message-ID: <CAKmqyKNZ73Ep1sBKGBoX=wNvOPq_R+UU_K9qSRABBQUzK-LFLA@mail.gmail.com>
+Subject: Re: [PATCH 3/6] target/riscv: add remaining named features
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -91,177 +91,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 26, 2024 at 6:55=E2=80=AFAM Daniel Henrique Barboza
+On Fri, Jan 26, 2024 at 5:54=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Further discussions after the introduction of rva22 support in QEMU
-> revealed that what we've been calling 'named features' are actually
-> regular extensions, with their respective riscv,isa DTs. This is
-> clarified in [1]. [2] is a bug tracker asking for the profile spec to be
-> less cryptic about it.
+> The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
+> until now, we were implying that they were available.
 >
-> As far as QEMU goes we understand extensions as something that the user
-> can enable/disable in the command line. This isn't the case for named
-> features, so we'll have to reach a middle ground.
+> We can't do this anymore since named features also has a riscv,isa
+> entry.  Let's add them to riscv_cpu_named_features[].
 >
-> We'll keep our existing nomenclature 'named features' to refer to any
-> extension that the user can't control in the command line. We'll also do
-> the following:
+> They will also need to be explicitly enabled in both profile
+> descriptions. TCG will enable the named features it already implements,
+> other accelerators are free to handle it as they like.
 >
-> - 'svade' and 'zic64b' flags are renamed to 'ext_svade' and
->   'ext_zic64b'. 'ext_svade' and 'ext_zic64b' now have riscv,isa strings a=
-nd
->   priv_spec versions;
+> After this patch, here's the riscv,isa from a buildroot using the
+> 'rva22s64' CPU:
 >
-> - skip name feature check in cpu_bump_multi_ext_priv_ver(). Now that
->   named features have a riscv,isa and an entry in isa_edata_arr[] we
->   don't need to gate the call to cpu_cfg_ext_get_min_version() anymore.
->
-> [1] https://github.com/riscv/riscv-profiles/issues/121
-> [2] https://github.com/riscv/riscv-profiles/issues/142
+>  # cat /proc/device-tree/cpus/cpu@0/riscv,isa
+> rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
+> zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
+> zbs_zkt_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
 > ---
->  target/riscv/cpu.c         | 17 +++++++++++++----
->  target/riscv/cpu_cfg.h     |  6 ++++--
->  target/riscv/tcg/tcg-cpu.c | 16 ++++++----------
->  3 files changed, 23 insertions(+), 16 deletions(-)
+>  target/riscv/cpu.c         | 41 +++++++++++++++++++++++++++++---------
+>  target/riscv/cpu_cfg.h     |  9 +++++++++
+>  target/riscv/tcg/tcg-cpu.c | 19 +++++++++++++++++-
+>  3 files changed, 59 insertions(+), 10 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 88e8cc8681..28d3cfa8ce 100644
+> index 28d3cfa8ce..1ecd8a57ed 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -97,6 +97,7 @@ bool riscv_cpu_option_set(const char *optname)
->   * instead.
->   */
->  const RISCVIsaExtData isa_edata_arr[] =3D {
-> +    ISA_EXT_DATA_ENTRY(zic64b, PRIV_VERSION_1_12_0, ext_zic64b),
+> @@ -101,6 +101,10 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
 >      ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
 >      ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
 >      ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
-> @@ -171,6 +172,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+> +    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_ziccamoa),
+> +    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_ziccif),
+> +    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_zicclsm),
+> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
+>      ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
+>      ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
+>      ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
+> @@ -109,6 +113,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause=
+),
+>      ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+>      ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+> +    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_za64rs),
+>      ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+>      ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+>      ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+> @@ -170,8 +175,12 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
 >      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+> +    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_ssccptr),
 >      ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+> +    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_sscountere=
+nw),
 >      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-> +    ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
+> +    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_sstvala),
+> +    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_sstvecd),
+>      ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
 >      ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
 >      ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
->      ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
-> @@ -1510,9 +1512,16 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimenta=
-l_exts[] =3D {
+> @@ -1523,6 +1532,22 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_featu=
+res[] =3D {
+>      MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
+>      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+>
+> +    /*
+> +     * cache-related extensions that are always enabled
+> +     * since QEMU RISC-V does not have a cache model.
+> +     */
+> +    MULTI_EXT_CFG_BOOL("za64rs", ext_za64rs, true),
+> +    MULTI_EXT_CFG_BOOL("ziccif", ext_ziccif, true),
+> +    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
+> +    MULTI_EXT_CFG_BOOL("ziccamoa", ext_ziccamoa, true),
+> +    MULTI_EXT_CFG_BOOL("zicclsm", ext_zicclsm, true),
+> +    MULTI_EXT_CFG_BOOL("ssccptr", ext_ssccptr, true),
+> +
+> +    /* Other named features that QEMU TCG always implements */
+> +    MULTI_EXT_CFG_BOOL("sstvecd", ext_sstvecd, true),
+> +    MULTI_EXT_CFG_BOOL("sstvala", ext_sstvala, true),
+> +    MULTI_EXT_CFG_BOOL("sscounterenw", ext_sscounterenw, true),
+> +
 >      DEFINE_PROP_END_OF_LIST(),
 >  };
 >
-> +/*
-> + * 'Named features' is the name we give to extensions that we
-> + * don't want to expose to users. They are either immutable
-> + * (always enabled/disable) or they'll vary depending on
-> + * the resulting CPU state. They have riscv,isa strings
-> + * and priv_ver like regular extensions.
-> + */
->  const RISCVCPUMultiExtConfig riscv_cpu_named_features[] =3D {
-> -    MULTI_EXT_CFG_BOOL("svade", svade, true),
-> -    MULTI_EXT_CFG_BOOL("zic64b", zic64b, true),
-> +    MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
-> +    MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
->
->      DEFINE_PROP_END_OF_LIST(),
+> @@ -2116,13 +2141,8 @@ static const PropertyInfo prop_marchid =3D {
 >  };
-> @@ -2130,7 +2139,7 @@ static RISCVCPUProfile RVA22U64 =3D {
+>
+>  /*
+> - * RVA22U64 defines some 'named features' or 'synthetic extensions'
+> - * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
+> - * and Zicclsm. We do not implement caching in QEMU so we'll consider
+> - * all these named features as always enabled.
+> - *
+> - * There's no riscv,isa update for them (nor for zic64b, despite it
+> - * having a cfg offset) at this moment.
+> + * RVA22U64 defines some cache related extensions: Za64rs,
+> + * Ziccif, Ziccrse, Ziccamoa and Zicclsm.
+>   */
+>  static RISCVCPUProfile RVA22U64 =3D {
+>      .parent =3D NULL,
+> @@ -2139,7 +2159,9 @@ static RISCVCPUProfile RVA22U64 =3D {
 >          CPU_CFG_OFFSET(ext_zicbop), CPU_CFG_OFFSET(ext_zicboz),
 >
 >          /* mandatory named features for this profile */
-> -        CPU_CFG_OFFSET(zic64b),
-> +        CPU_CFG_OFFSET(ext_zic64b),
+> -        CPU_CFG_OFFSET(ext_zic64b),
+> +        CPU_CFG_OFFSET(ext_za64rs), CPU_CFG_OFFSET(ext_zic64b),
+> +        CPU_CFG_OFFSET(ext_ziccif), CPU_CFG_OFFSET(ext_ziccrse),
+> +        CPU_CFG_OFFSET(ext_ziccamoa), CPU_CFG_OFFSET(ext_zicclsm),
 >
 >          RISCV_PROFILE_EXT_LIST_END
 >      }
-> @@ -2161,7 +2170,7 @@ static RISCVCPUProfile RVA22S64 =3D {
+> @@ -2170,7 +2192,8 @@ static RISCVCPUProfile RVA22S64 =3D {
 >          CPU_CFG_OFFSET(ext_svinval),
 >
 >          /* rva22s64 named features */
-> -        CPU_CFG_OFFSET(svade),
-> +        CPU_CFG_OFFSET(ext_svade),
+> -        CPU_CFG_OFFSET(ext_svade),
+> +        CPU_CFG_OFFSET(ext_sstvecd), CPU_CFG_OFFSET(ext_sstvala),
+> +        CPU_CFG_OFFSET(ext_sscounterenw), CPU_CFG_OFFSET(ext_svade),
 >
 >          RISCV_PROFILE_EXT_LIST_END
 >      }
 > diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index e241922f89..698f926ab1 100644
+> index 698f926ab1..f79fc3dfd1 100644
 > --- a/target/riscv/cpu_cfg.h
 > +++ b/target/riscv/cpu_cfg.h
-> @@ -117,13 +117,15 @@ struct RISCVCPUConfig {
->      bool ext_smepmp;
->      bool rvv_ta_all_1s;
->      bool rvv_ma_all_1s;
-> -    bool svade;
-> -    bool zic64b;
+> @@ -125,6 +125,15 @@ struct RISCVCPUConfig {
+>      /* Named features  */
+>      bool ext_svade;
+>      bool ext_zic64b;
+> +    bool ext_za64rs;
+> +    bool ext_ziccif;
+> +    bool ext_ziccrse;
+> +    bool ext_ziccamoa;
+> +    bool ext_zicclsm;
+> +    bool ext_ssccptr;
+> +    bool ext_sstvecd;
+> +    bool ext_sstvala;
+> +    bool ext_sscounterenw;
+
+Overall this and the previous patch look fine.
+
+One thing though, why store this information? I feel it could be
+confusing having these variables. If a developer sets them to false
+nothing actually happens, which is a little misleading
+
+Alistair
+
 >
->      uint32_t mvendorid;
->      uint64_t marchid;
->      uint64_t mimpid;
->
-> +    /* Named features  */
-> +    bool ext_svade;
-> +    bool ext_zic64b;
-> +
 >      /* Vendor-specific custom extensions */
 >      bool ext_xtheadba;
->      bool ext_xtheadbb;
 > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 88f92d1c7d..90861cc065 100644
+> index 90861cc065..6d5028cf84 100644
 > --- a/target/riscv/tcg/tcg-cpu.c
 > +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -197,12 +197,12 @@ static bool cpu_cfg_offset_is_named_feat(uint32_t e=
-xt_offset)
->  static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_off=
-set)
->  {
->      switch (feat_offset) {
-> -    case CPU_CFG_OFFSET(zic64b):
-> +    case CPU_CFG_OFFSET(ext_zic64b):
->          cpu->cfg.cbom_blocksize =3D 64;
->          cpu->cfg.cbop_blocksize =3D 64;
->          cpu->cfg.cboz_blocksize =3D 64;
->          break;
-> -    case CPU_CFG_OFFSET(svade):
-> +    case CPU_CFG_OFFSET(ext_svade):
+> @@ -206,7 +206,8 @@ static void riscv_cpu_enable_named_feat(RISCVCPU *cpu=
+, uint32_t feat_offset)
 >          cpu->cfg.ext_svadu =3D false;
 >          break;
 >      default:
-> @@ -219,10 +219,6 @@ static void cpu_bump_multi_ext_priv_ver(CPURISCVStat=
-e *env,
->          return;
+> -        g_assert_not_reached();
+> +        /* Named feature already enabled in riscv_tcg_cpu_instance_init =
+*/
+> +        return;
 >      }
->
-> -    if (cpu_cfg_offset_is_named_feat(ext_offset)) {
-> -        return;
-> -    }
-> -
->      ext_priv_ver =3D cpu_cfg_ext_get_min_version(ext_offset);
->
->      if (env->priv_ver < ext_priv_ver) {
-> @@ -349,11 +345,11 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RI=
-SCVCPU *cpu)
->
->  static void riscv_cpu_update_named_features(RISCVCPU *cpu)
->  {
-> -    cpu->cfg.zic64b =3D cpu->cfg.cbom_blocksize =3D=3D 64 &&
-> -                      cpu->cfg.cbop_blocksize =3D=3D 64 &&
-> -                      cpu->cfg.cboz_blocksize =3D=3D 64;
-> +    cpu->cfg.ext_zic64b =3D cpu->cfg.cbom_blocksize =3D=3D 64 &&
-> +                          cpu->cfg.cbop_blocksize =3D=3D 64 &&
-> +                          cpu->cfg.cboz_blocksize =3D=3D 64;
->
-> -    cpu->cfg.svade =3D !cpu->cfg.ext_svadu;
-> +    cpu->cfg.ext_svade =3D !cpu->cfg.ext_svadu;
 >  }
 >
->  static void riscv_cpu_validate_g(RISCVCPU *cpu)
+> @@ -1342,6 +1343,20 @@ static bool riscv_cpu_has_max_extensions(Object *c=
+pu_obj)
+>      return object_dynamic_cast(cpu_obj, TYPE_RISCV_CPU_MAX) !=3D NULL;
+>  }
+>
+> +/* Named features that TCG always implements */
+> +static void riscv_tcg_cpu_enable_named_feats(RISCVCPU *cpu)
+> +{
+> +    cpu->cfg.ext_za64rs =3D true;
+> +    cpu->cfg.ext_ziccif =3D true;
+> +    cpu->cfg.ext_ziccrse =3D true;
+> +    cpu->cfg.ext_ziccamoa =3D true;
+> +    cpu->cfg.ext_zicclsm =3D true;
+> +    cpu->cfg.ext_ssccptr =3D true;
+> +    cpu->cfg.ext_sstvecd =3D true;
+> +    cpu->cfg.ext_sstvala =3D true;
+> +    cpu->cfg.ext_sscounterenw =3D true;
+> +}
+> +
+>  static void riscv_tcg_cpu_instance_init(CPUState *cs)
+>  {
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+> @@ -1354,6 +1369,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *c=
+s)
+>      if (riscv_cpu_has_max_extensions(obj)) {
+>          riscv_init_max_cpu_extensions(obj);
+>      }
+> +
+> +    riscv_tcg_cpu_enable_named_feats(cpu);
+>  }
+>
+>  static void riscv_tcg_cpu_init_ops(AccelCPUClass *accel_cpu, CPUClass *c=
+c)
 > --
 > 2.43.0
 >
