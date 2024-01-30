@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82031C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C269C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:12:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUjCi-0005WO-3y; Tue, 30 Jan 2024 03:10:48 -0500
+	id 1rUjE4-00068c-OJ; Tue, 30 Jan 2024 03:12:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjCf-0005Vr-2F
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:10:45 -0500
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjDw-00068H-0p
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:12:04 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjCc-0000zh-8m
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:10:44 -0500
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-510221ab3ebso4950400e87.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:10:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjDt-000150-9W
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:12:03 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-40ef6bbb61fso15488105e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:12:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706602240; x=1707207040; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706602320; x=1707207120; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Uj6/jqHV0QLziy+ZEFbT3OJZcuznN2sdnkdTZcAL+Rw=;
- b=DMBUHv/kqWNriXvAPfND2BoAonVFPPU5ADYGkxKHClsE0xXudPqkFHWMJV3XPits+7
- LecDtH3rit1xVxSNV5c2IoO0xKKFw9a8ZfGFE53MlvgQtJIpQzToivsXkVfft1pq5Tc1
- TMlm9nO12Riz7YBG09p392Q9tBRqb+m3uM4HFgjTxyUuZoBE7pt92Qd/cnzoPUJrLOIU
- AAR384lj2n48icBBa8h/ctjckoc4VwEX6UFCGPeSJ4eyVJeqeTjh0XHZXZC2uiQNBLZF
- UZP3dFTVzj5vKObwkhxUEJ+YxMFUwOEHvzcl7M3Jmw4M3GVnNhceowlBHIauQVszaUOG
- OxVg==
+ bh=Qay1U2fKNw0FV5V9Q22Q21X9XdGnsoOE2/qXCphsTgM=;
+ b=Op20xv5nYK4fOGj7ee1spwMMvqCsMo02y3sVoDdP3NFp8P/IS1lLbWEKOlYGAoCGBU
+ WJ08OYANah50DihsfNNOYIXwiHBPLDhS4h5Zd8VE5+r98BO939ZF+zX1s+z7WqmYqBSL
+ NGYPC/VPLynSIlaK1E5h2VZi8KPqAdnkvhlcIGeKOuDIZ+gXGlL94FTmzjqqhoMW048d
+ hYIqak+Ax1K2g2vjFORoyROuPRtsHQzlVWaNobsNvZYU215Zk/2eJ7qePbsD2E5oeSZG
+ d0mnmGfVgR1Sr1xlDZmUzF9yDmreU8JnTqOHwA3uQqz0jOg1y5P76Go7qa/Edvq6AzoN
+ Q6Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706602240; x=1707207040;
+ d=1e100.net; s=20230601; t=1706602320; x=1707207120;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Uj6/jqHV0QLziy+ZEFbT3OJZcuznN2sdnkdTZcAL+Rw=;
- b=L2vLTHoPwiFshTSYkP7T75EckmVcayoPXPefrRRvJOSLtjfLk4vNliQpRp8DIgeqoa
- BziIsI3BHsJ3HBEPKofddsa8rPMkvCWfBEKp1nvc7TIkEhpqmneUtrm+/8ZK5CRKZfC/
- YI2ASY64osnANH+zVxiQC7vGtVsWS+W+8kkXRJrqipsp8QiGLQ8qCO7BZ15yItsr7sOG
- CKv6VfEfSiApUrUMYtYsRSAp3jdAU7fbCa+bUHgaE+OpQDxaPJxkimSHQ8ZQYf6Mwjj9
- 1wA92ru7vGesMN/FZrOUEpKSIZcHl5bYrwuTJINqfI8FgKy/pUayn2Y2v7NGhT+n9MSO
- 4MxA==
-X-Gm-Message-State: AOJu0Yx5vLGf+eUBCJZ9PfjDBMlW0f1BmPcKtPrn+jj4XUWAshjaubzT
- zojeU2ljpTCyjpRa1x5vSQbTvtOfXoWutZUeCsyvowvLAy1g5DjSl+ra7iEaxQE=
-X-Google-Smtp-Source: AGHT+IEzG3UlcH+Q0uuSVH65S4Y+LLkugsKaA3X2vYuHShqhTEA2nOS7shEijTSfZ0JyvOOWRKVByQ==
-X-Received: by 2002:ac2:4a65:0:b0:50f:1ac5:758c with SMTP id
- q5-20020ac24a65000000b0050f1ac5758cmr4955032lfp.17.1706602240381; 
- Tue, 30 Jan 2024 00:10:40 -0800 (PST)
+ bh=Qay1U2fKNw0FV5V9Q22Q21X9XdGnsoOE2/qXCphsTgM=;
+ b=SQkZ35ovjX0etn/bo3hIpVdGyep/uLKmV3NP12VFUhm6qg1WDbeLVFIP61omBzEq8Z
+ RWNQHEYKLS2l96yTbuooYZj8k0s5kTMDCxQxXhg8ko8+U0VrzPQqhVyAZAmBSjIEXGOr
+ snv27thr64sDXM+fHXDWlH3bfEWlfZBfZ0RgZkSRu4deDtVX187QDQPWg1dIYhcfIXLV
+ 0h+KrgIzbOKgvWlIXmVDzI6T4kPgy73yE0HliDMBlpLRqhOv7FErTW9uJu0wqAemIY3j
+ lSgn0ki9abQa8jsTVFN6NWx27zqeOymiqrKERQfJXlGSIgWEXpQpMg82IaSKiebkdU0e
+ 6O3w==
+X-Gm-Message-State: AOJu0YyhaunwxcpCX9goxMCnFIKvfbBkwP5X53Dm+3Qtp+zdl64nH/3S
+ JKUQr/yYHbfKj9J0zpiV0KNwHnkjWdd0aC9EPk9CcqAYh+rx8ygm3LscZJulaVk=
+X-Google-Smtp-Source: AGHT+IEiGP+qCMo7tS00fnCBlsOkBchiFqBlAY14NPbpDeLleajNBhDdt+lHC2TnCljxTRmYMdpieQ==
+X-Received: by 2002:a05:600c:4f08:b0:40f:993e:3591 with SMTP id
+ l8-20020a05600c4f0800b0040f993e3591mr181304wmq.3.1706602319904; 
+ Tue, 30 Jan 2024 00:11:59 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- g14-20020a05600c4ece00b0040d5ae2906esm16186462wmq.30.2024.01.30.00.10.39
+ g14-20020a05600c4ece00b0040d5ae2906esm16186462wmq.30.2024.01.30.00.11.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 00:10:40 -0800 (PST)
-Message-ID: <f538a86d-7ebb-466a-98de-d0093f6c202a@linaro.org>
-Date: Tue, 30 Jan 2024 09:10:38 +0100
+ Tue, 30 Jan 2024 00:11:59 -0800 (PST)
+Message-ID: <fd01306a-4c81-4f49-8dc4-74080330653d@linaro.org>
+Date: Tue, 30 Jan 2024 09:11:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/22] target/sparc: Introduce cpu_get_fsr, cpu_put_fsr
+Subject: Re: [PATCH 16/22] target/split: Split ver from env->fsr
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk
 References: <20231103173841.33651-1-richard.henderson@linaro.org>
- <20231103173841.33651-16-richard.henderson@linaro.org>
+ <20231103173841.33651-17-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20231103173841.33651-16-richard.henderson@linaro.org>
+In-Reply-To: <20231103173841.33651-17-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,55 +95,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/11/23 18:38, Richard Henderson wrote:
+> This field is read-only.  It is easier to store it separately
+> and merge it only upon read.
+> 
+> While we're at it, use FSR_VER_SHIFT to initialize fpu_version.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/sparc/cpu.h          |  4 +++-
->   target/sparc/helper.h       |  1 +
->   linux-user/sparc/cpu_loop.c |  2 +-
->   linux-user/sparc/signal.c   | 14 +++++++++-----
->   target/sparc/cpu.c          |  5 +++--
->   target/sparc/fop_helper.c   | 21 ++++++++++++++++++--
->   target/sparc/gdbstub.c      |  8 ++++----
->   target/sparc/machine.c      | 38 +++++++++++++++++++++++++++++++++++--
->   target/sparc/translate.c    |  7 ++++++-
->   9 files changed, 82 insertions(+), 18 deletions(-)
+>   target/sparc/cpu.h        |  3 +++
+>   target/sparc/cpu.c        | 27 +++++++++++++--------------
+>   target/sparc/fop_helper.c |  9 +++++++--
+>   3 files changed, 23 insertions(+), 16 deletions(-)
 
-
-> diff --git a/target/sparc/machine.c b/target/sparc/machine.c
-> index 44dfc07014..e46f15adb8 100644
-> --- a/target/sparc/machine.c
-> +++ b/target/sparc/machine.c
-> @@ -83,6 +83,34 @@ static const VMStateInfo vmstate_psr = {
->       .put = put_psr,
->   };
->   
-> +static int get_fsr(QEMUFile *f, void *opaque, size_t size,
-> +                   const VMStateField *field)
-> +{
-> +    SPARCCPU *cpu = opaque;
-> +    CPUSPARCState *env = &cpu->env;
-> +    target_ulong val = qemu_get_betl(f);
-> +
-> +    cpu_put_fsr(env, val);
-
-Preferably directly using cpu_env(), otherwise:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +    return 0;
-> +}
-> +
-> +static int put_fsr(QEMUFile *f, void *opaque, size_t size,
-> +                   const VMStateField *field, JSONWriter *vmdesc)
-> +{
-> +    SPARCCPU *cpu = opaque;
-> +    CPUSPARCState *env = &cpu->env;
-> +    target_ulong val = cpu_get_fsr(env);
-
-(Ditto)
-
-> +
-> +    qemu_put_betl(f, val);
-> +    return 0;
-> +}
 
 
