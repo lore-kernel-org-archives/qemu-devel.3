@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722AEC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 23:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C037C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 23:50:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUxrC-0000pM-RR; Tue, 30 Jan 2024 18:49:34 -0500
+	id 1rUxrA-0000ok-KV; Tue, 30 Jan 2024 18:49:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rUxrB-0000ow-9B
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 18:49:33 -0500
+ id 1rUxr8-0000oV-SB
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 18:49:30 -0500
 Received: from mgamail.intel.com ([134.134.136.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rUxr9-0003Zp-BI
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 18:49:33 -0500
+ id 1rUxr5-0003Zp-Jf
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 18:49:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706658571; x=1738194571;
- h=from:to:subject:date:message-id:in-reply-to:references:
- mime-version:content-transfer-encoding;
- bh=KY/AMnlQUPEtmtyCg8/YEs9GcXSzmt79ngRlqR1yPJA=;
- b=SRBo0Cph0BFfAnQgNBQ3ANKPhrr87X/4/+SW056N85Qb1LGXSI9sAj0J
- hfPq6ABMGknJMR7OkMc4rTIxbMAGG8fwA8r3hkrgbAHqHAtLhdUGmv4ka
- a3EjmlSB1Q49iGJaHcfiagdC7Ns34COx/53aJHukvIHSQhveJdNQpxmFS
- S/EL9szEMmTmIZlvSefI7suq6ADMD3H0zEQDObhOMATH5hkgxdJJrYqzP
- V79O3IApayPVY3Zq70DcgxQJrymD2AJByVitDaWu52oeV0PF544q6SITL
- t9d84RGtH2N7O68g0s/dSxEtjc6pcU0s6DRIxlXgMMg/4h3Z6MpltVEYu w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="393887939"
-X-IronPort-AV: E=Sophos;i="6.05,230,1701158400"; d="scan'208";a="393887939"
+ t=1706658567; x=1738194567;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=/I6hTJML4W3gynT9p14FVS1hx+RCSexpHKMqysXJs3E=;
+ b=c+ViXghHpkVOLx2/UDC9P8pzxHZQA67SJfGr4efvVF4Zv5HPe1iuuc/F
+ OMbqNQuVv3XCsAmyAhnP3SsJumeYso4A3Z4eew7xKNY512Bua5YWUmTmv
+ VB4ubIkSRJLAqJkE2eQi4A24kWpWNh9BkgTd2L6Z0JeLYuQfUNTJYhXH0
+ mjfhfm2TkZLXku5kYZyNXKqhNX2W0OkxUziL2Gxj0Nd9MjgKqKzDpSDlB
+ jSl8TM0uUgzil7Aw4l/GOzgNceGVh6nae4emjFUaZ4YSIhQoD4mSVEBfv
+ 640N7Luf0uR51BAMpble3a+wOR1RQ+z2P1yHCWxBjwxRDfOYY6fkJaKJy w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="393887938"
+X-IronPort-AV: E=Sophos;i="6.05,230,1701158400"; d="scan'208";a="393887938"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  30 Jan 2024 15:49:23 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="737919634"
-X-IronPort-AV: E=Sophos;i="6.05,230,1701158400"; d="scan'208";a="737919634"
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="737919632"
+X-IronPort-AV: E=Sophos;i="6.05,230,1701158400"; d="scan'208";a="737919632"
 Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
  by orsmga003.jf.intel.com with ESMTP; 30 Jan 2024 15:49:23 -0800
 From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/3] ui/gtk: skip drawing guest scanout when associated VC is
- invisible
-Date: Tue, 30 Jan 2024 15:48:38 -0800
-Message-Id: <20240130234840.53122-2-dongwon.kim@intel.com>
+Subject: [PATCH 0/3] ui/gtk: introducing vc->visible
+Date: Tue, 30 Jan 2024 15:48:37 -0800
+Message-Id: <20240130234840.53122-1-dongwon.kim@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240130234840.53122-1-dongwon.kim@intel.com>
-References: <20240130234840.53122-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,138 +78,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dongwon Kim <dongwon.kim@intel.com>
 
-A new flag "visible" is added to show visibility status of the gfx console.
-The flag is set to 'true' when the VC is visible but set to 'false' when
-it is hidden or closed. When the VC is invisible, drawing guest frames
-should be skipped as it will never be completed and it would potentially
-lock up the guest display especially when blob scanout is used.
+Drawing guest display frames can't be completed while the VC is not in
+visible state, which could result in timeout in both the host and the
+guest especially when using blob scanout. Therefore it is needed to
+update and track the visiblity status of the VC and unblock the pipeline
+in case when VC becomes invisible (e.g. windows minimization, switching
+among tabs) while processing a guest frame.
 
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+First patch (0001-ui-gtk-skip...) is introducing a flag 'visible' to
+VirtualConsole struct then set it only if the VC and its window is
+visible.
+ 
+Second patch (0002-ui-gtk-set-...) sets the ui size to 0 when VC is
+invisible when the tab is closed or deactivated. This notifies the guest
+that the associated guest display is not active anymore.
 
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
+Third patch (0003-ui-gtk-reset-visible...) adds a callback for GTK
+window-state-event. The flag, 'visible' is updated based on the
+minization status of the window.
+
+Dongwon Kim (3):
+  ui/gtk: skip drawing guest scanout when associated VC is invisible
+  ui/gtk: set the ui size to 0 when invisible
+  ui/gtk: reset visible flag when window is minimized
+
  include/ui/gtk.h |  1 +
- ui/gtk-egl.c     |  8 ++++++++
- ui/gtk-gl-area.c |  8 ++++++++
- ui/gtk.c         | 10 +++++++++-
- 4 files changed, 26 insertions(+), 1 deletion(-)
+ ui/gtk-egl.c     |  8 +++++++
+ ui/gtk-gl-area.c |  8 +++++++
+ ui/gtk.c         | 62 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 4 files changed, 77 insertions(+), 2 deletions(-)
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index aa3d637029..2de38e5724 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -57,6 +57,7 @@ typedef struct VirtualGfxConsole {
-     bool y0_top;
-     bool scanout_mode;
-     bool has_dmabuf;
-+    bool visible;
- #endif
- } VirtualGfxConsole;
- 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 3af5ac5bcf..993c283191 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -265,6 +265,10 @@ void gd_egl_scanout_dmabuf(DisplayChangeListener *dcl,
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
- 
-+    if (!vc->gfx.visible) {
-+        return;
-+    }
-+
-     eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-                    vc->gfx.esurface, vc->gfx.ectx);
- 
-@@ -363,6 +367,10 @@ void gd_egl_flush(DisplayChangeListener *dcl,
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-     GtkWidget *area = vc->gfx.drawing_area;
- 
-+    if (!vc->gfx.visible) {
-+        return;
-+    }
-+
-     if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 52dcac161e..04e07bd7ee 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -285,6 +285,10 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- {
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
- 
-+    if (!vc->gfx.visible) {
-+        return;
-+    }
-+
-     if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
-         graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-@@ -299,6 +303,10 @@ void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
- #ifdef CONFIG_GBM
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
- 
-+    if (!vc->gfx.visible) {
-+        return;
-+    }
-+
-     gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-     egl_dmabuf_import_texture(dmabuf);
-     if (!dmabuf->texture) {
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 810d7fc796..02eb667d8a 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -1312,15 +1312,20 @@ static void gd_menu_quit(GtkMenuItem *item, void *opaque)
- static void gd_menu_switch_vc(GtkMenuItem *item, void *opaque)
- {
-     GtkDisplayState *s = opaque;
--    VirtualConsole *vc = gd_vc_find_by_menu(s);
-+    VirtualConsole *vc;
-     GtkNotebook *nb = GTK_NOTEBOOK(s->notebook);
-     gint page;
- 
-+    vc = gd_vc_find_current(s);
-+    vc->gfx.visible = false;
-+
-+    vc = gd_vc_find_by_menu(s);
-     gtk_release_modifiers(s);
-     if (vc) {
-         page = gtk_notebook_page_num(nb, vc->tab_item);
-         gtk_notebook_set_current_page(nb, page);
-         gtk_widget_grab_focus(vc->focus);
-+        vc->gfx.visible = true;
-     }
- }
- 
-@@ -1350,6 +1355,7 @@ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
-     VirtualConsole *vc = opaque;
-     GtkDisplayState *s = vc->s;
- 
-+    vc->gfx.visible = false;
-     gtk_widget_set_sensitive(vc->menu_item, true);
-     gd_widget_reparent(vc->window, s->notebook, vc->tab_item);
-     gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(s->notebook),
-@@ -1423,6 +1429,7 @@ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
-         gd_update_geometry_hints(vc);
-         gd_update_caption(s);
-     }
-+    vc->gfx.visible = true;
- }
- 
- static void gd_menu_show_menubar(GtkMenuItem *item, void *opaque)
-@@ -2471,6 +2478,7 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
- #ifdef CONFIG_GTK_CLIPBOARD
-     gd_clipboard_init(s);
- #endif /* CONFIG_GTK_CLIPBOARD */
-+    vc->gfx.visible = true;
- }
- 
- static void early_gtk_display_init(DisplayOptions *opts)
 -- 
 2.34.1
 
