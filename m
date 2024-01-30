@@ -4,99 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CFBAC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 21:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EC1C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 21:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUvif-0005lR-5E; Tue, 30 Jan 2024 16:32:38 -0500
+	id 1rUvmm-000732-M7; Tue, 30 Jan 2024 16:36:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUvia-0005ku-DL
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 16:32:32 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rUviW-0002Nc-9d
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 16:32:32 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 51EC01F8BF;
- Tue, 30 Jan 2024 21:32:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706650344; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rUvmk-00072Z-VE
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 16:36:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rUvmi-0003AE-Ee
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 16:36:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706650606;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dVQwctn8NlZNoqF2O0FPw57aWJvBvL0NfnKUfUoBTxM=;
- b=aLY4PG0PlDpNwQpBj6Mncf9vo7dmQaAgthl9lGlxT9esHvchLufNm6AMhOnWH1ti+LgXxM
- PTSpeImA55GcQgfpepac/NcqWQ68v0NyMfnyG3rKYXOaOXL7itsiR0KBRg4WoVWZyAfzhE
- No8wflukmMU2cF24C5L4Neaz9KpH21s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706650344;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dVQwctn8NlZNoqF2O0FPw57aWJvBvL0NfnKUfUoBTxM=;
- b=utpzdtlAnE7o9QuM1w6ohk+wpWueG7fB9aRz20D+ExPSvTs+jikbLsPaK2i1DaWr1ErwKN
- II5PW3ztg799SuAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706650344; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dVQwctn8NlZNoqF2O0FPw57aWJvBvL0NfnKUfUoBTxM=;
- b=aLY4PG0PlDpNwQpBj6Mncf9vo7dmQaAgthl9lGlxT9esHvchLufNm6AMhOnWH1ti+LgXxM
- PTSpeImA55GcQgfpepac/NcqWQ68v0NyMfnyG3rKYXOaOXL7itsiR0KBRg4WoVWZyAfzhE
- No8wflukmMU2cF24C5L4Neaz9KpH21s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706650344;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dVQwctn8NlZNoqF2O0FPw57aWJvBvL0NfnKUfUoBTxM=;
- b=utpzdtlAnE7o9QuM1w6ohk+wpWueG7fB9aRz20D+ExPSvTs+jikbLsPaK2i1DaWr1ErwKN
- II5PW3ztg799SuAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D02F712FF7;
- Tue, 30 Jan 2024 21:32:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QFWBJedquWV/SgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 30 Jan 2024 21:32:23 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH 05/17] migration/multifd: Wait for multifd channels
- creation before proceeding
-In-Reply-To: <a54d5dec-6103-4e10-b732-2156573c4ad8@nvidia.com>
-References: <20240125162528.7552-1-avihaih@nvidia.com>
- <20240125162528.7552-6-avihaih@nvidia.com> <87cytkdx7z.fsf@suse.de>
- <a54d5dec-6103-4e10-b732-2156573c4ad8@nvidia.com>
-Date: Tue, 30 Jan 2024 18:32:21 -0300
-Message-ID: <87v87abj8a.fsf@suse.de>
+ bh=QSHt61PaZMBy+GTDt1iPdVJdrazh+KY3deItt0o4tt4=;
+ b=cm8gn0mRj7Y0fvxKP81DThJaRHJtxhN9wY0An3kDNTtPAI8FdpR75YUEsDEhBpkpFAdnXt
+ LWrSbt9OJAJ3I8P93AWW/+m1VgCgY2O4Z1nrNAcDW9eDQW1gUn2pm9sDm/IYRCaPalDYvc
+ IKwo7DXZqNL0pQSGGJtdgNoCIS6fr0E=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-493-Gpl3VB3uNXC5ZFLtEfHThw-1; Tue, 30 Jan 2024 16:36:44 -0500
+X-MC-Unique: Gpl3VB3uNXC5ZFLtEfHThw-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-29072b2ac68so3000011a91.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 13:36:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706650603; x=1707255403;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QSHt61PaZMBy+GTDt1iPdVJdrazh+KY3deItt0o4tt4=;
+ b=IpFBZyVobK5kITJgSkTc1oUIln8j+1xbqF9WloyliNl0wr30KFHN632ktqgIemLlKw
+ Vmp2OXLbthINzUrj3zuH5D9R5uEL0c9vJg1XFxKHuxt6Uyn+8WLxh4N0ymeowqZCbKOt
+ cAr5My/eyD31JhoHbaWcK9at6poCQD1D7lHDzO2etSsoT5vgsRwGGsnSQIqn2MALwIHr
+ InzZBO9lFELq/nawtV8Mbtk0bfvIpIB1I80enLrc1+EIwEL/G8HKnM74KnG7vi+mjRK7
+ NlJOBdBChjjbW6hP7bHocOOjNpGsZimWelWnOVRr7pK1ZPftxw5E8s3h3twtI0KUIjfE
+ Ijpw==
+X-Gm-Message-State: AOJu0YxLeBVL7BllUbhP6y7T2qlGTWD/GkITvwoHFW15rFonxeXgItLF
+ bhpaCyrAvoQTehWLWeVho5I8fP9vMWfyaPsAuI6cw7oU8oedMI2OlurVmIZyCHNjn3MDPYiczjt
+ rD0IHNEKvYeb6+lpCo6zc/8wLxS2vqilzlCk3eG/TbmgtI4+FoRbyEurWbZTyzdKcLuk4/0/r/b
+ fOWlnuEHIYmALHjwLiN6mJkt0jhwo=
+X-Received: by 2002:a17:90a:a083:b0:293:d395:f638 with SMTP id
+ r3-20020a17090aa08300b00293d395f638mr6869329pjp.8.1706650603165; 
+ Tue, 30 Jan 2024 13:36:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHSINDjRPxCsp+u/n8SIB5N4NY/uYdgWux7KaaHyukQxQbM5loRSuyfxTus0M45/1YhfLR/PUmhvp0ienG6Nzo=
+X-Received: by 2002:a17:90a:a083:b0:293:d395:f638 with SMTP id
+ r3-20020a17090aa08300b00293d395f638mr6869309pjp.8.1706650602810; Tue, 30 Jan
+ 2024 13:36:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240125160835.480488-1-npiggin@gmail.com>
+ <20240125160835.480488-3-npiggin@gmail.com>
+In-Reply-To: <20240125160835.480488-3-npiggin@gmail.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 30 Jan 2024 16:36:31 -0500
+Message-ID: <CAFn=p-aB94Y+WSJOdHOsxmrrETy-W76KK4z1qY05QCq2dzV=zg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] scripts/replay-dump.py: Update to current rr
+ record format
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,325 +103,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avihai Horon <avihaih@nvidia.com> writes:
-
-> On 29/01/2024 16:34, Fabiano Rosas wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> Avihai Horon <avihaih@nvidia.com> writes:
->>
->>> Currently, multifd channels are created asynchronously without waiting
->>> for their creation -- migration simply proceeds and may wait in
->>> multifd_send_sync_main(), which is called by ram_save_setup(). This
->>> hides in it some race conditions which can cause an unexpected behavior
->>> if some channels creation fail.
->>>
->>> For example, the following scenario of multifd migration with two
->>> channels, where the first channel creation fails, will end in a
->>> segmentation fault (time advances from top to bottom):
->> Is this reproducible? Or just observable at least.
+On Thu, Jan 25, 2024 at 11:09=E2=80=AFAM Nicholas Piggin <npiggin@gmail.com=
+> wrote:
 >
-> Yes, though I had to engineer it a bit:
-> 1. Run migration with two multifd channels and fail creation of the two 
-> channels (e.g., by changing the address they are connecting to).
-> 2. Add sleep(3) in multifd_send_sync_main() before we loop through the 
-> channels and check p->quit.
-> 3. Add sleep(5) only for the second multifd channel connect thread so 
-> its connection is delayed and runs last.
-
-Ok, well, that's something at least. I'll try to reproduce it so we can
-keep track of it.
-
->> I acknowledge the situation you describe, but with multifd there's
->> usually an issue in cleanup paths. Let's make sure we flushed those out
->> before adding this new semaphore.
+> The v12 format support for replay-dump has a few issues still. This
+> fixes async decoding; adds event, shutdown, and end decoding; fixes
+> audio in / out events, fixes checkpoint checking of following async
+> events.
 >
-> Indeed, I was not keen on adding yet another semaphore either.
-> I think there are multiple bugs here, some of them overlap and some don't.
-> There is also your and Peter's previous work that I was not aware of to 
-> fix those and to clean up the code.
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  scripts/replay-dump.py | 132 ++++++++++++++++++++++++++++++-----------
+>  1 file changed, 98 insertions(+), 34 deletions(-)
 >
-> Maybe we can take it one step at a time, pushing your series first, 
-> cleaning the code and fixing some bugs.
-> Then we can see what bugs are left (if any) and fix them. It might even 
-> be easier to fix after the cleanups.
+> diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+> index d668193e79..35732da08f 100755
+> --- a/scripts/replay-dump.py
+> +++ b/scripts/replay-dump.py
+> @@ -20,6 +20,7 @@
 >
->> This is similar to an issue Peter was addressing where we missed calling
->> multifd_send_termiante_threads() in the multifd_channel_connect() path:
->>
->> patch 4 in this
->> https://lore.kernel.org/r/20231022201211.452861-1-peterx@redhat.com
+>  import argparse
+>  import struct
+> +import os
+>  from collections import namedtuple
+>  from os import path
 >
-> What issue are you referring here? Can you elaborate?
-
-Oh, I just realised that series doesn't address any particular bug. But
-my point is that including a call to multifd_send_terminate_threads() at
-new_send_channel_cleanup might be all that's needed because that has
-code to cause the channels and the migration thread to end.
-
-> The main issue I am trying to fix in my patch is that we don't wait for 
-> all multifd channels to be created/error out before tearing down
-> multifd resources in mulitfd_save_cleanup().
-
-Ok, let me take a step back and ask why is this not solved by
-multifd_save_cleanup() -> qemu_thread_join()? I see you moved
-p->running=true to *after* the thread creation in patch 4. That will
-always leave a gap where p->running == false but the thread is already
-running.
-
+> @@ -63,6 +64,10 @@ def read_byte(fin):
+>      "Read a single byte"
+>      return struct.unpack('>B', fin.read(1))[0]
 >
->>> Thread           | Code execution
->>> ------------------------------------------------------------------------
->>> Multifd 1        |
->>>                   | multifd_new_send_channel_async (errors and quits)
->>>                   |   multifd_new_send_channel_cleanup
->>>                   |
->>> Migration thread |
->>>                   | qemu_savevm_state_setup
->>>                   |   ram_save_setup
->>>                   |     multifd_send_sync_main
->>>                   |     (detects Multifd 1 error and quits)
->>>                   | [...]
->>>                   | migration_iteration_finish
->>>                   |   migrate_fd_cleanup_schedule
->>>                   |
->>> Main thread      |
->>>                   | migrate_fd_cleanup
->>>                   |   multifd_save_cleanup (destroys Multifd 2 resources)
->>>                   |
->>> Multifd 2        |
->>>                   | multifd_new_send_channel_async
->>>                   | (accesses destroyed resources, segfault)
->>>
->>> In another scenario, migration can hang indefinitely:
->>> 1. Main migration thread reaches multifd_send_sync_main() and waits on
->>>     the semaphores.
->>> 2. Then, all multifd channels creation fails, so they post the
->>>     semaphores and quit.
->>> 3. Main migration channel will not identify the error, proceed to send
->>>     pages and will hang.
->>>
->>> Fix it by waiting for all multifd channels to be created before
->>> proceeding with migration.
->>>
->>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
->>> ---
->>>   migration/multifd.h   |  3 +++
->>>   migration/migration.c |  1 +
->>>   migration/multifd.c   | 34 +++++++++++++++++++++++++++++++---
->>>   migration/ram.c       |  7 +++++++
->>>   4 files changed, 42 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/migration/multifd.h b/migration/multifd.h
->>> index 35d11f103c..87a64e0a87 100644
->>> --- a/migration/multifd.h
->>> +++ b/migration/multifd.h
->>> @@ -23,6 +23,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
->>>   void multifd_recv_sync_main(void);
->>>   int multifd_send_sync_main(void);
->>>   int multifd_queue_page(RAMBlock *block, ram_addr_t offset);
->>> +int multifd_send_channels_created(void);
->>>
->>>   /* Multifd Compression flags */
->>>   #define MULTIFD_FLAG_SYNC (1 << 0)
->>> @@ -86,6 +87,8 @@ typedef struct {
->>>       /* multifd flags for sending ram */
->>>       int write_flags;
->>>
->>> +    /* Syncs channel creation and migration thread */
->>> +    QemuSemaphore create_sem;
->>>       /* sem where to wait for more work */
->>>       QemuSemaphore sem;
->>>       /* syncs main thread and channels */
->>> diff --git a/migration/migration.c b/migration/migration.c
->>> index 9c769a1ecd..d81d96eaa5 100644
->>> --- a/migration/migration.c
->>> +++ b/migration/migration.c
->>> @@ -3621,6 +3621,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
->>>           error_report_err(local_err);
->>>           migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
->>>                             MIGRATION_STATUS_FAILED);
->>> +        multifd_send_channels_created();
->>>           migrate_fd_cleanup(s);
->>>           return;
->>>       }
->>> diff --git a/migration/multifd.c b/migration/multifd.c
->>> index 564e911b6c..f0c216f4f9 100644
->>> --- a/migration/multifd.c
->>> +++ b/migration/multifd.c
->>> @@ -538,6 +538,7 @@ void multifd_save_cleanup(void)
->>>           multifd_send_channel_destroy(p->c);
->>>           p->c = NULL;
->>>           qemu_mutex_destroy(&p->mutex);
->>> +        qemu_sem_destroy(&p->create_sem);
->>>           qemu_sem_destroy(&p->sem);
->>>           qemu_sem_destroy(&p->sem_sync);
->>>           g_free(p->name);
->>> @@ -766,6 +767,29 @@ out:
->>>       return NULL;
->>>   }
->>>
->>> +int multifd_send_channels_created(void)
->>> +{
->>> +    int ret = 0;
->>> +
->>> +    if (!migrate_multifd()) {
->>> +        return 0;
->>> +    }
->>> +
->>> +    for (int i = 0; i < migrate_multifd_channels(); i++) {
->>> +        MultiFDSendParams *p = &multifd_send_state->params[i];
->>> +
->>> +        qemu_sem_wait(&p->create_sem);
->>> +        WITH_QEMU_LOCK_GUARD(&p->mutex) {
->>> +            if (p->quit) {
->>> +                error_report("%s: channel %d has already quit", __func__, i);
->>> +                ret = -1;
->>> +            }
->>> +        }
->> There are races here when a channel fails at
->> multifd_send_initial_packet(). If p->quit can be set after post to
->> create_sem, then this function could always return true and we'd run
->> into a broken channel. Possibly even the same bug you're trying to fix.
->>
->> I think that's one of the reasons we have channels_ready.
+> +def read_bytes(fin, nr):
+> +    "Read a nr bytes"
+
+Existing problem in this file, but please use """triple quotes""" for
+docstrings.
+
+> +    return fin.read(nr)
+> +
+
+Does it really save a lot of typing to alias fin.read(1) to
+read_bytes(fin, 1) ...?
+
+>  def read_event(fin):
+>      "Read a single byte event, but save some state"
+>      if replay_state.already_read:
+> @@ -134,6 +139,18 @@ def swallow_async_qword(eid, name, dumpfile):
+>      print("  %s(%d) @ %d" % (name, eid, step_id))
+>      return True
 >
-> I am not sure exactly what bug you are describing here, can you elaborate?
+> +def swallow_bytes(eid, name, dumpfile, nr):
+> +    "Swallow nr bytes of data without looking at it"
+> +    dumpfile.seek(nr, os.SEEK_CUR)
+> +    return True
+> +
+
+Why bother returning a bool if it's not based on any condition? Add an
+error check or just drop the return value.
+
+> +def decode_exception(eid, name, dumpfile):
+> +    print_event(eid, name)
+> +    return True
+> +
+
+I suppose in this case, the return is to fit a common signature.
+
+> +# v12 does away with the additional event byte and encodes it in the mai=
+n type
+> +# Between v8 and v9, REPLAY_ASYNC_BH_ONESHOT was added, but we don't dec=
+ode
+> +# those versions so leave it out.
+>  async_decode_table =3D [ Decoder(0, "REPLAY_ASYNC_EVENT_BH", swallow_asy=
+nc_qword),
+>                         Decoder(1, "REPLAY_ASYNC_INPUT", decode_unimp),
+>                         Decoder(2, "REPLAY_ASYNC_INPUT_SYNC", decode_unim=
+p),
+> @@ -142,8 +159,8 @@ def swallow_async_qword(eid, name, dumpfile):
+>                         Decoder(5, "REPLAY_ASYNC_EVENT_NET", decode_unimp=
+),
+>  ]
+>  # See replay_read_events/replay_read_event
+> -def decode_async(eid, name, dumpfile):
+> -    """Decode an ASYNC event"""
+> +def decode_async_old(eid, name, dumpfile):
+> +    """Decode an ASYNC event (pre-v8)"""
+>
+>      print_event(eid, name)
+>
+> @@ -157,6 +174,35 @@ def decode_async(eid, name, dumpfile):
+>
+>      return call_decode(async_decode_table, async_event_kind, dumpfile)
+>
+> +def decode_async_bh(eid, name, dumpfile):
+> +    op_id =3D read_qword(dumpfile)
+> +    print_event(eid, name)
+> +    return True
+> +
+> +def decode_async_bh_oneshot(eid, name, dumpfile):
+> +    op_id =3D read_qword(dumpfile)
+> +    print_event(eid, name)
+> +    return True
+> +
+> +def decode_async_char_read(eid, name, dumpfile):
+> +    char_id =3D read_byte(dumpfile)
+> +    size =3D read_dword(dumpfile)
+> +    print_event(eid, name, "device:%x chars:%s" % (char_id, read_bytes(d=
+umpfile, size)))
+> +    return True
+> +
+> +def decode_async_block(eid, name, dumpfile):
+> +    op_id =3D read_qword(dumpfile)
+> +    print_event(eid, name)
+> +    return True
+> +
+> +def decode_async_net(eid, name, dumpfile):
+> +    net_id =3D read_byte(dumpfile)
+> +    flags =3D read_dword(dumpfile)
+> +    size =3D read_dword(dumpfile)
+> +    swallow_bytes(eid, name, dumpfile, size)
+> +    print_event(eid, name, "net:%x flags:%x bytes:%d" % (net_id, flags, =
+size))
+> +    return True
+> +
+>  total_insns =3D 0
+>
+>  def decode_instruction(eid, name, dumpfile):
+> @@ -166,6 +212,10 @@ def decode_instruction(eid, name, dumpfile):
+>      print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
+>      return True
+>
+> +def decode_shutdown(eid, name, dumpfile):
+> +    print_event(eid, name)
+> +    return True
+> +
+>  def decode_char_write(eid, name, dumpfile):
+>      res =3D read_dword(dumpfile)
+>      offset =3D read_dword(dumpfile)
+> @@ -177,7 +227,7 @@ def decode_audio_out(eid, name, dumpfile):
+>      print_event(eid, name, "%d" % (audio_data))
+>      return True
+>
+> -def decode_checkpoint(eid, name, dumpfile):
+> +def __decode_checkpoint(eid, name, dumpfile, old):
+>      """Decode a checkpoint.
+>
+>      Checkpoints contain a series of async events with their own specific=
+ data.
+> @@ -189,14 +239,20 @@ def decode_checkpoint(eid, name, dumpfile):
+>
+>      # if the next event is EVENT_ASYNC there are a bunch of
+>      # async events to read, otherwise we are done
+> -    if next_event !=3D 3:
+> -        print_event(eid, name, "no additional data", event_number)
+> -    else:
+> +    if (old and next_event =3D=3D 3) or (not old and next_event >=3D 3 a=
+nd next_event <=3D 9):
+>          print_event(eid, name, "more data follows", event_number)
+> +    else:
+> +        print_event(eid, name, "no additional data", event_number)
+>
+>      replay_state.reuse_event(next_event)
+>      return True
+>
+> +def decode_checkpoint_old(eid, name, dumpfile):
+> +    return __decode_checkpoint(eid, name, dumpfile, False)
+> +
+> +def decode_checkpoint(eid, name, dumpfile):
+> +    return __decode_checkpoint(eid, name, dumpfile, True)
+> +
+>  def decode_checkpoint_init(eid, name, dumpfile):
+>      print_event(eid, name)
+>      return True
+> @@ -212,15 +268,23 @@ def decode_clock(eid, name, dumpfile):
+>
+>  def decode_random(eid, name, dumpfile):
+>      ret =3D read_dword(dumpfile)
+> -    data =3D read_array(dumpfile)
+> -    print_event(eid, "%d bytes of random data" % len(data))
+> +    size =3D read_dword(dumpfile)
+> +    swallow_bytes(eid, name, dumpfile, size)
+> +    if (ret):
+> +        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
+> +    else:
+> +        print_event(eid, name, "%d bytes" % (size))
+>      return True
+>
+> +def decode_end(eid, name, dumpfile):
+> +    print_event(eid, name)
+> +    return False
+> +
+>  # pre-MTTCG merge
+>  v5_event_table =3D [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
+>                    Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+>                    Decoder(2, "EVENT_EXCEPTION", decode_plain),
+> -                  Decoder(3, "EVENT_ASYNC", decode_async),
+> +                  Decoder(3, "EVENT_ASYNC", decode_async_old),
+>                    Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
+>                    Decoder(5, "EVENT_CHAR_WRITE", decode_char_write),
+>                    Decoder(6, "EVENT_CHAR_READ_ALL", decode_unimp),
+> @@ -242,7 +306,7 @@ def decode_random(eid, name, dumpfile):
+>  v6_event_table =3D [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
+>                    Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+>                    Decoder(2, "EVENT_EXCEPTION", decode_plain),
+> -                  Decoder(3, "EVENT_ASYNC", decode_async),
+> +                  Decoder(3, "EVENT_ASYNC", decode_async_old),
+>                    Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
+>                    Decoder(5, "EVENT_CHAR_WRITE", decode_char_write),
+>                    Decoder(6, "EVENT_CHAR_READ_ALL", decode_unimp),
+> @@ -266,7 +330,7 @@ def decode_random(eid, name, dumpfile):
+>  v7_event_table =3D [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
+>                    Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+>                    Decoder(2, "EVENT_EXCEPTION", decode_unimp),
+> -                  Decoder(3, "EVENT_ASYNC", decode_async),
+> +                  Decoder(3, "EVENT_ASYNC", decode_async_old),
+>                    Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
+>                    Decoder(5, "EVENT_SHUTDOWN_HOST_ERR", decode_unimp),
+>                    Decoder(6, "EVENT_SHUTDOWN_HOST_QMP", decode_unimp),
+> @@ -296,32 +360,31 @@ def decode_random(eid, name, dumpfile):
+>
+>  v12_event_table =3D [Decoder(0, "EVENT_INSTRUCTION", decode_instruction)=
+,
+>                    Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+> -                  Decoder(2, "EVENT_EXCEPTION", decode_plain),
+> -                  Decoder(3, "EVENT_ASYNC", decode_async),
+> -                  Decoder(4, "EVENT_ASYNC", decode_async),
+> -                  Decoder(5, "EVENT_ASYNC", decode_async),
+> -                  Decoder(6, "EVENT_ASYNC", decode_async),
+> -                  Decoder(6, "EVENT_ASYNC", decode_async),
+> -                  Decoder(8, "EVENT_ASYNC", decode_async),
+> -                  Decoder(9, "EVENT_ASYNC", decode_async),
+> -                  Decoder(10, "EVENT_ASYNC", decode_async),
+> -                  Decoder(11, "EVENT_SHUTDOWN", decode_unimp),
+> -                  Decoder(12, "EVENT_SHUTDOWN_HOST_ERR", decode_unimp),
+> -                  Decoder(13, "EVENT_SHUTDOWN_HOST_QMP_QUIT", decode_uni=
+mp),
+> -                  Decoder(14, "EVENT_SHUTDOWN_HOST_QMP_RESET", decode_un=
+imp),
+> -                  Decoder(14, "EVENT_SHUTDOWN_HOST_SIGNAL", decode_unimp=
+),
+> -                  Decoder(15, "EVENT_SHUTDOWN_HOST_UI", decode_unimp),
+> -                  Decoder(16, "EVENT_SHUTDOWN_GUEST_SHUTDOWN", decode_un=
+imp),
+> -                  Decoder(17, "EVENT_SHUTDOWN_GUEST_RESET", decode_unimp=
+),
+> -                  Decoder(18, "EVENT_SHUTDOWN_GUEST_PANIC", decode_unimp=
+),
+> -                  Decoder(19, "EVENT_SHUTDOWN_GUEST_SUBSYSTEM_RESET", de=
+code_unimp),
+> -                  Decoder(20, "EVENT_SHUTDOWN_GUEST_SNAPSHOT_LOAD", deco=
+de_unimp),
+> -                  Decoder(21, "EVENT_SHUTDOWN___MAX", decode_unimp),
+> +                  Decoder(2, "EVENT_EXCEPTION", decode_exception),
+> +                  Decoder(3, "EVENT_ASYNC_BH", decode_async_bh),
+> +                  Decoder(4, "EVENT_ASYNC_BH_ONESHOT", decode_async_bh_o=
+neshot),
+> +                  Decoder(5, "EVENT_ASYNC_INPUT", decode_unimp),
+> +                  Decoder(6, "EVENT_ASYNC_INPUT_SYNC", decode_unimp),
+> +                  Decoder(7, "EVENT_ASYNC_CHAR_READ", decode_async_char_=
+read),
+> +                  Decoder(8, "EVENT_ASYNC_BLOCK", decode_async_block),
+> +                  Decoder(9, "EVENT_ASYNC_NET", decode_async_net),
+> +                  Decoder(10, "EVENT_SHUTDOWN", decode_shutdown),
+> +                  Decoder(11, "EVENT_SHUTDOWN_HOST_ERR", decode_shutdown=
+),
+> +                  Decoder(12, "EVENT_SHUTDOWN_HOST_QMP_QUIT", decode_shu=
+tdown),
+> +                  Decoder(13, "EVENT_SHUTDOWN_HOST_QMP_RESET", decode_sh=
+utdown),
+> +                  Decoder(14, "EVENT_SHUTDOWN_HOST_SIGNAL", decode_shutd=
+own),
+> +                  Decoder(15, "EVENT_SHUTDOWN_HOST_UI", decode_shutdown)=
+,
+> +                  Decoder(16, "EVENT_SHUTDOWN_GUEST_SHUTDOWN", decode_sh=
+utdown),
+> +                  Decoder(17, "EVENT_SHUTDOWN_GUEST_RESET", decode_shutd=
+own),
+> +                  Decoder(18, "EVENT_SHUTDOWN_GUEST_PANIC", decode_shutd=
+own),
+> +                  Decoder(19, "EVENT_SHUTDOWN_SUBSYS_RESET", decode_shut=
+down),
+> +                  Decoder(20, "EVENT_SHUTDOWN_SNAPSHOT_LOAD", decode_shu=
+tdown),
+> +                  Decoder(21, "EVENT_SHUTDOWN___MAX", decode_shutdown),
+>                    Decoder(22, "EVENT_CHAR_WRITE", decode_char_write),
+>                    Decoder(23, "EVENT_CHAR_READ_ALL", decode_unimp),
+>                    Decoder(24, "EVENT_CHAR_READ_ALL_ERROR", decode_unimp)=
+,
+> -                  Decoder(25, "EVENT_AUDIO_IN", decode_unimp),
+> -                  Decoder(26, "EVENT_AUDIO_OUT", decode_audio_out),
+> +                  Decoder(25, "EVENT_AUDIO_OUT", decode_audio_out),
+> +                  Decoder(26, "EVENT_AUDIO_IN", decode_unimp),
+>                    Decoder(27, "EVENT_RANDOM", decode_random),
+>                    Decoder(28, "EVENT_CLOCK_HOST", decode_clock),
+>                    Decoder(29, "EVENT_CLOCK_VIRTUAL_RT", decode_clock),
+> @@ -334,6 +397,7 @@ def decode_random(eid, name, dumpfile):
+>                    Decoder(36, "EVENT_CP_CLOCK_VIRTUAL_RT", decode_checkp=
+oint),
+>                    Decoder(37, "EVENT_CP_INIT", decode_checkpoint_init),
+>                    Decoder(38, "EVENT_CP_RESET", decode_checkpoint),
+> +                  Decoder(39, "EVENT_END", decode_end),
+>  ]
+>
+>  def parse_arguments():
+> --
+> 2.42.0
 >
 
-This looks like it could be a preexisting issue actually, but in the
-current code, what stops the multifd channel from running ahead is
-p->sem. Except that the channel does some work at
-multifd_send_initial_packet() before checking p->sem and that work could
-fail.
+I'll leave the rest alone for now.
 
-This means that right after checking for p->quit above, the multifd
-thread could already be exiting due to an error and
-multifd_send_channels_created() would miss it. So there's still a chance
-that this function effectively behaves just like the previous code.
+--js
 
-Thread           | Code execution
-------------------------------------------------------------------------
-Migration        |
-                 | ram_save_setup()
-                 |   multifd_send_channels_created()
-                 |     qemu_sem_wait(&p->create_sem);
-Main             |
-                 | multifd_channel_connect()
-                 |   qemu_thread_create()
-                 |   qemu_sem_post(&p->create_sem)
-Multifd 1        |
-                 | multifd_send_initial_packet() *errors*
-                 | goto out
-                 | multifd_send_terminate_threads()
-Migration        |
-                 | still at multifd_send_channels_created
-                 |     qemu_mutex_lock(&p->mutex);
-                 |     p->quit == false      <--- !!!
-                 |     qemu_mutex_unlock(&p->mutex);
-                 | return true from multifd_send_channels_created()
-
-From here onwards, it's the same as not having checked
-multifd_send_channels_created() at all. One way this could go is:
-
-                 | runs unimpeded until multifd_send_sync_main()
-                 | multifd_send_pages()
-                 | *misses the exiting flag*
-                 | qemu_sem_wait(&multifd_send_state->channels_ready);
-Multifd 1        |
-                 | still at multifd_send_terminate_threads
-                 |   qemu_mutex_lock(&p->mutex);
-                 |   p->quit = true;
-                 |   qemu_mutex_unlock(&p->mutex);
-                 | qemu_sem_post(&p->sem_sync);
-                 | qemu_sem_post(&multifd_send_state->channels_ready);
-Migration        |
-                 | qemu_mutex_lock(&p->mutex);
-                 | p->quit == true;  <--- correct now
-                 | qemu_mutex_unlock(&p->mutex);
-                 | return -1;
-                 | *all good again*
-
-It seems that in order to avoid this kind of race we'd need the
-synchronization point to be at the multifd thread instead. But then,
-that's what channels_ready does.
-
->>
->>> +    }
->>> +
->>> +    return ret;
->>> +}
->>> +
->>>   static bool multifd_channel_connect(MultiFDSendParams *p,
->>>                                       QIOChannel *ioc,
->>>                                       Error **errp);
->>> @@ -794,6 +818,7 @@ static void multifd_tls_outgoing_handshake(QIOTask *task,
->>>       p->quit = true;
->>>       qemu_sem_post(&multifd_send_state->channels_ready);
->>>       qemu_sem_post(&p->sem_sync);
->>> +    qemu_sem_post(&p->create_sem);
->>>       error_free(err);
->>>   }
->>>
->>> @@ -857,6 +882,7 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
->>>       qemu_thread_create(&p->thread, p->name, multifd_send_thread, p,
->>>                          QEMU_THREAD_JOINABLE);
->>>       p->running = true;
->>> +    qemu_sem_post(&p->create_sem);
->>>       return true;
->>>   }
->>>
->>> @@ -864,15 +890,16 @@ static void multifd_new_send_channel_cleanup(MultiFDSendParams *p,
->>>                                                QIOChannel *ioc, Error *err)
->>>   {
->>>        migrate_set_error(migrate_get_current(), err);
->>> -     /* Error happen, we need to tell who pay attention to me */
->>> -     qemu_sem_post(&multifd_send_state->channels_ready);
->>> -     qemu_sem_post(&p->sem_sync);
->>>        /*
->>> +      * Error happen, we need to tell who pay attention to me.
->>>         * Although multifd_send_thread is not created, but main migration
->>>         * thread need to judge whether it is running, so we need to mark
->>>         * its status.
->>>         */
->>>        p->quit = true;
->>> +     qemu_sem_post(&multifd_send_state->channels_ready);
->>> +     qemu_sem_post(&p->sem_sync);
->>> +     qemu_sem_post(&p->create_sem);
->> Do we still need channels_ready and sem_sync here? The migration thread
->> shouldn't have gone past create_sem at this point.
->
-> I think you are right, we can drop channels_ready and sem_sync here.
->
->>
->>>        object_unref(OBJECT(ioc));
->>>        error_free(err);
->>>   }
->>> @@ -921,6 +948,7 @@ int multifd_save_setup(Error **errp)
->>>           MultiFDSendParams *p = &multifd_send_state->params[i];
->>>
->>>           qemu_mutex_init(&p->mutex);
->>> +        qemu_sem_init(&p->create_sem, 0);
->>>           qemu_sem_init(&p->sem, 0);
->>>           qemu_sem_init(&p->sem_sync, 0);
->>>           p->quit = false;
->>> diff --git a/migration/ram.c b/migration/ram.c
->>> index c0cdcccb75..b3e864a22b 100644
->>> --- a/migration/ram.c
->>> +++ b/migration/ram.c
->>> @@ -2937,6 +2937,13 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
->>>       RAMBlock *block;
->>>       int ret;
->>>
->>> +    bql_unlock();
->>> +    ret = multifd_send_channels_created();
->>> +    bql_lock();
->>> +    if (ret < 0) {
->>> +        return ret;
->>> +    }
->>> +
->>>       if (compress_threads_save_setup()) {
->>>           return -1;
->>>       }
 
