@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ABBBC47DDF
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 10:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F85C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 10:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUl54-0000No-6w; Tue, 30 Jan 2024 05:11:02 -0500
+	id 1rUl5W-0000ox-S3; Tue, 30 Jan 2024 05:11:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUl52-0000NW-7j
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:11:00 -0500
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rUl5U-0000kZ-UO
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:11:28 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUl50-0004O0-MA
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:10:59 -0500
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-6e112826395so1816015a34.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 02:10:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rUl5S-0004P8-8n
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:11:27 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-40e8fec0968so44792835e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 02:11:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706609455; x=1707214255; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n6+BBi6CCXU4BmP4U2guSGtvv3oi3jDkISZ3NIf4LtY=;
- b=NSjtga2oDoEGQz2tXj1RopsD2MUK+lbcz5Lvln3cKA3HpiiqTwuqZpchL5MEJauJzp
- ds07yG7ILYtZNmRLkU/d6KRmsAwOfjWBuOc83HTIARDq1oNMWGlZS7KgTX7a2f/SyCX9
- w4ykvBFMnKdy07Ds9lEu1hABOQ8QN1ciynn3v0JMlOXsslL6iJGOnOjQZ+Q1D4ilwepx
- OZh/edkjmV/49hnlYpMUW2TgJT3SHmVEZuQp9veeqN6v51WFXZm8/9oZJ9CE6N0WRUwH
- 1vId5Qf3LtavQa7kM4u5eO9eq8FeSSC52jULeK3sIPfJmforGvxwcxPJQmTbJcJUrQGd
- iEww==
+ d=linaro.org; s=google; t=1706609482; x=1707214282; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5EUAE0+fS+8pdEoClgBwkEwH6Z06aSX0F0hkIKyDRD0=;
+ b=l1/NR3NGWADkPC2WyFcswLp0HVUgb5Bx4OIwz+G8f9S6vi+doQaGB4ts+1ay9a1quq
+ uZxvTKuIe9fLLeO8vVX5nE/rDFCDlycDihyBrVCsW+Ub6yRdi+c+TwpuYmYpFlTo1qir
+ W+OFhw/NpinFB2LUqKd+wTvfHL6ufp6vbDcR+KRTduozk2C/qevXKKQYFSQGovhydki8
+ raOHWCi3EL2v3ZRtCT2NL15Ho7LrXeDGz2B6ESZ0bktwJUQDhhoQ1MFTgmKtZO91PRYD
+ YuUwXTj9CURSHkd1rVNqDTKwkZPR3Q5EAHPoGG1WMf122+cecKHeUie8kPrNniC4aD/d
+ S2/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706609455; x=1707214255;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n6+BBi6CCXU4BmP4U2guSGtvv3oi3jDkISZ3NIf4LtY=;
- b=gl6Zf9pljAIuqmKhGcoZ3J6FbTlsAoHfyXnWg49Pc0I6+AuswtTbeslsTaCVKKo6zl
- 04ms10+up7K2WzCGqOKXONhURSC/EWpgXdnSrKCm0qpfbkydGM/gTTjwsi1jgQiWeBw6
- 4hlMIKn1kWPtqfLB+ctX6++OjvJ9fOmkVqqCaZVLL+4vUdzfK5SJDxisEe6SuAFcTtPM
- NIbRD81Pl3opAPcf3Tyr/wUnP65GyDBgpgTQeIucUFt5poCNfm4tc1MSOQ1Rale5ZL2q
- L+3AGk7yraszy9CYWPvAE4APMBEIKZqfktE2WB3hJbFzkrkm7ghP4huRbhdtN+7XPSF0
- CEpw==
-X-Gm-Message-State: AOJu0YzlOevhEMwIo+U8wNTbrP3n7FxwHO7309ytWH7Z1q955ZKSfhzU
- tQOv4lqraLHwx9bl9pU8DJohI0Yjjjekz/TxOAJTb7Qy6QVwC9QzcI6/lXTshBc=
-X-Google-Smtp-Source: AGHT+IHajrBdE6XCzLLLjbds5/vXCl/Va7wShc3dOZGyUkaA6f8pcyUL0GxI0TYBdf4MsPfCCld6IQ==
-X-Received: by 2002:a05:6358:706:b0:176:939e:9b6 with SMTP id
- e6-20020a056358070600b00176939e09b6mr8833033rwj.17.1706609455593; 
- Tue, 30 Jan 2024 02:10:55 -0800 (PST)
-Received: from [192.168.0.103] ([103.210.27.218])
- by smtp.gmail.com with ESMTPSA id
- i21-20020aa787d5000000b006d9c216a9e6sm7445295pfo.56.2024.01.30.02.10.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 02:10:55 -0800 (PST)
-Message-ID: <ad4d8b27-c7d3-4d73-a363-1bd27b3c8394@linaro.org>
-Date: Tue, 30 Jan 2024 20:10:51 +1000
+ d=1e100.net; s=20230601; t=1706609482; x=1707214282;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5EUAE0+fS+8pdEoClgBwkEwH6Z06aSX0F0hkIKyDRD0=;
+ b=QqKu7HJCBvDmDTa+pw4SaBkE+FvC/JvwirZoyrFugZTuFJhsw4BS4ZBLJuHRbcf1Vv
+ BXUqTsLZvSWjUAKb9ajwftHRZOWqBNuWxUOqfvehilFxbU4fL0WtsLEz7NQ9EGEHOpmn
+ gC6qV40C1He72F5mHJWT1gSisMsLcDBmmPRk/nq6/+331e6RvWnt3cOzTfAikSQFRx2q
+ WADVrsSRypdKb5aKf0t3a0w/Bc0tu1TBUBHHGAt6OVsbmqaRMQFsJ1feIHkaQ65JkuJb
+ 8K9niFxIpBSCXB4PdjvAPR/LcMcBfwJnOnhprzzJeu3olKADYe0iY5huNyVScsUeVOEL
+ qjbQ==
+X-Gm-Message-State: AOJu0YwWYxs6maSLm4uVo7LR5fjBUROy2pwnxUZG1y/hRJZug7aX1zmA
+ jHecSBFSVLhmCNRqYR7r/gfeFzqmCJKEVB92CK9tV56MflPI+qoiHXoq8vqc7XgaTnUiqazhRSp
+ UK1U=
+X-Google-Smtp-Source: AGHT+IGAeQrfCu9Yn0Nh7ilmryi3jGTNZzZaj/cOB38f82KA+fhXJYxDovzFQiJOgG/Yf+eR1nV0tQ==
+X-Received: by 2002:a5d:59a6:0:b0:33a:fdb8:c616 with SMTP id
+ p6-20020a5d59a6000000b0033afdb8c616mr301592wrr.26.1706609482160; 
+ Tue, 30 Jan 2024 02:11:22 -0800 (PST)
+Received: from localhost.localdomain (adsl-101.109.242.224.tellas.gr.
+ [109.242.224.101]) by smtp.gmail.com with ESMTPSA id
+ cx16-20020a056000093000b00337d5cd0d8asm10306010wrb.90.2024.01.30.02.11.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jan 2024 02:11:21 -0800 (PST)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v2] scripts/checkpatch.pl: check for placeholders in cover
+ letter patches
+Date: Tue, 30 Jan 2024 12:11:07 +0200
+Message-Id: <20240130101107.214872-1-manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/29] target/i386: Prefer fast cpu_env() over slower
- CPU QOM cast macro
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240129164514.73104-1-philmd@linaro.org>
- <20240129164514.73104-15-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240129164514.73104-15-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,36 +97,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/30/24 02:44, Philippe Mathieu-Daudé wrote:
-> Mechanical patch produced running the command documented
-> in scripts/coccinelle/cpu_env.cocci_template header.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/i386/hvf/vmx.h                | 13 ++-------
->   hw/i386/fw_cfg.c                     |  3 +-
->   hw/i386/vmmouse.c                    |  6 ++--
->   hw/i386/xen/xen-hvm.c                |  3 +-
->   target/i386/arch_dump.c              | 11 ++------
->   target/i386/arch_memory_mapping.c    |  3 +-
->   target/i386/cpu-dump.c               |  3 +-
->   target/i386/cpu.c                    | 37 ++++++++----------------
->   target/i386/helper.c                 | 42 ++++++++--------------------
->   target/i386/hvf/hvf.c                |  8 ++----
->   target/i386/hvf/x86.c                |  4 +--
->   target/i386/hvf/x86_emu.c            |  6 ++--
->   target/i386/hvf/x86_task.c           | 10 ++-----
->   target/i386/hvf/x86hvf.c             |  9 ++----
->   target/i386/kvm/kvm.c                |  6 ++--
->   target/i386/kvm/xen-emu.c            | 32 +++++++--------------
->   target/i386/tcg/sysemu/bpt_helper.c  |  3 +-
->   target/i386/tcg/sysemu/excp_helper.c |  3 +-
->   target/i386/tcg/tcg-cpu.c            | 14 +++-------
->   target/i386/tcg/user/excp_helper.c   |  6 ++--
->   target/i386/tcg/user/seg_helper.c    |  3 +-
->   21 files changed, 67 insertions(+), 158 deletions(-)
+Check if a file argument is a cover letter patch produced by
+git-format-patch --cover-letter; It is initialized with subject suffix "
+*** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***". If they
+exist, warn the user.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+Range-diff against v1:
+1:  64b7ec2287 ! 1:  9bf816eb4c scripts/checkpatch.pl: check for placeholders in cover letter patches
+    @@ scripts/checkpatch.pl: sub process {
+     +# --cover-letter; It is initialized with subject suffix
+     +# " *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***"
+     +		if ($in_header_lines &&
+    -+		    $rawline =~ /^Subject:.+[*]{3} SUBJECT HERE [*]{3}\s*$/) {
+    -+        WARN("Patch appears to be a cover letter with uninitialized subject" .
+    -+             " '*** SUBJECT HERE ***'\n$hereline\n");
+    ++				$rawline =~ /^Subject:.+[*]{3} SUBJECT HERE [*]{3}\s*$/) {
+    ++			WARN("Patch appears to be a cover letter with " .
+    ++						"uninitialized subject '*** SUBJECT HERE ***'\n$hereline\n");
+     +		}
+     +
+     +		if ($rawline =~ /^[*]{3} BLURB HERE [*]{3}\s*$/) {
+    -+        WARN("Patch appears to be a cover letter with leftover placeholder " .
+    -+             "text '*** BLURB HERE ***'\n$hereline\n");
+    ++			WARN("Patch appears to be a cover letter with " .
+    ++						"leftover placeholder text '*** BLURB HERE ***'\n$hereline\n");
+     +		}
+     +
+      		if ($in_commit_log && $non_utf8_charset && $realfile =~ /^$/ &&
 
-r~
+ scripts/checkpatch.pl | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 7026895074..9a8d49f1d8 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1650,6 +1650,20 @@ sub process {
+ 			$non_utf8_charset = 1;
+ 		}
+ 
++# Check if this is a cover letter patch produced by git-format-patch
++# --cover-letter; It is initialized with subject suffix
++# " *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***"
++		if ($in_header_lines &&
++				$rawline =~ /^Subject:.+[*]{3} SUBJECT HERE [*]{3}\s*$/) {
++			WARN("Patch appears to be a cover letter with " .
++						"uninitialized subject '*** SUBJECT HERE ***'\n$hereline\n");
++		}
++
++		if ($rawline =~ /^[*]{3} BLURB HERE [*]{3}\s*$/) {
++			WARN("Patch appears to be a cover letter with " .
++						"leftover placeholder text '*** BLURB HERE ***'\n$hereline\n");
++		}
++
+ 		if ($in_commit_log && $non_utf8_charset && $realfile =~ /^$/ &&
+ 		    $rawline =~ /$NON_ASCII_UTF8/) {
+ 			WARN("8-bit UTF-8 used in possible commit log\n" . $herecurr);
+
+base-commit: 11be70677c70fdccd452a3233653949b79e97908
+-- 
+γαῖα πυρί μιχθήτω
+
 
