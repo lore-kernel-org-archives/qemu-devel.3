@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F242FC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 09:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19FF1C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 10:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUktl-0000c8-Gh; Tue, 30 Jan 2024 04:59:21 -0500
+	id 1rUkuv-0001IV-3q; Tue, 30 Jan 2024 05:00:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUkti-0000bx-FW
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:59:19 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1rUkus-0001H7-JV
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:00:30 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUktf-0002Gu-G8
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:59:18 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6ddb807e23bso1759940b3a.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 01:59:15 -0800 (PST)
+ id 1rUkuo-0002XG-EU
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:00:30 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6ddb807e23bso1760415b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 02:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706608754; x=1707213554; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1706608825; x=1707213625; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mJ5CrPpUSXgPeXcBUrXI64tCXkyiRPRbRWQBb0m1aVg=;
- b=R9jg1I+2v63gcC5FElA2nuVJzecCi/GoihGOH/qVguU96cxqlkM8i15fq15CrCWIZN
- axW3Cp7hBr6s5EiGvRqli457McoXlPUPqXtvI98Q2wukLwT08FxkG6OosoiITD5aCNnn
- Wuyrj7ADMczgeODGtRqO17u8V694INa+j4QJTtpamjp1J6qb7ZOeVMiWd3vgk+1fdk/R
- 12CZ+iQYKsQ7PMFBoYN7kkt+XiIzc/c5O8JNlsxvws9uLewLIMpfmG0cbRt7meUWS4k3
- 6+s4SeIRmcsc0jYvRIFwkTIcBx51zfFZsd7SwtNn0HCybUX4pyV+DdyhaDj419YLjLfu
- 6FUg==
+ bh=N6rrp1PZTWCFekP68QS7wfkG/TDpiqFhA7xNmGuR1oM=;
+ b=yFGJ59WgarB2ZtpV+mklR4A2IzT2zjGWkKqkz5QIgZP9BMCjvTQLLnUTPFiAJtXWv/
+ 0vdLR3ew26r+hosdAjwX64A5y2zKHPkGUTmEbEnbEG7nbtzR8Uou1ykkuEJivLNUzw61
+ wbEbbuSIS/+ZZ7mWYFai3vg9hXY+pZltF3NvcQp3durcsYoqA2UlkOs+lZ2Xp5H+HJlG
+ u3ZHy4oiL9mI20GPGHf9ar1KWfWPiTg21BN5OnnX3RDQyqc7HRiR2OzvjdYbaHzEF4iV
+ C7L0EvgOhDV9XrdqHPtmNMV5CyNfnaeEg5bFAY+I0x4SU2/3v/GZNgWFWArtGW2zz/UC
+ 3KQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706608754; x=1707213554;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1706608825; x=1707213625;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mJ5CrPpUSXgPeXcBUrXI64tCXkyiRPRbRWQBb0m1aVg=;
- b=YRn9aqxBoDauo60NV3VhSAfCoaYo/y7eHXWDlZq76Lc6c6I3YjkLtDq3NblP2wj61L
- W6B5G7KWBu/7LM9uAhJP/2Xz8J1kAB0pT8WOTdVyiJZ7Y/ArJuUdDppe8ZZpoAOOWZXz
- 6EUyER/CNfckyeVtC3yJWqedIt28tZ4dtaUjyAHkwF+M+DV2dxfiC8k3Efo+ot0/ikdW
- wdKKYR7OatU50JG8BQN79cTpjwNne5bUuEb2OpwM3iuq62mVZ3LEy50NY+QHXxg+blRT
- 8CzC3Fzs5aENUDDOzVj2q3KzKBBtF6FiUtZ48D6k14Cz67mmVIK3zZXoCB5tizMurxXf
- SFMg==
-X-Gm-Message-State: AOJu0Yzvt1X8F4X5R2bQHuDDz6tlZ94q7OgqpbidDU4l0AlYWLccRB40
- 0YIOclZuLuxg5gRduktADvM3rSKH3tzUtA+Wac+JHKseHiTnoPC3hIE77TIjIOM=
-X-Google-Smtp-Source: AGHT+IGPX5rw1oO2e7nxgYlMOq/IhYd51boXbYS7NZ6Ezs6zK8h4AZMkCMHlpiJzSAcokWlqBm49Dw==
-X-Received: by 2002:a05:6a00:2b56:b0:6de:5ad:fc91 with SMTP id
- du22-20020a056a002b5600b006de05adfc91mr3654653pfb.22.1706608753888; 
- Tue, 30 Jan 2024 01:59:13 -0800 (PST)
+ bh=N6rrp1PZTWCFekP68QS7wfkG/TDpiqFhA7xNmGuR1oM=;
+ b=dfFMofzQrhkZKacDmMI07qG7O71hUlKzIRmX/8rutVCKA0XAf5DsM1/V+IQjCiZZqt
+ FQdokCeHEwrPBbUiooK+e2iHgfswi/M7Wm9mxqzcpMpAqxFA5KJtZwlyOFNcI06qUbgw
+ vbcM6Tu+ikwa9BDySGdwMbdhn6NVCO+xrjpJaeoCjQ9UJ7d3XYfTRDVRMPETP9U349gI
+ 2cjKfZdnXr6TkzS88XZL+6i01ka05We85F3lMT/2oiGxCwgEsDPKANBcPBjb97xu2MZo
+ qAuO8Q+1iNT+vzGBnuBRMNcU3+TXrlC+sHBhsxvq/UZtV8N/pU+F/5Qarb9DjHbuledM
+ EzFg==
+X-Gm-Message-State: AOJu0YxBeI1ngRSJnlXFHeBCCg76r+H1aI69/ptm7JSmkKdiqluBLyn0
+ n0N37eTY7mVjzLUNkpLz0Vze2daMKOq0WjRClinlNDz5Sq9SoXhxzPta8dDY0ws=
+X-Google-Smtp-Source: AGHT+IEWBMyhl5lfi+g5ZJxpiEt85fcuC07bbj6Fs0uTefrP5NszaFZgkNvm/scKOXmd+fbtEsBhJQ==
+X-Received: by 2002:a05:6a00:4fcb:b0:6dd:8743:9e03 with SMTP id
+ le11-20020a056a004fcb00b006dd87439e03mr4125687pfb.34.1706608824927; 
+ Tue, 30 Jan 2024 02:00:24 -0800 (PST)
 Received: from [192.168.0.103] ([103.210.27.218])
  by smtp.gmail.com with ESMTPSA id
- gu7-20020a056a004e4700b006db105027basm7382769pfb.50.2024.01.30.01.59.12
+ gu7-20020a056a004e4700b006db105027basm7382769pfb.50.2024.01.30.02.00.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 01:59:13 -0800 (PST)
-Message-ID: <11754d4f-c0b7-47a5-9305-84c86436dbc0@linaro.org>
-Date: Tue, 30 Jan 2024 19:59:08 +1000
+ Tue, 30 Jan 2024 02:00:24 -0800 (PST)
+Message-ID: <40b11cae-39cb-4254-95c9-27d4a2a13ff0@linaro.org>
+Date: Tue, 30 Jan 2024 20:00:20 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/29] target/arm: Prefer fast cpu_env() over slower
- CPU QOM cast macro
+Subject: Re: [PATCH v3 11/29] target/hexagon: Prefer fast cpu_env() over
+ slower CPU QOM cast macro
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Brian Cain <bcain@quicinc.com>
 References: <20240129164514.73104-1-philmd@linaro.org>
- <20240129164514.73104-9-philmd@linaro.org>
+ <20240129164514.73104-12-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240129164514.73104-9-philmd@linaro.org>
+In-Reply-To: <20240129164514.73104-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,19 +106,9 @@ On 1/30/24 02:44, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/intc/arm_gicv3_cpuif.c        |  7 ++-----
->   hw/intc/arm_gicv3_cpuif_common.c |  5 +----
->   target/arm/cpu.c                 | 19 +++++--------------
->   target/arm/debug_helper.c        |  8 ++------
->   target/arm/gdbstub.c             |  6 ++----
->   target/arm/gdbstub64.c           |  6 ++----
->   target/arm/helper.c              |  9 +++------
->   target/arm/hvf/hvf.c             | 12 ++++--------
->   target/arm/kvm.c                 |  3 +--
->   target/arm/ptw.c                 |  3 +--
->   target/arm/tcg/cpu32.c           |  4 +---
->   target/arm/tcg/translate.c       |  3 +--
->   12 files changed, 25 insertions(+), 60 deletions(-)
+>   target/hexagon/cpu.c     | 25 ++++++-------------------
+>   target/hexagon/gdbstub.c |  6 ++----
+>   2 files changed, 8 insertions(+), 23 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
