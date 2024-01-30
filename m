@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08029C47DA9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 16:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8CB8C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 16:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUrHL-0000q9-0F; Tue, 30 Jan 2024 11:48:07 -0500
+	id 1rUrI6-00015r-T3; Tue, 30 Jan 2024 11:48:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rUrHH-0000pu-7Z
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:48:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rUrHF-0007cU-Io
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:48:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706633280;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MFdsOWSPeNtrox5lEStOmOkO2Q9e6A/LC5tsnlQJZfg=;
- b=RRKd1NzNORLDQ0thpsbH84/il+KsrP71qW4GS9ZPzgZYRXKVQlcs8vCGHy0mGIC4aPGWiz
- 0KsfgX4hlQNZ9nAeUG9OFdiqjKm5pMaL+jzp+/UOv46vrkvcsmdU8tGr2GpL4gmKTx7K4Z
- fuJviEr49YOEMyfkTuoZGIzGj1LPawM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-512-ebgMphT2OsmT2Ho48_nxJw-1; Tue, 30 Jan 2024 11:47:56 -0500
-X-MC-Unique: ebgMphT2OsmT2Ho48_nxJw-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 30A16800074;
- Tue, 30 Jan 2024 16:47:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C3E4B492BE4;
- Tue, 30 Jan 2024 16:47:54 +0000 (UTC)
-Date: Tue, 30 Jan 2024 16:47:52 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] pc: q35: Bump max_cpus to 1728 vcpus
-Message-ID: <ZbkoOAPo7gmFZw4g@redhat.com>
-References: <20240130164428.35955-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rUrHl-0000wE-Ux
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:48:34 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rUrHk-0007h9-0N
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:48:33 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-55f50cf2021so795630a12.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 08:48:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706633310; x=1707238110; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Fvg7jTM04r68l8vH9kFk00E3u8Nth1zbgqcIbNnmmyY=;
+ b=Jd7YgXwBoc1jlH/p88Dk4+G9TJ/kihGeEgKjtQEerreFV2V/ID5QanMV3dvm2kfJbp
+ 9/5BbtNwuXbUWp5UyBV6sa8VbbO6WS2m1Pt+J2W/x6np7TS+6cFWGDgwGL0KqT+49NaS
+ o4KZBtN+MHSnLg+izUTif8B+YKqQeG9GOX/082BX4Rg15jc/l8r1RwleoTwX+L90rpQL
+ ksaatxPuwEahACHjHOBPQJ5MXVEw2gLEOSccFeogMqrOSfIS7fz30UUyHXddAWT0ArGz
+ VRIGgalZPQHrmNuGYPIzYI66X5nnFsoQZzDNX6ldvkqLsUaRic9u8Usn0S+msDp8AhDo
+ eDOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706633310; x=1707238110;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Fvg7jTM04r68l8vH9kFk00E3u8Nth1zbgqcIbNnmmyY=;
+ b=aomUHrRd6XHhRLBl3z+INVhN0AQTZqF8sTfMYjijMK03Lhl/g4gA8yMWDNXpWGiCeb
+ OLh9ActkVzb0M9dnSdQ3SG6Yy72LL3WL0tyh7q+O8L+hU7PB0t8c8WiIlACJnpDC5MUl
+ 1ynX4Nks6t1KnbyTM6ePneyq0/R+3mLZ0yvs4k3TnCDiNdMJM/6ApDkvLewwjOdHsRQs
+ WXERvWd1/gokpNb9YGKKyZ3R6GE4Z+57s8yNdq400hJ0XzmntPXOpg0dj2IhnDqChGwT
+ eIVvFmVm0gJ9m9Cj19Nu/QmSdvrAY9RqsXcgXux5lM+wT6FTb6yjImKjpCpl/lEMv7D9
+ VcdQ==
+X-Gm-Message-State: AOJu0YxqkqBPOJAQ+qHJ9oKrSw9wEEIF4fzi5ueu3nIv1Oaj/HC9PE2/
+ ouUR0ntfoXfC9XHYR4FmTW8nfFGErZxt5HjWYtyRrrmyXzbFNV+IQHRXw7Ewk/68qpQByLnSDyF
+ V6Adb+yMtv4So3PFf/VqfA+YrzQBrCdzZOmOD4kW2HI6JgtIe
+X-Google-Smtp-Source: AGHT+IFU7eHulGxFB9ezHYe0jc8UcZoIWEt9shcq67lEqXLd6VOqBk27ZbdRDd6k+xqpXZRQ68ktBm0yxJ+Dl/jJNIY=
+X-Received: by 2002:a05:6402:510c:b0:55f:4b07:f383 with SMTP id
+ m12-20020a056402510c00b0055f4b07f383mr1383554edd.17.1706633310521; Tue, 30
+ Jan 2024 08:48:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240130164428.35955-1-anisinha@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240127202758.3326381-1-jan.kloetzke@kernkonzept.com>
+In-Reply-To: <20240127202758.3326381-1-jan.kloetzke@kernkonzept.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 30 Jan 2024 16:48:19 +0000
+Message-ID: <CAFEAcA_rF=wMB9agr9mt4iSz6_WKxRdMLGqLZoTSG+V+pePfig@mail.gmail.com>
+Subject: Re: [PATCH v2] target/arm: fix exception syndrome for AArch32 bkpt
+ insn
+To: =?UTF-8?B?SmFuIEtsw7Z0emtl?= <jan.kloetzke@kernkonzept.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,72 +87,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 10:14:28PM +0530, Ani Sinha wrote:
-> Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
-> Linux kernel can support upto a maximum number of 4096 vCPUS when MAXSMP is
-> enabled in the kernel. QEMU has been tested to correctly boot a linux guest
-> with 1728 vcpus both with edk2 and seabios firmwares. So bump up the max_cpus
-> value for q35 machines versions 9 and newer to 1728. Q35 machines versions
-> 8.2 and older continue to support 1024 maximum vcpus as before for
-> compatibility.
-
-Where does the 1728 number come from ?
-
-Did something break at 1729, or did the test machine simply not
-have sufficient resources to do practical larger tests ?
-
-> 
-> If KVM is not able to support the specified number of vcpus, QEMU would
-> return the following error messages:
-> 
-> $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
-> qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-> qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-> Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
-> 
-> Cc: Daniel P. Berrangé <berrange@redhat.com>
-> Cc: Igor Mammedov <imammedo@redhat.com>
-> Cc: Michael S. Tsirkin <mst@redhat.com>
-> Cc: Julia Suvorova <jusual@redhat.com>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+On Sat, 27 Jan 2024 at 20:30, Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.co=
+m> wrote:
+>
+> Debug exceptions that target AArch32 Hyp mode are reported differently
+> than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
+> such exceptions need to be either converted to a prefetch abort
+> (breakpoints, vector catch) or a data abort (watchpoints).
+>
+> Signed-off-by: Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.com>
 > ---
->  hw/i386/pc_q35.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index f43d5142b8..bfa627a70b 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -375,7 +375,7 @@ static void pc_q35_machine_options(MachineClass *m)
->      m->default_nic = "e1000e";
->      m->default_kernel_irqchip_split = false;
->      m->no_floppy = 1;
-> -    m->max_cpus = 1024;
-> +    m->max_cpus = 1728;
->      m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
->      machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
->      machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
-> @@ -396,6 +396,7 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
->  {
->      pc_q35_9_0_machine_options(m);
->      m->alias = NULL;
-> +    m->max_cpus = 1024;
->      compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
->      compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
->  }
-> -- 
-> 2.42.0
-> 
+> v2:
+>  * Refactor watchpoint syndrome rewriting
+>  * Drop ARM_EL_ISV from watchpoint syndrome
+>
+>  target/arm/helper.c   | 18 ++++++++++++++++++
+>  target/arm/syndrome.h |  8 ++++++++
+>  2 files changed, 26 insertions(+)
+>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Applied to target-arm.next, thanks (with a cc: qemu-stable header added).
 
+By the way, if you're interested in incorrect syndromes with
+AArch32 Hyp mode, the other one I know about is
+https://gitlab.com/qemu-project/qemu/-/issues/1153
+which describes some issues with the syndrome for traps
+of VFP or Neon instructions. I don't know if that affects
+your use-case.
+
+thanks
+-- PMM
 
