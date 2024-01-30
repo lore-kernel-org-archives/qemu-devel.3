@@ -4,69 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83375C47DA9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 00:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05328C47DB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 00:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUcGo-0004z9-Dq; Mon, 29 Jan 2024 19:46:35 -0500
+	id 1rUcQC-0007n4-KX; Mon, 29 Jan 2024 19:56:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcGY-0004yW-DY
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:46:20 -0500
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ id 1rUcQ9-0007kf-J6; Mon, 29 Jan 2024 19:56:13 -0500
+Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcGW-000334-Jo
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:46:18 -0500
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-4bda5740d2dso529039e0c.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 16:46:16 -0800 (PST)
+ id 1rUcQ6-0004yg-UB; Mon, 29 Jan 2024 19:56:13 -0500
+Received: by mail-vk1-xa31.google.com with SMTP id
+ 71dfb90a1353d-4bd9b71456fso589594e0c.2; 
+ Mon, 29 Jan 2024 16:56:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706575575; x=1707180375; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706576168; x=1707180968; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=voQbyWk7CDPfyWX1JLY7o8EKz2lJdsKpQihn9HuNlSk=;
- b=FX+JzYMB8iIuvf2jiy/d8ZtGnPhZzgegNrmyqBk7CgPoa34r8Qfd4JZ+zgyJ/fZNAf
- pHD0kyf9vFtQqZtK9Mk4rzUneSO9JxDt5Z4zeDI3ZgaxcSDyRNamgqUchtfqCY4J1Uww
- BbXu8fJkrBqR5caY+y2GOHwlBz7wbHeFHKYVwZKlixdMkFhfIw/uSn8uZKMEg8jyxF8i
- YmwUISudfLlr4LwQkHfWkuGOqf6/uL+7mVnTPVlakKyyBd1we1MaiFfaGuzczuDFTQ9n
- o/XBhzAO+slWnN5PzCpXsBw+yjUDWsU/OsoYuGrEb5eGa3Wp11dkd9TwQ9qFaoblyKw+
- m0qQ==
+ bh=aRw6jnCRjzD1gnHkyRcmhPH65k52Qp+1lLeCNAN+cho=;
+ b=TVN8U00gQPTFHWNm0fGMEVSiH+j/BkHHwI4FuNqJVl4pQ4xpD9hJXPUEQcyJJdsO72
+ j+MSK2vf83f0qiJx++9dVnxIbjMdhtWuVoyrAh7hDXGXU7FrH9hdWtwds8GALNscEUxV
+ 5Sf5am7bmTta8YmDbsDr5cCVfXDxEj/qdcJXpcIZ9mDC9XxkX3Z9vXyeO+CoBP0WXVbs
+ h1Ngm8ZJMRihijoFuRYW2CwWM3VBRCQbwsvnCf2TPnnsGDe/GAtRc8SmFqvcr8IkHK4V
+ J4EH5nqyPQnJpPyjOpeWxfjbsT0a+A06xq0FwQ21wq3tFOG0HNKSd8SXpYXblTcyncAt
+ euTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706575575; x=1707180375;
+ d=1e100.net; s=20230601; t=1706576168; x=1707180968;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=voQbyWk7CDPfyWX1JLY7o8EKz2lJdsKpQihn9HuNlSk=;
- b=gwSfKvdmnWZWspouQsOqDFgvMofeGoima97X+ZVz0jM7UdRUU+2HEcNlhI+mGC5jsn
- /AHC9ioa+jT9xitujrP6H7Y7/5peyWvQpkqoiht5vzv6slvBveHLbCjy4rtFA6c6JVmF
- hZPadWA46CNmarNE4MJFMyNIia+w97Mlwa+fCjSPVv+Pc+jmnXmacZJ8hugEui6wK3Db
- gQaxqtWsmCnBs7ToJaeLLMkcjrbmOGFQAPa2MwXQknrY/wm1uTsHkSjgdNmKC50SDylG
- QuIoebmvFTzT388OkdX5v0SVRUD2tw0U7U7AiFhiUT+CebbKijcFrMqSTFP4JVhO9xcz
- dOZA==
-X-Gm-Message-State: AOJu0Yx4L5X9ktxNhSfSrK2v1X9+2ASTw8siAPqsr4ZUNLbwoGYPD74Y
- cIriI1kb6O/ZWViO7+k21U85t1ej9cO29NjzNBBVL+c6ItMNtInlfsPIP1crlz0B/Co+dn4yoV5
- ja8/aBHiN9BurZsdeK4ec8296xrk=
-X-Google-Smtp-Source: AGHT+IENftbNzg9Gm6iVVgcedGkBrDgGkZ7CMid+MENsZAzyUlaS83ZxHLOT0E2uyWaa8V65OhKL6qwjig5vK/N7ZP8=
-X-Received: by 2002:a05:6122:2186:b0:4bd:29f7:53c4 with SMTP id
- j6-20020a056122218600b004bd29f753c4mr2828104vkd.1.1706575575361; Mon, 29 Jan
- 2024 16:46:15 -0800 (PST)
+ bh=aRw6jnCRjzD1gnHkyRcmhPH65k52Qp+1lLeCNAN+cho=;
+ b=A7M7Jgy0rL/AjRLGHdEMmzlAVbtMCknRYa6JJfkokbVMjteGs/4ZlkmhjnqwlWZVxH
+ na5TixALNdvSUZ/Rxb3GHUIDxwe2n1ud5gXxf8sWQyF6jEZMPd8/CJEYbx0wtVnRnVVa
+ ltVJoNjL9vFZ7ynscIEG+0946hp99dsefZ7in1xx+l/7u/B3LShgmxrVviGE3lYd8+ya
+ sTUQvNMHwm4OtLNG06NIt01xO2ferjEeKAqBbRIOVWu3GrgigLXnGMdBwGI96xRDpQdQ
+ pPuXl409Ucbvr26d6UutmfHAm4e9Z0k8GsISHGSLHTEzgcs52ab09kyk7qSltsfaghOY
+ 6h4A==
+X-Gm-Message-State: AOJu0YyEFxXwz0upD1+mvAMjAHCbZYCud4Te5rzaSbnsQLU0NP0qjV1m
+ Ixnr5DilW7AZF7CkBagL3LjTTZHp2kts8BT2TsXpuvn7YdVbaRdEdYqeUsi8r4Xt/ldKhijDYqB
+ AoAsIKfW0QFmJjEDqh7NwHvrNyhL8bp/LhQOXPw==
+X-Google-Smtp-Source: AGHT+IEaw/SPAkGS5SGmDZXQCt0/Z56Gof16hNYLa0v7S4UvHOvOAsYij43AIKtgEie0MnD+u3hA4yoR4J7rKsr7nBQ=
+X-Received: by 2002:a05:6122:4c1c:b0:4bf:d15b:ee3c with SMTP id
+ ff28-20020a0561224c1c00b004bfd15bee3cmr1552469vkb.8.1706576168547; Mon, 29
+ Jan 2024 16:56:08 -0800 (PST)
 MIME-Version: 1.0
-References: <20240129115809.1039924-1-pbonzini@redhat.com>
-In-Reply-To: <20240129115809.1039924-1-pbonzini@redhat.com>
+References: <20240128-riscv-v10-0-fdbe593976e9@daynix.com>
+In-Reply-To: <20240128-riscv-v10-0-fdbe593976e9@daynix.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 30 Jan 2024 10:45:49 +1000
-Message-ID: <CAKmqyKPbyAQCK5gvwg72G3GV61bUibzXdZ7H1CQ9in=e_6HKJg@mail.gmail.com>
-Subject: Re: [PATCH] kconfig: use "select" to enable semihosting
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org
+Date: Tue, 30 Jan 2024 10:55:42 +1000
+Message-ID: <CAKmqyKNFHnAv9axXXXZpf94XsCjCX2A_Js2seyfZUJe6Md-geQ@mail.gmail.com>
+Subject: Re: [PATCH v10 0/3] gdbstub and TCG plugin improvements
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mikhail Tyutin <m.tyutin@yadro.com>, Aleksandr Anenkov <a.anenkov@yadro.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Andrew Jones <ajones@ventanamicro.com>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -90,162 +97,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 29, 2024 at 9:59=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
+On Sun, Jan 28, 2024 at 6:29=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
 >
-> Just like all other dependencies, these can be expressed in Kconfig
-> files rather than in the default configurations.
+> This series extracts fixes and refactorings that can be applied
+> independently from "[PATCH v9 00/23] plugins: Allow to read registers".
 >
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> The patch "target/riscv: Move MISA limits to class" was replaced with
+> patch "target/riscv: Move misa_mxl_max to class" since I found instances
+> may have different misa_ext_mask.
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Do you mind rebasing this on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
 
 Alistair
 
+>
+> V6 -> V7:
+>   Rebased.
+>
+> V5 -> V6:
+>   Added patch "default-configs: Add TARGET_XML_FILES definition".
+>   Rebased.
+>
+> V4 -> V5:
+>   Added patch "hw/riscv: Use misa_mxl instead of misa_mxl_max".
+>
+> V3 -> V4:
+>   Added patch "gdbstub: Check if gdb_regs is NULL".
+>
+> V2 -> V3:
+>   Restored patch sets from the previous version.
+>   Rebased to commit 800485762e6564e04e2ab315132d477069562d91.
+>
+> V1 -> V2:
+>   Added patch "target/riscv: Do not allow MXL_RV32 for TARGET_RISCV64".
+>   Added patch "target/riscv: Initialize gdb_core_xml_file only once".
+>   Dropped patch "target/riscv: Remove misa_mxl validation".
+>   Dropped patch "target/riscv: Move misa_mxl_max to class".
+>   Dropped patch "target/riscv: Validate misa_mxl_max only once".
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  configs/devices/m68k-softmmu/default.mak    | 2 --
->  configs/devices/mips-softmmu/common.mak     | 3 ---
->  configs/devices/nios2-softmmu/default.mak   | 2 --
->  configs/devices/riscv32-softmmu/default.mak | 2 --
->  configs/devices/riscv64-softmmu/default.mak | 2 --
->  configs/devices/xtensa-softmmu/default.mak  | 2 --
->  target/m68k/Kconfig                         | 1 +
->  target/mips/Kconfig                         | 1 +
->  target/nios2/Kconfig                        | 1 +
->  target/riscv/Kconfig                        | 2 ++
->  target/xtensa/Kconfig                       | 1 +
->  11 files changed, 6 insertions(+), 13 deletions(-)
+> Changes in v10:
+> - Dropped patch "hw/riscv: Use misa_mxl instead of misa_mxl_max" due to
+>   invalid assumption that the relevant code is only used for kernel
+>   loading.
+> - Link to v9: https://lore.kernel.org/r/20240115-riscv-v9-0-ff171e1aedc8@=
+daynix.com
 >
-> diff --git a/configs/devices/m68k-softmmu/default.mak b/configs/devices/m=
-68k-softmmu/default.mak
-> index 7f8619e4278..8dcaa28ed38 100644
-> --- a/configs/devices/m68k-softmmu/default.mak
-> +++ b/configs/devices/m68k-softmmu/default.mak
-> @@ -1,7 +1,5 @@
->  # Default configuration for m68k-softmmu
+> Changes in v9:
+> - Rebased to commit 977542ded7e6b28d2bc077bcda24568c716e393c.
+> - Link to v8: https://lore.kernel.org/r/20231218-riscv-v8-0-c9bf2b1582d7@=
+daynix.com
 >
-> -CONFIG_SEMIHOSTING=3Dy
-> -
->  # Boards:
->  #
->  CONFIG_AN5206=3Dy
-> diff --git a/configs/devices/mips-softmmu/common.mak b/configs/devices/mi=
-ps-softmmu/common.mak
-> index 7da99327a77..1a853841b27 100644
-> --- a/configs/devices/mips-softmmu/common.mak
-> +++ b/configs/devices/mips-softmmu/common.mak
-> @@ -1,8 +1,5 @@
->  # Common mips*-softmmu CONFIG defines
+> Changes in v8:
+> - Added a more detailed explanation for patch "hw/riscv: Use misa_mxl
+>   instead of misa_mxl_max". (Alistair Francis)
+> - Link to v7: https://lore.kernel.org/r/20231213-riscv-v7-0-a760156a337f@=
+daynix.com
 >
-> -# CONFIG_SEMIHOSTING is always required on this architecture
-> -CONFIG_SEMIHOSTING=3Dy
-> -
->  CONFIG_ISA_BUS=3Dy
->  CONFIG_PCI=3Dy
->  CONFIG_PCI_DEVICES=3Dy
-> diff --git a/configs/devices/nios2-softmmu/default.mak b/configs/devices/=
-nios2-softmmu/default.mak
-> index 1bc4082ea99..e130d024e62 100644
-> --- a/configs/devices/nios2-softmmu/default.mak
-> +++ b/configs/devices/nios2-softmmu/default.mak
-> @@ -1,7 +1,5 @@
->  # Default configuration for nios2-softmmu
+> ---
+> Akihiko Odaki (3):
+>       target/riscv: Remove misa_mxl validation
+>       target/riscv: Move misa_mxl_max to class
+>       target/riscv: Validate misa_mxl_max only once
 >
-> -CONFIG_SEMIHOSTING=3Dy
-> -
->  # Boards:
->  #
->  CONFIG_NIOS2_10M50=3Dy
-> diff --git a/configs/devices/riscv32-softmmu/default.mak b/configs/device=
-s/riscv32-softmmu/default.mak
-> index d847bd5692e..94a236c9c25 100644
-> --- a/configs/devices/riscv32-softmmu/default.mak
-> +++ b/configs/devices/riscv32-softmmu/default.mak
-> @@ -3,8 +3,6 @@
->  # Uncomment the following lines to disable these optional devices:
->  #
->  #CONFIG_PCI_DEVICES=3Dn
-> -CONFIG_SEMIHOSTING=3Dy
-> -CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy
+>  target/riscv/cpu.h         |   4 +-
+>  hw/riscv/boot.c            |   3 +-
+>  target/riscv/cpu.c         | 183 ++++++++++++++++++++++++++-------------=
+------
+>  target/riscv/gdbstub.c     |  12 ++-
+>  target/riscv/kvm/kvm-cpu.c |  10 +--
+>  target/riscv/machine.c     |   7 +-
+>  target/riscv/tcg/tcg-cpu.c |  44 ++---------
+>  target/riscv/translate.c   |   3 +-
+>  8 files changed, 135 insertions(+), 131 deletions(-)
+> ---
+> base-commit: 977542ded7e6b28d2bc077bcda24568c716e393c
+> change-id: 20231213-riscv-fcc9640986cf
 >
->  # Boards:
->  #
-> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/device=
-s/riscv64-softmmu/default.mak
-> index bc69301fa4a..3f680594484 100644
-> --- a/configs/devices/riscv64-softmmu/default.mak
-> +++ b/configs/devices/riscv64-softmmu/default.mak
-> @@ -3,8 +3,6 @@
->  # Uncomment the following lines to disable these optional devices:
->  #
->  #CONFIG_PCI_DEVICES=3Dn
-> -CONFIG_SEMIHOSTING=3Dy
-> -CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy
->
->  # Boards:
->  #
-> diff --git a/configs/devices/xtensa-softmmu/default.mak b/configs/devices=
-/xtensa-softmmu/default.mak
-> index 4fe1bf00c94..49e4c9da88c 100644
-> --- a/configs/devices/xtensa-softmmu/default.mak
-> +++ b/configs/devices/xtensa-softmmu/default.mak
-> @@ -1,7 +1,5 @@
->  # Default configuration for Xtensa
->
-> -CONFIG_SEMIHOSTING=3Dy
-> -
->  # Boards:
->  #
->  CONFIG_XTENSA_SIM=3Dy
-> diff --git a/target/m68k/Kconfig b/target/m68k/Kconfig
-> index 23debad519a..9eae71486ff 100644
-> --- a/target/m68k/Kconfig
-> +++ b/target/m68k/Kconfig
-> @@ -1,2 +1,3 @@
->  config M68K
->      bool
-> +    select SEMIHOSTING
-> diff --git a/target/mips/Kconfig b/target/mips/Kconfig
-> index 6adf1453548..eb19c94c7d4 100644
-> --- a/target/mips/Kconfig
-> +++ b/target/mips/Kconfig
-> @@ -1,5 +1,6 @@
->  config MIPS
->      bool
-> +    select SEMIHOSTING
->
->  config MIPS64
->      bool
-> diff --git a/target/nios2/Kconfig b/target/nios2/Kconfig
-> index 1529ab8950d..c65550c861a 100644
-> --- a/target/nios2/Kconfig
-> +++ b/target/nios2/Kconfig
-> @@ -1,2 +1,3 @@
->  config NIOS2
->      bool
-> +    select SEMIHOSTING
-> diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
-> index b9e5932f13f..adb7de3f37d 100644
-> --- a/target/riscv/Kconfig
-> +++ b/target/riscv/Kconfig
-> @@ -1,5 +1,7 @@
->  config RISCV32
->      bool
-> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
->
->  config RISCV64
->      bool
-> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
-> diff --git a/target/xtensa/Kconfig b/target/xtensa/Kconfig
-> index a3c8dc7f6d7..5e46049262d 100644
-> --- a/target/xtensa/Kconfig
-> +++ b/target/xtensa/Kconfig
-> @@ -1,2 +1,3 @@
->  config XTENSA
->      bool
-> +    select SEMIHOSTING
+> Best regards,
 > --
-> 2.43.0
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 >
 >
 
