@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162C0C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63649C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUjMa-0000VI-U5; Tue, 30 Jan 2024 03:21:00 -0500
+	id 1rUjPZ-0001Q9-55; Tue, 30 Jan 2024 03:24:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjMZ-0000VA-JT
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:20:59 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjPT-0001Mj-Pe
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:23:59 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjMX-0002kE-RM
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:20:59 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a35e9161b8cso199191566b.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:20:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjPS-0002vz-4X
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:23:59 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-55c33773c0aso3707550a12.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:23:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706602856; x=1707207656; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706603036; x=1707207836; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tpfKHfwRkhm5M2uvL8jlJ4thgcW+XVnyEDvot+QlDZw=;
- b=xd2yVswPzf/LbXlqX9A4GwniJX1hDqWyaI0SyV+ks+ILFlKdyV9VBI3n+3B+P90RY/
- oq0Y5dWlDB9k6AvnFaLpXoYQnhqNDeXyQK200H4g2qe3bq8CneKtqigtqraeTUK2b5JY
- 3X8n4AkIb1l7WG4a9eowZFTlP+Dmqk1RePB7sN3wHGw6N19NrFwlCjT3nw2Gxj2igncf
- IQpTnkpmJSVRon4jDGoHV2aBAvbhSqIQIvqZDjjTHQPx7c2ktQ+3eJY12QKt6jvOjJ3z
- IWlVWiqeFX+4soxazGGEGBY4feJkgs/5Vr8lbo3NHREqh9e7/klXE8gy62iQNtRxWCKM
- TyZw==
+ bh=1Bj2PIdaGNrPAoFX7CRZa9+Rakq3s8HSS3Cz0DN4H30=;
+ b=LEoivonlhO80biSGlEToAJtdrWBMgogDmH445NhLDZZcNE2VZFSlSCd19n3jX8xraT
+ Pq3Ea3/qjScj4yZVQAytCMk/nSyq2nyiX+5LUywGDjJNrBsCsKmK6xE59Kx0vBOCLrHe
+ H7Ja3HcLalSCsxoTam2NDQUJONR6a53qmn3ZgkeBcPoyIgDT7H/1SaVYek8h5Wkv8aTb
+ 4MV4+IZl5ySDiQelt0sX2MQ00Ik3QMYjWeGLihgSbpc8SiEsZEoS/A2fICdkGbSCXQty
+ urkO61A3L3TzTt+wWcDnlsjwwuARrbcFmjYivLhlM9H8G9QdR/uOtzVC13I+vhCxpoHd
+ mDmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706602856; x=1707207656;
+ d=1e100.net; s=20230601; t=1706603036; x=1707207836;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tpfKHfwRkhm5M2uvL8jlJ4thgcW+XVnyEDvot+QlDZw=;
- b=prFwgAstYgPD1AIq2c9cLyYGwOVzb//8Xw2aNrbuOdmZ15dOp0poATzjtiHCwUwyQe
- +BDCncusOmdIcI28sN5jwb5pw2JNEfBqZudPGAC9N0DNY2Cbe35ApwkNnPhDKWBQlDkT
- GDT4UJ2eKi/ssGcKbD5we+Fzu8xOKTtWG7U/c3UjuYAZ9ClLWnwCxQVlzC+8mLGZY4Ct
- RR4GhxzkEaPWzG4Y03eMjHvrD0XCBsHBJl4ucaXA17SDzfdVbD78e25YPeB3PD/iG3cu
- vXNZbZt/c8LpERc6wZ8qvW9fBoYv76gMxqWH5LVxcAhT1Awg3wDQ8xHhJlrzkv34Colu
- 0e6g==
-X-Gm-Message-State: AOJu0YwtBSbspwoyYFHkIqSWr/xJj/vKmIaRYSZPXSyUkKnMV4PJk4nL
- izYkdt4CHo1kuB20Kjjyk7vXTvBrb8HdFn9YybT6hDWC5J0Zo10np+esMqzFEiNismSfFmZhD4o
- Y
-X-Google-Smtp-Source: AGHT+IFyiwEWNdDVRgvIvzlfBvgXIasWenYhJccpk0wJFqyq8fOQGB+TA1OkDzCuoQyZMBqcIPO7Hw==
-X-Received: by 2002:a17:907:1043:b0:a27:6570:adbc with SMTP id
- oy3-20020a170907104300b00a276570adbcmr5507104ejb.33.1706602856125; 
- Tue, 30 Jan 2024 00:20:56 -0800 (PST)
+ bh=1Bj2PIdaGNrPAoFX7CRZa9+Rakq3s8HSS3Cz0DN4H30=;
+ b=bxyH6pnJxdTGLoPcmxWSN5XtgH8KHEj4oYjuCy+KVkp5o2sdIcD3qbSwE2+G6ZUbsP
+ sNYzl/X19gDDZuvKcMmabk3YxO9O98cZuZsWgWDXrym8ckp091jI32iIts7H8jpmvzsy
+ vbG1q5kT5ESdoVsfjYsqXSW+QbEsHAemjl7MjZ3mKnrASwdWUSpu5X2OvQnTe4MNj0mu
+ QB2h48vnndImT5fJmruN5q/6OsyfIhsSHwbM7ZML3MG1Yrp7vlU0By/Lwsr0eApNzGNj
+ MRBFpfB0msObLNutKRqnqQf3wj2SMrouYkn3wjmloIzl0S3KiElXyKACo0whEAN6ZDll
+ zgJw==
+X-Gm-Message-State: AOJu0Yxw0ON07bNzTm98neAzbmF4UhRPltivKfAfvt4YshA5wSDRxrn7
+ IYeh7cKItmYVT1Lr8/Ws/c1iRIDwZbKffSb3mypwum+pS8AJUlXjhYJtJAVskOs=
+X-Google-Smtp-Source: AGHT+IExDl20dK8itOf6K9uhu62yWprftIeZ8VXSDLGgTczqKQWwOBZr5ipBH0p8dPEES2M+cuw/BA==
+X-Received: by 2002:a05:6402:50ce:b0:55f:4602:bf7d with SMTP id
+ h14-20020a05640250ce00b0055f4602bf7dmr465161edb.26.1706603036571; 
+ Tue, 30 Jan 2024 00:23:56 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- vu3-20020a170907a64300b00a360ba43173sm716124ejc.99.2024.01.30.00.20.55
+ p14-20020a05640243ce00b0055edbe94b34sm2821012edc.54.2024.01.30.00.23.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 00:20:55 -0800 (PST)
-Message-ID: <7b142c6e-07c4-4f57-bc47-b8490b2810d1@linaro.org>
-Date: Tue, 30 Jan 2024 09:20:54 +0100
+ Tue, 30 Jan 2024 00:23:56 -0800 (PST)
+Message-ID: <7bf17208-14ed-48c2-8995-ea4c580f73e2@linaro.org>
+Date: Tue, 30 Jan 2024 09:23:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/33] include/hw/core: Add mmu_index to CPUClass
+Subject: Re: [PATCH 32/33] include/exec: Implement cpu_mmu_index generically
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: anjo@rev.ng
 References: <20240129233043.34558-1-richard.henderson@linaro.org>
- <20240129233043.34558-2-richard.henderson@linaro.org>
- <238c5053-47d2-42c2-a012-5a88f318e290@linaro.org>
- <ab8d0b2c-4ee0-43ff-98a1-afaf02320dae@linaro.org>
+ <20240129233043.34558-33-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ab8d0b2c-4ee0-43ff-98a1-afaf02320dae@linaro.org>
+In-Reply-To: <20240129233043.34558-33-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,48 +94,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/1/24 08:51, Richard Henderson wrote:
-> On 1/30/24 17:46, Philippe Mathieu-Daudé wrote:
->> Hi Richard,
->>
->> On 30/1/24 00:30, Richard Henderson wrote:
->>> To be used after all targets have populated the hook.
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   include/hw/core/cpu.h | 3 +++
->>>   1 file changed, 3 insertions(+)
->>>
->>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
->>> index 2c284d6397..4385ce54c9 100644
->>> --- a/include/hw/core/cpu.h
->>> +++ b/include/hw/core/cpu.h
->>> @@ -103,6 +103,8 @@ struct SysemuCPUOps;
->>>    * @parse_features: Callback to parse command line arguments.
->>>    * @reset_dump_flags: #CPUDumpFlags to use for reset logging.
->>>    * @has_work: Callback for checking if there is work to do.
->>> + * @mmu_index: Callback for choosing softmmu mmu index;
->>> + *       may be used internally by memory_rw_debug without TCG.
->>>    * @memory_rw_debug: Callback for GDB memory access.
->>>    * @dump_state: Callback for dumping state.
->>>    * @query_cpu_fast:
->>> @@ -150,6 +152,7 @@ struct CPUClass {
->>>       void (*parse_features)(const char *typename, char *str, Error 
->>> **errp);
->>>       bool (*has_work)(CPUState *cpu);
->>> +    int (*mmu_index)(CPUState *cpu, bool ifetch);
->>
->> Can the index ever be negative?
+On 30/1/24 00:30, Richard Henderson wrote:
+> For user-only mode, use MMU_USER_IDX.
+> For system mode, use CPUClass.mmu_index.
 > 
-> No.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/exec/cpu-all.h    |  4 ++++
+>   include/exec/cpu-common.h | 19 +++++++++++++++++++
+>   target/alpha/cpu.h        |  5 -----
+>   target/arm/cpu.h          | 13 -------------
+>   target/avr/cpu.h          |  5 -----
+>   target/cris/cpu.h         |  4 ----
+>   target/hexagon/cpu.h      |  9 ---------
+>   target/hppa/cpu.h         | 10 ----------
+>   target/i386/cpu.h         |  6 ------
+>   target/loongarch/cpu.h    | 10 ----------
+>   target/m68k/cpu.h         |  4 ----
+>   target/microblaze/cpu.h   |  6 ------
+>   target/mips/cpu.h         |  5 -----
+>   target/nios2/cpu.h        |  6 ------
+>   target/openrisc/cpu.h     |  6 ------
+>   target/ppc/cpu.h          |  5 -----
+>   target/riscv/cpu.h        |  2 --
+>   target/rx/cpu.h           |  5 -----
+>   target/s390x/cpu.h        |  2 --
+>   target/sh4/cpu.h          |  6 ------
+>   target/sparc/cpu.h        |  6 ------
+>   target/tricore/cpu.h      |  5 -----
+>   target/xtensa/cpu.h       |  5 -----
+>   target/hppa/cpu.c         |  2 +-
+>   target/i386/cpu.c         |  2 +-
+>   target/loongarch/cpu.c    |  2 +-
+>   target/microblaze/cpu.c   |  2 +-
+>   target/nios2/cpu.c        |  2 +-
+>   target/openrisc/cpu.c     |  2 +-
+>   target/sh4/cpu.c          |  2 +-
+>   target/sparc/cpu.c        |  2 +-
+>   31 files changed, 31 insertions(+), 133 deletions(-)
 
-Then why not return an unsigned type?
 
->> Would it be useful to also have a mmu_index_max() so we could
->> check mmu_index() is in range in the final cpu_mmu_index()?
-> 
-> We have NB_MMU_MODES, a target-independent constant.
+> +#ifndef CONFIG_USER_ONLY
+> +/**
+> + * cpu_mmu_index:
+> + * @env: The cpu environment
+> + * @ifetch: True for code access, false for data access.
+> + *
+> + * Return the core mmu index for the current translation regime.
+> + * This function is used by generic TCG code paths.
+> + *
+> + * The user-only version of this function is inline in cpu-all.h,
+> + * where it always returns MMU_USER_IDX.
+> + */
+> +static inline int cpu_mmu_index(CPUArchState *env, bool ifetch)
+> +{
+> +    CPUState *cs = env_cpu(env);
+> +    return cs->cc->mmu_index(cs, ifetch);
 
-Ah right.
+Can we add here:
+
+       [tcg_debug_]assert(index < NB_MMU_MODES);
+
+> +}
+> +#endif /* !CONFIG_USER_ONLY */
 
 
