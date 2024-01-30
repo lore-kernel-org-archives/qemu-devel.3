@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E780C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 15:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4A6C47DDB
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 15:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUpad-0000lU-67; Tue, 30 Jan 2024 09:59:55 -0500
+	id 1rUpla-0007cU-9e; Tue, 30 Jan 2024 10:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rUpab-0000lH-R4
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 09:59:53 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1rUplW-0007bl-2J
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 10:11:10 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rUpaa-0008Fz-7U
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 09:59:53 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-40ef6f10b56so16771985e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 06:59:51 -0800 (PST)
+ id 1rUplQ-0003Bj-57
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 10:11:08 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33ae5e7d787so2360671f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 07:11:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706626791; x=1707231591; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706627461; x=1707232261; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2UiblXSj4QkLRr0+VsvzLHbNebXQPz1ut+cFGEbO/p4=;
- b=zGNP7oCf+its7V+nstCQFSCtVJrd432t5YduyiFlP0Q39Kcv6W08RyN/pDrzrg3zMe
- Za/eapHD3WB6xQSJaiM8wUCkY0FxY/40tPPRJVujrnDN8jtZuSFjoW9A+PNMDP8JhxKA
- yghs07q2WWuj/T9+hjirN0xuRpaBeoKAILF0Rq5fpsPNpVaaDRrggGL5qOdTh2wX3aJs
- 338aB0jeLBYozNRCayq9p/c2ncxNSZtnxmCgIBjnfzNhpSTJCUafd842O7tNfDZDutOP
- 5SoJFmvoCugmJryCuyORMl98ZOMaK6Lzi2JxM4jaJhVTLM+G2q6VVHmI2Y6pEHrYvNqm
- gP8g==
+ bh=rl8mVKyXBbIbbg+Hdc08clQcxKA01MtX6k5p7htTQ50=;
+ b=ylLfceT48K/KC54z92/cuDwQGHfC4uIrlTm8GwI6aSfAeHj1Vt1jcI9hbM+q3zknNq
+ u/ux8ItB/oC1wCgMqUBaat0pe4yGq6O6Rrdl4a8bh5yrCFnPQJGnS6ePpnN6lIAyB/Dn
+ 0xS9i3USO3e7z85d/Qtu+kBvI5dvEeEYcXXJOkeZn3te141CfDetxUk2iQfaJ1iWZ2vt
+ /S4obgN8Ehr/hmUe/HADEzGHQCvBDTSriQCaexUp90cU5limlIDT6QBTAx9zrS+ljuvL
+ 3numXSm76NB4b5KVqM9CZa1cUWtw424d9ouQommfxgO+PT6jPGneFFhpbReIT6kx+D7j
+ yKYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706626791; x=1707231591;
+ d=1e100.net; s=20230601; t=1706627461; x=1707232261;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2UiblXSj4QkLRr0+VsvzLHbNebXQPz1ut+cFGEbO/p4=;
- b=crtyJxa4N4R8LBOLbfyblWTYG7W3+fGzmMnZmTu8sfZlS1/CqMGEgxA2lde7gYCarX
- I4tehjgL8ZzJ48TzYbft/2Hux9N1DjFD+pQWS+DGXCw9Lg2MAV3As8k1VEoPJ1Awsc39
- al5pdjaAT67VxJvHEa3XqUeyveVWQuMTgW09ApanlsgOmO7h58Ubcin5DsvS48ZksMLS
- o485i5eOeJPmcvGmC9MhK2cBmXWjwjYAm4vRQMT4vnCmR2IJ5ACYUUGXcpBV83POTlAM
- Q2ZqXZA+H1R1/4GkktRWFoGuqJPg73+NeLxZNCHedBnLqG6Oi+pF77+ncDJmMxkEgQHL
- Bbqg==
-X-Gm-Message-State: AOJu0YxClzQwqUlxSfq2ptHS3K3zE1tzgC1uuF8xIkMmP5aLzF86tV59
- MKsBDPhMIS3gP2Q6O2HJ4OHUxPRcmuVBDPnObu5LxsFEJqVgcuezryVBwj5/058=
-X-Google-Smtp-Source: AGHT+IGqYns31rzWU/zCq5Dk2HyK4I6uZ9qoC8TEazn0HOLX38mYn5updaym/ZN0jpp36+sv8LbUhg==
-X-Received: by 2002:adf:f9c4:0:b0:33a:fd2b:bcc0 with SMTP id
- w4-20020adff9c4000000b0033afd2bbcc0mr902301wrr.5.1706626790729; 
- Tue, 30 Jan 2024 06:59:50 -0800 (PST)
+ bh=rl8mVKyXBbIbbg+Hdc08clQcxKA01MtX6k5p7htTQ50=;
+ b=hWVuisPBUTDhuroLQlVXGwBwiERAzMrWb5RU/Mey8dWAKa32kook8V7OfuQgqMImNf
+ 6OF2wypJnlss7RTWwdGO+4mByPMu2zfXgn72SVsZQSFCMKI6tja4zikd+DGHtG30431r
+ LE3674Sb1tTKHyndNkiR5+d+FSbCB8MVmGRqaI/T+RJ7YLAKhhJwENjGhFpgxdpeyKAS
+ Ppz6NL8LGETpb+oE5g9wmJDUmnOU3qZpwlIK0GeDLQ3yNPzQWGGPazFv+LKltNs4DHNl
+ E5k2/rP7FcotbnJOlGHNl8AoKrGTDogC5hjT0fkMg9EWW0sPbREiyKf9LsItSJwj9Ath
+ ifOw==
+X-Gm-Message-State: AOJu0YyS+iiZkOmTujluFFPpY+ud9VWZJdnHI69spn9AerR/x5YxW5aR
+ UpR3J2nFpGObsH7ea4Ituam6qPU3UoKR+YrzMubjhhFy/poy646A18vrJQQVY8+yVnO8tPfPOwD
+ E
+X-Google-Smtp-Source: AGHT+IHaFclazMByqrM6p3tmdf8M9vvge8DNA6sj0b89l1dlz29e4jUcnfHVBMJFkJnBOO5jT8tgiw==
+X-Received: by 2002:a05:6000:80c:b0:33a:e739:28ac with SMTP id
+ bt12-20020a056000080c00b0033ae73928acmr8650139wrb.67.1706627461381; 
+ Tue, 30 Jan 2024 07:11:01 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- i3-20020a05600011c300b0033ae8bdd642sm6554321wrx.114.2024.01.30.06.59.50
+ s14-20020adfdb0e000000b0033afce63fd0sm1463399wri.53.2024.01.30.07.11.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jan 2024 06:59:50 -0800 (PST)
+ Tue, 30 Jan 2024 07:11:01 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0E0F95F9D3;
- Tue, 30 Jan 2024 14:59:50 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id B13FF5F9D3;
+ Tue, 30 Jan 2024 15:11:00 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Aleksandar Rikalo
- <aleksandar.rikalo@syrmia.com>,  Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: Re: [PATCH] target/mips: Use qemu_irq typedef for CPUMIPSState::irq
- member
-In-Reply-To: <20240130111111.6372-1-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 30 Jan 2024 12:11:11
- +0100")
-References: <20240130111111.6372-1-philmd@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9=20?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Stefan
+ Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v2] scripts/checkpatch.pl: check for placeholders in
+ cover letter patches
+In-Reply-To: <82lcl.1qg7az61g8ip@linaro.org> (Manos Pitsidianakis's message of
+ "Tue, 30 Jan 2024 12:26:54 +0200")
+References: <20240130101107.214872-1-manos.pitsidianakis@linaro.org>
+ <ZbjMNZpX9kYyw5hW@redhat.com> <82lcl.1qg7az61g8ip@linaro.org>
 User-Agent: mu4e 1.11.27; emacs 29.1
-Date: Tue, 30 Jan 2024 14:59:50 +0000
-Message-ID: <87bk92ooih.fsf@draig.linaro.org>
+Date: Tue, 30 Jan 2024 15:11:00 +0000
+Message-ID: <875xzaonzv.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,14 +104,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
-> Missed during commit d537cf6c86 ("Unify IRQ handling")
-> when qemu_irq typedef was introduced for IRQState.
+> On Tue, 30 Jan 2024 12:15, "Daniel P. Berrang=C3=A9" <berrange@redhat.com=
+> wrote:
+>>On Tue, Jan 30, 2024 at 12:11:07PM +0200, Manos Pitsidianakis wrote:
+>>> Check if a file argument is a cover letter patch produced by
+>>> git-format-patch --cover-letter; It is initialized with subject suffix "
+>>> *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***". If they
+>>> exist, warn the user.
+>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>> ---
+>>> Range-diff against v1:
+>>> 1:  64b7ec2287 ! 1:  9bf816eb4c scripts/checkpatch.pl: check for placeh=
+olders in cover letter patches
+>>>     @@ scripts/checkpatch.pl: sub process {
+>>>      +# --cover-letter; It is initialized with subject suffix
+>>>      +# " *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***"
+>>>      +		if ($in_header_lines &&
+>>>     -+		    $rawline =3D~ /^Subject:.+[*]{3} SUBJECT HERE [*]{3}\s*$/) {
+>>>     -+        WARN("Patch appears to be a cover letter with uninitializ=
+ed subject" .
+>>>     -+             " '*** SUBJECT HERE ***'\n$hereline\n");
+>>>     ++				$rawline =3D~ /^Subject:.+[*]{3} SUBJECT HERE [*]{3}\s*$/) {
+>>>     ++			WARN("Patch appears to be a cover letter with " .
+>>>     ++						"uninitialized subject '*** SUBJECT HERE ***'\n$hereline\n"=
+);
+>>>      +		}
+>>>      +
+>>>      +		if ($rawline =3D~ /^[*]{3} BLURB HERE [*]{3}\s*$/) {
+>>>     -+        WARN("Patch appears to be a cover letter with leftover pl=
+aceholder " .
+>>>     -+             "text '*** BLURB HERE ***'\n$hereline\n");
+>>>     ++			WARN("Patch appears to be a cover letter with " .
+>>>     ++						"leftover placeholder text '*** BLURB HERE ***'\n$hereline\=
+n");
+>>>      +		}
+>>>      +
+>>>       		if ($in_commit_log && $non_utf8_charset && $realfile =3D~ /^$/ =
+&&
+>>>  scripts/checkpatch.pl | 14 ++++++++++++++
+>>>  1 file changed, 14 insertions(+)
+>>> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+>>> index 7026895074..9a8d49f1d8 100755
+>>> --- a/scripts/checkpatch.pl
+>>> +++ b/scripts/checkpatch.pl
+>>> @@ -1650,6 +1650,20 @@ sub process {
+>>>  			$non_utf8_charset =3D 1;
+>>>  		}
+>>>  +# Check if this is a cover letter patch produced by
+>>> git-format-patch
+>>> +# --cover-letter; It is initialized with subject suffix
+>>> +# " *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***"
+>>> +		if ($in_header_lines &&
+>>> +				$rawline =3D~ /^Subject:.+[*]{3} SUBJECT HERE [*]{3}\s*$/) {
+>>
+>>This continuation line is now hugely over-indented - it should
+>>be aligned just after the '('
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> It is not, it just uses tabs. Like line 2693 in current master:
+>
+> https://gitlab.com/qemu-project/qemu/-/blob/11be70677c70fdccd452a32336539=
+49b79e97908/scripts/checkpatch.pl#L2693
+>
+> I will quote the **QEMU Coding Style** again on whitespace:
+>
+>> Whitespace=EF=83=81
+>> Of course, the most important aspect in any coding style is
+>> whitespace. Crusty old coders who have trouble spotting the glasses
+>> on their noses can tell the difference between a tab and eight
+>> spaces from a distance of approximately fifteen parsecs. Many a
+>> flamewar has been fought and lost on this issue.
+>
+>> QEMU indents are four spaces. Tabs are never used, except in
+>> Makefiles where they have been irreversibly coded into the syntax.
+>> Spaces of course are superior to tabs because:
+>>     You have just one way to specify whitespace, not two. Ambiguity
+>> breeds mistakes.
+>>     The confusion surrounding =E2=80=98use tabs to indent, spaces to
+>> justify=E2=80=99 is gone.
+>>     Tab indents push your code to the right, making your screen
+>> seriously unbalanced.
+>>     Tabs will be rendered incorrectly on editors who are
+>> misconfigured not to use tab stops of eight positions.
+>>     Tabs are rendered badly in patches, causing off-by-one errors in
+>> almost every line.
+>>    It is the QEMU coding style.
+>
+> I think it's better if we leave this discussion here, and accept v1
+> which is consistent with the coding style, or this one which is
+> consistent with the inconsistency of the tabs and spaces mix of the
+> checkpatch.pl source code as a compromise, if it is deemed important.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+I suspect the problem is that checkpatch.pl is an import from the Linux
+source tree which has since had syncs with its upstream as well as a
+slew of QEMU specific patches. If we don't care about tracking upstream
+anymore we could bite the bullet and fix indentation going forward.
+
+Of course arguably we should replace it with a python script and reduce
+our dependence on perl. I'm sure someone had a go at that once but it
+might have only been a partial undertaking.
 
 --=20
 Alex Benn=C3=A9e
