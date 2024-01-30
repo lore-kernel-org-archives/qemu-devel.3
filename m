@@ -4,77 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8CB8C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 16:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB98C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 17:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUrI6-00015r-T3; Tue, 30 Jan 2024 11:48:58 -0500
+	id 1rUrZQ-0001G9-Ty; Tue, 30 Jan 2024 12:06:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUrHl-0000wE-Ux
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:48:34 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUrHk-0007h9-0N
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:48:33 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-55f50cf2021so795630a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 08:48:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706633310; x=1707238110; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Fvg7jTM04r68l8vH9kFk00E3u8Nth1zbgqcIbNnmmyY=;
- b=Jd7YgXwBoc1jlH/p88Dk4+G9TJ/kihGeEgKjtQEerreFV2V/ID5QanMV3dvm2kfJbp
- 9/5BbtNwuXbUWp5UyBV6sa8VbbO6WS2m1Pt+J2W/x6np7TS+6cFWGDgwGL0KqT+49NaS
- o4KZBtN+MHSnLg+izUTif8B+YKqQeG9GOX/082BX4Rg15jc/l8r1RwleoTwX+L90rpQL
- ksaatxPuwEahACHjHOBPQJ5MXVEw2gLEOSccFeogMqrOSfIS7fz30UUyHXddAWT0ArGz
- VRIGgalZPQHrmNuGYPIzYI66X5nnFsoQZzDNX6ldvkqLsUaRic9u8Usn0S+msDp8AhDo
- eDOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706633310; x=1707238110;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Fvg7jTM04r68l8vH9kFk00E3u8Nth1zbgqcIbNnmmyY=;
- b=aomUHrRd6XHhRLBl3z+INVhN0AQTZqF8sTfMYjijMK03Lhl/g4gA8yMWDNXpWGiCeb
- OLh9ActkVzb0M9dnSdQ3SG6Yy72LL3WL0tyh7q+O8L+hU7PB0t8c8WiIlACJnpDC5MUl
- 1ynX4Nks6t1KnbyTM6ePneyq0/R+3mLZ0yvs4k3TnCDiNdMJM/6ApDkvLewwjOdHsRQs
- WXERvWd1/gokpNb9YGKKyZ3R6GE4Z+57s8yNdq400hJ0XzmntPXOpg0dj2IhnDqChGwT
- eIVvFmVm0gJ9m9Cj19Nu/QmSdvrAY9RqsXcgXux5lM+wT6FTb6yjImKjpCpl/lEMv7D9
- VcdQ==
-X-Gm-Message-State: AOJu0YxqkqBPOJAQ+qHJ9oKrSw9wEEIF4fzi5ueu3nIv1Oaj/HC9PE2/
- ouUR0ntfoXfC9XHYR4FmTW8nfFGErZxt5HjWYtyRrrmyXzbFNV+IQHRXw7Ewk/68qpQByLnSDyF
- V6Adb+yMtv4So3PFf/VqfA+YrzQBrCdzZOmOD4kW2HI6JgtIe
-X-Google-Smtp-Source: AGHT+IFU7eHulGxFB9ezHYe0jc8UcZoIWEt9shcq67lEqXLd6VOqBk27ZbdRDd6k+xqpXZRQ68ktBm0yxJ+Dl/jJNIY=
-X-Received: by 2002:a05:6402:510c:b0:55f:4b07:f383 with SMTP id
- m12-20020a056402510c00b0055f4b07f383mr1383554edd.17.1706633310521; Tue, 30
- Jan 2024 08:48:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rUrZM-0001FR-UO
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 12:06:46 -0500
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rUrZF-0002dN-Qs
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 12:06:43 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.108.9.213])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 28E8E20232;
+ Tue, 30 Jan 2024 17:06:33 +0000 (UTC)
+Received: from kaod.org (37.59.142.107) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 30 Jan
+ 2024 18:06:32 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-107S00106b97671-13be-4df6-aea2-ec41010faa09,
+ 20D2C6FF0051686532C09B7171B66A66C8D21C17) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Tue, 30 Jan 2024 18:06:30 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Ani Sinha <anisinha@redhat.com>
+CC: QEMU Developers <qemu-devel@nongnu.org>, Peter Maydell
+ <peter.maydell@linaro.org>, <qemu-arm@nongnu.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, <qemu-trivial@nongnu.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH 1/3] hw/i386: Add `\n` to hint message
+Message-ID: <20240130180630.0e269e7d@bahia>
+In-Reply-To: <6E771066-49E8-448D-B90A-21766B108874@redhat.com>
+References: <20240130155653.142283-1-groug@kaod.org>
+ <20240130155653.142283-2-groug@kaod.org>
+ <6E771066-49E8-448D-B90A-21766B108874@redhat.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20240127202758.3326381-1-jan.kloetzke@kernkonzept.com>
-In-Reply-To: <20240127202758.3326381-1-jan.kloetzke@kernkonzept.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Jan 2024 16:48:19 +0000
-Message-ID: <CAFEAcA_rF=wMB9agr9mt4iSz6_WKxRdMLGqLZoTSG+V+pePfig@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: fix exception syndrome for AArch32 bkpt
- insn
-To: =?UTF-8?B?SmFuIEtsw7Z0emtl?= <jan.kloetzke@kernkonzept.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.107]
+X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: cb3013dc-e91d-4a1c-a898-9d33cf76acd5
+X-Ovh-Tracer-Id: 3213599812810480059
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtjedgfedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdejpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepoehgrhhouhhgsehkrghougdrohhrgheqpdhnsggprhgtphhtthhopedupdhrtghpthhtoheprghnihhsihhnhhgrsehrvgguhhgrthdrtghomhdpqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdpphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhshhgrnhhnohhnrdiihhgrohhslhesghhmrghilhdrtghomhdpphgsohhniihinhhisehrvgguhhgrthdrtghomhdprhhitghhrghrugdrhhgvnhguvghrshhonheslhhinhgrrhhordhorhhgpdhgrghoshhonhhgsehloh
+ honhhgshhonhdrtghnpdhmshhtsehrvgguhhgrthdrtghomhdpihhmrghmmhgvughosehrvgguhhgrthdrtghomhdpmhgrrhgtvghlrdgrphhfvghlsggruhhmsehgmhgrihhlrdgtohhmpdhqvghmuhdqthhrihhvihgrlhesnhhonhhgnhhurdhorhhgpdgvughurghrughosehhrggskhhoshhtrdhnvghtpdfovfetjfhoshhtpehmohehvdelpdhmohguvgepshhmthhpohhuth
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=groug@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,34 +82,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 27 Jan 2024 at 20:30, Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.co=
-m> wrote:
->
-> Debug exceptions that target AArch32 Hyp mode are reported differently
-> than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
-> such exceptions need to be either converted to a prefetch abort
-> (breakpoints, vector catch) or a data abort (watchpoints).
->
-> Signed-off-by: Jan Kl=C3=B6tzke <jan.kloetzke@kernkonzept.com>
-> ---
-> v2:
->  * Refactor watchpoint syndrome rewriting
->  * Drop ARM_EL_ISV from watchpoint syndrome
->
->  target/arm/helper.c   | 18 ++++++++++++++++++
->  target/arm/syndrome.h |  8 ++++++++
->  2 files changed, 26 insertions(+)
->
+On Tue, 30 Jan 2024 21:43:27 +0530
+Ani Sinha <anisinha@redhat.com> wrote:
 
-Applied to target-arm.next, thanks (with a cc: qemu-stable header added).
+> 
+> 
+> > On 30-Jan-2024, at 21:26, Greg Kurz <groug@kaod.org> wrote:
+> > 
+> > error_fprintf() doesn't add newlines.
+> 
+> ^^^^^^^^^^^^^^^^^
+> 
+> Should be error_printf(). Ditto for other patches.
+> 
 
-By the way, if you're interested in incorrect syndromes with
-AArch32 Hyp mode, the other one I know about is
-https://gitlab.com/qemu-project/qemu/-/issues/1153
-which describes some issues with the syndrome for traps
-of VFP or Neon instructions. I don't know if that affects
-your use-case.
+Thanks. Posted a v2.
 
-thanks
--- PMM
+> > 
+> > Signed-off-by: Greg Kurz <groug@kaod.org>
+> > ---
+> > hw/i386/acpi-build.c | 4 ++--
+> > 1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> > index edc979379c03..e990b0ae927f 100644
+> > --- a/hw/i386/acpi-build.c
+> > +++ b/hw/i386/acpi-build.c
+> > @@ -2697,7 +2697,7 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+> >                         " migration may not work",
+> >                         tables_blob->len, legacy_table_size);
+> >             error_printf("Try removing CPUs, NUMA nodes, memory slots"
+> > -                         " or PCI bridges.");
+> > +                         " or PCI bridges.\n");
+> >         }
+> >         g_array_set_size(tables_blob, legacy_table_size);
+> >     } else {
+> > @@ -2709,7 +2709,7 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+> >                         " migration may not work",
+> >                         tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
+> >             error_printf("Try removing CPUs, NUMA nodes, memory slots"
+> > -                         " or PCI bridges.");
+> > +                         " or PCI bridges.\n");
+> >         }
+> >         acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
+> >     }
+> > -- 
+> > 2.43.0
+> > 
+> 
+
+
+
+-- 
+Greg
 
