@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F368C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B573CC46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUlsw-0001CZ-Qc; Tue, 30 Jan 2024 06:02:34 -0500
+	id 1rUlt8-0001IL-F9; Tue, 30 Jan 2024 06:02:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rUlsu-0001CN-78
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:02:32 -0500
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rUlt7-0001Ho-AJ
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:02:45 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rUlsr-0007py-BH
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:02:31 -0500
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d043160cd1so25962981fa.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:02:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rUlt5-0007sf-RX
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:02:45 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6dddf4fc85dso1943576b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:02:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706612545; x=1707217345; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wOSWdDHiLKoLnultCId7x3ld088ShR7cGizs6XpJRQg=;
- b=M4OKoF4Q3mXgFQQndL0I0Y3/BeByvJfjcX10fjI6JTtXX7PXSXhjUb7dpW1Nmd7YgU
- QEBe19na0vYfMvzZgpiN1iSF0FhseJ5z3iq367mU8fFFup1dV2DcWu4aT3gZapvUy+Gy
- UOO3WxRm1G+3t4VOK5r83T2OPWXvffDaJ/sm5s7t/BkKeBm1M5w4KqmEbRGGIIr6klwG
- hG4tIaiI0G+4Ou8OI1ufCysXfw8e/DBIpqt9zIKuYvh+eoymXibvemXBHgYIPZWFJ2A+
- 4gCcA5DjYw00dxWORfUvmBmfL7v0oH7IQ769af6ynflnu1+R//5N9+pEOfyBsIX+Zysn
- vtnA==
+ d=linaro.org; s=google; t=1706612561; x=1707217361; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VnGok8mwjmNhzt2HXuIz+Lqj2e2ygpdpzHuBcAMHThk=;
+ b=XOJNTqF9HB92yPss890wsdQpN3wviaHUa3bidX5sC7FYoPuMqiX1Eu1GbcwSQznYVt
+ XToWvdE8CnD9ss3B0k1mz2+tb9TsPZzxkcfsKmXxeGYgB9eifCf55ZuTzq4899072m3f
+ CLa6f/Ekol3yirWOnROrfGKboIn4o5xtY5tuXsKF1J3nMK/WzA2NIc56S10YAoaeHfu+
+ mhAHE44a7MouEENtBh6izg2NNRXAXxzMA+7ah6UR2eNvEhaJWBQKyCchob07Ai4B3iHT
+ xw4t4eB0YZPwomxkchMcgnTwYu+2KGLBfzH9fZJnl035JqK+eyo0d8WUASv+QulOB6nr
+ zOwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706612545; x=1707217345;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wOSWdDHiLKoLnultCId7x3ld088ShR7cGizs6XpJRQg=;
- b=ABRpMtuyqVZwAOpUZ0bIztezMwX1+Vt4/5hUsJh0d8KBThEBYyX7YktLTMqksv3Vys
- ZLaXWPC5N5bVSzsoDfVa0d/i0bnTuqKvkKOdNjqUxaJ/TjQlY7huepPKclYfE+kil5tL
- /sS/jvYfxHG+eYE8eUBg8TQc9HiymW9jpyNB4FnDli7FQaDcdWE38JAkDHNuboLQt4Nu
- HfPsbOnfH1AN94fvLF0jjX/lUgVR3RZF0kzGyBj8MdpDPNkhVljbAuhJ/Uz25G/h61It
- Oo4ZTh/72dTJaKy4xzpFm5xfz+QzakyvwbbWfNa5mL4mkJkXB+TFBh8N2jKMSLe6dKwO
- NwJw==
-X-Gm-Message-State: AOJu0YyB7i1lHA3o4GdftkTZznr0GPm2WJmgdqbhA0rqWWEj0m2yVI6J
- Vz0CLMoS6pxd3gqktAhn49Sk3BberJ4Zy03lcrcHqcCW5pRyts2QJH6zDN+0HMZk22uDGJhiUmK
- apKbFCe+0E7WmWJJpg10Vpa4apoLo93aufp+5+w==
-X-Google-Smtp-Source: AGHT+IFHYY35s16dBNd08NFONKIbOke5fb90r7isoXTK/byJGefwhUx39NagCZTF40LrlkgtrnUDVIU7w7nVKCyGWXU=
-X-Received: by 2002:a2e:9688:0:b0:2d0:5101:2bbb with SMTP id
- q8-20020a2e9688000000b002d051012bbbmr2751894lji.23.1706612545132; Tue, 30 Jan
- 2024 03:02:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706612561; x=1707217361;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VnGok8mwjmNhzt2HXuIz+Lqj2e2ygpdpzHuBcAMHThk=;
+ b=wUIUn6P+dVHCzQCTaGPc9OHY+ZjP4LcSY06rokcKuxm8SONIY2ueRNUdV2QWHroH39
+ MvEZv4PN6uv74G0e/X2UjWwpEdO5wZJ0l0fXC7Nk/USelgtzBYtl8aGQxbvVimAIJvRi
+ I5V5ZD/bec5+MBkEd9aDC/cXqX8rFxGZlUzEQmYMPLtO6FBCb5IzqxBISCXo8T0ghC+F
+ D1hto5U/hrw3hK3t6lc+YwubBFRKLS02bO97jpHB/0abS4KFvGqBtrUgLJFSy40sfBXP
+ 3iF9r4XOpgrYcQBibEavOdsqMAqq9FGdyVpa9qm/HL2N9DDAr5BSubPHIMzD941yGAx2
+ QjOQ==
+X-Gm-Message-State: AOJu0YzAAxH1d7Mjm9dMFNmgk40o4Rj3JQd1/gIKtGMYZWpOHvyjZk3E
+ tdio0aunly+cYNiLS46Qu0AAAN8ATkQFyJHGuvAjyriP5+0WYPA4Bbpfkuk06kCD9ZRBj1F7Lcx
+ ivCY=
+X-Google-Smtp-Source: AGHT+IHUc03hnKApXKhZLY7Eg4P5aWX+0jnD6oi2yGlBIt8vGf0CwphGxy/s+fmAxUuRgs2Jj8YBog==
+X-Received: by 2002:a05:6a00:179f:b0:6d9:8ccb:be1b with SMTP id
+ s31-20020a056a00179f00b006d98ccbbe1bmr5736071pfg.29.1706612561270; 
+ Tue, 30 Jan 2024 03:02:41 -0800 (PST)
+Received: from [192.168.0.103] ([103.210.27.218])
+ by smtp.gmail.com with ESMTPSA id
+ c7-20020a62e807000000b006ddcfbe736esm7678047pfi.97.2024.01.30.03.02.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jan 2024 03:02:40 -0800 (PST)
+Message-ID: <a720b9a1-8e2e-4e2f-a673-d5e342e3b284@linaro.org>
+Date: Tue, 30 Jan 2024 21:02:36 +1000
 MIME-Version: 1.0
-References: <20240130101107.214872-1-manos.pitsidianakis@linaro.org>
- <CAFEAcA8P-8rRRQJLEFzwVJiKqdd-cu5DgiBdxBXYhq=2Oov9Fg@mail.gmail.com>
- <CAAjaMXYbm4ANhMEXOc35mJkq7Zr+A_vz8wBY+tPv4rk=dCQEaA@mail.gmail.com>
- <CAFEAcA_XX07ND82_ZrokBhVDbTot16_SNJNQDQeNnBvRZ4MHkw@mail.gmail.com>
- <CAAjaMXZsAHQYSotdn0f_3iao=sW3XRiA5iMQO1MMFnVj0cft_w@mail.gmail.com>
- <CAFEAcA-qa729wTz99fW6ur+FYjkmUjTkjd8eG_dNo7fSzYh_rw@mail.gmail.com>
-In-Reply-To: <CAFEAcA-qa729wTz99fW6ur+FYjkmUjTkjd8eG_dNo7fSzYh_rw@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 30 Jan 2024 13:02:09 +0200
-Message-ID: <CAAjaMXZYLCaXK5otq9iC=-D4RrjkcLDrgjhWhWnJDqwJwwfWhw@mail.gmail.com>
-Subject: Re: [PATCH v2] scripts/checkpatch.pl: check for placeholders in cover
- letter patches
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x229.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/33] include/hw/core: Add mmu_index to CPUClass
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: anjo@rev.ng
+References: <20240129233043.34558-1-richard.henderson@linaro.org>
+ <20240129233043.34558-2-richard.henderson@linaro.org>
+ <238c5053-47d2-42c2-a012-5a88f318e290@linaro.org>
+ <ab8d0b2c-4ee0-43ff-98a1-afaf02320dae@linaro.org>
+ <7b142c6e-07c4-4f57-bc47-b8490b2810d1@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <7b142c6e-07c4-4f57-bc47-b8490b2810d1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,57 +101,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jan 2024 at 12:57, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 30 Jan 2024 at 10:51, Manos Pitsidianakis
-> <manos.pitsidianakis@linaro.org> wrote:
-> >
-> > On Tue, 30 Jan 2024 at 12:42, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > >
-> > > On Tue, 30 Jan 2024 at 10:39, Manos Pitsidianakis
-> > > <manos.pitsidianakis@linaro.org> wrote:
-> > > >
-> > > > On Tue, 30 Jan 2024 at 12:34, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > > > >
-> > > > > On Tue, 30 Jan 2024 at 10:11, Manos Pitsidianakis
-> > > > > <manos.pitsidianakis@linaro.org> wrote:
-> > > > > >
-> > > > > > Check if a file argument is a cover letter patch produced by
-> > > > > > git-format-patch --cover-letter; It is initialized with subject suffix "
-> > > > > > *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***". If they
-> > > > > > exist, warn the user.
-> > > > >
-> > > > > FWIW, as far as I can see from my email archive, this particular
-> > > > > mistake has been made by contributors to qemu-devel perhaps
-> > > > > half a dozen times at most in the last decade...
-> > > > >
-> > > > > thanks
-> > > > > -- PMM
-> > > >
-> > > > Peter, searching for `b:"BLURB HERE"` in lore.kernel.org yields about
-> > > > 170 results including these patches.
-> > > >
-> > > > https://lore.kernel.org/qemu-devel/?q=b%3A%22BLURB+HERE%22
-> > >
-> > > Yes, there's a few more 'blurb here' results than 'subject here'
-> > > results, but they're almost always just where the submitter did
-> > > provide a proper blurb but then forgot to delete the 'BLURB HERE'
-> > > line, rather than where there's no blurb at all.
-> >
-> > Though you said half a dozen times at most.
->
-> Yes, because I was counting 'subject here'.
->
-> My question here is really "how much do we care about having
-> checkpatch point out this error?".
->
-> thanks
-> -- PMM
+On 1/30/24 18:20, Philippe Mathieu-Daudé wrote:
+>>> Can the index ever be negative?
+>>
+>> No.
+> 
+> Then why not return an unsigned type?
 
-I do, because it gives some peace of mind. But I do not care so much
-that I'd want to continue this conversation further.
+The existing function didn't, and I didn't think about it.
+Does it really matter?
 
--- 
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+
+r~
 
