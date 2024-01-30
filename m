@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E3DFC46CD2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25928C48285
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 13:48:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUoSm-0008AK-Qp; Tue, 30 Jan 2024 08:47:44 -0500
+	id 1rUoTQ-0008Tp-Ke; Tue, 30 Jan 2024 08:48:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoSk-00088Y-Vk
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:47:43 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoTP-0008RW-5S
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:48:23 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoSh-0000xt-Q2
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:47:42 -0500
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoTM-00019w-Pv
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:48:22 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40UDgB2r027784; Tue, 30 Jan 2024 13:47:37 GMT
+ 40UDWDIP001548; Tue, 30 Jan 2024 13:48:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to : cc :
+ h=date : from : to :
  subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=pp1;
- bh=NJXpPJkkdXXjmIP13XZ1szEZHNF8AUdw1dFPJrDHqfI=;
- b=hlqV90Vs5V1Dj/tOSb6c6oEtmCoW3OYmp2GZyQYwG2G+p0+uM5nzc925wYqCheXdA0FU
- ahUhVRuDE3KvpA/fGWe3YZ/24XMFKIui/4ibYid8nL0id0+2ucUjD7Z0m5mF4m5TS8/P
- CokVPf00cmT+/X/tsnINLCm0RO4/FdnL3buuIkIHFftutaRPhTGfoD4q3vDVzT/6RM7X
- lrmfknLvyR042UB7h6vdxEacc6+2E5SFu4kM/ruR338PVy2abE2YZs0gB0NMB/FGbPHM
- 3gK1F9ZPXpc2HLymqdHZ9I2HF9/L4oSBtSy4fZgmyOWYilFgAandCcqcnCMsSTC+FE2X Rw== 
+ in-reply-to; s=pp1; bh=sJlq+JJVgwubyXeEB09l0NNujBShz2q2k1AVcNEl0/0=;
+ b=NCk/zXcUuJYvKhuOXsjJW97Vii3+CZT4CmTEK18uxDG0M45+aXcW22/ncNVUL8P24rBd
+ +OpDz2cpyqS+5Lc/MXAbDa2SrOXF91bcPQvDsL9llgZBHiFLsXs2Vgjk9JyQyR9DZi1k
+ yqN4D18OoN/JCEWrfHcPActxOgpurvM4hBu5yllxkngGdczXY9xHQZRdwoVySNuTIEwv
+ XzpgVv7f8BaD94DygTbagt8vM7vN7j2hY0djaiX+1KNMKlt0W1xiMe0Lb8PM/SiGPQ9T
+ 24qrGKqsdHBDZZ2lPuc92DosuKvi5BgKT92wxpKIfg3+QmB6SLFgOB+uf+b1NkSmydLc 6w== 
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vy27rg4js-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vy22w0d66-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jan 2024 13:47:37 +0000
+ Tue, 30 Jan 2024 13:48:18 +0000
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
  by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40UBxmKr007188; Tue, 30 Jan 2024 13:47:36 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwev26jym-1
+ 40UC0Dcv007295; Tue, 30 Jan 2024 13:48:18 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwev26k2r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jan 2024 13:47:36 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40UDlYW944761794
+ Tue, 30 Jan 2024 13:48:18 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40UDmFLo20316800
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jan 2024 13:47:34 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A7FE2004F;
- Tue, 30 Jan 2024 13:47:34 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94D972004B;
- Tue, 30 Jan 2024 13:47:33 +0000 (GMT)
+ Tue, 30 Jan 2024 13:48:16 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4C1012004D;
+ Tue, 30 Jan 2024 13:48:15 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3589A2004B;
+ Tue, 30 Jan 2024 13:48:15 +0000 (GMT)
 Received: from black (unknown [9.155.200.166])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 30 Jan 2024 13:47:33 +0000 (GMT)
-Date: Tue, 30 Jan 2024 14:47:30 +0100
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 30 Jan 2024 13:48:15 +0000 (GMT)
+Date: Tue, 30 Jan 2024 14:48:12 +0100
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 29/33] linux-user: Allow TARGET_PAGE_BITS_VARY
-Message-ID: <ms3tptv4ivxdhh5w7kiqtyukg6de5zpjja7bwdjz5g5xhhdirq@octi35juyhse>
+Subject: Re: [PATCH v3 31/33] linux-user: Bound mmap_min_addr by host page size
+Message-ID: <qv7jourblot6ebluufd23tu7cxaze7o7e7avmorygkzwf6bll4@eh3ibtvbfcsq>
 References: <20240102015808.132373-1-richard.henderson@linaro.org>
- <20240102015808.132373-30-richard.henderson@linaro.org>
+ <20240102015808.132373-32-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240102015808.132373-30-richard.henderson@linaro.org>
+In-Reply-To: <20240102015808.132373-32-richard.henderson@linaro.org>
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: I-79r6irshxbhXOhJyhymfNXo2jogHjA
-X-Proofpoint-ORIG-GUID: I-79r6irshxbhXOhJyhymfNXo2jogHjA
+X-Proofpoint-ORIG-GUID: k_9821Y1USwgwSZKMgHQ4wajbkIgZp1M
+X-Proofpoint-GUID: k_9821Y1USwgwSZKMgHQ4wajbkIgZp1M
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-30_07,2024-01-30_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 lowpriorityscore=0
- malwarescore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- mlxlogscore=939 impostorscore=0 spamscore=0 phishscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2401300101
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ suspectscore=0 malwarescore=0
+ phishscore=0 mlxlogscore=772 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1015 mlxscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2401300101
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -107,64 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 02, 2024 at 12:58:04PM +1100, Richard Henderson wrote:
-> If set, match the host and guest page sizes.
+On Tue, Jan 02, 2024 at 12:58:06PM +1100, Richard Henderson wrote:
+> Bizzarely, it is possible to set /proc/sys/vm/mmap_min_addr
+> to a value below the host page size.  Fix that.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  linux-user/main.c | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
+>  linux-user/main.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-[...]
-
-> @@ -794,6 +796,16 @@ int main(int argc, char **argv, char **envp)
->                                   opt_one_insn_per_tb, &error_abort);
->          ac->init_machine(NULL);
->      }
-> +
-> +    /*
-> +     * Finalize page size before creating CPUs.
-> +     * This will do nothing if !TARGET_PAGE_BITS_VARY.
-> +     * The most efficient setting is to match the host.
-> +     */
-> +    host_page_size = qemu_real_host_page_size();
-> +    set_preferred_target_page_bits(ctz32(host_page_size));
-> +    finalize_target_page_bits();
-> +
->      cpu = cpu_create(cpu_type);
->      env = cpu_env(cpu);
->      cpu_reset(cpu);
-
-Not sure if that's an officially blessed use case, but I tried to
-increase the alpha page size to 8k by doing
-
---- a/target/alpha/cpu-param.h
-+++ b/target/alpha/cpu-param.h
-@@ -20,7 +20,7 @@
-  * a 4k minimum to match x86 host, which can minimize emulation issues.
-  */
- # define TARGET_PAGE_BITS_VARY
--# define TARGET_PAGE_BITS_MIN 12
-+# define TARGET_PAGE_BITS_MIN 13
- # define TARGET_VIRT_ADDR_SPACE_BITS  63
- #else
- # define TARGET_PAGE_BITS 13
-
-and this triggered an assetion in set_preferred_target_page_bits().
-I wonder if it would make sense to add something like the following to
-this patch?
-
---- a/page-vary-target.c
-+++ b/page-vary-target.c
-@@ -26,8 +26,7 @@
- bool set_preferred_target_page_bits(int bits)
- {
- #ifdef TARGET_PAGE_BITS_VARY
--    assert(bits >= TARGET_PAGE_BITS_MIN);
--    return set_preferred_target_page_bits_common(bits);
-+    return set_preferred_target_page_bits_common(MAX(TARGET_PAGE_BITS_MIN, bits));
- #else
-     return true;
- #endif
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
