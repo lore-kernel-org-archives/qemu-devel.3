@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63EB2C47DB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 00:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83375C47DA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 00:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUcEc-0003nR-U5; Mon, 29 Jan 2024 19:44:22 -0500
+	id 1rUcGo-0004z9-Dq; Mon, 29 Jan 2024 19:46:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcES-0003jS-OW; Mon, 29 Jan 2024 19:44:08 -0500
-Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
+ id 1rUcGY-0004yW-DY
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:46:20 -0500
+Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcER-0002aN-3B; Mon, 29 Jan 2024 19:44:08 -0500
-Received: by mail-vs1-xe2d.google.com with SMTP id
- ada2fe7eead31-46b1cfd38feso495460137.0; 
- Mon, 29 Jan 2024 16:44:06 -0800 (PST)
+ id 1rUcGW-000334-Jo
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:46:18 -0500
+Received: by mail-vk1-xa2c.google.com with SMTP id
+ 71dfb90a1353d-4bda5740d2dso529039e0c.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 16:46:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706575445; x=1707180245; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706575575; x=1707180375; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=94jabcGHwtMHKpLXpnpRuzdMZgPpwf3Ll9WdFIs/pI8=;
- b=djZ5chLy8KBIy0yOkgIZXeiN/bN37kHvGZO+zxDxmNllBTk3NEuenLM5D7LAFi9sbb
- czHJ3f1IaLhuIuyDm/up9qlqGyOjUYEAjbyGqA27mjY3R0DZ1IWNzaEiyVJ0cH36aZVA
- TdXrkzPyOq6dgdECDAEDeaCUewimycos+7ux2opgRbZVs7nyKX3gWKfc/JVCc0O5kUNS
- qA2xugiQBX5A1WQUd2UY4zjEsH6dm4WrnE7VId9jl+MPGzP3+JK5T9ITtnYU6H5XF/Na
- 6fEUta4rq7oLFhw2K66EL3sMtxqewXGIck7ZJqiFXxy8+M9UqwH84nOZNd70cECFMk14
- Rayg==
+ bh=voQbyWk7CDPfyWX1JLY7o8EKz2lJdsKpQihn9HuNlSk=;
+ b=FX+JzYMB8iIuvf2jiy/d8ZtGnPhZzgegNrmyqBk7CgPoa34r8Qfd4JZ+zgyJ/fZNAf
+ pHD0kyf9vFtQqZtK9Mk4rzUneSO9JxDt5Z4zeDI3ZgaxcSDyRNamgqUchtfqCY4J1Uww
+ BbXu8fJkrBqR5caY+y2GOHwlBz7wbHeFHKYVwZKlixdMkFhfIw/uSn8uZKMEg8jyxF8i
+ YmwUISudfLlr4LwQkHfWkuGOqf6/uL+7mVnTPVlakKyyBd1we1MaiFfaGuzczuDFTQ9n
+ o/XBhzAO+slWnN5PzCpXsBw+yjUDWsU/OsoYuGrEb5eGa3Wp11dkd9TwQ9qFaoblyKw+
+ m0qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706575445; x=1707180245;
+ d=1e100.net; s=20230601; t=1706575575; x=1707180375;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=94jabcGHwtMHKpLXpnpRuzdMZgPpwf3Ll9WdFIs/pI8=;
- b=Z6TGmvhp5zm1GD3OdS23OdI1oLltLlt8Tw29MCuWf2t/kCMyo9hi9MnhOMF//HEQ/A
- m0x77xMjvPN791tF/nBomCA/dO3zBEAh4tY88Kl9ZkFrBAJCwNHH89UWyk4+ohw1aaoU
- 6CTpDil/XcOIo/4U3IVnbeCN/6rw9xcb/TEM+gagMGVd67Eh/3XzjzHkwoxJWNkP1Y+j
- NYKz/vpsvk9OAfU2z+9qDlK+DCYPC4P+YA/Nrw1C5j0JKudOmUs0OQbVaVWh9p0aPrO1
- y66ACQeELidfRhkGH1U6OGRbyxA8laGBjA1C4jTiogv1mriTEiJweEV8z0mM9gFqh7qL
- LltA==
-X-Gm-Message-State: AOJu0Yz2a0RwcoR6zmbhIG9VH9u6VcEiotDcOUKAY/hMGd12O0wTIiZ5
- LnspQDaqQqBK9mEeJ/wEPmiZnT1fj6qezZ26eBCsfPABst/EbGH+ieQUcU+miNqTBYTRpwHASqI
- T9FcDm9GZJtn50tzssNc7GKQjyJs=
-X-Google-Smtp-Source: AGHT+IE75ECynGQQO4ZCZ/6BlGPPumjYB2xzzme4Zwv5UxujhGRE/pliYK66SK6fGFhPU8me/XW7JiKVdisCBek9j74=
-X-Received: by 2002:a67:e9d9:0:b0:46b:213c:af1d with SMTP id
- q25-20020a67e9d9000000b0046b213caf1dmr4444975vso.17.1706575445099; Mon, 29
- Jan 2024 16:44:05 -0800 (PST)
+ bh=voQbyWk7CDPfyWX1JLY7o8EKz2lJdsKpQihn9HuNlSk=;
+ b=gwSfKvdmnWZWspouQsOqDFgvMofeGoima97X+ZVz0jM7UdRUU+2HEcNlhI+mGC5jsn
+ /AHC9ioa+jT9xitujrP6H7Y7/5peyWvQpkqoiht5vzv6slvBveHLbCjy4rtFA6c6JVmF
+ hZPadWA46CNmarNE4MJFMyNIia+w97Mlwa+fCjSPVv+Pc+jmnXmacZJ8hugEui6wK3Db
+ gQaxqtWsmCnBs7ToJaeLLMkcjrbmOGFQAPa2MwXQknrY/wm1uTsHkSjgdNmKC50SDylG
+ QuIoebmvFTzT388OkdX5v0SVRUD2tw0U7U7AiFhiUT+CebbKijcFrMqSTFP4JVhO9xcz
+ dOZA==
+X-Gm-Message-State: AOJu0Yx4L5X9ktxNhSfSrK2v1X9+2ASTw8siAPqsr4ZUNLbwoGYPD74Y
+ cIriI1kb6O/ZWViO7+k21U85t1ej9cO29NjzNBBVL+c6ItMNtInlfsPIP1crlz0B/Co+dn4yoV5
+ ja8/aBHiN9BurZsdeK4ec8296xrk=
+X-Google-Smtp-Source: AGHT+IENftbNzg9Gm6iVVgcedGkBrDgGkZ7CMid+MENsZAzyUlaS83ZxHLOT0E2uyWaa8V65OhKL6qwjig5vK/N7ZP8=
+X-Received: by 2002:a05:6122:2186:b0:4bd:29f7:53c4 with SMTP id
+ j6-20020a056122218600b004bd29f753c4mr2828104vkd.1.1706575575361; Mon, 29 Jan
+ 2024 16:46:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20240125163408.1595135-1-peter.maydell@linaro.org>
- <20240125163408.1595135-10-peter.maydell@linaro.org>
-In-Reply-To: <20240125163408.1595135-10-peter.maydell@linaro.org>
+References: <20240129115809.1039924-1-pbonzini@redhat.com>
+In-Reply-To: <20240129115809.1039924-1-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 30 Jan 2024 10:43:39 +1000
-Message-ID: <CAKmqyKNd5ePr0auTp0KhvhVGo8mAf34OW_-f5t=X_1UPRubDzw@mail.gmail.com>
-Subject: Re: [PATCH 09/10] riscv: Clean up includes
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Date: Tue, 30 Jan 2024 10:45:49 +1000
+Message-ID: <CAKmqyKPbyAQCK5gvwg72G3GV61bUibzXdZ7H1CQ9in=e_6HKJg@mail.gmail.com>
+Subject: Re: [PATCH] kconfig: use "select" to enable semihosting
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -89,60 +90,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 26, 2024 at 2:35=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
+On Mon, Jan 29, 2024 at 9:59=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
 >
-> This commit was created with scripts/clean-includes:
->  ./scripts/clean-includes --git riscv target/riscv/*.[ch]
+> Just like all other dependencies, these can be expressed in Kconfig
+> files rather than in the default configurations.
 >
-> All .c should include qemu/osdep.h first.  The script performs three
-> related cleanups:
->
-> * Ensure .c files include qemu/osdep.h first.
-> * Including it in a .h is redundant, since the .c  already includes
->   it.  Drop such inclusions.
-> * Likewise, including headers qemu/osdep.h includes is redundant.
->   Drop these, too.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/vector_internals.h | 1 -
->  target/riscv/vector_internals.c | 1 +
->  2 files changed, 1 insertion(+), 1 deletion(-)
+>  configs/devices/m68k-softmmu/default.mak    | 2 --
+>  configs/devices/mips-softmmu/common.mak     | 3 ---
+>  configs/devices/nios2-softmmu/default.mak   | 2 --
+>  configs/devices/riscv32-softmmu/default.mak | 2 --
+>  configs/devices/riscv64-softmmu/default.mak | 2 --
+>  configs/devices/xtensa-softmmu/default.mak  | 2 --
+>  target/m68k/Kconfig                         | 1 +
+>  target/mips/Kconfig                         | 1 +
+>  target/nios2/Kconfig                        | 1 +
+>  target/riscv/Kconfig                        | 2 ++
+>  target/xtensa/Kconfig                       | 1 +
+>  11 files changed, 6 insertions(+), 13 deletions(-)
 >
-> diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_intern=
-als.h
-> index 8133111e5f6..842765f6c16 100644
-> --- a/target/riscv/vector_internals.h
-> +++ b/target/riscv/vector_internals.h
-> @@ -19,7 +19,6 @@
->  #ifndef TARGET_RISCV_VECTOR_INTERNALS_H
->  #define TARGET_RISCV_VECTOR_INTERNALS_H
+> diff --git a/configs/devices/m68k-softmmu/default.mak b/configs/devices/m=
+68k-softmmu/default.mak
+> index 7f8619e4278..8dcaa28ed38 100644
+> --- a/configs/devices/m68k-softmmu/default.mak
+> +++ b/configs/devices/m68k-softmmu/default.mak
+> @@ -1,7 +1,5 @@
+>  # Default configuration for m68k-softmmu
 >
-> -#include "qemu/osdep.h"
->  #include "qemu/bitops.h"
->  #include "cpu.h"
->  #include "tcg/tcg-gvec-desc.h"
-> diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_intern=
-als.c
-> index 9cf5c17cdea..12f5964fbbe 100644
-> --- a/target/riscv/vector_internals.c
-> +++ b/target/riscv/vector_internals.c
-> @@ -16,6 +16,7 @@
->   * this program.  If not, see <http://www.gnu.org/licenses/>.
->   */
+> -CONFIG_SEMIHOSTING=3Dy
+> -
+>  # Boards:
+>  #
+>  CONFIG_AN5206=3Dy
+> diff --git a/configs/devices/mips-softmmu/common.mak b/configs/devices/mi=
+ps-softmmu/common.mak
+> index 7da99327a77..1a853841b27 100644
+> --- a/configs/devices/mips-softmmu/common.mak
+> +++ b/configs/devices/mips-softmmu/common.mak
+> @@ -1,8 +1,5 @@
+>  # Common mips*-softmmu CONFIG defines
 >
-> +#include "qemu/osdep.h"
->  #include "vector_internals.h"
+> -# CONFIG_SEMIHOSTING is always required on this architecture
+> -CONFIG_SEMIHOSTING=3Dy
+> -
+>  CONFIG_ISA_BUS=3Dy
+>  CONFIG_PCI=3Dy
+>  CONFIG_PCI_DEVICES=3Dy
+> diff --git a/configs/devices/nios2-softmmu/default.mak b/configs/devices/=
+nios2-softmmu/default.mak
+> index 1bc4082ea99..e130d024e62 100644
+> --- a/configs/devices/nios2-softmmu/default.mak
+> +++ b/configs/devices/nios2-softmmu/default.mak
+> @@ -1,7 +1,5 @@
+>  # Default configuration for nios2-softmmu
 >
->  /* set agnostic elements to 1s */
+> -CONFIG_SEMIHOSTING=3Dy
+> -
+>  # Boards:
+>  #
+>  CONFIG_NIOS2_10M50=3Dy
+> diff --git a/configs/devices/riscv32-softmmu/default.mak b/configs/device=
+s/riscv32-softmmu/default.mak
+> index d847bd5692e..94a236c9c25 100644
+> --- a/configs/devices/riscv32-softmmu/default.mak
+> +++ b/configs/devices/riscv32-softmmu/default.mak
+> @@ -3,8 +3,6 @@
+>  # Uncomment the following lines to disable these optional devices:
+>  #
+>  #CONFIG_PCI_DEVICES=3Dn
+> -CONFIG_SEMIHOSTING=3Dy
+> -CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy
+>
+>  # Boards:
+>  #
+> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/device=
+s/riscv64-softmmu/default.mak
+> index bc69301fa4a..3f680594484 100644
+> --- a/configs/devices/riscv64-softmmu/default.mak
+> +++ b/configs/devices/riscv64-softmmu/default.mak
+> @@ -3,8 +3,6 @@
+>  # Uncomment the following lines to disable these optional devices:
+>  #
+>  #CONFIG_PCI_DEVICES=3Dn
+> -CONFIG_SEMIHOSTING=3Dy
+> -CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy
+>
+>  # Boards:
+>  #
+> diff --git a/configs/devices/xtensa-softmmu/default.mak b/configs/devices=
+/xtensa-softmmu/default.mak
+> index 4fe1bf00c94..49e4c9da88c 100644
+> --- a/configs/devices/xtensa-softmmu/default.mak
+> +++ b/configs/devices/xtensa-softmmu/default.mak
+> @@ -1,7 +1,5 @@
+>  # Default configuration for Xtensa
+>
+> -CONFIG_SEMIHOSTING=3Dy
+> -
+>  # Boards:
+>  #
+>  CONFIG_XTENSA_SIM=3Dy
+> diff --git a/target/m68k/Kconfig b/target/m68k/Kconfig
+> index 23debad519a..9eae71486ff 100644
+> --- a/target/m68k/Kconfig
+> +++ b/target/m68k/Kconfig
+> @@ -1,2 +1,3 @@
+>  config M68K
+>      bool
+> +    select SEMIHOSTING
+> diff --git a/target/mips/Kconfig b/target/mips/Kconfig
+> index 6adf1453548..eb19c94c7d4 100644
+> --- a/target/mips/Kconfig
+> +++ b/target/mips/Kconfig
+> @@ -1,5 +1,6 @@
+>  config MIPS
+>      bool
+> +    select SEMIHOSTING
+>
+>  config MIPS64
+>      bool
+> diff --git a/target/nios2/Kconfig b/target/nios2/Kconfig
+> index 1529ab8950d..c65550c861a 100644
+> --- a/target/nios2/Kconfig
+> +++ b/target/nios2/Kconfig
+> @@ -1,2 +1,3 @@
+>  config NIOS2
+>      bool
+> +    select SEMIHOSTING
+> diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
+> index b9e5932f13f..adb7de3f37d 100644
+> --- a/target/riscv/Kconfig
+> +++ b/target/riscv/Kconfig
+> @@ -1,5 +1,7 @@
+>  config RISCV32
+>      bool
+> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
+>
+>  config RISCV64
+>      bool
+> +    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
+> diff --git a/target/xtensa/Kconfig b/target/xtensa/Kconfig
+> index a3c8dc7f6d7..5e46049262d 100644
+> --- a/target/xtensa/Kconfig
+> +++ b/target/xtensa/Kconfig
+> @@ -1,2 +1,3 @@
+>  config XTENSA
+>      bool
+> +    select SEMIHOSTING
 > --
-> 2.34.1
+> 2.43.0
 >
 >
 
