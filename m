@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96614C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3381C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUmK0-0005hd-Uq; Tue, 30 Jan 2024 06:30:33 -0500
+	id 1rUmKx-0006IV-RJ; Tue, 30 Jan 2024 06:31:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUmJx-0005fn-S1
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:30:29 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKh-0006D1-RW
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:16 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUmJo-0005F0-9H
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:30:29 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-55f19a3ca7aso2582027a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:30:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKY-0005Mg-Ls
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:12 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-40e775695c6so34190545e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:31:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706614218; x=1707219018; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RJ4BNNQ/12Mbxx5pW9kipjNrOcVbSd5ZkJpUoXTBJqA=;
- b=A/HG4NMWEWqLtJH1y8rFAVreiMWDHPNZ0Ocy2SCace0o2tGE5YafDAkdRbiScXpWLk
- AE/LKsHX8i2BfxDWgmYqFXv2o2Pb13IgCAtcWqzLDkTZZ9OY0UAktjeq+SgMzp9byUTe
- TVdy6zUGB8ik8akGpqnOCYLXaNLmFXl1HlWYxP+q1nq7phIU8/nZ6nlHFqrP0GO1YsJT
- JpWGFZTQTTwjjqtRm6qv8osCM/cwVQlihH1QCk+2zSFetmrSxM/Q6ToL/3Qg/PKe0hRw
- zHPShT0Ggah4mJ17ByCvUdT630pmAKW3khWwZdp92e4Q0SQeUpXsKk9VnoJ2FoCABm1I
- vE5g==
+ d=linaro.org; s=google; t=1706614265; x=1707219065; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uriMJ13edI6G4XpJBTuYK8QPI1ou+khs8JB42NZhqwI=;
+ b=tfHCOuBl4VRcn2Ylb8CsqLqff64WElX2e9BWTM7eLr1C0bK/P1m8s7tyTQpKpQHtJc
+ MJS7tehF7Vm5V4sN7BpZmqyTkrVQP6ZwbPgTUZuep/ESsSbr3J/ecHeGz9cbdxmFOJzG
+ K09t8GPK/ABGkbiawjTGqU5GZ2RollAuo0uXLh7+VsEyPJ/S+p+6Zxv5G1nel7dzKAZo
+ cogs9HreqZcED/uyF62R1/gt+w58HUUMV6NEIWwC3A1gg+vQcSO7/YM3TPg5g+mR2/HA
+ sDY2z97/6l9QtMBP9gMsGzWTX5x4A0iuIftUzOBrPF7VcCDFmyLJe6F536PRaMy/yPJD
+ 2VXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706614218; x=1707219018;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RJ4BNNQ/12Mbxx5pW9kipjNrOcVbSd5ZkJpUoXTBJqA=;
- b=LlIGId4CYoJVeoBZD5399+DN5Te/maVPOEOhgojBb7Z+XzYAY45RqI2p+Sm//GRSob
- 1wSwVYnMA0STx+CKDd6sF3lM2IhsVy4kf8Z9xLaK4CHcEyKX07h3v5HgEK8vwiJzXShI
- 22YYGdiwNB+buF0TQp3V1U/C1YpKfyHpEwuRsv8qcs8Jg3HR9q8lPc/PZb/fiweGNO8m
- FCu7EZk03ZR8wQvQI+zaqwG3BR2aqrSyT5vbukzccoNSupKeamnU9+r8ROP6Q95LopoP
- OzdX9dmXDdjVFsjuvqsZJnS8X72vyNVn9/RbcZo7ZpZHVZaK4ojrsVIUCLJsO2aIklt8
- UIqg==
-X-Gm-Message-State: AOJu0YwHeyDgHGxlKkc4haHP+02YZyEakN2QMCCoIKF0OCpSSQ6jqE55
- eDRsoZGU7GmIdelFAnXunrLKKYWBMKTuWcp6NJvPYKbgcfdweUj9HgKVwbit1uRfNtPaaruvIa0
- hAsF9X/tqRLwA7xqA4e7IM29w19ksL4vVytUx/w==
-X-Google-Smtp-Source: AGHT+IH+WdeJUs/eDAP6u+h2P+alQv5VbVlp4uftzkwINAkFcC8dCHAK5Wq+awfXoyHyfmqQ9EPKb+Uj75EK+xTTje4=
-X-Received: by 2002:a05:6402:1d23:b0:55f:4d6a:c0ee with SMTP id
- dh3-20020a0564021d2300b0055f4d6ac0eemr643484edb.7.1706614218529; Tue, 30 Jan
- 2024 03:30:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706614265; x=1707219065;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uriMJ13edI6G4XpJBTuYK8QPI1ou+khs8JB42NZhqwI=;
+ b=Sh2MDCQ32CPYCUp6o3NFdj3ZGd5cvk8vkgRRauHUjlniN3gdTMRIBENuEq2KIfkPwm
+ Va6TGjIU/bPu9nwAH3LnOa+lmX0Wpb7IoBxjnB/pIy+Tb4KN0CVWdRte6OuQulkDDPZw
+ jnV3jaxEToiqQLLLDZ7lueiWUIMLU4BSPFERDWNLvIGPYluFCZG2dq3Igio4hunsJCNf
+ JLS7RGox7S+zYpsW64jC7uxWGRFRuEron/iHgbtaD1ht4SiSQQ11KjP3pauYxwpE7qnU
+ DmyJ4EqtwSbUFqDZ9iNAlU9Ehzhe5vh5m+NY63YmCn3BKcd1pc4CvLgBv5LDe/xoqaBL
+ la1Q==
+X-Gm-Message-State: AOJu0YwQh48apMvU2mPwwjdsRBQ+rTQD1gi7rh2nDXjYoKUlUcBF6ZmV
+ iuS77zCtqk6bS20og6i++c7MUJCIFsJz095UL9knLo8Fj9G2yNp/jiOv8LH9AV22z+3HMi+o3Rq
+ S
+X-Google-Smtp-Source: AGHT+IGcQMfVZ5giNtbbd1ZVB3eFxRx69II9jxTV1A5uZsVuhvuzSBkwSkB9O/wXJThxgAXxR8ypvw==
+X-Received: by 2002:a05:600c:35c9:b0:40e:f438:2f89 with SMTP id
+ r9-20020a05600c35c900b0040ef4382f89mr4985571wmq.18.1706614264863; 
+ Tue, 30 Jan 2024 03:31:04 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.218.134])
+ by smtp.gmail.com with ESMTPSA id
+ u17-20020adff891000000b0033ae55db108sm7925438wrp.20.2024.01.30.03.31.03
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 30 Jan 2024 03:31:04 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Fabien Chouteau <chouteau@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/2] hw/sparc/leon3: Minor cleanups
+Date: Tue, 30 Jan 2024 12:31:00 +0100
+Message-ID: <20240130113102.6732-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20240130101107.214872-1-manos.pitsidianakis@linaro.org>
- <CAFEAcA8P-8rRRQJLEFzwVJiKqdd-cu5DgiBdxBXYhq=2Oov9Fg@mail.gmail.com>
- <CAAjaMXYbm4ANhMEXOc35mJkq7Zr+A_vz8wBY+tPv4rk=dCQEaA@mail.gmail.com>
- <CAFEAcA_XX07ND82_ZrokBhVDbTot16_SNJNQDQeNnBvRZ4MHkw@mail.gmail.com>
- <CAAjaMXZsAHQYSotdn0f_3iao=sW3XRiA5iMQO1MMFnVj0cft_w@mail.gmail.com>
- <CAFEAcA-qa729wTz99fW6ur+FYjkmUjTkjd8eG_dNo7fSzYh_rw@mail.gmail.com>
- <CAAjaMXZYLCaXK5otq9iC=-D4RrjkcLDrgjhWhWnJDqwJwwfWhw@mail.gmail.com>
- <a353c5db-4583-4662-bf28-4332d51e9d30@linaro.org>
-In-Reply-To: <a353c5db-4583-4662-bf28-4332d51e9d30@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Jan 2024 11:30:07 +0000
-Message-ID: <CAFEAcA907EzOaPEhs_ZTpmBZeCHiY2n6ncgzbixhcK4VMnQ30g@mail.gmail.com>
-Subject: Re: [PATCH v2] scripts/checkpatch.pl: check for placeholders in cover
- letter patches
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,64 +95,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jan 2024 at 11:24, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi Manos,
->
-> On 30/1/24 12:02, Manos Pitsidianakis wrote:
-> > On Tue, 30 Jan 2024 at 12:57, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
-> >>
-> >> On Tue, 30 Jan 2024 at 10:51, Manos Pitsidianakis
-> >> <manos.pitsidianakis@linaro.org> wrote:
-> >>>
-> >>> On Tue, 30 Jan 2024 at 12:42, Peter Maydell <peter.maydell@linaro.org=
-> wrote:
-> >>>>
-> >>>> On Tue, 30 Jan 2024 at 10:39, Manos Pitsidianakis
-> >>>> <manos.pitsidianakis@linaro.org> wrote:
-> >>>>>
-> >>>>> On Tue, 30 Jan 2024 at 12:34, Peter Maydell <peter.maydell@linaro.o=
-rg> wrote:
-> >>>>>>
-> >>>>>> On Tue, 30 Jan 2024 at 10:11, Manos Pitsidianakis
-> >>>>>> <manos.pitsidianakis@linaro.org> wrote:
-> >>>>>>>
-> >>>>>>> Check if a file argument is a cover letter patch produced by
-> >>>>>>> git-format-patch --cover-letter; It is initialized with subject s=
-uffix "
-> >>>>>>> *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***". If t=
-hey
-> >>>>>>> exist, warn the user.
-> >>>>>>
-> >>>>>> FWIW, as far as I can see from my email archive, this particular
-> >>>>>> mistake has been made by contributors to qemu-devel perhaps
-> >>>>>> half a dozen times at most in the last decade...
-> >>>>>>
-> >>>>>> thanks
-> >>>>>> -- PMM
-> >>>>>
-> >>>>> Peter, searching for `b:"BLURB HERE"` in lore.kernel.org yields abo=
-ut
-> >>>>> 170 results including these patches.
-> >>>>>
-> >>>>> https://lore.kernel.org/qemu-devel/?q=3Db%3A%22BLURB+HERE%22
->
-> This comment is the default --blurb-template from git-publish:
-> https://github.com/stefanha/git-publish/blob/master/git-publish#L742
-> As the tool is also used to post patches to other projects, I'd
-> recommend fixing it there at the source.
+Minor cleanups noticed while reviewing Clément series:
+https://lore.kernel.org/qemu-devel/20240116130213.172358-1-chigot@adacore.com/
 
-It's also in the general 'git format-patch' cover letter template,
-where the workflow is supposed to be "produce cover letter template,
-manually edit it, send it". Stray template markers generally are
-the result of (a) a new contributor not knowing about the 'edit'
-step or (b) remembering to add the subject and blurb but forgetting
-to delete the 'blurb' template line so it gets left in at the
-bottom of the cover letter. So I think it is a check that is within
-checkpatch.pl's remit.
+Philippe Mathieu-Daudé (2):
+  target/sparc: Provide hint about CPUSPARCState::irq_manager member
+  hw/sparc/leon3: Remove duplicated code
 
-thanks
--- PMM
+ target/sparc/cpu.h | 5 ++---
+ hw/sparc/leon3.c   | 2 --
+ 2 files changed, 2 insertions(+), 5 deletions(-)
+
+-- 
+2.41.0
+
 
