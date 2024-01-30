@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A7D7C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 16:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B17F7C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 16:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUqek-0000NQ-9g; Tue, 30 Jan 2024 11:08:14 -0500
+	id 1rUqed-00007P-1u; Tue, 30 Jan 2024 11:08:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rUqdy-0008G9-QC; Tue, 30 Jan 2024 11:07:31 -0500
+ id 1rUqdw-0008F4-LK; Tue, 30 Jan 2024 11:07:24 -0500
 Received: from zproxy3.enst.fr ([2001:660:330f:2::de])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rUqdu-0006zX-2V; Tue, 30 Jan 2024 11:07:26 -0500
+ id 1rUqdu-0006zV-2X; Tue, 30 Jan 2024 11:07:24 -0500
 Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 580CCA0729;
- Tue, 30 Jan 2024 17:07:11 +0100 (CET)
+ by zproxy3.enst.fr (Postfix) with ESMTP id C3E80A074C;
+ Tue, 30 Jan 2024 17:07:10 +0100 (CET)
 Received: from zproxy3.enst.fr ([IPv6:::1])
  by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id 0fRA6q3o1jov; Tue, 30 Jan 2024 17:07:10 +0100 (CET)
+ id nwCI4f-MfNdP; Tue, 30 Jan 2024 17:07:10 +0100 (CET)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 8137BA0735;
- Tue, 30 Jan 2024 17:07:10 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 8137BA0735
+ by zproxy3.enst.fr (Postfix) with ESMTP id DC1D1A075B;
+ Tue, 30 Jan 2024 17:07:09 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr DC1D1A075B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706630830;
- bh=v84O/pymztSCX6RZH2mxEqjmLmu3yFmOAl5pG2Xt5n0=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706630829;
+ bh=LVrjzZb/80vL1mNjHWfSPL8E0/fxDvqChaQKIa1iSNI=;
  h=From:To:Date:Message-Id:MIME-Version;
- b=4sGLqbtDzSMQ7eAa+1/Wa4UB21sCXiExbc0y5z58RGZlbRd5u617paQfJP2NKuHDY
- DMRuyKrdQuixXFW+19Lk7Ilwsk//DLpzOA6TMHnPPyCuvhfkF6N+osgT3JiD94txsF
- OH7DaR/7dkgrKWgvanBxC3+lxYufzs387CcxNGVM=
+ b=Mf6cTkkhNRzR+voefUr+zyTl9EQQgkWw/jC3H51G/0LTeprSHvItQhatkxEbjFCH5
+ cG9347GTfoRVaC2lZrO1MgQ9GlH2ld05+i2SZ5Fh5zWKnpk0kjm3qcLyKgyDcuODSb
+ OzT3AM8GVyacjWVQmem4RGYlFBKytGjPJvnS5UiU=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy3.enst.fr ([IPv6:::1])
  by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id ImuY1qEFEVCy; Tue, 30 Jan 2024 17:07:10 +0100 (CET)
+ id bJYVgXGnKfMo; Tue, 30 Jan 2024 17:07:09 +0100 (CET)
 Received: from AM-Inspiron-3585.numericable.fr (38.162.10.109.rev.sfr.net
  [109.10.162.38])
- by zproxy3.enst.fr (Postfix) with ESMTPSA id 281A6A0712;
- Tue, 30 Jan 2024 17:07:10 +0100 (CET)
+ by zproxy3.enst.fr (Postfix) with ESMTPSA id 5C1FAA0657;
+ Tue, 30 Jan 2024 17:07:09 +0100 (CET)
 From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>,
@@ -50,14 +50,11 @@ Cc: Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v4 2/8] Add an internal clock multiplexer object
-Date: Tue, 30 Jan 2024 17:06:50 +0100
-Message-Id: <20240130160656.113112-3-arnaud.minier@telecom-paris.fr>
+ qemu-arm@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Subject: [PATCH v4 0/8] Add device STM32L4x5 RCC
+Date: Tue, 30 Jan 2024 17:06:48 +0100
+Message-Id: <20240130160656.113112-1-arnaud.minier@telecom-paris.fr>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240130160656.113112-1-arnaud.minier@telecom-paris.fr>
-References: <20240130160656.113112-1-arnaud.minier@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -84,453 +81,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This object is used to represent every multiplexer in the clock tree as
-well as every clock output, every presecaler, frequency multiplier, etc.
-This allows to use a generic approach for every component of the clock tr=
-ee
-(except the PLLs).
+This patch adds the STM32L4x5 RCC (Reset and Clock Control) device and is=
+ part
+of a series implementing the STM32L4x5 with a few peripherals.
 
-Wasn't sure about how to handle the reset and the migration so used the
-same appproach as the BCM2835 CPRMAN.
+Due to the high number of lines, I tried to split the patch into several =
+independent commits.
+Each commit compiles on its own but I had to add temporary workarounds in=
+ intermediary commits to allow them to compile even if some functions are=
+ not used. However, they have been removed once the functions were used. =
+Tell me if this is ok or if I should remove them.
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
----
- hw/misc/stm32l4x5_rcc.c                   | 158 ++++++++++++++++++++++
- hw/misc/trace-events                      |   5 +
- include/hw/misc/stm32l4x5_rcc.h           | 119 ++++++++++++++++
- include/hw/misc/stm32l4x5_rcc_internals.h |  29 ++++
- 4 files changed, 311 insertions(+)
+Also, the tests are not very exhaustive for the moment. I have not found =
+a way to test the clocks' frequency from the qtests, which limits severel=
+y the exhaustiveness of the tests.
 
-diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
-index 38ca8aad7d..ed10832f88 100644
---- a/hw/misc/stm32l4x5_rcc.c
-+++ b/hw/misc/stm32l4x5_rcc.c
-@@ -36,6 +36,132 @@
- #define LSE_FRQ 32768ULL
- #define LSI_FRQ 32000ULL
-=20
-+static void clock_mux_update(RccClockMuxState *mux)
-+{
-+    uint64_t src_freq, old_freq, freq;
-+
-+    src_freq =3D clock_get_hz(mux->srcs[mux->src]);
-+    old_freq =3D clock_get_hz(mux->out);
-+
-+    if (!mux->enabled || !mux->divider) {
-+        freq =3D 0;
-+    } else {
-+        freq =3D muldiv64(src_freq, mux->multiplier, mux->divider);
-+    }
-+
-+    /* No change, early return to avoid log spam and useless propagation=
- */
-+    if (old_freq =3D=3D freq) {
-+        return;
-+    }
-+
-+    clock_update_hz(mux->out, freq);
-+    trace_stm32l4x5_rcc_mux_update(mux->id, mux->src, src_freq, freq);
-+}
-+
-+static void clock_mux_src_update(void *opaque, ClockEvent event)
-+{
-+    RccClockMuxState **backref =3D opaque;
-+    RccClockMuxState *s =3D *backref;
-+    /*
-+     * The backref value is equal to:
-+     * s->backref + (sizeof(RccClockMuxState *) * update_src).
-+     * By subtracting we can get back the index of the updated clock.
-+     */
-+    const uint32_t update_src =3D backref - s->backref;
-+    /* Only update if the clock that was updated is the current source*/
-+    if (update_src =3D=3D s->src) {
-+        clock_mux_update(s);
-+    }
-+}
-+
-+static void clock_mux_init(Object *obj)
-+{
-+    RccClockMuxState *s =3D RCC_CLOCK_MUX(obj);
-+    size_t i;
-+
-+    for (i =3D 0; i < RCC_NUM_CLOCK_MUX_SRC; i++) {
-+        char *name =3D g_strdup_printf("srcs[%zu]", i);
-+        s->backref[i] =3D s;
-+        s->srcs[i] =3D qdev_init_clock_in(DEVICE(s), name,
-+                                        clock_mux_src_update,
-+                                        &s->backref[i],
-+                                        ClockUpdate);
-+        g_free(name);
-+    }
-+
-+    s->out =3D qdev_init_clock_out(DEVICE(s), "out");
-+}
-+
-+static void clock_mux_reset_hold(Object *obj)
-+{ }
-+
-+static const VMStateDescription clock_mux_vmstate =3D {
-+    .name =3D TYPE_RCC_CLOCK_MUX,
-+    .version_id =3D 1,
-+    .minimum_version_id =3D 1,
-+    .fields =3D (VMStateField[]) {
-+        VMSTATE_UINT32(id, RccClockMuxState),
-+        VMSTATE_ARRAY_CLOCK(srcs, RccClockMuxState,
-+                            RCC_NUM_CLOCK_MUX_SRC),
-+        VMSTATE_CLOCK(out, RccClockMuxState),
-+        VMSTATE_BOOL(enabled, RccClockMuxState),
-+        VMSTATE_UINT32(src, RccClockMuxState),
-+        VMSTATE_UINT32(multiplier, RccClockMuxState),
-+        VMSTATE_UINT32(divider, RccClockMuxState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void clock_mux_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc =3D DEVICE_CLASS(klass);
-+    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
-+
-+    rc->phases.hold =3D clock_mux_reset_hold;
-+    dc->vmsd =3D &clock_mux_vmstate;
-+}
-+
-+static void clock_mux_set_enable(RccClockMuxState *mux, bool enabled)
-+{
-+    if (mux->enabled =3D=3D enabled) {
-+        return;
-+    }
-+
-+    if (enabled) {
-+        trace_stm32l4x5_rcc_mux_enable(mux->id);
-+    } else {
-+        trace_stm32l4x5_rcc_mux_disable(mux->id);
-+    }
-+
-+    mux->enabled =3D enabled;
-+    clock_mux_update(mux);
-+}
-+
-+static void clock_mux_set_factor(RccClockMuxState *mux,
-+                                 uint32_t multiplier, uint32_t divider)
-+{
-+    if (mux->multiplier =3D=3D multiplier && mux->divider =3D=3D divider=
-) {
-+        return;
-+    }
-+    trace_stm32l4x5_rcc_mux_set_factor(mux->id,
-+        mux->multiplier, multiplier, mux->divider, divider);
-+
-+    mux->multiplier =3D multiplier;
-+    mux->divider =3D divider;
-+    clock_mux_update(mux);
-+}
-+
-+static void clock_mux_set_source(RccClockMuxState *mux, RccClockMuxSourc=
-e src)
-+{
-+    if (mux->src =3D=3D src) {
-+        return;
-+    }
-+
-+    trace_stm32l4x5_rcc_mux_set_src(mux->id, mux->src, src);
-+    mux->src =3D src;
-+    clock_mux_update(mux);
-+}
-+
- static void rcc_update_irq(Stm32l4x5RccState *s)
- {
-     if (s->cifr & CIFR_IRQ_MASK) {
-@@ -329,6 +455,7 @@ static const ClockPortInitArray stm32l4x5_rcc_clocks =
-=3D {
- static void stm32l4x5_rcc_init(Object *obj)
- {
-     Stm32l4x5RccState *s =3D STM32L4X5_RCC(obj);
-+    size_t i;
-=20
-     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
-=20
-@@ -338,6 +465,14 @@ static void stm32l4x5_rcc_init(Object *obj)
-=20
-     qdev_init_clocks(DEVICE(s), stm32l4x5_rcc_clocks);
-=20
-+    for (i =3D 0; i < RCC_NUM_CLOCK_MUX; i++) {
-+
-+        object_initialize_child(obj, "clock[*]",
-+                                &s->clock_muxes[i],
-+                                TYPE_RCC_CLOCK_MUX);
-+
-+    }
-+
-     s->gnd =3D clock_new(obj, "gnd");
- }
-=20
-@@ -383,6 +518,7 @@ static const VMStateDescription vmstate_stm32l4x5_rcc=
- =3D {
- static void stm32l4x5_rcc_realize(DeviceState *dev, Error **errp)
- {
-     Stm32l4x5RccState *s =3D STM32L4X5_RCC(dev);
-+    size_t i;
-=20
-     if (s->hse_frequency <  4000000ULL ||
-         s->hse_frequency > 48000000ULL) {
-@@ -392,10 +528,26 @@ static void stm32l4x5_rcc_realize(DeviceState *dev,=
- Error **errp)
-             return;
-         }
-=20
-+    for (i =3D 0; i < RCC_NUM_CLOCK_MUX; i++) {
-+        RccClockMuxState *clock_mux =3D &s->clock_muxes[i];
-+
-+        if (!qdev_realize(DEVICE(clock_mux), NULL, errp)) {
-+            return;
-+        }
-+    }
-+
-     clock_update_hz(s->msi_rc, MSI_DEFAULT_FRQ);
-     clock_update_hz(s->sai1_extclk, s->sai1_extclk_frequency);
-     clock_update_hz(s->sai2_extclk, s->sai2_extclk_frequency);
-     clock_update(s->gnd, 0);
-+
-+    /*
-+     * Dummy values to make compilation pass.
-+     * Removed in later commits.
-+     */
-+    clock_mux_set_source(&s->clock_muxes[0], RCC_CLOCK_MUX_SRC_GND);
-+    clock_mux_set_enable(&s->clock_muxes[0], true);
-+    clock_mux_set_factor(&s->clock_muxes[0], 1, 1);
- }
-=20
- static Property stm32l4x5_rcc_properties[] =3D {
-@@ -427,6 +579,12 @@ static const TypeInfo stm32l4x5_rcc_types[] =3D {
-         .instance_size  =3D sizeof(Stm32l4x5RccState),
-         .instance_init  =3D stm32l4x5_rcc_init,
-         .class_init     =3D stm32l4x5_rcc_class_init,
-+    }, {
-+        .name =3D TYPE_RCC_CLOCK_MUX,
-+        .parent =3D TYPE_DEVICE,
-+        .instance_size =3D sizeof(RccClockMuxState),
-+        .instance_init =3D clock_mux_init,
-+        .class_init =3D clock_mux_class_init,
-     }
- };
-=20
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 62a7599353..d5e471811c 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -177,6 +177,11 @@ stm32l4x5_exti_write(uint64_t addr, uint64_t data) "=
-reg write: addr: 0x%" PRIx64
- # stm32l4x5_rcc.c
- stm32l4x5_rcc_read(uint64_t addr, uint32_t data) "RCC: Read <0x%" PRIx64=
- "> -> 0x%" PRIx32 ""
- stm32l4x5_rcc_write(uint64_t addr, uint32_t data) "RCC: Write <0x%" PRIx=
-64 "> <- 0x%" PRIx32 ""
-+stm32l4x5_rcc_mux_enable(uint32_t mux_id) "RCC: Mux %d enabled"
-+stm32l4x5_rcc_mux_disable(uint32_t mux_id) "RCC: Mux %d disabled"
-+stm32l4x5_rcc_mux_set_factor(uint32_t mux_id, uint32_t old_multiplier, u=
-int32_t new_multiplier, uint32_t old_divider, uint32_t new_divider) "RCC:=
- Mux %d factor changed: multiplier (%u -> %u), divider (%u -> %u)"
-+stm32l4x5_rcc_mux_set_src(uint32_t mux_id, uint32_t old_src, uint32_t ne=
-w_src) "RCC: Mux %d source changed: from %u to %u"
-+stm32l4x5_rcc_mux_update(uint32_t mux_id, uint32_t src, uint64_t src_fre=
-q, uint64_t new_freq) "RCC: Mux %d src %d update: src_freq %" PRIu64 " ne=
-w_freq %" PRIu64 ""
-=20
- # tz-mpc.c
- tz_mpc_reg_read(uint32_t offset, uint64_t data, unsigned size) "TZ MPC r=
-egs read: offset 0x%x data 0x%" PRIx64 " size %u"
-diff --git a/include/hw/misc/stm32l4x5_rcc.h b/include/hw/misc/stm32l4x5_=
-rcc.h
-index 5157e96635..6719be9fbe 100644
---- a/include/hw/misc/stm32l4x5_rcc.h
-+++ b/include/hw/misc/stm32l4x5_rcc.h
-@@ -26,6 +26,122 @@ OBJECT_DECLARE_SIMPLE_TYPE(Stm32l4x5RccState, STM32L4=
-X5_RCC)
-=20
- /* In the Stm32l4x5 clock tree, mux have at most 7 sources */
- #define RCC_NUM_CLOCK_MUX_SRC 7
-+/* NB: Prescaler are assimilated to mux with one source and one output *=
-/
-+typedef enum RccClockMux {
-+    /* Internal muxes that arent't exposed publicly to other peripherals=
- */
-+    RCC_CLOCK_MUX_SYSCLK,
-+    RCC_CLOCK_MUX_PLL_INPUT,
-+    RCC_CLOCK_MUX_HCLK,
-+    RCC_CLOCK_MUX_PCLK1,
-+    RCC_CLOCK_MUX_PCLK2,
-+    RCC_CLOCK_MUX_HSE_OVER_32,
-+    RCC_CLOCK_MUX_LCD_AND_RTC_COMMON,
-+
-+    /* Muxes with a publicly available output */
-+    RCC_CLOCK_MUX_CORTEX_REFCLK,
-+    RCC_CLOCK_MUX_USART1,
-+    RCC_CLOCK_MUX_USART2,
-+    RCC_CLOCK_MUX_USART3,
-+    RCC_CLOCK_MUX_UART4,
-+    RCC_CLOCK_MUX_UART5,
-+    RCC_CLOCK_MUX_LPUART1,
-+    RCC_CLOCK_MUX_I2C1,
-+    RCC_CLOCK_MUX_I2C2,
-+    RCC_CLOCK_MUX_I2C3,
-+    RCC_CLOCK_MUX_LPTIM1,
-+    RCC_CLOCK_MUX_LPTIM2,
-+    RCC_CLOCK_MUX_SWPMI1,
-+    RCC_CLOCK_MUX_MCO,
-+    RCC_CLOCK_MUX_LSCO,
-+    RCC_CLOCK_MUX_DFSDM1,
-+    RCC_CLOCK_MUX_ADC,
-+    RCC_CLOCK_MUX_CLK48,
-+    RCC_CLOCK_MUX_SAI1,
-+    RCC_CLOCK_MUX_SAI2,
-+
-+    /*
-+     * Mux that have only one input and one output assigned to as periph=
-eral.
-+     * They could be direct lines but it is simpler
-+     * to use the same logic for all outputs.
-+     */
-+    /* - AHB1 */
-+    RCC_CLOCK_MUX_TSC,
-+    RCC_CLOCK_MUX_CRC,
-+    RCC_CLOCK_MUX_FLASH,
-+    RCC_CLOCK_MUX_DMA2,
-+    RCC_CLOCK_MUX_DMA1,
-+
-+    /* - AHB2 */
-+    RCC_CLOCK_MUX_RNG,
-+    RCC_CLOCK_MUX_AES,
-+    RCC_CLOCK_MUX_OTGFS,
-+    RCC_CLOCK_MUX_GPIOA,
-+    RCC_CLOCK_MUX_GPIOB,
-+    RCC_CLOCK_MUX_GPIOC,
-+    RCC_CLOCK_MUX_GPIOD,
-+    RCC_CLOCK_MUX_GPIOE,
-+    RCC_CLOCK_MUX_GPIOF,
-+    RCC_CLOCK_MUX_GPIOG,
-+    RCC_CLOCK_MUX_GPIOH,
-+
-+    /* - AHB3 */
-+    RCC_CLOCK_MUX_QSPI,
-+    RCC_CLOCK_MUX_FMC,
-+
-+    /* - APB1 */
-+    RCC_CLOCK_MUX_OPAMP,
-+    RCC_CLOCK_MUX_DAC1,
-+    RCC_CLOCK_MUX_PWR,
-+    RCC_CLOCK_MUX_CAN1,
-+    RCC_CLOCK_MUX_SPI3,
-+    RCC_CLOCK_MUX_SPI2,
-+    RCC_CLOCK_MUX_WWDG,
-+    RCC_CLOCK_MUX_LCD,
-+    RCC_CLOCK_MUX_TIM7,
-+    RCC_CLOCK_MUX_TIM6,
-+    RCC_CLOCK_MUX_TIM5,
-+    RCC_CLOCK_MUX_TIM4,
-+    RCC_CLOCK_MUX_TIM3,
-+    RCC_CLOCK_MUX_TIM2,
-+
-+    /* - APB2 */
-+    RCC_CLOCK_MUX_TIM17,
-+    RCC_CLOCK_MUX_TIM16,
-+    RCC_CLOCK_MUX_TIM15,
-+    RCC_CLOCK_MUX_TIM8,
-+    RCC_CLOCK_MUX_SPI1,
-+    RCC_CLOCK_MUX_TIM1,
-+    RCC_CLOCK_MUX_SDMMC1,
-+    RCC_CLOCK_MUX_FW,
-+    RCC_CLOCK_MUX_SYSCFG,
-+
-+    /* - BDCR */
-+    RCC_CLOCK_MUX_RTC,
-+
-+    /* - OTHER */
-+    RCC_CLOCK_MUX_CORTEX_FCLK,
-+
-+    RCC_NUM_CLOCK_MUX
-+} RccClockMux;
-+
-+typedef struct RccClockMuxState {
-+    DeviceState parent_obj;
-+
-+    RccClockMux id;
-+    Clock *srcs[RCC_NUM_CLOCK_MUX_SRC];
-+    Clock *out;
-+    bool enabled;
-+    uint32_t src;
-+    uint32_t multiplier;
-+    uint32_t divider;
-+
-+    /*
-+     * Used by clock srcs update callback to retrieve both the clock and=
- the
-+     * source number.
-+     */
-+    struct RccClockMuxState *backref[RCC_NUM_CLOCK_MUX_SRC];
-+} RccClockMuxState;
-+
- struct Stm32l4x5RccState {
-     SysBusDevice parent_obj;
-=20
-@@ -71,6 +187,9 @@ struct Stm32l4x5RccState {
-     Clock *sai1_extclk;
-     Clock *sai2_extclk;
-=20
-+    /* Muxes ~=3D outputs */
-+    RccClockMuxState clock_muxes[RCC_NUM_CLOCK_MUX];
-+
-     qemu_irq irq;
-     uint64_t hse_frequency;
-     uint64_t sai1_extclk_frequency;
-diff --git a/include/hw/misc/stm32l4x5_rcc_internals.h b/include/hw/misc/=
-stm32l4x5_rcc_internals.h
-index 331ea30db5..4aa836848b 100644
---- a/include/hw/misc/stm32l4x5_rcc_internals.h
-+++ b/include/hw/misc/stm32l4x5_rcc_internals.h
-@@ -21,6 +21,8 @@
- #include "hw/registerfields.h"
- #include "hw/misc/stm32l4x5_rcc.h"
-=20
-+#define TYPE_RCC_CLOCK_MUX "stm32l4x5-rcc-clock-mux"
-+OBJECT_DECLARE_SIMPLE_TYPE(RccClockMuxState, RCC_CLOCK_MUX)
-=20
- /* Register map */
- REG32(CR, 0x00)
-@@ -283,4 +285,31 @@ REG32(CSR, 0x94)
-                             R_CSR_FWRSTF_MASK   | \
-                             R_CSR_LSIRDY_MASK)
-=20
-+typedef enum RccClockMuxSource {
-+    RCC_CLOCK_MUX_SRC_GND =3D 0,
-+    RCC_CLOCK_MUX_SRC_HSI,
-+    RCC_CLOCK_MUX_SRC_HSE,
-+    RCC_CLOCK_MUX_SRC_MSI,
-+    RCC_CLOCK_MUX_SRC_LSI,
-+    RCC_CLOCK_MUX_SRC_LSE,
-+    RCC_CLOCK_MUX_SRC_SAI1_EXTCLK,
-+    RCC_CLOCK_MUX_SRC_SAI2_EXTCLK,
-+    RCC_CLOCK_MUX_SRC_PLL,
-+    RCC_CLOCK_MUX_SRC_PLLSAI1,
-+    RCC_CLOCK_MUX_SRC_PLLSAI2,
-+    RCC_CLOCK_MUX_SRC_PLLSAI3,
-+    RCC_CLOCK_MUX_SRC_PLL48M1,
-+    RCC_CLOCK_MUX_SRC_PLL48M2,
-+    RCC_CLOCK_MUX_SRC_PLLADC1,
-+    RCC_CLOCK_MUX_SRC_PLLADC2,
-+    RCC_CLOCK_MUX_SRC_SYSCLK,
-+    RCC_CLOCK_MUX_SRC_HCLK,
-+    RCC_CLOCK_MUX_SRC_PCLK1,
-+    RCC_CLOCK_MUX_SRC_PCLK2,
-+    RCC_CLOCK_MUX_SRC_HSE_OVER_32,
-+    RCC_CLOCK_MUX_SRC_LCD_AND_RTC_COMMON,
-+
-+    RCC_CLOCK_MUX_SRC_NUMBER,
-+} RccClockMuxSource;
-+
- #endif /* HW_STM32L4X5_RCC_INTERNALS_H */
+Thanks to Philippe Mathieu-Daud=C3=A9 and Luc Michel for guiding me towar=
+d the hw/misc/bcm2835_cprman.c implementation and answering my questions =
+about clock emulation in qemu !
+
+Changes from v1 to v2:
+- Removed a mention in the tests
+- Added an early return to prevent a clang compilation error in rcc_updat=
+e_pllsaixcfgr()
+
+Changes from v2 to v3:
+- Changed the timeout method used in the tests
+- Added a real value for ICSR register
+- Replaced some TODOs with correct error handling
+- Added a commit that implements correct write protections for the CR reg=
+ister
+
+Changes from v3 to v4:
+- Rebased on top of current master
+- Implemented reset functions for the multiplexers and the PLLs
+- Added explanatory messages to every commit
+- Addded logs for unimplemented registers
+- Completed the VMState for the multiplexers and the PLLs
+
+Arnaud Minier (8):
+  Implement STM32L4x5_RCC skeleton
+  Add an internal clock multiplexer object
+  Add an internal PLL Clock object
+  Add initialization information for PLLs and clock multiplexers
+  RCC: Handle Register Updates
+  Add write protections to CR register
+  STM32L4x5: Use the RCC Sysclk
+  Add tests for the STM32L4x5_RCC
+
+ MAINTAINERS                               |    5 +-
+ docs/system/arm/b-l475e-iot01a.rst        |    2 +-
+ hw/arm/Kconfig                            |    1 +
+ hw/arm/b-l475e-iot01a.c                   |   10 +-
+ hw/arm/stm32l4x5_soc.c                    |   45 +-
+ hw/misc/Kconfig                           |    3 +
+ hw/misc/meson.build                       |    1 +
+ hw/misc/stm32l4x5_rcc.c                   | 1415 +++++++++++++++++++++
+ hw/misc/trace-events                      |   14 +
+ include/hw/arm/stm32l4x5_soc.h            |    5 +-
+ include/hw/misc/stm32l4x5_rcc.h           |  239 ++++
+ include/hw/misc/stm32l4x5_rcc_internals.h | 1042 +++++++++++++++
+ tests/qtest/meson.build                   |    3 +-
+ tests/qtest/stm32l4x5_rcc-test.c          |  207 +++
+ 14 files changed, 2947 insertions(+), 45 deletions(-)
+ create mode 100644 hw/misc/stm32l4x5_rcc.c
+ create mode 100644 include/hw/misc/stm32l4x5_rcc.h
+ create mode 100644 include/hw/misc/stm32l4x5_rcc_internals.h
+ create mode 100644 tests/qtest/stm32l4x5_rcc-test.c
+
 --=20
 2.34.1
 
