@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F3CC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 19:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907E4C48285
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 19:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUtOz-0001Jq-Ps; Tue, 30 Jan 2024 14:04:09 -0500
+	id 1rUtOs-000140-OG; Tue, 30 Jan 2024 14:04:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUtOn-00014U-Gj
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:04:01 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUtOX-00011A-Bs
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:03:42 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUtOd-00005J-MW
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:03:57 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a26fa294e56so554640666b.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 11:03:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUtOV-0008WB-R8
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:03:41 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a35b32bd055so309767866b.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 11:03:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706641426; x=1707246226; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706641418; x=1707246218; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8Enae3717LfHgjJzKTiqqlkaB8nPVlBbey3ho9e5HGg=;
- b=JulB6Hj3gCGVEnrr6MwGJB0z1dUhaP8TtMFqupeL9FT5aJCARaH4BGbEDV+hpfhp/O
- +jjwST9QaY2arOpQti8vD5w/HJPsZP1fyORC+VEyfzUNMn9yVPFFBPNMKzrNqfFUv/bM
- xuf7Qb2Ym+TEkLg2uuoF03IPTwydcCzQiAVjUOjmybvGgUuX/EvYbBy93VvP1aqWTXXE
- esSnPGsofZCDK59jSFeXdIZxezPN+/A/3eSkmYHF2sFIl3F9sgnXUiH4g73PqiblQIy4
- KUy+oRDoqVsWqs/7NbbsS4CTtghtgvWbWZBecuTNV8VZYSv4eFucRZi0cQJpjySWxvjm
- VwxQ==
+ bh=ONQQAhlWUJUIL1ohHT6vUP5FJscZaLW2vVSHJwIJiGk=;
+ b=x8DGc7Qp6PVEjevdLESY+q5E2kZnQA3pON2QZ/YpLftR2FU0fmNUzlOXS+YCxfO9Uw
+ yor3vj8avrEDdl/0F2lXwAxzGGjZEBjf6Sq5H2qBJwvWo4nFv3vQzg+wKJ0V3xSTU+/K
+ FgmD6tSwpu6nBwYqjB63FqXaCAy7uzZ5DkIwTaqMOvPzeBEBf/NJOlSzzEpge/bIrhVo
+ OzYq30c4+f2kwlHnap3sn2RR4QivwXGPYAlslHxFPxgBWXfF2IiXuTlEkYmhpwsnbpTM
+ rHNGD/G4rgPUE1jR7svaVAR1tmtuM7E9K6afsNW1N/GZuYLED62PBbmNoM+7bCQY88Uq
+ ekOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706641426; x=1707246226;
+ d=1e100.net; s=20230601; t=1706641418; x=1707246218;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8Enae3717LfHgjJzKTiqqlkaB8nPVlBbey3ho9e5HGg=;
- b=N+CHvjFTXLh34+oPYMvbrbVeSwdX2p36fXKHYVeZGpatS+Sa6o+8T+Y9kohWysleVP
- 7kaUU6qKjJCfHYJluk7UV5JjF9oLORSwkMI5HFnT0QvvhL/GRKLkzc09f9L9JhhBtZ9c
- BEXVFp3T0wj4GUYsRt5gn5Nujz8HutoqvNx46E8NI1tYy4A7UIdSgDwvMPHRHbkKkcwR
- eAqj7MD+QMH2yIVip3mWUa6urSbzK8/ft1ltAxzVZM95jnU/eD3RWogFF+ZsbwTB1YeZ
- nWkezrLCSjo96gYhsFU7xyn/qsNs9ViqvFoYU4g+lYIXsCuURurA6WrhYFNmQo/7ettU
- elPQ==
-X-Gm-Message-State: AOJu0YyOfT3oUi9vx87f2MlX/bw3uL0Vbfqcr9fB2jL7pn0EcPEmiGGY
- PemalNvjuGjSAKCJtC2d9xZ4dS3kLZe44bLcTJE0jSa+iOgl+PlObzwTjVFU5sIJqm86LAjB/c+
- 4
-X-Google-Smtp-Source: AGHT+IGB8x+TSc0/5ym2fJKu8/neM1jd8yYRvGPf00SFZY7NkLvyD+LuruvQU1tGSYzsnluku+fLiA==
-X-Received: by 2002:a17:906:7190:b0:a31:7e46:eac4 with SMTP id
- h16-20020a170906719000b00a317e46eac4mr137038ejk.45.1706641425935; 
- Tue, 30 Jan 2024 11:03:45 -0800 (PST)
+ bh=ONQQAhlWUJUIL1ohHT6vUP5FJscZaLW2vVSHJwIJiGk=;
+ b=m0ogKN2iSW+L6oIEpe9zpQw05yYB2kZbN9+Dfp5H1F8K9K4KzAH6OMaKUBwQ0B/usK
+ Sc0Ijs8r1nwwhA4QhADXLwwUfOAP4eIEfphAEPDEXrKNMAgxZsDivcD8V3HG0CJSqrhr
+ 5K0002nFxfsrcSJ2TNRvtRQkrY3HQ1t3Ato3o7bCG/NwsrZiNh52KHfPj+7DE8bx3Tol
+ gU6j808589o3fQ+XayUWebVP0rQjvcxgGaMVDQyCiO2HIUDS6w2MBnpo78KlDxfKLRgp
+ cgrQOatL6CChymNANUvs1BCGibM5HbEt1vlyr/7zSjisZGZ/DpgwRNXhYFpEiXa+TXWQ
+ YAiQ==
+X-Gm-Message-State: AOJu0Yzwu7NKT9qNY6uiyHvsgBtSWCQXwDZOWyKNsuIUsv6uufzVk/+p
+ rCSH2MaOa4zO0RMvPVxxDlLRzX8S35sP3XBr/9UKep4AOtlX3+ukpx/nDKMHolEP/gY65ymJeac
+ u
+X-Google-Smtp-Source: AGHT+IE8PWbcJ05NYDH00NfSLE1CD3c6S6mwYY7iU9LPuHJIZONVOqT37jRPcX9gay+xSTR3cdS4PQ==
+X-Received: by 2002:a17:906:f152:b0:a36:5d54:64b1 with SMTP id
+ gw18-20020a170906f15200b00a365d5464b1mr212381ejb.73.1706641418290; 
+ Tue, 30 Jan 2024 11:03:38 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- vu12-20020a170907a64c00b00a3006857c55sm5359923ejc.130.2024.01.30.11.03.42
+ l13-20020a1709066b8d00b00a32429e455asm5441536ejr.175.2024.01.30.11.03.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jan 2024 11:03:45 -0800 (PST)
+ Tue, 30 Jan 2024 11:03:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -64,17 +64,17 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/4] hw/arm/stellaris: Add missing QOM 'SoC' parent
-Date: Tue, 30 Jan 2024 20:03:17 +0100
-Message-ID: <20240130190317.25692-5-philmd@linaro.org>
+Subject: [PATCH 3/4] hw/arm/stellaris: Add missing QOM 'machine' parent
+Date: Tue, 30 Jan 2024 20:03:16 +0100
+Message-ID: <20240130190317.25692-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240130190317.25692-1-philmd@linaro.org>
 References: <20240130190317.25692-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,84 +100,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 QDev objects created with qdev_new() need to manually add
 their parent relationship with object_property_add_child().
 
-Since we don't model the SoC, just use a QOM container.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/stellaris.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ hw/arm/stellaris.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index bb88b3ebde..e349981308 100644
+index 284b95005f..bb88b3ebde 100644
 --- a/hw/arm/stellaris.c
 +++ b/hw/arm/stellaris.c
-@@ -1018,6 +1018,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-      * 400fe000 system control
-      */
+@@ -1247,10 +1247,13 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+                                    &error_fatal);
  
-+    Object *soc_container;
-     DeviceState *gpio_dev[7], *nvic;
-     qemu_irq gpio_in[7][8];
-     qemu_irq gpio_out[7][8];
-@@ -1038,6 +1039,9 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     flash_size = (((board->dc0 & 0xffff) + 1) << 1) * 1024;
-     sram_size = ((board->dc0 >> 18) + 1) * 1024;
+             ssddev = qdev_new("ssd0323");
++            object_property_add_child(OBJECT(ms), "oled", OBJECT(ssddev));
+             qdev_prop_set_uint8(ssddev, "cs", 1);
+             qdev_realize_and_unref(ssddev, bus, &error_fatal);
  
-+    soc_container = object_new("container");
-+    object_property_add_child(OBJECT(ms), "soc", soc_container);
-+
-     /* Flash programming is done via the SCU, so pretend it is ROM.  */
-     memory_region_init_rom(flash, NULL, "stellaris.flash", flash_size,
-                            &error_fatal);
-@@ -1052,6 +1056,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-      * need its sysclk output.
-      */
-     ssys_dev = qdev_new(TYPE_STELLARIS_SYS);
-+    object_property_add_child(soc_container, "sys", OBJECT(ssys_dev));
-     /* Most devices come preprogrammed with a MAC address in the user data. */
-     macaddr = nd_table[0].macaddr.a;
-     qdev_prop_set_uint32(ssys_dev, "user0",
-@@ -1068,6 +1073,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(ssys_dev), &error_fatal);
+             gpio_d_splitter = qdev_new(TYPE_SPLIT_IRQ);
++            object_property_add_child(OBJECT(ms), "splitter",
++                                      OBJECT(gpio_d_splitter));
+             qdev_prop_set_uint32(gpio_d_splitter, "num-lines", 2);
+             qdev_realize_and_unref(gpio_d_splitter, NULL, &error_fatal);
+             qdev_connect_gpio_out(
+@@ -1287,6 +1290,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+         DeviceState *gpad;
  
-     nvic = qdev_new(TYPE_ARMV7M);
-+    object_property_add_child(soc_container, "v7m", OBJECT(nvic));
-     qdev_prop_set_uint32(nvic, "num-irq", NUM_IRQ_LINES);
-     qdev_prop_set_uint8(nvic, "num-prio-bits", NUM_PRIO_BITS);
-     qdev_prop_set_string(nvic, "cpu-type", ms->cpu_type);
-@@ -1101,6 +1107,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
- 
-             dev = qdev_new(TYPE_STELLARIS_GPTM);
-             sbd = SYS_BUS_DEVICE(dev);
-+            object_property_add_child(soc_container, "gptm[*]", OBJECT(dev));
-             qdev_connect_clock_in(dev, "clk",
-                                   qdev_get_clock_out(ssys_dev, "SYSCLK"));
-             sysbus_realize_and_unref(sbd, &error_fatal);
-@@ -1114,7 +1121,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
- 
-     if (board->dc1 & (1 << 3)) { /* watchdog present */
-         dev = qdev_new(TYPE_LUMINARY_WATCHDOG);
--
-+        object_property_add_child(soc_container, "wdg", OBJECT(dev));
-         qdev_connect_clock_in(dev, "WDOGCLK",
-                               qdev_get_clock_out(ssys_dev, "SYSCLK"));
- 
-@@ -1154,6 +1161,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-             SysBusDevice *sbd;
- 
-             dev = qdev_new("pl011_luminary");
-+            object_property_add_child(soc_container, "uart[*]", OBJECT(dev));
-             sbd = SYS_BUS_DEVICE(dev);
-             qdev_prop_set_chr(dev, "chardev", serial_hd(i));
-             sysbus_realize_and_unref(sbd, &error_fatal);
-@@ -1276,6 +1284,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-         qemu_check_nic_model(&nd_table[0], "stellaris");
- 
-         enet = qdev_new("stellaris_enet");
-+        object_property_add_child(soc_container, "enet", OBJECT(enet));
-         qdev_set_nic_properties(enet, &nd_table[0]);
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(enet), &error_fatal);
-         sysbus_mmio_map(SYS_BUS_DEVICE(enet), 0, 0x40048000);
+         gpad = qdev_new(TYPE_STELLARIS_GAMEPAD);
++        object_property_add_child(OBJECT(ms), "gamepad", OBJECT(gpad));
+         for (i = 0; i < ARRAY_SIZE(gpad_keycode); i++) {
+             qlist_append_int(gpad_keycode_list, gpad_keycode[i]);
+         }
 -- 
 2.41.0
 
