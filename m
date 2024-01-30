@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061B8C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484AAC46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUmfL-0005Dj-UT; Tue, 30 Jan 2024 06:52:35 -0500
+	id 1rUmg1-00065F-IE; Tue, 30 Jan 2024 06:53:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmfK-0005AZ-Ka
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:52:34 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmg0-00062x-0b
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:53:16 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmfJ-0000Lb-2y
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:52:34 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a359446b57dso288432666b.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:52:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmfy-0000Tf-BY
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:53:15 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a350bfcc621so416825366b.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:53:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706615551; x=1707220351; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706615593; x=1707220393; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8HLIQQPmg6yO2wkf1cfqMKx5WiKcA+VI6/DWk59FUWg=;
- b=Y35JQPeM0i7y+ex3zRwTozMV9WJO1T6F1nMjfV6zQrRjQvwcXCfqmj7cemNaIZLvD8
- bIZV6S9jlZVUOmdLZ2kWnOz1VhUqDDeMlgmbJzzp8lr/SxKr2wn3+6rENsmV4F2jqQ34
- xgzQI2FxmOPF5JIdE6+yJygMrPzmh8rtO5pMzMOC6LWxkXpW+ocDBh7Hxmq6CHSmrr90
- EQOQDN2cYSPmSe3K0Zf6k1S1oyOj8gq1miyHF6b7LlfOx+aC58k0svdQefPgB20x/k0g
- inkxkB2N6EBGlFYorxW8NiD6jonrqNiSEMWgjgxt2W/D8EaTv5oJ5TS4Q8Pv1j8M2fX7
- SPBw==
+ bh=xACOu8w65Myng4aOci7Em7bTuJ0Oe/mzT/yApVWi6yM=;
+ b=bgIPo1JPi3UTBQeb+5152JLSyLtGJTN7iNZo82aVdmF/tfSf7ZU76FgcMp3zWfWuXQ
+ UW9mAqRZLHJWxuw0gxfPtpR7gFGLnQ0wlmkRNqwFBAzLqG8zNjUl6OnK4QV46ETBzDWA
+ yg26zN59QgfzQTM+ja93IgoMIYMDk1H9wGAReT2TJRf+yI+WcAHUvDCiOZ/8I2TwUgNq
+ XfU1pVNBUaOnXMRzTZCIf4mmLgwYZKO0DFkpH1rYq3BQxA0UdAYyBFsvDML1bA/XihNL
+ AX+2ADLr+Jv2UmSqrJkgBM4eNlHwCbBRFj0Cdmo3iSTOLGy1oiEJAMVILRpOx1hZFVZ0
+ wXYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706615551; x=1707220351;
+ d=1e100.net; s=20230601; t=1706615593; x=1707220393;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8HLIQQPmg6yO2wkf1cfqMKx5WiKcA+VI6/DWk59FUWg=;
- b=gA8ehsYWxAHZASowOXw1qph5cg4dHSYJMg3zf2JLF1ajQdkALn4Qgc5ilAqegfFdP3
- fFufGmVJpjKm/m7hyu+3Ow63DpRMyfl2pT56vzgGVogMzInkn5gjMy3vWFP+JQErOCpb
- YIJ3Vg4UoMEVDAArm7Zn/Ofpv31X2b58FVM050Vn+FrWpVal7doHfF0D6g1f5CdZIWJZ
- kF/dMc27ibR8eR93p6KHRyE9mNMuwcwlvJcCAJnxD8fecpUlW4gCnKQHmCA8cf7pKRof
- t2QKP2O68YfhjJtssGC7kVPeNtrozWyK4YHw8noG4tHIRuoY/cSp1wcdEDJJgnYmtoN4
- tEXg==
-X-Gm-Message-State: AOJu0YywHXI0ISqO0OHxfkLYA/3MpbLbT0Dqb8nJsIhOV9kgYA79s2bo
- Z9ARuWCbRk8g9pi2CSA8mAskN5fyb2zLPGQqtgtQwk/k/Eme6cRwabUIfpxgGes=
-X-Google-Smtp-Source: AGHT+IF7lov476QgHN3pZ69W8EVDvycBxOy3JXvGQs4eXH0Zmbgq62Bt6yI/ALZ3m59objRFT+tUww==
-X-Received: by 2002:a17:906:9904:b0:a2f:2867:dabe with SMTP id
- zl4-20020a170906990400b00a2f2867dabemr6106795ejb.1.1706615551362; 
- Tue, 30 Jan 2024 03:52:31 -0800 (PST)
+ bh=xACOu8w65Myng4aOci7Em7bTuJ0Oe/mzT/yApVWi6yM=;
+ b=MUaPZp/9tYKsuv5gvsvUYyVjFKaSFDkCSTfyHhQWLQXl6RkXR9L+7VTexJFSzSxJJ4
+ BICrrM0Nkm31v2S2zgnxLBvehfKYbgcocrdo8Svp/XEVclqfQnCVeu4Make5u41y91ta
+ YyN5aQJkPNdqgMhRiwlI0rUtoETNvU91I9/Nvun2c27YbBW1Cjt+3vkbup1DgTzytohC
+ wFpXLkBYr67QPK7NM3sIcnq5AGxg5FFeyCpBQX4pSKFibarNJeLu26mHBUdJlZAPgtJy
+ jR1IzTtCNRKejfvSR2vc7bhvfu2iSolvODPmWj26YGpUA1LSN9fgnGwe0+drPnnL2q/I
+ yknQ==
+X-Gm-Message-State: AOJu0Yzodjz0GV0dO2m2Ae32xg5Nk+wToNJHOuR2bXG2Ur7VEwojJKrl
+ WuDA3Ijs+n7/sTvVYy+HpbdgCJ6+Ytpyh0c5+Ew1ACQiDqtxEcMc2ZKE3ZW+nFM=
+X-Google-Smtp-Source: AGHT+IE+/vQeaAI7b+BJUUpfX7/AeBCtU1quxZL1IUDQXuTV0LYgc5mnfzsvvF16Z6K/dIGqdhI/jg==
+X-Received: by 2002:a17:906:3413:b0:a35:9c88:f937 with SMTP id
+ c19-20020a170906341300b00a359c88f937mr4639230ejb.20.1706615593065; 
+ Tue, 30 Jan 2024 03:53:13 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- hd10-20020a170907968a00b00a35cd148c7esm1872893ejc.212.2024.01.30.03.52.30
+ hd10-20020a170907968a00b00a35cd148c7esm1872893ejc.212.2024.01.30.03.53.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 03:52:30 -0800 (PST)
-Message-ID: <cbc72601-31c8-456f-886b-641d746499c8@linaro.org>
-Date: Tue, 30 Jan 2024 12:52:29 +0100
+ Tue, 30 Jan 2024 03:53:12 -0800 (PST)
+Message-ID: <898124ff-880d-4bc5-beaa-ada1bc9439d3@linaro.org>
+Date: Tue, 30 Jan 2024 12:53:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] leon3: implement multiprocessor
+Subject: Re: [PATCH v2 3/8] intc/grlib_irqmp: implements the multiprocessor
+ status register
 Content-Language: en-US
 To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
 Cc: Frederic Konrad <konrad.frederic@yahoo.fr>
 References: <20240116130213.172358-1-chigot@adacore.com>
- <20240116130213.172358-7-chigot@adacore.com>
+ <20240116130213.172358-4-chigot@adacore.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240116130213.172358-7-chigot@adacore.com>
+In-Reply-To: <20240116130213.172358-4-chigot@adacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,36 +96,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/1/24 14:02, Clément Chigot wrote:
-> This allows to register more than one CPU on the leon3_generic machine.
+> This implements the multiprocessor status register in grlib-irqmp and bind
+> it to a start signal, which will be later wired in leon3-generic to
+> start a cpu.
+> 
+> The EIRQ and BA bits are not implemented.
+> 
+> Based on https://gaisler.com/doc/gr712rc-usermanual.pdf, §8.3.5.
 > 
 > Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
 > Signed-off-by: Clément Chigot <chigot@adacore.com>
 > ---
->   hw/sparc/leon3.c | 106 +++++++++++++++++++++++++++++++++--------------
->   1 file changed, 74 insertions(+), 32 deletions(-)
+>   hw/intc/grlib_irqmp.c | 35 ++++++++++++++++++++++++++++++++---
+>   1 file changed, 32 insertions(+), 3 deletions(-)
 
 
-> +static void leon3_start_cpu(void *opaque, int n, int level)
-> +{
-> +    CPUState *cs = CPU(opaque);
-> +
-> +    if (level) {
-> +        async_run_on_cpu(cs, leon3_start_cpu_async_work, RUN_ON_CPU_NULL);
-> +    }
+> @@ -325,6 +345,8 @@ static void grlib_irqmp_reset(DeviceState *d)
+>   
+>       memset(irqmp->state, 0, sizeof *irqmp->state);
+>       irqmp->state->parent = irqmp;
+> +    irqmp->state->mpstatus = ((irqmp->ncpus - 1) << MP_STATUS_NCPU_SHIFT)
+> +        | ((1 << irqmp->ncpus) - 2);
 
+Indentation off, otherwise:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-What about instead:
-
-     assert(level == 1);
-     async_run_on_cpu(cs, leon3_start_cpu_async_work, RUN_ON_CPU_NULL);
-
-since per patch #3:
-
-  +    /*
-  +     * Transitionning from 0 to 1 starts the CPUs. The opposite can't
-  +     * happen.
-  +     */
-
-> +}
+>   }
 
 
