@@ -4,95 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B48C48285
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 12:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD0CC47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 12:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUnZc-0004xZ-KB; Tue, 30 Jan 2024 07:50:44 -0500
+	id 1rUnZs-0005GM-7f; Tue, 30 Jan 2024 07:51:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rUnZZ-0004xB-Gh
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:50:41 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rUnZn-0005Bb-OC
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:50:59 -0500
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rUnZX-0005Lx-EW
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:50:41 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a26f73732c5so465781566b.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 04:50:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rUnZl-0005Og-Jp
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:50:55 -0500
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-42a9c21f9ecso12162951cf.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 04:50:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706619037; x=1707223837; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=FErAMGRMo5n3bVgxQ4ZhDOcJETw4leepzAnCBEurNTU=;
- b=gH7Lt52H6Ryl1gKj5m/52nhBG/L3miSW0bHQvM//FEDH3nUCyRQfQAD+kjZOOI7BoJ
- 1egP+RclC9bf0gssMB9eoYfTTigpyuDuOIL2LcpECPO4KRovLFEmtpBG3lXZLx08Tyc8
- y+2/vgj0nNK9kS5p+2SI/ZprwNeCHkuTOiEXXkXbh4nROTa8RIs4mH4CCFbWHOOZVATh
- Ge7rXGTSDJB4boALOUInENKEL7HzYsMyK1RHPqJfbNOlm76HBsrdpqmv/Cj21Xr4Co+9
- jda69Nx3SPPeeY0MB5oYuBwIOOnwElCEi+YNd5o096Jch0Pe11BtwdgKj9IE8SRYS+EE
- s25w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706619037; x=1707223837;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1706619052; x=1707223852; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FErAMGRMo5n3bVgxQ4ZhDOcJETw4leepzAnCBEurNTU=;
- b=GaKAS5ZoCBoUkOJSUlpiubcDPBRipjzuXwhZgoQJhXuo2v2pBdqh4++dCgC2nLEr4y
- j/uIzTGVkByV3CqpoiZwyzUEKbqN7b0uMGSyODJgVMsy8IcxgQyhefHziNj3u8I5Yq3S
- G9P/lhLGmq1eE8kgFx/wlXYRbOMd8p9KuDewePMLk9/9WYUtwFCOhpe+Qj7Y1Lb6m55Z
- vA+7svjJTANRzZGNUMPUeOYXSYL4Dk1L351Cvu26M+yh6GgXUPj8srI6Rvgkd1NsP3lq
- s6HlEZaT7FXfRjbwA/q0C1cOABPhpdOCeVh96k68ocscy/6fccE/IqMYoHxQ9UllpaqF
- l9uQ==
-X-Gm-Message-State: AOJu0YzjmPaQCWLBWjsrnD1mh2nt1N2uPWcO+C3r5LQpS8OYOrJq7WZm
- MwtC5cSIZwHUXaz3jTlyPyjFiFiXFm+cs4aOQRyUT4l68FQmQ+1Ff9byuE0I8wo=
-X-Google-Smtp-Source: AGHT+IHprd1Zesz0HZSZLQhTWjiY6//T9U6Y9L8Sy0YEKD448UqmkEqiyPXlGz7Z3RWWWtEZCnIbEQ==
-X-Received: by 2002:a17:906:4c56:b0:a35:9414:f46f with SMTP id
- d22-20020a1709064c5600b00a359414f46fmr4731786ejw.13.1706619037398; 
- Tue, 30 Jan 2024 04:50:37 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- o18-20020a1709061b1200b00a2e7d1b6042sm5047658ejg.196.2024.01.30.04.50.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jan 2024 04:50:36 -0800 (PST)
-Date: Tue, 30 Jan 2024 13:50:36 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: JeeHeng Sia <jeeheng.sia@starfivetech.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
- "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "anisinha@redhat.com" <anisinha@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, 
- "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
- "sunilvl@ventanamicro.com" <sunilvl@ventanamicro.com>, 
- "palmer@dabbelt.com" <palmer@dabbelt.com>,
- "alistair.francis@wdc.com" <alistair.francis@wdc.com>, 
- "bin.meng@windriver.com" <bin.meng@windriver.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>, 
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
-Subject: Re: RE: [RESEND v2 1/2] hw/arm/virt-acpi-build.c: Migrate SPCR
- creation to common location
-Message-ID: <20240130-48cfb21fac247f0d535f87c9@orel>
-References: <20240129021440.17640-1-jeeheng.sia@starfivetech.com>
- <20240129021440.17640-2-jeeheng.sia@starfivetech.com>
- <20240129-e51095f37656f4ba5262ec68@orel>
- <BJSPR01MB0561D2F722BBC446017856709C7DA@BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn>
+ bh=3KnXCCv6NztSUmS/XI3n+P3/1yeTTsnFfJwkgyt5MDE=;
+ b=MCMZ6z0x95+4mlIgbwCSjR5rKs4DrGlRiwUPGC26cKygSues4zQxoBbm4c9prW3/CP
+ DFXC74I0VZzLPWBAnUNLxKW4ZQI8lrObr9IGchWgDLrlhesE++1xtroly5BAaIKZGNxe
+ OgL9oOa223KQ4LuqtiMpCiJWdAdaEtt80zTRp1RVzfUstBZYxH+AfmYmO4meQoPq/q/5
+ qybz4vJdPDyY+V45Dax/SKG7VoisW9i0ozCP1o9lTSyZLqtfpKXGSrNPhY35X9Yv+JpJ
+ G+DqZ0hvhvRwxejsqZkIbGiBh826Cnk6VvFbAFt77nH14QAbDvO+9sLBVbMMGq5Eej/C
+ SlMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706619052; x=1707223852;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3KnXCCv6NztSUmS/XI3n+P3/1yeTTsnFfJwkgyt5MDE=;
+ b=eUdZui2BINYGgejiQa8GoYxoGYK9poyGwmMNYopFFF0+LTbsNHxGm8b7x2WBiyj4pL
+ F7czPL0ePl3WwIv6qAcu+e57GhewnUKuPuGlxIcEhTkfH4lSt7zFa4Jf52RPR7VHq9+j
+ swZqTqmFs4bJwnKwxMFN8V8FU4/D9lmLs+mpXk0d4mjBQmPvsIbJYg4RJaI7DG7gT7gY
+ vo2lbK0MrebpAg6MgaISE8TQT8GapNhAQw9WR8uSWJUmV6DR/+yB8sYTFcvZbVcxoHD+
+ m73YvPDeOVlBR/166h9AAhqqmDVKxrDjnEormNSf4ialX42jnRw5zNSkOh8VqN27PTwJ
+ AnMA==
+X-Gm-Message-State: AOJu0YxV/xMYd6yOWTi9xrMlPihUyNwo2dfdzW3AInYW42Z64gOihSFW
+ gcZLqnHwr0GmmdvOleyjgLblEJKd9qyVRucJjJbc3xkkv7/pdeQukjx0LuTyNxLYs5RDY4coa5U
+ qr3d/TQOGq4cxVDqRm0seihB3BTw=
+X-Google-Smtp-Source: AGHT+IHvdKN2BuxZKNomE1M5jVyFVCgCfz+Mwjju0u2H2G2MTphJnfCqctFtnASfybzQ412DnAfbq463Fw3VDeGv/cI=
+X-Received: by 2002:a05:622a:1a16:b0:42a:8507:c985 with SMTP id
+ f22-20020a05622a1a1600b0042a8507c985mr10183677qtb.79.1706619052368; Tue, 30
+ Jan 2024 04:50:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BJSPR01MB0561D2F722BBC446017856709C7DA@BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x62f.google.com
+References: <cover.1706542958.git.manos.pitsidianakis@linaro.org>
+ <926db899bebc1f9ca575bfd29d140f7658050a82.1706542958.git.manos.pitsidianakis@linaro.org>
+In-Reply-To: <926db899bebc1f9ca575bfd29d140f7658050a82.1706542958.git.manos.pitsidianakis@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 30 Jan 2024 16:50:41 +0400
+Message-ID: <CAJ+F1CL-ikZMQzYv_7VydAthTAfSUnYNONg+YUMKhw90+zAgcg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] virtio-gpu-rutabaga.c: override resource_destroy
+ method
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,30 +94,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 03:30:13AM +0000, JeeHeng Sia wrote:
-...
-> > Sharing code is good, but if we have to parametrize the entire table, then
-> > we might as well keep Arm and RISCV separate. Building the table first
-> > with this struct, just to have it built again with the build_append API,
-> > doesn't make much sense to me. Do Arm and riscv really diverge on all
-> > these parameters? If not, then just add the parameters which do diverge
-> > build_scpr's arguments.
-> It is kind of chicken and egg thing, I would suggest let the arch code to
-> fill in the value. It doesn't make sense to change again in the future when
-> both riscv and arm realized the parameters were different.
-> Can arm confirm that these values wouldn't change in the future?
-> > 
+Hi
 
-We can't be sure that arm nor riscv will change in the future, but we
-(arm/riscv/etc. QEMU developers) control the code for both, so I don't see
-a problem with only parametrizing what's necessary today and then
-extending that, or completely separating, later if necessary. In any case,
-I'd rather see the two completely separate from the start, than to see
-the structure with all the parameters get added. There's no difference to
-me when reading a list of 's->param_name = value' or a list of
-build_append_int(table, value, size) /* param_name */. And, given we need
-the later eventually anyway, then there's no reason for the former at all.
+On Mon, Jan 29, 2024 at 7:46=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> When the Rutabaga GPU device frees resources, it calls
+> rutabaga_resource_unref for that resource_id. However, when the generic
+> VirtIOGPU functions destroys resources, it only removes the
+> virtio_gpu_simple_resource from the device's VirtIOGPU->reslist list.
+> The rutabaga resource associated with that resource_id is then leaked.
+>
+> This commit overrides the resource_destroy class method introduced in
+> the previous commit to fix this.
+>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  hw/display/virtio-gpu-rutabaga.c | 51 ++++++++++++++++++++++++--------
+>  1 file changed, 39 insertions(+), 12 deletions(-)
+>
+> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rut=
+abaga.c
+> index 9e67f9bd51..6ac0776005 100644
+> --- a/hw/display/virtio-gpu-rutabaga.c
+> +++ b/hw/display/virtio-gpu-rutabaga.c
+> @@ -148,14 +148,42 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,
+>  }
+>
+>  static void
+> +virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,
+> +                                   struct virtio_gpu_simple_resource *re=
+s,
+> +                                   Error **errp)
+> +{
+> +    int32_t result;
+> +    const char *strerror =3D NULL;
+> +    VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);
+> +
+> +    result =3D rutabaga_resource_unref(vr->rutabaga, res->resource_id);
+> +    if (result) {
+> +        error_setg(errp, "%s: rutabaga_resource_unref returned %"PRIi32
+> +                   " for resource_id =3D %"PRIu32, __func__, result,
+> +                   res->resource_id);
+> +        strerror =3D strerrorname_np((int)result);
+> +        if (strerror !=3D NULL) {
+> +            error_append_hint(errp, "%s: %s\n",
+> +                              strerror, strerrordesc_np((int)result) ? :=
+ "");
+> +        }
+> +    }
 
-Thanks,
-drew
+There is error_setg_errno()
+
+> +
+> +    if (res->image) {
+> +        pixman_image_unref(res->image);
+> +    }
+> +
+> +    QTAILQ_REMOVE(&g->reslist, res, next);
+> +    g_free(res);
+> +}
+> +
+> +static void
+>  rutabaga_cmd_resource_unref(VirtIOGPU *g,
+>                              struct virtio_gpu_ctrl_command *cmd)
+>  {
+> -    int32_t result;
+> +    int32_t result =3D 0;
+>      struct virtio_gpu_simple_resource *res;
+>      struct virtio_gpu_resource_unref unref;
+> -
+> -    VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);
+> +    Error *local_err =3D NULL;
+>
+>      VIRTIO_GPU_FILL_CMD(unref);
+>
+> @@ -164,15 +192,14 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,
+>      res =3D virtio_gpu_find_resource(g, unref.resource_id);
+>      CHECK(res, cmd);
+>
+> -    result =3D rutabaga_resource_unref(vr->rutabaga, unref.resource_id);
+> -    CHECK(!result, cmd);
+> -
+> -    if (res->image) {
+> -        pixman_image_unref(res->image);
+> +    virtio_gpu_rutabaga_resource_unref(g, res, &local_err);
+> +    if (local_err) {
+> +        error_report_err(local_err);
+> +        /* local_err was freed, do not reuse it. */
+> +        local_err =3D NULL;
+> +        result =3D 1;
+>      }
+> -
+> -    QTAILQ_REMOVE(&g->reslist, res, next);
+> -    g_free(res);
+> +    CHECK(!result, cmd);
+>  }
+>
+>  static void
+> @@ -1099,7 +1126,7 @@ static void virtio_gpu_rutabaga_class_init(ObjectCl=
+ass *klass, void *data)
+>      vgc->handle_ctrl =3D virtio_gpu_rutabaga_handle_ctrl;
+>      vgc->process_cmd =3D virtio_gpu_rutabaga_process_cmd;
+>      vgc->update_cursor_data =3D virtio_gpu_rutabaga_update_cursor;
+> -
+> +    vgc->resource_destroy =3D virtio_gpu_rutabaga_resource_unref;
+>      vdc->realize =3D virtio_gpu_rutabaga_realize;
+>      device_class_set_props(dc, virtio_gpu_rutabaga_properties);
+>  }
+> --
+> =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
+=CE=B8=CE=AE=CF=84=CF=89
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
