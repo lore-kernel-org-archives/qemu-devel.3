@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41D1C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 12:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC910C47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 12:47:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUnR8-0007jV-7D; Tue, 30 Jan 2024 07:41:58 -0500
+	id 1rUnWL-0003CE-Dt; Tue, 30 Jan 2024 07:47:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1rUnR4-0007bJ-Qp
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:41:54 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rUnWB-0003AD-SJ
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:47:13 -0500
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1rUnR2-0003b8-25
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:41:54 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-295c67ab2ccso121672a91.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 04:41:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rUnW9-0004b5-FS
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:47:10 -0500
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-42b471540aaso2497881cf.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 04:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1706618510; x=1707223310; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706618823; x=1707223623; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JZGwxZb9AEKdQmBPPo1ZiTL9DBvhxnDTfHx7Qf4FIA8=;
- b=emHbpR4yjXTVCc55Bo5ACV7BN1NxOKUMNABZKPhM/8xHtjaEbLtiAFVCoIZ3MEjlz8
- Dij91mxNzdFJSg3+uAH/xuTiZsjZ/nf7SWYXKtH3oRGbbeqDhyxpGaIViHDnutK8eHsW
- Kli5N9SuCv4TAPei3oIU7nMcuqSKBN7vFAP00yKcTzT1j9P1iG6si9YW1IGWgh/d1qow
- 96/Si5LncFeDfcNK6v867Izaiv/xzmecKktQUBisP6CNkQb7+xinw6Yt9E5NA7JD99f3
- +XoIVi4dkwBZQN0KE2ZxZ0NJtsB7lu2JuieDr+xCJfEqwmEeaU0l97CDxnhNFdCZbVoD
- zG+Q==
+ bh=M4ZMY3pNRZH9y69tonv0+6nZuel941F9tmAloyRfJ8Q=;
+ b=J86RVgfFDM47gh4PtLtxpMg1X1jFJJjylNbLRkqIU++hGUsbphZfXmB0gQ4CV9g4oC
+ x90+kaBK8e/fORGtFzU2bznwrPgvjFU3jhwpK5IrPeuDQaFi7zlJHrZnmxtSmdblo59p
+ RSksgzBElpV3Dz4oYpBrHpECx8uWFmxrKIla3BzrJG8wlSFXyHZW9eVO2F7LWaRgSwfy
+ F5akc0fXB41y0ShfcMs4YzqPPmf3lUAy1uVwmZYNuihkz27QBufLQa9dDXNay965CGS6
+ HKSP1Yon/eSujUNd2QdIaT4GrnDJJi5UzXQQ0mIfT8bHZs8tmfm9VTIwpYVBwXMT2zA7
+ dpWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706618510; x=1707223310;
+ d=1e100.net; s=20230601; t=1706618823; x=1707223623;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JZGwxZb9AEKdQmBPPo1ZiTL9DBvhxnDTfHx7Qf4FIA8=;
- b=Nsb7tbxvgiTX9Qe0QWuDbRag/++vvC/a00cXXJyROu1iAtEa7eOxFP0fr1vs5L8Pt+
- l1Z/Vzipn8yfo5ZUkQT/0gYa8Eo784T7xZKW4exs8BUvb3eu4jPxIPycFwv/0YF+aYIv
- 8k7BKrIAtrY7SmLVQuLfqHf7U2eoYelM5Ce6tMRQj5fqwdCTrLAtQ8FjLsUhlHzDtHxs
- kVC+GoyWi0CsajPflDMXpLdkx6m6Py/NsRRW2fMYNu6jexqpDvwz7DtEZ8Rq5PBw3Hbe
- ZS9apUAkzutDEXHZ02JRKdzFRd8LmhF46ToTvyOIROQzXdAyMQ66HLPvMG5FJYKFHvLE
- aW1A==
-X-Gm-Message-State: AOJu0YzBLHrfuUDD8PsMqrW57H9RS4LTw+xUaKcRzUVPtbPaZuREti4H
- pfVrVx8aEcOkQVQiFNglwSpxctvxHAvQ8JONTex+xMNeZfwYIr9r3jIwS809AwOV0rroJ1k3SD/
- CdF8UUB2DL4I8EizJDmqWogCH8I17FvhyErzP
-X-Google-Smtp-Source: AGHT+IE88SIPTQ9wuzc8MKzbk/1ujZLqaRT7yrs76NfueljqZdFzjDyf9jkFJdw9zgY42G8fRiL383+QCkRG071qNjA=
-X-Received: by 2002:a17:90b:1244:b0:290:8bbf:e4c0 with SMTP id
- gx4-20020a17090b124400b002908bbfe4c0mr3892953pjb.39.1706618510563; Tue, 30
- Jan 2024 04:41:50 -0800 (PST)
+ bh=M4ZMY3pNRZH9y69tonv0+6nZuel941F9tmAloyRfJ8Q=;
+ b=KJ4gbzbiGKUAxWypgGpN0tC6e+aFLJCMUdyiOK5dugiLsjBS7If+Y2Hjolk1V1Giop
+ C1kbhdug/8Qu9z784hUTJVVFKYacMGS+hruLtmQ3M2vYc0Xjd+FDuKxvGIXImcO3sH8J
+ poDpwjTVUXcYOok7xWVU6E7yhFDDfUnWLFEi5AUtkKBPNNsZSD6QC2IprlO3HMSq1vAt
+ pBbqfLAtaqut7fNFcvKg8wBKIdfbyik31DjeAcUjfEIfuw23HT38/dYJwxeV4FIvXfak
+ qXP0ho6L1yx+UqVeEkYubU72pw5zQgbcMWoiFO92pAgqY9HLUctju0HEWK1bI8q/pXD9
+ AVZw==
+X-Gm-Message-State: AOJu0YzXgO3SxBvvOmsZfUwMi5La/SvOinbk4B7HY4LbP9sFUtBnNuA1
+ Se5/akUhYszz+DWSMh3Dy4RAFjyX1A8azamxw8PeQNA7HgG5//TOv6w0CW8OuzFC+gjRrkQ4ycb
+ PEF1ZhI5GeYVkw9cbhPErf6J8+sw=
+X-Google-Smtp-Source: AGHT+IEr7tbm+OFIF80YxsPt8IMDR8hwiiBigRRfnFfxamp/a9CyD3p7NlY2PV+W+65KM7vFSTe3PhQJeojOOilobwE=
+X-Received: by 2002:a05:622a:156:b0:42a:a4d5:966f with SMTP id
+ v22-20020a05622a015600b0042aa4d5966fmr4819499qtw.113.1706618822973; Tue, 30
+ Jan 2024 04:47:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20240116130213.172358-1-chigot@adacore.com>
- <20240116130213.172358-8-chigot@adacore.com>
- <61f637bc-96da-48f6-8798-95426060deff@linaro.org>
-In-Reply-To: <61f637bc-96da-48f6-8798-95426060deff@linaro.org>
-From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Date: Tue, 30 Jan 2024 13:41:39 +0100
-Message-ID: <CAJ307EgiXGn0U19GTN72nqqcB6_SAqyYckqnf3V_teFHP+wSpg@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] leon3: check cpu_id in the tiny bootloader
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Frederic Konrad <konrad.frederic@yahoo.fr>
+References: <cover.1706542958.git.manos.pitsidianakis@linaro.org>
+ <78b15e8f7e2af529aeaed2e6ef37efa508cf405f.1706542958.git.manos.pitsidianakis@linaro.org>
+In-Reply-To: <78b15e8f7e2af529aeaed2e6ef37efa508cf405f.1706542958.git.manos.pitsidianakis@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 30 Jan 2024 16:46:51 +0400
+Message-ID: <CAJ+F1CL8KKK4Sor5bZjVB7fGGhzWtb-VjkCAZPDeCjbeE8a98g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] virtio-gpu.c: add resource_destroy class method
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=chigot@adacore.com; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x829.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,86 +93,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 10:15=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 16/1/24 14:02, Cl=C3=A9ment Chigot wrote:
-> > Now that SMP is possible, the asr17 must be checked in the little boot =
-code
-> > or the secondary CPU will reinitialize the Timer and the Uart.
-> >
-> > Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
-> > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
-> > ---
-> >   hw/sparc/leon3.c | 22 ++++++++++++++++++++--
-> >   1 file changed, 20 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-> > index eacd85ee4f..87a8044a3e 100644
-> > --- a/hw/sparc/leon3.c
-> > +++ b/hw/sparc/leon3.c
-> > @@ -100,13 +100,27 @@ static uint32_t *gen_store_u32(uint32_t *code, hw=
-addr addr, uint32_t val)
-> >
-> >   /*
-> >    * When loading a kernel in RAM the machine is expected to be in a di=
-fferent
-> > - * state (eg: initialized by the bootloader). This little code reprodu=
-ces
-> > - * this behavior.
-> > + * state (eg: initialized by the bootloader).  This little code reprod=
-uces
-> > + * this behavior.  Also this code can be executed by the secondary cpu=
-s as
-> > + * well since it looks at the %asr17 register before doing any
-> > + * initialization, it allows to use the same reset address for all the
-> > + * cpus.
-> >    */
-> >   static void write_bootloader(CPUSPARCState *env, uint8_t *base,
-> >                                hwaddr kernel_addr)
-> >   {
-> >       uint32_t *p =3D (uint32_t *) base;
-> > +    uint32_t *sec_cpu_branch_p =3D NULL;
-> > +
-> > +    /* If we are running on a secondary CPU, jump directly to the kern=
-el.  */
-> > +
-> > +    stl_p(p++, 0x85444000); /* rd %asr17, %g2      */
-> > +    stl_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
-> > +    stl_p(p++, 0x80908000); /* tst  %g2            */
-> > +    /* Fill that later.  */
->
->        /* Filled below. */
->
-> > +    sec_cpu_branch_p =3D p;
-> > +    stl_p(p++, 0x0BADC0DE); /* bne xxx             */
-> > +    stl_p(p++, 0x01000000); /* nop */
-> >
-> >       /* Initialize the UARTs                                        */
-> >       /* *UART_CONTROL =3D UART_RECEIVE_ENABLE | UART_TRANSMIT_ENABLE; =
-*/
-> > @@ -120,6 +134,10 @@ static void write_bootloader(CPUSPARCState *env, u=
-int8_t *base,
-> >       /* *GPTIMER0_CONFIG =3D GPTIMER_ENABLE | GPTIMER_RESTART;        =
-*/
-> >       p =3D gen_store_u32(p, 0x80000318, 3);
-> >
-> > +    /* Now, the relative branch above can be computed.  */
-> > +    stl_p(sec_cpu_branch_p, 0x12800000
-> > +          + (p - sec_cpu_branch_p));
-> > +
-> >       /* JUMP to the entry point                                     */
-> >       stl_p(p++, 0x82100000); /* mov %g0, %g1 */
-> >       stl_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
->
-> Alternatively have main_cpu_reset / secondary_cpu_reset handlers.
-> You could split BL in HWINIT / JUMP, have HWINIT() return # instr
-> used and adjust secondary_cpu_reset entry.
+Hi
 
-Indeed that would make this code a bit easier to maintain. I'll keep
-it for a future MR if you don't mind.
-Thanks for the idea anyway.
+On Mon, Jan 29, 2024 at 7:46=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> When destroying/unrefing resources, devices such as virtio-gpu-rutabaga
+> need to do their own bookkeeping (free rutabaga resources that are
+> associated with the virtio_gpu_simple_resource).
+>
+> This commit adds a class method so that virtio-gpu-rutabaga can override
+> it in the next commit.
+>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  include/hw/virtio/virtio-gpu.h |  3 +++
+>  hw/display/virtio-gpu.c        | 25 ++++++++++++++++++++++---
+>  2 files changed, 25 insertions(+), 3 deletions(-)
+>
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
+u.h
+> index 584ba2ed73..b28e7ef0d2 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -219,6 +219,9 @@ struct VirtIOGPUClass {
+>      void (*update_cursor_data)(VirtIOGPU *g,
+>                                 struct virtio_gpu_scanout *s,
+>                                 uint32_t resource_id);
+> +    void (*resource_destroy)(VirtIOGPU *g,
+> +                             struct virtio_gpu_simple_resource *res,
+> +                             Error **errp);
+>  };
+>
+>  struct VirtIOGPUGL {
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index 2b73ae585b..1c1ee230b3 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -402,7 +402,8 @@ static void virtio_gpu_disable_scanout(VirtIOGPU *g, =
+int scanout_id)
+>  }
+>
+>  static void virtio_gpu_resource_destroy(VirtIOGPU *g,
+> -                                        struct virtio_gpu_simple_resourc=
+e *res)
+> +                                        struct virtio_gpu_simple_resourc=
+e *res,
+> +                                        Error **errp)
+>  {
+>      int i;
+>
+> @@ -438,7 +439,11 @@ static void virtio_gpu_resource_unref(VirtIOGPU *g,
+>          cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+>          return;
+>      }
+> -    virtio_gpu_resource_destroy(g, res);
+> +    /*
+> +     * virtio_gpu_resource_destroy does not set any errors, so pass a NU=
+LL errp
+> +     * to ignore them.
+> +     */
+> +    virtio_gpu_resource_destroy(g, res, NULL);
 
-> Anyway,
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+&error_fatal would be better.
+
+>  }
+>
+>  static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
+> @@ -1488,11 +1493,24 @@ static void virtio_gpu_device_unrealize(DeviceSta=
+te *qdev)
+>  static void virtio_gpu_reset_bh(void *opaque)
+>  {
+>      VirtIOGPU *g =3D VIRTIO_GPU(opaque);
+> +    VirtIOGPUClass *vgc =3D VIRTIO_GPU_GET_CLASS(g);
+>      struct virtio_gpu_simple_resource *res, *tmp;
+> +    uint32_t resource_id;
+> +    Error *local_err =3D NULL;
+>      int i =3D 0;
+>
+>      QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+> -        virtio_gpu_resource_destroy(g, res);
+> +        resource_id =3D res->resource_id;
+> +        vgc->resource_destroy(g, res, &local_err);
+> +        if (local_err) {
+> +            error_append_hint(&local_err, "%s: %s resource_destroy"
+> +                              "for resource_id =3D %"PRIu32" failed.\n",
+> +                              __func__, object_get_typename(OBJECT(g)),
+> +                              resource_id);
+> +            /* error_report_err frees the error object for us */
+> +            error_report_err(local_err);
+> +            local_err =3D NULL;
+> +        }
+>      }
+>
+>      for (i =3D 0; i < g->parent_obj.conf.max_outputs; i++) {
+> @@ -1632,6 +1650,7 @@ static void virtio_gpu_class_init(ObjectClass *klas=
+s, void *data)
+>      vgc->handle_ctrl =3D virtio_gpu_handle_ctrl;
+>      vgc->process_cmd =3D virtio_gpu_simple_process_cmd;
+>      vgc->update_cursor_data =3D virtio_gpu_update_cursor_data;
+> +    vgc->resource_destroy =3D virtio_gpu_resource_destroy;
+>      vgbc->gl_flushed =3D virtio_gpu_handle_gl_flushed;
+>
+>      vdc->realize =3D virtio_gpu_device_realize;
+> --
+> =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
+=CE=B8=CE=AE=CF=84=CF=89
+>
+
+otherwise,
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
