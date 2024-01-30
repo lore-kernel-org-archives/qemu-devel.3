@@ -4,137 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35742C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 18:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68998C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 18:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUt6E-0003fE-UP; Tue, 30 Jan 2024 13:44:46 -0500
+	id 1rUtHn-0006OO-2p; Tue, 30 Jan 2024 13:56:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rUt68-0003eY-Ab
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 13:44:41 -0500
-Received: from mail-dm6nam10on2060f.outbound.protection.outlook.com
- ([2a01:111:f400:7e88::60f]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from
+ <BATV+774705810a2fec5f7ef2+7464+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1rUtHj-0006O6-N5
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 13:56:39 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rUt63-00054c-9I
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 13:44:37 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lYPSjvsRaX3J+2SQABk1LUmofD9jqJozGHv7fpeVKPX7o++L1yoAsaXvt0AFVh3hSN/gPYHjEGn/n7G1dGTgVaizKPFL62sF/iGH0hNItw6zKFY8Z9/ZoR/okOUcsCFPk7UiFIpQqB3zgvN0OaJa/E72lmbOH1y0ggz+bDmzY/ind8uMWUDv5iotvYZ+HeNvJEdyf3rR303HkHqmujG/LTTJcSVEgo+ad/b8iZbcG9cHxRQYLK3T+yk9fTNpovRutbC5cVQudGqDZ+nFcN/aXIR5AoNJIIkq43YTkRceImrJxt4Jhs1RTtFZTTYnEsVXfpkmastkQsxucinh3BnY3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eNiQ8hmoSzdMbDWHY+FRgTYUtaHrOe7vGLNRMwnz91g=;
- b=IsnOc+R1pFkbglm01NvGcX9headQZ4OYYMBEhNnFVfMgjhPC3xHEg/DENvJw6kgqYN9UhV8B+Fs8YSabFFIb9aJGd/qcyIomJHyb2WXkric8Cvv9tOyRbVqcUxIS7sucsOteHIsvPB2qfmHdLmtGQDz5NCF1I47DqOc6BUTU1qtRJOwD2qAtIsjLUIeuAPapqPjrea963jOXzjVJdUkn8qFJCfIJihz1iR3MevDqmA/G62MmD4WFMtIWRbKJOS/ZYrMvIU4E6/MxMgQvYMYW2okedPiL7ParLpccgwqAJ8ppHeaTqdy6/USsjtll5qKgXaU2EY+x4FWd7kC4pF1ZLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eNiQ8hmoSzdMbDWHY+FRgTYUtaHrOe7vGLNRMwnz91g=;
- b=cMX7ZZE0he0CKuzynewFNHGZM3tDqf7rYqUt7dsEEUkIxeMIX9vg1g6df6iYTz680QvRXVaa3CWwbf5ZrH/9UBmiDwhZXNXvEgCabmyo6rgN9JyQYelsbUM/LnMz1aDsO6Qnvr50w6m4J+HfqvmSzDlaYNb+0fpWAwwMWPiAHeX0+96uGx+4xoafMj91PB0vaRiqlDDO1LXjOs1zYsS7TsYc9xUk71/u3Er4uGgIOFHWFACg41ZWm9z8F7aIUThWIPLfB7jm+KHreehuQZbGT4PeEW8yVlRQOHldIb9DEaB06gI1C+WE5Zd5MAbqxhOxSDi72TvdHd7DUxO9PmsTLQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by BY5PR12MB4307.namprd12.prod.outlook.com (2603:10b6:a03:20c::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.34; Tue, 30 Jan
- 2024 18:44:24 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::c444:5cde:d19a:c73e]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::c444:5cde:d19a:c73e%7]) with mapi id 15.20.7228.029; Tue, 30 Jan 2024
- 18:44:24 +0000
-Message-ID: <113f4fe5-30d4-4aff-9f60-91b2a0c103e5@nvidia.com>
-Date: Tue, 30 Jan 2024 20:44:19 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/17] migration/multifd: Set p->running = true in the
- right place
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-References: <20240125162528.7552-1-avihaih@nvidia.com>
- <20240125162528.7552-5-avihaih@nvidia.com> <87a5otw2ps.fsf@suse.de>
- <78fa90f7-d062-4f23-8035-841a0ffef8af@nvidia.com> <Zbcm1nXzQ_r0eGG0@x1n>
- <0f75090d-bbe1-43cb-b649-a0880bc413c4@nvidia.com> <ZbiP1Ayqxj9BLdY7@x1n>
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <ZbiP1Ayqxj9BLdY7@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0003.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:150::8) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+ (Exim 4.90_1) (envelope-from
+ <BATV+774705810a2fec5f7ef2+7464+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1rUtHf-00075l-8a
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 13:56:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=6ErCjBzpbz3Cr9+U2QFntJp4Ty7qMAvbLdY424ODmdk=; b=t+44MYzCwOuGtQdjjVkk0sWWsJ
+ uYeg53UZSi4y/xN5avNexu4U7o0sRFSOa3n/0R1z2MLZ4Wg8H1ap2BFk6DIrHOL6DyPeXkhlje9uN
+ avwZ23GTuPyqaNl0YQV9dKEPjyCEEEeUEHJtll1RPD+nRuZ2ZLgXgk3PyURsqdQqEP/zXod3FOq0w
+ zyUhuo2z4UiZVANTS0QU2SZBH1pQ+d7guxH32qLxZP6fY5QDJcfWHQBr7sTCfY/TCCEqXjjpFtLlO
+ WLtLSxrqpUD1bTp+VlS5nfdgc4WmNJgIrcJTKBEyMvet0lfzoPbvh0WpEYhYnwRGdSIP9JsyPgpd8
+ f0xbzPqA==;
+Received: from [205.251.233.106] (helo=freeip.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1rUtHS-0000000AaQe-0qnl; Tue, 30 Jan 2024 18:56:23 +0000
+Message-ID: <b292b80b1e13ff4a3907a8b1363a664a7ae9759f.camel@infradead.org>
+Subject: Re: [PATCH v3] doc/sphinx/hxtool.py: add optional label argument to
+ SRST directive
+From: David Woodhouse <dwmw2@infradead.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Date: Tue, 30 Jan 2024 10:56:21 -0800
+In-Reply-To: <CAFEAcA8YYEufaT9mU=YaiUKNMP7-ARSs_QwRHsP5Y7S5KC3O7g@mail.gmail.com>
+References: <4114f7204e892316d66be8f810eb5b8de4c0f75f.camel@infradead.org>
+ <CAFEAcA8YYEufaT9mU=YaiUKNMP7-ARSs_QwRHsP5Y7S5KC3O7g@mail.gmail.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-wE3hNarB96dVg+7tHlHC"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|BY5PR12MB4307:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9ab36810-40ca-49fe-8731-08dc21c37af5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: NoOlaye/1I0A89xw/GxIcuJ4d+OmlQSXvM2gNpj8eJqf+ZiePSjCvTgx4oolXh5MhCYvnOGr4sK5ong5KFwPYN9IZkzPKJBf4AGS3TomRJ6vHKaiuRIlzb49UlK5nC04TYSDFKBTPvCSMpMRrzWihan37qrhiFf3S7wgQ9rBmGlvUIsQG7vIHg3byxSo3i1XfS5TZvN+t5StJtGB+/Ao/i2SLxwH+taBbURxMu72xjKI2IK4b+qDkyyauI+AXwD7PSMXU2GwVSqu/IHbkCL6wIDVdY4C52s65zlZ343eVjKoe1RdpeNynF+dPnDideC72PkW/Qb/lJ1SKz2iErbEbHZvjH0v7ca4RJXOsVtKNc1X8VEaczQhM7mEvDp2LDm4yKhK4S9V9q90rRbn+mVlBUEug0WGoTJfaL+HcWMIzXUCfBdcAzRQi0IqRpEdPPFtQUzTAlSrgEEiXB+wvDyQvTtTvhjTkTSIbk+VEG37XUWF9jSxMRl/Xm3zQ3cqcszKJM4erOSjxGPtL4Ib8HAt18RzGNyY4GUvWRUbkuHTIrGRafW+aocoPGVNfSXMci7f85eVi5RareBa5oZEGuO36v6tHAoOzwatAAkOzAflSXl4lwi6dLXtvL2VkQk7minpfLfiEZyg58x4ZjXeS3H4Z9v57M1+s2Tv68pN2YpDbgVrnXke7SkFkc2DI1Y/mNOJ
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(39860400002)(346002)(136003)(396003)(366004)(376002)(230273577357003)(230922051799003)(230173577357003)(64100799003)(451199024)(1800799012)(186009)(41300700001)(66899024)(5660300002)(2906002)(36756003)(6916009)(83380400001)(6486002)(66946007)(66556008)(66476007)(86362001)(31696002)(316002)(966005)(6666004)(478600001)(53546011)(6512007)(4326008)(6506007)(8676002)(8936002)(38100700002)(26005)(2616005)(31686004)(45980500001)(43740500002);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SmRMZGdaN0NmUnVSM2x5NDMwZmJlOTkrR1g2RldadVE4Rk1QUXgxUU1oMmV6?=
- =?utf-8?B?VU1uSnBFSGQ4MkRBVlM1K0J6Q2s4M3NMYVJITDlmaTNNNFI3OVFabXFlRmIv?=
- =?utf-8?B?SWNvekdkT1NiT1ZraWl5aUhuMGtoRVdEUVR3WTVVY01LY3BYRmUyRjJ5STVv?=
- =?utf-8?B?YWh3enJ2THhtTlowcTNqODltL2JlYTR3MzRpM29odVZDY3dwdjlDN3dQaUJK?=
- =?utf-8?B?V1BsbUM4RlJqaGlyekYzN2UreEhRN0lxR1pMaUtsVk92Y2pwMlozL2JpUXRY?=
- =?utf-8?B?NXJKRk9aOFlNTkdaZHE1ZzhadGtjcnVDWEswUXR1b2ZwNTl6RDNHRmdMVkNB?=
- =?utf-8?B?c2NDUk5VTmhKL3Z4UndXQWtSTStGSXdNeEh2WExUVU12RklLdUQ2REZWTnhL?=
- =?utf-8?B?cnRDS1lQUStPdkNXS1AwVXMxYmhLMVd0WkxpQmJzS2gyR1ZmQ0xsTDZ4YjBX?=
- =?utf-8?B?ZWVBYnA5Q0RyNkZsWm45R2FiNzM5RE84VGFOUlZNYjFlTjluRyt1T2QwdkRp?=
- =?utf-8?B?RXF6Wnd4RWlOZHZwTnFRam95NHR6TU9QcTJGUElDN1UxZU1yTk9HWVBzcjNR?=
- =?utf-8?B?SWZxaDJEZ2VGMzNFU0ZLUDFvOGJLSENiR3FPNC8xTjhtMitSeTB4WnZCalQ5?=
- =?utf-8?B?Zk85TWgrdjVVT0ltVFk1dGNBd3JSVk1oMXBRYVpZVjkrSTgrR2JPTmhGUnQy?=
- =?utf-8?B?Vy92djl5dDMwT0VaRXZkY0pGMGN2ZGViVEl2SW1NYkFNcmpUVHQ2TTgyR0tS?=
- =?utf-8?B?Sk1iRmpaSWZ4cytzQmJPUFpvN0hvTHl6V3ozR0VpQ0lndU5SQk9taXVUY2Z5?=
- =?utf-8?B?T3gxK29iaDgrNGxlUDM0WWZ4MnMwM3o2M1dQTytxVE1lUjZlS1hqUUZUN0E3?=
- =?utf-8?B?MlRFUzdjS3M5cUU0Y0swOUxoZE5IMVJ6OEhNMzdwZXV1dVM0dGs4S2JBUlAv?=
- =?utf-8?B?RUpxZ25wM3BLbUlVNmxEWDBybzZKK2JvOEhCaVd2Vno0Vm9GdStOOTZpa2pV?=
- =?utf-8?B?clhqU1Q3d3pucEJ5TnNwa1hmVHR4NkFPWWhyMmR1bHlLY1BYNzd0bjN3QXgv?=
- =?utf-8?B?QXRDeUp2ZE5GWDg0VWd6TVNFVUVXY0xCc1UvZEJBeFVLT1RzenpZZzhMYmRp?=
- =?utf-8?B?ZWhnZ3FkY3Z1ZngwVmwvNVRKR2VtclpVd1hoN3h6LzBUQnVzYVE3N1IvaSt4?=
- =?utf-8?B?VkN5aWFPTUpCbHNEZXZoTnBtMnhXL29mTDFVeTVyOHNsS201YjdocXA2dG5B?=
- =?utf-8?B?MVIvb2kwYjhwNldieEdaYnZSajdLQmptNFAvVVU1b1FqRzc1bnlYNVovZEtI?=
- =?utf-8?B?dENOSFBrUFhRbEUzMUZMVUpUaFBmK2VIQWg4Z3FhMFJwRkVUS3RZU3AzNVNT?=
- =?utf-8?B?ZE1XRXNyL0h3OTFBaVFCZ0ZQcDBReXRkSDY2UGZ4TFViWGhSWDZwaUxRTGNo?=
- =?utf-8?B?QWJqT3poc2NQKzZPQkxwN3NwSXRUZk9VcWIwUVlJWkkxc3pPNWYrZ00zdUw0?=
- =?utf-8?B?MGFDcFNmWURpM290Zzh6NXozd0hMWGJaZUxtZlFtK1pDeHA1bmgvWHcyQUtT?=
- =?utf-8?B?M0cyVzZ5R21oMHFpWDNMYUIzcVZSSVo5S3dpWkhnWm81dnU4M2NiaHloYkR2?=
- =?utf-8?B?bzcrNFpTVmRNNXU0TFl4ZnN2b0tXZnRWS1JaNjk4ZGVuTHZJdXJuemtyZUEz?=
- =?utf-8?B?UEF5Sk5nZEgrUnhHaEZ1ZUo2L0Fpa1poNjZ1eXhUa0dDTFdORWRoS3FMeVA2?=
- =?utf-8?B?NjJhN2FrZGlxamhhWUhmeFVGZUY5dXh6WFdTenRYczB3QUpXYUlJR3VuR3Az?=
- =?utf-8?B?NThxTHR5N3NMRnNkczEwZ2FKZGpHQ1FWcHhDTmtPSmlrYk53UlNUNnNMbVlS?=
- =?utf-8?B?ZkF6VVZROWNNdDZhN1VXNHh1N01majBCeHRrRXhMUDAyMkVGcldIc0Nhd1VO?=
- =?utf-8?B?d2J1aGl4dHFwSGNpYURoY1FUL2dJSElmd3o3eTdVTmQxa2RzbTdlU0xsM3lM?=
- =?utf-8?B?Mnp4WFdUVUpXVkdQMVJnQ0d4MFJkY1R4UTdmMU5ISWdYdkZ6Y0tRbklnS2ky?=
- =?utf-8?B?WTFTQnFpaXp0TkpFeXoxYTA4blJaMzVoQkMyTWdoZHVqU1V6aEo0ZkQzTFll?=
- =?utf-8?Q?5vzIRzTLU4IWNGRvQrw6NjOgL?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9ab36810-40ca-49fe-8731-08dc21c37af5
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2024 18:44:24.6977 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: oR50ikppLNKEbkfYkjN6YUy+z5VYMDPMdvWsoVHK8Q110QWkrSGwkIoebA77KLU5kTeTt6nLw+lAnoFQbGHjPg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4307
-Received-SPF: softfail client-ip=2a01:111:f400:7e88::60f;
- envelope-from=avihaih@nvidia.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+774705810a2fec5f7ef2+7464+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,186 +78,145 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 30/01/2024 7:57, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> On Mon, Jan 29, 2024 at 02:20:35PM +0200, Avihai Horon wrote:
->> On 29/01/2024 6:17, Peter Xu wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> On Sun, Jan 28, 2024 at 05:43:52PM +0200, Avihai Horon wrote:
->>>> On 25/01/2024 22:57, Fabiano Rosas wrote:
->>>>> External email: Use caution opening links or attachments
->>>>>
->>>>>
->>>>> Avihai Horon <avihaih@nvidia.com> writes:
->>>>>
->>>>>> The commit in the fixes line moved multifd thread creation to a
->>>>>> different location, but forgot to move the p->running = true assignment
->>>>>> as well. Thus, p->running is set to true before multifd thread is
->>>>>> actually created.
->>>>>>
->>>>>> p->running is used in multifd_save_cleanup() to decide whether to join
->>>>>> the multifd thread or not.
->>>>>>
->>>>>> With TLS, an error in multifd_tls_channel_connect() can lead to a
->>>>>> segmentation fault because p->running is true but p->thread is never
->>>>>> initialized, so multifd_save_cleanup() tries to join an uninitialized
->>>>>> thread.
->>>>>>
->>>>>> Fix it by moving p->running = true assignment right after multifd thread
->>>>>> creation. Also move qio_channel_set_delay() to there, as this is where
->>>>>> it used to be originally.
->>>>>>
->>>>>> Fixes: 29647140157a ("migration/tls: add support for multifd tls-handshake")
->>>>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
->>>>> Just for context, I haven't looked at this patch yet, but we were
->>>>> planning to remove p->running altogether:
->>>>>
->>>>> https://lore.kernel.org/r/20231110200241.20679-1-farosas@suse.de
->>>> Thanks for putting me in the picture.
->>>> I see that there has been a discussion about the multifd creation/treadown
->>>> flow.
->>>> In light of this discussion, I can already see a few problems in my series
->>>> that I didn't notice before (such as the TLS handshake thread leak).
->>>> The thread you mentioned here and some of my patches point out some problems
->>>> in multifd creation/treardown. I guess we can discuss it and see what's the
->>>> best way to solve them.
->>>>
->>>> Regarding this patch, your solution indeed solves the bug that this patch
->>>> addresses, so maybe this could be dropped (or only noted in your patch).
->>>>
->>>> Maybe I should also put you (and Peter) in context for this whole series --
->>>> I am writing it as preparation for adding a separate migration channel for
->>>> VFIO device migration, so VFIO devices could be migrated in parallel.
->>>> So this series tries to lay down some foundations to facilitate it.
->>> Avihai, is the throughput the only reason that VFIO would like to have a
->>> separate channel?
->> Actually, the main reason is to be able to send and load multiple VFIO
->> devices data in parallel.
->> For example, today if we have three VFIO devices, they are migrated
->> sequentially one after another.
->> This particularly hurts during the complete pre-copy phase (downtime), as
->> loading the VFIO data in destination involves FW interaction and resource
->> allocation, which takes time and simply blocks the other devices from
->> sending and loading their data.
->> Providing a separate channel and thread for each VIFO device solves this
->> problem and ideally reduces the VFIO contribution to downtime from sum{VFIO
->> device #1, ..., VFIO device #N} to max{VFIO device #1, ..., VFIO device #N}.
-> I see.
->
->>> I'm wondering if we can also use multifd threads to send vfio data at some
->>> point.  Now multifd indeed is closely bound to ram pages but maybe it'll
->>> change in the near future to take any load?
->>>
->>> Multifd is for solving the throughput issue already. If vfio has the same
->>> goal, IMHO it'll be good to keep them using the same thread model, instead
->>> of managing different threads in different places.  With that, any user
->>> setting (for example, multifd-n-threads) will naturally apply to all
->>> components, rather than relying on yet-another vfio-migration-threads-num
->>> parameter.
->> Frankly, I didn't really put much attention to the throughput factor, and my
->> plan is to introduce only a single thread per device.
->> VFIO devices may have many GBs of data to migrate (e.g., vGPUs) and even
->> mlx5 VFs can have a few GBs of data.
->> So what you are saying here is interesting, although I didn't test such
->> scenario to see the actual benefit.
->>
->> I am trying to think if/how this could work and I have a few concerns:
->> 1. RAM is made of fixed-positioned pages that can be randomly read/written,
->> so sending these pages over multiple channels and loading them in the
->> destination can work pretty naturally without much overhead.
->>     VFIO device data, on the other hand, is just an opaque stream of bytes
->> from QEMU point of view. This means that if we break this data to "packets"
->> and send them over multiple channels, we must preserve the order by which
->> this data was
->>     originally read from the device and write the data in the same order to
->> the destination device.
->>     I am wondering if the overhead of maintaining such order may hurt
->> performance, making it not worthwhile.
-> Indeed, it seems to me VFIO migration is based on a streaming model where
-> there's no easy way to index a chunk of data.
+--=-wE3hNarB96dVg+7tHlHC
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes, you can see it here as well: 
-https://elixir.bootlin.com/linux/v6.8-rc2/source/include/uapi/linux/vfio.h#L1039
+On Tue, 2024-01-30 at 17:55 +0000, Peter Maydell wrote:
+>=20
+> This looks good so
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
->
-> Is there any background on how that kernel interface was designed?  It
-> seems pretty unfriendly to concurrency already: even if multiple devices
-> can migrate concurrently, each single device can already contain GBs of
-> data as you said, which is pretty common here.  I'm a bit surprised to see
-> that the kernel interface is designed in this way for such a device.
+Thanks.
 
-Not that I know of. There has been a pretty big discussion about the 
-uAPI back then when it was introduced, but not something formal.
-However, I don't think having a few GBs of device data is the common 
-case for VFIO devices, I just pointed out the extreme cases.
+> but something has got mangled somewhere: patchew can't apply it:
+> https://patchew.org/QEMU/4114f7204e892316d66be8f810eb5b8de4c0f75f.camel@i=
+nfradead.org/
+> and patches doesn't like it either. In both cases git am barfs with
+>=20
+> error: corrupt patch at line 23
+>=20
+> I'm guessing it doesn't like the quoted-printable encoding.
 
-> I was wondering the possibility of whether VFIO can provide data chunks
-> with indexes just like RAM (which is represented in ramblock offsets).
+Nah, QP really ought to be fine. The problem is that for some reason
+Evolution has decided to replace space characters with non-breaking-
+space characters. That is a new and strange pathology... in a version
+of Evolution that I haven't updated for over a year.
 
-I am not sure this would be feasible, as it will involve major changes 
-to the uAPI and for the devices.
-But if that's something you wish to explore I can ask around and see if 
-it's a hard no go.
+I'll send a v4 with git-send-email, as checkpatch was whinging about
+line lengths anyway.
 
->> 2. As I mentioned above, the main motivation for separate VFIO migration
->> channel/thread, as I see today, is to allow parallel migration of VFIO
->> devices.
->>     AFAIU multifd, as it is today, doesn't provide such parallelism (i.e., in
->> the complete pre-copy phase each device, be it RAM or VFIO, will fully send
->> its data over the multifd threads and only after finishing will the next
->> device send its data).
-> Indeed. That's actually an issue not only to VFIO but also to migration in
-> general: we can't migrate device states concurrently, and multifd is out of
-> the picture here so far, but maybe there's chance.
->
-> Consider huge VMs where there can be already ~500 vCPUs, each need their
-> own get()/put() of CPU states from/to KVM.  It'll be nice if we can do this
-> in concurrent threads too.  Here VFIO is one of the devices that will also
-> benefit from such a design, and greatly.
+--=-wE3hNarB96dVg+7tHlHC
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-Interesting, do you know how much time migrating these vCPUs take?
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwMTMwMTg1NjIxWjAvBgkqhkiG9w0BCQQxIgQga4KdZiWf
+zEXwq+v6t7JKfJBlV5Tm3b4l+4ELj271xmgwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgAtmMNJiHQLoOZvN705dgufRBInNbEGmqQX
+oGOFKI4ivv7d6KAhqqOMtigVcmj+zgx1q4NUjt0/8Rsc8aqrTJ+nWzGSwZ8bBoBk9V0cPIVJSQft
+u2W/X6RaAPjYQnSRW/8DtOC9/n+GjXh8WSo6OdG/QMCxswh37+Mvco5eyhWnMF81qd1rta6NaQsZ
+DSjdVa4AECVlhvHkFHoJBADZEF3l3tGn24ZE+PIW8qyh2dlP11hw/rFGoEtu1n+JzHKCWhmBbcsl
+fkaje6YkOhlXxR6NQZgYtapv5lNQtFcfT8fjhU17nI4zPxP661vGk4RXa9LJXPIxaAOW+onfwnh+
+71lG0OQmRva5XkGZuqukcHiteQ4QbdboFvqDegwIeoaNWXS9UmjfY/e29Yxq3tp8rlTdfYtaxLrZ
+eVpAp69+hzgnmYYfZQhsP2fLAjmnyJoz+8JPlDHP5cjpI8k/Jb1BQ72/i4bQKI1p0wt8FX+rf1TZ
+cLCdJEge6DhZvMIWF2119aYPkf4YoyGOGNcaj4i5wFWHjl2vCeOkUwMp4j0yY4ed8uG3sPewzzgs
+nPkAE/egUJkH5VNidamAX+NiwFfZz3n7KZjp3Hp6EOQgYg7qPxDNmriTRVum3pWzm/IJo5tT3X3h
+i/2lLHnUdDtnr+Zxzp6AkKynKL934z3s/lOrE0/tmAAAAAAAAA==
 
-> I added a todo in our wiki for this, which I see it a general improvement,
-> and hopefully someone can look into this:
->
-> https://wiki.qemu.org/ToDo/LiveMigration#Device_state_concurrency
->
-> I hope VFIO can consider resolving this as a generic issue, rather than
-> providing its own solution.
->
->> This is just what came to mind. Maybe we can think this more thoroughly and
->> see if it could work somehow, now or in the future.
->> However, I think making the multifd threads generic so they can send any
->> kind of data is a good thing in general, regardless of VFIO.
-> Right.
->
-> In general, having a VFIO separate channel may solve the immediate issue,
-> but it may still won't solve all, meanwhile it may introduce the first
-> example of using completely separate channel that migration won't easily
-> manage itself, which IMHO can cause migration much harder to maintain in
-> the future.
->
-> It may also in the future become some technical debt that VFIO will need to
-> take even if such a solution merged, because VFIO could have its own model
-> of handling a few similar problems that migration has.
->
-> I hope there's some way out that we can work together to improve the
-> framework, providing a clean approach and consider for the long terms.
 
-I understand your concern, and I hope as well we can work together 
-towards a proper and maintainable solution.
-Even if we don't get VFIO to use the multifd framework directly, maybe 
-adding common APIs would be good enough.
-For example, take this series of adding a common API to create migration 
-channels.
-I also saw you and Fabiano have been talking about a thread-pool model 
-to replace the multifd threads. Maybe we can use such scheme also for 
-VFIO and even for the vCPUs case you mentioned above, each component 
-stating how many threads it needs and creating a big pool for all 
-migration clients.
-
+--=-wE3hNarB96dVg+7tHlHC--
 
