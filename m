@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CDAC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 05:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E7AC46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 05:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUgqX-0002sZ-J9; Tue, 30 Jan 2024 00:39:45 -0500
+	id 1rUh8B-0002YV-NN; Tue, 30 Jan 2024 00:57:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1rUgqU-0002re-6q
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 00:39:43 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1rUgqR-0001N0-Tl
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 00:39:41 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-5ffdf06e009so35043937b3.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 21:37:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1706593059; x=1707197859;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GgIauGmyrGpKEXUINKH8zV3ggDfjrFXnkhV7HaAgky4=;
- b=o6bMqZWeRWXwshqrp+Qfd7VO2U8oVpObQE8ePIBlCEvQDeN8SPeHu9Ep+Cd2MxxI0M
- VD/Ffy5VaJwv/zk2hoj+lbLI6mYJypxNqBgAp2gDnFW+k0E3F6HKnCDw0OvwM9Xfu2Hy
- 6e4nGI/bYC77jG8+SGKzqqQfALEiFDEdyZFAZPGZBc80wrvWFZ+w+H7bPjTeQnn8rHbd
- zVq5mSYuCf2KocwOhp3OgTBza7rA1HW/YArPaOiMC+k2uv/AKXcV4LxDBgsDnWxR2ZCC
- UIf+E8zpd09fyqIWb5ytfS5tNIrlcp+tKjy/1NSolLbR8yIHUhP0One5DilWn6OstW/L
- 40Kg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUh8A-0002YF-65
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 00:57:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUh88-0005hO-26
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 00:57:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706594274;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tlmaJTNLauBsRuP/u2vKWQCaKCdoZvxOhcPgMWHUFw8=;
+ b=RWraSKxKDVw/aChEW+AHy2no1TxLCctJ7X2E2m2I9dxT0keb2MMNCUHYF+/rWjaz4S4b2g
+ O/QqAaQaZS6Hv4thKDTmdA5lwSg+2+fB3Ee4f5DccaQUcKHqW7yg/hnfJTR4ERVrcqWolB
+ QXHB67UvcewvKYX6DyQR0WFltMDwp3I=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-208-OrzEbURMPxS6RjSeAr3CNA-1; Tue, 30 Jan 2024 00:57:51 -0500
+X-MC-Unique: OrzEbURMPxS6RjSeAr3CNA-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-5d8b4e8033bso672892a12.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 21:57:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706593059; x=1707197859;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GgIauGmyrGpKEXUINKH8zV3ggDfjrFXnkhV7HaAgky4=;
- b=EfOGYn3wY7tO9H9jRTvYL8ckroRj8Aw8uaqLoJ3vuIo4s7bcA/d3idgGrN2tRANBD9
- jacS+RmVSkUbds+d6RP2CDkOBd22gxuvoa68OCWq3HSyY/XKcuhqt0R1rmipYf5Y9CiU
- pxkt3AJRYphvyq/JWyGfh0cHh+ulnOaPSvsrpDxUYGl1oG5CI9TFcYQ2ACmkqiLsqbzj
- UJguoL+jAqNJnLVn1NVdMx0nzWlRDlFYKqO6D7BGLMp4/s/Ci/E7CPH7WoEWko7+zgAf
- Vf8OBL0cVW2Qp/4PoKrIw4yCX5VD/kPn6cbfEyCDtlUivPftL1b4y77AWhH8OV4gTTAJ
- 4vwQ==
-X-Gm-Message-State: AOJu0YxnND99MRWDq1X5Cq+LHNuiw5C3uxT7B0bG3hBaYlJcF6MEnVt/
- ZEuw0mUnTt5fkNyvMpt/uobu7CNt6W7IjY1CqZgpuUJWoz+JAJjDs0C34ew1IQ3i+wNL2WcOSAN
- uL6I=
-X-Google-Smtp-Source: AGHT+IEZHbVoS+l8rYL3uw7l10gW5QjIP0/w6qWR4FaGRV7XP9Kysqw70t8AoI7tLpxWiLyCzU1Epg==
-X-Received: by 2002:a81:ae50:0:b0:5ee:65b3:f289 with SMTP id
- g16-20020a81ae50000000b005ee65b3f289mr4843588ywk.3.1706593058052; 
- Mon, 29 Jan 2024 21:37:38 -0800 (PST)
-Received: from anolis-dev.zelin.local ([221.122.98.162])
- by smtp.gmail.com with ESMTPSA id
- bv123-20020a632e81000000b005c1ce3c960bsm7343532pgb.50.2024.01.29.21.37.35
+ d=1e100.net; s=20230601; t=1706594270; x=1707199070;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tlmaJTNLauBsRuP/u2vKWQCaKCdoZvxOhcPgMWHUFw8=;
+ b=NYTg4N+ppgHv1ezQl09LSkEx2CfLbUQxYMgN0bU/pgbRLuQECJjR+bbK5+V2jsWFVX
+ 7JMg08G+w4mXKWkMZSWn9bgY2Lp4BOew1dhHimg1u71m9rjRAnuvqb0E6Z+NA+CQjHeh
+ 3SV1sYwaxeT47uI0wHkZ69kKsOQY07oXNUWWfEpcyMgxMamPNRbyaIclKRd2AfnmTO+6
+ B9tvlp0Qe4QULbOhA4szP4Vin1v3bcjMfVYpBRLH6neGK5URLH1RF3W5jCUHfFwFvnCI
+ GfOFyoUYf6ZNvcRTya8GZgUpnyUuvvcpHdkehYWTzj5TKviXhAnhndWRJlQxCekLeGQW
+ GzgA==
+X-Gm-Message-State: AOJu0YwdaoJWYQIMjRu/Mp2jNl60Ujfu+/xjWH+Wk6fht1QzcOxi37OA
+ NBRUmXirJBo3Dk1A9V1U0m97o9vb/3iVyvXV6wdd3w6aYbYPqJjm5H3YmamyL0Talvd/nI9L1aG
+ 2mFFef1GKyFeA9O65RrKqDoct6SiEuvQIweH13E+7kSm/gmOc+ZeV
+X-Received: by 2002:a05:6a21:a58a:b0:19c:99f8:b189 with SMTP id
+ gd10-20020a056a21a58a00b0019c99f8b189mr12094879pzc.0.1706594269821; 
+ Mon, 29 Jan 2024 21:57:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLa2LYi7P1uioKkkq8goXvLelHG2iyAk53x7bRfbhrnuUsTolnDHPKD+yFhGPneRSDuFw0xg==
+X-Received: by 2002:a05:6a21:a58a:b0:19c:99f8:b189 with SMTP id
+ gd10-20020a056a21a58a00b0019c99f8b189mr12094870pzc.0.1706594269405; 
+ Mon, 29 Jan 2024 21:57:49 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ e2-20020a170902744200b001d8fcca6c12sm1155399plt.285.2024.01.29.21.57.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jan 2024 21:37:37 -0800 (PST)
-From: yong.huang@smartx.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- yong.huang@smartx.com
-Subject: [PATCH v4 3/7] crypto: Modify the qcrypto_block_create to support
- creation flags
-Date: Tue, 30 Jan 2024 13:37:21 +0800
-Message-Id: <bc537fae33d4c3ba64371359d6dfd4928e653047.1706586786.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <cover.1706586786.git.yong.huang@smartx.com>
-References: <cover.1706586786.git.yong.huang@smartx.com>
+ Mon, 29 Jan 2024 21:57:49 -0800 (PST)
+Date: Tue, 30 Jan 2024 13:57:40 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 04/17] migration/multifd: Set p->running = true in the
+ right place
+Message-ID: <ZbiP1Ayqxj9BLdY7@x1n>
+References: <20240125162528.7552-1-avihaih@nvidia.com>
+ <20240125162528.7552-5-avihaih@nvidia.com> <87a5otw2ps.fsf@suse.de>
+ <78fa90f7-d062-4f23-8035-841a0ffef8af@nvidia.com>
+ <Zbcm1nXzQ_r0eGG0@x1n>
+ <0f75090d-bbe1-43cb-b649-a0880bc413c4@nvidia.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::1129;
- envelope-from=yong.huang@smartx.com; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <0f75090d-bbe1-43cb-b649-a0880bc413c4@nvidia.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,221 +104,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+On Mon, Jan 29, 2024 at 02:20:35PM +0200, Avihai Horon wrote:
+> 
+> On 29/01/2024 6:17, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > On Sun, Jan 28, 2024 at 05:43:52PM +0200, Avihai Horon wrote:
+> > > On 25/01/2024 22:57, Fabiano Rosas wrote:
+> > > > External email: Use caution opening links or attachments
+> > > > 
+> > > > 
+> > > > Avihai Horon <avihaih@nvidia.com> writes:
+> > > > 
+> > > > > The commit in the fixes line moved multifd thread creation to a
+> > > > > different location, but forgot to move the p->running = true assignment
+> > > > > as well. Thus, p->running is set to true before multifd thread is
+> > > > > actually created.
+> > > > > 
+> > > > > p->running is used in multifd_save_cleanup() to decide whether to join
+> > > > > the multifd thread or not.
+> > > > > 
+> > > > > With TLS, an error in multifd_tls_channel_connect() can lead to a
+> > > > > segmentation fault because p->running is true but p->thread is never
+> > > > > initialized, so multifd_save_cleanup() tries to join an uninitialized
+> > > > > thread.
+> > > > > 
+> > > > > Fix it by moving p->running = true assignment right after multifd thread
+> > > > > creation. Also move qio_channel_set_delay() to there, as this is where
+> > > > > it used to be originally.
+> > > > > 
+> > > > > Fixes: 29647140157a ("migration/tls: add support for multifd tls-handshake")
+> > > > > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> > > > Just for context, I haven't looked at this patch yet, but we were
+> > > > planning to remove p->running altogether:
+> > > > 
+> > > > https://lore.kernel.org/r/20231110200241.20679-1-farosas@suse.de
+> > > Thanks for putting me in the picture.
+> > > I see that there has been a discussion about the multifd creation/treadown
+> > > flow.
+> > > In light of this discussion, I can already see a few problems in my series
+> > > that I didn't notice before (such as the TLS handshake thread leak).
+> > > The thread you mentioned here and some of my patches point out some problems
+> > > in multifd creation/treardown. I guess we can discuss it and see what's the
+> > > best way to solve them.
+> > > 
+> > > Regarding this patch, your solution indeed solves the bug that this patch
+> > > addresses, so maybe this could be dropped (or only noted in your patch).
+> > > 
+> > > Maybe I should also put you (and Peter) in context for this whole series --
+> > > I am writing it as preparation for adding a separate migration channel for
+> > > VFIO device migration, so VFIO devices could be migrated in parallel.
+> > > So this series tries to lay down some foundations to facilitate it.
+> > Avihai, is the throughput the only reason that VFIO would like to have a
+> > separate channel?
+> 
+> Actually, the main reason is to be able to send and load multiple VFIO
+> devices data in parallel.
+> For example, today if we have three VFIO devices, they are migrated
+> sequentially one after another.
+> This particularly hurts during the complete pre-copy phase (downtime), as
+> loading the VFIO data in destination involves FW interaction and resource
+> allocation, which takes time and simply blocks the other devices from
+> sending and loading their data.
+> Providing a separate channel and thread for each VIFO device solves this
+> problem and ideally reduces the VFIO contribution to downtime from sum{VFIO
+> device #1, ..., VFIO device #N} to max{VFIO device #1, ..., VFIO device #N}.
 
-Expand the signature of qcrypto_block_create to enable the
-formation of LUKS volumes with detachable headers. To accomplish
-that, introduce QCryptoBlockCreateFlags to instruct the creation
-process to set the payload_offset_sector to 0.
+I see.
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- block/crypto.c                 |  1 +
- block/qcow.c                   |  2 +-
- block/qcow2.c                  |  2 +-
- crypto/block-luks.c            | 28 +++++++++++++++++++++-------
- crypto/block.c                 |  4 +++-
- crypto/blockpriv.h             |  2 ++
- include/crypto/block.h         | 11 +++++++++++
- tests/unit/test-crypto-block.c |  2 ++
- 8 files changed, 42 insertions(+), 10 deletions(-)
+> 
+> > 
+> > I'm wondering if we can also use multifd threads to send vfio data at some
+> > point.  Now multifd indeed is closely bound to ram pages but maybe it'll
+> > change in the near future to take any load?
+> > 
+> > Multifd is for solving the throughput issue already. If vfio has the same
+> > goal, IMHO it'll be good to keep them using the same thread model, instead
+> > of managing different threads in different places.  With that, any user
+> > setting (for example, multifd-n-threads) will naturally apply to all
+> > components, rather than relying on yet-another vfio-migration-threads-num
+> > parameter.
+> 
+> Frankly, I didn't really put much attention to the throughput factor, and my
+> plan is to introduce only a single thread per device.
+> VFIO devices may have many GBs of data to migrate (e.g., vGPUs) and even
+> mlx5 VFs can have a few GBs of data.
+> So what you are saying here is interesting, although I didn't test such
+> scenario to see the actual benefit.
+> 
+> I am trying to think if/how this could work and I have a few concerns:
+> 1. RAM is made of fixed-positioned pages that can be randomly read/written,
+> so sending these pages over multiple channels and loading them in the
+> destination can work pretty naturally without much overhead.
+>    VFIO device data, on the other hand, is just an opaque stream of bytes
+> from QEMU point of view. This means that if we break this data to "packets"
+> and send them over multiple channels, we must preserve the order by which
+> this data was
+>    originally read from the device and write the data in the same order to
+> the destination device.
+>    I am wondering if the overhead of maintaining such order may hurt
+> performance, making it not worthwhile.
 
-diff --git a/block/crypto.c b/block/crypto.c
-index e87dc84111..1b3f87922a 100644
---- a/block/crypto.c
-+++ b/block/crypto.c
-@@ -369,6 +369,7 @@ block_crypto_co_create_generic(BlockDriverState *bs, int64_t size,
-                                   block_crypto_create_init_func,
-                                   block_crypto_create_write_func,
-                                   &data,
-+                                  0,
-                                   errp);
- 
-     if (!crypto) {
-diff --git a/block/qcow.c b/block/qcow.c
-index c6d0e15f1e..ca8e1d5ec8 100644
---- a/block/qcow.c
-+++ b/block/qcow.c
-@@ -885,7 +885,7 @@ qcow_co_create(BlockdevCreateOptions *opts, Error **errp)
-         header.crypt_method = cpu_to_be32(QCOW_CRYPT_AES);
- 
-         crypto = qcrypto_block_create(qcow_opts->encrypt, "encrypt.",
--                                      NULL, NULL, NULL, errp);
-+                                      NULL, NULL, NULL, 0, errp);
-         if (!crypto) {
-             ret = -EINVAL;
-             goto exit;
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 9bee66fff5..204f5854cf 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -3216,7 +3216,7 @@ qcow2_set_up_encryption(BlockDriverState *bs,
-     crypto = qcrypto_block_create(cryptoopts, "encrypt.",
-                                   qcow2_crypto_hdr_init_func,
-                                   qcow2_crypto_hdr_write_func,
--                                  bs, errp);
-+                                  bs, 0, errp);
-     if (!crypto) {
-         return -EINVAL;
-     }
-diff --git a/crypto/block-luks.c b/crypto/block-luks.c
-index 10373aaba4..8ad7cc44a5 100644
---- a/crypto/block-luks.c
-+++ b/crypto/block-luks.c
-@@ -1304,6 +1304,7 @@ qcrypto_block_luks_create(QCryptoBlock *block,
-     const char *hash_alg;
-     g_autofree char *cipher_mode_spec = NULL;
-     uint64_t iters;
-+    uint64_t detached_header_size;
- 
-     memcpy(&luks_opts, &options->u.luks, sizeof(luks_opts));
-     if (!luks_opts.has_iter_time) {
-@@ -1532,19 +1533,32 @@ qcrypto_block_luks_create(QCryptoBlock *block,
-         slot->stripes = QCRYPTO_BLOCK_LUKS_STRIPES;
-     }
- 
--    /* The total size of the LUKS headers is the partition header + key
--     * slot headers, rounded up to the nearest sector, combined with
--     * the size of each master key material region, also rounded up
--     * to the nearest sector */
--    luks->header.payload_offset_sector = header_sectors +
--            QCRYPTO_BLOCK_LUKS_NUM_KEY_SLOTS * split_key_sectors;
-+    if (block->detached_header) {
-+        /*
-+         * For a detached LUKS header image, set the payload_offset_sector
-+         * to 0 to specify the starting point for read/write
-+         */
-+        luks->header.payload_offset_sector = 0;
-+    } else {
-+        /*
-+         * The total size of the LUKS headers is the partition header + key
-+         * slot headers, rounded up to the nearest sector, combined with
-+         * the size of each master key material region, also rounded up
-+         * to the nearest sector
-+         */
-+        luks->header.payload_offset_sector = header_sectors +
-+                QCRYPTO_BLOCK_LUKS_NUM_KEY_SLOTS * split_key_sectors;
-+    }
- 
-     block->sector_size = QCRYPTO_BLOCK_LUKS_SECTOR_SIZE;
-     block->payload_offset = luks->header.payload_offset_sector *
-         block->sector_size;
-+    detached_header_size =
-+        (header_sectors + QCRYPTO_BLOCK_LUKS_NUM_KEY_SLOTS *
-+         split_key_sectors) * block->sector_size;
- 
-     /* Reserve header space to match payload offset */
--    initfunc(block, block->payload_offset, opaque, &local_err);
-+    initfunc(block, detached_header_size, opaque, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         goto error;
-diff --git a/crypto/block.c b/crypto/block.c
-index 7bb4b74a37..506ea1d1a3 100644
---- a/crypto/block.c
-+++ b/crypto/block.c
-@@ -87,6 +87,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-                                    QCryptoBlockInitFunc initfunc,
-                                    QCryptoBlockWriteFunc writefunc,
-                                    void *opaque,
-+                                   unsigned int flags,
-                                    Error **errp)
- {
-     QCryptoBlock *block = g_new0(QCryptoBlock, 1);
-@@ -102,6 +103,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-     }
- 
-     block->driver = qcrypto_block_drivers[options->format];
-+    block->detached_header = flags & QCRYPTO_BLOCK_CREATE_DETACHED;
- 
-     if (block->driver->create(block, options, optprefix, initfunc,
-                               writefunc, opaque, errp) < 0) {
-@@ -146,7 +148,7 @@ qcrypto_block_calculate_payload_offset(QCryptoBlockCreateOptions *create_opts,
-         qcrypto_block_create(create_opts, optprefix,
-                              qcrypto_block_headerlen_hdr_init_func,
-                              qcrypto_block_headerlen_hdr_write_func,
--                             len, errp);
-+                             len, 0, errp);
-     return crypto != NULL;
- }
- 
-diff --git a/crypto/blockpriv.h b/crypto/blockpriv.h
-index 3c7ccea504..836f3b4726 100644
---- a/crypto/blockpriv.h
-+++ b/crypto/blockpriv.h
-@@ -42,6 +42,8 @@ struct QCryptoBlock {
-     size_t niv;
-     uint64_t payload_offset; /* In bytes */
-     uint64_t sector_size; /* In bytes */
-+
-+    bool detached_header; /* True if disk has a detached LUKS header */
- };
- 
- struct QCryptoBlockDriver {
-diff --git a/include/crypto/block.h b/include/crypto/block.h
-index d0d97f5d12..92e823c9f2 100644
---- a/include/crypto/block.h
-+++ b/include/crypto/block.h
-@@ -116,6 +116,10 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-                                  size_t n_threads,
-                                  Error **errp);
- 
-+typedef enum {
-+    QCRYPTO_BLOCK_CREATE_DETACHED = (1 << 0),
-+} QCryptoBlockCreateFlags;
-+
- /**
-  * qcrypto_block_create:
-  * @options: the encryption options
-@@ -123,6 +127,7 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-  * @initfunc: callback for initializing volume header
-  * @writefunc: callback for writing data to the volume header
-  * @opaque: data to pass to @initfunc and @writefunc
-+ * @flags: bitmask of QCryptoBlockCreateFlags values
-  * @errp: pointer to a NULL-initialized error object
-  *
-  * Create a new block encryption object for initializing
-@@ -134,6 +139,11 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-  * generating new master keys, etc as required. Any existing
-  * data present on the volume will be irrevocably destroyed.
-  *
-+ * If @flags contains QCRYPTO_BLOCK_CREATE_DETACHED then
-+ * the open process will set the payload_offset_sector to 0
-+ * to specify the starting point for the read/write of a
-+ * detached LUKS header image.
-+ *
-  * If any part of initializing the encryption context
-  * fails an error will be returned. This could be due
-  * to the volume being in the wrong format, a cipher
-@@ -147,6 +157,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-                                    QCryptoBlockInitFunc initfunc,
-                                    QCryptoBlockWriteFunc writefunc,
-                                    void *opaque,
-+                                   unsigned int flags,
-                                    Error **errp);
- 
- /**
-diff --git a/tests/unit/test-crypto-block.c b/tests/unit/test-crypto-block.c
-index 347cd5f3d7..6cfc817a92 100644
---- a/tests/unit/test-crypto-block.c
-+++ b/tests/unit/test-crypto-block.c
-@@ -283,6 +283,7 @@ static void test_block(gconstpointer opaque)
-                                test_block_init_func,
-                                test_block_write_func,
-                                &header,
-+                               0,
-                                &error_abort);
-     g_assert(blk);
- 
-@@ -362,6 +363,7 @@ test_luks_bad_header(gconstpointer data)
-                                test_block_init_func,
-                                test_block_write_func,
-                                &buf,
-+                               0,
-                                &error_abort);
-     g_assert(blk);
- 
+Indeed, it seems to me VFIO migration is based on a streaming model where
+there's no easy way to index a chunk of data.
+
+Is there any background on how that kernel interface was designed?  It
+seems pretty unfriendly to concurrency already: even if multiple devices
+can migrate concurrently, each single device can already contain GBs of
+data as you said, which is pretty common here.  I'm a bit surprised to see
+that the kernel interface is designed in this way for such a device.
+
+I was wondering the possibility of whether VFIO can provide data chunks
+with indexes just like RAM (which is represented in ramblock offsets).
+
+> 
+> 2. As I mentioned above, the main motivation for separate VFIO migration
+> channel/thread, as I see today, is to allow parallel migration of VFIO
+> devices.
+>    AFAIU multifd, as it is today, doesn't provide such parallelism (i.e., in
+> the complete pre-copy phase each device, be it RAM or VFIO, will fully send
+> its data over the multifd threads and only after finishing will the next
+> device send its data).
+
+Indeed. That's actually an issue not only to VFIO but also to migration in
+general: we can't migrate device states concurrently, and multifd is out of
+the picture here so far, but maybe there's chance.
+
+Consider huge VMs where there can be already ~500 vCPUs, each need their
+own get()/put() of CPU states from/to KVM.  It'll be nice if we can do this
+in concurrent threads too.  Here VFIO is one of the devices that will also
+benefit from such a design, and greatly.
+
+I added a todo in our wiki for this, which I see it a general improvement,
+and hopefully someone can look into this:
+
+https://wiki.qemu.org/ToDo/LiveMigration#Device_state_concurrency
+
+I hope VFIO can consider resolving this as a generic issue, rather than
+providing its own solution.
+
+> 
+> This is just what came to mind. Maybe we can think this more thoroughly and
+> see if it could work somehow, now or in the future.
+> However, I think making the multifd threads generic so they can send any
+> kind of data is a good thing in general, regardless of VFIO.
+
+Right.
+
+In general, having a VFIO separate channel may solve the immediate issue,
+but it may still won't solve all, meanwhile it may introduce the first
+example of using completely separate channel that migration won't easily
+manage itself, which IMHO can cause migration much harder to maintain in
+the future.
+
+It may also in the future become some technical debt that VFIO will need to
+take even if such a solution merged, because VFIO could have its own model
+of handling a few similar problems that migration has.
+
+I hope there's some way out that we can work together to improve the
+framework, providing a clean approach and consider for the long terms.
+
+Thanks,
+
 -- 
-2.31.1
+Peter Xu
 
 
