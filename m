@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484AAC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6385BC46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUmg1-00065F-IE; Tue, 30 Jan 2024 06:53:17 -0500
+	id 1rUmhu-0008Mz-Nr; Tue, 30 Jan 2024 06:55:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmg0-00062x-0b
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:53:16 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmhp-0008KW-BX
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:55:10 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmfy-0000Tf-BY
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:53:15 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a350bfcc621so416825366b.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:53:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmhm-0000nj-J8
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:55:09 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-55a8fd60af0so4084596a12.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:55:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706615593; x=1707220393; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1706615704; x=1707220504; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xACOu8w65Myng4aOci7Em7bTuJ0Oe/mzT/yApVWi6yM=;
- b=bgIPo1JPi3UTBQeb+5152JLSyLtGJTN7iNZo82aVdmF/tfSf7ZU76FgcMp3zWfWuXQ
- UW9mAqRZLHJWxuw0gxfPtpR7gFGLnQ0wlmkRNqwFBAzLqG8zNjUl6OnK4QV46ETBzDWA
- yg26zN59QgfzQTM+ja93IgoMIYMDk1H9wGAReT2TJRf+yI+WcAHUvDCiOZ/8I2TwUgNq
- XfU1pVNBUaOnXMRzTZCIf4mmLgwYZKO0DFkpH1rYq3BQxA0UdAYyBFsvDML1bA/XihNL
- AX+2ADLr+Jv2UmSqrJkgBM4eNlHwCbBRFj0Cdmo3iSTOLGy1oiEJAMVILRpOx1hZFVZ0
- wXYQ==
+ bh=/zV858AZvLi7xCe5NWW77dgGCH9fJvJbUOlwXik95x8=;
+ b=kbTxBy+ADIAYpOuIbEt3sM8r5yCQiuaFvCE9ZE9LO7gwyy4SnvlzDERgb3jo+ZZ+T9
+ h3mRGt1EqIP1bq+zuNMn9lbdirw1hZWYiLQWKvWOYCnT+lA2XdKpVQRmKCzf/MZK2r6J
+ JK6CC2MnBYiZnKfSTF9n1kZ8WYYXp5AEbGeQLsX4bD4LD5CpiQzDH6Q97L7M+wS2Iyfh
+ tz3Pxq5bL1dc7ZW7FUHgsxJyLNsajOP6TMUcy07QxOsenSi3bW+IT1AaIgcU9cH4TMnu
+ qRo2jVGM15AhOznaSqpMVRgi+O0pheBamOnsG2jCbYY1waD64QvUd3D9x0zhPaKOTOEB
+ 3e0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706615593; x=1707220393;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1706615704; x=1707220504;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xACOu8w65Myng4aOci7Em7bTuJ0Oe/mzT/yApVWi6yM=;
- b=MUaPZp/9tYKsuv5gvsvUYyVjFKaSFDkCSTfyHhQWLQXl6RkXR9L+7VTexJFSzSxJJ4
- BICrrM0Nkm31v2S2zgnxLBvehfKYbgcocrdo8Svp/XEVclqfQnCVeu4Make5u41y91ta
- YyN5aQJkPNdqgMhRiwlI0rUtoETNvU91I9/Nvun2c27YbBW1Cjt+3vkbup1DgTzytohC
- wFpXLkBYr67QPK7NM3sIcnq5AGxg5FFeyCpBQX4pSKFibarNJeLu26mHBUdJlZAPgtJy
- jR1IzTtCNRKejfvSR2vc7bhvfu2iSolvODPmWj26YGpUA1LSN9fgnGwe0+drPnnL2q/I
- yknQ==
-X-Gm-Message-State: AOJu0Yzodjz0GV0dO2m2Ae32xg5Nk+wToNJHOuR2bXG2Ur7VEwojJKrl
- WuDA3Ijs+n7/sTvVYy+HpbdgCJ6+Ytpyh0c5+Ew1ACQiDqtxEcMc2ZKE3ZW+nFM=
-X-Google-Smtp-Source: AGHT+IE+/vQeaAI7b+BJUUpfX7/AeBCtU1quxZL1IUDQXuTV0LYgc5mnfzsvvF16Z6K/dIGqdhI/jg==
-X-Received: by 2002:a17:906:3413:b0:a35:9c88:f937 with SMTP id
- c19-20020a170906341300b00a359c88f937mr4639230ejb.20.1706615593065; 
- Tue, 30 Jan 2024 03:53:13 -0800 (PST)
+ bh=/zV858AZvLi7xCe5NWW77dgGCH9fJvJbUOlwXik95x8=;
+ b=Yt8XUt/tKSJyN7rqgh1HNAUWR52v1PgxUPfZR3MDcofVYh0n5pBSjD7eoLyJy6+lzE
+ 9TcggqloNZsgPmhiApV1Ob8gd4fEEN1YXOU30prO1qEhO47SkpwAnhH+Y1Gmloer9EFv
+ CYiMryFvRVl4VhAciWDSimtkWHCogqGBaCNzwjjVi4mWqCosiFVAjoHvuN1s8iCo4RCz
+ OzrOWIQNe1i/v1QjRtTO0jPZoRdIuCMTP8xrZeOlAnVkCysmZPJhDYALA6M6XGT0lhSF
+ 4xDcw7+6Xq52qq2c6Sn83DbVjfqmlfeOnyowNABEeu7QbfVvTOfUtmebuthXN75J6uHY
+ VqRA==
+X-Gm-Message-State: AOJu0YzNaGwCz79E8GIsYy+yGGtxtWqd5l4Kp/hDFJlw2pSmt8Nz5igZ
+ Zimm45VVw4bQtgx90Qq6+jGG36VCdE5qODa/Gba1MFfhVf53rrTiJf2LS4Ot3S48gIR6oAFJJXI
+ l
+X-Google-Smtp-Source: AGHT+IHJ2wGQ3eQoN91uawIuGQA9GLEnrJ2lwP283Z7FQIs65GTAj4owklimzcxB5wSN9WxYzhgYIQ==
+X-Received: by 2002:a17:906:255b:b0:a35:da0b:d011 with SMTP id
+ j27-20020a170906255b00b00a35da0bd011mr3354347ejb.61.1706615704656; 
+ Tue, 30 Jan 2024 03:55:04 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- hd10-20020a170907968a00b00a35cd148c7esm1872893ejc.212.2024.01.30.03.53.12
+ r16-20020a170906281000b00a35becf3f0csm2073977ejc.85.2024.01.30.03.55.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 03:53:12 -0800 (PST)
-Message-ID: <898124ff-880d-4bc5-beaa-ada1bc9439d3@linaro.org>
-Date: Tue, 30 Jan 2024 12:53:11 +0100
+ Tue, 30 Jan 2024 03:55:04 -0800 (PST)
+Message-ID: <c0b73d73-bb73-46d5-849a-b4f6542b8c2f@linaro.org>
+Date: Tue, 30 Jan 2024 12:55:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] intc/grlib_irqmp: implements the multiprocessor
- status register
+Subject: Re: [PATCH v2 0/8] sparc/leon3: Add support for -smp
 Content-Language: en-US
 To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: Frederic Konrad <konrad.frederic@yahoo.fr>
 References: <20240116130213.172358-1-chigot@adacore.com>
- <20240116130213.172358-4-chigot@adacore.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240116130213.172358-4-chigot@adacore.com>
+In-Reply-To: <20240116130213.172358-1-chigot@adacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,31 +96,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/1/24 14:02, Clément Chigot wrote:
-> This implements the multiprocessor status register in grlib-irqmp and bind
-> it to a start signal, which will be later wired in leon3-generic to
-> start a cpu.
+> V2 modifications
+>   - Patch1: Add SPDX copyright tags.
+>   - Patch3: Add defines for MP_STATUS fields. Improve comments.
+>   - Patch4: Improve a comment.
+>   - Patch6: Dropped as already merged.
 > 
-> The EIRQ and BA bits are not implemented.
-> 
-> Based on https://gaisler.com/doc/gr712rc-usermanual.pdf, §8.3.5.
-> 
-> Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
 > ---
->   hw/intc/grlib_irqmp.c | 35 ++++++++++++++++++++++++++++++++---
->   1 file changed, 32 insertions(+), 3 deletions(-)
+> 
+> This series allows leon3 emulations to record up 4 CPUs.
+> 
+> It requires some enhancements in the grlib_irqmp device and adding the
+> cpu_index field in the asr17 instruction.
+> 
+> It has been tested locally with various bareboard runtimes.
+> 
+> 
+> Clément Chigot (8):
+>    sparc/grlib: split out the headers for each peripherals
+>    intc/grlib_irqmp: add ncpus property
+>    intc/grlib_irqmp: implements the multiprocessor status register
+>    intc/grlib_irqmp: implements multicore irq
+>    target/sparc: implement asr17 feature for smp
+>    leon3: implement multiprocessor
+>    leon3: check cpu_id in the tiny bootloader
+>    MAINTAINERS: replace Fabien by myself as Leon3 maintainer
 
+Cc'ing maintainers per:
 
-> @@ -325,6 +345,8 @@ static void grlib_irqmp_reset(DeviceState *d)
->   
->       memset(irqmp->state, 0, sizeof *irqmp->state);
->       irqmp->state->parent = irqmp;
-> +    irqmp->state->mpstatus = ((irqmp->ncpus - 1) << MP_STATUS_NCPU_SHIFT)
-> +        | ((1 << irqmp->ncpus) - 2);
+$ ./scripts/get_maintainer.pl -f hw/sparc/leon3.c
+"Clément Chigot" <chigot@adacore.com> (maintainer:Leon3)
+Frederic Konrad <konrad.frederic@yahoo.fr> (maintainer:Leon3)
+Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> (maintainer:SPARC TCG CPUs)
+Artyom Tarasenko <atar4qemu@gmail.com> (maintainer:SPARC TCG CPUs)
 
-Indentation off, otherwise:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Mark / Artyom if you don't have PR planned I can take the v3 if you Ack.
 
->   }
+Regards,
 
+Phil.
 
