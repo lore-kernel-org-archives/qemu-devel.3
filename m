@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33269C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65323C47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUjSM-0002d9-2Y; Tue, 30 Jan 2024 03:26:58 -0500
+	id 1rUjWZ-0003kA-Cl; Tue, 30 Jan 2024 03:31:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjSB-0002Ta-JB
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:26:49 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjWS-0003jX-ON
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:31:13 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjS9-0003Jm-RH
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:26:47 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a2f22bfb4e6so518405066b.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:26:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjWM-0003sj-AU
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:31:11 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-40e8fec0968so43974595e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:31:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706603204; x=1707208004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706603463; x=1707208263; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cRg1KPfnEeu4OlNchSDyEddHh2WugqQCGoHSXGlBAGU=;
- b=UIzcKC68spAWT/kEO29XFkWlht0wRdTvmJeWwenJXH9T495wz5e11ZP4LKXKdvMhW2
- wTmlrrgY9cFE7xSwCvK37sri86yExe10cz6C7aq2e1XXDsmuqNw8AGS/pYBr/HgBLFvN
- yg0Q7/Zpte6g4qZNiNgQTHCjh91wk3Hi5NrPRgt7220DxhnIvRtWa6shShx18lXjVg4K
- Q7wtYcnh6//AipIC+yS1OXzlKmoMCDy62G9DSg7U5bYXPoVeFMIVqBVl80FsSt2bNv0b
- dRFPE7Ws+9Cuu9i/9u2AyCefoHF4tLaoH+It9lE4exvkoQ+urZJTnilLqH+/t+3NkPmM
- t0Hg==
+ bh=cxVszLHp8FDNbJNY/mf3ia485nZl1e2+jY4i4I+6OVU=;
+ b=KotUov3hy/joLtNXFqo8RNmBOdAbnnkiye/V4eNmJQqhS6U2g1vJcGU9dwNOQZpXCm
+ IpwTZiNRkiwOFKVwzRn4j/zXq7n0jRYzCHFc+34EjuT83My2oDZgVYHKoKPH3+nLwNmZ
+ 5Yy/pTjaO+aTkMgYR9Vn+WyRvN+l9JtQa16Z8Gu2AgVVgLQm0QAizPVvZpBPbhfIBT9c
+ B7QSXW6uQV2wKUdRzXo3I5fnOcvG13sUVI8orFFftk74IpCmHk3W9FMqGSQKmGM65eaF
+ Hh6fUpa4h5e8YFiHkFC/65LnMMpbJg5WieINvO5fHRXTgsTLupvdW5hGUw+vTqJUHyDw
+ 4VUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706603204; x=1707208004;
+ d=1e100.net; s=20230601; t=1706603463; x=1707208263;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cRg1KPfnEeu4OlNchSDyEddHh2WugqQCGoHSXGlBAGU=;
- b=csWozWkdzRnXGvWagySlCO4kYgBLL67qdeI7Rvt/F3JT/1Kv2tzCOzzEbXtVV+WGbV
- i9ZJiobOI33j1SX9jo812cv6xKZu7xpB/Fq1Oz1EHGxgejzAqrPvR+tRp5NlewZxTRrO
- 7qreC2DfJ1KGxLOJqX33gr47aNgTNOe7HPUoVAJJiNMhqKTomFg3kzl6Ed9OSlUieP/U
- JcbBenGgRCaxuNnuJR5bUAp8vZsdGEJ+v6Jcveu+j+JU/SE0MuoKLvjrVyX6n/t4qrvx
- A3dfq+5lnWvikb+be68glmgyrgCkp7E/xauDZrRolXUmHbzjRtEmRqxHg2EzTvBLqseA
- oq/A==
-X-Gm-Message-State: AOJu0YxrQ7QpkbBMs+jVtWHkYF9Kuc72dLOONdYWNAgLZYMmaFx1nFum
- vwzFGksG4L2vsmGJQ8/9KB8DYp5YiIaGhCGfDWAV59xUhcrMWO8qTi1yPbxB4QDj/9i0pviT/ww
- 4
-X-Google-Smtp-Source: AGHT+IGrpuJnUUn5l9y48y9HxyE4iUxVYGnYVTEnPY11YgyiNKZRHlxn1lRxfFtHZybW66c5AcmARQ==
-X-Received: by 2002:a17:906:6d8:b0:a36:11f:58fc with SMTP id
- v24-20020a17090606d800b00a36011f58fcmr1824317ejb.40.1706603204326; 
- Tue, 30 Jan 2024 00:26:44 -0800 (PST)
+ bh=cxVszLHp8FDNbJNY/mf3ia485nZl1e2+jY4i4I+6OVU=;
+ b=W9DU7dWHZANhwWrLHxrqVeRvA/Dem9RM0rsv1fciYAk5ukN5CRwC2yfdtIVCY0uxls
+ ZIEWuelentQb53l8nNS63zo4V8iBg1FsbNJ97gA1cXm9+i0ZUJ89uO6VXHHZiw86rxIw
+ kbhr2G7mBqLnMfuGr3dZntp5k4iCnif+dga5GCyPG+dFCUlaD+LJsfAiP6ZcblHTYj7b
+ 4m22UgbNSRBgZVg1QJ5lp0mDrB+9YcHAq7XQyYxK093tlHoRtnCzL8tNtGq2Ef4EcXZa
+ bvO/p7nsGVg+u8TADr42hRc7QETN1OAX+LD6PZyVjgDmMywHDV2lOwyiBCBXL2nbbAKK
+ nCkg==
+X-Gm-Message-State: AOJu0YxpN9frSn9hOQE4/8fM/GYnEVJ0UwiP7isZ2y4TM83KeDLWqmru
+ FKFS/c6Pyq56OMcTID10z358NCFhAc56eh0wIZTVPLpp7ZIPxj1DT5fmi0MKzZo=
+X-Google-Smtp-Source: AGHT+IFgDQSZYS5xJZG8e5E7Fkd5LoE5NrieGmNZZyqED57aOktYazg6vuC6KmRkM/qj3PAioUiCPQ==
+X-Received: by 2002:adf:e58f:0:b0:33a:f4ba:d5ee with SMTP id
+ l15-20020adfe58f000000b0033af4bad5eemr2368411wrm.23.1706603463027; 
+ Tue, 30 Jan 2024 00:31:03 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- ub11-20020a170907c80b00b00a353ca3d907sm3762676ejc.217.2024.01.30.00.26.43
+ u15-20020a056000038f00b0033afd6551b2sm219513wrf.96.2024.01.30.00.31.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 00:26:43 -0800 (PST)
-Message-ID: <f9558a60-ef89-4820-9c6c-8489b3e7f462@linaro.org>
-Date: Tue, 30 Jan 2024 09:26:43 +0100
+ Tue, 30 Jan 2024 00:31:02 -0800 (PST)
+Message-ID: <f9d910e7-6b65-481e-abd9-f289eacacc88@linaro.org>
+Date: Tue, 30 Jan 2024 09:31:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/33] hw/core: Introduce CPUClass hook for mmu_index
+Subject: Re: [PATCH] pflash: fix sectors vs bytes confusion in
+ blk_pread_nonzeroes()
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: anjo@rev.ng
-References: <20240129233043.34558-1-richard.henderson@linaro.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Xiang Zheng <zhengxiang9@huawei.com>
+References: <20240130002712.257815-1-stefanha@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240129233043.34558-1-richard.henderson@linaro.org>
+In-Reply-To: <20240130002712.257815-1-stefanha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,54 +97,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/1/24 00:30, Richard Henderson wrote:
-> While the primary use of mmu_index is for the softmmu index for
-> system-mode tcg, it has a secondary use in encoding cpu state for
-> the page table walker, and thus depending on the target may also
-> be used by memory_rw_debug with kvm et al.
+On 30/1/24 01:27, Stefan Hajnoczi wrote:
+> The following expression is incorrect because blk_pread_nonzeroes()
+> deals in units of bytes, not sectors:
 > 
-> This is why I placed the hook in CPUClass not TCGCPUOps.
+>    bytes = MIN(size - offset, BDRV_REQUEST_MAX_SECTORS)
+>                                                ^^^^^^^
 > 
+> BDRV_REQUEST_MAX_BYTES is the appropriate constant.
 > 
-> r~
+> Fixes: a4b15a8b9ef2 ("pflash: Only read non-zero parts of backend image")
+> Cc: Xiang Zheng <zhengxiang9@huawei.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>   hw/block/block.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> 
-> Richard Henderson (33):
->    include/hw/core: Add mmu_index to CPUClass
->    target/alpha: Split out alpha_env_mmu_index
->    target/alpha: Populate CPUClass.mmu_index
->    target/arm: Split out arm_env_mmu_index
->    target/arm: Populate CPUClass.mmu_index
->    target/avr: Populate CPUClass.mmu_index
->    target/cris: Cache mem_index in DisasContext
->    target/cris: Populate CPUClass.mmu_index
->    target/hppa: Populate CPUClass.mmu_index
->    target/i386: Populate CPUClass.mmu_index
->    target/loongarch: Populate CPUClass.mmu_index
->    target/loongarch: Rename MMU_IDX_*
->    target/m68k: Populate CPUClass.mmu_index
->    target/microblaze: Populate CPUClass.mmu_index
->    target/mips: Pass ptw_mmu_idx down from mips_cpu_tlb_fill
->    target/mips: Split out mips_env_mmu_index
->    target/mips: Populate CPUClass.mmu_index
->    target/nios2: Populate CPUClass.mmu_index
->    target/openrisc: Populate CPUClass.mmu_index
->    target/ppc: Split out ppc_env_mmu_index
->    target/ppc: Populate CPUClass.mmu_index
->    target/riscv: Rename riscv_cpu_mmu_index to riscv_env_mmu_index
->    target/riscv: Replace cpu_mmu_index with riscv_env_mmu_index
->    target/riscv: Populate CPUClass.mmu_index
->    target/rx: Populate CPUClass.mmu_index
->    target/s390x: Split out s390x_env_mmu_index
->    target/s390x: Populate CPUClass.mmu_index
->    target/sh4: Populate CPUClass.mmu_index
->    target/sparc: Populate CPUClass.mmu_index
->    target/tricore: Populate CPUClass.mmu_index
->    target/xtensa: Populate CPUClass.mmu_index
->    include/exec: Implement cpu_mmu_index generically
->    include/exec: Change cpu_mmu_index argument to CPUState
+> diff --git a/hw/block/block.c b/hw/block/block.c
+> index 9f52ee6e72..ff503002aa 100644
+> --- a/hw/block/block.c
+> +++ b/hw/block/block.c
+> @@ -30,7 +30,7 @@ static int blk_pread_nonzeroes(BlockBackend *blk, hwaddr size, void *buf)
+>       BlockDriverState *bs = blk_bs(blk);
+>   
+>       for (;;) {
+> -        bytes = MIN(size - offset, BDRV_REQUEST_MAX_SECTORS);
+> +        bytes = MIN(size - offset, BDRV_REQUEST_MAX_BYTES);
+>           if (bytes <= 0) {
+>               return 0;
+>           }
 
-Series:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
