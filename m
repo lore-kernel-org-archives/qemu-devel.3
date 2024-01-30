@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 493A0C47DDF
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 10:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A0E4C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 10:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUlCE-0005Dn-7N; Tue, 30 Jan 2024 05:18:26 -0500
+	id 1rUlFz-0006gu-6Z; Tue, 30 Jan 2024 05:22:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUlCA-00055k-Pk
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:18:22 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rUlFx-0006gK-T8
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:22:17 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rUlC9-0005JK-8n
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:18:22 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a2a17f3217aso517472966b.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 02:18:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rUlFv-0005v6-B5
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:22:17 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-40ef6bbb61fso16467565e9.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 02:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706609899; x=1707214699; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pefoji9VsUlEMmyQtliMeRlNDQVVnfBhMfEnpti8Av0=;
- b=VGjLScqvElLcW0g5jR2JZxw3Jf8cwrHrhdh7BD8uiRSZKPJXRSHyLvdn5B8CeCuCZ8
- SAg5g7hYlE1fKbiE40hYdviVd6IBsgGZM/iqHOWYXj0FJz91Oa3cRK9jLo+IgS5v9lDG
- ko9aWpMkiZv2gRiuj3+HE2MbmS08tyRZxdqOux478g23Fv+plA8c+Jz3SQSVcBcFSgHB
- BRkPIcEdMzurhsZf6srwNRMUS7y8ZxMC7BM5XuhM3e2OjuYa6NgcRKNTfQ8jSlEVQAam
- SrpQmILuaDYuBYqs3A2LW4ttsjenYt7gIlRXUKLE05jFxGhCXztHH9uCwrph1jyDFcMe
- qQgw==
+ d=linaro.org; s=google; t=1706610133; x=1707214933; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=kIafumXK1cXSV78KiLyZvbw4P/pMFo6LAFAlZGmXJb8=;
+ b=lf11AU+gg5XdTFA8WCS7OQKcyCWFrX59EBjJdFiPfCuAv/8cKPnrfE3+M6XEf+X4aj
+ DJBgsiBf+ymrJL7hyB9MkImnY7GYHMV59V6zRClU0x5OF4HcNkbmyKwDljUJ1J2pbsxj
+ 3ZLs1wjWLBjOUJk9nLW6dLYw3QLNVh23uBGJA6WpozVIv9VF1vkfDgCQI0f0qZNqs+um
+ 0oveWjrD0A4i4+3zBXQ/fm9JVWDLFsFBSjGJS6AZgPX9gZcHhpMQb4thd7pw4c8ZFQOK
+ FX25elctGIOO44BPkg7uE3ExOGEriaf7W6xWRgo1h3uILcM8pEy65TV/obI8+1KGg5BT
+ 2m/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706609899; x=1707214699;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pefoji9VsUlEMmyQtliMeRlNDQVVnfBhMfEnpti8Av0=;
- b=fB9RXI5hl4uVeDHGM8dqy5iCnDIScg0xWnadVwuTXPFxwgMiA0BbOkEW1i9UE+WhnS
- b2F69ns4lqrNfZPO+yxpHfb8lprF6NU4ktdqKOjVl66AdCvqnFxcE3enTIbcmBjcNSTw
- 7diuq8EYWrSQtnSq/goCgt4FPsGsssnnZL0fqsEDlMCRXJusbP4fLNn/btHEQBXPIxL3
- xr4/jU7a2b/zvUUO1puIDNO+zaDa+A5Y5Okwzut4SyI4YHl9UxmkI+G3Bdiw7c4M8aoH
- rOndkyaZGG/2GwULhCzDbhpwImAxreNVfmdTohh+sQxyaq80iaOf2GWzPFJ/ujBX8IAF
- gB6A==
-X-Gm-Message-State: AOJu0Yw42biBA7CTCcj8cTpDAgArCqHa60lih4HvSQPRWzc+oMclfjOR
- 4s0/hxLzovXGZQfH9v+5B3/iDA8dk/oc+n3/Tvrxmjj9VrJtsqlbPdgJp1ZF2LRhykxMf/+z4De
- E83u8RHT6dAQiLOp+HQM1o9mhfsVSttvIvf4New==
-X-Google-Smtp-Source: AGHT+IEulnw+w82KbxR4YPB/tYbZFWCi3GJRaDlRU12sFNmAv3hirxlfNlw1EDyoQ0Dg90mAleOeNrJYTOl4F3R4sjQ=
-X-Received: by 2002:a17:906:c093:b0:a2f:d73d:e99c with SMTP id
- f19-20020a170906c09300b00a2fd73de99cmr6462724ejz.14.1706609899292; Tue, 30
- Jan 2024 02:18:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706610133; x=1707214933;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kIafumXK1cXSV78KiLyZvbw4P/pMFo6LAFAlZGmXJb8=;
+ b=w2YBQXNECkk0PQba2zCrkpaAJo/SSgQuvQnqrNI6788G2KVgrgP++1OiIraHjDWJf9
+ ZYrtVnUiNgr5KLlHlWJG7DmqRAIPOTHrRZMh5eeS6w8+uWPQCeDk/gHqP+ve1VdBto1d
+ cZk3dX9KQirN07TLfDnFC1cTebKauqtPNoOspYGnxkR4Sj2IguhD9zeHLy5uUNqdjLFg
+ Q3imvO6Vtz2kIpnF3nDMKP12Y+i2o7oFnq8IbPHhHlLNZz4er85L2ieF27un9w8Yi3GM
+ V+EGkeYxkF4w8ej/q58JZgm1jF70J/g/L473clD7eDxWtoyAgc6ytkA2oQ/aWQBiVEhu
+ KaYg==
+X-Gm-Message-State: AOJu0YxcaunFt7AL1LSXoewwzgVLUFLRJ2o+rOU8i9a/IvoDCskMUqql
+ hlkC8NlrBQ+TyC/c1SXGXU9TqLXtFUuEos8C97tp92p+3evhI4/NX06kEpF8ynw=
+X-Google-Smtp-Source: AGHT+IGm4pwVoBlt6sPmsLJzKE6acjc3YMElBUpO65tNY78+64Iqj1I4mQU5+FXcJBXBcNsG1I97ww==
+X-Received: by 2002:a05:600c:502b:b0:40e:f9d4:2b03 with SMTP id
+ n43-20020a05600c502b00b0040ef9d42b03mr3237053wmr.12.1706610133344; 
+ Tue, 30 Jan 2024 02:22:13 -0800 (PST)
+Received: from meli.delivery (adsl-101.109.242.224.tellas.gr.
+ [109.242.224.101]) by smtp.gmail.com with ESMTPSA id
+ g7-20020a05600c4ec700b0040e5945307esm12705075wmq.40.2024.01.30.02.22.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jan 2024 02:22:13 -0800 (PST)
+Date: Tue, 30 Jan 2024 12:17:18 +0200
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v1] scripts/checkpatch.pl: check for placeholders in cover
+ letter patches
+User-Agent: meli 0.8.5-rc.3
+References: <20240130075615.181040-1-manos.pitsidianakis@linaro.org>
+ <ZbivaYQ1rC6AgHbU@redhat.com>
+ <CAAjaMXaxqEGDY3RwSPns-Rr67-RV-9CL35XkKMyEhrryYAqsfQ@mail.gmail.com>
+ <ZbjFmQNrq3zVb5l6@redhat.com> <82jli.0uwnyp8y89dd@linaro.org>
+ <ZbjInI4T-tJCebIw@redhat.com>
+In-Reply-To: <ZbjInI4T-tJCebIw@redhat.com>
+Message-ID: <82ksy.fm0dt4we1re8@linaro.org>
 MIME-Version: 1.0
-References: <20240126041725.124562-1-peterx@redhat.com>
- <20240126041725.124562-7-peterx@redhat.com>
- <87le8c6u1d.fsf@suse.de>
- <CAFEAcA-x4WqvPsN-KZOA3SPN0F=vvYi=NFZ2qom2iT7-CN0RSg@mail.gmail.com>
- <87il3g6t7b.fsf@suse.de> <ZbcSqyGNLGu7ugBb@x1n> <87sf2ge3qu.fsf@suse.de>
- <87y1c7ogze.fsf@suse.de>
-In-Reply-To: <87y1c7ogze.fsf@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Jan 2024 10:18:07 +0000
-Message-ID: <CAFEAcA_BPf4LSh-JF1NVVVdaLoKgUcsnGeP7sHt-f73r4zyh7g@mail.gmail.com>
-Subject: Re: [PULL 06/15] tests/qtest/migration: Don't use -cpu max for aarch64
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62c.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,24 +102,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jan 2024 at 23:31, Fabiano Rosas <farosas@suse.de> wrote:
+On Tue, 30 Jan 2024 11:59, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
+>On Tue, Jan 30, 2024 at 11:54:51AM +0200, Manos Pitsidianakis wrote:
+>> On Tue, 30 Jan 2024 11:47, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
+>> > On Tue, Jan 30, 2024 at 10:51:58AM +0200, Manos Pitsidianakis wrote:
+>> > > On Tue, 30 Jan 2024 at 10:12, Daniel P. Berrangé <berrange@redhat.com> wrote:
+>> > > >
+>> > > > On Tue, Jan 30, 2024 at 09:56:15AM +0200, Manos Pitsidianakis wrote:
+>> > > > > Check if a file argument is a cover letter patch produced by
+>> > > > > git-format-patch --cover-letter; It is initialized with subject suffix "
+>> > > > > *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***". If they
+>> > > > > exist, warn the user.
+>> > > > >
+>> > > > > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> > > > > ---
+>> > > > >  scripts/checkpatch.pl | 14 ++++++++++++++
+>> > > > >  1 file changed, 14 insertions(+)
+>> > > > >
+>> > > > > diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+>> > > > > index 7026895074..34f12c9848 100755
+>> > > > > --- a/scripts/checkpatch.pl
+>> > > > > +++ b/scripts/checkpatch.pl
+>> > > > > @@ -1650,6 +1650,20 @@ sub process {
+>> > > > >                       $non_utf8_charset = 1;
+>> > > > >               }
+>> > > > >
+>> > > > > +# Check if this is a cover letter patch produced by git-format-patch
+>> > > > > +# --cover-letter; It is initialized with subject suffix
+>> > > > > +# " *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***"
+>> > > > > +             if ($in_header_lines &&
+>> > > > > +                 $rawline =~ /^Subject:.+[*]{3} SUBJECT HERE [*]{3}\s*$/) {
+>> > > > > +        WARN("Patch appears to be a cover letter with uninitialized subject" .
+>> > > > > +             " '*** SUBJECT HERE ***'\n$hereline\n");
+>> > > > > +             }
+>> > > > > +
+>> > > > > +             if ($rawline =~ /^[*]{3} BLURB HERE [*]{3}\s*$/) {
+>> > > > > +        WARN("Patch appears to be a cover letter with leftover placeholder " .
+>> > > > > +             "text '*** BLURB HERE ***'\n$hereline\n");
+>> > > > > +             }
+>> > > >
+>> > > > Indentation here is totally off
+>> > > 
+>> > > It only seems that way because the pre-existing lines use tabs, while
+>> > > I used spaces, according to the QEMU Coding style:
+>> > 
+>> > It is more important to be consistent within a single function.
+>> > 
+>> > Regardless of that though, the indent is still broken because the body
+>> > of the 'if' condition is indented /less/ than the 'if' condition itself.
+>> 
+>> Well not really, that's because my editor replaced the tabs when quoting
+>> your e-mail.
 >
-> Fabiano Rosas <farosas@suse.de> writes:
+>The under-indentation of the WARN statement has nothing to do with
+>reply quoting, it is visible in the initial patch you submitted:
 >
-> > Peter Xu <peterx@redhat.com> writes:
-> >
-> >> On Fri, Jan 26, 2024 at 11:54:32AM -0300, Fabiano Rosas wrote:
-> > The issue that occurs to me now is that 'cpu host' will not work with
-> > TCG. We might actually need to go poking /dev/kvm for this to work.
->
-> Nevermind this last part. There's not going to be a scenario where we
-> build with CONFIG_KVM, but run in an environment that does not support
-> KVM.
+>  https://lists.nongnu.org/archive/html/qemu-devel/2024-01/msg06216.html
 
-Yes, there is. We'll build with CONFIG_KVM on any aarch64 host,
-but that doesn't imply that the user running the build and
-test has permissions for /dev/kvm.
+The html in that link has expanded tabs to 8 spaces :) And QEMU coding 
+style says an indentation level is 4 spaces.
 
-thanks
--- PMM
+This is one of the reasons tabs should not be used for indentation at 
+all. It shows up different in different contexts.
+
+Anyway, it's not very important in any case. Besides, I have superseded 
+this patch with a v2.
+
+Thanks,
+Manos
 
