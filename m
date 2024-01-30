@@ -4,122 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05172C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 09:15:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5ECC46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 09:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUkCq-0005GV-Gp; Tue, 30 Jan 2024 04:15:07 -0500
+	id 1rUkDN-0005g5-3c; Tue, 30 Jan 2024 04:15:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1rUkCm-0005GI-6q; Tue, 30 Jan 2024 04:14:56 -0500
-Received: from mail-vi1eur02on2072a.outbound.protection.outlook.com
- ([2a01:111:f400:fe16::72a]
- helo=EUR02-VI1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1rUkCk-00031q-1v; Tue, 30 Jan 2024 04:14:55 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=X7YUTrtIefZRy5LV5jBr2sE/rZrKXwMpapHBX3QFqOh9r0fFiweReaMo1RhJ7AzfRmU5EAWWiUkWyTKAmGDD6xq+aUr62fJLVtRTumAJXzW0Cfs06QmtLAdGMJ2Hblw8adTJ4z3Fomi7nB1uP2ZAr8cHxyiotsVzcsmnbtFyRo0UH/mD+nxhRptXIPdA+/O5XN5x9Z/jXwE1qUYYj38oTFowxhbdO3/n3O3oBYksCCjC6GMvec8iGLKk1bkegc482YwA28SY3f4jlUtQ2ngW7DG+B3lkjfc3dU1PFgMCtqpNQBIkDhKUHdZ40xxtq5NzL1tx3Sh5IvUrKm9t95uKXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FMmx+r2TjpCB5oQS0w+GjyQw2qxEvy1syDcYI1Wj0ww=;
- b=EcplK+rLHlyYTqN9/BDudE8yweuup6GkMk/daNC6NTBasASYm6uqAMivlv7ke2sjMISd6dFUCmz48s+xnwEuWy/Zd1V10IhM77xCNnWW4cK0AG0n8vtgCqQP4avgjzRXqLQKLO2gauvujx9iaAbTMSyIH7s3efM3O66isRW/f89yXuHaamn5D+sat+Lnu5PFb0erwi5kWLY5HeZ9hJjkYdF8bbXYMF2+f8Kv9347CNOdrY+nAQAv7gcFR1khqetcEHSWzWC0JzV5zqLSL6sJ7/KzteaxkN3PC3JpZMxFPrVUipnDrhmLyVAoZhdzAen9AK3IhMjNzUBW4kf+EYYpvA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FMmx+r2TjpCB5oQS0w+GjyQw2qxEvy1syDcYI1Wj0ww=;
- b=0cb5Ya8V+M4d0n2iP3Y2E7TDt7RHHnLuoIdrQ8LkxAdxOFR4kZ9bn3JZVFrpMdgsbXuq98UQv01scqlbP1UIBInnb4AGxcgseg/jaHEL85z8SGrUGs96ztkcmwwfwGn7CY8rPWVPxBu3YoIDq39JwKBP1FduEmyvywYAdSTvPHo98gnyI5aqi2JQNQdLQBCaeOWcyup+Eee7V9bnXIrKHHu18NncOyKTuHvpcY/2JFq85VRh9Om61HhQLZHywjx+bIzXTpLFsXcznGHpsTtNeznWecv2K9XcN/YCL9YjkQ7nzl9wXsM6RnF2SIEVsqngpdrd9Wzkx9hc/GqdmT1Srw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19) by PR3PR08MB5644.eurprd08.prod.outlook.com
- (2603:10a6:102:86::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.34; Tue, 30 Jan
- 2024 09:14:48 +0000
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::567e:e2db:3928:5839]) by VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::567e:e2db:3928:5839%7]) with mapi id 15.20.7228.029; Tue, 30 Jan 2024
- 09:14:47 +0000
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
- jsnow@redhat.com, vsementsov@yandex-team.ru, kwolf@redhat.com,
- hreitz@redhat.com
-Subject: [PATCH v3] blockcommit: Reopen base image as RO after abort
-Date: Tue, 30 Jan 2024 10:14:40 +0100
-Message-Id: <20240130091440.2346274-1-alexander.ivanov@virtuozzo.com>
-X-Mailer: git-send-email 2.40.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VI1PR06CA0214.eurprd06.prod.outlook.com
- (2603:10a6:802:2c::35) To VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUkD8-0005ZN-Uo
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:15:19 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUkD6-00032x-2M
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:15:17 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-40ed3101ce3so50775745e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 01:15:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706606113; x=1707210913; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XfLxFI71XIL2+DXs783wOnsq5mKcs7k1NE3Mgkhwb64=;
+ b=OqdgQ1+uTGA20KvCz/5xHOwRatboVVoxpNdWpy7/I1LkVgABKLBkYFPi0458FNGsxB
+ 7TzbWAixuu/1maSmKNnsnm48kWiyJdvBy46jv95A6jmRwm6Ow+RudSP+4YernVlbqQnI
+ mQfoqeWPPjMp4MG6jSUGLHhcmhBfqTrESqfHAvcYcKGeKosod8+j/obl4qEYHLD6/253
+ g2rSNoO4N1ce0HG+riIQJVApeUvaFBAUXidzy06Rlb+7dD+4KbCfDViu3XMw+qjnzVH3
+ aMNJZQPzFB0QZDORUy2cKpbiRP5mxM+Ri9vYd3f9NjCzC8lfkyLHV1fWurSdWn/0lkVq
+ /vSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706606113; x=1707210913;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XfLxFI71XIL2+DXs783wOnsq5mKcs7k1NE3Mgkhwb64=;
+ b=sWbbd4iHY8iz67D5P4tZFiffWkdpdH/qGAeHl7jOTaKHH/qzbY5VD4T5LmMBGhEhtg
+ TIYIkhtZZ13Wqg7YDBQ0el6aSD60fEXIqJ98P9eKHVtlK6kxd15CW4O0epflG6PmvgmB
+ djov2xY4e9j6ZEV3beGO7g+TNk54ngsky3SChQVC+OBqRvHcxcQSE2h2aXaO7leZPF+k
+ M6cGf25zGJfgGZJ3nZNm38ldozDLcRJyeVLskjqQzMWNQn2c0DmPpRam6ke+8aLU0cz6
+ U9zrMhoKSapgC/rgJf7MmKOz8ZFi9x772K9gK5MmoKX3J9qB/dSmZ8mCuoGzIIhtdr/n
+ WuiA==
+X-Gm-Message-State: AOJu0YykLTiSJ9QyUsM45lDfhXF6bPAbKVu3LAK2KmyCdsLOuF8YjnWK
+ mdfLOy7wcj7yZOj8RksJnQ0N3DbRbRozswaIte+ChhXXX6VwjAvGCKLj77wwrmg=
+X-Google-Smtp-Source: AGHT+IGC/6N/3WghPptMWVuT4hGgCt69hXwHHV1fqkiLjZLsg0ybuMnX2OSZ30EFAgA3lhpXIF8ulA==
+X-Received: by 2002:a05:600c:3c91:b0:40e:5e25:4099 with SMTP id
+ bg17-20020a05600c3c9100b0040e5e254099mr7095730wmb.7.1706606113132; 
+ Tue, 30 Jan 2024 01:15:13 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.218.134])
+ by smtp.gmail.com with ESMTPSA id
+ gw7-20020a05600c850700b0040efc845cb6sm2449364wmb.7.2024.01.30.01.15.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jan 2024 01:15:12 -0800 (PST)
+Message-ID: <61f637bc-96da-48f6-8798-95426060deff@linaro.org>
+Date: Tue, 30 Jan 2024 10:15:10 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|PR3PR08MB5644:EE_
-X-MS-Office365-Filtering-Correlation-Id: 68d9e432-8faf-4a66-6e39-08dc2173e7e5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 8TN3D0zJClE+SUhNGHiNhIjsoumu/NJ7HDHIzw4t3RiTRRDSkMsdZem32mLMHbBFcW6BwuoRPSky/7wnHDw6G7m5NgQjRYm4oUXJuIGmu2Bjoe3uqvTh3IUvi46g6UZr0qJtmJxGlILIoxnf0544yduWUdeP2bYk6HOMxnyCGkPJGrzEqEYQfDOeVrXjBJUp/Fc8eLiW7HtesUpznT2JbLPsU1CUJyLMOP8fCtneIsH+6kinFUkAl95IpqvkzFzP0MPGNkpMI+1UDUFPQK+n8GKoCalVU0sm1zmFRSU560esuucdnveSi9OM0DB0zFplhYTE15E0yECiPIhwFXU4yhy4hGVJnLbluvUJRx3QvIsNN3yErMFwPQL+ud6KguBg90pSudPb/vi9+Ux9cDZ1MduQi5yf82M8RP0GmowLdONhN/uVAHIB1hMqxEY8+NtjW7Cqfi3ofbLUeYq5EnGmddQTcuUs76QTxX4WnJOZKGZZmvIN01Gllgdld/GWTch8+Oh18jLQQTumeTmCkXUdDxTsMXKCdsQbqXgHyTx8NIluBWm4GULG7Do8e15Yt2+h98QM60+Fgqfz9JSkW1496LONQPeu4qEwiZ0IFP4Euy+fSvJbGRXYEwXrazFjYc8H
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366004)(396003)(376002)(136003)(346002)(39850400004)(230922051799003)(451199024)(186009)(1800799012)(64100799003)(26005)(38350700005)(5660300002)(44832011)(86362001)(2906002)(8676002)(4326008)(8936002)(6916009)(66476007)(66556008)(66946007)(6512007)(316002)(52116002)(1076003)(36756003)(2616005)(6486002)(478600001)(6666004)(6506007)(41300700001)(83380400001)(38100700002);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?f6+DtPFzkO3covgroE8JoyrEH4NvDOSfXSD9AlZi8138iyCCYn3ks7+LGt4P?=
- =?us-ascii?Q?E0nfU+leTYbt6pGODnhBjvSVbD7IaRUrBTGBdEM7kCG9i14F0sDA9ba6kPAw?=
- =?us-ascii?Q?qZ6Hi+b6hbgXWRdty4dZ7g8w/qspdSKaTABcJlPFJktVgo6K5qWO63yzHE0D?=
- =?us-ascii?Q?zhEMkvDaF9SeGAMdnDcPKJUjKRyo1XG7Nq9qgtt6LVRSzOiR7KhnA5POuAGh?=
- =?us-ascii?Q?qFyvIp5sOwJo5kjjpfotH1C05yUqrEVlquvZNm8L/QQJ6g84kz6DGjqAbRl5?=
- =?us-ascii?Q?YH8OKuPih5Zgamanjm0UJuz50SPRsebOc3DZWoaRirrY+Am6iO60wDJgKccQ?=
- =?us-ascii?Q?ujQJDg4qHbdzy49rJv3yCwn4Ibybazb27B0b+G7crTKv8Jy+35ilcogkikyC?=
- =?us-ascii?Q?+PEGEOW0YUPMbR7k4rfqBNJA3J1bZaJPM5R8e2S6jSzc0niysgk+Om8Yqaro?=
- =?us-ascii?Q?6dwuUN9JHBObt5jZGVsyFCqTpN1tR74h76ybyhJV+B92EzFRuqLLcNiY4+VR?=
- =?us-ascii?Q?bxeUFxYlflS9c5iVNqckXRXF3ApGWrd5yjpBLcI+YsHT2T/5DOON9PgDjQKF?=
- =?us-ascii?Q?HOZklX2/+kLDFX8i1KioAlMhdu7GPHle7pz1bP4c+PpD+kt7SPmLvvywvGow?=
- =?us-ascii?Q?Q6rJ7V7/2rR7t5HKualPOa2DMKeggyN5u7YAMIg5SRS7K1Y8wjXsYVw0oS/b?=
- =?us-ascii?Q?KD9uE7/1C+N5To5LHaKjmOfKSVa3zY0DDG1ynEaOfhva8YBY2X0U3o57JVWt?=
- =?us-ascii?Q?imp8P/b2Q+uV5t384Du+9EWkUkLjhf33BSMnnvV1Wl6rDTAmBJya3KiQyIUh?=
- =?us-ascii?Q?21jrsQpG7WUUHVkF4JP7hm+il3++TErOpRYGcHsTCu3p1FG7Fx9UDZBHy1ZR?=
- =?us-ascii?Q?hyyITCos4VK+TlJPEC0qp/dtYPBBvTebzYPSqtRXw3hQAN0Y7m6nWwiWTKxD?=
- =?us-ascii?Q?yHc82u89f00bJ3X34LrgnCE4q588u5qAw65C544GtgrUr6BBoO9EgXM2mn2O?=
- =?us-ascii?Q?HsOjvPvvh+1Lc1QfTKiwbM79AOx2jUFdbY3lUKFpXyGW85JUjQdR7BigTvNg?=
- =?us-ascii?Q?/nwmI0JDIfovDSDsdr0Ca6YkqrxQSXkvcRqjXq9I5v5ZVoFBVGVFE8Gf/aRb?=
- =?us-ascii?Q?xxxi7jcORw8Nc3l+OU8jJJxus5mCE/P7eqJdI2bG3vjYsUGBYDxLgLXMwoZd?=
- =?us-ascii?Q?VRvFJ7TG2lNLCmiGV5DrfR7oWcf9qmNVwDHGJZ/wV5TQQFLoBEtDmVntqQjQ?=
- =?us-ascii?Q?zIfaX7PSoF3CvcndhwBtF3TDUgn3MWfH2n0Rs/KnisKS6qdGPjsSdWtH7vp3?=
- =?us-ascii?Q?H/4u3UFnH4DqT50YM1qMN82DvI7u0IGCBq+MF5ZrfSBEX6RKAu2hB5pQjPkh?=
- =?us-ascii?Q?DSk9B1HblIMngoIEdJtr4RRNb3B3/bu0Q6q9N6APsz46P3fpjHyhsvuopdB5?=
- =?us-ascii?Q?TUTNuGNDKnV1H5AmpBER7BTUNHps/HrByHSi6GOQ6dYdlHSBBp/jMyr+C9AG?=
- =?us-ascii?Q?lTXkOxKim/A/TqV3c1DPbb5OlbyTORe3DuA29Bc4cifQhMuL+e6B3X8fCnVX?=
- =?us-ascii?Q?nt80NUetchmpeItnBxW+h7aJKdHMjZ6qP4Droy35XdBSuZnoY7e0BL6jNd34?=
- =?us-ascii?Q?MpZ66OQofFpQvDiAwfEC3PA=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 68d9e432-8faf-4a66-6e39-08dc2173e7e5
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2024 09:14:47.6844 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DA8gQs0un7wykpf3wgqYKVwE8DRX73BlCqf2EwJyDWG2k9xQdVT+LiK68SvIVvO1DB2ESE8CqqFRcKa1dH+dnOir2UIaOMBupF/XYNlXguM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR08MB5644
-Received-SPF: pass client-ip=2a01:111:f400:fe16::72a;
- envelope-from=alexander.ivanov@virtuozzo.com;
- helo=EUR02-VI1-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 7/8] leon3: check cpu_id in the tiny bootloader
+Content-Language: en-US
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
+Cc: Frederic Konrad <konrad.frederic@yahoo.fr>
+References: <20240116130213.172358-1-chigot@adacore.com>
+ <20240116130213.172358-8-chigot@adacore.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240116130213.172358-8-chigot@adacore.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,125 +94,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a blockcommit is aborted the base image remains in RW mode, that leads
-to a fail of subsequent live migration.
+On 16/1/24 14:02, Clément Chigot wrote:
+> Now that SMP is possible, the asr17 must be checked in the little boot code
+> or the secondary CPU will reinitialize the Timer and the Uart.
+> 
+> Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
+> ---
+>   hw/sparc/leon3.c | 22 ++++++++++++++++++++--
+>   1 file changed, 20 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+> index eacd85ee4f..87a8044a3e 100644
+> --- a/hw/sparc/leon3.c
+> +++ b/hw/sparc/leon3.c
+> @@ -100,13 +100,27 @@ static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
+>   
+>   /*
+>    * When loading a kernel in RAM the machine is expected to be in a different
+> - * state (eg: initialized by the bootloader). This little code reproduces
+> - * this behavior.
+> + * state (eg: initialized by the bootloader).  This little code reproduces
+> + * this behavior.  Also this code can be executed by the secondary cpus as
+> + * well since it looks at the %asr17 register before doing any
+> + * initialization, it allows to use the same reset address for all the
+> + * cpus.
+>    */
+>   static void write_bootloader(CPUSPARCState *env, uint8_t *base,
+>                                hwaddr kernel_addr)
+>   {
+>       uint32_t *p = (uint32_t *) base;
+> +    uint32_t *sec_cpu_branch_p = NULL;
+> +
+> +    /* If we are running on a secondary CPU, jump directly to the kernel.  */
+> +
+> +    stl_p(p++, 0x85444000); /* rd %asr17, %g2      */
+> +    stl_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
+> +    stl_p(p++, 0x80908000); /* tst  %g2            */
+> +    /* Fill that later.  */
 
-How to reproduce:
-  $ virsh snapshot-create-as vm snp1 --disk-only
+       /* Filled below. */
 
-  *** write something to the disk inside the guest ***
+> +    sec_cpu_branch_p = p;
+> +    stl_p(p++, 0x0BADC0DE); /* bne xxx             */
+> +    stl_p(p++, 0x01000000); /* nop */
+>   
+>       /* Initialize the UARTs                                        */
+>       /* *UART_CONTROL = UART_RECEIVE_ENABLE | UART_TRANSMIT_ENABLE; */
+> @@ -120,6 +134,10 @@ static void write_bootloader(CPUSPARCState *env, uint8_t *base,
+>       /* *GPTIMER0_CONFIG = GPTIMER_ENABLE | GPTIMER_RESTART;        */
+>       p = gen_store_u32(p, 0x80000318, 3);
+>   
+> +    /* Now, the relative branch above can be computed.  */
+> +    stl_p(sec_cpu_branch_p, 0x12800000
+> +          + (p - sec_cpu_branch_p));
+> +
+>       /* JUMP to the entry point                                     */
+>       stl_p(p++, 0x82100000); /* mov %g0, %g1 */
+>       stl_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
 
-  $ virsh blockcommit vm vda --active --shallow && virsh blockjob vm vda --abort
-  $ lsof /vzt/vm.qcow2
-  COMMAND      PID USER   FD   TYPE DEVICE   SIZE/OFF NODE NAME
-  qemu-syst 433203 root   45u   REG  253,0 1724776448  133 /vzt/vm.qcow2
-  $ cat /proc/433203/fdinfo/45
-  pos:    0
-  flags:  02140002 <==== The last 2 means RW mode
+Alternatively have main_cpu_reset / secondary_cpu_reset handlers.
+You could split BL in HWINIT / JUMP, have HWINIT() return # instr
+used and adjust secondary_cpu_reset entry.
 
-If the base image is in RW mode at the end of blockcommit and was in RO
-mode before blockcommit, check if src BDS has refcnt > 1. If so, the BDS
-will not be removed after blockcommit, and we should make the base image
-RO. Otherwise check recursively if there is a parent BDS of src BDS and
-reopen the base BDS in RO in this case.
-
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
----
- block/mirror.c | 38 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
-
-diff --git a/block/mirror.c b/block/mirror.c
-index 5145eb53e1..52a7fee75e 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -93,6 +93,7 @@ typedef struct MirrorBlockJob {
-     int64_t active_write_bytes_in_flight;
-     bool prepared;
-     bool in_drain;
-+    bool base_ro;
- } MirrorBlockJob;
- 
- typedef struct MirrorBDSOpaque {
-@@ -652,6 +653,32 @@ static void coroutine_fn mirror_wait_for_all_io(MirrorBlockJob *s)
-     }
- }
- 
-+/*
-+ * Check recursively if there is a parent BDS referenced more than
-+ * min_refcnt times. This argument is needed because at the first
-+ * call there is a bds referenced in blockcommit.
-+ */
-+static bool bdrv_chain_has_significant_parent(BlockDriverState *bs)
-+{
-+    BdrvChild *parent;
-+    BlockDriverState *parent_bs;
-+
-+    QLIST_FOREACH(parent, &bs->parents, next) {
-+        if (!(parent->klass->parent_is_bds)) {
-+            continue;
-+        }
-+        parent_bs = parent->opaque;
-+        if (parent_bs->drv && !parent_bs->drv->is_filter) {
-+            return true;
-+        }
-+        if (bdrv_chain_has_significant_parent(parent_bs)) {
-+            return true;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- /**
-  * mirror_exit_common: handle both abort() and prepare() cases.
-  * for .prepare, returns 0 on success and -errno on failure.
-@@ -793,6 +820,11 @@ static int mirror_exit_common(Job *job)
-     bdrv_drained_end(target_bs);
-     bdrv_unref(target_bs);
- 
-+    if (s->base_ro && !bdrv_is_read_only(target_bs) &&
-+        (src->refcnt > 1 || bdrv_chain_has_significant_parent(src))) {
-+        bdrv_reopen_set_read_only(target_bs, true, NULL);
-+    }
-+
-     bs_opaque->job = NULL;
- 
-     bdrv_drained_end(src);
-@@ -1715,6 +1747,7 @@ static BlockJob *mirror_start_job(
-                              bool is_none_mode, BlockDriverState *base,
-                              bool auto_complete, const char *filter_node_name,
-                              bool is_mirror, MirrorCopyMode copy_mode,
-+                             bool base_ro,
-                              Error **errp)
- {
-     MirrorBlockJob *s;
-@@ -1798,6 +1831,7 @@ static BlockJob *mirror_start_job(
-     bdrv_unref(mirror_top_bs);
- 
-     s->mirror_top_bs = mirror_top_bs;
-+    s->base_ro = base_ro;
- 
-     /* No resize for the target either; while the mirror is still running, a
-      * consistent read isn't necessarily possible. We could possibly allow
-@@ -2027,7 +2061,7 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-                      speed, granularity, buf_size, backing_mode, zero_target,
-                      on_source_error, on_target_error, unmap, NULL, NULL,
-                      &mirror_job_driver, is_none_mode, base, false,
--                     filter_node_name, true, copy_mode, errp);
-+                     filter_node_name, true, copy_mode, false, errp);
- }
- 
- BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
-@@ -2056,7 +2090,7 @@ BlockJob *commit_active_start(const char *job_id, BlockDriverState *bs,
-                      on_error, on_error, true, cb, opaque,
-                      &commit_active_job_driver, false, base, auto_complete,
-                      filter_node_name, false, MIRROR_COPY_MODE_BACKGROUND,
--                     errp);
-+                     base_read_only, errp);
-     if (!job) {
-         goto error_restore_flags;
-     }
--- 
-2.40.1
-
+Anyway,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
