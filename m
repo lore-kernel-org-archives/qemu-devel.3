@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7AAC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061B8C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUmXP-0001Ed-TS; Tue, 30 Jan 2024 06:44:24 -0500
+	id 1rUmfL-0005Dj-UT; Tue, 30 Jan 2024 06:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmXN-000152-9z
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:44:21 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmfK-0005AZ-Ka
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:52:34 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmXL-0007b0-QX
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:44:21 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a35e65df2d8so213125666b.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:44:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmfJ-0000Lb-2y
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:52:34 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a359446b57dso288432666b.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:52:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706615058; x=1707219858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706615551; x=1707220351; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=38vZLVE5LLM+k6uuuX2x+pXQ0WmZImqryq5Q84MBTas=;
- b=kXD7l7iAhuiut4ZolrakzeJW1k/WpM3KIRgKjGAr0YrjjhP9sqvzFFPJWkYEp4d+HK
- WeC8dagfdtajz11RD4vRVv2nX9dTctuagSxj7baHsGbm14rx/ebpdtSApQGieYWaeg9u
- 07+eit03jrJD4ESYuTzAsZjTwnboRjxmBRqMRham4wlusTVcK/O2kztw1YQdNwttG27S
- a3ZJlohq2v9F4QAx7dEHk3MIEceggzcyeIbWT9zIx+V8jTuQUOFMchFN0u+M+2Ec0QWm
- HKnyvuCJJZhFTpSGCJdRJMjjgPZoWMYFbcZzRtawJ7FW6TtywyJst1th0QVf6UtwmeOC
- +ZMQ==
+ bh=8HLIQQPmg6yO2wkf1cfqMKx5WiKcA+VI6/DWk59FUWg=;
+ b=Y35JQPeM0i7y+ex3zRwTozMV9WJO1T6F1nMjfV6zQrRjQvwcXCfqmj7cemNaIZLvD8
+ bIZV6S9jlZVUOmdLZ2kWnOz1VhUqDDeMlgmbJzzp8lr/SxKr2wn3+6rENsmV4F2jqQ34
+ xgzQI2FxmOPF5JIdE6+yJygMrPzmh8rtO5pMzMOC6LWxkXpW+ocDBh7Hxmq6CHSmrr90
+ EQOQDN2cYSPmSe3K0Zf6k1S1oyOj8gq1miyHF6b7LlfOx+aC58k0svdQefPgB20x/k0g
+ inkxkB2N6EBGlFYorxW8NiD6jonrqNiSEMWgjgxt2W/D8EaTv5oJ5TS4Q8Pv1j8M2fX7
+ SPBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706615058; x=1707219858;
+ d=1e100.net; s=20230601; t=1706615551; x=1707220351;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=38vZLVE5LLM+k6uuuX2x+pXQ0WmZImqryq5Q84MBTas=;
- b=e1ZZ9RnPcbOE2/OolmwjZ1IYZb1OLdGiY3+Z/82rT5/6igD5yxj+C1ygE1+76ExF+d
- UjtH37Mq3tsAQ/wj4Vgzb53bwh0OsGDnOdyvx4EXgVYZ6rm4AED/gem9BOFVbONtPnd9
- aOhGNxO+bmFrACwO5pIh0cHgMDUEsTxWED0/Dbl6rMmbKDrRk6Vz6aJMeUCz6pfkJv02
- 07e+URQrT5s+KmLGQie++pqEH5ic7YDXBSPmlQxcgplctxUMpEhE/ZeB4AGlQL4EWthg
- rRy3/N7pxNmT4fPhEKXkUfTiIxBeBI0QO2AQqorHjo9cw/jOPYQdk2ti9JUy72FW4jPM
- YvoA==
-X-Gm-Message-State: AOJu0Yz0+3iWD8nvc7e6P0DBvKgfur7rp/zTpCiqzmTiI8Q8sDpiCkTP
- PnIpQBPQG81VZCKS6KFfrxX6ucDM0+qF7khoXQ4XL8rP/6IOoPNHXCzov/hinv4=
-X-Google-Smtp-Source: AGHT+IFUo8Cp7fBtA/SO+mErjg/9m310v8s3OzBWvxmhkhNuLuKaeuJHcVbgQegxis1r2LAgxCV8Ow==
-X-Received: by 2002:a17:906:2796:b0:a35:e40a:6d1d with SMTP id
- j22-20020a170906279600b00a35e40a6d1dmr2400245ejc.21.1706615058279; 
- Tue, 30 Jan 2024 03:44:18 -0800 (PST)
+ bh=8HLIQQPmg6yO2wkf1cfqMKx5WiKcA+VI6/DWk59FUWg=;
+ b=gA8ehsYWxAHZASowOXw1qph5cg4dHSYJMg3zf2JLF1ajQdkALn4Qgc5ilAqegfFdP3
+ fFufGmVJpjKm/m7hyu+3Ow63DpRMyfl2pT56vzgGVogMzInkn5gjMy3vWFP+JQErOCpb
+ YIJ3Vg4UoMEVDAArm7Zn/Ofpv31X2b58FVM050Vn+FrWpVal7doHfF0D6g1f5CdZIWJZ
+ kF/dMc27ibR8eR93p6KHRyE9mNMuwcwlvJcCAJnxD8fecpUlW4gCnKQHmCA8cf7pKRof
+ t2QKP2O68YfhjJtssGC7kVPeNtrozWyK4YHw8noG4tHIRuoY/cSp1wcdEDJJgnYmtoN4
+ tEXg==
+X-Gm-Message-State: AOJu0YywHXI0ISqO0OHxfkLYA/3MpbLbT0Dqb8nJsIhOV9kgYA79s2bo
+ Z9ARuWCbRk8g9pi2CSA8mAskN5fyb2zLPGQqtgtQwk/k/Eme6cRwabUIfpxgGes=
+X-Google-Smtp-Source: AGHT+IF7lov476QgHN3pZ69W8EVDvycBxOy3JXvGQs4eXH0Zmbgq62Bt6yI/ALZ3m59objRFT+tUww==
+X-Received: by 2002:a17:906:9904:b0:a2f:2867:dabe with SMTP id
+ zl4-20020a170906990400b00a2f2867dabemr6106795ejb.1.1706615551362; 
+ Tue, 30 Jan 2024 03:52:31 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- hd10-20020a170907968a00b00a35cd148c7esm1865132ejc.212.2024.01.30.03.44.17
+ hd10-20020a170907968a00b00a35cd148c7esm1872893ejc.212.2024.01.30.03.52.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 03:44:17 -0800 (PST)
-Message-ID: <48e8b880-1e74-4265-a98d-d52345ebc801@linaro.org>
-Date: Tue, 30 Jan 2024 12:44:17 +0100
+ Tue, 30 Jan 2024 03:52:30 -0800 (PST)
+Message-ID: <cbc72601-31c8-456f-886b-641d746499c8@linaro.org>
+Date: Tue, 30 Jan 2024 12:52:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] target/sparc: implement asr17 feature for smp
+Subject: Re: [PATCH v2 6/8] leon3: implement multiprocessor
 Content-Language: en-US
 To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: Frederic Konrad <konrad.frederic@yahoo.fr>,
- Richard Henderson <richard.henderson@linaro.org>
+Cc: Frederic Konrad <konrad.frederic@yahoo.fr>
 References: <20240116130213.172358-1-chigot@adacore.com>
- <20240116130213.172358-6-chigot@adacore.com>
+ <20240116130213.172358-7-chigot@adacore.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240116130213.172358-6-chigot@adacore.com>
+In-Reply-To: <20240116130213.172358-7-chigot@adacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,17 +95,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/1/24 14:02, Clément Chigot wrote:
-> This allows the guest program to know its cpu id.
+> This allows to register more than one CPU on the leon3_generic machine.
 > 
 > Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
 > Signed-off-by: Clément Chigot <chigot@adacore.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/sparc/helper.c    | 16 ++++++++++++++++
->   target/sparc/helper.h    |  1 +
->   target/sparc/translate.c | 13 +++----------
->   3 files changed, 20 insertions(+), 10 deletions(-)
+>   hw/sparc/leon3.c | 106 +++++++++++++++++++++++++++++++++--------------
+>   1 file changed, 74 insertions(+), 32 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +static void leon3_start_cpu(void *opaque, int n, int level)
+> +{
+> +    CPUState *cs = CPU(opaque);
+> +
+> +    if (level) {
+> +        async_run_on_cpu(cs, leon3_start_cpu_async_work, RUN_ON_CPU_NULL);
+> +    }
+
+
+What about instead:
+
+     assert(level == 1);
+     async_run_on_cpu(cs, leon3_start_cpu_async_work, RUN_ON_CPU_NULL);
+
+since per patch #3:
+
+  +    /*
+  +     * Transitionning from 0 to 1 starts the CPUs. The opposite can't
+  +     * happen.
+  +     */
+
+> +}
 
 
