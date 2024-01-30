@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C617C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 10:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E77C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 10:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUlde-000231-N9; Tue, 30 Jan 2024 05:46:46 -0500
+	id 1rUlfB-0003GU-R4; Tue, 30 Jan 2024 05:48:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUldc-00021y-JQ
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:46:44 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUlfA-0003Fe-53
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:48:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUldQ-0003v9-7R
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:46:44 -0500
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40UAjLTP028705; Tue, 30 Jan 2024 10:46:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=pp1; bh=DlDJwqGdKKL8th6A6LyRVfg8xSeL1QEw5/70yG8hijM=;
- b=I2e1SvoBHDxsd4hYlRPUWpNJ5MnG+XnDE9rMM4qpIUhnCZPg2RREbbwknrsTWcY5uY9S
- AL/HRnZUqWScucT8XmYeYagFJ3pBbI13u6/pjG2uxe4MXikriG/576QpmDBeZf446G5I
- g/cqaZgeGhpQK/FbrMVekTGLgIXdSSNuFHUtPeA5G0A7LU2OXlswNywDn5CdEusPL+Kd
- qgGmLsHhh4DwujREAV4DUCq4cyRtJ7ZnjYQ2apGE41cYBqF440bnIyZcd0Qvn6udVPYg
- CRiAn8cPvL6iEh6rnmadlj7IEq/b+vai+KCRgVwHAW+RwTs6teVC5Vof9aDRZB3DPfoN Tw== 
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vxyg28900-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jan 2024 10:46:30 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40U8ZCVm007179; Tue, 30 Jan 2024 10:46:30 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwev25rhs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jan 2024 10:46:29 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40UAkSc623790138
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jan 2024 10:46:28 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C77420043;
- Tue, 30 Jan 2024 10:46:28 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9F4920040;
- Tue, 30 Jan 2024 10:46:27 +0000 (GMT)
-Received: from heavy (unknown [9.171.1.43])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 30 Jan 2024 10:46:27 +0000 (GMT)
-Date: Tue, 30 Jan 2024 11:46:26 +0100
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 24/33] tests/tcg: Remove run-test-mmap-*
-Message-ID: <qbjgj5l5tgjwqo2lgbopu7j6gydcsxedxjggo3ypffpnr7gufx@kjsidkkjofxq>
-References: <20240102015808.132373-1-richard.henderson@linaro.org>
- <20240102015808.132373-25-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUlf8-0004Oi-LI
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 05:48:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706611697;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9gB2J6kr4easvAjJIYGK7lfO3I88bpiGgWZo27L07pM=;
+ b=EdWEirsPtD/jmC7jNrCaIiioDoQn17QyRAnmzY5CUqq3jtipAGCGSj0OH3XbGDgIZO5ZKz
+ VW+Q1tUdlUy2h40+5EQtmCgGTtFTubCUSRDn4c4W8SP3ISZw2ehMY0IYeis1NgcX/qXVgz
+ DO0eyQr7BL5DPZzGdE4BjNuUI+n/SS8=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-88-O6Vv47FWPEC_oaWXdSKsnQ-1; Tue, 30 Jan 2024 05:48:15 -0500
+X-MC-Unique: O6Vv47FWPEC_oaWXdSKsnQ-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-59a44d084edso413765eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 02:48:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706611695; x=1707216495;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9gB2J6kr4easvAjJIYGK7lfO3I88bpiGgWZo27L07pM=;
+ b=ZUgHQhOm1H5L4b0ltnx9+Zo/MDH92mFgXHN2OaZO+Q/7IZXjNbPJW/mfaojJPQhhCF
+ H8l2FU3UOFOfbcaFw82Rw3lXowCbrqh+gCumVPIKkO5JKelRS8hF2DntrbXDAlqyVc5+
+ yOTIW/EgkF6i27oCdFz377IxtDCgKktHIHpDHeyZdBONgFXJ+35AByMOu6zK4WPTRNAO
+ FkvHnQB2aeavn4m05ukd3Mt7fuo6PEmQc0itdrMBEIl8+obcDoHHn54Kh+Y8yLiWEPkj
+ TBaT924lbnAr6O77LoDWFqzSl/8AzNcXWHA2URnSc8aNWuy2bxrUjBhoAZajOhIreYTz
+ yQwg==
+X-Forwarded-Encrypted: i=0;
+ AJvYcCWo3NBj4PS7MLNKf5o9Z6R7DGXybyA4trtgHyr2TQBBX29mGfTpTW9jn5pz8Dt9aPQm5hYyTX/tiZk+QQH9lfWbxQr69FA=
+X-Gm-Message-State: AOJu0Yw0BqOF4mLzXxisp8iqHlETn+7DZBfoTVoLiZ8R+ZVTePwc6GGT
+ +mE6I8G9BSd3BSH1bzohcy/9xE03SkHvAkDWnS+/RzZBrwZf0SLdhOq0X0XQ+DBl8Laxx8snHzc
+ QX3K6oBm4lPSCCBd8m2faa3ZAqgFrgw0/rQdV0u+C9Kkq+p2pIPdf
+X-Received: by 2002:a05:6359:459d:b0:176:c1e1:7556 with SMTP id
+ no29-20020a056359459d00b00176c1e17556mr8958944rwb.0.1706611694847; 
+ Tue, 30 Jan 2024 02:48:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHweTCsPMU4oT4XVDKME2sgT0o+KvoPz5nRqnbFrTnusnXnfhbbL7uII4y25Q/RHWnar1SDKw==
+X-Received: by 2002:a05:6359:459d:b0:176:c1e1:7556 with SMTP id
+ no29-20020a056359459d00b00176c1e17556mr8958927rwb.0.1706611694478; 
+ Tue, 30 Jan 2024 02:48:14 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ ld10-20020a056a004f8a00b006ddce8e110bsm7448000pfb.128.2024.01.30.02.48.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jan 2024 02:48:14 -0800 (PST)
+Date: Tue, 30 Jan 2024 18:48:04 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PULL 06/15] tests/qtest/migration: Don't use -cpu max for aarch64
+Message-ID: <ZbjT5OYpzNJjkMw9@x1n>
+References: <20240126041725.124562-1-peterx@redhat.com>
+ <20240126041725.124562-7-peterx@redhat.com>
+ <87le8c6u1d.fsf@suse.de>
+ <CAFEAcA-x4WqvPsN-KZOA3SPN0F=vvYi=NFZ2qom2iT7-CN0RSg@mail.gmail.com>
+ <87il3g6t7b.fsf@suse.de> <ZbcSqyGNLGu7ugBb@x1n>
+ <87sf2ge3qu.fsf@suse.de> <87y1c7ogze.fsf@suse.de>
+ <CAFEAcA_BPf4LSh-JF1NVVVdaLoKgUcsnGeP7sHt-f73r4zyh7g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240102015808.132373-25-richard.henderson@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: IuoaecGehoR4fGFb8Cr51DTqPR6bGHZX
-X-Proofpoint-ORIG-GUID: IuoaecGehoR4fGFb8Cr51DTqPR6bGHZX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-30_05,2024-01-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0
- spamscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=668 suspectscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2401300078
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <CAFEAcA_BPf4LSh-JF1NVVVdaLoKgUcsnGeP7sHt-f73r4zyh7g@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,24 +105,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 02, 2024 at 12:57:59PM +1100, Richard Henderson wrote:
-> These tests are confused, because -p does not change
-> the guest page size, but the host page size.
+On Tue, Jan 30, 2024 at 10:18:07AM +0000, Peter Maydell wrote:
+> On Mon, 29 Jan 2024 at 23:31, Fabiano Rosas <farosas@suse.de> wrote:
+> >
+> > Fabiano Rosas <farosas@suse.de> writes:
+> >
+> > > Peter Xu <peterx@redhat.com> writes:
+> > >
+> > >> On Fri, Jan 26, 2024 at 11:54:32AM -0300, Fabiano Rosas wrote:
+> > > The issue that occurs to me now is that 'cpu host' will not work with
+> > > TCG. We might actually need to go poking /dev/kvm for this to work.
+> >
+> > Nevermind this last part. There's not going to be a scenario where we
+> > build with CONFIG_KVM, but run in an environment that does not support
+> > KVM.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  tests/tcg/alpha/Makefile.target     |  3 ---
->  tests/tcg/arm/Makefile.target       |  3 ---
->  tests/tcg/hppa/Makefile.target      |  3 ---
->  tests/tcg/i386/Makefile.target      |  3 ---
->  tests/tcg/m68k/Makefile.target      |  3 ---
->  tests/tcg/multiarch/Makefile.target |  9 ---------
->  tests/tcg/ppc/Makefile.target       | 12 ------------
->  tests/tcg/sh4/Makefile.target       |  3 ---
->  tests/tcg/sparc64/Makefile.target   |  6 ------
->  9 files changed, 45 deletions(-)
->  delete mode 100644 tests/tcg/ppc/Makefile.target
->  delete mode 100644 tests/tcg/sparc64/Makefile.target
+> Yes, there is. We'll build with CONFIG_KVM on any aarch64 host,
+> but that doesn't imply that the user running the build and
+> test has permissions for /dev/kvm.
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+I'm actually pretty confused on why this would be a problem even for
+neoverse-n1: can we just try to use KVM, if it fails then use TCG?
+Something like:
+
+  (construct qemu cmdline)
+  ..
+#ifdef CONFIG_KVM
+  "-accel kvm "
+#endif
+  "-accel tcg "
+  ..
+
+?
+
+IIUC if we specify two "-accel", we'll try the first, then if failed then
+the 2nd?
+
+-- 
+Peter Xu
+
 
