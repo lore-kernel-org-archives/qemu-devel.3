@@ -4,80 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5ECC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 09:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A31C47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 09:33:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUkDN-0005g5-3c; Tue, 30 Jan 2024 04:15:37 -0500
+	id 1rUkUT-0000HP-9e; Tue, 30 Jan 2024 04:33:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUkD8-0005ZN-Uo
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:15:19 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUkD6-00032x-2M
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:15:17 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-40ed3101ce3so50775745e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 01:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706606113; x=1707210913; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XfLxFI71XIL2+DXs783wOnsq5mKcs7k1NE3Mgkhwb64=;
- b=OqdgQ1+uTGA20KvCz/5xHOwRatboVVoxpNdWpy7/I1LkVgABKLBkYFPi0458FNGsxB
- 7TzbWAixuu/1maSmKNnsnm48kWiyJdvBy46jv95A6jmRwm6Ow+RudSP+4YernVlbqQnI
- mQfoqeWPPjMp4MG6jSUGLHhcmhBfqTrESqfHAvcYcKGeKosod8+j/obl4qEYHLD6/253
- g2rSNoO4N1ce0HG+riIQJVApeUvaFBAUXidzy06Rlb+7dD+4KbCfDViu3XMw+qjnzVH3
- aMNJZQPzFB0QZDORUy2cKpbiRP5mxM+Ri9vYd3f9NjCzC8lfkyLHV1fWurSdWn/0lkVq
- /vSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706606113; x=1707210913;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XfLxFI71XIL2+DXs783wOnsq5mKcs7k1NE3Mgkhwb64=;
- b=sWbbd4iHY8iz67D5P4tZFiffWkdpdH/qGAeHl7jOTaKHH/qzbY5VD4T5LmMBGhEhtg
- TIYIkhtZZ13Wqg7YDBQ0el6aSD60fEXIqJ98P9eKHVtlK6kxd15CW4O0epflG6PmvgmB
- djov2xY4e9j6ZEV3beGO7g+TNk54ngsky3SChQVC+OBqRvHcxcQSE2h2aXaO7leZPF+k
- M6cGf25zGJfgGZJ3nZNm38ldozDLcRJyeVLskjqQzMWNQn2c0DmPpRam6ke+8aLU0cz6
- U9zrMhoKSapgC/rgJf7MmKOz8ZFi9x772K9gK5MmoKX3J9qB/dSmZ8mCuoGzIIhtdr/n
- WuiA==
-X-Gm-Message-State: AOJu0YykLTiSJ9QyUsM45lDfhXF6bPAbKVu3LAK2KmyCdsLOuF8YjnWK
- mdfLOy7wcj7yZOj8RksJnQ0N3DbRbRozswaIte+ChhXXX6VwjAvGCKLj77wwrmg=
-X-Google-Smtp-Source: AGHT+IGC/6N/3WghPptMWVuT4hGgCt69hXwHHV1fqkiLjZLsg0ybuMnX2OSZ30EFAgA3lhpXIF8ulA==
-X-Received: by 2002:a05:600c:3c91:b0:40e:5e25:4099 with SMTP id
- bg17-20020a05600c3c9100b0040e5e254099mr7095730wmb.7.1706606113132; 
- Tue, 30 Jan 2024 01:15:13 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.218.134])
- by smtp.gmail.com with ESMTPSA id
- gw7-20020a05600c850700b0040efc845cb6sm2449364wmb.7.2024.01.30.01.15.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 01:15:12 -0800 (PST)
-Message-ID: <61f637bc-96da-48f6-8798-95426060deff@linaro.org>
-Date: Tue, 30 Jan 2024 10:15:10 +0100
+ (Exim 4.90_1) (envelope-from <lichao@loongson.cn>)
+ id 1rUkUN-0000H9-HP
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:33:07 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lichao@loongson.cn>) id 1rUkUH-0006LQ-N5
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 04:33:07 -0500
+Received: from loongson.cn (unknown [10.40.24.149])
+ by gateway (Coremail) with SMTP id _____8BxnutBwrhl3EoIAA--.25264S3;
+ Tue, 30 Jan 2024 17:32:49 +0800 (CST)
+Received: from [10.40.24.149] (unknown [10.40.24.149])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxjhM7wrhlN8EnAA--.34693S3; 
+ Tue, 30 Jan 2024 17:32:43 +0800 (CST)
+Content-Type: multipart/alternative;
+ boundary="------------isy0rzj4qTAVu8AyJHw006Sx"
+Message-ID: <84256a9a-70b5-474a-b057-73fd8e3dae8e@loongson.cn>
+Date: Tue, 30 Jan 2024 17:32:43 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] leon3: check cpu_id in the tiny bootloader
-Content-Language: en-US
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: Frederic Konrad <konrad.frederic@yahoo.fr>
-References: <20240116130213.172358-1-chigot@adacore.com>
- <20240116130213.172358-8-chigot@adacore.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240116130213.172358-8-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Subject: Re: [libvirt PATCH V2 0/4] add loongarch support for libvirt
+To: lixianglai <lixianglai@loongson.cn>,
+ Andrea Bolognani <abologna@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: devel@lists.libvirt.org, maobibo@loongson.cn, jiyin@redhat.com
+References: <cover.1704369486.git.lixianglai@loongson.cn>
+ <CABJz62MxNvFfs4aCRyp+7YANupU2T4k7x1C6avm=curjB+NmkA@mail.gmail.com>
+ <17234d81-cc17-6859-720a-f033206780da@loongson.cn>
+From: Chao Li <lichao@loongson.cn>
+In-Reply-To: <17234d81-cc17-6859-720a-f033206780da@loongson.cn>
+X-CM-TRANSID: AQAAf8AxjhM7wrhlN8EnAA--.34693S3
+X-CM-SenderInfo: xolfxt3r6o00pqjv00gofq/1tbiAQAMCGW4s2EBLwABsl
+X-Coremail-Antispam: 1Uk129KBj9fXoWfGr1DZrykXFW3uryxZrWDGFX_yoW8Xry3Ko
+ WruF47Aw4UGr1DGF17Jrs5JFy5A348KrnrX3s7Wa4DGF1UtF4UG3yUW34UGa43Jr1rGryU
+ X34xX3s8AFW7Jryfl-sFpf9Il3svdjkaLaAFLSUrUUUU0b8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn1kqx4xG6xAqzII2Y4kfWbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVr
+ nRJUUUBGb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG6r
+ Wj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
+ z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr
+ 1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AKxVWxJr0_
+ GcWln4kS14v26r126r1DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I
+ 8E6xACxx1l5I8CrVCF54CIxcxKerWlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCjr7xvwVCIw2I0I7
+ xG6c02F41lc7CjxVAaw2AFwI0_JF0_Jw1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
+ z7v_Jr0_Gr1l4IxYO2xFxVAFwI0_JF0_Jw1lx2IqxVAqx4xG67AKxVWUGVWUWwC20s026x
+ 8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE
+ 2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42
+ xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF
+ 7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1xRhUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=lichao@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,69 +85,935 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/24 14:02, Clément Chigot wrote:
-> Now that SMP is possible, the asr17 must be checked in the little boot code
-> or the secondary CPU will reinitialize the Timer and the Uart.
-> 
-> Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
-> ---
->   hw/sparc/leon3.c | 22 ++++++++++++++++++++--
->   1 file changed, 20 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-> index eacd85ee4f..87a8044a3e 100644
-> --- a/hw/sparc/leon3.c
-> +++ b/hw/sparc/leon3.c
-> @@ -100,13 +100,27 @@ static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
->   
->   /*
->    * When loading a kernel in RAM the machine is expected to be in a different
-> - * state (eg: initialized by the bootloader). This little code reproduces
-> - * this behavior.
-> + * state (eg: initialized by the bootloader).  This little code reproduces
-> + * this behavior.  Also this code can be executed by the secondary cpus as
-> + * well since it looks at the %asr17 register before doing any
-> + * initialization, it allows to use the same reset address for all the
-> + * cpus.
->    */
->   static void write_bootloader(CPUSPARCState *env, uint8_t *base,
->                                hwaddr kernel_addr)
->   {
->       uint32_t *p = (uint32_t *) base;
-> +    uint32_t *sec_cpu_branch_p = NULL;
-> +
-> +    /* If we are running on a secondary CPU, jump directly to the kernel.  */
-> +
-> +    stl_p(p++, 0x85444000); /* rd %asr17, %g2      */
-> +    stl_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
-> +    stl_p(p++, 0x80908000); /* tst  %g2            */
-> +    /* Fill that later.  */
+This is a multi-part message in MIME format.
+--------------isy0rzj4qTAVu8AyJHw006Sx
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-       /* Filled below. */
+Hi All,
 
-> +    sec_cpu_branch_p = p;
-> +    stl_p(p++, 0x0BADC0DE); /* bne xxx             */
-> +    stl_p(p++, 0x01000000); /* nop */
->   
->       /* Initialize the UARTs                                        */
->       /* *UART_CONTROL = UART_RECEIVE_ENABLE | UART_TRANSMIT_ENABLE; */
-> @@ -120,6 +134,10 @@ static void write_bootloader(CPUSPARCState *env, uint8_t *base,
->       /* *GPTIMER0_CONFIG = GPTIMER_ENABLE | GPTIMER_RESTART;        */
->       p = gen_store_u32(p, 0x80000318, 3);
->   
-> +    /* Now, the relative branch above can be computed.  */
-> +    stl_p(sec_cpu_branch_p, 0x12800000
-> +          + (p - sec_cpu_branch_p));
-> +
->       /* JUMP to the entry point                                     */
->       stl_p(p++, 0x82100000); /* mov %g0, %g1 */
->       stl_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
+Added my notes below.
 
-Alternatively have main_cpu_reset / secondary_cpu_reset handlers.
-You could split BL in HWINIT / JUMP, have HWINIT() return # instr
-used and adjust secondary_cpu_reset entry.
 
-Anyway,
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks,
+Chao
+On 2024/1/30 16:59, lixianglai wrote:
+>
+> Hi Andrea:
+>
+>     I'm sorry for taking so long to reply you!
+>
+> Hi Philippe:
+>
+>     When developing libvirt on loongarch, we encountered some problems 
+> related to pflash.
+>
+> libvirt and qemu met some difficulties in the coordination of UEFI 
+> loading.
+>
+> I think we need your suggestions and opinions on the solution.
+>
+>
+>> On Fri, Jan 12, 2024 at 02:32:43PM +0800, Xianglai Li wrote:
+>>> Hello, Everyone:
+>>>    This patch series adds libvirt support for loongarch.Although the bios
+>>> path and name has not been officially integrated into qemu and we think
+>>> there are still many shortcomings, we try to push a version of patch to
+>>> the community according to the opinions of the community, hoping to
+>>> listen to everyone's opinions. Anyway we have a version of libvirt that
+>>> supports loongarch.
+>>>
+>>>    You can also get libvirt's patch from the link below:
+>>> https://gitlab.com/lixianglai/libvirt
+>>> branch: loongarch
+>>>
+>>>    Since the patch associated with loongarch has not yet been submitted to
+>>> the virt-manager community, we are providing a temporary patch with
+>>> loongarch for the time being patch's virt-manager, the open source work
+>>> of virt-manager adding loongarch will be followed up later or
+>>> synchronized with the open source libvirt.
+>>>
+>>>    You can get the virt-manager code with loongarch patch from the link below:
+>>> https://github.com/lixianglai/virt-manager
+>>> branch: loongarch
+>> It's really great that you're considering the entire stack, all the
+>> way up to virt-manager, while working on this! :)
+> Oh! Thanks!
+> :)
+>>>    loongarch's virtual machine bios is not yet available in qemu, so you can get it from the following link
+>>> https://github.com/lixianglai/LoongarchVirtFirmware
+>>> (Note: You should clone the repository using git instead of downloading the file via wget or you'll get xml)
+>>> We named the bios QEMU_EFI.fd, QEMU_VARS.fd is used to store pflash images of non-volatile
+>>> variables.After installing qemu-system-loongarch64,You can install the loongarch bios by executing the script
+>>> install-loongarch-virt-firmware.sh
+>> To clarify, loongarch support has been merged into upstream edk2
+>> already, right? And the contents of this repository are just for
+>> convenience, since loongarch builds of edk2 have generally not made
+>> it into distros yet? I think I might have asked about this already,
+>> sorry O:-)
+>
+> Don't mention it.
+>
+> All right, The loongarch support has been merged into upstream edk2 
+> already.
+>
+> And you can see a detailed description of loongarch uefi in the link 
+> below:
+>
+> https://github.com/tianocore/edk2-platforms/blob/master/Platform/Loongson/LoongArchQemuPkg/Readme.md
+>
+> this repository are just for convenience. :)
+
+BTW, LoongArchVirt under OvmfPkg is being committed to upstream, I guess 
+it will be merged before the stable202402, please refer to:
+
+https://bugzilla.tianocore.org/show_bug.cgi?id=4584
+
+https://edk2.groups.io/g/devel/message/114526
+
+https://github.com/tianocore/edk2/pull/5208
+
+Most maintainer have completed the review.
+
+>
+>> Anyway, I fetched and installed this. The firmware descriptor looks
+>> like:
+>>
+>>    {
+>>       "interface-types": [
+>>         "uefi"
+>>       ],
+>>       "mapping": {
+>>         "device": "memory",
+>>         "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd"
+>>       },
+>>       "targets": [
+>>         {
+>>           "architecture": "loongarch64",
+>>           "machines": [
+>>             "virt",
+>>             "virt-*"
+>>           ]
+>>         }
+>>       ],
+>>       "features": [
+>>           "acpi"
+>>       ]
+>>     }
+>>
+>> This is not what I expected: specifically, it results in libvirt
+>> generating
+>>
+>>    -bios /usr/share/edk2/loongarch64/QEMU_EFI.fd
+>>
+>> So only one of the two files is used, in read-only mode, and there is
+>> no persistent NVRAM storage that the guest can use.
+>>
+>> This is what I expected instead:
+>>
+>>    {
+>>       "interface-types": [
+>>         "uefi"
+>>       ],
+>>       "mapping": {
+>>         "device": "flash",
+>>         "mode": "split",
+>>         "executable": {
+>>           "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd",
+>>           "format": "raw"
+>>         },
+>>         "nvram-template": {
+>>           "filename": "/usr/share/edk2/loongarch64/QEMU_VARS.fd",
+>>           "format": "raw"
+>>         }
+>>       },
+>>       "targets": [
+>>         {
+>>           "architecture": "loongarch64",
+>>           "machines": [
+>>             "virt",
+>>             "virt-*"
+>>           ]
+>>         }
+>>       ],
+>>       "features": [
+>>           "acpi"
+>>      ]
+>>    }
+>>
+>> I've tried installing such a descriptor and libvirt picks it up,
+>> resulting in the following guest configuration:
+>>
+>>    <os firmware='efi'>
+>>      <type arch='loongarch64' machine='virt'>hvm</type>
+>>      <firmware>
+>>        <feature enabled='no' name='enrolled-keys'/>
+>>        <feature enabled='no' name='secure-boot'/>
+>>      </firmware>
+>>      <loader readonly='yes'
+>> type='pflash'>/usr/share/edk2/loongarch64/QEMU_EFI.fd</loader>
+>>      <nvram template='/usr/share/edk2/loongarch64/QEMU_VARS.fd'>/var/lib/libvirt/qemu/nvram/guest_VARS.fd</nvram>
+>>      <boot dev='hd'/>
+>>    </os>
+>>
+>> which in turn produces the following QEMU command line options:
+>>
+>>    -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}'
+>>    -blockdev '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}'
+>>    -blockdev '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/guest_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}'
+>>    -blockdev '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}'
+>>
+>> Unfortunately, with this configuration the guest fails to start:
+>>
+>>    qemu-system-loongarch64: Property 'virt-machine.pflash0' not found
+>>
+>> This error message looked familiar to me, as it is the same that I
+>> hit when trying out UEFI support on RISC-V roughly a year ago[1]. In
+>> this case, however, it seems that the issue runs deeper: it's not
+>> just that the flash devices are not wired up to work as blockdevs,
+>> but even the old -drive syntax doesn't work.
+>>
+>> Looking at the QEMU code, it appears that the loongarch/virt machine
+>> only creates a single pflash device and exposes it via -bios. So it
+>> seems that there is simply no way to achieve the configuration that
+>> we want.
+>>
+>> I think that this is something that needs to be addressed as soon as
+>> possible. In the long run, guest-accessible NVRAM storage is a must,
+>> and I'm not sure it would make a lot of sense to merge loongarch
+>> support into libvirt until the firmware situation has been sorted out
+>> in the lower layers.
+>
+>
+> In the qemu code, loongarch virt machine does only create a pflash,
+>
+> which is used for nvram, and uefi code is loaded by rom.
+>
+> In summary, loongarch virt machine can use nvram with the following 
+> command:
+>
+> -------------------------------------------------------------------------------------------------------
+>
+> /qemu-system-loongarch64 \//
+> //-m 8G \//
+> //-smp 4 \//
+> //-cpu la464   \//
+> //-blockdev 
+> '{"driver":"file","filename":"./QEMU_VARS-pflash.raw","node-name":"libvirt-pflash0-storage","auto-read-only":false,"discard":"unmap"}' 
+> \//
+> //-blockdev 
+> '{"node-name":"libvirt-pflash0-format","read-only":false,"driver":"raw","file":"libvirt-pflash0-storage"}' 
+> \//
+> //-machine virt,pflash=libvirt-pflash0-format  \//
+> //-snapshot \//
+> //-bios ./QEMU_EFI.fd  \//
+> //-serial stdio/
+>
+> -------------------------------------------------------------------------------------------------------
+>
+>
+> This is really a big difference from the following boot method, and it 
+> still looks weird.
+>
+> -------------------------------------------------------------------------------------------------------
+>
+> /-blockdev 
+> '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}' 
+> -blockdev 
+> '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}' 
+> -blockdev 
+> '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/guest_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}' 
+> -blockdev 
+> '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}'/
+>
+> -------------------------------------------------------------------------------------------------------
+>
+> However, during the development of qemu loongarch,
+>
+> we also used a RISCV-like solution to create two pflash,
+>
+> but the qemu community suggested that we put uefi code in rom for the 
+> following reasons:
+>
+>
+> https://lore.kernel.org/qemu-devel/2f381d06-842f-ac8b-085c-0419675a4872@linaro.org/
+>
+> "
+>
+> Since you are starting a virtual machine from scratch, you should take
+> the opportunity to learn from other early mistakes. X86 ended that way
+> due to 1/ old firmwares back-compability and 2/ QEMU pflash block
+> protections not being implemented. IIUC if we were starting with a
+> UEFI firmware today, the layout design (still using QEMU) would be
+> to map the CODE area in a dumb ROM device, and the VARSTORE area
+> in a PFlash device. Since Virt machines don't need to use Capsule
+> update, having the CODE area in ROM drastically simplifies the design
+> and maintainance.
+>
+> "
+>
+> Well, anyway, now that we have an issue with qemu loongarch using 
+> nvram that is incompatible with libvirt,
+>
+> here I have come up with two solutions to solve this problem:
+>
+>
+>     Option 1:
+>
+> If the interface type "rom-uefi" is added and the device type 
+> "rom-flash" is added, the json file should be written like this:
+>
+> -------------------------------------------------------------------------------------------------------
+>
+> /{//
+> //   "interface-types": [//
+> ////"rom-uefi"//
+> //   ],//
+> //   "mapping": {//
+> ////"device": "rom-flash",//
+> //     "executable": {//
+> //       "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd",//
+> //       "format": "raw"//
+> //     },//
+> //     "nvram-template": {//
+> //       "filename": "/usr/share/edk2/loongarch64/QEMU_VARS.fd",//
+> //       "format": "raw"//
+> //     }//
+> //   },//
+> //   "targets": [//
+> //     {//
+> //       "architecture": "loongarch64",//
+> //       "machines": [//
+> //         "virt",//
+> //         "virt-*"//
+> //       ]//
+> //     }//
+> //   ],//
+> //   "features": [//
+> //       "acpi"//
+> //   ]/
+>
+>  -------------------------------------------------------------------------------------------------------
+>
+> Then add the parsing of the new interface types in libvirt and load 
+> QEMU_CODE.fd as -bios and QEMU_VARS.fd as nvram
+>
+> when creating the command line, generating commands like the following:
+>
+>  -------------------------------------------------------------------------------------------------------
+>
+> /qemu-system-loongarch64 \//
+> //-m 8G \//
+> //-smp 1 \//
+> //-cpu la464   \//
+> //-blockdev 
+> '{"driver":"file","filename":"////usr/share/edk2/loongarch64/QEMU_VARS.fd/","node-name":"libvirt-pflash0-storage","auto-read-only":false,"discard":"unmap"}' 
+> \//
+> //-blockdev 
+> '{"node-name":"libvirt-pflash0-format","read-only":false,"driver":"raw","file":"libvirt-pflash0-storage"}' 
+> \//
+> //-machine virt,pflash=libvirt-pflash0-format  \//
+> //-snapshot \//
+> //-bios /////usr/share/edk2/loongarch64///QEMU_EFI.fd \//
+> //-serial stdio/
+>
+> -------------------------------------------------------------------------------------------------------
+>
+>
+>     Option 2:
+>
+> Solution 2 mainly starts from qemu. Now the rom that bios is loaded 
+> into is a memory region that cannot be configured with attributes,
+>
+> so we imagine abstracting rom as a device, creating it during machine 
+> initialization and setting "pflash0" attribute for it.
+>
+> Then create a pflash and set its property to "pflash1", so our startup 
+> command will look like this:
+>
+>  -------------------------------------------------------------------------------------------------------
+>
+> /qemu-system-loongarch64 \//
+> //-m 8G \//
+> //-smp 1 \//
+> //-cpu la464   \//
+> //-blockdev 
+> '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}' 
+> \//
+> //-blockdev 
+> '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}' 
+> \//
+> //-blockdev 
+> '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}' 
+> \//
+> //-blockdev 
+> '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}' 
+> \//
+> //-machine 
+> virt,pflash0=libvirt-pflash0-format,pflash1=libvirt-pflash1-format \//
+> //-snapshot \//
+> //-serial stdio/
+>
+>  -------------------------------------------------------------------------------------------------------
+>
+> This way, without modifying libvirt, QEMU_CODE.fd can be loaded into 
+> the rom,
+>
+> but it is still a little strange that it is clearly rom but set a 
+> "pflash0" attribute, which can be confusing.
+>
+>
+>>>    Since there is no fedora operating system that supports the loongarch
+>>> architecture, you can find an iso that supports loongarch at the link
+>>> below for testing purposes:
+>>>    https://github.com/fedora-remix-loongarch/releases-info
+>>>
+>>>    Well, if you have completed the above steps I think you can now install loongarch virtual machine,
+>>> you can install it through the virt-manager graphical interface, or install it through vrit-install,
+>>> here is an example of installing it using virt-install:
+>>>
+>>> virt-install  \
+>>> --virt-type=qemu \
+>>> --name  loongarch-test \
+>>> --memory 4096 \
+>>> --vcpus=4 \
+>>> --arch=loongarch64 \
+>>> --boot cdrom \
+>>> --disk device=cdrom,bus=scsi,path=/root/livecd-fedora-mate-4.loongarch64.iso \
+>>> --disk path=/var/lib/libvirt/images/debian12-loongarch64.qcow2,size=10,format=qcow2,bus=scsi \
+>>> --network network=default \
+>>> --osinfo archlinux   \
+>>> --video=virtio  \
+>>> --graphics=vnc,listen=0.0.0.0
+>> Regardless of what I said above, this actually worked quite well! I
+>> was able to boot the MATE image and, ignoring the expected slowness
+>> caused by emulation, things were generally fairly smooth.
+>>
+>> Note that I tried the LXDE image first, expecting it to be a bit
+>> smaller and faster, but in that case I wasn't able to get a
+>> successful boot: edk2 loaded up just fine, but the guest OS was never
+>> started and I was dropped into the edk2 shell instead. Maybe that's a
+>> known issue, but I thought I'd point it out.
+>
+> Thank you very much for pointing out the problem,
+>
+> lxde iso is missing efiboot.img file so that the virtual machine UEFI 
+> can not recognize efi partition
+>
+> caused by the problem has been notified to the relevant personnel,
+>
+> I believe that the next version of libvirt patch will be shipped to 
+> use lxde iso.
+>
+>
+> Thanks,
+>
+> Xianglai.
+>
+>> [1]https://lists.gnu.org/archive/html/qemu-devel/2023-05/msg06258.html
+--------------isy0rzj4qTAVu8AyJHw006Sx
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><font size="2">Hi All,</font></p>
+    <p><font size="2">Added my notes below.<br>
+      </font></p>
+    <div class="moz-signature"
+      signature-switch-id="18b8a24a-8ce6-4aca-a108-921eeebcd5e9"><br>
+      <div
+style="width:15%;height:1px;background-color:grey;transform:scaleY(0.3)"></div>
+      <div style="color:grey;font-size:11px">Thanks,<br>
+        Chao<br>
+      </div>
+    </div>
+    <div class="moz-cite-prefix">On 2024/1/30 16:59, lixianglai wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:17234d81-cc17-6859-720a-f033206780da@loongson.cn">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <p>Hi Andrea:</p>
+      <p>    I'm sorry for taking so long to reply you!</p>
+      <p>Hi Philippe:</p>
+      <p>    When developing libvirt on loongarch, we encountered some
+        problems related to pflash. <br>
+      </p>
+      <p>libvirt and qemu met some difficulties in the coordination of
+        UEFI loading.</p>
+      <p> I think we need your suggestions and opinions on the solution.</p>
+      <p><br>
+      </p>
+      <blockquote type="cite"
+cite="mid:CABJz62MxNvFfs4aCRyp+7YANupU2T4k7x1C6avm=curjB+NmkA@mail.gmail.com">
+        <pre class="moz-quote-pre" wrap="">On Fri, Jan 12, 2024 at 02:32:43PM +0800, Xianglai Li wrote:
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">Hello, Everyone:
+  This patch series adds libvirt support for loongarch.Although the bios
+path and name has not been officially integrated into qemu and we think
+there are still many shortcomings, we try to push a version of patch to
+the community according to the opinions of the community, hoping to
+listen to everyone's opinions. Anyway we have a version of libvirt that
+supports loongarch.
+
+  You can also get libvirt's patch from the link below:
+<a class="moz-txt-link-freetext"
+          href="https://gitlab.com/lixianglai/libvirt"
+          moz-do-not-send="true">https://gitlab.com/lixianglai/libvirt</a>
+branch: loongarch
+
+  Since the patch associated with loongarch has not yet been submitted to
+the virt-manager community, we are providing a temporary patch with
+loongarch for the time being patch's virt-manager, the open source work
+of virt-manager adding loongarch will be followed up later or
+synchronized with the open source libvirt.
+
+  You can get the virt-manager code with loongarch patch from the link below:
+<a class="moz-txt-link-freetext"
+          href="https://github.com/lixianglai/virt-manager"
+          moz-do-not-send="true">https://github.com/lixianglai/virt-manager</a>
+branch: loongarch
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">It's really great that you're considering the entire stack, all the
+way up to virt-manager, while working on this! :)</pre>
+      </blockquote>
+      Oh! Thanks! <br>
+      <pre class="moz-quote-pre" wrap="">:)</pre>
+      <blockquote type="cite"
+cite="mid:CABJz62MxNvFfs4aCRyp+7YANupU2T4k7x1C6avm=curjB+NmkA@mail.gmail.com">
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">  loongarch's virtual machine bios is not yet available in qemu, so you can get it from the following link
+<a class="moz-txt-link-freetext"
+          href="https://github.com/lixianglai/LoongarchVirtFirmware"
+          moz-do-not-send="true">https://github.com/lixianglai/LoongarchVirtFirmware</a>
+(Note: You should clone the repository using git instead of downloading the file via wget or you'll get xml)
+We named the bios QEMU_EFI.fd, QEMU_VARS.fd is used to store pflash images of non-volatile
+variables.After installing qemu-system-loongarch64,You can install the loongarch bios by executing the script
+install-loongarch-virt-firmware.sh
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">To clarify, loongarch support has been merged into upstream edk2
+already, right? And the contents of this repository are just for
+convenience, since loongarch builds of edk2 have generally not made
+it into distros yet? I think I might have asked about this already,
+sorry O:-)</pre>
+      </blockquote>
+      <p><span
+style="color: rgb(25, 27, 31); font-family: -apple-system,
+        BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang
+        SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans
+        SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro
+        Hei&quot;, sans-serif; font-size: medium; font-style: normal;
+        font-variant-ligatures: normal; font-variant-caps: normal;
+        font-weight: 400; letter-spacing: normal; orphans: 2;
+        text-align: start; text-indent: 0px; text-transform: none;
+        white-space: normal; widows: 2; word-spacing: 0px;
+        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
+        255); text-decoration-thickness: initial; text-decoration-style:
+        initial; text-decoration-color: initial; display: inline
+        !important; float: none;">Don't mention it. <br>
+        </span></p>
+      <p><span
+style="color: rgb(25, 27, 31); font-family: -apple-system,
+        BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang
+        SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans
+        SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro
+        Hei&quot;, sans-serif; font-size: medium; font-style: normal;
+        font-variant-ligatures: normal; font-variant-caps: normal;
+        font-weight: 400; letter-spacing: normal; orphans: 2;
+        text-align: start; text-indent: 0px; text-transform: none;
+        white-space: normal; widows: 2; word-spacing: 0px;
+        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
+        255); text-decoration-thickness: initial; text-decoration-style:
+        initial; text-decoration-color: initial; display: inline
+        !important; float: none;"><span
+style="color: rgb(51, 51, 51);
+          font-family: &quot;PingFang SC&quot;, &quot;Lantinghei
+          SC&quot;, &quot;Microsoft YaHei&quot;, arial, 宋体, sans-serif,
+          tahoma; font-size: 16px; font-style: normal;
+          font-variant-ligatures: normal; font-variant-caps: normal;
+          font-weight: 400; letter-spacing: normal; orphans: 2;
+          text-align: start; text-indent: 0px; text-transform: none;
+          white-space: normal; widows: 2; word-spacing: 0px;
+          -webkit-text-stroke-width: 0px; background-color: rgb(255,
+          255, 255); text-decoration-thickness: initial;
+          text-decoration-style: initial; text-decoration-color:
+          initial; display: inline !important; float: none;">All right</span>,</span>
+        The loongarch support has been merged into upstream edk2
+        already.</p>
+      <p>And you can see a detailed description of loongarch uefi in the
+        link below:</p>
+      <p><a class="moz-txt-link-freetext"
+href="https://github.com/tianocore/edk2-platforms/blob/master/Platform/Loongson/LoongArchQemuPkg/Readme.md"
+          moz-do-not-send="true">https://github.com/tianocore/edk2-platforms/blob/master/Platform/Loongson/LoongArchQemuPkg/Readme.md</a><br>
+      </p>
+      <pre class="moz-quote-pre" wrap="">this repository are just for convenience. :)</pre>
+    </blockquote>
+    <p>BTW, LoongArchVirt under OvmfPkg is being committed to upstream,
+      I guess it will be merged before the stable202402, please refer
+      to:</p>
+    <p><a class="moz-txt-link-freetext" href="https://bugzilla.tianocore.org/show_bug.cgi?id=4584">https://bugzilla.tianocore.org/show_bug.cgi?id=4584</a></p>
+    <p><a class="moz-txt-link-freetext" href="https://edk2.groups.io/g/devel/message/114526">https://edk2.groups.io/g/devel/message/114526</a></p>
+    <p><a class="moz-txt-link-freetext" href="https://github.com/tianocore/edk2/pull/5208">https://github.com/tianocore/edk2/pull/5208</a></p>
+    <p>Most maintainer have completed the review.<br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:17234d81-cc17-6859-720a-f033206780da@loongson.cn">
+      <pre class="moz-quote-pre" wrap="">
+</pre>
+      <p><br>
+        <span
+style="color: rgb(25, 27, 31); font-family: -apple-system,
+        BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang
+        SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans
+        SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro
+        Hei&quot;, sans-serif; font-size: medium; font-style: normal;
+        font-variant-ligatures: normal; font-variant-caps: normal;
+        font-weight: 400; letter-spacing: normal; orphans: 2;
+        text-align: start; text-indent: 0px; text-transform: none;
+        white-space: normal; widows: 2; word-spacing: 0px;
+        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
+        255); text-decoration-thickness: initial; text-decoration-style:
+        initial; text-decoration-color: initial; display: inline
+        !important; float: none;"></span></p>
+      <blockquote type="cite"
+cite="mid:CABJz62MxNvFfs4aCRyp+7YANupU2T4k7x1C6avm=curjB+NmkA@mail.gmail.com">
+        <pre class="moz-quote-pre" wrap="">Anyway, I fetched and installed this. The firmware descriptor looks
+like:
+
+  {
+     "interface-types": [
+       "uefi"
+     ],
+     "mapping": {
+       "device": "memory",
+       "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd"
+     },
+     "targets": [
+       {
+         "architecture": "loongarch64",
+         "machines": [
+           "virt",
+           "virt-*"
+         ]
+       }
+     ],
+     "features": [
+         "acpi"
+     ]
+   }
+
+This is not what I expected: specifically, it results in libvirt
+generating
+
+  -bios /usr/share/edk2/loongarch64/QEMU_EFI.fd
+
+So only one of the two files is used, in read-only mode, and there is
+no persistent NVRAM storage that the guest can use.
+
+This is what I expected instead:
+
+  {
+     "interface-types": [
+       "uefi"
+     ],
+     "mapping": {
+       "device": "flash",
+       "mode": "split",
+       "executable": {
+         "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd",
+         "format": "raw"
+       },
+       "nvram-template": {
+         "filename": "/usr/share/edk2/loongarch64/QEMU_VARS.fd",
+         "format": "raw"
+       }
+     },
+     "targets": [
+       {
+         "architecture": "loongarch64",
+         "machines": [
+           "virt",
+           "virt-*"
+         ]
+       }
+     ],
+     "features": [
+         "acpi"
+    ]
+  }
+
+I've tried installing such a descriptor and libvirt picks it up,
+resulting in the following guest configuration:
+
+  &lt;os firmware='efi'&gt;
+    &lt;type arch='loongarch64' machine='virt'&gt;hvm&lt;/type&gt;
+    &lt;firmware&gt;
+      &lt;feature enabled='no' name='enrolled-keys'/&gt;
+      &lt;feature enabled='no' name='secure-boot'/&gt;
+    &lt;/firmware&gt;
+    &lt;loader readonly='yes'
+type='pflash'&gt;/usr/share/edk2/loongarch64/QEMU_EFI.fd&lt;/loader&gt;
+    &lt;nvram template='/usr/share/edk2/loongarch64/QEMU_VARS.fd'&gt;/var/lib/libvirt/qemu/nvram/guest_VARS.fd&lt;/nvram&gt;
+    &lt;boot dev='hd'/&gt;
+  &lt;/os&gt;
+
+which in turn produces the following QEMU command line options:
+
+  -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}'
+  -blockdev '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}'
+  -blockdev '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/guest_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}'
+  -blockdev '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}'
+
+Unfortunately, with this configuration the guest fails to start:
+
+  qemu-system-loongarch64: Property 'virt-machine.pflash0' not found
+
+This error message looked familiar to me, as it is the same that I
+hit when trying out UEFI support on RISC-V roughly a year ago[1]. In
+this case, however, it seems that the issue runs deeper: it's not
+just that the flash devices are not wired up to work as blockdevs,
+but even the old -drive syntax doesn't work.
+
+Looking at the QEMU code, it appears that the loongarch/virt machine
+only creates a single pflash device and exposes it via -bios. So it
+seems that there is simply no way to achieve the configuration that
+we want.
+
+I think that this is something that needs to be addressed as soon as
+possible. In the long run, guest-accessible NVRAM storage is a must,
+and I'm not sure it would make a lot of sense to merge loongarch
+support into libvirt until the firmware situation has been sorted out
+in the lower layers.</pre>
+      </blockquote>
+      <p><br>
+      </p>
+      <p>In the qemu code, loongarch virt machine does only create a
+        pflash, <br>
+      </p>
+      <p>which is used for nvram, and uefi code is loaded by rom.</p>
+      <p> In summary, loongarch virt machine can use nvram with the
+        following command:</p>
+      <p>-------------------------------------------------------------------------------------------------------</p>
+      <p><i>qemu-system-loongarch64 \</i><i><br>
+        </i><i>-m 8G \</i><i><br>
+        </i><i>-smp 4 \</i><i><br>
+        </i><i>-cpu la464   \</i><i><br>
+        </i><i>-blockdev
+'{"driver":"file","filename":"./QEMU_VARS-pflash.raw","node-name":"libvirt-pflash0-storage","auto-read-only":false,"discard":"unmap"}' 
+          \</i><i><br>
+        </i><i>-blockdev
+'{"node-name":"libvirt-pflash0-format","read-only":false,"driver":"raw","file":"libvirt-pflash0-storage"}'
+          \</i><i><br>
+        </i><i>-machine virt,pflash=libvirt-pflash0-format  \</i><i><br>
+        </i><i>-snapshot \</i><i><br>
+        </i><i>-bios ./QEMU_EFI.fd  \</i><i><br>
+        </i><i>-serial stdio</i></p>
+      <p>-------------------------------------------------------------------------------------------------------</p>
+      <p><br>
+      </p>
+      <p>This is really a big difference from the following boot method,
+        and it still looks weird.</p>
+      <p>-------------------------------------------------------------------------------------------------------</p>
+      <pre class="moz-quote-pre" wrap=""><i>  -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}'
+  -blockdev '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}'
+  -blockdev '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/guest_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}'
+  -blockdev '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}'</i>
+</pre>
+      <p>-------------------------------------------------------------------------------------------------------</p>
+      <p>However, during the development of qemu loongarch,</p>
+      <p> we also used a RISCV-like solution to create two pflash,</p>
+      <p> but the qemu community suggested that we put uefi code in rom
+        for the following reasons:</p>
+      <p><br>
+      </p>
+      <p><a class="moz-txt-link-freetext"
+href="https://lore.kernel.org/qemu-devel/2f381d06-842f-ac8b-085c-0419675a4872@linaro.org/"
+          moz-do-not-send="true">https://lore.kernel.org/qemu-devel/2f381d06-842f-ac8b-085c-0419675a4872@linaro.org/</a></p>
+      <p>"</p>
+      <pre id="b"
+style="font-size: 13px; font-family: monospace; background: rgb(255, 255, 255); color: rgb(0, 0, 51); white-space: pre-wrap; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">Since you are starting a virtual machine from scratch, you should take
+the opportunity to learn from other early mistakes. X86 ended that way
+due to 1/ old firmwares back-compability and 2/ QEMU pflash block
+protections not being implemented. IIUC if we were starting with a
+UEFI firmware today, the layout design (still using QEMU) would be
+to map the CODE area in a dumb ROM device, and the VARSTORE area
+in a PFlash device. Since Virt machines don't need to use Capsule
+update, having the CODE area in ROM drastically simplifies the design
+and maintainance.</pre>
+      <p>"</p>
+      <p>Well, anyway, now that we have an issue with qemu loongarch
+        using nvram that is incompatible with libvirt,</p>
+      <p> here I have come up with two solutions to solve this problem:<br>
+      </p>
+      <h2>Option 1:  <br>
+      </h2>
+      <p>If the interface type "rom-uefi" is added and the device type
+        "rom-flash" is added, the json file should be written like this:</p>
+      <p>-------------------------------------------------------------------------------------------------------<br>
+      </p>
+      <i>{</i><i><br>
+      </i><i>   "interface-types": [</i><i><br>
+      </i><i>    </i><i><font color="#ff0000"> "rom-uefi"</font></i><i><br>
+      </i><i>   ],</i><i><br>
+      </i><i>   "mapping": {</i><i><br>
+      </i><i>     </i><i><font color="#ff0000">"device": "rom-flash",</font></i><i><br>
+      </i><i>     "executable": {</i><i><br>
+      </i><i>       "filename":
+        "/usr/share/edk2/loongarch64/QEMU_EFI.fd",</i><i><br>
+      </i><i>       "format": "raw"</i><i><br>
+      </i><i>     },</i><i><br>
+      </i><i>     "nvram-template": {</i><i><br>
+      </i><i>       "filename":
+        "/usr/share/edk2/loongarch64/QEMU_VARS.fd",</i><i><br>
+      </i><i>       "format": "raw"</i><i><br>
+      </i><i>     }</i><i><br>
+      </i><i>   },</i><i><br>
+      </i><i>   "targets": [</i><i><br>
+      </i><i>     {</i><i><br>
+      </i><i>       "architecture": "loongarch64",</i><i><br>
+      </i><i>       "machines": [</i><i><br>
+      </i><i>         "virt",</i><i><br>
+      </i><i>         "virt-*"</i><i><br>
+      </i><i>       ]</i><i><br>
+      </i><i>     }</i><i><br>
+      </i><i>   ],</i><i><br>
+      </i><i>   "features": [</i><i><br>
+      </i><i>       "acpi"</i><i><br>
+      </i><i>   ]</i><br>
+      <p> -------------------------------------------------------------------------------------------------------</p>
+      <p>Then add the parsing of the new interface types in libvirt and
+        load QEMU_CODE.fd as -bios and QEMU_VARS.fd as nvram</p>
+      <p>when creating the command line, generating commands like the
+        following:</p>
+      <p> -------------------------------------------------------------------------------------------------------</p>
+      <p><i>qemu-system-loongarch64 \</i><i><br>
+        </i><i> -m 8G \</i><i><br>
+        </i><i> -smp 1 \</i><i><br>
+        </i><i> -cpu la464   \</i><i><br>
+        </i><i> -blockdev '{"driver":"file","filename":"</i><i><i>/usr/share/edk2/loongarch64/QEMU_VARS.fd</i>","node-name":"libvirt-pflash0-storage","auto-read-only":false,"discard":"unmap"}' 
+          \</i><i><br>
+        </i><i> -blockdev
+'{"node-name":"libvirt-pflash0-format","read-only":false,"driver":"raw","file":"libvirt-pflash0-storage"}'
+          \</i><i><br>
+        </i><i> -machine virt,pflash=libvirt-pflash0-format  \</i><i><br>
+        </i><i> -snapshot \</i><i><br>
+        </i><i> -bios </i><i><i><i>/usr/share/edk2/loongarch64/</i></i>QEMU_EFI.fd 
+          \</i><i><br>
+        </i><i> -serial stdio</i><br>
+      </p>
+      <p>
+-------------------------------------------------------------------------------------------------------</p>
+      <h2>Option 2: </h2>
+      <p>Solution 2 mainly starts from qemu. Now the rom that bios is
+        loaded into is a memory region that cannot be configured with
+        attributes,</p>
+      <p> so we imagine abstracting rom as a device, creating it during
+        machine initialization and setting "pflash0" attribute for it. <br>
+      </p>
+      <p>Then create a pflash and set its property to "pflash1", so our
+        startup command will look like this:</p>
+      <p> -------------------------------------------------------------------------------------------------------</p>
+      <p><i>qemu-system-loongarch64 \</i><i><br>
+        </i><i>-m 8G \</i><i><br>
+        </i><i>-smp 1 \</i><i><br>
+        </i><i>-cpu la464   \</i><i><br>
+        </i><i>-blockdev
+'{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}'
+          \</i><i><br>
+        </i><i>-blockdev
+'{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}'
+          \</i><i><br>
+        </i><i>-blockdev
+'{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}'
+          \</i><i><br>
+        </i><i>-blockdev
+'{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}'
+          \</i><i><br>
+        </i><i>-machine
+          virt,pflash0=libvirt-pflash0-format,pflash1=libvirt-pflash1-format 
+          \</i><i><br>
+        </i><i>-snapshot \</i><i><br>
+        </i><i>-serial stdio</i><br>
+      </p>
+      <p> -------------------------------------------------------------------------------------------------------</p>
+      <p>This way, without modifying libvirt, QEMU_CODE.fd can be loaded
+        into the rom, <br>
+      </p>
+      <p>but it is still a little strange that it is clearly rom but set
+        a "pflash0" attribute, which can be confusing.</p>
+      <p><br>
+      </p>
+      <blockquote type="cite"
+cite="mid:CABJz62MxNvFfs4aCRyp+7YANupU2T4k7x1C6avm=curjB+NmkA@mail.gmail.com">
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">  Since there is no fedora operating system that supports the loongarch
+architecture, you can find an iso that supports loongarch at the link
+below for testing purposes:
+  <a class="moz-txt-link-freetext"
+          href="https://github.com/fedora-remix-loongarch/releases-info"
+          moz-do-not-send="true">https://github.com/fedora-remix-loongarch/releases-info</a>
+
+  Well, if you have completed the above steps I think you can now install loongarch virtual machine,
+you can install it through the virt-manager graphical interface, or install it through vrit-install,
+here is an example of installing it using virt-install:
+
+virt-install  \
+--virt-type=qemu \
+--name  loongarch-test \
+--memory 4096 \
+--vcpus=4 \
+--arch=loongarch64 \
+--boot cdrom \
+--disk device=cdrom,bus=scsi,path=/root/livecd-fedora-mate-4.loongarch64.iso \
+--disk path=/var/lib/libvirt/images/debian12-loongarch64.qcow2,size=10,format=qcow2,bus=scsi \
+--network network=default \
+--osinfo archlinux   \
+--video=virtio  \
+--graphics=vnc,listen=0.0.0.0
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">Regardless of what I said above, this actually worked quite well! I
+was able to boot the MATE image and, ignoring the expected slowness
+caused by emulation, things were generally fairly smooth.
+
+Note that I tried the LXDE image first, expecting it to be a bit
+smaller and faster, but in that case I wasn't able to get a
+successful boot: edk2 loaded up just fine, but the guest OS was never
+started and I was dropped into the edk2 shell instead. Maybe that's a
+known issue, but I thought I'd point it out.</pre>
+      </blockquote>
+      <p>Thank you very much for pointing out the problem, <br>
+      </p>
+      <p>lxde iso is missing efiboot.img file so that the virtual
+        machine UEFI can not recognize efi partition</p>
+      <p>caused by the problem has been notified to the relevant
+        personnel,</p>
+      <p> I believe that the next version of libvirt patch will be
+        shipped to use lxde iso.</p>
+      <p><br>
+      </p>
+      <p>Thanks,</p>
+      <p>Xianglai.<br>
+      </p>
+      <blockquote type="cite"
+cite="mid:CABJz62MxNvFfs4aCRyp+7YANupU2T4k7x1C6avm=curjB+NmkA@mail.gmail.com">
+        <pre class="moz-quote-pre" wrap="">[1] <a
+        class="moz-txt-link-freetext"
+href="https://lists.gnu.org/archive/html/qemu-devel/2023-05/msg06258.html"
+        moz-do-not-send="true">https://lists.gnu.org/archive/html/qemu-devel/2023-05/msg06258.html</a>
+</pre>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
+
+--------------isy0rzj4qTAVu8AyJHw006Sx--
+
 
