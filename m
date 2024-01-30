@@ -4,84 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907E4C48285
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3BFFC46CD2
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 19:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUtOs-000140-OG; Tue, 30 Jan 2024 14:04:04 -0500
+	id 1rUtPG-0001YG-Aq; Tue, 30 Jan 2024 14:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUtOX-00011A-Bs
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:03:42 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUtOV-0008WB-R8
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:03:41 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a35b32bd055so309767866b.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 11:03:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706641418; x=1707246218; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ONQQAhlWUJUIL1ohHT6vUP5FJscZaLW2vVSHJwIJiGk=;
- b=x8DGc7Qp6PVEjevdLESY+q5E2kZnQA3pON2QZ/YpLftR2FU0fmNUzlOXS+YCxfO9Uw
- yor3vj8avrEDdl/0F2lXwAxzGGjZEBjf6Sq5H2qBJwvWo4nFv3vQzg+wKJ0V3xSTU+/K
- FgmD6tSwpu6nBwYqjB63FqXaCAy7uzZ5DkIwTaqMOvPzeBEBf/NJOlSzzEpge/bIrhVo
- OzYq30c4+f2kwlHnap3sn2RR4QivwXGPYAlslHxFPxgBWXfF2IiXuTlEkYmhpwsnbpTM
- rHNGD/G4rgPUE1jR7svaVAR1tmtuM7E9K6afsNW1N/GZuYLED62PBbmNoM+7bCQY88Uq
- ekOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706641418; x=1707246218;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ONQQAhlWUJUIL1ohHT6vUP5FJscZaLW2vVSHJwIJiGk=;
- b=m0ogKN2iSW+L6oIEpe9zpQw05yYB2kZbN9+Dfp5H1F8K9K4KzAH6OMaKUBwQ0B/usK
- Sc0Ijs8r1nwwhA4QhADXLwwUfOAP4eIEfphAEPDEXrKNMAgxZsDivcD8V3HG0CJSqrhr
- 5K0002nFxfsrcSJ2TNRvtRQkrY3HQ1t3Ato3o7bCG/NwsrZiNh52KHfPj+7DE8bx3Tol
- gU6j808589o3fQ+XayUWebVP0rQjvcxgGaMVDQyCiO2HIUDS6w2MBnpo78KlDxfKLRgp
- cgrQOatL6CChymNANUvs1BCGibM5HbEt1vlyr/7zSjisZGZ/DpgwRNXhYFpEiXa+TXWQ
- YAiQ==
-X-Gm-Message-State: AOJu0Yzwu7NKT9qNY6uiyHvsgBtSWCQXwDZOWyKNsuIUsv6uufzVk/+p
- rCSH2MaOa4zO0RMvPVxxDlLRzX8S35sP3XBr/9UKep4AOtlX3+ukpx/nDKMHolEP/gY65ymJeac
- u
-X-Google-Smtp-Source: AGHT+IE8PWbcJ05NYDH00NfSLE1CD3c6S6mwYY7iU9LPuHJIZONVOqT37jRPcX9gay+xSTR3cdS4PQ==
-X-Received: by 2002:a17:906:f152:b0:a36:5d54:64b1 with SMTP id
- gw18-20020a170906f15200b00a365d5464b1mr212381ejb.73.1706641418290; 
- Tue, 30 Jan 2024 11:03:38 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.218.134])
- by smtp.gmail.com with ESMTPSA id
- l13-20020a1709066b8d00b00a32429e455asm5441536ejr.175.2024.01.30.11.03.36
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jan 2024 11:03:37 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from
+ <BATV+7af2922fdc4e6c7e46df+7464+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1rUtPD-0001Xq-SH
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:04:23 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+7af2922fdc4e6c7e46df+7464+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1rUtP7-00009a-LX
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 14:04:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:
+ Content-ID:Content-Description:In-Reply-To:References;
+ bh=e/eQy+FGPkAXiPNreNmza+angjwwtJFW4FhCcIiyHXg=; b=Vsp0NmWkrXTeP8423IvAYrUo0N
+ 6iHjQDSgHjQRwduuLY/ECBbDTQNp2JqLlMX4d+HvYQ4ofIIBQN7OybnftzxYVvNsJn6X65ntFoHSq
+ y1UCVDRQnP3+3z2rhfbtAHgGRV7bywS0SFBqMkD9ToNByrf0XVQsWp5TugOLsznmbtsiTq1B+6bZu
+ W8C4M5Kt75GKL5pZ7XAd/T6ghnnPGMUbqAKhEJha0hJMfLF4QhXGo3mul6oGfT9fhR02YudFMBTtR
+ /a9S1cn1DT8y1Vk/bFlz73i04POnkSRaYfvxHNnqxWKNLDXdhVjtpKh0q2qV/RMGRY8JldiP6nNEy
+ JXImYasQ==;
+Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
+ by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1rUtP1-00000008Tjt-1rbY; Tue, 30 Jan 2024 19:04:11 +0000
+Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
+ Hat Linux)) id 1rUtOy-00000002rgA-0Tlx;
+ Tue, 30 Jan 2024 19:04:08 +0000
+From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/4] hw/arm/stellaris: Add missing QOM 'machine' parent
-Date: Tue, 30 Jan 2024 20:03:16 +0100
-Message-ID: <20240130190317.25692-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240130190317.25692-1-philmd@linaro.org>
-References: <20240130190317.25692-1-philmd@linaro.org>
+Cc: David Woodhouse <dwmw@amazon.co.uk>, Paul Durrant <paul@xen.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v4] doc/sphinx/hxtool.py: add optional label argument to SRST
+ directive
+Date: Tue, 30 Jan 2024 19:01:43 +0000
+Message-ID: <20240130190348.682912-1-dwmw2@infradead.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+7af2922fdc4e6c7e46df+7464+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,41 +77,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QDev objects created with qdev_new() need to manually add
-their parent relationship with object_property_add_child().
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We can't just embed labels directly into files like qemu-options.hx which
+are included from multiple top-level rST files, because Sphinx sees the
+labels as duplicate: https://github.com/sphinx-doc/sphinx/issues/9707
+
+So add an optional argument to the SRST directive which causes a label
+of the form '.. _DOCNAME-HXFILE-LABEL:' to be emitted, where 'DOCNAME'
+is the name of the top level rST file, 'HXFILE' is the filename of the
+.hx file, and 'LABEL' is the text provided within the 'SRST()' directive.
+Using the DOCNAME of the top-level rST document means that it is unique
+even when the .hx file is included from two different documents, as is
+the case for qemu-options.hx
+
+Now where the Xen PV documentation refers to the documentation for the
+-initrd command line option, it can emit a link directly to it as
+'<system/invocation-qemu-options-initrd>'.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/stellaris.c | 4 ++++
- 1 file changed, 4 insertions(+)
+v4:
+ • Wrap long lines to shut checkpatch up
 
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 284b95005f..bb88b3ebde 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1247,10 +1247,13 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-                                    &error_fatal);
+v3:
+ • Include DOCNAME in label
+ • Drop emitrefs option which is no longer needed
+
+v2:
+ • Invoke parse_srst() unconditionally
+ • Change emitted label to include basename of .hx file
+ • Describe it in docs/devel/docs.rst
+
+
+ docs/devel/docs.rst      | 12 ++++++++++--
+ docs/sphinx/hxtool.py    | 16 ++++++++++++++++
+ docs/system/i386/xen.rst |  3 ++-
+ qemu-options.hx          |  2 +-
+ 4 files changed, 29 insertions(+), 4 deletions(-)
+
+diff --git a/docs/devel/docs.rst b/docs/devel/docs.rst
+index 7da067905b..50ff0d67f8 100644
+--- a/docs/devel/docs.rst
++++ b/docs/devel/docs.rst
+@@ -30,6 +30,13 @@ nor the documentation output.
  
-             ssddev = qdev_new("ssd0323");
-+            object_property_add_child(OBJECT(ms), "oled", OBJECT(ssddev));
-             qdev_prop_set_uint8(ssddev, "cs", 1);
-             qdev_realize_and_unref(ssddev, bus, &error_fatal);
+ ``SRST`` starts a reStructuredText section. Following lines
+ are put into the documentation verbatim, and discarded from the C output.
++The alternative form ``SRST()`` is used to define a label which can be
++referenced from elsewhere in the rST documentation. The label will take
++the form ``<DOCNAME-HXFILE-LABEL>``, where ``DOCNAME`` is the name of the
++top level rST file, ``HXFILE`` is the filename of the .hx file without
++the ``.hx`` extension, and ``LABEL`` is the text provided within the
++``SRST()`` directive. For example,
++``<system/invocation-qemu-options-initrd>``.
  
-             gpio_d_splitter = qdev_new(TYPE_SPLIT_IRQ);
-+            object_property_add_child(OBJECT(ms), "splitter",
-+                                      OBJECT(gpio_d_splitter));
-             qdev_prop_set_uint32(gpio_d_splitter, "num-lines", 2);
-             qdev_realize_and_unref(gpio_d_splitter, NULL, &error_fatal);
-             qdev_connect_gpio_out(
-@@ -1287,6 +1290,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-         DeviceState *gpad;
+ ``ERST`` ends the documentation section started with ``SRST``,
+ and switches back to a C code section.
+@@ -53,8 +60,9 @@ text, but in ``hmp-commands.hx`` the C code sections are elements
+ of an array of structs of type ``HMPCommand`` which define the
+ name, behaviour and help text for each monitor command.
  
-         gpad = qdev_new(TYPE_STELLARIS_GAMEPAD);
-+        object_property_add_child(OBJECT(ms), "gamepad", OBJECT(gpad));
-         for (i = 0; i < ARRAY_SIZE(gpad_keycode); i++) {
-             qlist_append_int(gpad_keycode_list, gpad_keycode[i]);
-         }
+-In the file ``qemu-options.hx``, do not try to define a
++In the file ``qemu-options.hx``, do not try to explicitly define a
+ reStructuredText label within a documentation section. This file
+ is included into two separate Sphinx documents, and some
+ versions of Sphinx will complain about the duplicate label
+-that results.
++that results. Use the ``SRST()`` directive documented above, to
++emit an unambiguous label.
+diff --git a/docs/sphinx/hxtool.py b/docs/sphinx/hxtool.py
+index 9f6b9d87dc..3729084a36 100644
+--- a/docs/sphinx/hxtool.py
++++ b/docs/sphinx/hxtool.py
+@@ -78,6 +78,14 @@ def parse_archheading(file, lnum, line):
+         serror(file, lnum, "Invalid ARCHHEADING line")
+     return match.group(1)
+ 
++def parse_srst(file, lnum, line):
++    """Handle an SRST directive"""
++    # The input should be either "SRST", or "SRST(label)".
++    match = re.match(r'SRST(\((.*?)\))?', line)
++    if match is None:
++        serror(file, lnum, "Invalid SRST line")
++    return match.group(2)
++
+ class HxtoolDocDirective(Directive):
+     """Extract rST fragments from the specified .hx file"""
+     required_argument = 1
+@@ -113,6 +121,14 @@ def run(self):
+                         serror(hxfile, lnum, 'expected ERST, found SRST')
+                     else:
+                         state = HxState.RST
++                        label = parse_srst(hxfile, lnum, line)
++                        if label:
++                            rstlist.append("", hxfile, lnum - 1)
++                            # Build label as _DOCNAME-HXNAME-LABEL
++                            hx = os.path.splitext(os.path.basename(hxfile))[0]
++                            refline = ".. _" + env.docname + "-" + hx + \
++                                "-" + label + ":"
++                            rstlist.append(refline, hxfile, lnum - 1)
+                 elif directive == 'ERST':
+                     if state == HxState.CTEXT:
+                         serror(hxfile, lnum, 'expected SRST, found ERST')
+diff --git a/docs/system/i386/xen.rst b/docs/system/i386/xen.rst
+index 81898768ba..46db5f34c1 100644
+--- a/docs/system/i386/xen.rst
++++ b/docs/system/i386/xen.rst
+@@ -132,7 +132,8 @@ The example above provides the guest kernel command line after a separator
+ (" ``--`` ") on the Xen command line, and does not provide the guest kernel
+ with an actual initramfs, which would need to listed as a second multiboot
+ module. For more complicated alternatives, see the command line
+-documentation for the ``-initrd`` option.
++:ref:`documentation <system/invocation-qemu-options-initrd>` for the
++``-initrd`` option.
+ 
+ Host OS requirements
+ --------------------
+diff --git a/qemu-options.hx b/qemu-options.hx
+index ced8284863..b3ff06b0b6 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3994,7 +3994,7 @@ ERST
+ 
+ DEF("initrd", HAS_ARG, QEMU_OPTION_initrd, \
+            "-initrd file    use 'file' as initial ram disk\n", QEMU_ARCH_ALL)
+-SRST
++SRST(initrd)
+ 
+ ``-initrd file``
+     Use file as initial ram disk.
 -- 
-2.41.0
+2.43.0
 
 
