@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDD6C47DA9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8084CC48285
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 15:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUqUE-0000x8-He; Tue, 30 Jan 2024 10:57:22 -0500
+	id 1rUqUK-00011W-UM; Tue, 30 Jan 2024 10:57:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rUqUA-0000vZ-CA
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 10:57:18 -0500
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rUqUH-0000zg-8R
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 10:57:25 -0500
 Received: from us-smtp-delivery-44.mimecast.com ([207.211.30.44])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rUqU3-0004f5-VR
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 10:57:14 -0500
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-bKguWURjMyu4nldr2A8rlg-1; Tue,
- 30 Jan 2024 10:56:59 -0500
-X-MC-Unique: bKguWURjMyu4nldr2A8rlg-1
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rUqUC-0004hY-3d
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 10:57:24 -0500
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-D-ZvX3HxOCy-N8DttmbE1w-1; Tue, 30 Jan 2024 10:57:04 -0500
+X-MC-Unique: D-ZvX3HxOCy-N8DttmbE1w-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8061F3C2E0A2;
- Tue, 30 Jan 2024 15:56:57 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0BC471013778;
+ Tue, 30 Jan 2024 15:57:04 +0000 (UTC)
 Received: from bahia.redhat.com (unknown [10.39.192.68])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 0A66B492BE2;
- Tue, 30 Jan 2024 15:56:53 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1B274492BE2;
+ Tue, 30 Jan 2024 15:57:01 +0000 (UTC)
 From: Greg Kurz <groug@kaod.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
@@ -44,12 +44,13 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-trivial@nongnu.org,
  Eduardo Habkost <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>,
  Greg Kurz <groug@kaod.org>
-Subject: [PATCH 0/3] acpi-build: Fix hint messages
-Date: Tue, 30 Jan 2024 16:56:50 +0100
-Message-ID: <20240130155653.142283-1-groug@kaod.org>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 3/3] hw/arm: Add `\n` to hint message
+Date: Tue, 30 Jan 2024 16:56:53 +0100
+Message-ID: <20240130155653.142283-4-groug@kaod.org>
+In-Reply-To: <20240130155653.142283-1-groug@kaod.org>
+References: <20240130155653.142283-1-groug@kaod.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: softfail client-ip=207.211.30.44; envelope-from=groug@kaod.org;
  helo=us-smtp-delivery-44.mimecast.com
@@ -74,23 +75,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ACPI build for ARM, i386 and Loongarch all have the=0D
-same warning report with a hint for the user. The=0D
-hint is printed with error_printf() as expected but=0D
-it lacks the terminating '\n'.=0D
-=0D
-Greg Kurz (3):=0D
-  hw/i386: Add `\n` to hint message=0D
-  hw/loongarch: Add `\n` to hint message=0D
-  hw/arm: Add `\n` to hint message=0D
-=0D
- hw/arm/virt-acpi-build.c  | 2 +-=0D
- hw/i386/acpi-build.c      | 4 ++--=0D
- hw/loongarch/acpi-build.c | 2 +-=0D
- 3 files changed, 4 insertions(+), 4 deletions(-)=0D
-=0D
--- =0D
-2.43.0=0D
-=0D
+error_fprintf() doesn't add newlines.
+
+Signed-off-by: Greg Kurz <groug@kaod.org>
+---
+ hw/arm/virt-acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 17aeec7a6f56..48febde1ccd1 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -1008,7 +1008,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+                     " migration may not work",
+                     tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
+         error_printf("Try removing CPUs, NUMA nodes, memory slots"
+-                     " or PCI bridges.");
++                     " or PCI bridges.\n");
+     }
+     acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
+ 
+-- 
+2.43.0
 
 
