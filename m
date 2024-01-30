@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A30EC47DB3
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 00:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2C7C47DB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 00:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUcBU-0000yV-ML; Mon, 29 Jan 2024 19:41:06 -0500
+	id 1rUcC5-0001ty-GZ; Mon, 29 Jan 2024 19:41:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcB5-0000jX-07
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:40:42 -0500
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
+ id 1rUcBz-0001oV-3A
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:41:36 -0500
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUcB2-00027Q-M8
- for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:40:38 -0500
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-7ce55932330so1049052241.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 16:40:35 -0800 (PST)
+ id 1rUcBw-0002Dq-1Z
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 19:41:34 -0500
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-4676a37e2c4so751894137.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 16:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706575235; x=1707180035; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706575290; x=1707180090; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kUwDKgC0XLtEiNvv3DtQd3Dq8ffozL4Eax/QpX2aGWc=;
- b=C6Rgl8CocKcqY8sFOywKFMY325fiEn4/8EBqBiUeYq1gSnluAi/ZZjLcYcZ99GrufG
- eejk9e8CdWSCOe0kliRQfq8gjbEj3nxm0XKM7+b6ODGrlRxcgwOmWjur0C1QBu/jv47B
- NkR2tNCdtz/bVoW7BHX45B9K45dBxPQf+501Bt1uKfhexGhbob8XwTL51F9dBSlEe0TW
- 9vkXZpU1bkRurOh7PjGolF8Dn8YDWFO9qnRz33fwtqLsnEXJtsoMpcQDEWiSg5Jq0bHK
- rBPxmpXvtPZPjUmPqBVYq15T1OuNPX3QGjoUcx/tuU+9WmrbPDB/o/ztAjNtHvR8Vp+o
- L0dA==
+ bh=X2Lk5HVyBGBoFVy/SPPTpSyC9wQbjqykaNNwn6OlgPg=;
+ b=MbwvFtD/ySlAu86LuPSDPl6VuATzhNqJik60jo2fWV/MIZgqFmx3019zF+1/Svs/o5
+ EmI8j8d0Xf41L6mY+v1n/5tnzlymZt7MOWHrm/c66GBzcuNe5cUnmOh9Ic4ZpW6z4gu2
+ e0pkQ9cP6pcmR4DUSOSwWs4kkvlsKQkN+CandET7kbCfpPgXzKQnKtKjCPO/mnZ31gOa
+ NnS1qgoYMjpubS6ki45ivRmGLytLmGrxvqEK0dEXs12TeUD7jSRdledzW+lhhz7ezj2p
+ aJZri8X6V86ZBDxUnvLXOCl0ehkjtPcT7XnVjJKh9KN/T+w8bQ1lRScPDwHULM9c8G21
+ Xb/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706575235; x=1707180035;
+ d=1e100.net; s=20230601; t=1706575290; x=1707180090;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kUwDKgC0XLtEiNvv3DtQd3Dq8ffozL4Eax/QpX2aGWc=;
- b=UQ31NpZVPn6WDcWeqbRzKYcEXUQxhf9hJJQPUS3UOu8XBvMkOvS2QfKQEs5mLFxUaI
- cOgz5VsJJf9NFJ8fBc/wv8Tm02arIcVTU6O6TLTQrXdoqT5txluN9q5+c0f/0ObihijY
- wmSzH4L/FQtoPcKu8Eb3oeQd+ClE3ZFuj2/w4vrVmd1yGIX6Z3q7L2AwetdjUau0jUeb
- Fn6m4XhMeiUyJuv9siKrSALMKl4HFHAYnT3lqXGyFSCFaaq29t4f6nwXxrvjYitaTWUE
- LbfqVe13A3WmB2HZlDmqZle8ZM0YJwDL3S/3CucDk0PNVsHAgq9OznaT7KX29O3CM/9i
- bGYg==
-X-Gm-Message-State: AOJu0Yz7S2kSj6I4Ce2MTrrz8Y9TWnlET/mXcXCnpIM+ft3KxNLyuL4w
- o6YvWyrXb5IyRhj6qg9AG1W0va5xjW7v9gB30M96Eify3GO2RG4K/xruXo2R0w4q9FfnsFzoHjR
- pUAObpCSjM7MpqxuWGU+LNt3Cru0=
-X-Google-Smtp-Source: AGHT+IGextyoATUpHSRBtuCFd2bKWaD6fnJExDS0XAP1siFKqV6+pEqvbmdnny/rnvLJams7K14M2CtaGFnUccZAA1Q=
-X-Received: by 2002:a05:6102:1884:b0:46b:3e04:19d4 with SMTP id
- ji4-20020a056102188400b0046b3e0419d4mr2474776vsb.29.1706575234837; Mon, 29
- Jan 2024 16:40:34 -0800 (PST)
+ bh=X2Lk5HVyBGBoFVy/SPPTpSyC9wQbjqykaNNwn6OlgPg=;
+ b=SlUpblBGxkwRJXs/leLkrTPI73p+8v1wu/LczjQ9VXU18Oh63lNZHsPxnoiP/rJ+UZ
+ PFryNOR9im1bL+wCn/MALTnYOpQBnyuIymkt5Kcd0KkW8TsBAfYtcC/H24IkmroKHgRg
+ XkQh34Ai++4WiprhpapZsxpQA0aqQvU3ve/5dXBHrHrNPYQoPFomOxHkzuHgr+j2psSw
+ gBJ4r9ZjEhssZrs3X+tYDLdCm9AvSLUteIGWqcCd3bYDkTcZW9FxgQ8IiE+gSXDcEP26
+ v1ghQzr2L8Pzf5XwOQG2JXtmB7+6OXv9uuk+rg1N4gg43Xdq1MdJS2bMbU0cqlcCWdIY
+ GY8Q==
+X-Gm-Message-State: AOJu0Yx1rZ5apFF4joVnDamMdsnRiAW3+Pc7dPqlT06QZc2U3ZvGcIli
+ qLlBOdjbC1uDCOdh3OfgMyHJ9KjLYWvsrTQssD+ir0tKGx0YiKihD0bfwK4x0C/6B5KckQb5Akf
+ FK+IjfcDzLHJAqYUQQgfZzFQTqdiazItSQVc=
+X-Google-Smtp-Source: AGHT+IEUeN79JALIpePhdUGsdkVwMHaGWYdh2UPUOStH++/erFg/c6Eiw2bVTPonnTrK09T/KA5OePY6Fkehxb2tr/s=
+X-Received: by 2002:a05:6102:72f:b0:46b:1891:33e0 with SMTP id
+ u15-20020a056102072f00b0046b189133e0mr3529932vsg.5.1706575290258; Mon, 29 Jan
+ 2024 16:41:30 -0800 (PST)
 MIME-Version: 1.0
 References: <20240129233043.34558-1-richard.henderson@linaro.org>
- <20240129233043.34558-23-richard.henderson@linaro.org>
-In-Reply-To: <20240129233043.34558-23-richard.henderson@linaro.org>
+ <20240129233043.34558-24-richard.henderson@linaro.org>
+In-Reply-To: <20240129233043.34558-24-richard.henderson@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 30 Jan 2024 10:40:08 +1000
-Message-ID: <CAKmqyKOm74JMuh26ExB-4e4vcb0qR2W53eGM8v--KO-mmD_WsQ@mail.gmail.com>
-Subject: Re: [PATCH 22/33] target/riscv: Rename riscv_cpu_mmu_index to
+Date: Tue, 30 Jan 2024 10:41:04 +1000
+Message-ID: <CAKmqyKO8cNieQ-AfzVZUQLdayBvQX9SFXFoO205W6+L_myaT3A@mail.gmail.com>
+Subject: Re: [PATCH 23/33] target/riscv: Replace cpu_mmu_index with
  riscv_env_mmu_index
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, anjo@rev.ng
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,11 +92,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 9:39=E2=80=AFAM Richard Henderson
+On Tue, Jan 30, 2024 at 9:36=E2=80=AFAM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Free up the riscv_cpu_mmu_index name for other usage;
-> emphasize that the argument is 'env'.
+> Use the target-specific function name in preference
+> to the generic name.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
@@ -105,49 +105,101 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.h        | 4 ++--
->  target/riscv/cpu_helper.c | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
+>  target/riscv/cpu_helper.c    | 4 ++--
+>  target/riscv/op_helper.c     | 4 ++--
+>  target/riscv/vector_helper.c | 9 +++++----
+>  3 files changed, 9 insertions(+), 8 deletions(-)
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 5f3955c38d..9c825c7b51 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -498,7 +498,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env)=
-;
->  void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
->  bool riscv_cpu_vector_enabled(CPURISCVState *env);
->  void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
-> -int riscv_cpu_mmu_index(CPURISCVState *env, bool ifetch);
-> +int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
->  G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
->                                                 MMUAccessType access_type=
-,
->                                                 int mmu_idx, uintptr_t re=
-taddr);
-> @@ -507,7 +507,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, =
-int size,
->                          bool probe, uintptr_t retaddr);
->  char *riscv_isa_string(RISCVCPU *cpu);
->
-> -#define cpu_mmu_index riscv_cpu_mmu_index
-> +#define cpu_mmu_index riscv_env_mmu_index
->
->  #ifndef CONFIG_USER_ONLY
->  void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
 > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index c7cc7eb423..15f87ecdb0 100644
+> index 15f87ecdb0..b6b23b7d03 100644
 > --- a/target/riscv/cpu_helper.c
 > +++ b/target/riscv/cpu_helper.c
-> @@ -33,7 +33,7 @@
->  #include "debug.h"
->  #include "tcg/oversized-guest.h"
+> @@ -106,7 +106,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *=
+pc,
+>  #else
+>      flags =3D FIELD_DP32(flags, TB_FLAGS, PRIV, env->priv);
 >
-> -int riscv_cpu_mmu_index(CPURISCVState *env, bool ifetch)
-> +int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+> -    flags |=3D cpu_mmu_index(env, 0);
+> +    flags |=3D riscv_env_mmu_index(env, 0);
+>      fs =3D get_field(env->mstatus, MSTATUS_FS);
+>      vs =3D get_field(env->mstatus, MSTATUS_VS);
+>
+> @@ -1200,7 +1200,7 @@ hwaddr riscv_cpu_get_phys_page_debug(CPUState *cs, =
+vaddr addr)
+>      CPURISCVState *env =3D &cpu->env;
+>      hwaddr phys_addr;
+>      int prot;
+> -    int mmu_idx =3D cpu_mmu_index(&cpu->env, false);
+> +    int mmu_idx =3D riscv_env_mmu_index(&cpu->env, false);
+>
+>      if (get_physical_address(env, &phys_addr, &prot, addr, NULL, 0, mmu_=
+idx,
+>                               true, env->virt_enabled, true)) {
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index 5355225d56..f414aaebdb 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -157,7 +157,7 @@ void helper_cbo_zero(CPURISCVState *env, target_ulong=
+ address)
 >  {
+>      RISCVCPU *cpu =3D env_archcpu(env);
+>      uint16_t cbozlen =3D cpu->cfg.cboz_blocksize;
+> -    int mmu_idx =3D cpu_mmu_index(env, false);
+> +    int mmu_idx =3D riscv_env_mmu_index(env, false);
+>      uintptr_t ra =3D GETPC();
+>      void *mem;
+>
+> @@ -205,7 +205,7 @@ static void check_zicbom_access(CPURISCVState *env,
+>                                  uintptr_t ra)
+>  {
+>      RISCVCPU *cpu =3D env_archcpu(env);
+> -    int mmu_idx =3D cpu_mmu_index(env, false);
+> +    int mmu_idx =3D riscv_env_mmu_index(env, false);
+>      uint16_t cbomlen =3D cpu->cfg.cbom_blocksize;
+>      void *phost;
+>      int ret;
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index c1c3a4d1ea..fe0d5d053c 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -113,14 +113,15 @@ static void probe_pages(CPURISCVState *env, target_=
+ulong addr,
+>  {
+>      target_ulong pagelen =3D -(addr | TARGET_PAGE_MASK);
+>      target_ulong curlen =3D MIN(pagelen, len);
+> +    int mmu_index =3D riscv_env_mmu_index(env, false);
+>
+>      probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> -                 cpu_mmu_index(env, false), ra);
+> +                 mmu_index, ra);
+>      if (len > curlen) {
+>          addr +=3D curlen;
+>          curlen =3D len - curlen;
+>          probe_access(env, adjust_addr(env, addr), curlen, access_type,
+> -                     cpu_mmu_index(env, false), ra);
+> +                     mmu_index, ra);
+>      }
+>  }
+>
+> @@ -464,6 +465,7 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+>      uint32_t esz =3D 1 << log2_esz;
+>      uint32_t vma =3D vext_vma(desc);
+>      target_ulong addr, offset, remain;
+> +    int mmu_index =3D riscv_env_mmu_index(env, false);
+>
+>      /* probe every access */
+>      for (i =3D env->vstart; i < env->vl; i++) {
+> @@ -478,8 +480,7 @@ vext_ldff(void *vd, void *v0, target_ulong base,
+>              remain =3D nf << log2_esz;
+>              while (remain > 0) {
+>                  offset =3D -(addr | TARGET_PAGE_MASK);
+> -                host =3D tlb_vaddr_to_host(env, addr, MMU_DATA_LOAD,
+> -                                         cpu_mmu_index(env, false));
+> +                host =3D tlb_vaddr_to_host(env, addr, MMU_DATA_LOAD, mmu=
+_index);
+>                  if (host) {
 >  #ifdef CONFIG_USER_ONLY
->      return 0;
+>                      if (!page_check_range(addr, offset, PAGE_READ)) {
 > --
 > 2.34.1
 >
