@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F6EC47DDF
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF5FC47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUmL2-0006RE-9r; Tue, 30 Jan 2024 06:31:36 -0500
+	id 1rUmL3-0006VA-Pv; Tue, 30 Jan 2024 06:31:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKo-0006H7-0f
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:22 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKu-0006Kz-CB
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:29 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKe-0005Oo-01
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:16 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40e9101b5f9so42775345e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:31:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKk-0005Pb-H4
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:26 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-40fafc8bd6dso1075245e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:31:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706614270; x=1707219070; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706614275; x=1707219075; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XcqZ31sxniLOzI3SY0/z0idfpzeqrHKXR2vxwlvPTP8=;
- b=CXIFYq8ZZnLuzdCp3s/q6Lc4uagJiP1FvPKC82t//zoTuNoIvMYS3j+7PH1fEObg2V
- 7vEvFaqUm9YBNXDsVkW+w1iKbp5rrVMgwJbo0o+HIPcU/0x1TiV8VezzRFerZ5FD4WD1
- TBJd6URmJZOkB8pmLKm2d5SXQd7rARh4531NDQERaQoVFF1RGZckY4fao/mg8ji4d1QL
- Sk+5NMds5vlGZE0jdy6yGADTlN9+Erx+qFHGAUe8iOOfwXFeo6b9jzNiA5NBhkR/8g06
- N6TPOcu3O5HUOFloJgxUBpbr7/rQeBxGJzs1I8wCthRLm9PJ7FbgIStIAaruzJeDHHK8
- c3Dw==
+ bh=9KrXeN10E4XsxZLxA1TMdRw66dElQqMYKHUX/+flIDU=;
+ b=SyIzsRTo27b2e6YMBOKQvA18NXcVg31QgoamvJ6NpLVkxYtUkEpMi1lk13IEQNX61e
+ 7hykys5Eg2b93i2L1+eQ5jjry/Ttb56LBJ7MEvhk2PUZrZcTSVR0S7Y74CFcTkoQTRLl
+ fkZUKoqrAYJ3e/OwCW+Q/oANwnRde+jZkfljS6XwlbxnLPWZUcg0VnuPdF7Z/LTsyQK4
+ GD6Md1t0reWORWUhvam4oqvGEBO2vcRpIgqPYt8UyH9V95llGvx4nKn72CPVGKMDcesp
+ L1BI+oc5ZNUQvFQPiid8y5CsZnIc5OxSZTB+4YV0pxN8S5O0zJQaNOeKRfEf1sL37DUY
+ XP0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706614270; x=1707219070;
+ d=1e100.net; s=20230601; t=1706614275; x=1707219075;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XcqZ31sxniLOzI3SY0/z0idfpzeqrHKXR2vxwlvPTP8=;
- b=KNxGkzpsIrU/LGW+YGNmsEpja3N4hIkUnKNQ+AiHgChC4aKXzAp0JANM5ekSVbiybw
- /0IC9sOd5DkKieLa/H/oZywRFA8uAjZI7LmMuk2E9S6Zm3B4zMMOu53o3Nzx+O+AtKcZ
- sEgKBik0FJyqk/TH18mVvIOfZ6/HcDbaBZKXb19/K7E8NdNYxd778Z4ZuaaP5QexOxPQ
- IyYcvpA/OrkKylaIx8E3t+Scn8QYjpID3pKQi6biSiF6tB5Q4y6j+/gzS9FqDz52rr1q
- H+TC8U4i+IaUVjeMryLAppkNv3lZnm1espxHlhbmHy0xwzKn8sVSS2gwRyA5QUH25oLp
- Ol3A==
-X-Gm-Message-State: AOJu0Yz2EqUS8Fu3WiqeGye/yewbU/aTlHx9RQ4zO38glDkVWh/cZI1x
- jCJUSQ3Iv9IzPLqlB907OZqL155wJpFws2Pqwx2PtgCpWsXarRIwul0w6AQbljtdCx9DgnHudLG
- k
-X-Google-Smtp-Source: AGHT+IGTRTlV5tJ2vqnH0C66VusvvAuoNIPvu1+ybBeRUSp0hkL+Pfylnt0R+zAm34U3IUJhWDqnXg==
-X-Received: by 2002:a05:600c:1396:b0:40e:d425:85a with SMTP id
- u22-20020a05600c139600b0040ed425085amr7573143wmf.17.1706614270186; 
- Tue, 30 Jan 2024 03:31:10 -0800 (PST)
+ bh=9KrXeN10E4XsxZLxA1TMdRw66dElQqMYKHUX/+flIDU=;
+ b=PRlyZpa0DfZWdp9NlUqE8j/+cyG8lp0UoyZ4KBvsu5LUkvAjSDrX9wlLzvBxikt4eQ
+ 0RhkjYRWz3540MwCq+KglGPsHxuE6lvzIbCCcy/NnMYC6TufiA0dXxhxG6ZB0BiAyYt5
+ nQ1fZCxH2w4f9PLMLq3S0OAu6UUdSXLHUoyl36QK/eJVM1o7SNfDlfZ0/l+/xQXp2w0v
+ hLDuAdkGzsYeu57khIdXg3YugGNRVJeUi34s+jF+Nw25YGydJ1w/yEHan7E20gzlOVXF
+ P/O2Y8qnVh32sws2FGoA7z0msGGDMg3QQNmqbijdQbOucBDOFcT1guucrVLD0bB1KfnA
+ n1oA==
+X-Gm-Message-State: AOJu0YykE+J93zwA7WNc6ok7msJJ29xrvCzY9Aqytx2sKPZrUFQRzdqY
+ XI+rbB2j4CQ4nbtuxEZizYyRtiIUnN+jyGmMQUxDnLXSEzF51agpKfW7I7UqZvvJElBbXSNYwv7
+ m
+X-Google-Smtp-Source: AGHT+IGSsWciT1l+AcxCNFwMBzQpacXgSAsSVOpBba2f9elq9ajyDYnf4VVk9FS3LM093C6LwKh1DA==
+X-Received: by 2002:a05:600c:1c81:b0:40e:622e:7449 with SMTP id
+ k1-20020a05600c1c8100b0040e622e7449mr6317366wms.22.1706614275486; 
+ Tue, 30 Jan 2024 03:31:15 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- h13-20020a05600c314d00b0040efb445698sm3937420wmo.5.2024.01.30.03.31.09
+ r18-20020a05600c35d200b0040f44b5c847sm1148598wmq.45.2024.01.30.03.31.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jan 2024 03:31:09 -0800 (PST)
+ Tue, 30 Jan 2024 03:31:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
@@ -65,18 +65,17 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
  =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/2] target/sparc: Provide hint about
- CPUSPARCState::irq_manager member
-Date: Tue, 30 Jan 2024 12:31:01 +0100
-Message-ID: <20240130113102.6732-2-philmd@linaro.org>
+Subject: [PATCH 2/2] hw/sparc/leon3: Remove duplicated code
+Date: Tue, 30 Jan 2024 12:31:02 +0100
+Message-ID: <20240130113102.6732-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240130113102.6732-1-philmd@linaro.org>
 References: <20240130113102.6732-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,33 +98,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPUSPARCState::irq_manager holds a pointer to a QDev,
-so declare it as DeviceState instead of void.
-
-Move the comment about Leon3 fields.
+Since commit b04d989054 ("SPARC: Emulation of Leon3") the
+main_cpu_reset() handler sets both pc/npc when the CPU is
+reset, after the machine is realized. It is pointless to
+set it in leon3_generic_hw_init().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/cpu.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/sparc/leon3.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index 12a11ecb26..d02684569a 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -548,10 +548,9 @@ struct CPUArchState {
- #endif
-     sparc_def_t def;
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index 2dfb742566..1ae9a37583 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -343,8 +343,6 @@ static void leon3_generic_hw_init(MachineState *machine)
  
--    void *irq_manager;
-+    /* Leon3 */
-+    DeviceState *irq_manager;
-     void (*qemu_irq_ack)(CPUSPARCState *env, int intno);
--
--    /* Leon3 cache control */
-     uint32_t cache_control;
- };
- 
+             bootloader_entry = memory_region_get_ram_ptr(prom);
+             write_bootloader(env, bootloader_entry, entry);
+-            env->pc = LEON3_PROM_OFFSET;
+-            env->npc = LEON3_PROM_OFFSET + 4;
+             reset_info->entry = LEON3_PROM_OFFSET;
+         }
+     }
 -- 
 2.41.0
 
