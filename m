@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3381C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F6EC47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUmKx-0006IV-RJ; Tue, 30 Jan 2024 06:31:34 -0500
+	id 1rUmL2-0006RE-9r; Tue, 30 Jan 2024 06:31:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKh-0006D1-RW
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:16 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKo-0006H7-0f
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:22 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKY-0005Mg-Ls
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:12 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-40e775695c6so34190545e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:31:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmKe-0005Oo-01
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:31:16 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-40e9101b5f9so42775345e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:31:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706614265; x=1707219065; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uriMJ13edI6G4XpJBTuYK8QPI1ou+khs8JB42NZhqwI=;
- b=tfHCOuBl4VRcn2Ylb8CsqLqff64WElX2e9BWTM7eLr1C0bK/P1m8s7tyTQpKpQHtJc
- MJS7tehF7Vm5V4sN7BpZmqyTkrVQP6ZwbPgTUZuep/ESsSbr3J/ecHeGz9cbdxmFOJzG
- K09t8GPK/ABGkbiawjTGqU5GZ2RollAuo0uXLh7+VsEyPJ/S+p+6Zxv5G1nel7dzKAZo
- cogs9HreqZcED/uyF62R1/gt+w58HUUMV6NEIWwC3A1gg+vQcSO7/YM3TPg5g+mR2/HA
- sDY2z97/6l9QtMBP9gMsGzWTX5x4A0iuIftUzOBrPF7VcCDFmyLJe6F536PRaMy/yPJD
- 2VXQ==
+ d=linaro.org; s=google; t=1706614270; x=1707219070; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XcqZ31sxniLOzI3SY0/z0idfpzeqrHKXR2vxwlvPTP8=;
+ b=CXIFYq8ZZnLuzdCp3s/q6Lc4uagJiP1FvPKC82t//zoTuNoIvMYS3j+7PH1fEObg2V
+ 7vEvFaqUm9YBNXDsVkW+w1iKbp5rrVMgwJbo0o+HIPcU/0x1TiV8VezzRFerZ5FD4WD1
+ TBJd6URmJZOkB8pmLKm2d5SXQd7rARh4531NDQERaQoVFF1RGZckY4fao/mg8ji4d1QL
+ Sk+5NMds5vlGZE0jdy6yGADTlN9+Erx+qFHGAUe8iOOfwXFeo6b9jzNiA5NBhkR/8g06
+ N6TPOcu3O5HUOFloJgxUBpbr7/rQeBxGJzs1I8wCthRLm9PJ7FbgIStIAaruzJeDHHK8
+ c3Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706614265; x=1707219065;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uriMJ13edI6G4XpJBTuYK8QPI1ou+khs8JB42NZhqwI=;
- b=Sh2MDCQ32CPYCUp6o3NFdj3ZGd5cvk8vkgRRauHUjlniN3gdTMRIBENuEq2KIfkPwm
- Va6TGjIU/bPu9nwAH3LnOa+lmX0Wpb7IoBxjnB/pIy+Tb4KN0CVWdRte6OuQulkDDPZw
- jnV3jaxEToiqQLLLDZ7lueiWUIMLU4BSPFERDWNLvIGPYluFCZG2dq3Igio4hunsJCNf
- JLS7RGox7S+zYpsW64jC7uxWGRFRuEron/iHgbtaD1ht4SiSQQ11KjP3pauYxwpE7qnU
- DmyJ4EqtwSbUFqDZ9iNAlU9Ehzhe5vh5m+NY63YmCn3BKcd1pc4CvLgBv5LDe/xoqaBL
- la1Q==
-X-Gm-Message-State: AOJu0YwQh48apMvU2mPwwjdsRBQ+rTQD1gi7rh2nDXjYoKUlUcBF6ZmV
- iuS77zCtqk6bS20og6i++c7MUJCIFsJz095UL9knLo8Fj9G2yNp/jiOv8LH9AV22z+3HMi+o3Rq
- S
-X-Google-Smtp-Source: AGHT+IGcQMfVZ5giNtbbd1ZVB3eFxRx69II9jxTV1A5uZsVuhvuzSBkwSkB9O/wXJThxgAXxR8ypvw==
-X-Received: by 2002:a05:600c:35c9:b0:40e:f438:2f89 with SMTP id
- r9-20020a05600c35c900b0040ef4382f89mr4985571wmq.18.1706614264863; 
- Tue, 30 Jan 2024 03:31:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706614270; x=1707219070;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XcqZ31sxniLOzI3SY0/z0idfpzeqrHKXR2vxwlvPTP8=;
+ b=KNxGkzpsIrU/LGW+YGNmsEpja3N4hIkUnKNQ+AiHgChC4aKXzAp0JANM5ekSVbiybw
+ /0IC9sOd5DkKieLa/H/oZywRFA8uAjZI7LmMuk2E9S6Zm3B4zMMOu53o3Nzx+O+AtKcZ
+ sEgKBik0FJyqk/TH18mVvIOfZ6/HcDbaBZKXb19/K7E8NdNYxd778Z4ZuaaP5QexOxPQ
+ IyYcvpA/OrkKylaIx8E3t+Scn8QYjpID3pKQi6biSiF6tB5Q4y6j+/gzS9FqDz52rr1q
+ H+TC8U4i+IaUVjeMryLAppkNv3lZnm1espxHlhbmHy0xwzKn8sVSS2gwRyA5QUH25oLp
+ Ol3A==
+X-Gm-Message-State: AOJu0Yz2EqUS8Fu3WiqeGye/yewbU/aTlHx9RQ4zO38glDkVWh/cZI1x
+ jCJUSQ3Iv9IzPLqlB907OZqL155wJpFws2Pqwx2PtgCpWsXarRIwul0w6AQbljtdCx9DgnHudLG
+ k
+X-Google-Smtp-Source: AGHT+IGTRTlV5tJ2vqnH0C66VusvvAuoNIPvu1+ybBeRUSp0hkL+Pfylnt0R+zAm34U3IUJhWDqnXg==
+X-Received: by 2002:a05:600c:1396:b0:40e:d425:85a with SMTP id
+ u22-20020a05600c139600b0040ed425085amr7573143wmf.17.1706614270186; 
+ Tue, 30 Jan 2024 03:31:10 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- u17-20020adff891000000b0033ae55db108sm7925438wrp.20.2024.01.30.03.31.03
+ h13-20020a05600c314d00b0040efb445698sm3937420wmo.5.2024.01.30.03.31.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jan 2024 03:31:04 -0800 (PST)
+ Tue, 30 Jan 2024 03:31:09 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
@@ -64,15 +65,18 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
  =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] hw/sparc/leon3: Minor cleanups
-Date: Tue, 30 Jan 2024 12:31:00 +0100
-Message-ID: <20240130113102.6732-1-philmd@linaro.org>
+Subject: [PATCH 1/2] target/sparc: Provide hint about
+ CPUSPARCState::irq_manager member
+Date: Tue, 30 Jan 2024 12:31:01 +0100
+Message-ID: <20240130113102.6732-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240130113102.6732-1-philmd@linaro.org>
+References: <20240130113102.6732-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,17 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Minor cleanups noticed while reviewing Clément series:
-https://lore.kernel.org/qemu-devel/20240116130213.172358-1-chigot@adacore.com/
+CPUSPARCState::irq_manager holds a pointer to a QDev,
+so declare it as DeviceState instead of void.
 
-Philippe Mathieu-Daudé (2):
-  target/sparc: Provide hint about CPUSPARCState::irq_manager member
-  hw/sparc/leon3: Remove duplicated code
+Move the comment about Leon3 fields.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
  target/sparc/cpu.h | 5 ++---
- hw/sparc/leon3.c   | 2 --
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 12a11ecb26..d02684569a 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -548,10 +548,9 @@ struct CPUArchState {
+ #endif
+     sparc_def_t def;
+ 
+-    void *irq_manager;
++    /* Leon3 */
++    DeviceState *irq_manager;
+     void (*qemu_irq_ack)(CPUSPARCState *env, int intno);
+-
+-    /* Leon3 cache control */
+     uint32_t cache_control;
+ };
+ 
 -- 
 2.41.0
 
