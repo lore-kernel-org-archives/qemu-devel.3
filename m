@@ -4,75 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6385BC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D87BFC47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 11:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUmhu-0008Mz-Nr; Tue, 30 Jan 2024 06:55:15 -0500
+	id 1rUmjw-0000wy-7z; Tue, 30 Jan 2024 06:57:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmhp-0008KW-BX
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:55:10 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmjt-0000wm-5n
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:57:17 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmhm-0000nj-J8
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:55:09 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-55a8fd60af0so4084596a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:55:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUmjk-0001TT-TK
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 06:57:12 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-55eed368b0bso4114284a12.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 03:57:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706615704; x=1707220504; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ d=linaro.org; s=google; t=1706615825; x=1707220625; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/zV858AZvLi7xCe5NWW77dgGCH9fJvJbUOlwXik95x8=;
- b=kbTxBy+ADIAYpOuIbEt3sM8r5yCQiuaFvCE9ZE9LO7gwyy4SnvlzDERgb3jo+ZZ+T9
- h3mRGt1EqIP1bq+zuNMn9lbdirw1hZWYiLQWKvWOYCnT+lA2XdKpVQRmKCzf/MZK2r6J
- JK6CC2MnBYiZnKfSTF9n1kZ8WYYXp5AEbGeQLsX4bD4LD5CpiQzDH6Q97L7M+wS2Iyfh
- tz3Pxq5bL1dc7ZW7FUHgsxJyLNsajOP6TMUcy07QxOsenSi3bW+IT1AaIgcU9cH4TMnu
- qRo2jVGM15AhOznaSqpMVRgi+O0pheBamOnsG2jCbYY1waD64QvUd3D9x0zhPaKOTOEB
- 3e0A==
+ bh=iyrmL3Ee8X9twzNGEQu2P2TXFvFP1GT9jYDzL4oZp5c=;
+ b=V++nF4ovdBWSjcgjIpqnUXqDUF27tzu9Qa46fpNUrIJu/B7AJjmw9A/oWVDjdY953K
+ A0VJgMoeJ4eDv8ZQ3VHAAEJ4Xm1AHQ8sBckhIbNzj4VXzuwnj3A6i3foz21Fg0ryqoPL
+ 90AIpN/48B8sFPYvTAZ++eh+GQdWK3+BZy859XP8C3yU6vBNeFUO2ynUgN2xuSgCAo+R
+ 4ipIkq51yzSNh8fk/o6Hy80lrmovkcDkTeQmAvdujMXvYPshoejr79BeEm+DASXFdxMI
+ GkuYMUW+RZCnqwPhKVJSXihe4QKceyqUV24jcK03JhPKlpWNF49P8JZE2lkEclag4wru
+ bO3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706615704; x=1707220504;
- h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ d=1e100.net; s=20230601; t=1706615825; x=1707220625;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/zV858AZvLi7xCe5NWW77dgGCH9fJvJbUOlwXik95x8=;
- b=Yt8XUt/tKSJyN7rqgh1HNAUWR52v1PgxUPfZR3MDcofVYh0n5pBSjD7eoLyJy6+lzE
- 9TcggqloNZsgPmhiApV1Ob8gd4fEEN1YXOU30prO1qEhO47SkpwAnhH+Y1Gmloer9EFv
- CYiMryFvRVl4VhAciWDSimtkWHCogqGBaCNzwjjVi4mWqCosiFVAjoHvuN1s8iCo4RCz
- OzrOWIQNe1i/v1QjRtTO0jPZoRdIuCMTP8xrZeOlAnVkCysmZPJhDYALA6M6XGT0lhSF
- 4xDcw7+6Xq52qq2c6Sn83DbVjfqmlfeOnyowNABEeu7QbfVvTOfUtmebuthXN75J6uHY
- VqRA==
-X-Gm-Message-State: AOJu0YzNaGwCz79E8GIsYy+yGGtxtWqd5l4Kp/hDFJlw2pSmt8Nz5igZ
- Zimm45VVw4bQtgx90Qq6+jGG36VCdE5qODa/Gba1MFfhVf53rrTiJf2LS4Ot3S48gIR6oAFJJXI
- l
-X-Google-Smtp-Source: AGHT+IHJ2wGQ3eQoN91uawIuGQA9GLEnrJ2lwP283Z7FQIs65GTAj4owklimzcxB5wSN9WxYzhgYIQ==
-X-Received: by 2002:a17:906:255b:b0:a35:da0b:d011 with SMTP id
- j27-20020a170906255b00b00a35da0bd011mr3354347ejb.61.1706615704656; 
- Tue, 30 Jan 2024 03:55:04 -0800 (PST)
+ bh=iyrmL3Ee8X9twzNGEQu2P2TXFvFP1GT9jYDzL4oZp5c=;
+ b=Wa4bVDhjnc0DFDD2np2qNWnKt7jn2gR5eczHosEKqmAUlNIhE7sZSYiN5NIZuqoN63
+ /j1G/oab85637WfhBN9fKiaAKJ4i8pBAln9vUi5Cp2x//VsKMmxEa0wc3WXLDACo3X5h
+ JgoNsxSUUXJP4i7lUN1wvYuFOEcDjxtTngeuNcMfwlHFs3LcCGMmJWrq0rsgxt2c2BI0
+ OoDy+Vzp+tn/RRaE2H5ibnmwrsEd2vtmUrlDd7lp07irrmRhkqs9S4NCFMjJwWumrxyJ
+ HHUqrJuiWvrxnb9hw/clzXB9+XbQQ4JYftxmWMp3Hn6SvbeWSzUYN+9MxcMbY5d2sozk
+ +EXg==
+X-Gm-Message-State: AOJu0YwIaErBebPw+UAy7C+l31bULhomD6+9YEpRtZwoIu1xwOc7+Idx
+ 12HSiKFOo4nCVYh0xH/k29uTp8e9kvrFJnoaHp1BwdM44OGuzrpYYZSs+D55EpU=
+X-Google-Smtp-Source: AGHT+IGkPdrYJgps/y+Df9aOpS58sbAtArMIO270NmH5dHVkSgcbANau2WLAmnrVVpGzNEAt7lhWCw==
+X-Received: by 2002:a05:6402:2073:b0:55e:b30d:d845 with SMTP id
+ bd19-20020a056402207300b0055eb30dd845mr1159857edb.17.1706615825215; 
+ Tue, 30 Jan 2024 03:57:05 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- r16-20020a170906281000b00a35becf3f0csm2073977ejc.85.2024.01.30.03.55.03
+ s4-20020a056402014400b0055f4558c602sm475390edu.67.2024.01.30.03.57.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 03:55:04 -0800 (PST)
-Message-ID: <c0b73d73-bb73-46d5-849a-b4f6542b8c2f@linaro.org>
-Date: Tue, 30 Jan 2024 12:55:02 +0100
+ Tue, 30 Jan 2024 03:57:04 -0800 (PST)
+Message-ID: <f9e9af2e-260c-4ac6-8ecd-65c636edb277@linaro.org>
+Date: Tue, 30 Jan 2024 12:57:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] sparc/leon3: Add support for -smp
+Subject: Re: [PATCH v2] scripts/checkpatch.pl: check for placeholders in cover
+ letter patches
 Content-Language: en-US
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-References: <20240116130213.172358-1-chigot@adacore.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20240130101107.214872-1-manos.pitsidianakis@linaro.org>
+ <CAFEAcA8P-8rRRQJLEFzwVJiKqdd-cu5DgiBdxBXYhq=2Oov9Fg@mail.gmail.com>
+ <CAAjaMXYbm4ANhMEXOc35mJkq7Zr+A_vz8wBY+tPv4rk=dCQEaA@mail.gmail.com>
+ <CAFEAcA_XX07ND82_ZrokBhVDbTot16_SNJNQDQeNnBvRZ4MHkw@mail.gmail.com>
+ <CAAjaMXZsAHQYSotdn0f_3iao=sW3XRiA5iMQO1MMFnVj0cft_w@mail.gmail.com>
+ <CAFEAcA-qa729wTz99fW6ur+FYjkmUjTkjd8eG_dNo7fSzYh_rw@mail.gmail.com>
+ <CAAjaMXZYLCaXK5otq9iC=-D4RrjkcLDrgjhWhWnJDqwJwwfWhw@mail.gmail.com>
+ <a353c5db-4583-4662-bf28-4332d51e9d30@linaro.org>
+ <CAFEAcA907EzOaPEhs_ZTpmBZeCHiY2n6ncgzbixhcK4VMnQ30g@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240116130213.172358-1-chigot@adacore.com>
+In-Reply-To: <CAFEAcA907EzOaPEhs_ZTpmBZeCHiY2n6ncgzbixhcK4VMnQ30g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,44 +106,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/24 14:02, Clément Chigot wrote:
-> V2 modifications
->   - Patch1: Add SPDX copyright tags.
->   - Patch3: Add defines for MP_STATUS fields. Improve comments.
->   - Patch4: Improve a comment.
->   - Patch6: Dropped as already merged.
+On 30/1/24 12:30, Peter Maydell wrote:
+> On Tue, 30 Jan 2024 at 11:24, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Hi Manos,
+>>
+>> On 30/1/24 12:02, Manos Pitsidianakis wrote:
+>>> On Tue, 30 Jan 2024 at 12:57, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>>>
+>>>> On Tue, 30 Jan 2024 at 10:51, Manos Pitsidianakis
+>>>> <manos.pitsidianakis@linaro.org> wrote:
+>>>>>
+>>>>> On Tue, 30 Jan 2024 at 12:42, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>>>>>
+>>>>>> On Tue, 30 Jan 2024 at 10:39, Manos Pitsidianakis
+>>>>>> <manos.pitsidianakis@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On Tue, 30 Jan 2024 at 12:34, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>>>>>>>
+>>>>>>>> On Tue, 30 Jan 2024 at 10:11, Manos Pitsidianakis
+>>>>>>>> <manos.pitsidianakis@linaro.org> wrote:
+>>>>>>>>>
+>>>>>>>>> Check if a file argument is a cover letter patch produced by
+>>>>>>>>> git-format-patch --cover-letter; It is initialized with subject suffix "
+>>>>>>>>> *** SUBJECT HERE ***" and body prefix " *** BLURB HERE ***". If they
+>>>>>>>>> exist, warn the user.
+>>>>>>>>
+>>>>>>>> FWIW, as far as I can see from my email archive, this particular
+>>>>>>>> mistake has been made by contributors to qemu-devel perhaps
+>>>>>>>> half a dozen times at most in the last decade...
+>>>>>>>>
+>>>>>>>> thanks
+>>>>>>>> -- PMM
+>>>>>>>
+>>>>>>> Peter, searching for `b:"BLURB HERE"` in lore.kernel.org yields about
+>>>>>>> 170 results including these patches.
+>>>>>>>
+>>>>>>> https://lore.kernel.org/qemu-devel/?q=b%3A%22BLURB+HERE%22
+>>
+>> This comment is the default --blurb-template from git-publish:
+>> https://github.com/stefanha/git-publish/blob/master/git-publish#L742
+>> As the tool is also used to post patches to other projects, I'd
+>> recommend fixing it there at the source.
 > 
-> ---
-> 
-> This series allows leon3 emulations to record up 4 CPUs.
-> 
-> It requires some enhancements in the grlib_irqmp device and adding the
-> cpu_index field in the asr17 instruction.
-> 
-> It has been tested locally with various bareboard runtimes.
-> 
-> 
-> Clément Chigot (8):
->    sparc/grlib: split out the headers for each peripherals
->    intc/grlib_irqmp: add ncpus property
->    intc/grlib_irqmp: implements the multiprocessor status register
->    intc/grlib_irqmp: implements multicore irq
->    target/sparc: implement asr17 feature for smp
->    leon3: implement multiprocessor
->    leon3: check cpu_id in the tiny bootloader
->    MAINTAINERS: replace Fabien by myself as Leon3 maintainer
+> It's also in the general 'git format-patch' cover letter template,
+> where the workflow is supposed to be "produce cover letter template,
+> manually edit it, send it". Stray template markers generally are
+> the result of (a) a new contributor not knowing about the 'edit'
+> step or (b) remembering to add the subject and blurb but forgetting
+> to delete the 'blurb' template line so it gets left in at the
+> bottom of the cover letter. So I think it is a check that is within
+> checkpatch.pl's remit.
 
-Cc'ing maintainers per:
-
-$ ./scripts/get_maintainer.pl -f hw/sparc/leon3.c
-"Clément Chigot" <chigot@adacore.com> (maintainer:Leon3)
-Frederic Konrad <konrad.frederic@yahoo.fr> (maintainer:Leon3)
-Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> (maintainer:SPARC TCG CPUs)
-Artyom Tarasenko <atar4qemu@gmail.com> (maintainer:SPARC TCG CPUs)
-
-Mark / Artyom if you don't have PR planned I can take the v3 if you Ack.
-
-Regards,
-
-Phil.
+Oh, it is so long since the last time I used git-format-patch
+manually that I thought this template was a git-publish feature :)
 
