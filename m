@@ -4,78 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC910C47DDF
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 12:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B48C48285
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 12:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUnWL-0003CE-Dt; Tue, 30 Jan 2024 07:47:21 -0500
+	id 1rUnZc-0004xZ-KB; Tue, 30 Jan 2024 07:50:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rUnWB-0003AD-SJ
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:47:13 -0500
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rUnZZ-0004xB-Gh
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:50:41 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rUnW9-0004b5-FS
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:47:10 -0500
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-42b471540aaso2497881cf.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 04:47:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rUnZX-0005Lx-EW
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 07:50:41 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a26f73732c5so465781566b.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 04:50:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706618823; x=1707223623; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M4ZMY3pNRZH9y69tonv0+6nZuel941F9tmAloyRfJ8Q=;
- b=J86RVgfFDM47gh4PtLtxpMg1X1jFJJjylNbLRkqIU++hGUsbphZfXmB0gQ4CV9g4oC
- x90+kaBK8e/fORGtFzU2bznwrPgvjFU3jhwpK5IrPeuDQaFi7zlJHrZnmxtSmdblo59p
- RSksgzBElpV3Dz4oYpBrHpECx8uWFmxrKIla3BzrJG8wlSFXyHZW9eVO2F7LWaRgSwfy
- F5akc0fXB41y0ShfcMs4YzqPPmf3lUAy1uVwmZYNuihkz27QBufLQa9dDXNay965CGS6
- HKSP1Yon/eSujUNd2QdIaT4GrnDJJi5UzXQQ0mIfT8bHZs8tmfm9VTIwpYVBwXMT2zA7
- dpWQ==
+ d=ventanamicro.com; s=google; t=1706619037; x=1707223837; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=FErAMGRMo5n3bVgxQ4ZhDOcJETw4leepzAnCBEurNTU=;
+ b=gH7Lt52H6Ryl1gKj5m/52nhBG/L3miSW0bHQvM//FEDH3nUCyRQfQAD+kjZOOI7BoJ
+ 1egP+RclC9bf0gssMB9eoYfTTigpyuDuOIL2LcpECPO4KRovLFEmtpBG3lXZLx08Tyc8
+ y+2/vgj0nNK9kS5p+2SI/ZprwNeCHkuTOiEXXkXbh4nROTa8RIs4mH4CCFbWHOOZVATh
+ Ge7rXGTSDJB4boALOUInENKEL7HzYsMyK1RHPqJfbNOlm76HBsrdpqmv/Cj21Xr4Co+9
+ jda69Nx3SPPeeY0MB5oYuBwIOOnwElCEi+YNd5o096Jch0Pe11BtwdgKj9IE8SRYS+EE
+ s25w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706618823; x=1707223623;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M4ZMY3pNRZH9y69tonv0+6nZuel941F9tmAloyRfJ8Q=;
- b=KJ4gbzbiGKUAxWypgGpN0tC6e+aFLJCMUdyiOK5dugiLsjBS7If+Y2Hjolk1V1Giop
- C1kbhdug/8Qu9z784hUTJVVFKYacMGS+hruLtmQ3M2vYc0Xjd+FDuKxvGIXImcO3sH8J
- poDpwjTVUXcYOok7xWVU6E7yhFDDfUnWLFEi5AUtkKBPNNsZSD6QC2IprlO3HMSq1vAt
- pBbqfLAtaqut7fNFcvKg8wBKIdfbyik31DjeAcUjfEIfuw23HT38/dYJwxeV4FIvXfak
- qXP0ho6L1yx+UqVeEkYubU72pw5zQgbcMWoiFO92pAgqY9HLUctju0HEWK1bI8q/pXD9
- AVZw==
-X-Gm-Message-State: AOJu0YzXgO3SxBvvOmsZfUwMi5La/SvOinbk4B7HY4LbP9sFUtBnNuA1
- Se5/akUhYszz+DWSMh3Dy4RAFjyX1A8azamxw8PeQNA7HgG5//TOv6w0CW8OuzFC+gjRrkQ4ycb
- PEF1ZhI5GeYVkw9cbhPErf6J8+sw=
-X-Google-Smtp-Source: AGHT+IEr7tbm+OFIF80YxsPt8IMDR8hwiiBigRRfnFfxamp/a9CyD3p7NlY2PV+W+65KM7vFSTe3PhQJeojOOilobwE=
-X-Received: by 2002:a05:622a:156:b0:42a:a4d5:966f with SMTP id
- v22-20020a05622a015600b0042aa4d5966fmr4819499qtw.113.1706618822973; Tue, 30
- Jan 2024 04:47:02 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706619037; x=1707223837;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FErAMGRMo5n3bVgxQ4ZhDOcJETw4leepzAnCBEurNTU=;
+ b=GaKAS5ZoCBoUkOJSUlpiubcDPBRipjzuXwhZgoQJhXuo2v2pBdqh4++dCgC2nLEr4y
+ j/uIzTGVkByV3CqpoiZwyzUEKbqN7b0uMGSyODJgVMsy8IcxgQyhefHziNj3u8I5Yq3S
+ G9P/lhLGmq1eE8kgFx/wlXYRbOMd8p9KuDewePMLk9/9WYUtwFCOhpe+Qj7Y1Lb6m55Z
+ vA+7svjJTANRzZGNUMPUeOYXSYL4Dk1L351Cvu26M+yh6GgXUPj8srI6Rvgkd1NsP3lq
+ s6HlEZaT7FXfRjbwA/q0C1cOABPhpdOCeVh96k68ocscy/6fccE/IqMYoHxQ9UllpaqF
+ l9uQ==
+X-Gm-Message-State: AOJu0YzjmPaQCWLBWjsrnD1mh2nt1N2uPWcO+C3r5LQpS8OYOrJq7WZm
+ MwtC5cSIZwHUXaz3jTlyPyjFiFiXFm+cs4aOQRyUT4l68FQmQ+1Ff9byuE0I8wo=
+X-Google-Smtp-Source: AGHT+IHprd1Zesz0HZSZLQhTWjiY6//T9U6Y9L8Sy0YEKD448UqmkEqiyPXlGz7Z3RWWWtEZCnIbEQ==
+X-Received: by 2002:a17:906:4c56:b0:a35:9414:f46f with SMTP id
+ d22-20020a1709064c5600b00a359414f46fmr4731786ejw.13.1706619037398; 
+ Tue, 30 Jan 2024 04:50:37 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ o18-20020a1709061b1200b00a2e7d1b6042sm5047658ejg.196.2024.01.30.04.50.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jan 2024 04:50:36 -0800 (PST)
+Date: Tue, 30 Jan 2024 13:50:36 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: JeeHeng Sia <jeeheng.sia@starfivetech.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
+ "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "anisinha@redhat.com" <anisinha@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, 
+ "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "sunilvl@ventanamicro.com" <sunilvl@ventanamicro.com>, 
+ "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "alistair.francis@wdc.com" <alistair.francis@wdc.com>, 
+ "bin.meng@windriver.com" <bin.meng@windriver.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>, 
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+Subject: Re: RE: [RESEND v2 1/2] hw/arm/virt-acpi-build.c: Migrate SPCR
+ creation to common location
+Message-ID: <20240130-48cfb21fac247f0d535f87c9@orel>
+References: <20240129021440.17640-1-jeeheng.sia@starfivetech.com>
+ <20240129021440.17640-2-jeeheng.sia@starfivetech.com>
+ <20240129-e51095f37656f4ba5262ec68@orel>
+ <BJSPR01MB0561D2F722BBC446017856709C7DA@BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn>
 MIME-Version: 1.0
-References: <cover.1706542958.git.manos.pitsidianakis@linaro.org>
- <78b15e8f7e2af529aeaed2e6ef37efa508cf405f.1706542958.git.manos.pitsidianakis@linaro.org>
-In-Reply-To: <78b15e8f7e2af529aeaed2e6ef37efa508cf405f.1706542958.git.manos.pitsidianakis@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 30 Jan 2024 16:46:51 +0400
-Message-ID: <CAJ+F1CL8KKK4Sor5bZjVB7fGGhzWtb-VjkCAZPDeCjbeE8a98g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] virtio-gpu.c: add resource_destroy class method
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x829.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BJSPR01MB0561D2F722BBC446017856709C7DA@BJSPR01MB0561.CHNPR01.prod.partner.outlook.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,117 +110,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Tue, Jan 30, 2024 at 03:30:13AM +0000, JeeHeng Sia wrote:
+...
+> > Sharing code is good, but if we have to parametrize the entire table, then
+> > we might as well keep Arm and RISCV separate. Building the table first
+> > with this struct, just to have it built again with the build_append API,
+> > doesn't make much sense to me. Do Arm and riscv really diverge on all
+> > these parameters? If not, then just add the parameters which do diverge
+> > build_scpr's arguments.
+> It is kind of chicken and egg thing, I would suggest let the arch code to
+> fill in the value. It doesn't make sense to change again in the future when
+> both riscv and arm realized the parameters were different.
+> Can arm confirm that these values wouldn't change in the future?
+> > 
 
-On Mon, Jan 29, 2024 at 7:46=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> When destroying/unrefing resources, devices such as virtio-gpu-rutabaga
-> need to do their own bookkeeping (free rutabaga resources that are
-> associated with the virtio_gpu_simple_resource).
->
-> This commit adds a class method so that virtio-gpu-rutabaga can override
-> it in the next commit.
->
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->  include/hw/virtio/virtio-gpu.h |  3 +++
->  hw/display/virtio-gpu.c        | 25 ++++++++++++++++++++++---
->  2 files changed, 25 insertions(+), 3 deletions(-)
->
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
-u.h
-> index 584ba2ed73..b28e7ef0d2 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -219,6 +219,9 @@ struct VirtIOGPUClass {
->      void (*update_cursor_data)(VirtIOGPU *g,
->                                 struct virtio_gpu_scanout *s,
->                                 uint32_t resource_id);
-> +    void (*resource_destroy)(VirtIOGPU *g,
-> +                             struct virtio_gpu_simple_resource *res,
-> +                             Error **errp);
->  };
->
->  struct VirtIOGPUGL {
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 2b73ae585b..1c1ee230b3 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -402,7 +402,8 @@ static void virtio_gpu_disable_scanout(VirtIOGPU *g, =
-int scanout_id)
->  }
->
->  static void virtio_gpu_resource_destroy(VirtIOGPU *g,
-> -                                        struct virtio_gpu_simple_resourc=
-e *res)
-> +                                        struct virtio_gpu_simple_resourc=
-e *res,
-> +                                        Error **errp)
->  {
->      int i;
->
-> @@ -438,7 +439,11 @@ static void virtio_gpu_resource_unref(VirtIOGPU *g,
->          cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
->          return;
->      }
-> -    virtio_gpu_resource_destroy(g, res);
-> +    /*
-> +     * virtio_gpu_resource_destroy does not set any errors, so pass a NU=
-LL errp
-> +     * to ignore them.
-> +     */
-> +    virtio_gpu_resource_destroy(g, res, NULL);
+We can't be sure that arm nor riscv will change in the future, but we
+(arm/riscv/etc. QEMU developers) control the code for both, so I don't see
+a problem with only parametrizing what's necessary today and then
+extending that, or completely separating, later if necessary. In any case,
+I'd rather see the two completely separate from the start, than to see
+the structure with all the parameters get added. There's no difference to
+me when reading a list of 's->param_name = value' or a list of
+build_append_int(table, value, size) /* param_name */. And, given we need
+the later eventually anyway, then there's no reason for the former at all.
 
-&error_fatal would be better.
-
->  }
->
->  static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
-> @@ -1488,11 +1493,24 @@ static void virtio_gpu_device_unrealize(DeviceSta=
-te *qdev)
->  static void virtio_gpu_reset_bh(void *opaque)
->  {
->      VirtIOGPU *g =3D VIRTIO_GPU(opaque);
-> +    VirtIOGPUClass *vgc =3D VIRTIO_GPU_GET_CLASS(g);
->      struct virtio_gpu_simple_resource *res, *tmp;
-> +    uint32_t resource_id;
-> +    Error *local_err =3D NULL;
->      int i =3D 0;
->
->      QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
-> -        virtio_gpu_resource_destroy(g, res);
-> +        resource_id =3D res->resource_id;
-> +        vgc->resource_destroy(g, res, &local_err);
-> +        if (local_err) {
-> +            error_append_hint(&local_err, "%s: %s resource_destroy"
-> +                              "for resource_id =3D %"PRIu32" failed.\n",
-> +                              __func__, object_get_typename(OBJECT(g)),
-> +                              resource_id);
-> +            /* error_report_err frees the error object for us */
-> +            error_report_err(local_err);
-> +            local_err =3D NULL;
-> +        }
->      }
->
->      for (i =3D 0; i < g->parent_obj.conf.max_outputs; i++) {
-> @@ -1632,6 +1650,7 @@ static void virtio_gpu_class_init(ObjectClass *klas=
-s, void *data)
->      vgc->handle_ctrl =3D virtio_gpu_handle_ctrl;
->      vgc->process_cmd =3D virtio_gpu_simple_process_cmd;
->      vgc->update_cursor_data =3D virtio_gpu_update_cursor_data;
-> +    vgc->resource_destroy =3D virtio_gpu_resource_destroy;
->      vgbc->gl_flushed =3D virtio_gpu_handle_gl_flushed;
->
->      vdc->realize =3D virtio_gpu_device_realize;
-> --
-> =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
-=CE=B8=CE=AE=CF=84=CF=89
->
-
-otherwise,
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
---=20
-Marc-Andr=C3=A9 Lureau
+Thanks,
+drew
 
