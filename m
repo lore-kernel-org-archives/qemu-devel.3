@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E39C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 13:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2F4C47DDF
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 13:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUoWi-0004We-2y; Tue, 30 Jan 2024 08:51:48 -0500
+	id 1rUoXA-0005Vr-MV; Tue, 30 Jan 2024 08:52:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoWg-0004WH-BN
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:51:46 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoX9-0005Ng-1I
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:52:15 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoWe-0002MC-Aw
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:51:46 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rUoX7-0002UC-4Y
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 08:52:14 -0500
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40UDgbFD031921; Tue, 30 Jan 2024 13:51:41 GMT
+ 40UDgWwC031760; Tue, 30 Jan 2024 13:52:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to : cc :
+ h=date : from : to :
  subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=pp1;
- bh=J2/Mm3KLYRte7mAm5li1L+S45pf2x/GofsfWgxrt5cU=;
- b=jMKwABOfP9KCuoW6tPclQsBqGYxFh/DQg7tcUnn/NdKJjrIH+KMA9lyvcRQLPHKBu6rD
- 5+q090L8ophrIgjvxNYnH0iEEFExULIYaHDviCIin/WU+R11ggyth7zT2s+xGlHLCYDh
- OEknUfnUYHZvkt/XGfXjFgOk53THl74OA28heSXF46C21Z0eSE/GhzTuGKggn8xamZns
- s8HjHCkWxG/IDsyWKSh/MYUxhhkKgV3SEun/wWkYTlYCuiQnGciUanNV/6mwHPmEbp2n
- 4SR/weQ4rSdMmv2qmfCfuGQgx47liLT01eK1vc3YUWXyJbJDwJ0VoDmCh2KWL7G/T5li AQ== 
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vy27r078v-1
+ in-reply-to; s=pp1; bh=YYEZhaDk/fDiOJWy42FDO5Ct7R/6dg44NK1sbkIjxEM=;
+ b=P8xK6NLge1GC9SG0cTZnQcFipDctqwpY7gyJ5iviXVNJksmHtesSQEuHDIDP940omMN8
+ 9RFPKP9XlfwDCx9c5mop/VLGbBw2ZwKSs8RED8PIm+Tfpw4QdfpJ6GScFXtxbywxMXXv
+ GUkOKGl1bQYd2b0JpnGrPgxmZgGgF4k0BZg45v1D0GhuthRcxtP01Z4Al0XBuW/Q8COH
+ kxAgBhId6g6CjzMRcQ7aHqr/xqWh8R6xasULXSbyW3KKCSKKtHrQsGsVOf4BHPBZYpKZ
+ kri7zSfkh0on4jIEOZeDTBtkRPpadx5pQzUGcOyZP6Flmf1jW1qh7krv0Z9ewA8Hpa4Z zg== 
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vy27r07re-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jan 2024 13:51:40 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 40UBgrvu010884; Tue, 30 Jan 2024 13:51:39 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vweckeq7m-1
+ Tue, 30 Jan 2024 13:52:10 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40UDKBt7017755; Tue, 30 Jan 2024 13:52:09 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwchyq7jj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jan 2024 13:51:39 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 40UDpbOC18153918
+ Tue, 30 Jan 2024 13:52:09 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40UDq7Oa15991534
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jan 2024 13:51:38 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D15BA20040;
- Tue, 30 Jan 2024 13:51:37 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB7112004E;
- Tue, 30 Jan 2024 13:51:37 +0000 (GMT)
+ Tue, 30 Jan 2024 13:52:07 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 30FB82004B;
+ Tue, 30 Jan 2024 13:52:07 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1024D2004D;
+ Tue, 30 Jan 2024 13:52:07 +0000 (GMT)
 Received: from black (unknown [9.155.200.166])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 30 Jan 2024 13:51:37 +0000 (GMT)
-Date: Tue, 30 Jan 2024 14:51:36 +0100
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 30 Jan 2024 13:52:07 +0000 (GMT)
+Date: Tue, 30 Jan 2024 14:52:05 +0100
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 32/33] target/ppc: Enable TARGET_PAGE_BITS_VARY for
+Subject: Re: [PATCH v3 33/33] target/alpha: Enable TARGET_PAGE_BITS_VARY for
  user-only
-Message-ID: <c5c2y556qjlmiqrgjqwgbjkvouoipz2t2dgs6w7euvj2qbgsph@2s7o4mjf24it>
+Message-ID: <by64lqh26zra336tjzlwibpgy3uppcudjydifebjowvouynuf4@iotfsv2pz7yg>
 References: <20240102015808.132373-1-richard.henderson@linaro.org>
- <20240102015808.132373-33-richard.henderson@linaro.org>
+ <20240102015808.132373-34-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240102015808.132373-33-richard.henderson@linaro.org>
+In-Reply-To: <20240102015808.132373-34-richard.henderson@linaro.org>
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: btq6_j9bhmDwvSVLiYOIgJ346zCC6HDz
-X-Proofpoint-GUID: btq6_j9bhmDwvSVLiYOIgJ346zCC6HDz
+X-Proofpoint-ORIG-GUID: XFTV6exEjKtvZ_6KgMas5OXhmY-ZrEmd
+X-Proofpoint-GUID: XFTV6exEjKtvZ_6KgMas5OXhmY-ZrEmd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-01-30_07,2024-01-30_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  lowpriorityscore=0 mlxscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=697
+ bulkscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=924
  impostorscore=0 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2401300102
@@ -108,34 +105,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 02, 2024 at 12:58:07PM +1100, Richard Henderson wrote:
-> Since ppc binaries are generally built for multiple
+On Tue, Jan 02, 2024 at 12:58:08PM +1100, Richard Henderson wrote:
+> Since alpha binaries are generally built for multiple
 > page sizes, it is trivial to allow the page size to vary.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/ppc/cpu-param.h | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-
-It would be great if it were possible to choose the page size from the
-command line for linux-user. I was recently looking into comparing
-traces from ppc64le-linux-user and real hardware, and mismatching page
-size was one of the things getting in the way. Of course,
-
---- a/target/ppc/cpu-param.h
-+++ b/target/ppc/cpu-param.h
-@@ -31,6 +31,10 @@
- # define TARGET_PHYS_ADDR_SPACE_BITS 36
- # define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
-+#if defined(TARGET_PPC64) && defined(__linux__) && defined(CONFIG_USER_ONLY)
-+#define TARGET_PAGE_BITS 16
-+#else
- #define TARGET_PAGE_BITS 12
-+#endif
-
-worked, but an official support for this would be even better.
+>  target/alpha/cpu-param.h | 16 ++++++++++++++--
+>  1 file changed, 14 insertions(+), 2 deletions(-)
 
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
