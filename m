@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E119CC46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 16:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB0EC47DA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 16:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUqjw-00087S-Cj; Tue, 30 Jan 2024 11:13:36 -0500
+	id 1rUqkI-00007p-AV; Tue, 30 Jan 2024 11:13:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rUqjq-00084e-H6; Tue, 30 Jan 2024 11:13:32 -0500
-Received: from zproxy1.enst.fr ([137.194.2.220])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rUqkE-0008PW-IO
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:13:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rUqjn-0008MK-5N; Tue, 30 Jan 2024 11:13:30 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 8FCCEC0571;
- Tue, 30 Jan 2024 17:13:23 +0100 (CET)
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id oTLzdEOi1Fht; Tue, 30 Jan 2024 17:13:23 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 0E0B3C05E3;
- Tue, 30 Jan 2024 17:13:23 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr 0E0B3C05E3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1706631203;
- bh=6YWMdlOIz5twvF2x5Q7DcGkcdBzFvr5h+gkPk8b68wU=;
- h=From:To:Date:Message-Id:MIME-Version;
- b=g8krer910l9KDRWc9EgB+qrBQ86AFHbucMtuykXv++ZominoePji2nIm3gvxaCTcf
- u61ZtJZGuXAutoQqp+SD6SO3WBfPdImti9+7qxA5ecK3PzmjVKaswwB+Gqx98tVbAb
- CFSOCBKywGFDFcXVtmXOuoRs0QVdFprS2m0qEpbI=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id hhjE4yXT4PVj; Tue, 30 Jan 2024 17:13:22 +0100 (CET)
-Received: from AM-Inspiron-3585.numericable.fr (38.162.10.109.rev.sfr.net
- [109.10.162.38])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id A1C99C0571;
- Tue, 30 Jan 2024 17:13:22 +0100 (CET)
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rUqkC-0008PO-MV
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 11:13:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706631231;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h2TXQY7oLkByMa20k4kM2kuAi6geHCpwaT9GmhgYfg4=;
+ b=PygFM8+uWXfUS3dLbl/4Aau13v897D4lvj6AcASW6kHNuxUmKZtPlIo9LWZoo62hYx3Vz/
+ HKFpIzR9FU2zDr3N0fSEW7W8S8eB5q1ADbkTc5z4bV+IEwsme0fIDHHihsUSV3ZAY27t0d
+ 7haKtp+dbgXcSY1pl1kLeO1eFNooD/0=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-491-XVKja-zrO06BoASw-Yhf3Q-1; Tue, 30 Jan 2024 11:13:48 -0500
+X-MC-Unique: XVKja-zrO06BoASw-Yhf3Q-1
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-1d8cd8315fbso29440035ad.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 08:13:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706631224; x=1707236024;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h2TXQY7oLkByMa20k4kM2kuAi6geHCpwaT9GmhgYfg4=;
+ b=YE4ot+p0qJQfi9mNFCqLir0as52xC8qdQcY9znAWE8tA3fxP3VIwaHtoe5RFgDGZ2B
+ zfayaJ6xu2HNdwIgaLOUQlkO4qbs9rYo5vO8aYqswDgZog0//3yJ66pn0MeGuRXns79t
+ KoiYm6GurMo6ctC4HtphyyBw21MnKbhcj+zgZgJ3oldTcIx2ZVd+NXFExBTjNhccJdCU
+ BbYjsXnHFFoAlYDzsmcEerfeVMjcy2wte9VCX7ihjeVx34Mt276k+f3vQEHl+diTjpNC
+ W2CYNZSG6Bm8rS2IcWOK6SZB3YnMqTAUG2Fo9OPQXezf+4zablWzcvz0s3+9dvJd+uA9
+ 9OWQ==
+X-Gm-Message-State: AOJu0YyFAX3hIJC5ttp/PVe5zSz6H2q1NIuN+NhSA+AcSmj1pvc1l8PQ
+ 0H7cTCElfxcsyzT/q0l+KnbBNVoYpr3ag/J6cjfy4jVLu9BX1yIOy/nd+M5bEfyJrfBTX37x2Sv
+ pzdNSRVU0l+BUmPqJv3X7m22BcdpE7HVjaeh9NyWk6BTjjgOkno0p
+X-Received: by 2002:a17:902:7482:b0:1d7:690f:a961 with SMTP id
+ h2-20020a170902748200b001d7690fa961mr8057428pll.44.1706631224686; 
+ Tue, 30 Jan 2024 08:13:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEoUC5dZkqOrk3Ruu5iIsAE9bfnf1tDPMjgnvxw87bssrw4+DoBsKbykAyTUED4BCFgz9ejUw==
+X-Received: by 2002:a17:902:7482:b0:1d7:690f:a961 with SMTP id
+ h2-20020a170902748200b001d7690fa961mr8057407pll.44.1706631224363; 
+ Tue, 30 Jan 2024 08:13:44 -0800 (PST)
+Received: from smtpclient.apple ([115.96.128.50])
+ by smtp.gmail.com with ESMTPSA id
+ r18-20020a170903411200b001d73adf350asm7394811pld.56.2024.01.30.08.13.39
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 30 Jan 2024 08:13:43 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Re: [PATCH 1/3] hw/i386: Add `\n` to hint message
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20240130155653.142283-2-groug@kaod.org>
+Date: Tue, 30 Jan 2024 21:43:27 +0530
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v4 8/8] Add tests for the STM32L4x5_RCC
-Date: Tue, 30 Jan 2024 17:13:16 +0100
-Message-Id: <20240130161316.114675-1-arnaud.minier@telecom-paris.fr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240130160656.113112-1-arnaud.minier@telecom-paris.fr>
-References: <20240130160656.113112-1-arnaud.minier@telecom-paris.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-trivial@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.220;
- envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy1.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Message-Id: <6E771066-49E8-448D-B90A-21766B108874@redhat.com>
+References: <20240130155653.142283-1-groug@kaod.org>
+ <20240130155653.142283-2-groug@kaod.org>
+To: Greg Kurz <groug@kaod.org>
+X-Mailer: Apple Mail (2.3774.400.31)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,256 +112,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tests:
-- the ability to change the sysclk of the device
-- the ability to enable/disable/configure the PLLs
-- if the clock multiplexers work
-- the register flags and the generation of irqs
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- tests/qtest/meson.build          |   3 +-
- tests/qtest/stm32l4x5_rcc-test.c | 207 +++++++++++++++++++++++++++++++
- 2 files changed, 209 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/stm32l4x5_rcc-test.c
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 84a055a7d9..36f85c8920 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -201,7 +201,8 @@ qtests_aspeed =3D \
-=20
- qtests_stm32l4x5 =3D \
-   ['stm32l4x5_exti-test',
--   'stm32l4x5_syscfg-test']
-+   'stm32l4x5_syscfg-test',
-+   'stm32l4x5_rcc-test']
-=20
- qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) =
-+ \
-diff --git a/tests/qtest/stm32l4x5_rcc-test.c b/tests/qtest/stm32l4x5_rcc=
--test.c
-new file mode 100644
-index 0000000000..4157291052
---- /dev/null
-+++ b/tests/qtest/stm32l4x5_rcc-test.c
-@@ -0,0 +1,207 @@
-+/*
-+ * QTest testcase for STM32L4x5_RCC
-+ *
-+ * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-+ * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/registerfields.h"
-+#include "libqtest-single.h"
-+#include "hw/misc/stm32l4x5_rcc_internals.h"
-+
-+#define RCC_BASE_ADDR 0x40021000
-+#define NVIC_ISER 0xE000E100
-+#define NVIC_ISPR 0xE000E200
-+#define NVIC_ICPR 0xE000E280
-+#define RCC_IRQ 5
-+
-+static void enable_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ISER, 1 << n);
-+}
-+
-+static void unpend_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ICPR, 1 << n);
-+}
-+
-+static bool check_nvic_pending(unsigned int n)
-+{
-+    return readl(NVIC_ISPR) & (1 << n);
-+}
-+
-+static bool qts_wait_for_flag(QTestState *qts, uint32_t event_addr,
-+                              uint32_t flag, uint32_t value)
-+{
-+    /* Wait at most 5 seconds */
-+    for (int i =3D 0; i < 5000; i++) {
-+        if ((qtest_readl(qts, event_addr) & flag) =3D=3D value) {
-+            return true;
-+        }
-+        g_usleep(1000);
-+    }
-+
-+    return false;
-+}
-+
-+static bool rcc_wait_for_flag(uint32_t event_addr, uint32_t flag,
-+                              uint32_t value)
-+{
-+    return qts_wait_for_flag(global_qtest, RCC_BASE_ADDR + event_addr, f=
-lag, value);
-+}
-+
-+static void rcc_writel(unsigned int offset, uint32_t value)
-+{
-+    writel(RCC_BASE_ADDR + offset, value);
-+}
-+
-+static uint32_t rcc_readl(unsigned int offset)
-+{
-+    return readl(RCC_BASE_ADDR + offset);
-+}
-+
-+static void test_init_msi(void)
-+{
-+    /* MSIRANGE can be set only when MSI is OFF or READY */
-+    rcc_writel(A_CR, R_CR_MSION_MASK);
-+    /* Wait until MSI is stable */
-+    g_assert_true(rcc_wait_for_flag(A_CR, R_CR_MSIRDY_MASK, R_CR_MSIRDY_=
-MASK));
-+    /* TODO find a way to test MSI value */
-+}
-+
-+static void test_set_msi_as_sysclk(void)
-+{
-+    /* Clocking from MSI, in case MSI was not the default source */
-+    rcc_writel(A_CFGR, 0);
-+    /* Wait until MSI is selected and stable */
-+    g_assert_true(rcc_wait_for_flag(A_CFGR, R_CFGR_SWS_MASK, 0));
-+}
-+
-+static void test_init_pll(void)
-+{
-+    uint32_t value;
-+
-+    /*
-+     * Update PLL and set MSI as the source clock.
-+     * PLLM =3D 1 --> 000
-+     * PLLN =3D 40 --> 40
-+     * PPLLR =3D 2 --> 00
-+     * PLLDIV =3D unused, PLLP =3D unused (SAI3), PLLQ =3D unused (48M1)
-+     * SRC =3D MSI --> 01
-+     */
-+    rcc_writel(A_PLLCFGR, R_PLLCFGR_PLLREN_MASK |
-+            (40 << R_PLLCFGR_PLLN_SHIFT) |
-+            (0b01 << R_PLLCFGR_PLLSRC_SHIFT));
-+
-+    /* PLL activation */
-+    value =3D rcc_readl(A_CR);
-+    rcc_writel(A_CR, value | R_CR_PLLON_MASK);
-+
-+    /* Waiting for PLL lock. */
-+    g_assert_true(rcc_wait_for_flag(A_CR, R_CR_PLLRDY_MASK, R_CR_PLLRDY_=
-MASK));
-+
-+    /* Switches on the PLL clock source */
-+    value =3D rcc_readl(A_CFGR);
-+    rcc_writel(A_CFGR, (value & ~R_CFGR_SW_MASK) |
-+        (0b11 << R_CFGR_SW_SHIFT));
-+
-+    /* Wait until SYSCLK is stable. */
-+    g_assert_true(rcc_wait_for_flag(A_CFGR, R_CFGR_SWS_MASK,
-+        (0b11 << R_CFGR_SWS_SHIFT)));
-+}
-+
-+static void test_activate_lse(void)
-+{
-+    /* LSE activation, no LSE Bypass */
-+    rcc_writel(A_BDCR, R_BDCR_LSEDRV_MASK | R_BDCR_LSEON_MASK);
-+    g_assert_true(rcc_wait_for_flag(A_BDCR, R_BDCR_LSERDY_MASK, R_BDCR_L=
-SERDY_MASK));
-+}
-+
-+static void test_irq(void)
-+{
-+    enable_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_LSIRDYIE_MASK);
-+    rcc_writel(A_CSR, R_CSR_LSION_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_LSIRDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_LSERDYIE_MASK);
-+    rcc_writel(A_BDCR, R_BDCR_LSEON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_LSERDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    /*
-+     * MSI has been enabled by previous tests,
-+     * shouln't generate an interruption.
-+     */
-+    rcc_writel(A_CIER, R_CIER_MSIRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_MSION_MASK);
-+    g_assert_false(check_nvic_pending(RCC_IRQ));
-+
-+    rcc_writel(A_CIER, R_CIER_HSIRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_HSION_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_HSIRDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_HSERDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_HSEON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_HSERDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    /*
-+     * PLL has been enabled by previous tests,
-+     * shouln't generate an interruption.
-+     */
-+    rcc_writel(A_CIER, R_CIER_PLLRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLON_MASK);
-+    g_assert_false(check_nvic_pending(RCC_IRQ));
-+
-+    rcc_writel(A_CIER, R_CIER_PLLSAI1RDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLSAI1ON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_PLLSAI1RDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+
-+    rcc_writel(A_CIER, R_CIER_PLLSAI2RDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLSAI2ON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_PLLSAI2RDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_set_nonfatal_assertions();
-+    /*
-+     * These test separately that we can enable the plls, change the sys=
-clk,
-+     * and enable different devices.
-+     * They are dependent on one another.
-+     */
-+    qtest_add_func("stm32l4x5/rcc/init_msi", test_init_msi);
-+    qtest_add_func("stm32l4x5/rcc/set_msi_as_sysclk",
-+        test_set_msi_as_sysclk);
-+    qtest_add_func("stm32l4x5/rcc/activate_lse", test_activate_lse);
-+    qtest_add_func("stm32l4x5/rcc/init_pll", test_init_pll);
-+
-+    qtest_add_func("stm32l4x5/rcc/irq", test_irq);
-+
-+    qtest_start("-machine b-l475e-iot01a");
-+    ret =3D g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
---=20
-2.34.1
+> On 30-Jan-2024, at 21:26, Greg Kurz <groug@kaod.org> wrote:
+>=20
+> error_fprintf() doesn't add newlines.
+
+^^^^^^^^^^^^^^^^^
+
+Should be error_printf(). Ditto for other patches.
+
+>=20
+> Signed-off-by: Greg Kurz <groug@kaod.org>
+> ---
+> hw/i386/acpi-build.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index edc979379c03..e990b0ae927f 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -2697,7 +2697,7 @@ void acpi_build(AcpiBuildTables *tables, =
+MachineState *machine)
+>                         " migration may not work",
+>                         tables_blob->len, legacy_table_size);
+>             error_printf("Try removing CPUs, NUMA nodes, memory slots"
+> -                         " or PCI bridges.");
+> +                         " or PCI bridges.\n");
+>         }
+>         g_array_set_size(tables_blob, legacy_table_size);
+>     } else {
+> @@ -2709,7 +2709,7 @@ void acpi_build(AcpiBuildTables *tables, =
+MachineState *machine)
+>                         " migration may not work",
+>                         tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
+>             error_printf("Try removing CPUs, NUMA nodes, memory slots"
+> -                         " or PCI bridges.");
+> +                         " or PCI bridges.\n");
+>         }
+>         acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
+>     }
+> --=20
+> 2.43.0
+>=20
 
 
