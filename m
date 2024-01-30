@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3356C46CD2
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33269C46CD2
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 08:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUjRg-0002Fm-Go; Tue, 30 Jan 2024 03:26:16 -0500
+	id 1rUjSM-0002d9-2Y; Tue, 30 Jan 2024 03:26:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjRf-0002FP-5Z
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:26:15 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjSB-0002Ta-JB
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:26:49 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjRd-0003GX-JY
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:26:14 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-55f279dca99so1723740a12.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:26:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rUjS9-0003Jm-RH
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 03:26:47 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a2f22bfb4e6so518405066b.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 00:26:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706603172; x=1707207972; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706603204; x=1707208004; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3hFoYlaUcAhHmUYLVMa1OMNE/MF2MZe2XiXWbWUAdUg=;
- b=fF2+ATC9j4765fDkWtw3eEePRmCmiD4823zsUj7kIMYhPSp54aLI7yMw9JCGw6sYcw
- b17jrAr9uord2oB/EWFzboPKFQyRR0QWx+NI/ZtZOAHlf1h6/MsP/lprqHyHocodW5Of
- 6O1QmUMXWulp32/q959MgnIeKLO68XETZuMl/rdo6DeMNRhwARUAhb7KHTwbSHSxJVw1
- eTWIEffZbkR8B0OOc+fBMd8PAQZsZvnxBdlo2KMvblqR1EhBy9KWZZXnAheqDRNDhd9T
- HTooMJL0q90KXSjxP0nVSNFpqh9dXcRmx6u+7GVaE+8jPlUQ510KUxNAIqS0Lh4l+l+Y
- BL9A==
+ bh=cRg1KPfnEeu4OlNchSDyEddHh2WugqQCGoHSXGlBAGU=;
+ b=UIzcKC68spAWT/kEO29XFkWlht0wRdTvmJeWwenJXH9T495wz5e11ZP4LKXKdvMhW2
+ wTmlrrgY9cFE7xSwCvK37sri86yExe10cz6C7aq2e1XXDsmuqNw8AGS/pYBr/HgBLFvN
+ yg0Q7/Zpte6g4qZNiNgQTHCjh91wk3Hi5NrPRgt7220DxhnIvRtWa6shShx18lXjVg4K
+ Q7wtYcnh6//AipIC+yS1OXzlKmoMCDy62G9DSg7U5bYXPoVeFMIVqBVl80FsSt2bNv0b
+ dRFPE7Ws+9Cuu9i/9u2AyCefoHF4tLaoH+It9lE4exvkoQ+urZJTnilLqH+/t+3NkPmM
+ t0Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706603172; x=1707207972;
+ d=1e100.net; s=20230601; t=1706603204; x=1707208004;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3hFoYlaUcAhHmUYLVMa1OMNE/MF2MZe2XiXWbWUAdUg=;
- b=Na+QVtgACjcuKlvtI69mMyVZcUyecgrwN4Qo64G32lr2pnSRQWJ8tSnJ03aBobpsT1
- X6YJiV322alo0zDU8EcrExbd1vIGtHrGZczs+Qxl6kQRw44CWv0ZcjUFeuEj/GoEeE5S
- Gk/3KDWMTWK3891kn/8v6c1EzC8890+kUdeAY254FiE6vakU8KuR9xKhM09PbXiHjOzb
- SvDfwpY7oHhpmTwb5oc6UzGsxjpLVdobuTlWiWpCaDkULWhJNKlCrmS4P6uG/ZlbWM/f
- +F8PkYOnH4oEQLHl9lefPxzmOKMlw47ClN/+zg2BQakYnyVQ9mUgrFEoSMWAHPe9Cj5R
- B87Q==
-X-Gm-Message-State: AOJu0YxipV1jKihS3YMjr0g2MXOemZYGB5J4o1eIdWJaJFStiFuRTLby
- fz2V5OA0jKm+lX+Gf/ELV1R5Ece+UdCZoZhOmF6y+cud0EwsE1Aitg7wGHxonzU=
-X-Google-Smtp-Source: AGHT+IFquD5s/9XfQgfT29qDEzNNm0g35hHf8skLr+whUPkC7v64R7ffvVGxgSNmct6OBnuu1pvZ/A==
-X-Received: by 2002:a17:906:138d:b0:a35:53e8:c5d4 with SMTP id
- f13-20020a170906138d00b00a3553e8c5d4mr4223913ejc.73.1706603171939; 
- Tue, 30 Jan 2024 00:26:11 -0800 (PST)
+ bh=cRg1KPfnEeu4OlNchSDyEddHh2WugqQCGoHSXGlBAGU=;
+ b=csWozWkdzRnXGvWagySlCO4kYgBLL67qdeI7Rvt/F3JT/1Kv2tzCOzzEbXtVV+WGbV
+ i9ZJiobOI33j1SX9jo812cv6xKZu7xpB/Fq1Oz1EHGxgejzAqrPvR+tRp5NlewZxTRrO
+ 7qreC2DfJ1KGxLOJqX33gr47aNgTNOe7HPUoVAJJiNMhqKTomFg3kzl6Ed9OSlUieP/U
+ JcbBenGgRCaxuNnuJR5bUAp8vZsdGEJ+v6Jcveu+j+JU/SE0MuoKLvjrVyX6n/t4qrvx
+ A3dfq+5lnWvikb+be68glmgyrgCkp7E/xauDZrRolXUmHbzjRtEmRqxHg2EzTvBLqseA
+ oq/A==
+X-Gm-Message-State: AOJu0YxrQ7QpkbBMs+jVtWHkYF9Kuc72dLOONdYWNAgLZYMmaFx1nFum
+ vwzFGksG4L2vsmGJQ8/9KB8DYp5YiIaGhCGfDWAV59xUhcrMWO8qTi1yPbxB4QDj/9i0pviT/ww
+ 4
+X-Google-Smtp-Source: AGHT+IGrpuJnUUn5l9y48y9HxyE4iUxVYGnYVTEnPY11YgyiNKZRHlxn1lRxfFtHZybW66c5AcmARQ==
+X-Received: by 2002:a17:906:6d8:b0:a36:11f:58fc with SMTP id
+ v24-20020a17090606d800b00a36011f58fcmr1824317ejb.40.1706603204326; 
+ Tue, 30 Jan 2024 00:26:44 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.218.134])
  by smtp.gmail.com with ESMTPSA id
- ub11-20020a170907c80b00b00a353ca3d907sm3762676ejc.217.2024.01.30.00.26.10
+ ub11-20020a170907c80b00b00a353ca3d907sm3762676ejc.217.2024.01.30.00.26.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 00:26:11 -0800 (PST)
-Message-ID: <51e69a4f-9003-45b0-9350-24728d952d86@linaro.org>
-Date: Tue, 30 Jan 2024 09:26:10 +0100
+ Tue, 30 Jan 2024 00:26:43 -0800 (PST)
+Message-ID: <f9558a60-ef89-4820-9c6c-8489b3e7f462@linaro.org>
+Date: Tue, 30 Jan 2024 09:26:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 33/33] include/exec: Change cpu_mmu_index argument to
- CPUState
+Subject: Re: [PATCH 00/33] hw/core: Introduce CPUClass hook for mmu_index
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: anjo@rev.ng
 References: <20240129233043.34558-1-richard.henderson@linaro.org>
- <20240129233043.34558-34-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240129233043.34558-34-richard.henderson@linaro.org>
+In-Reply-To: <20240129233043.34558-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,34 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-What is the rationale here? (I'm trying to generically understand
-in which case one is better than another).
-
 On 30/1/24 00:30, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/exec/cpu-all.h            |  2 +-
->   include/exec/cpu-common.h         |  3 +--
->   target/sparc/cpu.h                |  2 +-
->   accel/tcg/cputlb.c                | 22 +++++++++-------
->   semihosting/uaccess.c             |  2 +-
->   target/cris/translate.c           |  2 +-
->   target/hppa/mem_helper.c          |  2 +-
->   target/hppa/op_helper.c           |  8 +++---
->   target/i386/tcg/translate.c       |  2 +-
->   target/loongarch/tcg/tlb_helper.c |  4 +--
->   target/m68k/op_helper.c           |  2 +-
->   target/microblaze/helper.c        |  3 +--
->   target/microblaze/mmu.c           |  2 +-
->   target/microblaze/translate.c     |  2 +-
->   target/nios2/translate.c          |  2 +-
->   target/openrisc/translate.c       |  2 +-
->   target/sparc/ldst_helper.c        |  2 +-
->   target/sparc/mmu_helper.c         |  2 +-
->   target/tricore/helper.c           |  2 +-
->   target/tricore/translate.c        |  2 +-
->   target/xtensa/mmu_helper.c        |  2 +-
->   accel/tcg/ldst_common.c.inc       | 42 ++++++++++++++++++++-----------
->   22 files changed, 65 insertions(+), 49 deletions(-)
+> While the primary use of mmu_index is for the softmmu index for
+> system-mode tcg, it has a secondary use in encoding cpu state for
+> the page table walker, and thus depending on the target may also
+> be used by memory_rw_debug with kvm et al.
+> 
+> This is why I placed the hook in CPUClass not TCGCPUOps.
+> 
+> 
+> r~
+> 
+> 
+> Richard Henderson (33):
+>    include/hw/core: Add mmu_index to CPUClass
+>    target/alpha: Split out alpha_env_mmu_index
+>    target/alpha: Populate CPUClass.mmu_index
+>    target/arm: Split out arm_env_mmu_index
+>    target/arm: Populate CPUClass.mmu_index
+>    target/avr: Populate CPUClass.mmu_index
+>    target/cris: Cache mem_index in DisasContext
+>    target/cris: Populate CPUClass.mmu_index
+>    target/hppa: Populate CPUClass.mmu_index
+>    target/i386: Populate CPUClass.mmu_index
+>    target/loongarch: Populate CPUClass.mmu_index
+>    target/loongarch: Rename MMU_IDX_*
+>    target/m68k: Populate CPUClass.mmu_index
+>    target/microblaze: Populate CPUClass.mmu_index
+>    target/mips: Pass ptw_mmu_idx down from mips_cpu_tlb_fill
+>    target/mips: Split out mips_env_mmu_index
+>    target/mips: Populate CPUClass.mmu_index
+>    target/nios2: Populate CPUClass.mmu_index
+>    target/openrisc: Populate CPUClass.mmu_index
+>    target/ppc: Split out ppc_env_mmu_index
+>    target/ppc: Populate CPUClass.mmu_index
+>    target/riscv: Rename riscv_cpu_mmu_index to riscv_env_mmu_index
+>    target/riscv: Replace cpu_mmu_index with riscv_env_mmu_index
+>    target/riscv: Populate CPUClass.mmu_index
+>    target/rx: Populate CPUClass.mmu_index
+>    target/s390x: Split out s390x_env_mmu_index
+>    target/s390x: Populate CPUClass.mmu_index
+>    target/sh4: Populate CPUClass.mmu_index
+>    target/sparc: Populate CPUClass.mmu_index
+>    target/tricore: Populate CPUClass.mmu_index
+>    target/xtensa: Populate CPUClass.mmu_index
+>    include/exec: Implement cpu_mmu_index generically
+>    include/exec: Change cpu_mmu_index argument to CPUState
+
+Series:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
