@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E402FC47DA9
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 01:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A7DEC47DB3
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jan 2024 01:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUceU-0004u9-Ng; Mon, 29 Jan 2024 20:11:02 -0500
+	id 1rUcuJ-0001zH-Gu; Mon, 29 Jan 2024 20:27:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUceT-0004rz-86; Mon, 29 Jan 2024 20:11:01 -0500
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
+ id 1rUcuB-0001xu-Ip
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 20:27:15 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUceR-0006zJ-6Z; Mon, 29 Jan 2024 20:11:00 -0500
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-4bddb27e832so641983e0c.0; 
- Mon, 29 Jan 2024 17:10:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
+ id 1rUcu6-0001UT-Hs
+ for qemu-devel@nongnu.org; Mon, 29 Jan 2024 20:27:14 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a26f73732c5so391702566b.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 17:26:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706577058; x=1707181858; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R3VubPsSFNsoGb6IT4tjxLCgDTp4ID39cxhGZ/Camr0=;
- b=gYnN5BVJ2MJO5oJtNhStosXDSqJEJm0e5e52sWjSTstEMrLQNlGd+LIKGTi++KfvPT
- MhoDBpTQI9kI7+eOkEyEPND7mZuIGS52D7Odh6wRrz2xCQsXlbpX3GcQjPKQTI0FjA+3
- r682mVwHTcr3dMi6WoV6NIXzZubnYlXKnxepUkGOav+wsmGpKPdjHX1QdP2Ea+u7bYDS
- CG9IShju03NWT/5W+vkwJpGqGTNfVb00V80QmfCzJtpYG4srhhfCbIkYd85h3T0xszTk
- LFmO1rY3HI0xUAmqhyF9oJwI42/GOvnn1p52wbjSGxn+vJkMag9f4RhtGt+9YN/6qH9d
- voaA==
+ d=chromium.org; s=google; t=1706578017; x=1707182817; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mud5F01IUVyyaB3M7CysiT6Pol/s2BAtLhbMzXFilTQ=;
+ b=i1EANysr9UvBGNQLCdu+PPyvPak2X7C3Z//J8QwvZv57CKQYikosA7a6OOpwn35Qq6
+ LGX8SPI1/IZ0Eb7akOa+EJ16+849ziqV98MFpBsDNYUgdbY+kEpT9Giut4g6NSucX3hK
+ PGhwt5tFMhnM/Vv0wA3bnq1SUAPCGHOwPxPD0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706577058; x=1707181858;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R3VubPsSFNsoGb6IT4tjxLCgDTp4ID39cxhGZ/Camr0=;
- b=K/K9lq69JSoiReZzPg2Q4m9vuhR/9V6nio2gkktzkH+O3u4GLiobksmQXAB42VBN9b
- XwN7KyBLFGx+F0jd/CpDWhSXyGjiYd3R+FLGoVCaY+gTy+qN418WZbuS/HesomeDW0XR
- Qbl9A6ws7r4fHgCLvkltkVkVYZtbUgx6a7oX/8omxRI3j0SwFnZA4RwRLtIcpuqSebxD
- HErp5OExT5Avnu6zMgvndOahgOHRCbr6WRyFZ63P20XixycM451V6eAQmPe0o3+YuGA4
- PRkfF09XH05xrV5ij3K/FVNi2fntrYCYDN5Xu4oFsurCEuiELbldGZADwskEW2gzzRnj
- I0qw==
-X-Gm-Message-State: AOJu0YxyGB8xq0SLNtYlIPh3fR6d3feyKRpdy/CrrX1k2AiTElqK8PlK
- LOsQUDc7LvGA6lehMx/JR511I4oHanleWtICbF2PDlihTyqf29Kb2lIDnm+WlBq05OfsBah4ySE
- 4BlYV65l2LGPa2EBycVCKme+I6oo=
-X-Google-Smtp-Source: AGHT+IGW3GV3QMG4Rdd2Kd1CxvtsOVqUsqn44I0G53SfuLNTL6k0q6E76A5wXUByF4xgiBm202pgtACWfOrnQwltzgo=
-X-Received: by 2002:a05:6122:2013:b0:4bd:5cd5:f494 with SMTP id
- l19-20020a056122201300b004bd5cd5f494mr3579142vkd.28.1706577057620; Mon, 29
- Jan 2024 17:10:57 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706578017; x=1707182817;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Mud5F01IUVyyaB3M7CysiT6Pol/s2BAtLhbMzXFilTQ=;
+ b=xF478w5IoVLwqgIXS0CF0n37yYPQj/AXCD0ERyO/9j9FuLv/dI1IftLq0SyTuprh3i
+ lVV+E57OCB3OpytwrsAiJS+k37QaSP6bx0TThxWmVQ/enSvm3I8NPe7I6Wetrk9kz7/X
+ 0eugT+WZKHPmtcGYo7EARlPMJajA7qVC+tf9UmytmdFt6Td98W1I7nE+/FzvUTy7RWQG
+ irFq43IJYo7h16Dv/n7X39KOS/DTrr34DaaGhzwjQG+7gZrgBGKcbI5yLyRzM9CHnoko
+ TvB4/j4N+NJGJKt7V7l/tcDIS/IytliLLbwn0ycQlaXGpbKrpLkB9l72YuvPRENo1WZA
+ lbvg==
+X-Gm-Message-State: AOJu0YzaWjdm51I+H6QzxN8zKIDT88P9E3lZ0rBC6AJfqUpjtzaJAXW+
+ 1G8TwFSvMVgWzHjlmTnKQLgIoZphFkFuTD3+Z1v7hnMNNDsYIMC6zI/cprKFBvUb7XXMCCIxzCg
+ 8iA==
+X-Google-Smtp-Source: AGHT+IFJ3vudVANuCfhhx8ZH44vvsvWBgNnEa2SlBnFCWabEGG1ephlDprgp62dEdCUUEzZFT/Q33Q==
+X-Received: by 2002:a17:906:134b:b0:a32:42a0:6ed with SMTP id
+ x11-20020a170906134b00b00a3242a006edmr5363273ejb.37.1706578017323; 
+ Mon, 29 Jan 2024 17:26:57 -0800 (PST)
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com.
+ [209.85.208.48]) by smtp.gmail.com with ESMTPSA id
+ hu19-20020a170907a09300b00a31c5caa750sm3695228ejc.177.2024.01.29.17.26.56
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jan 2024 17:26:56 -0800 (PST)
+Received: by mail-ed1-f48.google.com with SMTP id
+ 4fb4d7f45d1cf-55818b7053eso7019a12.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jan 2024 17:26:56 -0800 (PST)
+X-Received: by 2002:a05:6402:288a:b0:55d:2dda:f331 with SMTP id
+ eg10-20020a056402288a00b0055d2ddaf331mr49263edb.7.1706578016581; Mon, 29 Jan
+ 2024 17:26:56 -0800 (PST)
 MIME-Version: 1.0
-References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
- <20240125195319.329181-4-dbarboza@ventanamicro.com>
-In-Reply-To: <20240125195319.329181-4-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 30 Jan 2024 11:10:31 +1000
-Message-ID: <CAKmqyKNZ73Ep1sBKGBoX=wNvOPq_R+UU_K9qSRABBQUzK-LFLA@mail.gmail.com>
-Subject: Re: [PATCH 3/6] target/riscv: add remaining named features
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <cover.1706542958.git.manos.pitsidianakis@linaro.org>
+ <926db899bebc1f9ca575bfd29d140f7658050a82.1706542958.git.manos.pitsidianakis@linaro.org>
+In-Reply-To: <926db899bebc1f9ca575bfd29d140f7658050a82.1706542958.git.manos.pitsidianakis@linaro.org>
+From: Gurchetan Singh <gurchetansingh@chromium.org>
+Date: Mon, 29 Jan 2024 17:26:43 -0800
+X-Gmail-Original-Message-ID: <CAAfnVBk1jsOxvOd0k2otPOEz65v5ngN4E98LMHhTr5Vtc2fOcQ@mail.gmail.com>
+Message-ID: <CAAfnVBk1jsOxvOd0k2otPOEz65v5ngN4E98LMHhTr5Vtc2fOcQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] virtio-gpu-rutabaga.c: override resource_destroy
+ method
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>
+Content-Type: multipart/alternative; boundary="000000000000767be206101fa849"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=gurchetansingh@chromium.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.29,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,213 +103,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 26, 2024 at 5:54=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+--000000000000767be206101fa849
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jan 29, 2024 at 7:46=E2=80=AFAM Manos Pitsidianakis <
+manos.pitsidianakis@linaro.org> wrote:
+
+> When the Rutabaga GPU device frees resources, it calls
+> rutabaga_resource_unref for that resource_id. However, when the generic
+> VirtIOGPU functions destroys resources, it only removes the
+> virtio_gpu_simple_resource from the device's VirtIOGPU->reslist list.
+> The rutabaga resource associated with that resource_id is then leaked.
 >
-> The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
-> until now, we were implying that they were available.
+> This commit overrides the resource_destroy class method introduced in
+> the previous commit to fix this.
 >
-> We can't do this anymore since named features also has a riscv,isa
-> entry.  Let's add them to riscv_cpu_named_features[].
->
-> They will also need to be explicitly enabled in both profile
-> descriptions. TCG will enable the named features it already implements,
-> other accelerators are free to handle it as they like.
->
-> After this patch, here's the riscv,isa from a buildroot using the
-> 'rva22s64' CPU:
->
->  # cat /proc/device-tree/cpus/cpu@0/riscv,isa
-> rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
-> zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
-> zbs_zkt_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > ---
->  target/riscv/cpu.c         | 41 +++++++++++++++++++++++++++++---------
->  target/riscv/cpu_cfg.h     |  9 +++++++++
->  target/riscv/tcg/tcg-cpu.c | 19 +++++++++++++++++-
->  3 files changed, 59 insertions(+), 10 deletions(-)
+>  hw/display/virtio-gpu-rutabaga.c | 51 ++++++++++++++++++++++++--------
+>  1 file changed, 39 insertions(+), 12 deletions(-)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 28d3cfa8ce..1ecd8a57ed 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -101,6 +101,10 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
->      ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
->      ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
-> +    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_ziccamoa),
-> +    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_ziccif),
-> +    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_zicclsm),
-> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
->      ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
->      ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
->      ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
-> @@ -109,6 +113,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause=
-),
->      ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
->      ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
-> +    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_za64rs),
->      ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
->      ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
->      ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
-> @@ -170,8 +175,12 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-> +    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_ssccptr),
->      ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
-> +    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_sscountere=
-nw),
->      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-> +    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_sstvala),
-> +    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_sstvecd),
->      ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
->      ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
->      ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
-> @@ -1523,6 +1532,22 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_featu=
-res[] =3D {
->      MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
->      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
->
-> +    /*
-> +     * cache-related extensions that are always enabled
-> +     * since QEMU RISC-V does not have a cache model.
-> +     */
-> +    MULTI_EXT_CFG_BOOL("za64rs", ext_za64rs, true),
-> +    MULTI_EXT_CFG_BOOL("ziccif", ext_ziccif, true),
-> +    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
-> +    MULTI_EXT_CFG_BOOL("ziccamoa", ext_ziccamoa, true),
-> +    MULTI_EXT_CFG_BOOL("zicclsm", ext_zicclsm, true),
-> +    MULTI_EXT_CFG_BOOL("ssccptr", ext_ssccptr, true),
-> +
-> +    /* Other named features that QEMU TCG always implements */
-> +    MULTI_EXT_CFG_BOOL("sstvecd", ext_sstvecd, true),
-> +    MULTI_EXT_CFG_BOOL("sstvala", ext_sstvala, true),
-> +    MULTI_EXT_CFG_BOOL("sscounterenw", ext_sscounterenw, true),
-> +
->      DEFINE_PROP_END_OF_LIST(),
->  };
->
-> @@ -2116,13 +2141,8 @@ static const PropertyInfo prop_marchid =3D {
->  };
->
->  /*
-> - * RVA22U64 defines some 'named features' or 'synthetic extensions'
-> - * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
-> - * and Zicclsm. We do not implement caching in QEMU so we'll consider
-> - * all these named features as always enabled.
-> - *
-> - * There's no riscv,isa update for them (nor for zic64b, despite it
-> - * having a cfg offset) at this moment.
-> + * RVA22U64 defines some cache related extensions: Za64rs,
-> + * Ziccif, Ziccrse, Ziccamoa and Zicclsm.
->   */
->  static RISCVCPUProfile RVA22U64 =3D {
->      .parent =3D NULL,
-> @@ -2139,7 +2159,9 @@ static RISCVCPUProfile RVA22U64 =3D {
->          CPU_CFG_OFFSET(ext_zicbop), CPU_CFG_OFFSET(ext_zicboz),
->
->          /* mandatory named features for this profile */
-> -        CPU_CFG_OFFSET(ext_zic64b),
-> +        CPU_CFG_OFFSET(ext_za64rs), CPU_CFG_OFFSET(ext_zic64b),
-> +        CPU_CFG_OFFSET(ext_ziccif), CPU_CFG_OFFSET(ext_ziccrse),
-> +        CPU_CFG_OFFSET(ext_ziccamoa), CPU_CFG_OFFSET(ext_zicclsm),
->
->          RISCV_PROFILE_EXT_LIST_END
->      }
-> @@ -2170,7 +2192,8 @@ static RISCVCPUProfile RVA22S64 =3D {
->          CPU_CFG_OFFSET(ext_svinval),
->
->          /* rva22s64 named features */
-> -        CPU_CFG_OFFSET(ext_svade),
-> +        CPU_CFG_OFFSET(ext_sstvecd), CPU_CFG_OFFSET(ext_sstvala),
-> +        CPU_CFG_OFFSET(ext_sscounterenw), CPU_CFG_OFFSET(ext_svade),
->
->          RISCV_PROFILE_EXT_LIST_END
->      }
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 698f926ab1..f79fc3dfd1 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -125,6 +125,15 @@ struct RISCVCPUConfig {
->      /* Named features  */
->      bool ext_svade;
->      bool ext_zic64b;
-> +    bool ext_za64rs;
-> +    bool ext_ziccif;
-> +    bool ext_ziccrse;
-> +    bool ext_ziccamoa;
-> +    bool ext_zicclsm;
-> +    bool ext_ssccptr;
-> +    bool ext_sstvecd;
-> +    bool ext_sstvala;
-> +    bool ext_sscounterenw;
-
-Overall this and the previous patch look fine.
-
-One thing though, why store this information? I feel it could be
-confusing having these variables. If a developer sets them to false
-nothing actually happens, which is a little misleading
-
-Alistair
-
->
->      /* Vendor-specific custom extensions */
->      bool ext_xtheadba;
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 90861cc065..6d5028cf84 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -206,7 +206,8 @@ static void riscv_cpu_enable_named_feat(RISCVCPU *cpu=
-, uint32_t feat_offset)
->          cpu->cfg.ext_svadu =3D false;
->          break;
->      default:
-> -        g_assert_not_reached();
-> +        /* Named feature already enabled in riscv_tcg_cpu_instance_init =
-*/
-> +        return;
->      }
+> diff --git a/hw/display/virtio-gpu-rutabaga.c
+> b/hw/display/virtio-gpu-rutabaga.c
+> index 9e67f9bd51..6ac0776005 100644
+> --- a/hw/display/virtio-gpu-rutabaga.c
+> +++ b/hw/display/virtio-gpu-rutabaga.c
+> @@ -148,14 +148,42 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,
 >  }
 >
-> @@ -1342,6 +1343,20 @@ static bool riscv_cpu_has_max_extensions(Object *c=
-pu_obj)
->      return object_dynamic_cast(cpu_obj, TYPE_RISCV_CPU_MAX) !=3D NULL;
->  }
->
-> +/* Named features that TCG always implements */
-> +static void riscv_tcg_cpu_enable_named_feats(RISCVCPU *cpu)
+>  static void
+> +virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,
+> +                                   struct virtio_gpu_simple_resource *re=
+s,
+> +                                   Error **errp)
 > +{
-> +    cpu->cfg.ext_za64rs =3D true;
-> +    cpu->cfg.ext_ziccif =3D true;
-> +    cpu->cfg.ext_ziccrse =3D true;
-> +    cpu->cfg.ext_ziccamoa =3D true;
-> +    cpu->cfg.ext_zicclsm =3D true;
-> +    cpu->cfg.ext_ssccptr =3D true;
-> +    cpu->cfg.ext_sstvecd =3D true;
-> +    cpu->cfg.ext_sstvala =3D true;
-> +    cpu->cfg.ext_sscounterenw =3D true;
+> +    int32_t result;
+> +    const char *strerror =3D NULL;
+> +    VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);
+> +
+> +    result =3D rutabaga_resource_unref(vr->rutabaga, res->resource_id);
+> +    if (result) {
+> +        error_setg(errp, "%s: rutabaga_resource_unref returned %"PRIi32
+> +                   " for resource_id =3D %"PRIu32, __func__, result,
+> +                   res->resource_id);
+> +        strerror =3D strerrorname_np((int)result);
+> +        if (strerror !=3D NULL) {
+> +            error_append_hint(errp, "%s: %s\n",
+> +                              strerror, strerrordesc_np((int)result) ? :
+> "");
+> +        }
+>
+
+Can't we rely on virtio_gpu_rutabaga_debug_cb(..) to report an error when
+the resource ID is not found?
+
+
+
+> +    }
+> +
+> +    if (res->image) {
+> +        pixman_image_unref(res->image);
+> +    }
+> +
+> +    QTAILQ_REMOVE(&g->reslist, res, next);
+> +    g_free(res);
 > +}
 > +
->  static void riscv_tcg_cpu_instance_init(CPUState *cs)
+> +static void
+>  rutabaga_cmd_resource_unref(VirtIOGPU *g,
+>                              struct virtio_gpu_ctrl_command *cmd)
 >  {
->      RISCVCPU *cpu =3D RISCV_CPU(cs);
-> @@ -1354,6 +1369,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *c=
-s)
->      if (riscv_cpu_has_max_extensions(obj)) {
->          riscv_init_max_cpu_extensions(obj);
+> -    int32_t result;
+> +    int32_t result =3D 0;
+>      struct virtio_gpu_simple_resource *res;
+>      struct virtio_gpu_resource_unref unref;
+> -
+> -    VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);
+> +    Error *local_err =3D NULL;
+>
+>      VIRTIO_GPU_FILL_CMD(unref);
+>
+> @@ -164,15 +192,14 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,
+>      res =3D virtio_gpu_find_resource(g, unref.resource_id);
+>      CHECK(res, cmd);
+>
+> -    result =3D rutabaga_resource_unref(vr->rutabaga, unref.resource_id);
+> -    CHECK(!result, cmd);
+> -
+> -    if (res->image) {
+> -        pixman_image_unref(res->image);
+> +    virtio_gpu_rutabaga_resource_unref(g, res, &local_err);
+> +    if (local_err) {
+> +        error_report_err(local_err);
+> +        /* local_err was freed, do not reuse it. */
+> +        local_err =3D NULL;
+> +        result =3D 1;
 >      }
-> +
-> +    riscv_tcg_cpu_enable_named_feats(cpu);
+> -
+> -    QTAILQ_REMOVE(&g->reslist, res, next);
+> -    g_free(res);
+> +    CHECK(!result, cmd);
 >  }
 >
->  static void riscv_tcg_cpu_init_ops(AccelCPUClass *accel_cpu, CPUClass *c=
-c)
+>  static void
+> @@ -1099,7 +1126,7 @@ static void
+> virtio_gpu_rutabaga_class_init(ObjectClass *klass, void *data)
+>      vgc->handle_ctrl =3D virtio_gpu_rutabaga_handle_ctrl;
+>      vgc->process_cmd =3D virtio_gpu_rutabaga_process_cmd;
+>      vgc->update_cursor_data =3D virtio_gpu_rutabaga_update_cursor;
+> -
+> +    vgc->resource_destroy =3D virtio_gpu_rutabaga_resource_unref;
+>      vdc->realize =3D virtio_gpu_rutabaga_realize;
+>      device_class_set_props(dc, virtio_gpu_rutabaga_properties);
+>  }
 > --
-> 2.43.0
+> =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
+=CE=B8=CE=AE=CF=84=CF=89
 >
 >
+
+--000000000000767be206101fa849
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jan 29, 2024 at 7:46=E2=80=AF=
+AM Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.org=
+">manos.pitsidianakis@linaro.org</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">When the Rutabaga GPU device frees resourc=
+es, it calls<br>
+rutabaga_resource_unref for that resource_id. However, when the generic<br>
+VirtIOGPU functions destroys resources, it only removes the<br>
+virtio_gpu_simple_resource from the device&#39;s VirtIOGPU-&gt;reslist list=
+.<br>
+The rutabaga resource associated with that resource_id is then leaked.<br>
+<br>
+This commit overrides the resource_destroy class method introduced in<br>
+the previous commit to fix this.<br>
+<br>
+Signed-off-by: Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidianaki=
+s@linaro.org" target=3D"_blank">manos.pitsidianakis@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0hw/display/virtio-gpu-rutabaga.c | 51 ++++++++++++++++++++++++-------=
+-<br>
+=C2=A01 file changed, 39 insertions(+), 12 deletions(-)<br>
+<br>
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutab=
+aga.c<br>
+index 9e67f9bd51..6ac0776005 100644<br>
+--- a/hw/display/virtio-gpu-rutabaga.c<br>
++++ b/hw/display/virtio-gpu-rutabaga.c<br>
+@@ -148,14 +148,42 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void<br>
++virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct virtio_gpu_simpl=
+e_resource *res,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 int32_t result;<br>
++=C2=A0 =C2=A0 const char *strerror =3D NULL;<br>
++=C2=A0 =C2=A0 VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);<br>
++<br>
++=C2=A0 =C2=A0 result =3D rutabaga_resource_unref(vr-&gt;rutabaga, res-&gt;=
+resource_id);<br>
++=C2=A0 =C2=A0 if (result) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;%s: rutabaga_resource_u=
+nref returned %&quot;PRIi32<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot=
+; for resource_id =3D %&quot;PRIu32, __func__, result,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0res-&=
+gt;resource_id);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 strerror =3D strerrorname_np((int)result);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (strerror !=3D NULL) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_append_hint(errp, &quot;%s=
+: %s\n&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strerror, strerrordesc_np((int)result) ? : =
+&quot;&quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br></blockquote><div><br></div><div>Can&#39;=
+t we rely on=C2=A0virtio_gpu_rutabaga_debug_cb(..) to report an error when =
+the resource ID is not found?</div><div><br></div><div>=C2=A0</div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 if (res-&gt;image) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 pixman_image_unref(res-&gt;image);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 QTAILQ_REMOVE(&amp;g-&gt;reslist, res, next);<br>
++=C2=A0 =C2=A0 g_free(res);<br>
++}<br>
++<br>
++static void<br>
+=C2=A0rutabaga_cmd_resource_unref(VirtIOGPU *g,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct virtio_gpu_ctrl_command *cmd)<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 int32_t result;<br>
++=C2=A0 =C2=A0 int32_t result =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0struct virtio_gpu_simple_resource *res;<br>
+=C2=A0 =C2=A0 =C2=A0struct virtio_gpu_resource_unref unref;<br>
+-<br>
+-=C2=A0 =C2=A0 VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);<br>
++=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0VIRTIO_GPU_FILL_CMD(unref);<br>
+<br>
+@@ -164,15 +192,14 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,<br>
+=C2=A0 =C2=A0 =C2=A0res =3D virtio_gpu_find_resource(g, unref.resource_id);=
+<br>
+=C2=A0 =C2=A0 =C2=A0CHECK(res, cmd);<br>
+<br>
+-=C2=A0 =C2=A0 result =3D rutabaga_resource_unref(vr-&gt;rutabaga, unref.re=
+source_id);<br>
+-=C2=A0 =C2=A0 CHECK(!result, cmd);<br>
+-<br>
+-=C2=A0 =C2=A0 if (res-&gt;image) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 pixman_image_unref(res-&gt;image);<br>
++=C2=A0 =C2=A0 virtio_gpu_rutabaga_resource_unref(g, res, &amp;local_err);<=
+br>
++=C2=A0 =C2=A0 if (local_err) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report_err(local_err);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* local_err was freed, do not reuse it. */<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 local_err =3D NULL;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 result =3D 1;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-<br>
+-=C2=A0 =C2=A0 QTAILQ_REMOVE(&amp;g-&gt;reslist, res, next);<br>
+-=C2=A0 =C2=A0 g_free(res);<br>
++=C2=A0 =C2=A0 CHECK(!result, cmd);<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void<br>
+@@ -1099,7 +1126,7 @@ static void virtio_gpu_rutabaga_class_init(ObjectClas=
+s *klass, void *data)<br>
+=C2=A0 =C2=A0 =C2=A0vgc-&gt;handle_ctrl =3D virtio_gpu_rutabaga_handle_ctrl=
+;<br>
+=C2=A0 =C2=A0 =C2=A0vgc-&gt;process_cmd =3D virtio_gpu_rutabaga_process_cmd=
+;<br>
+=C2=A0 =C2=A0 =C2=A0vgc-&gt;update_cursor_data =3D virtio_gpu_rutabaga_upda=
+te_cursor;<br>
+-<br>
++=C2=A0 =C2=A0 vgc-&gt;resource_destroy =3D virtio_gpu_rutabaga_resource_un=
+ref;<br>
+=C2=A0 =C2=A0 =C2=A0vdc-&gt;realize =3D virtio_gpu_rutabaga_realize;<br>
+=C2=A0 =C2=A0 =C2=A0device_class_set_props(dc, virtio_gpu_rutabaga_properti=
+es);<br>
+=C2=A0}<br>
+-- <br>
+=CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=CE=
+=B8=CE=AE=CF=84=CF=89<br>
+<br>
+</blockquote></div></div>
+
+--000000000000767be206101fa849--
 
