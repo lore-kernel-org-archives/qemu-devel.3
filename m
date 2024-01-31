@@ -4,80 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5205DC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 18:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40CFC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 18:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVFHy-0003IC-Qt; Wed, 31 Jan 2024 13:26:22 -0500
+	id 1rVFae-00083m-8h; Wed, 31 Jan 2024 13:45:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <palmer@rivosinc.com>)
- id 1rVFHx-0003HZ-3i
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:26:21 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVFab-00083U-Nf
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:45:38 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <palmer@rivosinc.com>)
- id 1rVFHl-0001Wq-P1
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:26:20 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-5c229dabbb6so79807a12.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 10:26:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1706725566; x=1707330366;
- darn=nongnu.org; 
- h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
- :subject:from:to:cc:subject:date:message-id:reply-to;
- bh=xl8lOyhiLUDTPIVcSct4Ltd9837FiugwFKaP5eSD1yM=;
- b=X36sTfDAVVnHWtX50Wb2R6d7RjJPyWS7mVgEj9sDZ3GAZvk2cTOY9bJRuzLSCTsJUo
- 8ztWPQpYObVIZff80uLtlqUOE7swZ2rdPIJaVMJ0rh4jGoFC2PvWyEKLK+whZo592MQJ
- fm087wVxcpQyZaxrmTvH6FePQe96Hw8GmbX0HDItIk2OCiZHuADa0pqx2n1hEe6iWqtA
- LRQIjy14LzBAmJx3EwBu0DvKxbhXLm+Dv35VtracN4M/vd09IQtVWJkqAex7xYgdXVM+
- XmCEoNob6BHcISRThwe8Co+O3DFd5MDJsv5CTFbfEIesHjpnulUpsLoTKrARlNbCGOzR
- fkHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706725566; x=1707330366;
- h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
- :subject:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xl8lOyhiLUDTPIVcSct4Ltd9837FiugwFKaP5eSD1yM=;
- b=pzNttJSS6MxDgmDhTSqAR+h6dv9RbY5VGL5dGkUzppdBnafPMC2vwhYkw8QKjpo7Wg
- HUDyOQI6uFYZmPj1Wf39RmmjZl0J0m4H79C7Wq0qVQbkTEpTChM+dwfdAz9+vGb3Nga6
- kUddKCB+Jjv+dJXQ8VIq5iGtPFAji/eAKt4Y49HfL7pdcIpY6/mDs0s4klWq2bB+QILu
- urXJaKSxC3aT1PbzFRZA0pQ2iX93g3UWF782wgYFYgXp9yey7GIGBsK0uuVskGqTrMG4
- A1bvXQMMooJBp5dhj9sr09xzBvj5Xfmlx6tJ1I2vK14JnGhm2q8olw8QnOghhEU1P3JQ
- mxow==
-X-Gm-Message-State: AOJu0YxkP0JCjrZ+ragbT/zULAsIUFPDkoZtxw6WQDojjUD4VeFbGfyx
- 47a3VqRr/8t+j5yrWpRrZp8yoSAfShM+uHlc7c09aWTk2sV3rp+BSg/YDGOFSj/6AyaQGlbQHM7
- /
-X-Google-Smtp-Source: AGHT+IH9XRp4PliDG4VbzcYWZ5osjMSIhTztVv1ivXGQ58iGHiM5di/MzXV1xl467UVW19DXXUhFQg==
-X-Received: by 2002:a17:903:2286:b0:1d9:1df6:6e23 with SMTP id
- b6-20020a170903228600b001d91df66e23mr2040660plh.39.1706725566314; 
- Wed, 31 Jan 2024 10:26:06 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXlA59mGIs/P9GLVPqZqFwa5XBGd8AKQPv/pxU5t843Qr96+EX4zKgVODvZxUVr2LubGPQKxc9OahwG2tlkho3cq3lt
-Received: from localhost ([12.44.203.122]) by smtp.gmail.com with ESMTPSA id
- kr12-20020a170903080c00b001d8f82c61cdsm4740633plb.231.2024.01.31.10.26.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jan 2024 10:26:04 -0800 (PST)
-Subject: [PATCH] RISC-V: Report the QEMU vendor/arch IDs on virtual CPUs
-Date: Wed, 31 Jan 2024 10:24:30 -0800
-Message-ID: <20240131182430.20174-1-palmer@rivosinc.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVFaa-0006Oy-02
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:45:37 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 019CE22020;
+ Wed, 31 Jan 2024 18:45:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706726734; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gb46ZMhhD2FwTd7h3CM7tms4fW5Y8ABiI5vMTwKrzoQ=;
+ b=fW1VX+CSAjcD12nOAdLbWqorIPhx3W2RQK7gLhjn2kFHrH0N5Btn+0Ud7f5nmAgs4I4Z0O
+ P9OwvxaV9spettFfHQ+nhTtWJVeazkumvHRP8Sqrz6ZaTk/2nAYlQK5Me2GN9uZzwOVf4X
+ 6rm5oguBqgD50ZGVG+P51H28d/1o/ds=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706726734;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gb46ZMhhD2FwTd7h3CM7tms4fW5Y8ABiI5vMTwKrzoQ=;
+ b=6fbmBXQeqsmYUz8KzfPGKtSfZcuE46U2FABiwgfIPlwgRjgukYmSHp7/I7v/G+Ua/P7eMJ
+ M//sBXvMDnCfXcCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706726734; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gb46ZMhhD2FwTd7h3CM7tms4fW5Y8ABiI5vMTwKrzoQ=;
+ b=fW1VX+CSAjcD12nOAdLbWqorIPhx3W2RQK7gLhjn2kFHrH0N5Btn+0Ud7f5nmAgs4I4Z0O
+ P9OwvxaV9spettFfHQ+nhTtWJVeazkumvHRP8Sqrz6ZaTk/2nAYlQK5Me2GN9uZzwOVf4X
+ 6rm5oguBqgD50ZGVG+P51H28d/1o/ds=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706726734;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gb46ZMhhD2FwTd7h3CM7tms4fW5Y8ABiI5vMTwKrzoQ=;
+ b=6fbmBXQeqsmYUz8KzfPGKtSfZcuE46U2FABiwgfIPlwgRjgukYmSHp7/I7v/G+Ua/P7eMJ
+ M//sBXvMDnCfXcCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7F8D4139B1;
+ Wed, 31 Jan 2024 18:45:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ZCLcEU2VumWHTQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 31 Jan 2024 18:45:33 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: peterx@redhat.com, qemu-devel@nongnu.org
+Cc: Bryan Zhang <bryan.zhang@bytedance.com>, Prasad Pandit
+ <ppandit@redhat.com>, peterx@redhat.com, Yuan Liu <yuan1.liu@intel.com>,
+ Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH 06/14] migration/multifd: Separate SYNC request with
+ normal jobs
+In-Reply-To: <20240131103111.306523-7-peterx@redhat.com>
+References: <20240131103111.306523-1-peterx@redhat.com>
+ <20240131103111.306523-7-peterx@redhat.com>
+Date: Wed, 31 Jan 2024 15:45:31 -0300
+Message-ID: <87r0hxjq9g.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@rivosinc.com>
-From: Palmer Dabbelt <palmer@rivosinc.com>
-To: qemu-riscv@nongnu.org
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=palmer@rivosinc.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,101 +116,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Right now we just report 0 for marchid/mvendorid in QEMU.  That's legal,
-but it's tricky for users that want to check if they're running on QEMU
-to do so.  This sets marchid to 42, which I've proposed as the QEMU
-architecture ID (mvendorid remains 0, just explicitly set, as that's how
-the ISA handles open source implementations).
+peterx@redhat.com writes:
 
-Link: https://github.com/riscv/riscv-isa-manual/pull/1213
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
----
- target/riscv/cpu.c          | 16 ++++++++++++++++
- target/riscv/cpu_vendorid.h |  3 +++
- 2 files changed, 19 insertions(+)
+> From: Peter Xu <peterx@redhat.com>
+>
+> Multifd provide a threaded model for processing jobs.  On sender side,
+> there can be two kinds of job: (1) a list of pages to send, or (2) a sync
+> request.
+>
+> The sync request is a very special kind of job.  It never contains a page
+> array, but only a multifd packet telling the dest side to synchronize with
+> sent pages.
+>
+> Before this patch, both requests use the pending_job field, no matter what
+> the request is, it will boost pending_job, while multifd sender thread will
+> decrement it after it finishes one job.
+>
+> However this should be racy, because SYNC is special in that it needs to
+> set p->flags with MULTIFD_FLAG_SYNC, showing that this is a sync request.
+> Consider a sequence of operations where:
+>
+>   - migration thread enqueue a job to send some pages, pending_job++ (0->1)
+>
+>   - [...before the selected multifd sender thread wakes up...]
+>
+>   - migration thread enqueue another job to sync, pending_job++ (1->2),
+>     setup p->flags=MULTIFD_FLAG_SYNC
+>
+>   - multifd sender thread wakes up, found pending_job==2
+>     - send the 1st packet with MULTIFD_FLAG_SYNC and list of pages
+>     - send the 2nd packet with flags==0 and no pages
+>
+> This is not expected, because MULTIFD_FLAG_SYNC should hopefully be done
+> after all the pages are received.  Meanwhile, the 2nd packet will be
+> completely useless, which contains zero information.
+>
+> I didn't verify above, but I think this issue is still benign in that at
+> least on the recv side we always receive pages before handling
+> MULTIFD_FLAG_SYNC.  However that's not always guaranteed and just tricky.
+>
+> One other reason I want to separate it is using p->flags to communicate
+> between the two threads is also not clearly defined, it's very hard to read
+> and understand why accessing p->flags is always safe; see the current impl
+> of multifd_send_thread() where we tried to cache only p->flags.  It doesn't
+> need to be that complicated.
+>
+> This patch introduces pending_sync, a separate flag just to show that the
+> requester needs a sync.  Alongside, we remove the tricky caching of
+> p->flags now because after this patch p->flags should only be used by
+> multifd sender thread now, which will be crystal clear.  So it is always
+> thread safe to access p->flags.
+>
+> With that, we can also safely convert the pending_job into a boolean,
+> because we don't support >1 pending jobs anyway.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 8cbfc7e781..1aef186f87 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -415,6 +415,9 @@ static void riscv_any_cpu_init(Object *obj)
-     cpu->cfg.ext_zicsr = true;
-     cpu->cfg.mmu = true;
-     cpu->cfg.pmp = true;
-+
-+    cpu->cfg.mvendorid = QEMU_MVENDORID;
-+    cpu->cfg.marchid = QEMU_MARCHID;
- }
- 
- static void riscv_max_cpu_init(Object *obj)
-@@ -432,6 +435,8 @@ static void riscv_max_cpu_init(Object *obj)
-     set_satp_mode_max_supported(RISCV_CPU(obj), mlx == MXL_RV32 ?
-                                 VM_1_10_SV32 : VM_1_10_SV57);
- #endif
-+    cpu->cfg.mvendorid = QEMU_MVENDORID;
-+    cpu->cfg.marchid = QEMU_MARCHID;
- }
- 
- #if defined(TARGET_RISCV64)
-@@ -445,6 +450,8 @@ static void rv64_base_cpu_init(Object *obj)
- #ifndef CONFIG_USER_ONLY
-     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
- #endif
-+    cpu->cfg.mvendorid = QEMU_MVENDORID;
-+    cpu->cfg.marchid = QEMU_MARCHID;
- }
- 
- static void rv64_sifive_u_cpu_init(Object *obj)
-@@ -569,6 +576,8 @@ static void rv128_base_cpu_init(Object *obj)
- #ifndef CONFIG_USER_ONLY
-     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
- #endif
-+    cpu->cfg.mvendorid = QEMU_MVENDORID;
-+    cpu->cfg.marchid = QEMU_MARCHID;
- }
- 
- static void rv64i_bare_cpu_init(Object *obj)
-@@ -591,6 +600,8 @@ static void rv64i_bare_cpu_init(Object *obj)
- #ifndef CONFIG_USER_ONLY
-     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV64);
- #endif
-+    cpu->cfg.mvendorid = QEMU_MVENDORID;
-+    cpu->cfg.marchid = QEMU_MARCHID;
- }
- #else
- static void rv32_base_cpu_init(Object *obj)
-@@ -603,6 +614,8 @@ static void rv32_base_cpu_init(Object *obj)
- #ifndef CONFIG_USER_ONLY
-     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV32);
- #endif
-+    cpu->cfg.mvendorid = QEMU_MVENDORID;
-+    cpu->cfg.marchid = QEMU_MARCHID;
- }
- 
- static void rv32_sifive_u_cpu_init(Object *obj)
-@@ -672,6 +685,9 @@ static void rv32_imafcu_nommu_cpu_init(Object *obj)
-     cpu->cfg.ext_zifencei = true;
-     cpu->cfg.ext_zicsr = true;
-     cpu->cfg.pmp = true;
-+
-+    cpu->cfg.mvendorid = QEMU_MVENDORID;
-+    cpu->cfg.marchid = QEMU_MARCHID;
- }
- #endif
- 
-diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
-index 96b6b9c2cb..486832cd53 100644
---- a/target/riscv/cpu_vendorid.h
-+++ b/target/riscv/cpu_vendorid.h
-@@ -7,4 +7,7 @@
- #define VEYRON_V1_MIMPID        0x111
- #define VEYRON_V1_MVENDORID     0x61f
- 
-+#define QEMU_VIRT_MVENDORID     0
-+#define QEMU_VIRT_MARCHID       42
-+
- #endif /*  TARGET_RISCV_CPU_VENDORID_H */
--- 
-2.43.0
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
 
