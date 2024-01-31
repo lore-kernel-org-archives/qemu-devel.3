@@ -4,94 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F36C47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7B5DC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV10I-00020N-SL; Tue, 30 Jan 2024 22:11:10 -0500
+	id 1rV19m-0003OX-3Q; Tue, 30 Jan 2024 22:20:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
- id 1rV10G-0001z5-QJ
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:11:08 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
- id 1rV10C-0006vB-1E
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:11:08 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a315f43ecc3so483309466b.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 19:11:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1706670662; x=1707275462; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=seTow07xii/tgNaQcZGxCbxNrNPVx8O+lxkDBB+n+/E=;
- b=JFAU+hGhkoPydnrmklbWRpInQHEvhqA2VEjJoLyfGbBBhEG1YcV/t4udr/wrMsc/CK
- TW4Ske/gmvHzThq0BmyE1vge8DZRbLNCSr4Py1/MYxDZ4FQz8Oy4aw+xrHmxxXC9D9zf
- So5VIag+rWurokpoC+a2dhU1UEWXqN6nYjxcU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706670662; x=1707275462;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=seTow07xii/tgNaQcZGxCbxNrNPVx8O+lxkDBB+n+/E=;
- b=SjectEUPfMSl1ar4d6KbQHW59FF0dkz8q/sKcPdOl4tXFwBXNjDZ0Ury6uRHmHyDwT
- Qdt6qr3jiiXsAsV0qDUxLm47eneyeHbTjblcy6QP+5ouQ6CB2Qt8Jfh/SLRDDR/Kwe/p
- fVdO4SaXG/xGwAi494oG2goVs8cHfPn8si/qTda/i7Mb7yoGsamdFXNBrnC1CD4300WM
- K+j6WkNSPWRkyUtc3C+snIdeJ+/JolsVzvQt2ROlhyECr6KYPoJzOk3OL6CF5B9QIkiu
- zrnD86wF+25qre49NWqBuzURgiRiFnsJHOQEnKYSvFfjMlc/46rBVBmfDwk52/T06qTC
- fbBg==
-X-Gm-Message-State: AOJu0YxnnPLWHBtux42w/n9sjsno39wVZ34qeZrnAAbP5RUegcubDQ9r
- n44Spex0asFyL3X13IjqOIcJBkifrjGQsYy4ooT93bIG+4ClU3NyftU73rewtIT3vwEuX36iPn1
- VvQ==
-X-Google-Smtp-Source: AGHT+IHTFC+rPS8yqVGizs3nZRqgL9QLFF2AADK4OyPIE+nHvOfEkNeIUqz8IuD9Hp6SdH4lZPP3uQ==
-X-Received: by 2002:a17:906:fa92:b0:a36:7291:888f with SMTP id
- lt18-20020a170906fa9200b00a367291888fmr182498ejb.65.1706670662113; 
- Tue, 30 Jan 2024 19:11:02 -0800 (PST)
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com.
- [209.85.208.51]) by smtp.gmail.com with ESMTPSA id
- f19-20020a17090624d300b00a2f15b8cb76sm5681253ejb.184.2024.01.30.19.11.01
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jan 2024 19:11:01 -0800 (PST)
-Received: by mail-ed1-f51.google.com with SMTP id
- 4fb4d7f45d1cf-55f85a2a43fso2189a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 19:11:01 -0800 (PST)
-X-Received: by 2002:a05:6402:312f:b0:55d:2163:7ed1 with SMTP id
- dd15-20020a056402312f00b0055d21637ed1mr308542edb.1.1706670661546; Tue, 30 Jan
- 2024 19:11:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1rV19i-0003LZ-SV
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:20:54 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1rV19f-0000V2-L0
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:20:54 -0500
+Received: from loongson.cn (unknown [10.20.42.32])
+ by gateway (Coremail) with SMTP id _____8DxfeuMvLll8cEIAA--.26114S3;
+ Wed, 31 Jan 2024 11:20:45 +0800 (CST)
+Received: from [10.20.42.32] (unknown [10.20.42.32])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cx7xOJvLll6XQpAA--.868S2; 
+ Wed, 31 Jan 2024 11:20:43 +0800 (CST)
+Subject: Re: [libvirt PATCH V2 0/4] add loongarch support for libvirt
+To: Andrea Bolognani <abologna@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: devel@lists.libvirt.org, maobibo@loongson.cn, lichao@loongson.cn,
+ jiyin@redhat.com
+References: <cover.1704369486.git.lixianglai@loongson.cn>
+ <CABJz62MxNvFfs4aCRyp+7YANupU2T4k7x1C6avm=curjB+NmkA@mail.gmail.com>
+ <17234d81-cc17-6859-720a-f033206780da@loongson.cn>
+ <CABJz62OtwrfUj_OogStyzwk0zoh6U1+dFKRN9Y0t_y5r66WhZQ@mail.gmail.com>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <6edc28f0-bc21-cbe3-4ce2-94c8f6073f61@loongson.cn>
+Date: Wed, 31 Jan 2024 11:20:41 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20231003204500.518-1-gurchetansingh@chromium.org>
- <87wms9d0fi.fsf@alyssa.is>
- <CAAfnVBmiaesEQkZOk4zf08JTh-WM3tqNT8RoyaL=49Lm--5HSQ@mail.gmail.com>
- <87cytxni1n.fsf@alyssa.is>
- <CAAfnVBmV3m0-Kh5gcrxzQXotEQ9ktXfEhJr92XAMKi6rXXkuOg@mail.gmail.com>
- <87cytwnqoj.fsf@alyssa.is>
- <CAAfnVBkuKW7gfG5KAh8g26Keq_VCqmNrJwJi9+YZ-Lm+7rOUNA@mail.gmail.com>
- <87msssmax4.fsf@alyssa.is>
-In-Reply-To: <87msssmax4.fsf@alyssa.is>
-From: Gurchetan Singh <gurchetansingh@chromium.org>
-Date: Tue, 30 Jan 2024 19:10:49 -0800
-X-Gmail-Original-Message-ID: <CAAfnVBm--wu3=ES0tY2JPXwm+Ga-tRLq=EpkZdzdVoHGUfb2KQ@mail.gmail.com>
-Message-ID: <CAAfnVBm--wu3=ES0tY2JPXwm+Ga-tRLq=EpkZdzdVoHGUfb2KQ@mail.gmail.com>
-Subject: Re: [PATCH v15 0/9] rutabaga_gfx + gfxstream
-To: Alyssa Ross <hi@alyssa.is>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
- akihiko.odaki@gmail.com, ray.huang@amd.com, alex.bennee@linaro.org, 
- shentey@gmail.com, ernunes@redhat.com, manos.pitsidianakis@linaro.org, 
- mark.cave-ayland@ilande.co.uk, thuth@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000008853ba0610353ada"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=gurchetansingh@chromium.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
+In-Reply-To: <CABJz62OtwrfUj_OogStyzwk0zoh6U1+dFKRN9Y0t_y5r66WhZQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Cx7xOJvLll6XQpAA--.868S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3uw1UWryDCF1fKr4fKF1UXFc_yoW8Jr18Ao
+ WY9F17Aw1UJrn8WF17Jan5JFW5Aw1UJFnrXrykXa4DGr1Uta1UCrWUX348Gay3Jr1rGryU
+ J34aq3s8ArW7Jryfl-sFpf9Il3svdjkaLaAFLSUrUUUU1b8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUYG7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8JVW8Jr1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
+ xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y
+ 6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
+ 1lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+ JVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
+ vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
+ x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
+ xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
+ wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU88Ma5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -31
+X-Spam_score: -3.2
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.281,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,198 +88,306 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008853ba0610353ada
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Jan 26, 2024 at 6:23=E2=80=AFAM Alyssa Ross <hi@alyssa.is> wrote:
-
-> Gurchetan Singh <gurchetansingh@chromium.org> writes:
 >
-> > On Sat, Jan 20, 2024 at 4:19=E2=80=AFAM Alyssa Ross <hi@alyssa.is> wrot=
-e:
-> >
-> >> Gurchetan Singh <gurchetansingh@chromium.org> writes:
-> >>
-> >> > On Fri, Jan 19, 2024 at 1:13=E2=80=AFPM Alyssa Ross <hi@alyssa.is> w=
-rote:
-> >> >>
-> >> >> Hi Gurchetan,
-> >> >>
-> >> >> > Thanks for the reminder.  I did make a request to create the
-> release
-> >> >> > tags, but changes were requested by Fedora packaging effort:
-> >> >> >
-> >> >> > https://bugzilla.redhat.com/show_bug.cgi?id=3D2242058
-> >> >> > https://bugzilla.redhat.com/show_bug.cgi?id=3D2241701
-> >> >> >
-> >> >> > So the request was canceled, but never re-requested.  I'll fire o=
-ff
-> >> >> > another request, with:
-> >> >> >
-> >> >> > gfxstream: 23d05703b94035ac045df60823fb1fc4be0fdf1c ("gfxstream:
-> >> >> > manually add debug logic")
-> >> >> > AEMU: dd8b929c247ce9872c775e0e5ddc4300011d0e82 ("aemu: improve
-> >> licensing")
-> >> >> >
-> >> >> > as the commits.  These match the Fedora requests, and the AEMU on=
-e
-> has
-> >> >> > been merged into Fedora already it seems.
-> >> >>
-> >> >> These revisions have the problem I mentioned in my previous message=
-:
-> >> >>
-> >> >> >> The gfxstream ref mentioned here isn't compatible with
-> >> >> >> v0.1.2-rutabaga-release, because it no longer provides
-> >> logging_base.pc,
-> >> >>
-> >> >> rutabaga was not fixed to use the new AEMU package names until afte=
-r
-> the
-> >> >> v0.1.2-rutabaga-release tag, in commit 5dfd74a06.  So will there be=
- a
-> >> >> new Rutabaga release that's compatible with these release versions =
-of
-> >> >> gfxstream and AEMU?
-> >> >
-> >> > Good catch.
-> >> >
-> >> > One possible workaround is to build gfxstream as a shared library.  =
-I
-> >> > think that would avoid rutabaga looking for AEMU package config file=
-s.
-> >> >
-> >> > But if another rutabaga release is desired with support for a static
-> >> > library, then we can make that happen too.
-> >>
-> >> We're exclusively building gfxstream as a shared library.
-> >>
-> >> Looking at rutabaga's build.rs, it appears to me like pkg-config is
-> >> always used for gfxstream unless overridden by GFXSTREAM_PATH.
-> >>
-> >
-> > Hmm, it seems we should be checking pkg-config --static before looking
-> for
-> > AEMU in build.rs -- oh well.
-> >
-> > Would this be a suitable commit for the 0.1.3 release of rutabaga?
-> >
-> >
-> https://chromium.googlesource.com/crosvm/crosvm/+/5dfd74a0680d317c6edf441=
-38def886f47cb1c7c
-> >
-> > The gfxstream/AEMU commits would remain unchanged.
+>> Hi Philippe:
+>>
+>>      When developing libvirt on loongarch, we encountered some problems
+>> related to pflash.
+>>
+>> libvirt and qemu met some difficulties in the coordination of UEFI loading.
+>>
+>> I think we need your suggestions and opinions on the solution.
+>>
+>>> Anyway, I fetched and installed this. The firmware descriptor looks
+>>> like:
+>>>
+>>>     {
+>>>        "interface-types": [
+>>>          "uefi"
+>>>        ],
+>>>        "mapping": {
+>>>          "device": "memory",
+>>>          "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd"
+>>>        },
+>>>        "targets": [
+>>>          {
+>>>            "architecture": "loongarch64",
+>>>            "machines": [
+>>>              "virt",
+>>>              "virt-*"
+>>>            ]
+>>>          }
+>>>        ],
+>>>        "features": [
+>>>            "acpi"
+>>>        ]
+>>>      }
+>>>
+>>> This is not what I expected: specifically, it results in libvirt
+>>> generating
+>>>
+>>>     -bios /usr/share/edk2/loongarch64/QEMU_EFI.fd
+>>>
+>>> So only one of the two files is used, in read-only mode, and there is
+>>> no persistent NVRAM storage that the guest can use.
+>>>
+>>> This is what I expected instead:
+>>>
+>>>     {
+>>>        "interface-types": [
+>>>          "uefi"
+>>>        ],
+>>>        "mapping": {
+>>>          "device": "flash",
+>>>          "mode": "split",
+>>>          "executable": {
+>>>            "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd",
+>>>            "format": "raw"
+>>>          },
+>>>          "nvram-template": {
+>>>            "filename": "/usr/share/edk2/loongarch64/QEMU_VARS.fd",
+>>>            "format": "raw"
+>>>          }
+>>>        },
+>>>        "targets": [
+>>>          {
+>>>            "architecture": "loongarch64",
+>>>            "machines": [
+>>>              "virt",
+>>>              "virt-*"
+>>>            ]
+>>>          }
+>>>        ],
+>>>        "features": [
+>>>            "acpi"
+>>>       ]
+>>>     }
+>>>
+>>> I've tried installing such a descriptor and libvirt picks it up,
+>>> resulting in the following guest configuration:
+>>>
+>>>     <os firmware='efi'>
+>>>       <type arch='loongarch64' machine='virt'>hvm</type>
+>>>       <firmware>
+>>>         <feature enabled='no' name='enrolled-keys'/>
+>>>         <feature enabled='no' name='secure-boot'/>
+>>>       </firmware>
+>>>       <loader readonly='yes'
+>>> type='pflash'>/usr/share/edk2/loongarch64/QEMU_EFI.fd</loader>
+>>>       <nvram template='/usr/share/edk2/loongarch64/QEMU_VARS.fd'>/var/lib/libvirt/qemu/nvram/guest_VARS.fd</nvram>
+>>>       <boot dev='hd'/>
+>>>     </os>
+>>>
+>>> which in turn produces the following QEMU command line options:
+>>>
+>>>     -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}'
+>>>     -blockdev '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}'
+>>>     -blockdev '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/guest_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}'
+>>>     -blockdev '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}'
+>>>
+>>> Unfortunately, with this configuration the guest fails to start:
+>>>
+>>>     qemu-system-loongarch64: Property 'virt-machine.pflash0' not found
+>>>
+>>> This error message looked familiar to me, as it is the same that I
+>>> hit when trying out UEFI support on RISC-V roughly a year ago[1]. In
+>>> this case, however, it seems that the issue runs deeper: it's not
+>>> just that the flash devices are not wired up to work as blockdevs,
+>>> but even the old -drive syntax doesn't work.
+>>>
+>>> Looking at the QEMU code, it appears that the loongarch/virt machine
+>>> only creates a single pflash device and exposes it via -bios. So it
+>>> seems that there is simply no way to achieve the configuration that
+>>> we want.
+>>>
+>>> I think that this is something that needs to be addressed as soon as
+>>> possible. In the long run, guest-accessible NVRAM storage is a must,
+>>> and I'm not sure it would make a lot of sense to merge loongarch
+>>> support into libvirt until the firmware situation has been sorted out
+>>> in the lower layers.
+>> In the qemu code, loongarch virt machine does only create a pflash,
+>>
+>> which is used for nvram, and uefi code is loaded by rom.
+>>
+>> In summary, loongarch virt machine can use nvram with the following command:
+>>
+>> -------------------------------------------------------------------------------------------------------
+>>
+>> qemu-system-loongarch64 \
+>> -m 8G \
+>> -smp 4 \
+>> -cpu la464 \
+>> -blockdev '{"driver":"file","filename":"./QEMU_VARS-pflash.raw","node-name":"libvirt-pflash0-storage","auto-read-only":false,"discard":"unmap"}' \
+>> -blockdev '{"node-name":"libvirt-pflash0-format","read-only":false,"driver":"raw","file":"libvirt-pflash0-storage"}' \
+>> -machine virt,pflash=libvirt-pflash0-format \
+>> -bios ./QEMU_EFI.fd
+>>
+>> -------------------------------------------------------------------------------------------------------
+>>
+>>
+>> This is really a big difference from the following boot method, and it still
+>> looks weird.
+>>
+>> -------------------------------------------------------------------------------------------------------
+>>
+>> -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}'
+>> -blockdev '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}'
+>> -blockdev '{"driver":"file","filename":"/var/lib/libvirt/qemu/nvram/guest_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}'
+>> -blockdev '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}'
+>>
+>> -------------------------------------------------------------------------------------------------------
+>>
+>> However, during the development of qemu loongarch,
+>>
+>> we also used a RISCV-like solution to create two pflash,
+>>
+>> but the qemu community suggested that we put uefi code in rom for the
+>> following reasons:
+>>
+>>
+>> https://lore.kernel.org/qemu-devel/2f381d06-842f-ac8b-085c-0419675a4872@linaro.org/
+>>
+>> "
+>>
+>> Since you are starting a virtual machine from scratch, you should take
+>> the opportunity to learn from other early mistakes. X86 ended that way
+>> due to 1/ old firmwares back-compability and 2/ QEMU pflash block
+>> protections not being implemented. IIUC if we were starting with a
+>> UEFI firmware today, the layout design (still using QEMU) would be
+>> to map the CODE area in a dumb ROM device, and the VARSTORE area
+>> in a PFlash device. Since Virt machines don't need to use Capsule
+>> update, having the CODE area in ROM drastically simplifies the design
+>> and maintainance.
+>>
+>> "
+>>
+>> Well, anyway, now that we have an issue with qemu loongarch using nvram that
+>> is incompatible with libvirt,
+>>
+>> here I have come up with two solutions to solve this problem:
+>>
+>>
+>>     Option 1:
+>>
+>> If the interface type "rom-uefi" is added and the device type "rom-flash" is
+>> added, the json file should be written like this:
+>>
+>> -------------------------------------------------------------------------------------------------------
+>>
+>> {
+>>     "interface-types": [
+>>       "rom-uefi"
+>>     ],
+>>     "mapping": {
+>>       "device": "rom-flash",
+>>       "executable": {
+>>         "filename": "/usr/share/edk2/loongarch64/QEMU_EFI.fd",
+>>         "format": "raw"
+>>       },
+>>       "nvram-template": {
+>>         "filename": "/usr/share/edk2/loongarch64/QEMU_VARS.fd",
+>>         "format": "raw"
+>>       }
+>>     },
+>>     "targets": [
+>>       {
+>>         "architecture": "loongarch64",
+>>         "machines": [
+>>           "virt",
+>>           "virt-*"
+>>         ]
+>>       }
+>>     ],
+>>     "features": [
+>>         "acpi"
+>>     ]
+>>
+>>   -------------------------------------------------------------------------------------------------------
+>>
+>> Then add the parsing of the new interface types in libvirt and load
+>> QEMU_CODE.fd as -bios and QEMU_VARS.fd as nvram
+>>
+>> when creating the command line, generating commands like the following:
+>>
+>>   -------------------------------------------------------------------------------------------------------
+>>
+>> -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_VARS.fd/","node-name":"libvirt-pflash0-storage","auto-read-only":false,"discard":"unmap"}' \
+>> -blockdev '{"node-name":"libvirt-pflash0-format","read-only":false,"driver":"raw","file":"libvirt-pflash0-storage"}' \
+>> -machine virt,pflash=libvirt-pflash0-format \
+>> -bios /usr/share/edk2/loongarch64///QEMU_EFI.fd \
+>>
+>> -------------------------------------------------------------------------------------------------------
+>>
+>>     Option 2:
+>>
+>> Solution 2 mainly starts from qemu. Now the rom that bios is loaded into is
+>> a memory region that cannot be configured with attributes,
+>>
+>> so we imagine abstracting rom as a device, creating it during machine
+>> initialization and setting "pflash0" attribute for it.
+>>
+>> Then create a pflash and set its property to "pflash1", so our startup
+>> command will look like this:
+>>
+>>   -------------------------------------------------------------------------------------------------------
+>>
+>> -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_EFI.fd","node-name":"libvirt-pflash0-storage","auto-read-only":true,"discard":"unmap"}' \
+>> -blockdev '{"node-name":"libvirt-pflash0-format","read-only":true,"driver":"raw","file":"libvirt-pflash0-storage"}' \
+>> -blockdev '{"driver":"file","filename":"/usr/share/edk2/loongarch64/QEMU_VARS.fd","node-name":"libvirt-pflash1-storage","auto-read-only":true,"discard":"unmap"}' \
+>> -blockdev '{"node-name":"libvirt-pflash1-format","read-only":false,"driver":"raw","file":"libvirt-pflash1-storage"}' \
+>> -machine virt,pflash0=libvirt-pflash0-format,pflash1=libvirt-pflash1-format \
+>>
+>>   -------------------------------------------------------------------------------------------------------
+>>
+>> This way, without modifying libvirt, QEMU_CODE.fd can be loaded into the
+>> rom,
+>>
+>> but it is still a little strange that it is clearly rom but set a "pflash0"
+>> attribute, which can be confusing.
+> We recently had a very similar discussion regarding EFI booting on
+> RISC-V.
 >
-> That combination works for me.
+> Personally I would prefer to see the approach with two pflash
+> devices, one read-only and one read/write, adopted. This is pretty
+> much the de-facto standard across architectures: x86_64, aarch64 and
+> riscv64 all boot edk2 this way.
 >
-
-Just FYI, still working on it.  Could take 1-2 more weeks.
-
---0000000000008853ba0610353ada
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jan 26, 2024 at 6:23=E2=80=AF=
-AM Alyssa Ross &lt;<a href=3D"mailto:hi@alyssa.is">hi@alyssa.is</a>&gt; wro=
-te:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Gurchetan Si=
-ngh &lt;<a href=3D"mailto:gurchetansingh@chromium.org" target=3D"_blank">gu=
-rchetansingh@chromium.org</a>&gt; writes:<br>
-<br>
-&gt; On Sat, Jan 20, 2024 at 4:19=E2=80=AFAM Alyssa Ross &lt;<a href=3D"mai=
-lto:hi@alyssa.is" target=3D"_blank">hi@alyssa.is</a>&gt; wrote:<br>
-&gt;<br>
-&gt;&gt; Gurchetan Singh &lt;<a href=3D"mailto:gurchetansingh@chromium.org"=
- target=3D"_blank">gurchetansingh@chromium.org</a>&gt; writes:<br>
-&gt;&gt;<br>
-&gt;&gt; &gt; On Fri, Jan 19, 2024 at 1:13=E2=80=AFPM Alyssa Ross &lt;<a hr=
-ef=3D"mailto:hi@alyssa.is" target=3D"_blank">hi@alyssa.is</a>&gt; wrote:<br=
+> I understand the desire to simplify things where possible, and I am
+> sympathetic towards it. If we could boot from just rom, without using
+> pflash at all, I would definitely see the appeal. However, as noted
+> earlier, in the case of EFI having some read/write storage space is
+> necessary to expose the full functionality, so going without it is
+> not really an option.
 >
-&gt;&gt; &gt;&gt;<br>
-&gt;&gt; &gt;&gt; Hi Gurchetan,<br>
-&gt;&gt; &gt;&gt;<br>
-&gt;&gt; &gt;&gt; &gt; Thanks for the reminder.=C2=A0 I did make a request =
-to create the release<br>
-&gt;&gt; &gt;&gt; &gt; tags, but changes were requested by Fedora packaging=
- effort:<br>
-&gt;&gt; &gt;&gt; &gt;<br>
-&gt;&gt; &gt;&gt; &gt; <a href=3D"https://bugzilla.redhat.com/show_bug.cgi?=
-id=3D2242058" rel=3D"noreferrer" target=3D"_blank">https://bugzilla.redhat.=
-com/show_bug.cgi?id=3D2242058</a><br>
-&gt;&gt; &gt;&gt; &gt; <a href=3D"https://bugzilla.redhat.com/show_bug.cgi?=
-id=3D2241701" rel=3D"noreferrer" target=3D"_blank">https://bugzilla.redhat.=
-com/show_bug.cgi?id=3D2241701</a><br>
-&gt;&gt; &gt;&gt; &gt;<br>
-&gt;&gt; &gt;&gt; &gt; So the request was canceled, but never re-requested.=
-=C2=A0 I&#39;ll fire off<br>
-&gt;&gt; &gt;&gt; &gt; another request, with:<br>
-&gt;&gt; &gt;&gt; &gt;<br>
-&gt;&gt; &gt;&gt; &gt; gfxstream: 23d05703b94035ac045df60823fb1fc4be0fdf1c =
-(&quot;gfxstream:<br>
-&gt;&gt; &gt;&gt; &gt; manually add debug logic&quot;)<br>
-&gt;&gt; &gt;&gt; &gt; AEMU: dd8b929c247ce9872c775e0e5ddc4300011d0e82 (&quo=
-t;aemu: improve<br>
-&gt;&gt; licensing&quot;)<br>
-&gt;&gt; &gt;&gt; &gt;<br>
-&gt;&gt; &gt;&gt; &gt; as the commits.=C2=A0 These match the Fedora request=
-s, and the AEMU one has<br>
-&gt;&gt; &gt;&gt; &gt; been merged into Fedora already it seems.<br>
-&gt;&gt; &gt;&gt;<br>
-&gt;&gt; &gt;&gt; These revisions have the problem I mentioned in my previo=
-us message:<br>
-&gt;&gt; &gt;&gt;<br>
-&gt;&gt; &gt;&gt; &gt;&gt; The gfxstream ref mentioned here isn&#39;t compa=
-tible with<br>
-&gt;&gt; &gt;&gt; &gt;&gt; v0.1.2-rutabaga-release, because it no longer pr=
-ovides<br>
-&gt;&gt; logging_base.pc,<br>
-&gt;&gt; &gt;&gt;<br>
-&gt;&gt; &gt;&gt; rutabaga was not fixed to use the new AEMU package names =
-until after the<br>
-&gt;&gt; &gt;&gt; v0.1.2-rutabaga-release tag, in commit 5dfd74a06.=C2=A0 S=
-o will there be a<br>
-&gt;&gt; &gt;&gt; new Rutabaga release that&#39;s compatible with these rel=
-ease versions of<br>
-&gt;&gt; &gt;&gt; gfxstream and AEMU?<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; Good catch.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; One possible workaround is to build gfxstream as a shared lib=
-rary.=C2=A0 I<br>
-&gt;&gt; &gt; think that would avoid rutabaga looking for AEMU package conf=
-ig files.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; But if another rutabaga release is desired with support for a=
- static<br>
-&gt;&gt; &gt; library, then we can make that happen too.<br>
-&gt;&gt;<br>
-&gt;&gt; We&#39;re exclusively building gfxstream as a shared library.<br>
-&gt;&gt;<br>
-&gt;&gt; Looking at rutabaga&#39;s <a href=3D"http://build.rs" rel=3D"noref=
-errer" target=3D"_blank">build.rs</a>, it appears to me like pkg-config is<=
-br>
-&gt;&gt; always used for gfxstream unless overridden by GFXSTREAM_PATH.<br>
-&gt;&gt;<br>
-&gt;<br>
-&gt; Hmm, it seems we should be checking pkg-config --static before looking=
- for<br>
-&gt; AEMU in <a href=3D"http://build.rs" rel=3D"noreferrer" target=3D"_blan=
-k">build.rs</a> -- oh well.<br>
-&gt;<br>
-&gt; Would this be a suitable commit for the 0.1.3 release of rutabaga?<br>
-&gt;<br>
-&gt; <a href=3D"https://chromium.googlesource.com/crosvm/crosvm/+/5dfd74a06=
-80d317c6edf44138def886f47cb1c7c" rel=3D"noreferrer" target=3D"_blank">https=
-://chromium.googlesource.com/crosvm/crosvm/+/5dfd74a0680d317c6edf44138def88=
-6f47cb1c7c</a><br>
-&gt;<br>
-&gt; The gfxstream/AEMU commits would remain unchanged.<br>
-<br>
-That combination works for me.<br></blockquote><div><br></div><div>Just FYI=
-, still working on it.=C2=A0 Could take 1-2 more weeks.</div><div><br></div=
-><div>=C2=A0</div></div></div>
+> With all the above in mind, the cost of loongarch64 doing things
+> differently from other architectures seems like it would outweight
+> the benefits, and I strongly advise against it.
+>
+Hi Andrea :
 
---0000000000008853ba0610353ada--
+     So, just to be clear, you're not suggesting either of the options I 
+suggested above,
+
+     are you? And still recommend that we use a two-piece pflash 
+solution similar to other architectures,
+
+      right?
+
+
+Hi Philippe :
+
+   I look forward to your reply and the comments of other members of the 
+qemu community very much.
+
+  If everyone has no opinions,
+
+I will submit a patch to the community to change the loading mode of 
+qemu under loongarch architecture to UEFI with two pieces of pflash.
+
+
+Thanks,
+
+Xianglai.
+
+
 
