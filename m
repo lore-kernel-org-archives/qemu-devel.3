@@ -4,136 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110ECC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 20:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9879DC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 21:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVHcF-0006rf-Vo; Wed, 31 Jan 2024 15:55:28 -0500
+	id 1rVHwa-0001qi-HE; Wed, 31 Jan 2024 16:16:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.charney@os.amperecomputing.com>)
- id 1rVHSE-0003a2-Lc; Wed, 31 Jan 2024 15:45:06 -0500
-Received: from mail-bn8nam12on20700.outbound.protection.outlook.com
- ([2a01:111:f403:2418::700]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.charney@os.amperecomputing.com>)
- id 1rVHSC-00035q-Mw; Wed, 31 Jan 2024 15:45:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GfKQZKMfBDs1pa8i9lPMAzyPqAAy3b+r9zDwMvAAc4DZ7w/WsBRV+VR5UlEWWJCoHd6TPjKVcRxCwGOaysgvanor7SdhUPpxpBImOBG38rlJ/rl244/4ZkL7vfzcq36E4UCBkSHBTw9dsU1Wx/gG0PrGERODxDqONH+rq6G7qJeCEKk+MmYd6p6jZpzSXvXyM+v1e6C9xJYQRcY99eGApVUynC227My5xeqejH1tZdfFbBLeTiS/Jb12PFA+SqvNJf/UgrEl2Bk9ahimX4wy2mFOAGlQ21ftroRzOh0JX2CT33vYS1l1/mrkwWfTsI3gn3q5y2E9ezR26hBMdjyFXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9XNZZWN1GY1PJmnRTS4Yyv5+Drjpiu7QMIq1mVygUUk=;
- b=J2hS57TWo2JYuIp95P+TRSgoeexN/0VqWdsGaIGDeqoV3xqzLhE3t7JWaiiBt9BtkmQA9kmCW76FE2MQJgiCrGTm7wGqY3tHPP39Oj0omg2Rrw0mPHXrhiwObCQliawxiEfLwWKn+/AjFXUnrQ7DqSdVwys9DkEyNIck2xWFCyE8Zi9MI/D+jDlY3rmTUTHAzPICMjZnchHs5UYQd13srFgaAPfmO872WhbobMo8QsmGOv0IfRCDvAYRzCbIhJ4zXZWum25/YZJSkCrPF8zyxuW2vCkt+I4mTq8bZwHpnxaagZTKxotuvwYM1aN+OY445EafUnHIb+qmvRq/HrNfmA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rVHwU-0001qU-MI
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:16:24 -0500
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rVHwS-0000xk-V4
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:16:22 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-5d3907ff128so220673a12.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 13:16:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9XNZZWN1GY1PJmnRTS4Yyv5+Drjpiu7QMIq1mVygUUk=;
- b=kXs+oPEgVI6BrqB8X75bIqeu8zH1xRRY7On6IVxEcmgpCs4fRr0BA3ubxm0DeUThS92ivf5InRD3OEMpYc8a3CJt2I0fJZlG9qi66Qu5IEmvSTG/IAHAVbHGg3nfzY/gXAeH/fEa+1+58qLXX+xMHGEbD3g8O9pTgGxZUUTHapI=
-Received: from BL1PR01MB7795.prod.exchangelabs.com (2603:10b6:208:39a::5) by
- PH7PR01MB7931.prod.exchangelabs.com (2603:10b6:510:275::6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7249.24; Wed, 31 Jan 2024 20:44:56 +0000
-Received: from BL1PR01MB7795.prod.exchangelabs.com
- ([fe80::93f7:ce4f:5253:1269]) by BL1PR01MB7795.prod.exchangelabs.com
- ([fe80::93f7:ce4f:5253:1269%7]) with mapi id 15.20.7249.024; Wed, 31 Jan 2024
- 20:44:55 +0000
-From: Mark Charney OS <mark.charney@os.amperecomputing.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>
-CC: Aaron Lindsay OS <aaron@os.amperecomputing.com>, "alex.bennee@linaro.org"
- <alex.bennee@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>
-Subject: QEMU 8.2.0 aarch64 sve ldff1b returning 1 byte when 16 are expected
-Thread-Topic: QEMU 8.2.0 aarch64 sve ldff1b returning 1 byte when 16 are
- expected
-Thread-Index: AQHaVGIniO3WZ/GXMk6DS8JgnshVfA==
-Date: Wed, 31 Jan 2024 20:44:55 +0000
-Message-ID: <BL1PR01MB7795E154CD5AE6ADA60C0D53A87C2@BL1PR01MB7795.prod.exchangelabs.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_5b82cb1d-c2e0-4643-920a-bbe7b2d7cc47_Enabled=True;
- MSIP_Label_5b82cb1d-c2e0-4643-920a-bbe7b2d7cc47_SiteId=3bc2b170-fd94-476d-b0ce-4229bdc904a7;
- MSIP_Label_5b82cb1d-c2e0-4643-920a-bbe7b2d7cc47_SetDate=2024-01-31T20:44:55.082Z;
- MSIP_Label_5b82cb1d-c2e0-4643-920a-bbe7b2d7cc47_Name=Confidential;
- MSIP_Label_5b82cb1d-c2e0-4643-920a-bbe7b2d7cc47_ContentBits=0;
- MSIP_Label_5b82cb1d-c2e0-4643-920a-bbe7b2d7cc47_Method=Standard; 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BL1PR01MB7795:EE_|PH7PR01MB7931:EE_
-x-ms-office365-filtering-correlation-id: 6bdd755f-73dc-4645-6182-08dc229d7b42
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: zB3leId2fto/2k0WKnR8GeBglT/7dRsjQvrTQqWwd8KxUMzYZmp/KjRgjeXZaRinGp6cPife2uDi0XkVUuioGltBtBeqnKVnkkUw8/FUtD0OBTIYdyWI98u9+K4TxtigcxOoOH3/YKkrXj+j7O41Iw6JZ9IBKOXUoCvEcyzAyQB0H4vkq/48OY7D3pQvnuqRBTgM+f/zrGSvn1SgZuwzvl5ZLegoNRlQR4eD/xuN3DDB2rl9HvQKqI/Yman57ftcjrqcfN6xKMBbsgB6ism/XozMeHoCVHPhaNWuHy1BW7DPK4NEhQYqNSl4pZhTgXEwnrmqENuQsIncKxqQTboShkPtpKroBjurXDRdaqw/bIES+smgSum1dFbOY4Ova4LSqYoDDOEDdFVM24G2PV7XzY2DjS/NeCsWkyUEoOEx5n54ruu0lyBGGnJH3sgjr6c4dVeHve3HYebs0mlPIOq9LSNqYp8V0w5qxnNVvTvFSWGyTMP7GaygIZb0RxJRixj7zDpLvw/5DoSdUGPRK2OjYmIOV4X0Y43kTaUD90P+CIHHlejAAmpLdtINfm61x0WvKAGM4RSLbF69P0q2h/EhyXm8sGFQx4G4BuhW4ydM5ezGSUfgwRM7cXt4AZselA7Ro3j+rK5icvS9JgelnkqEwWi5yUN+lz2oCC/WEDu1+m8=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR01MB7795.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(13230031)(136003)(376002)(346002)(366004)(396003)(39850400004)(230922051799003)(64100799003)(186009)(1800799012)(451199024)(26005)(55016003)(41300700001)(54906003)(38070700009)(64756008)(66446008)(316002)(66556008)(66476007)(6506007)(478600001)(9686003)(38100700002)(71200400001)(7696005)(122000001)(66946007)(8936002)(5660300002)(2906002)(76116006)(91956017)(86362001)(110136005)(8676002)(33656002)(4326008)(52536014)(32563001)(357404004);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?QrX2HxqV6q6p8i8EUjOif9DuB2YMNBKCIdOFvVvS4fx9WbQv9CQN4JyEvP?=
- =?iso-8859-1?Q?vxrTn68rbFUpie0k3q23JaQiSv/wT4HhalIDPQD1fifuujh4njIOAmb/PN?=
- =?iso-8859-1?Q?0dHjtF80q6UgBXsfXZ2pyXxjxLp2RJZ+OL2RpE1vG0gQRGPPYYVSgQ7goD?=
- =?iso-8859-1?Q?mb/KKohbpWKRuSpuAsVdfVmFWNDxjEitmtZN0M/axB3qDBx2RmYDQyrWpW?=
- =?iso-8859-1?Q?18nD1oMC6tT/qsXB/DBhxpB/BbWRlvCyCM72cM0X+jDsSdUhZc+SkLUaBS?=
- =?iso-8859-1?Q?2QIFBsv/UuXky0cKXPcezD0p5GSzwXoX1dgWObSQbhFiGVMUe7cO7H/HB2?=
- =?iso-8859-1?Q?UImvqpBg57mOkupLJPZ/Z5VD1SKF9/vjkIAcbV8SjfYdW9jrThzMmaN99U?=
- =?iso-8859-1?Q?t6T8ZGn9yhqISSq0ACD2IglWDTf61X9i7uKaMi8naC7PzZW6n5hf9Qjgvn?=
- =?iso-8859-1?Q?hzsw/fqwkhhXTO5LxCLARNsKGgbNdCJjZSsHZmodMAaXFCDT9HZGc0iQ8j?=
- =?iso-8859-1?Q?Voyinal0GJor5tt+/HUTf9ZlCLYpyf8aSxRGx8UhrjQFtaChF6Xsb3aBXh?=
- =?iso-8859-1?Q?pK/BaYSpnxUjVlMOHdl+pwnqmTup3Bm/ZuZt7X8ELyLPfx2KaOr4N78NJI?=
- =?iso-8859-1?Q?0DbUeio2COPp6VNOzKWZvkoggRtWpkWM4wt/Un6bd7TPHHEcdP5QRq5y3R?=
- =?iso-8859-1?Q?o6uActNhLnhksaReqetAcvIckLiAr5pwc+1ysykTbqmTgTgI7WfX4BFaDj?=
- =?iso-8859-1?Q?1Tf1CYRvjG+vknKd0wfnFKJUpNJf0uLydipZlbTjS5/z/raJ5OLrc+SG4d?=
- =?iso-8859-1?Q?wyldTtSF2z4Odre7H1kM1EyxL+7dauWRTRYsainuU036ebOiz1DUcrE7fl?=
- =?iso-8859-1?Q?g+/ZGGzUcmR9+xawrnU8NYl4hvl6DbqY0gxxjIgT+WTujpYbJWFdRI+rIY?=
- =?iso-8859-1?Q?hPyFEbUi3dqTwCXcaW5fcTwKQYzV+UKN5UTDi9NIPffDyayyN9XnI/gw++?=
- =?iso-8859-1?Q?DM3MCLaoY4nAVMGKd8dpKdiy/oaOUbk4QNCfOdkf5T0oxPGUWMZaeBcfRQ?=
- =?iso-8859-1?Q?UkjhY2SnwNk1oYawsKWzUvrZTzha1VLi6plu+frL1OZhC+6O+d8ageQus8?=
- =?iso-8859-1?Q?BWllqlJ3BFjANcYc98zMVzENMsXmXGUzWZTUVirbFUpqHWdTBy2r3Pxvk/?=
- =?iso-8859-1?Q?TxP6JEHOSK/z5my4q1Bg2P5bZDSguYz2VhdVTBjhkO9pQW4i5uVfH5svnv?=
- =?iso-8859-1?Q?NM50CHzf1GtxnPh5SIKFdtgQUGGOFhxzLFMZQ4iuyHGC0jVb4LGSmg4ohV?=
- =?iso-8859-1?Q?nmeyAn647akAeEIRgY5tubOV2gUXHl/0ONul0c4bJYwxDN3hJmAXRMP2jk?=
- =?iso-8859-1?Q?dQD8Sz0KGVl74MCEORbNuItl4S9OuoWVDJRGXEY0xaw70rF/T/PcOW2qZf?=
- =?iso-8859-1?Q?6Dwyqp+tZ2Q1Oevlwrt9zalXMCbTznBsir2dVdBBNRHEhcsRNO5YXCD4hq?=
- =?iso-8859-1?Q?265/9qP3o1EE/cyjI35M4k6wo+ZBaByx4UHzZV4XokDUz2I7N5SMPIHuEH?=
- =?iso-8859-1?Q?NVW++HuuBEHu+FkKxyuQ6A6HHazSVcxKH6mGQyQ3PXjVbIB2LzeDiP57tq?=
- =?iso-8859-1?Q?QAE+4th8KB4tfBJ7dcGzaVgSs8aC2+SYodLkT3DRMqC37tOMoDb3foVVZA?=
- =?iso-8859-1?Q?k4X8UcYdS4JvwVOzKIo=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ d=linaro.org; s=google; t=1706735778; x=1707340578; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vewnQobiaf44xJDr6UCTiW7VIyUsXzfOXJv7R0rJsSU=;
+ b=rgbn9HaFM3OrJ2ty578gC7f5QHTROLX6mWjA9RC79C1WfnauhFCArGqmulPIDN7vCl
+ jw1jWw1uBGUxSX3+nTRDS03zXjA4jqykgLt60hKbnPViln90NL4YPBX8lktvMn8tP0+0
+ 8ERRMz1SxJ4HzY8UZLg3aDcNMCauizCLxQLBRcPVTrxQTYuVHPB+eexI/lDzj84WcC0c
+ tuaWInmHIp58qZrujS67IyugjvFwevodrX9TdcwJ40M6mxYhOrXSFdNQZhSDZjSOCdvw
+ isfCZoEgY5wKoA1t0GfMDFXLXKKkt9Gn7gdwbuXQgxdqnsL/Ub9lAIXxluvPytHioZk0
+ t5Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706735778; x=1707340578;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vewnQobiaf44xJDr6UCTiW7VIyUsXzfOXJv7R0rJsSU=;
+ b=QY1r2KZ7KivW9/qqyXkhcqAbDdwlmOiZe6JvzBipOJJqGRGhejTJzFfKVkJezJqW/D
+ 2apFX0pX4Q2W101T4pMJr3xUPF/e58gkgLECQhJ1SJl4Ce13KRDIoTELdyrQeGFSvyjx
+ tiorV2S6p+o4ji1qsJKLsHzaKgWHDivltwr3mhxGthXXiVLPtb7XWY8//bqv/lc1pjNZ
+ z4y8t0dVjkSAl4O1oYHJNet79+6IaTuJWOTNV9Vd3ZP2lgoRNz0MR/GxfIoNUhokZfdV
+ PJQ0RrJswRo6lUWi+bnzjOzMaDHraxJVOcswvE32oTNbAA93VNWkLlO6MzGAbDoKdZ6V
+ ln/g==
+X-Gm-Message-State: AOJu0YzuXz7fzJzrLfQeIB08Jo0cCpkTtm3WOUTRJrfYwwNOW6bkU6gf
+ Sn/0R6t9FziUib31AaeDNsLGsXDftjEUGIzASsNt3Wwdr1Y20sQWJ7iNfqoVaZE=
+X-Google-Smtp-Source: AGHT+IE+uaPQYTi0FhLFzrVWEHOKuOxyY9WToFurVZ3s3cJcW7K7DXFTeLTs7l7YM1gsdze1uZfniA==
+X-Received: by 2002:a17:90a:f992:b0:295:cf16:17fe with SMTP id
+ cq18-20020a17090af99200b00295cf1617femr3005033pjb.34.1706735778620; 
+ Wed, 31 Jan 2024 13:16:18 -0800 (PST)
+Received: from [192.168.0.100] ([103.210.27.218])
+ by smtp.gmail.com with ESMTPSA id
+ hc7-20020a17090b318700b00290f9e8b4f9sm1966761pjb.46.2024.01.31.13.16.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Jan 2024 13:16:18 -0800 (PST)
+Message-ID: <70186760-61be-4b44-8c0f-eb6acb4587f2@linaro.org>
+Date: Thu, 1 Feb 2024 07:16:12 +1000
 MIME-Version: 1.0
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR01MB7795.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6bdd755f-73dc-4645-6182-08dc229d7b42
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jan 2024 20:44:55.2864 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6oY/KfUP2FgR7eV4EsNPSCErqi+olMvoa9RAn98/20JSUsBADMiajD0mMWOq+wRsXJMNAnSWZfYfJXxSt6xJnyePDbIMraRF+bvekOByaXo8UbpqUKGs3XUCSd5HSbF8
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR01MB7931
-Received-SPF: pass client-ip=2a01:111:f403:2418::700;
- envelope-from=mark.charney@os.amperecomputing.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg: Fixes set const_args[i] wrong value when
+ instructions imm is 0
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: c@jia.je, philmd@redhat.com, git@xen0n.name, maobibo@loongson.cn
+References: <20240131072740.2569850-1-gaosong@loongson.cn>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240131072740.2569850-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 31 Jan 2024 15:55:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -148,46 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using QEMU v8.2.0 (and also the HEAD of the git master branch), I=0A=
-encountered an unexpected situation: an ldff1b is returning 1 byte=0A=
-when I run with the QEMU user level plugin (and setting FFR as if=0A=
-there was a fault).=0A=
-=0A=
-However the ldff1b actually loads 16 bytes when: (a) I run this same=0A=
-test natively on a system with SVE support (no QEMU involved) or (b)=0A=
-when I run this test interactively (logged in to a console) in GDB=0A=
-running on the QEMU (with no plugin involved).=0A=
-=0A=
-I was wondering if this one-byte-per-ldff1b was a known/expected=0A=
-behavior with plugins?  I guess it is legal to only return one byte,=0A=
-but I was wondering why QEMU did this and if there was some way to get=0A=
-QEMU to return 16 bytes in the absence of faults (or as many bytes as=0A=
-it can up until the fault).=0A=
-=0A=
-There is *no* page boundary being crossed in the examples of interest,=0A=
-and no MMIO, so a partial data return is not expected. The page=0A=
-referenced is mapped and previously referenced.=0A=
-=0A=
-Talking to Alex Bennee, he pointed out:=0A=
-=0A=
-> I'm wondering if this is a result of the fix in 6d03226b422=0A=
-> (plugins: force slow path when plugins instrument memory ops). This=0A=
-> will always force the slow path which is where we instrument the=0A=
-> operation.=0A=
-=0A=
-I attempted to revert this commit locally and no longer got memop=0A=
-callbacks for any SVE load operations, first fault, nonfault or not=0A=
-"normal" predicated SVE operations. But I believe ldff1b are returning=0A=
-16 bytes (judging by the control flow).=0A=
-=0A=
-Our goal is to use QEMU for tracing with a home-grown plugin.  For our=0A=
-purposes, we were expecting to observe control flow like what we see=0A=
-on SVE-enabled hardware where ldff1b returns 16 bytes in the absence=0A=
-of faults.=0A=
-=0A=
-If necessary, I can provide a reproducer, that includes:=0A=
-  - a sve strcpy loop from one of Alex's talks.=0A=
-  - a simple user level plugin=0A=
-=0A=
-=0A=
+On 1/31/24 17:27, Song Gao wrote:
+> It seems that tcg_reg_alloc_op() set const_args[i] wrong value
+> when instructions imm is 0. The LoongArch tcg_out_vec_op() cmp_vec
+> use the wrong const_args[2].
+> e.g
+>     The wrong const_args[2] is 0.
+>     IN: vslti.w v5, v4, 0x0   OUT: vslt.w  v1, v1, v0
+> 
+>     The right const_args[2] is 1.
+>     IN: vslti.w v5, v4, 0x0   OUT: vslti.w v1, v1, 0x0
+> 
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2136
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   tcg/tcg.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index e2c38f6d11..5b290123bc 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -4808,7 +4808,7 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+>           arg_ct = &def->args_ct[i];
+>           ts = arg_temp(arg);
+>   
+> -        if (ts->val_type == TEMP_VAL_CONST
+> +        if ((ts->val_type == TEMP_VAL_CONST || ts->kind == TEMP_CONST)
+>               && tcg_target_const_match(ts->val, ts->type, arg_ct->ct, TCGOP_VECE(op))) {
+>               /* constant is OK for instruction */
+>               const_args[i] = 1;
+
+This is wrong.
+
+I strongly suspect that the TEMP_CONST value 0 has been loaded into a register for use in 
+another operation, and the register allocator sees that it is still there.
+
+
+r~
 
