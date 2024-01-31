@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C2EDC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 07:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A597FC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 07:13:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV4iv-0001x1-8J; Wed, 31 Jan 2024 02:09:30 -0500
+	id 1rV4mh-0004XN-KJ; Wed, 31 Jan 2024 02:13:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rV4ig-0001ca-DC
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 02:09:16 -0500
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ id 1rV4mX-0004RO-Gk
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 02:13:17 -0500
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rV4id-0004Gi-52
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 02:09:13 -0500
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-42a8a398cb2so43294381cf.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 23:09:10 -0800 (PST)
+ id 1rV4mU-0004s7-Nl
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 02:13:12 -0500
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-42a9f4935a6so4742611cf.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 23:13:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706684949; x=1707289749; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706685189; x=1707289989; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zpc4cL3kzvl8tTCs9w7lKB+yt7W9tMR4Ryk7kizs/Os=;
- b=gqXr7AAqlMAoBofKF9p6jh1DXWHtJhBrmJ6VYNFP2jP9H+E29fnMbm8MxCOQoFS9Ru
- AcflQLLg2fL+Encqd+MSMBt6fXL8lO0dYOr5mfU0Rpq6f17+V6nuWGMQnOfbFSL/xcNL
- G5b/YWDQbg6NP3mPit86n+Q1vWbFu0nkuW0bLH1xeYznPuJdRjHNiPPpqg2AZoeCYs0N
- 2C00JqgE3zNTIgH3VwaLhwxvCSkUAuioQYUPuTbRQK0Bjo4wvWL0T81Aow6QgZh7loh6
- 73TJibPlkws6R1TgkifEuuHNWx02mFX6wI2FfgCv9lIIDCbe1pdPcwBp/4OT9ki/k3Zt
- 20yg==
+ bh=qX/ouYGIanFoVN5c4hQ+DriYI2uuSYLP1IPJJSmT3yc=;
+ b=Ipw2XOb8X0N4OmiAaPU2E+vaUojQWWtMuHk7wxPoR19QIS0/ESklXjYmKxMu76zi5B
+ UQihqs5GYKnTdBd4SHyKsA0rQa8db1kDjWGtfKHlEzn4Lr1T6+2/tvTYDPDUCi6+SrZ2
+ 2nsoFONs7szqztyW0Vgi+n1C8BCKUR2YI5jGxWkgJBdshS7hfG2qtjM796HnDmEe95Uh
+ dz5mrxDlJpq1Ctz5qA1QQyqOsXoA6CJI/jHdCYegXVl/dCJjDrE02DHTH8j2IYNS0ygu
+ EKqHnHM9NMIBTW4uaizmVK9t+HK2RFxnR0E2byfvS4lTJWJBtESXvkneORtDX4blVjSA
+ 00rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706684949; x=1707289749;
+ d=1e100.net; s=20230601; t=1706685189; x=1707289989;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zpc4cL3kzvl8tTCs9w7lKB+yt7W9tMR4Ryk7kizs/Os=;
- b=LANJAM5LeOFHaglBJN1Mae/Ke8rW8k+LkgEN8OI4oXBrVW+MepO/FXiXbKwJOB5ZI/
- lSPnsYQ1jM6bri3Xta/bFoUhlwrnglkUCR/cFFbTOZrtiD78AG1868i+QSNGDsGekCIA
- YBX3CkoDBdVpn70e1cO9KDFN+cJNtS3HZthhR/f0XO52fqarzFceE4XBaERCFY2JOGlv
- lvSsJp2VwmxWoM/ibWjkiZmUfexxh8fiNSUdaOIFr+iVPnUYJ+SiepkW798v+Cc5ANj0
- +Ogf0Nd4LHp/KVkCd2mMo9N6iBHj6uhRCuYYufVU12rV1v0ErRB6zLX15AnGp6bUwbWF
- oGJA==
-X-Gm-Message-State: AOJu0YzbhC5UXyKb5NOu4R5N8ZaeyQRR+h4k6nNaU+F0FAaYalzxs6Ey
- Ly6p6SPtEU9GgDwPWUOVeeZXdRiF7cFhRk8uEoxwzCTquht9OgOEffaQEaSRsoy10dmh4poK7EY
- KEgfe0g0VdxSrj5n9nP+GBWiBnik=
-X-Google-Smtp-Source: AGHT+IGVHaSthsluYm65axoqNSpav0OKFXzGhO5k5qvdnqMdLF0ueB6JTqOMQWzPPvvaoeMr+BLmBOK4Hoko80JBnpg=
-X-Received: by 2002:a05:622a:54e:b0:42a:5150:3e46 with SMTP id
- m14-20020a05622a054e00b0042a51503e46mr934594qtx.47.1706684949356; Tue, 30 Jan
- 2024 23:09:09 -0800 (PST)
+ bh=qX/ouYGIanFoVN5c4hQ+DriYI2uuSYLP1IPJJSmT3yc=;
+ b=L6VvQDvRlVMf6uAV+KPlW5clPA/st1DdGUZmEk0TP8sjvK71m1tk2jpzhtdYfy6P0B
+ rIDpJhVd+Bn3OLSoACFNROqiK7kJBEVjvSmbZY+eLlQSpgPb7tuWxNiZylFoKceLDC/U
+ Xl/gdZ68PO8tXGt6/mlf3jh9albMB0YzbbTnQU0gnmSvqxco8Aby+H/Gprv81CTzdq6i
+ CnzaoWdivU2l9Zb3F75WtuIw+PxFI7iL44JvNYXxmQtF3nDKp3XCkkZqUxCBLE7agnyh
+ oE8cBeU8gsIN3GAHGDp1g8i5JSQGYQQu0eX/EeGO25sHryjgx2vtFEL2ayemJwBtRnYy
+ Qhlw==
+X-Gm-Message-State: AOJu0Yx8xElhS8K7IYMtXFC+pQ2JZkZe5FQi5TylT0b5xfderUDlECDQ
+ 44yOMSpW7fZbwyavrtPb8u5kS4OEAjuvVDAegD9eNbpssNJW6ThTh0RzXntGMHl61ZtAkHUsSn6
+ Lud8kNBHhrcMCbIQocHPZfg1vG2U=
+X-Google-Smtp-Source: AGHT+IGS/s36iEpp23cyCmH0pRs6ruCDDo4MboP7SFPTFed4gioxfTpBIj9v77usL5mcmNIxncF2lc4qjU+mzv8eTU4=
+X-Received: by 2002:ac8:5bc1:0:b0:42a:75dc:6eca with SMTP id
+ b1-20020ac85bc1000000b0042a75dc6ecamr3983904qtb.44.1706685188859; Tue, 30 Jan
+ 2024 23:13:08 -0800 (PST)
 MIME-Version: 1.0
 References: <20240130234840.53122-1-dongwon.kim@intel.com>
- <20240130234840.53122-2-dongwon.kim@intel.com>
-In-Reply-To: <20240130234840.53122-2-dongwon.kim@intel.com>
+ <20240130234840.53122-3-dongwon.kim@intel.com>
+In-Reply-To: <20240130234840.53122-3-dongwon.kim@intel.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 31 Jan 2024 11:08:57 +0400
-Message-ID: <CAJ+F1CLzVDfCdy9XUGxAf1DN=ert+9JDs3Sq1HYve4Bdy7mFHw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ui/gtk: skip drawing guest scanout when associated VC
- is invisible
+Date: Wed, 31 Jan 2024 11:12:57 +0400
+Message-ID: <CAJ+F1CKH6oWkvN44de_FT0hG5vKd8pKapn62OM+DfmQggnDcHg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] ui/gtk: set the ui size to 0 when invisible
 To: dongwon.kim@intel.com
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,158 +90,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dongwon
+Hi
 
 On Wed, Jan 31, 2024 at 3:50=E2=80=AFAM <dongwon.kim@intel.com> wrote:
 >
 > From: Dongwon Kim <dongwon.kim@intel.com>
 >
-> A new flag "visible" is added to show visibility status of the gfx consol=
-e.
-> The flag is set to 'true' when the VC is visible but set to 'false' when
-> it is hidden or closed. When the VC is invisible, drawing guest frames
-> should be skipped as it will never be completed and it would potentially
-> lock up the guest display especially when blob scanout is used.
+> UI size is set to 0 when the VC is invisible, which will prevent
+> the further scanout update by notifying the guest that the display
+> is not in active state. Then it is restored to the original size
+> whenever the VC becomes visible again.
 
-Can't it skip drawing when the widget is not visible instead?
-https://docs.gtk.org/gtk3/method.Widget.is_visible.html
+This can have unwanted results on multi monitor setups, such as moving
+windows or icons around on different monitors.
+
+Switching tabs or minimizing the display window shouldn't cause a
+guest display reconfiguration.
+
+What is the benefit of disabling the monitor here? Is it for
+performance reasons?
 
 >
 > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > Cc: Gerd Hoffmann <kraxel@redhat.com>
 > Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
->
 > Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 > ---
->  include/ui/gtk.h |  1 +
->  ui/gtk-egl.c     |  8 ++++++++
->  ui/gtk-gl-area.c |  8 ++++++++
->  ui/gtk.c         | 10 +++++++++-
->  4 files changed, 26 insertions(+), 1 deletion(-)
+>  ui/gtk.c | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
 >
-> diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-> index aa3d637029..2de38e5724 100644
-> --- a/include/ui/gtk.h
-> +++ b/include/ui/gtk.h
-> @@ -57,6 +57,7 @@ typedef struct VirtualGfxConsole {
->      bool y0_top;
->      bool scanout_mode;
->      bool has_dmabuf;
-> +    bool visible;
->  #endif
->  } VirtualGfxConsole;
->
-> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-> index 3af5ac5bcf..993c283191 100644
-> --- a/ui/gtk-egl.c
-> +++ b/ui/gtk-egl.c
-> @@ -265,6 +265,10 @@ void gd_egl_scanout_dmabuf(DisplayChangeListener *dc=
-l,
->  #ifdef CONFIG_GBM
->      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl);
->
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
->                     vc->gfx.esurface, vc->gfx.ectx);
->
-> @@ -363,6 +367,10 @@ void gd_egl_flush(DisplayChangeListener *dcl,
->      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl);
->      GtkWidget *area =3D vc->gfx.drawing_area;
->
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submit=
-ted) {
->          graphic_hw_gl_block(vc->gfx.dcl.con, true);
->          vc->gfx.guest_fb.dmabuf->draw_submitted =3D true;
-> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-> index 52dcac161e..04e07bd7ee 100644
-> --- a/ui/gtk-gl-area.c
-> +++ b/ui/gtk-gl-area.c
-> @@ -285,6 +285,10 @@ void gd_gl_area_scanout_flush(DisplayChangeListener =
-*dcl,
->  {
->      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl);
->
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submit=
-ted) {
->          graphic_hw_gl_block(vc->gfx.dcl.con, true);
->          vc->gfx.guest_fb.dmabuf->draw_submitted =3D true;
-> @@ -299,6 +303,10 @@ void gd_gl_area_scanout_dmabuf(DisplayChangeListener=
- *dcl,
->  #ifdef CONFIG_GBM
->      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl);
->
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
->      egl_dmabuf_import_texture(dmabuf);
->      if (!dmabuf->texture) {
 > diff --git a/ui/gtk.c b/ui/gtk.c
-> index 810d7fc796..02eb667d8a 100644
+> index 02eb667d8a..651ed3492f 100644
 > --- a/ui/gtk.c
 > +++ b/ui/gtk.c
-> @@ -1312,15 +1312,20 @@ static void gd_menu_quit(GtkMenuItem *item, void =
-*opaque)
->  static void gd_menu_switch_vc(GtkMenuItem *item, void *opaque)
->  {
+> @@ -1314,10 +1314,12 @@ static void gd_menu_switch_vc(GtkMenuItem *item, =
+void *opaque)
 >      GtkDisplayState *s =3D opaque;
-> -    VirtualConsole *vc =3D gd_vc_find_by_menu(s);
-> +    VirtualConsole *vc;
+>      VirtualConsole *vc;
 >      GtkNotebook *nb =3D GTK_NOTEBOOK(s->notebook);
+> +    GdkWindow *window;
 >      gint page;
 >
-> +    vc =3D gd_vc_find_current(s);
-> +    vc->gfx.visible =3D false;
-> +
-> +    vc =3D gd_vc_find_by_menu(s);
+>      vc =3D gd_vc_find_current(s);
+>      vc->gfx.visible =3D false;
+> +    gd_set_ui_size(vc, 0, 0);
+>
+>      vc =3D gd_vc_find_by_menu(s);
 >      gtk_release_modifiers(s);
->      if (vc) {
+> @@ -1325,6 +1327,9 @@ static void gd_menu_switch_vc(GtkMenuItem *item, vo=
+id *opaque)
 >          page =3D gtk_notebook_page_num(nb, vc->tab_item);
 >          gtk_notebook_set_current_page(nb, page);
 >          gtk_widget_grab_focus(vc->focus);
-> +        vc->gfx.visible =3D true;
+> +        window =3D gtk_widget_get_window(vc->gfx.drawing_area);
+> +        gd_set_ui_size(vc, gdk_window_get_width(window),
+> +                       gdk_window_get_height(window));
+>          vc->gfx.visible =3D true;
 >      }
 >  }
->
-> @@ -1350,6 +1355,7 @@ static gboolean gd_tab_window_close(GtkWidget *widg=
+> @@ -1356,6 +1361,7 @@ static gboolean gd_tab_window_close(GtkWidget *widg=
 et, GdkEvent *event,
->      VirtualConsole *vc =3D opaque;
 >      GtkDisplayState *s =3D vc->s;
 >
-> +    vc->gfx.visible =3D false;
+>      vc->gfx.visible =3D false;
+> +    gd_set_ui_size(vc, 0, 0);
 >      gtk_widget_set_sensitive(vc->menu_item, true);
 >      gd_widget_reparent(vc->window, s->notebook, vc->tab_item);
 >      gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(s->notebook),
-> @@ -1423,6 +1429,7 @@ static void gd_menu_untabify(GtkMenuItem *item, voi=
-d *opaque)
+> @@ -1391,6 +1397,7 @@ static gboolean gd_win_grab(void *opaque)
+>  static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+>  {
+>      GtkDisplayState *s =3D opaque;
+> +    GdkWindow *window;
+>      VirtualConsole *vc =3D gd_vc_find_current(s);
+>
+>      if (vc->type =3D=3D GD_VC_GFX &&
+> @@ -1429,6 +1436,10 @@ static void gd_menu_untabify(GtkMenuItem *item, vo=
+id *opaque)
 >          gd_update_geometry_hints(vc);
 >          gd_update_caption(s);
 >      }
-> +    vc->gfx.visible =3D true;
+> +
+> +    window =3D gtk_widget_get_window(vc->gfx.drawing_area);
+> +    gd_set_ui_size(vc, gdk_window_get_width(window),
+> +                   gdk_window_get_height(window));
+>      vc->gfx.visible =3D true;
 >  }
 >
->  static void gd_menu_show_menubar(GtkMenuItem *item, void *opaque)
-> @@ -2471,6 +2478,7 @@ static void gtk_display_init(DisplayState *ds, Disp=
-layOptions *opts)
->  #ifdef CONFIG_GTK_CLIPBOARD
->      gd_clipboard_init(s);
->  #endif /* CONFIG_GTK_CLIPBOARD */
-> +    vc->gfx.visible =3D true;
+> @@ -1753,7 +1764,9 @@ static gboolean gd_configure(GtkWidget *widget,
+>  {
+>      VirtualConsole *vc =3D opaque;
+>
+> -    gd_set_ui_size(vc, cfg->width, cfg->height);
+> +    if (vc->gfx.visible) {
+> +        gd_set_ui_size(vc, cfg->width, cfg->height);
+> +    }
+>      return FALSE;
 >  }
 >
->  static void early_gtk_display_init(DisplayOptions *opts)
 > --
 > 2.34.1
 >
