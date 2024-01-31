@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC74EC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 13:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20802C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 13:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVADk-00045j-8M; Wed, 31 Jan 2024 08:01:40 -0500
+	id 1rVAH1-0005sJ-Mu; Wed, 31 Jan 2024 08:05:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVADa-0003yE-EB
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 08:01:32 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVADY-0001kw-Bf
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 08:01:29 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-55f15762840so3262444a12.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 05:01:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706706083; x=1707310883; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mTDbCgLg1TvA38YsJrW2PZsvTSvfSNldlqZiOf1PCxU=;
- b=aeFctrtuNgSYdJydNi8yMcHAikW6n4LEx572e/Ag/ztIN+yX4YUyyrzrzP7ZVp9XZ4
- gRP8zt3KNw66zvx/vATLUtqlaExCmKzi5S4Rv1iSxhtVXf9fYelGeUYQ4q3+5hs1urwC
- xgmp2wfxgw+O0Lw7ibPAMZ5zUYf1dFzcl2vj1QOhLyyvphN3aRzgIL8yKa6GSu7JFfGC
- 5g0UwbbS2tfRIHZICTymjpRu3cF4i740W0DwJd66mNXIF5lm+GUMunrnxVd/MNdEr2zc
- u1qht7CdAacBfiv3CCyiT/cFkHEAbXWaJNt6tp2d5YZFHUiVf2cSRnD+BvBq0FR8CFGG
- b5Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706706083; x=1707310883;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mTDbCgLg1TvA38YsJrW2PZsvTSvfSNldlqZiOf1PCxU=;
- b=vjTfSbzVlJt4xK1mF92fffU4WVp/voVEZfPgL4LgH4jgXJhP1uffdBaHENVHs2eerf
- 9WM66k27pNXPO5gqf4TQsWAFPcNTydKfJuqOPrcQ2KgZh4Ozn9zSIIWmkcBu8tpSsNGv
- dWDpbD4+iDflskbfqNqo1QbMO0NzbRvELQvf9ODK5rlCRT3ABuKtKyP64L1mzdYgR0+P
- sbIQa7/Rd1CbM+IWSsigzldpCY/O6I+dhoRdnb3k/R2SQTnyIGVzcGg9vJQJY/b18bzq
- N/D0gAbJxZ/hEfREDD8C0Qf1xPZ8aarazOCySWpaO0dPX5lFbUEa8Ik5iC3ziXOJBZvr
- XwkA==
-X-Gm-Message-State: AOJu0YzcGIbYa0fCEcu2TSTox60gX95/RJTgsOhlMxgBkKMr5+5VvVUr
- W5sUewWyQMn0sPK0ySHGjyU5Gk5879A4WUNvbVDel9ihHpmmpSR84ZDuiuz8EHnnL1Wi7ETRfWE
- ehlk+NGSbrQqe4XYTWrV0AGGPP0hfXnt7a9mEEo1uPGvktURG
-X-Google-Smtp-Source: AGHT+IHoTKZtmlQBT2ncOHzIQOmF50uw73dqlGl0ntRpC1bK/cDGQiEGk9LuLfW3z+aWXEGhj6TRp0SwFI52aYrQ4ZY=
-X-Received: by 2002:aa7:c0cf:0:b0:55e:aca4:aab2 with SMTP id
- j15-20020aa7c0cf000000b0055eaca4aab2mr1090282edp.19.1706706083338; Wed, 31
- Jan 2024 05:01:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rVAGx-0005pG-1W
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 08:04:59 -0500
+Received: from mgamail.intel.com ([192.55.52.120])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rVAGt-0002Vz-3C
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 08:04:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706706294; x=1738242294;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=cDyS2Uz3gr0xtzndvP1kzwH1HdNB+UWPOpj/77gNgm4=;
+ b=Pt7yXfpIjrBVqhzObByTOrOG/IrhvIIA3eBP38/62Bxws6rrBwv8L+AE
+ onpJcFM/Z+1uNnUAU36x2YplcYw5bNoX7oIyU2NAa9wdWZdyqyoMSL5JC
+ KCddpXMLYgeUHfhAYiSL9xrKc4SxrhnvjnldkenHtwKjW+uvwuEV2RP/p
+ NA04JwDPrO5oMYyasd7bPWy9EflhLeHs4cVLU+m/e+IGn3y4zEGTiKe2S
+ DYPIjbBlTgtaTiEYSZd3feAbW35fz9KUflGK1IlwB4elmu9a3LQZdTkZH
+ U+SXWu3HCXm2WB8rDyBb2mmKIpJ8JwLljgfkshmioFGBUvCdyvo10fh+8 Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402444541"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="402444541"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jan 2024 05:04:40 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
+   d="scan'208";a="4030984"
+Received: from linux.bj.intel.com ([10.238.157.71])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jan 2024 05:04:39 -0800
+Date: Wed, 31 Jan 2024 21:01:38 +0800
+From: Tao Su <tao1.su@linux.intel.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, xiaoyao.li@intel.com,
+ lei4.wang@intel.com, qian.wen@intel.com
+Subject: Re: [PATCH v2 6/6] target/i386: Add new CPU model GraniteRapids
+Message-ID: <ZbpEsu88L/Q/GMWw@linux.bj.intel.com>
+References: <20230706054949.66556-1-tao1.su@linux.intel.com>
+ <20230706054949.66556-7-tao1.su@linux.intel.com>
+ <20240130111459.5718f484@imammedo.users.ipa.redhat.com>
+ <Zbj67L0dbtJSF3xm@linux.bj.intel.com>
+ <20240131133431.11e3c3f8@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-References: <8e838817-8b55-4275-a199-0562216d2d1d@tls.msk.ru>
-In-Reply-To: <8e838817-8b55-4275-a199-0562216d2d1d@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 31 Jan 2024 13:00:53 +0000
-Message-ID: <CAFEAcA_qxALhqHgd0zO6v6ufTaHvmiyyHuCDcHZdxRvbh+x_Hg@mail.gmail.com>
-Subject: Re: why various devices are loading x86 roms on non-x86 architectures?
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240131133431.11e3c3f8@imammedo.users.ipa.redhat.com>
+Received-SPF: none client-ip=192.55.52.120;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -55
+X-Spam_score: -5.6
+X-Spam_bar: -----
+X-Spam_report: (-5.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,24 +84,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 31 Jan 2024 at 10:29, Michael Tokarev <mjt@tls.msk.ru> wrote:
-> qemu-system-aarch64 -device virtio-vga
->
-> this one loads vgabios-virtio.bin.  Why?
-> Does this bios work on aarch64 (or any other non-x86 arch)?
-> Should there may be some conditional in this and similar places?
-> The same is true for x86 pxe roms and other x86-only roms.
+On Wed, Jan 31, 2024 at 01:34:31PM +0100, Igor Mammedov wrote:
+> On Tue, 30 Jan 2024 21:34:36 +0800
+> Tao Su <tao1.su@linux.intel.com> wrote:
+> 
+> > On Tue, Jan 30, 2024 at 11:14:59AM +0100, Igor Mammedov wrote:
+> > > On Thu,  6 Jul 2023 13:49:49 +0800
+> > > Tao Su <tao1.su@linux.intel.com> wrote:
+> > >   
+> > > > The GraniteRapids CPU model mainly adds the following new features
+> > > > based on SapphireRapids:
+> > > > - PREFETCHITI CPUID.(EAX=7,ECX=1):EDX[bit 14]
+> > > > - AMX-FP16 CPUID.(EAX=7,ECX=1):EAX[bit 21]  
+> > > 
+> > > it seems the list/definition is not complete, see
+> > > https://lore.kernel.org/kvm/20221125125845.1182922-1-jiaxi.chen@linux.intel.com/
+> > > and those feature bits were merged into QEMU earlier (a9ce107fd0f..d1a11115143)
+> > > 
+> > > were they omited intentionaly?
+> > >   
+> > 
+> > No, Jiaxi’s patch series includes new feature bits of both Granite Rapids(GNR)
+> > and Sierra Forest(SRF).
+> > 
+> > GNR contains:
+> > 	PREFETCHITI CPUID.(EAX=7,ECX=1):EDX[bit 14]
+> > 	AMX-FP16 CPUID.(EAX=7,ECX=1):EAX[bit 21]
+> > 
+> > SRF contains:
+> > 	CMPccXADD CPUID.(EAX=7,ECX=1):EAX[bit 7]
+> > 	AVX-IFMA CPUID.(EAX=7,ECX=1):EAX[bit 23]
+> > 	AVX-VNNI-INT8 CPUID.(EAX=7,ECX=1):EDX[bit 4]
+> > 	AVX-NE-CONVERT CPUID.(EAX=7,ECX=1):EDX[bit 5]
+> 
+> > What new platforms support the new features can be found in Table 1-2 of ISE[1].
+> > And the SRF CPU model we submitted[2] contains the four feature bits supported above.
+> Thanks,
+> 
+> for future patches: 
+> this kind of info should be part of commit message incl.
+> spec/doc title/revision it's coming from with a specific
+> chapter/table also mentioned. This way whoever reads it
+> later won't have to ask or spend time for searching where
+> it comes from.
+> 
+> And maybe also have a comment close to new code,
+> aka like we do for ACPI patches.
 
-For the same reason that if you plug a PCI card with an
-x86 BIOS ROM on it into a non-x86 system with a PCI bus,
-the x86 code is still on the ROM, even if it's never
-executed :-) Mostly the ROM is ignored and the guest kernel
-drives the hardware directly without it.
+Got it, thanks for the suggestion! This is really useful, I will do.
 
-For stuff we control like virtio-vga it would probably be
-helpful to be able to drop the requirement for the binary
-blob, just as a practical convenience for users.
+Thanks,
+Tao
 
-thanks
--- PMM
+>  
+> > [1] https://cdrdv2.intel.com/v1/dl/getContent/671368
+> > [2] https://lore.kernel.org/all/20231206131923.1192066-1-tao1.su@linux.intel.com/
+> > 
+> > Thanks,
+> > Tao
+> > 
+> 
 
