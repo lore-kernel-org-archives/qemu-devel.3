@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE4BC47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C49C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:19:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9Tu-0004tk-Tf; Wed, 31 Jan 2024 07:14:18 -0500
+	id 1rV9Yn-0007kW-6n; Wed, 31 Jan 2024 07:19:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV9Tt-0004sC-J3
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:14:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV9Yl-0007il-Ep
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:19:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV9Tq-0008Ac-La
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:14:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV9Yj-0000hG-PO
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:19:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706703253;
+ s=mimecast20190719; t=1706703556;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ixbf8MQxGmVaSKrYxOhBY7rmtk7uk2A4FZyVUvl/PXo=;
- b=MJiu6gx92Ns92NjMd34rnAbGy1geoJpmuTHQyAYJyGhl174PcYUOF/Gmt7u4MZpdS8jO2U
- gAMPeE+jblzVcLZ26cXlTAUJZdNMTiuKe264govU4oatUKaPnvh2K7YGNm7ms6YV5ECXJX
- 7XuKJQjhlAIa0PJu6hyjHT6ImxzVd4w=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FNYcmbvDcxFkEVurHVXl1lNjrqJzXSh4YpIjX2yl2HY=;
+ b=IVNzgB5mJQL4vVInMelUWyWSl9Tv+1OPLvlgi2Rp2OPDjHCAhsh1kAaKufbR7OTvWVA08t
+ 4NzRcpHuB6JjcvaAV6lcnlmljbsPRCcHsxmR8uYJntnuJwSdpPWdp/VA08+vXV7/jEYbBg
+ daKw1G6C0/2vp1COQU0YztaO3msd7IU=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-t270LYrwOn-b4Tadl7-PbA-1; Wed, 31 Jan 2024 07:14:11 -0500
-X-MC-Unique: t270LYrwOn-b4Tadl7-PbA-1
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-dc3645a6790so10006164276.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 04:14:11 -0800 (PST)
+ us-mta-50-9JACTMCONm63N8tFDtVjQA-1; Wed, 31 Jan 2024 07:19:15 -0500
+X-MC-Unique: 9JACTMCONm63N8tFDtVjQA-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7831aaa797aso131172885a.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 04:19:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706703251; x=1707308051;
+ d=1e100.net; s=20230601; t=1706703554; x=1707308354;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ixbf8MQxGmVaSKrYxOhBY7rmtk7uk2A4FZyVUvl/PXo=;
- b=GCy4/Ho5RPZizcc0YlBugGzuQYWcNQqtXPsYN7lVAJOMvCqcldXZdZtHRgtl3jb2Mc
- TxAzdQyE4SH6ONTDaXFqSarcXAyWhN/OJo1r5GrQW7uQI8zk17aH8b4oNhJl428fqR7S
- UWCS9k3LzEqJwJIBE2Wc0+XMpJW2PbeCTBYDL0ossyLAaXGDuWzfewWV/L0P+BKWbpp9
- SZxplsdMallZvi9A453LAZuyyXgCq/duM7scaBtGrj2AFYMIiibqQ6JiuVhvjwdavqfh
- SpZPDZtkUDh0PdSSCbMCn4aumcVlIn839/AJnRZgULHsn8OXAKKtTSyL30BGZtmpqpJU
- xs1g==
-X-Gm-Message-State: AOJu0YxrcLna1vCeP5zyGTAR1/fLOpbE+kBW7RdKzeT40SxBe4vH24ia
- Ot5wWuv2d7QZSxfYyvNqgCQUsgcNkLOU7QWFcGqW3BRcfgD9ERnc/mvYfGZfUELUC5+bWQq8yPM
- oT139sBmLcPrJTTBS9I99FLl4QV9r0nefJnzZpY1d2QopQ2KJ8b7c
-X-Received: by 2002:a25:b2a2:0:b0:dc6:adf5:5a8e with SMTP id
- k34-20020a25b2a2000000b00dc6adf55a8emr1337558ybj.32.1706703251248; 
- Wed, 31 Jan 2024 04:14:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGQIDKdu4hdad6Ung4+YYTCZCL6FnUQ2u7pJow0XJRkTbHAmsO6w+F7VaiPMp0IjGcVskJxcg==
-X-Received: by 2002:a25:b2a2:0:b0:dc6:adf5:5a8e with SMTP id
- k34-20020a25b2a2000000b00dc6adf55a8emr1337519ybj.32.1706703250875; 
- Wed, 31 Jan 2024 04:14:10 -0800 (PST)
+ bh=FNYcmbvDcxFkEVurHVXl1lNjrqJzXSh4YpIjX2yl2HY=;
+ b=hDpC24404bObP+9ABJkWpLcNsqWcGFgS+0/0N9muNhx+tEgJOLdo0gsl7uCL4ZUV6E
+ if+DIcJtk5EPgdGt+DOFdwKhV1bU4MT3GYCEn0Ml8AW/66GFBqt9KGbTSdNBmN8+QNyF
+ SmgHEhNraFQ1hyKdKFNFpU78cTD5o8VlEumzJ1J30cDBpQ16OAj1V0dL7TGPLtxWFdVS
+ 858K2xDKtdsH9WtC+X1HNDG9QRXvS7iKhd0q54Bhc4nCNU/y2XBcqtpAbuFwlScNGqB8
+ 7bJ0QZD8Y1qMdj3ImHHE7WVlleagrl09rb19IPrFs81WpK7uJW80cWi8pBXlrVEL6qZ7
+ eKlw==
+X-Gm-Message-State: AOJu0YywQG4jziYrHRJ7H6K88sfRFciNwfSWACijY6zEVHa6dPzcJDkW
+ JxGUMWRU2w7hGiYtoNcL85IbxJ+aX0OISAgyFDHJOPIiDa4b9txDmIkuoxCRKdDkbiiruVCYW4m
+ PxNt7h1xw//YIhPs24TXyKxTAjYfpmfa2G+bRCf0pLVJG7Rj4iExD
+X-Received: by 2002:a05:620a:4443:b0:785:4016:c954 with SMTP id
+ w3-20020a05620a444300b007854016c954mr249310qkp.14.1706703554535; 
+ Wed, 31 Jan 2024 04:19:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH37FXit2HxYvbVavxL2mHCz2bu8z5ez/7u5MJ8d/a7UoA4RlIkqzOnvjbzN00SvdeQoqKubg==
+X-Received: by 2002:a05:620a:4443:b0:785:4016:c954 with SMTP id
+ w3-20020a05620a444300b007854016c954mr249272qkp.14.1706703554251; 
+ Wed, 31 Jan 2024 04:19:14 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
  [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- ph15-20020a0562144a4f00b0068c50dec857sm2740939qvb.128.2024.01.31.04.13.58
+ bk1-20020a05620a1a0100b0078382946fb5sm4753628qkb.29.2024.01.31.04.19.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jan 2024 04:14:10 -0800 (PST)
-Message-ID: <d3f5d8a7-a224-4269-9f17-5f411266ba64@redhat.com>
-Date: Wed, 31 Jan 2024 13:13:55 +0100
+ Wed, 31 Jan 2024 04:19:13 -0800 (PST)
+Message-ID: <a71dfb65-be10-409f-87bf-fa4e71253b41@redhat.com>
+Date: Wed, 31 Jan 2024 13:18:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 29/47] hw/arm/stellaris: use qemu_find_nic_info()
+Subject: Re: [PATCH v4 33/47] hw/m68k/q800: use qemu_find_nic_info()
 Content-Language: en-US
-To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Beniamino Galvani <b.galvani@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -90,8 +91,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
- <gaosong@loongson.cn>, Thomas Huth <huth@tuxfamily.org>,
- Laurent Vivier <laurent@vivier.eu>, Huacai Chen <chenhuacai@kernel.org>,
+ <gaosong@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
@@ -112,11 +112,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
  Stefano Stabellini <sstabellini@kernel.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- David Woodhouse <dwmw@amazon.co.uk>
+ Max Filippov <jcmvbkbc@gmail.com>, David Woodhouse <dwmw@amazon.co.uk>
 References: <20240126173228.394202-1-dwmw2@infradead.org>
- <20240126173228.394202-30-dwmw2@infradead.org>
+ <20240126173228.394202-34-dwmw2@infradead.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -160,17 +158,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240126173228.394202-30-dwmw2@infradead.org>
+In-Reply-To: <20240126173228.394202-34-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 0
 X-Spam_score: -0.1
 X-Spam_bar: /
 X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -191,83 +189,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 26/01/2024 18.25, David Woodhouse wrote:
 > From: David Woodhouse <dwmw@amazon.co.uk>
 > 
-> Rather than just using qemu_configure_nic_device(), populate the MAC
-> address in the system-registers device by peeking at the NICInfo before
-> it's assigned to the device.
+> If a corresponding NIC configuration was found, it will have a MAC address
+> already assigned, so use that. Else, generate and assign a default one.
 > 
-> Generate the MAC address early, if there is no matching -nic option.
-> Otherwise the MAC address wouldn't be generated until net_client_init1()
-> runs.
+> Using qemu_find_nic_info() is simpler than the alternative of using
+> qemu_configure_nic_device() and then having to fetch the "mac" property
+> as a string and convert it.
 > 
 > Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   hw/arm/stellaris.c | 30 ++++++++++++++++++++++--------
->   1 file changed, 22 insertions(+), 8 deletions(-)
+>   hw/m68k/q800.c | 29 ++++++++++++++++-------------
+>   1 file changed, 16 insertions(+), 13 deletions(-)
 > 
-> diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-> index d18b1144af..34c5a86ac2 100644
-> --- a/hw/arm/stellaris.c
-> +++ b/hw/arm/stellaris.c
-> @@ -1028,7 +1028,8 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
->       DeviceState *ssys_dev;
->       int i;
->       int j;
-> -    const uint8_t *macaddr;
+> diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+> index b80a3b6d5f..fa7683bf76 100644
+> --- a/hw/m68k/q800.c
+> +++ b/hw/m68k/q800.c
+> @@ -48,6 +48,7 @@
+>   #include "hw/display/macfb.h"
+>   #include "hw/block/swim.h"
+>   #include "net/net.h"
+> +#include "net/util.h"
+>   #include "qapi/error.h"
+>   #include "qemu/error-report.h"
+>   #include "sysemu/qtest.h"
+> @@ -270,6 +271,8 @@ static void q800_machine_init(MachineState *machine)
+>       BusState *adb_bus;
+>       NubusBus *nubus;
+>       DriveInfo *dinfo;
 > +    NICInfo *nd;
 > +    MACAddr mac;
+>       uint8_t rng_seed[32];
 >   
->       MemoryRegion *sram = g_new(MemoryRegion, 1);
->       MemoryRegion *flash = g_new(MemoryRegion, 1);
-> @@ -1051,12 +1052,22 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
->        * need its sysclk output.
+>       linux_boot = (kernel_filename != NULL);
+> @@ -370,13 +373,6 @@ static void q800_machine_init(MachineState *machine)
+>   
+>       /* MACSONIC */
+>   
+> -    if (nb_nics > 1) {
+> -        error_report("q800 can only have one ethernet interface");
+> -        exit(1);
+> -    }
+> -
+> -    qemu_check_nic_model(&nd_table[0], "dp83932");
+> -
+>       /*
+>        * MacSonic driver needs an Apple MAC address
+>        * Valid prefix are:
+> @@ -386,14 +382,21 @@ static void q800_machine_init(MachineState *machine)
+>        * 08:00:07 Apple
+>        * (Q800 use the last one)
 >        */
->       ssys_dev = qdev_new(TYPE_STELLARIS_SYS);
-> -    /* Most devices come preprogrammed with a MAC address in the user data. */
-> -    macaddr = nd_table[0].macaddr.a;
-> +
-> +    /*
-> +     * Most devices come preprogrammed with a MAC address in the user data.
-> +     * Generate a MAC address now, if there isn't a matching -nic for it.
-> +     */
-> +    nd = qemu_find_nic_info("stellaris_enet", true, "stellaris");
+> -    nd_table[0].macaddr.a[0] = 0x08;
+> -    nd_table[0].macaddr.a[1] = 0x00;
+> -    nd_table[0].macaddr.a[2] = 0x07;
+> -
+>       object_initialize_child(OBJECT(machine), "dp8393x", &m->dp8393x,
+>                               TYPE_DP8393X);
+>       dev = DEVICE(&m->dp8393x);
+> -    qdev_set_nic_properties(dev, &nd_table[0]);
+> +    nd = qemu_find_nic_info(TYPE_DP8393X, true, "dp83932");
 > +    if (nd) {
+> +        qdev_set_nic_properties(dev, nd);
 > +        memcpy(mac.a, nd->macaddr.a, sizeof(mac.a));
 > +    } else {
 > +        qemu_macaddr_default_if_unset(&mac);
 > +    }
+> +    mac.a[0] = 0x08;
+> +    mac.a[1] = 0x00;
+> +    mac.a[2] = 0x07;
+
+Don't we have to change nd->macaddr.a[0 to 2] with this hard-coded 
+MAC-prefix, too?
+
+  Thomas
+
+> +    qdev_prop_set_macaddr(dev, "mac", mac.a);
 > +
->       qdev_prop_set_uint32(ssys_dev, "user0",
-> -                         macaddr[0] | (macaddr[1] << 8) | (macaddr[2] << 16));
-> +                         mac.a[0] | (mac.a[1] << 8) | (mac.a[2] << 16));
->       qdev_prop_set_uint32(ssys_dev, "user1",
-> -                         macaddr[3] | (macaddr[4] << 8) | (macaddr[5] << 16));
-> +                         mac.a[3] | (mac.a[4] << 8) | (mac.a[5] << 16));
-
-Out of scope of your patch, but I wonder why we didn't use 
-qdev_prop_set_macaddr() with an according MAC address property for this 
-device...?
-
->       qdev_prop_set_uint32(ssys_dev, "did0", board->did0);
->       qdev_prop_set_uint32(ssys_dev, "did1", board->did1);
->       qdev_prop_set_uint32(ssys_dev, "dc0", board->dc0);
-> @@ -1269,10 +1280,13 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
->       if (board->dc4 & (1 << 28)) {
->           DeviceState *enet;
->   
-> -        qemu_check_nic_model(&nd_table[0], "stellaris");
-> -
->           enet = qdev_new("stellaris_enet");
-> -        qdev_set_nic_properties(enet, &nd_table[0]);
-> +        if (nd) {
-> +            qdev_set_nic_properties(enet, nd);
-> +        } else {
-> +            qdev_prop_set_macaddr(enet, "mac", mac.a);
-> +        }
-> +
->           sysbus_realize_and_unref(SYS_BUS_DEVICE(enet), &error_fatal);
->           sysbus_mmio_map(SYS_BUS_DEVICE(enet), 0, 0x40048000);
->           sysbus_connect_irq(SYS_BUS_DEVICE(enet), 0, qdev_get_gpio_in(nvic, 42));
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+>       qdev_prop_set_uint8(dev, "it_shift", 2);
+>       qdev_prop_set_bit(dev, "big_endian", true);
+>       object_property_set_link(OBJECT(dev), "dma_mr",
+> @@ -414,7 +417,7 @@ static void q800_machine_init(MachineState *machine)
+>       prom = memory_region_get_ram_ptr(&m->dp8393x_prom);
+>       checksum = 0;
+>       for (i = 0; i < 6; i++) {
+> -        prom[i] = revbit8(nd_table[0].macaddr.a[i]);
+> +        prom[i] = revbit8(mac.a[i]);
+>           checksum ^= prom[i];
+>       }
+>       prom[7] = 0xff - checksum;
 
 
