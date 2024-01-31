@@ -4,61 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10DCDC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 06:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C03EC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 06:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV3yZ-00073d-Qz; Wed, 31 Jan 2024 01:21:35 -0500
+	id 1rV4HT-0001zB-0x; Wed, 31 Jan 2024 01:41:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rV3yX-00073B-Fu; Wed, 31 Jan 2024 01:21:33 -0500
-Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rV4HN-0001yu-Tj
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 01:41:02 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rV3yU-0004Ak-Qg; Wed, 31 Jan 2024 01:21:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1706682080; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=EeWh8n22ZvMxrk8hktTaOEr2sDarzcyjqxVNVugijLw=;
- b=j6zoGv9igZilBVcRKbfhzoP3NEZtCppPyAPExNhjer8WSM77ZB2U+fNAMRTLgS8hNO7swowgeLLLhujNEt2EcBXS4Ku4EtDujCXfDgzNVISgHcCzHJAFrQ/m4K5q/ionkgBMbj2V4qKk/pkVVTzLPJ9FsJmLqJtpfxWe2zV0uPk=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R841e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046050;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0W.iK23V_1706682078; 
-Received: from 30.198.0.179(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W.iK23V_1706682078) by smtp.aliyun-inc.com;
- Wed, 31 Jan 2024 14:21:19 +0800
-Message-ID: <83c3bd1c-d3e0-4a64-8101-5591efaabaa8@linux.alibaba.com>
-Date: Wed, 31 Jan 2024 14:21:18 +0800
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rV4HI-0007og-O2
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 01:40:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706683256; x=1738219256;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Utwv8x1yHG+Q/I4M1PRcqkm2D0AGQgovRIihzK8VJwY=;
+ b=KeQtaOClzycLwqBwDhSMaVbJEoM+y+6+41fpB10SBTCMj/xaVXIlQDLJ
+ 5KExFKgJwEUEyywGsMl/nDob+aZOZQAHW5USQWfrUVUIAvbYIycR9uTOO
+ wKUE/67N0HaoG22MF6sN7DQx1ASv3YH8OeIzsYv3F5+XHJecTLSsvOn5W
+ wTuMVGXn21safEhUYHVQfAbjq+t0NUldszqilBbnkAUk0UK5yh1H1wYrb
+ L8dYJcaCrUVpC9+v1+UaI92p/lYITOwzRuJbx7JH6q1QnERR+oqT1TWJa
+ oNmrCHvG/PmvyT1F83Pvhs01+Gog/yMJFDQ2dUXki5VnRZBfqEm/Jd1XP A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="10261330"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="10261330"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jan 2024 22:40:53 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
+   d="scan'208";a="3941556"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa005.jf.intel.com with ESMTP; 30 Jan 2024 22:40:50 -0800
+Date: Wed, 31 Jan 2024 14:54:19 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, kraxel@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
+Message-ID: <Zbnum6Mljz6ZoFvx@intel.com>
+References: <20240131024906.3920-1-anisinha@redhat.com>
+ <ZbnH9Yehg7bWY+ws@intel.com>
+ <CAK3XEhOOGFtGPr6h1YpSv54QeBBjVnASUk6k59842vCvBt0qLQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/riscv: Support xtheadmaee for thead-c906
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: Alistair.Francis@wdc.com, palmer@dabbelt.com, bin.meng@windriver.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com, qemu-riscv@nongnu.org,
- christoph.muellner@vrull.eu, bjorn@kernel.org
-References: <20240130111159.532-1-zhiwei_liu@linux.alibaba.com>
- <20240130111159.532-3-zhiwei_liu@linux.alibaba.com>
- <4345f1e4-6588-4f17-975d-b9349b07421c@linaro.org>
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <4345f1e4-6588-4f17-975d-b9349b07421c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+In-Reply-To: <CAK3XEhOOGFtGPr6h1YpSv54QeBBjVnASUk6k59842vCvBt0qLQ@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,33 +89,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jan 31, 2024 at 10:47:29AM +0530, Ani Sinha wrote:
+> Date: Wed, 31 Jan 2024 10:47:29 +0530
+> From: Ani Sinha <anisinha@redhat.com>
+> Subject: Re: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
+> 
+> On Wed, Jan 31, 2024 at 9:27 AM Zhao Liu <zhao1.liu@intel.com> wrote:
+> >
+> > Hi Ani,
+> >
+> > On Wed, Jan 31, 2024 at 08:19:06AM +0530, Ani Sinha wrote:
+> > > Date: Wed, 31 Jan 2024 08:19:06 +0530
+> > > From: Ani Sinha <anisinha@redhat.com>
+> > > Subject: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
+> > > X-Mailer: git-send-email 2.42.0
+> > >
+> > > Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
+> > > Linux kernel can support upto a maximum number of 4096 vCPUS when MAXSMP is
+> > > enabled in the kernel. At present, QEMU has been tested to correctly boot a
+> > > linux guest with 1856 vcpus and no more both with edk2 and seabios firmwares.
+> >
+> > About background, could I ask if there will be Host machines with so
+> > much CPUs? What are the benefits of vCPUs that far exceed the number
+> > of Host CPUs?
+> 
+> Yes HPE has SAP HANA host machines with large numbers of physical
+> cores and memory. For example QEMU was tested on a system with 3840
+> cores.
 
-On 2024/1/31 13:07, Richard Henderson wrote:
-> On 1/30/24 21:11, LIU Zhiwei wrote:
->> +riscv_csr_operations th_csr_ops[CSR_TABLE_SIZE] = {
->> +#if !defined(CONFIG_USER_ONLY)
->> +    [CSR_TH_MXSTATUS]     = { "th_mxstatus", th_maee_check, 
->> read_th_mxstatus,
->> + write_th_mxstatus},
->> +#endif /* !CONFIG_USER_ONLY */
->> +};
->
-> This is clearly the wrong data structure for a single entry in the array.
+Thanks! For such large system, does the vCPU need the CPU affinity, or
+just let them run free on the Host's physical cores?
 
-This array should have the same size with csr_ops so that we can 
-override custom CSR behavior directly. Besides, It will have other 
-entries in the near future.
+> 
+> >
+> > Thanks,
+> > Zhao
+> >
+> > > If an additional vcpu is added, that is with 1857 vcpus, edk2 currently fails
+> > > with the following error messages:
+> > >
+> > > AllocatePages failed: No 0x400 Pages is available.
+> > > There is only left 0x2BF pages memory resource to be allocated.
+> > > ERROR: Out of aligned pages
+> > > ASSERT /builddir/build/BUILD/edk2-ba91d0292e/MdeModulePkg/Core/DxeIplPeim/X64/VirtualMemory.c(814): BigPageAddress != 0
+> > >
+> > > This error exists only with edk2. Seabios currently can boot a linux guest
+> > > fine with 4096 vcpus. Since the lowest common denominator for a working VM for
+> > > both edk2 and seabios is 1856 vcpus, bump up the value max_cpus to 1856 for q35
+> > > machines versions 9 and newer. Q35 machines versions 8.2 and older continue
+> > > to support 1024 maximum vcpus as before for compatibility reasons.
+> > >
+> > > If KVM is not able to support the specified number of vcpus, QEMU would
+> > > return the following error messages:
+> > >
+> > > $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
 
-I see that I missed surround the th_maee_check, read_th_mxstatus, 
-write_mxstatus with !CONFIG_USER_ONLY.  But I don't understand why it is 
-wrong for a single entry in the array, at least the compiler think it 
-has no error.
+In practice, do users need to set the socket level topology and NUMA to
+be consistent with Host for this large system?
+
+NUMA settings are also related to topology, and it's better if NUMA is
+also covered.
 
 Thanks,
-Zhiwei
+Zhao
 
->
->
-> r~
->
+> > > qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> > > qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> > > Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
+> > >
+> > > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> > > Cc: Igor Mammedov <imammedo@redhat.com>
+> > > Cc: Michael S. Tsirkin <mst@redhat.com>
+> > > Cc: Julia Suvorova <jusual@redhat.com>
+> > > Cc: kraxel@redhat.com
+> > > Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> > > ---
+> > >  hw/i386/pc_q35.c | 3 ++-
+> > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > >
+> > > Changelog:
+> > > v2: bump up the vcpu number to 1856. Add failure messages from ekd2 in
+> > > the commit description.
+> > > See also RH Jira https://issues.redhat.com/browse/RHEL-22202
+> > >
+> > > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> > > index f43d5142b8..f9c4b6594d 100644
+> > > --- a/hw/i386/pc_q35.c
+> > > +++ b/hw/i386/pc_q35.c
+> > > @@ -375,7 +375,7 @@ static void pc_q35_machine_options(MachineClass *m)
+> > >      m->default_nic = "e1000e";
+> > >      m->default_kernel_irqchip_split = false;
+> > >      m->no_floppy = 1;
+> > > -    m->max_cpus = 1024;
+> > > +    m->max_cpus = 1856;
+> > >      m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+> > >      machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
+> > >      machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
+> > > @@ -396,6 +396,7 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
+> > >  {
+> > >      pc_q35_9_0_machine_options(m);
+> > >      m->alias = NULL;
+> > > +    m->max_cpus = 1024;
+> > >      compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+> > >      compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
+> > >  }
+> > > --
+> > > 2.42.0
+> > >
+> > >
+> >
+> 
+> 
 
