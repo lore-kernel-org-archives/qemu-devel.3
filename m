@@ -4,84 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74554C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 15:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 779D0C47DB3
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 15:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVCQM-0007Dd-FS; Wed, 31 Jan 2024 10:22:51 -0500
+	id 1rVCVP-0000HB-TS; Wed, 31 Jan 2024 10:28:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rVCQF-0007Bh-EH
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 10:22:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rVCQD-00073U-9z
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 10:22:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706714559;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVCVM-0000H2-2v
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 10:28:00 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVCVK-0007qq-4V
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 10:27:59 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 61BB01FB87;
+ Wed, 31 Jan 2024 15:27:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706714874; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NFS1hnVdyyBfAftv4YLN9PhOlVC7c4KyfDHCOLNRUwQ=;
- b=KYB8Otc5JU1z8G4RtxPNYuP36BZN0sWyYFqMegvuw9Ry8kTKPkiZH7G6J/kQu+3ShTkZyj
- 3iGNgRw2fcK1MZ9YIxfC1F+KzcNSHGdz4+TRlQZrBI3Dh6uD3V+ha4pZsXH9oEkml+Gz81
- kVH4+ERha7B/g9k5p+5MPxbw1a6H8XI=
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-o6ajJPmrO-KvAcMB211afg-1; Wed, 31 Jan 2024 10:22:37 -0500
-X-MC-Unique: o6ajJPmrO-KvAcMB211afg-1
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-46b17994ddbso1287682137.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 07:22:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706714557; x=1707319357;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NFS1hnVdyyBfAftv4YLN9PhOlVC7c4KyfDHCOLNRUwQ=;
- b=l2azKiwrVq2FvKOpSbDwOo1y7Av6bpsL+7S8HOG5GisKk/Csci+I9s+ytuoAnIGeSI
- mSwbxxMsW2jdeuxRY8L286SaYbdvQ3zf/KaNTjwnfzmjIPVmoHJnDYdG1IrvvFl1EB0w
- VGjCSy11PleiBnXejTtOAlU7Crds9Ceb2xWWK0cFizBJ8xkqjVAR+hhla8V7Mstjn0YE
- hiSFD3Y+7IRNqYbftK/WGRmrBXmTeGFwzPLlbq4zkHPNeqwUSWbQtOxSCxYS13QUa0o9
- ZebqMW9R4jdkbDi8zToDesaPfNyFdlLAQGuNsp2Chh9PjsFyb8kfyrX2iz2ne22dtrqZ
- T/Zw==
-X-Gm-Message-State: AOJu0YxzPq62lFiLdUWgqayGNJiwMzFhjhOUq2E3DoiM9jakrFUsPZ9l
- Rf4JOc9ADqig+2bhlHLLr6lYAuzDVrDFUuqf88QPjP3NLOnB++M12lx4BlDqjvhv5glVmJVOFIb
- dDrOiEKP/f1Ub6UyD5BTxHAJoMCMFgPEjByVSQUeBsfTqmnX4Uoc+/slblPSvwAwPKrdK0vybPZ
- EyIZKmz7nr70s6D+szSes0a0mEUUtA8Her7ig=
-X-Received: by 2002:a67:eec8:0:b0:469:4f37:8a10 with SMTP id
- o8-20020a67eec8000000b004694f378a10mr1615930vsp.11.1706714556875; 
- Wed, 31 Jan 2024 07:22:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF6eUqNuajVvDowBAVSfLk2z4yOlJgZVwM223RYdaBv/cIWoMRGuPM5nXiNL4MWlG01NjipI/s7neOt4ePF3KU=
-X-Received: by 2002:a67:eec8:0:b0:469:4f37:8a10 with SMTP id
- o8-20020a67eec8000000b004694f378a10mr1615917vsp.11.1706714556580; Wed, 31 Jan
- 2024 07:22:36 -0800 (PST)
+ bh=0+DNZ6I32eZMs6ZzKj2i0TW6Vj+d9c3gaQT//9d5U4w=;
+ b=0f08RQj6qIVwNFeWXSNcDoDLwjvsWV2tBmHBL7MQk42arzzZrx0S0/4pR2YmSy6nCWH7Bt
+ ZJDIafToyET8UYp0++H2+u1Fy81UHh6omqiHvERfUhXukpx901iWK6Zpa9V+z4ajtVUn9r
+ D20KNkthVQRX+I/x5xETjZcqOLJIC0o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706714874;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0+DNZ6I32eZMs6ZzKj2i0TW6Vj+d9c3gaQT//9d5U4w=;
+ b=I4oXRkuu1Y8nWbCqv76NndtxWPgsDeD+IeJ4AMpz20Vlk6AxEdA5X4frlIOck7sWPbA7X8
+ Upin68eHlH2PsWAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706714874; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0+DNZ6I32eZMs6ZzKj2i0TW6Vj+d9c3gaQT//9d5U4w=;
+ b=0f08RQj6qIVwNFeWXSNcDoDLwjvsWV2tBmHBL7MQk42arzzZrx0S0/4pR2YmSy6nCWH7Bt
+ ZJDIafToyET8UYp0++H2+u1Fy81UHh6omqiHvERfUhXukpx901iWK6Zpa9V+z4ajtVUn9r
+ D20KNkthVQRX+I/x5xETjZcqOLJIC0o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706714874;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0+DNZ6I32eZMs6ZzKj2i0TW6Vj+d9c3gaQT//9d5U4w=;
+ b=I4oXRkuu1Y8nWbCqv76NndtxWPgsDeD+IeJ4AMpz20Vlk6AxEdA5X4frlIOck7sWPbA7X8
+ Upin68eHlH2PsWAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E023D1347F;
+ Wed, 31 Jan 2024 15:27:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id H60hKPlmumWNIgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 31 Jan 2024 15:27:53 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: peterx@redhat.com, qemu-devel@nongnu.org
+Cc: Bryan Zhang <bryan.zhang@bytedance.com>, Prasad Pandit
+ <ppandit@redhat.com>, peterx@redhat.com, Yuan Liu <yuan1.liu@intel.com>,
+ Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH 04/14] migration/multifd: Postpone reset of MultiFDPages_t
+In-Reply-To: <20240131103111.306523-5-peterx@redhat.com>
+References: <20240131103111.306523-1-peterx@redhat.com>
+ <20240131103111.306523-5-peterx@redhat.com>
+Date: Wed, 31 Jan 2024 12:27:51 -0300
+Message-ID: <87wmrpjzew.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240129121312.1057281-1-pbonzini@redhat.com>
- <1ff4b856-352b-4eb0-944e-67ab75474be8@linaro.org>
- <CABgObfZ5r9DRjaxWZcOJ4u5+8zz8LmKtY562-6phu6FiYBV7bA@mail.gmail.com>
-In-Reply-To: <CABgObfZ5r9DRjaxWZcOJ4u5+8zz8LmKtY562-6phu6FiYBV7bA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 31 Jan 2024 15:25:41 +0100
-Message-ID: <CABgObfZeykpBx0fPLfa-11eUdM=qMY4mVNA_co1E4Wxq8TVsbA@mail.gmail.com>
-Subject: Re: [PATCH] mips: allow compiling out CONFIG_MIPS_ITU
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000e0e2e506103f724c"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0f08RQj6;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=I4oXRkuu
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-6.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: 61BB01FB87
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,71 +123,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e0e2e506103f724c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+peterx@redhat.com writes:
 
-Il lun 29 gen 2024, 14:31 Paolo Bonzini <pbonzini@redhat.com> ha scritto:
-
-> On Mon, Jan 29, 2024 at 2:30=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> <philmd@linaro.org> wrote:
-> >
-> > Hi Paolo,
-> >
-> > On 29/1/24 13:13, Paolo Bonzini wrote:
-> > > itu_reconfigure() is referenced from TCG, provide a stub if needed.
-> >
-> > s/itu_reconfigure/itc_reconfigure/
-> >
-> > What are you trying to achieve?
+> From: Peter Xu <peterx@redhat.com>
 >
-> I'm trying to build all MIPS boards one by one (to clean up
-> configs/devices/mips*).
+> Now we reset MultiFDPages_t object in the multifd sender thread in the
+> middle of the sending job.  That's not necessary, because the "*pages"
+> struct will not be reused anyway until pending_job is cleared.
 >
-
-Is this okay? It's not *required* in order to clean up
-configs/devices/mips*, but it's still a bug.
-
-Paolo
-
-
-> Paolo
+> Move that to the end after the job is completed, provide a helper to reset
+> a "*pages" object.  Use that same helper when free the object too.
 >
+> This prepares us to keep using p->pages in the follow up patches, where we
+> may drop p->normal[].
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
---000000000000e0e2e506103f724c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il lun 29 gen 2024, 14:31 Paolo Bonzini &lt;<a href=3D=
-"mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>&gt; ha scritto:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
-:1px #ccc solid;padding-left:1ex">On Mon, Jan 29, 2024 at 2:30=E2=80=AFPM P=
-hilippe Mathieu-Daud=C3=A9<br>
-&lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank" rel=3D"noreferre=
-r">philmd@linaro.org</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Hi Paolo,<br>
-&gt;<br>
-&gt; On 29/1/24 13:13, Paolo Bonzini wrote:<br>
-&gt; &gt; itu_reconfigure() is referenced from TCG, provide a stub if neede=
-d.<br>
-&gt;<br>
-&gt; s/itu_reconfigure/itc_reconfigure/<br>
-&gt;<br>
-&gt; What are you trying to achieve?<br>
-<br>
-I&#39;m trying to build all MIPS boards one by one (to clean up<br>
-configs/devices/mips*).<br></blockquote></div></div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">Is this okay? It&#39;s not *required* in order to cl=
-ean up configs/devices/mips*, but it&#39;s still a bug.</div><div dir=3D"au=
-to"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" =
-style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-Paolo<br>
-</blockquote></div></div></div>
+Just an observation about the code below.
 
---000000000000e0e2e506103f724c--
+> ---
+>  migration/multifd.c | 18 ++++++++++++++----
+>  1 file changed, 14 insertions(+), 4 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 2c98023d67..5633ac245a 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -172,6 +172,17 @@ void multifd_register_ops(int method, MultiFDMethods *ops)
+>      multifd_ops[method] = ops;
+>  }
+>  
+> +/* Reset a MultiFDPages_t* object for the next use */
+> +static void multifd_pages_reset(MultiFDPages_t *pages)
+> +{
+> +    /*
+> +     * We don't need to touch offset[] array, because it will be
+> +     * overwritten later when reused.
+> +     */
+> +    pages->num = 0;
+> +    pages->block = NULL;
 
+Having to do this at all is a huge overloading of this field. This not
+only resets it, but it also communicates to multifd_queue_page() that
+the previous payload has been sent. Otherwise, multifd_queue_page()
+wouldn't know whether the previous call to multifd_queue_page() has
+called multifd_send_pages() or if it has exited early. So this basically
+means "the block that was previously here has been sent".
+
+That's why we need the changed=true logic. A
+multifd_send_state->pages->block still has a few pages left to send, but
+because it's less than pages->allocated, it skips
+multifd_send_pages(). The next call to multifd_queue_page() already has
+the next ramblock. So we set changed=true, call multifd_send_pages() to
+send the remaining pages of that block and recurse into
+multifd_queue_page() once more to send the new block.
+
+> +}
+> +
+>  static int multifd_send_initial_packet(MultiFDSendParams *p, Error **errp)
+>  {
+>      MultiFDInit_t msg = {};
+> @@ -248,9 +259,8 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
+>  
+>  static void multifd_pages_clear(MultiFDPages_t *pages)
+>  {
+> -    pages->num = 0;
+> +    multifd_pages_reset(pages);
+>      pages->allocated = 0;
+> -    pages->block = NULL;
+>      g_free(pages->offset);
+>      pages->offset = NULL;
+>      g_free(pages);
+> @@ -704,8 +714,6 @@ static void *multifd_send_thread(void *opaque)
+>              p->flags = 0;
+>              p->num_packets++;
+>              p->total_normal_pages += p->normal_num;
+> -            p->pages->num = 0;
+> -            p->pages->block = NULL;
+>              qemu_mutex_unlock(&p->mutex);
+>  
+>              trace_multifd_send(p->id, packet_num, p->normal_num, flags,
+> @@ -732,6 +740,8 @@ static void *multifd_send_thread(void *opaque)
+>  
+>              stat64_add(&mig_stats.multifd_bytes,
+>                         p->next_packet_size + p->packet_len);
+> +
+> +            multifd_pages_reset(p->pages);
+>              p->next_packet_size = 0;
+>              qemu_mutex_lock(&p->mutex);
+>              p->pending_job--;
 
