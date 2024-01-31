@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD29C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5974C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV7Rc-0007De-Tb; Wed, 31 Jan 2024 05:03:49 -0500
+	id 1rV7QY-0005k3-Kc; Wed, 31 Jan 2024 05:02:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rV7QK-0005b2-Hk
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:02:29 -0500
+ id 1rV7Q2-0005Ac-Q7
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:02:12 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rV7QI-0008UC-Sh
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:02:28 -0500
+ id 1rV7Q0-0008RJ-Es
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:02:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706695347; x=1738231347;
+ t=1706695328; x=1738231328;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=fLMMs/SeWi/Vzb8lvrux8mGIdvidsDOqLQrh225b0Qg=;
- b=BqGoKyfo8vIlgoFAcXEIx37NkWBLNR3ro2JrLE5R88i2k5Zj7ihH0b7i
- zMk36sw5VnxHhp4Jd5jvcILpsJ5RxSEyZI/1jbCsKjTFVZeK+RKPoIRon
- 2SMZza9h5LUKx3e4OIdgvhiM8HqZ7pnMswWp1pwhSfoatufZ+0Gk3fnYH
- W0MdiIGCOn8m840By1UdDyd5/OqKEHPI5LxxV54rS1/AuXSlyCdVtO05X
- xShYWefhOwzVr3jtQGGibCEi+S58LeSK4orVl/Z6qNrFpkDQHl4O2EIHc
- /zT7xFMP+QzQafaJjgMv/XlsQgOoGSGsdftXn/Gg72vhMiZbB/FGdBx/W g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="25033127"
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="25033127"
+ bh=2cHMC5a5BJRlD/PsC4aspwTroLUP40TmuAMHURKso6g=;
+ b=mWcfZMqz2Ds/PIlc9RfoWVbGFoFKeJjXMUhQhdewGD+NOE337nt4Y9fX
+ eAuUkbtoydmORGW/qOQRf/kllL9Hd6Meiw0zrkkLiQFNfhTedr4E2jbAB
+ q2/mh9nx+sCVsquqQKaph2HkNG4W9sY2hjPWj7TJJXk0GSyhdU4+Qye+Z
+ 2brumRX6m8nsni5fNxlrzMH4E3m1UsVooL8FlgEyZvL3XlP7kn1KT058B
+ Ba7efKw344EqPJ+B7ojqgF3QxWcZ6vKCm8kbQ/dNXaLIZsJEiTsiFlksj
+ ZZGN7SPtA127Ol1Ge9K+J6EGi6wKV6pj8MTGQq33QtW9OaT0lFMcBWoCO Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="25033013"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="25033013"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 02:02:15 -0800
+ 31 Jan 2024 02:01:57 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
-   d="scan'208";a="4036401"
+   d="scan'208";a="4036273"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 31 Jan 2024 02:02:09 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 31 Jan 2024 02:01:52 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -57,10 +57,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v8 21/21] i386/cpu: Use CPUCacheInfo.share_level to encode
- CPUID[0x8000001D].EAX[bits 25:14]
-Date: Wed, 31 Jan 2024 18:13:50 +0800
-Message-Id: <20240131101350.109512-22-zhao1.liu@linux.intel.com>
+Subject: [PATCH v8 17/21] tests: Add test case of APIC ID for module level
+ parsing
+Date: Wed, 31 Jan 2024 18:13:46 +0800
+Message-Id: <20240131101350.109512-18-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
 References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
@@ -89,64 +89,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Zhuocheng Ding <zhuocheng.ding@intel.com>
 
-CPUID[0x8000001D].EAX[bits 25:14] NumSharingCache: number of logical
-processors sharing cache.
+After i386 supports module level, it's time to add the test for module
+level's parsing.
 
-The number of logical processors sharing this cache is
-NumSharingCache + 1.
-
-After cache models have topology information, we can use
-CPUCacheInfo.share_level to decide which topology level to be encoded
-into CPUID[0x8000001D].EAX[bits 25:14].
-
-Cc: Babu Moger <babu.moger@amd.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Yanan Wang <wangyanan55@huawei.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 ---
-Changes since v7:
- * Renamed max_processor_ids_for_cache() to max_thread_ids_for_cache().
- * Dropped Michael/Babu's ACKed/Tested tags since the code change.
- * Re-added Yongwei's Tested tag For his re-testing.
+ tests/unit/test-x86-topo.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-Changes since v3:
- * Explained what "CPUID[0x8000001D].EAX[bits 25:14]" means in the
-   commit message. (Babu)
-
-Changes since v1:
- * Used cache->share_level as the parameter in
-   max_processor_ids_for_cache().
----
- target/i386/cpu.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index fbfebdc2caf3..763de2b93c28 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -481,20 +481,12 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
-                                        uint32_t *eax, uint32_t *ebx,
-                                        uint32_t *ecx, uint32_t *edx)
- {
--    uint32_t num_sharing_cache;
-     assert(cache->size == cache->line_size * cache->associativity *
-                           cache->partitions * cache->sets);
+diff --git a/tests/unit/test-x86-topo.c b/tests/unit/test-x86-topo.c
+index f21b8a5d95c2..55b731ccae55 100644
+--- a/tests/unit/test-x86-topo.c
++++ b/tests/unit/test-x86-topo.c
+@@ -37,6 +37,7 @@ static void test_topo_bits(void)
+     topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 0);
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 0);
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 0);
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
  
-     *eax = CACHE_TYPE(cache->type) | CACHE_LEVEL(cache->level) |
-                (cache->self_init ? CACHE_SELF_INIT_LEVEL : 0);
--
--    /* L3 is shared among multiple cores */
--    if (cache->level == 3) {
--        num_sharing_cache = 1 << apicid_die_offset(topo_info);
--    } else {
--        num_sharing_cache = 1 << apicid_core_offset(topo_info);
--    }
--    *eax |= (num_sharing_cache - 1) << 14;
-+    *eax |= max_thread_ids_for_cache(topo_info, cache->share_level) << 14;
+     topo_info = (X86CPUTopoInfo) {1, 1, 1, 1};
+@@ -74,13 +75,22 @@ static void test_topo_bits(void)
+     topo_info = (X86CPUTopoInfo) {1, 1, 33, 2};
+     g_assert_cmpuint(apicid_core_width(&topo_info), ==, 6);
  
-     assert(cache->line_size > 0);
-     assert(cache->partitions > 0);
+-    topo_info = (X86CPUTopoInfo) {1, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {1, 6, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
++    topo_info = (X86CPUTopoInfo) {1, 7, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
++    topo_info = (X86CPUTopoInfo) {1, 8, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 3);
++    topo_info = (X86CPUTopoInfo) {1, 9, 30, 2};
++    g_assert_cmpuint(apicid_module_width(&topo_info), ==, 4);
++
++    topo_info = (X86CPUTopoInfo) {1, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 0);
+-    topo_info = (X86CPUTopoInfo) {2, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {2, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 1);
+-    topo_info = (X86CPUTopoInfo) {3, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {3, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
+-    topo_info = (X86CPUTopoInfo) {4, 1, 30, 2};
++    topo_info = (X86CPUTopoInfo) {4, 6, 30, 2};
+     g_assert_cmpuint(apicid_die_width(&topo_info), ==, 2);
+ 
+     /* build a weird topology and see if IDs are calculated correctly
+@@ -91,6 +101,7 @@ static void test_topo_bits(void)
+     topo_info = (X86CPUTopoInfo) {1, 1, 6, 3};
+     g_assert_cmpuint(apicid_smt_width(&topo_info), ==, 2);
+     g_assert_cmpuint(apicid_core_offset(&topo_info), ==, 2);
++    g_assert_cmpuint(apicid_module_offset(&topo_info), ==, 5);
+     g_assert_cmpuint(apicid_die_offset(&topo_info), ==, 5);
+     g_assert_cmpuint(apicid_pkg_offset(&topo_info), ==, 5);
+ 
 -- 
 2.34.1
 
