@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753F5C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B689EC48285
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV7sb-00056D-9v; Wed, 31 Jan 2024 05:31:41 -0500
+	id 1rV7sw-0005Kd-PI; Wed, 31 Jan 2024 05:32:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV7sY-000560-CW
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:31:38 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV7su-0005GE-PM
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:32:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV7sW-0005bm-JD
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:31:38 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV7sh-0005eU-7d
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:32:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706697095;
+ s=mimecast20190719; t=1706697106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=a9GwF5wr+IkbZjgGSvzhOPqUroVN/4alXq1fUUQ0DrU=;
- b=bVaQyuJD8ZkRskgSQvRYWUcsdgN/7/pR2S77jYr5JeNyWNlIIaXRl4pb1L7X7GPnbqppsd
- 0uYKY9RjZh9AT2QzeDxcJPwSY07DjEEYaQusMiVVR3z1/eTCid6Ecl9kxNHveetQPfkj+S
- fobFrOfwKi3ta2/g8hftVH46xhX0GAo=
+ bh=ElajTl0KQDTZfk5JDAySHNwJ/Mkh9oGo9gAC5F2I/Ns=;
+ b=Cbm17MMKtF5l3F47aM7k+ccOgJ8ZjcqWTk8BqQ4GcXR1/CK3ZJc84/DiKgPq/FISq310me
+ ui5sHzAwfpZ/Dcvs65dB+BVtuIxVSG+RZwVqqLdBqonxZsKh1TaMXcCWqMOlUwXhvUPLkH
+ d9Gzc60XITR+1lw1YxoDMJ68htqj+zE=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-z-phsNPsMR2m5wVdrVohHA-1; Wed,
- 31 Jan 2024 05:31:33 -0500
-X-MC-Unique: z-phsNPsMR2m5wVdrVohHA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-k1DTx1JcOzKHsvqamHt9AQ-1; Wed,
+ 31 Jan 2024 05:31:41 -0500
+X-MC-Unique: k1DTx1JcOzKHsvqamHt9AQ-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 79D343813F2D;
- Wed, 31 Jan 2024 10:31:32 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5522A2825BAD;
+ Wed, 31 Jan 2024 10:31:41 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.11])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B5752107BD;
- Wed, 31 Jan 2024 10:31:28 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9FD6F1BDB1;
+ Wed, 31 Jan 2024 10:31:37 +0000 (UTC)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Bryan Zhang <bryan.zhang@bytedance.com>,
  Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  peterx@redhat.com, Yuan Liu <yuan1.liu@intel.com>,
  Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
-Subject: [PATCH 03/14] migration/multifd: Drop MultiFDSendParams.quit,
- cleanup error paths
-Date: Wed, 31 Jan 2024 18:31:00 +0800
-Message-ID: <20240131103111.306523-4-peterx@redhat.com>
+Subject: [PATCH 05/14] migration/multifd: Drop MultiFDSendParams.normal[] array
+Date: Wed, 31 Jan 2024 18:31:02 +0800
+Message-ID: <20240131103111.306523-6-peterx@redhat.com>
 In-Reply-To: <20240131103111.306523-1-peterx@redhat.com>
 References: <20240131103111.306523-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -65,8 +64,7 @@ X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,243 +83,205 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Multifd send side has two fields to indicate error quits:
+This array is redundant when p->pages exists.  Now we extended the life of
+p->pages to the whole period where pending_job is set, it should be safe to
+always use p->pages->offset[] rather than p->normal[].  Drop the array.
 
-  - MultiFDSendParams.quit
-  - &multifd_send_state->exiting
+Alongside, the normal_num is also redundant, which is the same to
+p->pages->num.
 
-Merge them into the global one.  The replacement is done by changing all
-p->quit checks into the global var check.  The global check doesn't need
-any lock.
-
-A few more things done on top of this altogether:
-
-  - multifd_send_terminate_threads()
-
-    Moving the xchg() of &multifd_send_state->exiting upper, so as to cover
-    the tracepoint, migrate_set_error() and migrate_set_state().
-
-  - multifd_send_sync_main()
-
-    In the 2nd loop, add one more check over the global var to make sure we
-    don't keep the looping if QEMU already decided to quit.
-
-  - multifd_tls_outgoing_handshake()
-
-    Use multifd_send_terminate_threads() to set the error state.  That has
-    a benefit of updating MigrationState.error to that error too, so we can
-    persist that 1st error we hit in that specific channel.
-
-  - multifd_new_send_channel_async()
-
-    Take similar approach like above, drop the migrate_set_error() because
-    multifd_send_terminate_threads() already covers that.  Unwrap the helper
-    multifd_new_send_channel_cleanup() along the way; not really needed.
+This doesn't apply to recv side, because there's no extra buffering on recv
+side, so p->normal[] array is still needed.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/multifd.h |  2 --
- migration/multifd.c | 85 ++++++++++++++++++---------------------------
- 2 files changed, 33 insertions(+), 54 deletions(-)
+ migration/multifd.h      |  4 ----
+ migration/multifd-zlib.c |  7 ++++---
+ migration/multifd-zstd.c |  7 ++++---
+ migration/multifd.c      | 33 +++++++++++++--------------------
+ 4 files changed, 21 insertions(+), 30 deletions(-)
 
 diff --git a/migration/multifd.h b/migration/multifd.h
-index 35d11f103c..7c040cb85a 100644
+index 7c040cb85a..3920bdbcf1 100644
 --- a/migration/multifd.h
 +++ b/migration/multifd.h
-@@ -95,8 +95,6 @@ typedef struct {
-     QemuMutex mutex;
-     /* is this channel thread running */
-     bool running;
--    /* should this thread finish */
--    bool quit;
-     /* multifd flags for each packet */
-     uint32_t flags;
-     /* global number of generated multifd packets */
+@@ -122,10 +122,6 @@ typedef struct {
+     struct iovec *iov;
+     /* number of iovs used */
+     uint32_t iovs_num;
+-    /* Pages that are not zero */
+-    ram_addr_t *normal;
+-    /* num of non zero pages */
+-    uint32_t normal_num;
+     /* used for compression methods */
+     void *data;
+ }  MultiFDSendParams;
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 37ce48621e..100809abc1 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -116,17 +116,18 @@ static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
+  */
+ static int zlib_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
++    MultiFDPages_t *pages = p->pages;
+     struct zlib_data *z = p->data;
+     z_stream *zs = &z->zs;
+     uint32_t out_size = 0;
+     int ret;
+     uint32_t i;
+ 
+-    for (i = 0; i < p->normal_num; i++) {
++    for (i = 0; i < pages->num; i++) {
+         uint32_t available = z->zbuff_len - out_size;
+         int flush = Z_NO_FLUSH;
+ 
+-        if (i == p->normal_num - 1) {
++        if (i == pages->num - 1) {
+             flush = Z_SYNC_FLUSH;
+         }
+ 
+@@ -135,7 +136,7 @@ static int zlib_send_prepare(MultiFDSendParams *p, Error **errp)
+          * with compression. zlib does not guarantee that this is safe,
+          * therefore copy the page before calling deflate().
+          */
+-        memcpy(z->buf, p->pages->block->host + p->normal[i], p->page_size);
++        memcpy(z->buf, p->pages->block->host + pages->offset[i], p->page_size);
+         zs->avail_in = p->page_size;
+         zs->next_in = z->buf;
+ 
+diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+index b471daadcd..2023edd8cc 100644
+--- a/migration/multifd-zstd.c
++++ b/migration/multifd-zstd.c
+@@ -113,6 +113,7 @@ static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
+  */
+ static int zstd_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
++    MultiFDPages_t *pages = p->pages;
+     struct zstd_data *z = p->data;
+     int ret;
+     uint32_t i;
+@@ -121,13 +122,13 @@ static int zstd_send_prepare(MultiFDSendParams *p, Error **errp)
+     z->out.size = z->zbuff_len;
+     z->out.pos = 0;
+ 
+-    for (i = 0; i < p->normal_num; i++) {
++    for (i = 0; i < pages->num; i++) {
+         ZSTD_EndDirective flush = ZSTD_e_continue;
+ 
+-        if (i == p->normal_num - 1) {
++        if (i == pages->num - 1) {
+             flush = ZSTD_e_flush;
+         }
+-        z->in.src = p->pages->block->host + p->normal[i];
++        z->in.src = p->pages->block->host + pages->offset[i];
+         z->in.size = p->page_size;
+         z->in.pos = 0;
+ 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index b8d2c96533..2c98023d67 100644
+index 5633ac245a..8bb1fd95cf 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -372,6 +372,11 @@ struct {
-     MultiFDMethods *ops;
- } *multifd_send_state;
+@@ -90,13 +90,13 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+     MultiFDPages_t *pages = p->pages;
  
-+static bool multifd_send_should_exit(void)
-+{
-+    return qatomic_read(&multifd_send_state->exiting);
-+}
-+
- /*
-  * The migration thread can wait on either of the two semaphores.  This
-  * function can be used to kick the main thread out of waiting on either of
-@@ -409,7 +414,7 @@ static int multifd_send_pages(void)
-     MultiFDSendParams *p = NULL; /* make happy gcc */
-     MultiFDPages_t *pages = multifd_send_state->pages;
- 
--    if (qatomic_read(&multifd_send_state->exiting)) {
-+    if (multifd_send_should_exit()) {
-         return -1;
+-    for (int i = 0; i < p->normal_num; i++) {
+-        p->iov[p->iovs_num].iov_base = pages->block->host + p->normal[i];
++    for (int i = 0; i < pages->num; i++) {
++        p->iov[p->iovs_num].iov_base = pages->block->host + pages->offset[i];
+         p->iov[p->iovs_num].iov_len = p->page_size;
+         p->iovs_num++;
      }
  
-@@ -421,14 +426,11 @@ static int multifd_send_pages(void)
-      */
-     next_channel %= migrate_multifd_channels();
-     for (i = next_channel;; i = (i + 1) % migrate_multifd_channels()) {
--        p = &multifd_send_state->params[i];
--
--        qemu_mutex_lock(&p->mutex);
--        if (p->quit) {
--            error_report("%s: channel %d has already quit!", __func__, i);
--            qemu_mutex_unlock(&p->mutex);
-+        if (multifd_send_should_exit()) {
-             return -1;
-         }
-+        p = &multifd_send_state->params[i];
-+        qemu_mutex_lock(&p->mutex);
-         if (!p->pending_job) {
-             p->pending_job++;
-             next_channel = (i + 1) % migrate_multifd_channels();
-@@ -483,6 +485,16 @@ static void multifd_send_terminate_threads(Error *err)
+-    p->next_packet_size = p->normal_num * p->page_size;
++    p->next_packet_size = pages->num * p->page_size;
+     p->flags |= MULTIFD_FLAG_NOCOMP;
+     return 0;
+ }
+@@ -269,21 +269,22 @@ static void multifd_pages_clear(MultiFDPages_t *pages)
+ static void multifd_send_fill_packet(MultiFDSendParams *p)
  {
+     MultiFDPacket_t *packet = p->packet;
++    MultiFDPages_t *pages = p->pages;
      int i;
  
-+    /*
-+     * We don't want to exit each threads twice.  Depending on where
-+     * we get the error, or if there are two independent errors in two
-+     * threads at the same time, we can end calling this function
-+     * twice.
-+     */
-+    if (qatomic_xchg(&multifd_send_state->exiting, 1)) {
-+        return;
-+    }
-+
-     trace_multifd_send_terminate_threads(err != NULL);
+     packet->flags = cpu_to_be32(p->flags);
+     packet->pages_alloc = cpu_to_be32(p->pages->allocated);
+-    packet->normal_pages = cpu_to_be32(p->normal_num);
++    packet->normal_pages = cpu_to_be32(pages->num);
+     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+     packet->packet_num = cpu_to_be64(p->packet_num);
  
-     if (err) {
-@@ -497,26 +509,13 @@ static void multifd_send_terminate_threads(Error *err)
-         }
+-    if (p->pages->block) {
+-        strncpy(packet->ramblock, p->pages->block->idstr, 256);
++    if (pages->block) {
++        strncpy(packet->ramblock, pages->block->idstr, 256);
      }
  
--    /*
--     * We don't want to exit each threads twice.  Depending on where
--     * we get the error, or if there are two independent errors in two
--     * threads at the same time, we can end calling this function
--     * twice.
--     */
--    if (qatomic_xchg(&multifd_send_state->exiting, 1)) {
--        return;
--    }
--
-     for (i = 0; i < migrate_multifd_channels(); i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
+-    for (i = 0; i < p->normal_num; i++) {
++    for (i = 0; i < pages->num; i++) {
+         /* there are architectures where ram_addr_t is 32 bit */
+-        uint64_t temp = p->normal[i];
++        uint64_t temp = pages->offset[i];
  
--        qemu_mutex_lock(&p->mutex);
--        p->quit = true;
-         qemu_sem_post(&p->sem);
-         if (p->c) {
-             qio_channel_shutdown(p->c, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
-         }
--        qemu_mutex_unlock(&p->mutex);
+         packet->offset[i] = cpu_to_be64(temp);
      }
- }
+@@ -570,8 +571,6 @@ void multifd_save_cleanup(void)
+         p->packet = NULL;
+         g_free(p->iov);
+         p->iov = NULL;
+-        g_free(p->normal);
+-        p->normal = NULL;
+         multifd_send_state->ops->send_cleanup(p, &local_err);
+         if (local_err) {
+             migrate_set_error(migrate_get_current(), local_err);
+@@ -688,8 +687,8 @@ static void *multifd_send_thread(void *opaque)
  
-@@ -615,16 +614,13 @@ int multifd_send_sync_main(void)
-     for (i = 0; i < migrate_multifd_channels(); i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
+         if (p->pending_job) {
+             uint64_t packet_num = p->packet_num;
++            MultiFDPages_t *pages = p->pages;
+             uint32_t flags;
+-            p->normal_num = 0;
  
--        trace_multifd_send_sync_main_signal(p->id);
+             if (use_zero_copy_send) {
+                 p->iovs_num = 0;
+@@ -697,12 +696,7 @@ static void *multifd_send_thread(void *opaque)
+                 p->iovs_num = 1;
+             }
+ 
+-            for (int i = 0; i < p->pages->num; i++) {
+-                p->normal[p->normal_num] = p->pages->offset[i];
+-                p->normal_num++;
+-            }
 -
--        qemu_mutex_lock(&p->mutex);
--
--        if (p->quit) {
--            error_report("%s: channel %d has already quit", __func__, i);
--            qemu_mutex_unlock(&p->mutex);
-+        if (multifd_send_should_exit()) {
-             return -1;
-         }
+-            if (p->normal_num) {
++            if (pages->num) {
+                 ret = multifd_send_state->ops->send_prepare(p, &local_err);
+                 if (ret != 0) {
+                     qemu_mutex_unlock(&p->mutex);
+@@ -713,10 +707,10 @@ static void *multifd_send_thread(void *opaque)
+             flags = p->flags;
+             p->flags = 0;
+             p->num_packets++;
+-            p->total_normal_pages += p->normal_num;
++            p->total_normal_pages += pages->num;
+             qemu_mutex_unlock(&p->mutex);
  
-+        trace_multifd_send_sync_main_signal(p->id);
-+
-+        qemu_mutex_lock(&p->mutex);
-         p->packet_num = multifd_send_state->packet_num++;
-         p->flags |= MULTIFD_FLAG_SYNC;
-         p->pending_job++;
-@@ -634,6 +630,10 @@ int multifd_send_sync_main(void)
-     for (i = 0; i < migrate_multifd_channels(); i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
+-            trace_multifd_send(p->id, packet_num, p->normal_num, flags,
++            trace_multifd_send(p->id, packet_num, pages->num, flags,
+                                p->next_packet_size);
  
-+        if (multifd_send_should_exit()) {
-+            return -1;
-+        }
-+
-         qemu_sem_wait(&multifd_send_state->channels_ready);
-         trace_multifd_send_sync_main_wait(p->id);
-         qemu_sem_wait(&p->sem_sync);
-@@ -671,7 +671,7 @@ static void *multifd_send_thread(void *opaque)
-         qemu_sem_post(&multifd_send_state->channels_ready);
-         qemu_sem_wait(&p->sem);
+             if (use_zero_copy_send) {
+@@ -924,7 +918,6 @@ int multifd_save_setup(Error **errp)
+         p->name = g_strdup_printf("multifdsend_%d", i);
+         /* We need one extra place for the packet header */
+         p->iov = g_new0(struct iovec, page_count + 1);
+-        p->normal = g_new0(ram_addr_t, page_count);
+         p->page_size = qemu_target_page_size();
+         p->page_count = page_count;
  
--        if (qatomic_read(&multifd_send_state->exiting)) {
-+        if (multifd_send_should_exit()) {
-             break;
-         }
-         qemu_mutex_lock(&p->mutex);
-@@ -786,12 +786,7 @@ static void multifd_tls_outgoing_handshake(QIOTask *task,
- 
-     trace_multifd_tls_outgoing_handshake_error(ioc, error_get_pretty(err));
- 
--    migrate_set_error(migrate_get_current(), err);
--    /*
--     * Error happen, mark multifd_send_thread status as 'quit' although it
--     * is not created, and then tell who pay attention to me.
--     */
--    p->quit = true;
-+    multifd_send_terminate_threads(err);
-     multifd_send_kick_main(p);
-     error_free(err);
- }
-@@ -857,22 +852,6 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
-     return true;
- }
- 
--static void multifd_new_send_channel_cleanup(MultiFDSendParams *p,
--                                             QIOChannel *ioc, Error *err)
--{
--     migrate_set_error(migrate_get_current(), err);
--     /* Error happen, we need to tell who pay attention to me */
--     multifd_send_kick_main(p);
--     /*
--      * Although multifd_send_thread is not created, but main migration
--      * thread need to judge whether it is running, so we need to mark
--      * its status.
--      */
--     p->quit = true;
--     object_unref(OBJECT(ioc));
--     error_free(err);
--}
--
- static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
- {
-     MultiFDSendParams *p = opaque;
-@@ -889,7 +868,10 @@ static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
-     }
- 
-     trace_multifd_new_send_channel_async_error(p->id, local_err);
--    multifd_new_send_channel_cleanup(p, ioc, local_err);
-+    multifd_send_terminate_threads(local_err);
-+    multifd_send_kick_main(p);
-+    object_unref(OBJECT(ioc));
-+    error_free(local_err);
- }
- 
- static void multifd_new_send_channel_create(gpointer opaque)
-@@ -921,7 +903,6 @@ int multifd_save_setup(Error **errp)
-         qemu_mutex_init(&p->mutex);
-         qemu_sem_init(&p->sem, 0);
-         qemu_sem_init(&p->sem_sync, 0);
--        p->quit = false;
-         p->pending_job = 0;
-         p->id = i;
-         p->pages = multifd_pages_init(page_count);
 -- 
 2.43.0
 
