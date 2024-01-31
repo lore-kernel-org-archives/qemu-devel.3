@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D496C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 08:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FF9C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 09:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV6P1-0000q9-56; Wed, 31 Jan 2024 03:57:03 -0500
+	id 1rV6ui-0006md-31; Wed, 31 Jan 2024 04:29:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rV6Oz-0000q1-2V
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:57:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV6ue-0006mG-5N
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 04:29:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rV6Ov-0000gH-Km
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:57:00 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV6uY-0000Io-W5
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 04:29:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706691415;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1706693376;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=swtu9+GCamo+LAafHhqIYs0NU/TqcvXjInatdY9WTdg=;
- b=aecHblmSPhUKiCTFRRsKCCT24GiQdFbciWqHWdqQxE2mXKKH7Z8bXcqX6VSoGfOUxzB0mZ
- 0uFOl3rvTb8fSsTibyklsO8dlYV6hT+UYJ7vkGR/NAK0+IVmDSyOJSgf7o6hQUfFdgQcys
- JXnJ7m1h+3z9dVqYKisKcGcpszd420M=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-55VcQfPEMwGMBum9Id3bng-1; Wed,
- 31 Jan 2024 03:56:52 -0500
-X-MC-Unique: 55VcQfPEMwGMBum9Id3bng-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7FC6C2812FE1;
- Wed, 31 Jan 2024 08:56:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.72])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 09EC21121306;
- Wed, 31 Jan 2024 08:56:49 +0000 (UTC)
-Date: Wed, 31 Jan 2024 08:56:47 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, kraxel@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
-Message-ID: <ZboLOoFtyGc6AwzZ@redhat.com>
-References: <20240131024906.3920-1-anisinha@redhat.com>
- <ZbnH9Yehg7bWY+ws@intel.com>
- <CAK3XEhOOGFtGPr6h1YpSv54QeBBjVnASUk6k59842vCvBt0qLQ@mail.gmail.com>
- <Zbnum6Mljz6ZoFvx@intel.com>
+ bh=j5BgPZB3DcHE5xi3YsK0Kp2E7kwJsLWXuW/xZHvP6Fc=;
+ b=hhjNd7hm+5pgly01G3kAjpx+SofRJGkL4ABBPhA6EJoN2RwGTpZMVS0qbW1vImhceak7W1
+ 4Vc6bzxBQ4psJq9pnoXDtA1B/YXfyxJWCfwgz8pIJWdEmCulDzSox9hDwfqUHhoyV4EbrM
+ 8XzWX30MCunpRWOoWgWZ7/vAtc1kiiE=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-v0DjqaHDO16jnYcSNCdbZQ-1; Wed, 31 Jan 2024 04:29:35 -0500
+X-MC-Unique: v0DjqaHDO16jnYcSNCdbZQ-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5c683944ab0so1368771a12.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 01:29:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706693374; x=1707298174;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j5BgPZB3DcHE5xi3YsK0Kp2E7kwJsLWXuW/xZHvP6Fc=;
+ b=weOrs4a6rCAuL81+g8W0xsauRMc4dxxEGWxSRB2Pqm+ssWoRkPBnx4Qc+qzNxM8sMd
+ XvMB1c7YcnlYEXS4NSZ+liU0UgmOrRuk8dc1FDkv3+36Nlogxb/HNmahbl0VF7UXbusG
+ WQEyTcoaE0fyhahAW0T1aBtsAgLv1acJTbCmnsMVfKvnLnR1LYHUNrNNL5eck1Kcvt1l
+ UqXSTkULd3UFUTi6nwf0SgFmVPKmRTV11D5cD0rlabAczFhy5kf1aHFX5ma6HO1YPUzX
+ PcKopndNLZ+hzMe2w16REhnrrgt97P0xYTou+yG21E4colGNjXrMrvUujY+MPkgs2DUP
+ vJeQ==
+X-Gm-Message-State: AOJu0YyeCaIH4JYZPLCE6z9XzUgXpvexxSZEhYfmf3Nk20suL8jKeefj
+ nBKuB0zRVpMj5m90KSzc7KwDEWpp1AqQL3EJIcx68S3lRET98cZFgRlYzrC9lzGu0XkMXCDeSMD
+ FjolNm6l3QRPQp6BzNu70s/ZlT50I1uigI+9/5DR1B57arlabnOXq
+X-Received: by 2002:a05:6a20:6a1c:b0:19c:9da4:dc9e with SMTP id
+ p28-20020a056a206a1c00b0019c9da4dc9emr1148171pzk.1.1706693374415; 
+ Wed, 31 Jan 2024 01:29:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGk9K2eLNRWFpW2Oma/iKuosy3ecUSB48GkRzzxedObcaP0CtY2WwuLX9yGQDMWBo8KNBI2ag==
+X-Received: by 2002:a05:6a20:6a1c:b0:19c:9da4:dc9e with SMTP id
+ p28-20020a056a206a1c00b0019c9da4dc9emr1148156pzk.1.1706693374030; 
+ Wed, 31 Jan 2024 01:29:34 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ ph11-20020a17090b3bcb00b00295f1aa0a68sm471086pjb.7.2024.01.31.01.29.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jan 2024 01:29:33 -0800 (PST)
+Date: Wed, 31 Jan 2024 17:29:24 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Hao Xiang <hao.xiang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: Re: [PATCH 0/5] migration/multifd: Prerequisite cleanups for ongoing
+ work
+Message-ID: <ZboS9CPIuxIc9PTf@x1n>
+References: <20240126221943.26628-1-farosas@suse.de>
+ <PH7PR11MB5941BDAB9743C53A9E08CC3CA37E2@PH7PR11MB5941.namprd11.prod.outlook.com>
+ <ZbdVhLTLo5udNfeL@x1n> <87jznse211.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zbnum6Mljz6ZoFvx@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <87jznse211.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,62 +100,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 02:54:19PM +0800, Zhao Liu wrote:
-> On Wed, Jan 31, 2024 at 10:47:29AM +0530, Ani Sinha wrote:
-> > Date: Wed, 31 Jan 2024 10:47:29 +0530
-> > From: Ani Sinha <anisinha@redhat.com>
-> > Subject: Re: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
-> > 
-> > On Wed, Jan 31, 2024 at 9:27 AM Zhao Liu <zhao1.liu@intel.com> wrote:
-> > >
-> > > Hi Ani,
-> > >
-> > > On Wed, Jan 31, 2024 at 08:19:06AM +0530, Ani Sinha wrote:
-> > > > Date: Wed, 31 Jan 2024 08:19:06 +0530
-> > > > From: Ani Sinha <anisinha@redhat.com>
-> > > > Subject: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
-> > > > X-Mailer: git-send-email 2.42.0
-> > > >
-> > > > Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
-> > > > Linux kernel can support upto a maximum number of 4096 vCPUS when MAXSMP is
-> > > > enabled in the kernel. At present, QEMU has been tested to correctly boot a
-> > > > linux guest with 1856 vcpus and no more both with edk2 and seabios firmwares.
-> > >
-> > > About background, could I ask if there will be Host machines with so
-> > > much CPUs? What are the benefits of vCPUs that far exceed the number
-> > > of Host CPUs?
-> > 
-> > Yes HPE has SAP HANA host machines with large numbers of physical
-> > cores and memory. For example QEMU was tested on a system with 3840
-> > cores.
+On Mon, Jan 29, 2024 at 09:51:06AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Thanks! For such large system, does the vCPU need the CPU affinity, or
-> just let them run free on the Host's physical cores?
+> > On Mon, Jan 29, 2024 at 01:41:01AM +0000, Liu, Yuan1 wrote:
+> >> Because this change has an impact on the previous live migration 
+> >> With IAA Patch, does the submission of the next version needs 
+> >> to be submitted based on this change?
+> >
+> > I'd say hold off a little while until we're more certain on the planned
+> > interface changes, to avoid you rebase your code back and forth; unless
+> > you're pretty confident that this will be the right approach.
+> >
+> > I apologize on not having looked at any of the QAT/IAA compression / zero
+> > detection series posted on the list; I do plan to read them very soon too
+> > after Fabiano.  So I may not have a complete full picture here yet, please
+> > bare with me.
+> >
+> > If this series is trying to provide a base ground for all the efforts,
+> > it'll be great if we can thoroughly discuss here and settle an approach
+> > soon that will satisfy everyone.
+> 
+> Just a summary if it helps:
+> 
+> For compression work (IAA/QPL, QAT) the discussion is around having a
+> new "compression acceleration" option that enables the accelerators and
+> is complementary to the existing zlib compression method. We'd choose
+> those automatically based on availability and we'd make HW accelerated
+> compression produce a stream that is compatible with QEMU's zlib stream
+> so we could migrate between solutions.
+> 
+> For zero page work and zero page acceleration (DSA), the question is how
+> to fit zero page detection into multifd and whether we need a new hook
+> multifd_ops->zero_page_detect() (or similar) to allow client code to
+> provide it's own zero page detection methods. My worry here is that
+> teaching multifd to recognize zero pages is one more coupling to the
+> "pages" data type. Ideallly we'd find a way to include that operation as
+> a prepare() responsibility and the client code would deal with it.
 
-It depends what you are trying to achieve. The tradeoffs for guest
-placement on small systems still pretty much apply on large systems
-too. There may be factors which alter the balance for the tradeoffs,
-but the theme is still determined by what the guest owner requires
-and what the host owner wants to achieve.
+Thanks Fabiano.
 
-Strict host:guest CPU affinity will give the guest a deterministic
-amount of host CPU time, and lowest latencies. It is wasteful of
-host resources though, because if a guest CPU is idle, a different
-guests' CPU can't use that host CPU time. So letting guests run
-freely across host cores and overcommiting CPUs will maximize
-utilization but give non-deterministic timeslices & latency to
-guests.
+Since I'm preparing the old series to post for some fundamental cleanups
+around multifd, and when I'm looking around the code, I noticed that
+_maybe_ it'll also be eaiser to apply such a series if we can cleanup more
+things then move towards a clean base to add more accelerators.
 
+I agree many ideas in your this series, but I may address it slightly
+different (e.g., I want to avoid send(), but you can consider that in the
+fixed-ram series instead), also it'll be after some other cleanup I plan to
+give a stab at which is not yet covered in this series.  I hope I can add
+your "Co-developed-by" in some of the patches there.  If you haven't spend
+more time on new version of this series, please wait 1-2 days so I can post
+my thoughts.
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
