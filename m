@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14AB0C47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C6D1C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:41:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV1Ss-0003UI-A2; Tue, 30 Jan 2024 22:40:42 -0500
+	id 1rV1TJ-000426-VU; Tue, 30 Jan 2024 22:41:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rV1Sp-0003Tu-TH
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:40:39 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1rV1TI-000400-EA
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:41:08 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rV1So-0005Fd-8X
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:40:39 -0500
+ id 1rV1TE-0005Ju-TV
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:41:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706672438; x=1738208438;
+ t=1706672465; x=1738208465;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=KGHpZchEPOCHx/eWagvh8uHFJsiU2Zn5DZlw0pF/M54=;
- b=h0MBtEjme/9Hb+o+THFgLSnu/4KrRuKOEl1G5glIv70dtW+Z/sfdY7tK
- ExzMiFlHtu1hlangcnwEFPesUNyXlpqDoY3t0zV1BJETuaubra7Uw4kkt
- C95Iac9N3JTgu9nwkd50nGDzQqgbSXHXR0uaLt2lFozQ77QtXNG/NtJDN
- BOMmvVJDgQy5ulV2VHSdOjE9467OvsP3Q0CBQAXIC+juMjyi6Lo28nIka
- 4sDsrXaR3rWC2YlPT3evL3GeBdko6Ijr4/DxVWRZvFXVgvs4SrY2VUSYA
- dg3Iaxz5lyoLKylP1P0SpJJr8hhOrvbbMT4ovWjoAUuyzW5zcwBJFnHUZ Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="2420096"
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
-   d="scan'208";a="2420096"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jan 2024 19:40:32 -0800
+ bh=SsMF/XjkR9KbJrORHqb0wo7J/9pMVHTwKFoP7xTkUss=;
+ b=BaXMtUXbYjumxVUfo/TmjEWMD4TyehUpmIjLaKkcQJMQirWayi/b08HN
+ yT51/Znez2FMH3hiD0xQwQvlA5rjUlq1h/FO2QjxuqFsSwt30FPjYQr/u
+ s5hOd/BL+IeBeFJUHcSCLHTENROMLmsmS/Rou6/VRgPmBmjXhbdSvR41u
+ jJoH/wOz5rt8pzPAs/tO6Y4JOkZ9rjQpW/nrPLBHAU3wUCc2HJLxwsEDn
+ JgIhtIKtFTQk0HDrnsb1blxFUHMM1AtJSS9jqR3PDASbxCjAXcfDdaKcX
+ D9twoiRlpWjqTOA7oX4uuMkDUbLcjU9P1oDPMwDNUzr8PK83GnCylW/eS g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="21993531"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="21993531"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jan 2024 19:41:03 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
-   d="scan'208";a="4012490"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="30350445"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 30 Jan 2024 19:40:29 -0800
-Date: Wed, 31 Jan 2024 11:53:59 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 30 Jan 2024 19:41:00 -0800
+Date: Wed, 31 Jan 2024 11:54:29 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
@@ -55,15 +53,16 @@ Cc: qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 3/5] adb: Switch bus reset to 3-phase-reset
-Message-ID: <ZbnEVzTOHqsKjqvk@intel.com>
+Subject: Re: [PATCH 4/5] hw/s390x/css-bridge: switch virtual-css bus to
+ 3-phase-reset
+Message-ID: <ZbnEdejLyCTScl2r@intel.com>
 References: <20240119163512.3810301-1-peter.maydell@linaro.org>
- <20240119163512.3810301-4-peter.maydell@linaro.org>
+ <20240119163512.3810301-5-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240119163512.3810301-4-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240119163512.3810301-5-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -87,14 +86,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 19, 2024 at 04:35:10PM +0000, Peter Maydell wrote:
-> Date: Fri, 19 Jan 2024 16:35:10 +0000
+On Fri, Jan 19, 2024 at 04:35:11PM +0000, Peter Maydell wrote:
+> Date: Fri, 19 Jan 2024 16:35:11 +0000
 > From: Peter Maydell <peter.maydell@linaro.org>
-> Subject: [PATCH 3/5] adb: Switch bus reset to 3-phase-reset
+> Subject: [PATCH 4/5] hw/s390x/css-bridge: switch virtual-css bus to
+>  3-phase-reset
 > X-Mailer: git-send-email 2.34.1
 > 
-> Switch the ADB bus from using BusClass::reset to the Resettable
-> interface.
+> Switch the s390x virtual-css bus from using BusClass::reset to the
+> Resettable interface.
 > 
 > This has no behavioural change, because the BusClass code to support
 > subclasses that use the legacy BusClass::reset will call that method
@@ -102,41 +102,36 @@ On Fri, Jan 19, 2024 at 04:35:10PM +0000, Peter Maydell wrote:
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  hw/input/adb.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+>  hw/s390x/css-bridge.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 > 
-> diff --git a/hw/input/adb.c b/hw/input/adb.c
-> index 0f3c73d6d00..98f39b4281a 100644
-> --- a/hw/input/adb.c
-> +++ b/hw/input/adb.c
-> @@ -231,9 +231,9 @@ static const VMStateDescription vmstate_adb_bus = {
->      }
->  };
+> diff --git a/hw/s390x/css-bridge.c b/hw/s390x/css-bridge.c
+> index 15d26efc951..34639f21435 100644
+> --- a/hw/s390x/css-bridge.c
+> +++ b/hw/s390x/css-bridge.c
+> @@ -56,7 +56,7 @@ static void ccw_device_unplug(HotplugHandler *hotplug_dev,
+>      qdev_unrealize(dev);
+>  }
 >  
-> -static void adb_bus_reset(BusState *qbus)
-> +static void adb_bus_reset_hold(Object *obj)
+> -static void virtual_css_bus_reset(BusState *qbus)
+> +static void virtual_css_bus_reset_hold(Object *obj)
 >  {
-> -    ADBBusState *adb_bus = ADB_BUS(qbus);
-> +    ADBBusState *adb_bus = ADB_BUS(obj);
->  
->      adb_bus->autopoll_enabled = false;
->      adb_bus->autopoll_mask = 0xffff;
-> @@ -262,10 +262,11 @@ static void adb_bus_unrealize(BusState *qbus)
->  static void adb_bus_class_init(ObjectClass *klass, void *data)
+>      /* This should actually be modelled via the generic css */
+>      css_reset();
+> @@ -81,8 +81,9 @@ static char *virtual_css_bus_get_dev_path(DeviceState *dev)
+>  static void virtual_css_bus_class_init(ObjectClass *klass, void *data)
 >  {
 >      BusClass *k = BUS_CLASS(klass);
 > +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 >  
->      k->realize = adb_bus_realize;
->      k->unrealize = adb_bus_unrealize;
-> -    k->reset = adb_bus_reset;
-> +    rc->phases.hold = adb_bus_reset_hold;
+> -    k->reset = virtual_css_bus_reset;
+> +    rc->phases.hold = virtual_css_bus_reset_hold;
+>      k->get_dev_path = virtual_css_bus_get_dev_path;
 >  }
 >  
->  static const TypeInfo adb_bus_type_info = {
 > -- 
 > 2.34.1
 > 
