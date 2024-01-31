@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B59C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 17:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A8AC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 18:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVEg4-00045M-NK; Wed, 31 Jan 2024 12:47:12 -0500
+	id 1rVFCf-0001P3-Nz; Wed, 31 Jan 2024 13:20:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rVEfy-00044r-Up
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 12:47:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rVEfw-0007xc-PM
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 12:47:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706723223;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ILYztaESA9bZT1/pY1CVEJY9y26xbOdFAKe9DFiOR9A=;
- b=gOSyyaBG0yo8Ybrq3WoRmVSGSiLZoCYvuTGI8YpX4H/60zfdQwrBh1RGgjvwJhTaDfDEwT
- 22/r3neWITULpq/adpsyj1Xbr7IIVFlEM3pZa6zvV6SzDqqwuCiJAWGovlmdfjoZc3YRYR
- 18bwHjqjAvlkI8H5o5JOYFLjUSLhf6U=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-KXt_Lr9gN2i4CyO3Ercr_g-1; Wed, 31 Jan 2024 12:45:29 -0500
-X-MC-Unique: KXt_Lr9gN2i4CyO3Ercr_g-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-55f63fd55ffso557a12.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 09:45:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rVFCe-0001OQ-1U
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:20:52 -0500
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rVFCc-0008V1-7y
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:20:51 -0500
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-59a910a1265so50412eaf.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 10:20:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706725249; x=1707330049; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5nzSUsGtwDOpa5mVgavX+vD5ccBHZ1+xybNzom9gkDM=;
+ b=EJIsd+8HZYIo3ZzcLJN2NtyCbT7ahFU8NmRPuq5u2XVgb8wSvS6M3eYcEhagsQKtv6
+ a1ok40adgOEoGBGo+aRKH3kCmcw0LOp79wAXEuce9qVaWdQ0rSILJl2iZFprXB09ZZNh
+ SJZagUjd4zBH5tElopvjXztPcM0fnHPOtd2Y/Le1qfeYZgEpUOnP9U3Ht1hcIKO1GwSE
+ pn1XQTkH3JKHqEU3IS+aOThAkJwXHwyR4dR3l7tqSwMnjf8Cgxr4dRGdXRGBWeqqVNpx
+ woAsI3CbCTM2jO9CwaS+uogHjOmClg4qo3Ypi9Za8E5k0HcsuAiDMERf9N9rYnaAqTos
+ nPeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706723128; x=1707327928;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ILYztaESA9bZT1/pY1CVEJY9y26xbOdFAKe9DFiOR9A=;
- b=jKoYpNTJMt37Hhw+Jn/OF7EL4qgFV92yhtljEXoGivQQ87V5ysCPVhtt2SKjb8ncDl
- nRtHjdnjKbhXZx0tmQr5XM0XPytEPtFSxJVclKInyVS09q4Etq1tqilV/bAI2gI7+2Pk
- zEMHUpcK9V9qaf/MLz8n7VPX470AxgopQU3+HxyVVdimLQrgdSHKgTfYNjYy3su7b1gB
- xXaDbEdxuugK3jRcv7PX2DPurQhHM+35aKndoCQmXKtYmOzyHWc439+qIn+JKW7+U5X/
- Isdxu9bkcMpI+HyeutB+mj9K8c9kKoT09zCAOQTd3rfhziCQ7jtpijxn9XzUIWjoLC/M
- YEYw==
-X-Gm-Message-State: AOJu0YxbxKzmk6PiyQKNKJ9GcfFdfW3qmO2Eg8cpBuTuh1bSzJvymeRx
- 0MoCPS2RnaGIedBvu3Pi91ZVxVaaFot7jY9xLKp1TGYtYSYFMNx8cUWj2e+Oxq/1abMwNcxZxnj
- mRQAnHGXGNpUyW/yTR8pEU3xBudBjw8nahyywfDMTi+ul3X9yoMAH
-X-Received: by 2002:aa7:c457:0:b0:55e:ed79:6ff1 with SMTP id
- n23-20020aa7c457000000b0055eed796ff1mr1691637edr.20.1706723128818; 
- Wed, 31 Jan 2024 09:45:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEkug1/EqJ3+Ez1Ny0yrbNBi6CzZEhqyAP1w7WAIondAhkdR/FrQD4O4Zbb6OrB/xY8DdXT9g==
-X-Received: by 2002:aa7:c457:0:b0:55e:ed79:6ff1 with SMTP id
- n23-20020aa7c457000000b0055eed796ff1mr1691623edr.20.1706723128466; 
- Wed, 31 Jan 2024 09:45:28 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXIm0aYisu2dgm5OXJqIbVzGJKnKY+TUS/Wd1uiszjckS1SD00JOdKww/nmhhQdBNSluipvmBQBXrLG3dJTlxxUf5onWFeiiI+C7Ae1GxYSNqWy7KrpBOCn1VA=
-Received: from sgarzare-redhat (host-82-53-134-47.retail.telecomitalia.it.
- [82.53.134.47]) by smtp.gmail.com with ESMTPSA id
- k7-20020aa7c047000000b0055f3edfc3desm1843004edo.20.2024.01.31.09.45.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jan 2024 09:45:28 -0800 (PST)
-Date: Wed, 31 Jan 2024 18:45:26 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH] blkio: Respect memory-alignment for bounce buffer
- allocations
-Message-ID: <gyzwcv5zfvxr5hjo33kdspotoog4zchcinxufhabms3slf3c3q@blvlgunraoti>
-References: <20240131173140.42398-1-kwolf@redhat.com>
+ d=1e100.net; s=20230601; t=1706725249; x=1707330049;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5nzSUsGtwDOpa5mVgavX+vD5ccBHZ1+xybNzom9gkDM=;
+ b=f0zjto5spdISfRnyplnidAEmlLv+fdUZUemvF5h7cUrkw+dfJCxSWEKv+4fJcALzH8
+ x/4Z/bRWDP7nKdZgmfqynntLQFPZy/W7t6iFLdhAf2evCbBecAotvAIl7r07hg2HyK33
+ 2PqqJhNaiav8PdnO4+Hn0C2StUwtzJGUZ4a+RqVdwxT2xdbDLlaNwGQOg5p3kHLeM8+F
+ 3LNta4w/evUz8ATvchDR3SDfWT4gJu40/T8eyRlIH2Wk24e+O8jbeLZBtnbxKd4iVpEB
+ SIGlvEXBw9XQvppHfoH272b2erTzvwhFrvIOioKem+2zEC773KU6ZNW8plIlzafwsFCs
+ jlsA==
+X-Gm-Message-State: AOJu0YxWXVkZILqSkuKahUyyS9sTrjT8PtGThGl+WdaiS+G2znLOuKxw
+ X0Ii+J/CLdxWjM4FqSl0P/ljnqGxA/U74gdNb+lIo9pfgxgV8bs0dUZ/ZJo4wOtepRk8iS86sU6
+ ta+tJ5QMssv/aB0l2+V7IuuvZIqI=
+X-Google-Smtp-Source: AGHT+IHPFDaL5R0u4JVoG0cJRFQ7IuSEn5SqHC7WVPA7Bzuf/ThSIeBbOqrKSRxz+u0Q4VWFrMbLHfJVpBlzcRr+qOg=
+X-Received: by 2002:a4a:d018:0:b0:59a:e23:2831 with SMTP id
+ h24-20020a4ad018000000b0059a0e232831mr2276572oor.2.1706725248860; Wed, 31 Jan
+ 2024 10:20:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20240131173140.42398-1-kwolf@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <CAJSP0QWE8P-GTNmFPbHvvDLstBZgTZA7sFg0qz4u28kUFiCAHg@mail.gmail.com>
+ <mhng-125f45c7-5a14-4c91-af16-197a4ad2f517@palmer-ri-x1c9a>
+In-Reply-To: <mhng-125f45c7-5a14-4c91-af16-197a4ad2f517@palmer-ri-x1c9a>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 31 Jan 2024 13:20:36 -0500
+Message-ID: <CAJSP0QU8d6UdNgk25+BZoOy6OXFMAR9Ux=T445O8Ehir_UsTew@mail.gmail.com>
+Subject: Re: Call for GSoC/Outreachy internship project ideas
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>, dbarboza@ventanamicro.com, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, afaria@redhat.com, 
+ alex.bennee@linaro.org, eperezma@redhat.com, gmaglione@redhat.com, 
+ marcandre.lureau@redhat.com, rjones@redhat.com, sgarzare@redhat.com, 
+ imp@bsdimp.com, philmd@linaro.org, pbonzini@redhat.com, thuth@redhat.com, 
+ danielhb413@gmail.com, gaosong@loongson.cn, akihiko.odaki@daynix.com, 
+ shentey@gmail.com, npiggin@gmail.com, seanjc@google.com, 
+ Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=stefanha@gmail.com; helo=mail-oo1-xc35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +95,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 06:31:40PM +0100, Kevin Wolf wrote:
->blkio_alloc_mem_region() requires that the requested buffer size is a
->multiple of the memory-alignment property. If it isn't, the allocation
->fails with a return value of -EINVAL.
+On Wed, 31 Jan 2024 at 10:59, Palmer Dabbelt <palmer@dabbelt.com> wrote:
 >
->Fix the call in blkio_resize_bounce_pool() to make sure the requested
->size is properly aligned.
+> On Wed, 31 Jan 2024 06:39:25 PST (-0800), stefanha@gmail.com wrote:
+> > On Tue, 30 Jan 2024 at 14:40, Palmer Dabbelt <palmer@dabbelt.com> wrote:
+> >> On Mon, 15 Jan 2024 08:32:59 PST (-0800), stefanha@gmail.com wrote:
+> >> I'm not 100% sure this is a sane GSoC idea, as it's a bit open ended and
+> >> might have some tricky parts.  That said it's tripping some people up
+> >> and as far as I know nobody's started looking at it, so I figrued I'd
+> >> write something up.
+> >
+> > Hi Palmer,
+> > Your idea has been added:
+> > https://wiki.qemu.org/Google_Summer_of_Code_2024#RISC-V_Vector_TCG_Frontend_Optimization
+> >
+> > I added links to the vector extension specification and the RISC-V TCG
+> > frontend source code.
+> >
+> > Please add concrete tasks (e.g. specific optimizations the intern
+> > should implement and benchmark) by Feb 21st. Thank you!
 >
->I observed this problem with vhost-vdpa, which requires page aligned
->memory. As the virtio-blk device behind it still had 512 byte blocks, we
->got bs->bl.request_alignment = 512, but actually any request that needed
->a bounce buffer and was not aligned to 4k would fail without this fix.
+> OK.  We've got a few examples starting to filter in, I'll keep updating
+> the bug until we get some nice concrete reproducers for slowdows of
+> decent vectorized code.  Then I'll take a look and what's inside them,
+> with any luck it'll be simple to figure out which vector instructions
+> are commonly used and slow -- there's a bunch of stuff in the RVV
+> translation that doesn't map cleanly, so I'm guessing it'll be in there.
 >
->Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
->Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->---
-> block/blkio.c | 3 +++
-> 1 file changed, 3 insertions(+)
+> If that all goes smoothly then I think we should have a reasonably
+> actionable intern project, but LMK if you were thinking of something
+> else?
 
-Thanks for fixinig this!
+That's great!
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
->
->diff --git a/block/blkio.c b/block/blkio.c
->index 0a0a6c0f5f..b989617608 100644
->--- a/block/blkio.c
->+++ b/block/blkio.c
->@@ -89,6 +89,9 @@ static int blkio_resize_bounce_pool(BDRVBlkioState *s, int64_t bytes)
->     /* Pad size to reduce frequency of resize calls */
->     bytes += 128 * 1024;
->
->+    /* Align the pool size to avoid blkio_alloc_mem_region() failure */
->+    bytes = QEMU_ALIGN_UP(bytes, s->mem_region_alignment);
->+
->     WITH_QEMU_LOCK_GUARD(&s->blkio_lock) {
->         int ret;
->
->-- 
->2.43.0
->
-
+Thanks,
+Stefan
 
