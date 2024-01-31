@@ -4,122 +4,174 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93055C48285
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 07:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 626CAC4828C
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 08:46:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV5Q9-0006hs-O4; Wed, 31 Jan 2024 02:54:13 -0500
+	id 1rV6Do-0000gb-GL; Wed, 31 Jan 2024 03:45:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1rV5Pz-0006hG-4x; Wed, 31 Jan 2024 02:54:00 -0500
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV6Dm-0000fu-3M
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:45:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1rV5Pw-0003ws-DP; Wed, 31 Jan 2024 02:53:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
- t=1706687630; x=1707292430; i=deller@gmx.de;
- bh=OUlOUPanpqW+l3/HdWMeEiDAUtYzhO98jP1LIhhLvDo=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
- In-Reply-To;
- b=c27R/Wl3syKA2vaP55deotmv810GumD9ArsX/JgD8vEs3j/HnOvVC6c9wy63KKy2
- Zu03bJkOllsZLorhRvBDf/DEECnp8jbVT/E7KS8Bbgfk9G6jdrpLTEOkcr1+XhAmw
- rf3UvGOKTL4j4Zf3vQ3Gjw6/SJ/ZQB4ar+qi81/HxrYHrMI0ToIKw7RJbjksu+UZ7
- rk8D552iDrFoE+bosi3N813E3GqC4oOSTp/Br4ap12/1UlYy/nMjTfGc9pAOvK04I
- ShMCSP/LqaYOIbqvdMAQRxE2EMMMtS5eErTJFKGBofK2Wp/QxrBt3Pqjjr+9OL0cq
- v7rlvzUTHeR060C0kg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([94.134.150.68]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9uU-1rnAX13HL0-00IC3l; Wed, 31
- Jan 2024 08:53:49 +0100
-Message-ID: <c96f12a4-8a36-4d40-8fd9-54e4b0284ae6@gmx.de>
-Date: Wed, 31 Jan 2024 08:53:49 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV6Dk-0006mQ-FQ
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:45:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706690721;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ifQYwXA2Ikp4OabK9TkOB8XUJcM/314ZIMuHkhoHXeY=;
+ b=YRBkIhTzCNOF88wHwJj56paH96orjnRzu7VmLiIz4pu96LbLjVz3GerVuCTUxDs8805ihI
+ eBIGafHN2qhaijgMk5Q2S2a17+boX50mPH1bk8HmbI91JqS5lvlMOxzdYhd7D6spcBE6wc
+ A4GigHhzrucvVcwFyGOhp1jHbAljv8s=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-s353SBMgNeu1HpEULs9mOg-1; Wed, 31 Jan 2024 03:45:19 -0500
+X-MC-Unique: s353SBMgNeu1HpEULs9mOg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33ae7046cd0so1609263f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 00:45:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706690718; x=1707295518;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ifQYwXA2Ikp4OabK9TkOB8XUJcM/314ZIMuHkhoHXeY=;
+ b=NEjU0T60OeFlBD9zalP83jb9F7pTBeXWPiCAW3OBZiyh12IG65ku9dTGOkjMV9J/SJ
+ On5AdtjXBOeXkxCAT+F4xCpzIlBtE7NMClmRnISpBJvG2mDax/q2I7b8HGhMniwTqcEs
+ QbHwijzy9ULOXoRGNxIjf/ONW/fjc7flf3a9nik1e+FsisKu/RDhLQVmkIl+tFzf1N6H
+ SnrEzTwKgXUlGzKSimJOvfbK4c03CgLCXkFlCk8YxaHRPQMVl4k2S4YmVWA6UmG208jd
+ V7/bnQx6LnGvMbnSpCz/cfytyuJPu2gWZqdsUuL9V6FBpva8faUPWYBbnY6NgW+cWKlq
+ FI2w==
+X-Gm-Message-State: AOJu0YwKNgCvygy3IOSOABic3IzbsvaCDXsSx9Gd3UzxdXzZyJ5RphPR
+ B9r+Kuk5C8de4KtFXYdQhw4OEN/WhLV1ldHuHQTbGLguPMwR/csVTS9GeJfkYHb/EaunbZ893kt
+ 0vhr42CbG7KId/vIBrOTQUT1UVQh0PkXrhAMhaweW51FBJ6Z2Bsze
+X-Received: by 2002:adf:eb87:0:b0:33a:e76e:8b5c with SMTP id
+ t7-20020adfeb87000000b0033ae76e8b5cmr574279wrn.33.1706690718249; 
+ Wed, 31 Jan 2024 00:45:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFHvV4eZ/eD39tp6FjgcUWYLgCe23Kt35Pg4vDSQY29K+uLDjRqtFCQO1n5gSngyz6k8p0kFw==
+X-Received: by 2002:adf:eb87:0:b0:33a:e76e:8b5c with SMTP id
+ t7-20020adfeb87000000b0033ae76e8b5cmr574219wrn.33.1706690717925; 
+ Wed, 31 Jan 2024 00:45:17 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
+ [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
+ r15-20020adfda4f000000b00337d9a717bcsm12749310wrl.52.2024.01.31.00.45.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Jan 2024 00:45:17 -0800 (PST)
+Message-ID: <54c89e8d-98b6-4fc5-a383-fcb2aa719bf0@redhat.com>
+Date: Wed, 31 Jan 2024 09:45:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Make TARGET_NR_setgroups affect only the
- current thread
+Subject: Re: [PATCH v4 30/47] hw/arm: use qemu_configure_nic_device()
 Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-References: <20240131001851.15932-1-iii@linux.ibm.com>
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20240131001851.15932-1-iii@linux.ibm.com>
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
+ <gaosong@loongson.cn>, Thomas Huth <huth@tuxfamily.org>,
+ Laurent Vivier <laurent@vivier.eu>, Huacai Chen <chenhuacai@kernel.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jason Wang <jasowang@redhat.com>,
+ Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Bin Meng
+ <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
+ David Woodhouse <dwmw@amazon.co.uk>
+References: <20240126173228.394202-1-dwmw2@infradead.org>
+ <20240126173228.394202-31-dwmw2@infradead.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240126173228.394202-31-dwmw2@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:R3UZPvfQ4nOlIQPzcUqU/Sly+irgFiNzRmuZRu6RGm/bOIERkQl
- FK0aLbuYgMcL6zqHC7LfOoq8vtFD0kFXRlJGNhPn9YOzKV5/axy5Ss+7/dKvRBfyLZxKbNX
- m5qo6fptKeCQeI0jTdQ8k4JWnK3ymyiQuX1Q9s5QNysI9Xe8Frn53etcQFjCa7oaR6frGyt
- DqadoKqE2ghQL6vtOwVog==
-UI-OutboundReport: notjunk:1;M01:P0:oSqswmcm00E=;+RTEGTocZNKBLEppDJkBCEDDjiC
- xqN0swLVbouJEgQ34H0FMEG+j0iBujgnCp3pdAU7UV6yv8YgPBeDWjgZbMXeKy2Ot5aBT/f0T
- GuS/sf3HZ7DfkMzvycW3Pu8porTqOu0KC/QyX9HXD3Y8THWthVNHK41F9awxlEDus2zk3BbdP
- F2i7wTl2y6vUrTG7VdFdfFHjQiP4pa9B8UFqC/UxI80F35liHzKZJ27UnptXMqMyAUUr0szCY
- hvajUv2U6cOQPRRwJxBplKwjhKi3w9BWnZmgObvJliEr5IKHAE4glW1c5Mgsdk3SYjKXhFm5L
- xtoRBgOKH09p8SaKd0ax9xSm7Xp0m/yzzkLPLrpMKK3DzoMlWv/QiCxoibAdGMNJ+bHo3kEVW
- ggEQ2WW0sHVPe8TWegkBNDY3hXx/K/nNOBIXlA7I0w02dnVtsuDCVRcxs/qdgSh77nCCEVifA
- TRo+mWE2neKVJlFYZUTPzObiAANGi41Lb8D/DSAvJYSEoOTXKDg5zchvceji1cpmCGTj7iuYU
- dkbQ/1reTnnC1OFbBIJ/rJIhLJipc+W2LULyW4F5saI1AKj3Avy1g1leeFrOFQjL7z4rw9X4Q
- yEgMkgdCqwOpGeNZqx8UJZdxcXcxJSeCTiC0dX1yIN6ornJwtDIbfX6SgKuBJ0KZYp4jUVu/4
- 8n8ispyLnanP4y62Z9acbE9BxnRrC1ZDOB/rWM9R3xZjcHR4/bIBqspy/XPDzwF+CaYmlZEUS
- /VCdXZh7lAfZ1B72WgNYjMkluwkztCUgdenePsMzeVUaIMU4MwLktoTPZTnJe9IEbFLekhegr
- KolRXD4hZU8hrhBRHMUyJsAWaXkBMQPzhYClEa4UpRJJG7N1uOKqWzYJT7rA8TLAsWhdCyn3n
- BOUB0Dey03OvoLHAE/TUEi/Vu7vuaSX+7uZOGdXdAexwjdoFqdP3WVOjHw0o4l7k8osxFL8FT
- vJPKZf1yXfdvZEtyoVv0Av33yW4=
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,66 +187,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/31/24 01:18, Ilya Leoshkevich wrote:
-> Like TARGET_NR_setuid, TARGET_NR_setgroups should affect only the
-> calling thread, and not the entire process. Therefore, implement it
-> using a syscall, and not a libc call.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 19b84f3c35d7 ("added setgroups and getgroups syscalls")
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-
-Patch seems ok, but just out of interest, how did you noticed?
-
-Helge
-
-
+On 26/01/2024 18.25, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > ---
->   linux-user/syscall.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index ff245dade51..da15d727e16 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -7203,11 +7203,17 @@ static inline int tswapid(int id)
->   #else
->   #define __NR_sys_setresgid __NR_setresgid
->   #endif
-> +#ifdef __NR_setgroups32
-> +#define __NR_sys_setgroups __NR_setgroups32
-> +#else
-> +#define __NR_sys_setgroups __NR_setgroups
-> +#endif
->
->   _syscall1(int, sys_setuid, uid_t, uid)
->   _syscall1(int, sys_setgid, gid_t, gid)
->   _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
->   _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
-> +_syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
->
->   void syscall_init(void)
->   {
-> @@ -11772,7 +11778,7 @@ static abi_long do_syscall1(CPUArchState *cpu_en=
-v, int num, abi_long arg1,
->                   unlock_user(target_grouplist, arg2,
->                               gidsetsize * sizeof(target_id));
->               }
-> -            return get_errno(setgroups(gidsetsize, grouplist));
-> +            return get_errno(sys_setgroups(gidsetsize, grouplist));
->           }
->       case TARGET_NR_fchown:
->           return get_errno(fchown(arg1, low2highuid(arg2), low2highgid(a=
-rg3)));
-> @@ -12108,7 +12114,7 @@ static abi_long do_syscall1(CPUArchState *cpu_en=
-v, int num, abi_long arg1,
->                   }
->                   unlock_user(target_grouplist, arg2, 0);
->               }
-> -            return get_errno(setgroups(gidsetsize, grouplist));
-> +            return get_errno(sys_setgroups(gidsetsize, grouplist));
->           }
->   #endif
->   #ifdef TARGET_NR_fchown32
+>   hw/arm/mps2-tz.c     |  8 ++------
+>   hw/arm/msf2-soc.c    |  6 +-----
+>   hw/arm/musicpal.c    |  3 +--
+>   hw/arm/xilinx_zynq.c | 11 ++++-------
+>   hw/arm/xlnx-versal.c |  7 +------
+>   hw/arm/xlnx-zynqmp.c |  8 +-------
+>   6 files changed, 10 insertions(+), 33 deletions(-)
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
