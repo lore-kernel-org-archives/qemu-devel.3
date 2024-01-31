@@ -4,103 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF58C47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 21:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F5FEC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 21:50:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVIMK-0001qx-Qd; Wed, 31 Jan 2024 16:43:04 -0500
+	id 1rVISY-0004z4-N2; Wed, 31 Jan 2024 16:49:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVIMJ-0001qi-Gd
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:43:03 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVIMH-0006KA-PZ
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:43:03 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 122E01F889;
- Wed, 31 Jan 2024 21:43:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706737380; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fYQ8F31h9AEDAKiJ+TwiTiAo+Knnm/1JI/tBQzPcLak=;
- b=CFgRMwLRsR59JZ7kDK7jJKd2niGrgz1jNAYoBsaanUgnzsZCxd9UrGoFKuaj+EROta/d05
- Gx+GWa+PIxo9BhShypIdqZDvXRY+QguGwYMwLEovMQCugNP51KbMF2rNgn+JzXsYbD8gBw
- sduubuD3fIns5WTmN6cCGlsoxfilQGY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706737380;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fYQ8F31h9AEDAKiJ+TwiTiAo+Knnm/1JI/tBQzPcLak=;
- b=EycS1paWvJ/0hBTtZuXBA3u+UjpiKni79nKo9A8MHxK/KQteC+nxYwAxg+fBAQYBtoehRd
- YFiGXCquQdYfH4BA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706737380; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fYQ8F31h9AEDAKiJ+TwiTiAo+Knnm/1JI/tBQzPcLak=;
- b=CFgRMwLRsR59JZ7kDK7jJKd2niGrgz1jNAYoBsaanUgnzsZCxd9UrGoFKuaj+EROta/d05
- Gx+GWa+PIxo9BhShypIdqZDvXRY+QguGwYMwLEovMQCugNP51KbMF2rNgn+JzXsYbD8gBw
- sduubuD3fIns5WTmN6cCGlsoxfilQGY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706737380;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fYQ8F31h9AEDAKiJ+TwiTiAo+Knnm/1JI/tBQzPcLak=;
- b=EycS1paWvJ/0hBTtZuXBA3u+UjpiKni79nKo9A8MHxK/KQteC+nxYwAxg+fBAQYBtoehRd
- YFiGXCquQdYfH4BA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8C1BC1347F;
- Wed, 31 Jan 2024 21:42:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id dBzBFOO+umU0cQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 31 Jan 2024 21:42:59 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: peterx@redhat.com, qemu-devel@nongnu.org
-Cc: Bryan Zhang <bryan.zhang@bytedance.com>, Prasad Pandit
- <ppandit@redhat.com>, peterx@redhat.com, Yuan Liu <yuan1.liu@intel.com>,
- Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH 13/14] migration/multifd: Move header prepare/fill into
- send_prepare()
-In-Reply-To: <20240131103111.306523-14-peterx@redhat.com>
-References: <20240131103111.306523-1-peterx@redhat.com>
- <20240131103111.306523-14-peterx@redhat.com>
-Date: Wed, 31 Jan 2024 18:42:57 -0300
-Message-ID: <877cjpji1q.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rVISX-0004xM-G5
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:49:29 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rVISV-00084W-BM
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:49:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=PkAjUhH6VeffhCk4g8SmClnsfF20XGc9AVspgFjh6wk=; b=CmqQ1hlqzMkQLMq7Cq0u6mruQk
+ luEyn2SDMnVlsI6Tlm6QHhu4tlkiYQvG1DWWOk+ilUPI9TukwEmcOFwlfq9CgJkbdhtpXAC5clwLO
+ OMrjohyOoRK0QJxfr6cz56IhrMhN6c7tBmwDB7H63EvxNjmgdW+IiKY9I8u9YoIug3RHD/HardULE
+ MUlbAIXJI6x6Hs01Gb/8Xk6sFVaqXD5D+xYTiEOMAtN2P2fuSvBpqC4X/JXhkxOjEVyBihRnI8GYU
+ dQsEa0MH+036x0k38NpcRyug8f+gHLCqBW0dJP5CCg1yVI67W6+gnEH1LIXL5V4NrbqX64FBLiJj1
+ q7WbeMsVACna+xvU9eJQFy72FkYEZMqulxdDde+E+IeJ0+TDjCCk9urdSXat2ARKi9ry8xayxfJQl
+ VjLzNRx4pnbqL+wT847Jdws0HBHmxsaaccCthzS9T+KpOq8SKBwjW6xA6PhCHrDUVgzsTD1sn+qRZ
+ QQYQgl4WYEo5GF7CDa0pWfKL7pQrOCvUWPrn3Ked93noO1xLv1bA19jp9AkIzqz+bKgyTdDgJKtRk
+ KCQ1tKRbMsRnhJtGY/N9jyNARNDa5F04DYQdz7C6r7yWkmy4cUSPxZ/v0Ywnbb0Y46EBS0mST7a+0
+ 1nxw/R9q1pq2Irqrx6BgkcSJUvyUYdXVg7fD4dDMs=;
+Received: from [2a00:23c4:8bb2:1300:abd8:dbb4:d9a1:12c5]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rVIRn-0009Zg-Sk; Wed, 31 Jan 2024 21:48:47 +0000
+Message-ID: <b6ac778b-4a75-4c1d-812d-23e27f9a9b04@ilande.co.uk>
+Date: Wed, 31 Jan 2024 21:49:13 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-2.00 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-0.70)[83.32%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20231103173841.33651-1-richard.henderson@linaro.org>
+ <a96a571b-55b7-46b4-a793-bb405ef10467@linaro.org>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <a96a571b-55b7-46b4-a793-bb405ef10467@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:abd8:dbb4:d9a1:12c5
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 00/22] target/sparc: floating-point cleanup
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,38 +104,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-peterx@redhat.com writes:
+On 28/01/2024 06:49, Richard Henderson wrote:
 
-> From: Peter Xu <peterx@redhat.com>
->
-> This patch redefines the interfacing of ->send_prepare().  It further
-> simplifies multifd_send_thread() especially on zero copy.
->
-> Now with the new interface, we require the hook to do all the work for
-> preparing the IOVs to send.  After it's completed, the IOVs should be ready
-> to be dumped into the specific multifd QIOChannel later.
->
-> So now the API looks like:
->
->   p->pages ----------->  send_prepare() -------------> IOVs
->
-> This also prepares for the case where the input can be extended to even not
-> any p->pages.  But that's for later.
->
-> This patch will achieve similar goal of what Fabiano used to propose here:
->
-> https://lore.kernel.org/r/20240126221943.26628-1-farosas@suse.de
->
-> However the send() interface may not be necessary.  I'm boldly attaching a
+> On 11/4/23 03:38, Richard Henderson wrote:
+>> Major changes:
+>>
+>> (1) Get rid of the env->qt[01] temporaries and use TCGv_i128 for float128.
+>> (2) Perform ieee exception check within the helpers, before any writeback
+>>      to the floating point registers.
+>> (3) Split env->fsr into pieces to simplify update, especially compares.
+>>
+>>
+>> r~
+>>
+>>
+>> Based-on: 20231101041132.174501-1-richard.henderson@linaro.org
+>> ("[PATCH v2 00/21] target/sparc: Cleanup condition codes etc")
+> 
+> Ping.
+> 
+> Prerequisites are upstream, and it rebases cleanly on master.
+> For reference,
+> 
+>    https://gitlab.com/rth7680/qemu/-/commits/tgt-sparc-fp
+> 
+> 
+> r~
 
-So should I drop send() for fixed-ram as well? Or do you still want a
-separate layer just for send()?
+I've tested the above branch on my SPARC32 and SPARC64 images, and whilst I don't 
+think they particularly exercise FP instructions, I don't see any regressions so:
 
-> "Co-developed-by" for Fabiano.
->
-> Co-developed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+I'm happy for you to take this via tcg-next if that's easiest for you.
+
+>> Richard Henderson (22):
+>>    target/sparc: Use tcg_gen_qemu_{ld,st}_i128 for ASI_M_BCOPY
+>>    target/sparc: Use tcg_gen_qemu_{ld,st}_i128 for ASI_M_BFILL
+>>    target/sparc: Remove gen_dest_fpr_F
+>>    target/sparc: Introduce gen_{load,store}_fpr_Q
+>>    target/sparc: Inline FNEG, FABS
+>>    target/sparc: Use i128 for FSQRTq
+>>    target/sparc: Use i128 for FADDq, FSUBq, FMULq, FDIVq
+>>    target/sparc: Use i128 for FqTOs, FqTOi
+>>    target/sparc: Use i128 for FqTOd, FqTOx
+>>    target/sparc: Use i128 for FCMPq, FCMPEq
+>>    target/sparc: Use i128 for FsTOq, FiTOq
+>>    target/sparc: Use i128 for FdTOq, FxTOq
+>>    target/sparc: Use i128 for Fdmulq
+>>    target/sparc: Remove qt0, qt1 temporaries
+>>    target/sparc: Introduce cpu_get_fsr, cpu_put_fsr
+>>    target/split: Split ver from env->fsr
+>>    target/sparc: Clear cexc and ftt in do_check_ieee_exceptions
+>>    target/sparc: Merge check_ieee_exceptions with FPop helpers
+>>    target/sparc: Split cexc and ftt from env->fsr
+>>    target/sparc: Remove cpu_fsr
+>>    target/sparc: Split fcc out of env->fsr
+>>    target/sparc: Remove FSR_FTT_NMASK, FSR_FTT_CEXC_NMASK
+>>
+>>   target/sparc/cpu.h          |  39 +-
+>>   target/sparc/helper.h       | 116 ++----
+>>   linux-user/sparc/cpu_loop.c |   2 +-
+>>   linux-user/sparc/signal.c   |  14 +-
+>>   target/sparc/cpu.c          |  32 +-
+>>   target/sparc/fop_helper.c   | 510 +++++++++++++----------
+>>   target/sparc/gdbstub.c      |   8 +-
+>>   target/sparc/ldst_helper.c  |   3 -
+>>   target/sparc/machine.c      |  38 +-
+>>   target/sparc/translate.c    | 799 ++++++++++++------------------------
+>>   10 files changed, 680 insertions(+), 881 deletions(-)
+
+
+ATB,
+
+Mark.
 
 
