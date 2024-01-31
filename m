@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02413C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCB8C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:50:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV95j-00017W-2Z; Wed, 31 Jan 2024 06:49:19 -0500
+	id 1rV96y-0004Pu-VN; Wed, 31 Jan 2024 06:50:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rV95a-00016P-LN
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 06:49:10 -0500
+ id 1rV96w-0004OJ-Nt
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 06:50:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rV95Y-0002go-Mc
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 06:49:10 -0500
+ id 1rV96u-00031h-Jw
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 06:50:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706701747;
+ s=mimecast20190719; t=1706701831;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mGtC2yTYN4yP74jUMXUMfLUhabJWd41a2GwzIeTlzbk=;
- b=ZHheQ+NUqAInR8hp5+kMEF/O6hgcDa9bJVoxnPWzK26pechmXZVvANdEuy/VtZI2qY9tiD
- 3jUNWP6ez++VFB2QbsyWbm6hvcbzREzUZ5wj+mT9pL4l3lqJlO8cgRse7hgMPoEbmI6c6H
- xLjtx80k0gtC4yqNJ8a+Z4uxubAjCOI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-cB9oeHAhOr-O8fTi5MIANw-1; Wed,
- 31 Jan 2024 06:49:06 -0500
-X-MC-Unique: cB9oeHAhOr-O8fTi5MIANw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ bh=m9VV+Pnd7S3N4gOiX34/bsTeq/eqBnQGYZUvW68BBo4=;
+ b=LIq1atTc/SVZCPDCCYVPtLO9fvEQ6HI5rYl8QhEZaMutIj8x5ubidNKZXCqre9SzTjVfVX
+ Xgwe/46NEETKF1uCMiF14tLwQixYO8bSGGxU9cIrgtftBdl9mxYiJew5R/bkPqgAZpdlPi
+ bLQ/m0NrizOS8pz9WnW+QyX/NCumjxs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-412-kCxgxvXFMDqlF5hr6QhjTg-1; Wed, 31 Jan 2024 06:50:28 -0500
+X-MC-Unique: kCxgxvXFMDqlF5hr6QhjTg-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B7277280C29E;
- Wed, 31 Jan 2024 11:49:05 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1F52185A589;
+ Wed, 31 Jan 2024 11:50:28 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.72])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7C66D400DF3E;
- Wed, 31 Jan 2024 11:49:04 +0000 (UTC)
-Date: Wed, 31 Jan 2024 11:49:01 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 4861F492BC6;
+ Wed, 31 Jan 2024 11:50:27 +0000 (UTC)
+Date: Wed, 31 Jan 2024 11:50:25 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: yong.huang@smartx.com
 Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH v4 4/7] block: Support detached LUKS header creation
- using blockdev-create
-Message-ID: <ZbozrQuCnfJUZj1d@redhat.com>
+Subject: Re: [PATCH v4 5/7] block: Support detached LUKS header creation
+ using qemu-img
+Message-ID: <Zbo0ARbLsqIB6vci@redhat.com>
 References: <cover.1706586786.git.yong.huang@smartx.com>
- <9e35e621f12478822072e5c740ed65beb77f1238.1706586786.git.yong.huang@smartx.com>
+ <c573cf4d985b0386e2e419fcccd92245800cdeca.1706586786.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <9e35e621f12478822072e5c740ed65beb77f1238.1706586786.git.yong.huang@smartx.com>
+In-Reply-To: <c573cf4d985b0386e2e419fcccd92245800cdeca.1706586786.git.yong.huang@smartx.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
@@ -90,57 +90,46 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 01:37:22PM +0800, yong.huang@smartx.com wrote:
+On Tue, Jan 30, 2024 at 01:37:23PM +0800, yong.huang@smartx.com wrote:
 > From: Hyman Huang <yong.huang@smartx.com>
 > 
-> Firstly, enable the ability to choose the block device containing
-> a detachable LUKS header by adding the 'header' parameter to
-> BlockdevCreateOptionsLUKS.
+> Even though a LUKS header might be created with cryptsetup,
+> qemu-img should be enhanced to accommodate it as well.
 > 
-> Secondly, when formatting the LUKS volume with a detachable header,
-> truncate the payload volume to length without a header size.
+> Add the 'detached-header' option to specify the creation of
+> a detached LUKS header. This is how it is used:
+> $ qemu-img create --object secret,id=sec0,data=abc123 -f luks
+> > -o cipher-alg=aes-256,cipher-mode=xts -o key-secret=sec0
+> > -o detached-header=true header.luks
 > 
-> Using the qmp blockdev command, create the LUKS volume with a
-> detachable header as follows:
+> Using qemu-img or cryptsetup tools to query information of
+> an LUKS header image as follows:
 > 
-> 1. add the secret to lock/unlock the cipher stored in the
->    detached LUKS header
-> $ virsh qemu-monitor-command vm '{"execute":"object-add",
-> > "arguments":{"qom-type": "secret", "id": "sec0", "data": "foo"}}'
+> Assume a detached LUKS header image has been created by:
+> $ dd if=/dev/zero of=test-header.img bs=1M count=32
+> $ dd if=/dev/zero of=test-payload.img bs=1M count=1000
+> $ cryptsetup luksFormat --header test-header.img test-payload.img
+> > --force-password --type luks1
 > 
-> 2. create a header img with 0 size
-> $ virsh qemu-monitor-command vm '{"execute":"blockdev-create",
-> > "arguments":{"job-id":"job0", "options":{"driver":"file",
-> > "filename":"/path/to/detached_luks_header.img", "size":0 }}}'
+> Header image information could be queried using cryptsetup:
+> $ cryptsetup luksDump test-header.img
 > 
-> 3. add protocol blockdev node for header
-> $ virsh qemu-monitor-command vm '{"execute":"blockdev-add",
-> > "arguments": {"driver":"file", "filename":
-> > "/path/to/detached_luks_header.img", "node-name":
-> > "detached-luks-header-storage"}}'
+> or qemu-img:
+> $ qemu-img info 'json:{"driver":"luks","file":{"filename":
+> > "test-payload.img"},"header":{"filename":"test-header.img"}}'
 > 
-> 4. create a payload img with 0 size
-> $ virsh qemu-monitor-command vm '{"execute":"blockdev-create",
-> > "arguments":{"job-id":"job1", "options":{"driver":"file",
-> > "filename":"/path/to/detached_luks_payload_raw.img", "size":0}}}'
-> 
-> 5. add protocol blockdev node for payload
-> $ virsh qemu-monitor-command vm '{"execute":"blockdev-add",
-> > "arguments": {"driver":"file", "filename":
-> > "/path/to/detached_luks_payload_raw.img", "node-name":
-> > "luks-payload-raw-storage"}}'
-> 
-> 6. do the formatting with 128M size
-> $ virsh qemu-monitor-command c81_node1 '{"execute":"blockdev-create",
-> > "arguments":{"job-id":"job2", "options":{"driver":"luks", "header":
-> > "detached-luks-header-storage", "file":"luks-payload-raw-storage",
-> > "size":134217728, "preallocation":"full", "key-secret":"sec0" }}}'
+> When using qemu-img, keep in mind that the entire disk
+> information specified by the JSON-format string above must be
+> supplied on the commandline; if not, an overlay check will reveal
+> a problem with the LUKS volume check logic.
 > 
 > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > ---
->  block/crypto.c       | 101 +++++++++++++++++++++++++++++++++++++++----
->  qapi/block-core.json |   3 ++
->  2 files changed, 96 insertions(+), 8 deletions(-)
+>  block.c          |  5 ++++-
+>  block/crypto.c   | 10 +++++++++-
+>  block/crypto.h   |  8 ++++++++
+>  qapi/crypto.json |  5 ++++-
+>  4 files changed, 25 insertions(+), 3 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
