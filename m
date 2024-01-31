@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19331C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBB1C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:58:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9CD-0008Dh-4e; Wed, 31 Jan 2024 06:56:01 -0500
+	id 1rV9CE-0008EF-3n; Wed, 31 Jan 2024 06:56:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9CA-0008Ce-TO; Wed, 31 Jan 2024 06:55:58 -0500
+ id 1rV9CC-0008DJ-Ea; Wed, 31 Jan 2024 06:56:00 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9C9-0003uz-A1; Wed, 31 Jan 2024 06:55:58 -0500
+ id 1rV9CA-0003vO-QV; Wed, 31 Jan 2024 06:56:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DE7A9490C1;
+ by isrv.corpit.ru (Postfix) with ESMTP id ED80B490C2;
  Wed, 31 Jan 2024 14:56:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 20B317026A;
+ by tsrv.corpit.ru (Postfix) with SMTP id 2F67C7026B;
  Wed, 31 Jan 2024 14:55:50 +0300 (MSK)
-Received: (nullmailer pid 2263921 invoked by uid 1000);
+Received: (nullmailer pid 2263924 invoked by uid 1000);
  Wed, 31 Jan 2024 11:55:49 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Han Han <hhan@redhat.com>, qemu-trivial@nongnu.org,
+Cc: Yihuan Pan <xun794@gmail.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 03/21] qapi/migration.json: Fix the member name for
- MigrationCapability
-Date: Wed, 31 Jan 2024 14:55:31 +0300
-Message-Id: <20240131115549.2263854-4-mjt@tls.msk.ru>
+Subject: [PULL 04/21] qemu-docs: Update options for graphical frontends
+Date: Wed, 31 Jan 2024 14:55:32 +0300
+Message-Id: <20240131115549.2263854-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240131115549.2263854-1-mjt@tls.msk.ru>
 References: <20240131115549.2263854-1-mjt@tls.msk.ru>
@@ -62,31 +61,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Han Han <hhan@redhat.com>
+From: Yihuan Pan <xun794@gmail.com>
 
-s/@compression/@compress/
+The command line options `-ctrl-grab` and `-alt-grab` have been removed
+in QEMU 7.1. Instead, use the `-display sdl,grab-mod=<modifiers>` option
+to specify the grab modifiers.
 
-Fixes: 864128df46
-
-Signed-off-by: Han Han <hhan@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2103
+Signed-off-by: Yihuan Pan <xun794@gmail.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qapi/migration.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/system/keys.rst.inc | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index d3e2b864c5..819708321d 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -534,7 +534,7 @@
- # Features:
- #
- # @deprecated: Member @block is deprecated.  Use blockdev-mirror with
--#     NBD instead.  Member @compression is deprecated because it is
-+#     NBD instead.  Member @compress is deprecated because it is
- #     unreliable and untested.  It is recommended to use multifd
- #     migration, which offers an alternative compression
- #     implementation that is reliable and tested.
+diff --git a/docs/system/keys.rst.inc b/docs/system/keys.rst.inc
+index bd9b8e5f6f..2e2c97aa23 100644
+--- a/docs/system/keys.rst.inc
++++ b/docs/system/keys.rst.inc
+@@ -1,8 +1,9 @@
+-During the graphical emulation, you can use special key combinations to
+-change modes. The default key mappings are shown below, but if you use
+-``-alt-grab`` then the modifier is Ctrl-Alt-Shift (instead of Ctrl-Alt)
+-and if you use ``-ctrl-grab`` then the modifier is the right Ctrl key
+-(instead of Ctrl-Alt):
++During the graphical emulation, you can use special key combinations from
++the following table to change modes. By default the modifier is Ctrl-Alt
++(used in the table below) which can be changed with ``-display`` suboption
++``mod=`` where appropriate. For example, ``-display sdl,
++grab-mod=lshift-lctrl-lalt`` changes the modifier key to Ctrl-Alt-Shift,
++while ``-display sdl,grab-mod=rctrl`` changes it to the right Ctrl key.
+ 
+ Ctrl-Alt-f
+    Toggle full screen
 -- 
 2.39.2
 
