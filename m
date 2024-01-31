@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31EF4C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EE3C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV1X0-0005tb-9w; Tue, 30 Jan 2024 22:44:58 -0500
+	id 1rV1hp-0007Dh-KD; Tue, 30 Jan 2024 22:56:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rV1Wy-0005tJ-HP
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:44:56 -0500
-Received: from mgamail.intel.com ([198.175.65.14])
+ id 1rV1hn-0007DQ-Mm
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:56:07 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rV1Wt-0005pC-CW
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:44:56 -0500
+ id 1rV1hi-0008EE-Aw
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:56:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706672691; x=1738208691;
+ t=1706673362; x=1738209362;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=AYUWX5XLzBgWV6jAaAyhHU9raTNKoF6D4QyI0moHs6o=;
- b=npvaQPVTMsVztTRhwTGLDdijHraPv1NseGVEkqbCeBAk71NAOzH3jVqm
- dIv0irJWn6ZhjKp76IaD42qelmXZKV6A4ysKna3Oz3lO8KBZeqnu4JRbP
- vorggxUQMebY76sx1ce0yxZHAHsbpbuePN/deiK9GcnH4B7QvfGaMDzxg
- KmuGcZd1Ik1n80Ff7u8M/wNT9YwXOhYpq2dj1tpy+AeUL2THbjhvbUMeY
- f7M4g8lAMzdjjrnCN+STw5EHEs/o3mc+M7x5BczHC31/XO0DoYy4scRqm
- SomDsc7bmaOx33fAEE8qrVU5P5L5T6hUieDj11Sa4h1ATDPjaA3/5Vv4i A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="3350112"
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=BVvzRz029buemp1hiUC0zv0GoHBPGAEoAqDi4VoTwj4=;
+ b=mVwAG8+QIvi42V7oAneXBlSrn0TbDu+HHlKxSWmk2DR9V20MvrlAFxah
+ w33uXSCujUn+Y6aNogGmxiSpCoalxUuWPiXsMPKVZV712JMKZl0O2HleP
+ ntmgPpMc/KNZpQJx3C/dwHay75lFmcheF0Bmr/S9WD9M+I+Q6+Aw94DSe
+ sRYcQ82Q1uY/+97DSn/ALo5DRUbhhZplrSEOl8lkDLhtgkJuBssgur9AI
+ o0fkgtwysdtj1hNrM7y4aQ99h4yy7JFVUEh3+fg1+AQK+4XoX6nJsFQzG
+ ineeG+YZCmLOpCTjFX+Y50PhzneAEplVdRR/ilheNElDxXVw6rM42iRm8 A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="3332658"
 X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
-   d="scan'208";a="3350112"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jan 2024 19:44:50 -0800
+   d="scan'208";a="3332658"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jan 2024 19:55:59 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="931693687"
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="931693687"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="30353443"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmsmga001.fm.intel.com with ESMTP; 30 Jan 2024 19:44:46 -0800
-Date: Wed, 31 Jan 2024 11:58:16 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 30 Jan 2024 19:55:56 -0800
+Date: Wed, 31 Jan 2024 12:09:25 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 5/5] hw/core: Remove transitional infrastructure from
- BusClass
-Message-ID: <ZbnFWB1vJjW0CmzX@intel.com>
-References: <20240119163512.3810301-1-peter.maydell@linaro.org>
- <20240119163512.3810301-6-peter.maydell@linaro.org>
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, kraxel@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
+Message-ID: <ZbnH9Yehg7bWY+ws@intel.com>
+References: <20240131024906.3920-1-anisinha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240119163512.3810301-6-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240131024906.3920-1-anisinha@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,130 +86,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 19, 2024 at 04:35:12PM +0000, Peter Maydell wrote:
-> Date: Fri, 19 Jan 2024 16:35:12 +0000
-> From: Peter Maydell <peter.maydell@linaro.org>
-> Subject: [PATCH 5/5] hw/core: Remove transitional infrastructure from
->  BusClass
-> X-Mailer: git-send-email 2.34.1
+Hi Ani,
+
+On Wed, Jan 31, 2024 at 08:19:06AM +0530, Ani Sinha wrote:
+> Date: Wed, 31 Jan 2024 08:19:06 +0530
+> From: Ani Sinha <anisinha@redhat.com>
+> Subject: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
+> X-Mailer: git-send-email 2.42.0
 > 
-> BusClass currently has transitional infrastructure to support
-> subclasses which implement the legacy BusClass::reset method rather
-> than the Resettable interface.  We have now removed all the users of
-> BusClass::reset in the tree, so we can remove the transitional
-> infrastructure.
+> Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
+> Linux kernel can support upto a maximum number of 4096 vCPUS when MAXSMP is
+> enabled in the kernel. At present, QEMU has been tested to correctly boot a
+> linux guest with 1856 vcpus and no more both with edk2 and seabios firmwares.
+
+About background, could I ask if there will be Host machines with so
+much CPUs? What are the benefits of vCPUs that far exceed the number
+of Host CPUs?
+
+Thanks,
+Zhao
+
+> If an additional vcpu is added, that is with 1857 vcpus, edk2 currently fails
+> with the following error messages:
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> AllocatePages failed: No 0x400 Pages is available.
+> There is only left 0x2BF pages memory resource to be allocated.
+> ERROR: Out of aligned pages
+> ASSERT /builddir/build/BUILD/edk2-ba91d0292e/MdeModulePkg/Core/DxeIplPeim/X64/VirtualMemory.c(814): BigPageAddress != 0
+> 
+> This error exists only with edk2. Seabios currently can boot a linux guest
+> fine with 4096 vcpus. Since the lowest common denominator for a working VM for
+> both edk2 and seabios is 1856 vcpus, bump up the value max_cpus to 1856 for q35
+> machines versions 9 and newer. Q35 machines versions 8.2 and older continue
+> to support 1024 maximum vcpus as before for compatibility reasons.
+> 
+> If KVM is not able to support the specified number of vcpus, QEMU would
+> return the following error messages:
+> 
+> $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
+> qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
+> 
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Cc: Igor Mammedov <imammedo@redhat.com>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Julia Suvorova <jusual@redhat.com>
+> Cc: kraxel@redhat.com
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 > ---
->  include/hw/qdev-core.h |  2 --
->  hw/core/bus.c          | 67 ------------------------------------------
->  2 files changed, 69 deletions(-)
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-It seems the similar cleanup for DeviceClass needs a lot of effort.
-
+>  hw/i386/pc_q35.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-> index 151d9682380..986c924fa55 100644
-> --- a/include/hw/qdev-core.h
-> +++ b/include/hw/qdev-core.h
-> @@ -329,8 +329,6 @@ struct BusClass {
->       */
->      char *(*get_fw_dev_path)(DeviceState *dev);
->  
-> -    void (*reset)(BusState *bus);
-> -
->      /*
->       * Return whether the device can be added to @bus,
->       * based on the address that was set (via device properties)
-> diff --git a/hw/core/bus.c b/hw/core/bus.c
-> index c7831b5293b..b9d89495cdf 100644
-> --- a/hw/core/bus.c
-> +++ b/hw/core/bus.c
-> @@ -232,57 +232,6 @@ static char *default_bus_get_fw_dev_path(DeviceState *dev)
->      return g_strdup(object_get_typename(OBJECT(dev)));
->  }
->  
-> -/**
-> - * bus_phases_reset:
-> - * Transition reset method for buses to allow moving
-> - * smoothly from legacy reset method to multi-phases
-> - */
-> -static void bus_phases_reset(BusState *bus)
-> -{
-> -    ResettableClass *rc = RESETTABLE_GET_CLASS(bus);
-> -
-> -    if (rc->phases.enter) {
-> -        rc->phases.enter(OBJECT(bus), RESET_TYPE_COLD);
-> -    }
-> -    if (rc->phases.hold) {
-> -        rc->phases.hold(OBJECT(bus));
-> -    }
-> -    if (rc->phases.exit) {
-> -        rc->phases.exit(OBJECT(bus));
-> -    }
-> -}
-> -
-> -static void bus_transitional_reset(Object *obj)
-> -{
-> -    BusClass *bc = BUS_GET_CLASS(obj);
-> -
-> -    /*
-> -     * This will call either @bus_phases_reset (for multi-phases transitioned
-> -     * buses) or a bus's specific method for not-yet transitioned buses.
-> -     * In both case, it does not reset children.
-> -     */
-> -    if (bc->reset) {
-> -        bc->reset(BUS(obj));
-> -    }
-> -}
-> -
-> -/**
-> - * bus_get_transitional_reset:
-> - * check if the bus's class is ready for multi-phase
-> - */
-> -static ResettableTrFunction bus_get_transitional_reset(Object *obj)
-> -{
-> -    BusClass *dc = BUS_GET_CLASS(obj);
-> -    if (dc->reset != bus_phases_reset) {
-> -        /*
-> -         * dc->reset has been overridden by a subclass,
-> -         * the bus is not ready for multi phase yet.
-> -         */
-> -        return bus_transitional_reset;
-> -    }
-> -    return NULL;
-> -}
-> -
->  static void bus_class_init(ObjectClass *class, void *data)
+> Changelog:
+> v2: bump up the vcpu number to 1856. Add failure messages from ekd2 in
+> the commit description.
+> See also RH Jira https://issues.redhat.com/browse/RHEL-22202
+> 
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index f43d5142b8..f9c4b6594d 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -375,7 +375,7 @@ static void pc_q35_machine_options(MachineClass *m)
+>      m->default_nic = "e1000e";
+>      m->default_kernel_irqchip_split = false;
+>      m->no_floppy = 1;
+> -    m->max_cpus = 1024;
+> +    m->max_cpus = 1856;
+>      m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+>      machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
+>      machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
+> @@ -396,6 +396,7 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
 >  {
->      BusClass *bc = BUS_CLASS(class);
-> @@ -293,22 +242,6 @@ static void bus_class_init(ObjectClass *class, void *data)
->  
->      rc->get_state = bus_get_reset_state;
->      rc->child_foreach = bus_reset_child_foreach;
-> -
-> -    /*
-> -     * @bus_phases_reset is put as the default reset method below, allowing
-> -     * to do the multi-phase transition from base classes to leaf classes. It
-> -     * allows a legacy-reset Bus class to extend a multi-phases-reset
-> -     * Bus class for the following reason:
-> -     * + If a base class B has been moved to multi-phase, then it does not
-> -     *   override this default reset method and may have defined phase methods.
-> -     * + A child class C (extending class B) which uses
-> -     *   bus_class_set_parent_reset() (or similar means) to override the
-> -     *   reset method will still work as expected. @bus_phases_reset function
-> -     *   will be registered as the parent reset method and effectively call
-> -     *   parent reset phases.
-> -     */
-> -    bc->reset = bus_phases_reset;
-> -    rc->get_transitional_function = bus_get_transitional_reset;
+>      pc_q35_9_0_machine_options(m);
+>      m->alias = NULL;
+> +    m->max_cpus = 1024;
+>      compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+>      compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
 >  }
->  
->  static void qbus_finalize(Object *obj)
 > -- 
-> 2.34.1
+> 2.42.0
 > 
 > 
 
