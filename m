@@ -4,137 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B010EC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 14:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3A4C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 14:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVBcC-0002bv-On; Wed, 31 Jan 2024 09:31:03 -0500
+	id 1rVBkg-0005Q9-MF; Wed, 31 Jan 2024 09:39:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rVBcB-0002bY-MN
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 09:30:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rVBc9-000557-U7
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 09:30:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706711455;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3o42FGqW+O1moWwbRZqgNE9AxUZgsSgtbLuiUH5suqg=;
- b=AJ0Q53KuRvmuvhcHPUbNA1l1k5WSGO+e3OBddeS3OUEsJoKDmGhgeK7gsLa5nqUzn9Mp+A
- 3YfZHkzq9CBTwzjhHryFni+ppY4fIyGxO89N/XopIDIag3PTEAp4NlqflDt5fPU9zus+UQ
- axMIniXT+6FfFWlaUvM8IrRgJ15yCt4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-261-LnJhY9O3N-eBxWWQFJ9yWw-1; Wed, 31 Jan 2024 09:30:53 -0500
-X-MC-Unique: LnJhY9O3N-eBxWWQFJ9yWw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-40ef9f4ef41so16312315e9.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 06:30:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rVBkd-0005Pg-AS
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 09:39:43 -0500
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rVBka-0006Rm-2U
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 09:39:41 -0500
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-214c940145bso2641111fac.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 06:39:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706711978; x=1707316778; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5aaFoAo6yHIEQXEMEH+9qzGfghoVpdZE0vIfZZ7ypDk=;
+ b=WqI7lCohLbRVxC5yA/30FegQMEQs1H3yXeHFS53s2Gem6F7T6dXWdTHKlRr/nztw7/
+ nAhJKeAdPFYY5F7y/bKSBcW3kLWSn/heWM04/lLh8VcsksFlexlKZ2A98OB4Xmzbkas3
+ Z4iCiGdTM0jtdQcF+HLKcuwjjj5u/ZGPQFO/7POh5lXsoB4j7QHBrnjZOziEW5aZtyMU
+ rPGzyKbGJPdfeCTFRo8gEJ76tVhs4CMicfReA1HRAgEANsc2Yy6bnPnrPFz/75scPZUq
+ zJC4pPH/LbikiP7sGpBeM00v5C9k79KbvoS6i8HZ34XA6btCTfKz6VyBv8K/J0LfuNB2
+ yjtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706711452; x=1707316252;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3o42FGqW+O1moWwbRZqgNE9AxUZgsSgtbLuiUH5suqg=;
- b=oZRS5zTOoG0dimvj8Xs0A592UNDm/rQAkxhwAAkJwfhTQ2PNPXR22jAiEseO228C/Z
- 2TT3ca7vFynQRESyMZz4AYLSj5zGy+sn3I0l7FsonjqT74bVoCbowVWFV2Bj1+NTBAK/
- 1gDFdtwE5d2hbYqNlXz+j/tpPflEzfVPXzLnLBp2ZS7hUWy+fJWi8qoCYgOvWRDiqNvf
- 77ff7GXsNfM7iBmnmbSA84UGqW+RsS9tAmb+xKSD1WtrmPLNXjbsY9p5Yzrri2XLnS/H
- l8b8gsO37Nr3wvtV20s/pGcfYgN0NBLbPl2XLpGHEr5TLItklv0dDIyNj3Xm8bR/77zu
- b9sA==
-X-Gm-Message-State: AOJu0Yztp1pkfDaYXrwoqTzJppy5YHN6nMq3na7HqxhbZueTY+gvGvzT
- crJV5HsFMFzj/EPIXA8xydI3evtZ35hMcDuA7omidN/zVMtafXRq5flvBcSh8z0xIzGoZ4Qg/l1
- I147GSCHRL2XvYTZe5UBJqCF6ZyEmmEbOiSMiVf2iQHGpJRQrq3TQ
-X-Received: by 2002:a05:600c:5347:b0:40f:20e:bf7d with SMTP id
- hi7-20020a05600c534700b0040f020ebf7dmr1297193wmb.22.1706711452645; 
- Wed, 31 Jan 2024 06:30:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFhKsmGevi/c59tlM1V7ZLLPIkz7inDqihfGx6nrSfvKQlnHW68z1f6hpXyT0CZitkAXs7psA==
-X-Received: by 2002:a05:600c:5347:b0:40f:20e:bf7d with SMTP id
- hi7-20020a05600c534700b0040f020ebf7dmr1297182wmb.22.1706711452290; 
- Wed, 31 Jan 2024 06:30:52 -0800 (PST)
-Received: from [10.32.64.237] (nat-pool-muc-t.redhat.com. [149.14.88.26])
- by smtp.gmail.com with ESMTPSA id
- 18-20020a05600c025200b0040d4e1393dcsm1765374wmj.20.2024.01.31.06.30.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jan 2024 06:30:51 -0800 (PST)
-Message-ID: <7686daa5-c175-4b2c-a6ad-72d3c78b2249@redhat.com>
-Date: Wed, 31 Jan 2024 15:30:51 +0100
+ d=1e100.net; s=20230601; t=1706711978; x=1707316778;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5aaFoAo6yHIEQXEMEH+9qzGfghoVpdZE0vIfZZ7ypDk=;
+ b=wLyk31Vj4/s4trFfGOofVUUeLa0KHoFJe77Zw3CMaaapBLRsihqDB+DcEYSeEFwqlG
+ 0Y1iMVkEl1cRPIWg03Oo62WF1fEwnYlPfunylXsQvAfJnHyrYs/AYZMYocMi9lLzX79i
+ 7z+22kj7YrZJ5yOWatqcUjUPfZjewIs67QwwT3OotijW06JZbiVV2PhvkY5LA/NJS/3O
+ Nhm32KvZkUPDDBME0xnASzRy2un1ga9zANTSVAeUcDwmppruy4ocC87nic8YYm102v6F
+ 9AP8dm3ZHHfqZlQ7POIj0o5bhTL4z73j9fBxvO5aEWIRIITl3l3L7wnqm8R2JvHGdNQ9
+ yguA==
+X-Gm-Message-State: AOJu0YzKnRq1vLTare8qomDGZLnjuBLw/a9jETE7o7QWf5hj162bfGbl
+ af+puAeURhK5ZD7cBn+tppeHdOblPey8SP1tYe6pu/F70ZimMkvmmcLcoOcJa7/S15iDhQOJGoq
+ Imnkav4+AStbzh6ODoWP6cIG684k=
+X-Google-Smtp-Source: AGHT+IFElWLLXQwef+7+fERmu7M4ME7jfoUL9BSEfQuPDKqElQIyuSJN5FKJdmp4ApM6HgZX0Ll8uj+vLtevJufb5Gg=
+X-Received: by 2002:a05:6870:6e12:b0:214:fd96:486c with SMTP id
+ qt18-20020a0568706e1200b00214fd96486cmr2051195oab.9.1706711977915; Wed, 31
+ Jan 2024 06:39:37 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] oslib-posix: initialize backend memory objects in
- parallel
-Content-Language: en-US
-To: Mark Kanda <mark.kanda@oracle.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, berrange@redhat.com
-References: <20240131134843.3074922-1-mark.kanda@oracle.com>
- <20240131134843.3074922-2-mark.kanda@oracle.com>
- <46fc0732-8735-4440-b14a-13e2389d7d6c@redhat.com>
- <578395fd-9538-4d3d-85ea-f5e9b95b8bd7@oracle.com>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
- ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
- 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
- rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
- wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
- 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
- pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
- KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
- BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
- 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
- 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
- M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
- Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
- T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
- 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
- CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
- NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
- 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
- 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
- lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
- AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
- N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
- AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
- boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
- 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
- XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
- a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
- Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
- 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
- kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
- th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
- jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <578395fd-9538-4d3d-85ea-f5e9b95b8bd7@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <CAJSP0QX9TQ-=PD7apOamXvGW29VwJPfVNN2X5BsFLFoP2g6USg@mail.gmail.com>
+ <mhng-bcb98ddd-c9a7-4bb9-b180-bf310a289eeb@palmer-ri-x1c9a>
+In-Reply-To: <mhng-bcb98ddd-c9a7-4bb9-b180-bf310a289eeb@palmer-ri-x1c9a>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 31 Jan 2024 09:39:25 -0500
+Message-ID: <CAJSP0QWE8P-GTNmFPbHvvDLstBZgTZA7sFg0qz4u28kUFiCAHg@mail.gmail.com>
+Subject: Re: Call for GSoC/Outreachy internship project ideas
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>, dbarboza@ventanamicro.com, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, afaria@redhat.com, 
+ alex.bennee@linaro.org, eperezma@redhat.com, gmaglione@redhat.com, 
+ marcandre.lureau@redhat.com, rjones@redhat.com, sgarzare@redhat.com, 
+ imp@bsdimp.com, philmd@linaro.org, pbonzini@redhat.com, thuth@redhat.com, 
+ danielhb413@gmail.com, gaosong@loongson.cn, akihiko.odaki@daynix.com, 
+ shentey@gmail.com, npiggin@gmail.com, seanjc@google.com, 
+ Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=stefanha@gmail.com; helo=mail-oa1-x29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,18 +95,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> 
-> OK. I'll call it 'PHASE_LATE_BACKENDS_CREATED' (to make it consistent
-> with code comments/function name).
+On Tue, 30 Jan 2024 at 14:40, Palmer Dabbelt <palmer@dabbelt.com> wrote:
+> On Mon, 15 Jan 2024 08:32:59 PST (-0800), stefanha@gmail.com wrote:
+> I'm not 100% sure this is a sane GSoC idea, as it's a bit open ended and
+> might have some tricky parts.  That said it's tripping some people up
+> and as far as I know nobody's started looking at it, so I figrued I'd
+> write something up.
 
-But then, you should set it at the very end of the function (not sure if 
-that would be a problem with the other devices that are getting created 
-in between -- if they would be using one of these memory backends; 
-likely not).
+Hi Palmer,
+Your idea has been added:
+https://wiki.qemu.org/Google_Summer_of_Code_2024#RISC-V_Vector_TCG_Frontend_Optimization
 
--- 
-Cheers,
+I added links to the vector extension specification and the RISC-V TCG
+frontend source code.
 
-David / dhildenb
+Please add concrete tasks (e.g. specific optimizations the intern
+should implement and benchmark) by Feb 21st. Thank you!
 
+Stefan
 
