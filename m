@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D2AC47DDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A5B2C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV0ss-0007PL-Md; Tue, 30 Jan 2024 22:03:30 -0500
+	id 1rV0zQ-0001RC-9k; Tue, 30 Jan 2024 22:10:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV0sq-0007O2-Ct
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:03:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rV0sn-0004rC-Me
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:03:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706670204;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1AUHlXOFdV1GF0CF2xonLCznzzAjNlaQD2w1Uh9b7HI=;
- b=fn9u4IXiJ+YWt20ma+mWajT55DZXYSq3O6gtk/lhLhqUf+nKn7JziwuS3dAAJPATJWTm5V
- BoaIZETns/LugxtMtzZOjc5/9zNu9lVNFsvQIcRZId2EsjykjhC1Hn1MpvLnXQoq/nPmSE
- /T2GuEtHbHgdN4pmGFJ+7jmt5RJMAus=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-dioXNfy-PxO084qkqI9EjQ-1; Tue, 30 Jan 2024 22:03:21 -0500
-X-MC-Unique: dioXNfy-PxO084qkqI9EjQ-1
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-7bff15a8209so59458439f.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 19:03:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
+ id 1rV0zO-0001Qx-Tu
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:10:14 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
+ id 1rV0zM-0006jq-PQ
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:10:14 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a35385da5bbso617898266b.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 19:10:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=chromium.org; s=google; t=1706670610; x=1707275410; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=L51Os2kRdO8C6Jo9aOUVeiCkbwmHBHzSsSn/oaCKWMw=;
+ b=cyP1YSDGBMfzLNAiEjENVfWDpUNpoL4/oVqkv4pYNHQ+AOTHIvAWFHiS8nTaQjcXM0
+ VwdOKNHykPVmn2eM9TboW2/oWgM7sbYmAA2GpALXDg7fqq3J4eopyOGPDr8xlBjvHKvG
+ F0/UtHVPlEDD79GDteH58dUxRqJgHogNNanys=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706670200; x=1707275000;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1AUHlXOFdV1GF0CF2xonLCznzzAjNlaQD2w1Uh9b7HI=;
- b=Ly1+tMueKw3ztuYI6GDs5CiuYif6WtB929IlL28J6AndsbQXl033H0fMH3pU5Xmhns
- dRtpSgfmWbJcnu/SwQh1w9bCmfZOnzVGXoAyFpxudPFxaHiP6T1TZCB/1rtAymIPN0Tv
- EhTpVyrz+Wx9WPld/bStgyGpa3Y9/k3rC16LiWgfZ9X6e2sTX9H+SZT0tg9eMIYl2Rkw
- EpStp6+7j3RB3oPr6J9g7MRZIr2QN5Nc3PQuQlnMz12NT6X52/T9yu2bT20DbC8doHU9
- JTwbUEwJDJ9rDNE9PjixwQVa8k7wQBjfPFwrJdaFFhpI3avXNVQW9ACbF1D5/MnPk/pr
- GCWA==
-X-Gm-Message-State: AOJu0Yyp3H1OeCil2+RXKp0doJpw60f3LIdtro8zCa/51zCr3ZoBr7ah
- 2Wsws1yEOpwcfLoLdqjd1j+hT0vJSlxXpKhSdPM3Xm1TGPqnfcze4fmhnV3J4wrzXiQX2N3Q8zr
- 4QzDkq2yIqWIpwXi6sOWdFKaqweecadfTs50LzLifo/C0HhBMCbHyDyujE3EVndQ=
-X-Received: by 2002:a05:6e02:1c8e:b0:363:7bef:a4cd with SMTP id
- w14-20020a056e021c8e00b003637befa4cdmr543659ill.0.1706670200482; 
- Tue, 30 Jan 2024 19:03:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCTCjKhzsbIm1UziVtBHyfUhQvbfzl1Ltua4YZQYMB99CUBz6yY5UCPsaVXha08hhEkyNpwQ==
-X-Received: by 2002:a05:6e02:1c8e:b0:363:7bef:a4cd with SMTP id
- w14-20020a056e021c8e00b003637befa4cdmr543643ill.0.1706670200070; 
- Tue, 30 Jan 2024 19:03:20 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- b12-20020a63cf4c000000b005ceac534e47sm9254468pgj.51.2024.01.30.19.03.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jan 2024 19:03:19 -0800 (PST)
-Date: Wed, 31 Jan 2024 11:03:13 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] migration/docs: Explain two solutions for VMSD
- compatibility
-Message-ID: <Zbm4cYeDCTe3RbBz@x1n>
-References: <20240122070600.16681-1-peterx@redhat.com> <87plxtgyxx.fsf@suse.de>
- <Za81vJgTjFSGT56r@x1n> <87frygdzjl.fsf@suse.de>
- <Zbh7zAqS4_9KnATk@x1n> <875xzaditb.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1706670610; x=1707275410;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L51Os2kRdO8C6Jo9aOUVeiCkbwmHBHzSsSn/oaCKWMw=;
+ b=Z6TNW7cWVWFkGwgOoiLPanDHSPBDoPAUaA0vfKyt7Jbr30INV3Pp2nObvQZASBXbvO
+ fp7AgRjUXZlKArQwV3Fn4GLeZQp4zCifwY4Nhf7R+jieNDLCO4BGb4f0c7Lyzvt1PkVN
+ BfhNkBu7zcEVzQI9qjWwU18ernGwUQu1yYiL5RkINjXp9xLIZ217urMTY/gr8/ZbSI19
+ aSZZvTX/XWZmWTYDZTJU86fvcirX4+qHXqRnN1MDSRbSNuuZSE7vbve7sntb2qUBeL/q
+ MQwQkfc1/tBSLC1w+fy02nNwLXwIdlSZh0I8jadW2brvUMVKblmT/Q/iEzyPXfZxYwjd
+ 9QXQ==
+X-Gm-Message-State: AOJu0YxLvotzG9aqOWxkYTxxQq87n/Zu6/fWpEzS6FsUikWCMfbXHHEt
+ 7Ub9UMiV9gw9LYn+NGnDZuS8sWOobhLw091CCu7yC6anuD+o+o6nA6/GMlLOgd2Lgt0FZ1WMqoi
+ olg==
+X-Google-Smtp-Source: AGHT+IH+i1REv29zjmuKYpV52IQeIva/tyVPlb2E0ru3yDtw/tugRgwYhiLzGN6KWOdQQ+sKWcThGg==
+X-Received: by 2002:a17:907:bb88:b0:a36:55d5:2364 with SMTP id
+ xo8-20020a170907bb8800b00a3655d52364mr175072ejc.21.1706670609486; 
+ Tue, 30 Jan 2024 19:10:09 -0800 (PST)
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com.
+ [209.85.208.49]) by smtp.gmail.com with ESMTPSA id
+ sn24-20020a170906629800b00a35f05514a4sm2084797ejc.218.2024.01.30.19.10.08
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jan 2024 19:10:09 -0800 (PST)
+Received: by mail-ed1-f49.google.com with SMTP id
+ 4fb4d7f45d1cf-55f85a2a43fso2172a12.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 19:10:08 -0800 (PST)
+X-Received: by 2002:a05:6402:26d3:b0:55f:3fe8:b5e0 with SMTP id
+ x19-20020a05640226d300b0055f3fe8b5e0mr363162edd.0.1706670608550; Tue, 30 Jan
+ 2024 19:10:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <875xzaditb.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <cover.1706626470.git.manos.pitsidianakis@linaro.org>
+ <e3778e44c98a35839de2f4938e5355449fa3aa14.1706626470.git.manos.pitsidianakis@linaro.org>
+In-Reply-To: <e3778e44c98a35839de2f4938e5355449fa3aa14.1706626470.git.manos.pitsidianakis@linaro.org>
+From: Gurchetan Singh <gurchetansingh@chromium.org>
+Date: Tue, 30 Jan 2024 19:09:56 -0800
+X-Gmail-Original-Message-ID: <CAAfnVBkCv0BzbE4W5UPh9Y8U5iTzGEQ1m1Bdy8rgXOckzsuWsg@mail.gmail.com>
+Message-ID: <CAAfnVBkCv0BzbE4W5UPh9Y8U5iTzGEQ1m1Bdy8rgXOckzsuWsg@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] virtio-gpu-rutabaga.c: override resource_destroy
+ method
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000005fd89c06103537fd"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=gurchetansingh@chromium.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,188 +104,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 10:58:24AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Mon, Jan 29, 2024 at 10:44:46AM -0300, Fabiano Rosas wrote:
-> >> > Since we're at it, I would also like to know how you think about whether we
-> >> > should still suggest people using VMSD versioning, as we know that it won't
-> >> > work for backward migrations.
-> >> >
-> >> > My current thoughts is it is still fine, as it's easier to use, and it
-> >> > should still be applicable to the cases where a strict migration semantics
-> >> > are not required.  However it's hard to justify which device needs that
-> >> > strictness.
-> >> 
-> >> I'd prefer if we kept things strict. However I don't think we can do
-> >> that without having enough testing and specially, clear recipes on how
-> >> to add compatibility back once it gets lost. Think of that recent thread
-> >
-> > If it was broken, IMHO we should just fix it and backport to stable.
-> 
-> (tangent)
-> Sure, but I'm talking about how do we instruct device developers on
-> fixing migration bugs. We cannot simply yell "regression!" and expect
-> people to care.
-> 
-> Once something breaks there's no easy way to determine what's the right
-> fix. It will always involve copying the migration maintainers and some
-> back and forth with the device people before we reach an agreement on
-> what's even broken.
-> 
-> When I say "clear recipes" what I mean is we'd have a "catalogue" of
-> types of failures that could happen. Those would be both documented in
-> plain english and also have some instrumentation in the code to produce
-> a clear error/message.
-> 
->   E.g.: "Device 'foo' failed to migrate because of error type X: the src
->   machine provided more state than the dst was expecting around the
->   value Y".
-> 
-> And that "error type X" would come with some docs listing examples of
-> other similar errors and what strategies we suggest do deal with them.
-> 
-> Currently most migration failures are just a completely helpless:
-> "blergh, error -5". And the only thing we can say about it upfront is
-> "well, something must have changed in the stream".
+--0000000000005fd89c06103537fd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes, IMHO it's because of the current design of VMSD isn't self describing,
-then if some VMSD added new fields without boosting the version_id, what
-can happen is when the destination reads that new VMSD field added it'll
-assume it is the next thing to read, and that can be a completely different
-VMSD for another device.  We just don't have anything to describe it.
+On Tue, Jan 30, 2024 at 7:00=E2=80=AFAM Manos Pitsidianakis <
+manos.pitsidianakis@linaro.org> wrote:
 
-E.g. for sending an uint32_t field, vmstate_info_uint32 only does
-qemu_put_be32s(), we keep pushing data onto the wire without proper
-description of that field.
+> When the Rutabaga GPU device frees resources, it calls
+> rutabaga_resource_unref for that resource_id. However, when the generic
+> VirtIOGPU functions destroys resources, it only removes the
+> virtio_gpu_simple_resource from the device's VirtIOGPU->reslist list.
+> The rutabaga resource associated with that resource_id is then leaked.
+>
+> This commit overrides the resource_destroy class method introduced in
+> the previous commit to fix this.
+>
 
-We used to have some attempt describing these fields so it might be easier
-at least for debugging, see:
+Reviewed-by: Gurchetan Singh <gurchetansingh@chromium.org>
 
-commit 8118f0950fc77cce7873002a5021172dd6e040b5
-Author: Alexander Graf <agraf@csgraf.de>
-Date:   Thu Jan 22 15:01:39 2015 +0100
 
-    migration: Append JSON description of migration stream
+>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  hw/display/virtio-gpu-rutabaga.c | 47 ++++++++++++++++++++++++--------
+>  1 file changed, 35 insertions(+), 12 deletions(-)
+>
+> diff --git a/hw/display/virtio-gpu-rutabaga.c
+> b/hw/display/virtio-gpu-rutabaga.c
+> index 9e67f9bd51..17bf701a21 100644
+> --- a/hw/display/virtio-gpu-rutabaga.c
+> +++ b/hw/display/virtio-gpu-rutabaga.c
+> @@ -148,14 +148,38 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,
+>  }
+>
+>  static void
+> +virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,
+> +                                   struct virtio_gpu_simple_resource *re=
+s,
+> +                                   Error **errp)
+> +{
+> +    int32_t result;
+> +    VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);
+> +
+> +    result =3D rutabaga_resource_unref(vr->rutabaga, res->resource_id);
+> +    if (result) {
+> +        error_setg_errno(errp,
+> +                        (int)result,
+> +                        "%s: rutabaga_resource_unref returned %"PRIi32
+> +                        " for resource_id =3D %"PRIu32, __func__, result=
+,
+> +                        res->resource_id);
+> +    }
+> +
+> +    if (res->image) {
+> +        pixman_image_unref(res->image);
+> +    }
+> +
+> +    QTAILQ_REMOVE(&g->reslist, res, next);
+> +    g_free(res);
+> +}
 
-But that seems only for debugging.  E.g., that happens _after_ all vmstate
-loaded.  So the reported error could be the same confusing, as when an
-error happens it is before the JSON chunk ready.
++
+> +static void
+>  rutabaga_cmd_resource_unref(VirtIOGPU *g,
+>                              struct virtio_gpu_ctrl_command *cmd)
+>  {
+> -    int32_t result;
+> +    int32_t result =3D 0;
+>      struct virtio_gpu_simple_resource *res;
+>      struct virtio_gpu_resource_unref unref;
+> -
+> -    VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);
+> +    Error *local_err =3D NULL;
+>
+>      VIRTIO_GPU_FILL_CMD(unref);
+>
+> @@ -164,15 +188,14 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,
+>      res =3D virtio_gpu_find_resource(g, unref.resource_id);
+>      CHECK(res, cmd);
+>
+> -    result =3D rutabaga_resource_unref(vr->rutabaga, unref.resource_id);
+> -    CHECK(!result, cmd);
+> -
+> -    if (res->image) {
+> -        pixman_image_unref(res->image);
+> +    virtio_gpu_rutabaga_resource_unref(g, res, &local_err);
+> +    if (local_err) {
+> +        error_report_err(local_err);
+> +        /* local_err was freed, do not reuse it. */
+> +        local_err =3D NULL;
+> +        result =3D 1;
+>      }
+> -
+> -    QTAILQ_REMOVE(&g->reslist, res, next);
+> -    g_free(res);
+> +    CHECK(!result, cmd);
+>  }
+>
+>  static void
+> @@ -1099,7 +1122,7 @@ static void
+> virtio_gpu_rutabaga_class_init(ObjectClass *klass, void *data)
+>      vgc->handle_ctrl =3D virtio_gpu_rutabaga_handle_ctrl;
+>      vgc->process_cmd =3D virtio_gpu_rutabaga_process_cmd;
+>      vgc->update_cursor_data =3D virtio_gpu_rutabaga_update_cursor;
+> -
+> +    vgc->resource_destroy =3D virtio_gpu_rutabaga_resource_unref;
+>      vdc->realize =3D virtio_gpu_rutabaga_realize;
+>      device_class_set_props(dc, virtio_gpu_rutabaga_properties);
+>  }
+> --
+> =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
+=CE=B8=CE=AE=CF=84=CF=89
+>
+>
 
-We may be able to do better in this regard in the future, but that'll take
-some thoughts and effort.
+--0000000000005fd89c06103537fd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Real migration failures I have seen recently (all fixed already):
-> 
-> 1- Some feature bit was mistakenly removed from an arm cpu. Migration
->    complains about a 'length' field being different.
-> 
-> 2- A group of devices was moved from the machine init to the cpu init on
->    pseries. Migration spews some nonsense about an "index".
-> 
-> 3- Recent (invalid) bug on -cpu max on arm, a couple of bits were set in
->    a register. Migration barfs incomprehensibly with: "error while
->    loading state for instance 0x0 of device 'cpu', Operation not
->    permitted".
-> 
-> So I bet we could improve these error cases to be a bit more predictable
-> and that would help device developers to be able to maintain migration
-> compatibility without making it seem like an arbitrary, hard to achieve
-> requirement.
-> (/tangent)
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jan 30, 2024 at 7:00=E2=80=AF=
+AM Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.org=
+">manos.pitsidianakis@linaro.org</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">When the Rutabaga GPU device frees resourc=
+es, it calls<br>
+rutabaga_resource_unref for that resource_id. However, when the generic<br>
+VirtIOGPU functions destroys resources, it only removes the<br>
+virtio_gpu_simple_resource from the device&#39;s VirtIOGPU-&gt;reslist list=
+.<br>
+The rutabaga resource associated with that resource_id is then leaked.<br>
+<br>
+This commit overrides the resource_destroy class method introduced in<br>
+the previous commit to fix this.<br></blockquote><div><br></div><div>Review=
+ed-by: Gurchetan Singh &lt;<a href=3D"mailto:gurchetansingh@chromium.org">g=
+urchetansingh@chromium.org</a>&gt;<br></div><div>=C2=A0</div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">
+<br>
+Signed-off-by: Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidianaki=
+s@linaro.org" target=3D"_blank">manos.pitsidianakis@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0hw/display/virtio-gpu-rutabaga.c | 47 ++++++++++++++++++++++++-------=
+-<br>
+=C2=A01 file changed, 35 insertions(+), 12 deletions(-)<br>
+<br>
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutab=
+aga.c<br>
+index 9e67f9bd51..17bf701a21 100644<br>
+--- a/hw/display/virtio-gpu-rutabaga.c<br>
++++ b/hw/display/virtio-gpu-rutabaga.c<br>
+@@ -148,14 +148,38 @@ rutabaga_cmd_create_resource_3d(VirtIOGPU *g,<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void<br>
++virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct virtio_gpu_simpl=
+e_resource *res,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 int32_t result;<br>
++=C2=A0 =C2=A0 VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);<br>
++<br>
++=C2=A0 =C2=A0 result =3D rutabaga_resource_unref(vr-&gt;rutabaga, res-&gt;=
+resource_id);<br>
++=C2=A0 =C2=A0 if (result) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 (int)result,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;%s: rutabaga_resource_unref returned %&quot;PRIi32<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot; for resource_id =3D %&quot;PRIu32, __func__, result,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 res-&gt;resource_id);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 if (res-&gt;image) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 pixman_image_unref(res-&gt;image);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 QTAILQ_REMOVE(&amp;g-&gt;reslist, res, next);<br>
++=C2=A0 =C2=A0 g_free(res);<br>
++}=C2=A0</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++<br>
++static void<br>
+=C2=A0rutabaga_cmd_resource_unref(VirtIOGPU *g,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct virtio_gpu_ctrl_command *cmd)<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 int32_t result;<br>
++=C2=A0 =C2=A0 int32_t result =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0struct virtio_gpu_simple_resource *res;<br>
+=C2=A0 =C2=A0 =C2=A0struct virtio_gpu_resource_unref unref;<br>
+-<br>
+-=C2=A0 =C2=A0 VirtIOGPURutabaga *vr =3D VIRTIO_GPU_RUTABAGA(g);<br>
++=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0VIRTIO_GPU_FILL_CMD(unref);<br>
+<br>
+@@ -164,15 +188,14 @@ rutabaga_cmd_resource_unref(VirtIOGPU *g,<br>
+=C2=A0 =C2=A0 =C2=A0res =3D virtio_gpu_find_resource(g, unref.resource_id);=
+<br>
+=C2=A0 =C2=A0 =C2=A0CHECK(res, cmd);<br>
+<br>
+-=C2=A0 =C2=A0 result =3D rutabaga_resource_unref(vr-&gt;rutabaga, unref.re=
+source_id);<br>
+-=C2=A0 =C2=A0 CHECK(!result, cmd);<br>
+-<br>
+-=C2=A0 =C2=A0 if (res-&gt;image) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 pixman_image_unref(res-&gt;image);<br>
++=C2=A0 =C2=A0 virtio_gpu_rutabaga_resource_unref(g, res, &amp;local_err);<=
+br>
++=C2=A0 =C2=A0 if (local_err) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report_err(local_err);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* local_err was freed, do not reuse it. */<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 local_err =3D NULL;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 result =3D 1;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-<br>
+-=C2=A0 =C2=A0 QTAILQ_REMOVE(&amp;g-&gt;reslist, res, next);<br>
+-=C2=A0 =C2=A0 g_free(res);<br>
++=C2=A0 =C2=A0 CHECK(!result, cmd);<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void<br>
+@@ -1099,7 +1122,7 @@ static void virtio_gpu_rutabaga_class_init(ObjectClas=
+s *klass, void *data)<br>
+=C2=A0 =C2=A0 =C2=A0vgc-&gt;handle_ctrl =3D virtio_gpu_rutabaga_handle_ctrl=
+;<br>
+=C2=A0 =C2=A0 =C2=A0vgc-&gt;process_cmd =3D virtio_gpu_rutabaga_process_cmd=
+;<br>
+=C2=A0 =C2=A0 =C2=A0vgc-&gt;update_cursor_data =3D virtio_gpu_rutabaga_upda=
+te_cursor;<br>
+-<br>
++=C2=A0 =C2=A0 vgc-&gt;resource_destroy =3D virtio_gpu_rutabaga_resource_un=
+ref;<br>
+=C2=A0 =C2=A0 =C2=A0vdc-&gt;realize =3D virtio_gpu_rutabaga_realize;<br>
+=C2=A0 =C2=A0 =C2=A0device_class_set_props(dc, virtio_gpu_rutabaga_properti=
+es);<br>
+=C2=A0}<br>
+-- <br>
+=CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=CE=
+=B8=CE=AE=CF=84=CF=89<br>
+<br>
+</blockquote></div></div>
 
-Right, there can be multiple ways to fail, and we may need to look into
-them one by one.  They all take quite some effort.
-
-> 
-> >
-> > I think Juan used to worry on what happens if someone already used an old
-> > version of old release, e.g., someone using 8.2.0 may not be able to
-> > migrate to 8.2.1 if we fix that breakage in 9.0 and backport that to 8.2.1.
-> > My take is that maybe that's overcomplicated, and maybe we should simply
-> > only maintain the latest stable version, rather than all.  In this case,
-> > IMHO it will be less burden if we only guarantee 8.2.1 will be working,
-> > e.g., when migrating from 8.1.z -> 8.2.1.  Then we should just state a
-> > known issue in 8.2.0 that it is broken, and both:
-> >
-> >   (1) 8.1.z -> 8.2.0, and
-> 
-> Fair enough.
-> 
-> >   (2) 8.2.0 -> 8.2.1
-> 
-> Do you think we may not be able to always ensure that the user can get
-> out of the broken version? Or do you simply think that's too much work?
-
-Yes.  Allowing such compatibility means we declare support over all
-binaries we released, including buggy ones.  But a bug is a bug, and it can
-happen.  Just like QEMU, as one normal piece of software, can crash when
-hit a bug, and it can happen to any binary because we can't guarantee it's
-bug-free.
-
-It's just too much to me.  It's also hard if not impossible, because I
-don't think it always has a solution if the src QEMU is simply broken.
-When such happens, we request the user to reboot with a correct version of
-QEMU.
-
-> 
-> I think I agree with you. It's better to have a clear statement of what
-> we support and make sure that works, rather than having _some_ scenarios
-> where the user _may_ need to shutdown the VM and _some_ where they _may_
-> be able to migrate out of the situation. It creates a confusing message
-> that I imagine would just cause people to avoid using migration
-> altogether.
-> 
-> > will expect to fail.
-> >
-> >> were we discussed an old powerpc issue. How come we can see the fix
-> >> today in the code but cannot tell which problem it was trying to solve?
-> >> That's bonkers. Ideally every type of breakage would have a mapping into
-> >> why it breaks and how to fix it.
-> >> 
-> >> So with testing to catch the issue early and a clear step-by-step on how
-> >> to identify and fix compatibility, then we could require strict
-> >> compatibility for every device.
-> >
-> > I don't think we can guarantee no bug there, but indeed we can do better on
-> > providing some test framework for device VMSDs.
-> >
-> >> 
-> >> >
-> >> > For example, any device to be used in migration-test must be forward +
-> >> > backward migration compatible at least, because you just added the n-1
-> >> > regression tests to cover both directions.  Said that, only a few devices
-> >> > are involved because currently our migration-test qemu cmdline is pretty
-> >> > simple.
-> >> 
-> >> We might want to make a distinction between migration core vs. device
-> >> state testing. I see n-1 testing more like migration core testing. It's
-> >> bad to break migration, but it's really bad to break migration for
-> >> everyone because we refactored something deep within migration/.
-> >> 
-> >> I also wouldn't mind if we had some simple way for device developers to
-> >> add migration tests that cover their code. Currently it's infeasible to
-> >> edit migration-test with new command lines for every device of
-> >> interest. Maybe we could have a little framework that takes a command
-> >> line and spits a migration stream? Something really self-contained,
-> >> behind the device's CONFIG in meson.
-> >
-> > I added one more todo:
-> >
-> > https://wiki.qemu.org/ToDo/LiveMigration#Device_migration_stream_test_framework
-> >
-> > How's that look?  Feel free to modify on your will.
-> 
-> Looks good.
-> 
-> The point about the guest behavior influence is something that Juan has
-> mentioned as a blocker for testing with static data. I don't think it
-> would be impossible to have some unit testing at the vmstate with some
-> artificial values, but it might be too much work to be worth it.
-> 
-
--- 
-Peter Xu
-
+--0000000000005fd89c06103537fd--
 
