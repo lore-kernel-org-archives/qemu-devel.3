@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A58B8C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF03C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9Ce-0000Ui-K5; Wed, 31 Jan 2024 06:56:28 -0500
+	id 1rV9Cx-0001JK-Gm; Wed, 31 Jan 2024 06:56:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9CU-0000B8-1U; Wed, 31 Jan 2024 06:56:19 -0500
+ id 1rV9Cv-0001EI-2X; Wed, 31 Jan 2024 06:56:45 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9CR-0003xr-J4; Wed, 31 Jan 2024 06:56:17 -0500
+ id 1rV9Ct-0003zz-Fx; Wed, 31 Jan 2024 06:56:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F6F9490C9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A785490CC;
  Wed, 31 Jan 2024 14:56:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A64E370272;
+ by tsrv.corpit.ru (Postfix) with SMTP id D122870275;
  Wed, 31 Jan 2024 14:55:50 +0300 (MSK)
-Received: (nullmailer pid 2263945 invoked by uid 1000);
+Received: (nullmailer pid 2263954 invoked by uid 1000);
  Wed, 31 Jan 2024 11:55:49 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 11/21] m68k: Clean up includes
-Date: Wed, 31 Jan 2024 14:55:39 +0300
-Message-Id: <20240131115549.2263854-12-mjt@tls.msk.ru>
+Subject: [PULL 14/21] riscv: Clean up includes
+Date: Wed, 31 Jan 2024 14:55:42 +0300
+Message-Id: <20240131115549.2263854-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240131115549.2263854-1-mjt@tls.msk.ru>
 References: <20240131115549.2263854-1-mjt@tls.msk.ru>
@@ -65,7 +65,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Peter Maydell <peter.maydell@linaro.org>
 
 This commit was created with scripts/clean-includes:
-./scripts/clean-includes --git m68k include/hw/audio/asc.h include/hw/m68k/*.h
+ ./scripts/clean-includes --git riscv target/riscv/*.[ch]
 
 All .c should include qemu/osdep.h first.  The script performs three
 related cleanups:
@@ -78,38 +78,37 @@ related cleanups:
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- include/hw/audio/asc.h      | 1 -
- include/hw/m68k/q800-glue.h | 1 -
- 2 files changed, 2 deletions(-)
+ target/riscv/vector_internals.c | 1 +
+ target/riscv/vector_internals.h | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/audio/asc.h b/include/hw/audio/asc.h
-index 4741f92c46..04fac270b6 100644
---- a/include/hw/audio/asc.h
-+++ b/include/hw/audio/asc.h
-@@ -13,7 +13,6 @@
- #ifndef HW_AUDIO_ASC_H
- #define HW_AUDIO_ASC_H
+diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
+index 9cf5c17cde..12f5964fbb 100644
+--- a/target/riscv/vector_internals.c
++++ b/target/riscv/vector_internals.c
+@@ -16,6 +16,7 @@
+  * this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
+ 
++#include "qemu/osdep.h"
+ #include "vector_internals.h"
+ 
+ /* set agnostic elements to 1s */
+diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
+index 8133111e5f..842765f6c1 100644
+--- a/target/riscv/vector_internals.h
++++ b/target/riscv/vector_internals.h
+@@ -19,7 +19,6 @@
+ #ifndef TARGET_RISCV_VECTOR_INTERNALS_H
+ #define TARGET_RISCV_VECTOR_INTERNALS_H
  
 -#include "qemu/osdep.h"
- #include "hw/sysbus.h"
- #include "audio/audio.h"
- 
-diff --git a/include/hw/m68k/q800-glue.h b/include/hw/m68k/q800-glue.h
-index ceb916d16c..04fac25f6c 100644
---- a/include/hw/m68k/q800-glue.h
-+++ b/include/hw/m68k/q800-glue.h
-@@ -23,7 +23,6 @@
- #ifndef HW_Q800_GLUE_H
- #define HW_Q800_GLUE_H
- 
--#include "qemu/osdep.h"
- #include "hw/sysbus.h"
- 
- #define TYPE_GLUE "q800-glue"
+ #include "qemu/bitops.h"
+ #include "cpu.h"
+ #include "tcg/tcg-gvec-desc.h"
 -- 
 2.39.2
 
