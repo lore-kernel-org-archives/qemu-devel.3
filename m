@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D142C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 00:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89727C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 01:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUyaI-0005WD-TY; Tue, 30 Jan 2024 19:36:11 -0500
+	id 1rUzNG-0006D2-7U; Tue, 30 Jan 2024 20:26:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUyaG-0005W5-Qg
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 19:36:08 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rUzNB-0006CY-US
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 20:26:42 -0500
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rUyaC-0005wZ-E3
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 19:36:08 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1d8a66a2976so40938595ad.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 16:36:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rUzN9-0000Jv-RW
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 20:26:41 -0500
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-7d2e19120b5so2004108241.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 17:26:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706661362; x=1707266162; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=z4TKu/oocA0kYxGYSvMCRJUvyKgDJLJvgkWf1sMFFJM=;
- b=WsUMFItkoAxSZLWZTS/yiH7xl3VuVunNcDoPHA2MqtLGfnBlKD1KdGKZ11cPLRfGgo
- UHzNW9X5WbaYrDkOI32sPYCeprylrE7Aw2NQmml6Hp/S6MWE5QTa2bJ7j2oDnSm+7wJM
- brdXbH6BP60l8GmKT+Jkn0c6eUxsoTBq0hmHQaENJ8Ve9lVL1fBthTA2S9ZBCYY9LCJ2
- mNKP3M5St00RDAUsexUn+CCYEdeoAYk3MGUtMH0sIGyccjuQbYBPzsRg64WGxykzONjD
- S0KQaC2hKM/Dp4MLfGo/d8pT+77pgiAhFnRBTtamSbIRFooDB1XUHBusx5TT0mZXcAsh
- B6Zg==
+ d=gmail.com; s=20230601; t=1706664398; x=1707269198; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h93BkgVFUuRnPb2+mPK0buA3QG1DHMAEwTXxdNF0ziU=;
+ b=iTyE2Di7KyVss4o4vLHpIoL5kFgbadoD5FRvdU8iUn4779ISfU7J/1tLlF4I0gbcKI
+ BwlwhLzX5Xb5WznCEx7BYIsY46A+VGCYD0dac/KiIlTSqexAqH5iQudp3w8jSdxDs6GQ
+ Sgd81x7pa177fNAb3LaVeHQMfxht77F+VNtPPGEy9kdRwXQp1ikx3WdQLSgJt1ixnp68
+ DzWjSCPz1TTxoy65nziK3s+fax0MGDjupdLXkHHnwk4K9M2di7CuhdLQmgRaovBHaPIf
+ hW23e3kxThTHoOGD8rGR9hJDv7JufUdoaRpX7+zQXiX/D/TQjKUiphSGPdlk0/PJvEtQ
+ mhsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706661362; x=1707266162;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z4TKu/oocA0kYxGYSvMCRJUvyKgDJLJvgkWf1sMFFJM=;
- b=ldz9HruFZAGCzP+CWQbxeHfjmZGDHt7hbHLoT8zr4GimX41bmlBTxZ5aM65LVv+AxQ
- Ad/rvo+edm+BGihxu0SleZ13av/wJoIG7kw0fYRGvFCLhGZbyOk4Zwm5ULnJy+XF2f9U
- pq2FHlABYCjlK1m1QdyPBBodgoqwpogELt2Rl9790Bm/38CRC6ox7UEb9dx4/heehAHO
- ofZg/EShHcJA2Xg+FqRcLE1CCx0gaVJK4ptSjNYOoVhU27idmAYVrWHrMAh8iuF+5qn/
- I2SPOjp7MPfm76tJwEVV5YLt9802lNlHvjvb9vgb9dDp5PVtAu8Va84a41pSyV9RsU2Q
- y99w==
-X-Gm-Message-State: AOJu0Yy3zZVphX+TENOE/YUB4/gx5VixUc4VtIObxAKSDKAMyOm0unWU
- 8TrHRXppDGdy5rsvllo4nku7ETCVo+TVCZ0Nab6lkq0g4FoBrSr6Y3rAS65a3PMUxhpLF+gVpuE
- wHyM=
-X-Google-Smtp-Source: AGHT+IEtP/ASIpbzCoG4ir17vTD4+e0yl772J8cSpJGiIxebIql9WXq5pqLce8Wb3AHw5wuCEMkPOg==
-X-Received: by 2002:a17:902:6848:b0:1d7:1315:ad2d with SMTP id
- f8-20020a170902684800b001d71315ad2dmr234548pln.22.1706661361896; 
- Tue, 30 Jan 2024 16:36:01 -0800 (PST)
-Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- jd20-20020a170903261400b001d8f6b95dcbsm3270309plb.20.2024.01.30.16.36.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jan 2024 16:36:01 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: gustavo.romero@linaro.org
-Subject: [PATCH] linux-user/aarch64: Extend PR_SET_TAGGED_ADDR_CTRL for
- FEAT_MTE3
-Date: Wed, 31 Jan 2024 10:35:57 +1000
-Message-Id: <20240131003557.176486-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1706664398; x=1707269198;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h93BkgVFUuRnPb2+mPK0buA3QG1DHMAEwTXxdNF0ziU=;
+ b=vmuXcI4NWWhkLmnypF2Ex6kGy1x0H0mHWUjV8TyoV4nanjS2hmCdb7U5OpMSXdkP0/
+ 5NFbohYWqrGQj+y5TQXRLJm7ErzC9gZ5ozqxcoxejuTVWdBGxx+aNKN8691lqRpewIGV
+ W5H6Mw7hyweLpUhIM7g1R18u/tKCK2LYsM7TRNfv1roef7E4Onm7zmNzcxoNo3SYYBW7
+ ONV/0zfO73y32f3wcXceXCQvPNpTcjzCXDMYz8FPqc+9hlY+MLUrbAfcFcZ6CeJRR6w4
+ 5HCo4nnlbdkvYh/sYuYVpaqJaQRa/pGndj+QehAhHYJJcH3VomOT9XUrNjjSfBd8j8Mb
+ Go3Q==
+X-Gm-Message-State: AOJu0YwOgWFHjc2VzG0ICYsyQR0aTBxRY21BlGzulhnSg59xskJFYRpk
+ OIzjJMtLOpd4wUlKJgT/srArjcbgaYjab3VtE7zdWI+8cShIZGVbMLtoit+j58V/M1I17SDu5z5
+ khu45br/CSC4AWkKbAvlbiBDrpYI=
+X-Google-Smtp-Source: AGHT+IEyWGLO3/jvjHtdjXsT7PNhenjAm0xbQRnRwO0JBpDoipIMfct79gY1WGUaNOu7+iZ+11d5WShu6OqllnLtNJ4=
+X-Received: by 2002:a67:f90a:0:b0:46b:3fe2:4ae6 with SMTP id
+ t10-20020a67f90a000000b0046b3fe24ae6mr93787vsq.27.1706664398424; Tue, 30 Jan
+ 2024 17:26:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <CAJSP0QU2M0e56M0S9ztMDO7eyqFB-p1KgwxJhzwkxt=CuS_PqA@mail.gmail.com>
+ <mhng-e7014372-2334-430e-b22e-17227af21bd9@palmer-ri-x1c9a>
+In-Reply-To: <mhng-e7014372-2334-430e-b22e-17227af21bd9@palmer-ri-x1c9a>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 31 Jan 2024 11:26:11 +1000
+Message-ID: <CAKmqyKMAQ1vrf9QnCx17DbKgGTqgDd58y46RLwZvzW4Sk4zyjA@mail.gmail.com>
+Subject: Re: Call for GSoC/Outreachy internship project ideas
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: stefanha@gmail.com, Alistair Francis <Alistair.Francis@wdc.com>,
+ dbarboza@ventanamicro.com, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, afaria@redhat.com, 
+ alex.bennee@linaro.org, eperezma@redhat.com, gmaglione@redhat.com, 
+ marcandre.lureau@redhat.com, rjones@redhat.com, sgarzare@redhat.com, 
+ imp@bsdimp.com, philmd@linaro.org, pbonzini@redhat.com, thuth@redhat.com, 
+ danielhb413@gmail.com, gaosong@loongson.cn, akihiko.odaki@daynix.com, 
+ shentey@gmail.com, npiggin@gmail.com, seanjc@google.com, 
+ Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,62 +99,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When MTE3 is supported, the kernel maps
-  PR_MTE_TCF_ASYNC | PR_MTE_TCF_SYNC
-to
-  MTE_CTRL_TCF_ASYMM
-and from there to
-  SCTLR_EL1.TCF0 = 3
+On Wed, Jan 31, 2024 at 10:30=E2=80=AFAM Palmer Dabbelt <palmer@dabbelt.com=
+> wrote:
+>
+> On Tue, 30 Jan 2024 12:28:27 PST (-0800), stefanha@gmail.com wrote:
+> > On Tue, 30 Jan 2024 at 14:40, Palmer Dabbelt <palmer@dabbelt.com> wrote=
+:
+> >>
+> >> On Mon, 15 Jan 2024 08:32:59 PST (-0800), stefanha@gmail.com wrote:
+> >> > Dear QEMU and KVM communities,
+> >> > QEMU will apply for the Google Summer of Code and Outreachy internsh=
+ip
+> >> > programs again this year. Regular contributors can submit project
+> >> > ideas that they'd like to mentor by replying to this email before
+> >> > January 30th.
+> >>
+> >> It's the 30th, sorry if this is late but I just saw it today.  +Alista=
+ir
+> >> and Daniel, as I didn't sync up with anyone about this so not sure if
+> >> someone else is looking already (we're not internally).
+> >>
+> >> > Internship programs
+> >> > ---------------------------
+> >> > GSoC (https://summerofcode.withgoogle.com/) and Outreachy
+> >> > (https://www.outreachy.org/) offer paid open source remote work
+> >> > internships to eligible people wishing to participate in open source
+> >> > development. QEMU has been part of these internship programs for man=
+y
+> >> > years. Our mentors have enjoyed helping talented interns make their
+> >> > first open source contributions and some former interns continue to
+> >> > participate today.
+> >> >
+> >> > Who can mentor
+> >> > ----------------------
+> >> > Regular contributors to QEMU and KVM can participate as mentors.
+> >> > Mentorship involves about 5 hours of time commitment per week to
+> >> > communicate with the intern, review their patches, etc. Time is also
+> >> > required during the intern selection phase to communicate with
+> >> > applicants. Being a mentor is an opportunity to help someone get
+> >> > started in open source development, will give you experience with
+> >> > managing a project in a low-stakes environment, and a chance to
+> >> > explore interesting technical ideas that you may not have time to
+> >> > develop yourself.
+> >> >
+> >> > How to propose your idea
+> >> > ----------------------------------
+> >> > Reply to this email with the following project idea template filled =
+in:
+> >> >
+> >> > =3D=3D=3D TITLE =3D=3D=3D
+> >> >
+> >> > '''Summary:''' Short description of the project
+> >> >
+> >> > Detailed description of the project that explains the general idea,
+> >> > including a list of high-level tasks that will be completed by the
+> >> > project, and provides enough background for someone unfamiliar with
+> >> > the codebase to do research. Typically 2 or 3 paragraphs.
+> >> >
+> >> > '''Links:'''
+> >> > * Wiki links to relevant material
+> >> > * External links to mailing lists or web sites
+> >> >
+> >> > '''Details:'''
+> >> > * Skill level: beginner or intermediate or advanced
+> >> > * Language: C/Python/Rust/etc
+> >>
+> >> I'm not 100% sure this is a sane GSoC idea, as it's a bit open ended a=
+nd
+> >> might have some tricky parts.  That said it's tripping some people up
+> >> and as far as I know nobody's started looking at it, so I figrued I'd
+> >> write something up.
+> >>
+> >> I can try and dig up some more links if folks thing it's interesting,
+> >> IIRC there's been a handful of bug reports related to very small loops
+> >> that run ~10x slower when vectorized.  Large benchmarks like SPEC have
+> >> also shown slowdowns.
+> >
+> > Hi Palmer,
+> > Performance optimization can be challenging for newcomers. I wouldn't
+> > recommend it for a GSoC project unless you have time to seed the
+> > project idea with specific optimizations to implement based on your
+> > experience and profiling. That way the intern has a solid starting
+> > point where they can have a few successes before venturing out to do
+> > their own performance analysis.
+>
+> Ya, I agree.  That's part of the reason why I wasn't sure if it's a
+> good idea.  At least for this one I think there should be some easy to
+> understand performance issue, as the loops that go very slowly consist
+> of a small number of instructions and go a lot slower.
+>
+> I'm actually more worried about this running into a rabbit hole of
+> adding new TCG operations or even just having no well defined mappings
+> between RVV and AVX, those might make the project really hard.
+>
+> > Do you have the time to profile and add specifics to the project idea
+> > by Feb 21st? If that sounds good to you, I'll add it to the project
+> > ideas list and you can add more detailed tasks in the coming weeks.
+>
+> I can at least dig up some of the examples I ran into, there's been a
+> handful filtering in over the last year or so.
+>
+> This one
+> <https://gist.github.com/compnerd/daa7e68f7b4910cb6b27f856e6c2beba>
+> still has a much more than 10x slowdown (73ms -> 13s) with
+> vectorization, for example.
 
-There is no error reported for setting ASYNC | SYNC
-when MTE3 is not supported; the kernel simply selects
-the ASYNC behavior of TCG0=2.
+It's probably worth creating a Gitlab issue for this and adding all of
+the examples there. That way we have a single place to store them all
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/aarch64/target_prctl.h | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+Alistair
 
-diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
-index 5067e7d731..49bd16aa95 100644
---- a/linux-user/aarch64/target_prctl.h
-+++ b/linux-user/aarch64/target_prctl.h
-@@ -173,21 +173,22 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
- 
-     if (cpu_isar_feature(aa64_mte, cpu)) {
--        switch (arg2 & PR_MTE_TCF_MASK) {
--        case PR_MTE_TCF_NONE:
--        case PR_MTE_TCF_SYNC:
--        case PR_MTE_TCF_ASYNC:
--            break;
--        default:
--            return -EINVAL;
--        }
--
-         /*
-          * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
--         * Note that the syscall values are consistent with hw.
-+         * Note that SYNC | ASYNC -> ASYMM with FEAT_MTE3,
-+         * otherwise mte_update_sctlr_user chooses ASYNC.
-          */
--        env->cp15.sctlr_el[1] =
--            deposit64(env->cp15.sctlr_el[1], 38, 2, arg2 >> PR_MTE_TCF_SHIFT);
-+        unsigned tcf = 0;
-+        if (arg2 & PR_MTE_TCF_ASYNC) {
-+            if ((arg2 & PR_MTE_TCF_SYNC) && cpu_isar_feature(aa64_mte3, cpu)) {
-+                tcf = 3;
-+            } else {
-+                tcf = 2;
-+            }
-+        } else if (arg2 & PR_MTE_TCF_SYNC) {
-+            tcf = 1;
-+        }
-+        env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
- 
-         /*
-          * Write PR_MTE_TAG to GCR_EL1[Exclude].
--- 
-2.34.1
-
+>
+> > Thanks,
+> > Stefan
+>
 
