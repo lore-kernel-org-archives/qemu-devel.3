@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E46C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE91C47DB3
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9zb-0007aO-6S; Wed, 31 Jan 2024 07:47:03 -0500
+	id 1rVA2i-00018s-3t; Wed, 31 Jan 2024 07:50:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV9za-0007Wb-5c
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:47:02 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVA2g-00018j-FY
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:50:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV9zY-0006Hc-Hd
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:47:01 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVA2e-0007K8-B2
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 07:50:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706705219;
+ s=mimecast20190719; t=1706705411;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Aqjp+PfeNnwluhVQgXzalJxU3UoopvhUe/hBgKPMo+s=;
- b=HS19lMapnE5Wmm6dNt9GeB/h3yCTotJ+0cikB/rT2uMcM43NNOd3/OuDokGArCiVRoPy1c
- NfOc8FshImKC4pd4ex4Cu9KgRBmI9J7sfy9yBD1kJK9O2RKfE2phKEKJzhMQd3gurg2Mv4
- ck+Zv8Eceah88p8wOwKwb63G6XceuJI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aYgeJE/2QOUljOH0A7LmRF9BPg4zXGGJuS11ytaaWb0=;
+ b=HcWwPZL+g/SWgxxBsSBm68tfn7PkWjq49VsX7JdXzsdLQ4JfcidE5wYa2dlzc7zOZ/HHsK
+ /OOWTbr8J27w5ZTYzOC5czcVfj74nlbBx93aL2VVZn6r+zbeOaRv6xGYJTJjp/aG8ECHlb
+ PXNk8bAPKwonQHT0d4F1Tej8tMvJ/Eo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-171-kTqwyvRsPTaCp9otUI3Mpw-1; Wed, 31 Jan 2024 07:46:57 -0500
-X-MC-Unique: kTqwyvRsPTaCp9otUI3Mpw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-40efce14b13so11648725e9.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 04:46:57 -0800 (PST)
+ us-mta-443-dRfM1yN8MweNddOl2bvO-A-1; Wed, 31 Jan 2024 07:50:08 -0500
+X-MC-Unique: dRfM1yN8MweNddOl2bvO-A-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33ae7046cd0so1696184f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 04:50:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706705216; x=1707310016;
+ d=1e100.net; s=20230601; t=1706705407; x=1707310207;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Aqjp+PfeNnwluhVQgXzalJxU3UoopvhUe/hBgKPMo+s=;
- b=oTiMj8NVhCSTAgkGgBex1HWs+P8FBcae9EoV+z0v3IYu88qOp/M4y+COqgSSnfSCaa
- wPcbt0CbBVvjJZBJNie3Q2dLfL0WI1wRjjOTH3PJUgeJS3JTHtdKMIeiUuh4cIuIWCeP
- 2NKBSm6ehDksVSiWKXUBaSaX1u/hP+4KawMENRIySAvB440qWNVnN/+pPBl1CrAZ2R/m
- HVuaf3BiXbks1rDnpKOU77aUO1umXeUia/6530Kw4XNZna6e0g4Iro80M78uWVQuG/n5
- S6tNVWykoZqDL4z1fZGqPFc+42jnO4mEJZ4P9uH/jRG8zSDWFFkiLPWAgzqcxguAwsWH
- JplA==
-X-Gm-Message-State: AOJu0Yz1mDqsqaHuTBCkSHJtKVudWFzFXokcanvx6Zkw60YB+udDaDCt
- bt8lwBA1y/vN47VO8FLKPTPx/qpiC3XnCaLlvBXiVZhiRjWpcBsQpVjk9O0CRtUtwUHsLMw8IZ7
- OG47aAxnyx16ioYvH9vv3lT+abSo7nbPhAb3MF+o5ZC5fyv5PYsDr
-X-Received: by 2002:a05:600c:3552:b0:40f:b0d9:113 with SMTP id
- i18-20020a05600c355200b0040fb0d90113mr1176949wmq.36.1706705216499; 
- Wed, 31 Jan 2024 04:46:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEWxBB0Spb+IRxyN2jtfFa1R4CIoIB4vZXBCHwi0v6vZNshtFhKgsi+G4x6dRI8Z27NRqsMnw==
-X-Received: by 2002:a05:600c:3552:b0:40f:b0d9:113 with SMTP id
- i18-20020a05600c355200b0040fb0d90113mr1176934wmq.36.1706705216188; 
- Wed, 31 Jan 2024 04:46:56 -0800 (PST)
+ bh=aYgeJE/2QOUljOH0A7LmRF9BPg4zXGGJuS11ytaaWb0=;
+ b=gwwKw0bZvLO6/Q12HoOF+KBOvrWjJ0h3ubTfZ+MRMekLR1U3LV/szFQCb5QQSUHorw
+ 2IkXC4cTTqrBmvN0N9ykhaidMbCHZdt8Cin8PCDDZ3hYhQP4umw5gT1zxOXsAfSxwFg9
+ KlHHOaPuaqISY90vYzzn7mnCO7VewNwWoYQh4L9g/QWb5IIqDQKVIEq4krZImqkkW1IV
+ dX96VV4/Z69dqFz6AGcp1c5+Ptj2rCH8OChEk28r09Zii1jjSYrCmLafLhNGQ1SJES/3
+ ffsmVIC5/Dt5Z+nbKlY7YgGURVUa4EqicFdRmYKvBFo+3ZJCpHxPfoEeR5ngNXLmNIMO
+ qv7A==
+X-Gm-Message-State: AOJu0YxtuXYcZg674bFlNn2dY6MB+sjfRdLcJQEX/SdsDWsaxK1g9HeI
+ 6S1MP4ridYJm6PfRuWjHFSs/ep2IdzOux9PuZ+EYeeh2FZsNHbOqfgR4vWlL09k08xw3yjJY7JM
+ rdsJfLNUbLOzgMJcSouEjS/YTqfDufAFKDUaaPPegjMfmsG7aSRoB
+X-Received: by 2002:a5d:43ce:0:b0:33a:e74e:8b04 with SMTP id
+ v14-20020a5d43ce000000b0033ae74e8b04mr1013172wrr.62.1706705407346; 
+ Wed, 31 Jan 2024 04:50:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECxPJk6DGKiX8KSol8rL1MFhxxYBrBWPgkKwvYjsp3cvotPTtnQciZZ5IF9Ugz8EzJYV2Nyg==
+X-Received: by 2002:a5d:43ce:0:b0:33a:e74e:8b04 with SMTP id
+ v14-20020a5d43ce000000b0033ae74e8b04mr1013153wrr.62.1706705407026; 
+ Wed, 31 Jan 2024 04:50:07 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
  [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- i11-20020a05600c354b00b0040efcd70cc2sm1509668wmq.45.2024.01.31.04.46.55
+ fa1-20020a056000258100b0033af5716a7fsm5723563wrb.61.2024.01.31.04.50.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jan 2024 04:46:55 -0800 (PST)
-Message-ID: <5020640f-5c85-4352-bc7a-0d44f24ea43d@redhat.com>
-Date: Wed, 31 Jan 2024 13:46:54 +0100
+ Wed, 31 Jan 2024 04:50:06 -0800 (PST)
+Message-ID: <35ff530c-8d4f-476b-8d7c-726d3ea2bb24@redhat.com>
+Date: Wed, 31 Jan 2024 13:50:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] tests/vm/freebsd: Reload the sshd configuration
+Subject: Re: [PATCH 3/3] meson: Disable CONFIG_NOTIFY1 on FreeBSD
 Content-Language: en-US
 To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini
  <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
@@ -80,7 +80,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
  qemu-devel@nongnu.org
 References: <20240125194840.1564-1-iii@linux.ibm.com>
- <20240125194840.1564-3-iii@linux.ibm.com>
+ <20240125194840.1564-4-iii@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -124,7 +124,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240125194840.1564-3-iii@linux.ibm.com>
+In-Reply-To: <20240125194840.1564-4-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -153,30 +153,50 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/01/2024 20.48, Ilya Leoshkevich wrote:
-> After console_sshd_config(), the SSH server needs to be nudged to pick
-> up the new configs. The scripts for the other BSD flavors already do
-> this with a reboot, but a simple reload is sufficient.
+> make vm-build-freebsd fails with:
+> 
+>      ld: error: undefined symbol: inotify_init1
+>      >>> referenced by filemonitor-inotify.c:183 (../src/util/filemonitor-inotify.c:183)
+>      >>>               util_filemonitor-inotify.c.o:(qemu_file_monitor_new) in archive libqemuutil.a
+> 
+> On FreeBSD inotify functions are defined in libinotify.so, so it might
+> be tempting to add it to the dependencies. Doing so, however, reveals
+> that this library handles rename events differently from Linux:
+> 
+>      $ FILEMONITOR_DEBUG=1 build/tests/unit/test-util-filemonitor
+>      Rename /tmp/test-util-filemonitor-K13LI2/fish/one.txt -> /tmp/test-util-filemonitor-K13LI2/two.txt
+>      Event id=200000000 event=2 file=one.txt
+>      Queue event id 200000000 event 2 file one.txt
+>      Queue event id 100000000 event 2 file two.txt
+>      Queue event id 100000002 event 2 file two.txt
+>      Queue event id 100000000 event 0 file two.txt
+>      Queue event id 100000002 event 0 file two.txt
+>      Event id=100000000 event=0 file=two.txt
+>      Expected event 0 but got 2
+> 
+> FreeBSD itself disables this functionality in the respective port [1].
+> So do it upstream too.
+> 
+> [1] https://cgit.freebsd.org/ports/tree/emulators/qemu-devel/files/patch-util_meson.build?id=984366c18f1bc54e38751afc29be08c596b83696
 > 
 > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->   tests/vm/freebsd | 2 ++
->   1 file changed, 2 insertions(+)
+>   meson.build | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/tests/vm/freebsd b/tests/vm/freebsd
-> index b581bd17fb7..9971bc1f2b2 100755
-> --- a/tests/vm/freebsd
-> +++ b/tests/vm/freebsd
-> @@ -108,6 +108,8 @@ class FreeBSDVM(basevm.BaseVM):
->           prompt = "root@freebsd:~ #"
->           self.console_ssh_init(prompt, "root", self._config["root_pass"])
->           self.console_sshd_config(prompt)
-> +        self.console_wait(prompt)
-> +        self.console_send("service sshd reload\n")
+> diff --git a/meson.build b/meson.build
+> index d0329966f1b..3d67d78b522 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2403,6 +2403,7 @@ config_host_data.set('CONFIG_GETRANDOM',
+>   config_host_data.set('CONFIG_INOTIFY',
+>                        cc.has_header_symbol('sys/inotify.h', 'inotify_init'))
+>   config_host_data.set('CONFIG_INOTIFY1',
+> +                     host_os != 'freebsd' and
+>                        cc.has_header_symbol('sys/inotify.h', 'inotify_init1'))
+>   config_host_data.set('CONFIG_PRCTL_PR_SET_TIMERSLACK',
+>                        cc.has_header_symbol('sys/prctl.h', 'PR_SET_TIMERSLACK'))
 
-Could be simplified to:
-
-	self.console_wait_send(prompt, "service sshd reload\n")
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
