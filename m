@@ -4,73 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C4CC47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF0DC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9Az-0007TN-1f; Wed, 31 Jan 2024 06:54:46 -0500
+	id 1rV9CH-0008Fr-RR; Wed, 31 Jan 2024 06:56:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rV9Au-0007Sc-No
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 06:54:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rV9CG-0008F1-Cu; Wed, 31 Jan 2024 06:56:04 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rV9At-0003YW-4j
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 06:54:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706702077;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mEG5iDPTloHFi6rsZH43saXsxbB8EpUTK7mlc4hoSzE=;
- b=hVdw9TkZ3H0sv5pWwpFBldEEN2+SdSASBP3wS7zebQj9PZtfEeTEmAylnbsDBBbNn5m1t0
- U8AD3vO1lPm0Dxh53gyI3vYpdiDh12zi5+QLc23RBJikCvWQOP88taIaIHc2HHY0klfCLO
- QrSvuiZUclHkTfm/Zq5HEb8ITdGEmXI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-HviO8ehnN2CcjjUtIVRp-g-1; Wed,
- 31 Jan 2024 06:54:33 -0500
-X-MC-Unique: HviO8ehnN2CcjjUtIVRp-g-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7FA173816B42;
- Wed, 31 Jan 2024 11:54:33 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.243])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 47BB1107BD;
- Wed, 31 Jan 2024 11:54:33 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 18ABD1800DDC; Wed, 31 Jan 2024 12:54:32 +0100 (CET)
-Date: Wed, 31 Jan 2024 12:54:32 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, 
- Julia Suvorova <jusual@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] pc: q35: Bump max_cpus to 1856 vcpus
-Message-ID: <ulrgo3dqewvffg3okryrsnnwhsdbb4f7sga3agmszfyv4jte7t@fds5d2ww4xyf>
-References: <20240131024906.3920-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rV9CD-0003w7-S8; Wed, 31 Jan 2024 06:56:03 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 16FA8490C4;
+ Wed, 31 Jan 2024 14:56:47 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 4D6207026D;
+ Wed, 31 Jan 2024 14:55:50 +0300 (MSK)
+Received: (nullmailer pid 2263930 invoked by uid 1000);
+ Wed, 31 Jan 2024 11:55:49 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 06/21] scripts/clean-includes: Update exclude list
+Date: Wed, 31 Jan 2024 14:55:34 +0300
+Message-Id: <20240131115549.2263854-7-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240131115549.2263854-1-mjt@tls.msk.ru>
+References: <20240131115549.2263854-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240131024906.3920-1-anisinha@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,21 +61,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 08:19:06AM +0530, Ani Sinha wrote:
+From: Peter Maydell <peter.maydell@linaro.org>
+
+Update the exclude list to exclude some more files which don't follow our
+standard #include policy.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ scripts/clean-includes | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/clean-includes b/scripts/clean-includes
+index 58e1607a82..bdbf404024 100755
+--- a/scripts/clean-includes
++++ b/scripts/clean-includes
+@@ -51,7 +51,7 @@ GIT=no
+ DUPHEAD=no
  
-> This error exists only with edk2. Seabios currently can boot a linux guest
-> fine with 4096 vcpus. Since the lowest common denominator for a working VM for
-> both edk2 and seabios is 1856 vcpus, bump up the value max_cpus to 1856 for q35
-> machines versions 9 and newer. Q35 machines versions 8.2 and older continue
-> to support 1024 maximum vcpus as before for compatibility reasons.
-
-There is a high chance this limit will be gone soon.
-
-https://github.com/kraxel/edk2/commit/7a03c17f0f4f4a9003d77db2660c8e087604b2f0
-
-If 4096 works fine with seabios, I'd suggest to go with 4096 as limit.
-
-take care,
-  Gerd
+ # Extended regular expression defining files to ignore when using --all
+-XDIRREGEX='^(tests/tcg|tests/multiboot|pc-bios)'
++XDIRREGEX='^(tests/tcg|tests/multiboot|tests/fp|tests/plugin|tests/uefi-test-tools|pc-bios|subprojects|contrib/plugins|tools/ebpf|ebpf/rss.bpf.skeleton.h|linux-user/(mips64|x86_64)/(cpu_loop|signal).c)'
+ 
+ while true
+ do
+-- 
+2.39.2
 
 
