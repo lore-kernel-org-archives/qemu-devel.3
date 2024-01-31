@@ -4,162 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A079EC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 19:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0814C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 19:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVFyz-0001Xh-07; Wed, 31 Jan 2024 14:10:49 -0500
+	id 1rVG3d-0003TS-DH; Wed, 31 Jan 2024 14:15:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rVFyo-0001Wm-Gj
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 14:10:40 -0500
-Received: from mgamail.intel.com ([192.55.52.93])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rVFyl-0002GM-6n
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 14:10:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706728235; x=1738264235;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=VrGR+fBemcmLlf6xGZmjizXf4HPj/F8yzXWvQiXfMxI=;
- b=AIZS2Qux+cZAsauMveOOwCrpblu9qIWiOCp+Ki7FyGBpeF2ap1szU6Uv
- 16r37zBlTPqpVQtKlbm37hiA7I6Z3KHkkQ3+9KoEp6vXrmxMUL4MBmTNb
- v4xR25yAEunmw4XNMQrOu1FLH826EnndATd9kVD6ZZhegRmDT4faQU8a2
- jpDU/BSA1l3tIYMZdarReLBQ/DA3lGWZtIHWEYkvFQRDCmG77JemIzqbi
- po+leSZR89sWy/3aaahCS6tXYEm2KSQiuqn0XZew7K1iXT8oFKSXjIUHQ
- iaMKZACzOzoINkgM1G2O89B4htHexmrunHGgkRt7yWQ0NwtvpceDAgYg2 w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="400830506"
-X-IronPort-AV: E=Sophos;i="6.05,233,1701158400"; d="scan'208";a="400830506"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 11:10:32 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,233,1701158400"; d="scan'208";a="22878157"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 31 Jan 2024 11:10:32 -0800
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 31 Jan 2024 11:10:31 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Wed, 31 Jan 2024 11:10:31 -0800
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.41) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 31 Jan 2024 11:10:31 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=e6x4gZEkqyD7E/y1LGexPpUldPTiCFJeit5ldPyc8IW0Pt7I7O3PkrSmfd+kGD2zxpvS9WYV97LuPuo2yi3fek0/aPRaWvkRDuVnFrxqAWHFAlr+QeegQVLZI3SdZAtlm9ip5hnt6E/S1GiMOj2uIdy5K9YBGJO19gjl1WFDOb5HCKQiZ1qjFRhnr+KAKweV/Mz9Zo/yVIPSOF2ZFQbE7XjMw1o4QdQgJlF05ZkiD58mHFRmMWp8fARELw2Smc9ETQxXvmeuV62WmqcSPQEkLiKs7zUPEYfS6CtDaUH0N/iuLqcjBNo3PR+/ZL9bZtSEsCOhhvBpUXKFk0+YhL7tBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VrGR+fBemcmLlf6xGZmjizXf4HPj/F8yzXWvQiXfMxI=;
- b=nuVnMQmnUUUEdLSkRExGaSDE10hsX1MFcHhP6TjGvJZ8rJoPAquhSTgdBFqOK8mRiYh0a8uvVP/XE+QVFbPahvS0NYCZUN+nH+Qv6SZyjv/ssyYx5QSHWjxX0t7+mz4BVIWwYK/yJN4XOXOHcI/UltZ3KBRyMBsu+uC327Ut2K57MDMXBEMAr4yxUnfTH5LMWM5wBjhkhNwfBB93Ei3imwZiiGhZOpbD1Sw9mmd8jLvF25Afkj799IYOW9oCJkbg4YP0lgWCzmymNdHgaii/+UoQ2jE3Edj3aHuSh8PpV5zPxgcMhySPQ0ikpt9+ZQ3fOqpBy+0tl1ATUEkCEKUqww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from PH8PR11MB6879.namprd11.prod.outlook.com (2603:10b6:510:229::22)
- by DM4PR11MB6143.namprd11.prod.outlook.com (2603:10b6:8:b1::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.34; Wed, 31 Jan
- 2024 19:10:28 +0000
-Received: from PH8PR11MB6879.namprd11.prod.outlook.com
- ([fe80::1332:70db:38b7:437d]) by PH8PR11MB6879.namprd11.prod.outlook.com
- ([fe80::1332:70db:38b7:437d%6]) with mapi id 15.20.7249.017; Wed, 31 Jan 2024
- 19:10:28 +0000
-From: "Kim, Dongwon" <dongwon.kim@intel.com>
-To: =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: RE: [PATCH 2/3] ui/gtk: set the ui size to 0 when invisible
-Thread-Topic: [PATCH 2/3] ui/gtk: set the ui size to 0 when invisible
-Thread-Index: AQHaU//bLhwa6CS7806/eG/RIH3+D7DzgdWAgADEfiA=
-Date: Wed, 31 Jan 2024 19:10:27 +0000
-Message-ID: <PH8PR11MB687929088D824A6F68875FA2FA7C2@PH8PR11MB6879.namprd11.prod.outlook.com>
-References: <20240130234840.53122-1-dongwon.kim@intel.com>
- <20240130234840.53122-3-dongwon.kim@intel.com>
- <CAJ+F1CKH6oWkvN44de_FT0hG5vKd8pKapn62OM+DfmQggnDcHg@mail.gmail.com>
-In-Reply-To: <CAJ+F1CKH6oWkvN44de_FT0hG5vKd8pKapn62OM+DfmQggnDcHg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH8PR11MB6879:EE_|DM4PR11MB6143:EE_
-x-ms-office365-filtering-correlation-id: d5c5ed77-89e9-4886-c013-08dc22904944
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: ZFCL2BqUND2FZ7CkpLFfvdMxFWCh00cnfHBXXi5wG5H95rdaUSADcv093n1VwvfSW0O9MRjnE43sVs183GovHCnsjHJCEM1ZIQ5mo7VsdV2MIPOzi0fqXIXzZy9fVI8p/3wuysCF1joegmPgz04zY5lOhdSbGtpfCUW1T2ioCGdK6akAmK+xwkhXdSiTrgmMwUmD7Zsd/hUfU2DVyLYS53Lhk++CU2D8iSFcXE0HkN73RCB5OBhNnhC+iVR4EVqaxtdQd27eIEK8ryZ9/UpZ96dflyJjHE1juD2vArmSKMDnxSfoTetI356oM1lDt8EJ+xtSnQzkdFY3jKVV4o2MK9prRcJGzqu26Kzm0HaW1nDaa1LbbpPKCUE5qGAPIg6ckjVPS78QiDsfOklwK5w1WccoEJh4B3AEXwWgBrn7F6QNHWOS03lApVQ26OyAL0JhobTjVEw0nU8CL/D3DvxeX+80q7+yx9/o0TFUh230jSB11wkyfeOlMznzDShOxWbeofm2OhTtXjHV/GZjUCpNHXhODPfSyNZV8w+l+FjPvdDg9HDRX3mEDhkfA5gwAXqO13LcHrJQOmC3qIlFrBqTBXUyJW/9uBilwgoR7sPSlpgH2Kdryt5Tadum0wDN16HP
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH8PR11MB6879.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(39860400002)(376002)(366004)(346002)(396003)(136003)(230922051799003)(451199024)(64100799003)(186009)(1800799012)(71200400001)(478600001)(53546011)(6506007)(9686003)(86362001)(83380400001)(7696005)(26005)(76116006)(66946007)(38070700009)(66556008)(66446008)(66476007)(64756008)(55016003)(6916009)(38100700002)(122000001)(5660300002)(82960400001)(2906002)(8936002)(8676002)(33656002)(316002)(4326008)(52536014)(41300700001);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?N0MwZGdUZFNaTS92V1ZIazBacmtYQTRHRERoQTNEenlycy9TUFRxTjkxL0I4?=
- =?utf-8?B?NCtYNjhQK0JXWmlDL0RuSjdtWmgxRWlJWTdxd2kyOTdIb1B4Zm0rMWUrTmFO?=
- =?utf-8?B?MzFzZk1rWWlkbDBxdnBnVjVuNUlUQnNIRjJOeW0ycnRmSVlJQkVsekRlemdK?=
- =?utf-8?B?a0l0KytFMTZDWkgwZ3c4d09RemZGdVd5WUY5bFNlNzUvTVkzbXpqb0ZlYUph?=
- =?utf-8?B?aFp6OWExeWRwc2xkMURoSWJpeEdnMCt5d25LYUFmbUkzdVpSalVOSHhQdEtO?=
- =?utf-8?B?Vm1xSWh1b0pwQjdiWjArWDVFcHJ6NXk3aDdHQm96aU9kajc1SmVnQTh6RVM4?=
- =?utf-8?B?YXF4ODlrRW55eERxSzV0OTRCQ1hIdWZBSmhicmZaNFp6TlRmSEc0cW5JMnc4?=
- =?utf-8?B?MmcxN2xxUmlqNUliREJhUW5LYzY1U2E2cWxCMUFiUVRKcDhVREhkRmMvQ0Zj?=
- =?utf-8?B?MU1vcThWbWJJVWNUV2xsTzQ1eFVMck41ZjY5VlJpT2I5aUVSZWRYK2xxamwx?=
- =?utf-8?B?d29sbW9DalF4eXBIalBUNWNjRmMyS2VoL0dlak1reDA0VXNzU2FJRlFnZVJB?=
- =?utf-8?B?NFdmYVI0Sm55UU45Vzl5dVB2YjdEKzQzY3pWZmd2T3FlZTJFTFQzZ0E5RkpD?=
- =?utf-8?B?bXpsWEVYQmlXYytaTlZ6TExNcE5mWC82YXBVWld3Uk9YUVNaN3R3RFVndExN?=
- =?utf-8?B?QjlSZzV6MVl6aWx6REFYcHBCVzVVVlBmWnpXK1pmVk5yMlNQUnlFNUFkMlAz?=
- =?utf-8?B?aktpdFExTG9JN2tJUVM1aVQvNWQwMXQzM3hzRUFsNXY0ZUNwUDV2dmVLZURB?=
- =?utf-8?B?ajFSZlZoWmlTM0diajdsMk1tbXl4Mnh0Smp3amcxWG5IbGEvd0RjOVBTYkVu?=
- =?utf-8?B?ZW5zWk5NSWhYZGc1L1A5UkptVnI4aGsvb2tUeDNuKzZhYjJ1cmhLUkVGRFAx?=
- =?utf-8?B?b1FXTVFUR1VKOUdrZDJMQmloMGZ3aUZ1R0syUUp6aGlIWkVSTVhwVmhRQlIx?=
- =?utf-8?B?bUI3endTcWFjcmgrNGF2ZDFLUTg3ZXo5Rnozd3ZaWWRDNmZqU2ZEYlc1MUdI?=
- =?utf-8?B?VnJtMGZ0TjhiK0ZSRzBYZEIrRHdJZjY1TDJTZGlLdlVMWW5IWDRYeTBNb3pK?=
- =?utf-8?B?VG5UYkZydjA5ZFlTZW9HWS9qOEdBZXlaV0ltWVNpRjBrTGNwb2NCZk01OU9Q?=
- =?utf-8?B?NUlrUC9aUk5FNUZmZkNIMHNCSzExRFlmRDZwL2NQakdsMVNXc3RJbXdnUXhP?=
- =?utf-8?B?aWRhWDRkb3FhQzV2ZktyVTNvWDFYUHE5YXBxRERiNk1RRGg0Qnh4TitweCtX?=
- =?utf-8?B?UW02aXEweHZlaGdLcHF6bmJleGZOUWRFRXFYeEgyQ2lSalNqaGhyekprTnpE?=
- =?utf-8?B?Nk1nemFtVEFjRVFTU2g0UDg2RFQ2U0EydXFKVHV6L3pxanJSQm5wOE56WnFY?=
- =?utf-8?B?aURkK0F6NGprc3VQalhVdXJ2QllLNHdHbXhNZVpsNE5VUXZjVytPWDBIMjNj?=
- =?utf-8?B?ZHQ0cmFPeGFZajNPdm5QNzhkWkRXb3hrOUp1eGl0N0tvVG5UVG9Hb0tiN085?=
- =?utf-8?B?SUIrTmE3YklEbFNmOGtIa2IyR3RKVk9Qb3dURnFmRHJobnRFZ0R0bXh1d2o2?=
- =?utf-8?B?VklBSmhucERzM1ppc1p4OWNIK21rTHVPWkMxQkhMcVdOQXcyTmxJR0s3OWZj?=
- =?utf-8?B?Z2p1b3BpZ1BFZ3QvZ1dLVm5JcEtnMXBadGNCQUFWdGN0ZlZMcnpWZC9NSGZ2?=
- =?utf-8?B?d3c2by9pN2tBNWtxMnpNeVE2NFZXaGU5QlVRM0FPQWpWRXUwZGwvSy9VUzFT?=
- =?utf-8?B?eDZtcUE0YUo0RjJtVTRUT29QZFY0a0dnWHFGTFJPcXJpc2tFWmxmbG1VN0RP?=
- =?utf-8?B?djZtRnVqR3ZWdzhlL3EyTkxCejMxcVJyY3lEU3VOOVJCK29SaXN3SGsxcmhv?=
- =?utf-8?B?eUR4U0tQOHplWUErejZSWFNjbkpiaHBGaUdsZUEyb200SmZvWUk0Y2FWUGF2?=
- =?utf-8?B?Yy9pa3dVZGhwcGZ5RVJKUGw1UTluemNSSDJ3ZjByU29HcE9ielBmblltUFRZ?=
- =?utf-8?B?YWpMRlJKYU5FcUNBL1FQam54UVcyR3BPZ1N2c29Dbi9FakhYRWdlejJqSllF?=
- =?utf-8?Q?ZkuGDmh7dfvaFIoRo8KbFfMoa?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rVG3a-0003Ru-JE
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 14:15:34 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rVG3Y-0002wy-78
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 14:15:34 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6de2e24ea87so34152b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 11:15:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1706728530; x=1707333330; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pWQveSsFJ/3CVVd/Ztg7/c4z2PNpagKkX/j/QMzbWnQ=;
+ b=R0uJkubb93VHNLMhgIljppXLToQ79+OLtLxT4hZRQfJ4wq7By8Pqp3Kof19RMKVdGZ
+ TcddlQ5eF/K7IfdcWFM8urdkn2k9AjMVF+ShRCAS2tK4iguNtIbNVcPToyC2PtgvIz6O
+ KvGquLJVmNFovMeFdoVEhvmEXTvbKQjJ1r5ULyUMY47dCc/TEqFcWSuYeslxRDyDmUCz
+ if+bYLl0j9xGJCezFYwUEbjp2/VfkOaoM40rkccK1uAO0gy81BvtQbRcUM2Uidoce1R7
+ 44vARWv6c1D3mK+nqEIztI16AdgIgKkqKu3DC04UFlSZ9y9U+JoCfxFQqm1UxBc0qLz2
+ ki8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706728530; x=1707333330;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pWQveSsFJ/3CVVd/Ztg7/c4z2PNpagKkX/j/QMzbWnQ=;
+ b=UHsUStlItr3+1pbKkxLnolCQTahs6abOeCe22YA7qXF9HtZ701Zb2q9+z9SYcOTwwg
+ b+lSvUOESxKpNgcEOHdMHVSXW4kyoantAAgYnhzxcwO0K5bqNYY+Fd0KJXwlqxoeEmK0
+ 4nqTu1cNbzjM4XgRGUtUBxWRjsLU7kKKejzntwvVlS/l5TgOuwotpS29T6rT18kqk/3y
+ O0TlzXgnSdhrOUBHf6oD5vvUvO4/x45XQrfKB9Jq7nQ59FM6OicBGAcUF2wCJxcNb5I6
+ icLIrtTMJZQ7eO3VN1pt1tP+7D1yKPxIolh7gmiu/EkKrhzp09dIKys5LA78QMYfXX9e
+ UplA==
+X-Gm-Message-State: AOJu0YzZBQ7zmEXSk9l90RpwvR2r4prS7q1xGafkZSuwo5JYo5pndyLI
+ 0H/u2NT3A11ots2bbNwKOVwB3fGwbSI/jN84xQ6UoG/xW8ADfpeVKLOaBayr718=
+X-Google-Smtp-Source: AGHT+IGg27grFLp3NK1IhkRqHk0uiDPtA2JS10EuTOVm9fg7rKjG0QGubSxLdTg9pGOBHQo8iWIeuA==
+X-Received: by 2002:a05:6a00:1803:b0:6db:acb2:a95d with SMTP id
+ y3-20020a056a00180300b006dbacb2a95dmr2707304pfa.21.1706728530627; 
+ Wed, 31 Jan 2024 11:15:30 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ y11-20020a056a00190b00b006da8f6650a2sm10141463pfi.155.2024.01.31.11.15.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Jan 2024 11:15:30 -0800 (PST)
+Message-ID: <92c19649-4799-44c1-b7df-c958e1d5b2cc@ventanamicro.com>
+Date: Wed, 31 Jan 2024 16:15:26 -0300
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB6879.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5c5ed77-89e9-4886-c013-08dc22904944
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jan 2024 19:10:27.9004 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: tsBUgh3G+vI2rA9SDBgVX3xe2J0pjL4N900QSQ4TdeOB9OwkPYK7g5D0jlt6TsZcbqnjNJ9jIFj0ofm6fxM7EA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6143
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.55.52.93; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -56
-X-Spam_score: -5.7
-X-Spam_bar: -----
-X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] target/riscv: add remaining named features
+Content-Language: en-US
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com, ajones@ventanamicro.com
+References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
+ <20240125195319.329181-4-dbarboza@ventanamicro.com>
+ <CAKmqyKNZ73Ep1sBKGBoX=wNvOPq_R+UU_K9qSRABBQUzK-LFLA@mail.gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAKmqyKNZ73Ep1sBKGBoX=wNvOPq_R+UU_K9qSRABBQUzK-LFLA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,97 +99,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTWFyYy1BbmRyw6ksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTog
-TWFyYy1BbmRyw6kgTHVyZWF1IDxtYXJjYW5kcmUubHVyZWF1QGdtYWlsLmNvbT4NCj4gU2VudDog
-VHVlc2RheSwgSmFudWFyeSAzMCwgMjAyNCAxMToxMyBQTQ0KPiBUbzogS2ltLCBEb25nd29uIDxk
-b25nd29uLmtpbUBpbnRlbC5jb20+DQo+IENjOiBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4gU3Vi
-amVjdDogUmU6IFtQQVRDSCAyLzNdIHVpL2d0azogc2V0IHRoZSB1aSBzaXplIHRvIDAgd2hlbiBp
-bnZpc2libGUNCj4gDQo+IEhpDQo+IA0KPiBPbiBXZWQsIEphbiAzMSwgMjAyNCBhdCAzOjUw4oCv
-QU0gPGRvbmd3b24ua2ltQGludGVsLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBGcm9tOiBEb25nd29u
-IEtpbSA8ZG9uZ3dvbi5raW1AaW50ZWwuY29tPg0KPiA+DQo+ID4gVUkgc2l6ZSBpcyBzZXQgdG8g
-MCB3aGVuIHRoZSBWQyBpcyBpbnZpc2libGUsIHdoaWNoIHdpbGwgcHJldmVudCB0aGUNCj4gPiBm
-dXJ0aGVyIHNjYW5vdXQgdXBkYXRlIGJ5IG5vdGlmeWluZyB0aGUgZ3Vlc3QgdGhhdCB0aGUgZGlz
-cGxheSBpcyBub3QNCj4gPiBpbiBhY3RpdmUgc3RhdGUuIFRoZW4gaXQgaXMgcmVzdG9yZWQgdG8g
-dGhlIG9yaWdpbmFsIHNpemUgd2hlbmV2ZXIgdGhlDQo+ID4gVkMgYmVjb21lcyB2aXNpYmxlIGFn
-YWluLg0KPiANCj4gVGhpcyBjYW4gaGF2ZSB1bndhbnRlZCByZXN1bHRzIG9uIG11bHRpIG1vbml0
-b3Igc2V0dXBzLCBzdWNoIGFzIG1vdmluZw0KPiB3aW5kb3dzIG9yIGljb25zIGFyb3VuZCBvbiBk
-aWZmZXJlbnQgbW9uaXRvcnMuDQoNCltLaW0sIERvbmd3b25dICBZb3UgYXJlIHJpZ2h0LiBUaGlz
-IGlzIGp1c3QgYSBjaG9pY2Ugd2UgbWFkZS4NCj4gDQo+IFN3aXRjaGluZyB0YWJzIG9yIG1pbmlt
-aXppbmcgdGhlIGRpc3BsYXkgd2luZG93IHNob3VsZG4ndCBjYXVzZSBhIGd1ZXN0DQo+IGRpc3Bs
-YXkgcmVjb25maWd1cmF0aW9uLg0KPiANCj4gV2hhdCBpcyB0aGUgYmVuZWZpdCBvZiBkaXNhYmxp
-bmcgdGhlIG1vbml0b3IgaGVyZT8gSXMgaXQgZm9yIHBlcmZvcm1hbmNlIHJlYXNvbnM/DQoNCltL
-aW0sIERvbmd3b25dIE5vdCBzdXJlIGlmIHlvdSByZWNvZ25pemVkIGl0IGJ1dCB0aGlzIHBhdGNo
-IHNlcmllcyB3YXMgYSBwYXJ0IG9mDQpvdXIgVk0gZGlzcGxheSBob3QtcGx1ZyBmZWF0dXJlIHdl
-IHN1Ym1pdHRlZCBhIGZldyBtb250aHMgYWdvLiBUaGVyZSwgd2UgYWRkZWQgYSBuZXcNCnBhcmFt
-IGNhbGxlZCBjb25uZWN0b3JzIHRvIGhhdmUgYSB3YXkgdG8gZml4IGluZGl2aWR1YWwgVk0gZGlz
-cGxheXMgKGluIG11bHRpIGRpc3BsYXkgZW52KQ0Kb24gZGlmZmVyZW50IHBoeXNpY2FsIGRpc3Bs
-YXlzIHRoZXJlIGFuZCBtYWRlIHRoZSBWTSBkaXNwbGF5IGRpc2Nvbm5lY3RlZCB3aGVuDQphc3Nv
-Y2lhdGVkIHBoeXNpY2FsIG9uZSBpcyBkaXNjb25uZWN0ZWQuIFdlIGp1c3Qgd2FudGVkIHRvIG1h
-a2UgdGFiIHN3aXRjaGluZyBhbmQNCndpbmRvdyBtaW5pbWl6YXRpb24gZG8gdGhlIHNpbWlsYXIg
-dG8gbWFrZSBhbGwgb2YgdGhpcyBsb2dpYyBjb25zaXN0ZW50LiANCg0KSG93ZXZlciwgaWYgaXQg
-bWFrZXMgbW9yZSBzZW5zZSB0byBoYXZlIHRob3NlIGRpc3BsYXlzIGFsbCBjb25uZWN0ZWQgZXZl
-biB3aGVuDQp0aG9zZSBhcmUgbm90IHNob3duIGV4Y2VwdCBmb3IgdGhlIGNhc2Ugb2YgaG90LXBs
-dWcgaW4sIHdlIGNvdWxkIGNoYW5nZSB0aGUgbG9naWMuDQpCdXQgYXMgeW91IG1lbnRpb25lZCwg
-dGhlcmUgd2lsbCBiZSBzb21lIHdhc3RlIG9mIGJhbmR3aWR0aCBhbmQgcGVyZiBzaW5jZSB0aGUN
-Cmd1ZXN0IHdpbGwga2VlcCBzZW5kaW5nIG91dCBzY2FuLW91dCBmcmFtZXMgdGhhdCB3b3VsZCBi
-ZSBqdXN0IGR1bXBlZC4NCg0KVGhpcyBtaWdodCBiZSBhIG1pbm9yIHRoaW5nIGJ1dCBhbm90aGVy
-IGNvbmNlcm4gaXMgYWJvdXQgdGFiLXN3aXRjaGluZy4gSW5pdGlhbGx5LCB0aGUgZ3Vlc3QNCndp
-bGwgZGV0ZWN0IG9ubHkgb25lIGRpc3BsYXkgZXZlbiBpZiB0aGUgbWF4LW91dHB1dCBpcyBzZXQg
-dG8gTiAob3RoZXIgdGhhbiAxKS4gTXVsdGkgZGlzcGxheXMNCndpbGwgYmUgZGV0ZWN0ZWQgb25j
-ZSB5b3UgZGV0YWNoIG9yIHN3aXRjaCB0byBhbm90aGVyIHRhYi4gVGhlbiBpZiB5b3UgbW92ZSB0
-byB0aGUgb3JpZ2luYWwNCnRhYiBvciBjbG9zZSB0aGUgZGV0YWNoZWQgd2luZG93LCB0aGUgZ3Vl
-c3Qgd29uJ3QgZ28gYmFjayB0byBzaW5nbGUgZGlzcGxheSBzZXR1cC4NCkFsbCBtdWx0aS1kaXNw
-bGF5cyB3aWxsIGV4aXN0IGluIGl0cyBzZXR1cCBhbmQgdGhpcyBkb2VzbuKAmXQgbG9vayBjb25z
-aXN0ZW50IHRvIG1lLg0KDQo+IA0KPiA+DQo+ID4gQ2M6IE1hcmMtQW5kcsOpIEx1cmVhdSA8bWFy
-Y2FuZHJlLmx1cmVhdUByZWRoYXQuY29tPg0KPiA+IENjOiBHZXJkIEhvZmZtYW5uIDxrcmF4ZWxA
-cmVkaGF0LmNvbT4NCj4gPiBDYzogVml2ZWsgS2FzaXJlZGR5IDx2aXZlay5rYXNpcmVkZHlAaW50
-ZWwuY29tPg0KPiA+IFNpZ25lZC1vZmYtYnk6IERvbmd3b24gS2ltIDxkb25nd29uLmtpbUBpbnRl
-bC5jb20+DQo+ID4gLS0tDQo+ID4gIHVpL2d0ay5jIHwgMTUgKysrKysrKysrKysrKystDQo+ID4g
-IDEgZmlsZSBjaGFuZ2VkLCAxNCBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQo+ID4NCj4g
-PiBkaWZmIC0tZ2l0IGEvdWkvZ3RrLmMgYi91aS9ndGsuYw0KPiA+IGluZGV4IDAyZWI2NjdkOGEu
-LjY1MWVkMzQ5MmYgMTAwNjQ0DQo+ID4gLS0tIGEvdWkvZ3RrLmMNCj4gPiArKysgYi91aS9ndGsu
-Yw0KPiA+IEBAIC0xMzE0LDEwICsxMzE0LDEyIEBAIHN0YXRpYyB2b2lkIGdkX21lbnVfc3dpdGNo
-X3ZjKEd0a01lbnVJdGVtDQo+ICppdGVtLCB2b2lkICpvcGFxdWUpDQo+ID4gICAgICBHdGtEaXNw
-bGF5U3RhdGUgKnMgPSBvcGFxdWU7DQo+ID4gICAgICBWaXJ0dWFsQ29uc29sZSAqdmM7DQo+ID4g
-ICAgICBHdGtOb3RlYm9vayAqbmIgPSBHVEtfTk9URUJPT0socy0+bm90ZWJvb2spOw0KPiA+ICsg
-ICAgR2RrV2luZG93ICp3aW5kb3c7DQo+ID4gICAgICBnaW50IHBhZ2U7DQo+ID4NCj4gPiAgICAg
-IHZjID0gZ2RfdmNfZmluZF9jdXJyZW50KHMpOw0KPiA+ICAgICAgdmMtPmdmeC52aXNpYmxlID0g
-ZmFsc2U7DQo+ID4gKyAgICBnZF9zZXRfdWlfc2l6ZSh2YywgMCwgMCk7DQo+ID4NCj4gPiAgICAg
-IHZjID0gZ2RfdmNfZmluZF9ieV9tZW51KHMpOw0KPiA+ICAgICAgZ3RrX3JlbGVhc2VfbW9kaWZp
-ZXJzKHMpOw0KPiA+IEBAIC0xMzI1LDYgKzEzMjcsOSBAQCBzdGF0aWMgdm9pZCBnZF9tZW51X3N3
-aXRjaF92YyhHdGtNZW51SXRlbQ0KPiAqaXRlbSwgdm9pZCAqb3BhcXVlKQ0KPiA+ICAgICAgICAg
-IHBhZ2UgPSBndGtfbm90ZWJvb2tfcGFnZV9udW0obmIsIHZjLT50YWJfaXRlbSk7DQo+ID4gICAg
-ICAgICAgZ3RrX25vdGVib29rX3NldF9jdXJyZW50X3BhZ2UobmIsIHBhZ2UpOw0KPiA+ICAgICAg
-ICAgIGd0a193aWRnZXRfZ3JhYl9mb2N1cyh2Yy0+Zm9jdXMpOw0KPiA+ICsgICAgICAgIHdpbmRv
-dyA9IGd0a193aWRnZXRfZ2V0X3dpbmRvdyh2Yy0+Z2Z4LmRyYXdpbmdfYXJlYSk7DQo+ID4gKyAg
-ICAgICAgZ2Rfc2V0X3VpX3NpemUodmMsIGdka193aW5kb3dfZ2V0X3dpZHRoKHdpbmRvdyksDQo+
-ID4gKyAgICAgICAgICAgICAgICAgICAgICAgZ2RrX3dpbmRvd19nZXRfaGVpZ2h0KHdpbmRvdykp
-Ow0KPiA+ICAgICAgICAgIHZjLT5nZngudmlzaWJsZSA9IHRydWU7DQo+ID4gICAgICB9DQo+ID4g
-IH0NCj4gPiBAQCAtMTM1Niw2ICsxMzYxLDcgQEAgc3RhdGljIGdib29sZWFuIGdkX3RhYl93aW5k
-b3dfY2xvc2UoR3RrV2lkZ2V0DQo+ICp3aWRnZXQsIEdka0V2ZW50ICpldmVudCwNCj4gPiAgICAg
-IEd0a0Rpc3BsYXlTdGF0ZSAqcyA9IHZjLT5zOw0KPiA+DQo+ID4gICAgICB2Yy0+Z2Z4LnZpc2li
-bGUgPSBmYWxzZTsNCj4gPiArICAgIGdkX3NldF91aV9zaXplKHZjLCAwLCAwKTsNCj4gPiAgICAg
-IGd0a193aWRnZXRfc2V0X3NlbnNpdGl2ZSh2Yy0+bWVudV9pdGVtLCB0cnVlKTsNCj4gPiAgICAg
-IGdkX3dpZGdldF9yZXBhcmVudCh2Yy0+d2luZG93LCBzLT5ub3RlYm9vaywgdmMtPnRhYl9pdGVt
-KTsNCj4gPiAgICAgIGd0a19ub3RlYm9va19zZXRfdGFiX2xhYmVsX3RleHQoR1RLX05PVEVCT09L
-KHMtPm5vdGVib29rKSwNCj4gPiBAQCAtMTM5MSw2ICsxMzk3LDcgQEAgc3RhdGljIGdib29sZWFu
-IGdkX3dpbl9ncmFiKHZvaWQgKm9wYXF1ZSkNCj4gPiBzdGF0aWMgdm9pZCBnZF9tZW51X3VudGFi
-aWZ5KEd0a01lbnVJdGVtICppdGVtLCB2b2lkICpvcGFxdWUpICB7DQo+ID4gICAgICBHdGtEaXNw
-bGF5U3RhdGUgKnMgPSBvcGFxdWU7DQo+ID4gKyAgICBHZGtXaW5kb3cgKndpbmRvdzsNCj4gPiAg
-ICAgIFZpcnR1YWxDb25zb2xlICp2YyA9IGdkX3ZjX2ZpbmRfY3VycmVudChzKTsNCj4gPg0KPiA+
-ICAgICAgaWYgKHZjLT50eXBlID09IEdEX1ZDX0dGWCAmJg0KPiA+IEBAIC0xNDI5LDYgKzE0MzYs
-MTAgQEAgc3RhdGljIHZvaWQgZ2RfbWVudV91bnRhYmlmeShHdGtNZW51SXRlbQ0KPiAqaXRlbSwg
-dm9pZCAqb3BhcXVlKQ0KPiA+ICAgICAgICAgIGdkX3VwZGF0ZV9nZW9tZXRyeV9oaW50cyh2Yyk7
-DQo+ID4gICAgICAgICAgZ2RfdXBkYXRlX2NhcHRpb24ocyk7DQo+ID4gICAgICB9DQo+ID4gKw0K
-PiA+ICsgICAgd2luZG93ID0gZ3RrX3dpZGdldF9nZXRfd2luZG93KHZjLT5nZnguZHJhd2luZ19h
-cmVhKTsNCj4gPiArICAgIGdkX3NldF91aV9zaXplKHZjLCBnZGtfd2luZG93X2dldF93aWR0aCh3
-aW5kb3cpLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgZ2RrX3dpbmRvd19nZXRfaGVpZ2h0KHdp
-bmRvdykpOw0KPiA+ICAgICAgdmMtPmdmeC52aXNpYmxlID0gdHJ1ZTsNCj4gPiAgfQ0KPiA+DQo+
-ID4gQEAgLTE3NTMsNyArMTc2NCw5IEBAIHN0YXRpYyBnYm9vbGVhbiBnZF9jb25maWd1cmUoR3Rr
-V2lkZ2V0ICp3aWRnZXQsDQo+ID4gew0KPiA+ICAgICAgVmlydHVhbENvbnNvbGUgKnZjID0gb3Bh
-cXVlOw0KPiA+DQo+ID4gLSAgICBnZF9zZXRfdWlfc2l6ZSh2YywgY2ZnLT53aWR0aCwgY2ZnLT5o
-ZWlnaHQpOw0KPiA+ICsgICAgaWYgKHZjLT5nZngudmlzaWJsZSkgew0KPiA+ICsgICAgICAgIGdk
-X3NldF91aV9zaXplKHZjLCBjZmctPndpZHRoLCBjZmctPmhlaWdodCk7DQo+ID4gKyAgICB9DQo+
-ID4gICAgICByZXR1cm4gRkFMU0U7DQo+ID4gIH0NCj4gPg0KPiA+IC0tDQo+ID4gMi4zNC4xDQo+
-ID4NCj4gPg0KPiANCj4gDQo+IC0tDQo+IE1hcmMtQW5kcsOpIEx1cmVhdQ0K
+
+
+On 1/29/24 22:10, Alistair Francis wrote:
+> On Fri, Jan 26, 2024 at 5:54 AM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+>>
+>> The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
+>> until now, we were implying that they were available.
+>>
+>> We can't do this anymore since named features also has a riscv,isa
+>> entry.  Let's add them to riscv_cpu_named_features[].
+>>
+>> They will also need to be explicitly enabled in both profile
+>> descriptions. TCG will enable the named features it already implements,
+>> other accelerators are free to handle it as they like.
+>>
+>> After this patch, here's the riscv,isa from a buildroot using the
+>> 'rva22s64' CPU:
+>>
+>>   # cat /proc/device-tree/cpus/cpu@0/riscv,isa
+>> rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
+>> zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
+>> zbs_zkt_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
+>>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/cpu.c         | 41 +++++++++++++++++++++++++++++---------
+>>   target/riscv/cpu_cfg.h     |  9 +++++++++
+>>   target/riscv/tcg/tcg-cpu.c | 19 +++++++++++++++++-
+>>   3 files changed, 59 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index 28d3cfa8ce..1ecd8a57ed 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -101,6 +101,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>       ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
+>>       ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
+>>       ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
+>> +    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_ziccamoa),
+>> +    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_ziccif),
+>> +    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_zicclsm),
+>> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
+>>       ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
+>>       ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
+>>       ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
+>> @@ -109,6 +113,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>       ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
+>>       ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+>>       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+>> +    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_za64rs),
+>>       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+>>       ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+>>       ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+>> @@ -170,8 +175,12 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+>> +    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_ssccptr),
+>>       ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+>> +    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_sscounterenw),
+>>       ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+>> +    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_sstvala),
+>> +    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_sstvecd),
+>>       ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
+>>       ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
+>>       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+>> @@ -1523,6 +1532,22 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+>>       MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
+>>       MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+>>
+>> +    /*
+>> +     * cache-related extensions that are always enabled
+>> +     * since QEMU RISC-V does not have a cache model.
+>> +     */
+>> +    MULTI_EXT_CFG_BOOL("za64rs", ext_za64rs, true),
+>> +    MULTI_EXT_CFG_BOOL("ziccif", ext_ziccif, true),
+>> +    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
+>> +    MULTI_EXT_CFG_BOOL("ziccamoa", ext_ziccamoa, true),
+>> +    MULTI_EXT_CFG_BOOL("zicclsm", ext_zicclsm, true),
+>> +    MULTI_EXT_CFG_BOOL("ssccptr", ext_ssccptr, true),
+>> +
+>> +    /* Other named features that QEMU TCG always implements */
+>> +    MULTI_EXT_CFG_BOOL("sstvecd", ext_sstvecd, true),
+>> +    MULTI_EXT_CFG_BOOL("sstvala", ext_sstvala, true),
+>> +    MULTI_EXT_CFG_BOOL("sscounterenw", ext_sscounterenw, true),
+>> +
+>>       DEFINE_PROP_END_OF_LIST(),
+>>   };
+>>
+>> @@ -2116,13 +2141,8 @@ static const PropertyInfo prop_marchid = {
+>>   };
+>>
+>>   /*
+>> - * RVA22U64 defines some 'named features' or 'synthetic extensions'
+>> - * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
+>> - * and Zicclsm. We do not implement caching in QEMU so we'll consider
+>> - * all these named features as always enabled.
+>> - *
+>> - * There's no riscv,isa update for them (nor for zic64b, despite it
+>> - * having a cfg offset) at this moment.
+>> + * RVA22U64 defines some cache related extensions: Za64rs,
+>> + * Ziccif, Ziccrse, Ziccamoa and Zicclsm.
+>>    */
+>>   static RISCVCPUProfile RVA22U64 = {
+>>       .parent = NULL,
+>> @@ -2139,7 +2159,9 @@ static RISCVCPUProfile RVA22U64 = {
+>>           CPU_CFG_OFFSET(ext_zicbop), CPU_CFG_OFFSET(ext_zicboz),
+>>
+>>           /* mandatory named features for this profile */
+>> -        CPU_CFG_OFFSET(ext_zic64b),
+>> +        CPU_CFG_OFFSET(ext_za64rs), CPU_CFG_OFFSET(ext_zic64b),
+>> +        CPU_CFG_OFFSET(ext_ziccif), CPU_CFG_OFFSET(ext_ziccrse),
+>> +        CPU_CFG_OFFSET(ext_ziccamoa), CPU_CFG_OFFSET(ext_zicclsm),
+>>
+>>           RISCV_PROFILE_EXT_LIST_END
+>>       }
+>> @@ -2170,7 +2192,8 @@ static RISCVCPUProfile RVA22S64 = {
+>>           CPU_CFG_OFFSET(ext_svinval),
+>>
+>>           /* rva22s64 named features */
+>> -        CPU_CFG_OFFSET(ext_svade),
+>> +        CPU_CFG_OFFSET(ext_sstvecd), CPU_CFG_OFFSET(ext_sstvala),
+>> +        CPU_CFG_OFFSET(ext_sscounterenw), CPU_CFG_OFFSET(ext_svade),
+>>
+>>           RISCV_PROFILE_EXT_LIST_END
+>>       }
+>> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+>> index 698f926ab1..f79fc3dfd1 100644
+>> --- a/target/riscv/cpu_cfg.h
+>> +++ b/target/riscv/cpu_cfg.h
+>> @@ -125,6 +125,15 @@ struct RISCVCPUConfig {
+>>       /* Named features  */
+>>       bool ext_svade;
+>>       bool ext_zic64b;
+>> +    bool ext_za64rs;
+>> +    bool ext_ziccif;
+>> +    bool ext_ziccrse;
+>> +    bool ext_ziccamoa;
+>> +    bool ext_zicclsm;
+>> +    bool ext_ssccptr;
+>> +    bool ext_sstvecd;
+>> +    bool ext_sstvala;
+>> +    bool ext_sscounterenw;
+> 
+> Overall this and the previous patch look fine.
+> 
+> One thing though, why store this information? I feel it could be
+> confusing having these variables. If a developer sets them to false
+> nothing actually happens, which is a little misleading
+
+These extensions aren't being exposed to users. riscv_cpu_named_features[] isn't
+being used to create any CPU user properties. I should've mentioned that in
+patch 2 ...
+
+As for the extra booleans that we'll be setting to 'true', as it is now
+isa_edata_arr[] stores a string name, priv_ver and a cpu->cfg offset, so
+everyone that adds a riscv,isa str must also have a valid bool offset in
+RISCVCPUConfig. Having a bool also allow us to treat them as regular extensions
+because we can re-use existing code to blindly enable them in profiles like
+any other profile extension.
+
+And, in case we need to promote them as regular user extensions, having the
+booleans in place make it easier to do so. Patch 6 is doing that with 'svade'.
+
+
+Thanks,
+
+Daniel
+
+
+We could create a single boolean that is always true in cpu->cfg and use it
+for these entries. Another idea would be to change the riscv,isa functions to
+handle these extensions separately, then we can add them in the array without
+a valid cpu->cfg offfset.
+
+> 
+> Alistair
+> 
+>>
+>>       /* Vendor-specific custom extensions */
+>>       bool ext_xtheadba;
+>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+>> index 90861cc065..6d5028cf84 100644
+>> --- a/target/riscv/tcg/tcg-cpu.c
+>> +++ b/target/riscv/tcg/tcg-cpu.c
+>> @@ -206,7 +206,8 @@ static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_offset)
+>>           cpu->cfg.ext_svadu = false;
+>>           break;
+>>       default:
+>> -        g_assert_not_reached();
+>> +        /* Named feature already enabled in riscv_tcg_cpu_instance_init */
+>> +        return;
+>>       }
+>>   }
+>>
+>> @@ -1342,6 +1343,20 @@ static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
+>>       return object_dynamic_cast(cpu_obj, TYPE_RISCV_CPU_MAX) != NULL;
+>>   }
+>>
+>> +/* Named features that TCG always implements */
+>> +static void riscv_tcg_cpu_enable_named_feats(RISCVCPU *cpu)
+>> +{
+>> +    cpu->cfg.ext_za64rs = true;
+>> +    cpu->cfg.ext_ziccif = true;
+>> +    cpu->cfg.ext_ziccrse = true;
+>> +    cpu->cfg.ext_ziccamoa = true;
+>> +    cpu->cfg.ext_zicclsm = true;
+>> +    cpu->cfg.ext_ssccptr = true;
+>> +    cpu->cfg.ext_sstvecd = true;
+>> +    cpu->cfg.ext_sstvala = true;
+>> +    cpu->cfg.ext_sscounterenw = true;
+>> +}
+>> +
+>>   static void riscv_tcg_cpu_instance_init(CPUState *cs)
+>>   {
+>>       RISCVCPU *cpu = RISCV_CPU(cs);
+>> @@ -1354,6 +1369,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *cs)
+>>       if (riscv_cpu_has_max_extensions(obj)) {
+>>           riscv_init_max_cpu_extensions(obj);
+>>       }
+>> +
+>> +    riscv_tcg_cpu_enable_named_feats(cpu);
+>>   }
+>>
+>>   static void riscv_tcg_cpu_init_ops(AccelCPUClass *accel_cpu, CPUClass *cc)
+>> --
+>> 2.43.0
+>>
+>>
 
