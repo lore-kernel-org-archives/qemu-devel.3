@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A54EAC47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A58B8C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 11:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9DN-0002OR-7Z; Wed, 31 Jan 2024 06:57:13 -0500
+	id 1rV9Ce-0000Ui-K5; Wed, 31 Jan 2024 06:56:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9DJ-0002Kc-RB; Wed, 31 Jan 2024 06:57:09 -0500
+ id 1rV9CU-0000B8-1U; Wed, 31 Jan 2024 06:56:19 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9DI-000425-BU; Wed, 31 Jan 2024 06:57:09 -0500
+ id 1rV9CR-0003xr-J4; Wed, 31 Jan 2024 06:56:17 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D4803490D0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F6F9490C9;
  Wed, 31 Jan 2024 14:56:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1766A70279;
- Wed, 31 Jan 2024 14:55:51 +0300 (MSK)
-Received: (nullmailer pid 2263966 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id A64E370272;
+ Wed, 31 Jan 2024 14:55:50 +0300 (MSK)
+Received: (nullmailer pid 2263945 invoked by uid 1000);
  Wed, 31 Jan 2024 11:55:49 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, qemu-trivial@nongnu.org,
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 18/21] hw/loongarch: Add `\n` to hint message
-Date: Wed, 31 Jan 2024 14:55:46 +0300
-Message-Id: <20240131115549.2263854-19-mjt@tls.msk.ru>
+Subject: [PULL 11/21] m68k: Clean up includes
+Date: Wed, 31 Jan 2024 14:55:39 +0300
+Message-Id: <20240131115549.2263854-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240131115549.2263854-1-mjt@tls.msk.ru>
 References: <20240131115549.2263854-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,30 +62,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Greg Kurz <groug@kaod.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-error_printf() doesn't add newlines.
+This commit was created with scripts/clean-includes:
+./scripts/clean-includes --git m68k include/hw/audio/asc.h include/hw/m68k/*.h
 
-Signed-off-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+All .c should include qemu/osdep.h first.  The script performs three
+related cleanups:
+
+* Ensure .c files include qemu/osdep.h first.
+* Including it in a .h is redundant, since the .c  already includes
+  it.  Drop such inclusions.
+* Likewise, including headers qemu/osdep.h includes is redundant.
+  Drop these, too.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/loongarch/acpi-build.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/audio/asc.h      | 1 -
+ include/hw/m68k/q800-glue.h | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index 730bc4a748..a1c4198741 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -509,7 +509,7 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-                     " migration may not work",
-                     tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
-         error_printf("Try removing CPUs, NUMA nodes, memory slots"
--                     " or PCI bridges.");
-+                     " or PCI bridges.\n");
-     }
+diff --git a/include/hw/audio/asc.h b/include/hw/audio/asc.h
+index 4741f92c46..04fac270b6 100644
+--- a/include/hw/audio/asc.h
++++ b/include/hw/audio/asc.h
+@@ -13,7 +13,6 @@
+ #ifndef HW_AUDIO_ASC_H
+ #define HW_AUDIO_ASC_H
  
-     acpi_align_size(tables->linker->cmd_blob, ACPI_BUILD_ALIGN_SIZE);
+-#include "qemu/osdep.h"
+ #include "hw/sysbus.h"
+ #include "audio/audio.h"
+ 
+diff --git a/include/hw/m68k/q800-glue.h b/include/hw/m68k/q800-glue.h
+index ceb916d16c..04fac25f6c 100644
+--- a/include/hw/m68k/q800-glue.h
++++ b/include/hw/m68k/q800-glue.h
+@@ -23,7 +23,6 @@
+ #ifndef HW_Q800_GLUE_H
+ #define HW_Q800_GLUE_H
+ 
+-#include "qemu/osdep.h"
+ #include "hw/sysbus.h"
+ 
+ #define TYPE_GLUE "q800-glue"
 -- 
 2.39.2
 
