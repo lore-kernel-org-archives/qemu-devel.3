@@ -4,96 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506CBC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 21:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C79C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 21:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVI62-0004lq-2L; Wed, 31 Jan 2024 16:26:14 -0500
+	id 1rVI6g-0005GO-UY; Wed, 31 Jan 2024 16:26:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVI5w-0004jA-5x
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:26:11 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVI6e-00057X-Ln
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:26:52 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVI5u-000337-Jj
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:26:07 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVI6d-00038d-2N
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:26:52 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 434A521FF4;
- Wed, 31 Jan 2024 21:26:03 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F3EFA21FF4;
+ Wed, 31 Jan 2024 21:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706736363; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706736409; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=raCxn7M1JwJSlmWVm3wCtnBHXD8rf3rGK7pdpuZWE8Y=;
- b=ePhn+jJmjd3H/7wtuzQTdke+27aDjgVhtfX0rbQHnQ2HACHxNrSRPL3Z0bQSgGrFtNp8XA
- l+EDPIEMQtORByNltCEF7tKySmkbPHbS8B8UE7ri5HuW5vcqzlg+gEsFV8DZNfW1oOMuYh
- AwyykoAYT6dJ4x3RS1ry11WBol40abM=
+ bh=W96O+TgzdqT/DrtRRhHgg0Q3FgxN0uI25ts6e6atSpQ=;
+ b=MtFS4s+Wvq4iORS81D1wfVlAEviFyGTfvLqCLiQDyVw47xYvID9IkKwy/FzvC7PIqMRYSe
+ BvDRcmwcdoKSutmJXfvNrgKU7qTXVVro5zz0srb+D0VGqSjg92qtt6ZWP4WLAjbnD09lmW
+ ZDodgpZgz7Xhgij4nQ2+zXPFDasi3Yw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706736363;
+ s=susede2_ed25519; t=1706736409;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=raCxn7M1JwJSlmWVm3wCtnBHXD8rf3rGK7pdpuZWE8Y=;
- b=uXJmzy2dmnhFf/YyUV/tuk0lSsWK1Qa6hzVTI6gKld34C/g3kBJn/NaPAtKICNMCQEFRCh
- WyhtMkQjmpLCn/Ag==
+ bh=W96O+TgzdqT/DrtRRhHgg0Q3FgxN0uI25ts6e6atSpQ=;
+ b=h6xjppEuHk6MhqUwCAEQTdHSD3fO6Qjgs7oklpBwg5wuwbB34KsTlCmuDtm/B/Afho9JG0
+ jVhCpgw2qTckybCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706736363; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706736409; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=raCxn7M1JwJSlmWVm3wCtnBHXD8rf3rGK7pdpuZWE8Y=;
- b=ePhn+jJmjd3H/7wtuzQTdke+27aDjgVhtfX0rbQHnQ2HACHxNrSRPL3Z0bQSgGrFtNp8XA
- l+EDPIEMQtORByNltCEF7tKySmkbPHbS8B8UE7ri5HuW5vcqzlg+gEsFV8DZNfW1oOMuYh
- AwyykoAYT6dJ4x3RS1ry11WBol40abM=
+ bh=W96O+TgzdqT/DrtRRhHgg0Q3FgxN0uI25ts6e6atSpQ=;
+ b=MtFS4s+Wvq4iORS81D1wfVlAEviFyGTfvLqCLiQDyVw47xYvID9IkKwy/FzvC7PIqMRYSe
+ BvDRcmwcdoKSutmJXfvNrgKU7qTXVVro5zz0srb+D0VGqSjg92qtt6ZWP4WLAjbnD09lmW
+ ZDodgpZgz7Xhgij4nQ2+zXPFDasi3Yw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706736363;
+ s=susede2_ed25519; t=1706736409;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=raCxn7M1JwJSlmWVm3wCtnBHXD8rf3rGK7pdpuZWE8Y=;
- b=uXJmzy2dmnhFf/YyUV/tuk0lSsWK1Qa6hzVTI6gKld34C/g3kBJn/NaPAtKICNMCQEFRCh
- WyhtMkQjmpLCn/Ag==
+ bh=W96O+TgzdqT/DrtRRhHgg0Q3FgxN0uI25ts6e6atSpQ=;
+ b=h6xjppEuHk6MhqUwCAEQTdHSD3fO6Qjgs7oklpBwg5wuwbB34KsTlCmuDtm/B/Afho9JG0
+ jVhCpgw2qTckybCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C1E9C1347F;
- Wed, 31 Jan 2024 21:26:02 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7ED8B1347F;
+ Wed, 31 Jan 2024 21:26:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Lx76Ieq6umXTbQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 31 Jan 2024 21:26:02 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8WOWERi7umX3bQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 31 Jan 2024 21:26:48 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: peterx@redhat.com, qemu-devel@nongnu.org
 Cc: Bryan Zhang <bryan.zhang@bytedance.com>, Prasad Pandit
  <ppandit@redhat.com>, peterx@redhat.com, Yuan Liu <yuan1.liu@intel.com>,
  Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH 10/14] migration/multifd: Move total_normal_pages
- accounting
-In-Reply-To: <20240131103111.306523-11-peterx@redhat.com>
+Subject: Re: [PATCH 11/14] migration/multifd: Move trace_multifd_send|recv()
+In-Reply-To: <20240131103111.306523-12-peterx@redhat.com>
 References: <20240131103111.306523-1-peterx@redhat.com>
- <20240131103111.306523-11-peterx@redhat.com>
-Date: Wed, 31 Jan 2024 18:26:00 -0300
-Message-ID: <87frydjitz.fsf@suse.de>
+ <20240131103111.306523-12-peterx@redhat.com>
+Date: Wed, 31 Jan 2024 18:26:46 -0300
+Message-ID: <87cythjisp.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-1.29 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-1.19)[89.07%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_THREE(0.00)[3];
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MtFS4s+W;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=h6xjppEu
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-7.98 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ BAYES_HAM(-2.97)[99.88%]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ DWL_DNSWL_HI(-3.50)[suse.de:dkim]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: F3EFA21FF4
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,8 +126,8 @@ peterx@redhat.com writes:
 
 > From: Peter Xu <peterx@redhat.com>
 >
-> Just like the previous patch, move the accounting for total_normal_pages on
-> both src/dst sides into the packet fill/unfill procedures.
+> Move them into fill/unfill of packets.  With that, we can further cleanup
+> the send/recv thread procedure, and remove one more temp var.
 >
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
