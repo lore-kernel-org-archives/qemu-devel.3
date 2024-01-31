@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E10C47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010E0C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 03:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV1Rf-0002vg-5g; Tue, 30 Jan 2024 22:39:27 -0500
+	id 1rV1Sf-0003TE-5e; Tue, 30 Jan 2024 22:40:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rV1Rd-0002vY-1F
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:39:25 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ id 1rV1Sd-0003Sr-Lf
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:40:27 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rV1Ra-0004uA-LQ
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:39:24 -0500
+ id 1rV1Sc-0005EA-28
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 22:40:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706672363; x=1738208363;
+ t=1706672426; x=1738208426;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=jFt7W29WlZr+tWeECXsjc2n5qhxVmEUKjJ6VOVNjujU=;
- b=CmsrcrEgW7Hu4DzwhRJPCzMQG2KNUoCvlcCF1kPoS5gImLDcDlSHpApI
- 2vBK633dzrDhEasKOyhsFW+LIlLD4qyHg1yi7E6trHeWkIzE+oj46CWw7
- 5uz9YSn/F6Yg0CBXDZ08egq8Pwecb8yWs5JKwzArSjMigcE0F6MPZdKva
- mWBgbmZvUg6CIKNC67CnPSWZgogTHsATXu4WXoO+R8QMUyADIzMh7Xp6r
- oRZK6QQ+3A+gEQ+yTB7hD5tt11zqHUEQPfRl5Yw7zJkIkQ/YoY/r6VzRO
- toKS27RA/e9QYiUt0Xu6HGhZWhjit3BCzN14zUo957pmmNmn1tYenQ4PV g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="17010397"
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="17010397"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jan 2024 19:39:17 -0800
+ bh=5BWH/FDpGN4wqK3bRSej8yHnFryVSr/ULTUTxOx275k=;
+ b=iH4HdqcaL2/RK4JNWFhnb3z/3nrYyv2bVqFyQfApjNtkh0WW8EDuql85
+ pMgBksrImR9s6FPpUyk1TcqUi4vShzFO1PEJx7z3S1YnBfmTSs5Ftseir
+ snvefyb5A/QmE6wo0Pmzx/ZaEa9yI5gf38DP0bWzg9JNr/BmQ1Umm5v/G
+ NUD+vFXObOy+CHdSFkkmErCGTx5ThDrK0PfTmMgMVdxs10r+wCqzwjbee
+ o4ZxeT7bj6HxN2Xu6QDKT4PSKs6zNQ/DggypaSPUof4L1yN5VhfX9oVQB
+ yDz+JWespP2bkpF8Wi906072nll1/a9tGARrvQta3jT1qjgmlR2k8Uqt/ A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="2419900"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
+   d="scan'208";a="2419900"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jan 2024 19:39:56 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="1119483627"
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="1119483627"
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="822421510"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="822421510"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmsmga005.fm.intel.com with ESMTP; 30 Jan 2024 19:39:14 -0800
-Date: Wed, 31 Jan 2024 11:52:45 +0800
+ by orsmga001.jf.intel.com with ESMTP; 30 Jan 2024 19:39:53 -0800
+Date: Wed, 31 Jan 2024 11:53:23 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
@@ -54,15 +55,15 @@ Cc: qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/5] pci: Switch bus reset to 3-phase-reset
-Message-ID: <ZbnEDTH2IP4xKNFx@intel.com>
+Subject: Re: [PATCH 2/5] vmbus: Switch bus reset to 3-phase-reset
+Message-ID: <ZbnEM2Y1YBrBzKD/@intel.com>
 References: <20240119163512.3810301-1-peter.maydell@linaro.org>
- <20240119163512.3810301-2-peter.maydell@linaro.org>
+ <20240119163512.3810301-3-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240119163512.3810301-2-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240119163512.3810301-3-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -86,14 +87,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 19, 2024 at 04:35:08PM +0000, Peter Maydell wrote:
-> Date: Fri, 19 Jan 2024 16:35:08 +0000
+On Fri, Jan 19, 2024 at 04:35:09PM +0000, Peter Maydell wrote:
+> Date: Fri, 19 Jan 2024 16:35:09 +0000
 > From: Peter Maydell <peter.maydell@linaro.org>
-> Subject: [PATCH 1/5] pci: Switch bus reset to 3-phase-reset
+> Subject: [PATCH 2/5] vmbus: Switch bus reset to 3-phase-reset
 > X-Mailer: git-send-email 2.34.1
 > 
-> Switch the PCI bus from using BusClass::reset to the Resettable
-> interface.
+> Switch vmbus from using BusClass::reset to the Resettable interface.
 > 
 > This has no behavioural change, because the BusClass code to support
 > subclasses that use the legacy BusClass::reset will call that method
@@ -101,54 +101,43 @@ On Fri, Jan 19, 2024 at 04:35:08PM +0000, Peter Maydell wrote:
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  hw/pci/pci.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  hw/hyperv/vmbus.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 > 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 76080af580d..05c2e46bda5 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -64,7 +64,7 @@ bool pci_available = true;
+> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+> index c86d1895bae..380239af2c7 100644
+> --- a/hw/hyperv/vmbus.c
+> +++ b/hw/hyperv/vmbus.c
+> @@ -2453,9 +2453,9 @@ static void vmbus_unrealize(BusState *bus)
+>      qemu_mutex_destroy(&vmbus->rx_queue_lock);
+>  }
 >  
->  static char *pcibus_get_dev_path(DeviceState *dev);
->  static char *pcibus_get_fw_dev_path(DeviceState *dev);
-> -static void pcibus_reset(BusState *qbus);
-> +static void pcibus_reset_hold(Object *obj);
->  static bool pcie_has_upstream_port(PCIDevice *dev);
+> -static void vmbus_reset(BusState *bus)
+> +static void vmbus_reset_hold(Object *obj)
+>  {
+> -    vmbus_deinit(VMBUS(bus));
+> +    vmbus_deinit(VMBUS(obj));
+>  }
 >  
->  static Property pci_props[] = {
-> @@ -202,13 +202,15 @@ static void pci_bus_class_init(ObjectClass *klass, void *data)
+>  static char *vmbus_get_dev_path(DeviceState *dev)
+> @@ -2476,12 +2476,13 @@ static char *vmbus_get_fw_dev_path(DeviceState *dev)
+>  static void vmbus_class_init(ObjectClass *klass, void *data)
 >  {
 >      BusClass *k = BUS_CLASS(klass);
->      PCIBusClass *pbc = PCI_BUS_CLASS(klass);
 > +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 >  
->      k->print_dev = pcibus_dev_print;
->      k->get_dev_path = pcibus_get_dev_path;
->      k->get_fw_dev_path = pcibus_get_fw_dev_path;
->      k->realize = pci_bus_realize;
->      k->unrealize = pci_bus_unrealize;
-> -    k->reset = pcibus_reset;
-> +
-> +    rc->phases.hold = pcibus_reset_hold;
+>      k->get_dev_path = vmbus_get_dev_path;
+>      k->get_fw_dev_path = vmbus_get_fw_dev_path;
+>      k->realize = vmbus_realize;
+>      k->unrealize = vmbus_unrealize;
+> -    k->reset = vmbus_reset;
+> +    rc->phases.hold = vmbus_reset_hold;
+>  }
 >  
->      pbc->bus_num = pcibus_num;
->      pbc->numa_node = pcibus_numa_node;
-> @@ -424,9 +426,9 @@ void pci_device_reset(PCIDevice *dev)
->   * Called via bus_cold_reset on RST# assert, after the devices
->   * have been reset device_cold_reset-ed already.
->   */
-> -static void pcibus_reset(BusState *qbus)
-> +static void pcibus_reset_hold(Object *obj)
->  {
-> -    PCIBus *bus = DO_UPCAST(PCIBus, qbus, qbus);
-> +    PCIBus *bus = PCI_BUS(obj);
->      int i;
->  
->      for (i = 0; i < ARRAY_SIZE(bus->devices); ++i) {
+>  static int vmbus_pre_load(void *opaque)
 > -- 
 > 2.34.1
 > 
