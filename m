@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633F5C48285
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 08:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6523C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 08:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV6Ja-0001wE-CB; Wed, 31 Jan 2024 03:51:26 -0500
+	id 1rV6JZ-0001vO-0g; Wed, 31 Jan 2024 03:51:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1rV6JT-0001uU-S7
+ id 1rV6JT-0001uS-RC
  for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:51:21 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1rV6JR-0007s3-Cr
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:51:18 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-40f02b8d176so12884825e9.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 00:51:16 -0800 (PST)
+ id 1rV6JQ-0007qO-0s
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:51:17 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-40fb5d67763so1514385e9.2
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 00:51:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1706691075; x=1707295875; darn=nongnu.org;
+ d=adacore.com; s=google; t=1706691074; x=1707295874; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i9v7qgpqTwh9hq22Mg4JAHZdgJYch8tJcJ4v6ze8WCo=;
- b=ZPoXcyEBCvZNSMq/t02gNYWG5Pp0UMPQBa7+e+ae5nUJf5mXtAd4sYJ8ZuMAn86QYr
- GwnkxCQ9leGDL1FWgw+arvKY2CJc1UHF4ReDgjUNc1AXDDi1nJscMqWtz53mMqLBLGpt
- +NxctMHaKML5qep5nRLp8WQmjiodzAn3bDI51qXHwAeSBZ0sSxU7eZV/sug7SArNONVA
- px+aoA8eo2qp4jQP6GqaWeyIS47k6eXcHhZrxV2jFAmZim0OMqtY4BVhTIIYDUF01bQi
- RoCamVZFqvtxkyzvWbkqysf/6lMYXfa9Jcmf1rdx6Rr2DWFH/d7XwjuohUz9ytz23+tB
- hIlw==
+ bh=mUU2OsysmeYjtlDgPMbUT7x1rpWKo5GkfDES6teYBdY=;
+ b=PV34dV6HSMdyHIzENNGZ2KDFFcmxMGW+D2Vf+KsHJOEDSGFi/KgEKUZBhvNvIe3ZSs
+ ONAtpqLwB0n58rZTYwEdzoEQ9+VAAkYudKRkmclqqoHz6H+83t9NdeuvQ8lv8SGD2q8j
+ enhDdILIVOTmYUXzQFTfHPxUCbg5VUF2blrKykbB1eMKsdla9BAxjcRvDImnNJkUjoXd
+ 4JK4+wugVg2g5MyfCIPxAtSoRNS4//omgZzaZM4+z7F8I2zoGGJWcbCNNKGebH3gvYBh
+ YgyBg18FoGw9grjAOmBD/kXOfgM62gEJ5Gb/Q967kw1A/UgVWMCIUOY2lF8qtPLZH6X4
+ ZtAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706691075; x=1707295875;
+ d=1e100.net; s=20230601; t=1706691074; x=1707295874;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i9v7qgpqTwh9hq22Mg4JAHZdgJYch8tJcJ4v6ze8WCo=;
- b=rk3iIcCnqo0qKAOGVkJTiqABsdJcXVB3i4Cq8KviiOkdHKuJzS6SsCzEQq7AefLoN0
- LlY8XKuIFX2CvNl+1E0I0gxSzjRpPgagKkn6283u1UA1kL4c6N3wD72p9CJGCfUCMyHS
- fU3pBMXJTHlQFw9JTasxKhHzE1Lwxhi4Hfi0EFq1YAtpxk/jthqpQR+nZjgvXKdcmXgS
- K5Qy0dkUgi10KCd+2JaVj1+paecVwEc3FVvl3X/EuOu4wVo94l3jGIB43VD6GI5z9oAS
- 9unZLSN5kMoc2Nd1DKjppFq0G7IVoFHWOrZGpOYwfm1vwVujKaSufK0zlRBk9QubHzfz
- 817g==
-X-Gm-Message-State: AOJu0YztvFVrIT7ioS4eU/o5bcDxQV1cQSuf+rx0Bgp2kDbEgYVd5Pzw
- G3cQ1vtWZVUM/0pEHEQkWhuGzthRaYX70H6tR9r+xHfJ3WZw9T9rO3bPFdavC5eqe8DGPyAVzwc
+ bh=mUU2OsysmeYjtlDgPMbUT7x1rpWKo5GkfDES6teYBdY=;
+ b=fKeRmO3ByDcjHKDBgc23veZV7sGWh9jUA+edPyYHFFb8jooj8+54YrhwuXK5kgnAMD
+ cOEA/OnNAsVdvmdLaBVlLqo2r8P/WD7jczWZ3lTve8fXAB2T8MV2PkTJ1KG6XF3nGuvj
+ VNuNDfNSHM74LIUJMl5quHEDXqmJbO3ulEECVIb+8RWqH4FSSgE+doJjRFtTqWneHKaL
+ caqfcn4uV0RrcS/aJYZ3YO/XfJa8C9s6lfGR4i7rsCUsFT9qjuLHFbFTncBjPIv+bKv9
+ 1vDaP1S52/Ey3umCWHCS9gJCjVVCWnAZ8KD3bFUyZOSWpLWOCs+2XNcgZGFGYA0NpyX/
+ m1ww==
+X-Gm-Message-State: AOJu0Yws98FjY32SkWE1jh8rodyO+rRUKKvkiLOqONr+Q/joPwcCX60e
+ dUNppRpRHVY6OCBrpGIuCmUL6jXsUCrVLYV3eB4R6hm9ywqyIZEqx42cg8TGU3qicXvI2aOVKUY
  =
-X-Google-Smtp-Source: AGHT+IEI8i2zxFB9XGjsgrT0ld7AM+ELVoSvx0klCgge3VE4glNDVT/HvHHI78RdkTPg0XwGRzwZBA==
-X-Received: by 2002:a05:600c:470f:b0:40e:cdff:8d10 with SMTP id
- v15-20020a05600c470f00b0040ecdff8d10mr708731wmo.6.1706691075522; 
- Wed, 31 Jan 2024 00:51:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEysSa5YspvsShTwBbW9xPU4Cui3kKxfEeS88udYSZ2/odEuwQb9eW0Pl2JKk8iQp2sHFHY6Q==
+X-Received: by 2002:a05:600c:3411:b0:40e:f6a1:ad02 with SMTP id
+ y17-20020a05600c341100b0040ef6a1ad02mr767476wmp.14.1706691074278; 
+ Wed, 31 Jan 2024 00:51:14 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCUSGcp/WPJNqFLCN91P3Z62hfHVVn8apf70Q8IAXmSq9BHxuHFhIYAjj0tiiPsHmqjWshaoOqOCZuQV8iKAZiE06GJ5DM3VeAZbk3LjlhTsSO05u1ZRQlndaM7N8PpsYp8ozIXBe5JG1RX5aSmNmFGa5FqDsaQQAxpx
 Received: from chigot-Dell.home ([2a01:cb15:8123:8100:aea2:cdf3:9482:a36])
  by smtp.gmail.com with ESMTPSA id
- n28-20020a05600c181c00b0040efd216050sm909926wmp.35.2024.01.31.00.51.14
+ n28-20020a05600c181c00b0040efd216050sm909926wmp.35.2024.01.31.00.51.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jan 2024 00:51:15 -0800 (PST)
+ Wed, 31 Jan 2024 00:51:13 -0800 (PST)
 From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [PATCH v3 6/9] leon3: remove SP initialization
-Date: Wed, 31 Jan 2024 09:50:44 +0100
-Message-Id: <20240131085047.18458-7-chigot@adacore.com>
+Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 5/9] target/sparc: implement asr17 feature for smp
+Date: Wed, 31 Jan 2024 09:50:43 +0100
+Message-Id: <20240131085047.18458-6-chigot@adacore.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240131085047.18458-1-chigot@adacore.com>
 References: <20240131085047.18458-1-chigot@adacore.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=chigot@adacore.com; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=chigot@adacore.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,44 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the doc (see §4.2.15 in [1]), the reset operation should
-not impact %SP.
+This allows the guest program to know its cpu id.
 
-[1] https://gaisler.com/doc/gr712rc-usermanual.pdf
-
+Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
 Signed-off-by: Clément Chigot <chigot@adacore.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sparc/leon3.c | 3 ---
- 1 file changed, 3 deletions(-)
+ target/sparc/helper.c    | 16 ++++++++++++++++
+ target/sparc/helper.h    |  1 +
+ target/sparc/translate.c | 13 +++----------
+ 3 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index 7866f0a049..317eb57336 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -69,7 +69,6 @@
- typedef struct ResetData {
-     SPARCCPU *cpu;
-     uint32_t  entry;            /* save kernel entry in case of reset */
--    target_ulong sp;            /* initial stack pointer */
- } ResetData;
+diff --git a/target/sparc/helper.c b/target/sparc/helper.c
+index bd10b60e4b..2247e243b5 100644
+--- a/target/sparc/helper.c
++++ b/target/sparc/helper.c
+@@ -212,4 +212,20 @@ void helper_power_down(CPUSPARCState *env)
+     env->npc = env->pc + 4;
+     cpu_loop_exit(cs);
+ }
++
++target_ulong helper_rdasr17(CPUSPARCState *env)
++{
++    CPUState *cs = env_cpu(env);
++    target_ulong val;
++
++    /*
++     * TODO: There are many more fields to be filled,
++     * some of which are writable.
++     */
++    val = env->def.nwindows - 1;    /* [4:0]   NWIN   */
++    val |= 1 << 8;                  /* [8]      V8    */
++    val |= (cs->cpu_index) << 28;   /* [31:28] INDEX  */
++
++    return val;
++}
+ #endif
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 55eff66283..fc818b8678 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -2,6 +2,7 @@
+ DEF_HELPER_1(rett, void, env)
+ DEF_HELPER_2(wrpsr, void, env, tl)
+ DEF_HELPER_1(rdpsr, tl, env)
++DEF_HELPER_1(rdasr17, tl, env)
+ DEF_HELPER_1(power_down, void, env)
+ #else
+ DEF_HELPER_FLAGS_2(wrpil, TCG_CALL_NO_RWG, void, env, tl)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 9387299559..1cabda9565 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -37,6 +37,7 @@
  
- static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
-@@ -136,7 +135,6 @@ static void main_cpu_reset(void *opaque)
-     cpu->halted = 0;
-     env->pc     = s->entry;
-     env->npc    = s->entry + 4;
--    env->regbase[6] = s->sp;
+ #ifdef TARGET_SPARC64
+ # define gen_helper_rdpsr(D, E)                 qemu_build_not_reached()
++# define gen_helper_rdasr17(D, E)               qemu_build_not_reached()
+ # define gen_helper_rett(E)                     qemu_build_not_reached()
+ # define gen_helper_power_down(E)               qemu_build_not_reached()
+ # define gen_helper_wrpsr(E, S)                 qemu_build_not_reached()
+@@ -2681,16 +2682,8 @@ static bool trans_RDY(DisasContext *dc, arg_RDY *a)
+ 
+ static TCGv do_rd_leon3_config(DisasContext *dc, TCGv dst)
+ {
+-    uint32_t val;
+-
+-    /*
+-     * TODO: There are many more fields to be filled,
+-     * some of which are writable.
+-     */
+-    val = dc->def->nwindows - 1;   /* [4:0] NWIN */
+-    val |= 1 << 8;                 /* [8]   V8   */
+-
+-    return tcg_constant_tl(val);
++    gen_helper_rdasr17(dst, tcg_env);
++    return dst;
  }
  
- static void leon3_cache_control_int(CPUSPARCState *env)
-@@ -247,7 +245,6 @@ static void leon3_generic_hw_init(MachineState *machine)
-     /* Reset data */
-     reset_info        = g_new0(ResetData, 1);
-     reset_info->cpu   = cpu;
--    reset_info->sp    = LEON3_RAM_OFFSET + ram_size;
-     qemu_register_reset(main_cpu_reset, reset_info);
- 
-     ahb_pnp = GRLIB_AHB_PNP(qdev_new(TYPE_GRLIB_AHB_PNP));
+ TRANS(RDASR17, ASR17, do_rd_special, true, a->rd, do_rd_leon3_config)
 -- 
 2.25.1
 
