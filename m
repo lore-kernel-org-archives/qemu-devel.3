@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F5FEC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 21:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3111C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 22:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVISY-0004z4-N2; Wed, 31 Jan 2024 16:49:30 -0500
+	id 1rVIgz-0008VB-Sp; Wed, 31 Jan 2024 17:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rVISX-0004xM-G5
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:49:29 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rVIgu-0008TV-8s
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 17:04:23 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rVISV-00084W-BM
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 16:49:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=PkAjUhH6VeffhCk4g8SmClnsfF20XGc9AVspgFjh6wk=; b=CmqQ1hlqzMkQLMq7Cq0u6mruQk
- luEyn2SDMnVlsI6Tlm6QHhu4tlkiYQvG1DWWOk+ilUPI9TukwEmcOFwlfq9CgJkbdhtpXAC5clwLO
- OMrjohyOoRK0QJxfr6cz56IhrMhN6c7tBmwDB7H63EvxNjmgdW+IiKY9I8u9YoIug3RHD/HardULE
- MUlbAIXJI6x6Hs01Gb/8Xk6sFVaqXD5D+xYTiEOMAtN2P2fuSvBpqC4X/JXhkxOjEVyBihRnI8GYU
- dQsEa0MH+036x0k38NpcRyug8f+gHLCqBW0dJP5CCg1yVI67W6+gnEH1LIXL5V4NrbqX64FBLiJj1
- q7WbeMsVACna+xvU9eJQFy72FkYEZMqulxdDde+E+IeJ0+TDjCCk9urdSXat2ARKi9ry8xayxfJQl
- VjLzNRx4pnbqL+wT847Jdws0HBHmxsaaccCthzS9T+KpOq8SKBwjW6xA6PhCHrDUVgzsTD1sn+qRZ
- QQYQgl4WYEo5GF7CDa0pWfKL7pQrOCvUWPrn3Ked93noO1xLv1bA19jp9AkIzqz+bKgyTdDgJKtRk
- KCQ1tKRbMsRnhJtGY/N9jyNARNDa5F04DYQdz7C6r7yWkmy4cUSPxZ/v0Ywnbb0Y46EBS0mST7a+0
- 1nxw/R9q1pq2Irqrx6BgkcSJUvyUYdXVg7fD4dDMs=;
-Received: from [2a00:23c4:8bb2:1300:abd8:dbb4:d9a1:12c5]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rVIRn-0009Zg-Sk; Wed, 31 Jan 2024 21:48:47 +0000
-Message-ID: <b6ac778b-4a75-4c1d-812d-23e27f9a9b04@ilande.co.uk>
-Date: Wed, 31 Jan 2024 21:49:13 +0000
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rVIgq-0002iC-Bu
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 17:04:20 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40VL8q9F022575; Wed, 31 Jan 2024 22:04:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=C0LuXU3HStt5FxTADOOZj3v2htHG109/FP22/FS2HgM=;
+ b=DJM+MKAxEoG1RJYe6LcbBw6Pf7HzhV3TYt9VFg5uVMIt35dW9Ttxs0QlffyqJ2SU9XCY
+ 72Bp93UN9qfew3A2d345l4Wy22QHYMwqEYva7VV3RCQPONnty1he+8dv3EUvPumR07sF
+ nccARmCrLVvSSjBd6/01HFeUBSBOzcJoySG8v9wSm2pDEouGvcsjspZ6T8zvj2qiQsb4
+ WBdgrbBZE7upS8xXZeOzwVeXX70Pvwrl5obBFasUKt0p1foNxWiJsYQX3EDt8+/QbQ+r
+ aIF9vKF4DRcYDBWJsqD43zqsAbco6d5n2lqqfCjCr0tVQB1dG3Qs8so62cLgfl8rWmwn 8Q== 
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3vywv0s7qs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jan 2024 22:04:12 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40VLt6T2007964; Wed, 31 Jan 2024 22:02:49 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwdnm7yc1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jan 2024 22:02:49 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 40VM2lcs8520324
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 31 Jan 2024 22:02:47 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 937A42006F;
+ Wed, 31 Jan 2024 22:02:47 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 405D12006C;
+ Wed, 31 Jan 2024 22:02:47 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.171.74.74])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 31 Jan 2024 22:02:47 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] tests/tcg: Fix the /proc/self/mem probing in the PROT_NONE
+ gdbstub test
+Date: Wed, 31 Jan 2024 23:02:18 +0100
+Message-ID: <20240131220245.235993-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20231103173841.33651-1-richard.henderson@linaro.org>
- <a96a571b-55b7-46b4-a793-bb405ef10467@linaro.org>
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <a96a571b-55b7-46b4-a793-bb405ef10467@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:abd8:dbb4:d9a1:12c5
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 00/22] target/sparc: floating-point cleanup
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: dBcsbm3so-UVQZFoWU3_b2-zLGCBjlYY
+X-Proofpoint-ORIG-GUID: dBcsbm3so-UVQZFoWU3_b2-zLGCBjlYY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-31_10,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=614 impostorscore=0
+ spamscore=0 clxscore=1015 bulkscore=0 mlxscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2401310170
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,80 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/01/2024 06:49, Richard Henderson wrote:
+The `if not probe_proc_self_mem` check never passes, because
+probe_proc_self_mem is a function object, which is a truthy value.
+Add parentheses in order to perform a function call.
 
-> On 11/4/23 03:38, Richard Henderson wrote:
->> Major changes:
->>
->> (1) Get rid of the env->qt[01] temporaries and use TCGv_i128 for float128.
->> (2) Perform ieee exception check within the helpers, before any writeback
->>      to the floating point registers.
->> (3) Split env->fsr into pieces to simplify update, especially compares.
->>
->>
->> r~
->>
->>
->> Based-on: 20231101041132.174501-1-richard.henderson@linaro.org
->> ("[PATCH v2 00/21] target/sparc: Cleanup condition codes etc")
-> 
-> Ping.
-> 
-> Prerequisites are upstream, and it rebases cleanly on master.
-> For reference,
-> 
->    https://gitlab.com/rth7680/qemu/-/commits/tgt-sparc-fp
-> 
-> 
-> r~
+Fixes: dc84d50a7f9b ("tests/tcg: Add the PROT_NONE gdbstub test")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ tests/tcg/multiarch/gdbstub/prot-none.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I've tested the above branch on my SPARC32 and SPARC64 images, and whilst I don't 
-think they particularly exercise FP instructions, I don't see any regressions so:
-
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-I'm happy for you to take this via tcg-next if that's easiest for you.
-
->> Richard Henderson (22):
->>    target/sparc: Use tcg_gen_qemu_{ld,st}_i128 for ASI_M_BCOPY
->>    target/sparc: Use tcg_gen_qemu_{ld,st}_i128 for ASI_M_BFILL
->>    target/sparc: Remove gen_dest_fpr_F
->>    target/sparc: Introduce gen_{load,store}_fpr_Q
->>    target/sparc: Inline FNEG, FABS
->>    target/sparc: Use i128 for FSQRTq
->>    target/sparc: Use i128 for FADDq, FSUBq, FMULq, FDIVq
->>    target/sparc: Use i128 for FqTOs, FqTOi
->>    target/sparc: Use i128 for FqTOd, FqTOx
->>    target/sparc: Use i128 for FCMPq, FCMPEq
->>    target/sparc: Use i128 for FsTOq, FiTOq
->>    target/sparc: Use i128 for FdTOq, FxTOq
->>    target/sparc: Use i128 for Fdmulq
->>    target/sparc: Remove qt0, qt1 temporaries
->>    target/sparc: Introduce cpu_get_fsr, cpu_put_fsr
->>    target/split: Split ver from env->fsr
->>    target/sparc: Clear cexc and ftt in do_check_ieee_exceptions
->>    target/sparc: Merge check_ieee_exceptions with FPop helpers
->>    target/sparc: Split cexc and ftt from env->fsr
->>    target/sparc: Remove cpu_fsr
->>    target/sparc: Split fcc out of env->fsr
->>    target/sparc: Remove FSR_FTT_NMASK, FSR_FTT_CEXC_NMASK
->>
->>   target/sparc/cpu.h          |  39 +-
->>   target/sparc/helper.h       | 116 ++----
->>   linux-user/sparc/cpu_loop.c |   2 +-
->>   linux-user/sparc/signal.c   |  14 +-
->>   target/sparc/cpu.c          |  32 +-
->>   target/sparc/fop_helper.c   | 510 +++++++++++++----------
->>   target/sparc/gdbstub.c      |   8 +-
->>   target/sparc/ldst_helper.c  |   3 -
->>   target/sparc/machine.c      |  38 +-
->>   target/sparc/translate.c    | 799 ++++++++++++------------------------
->>   10 files changed, 680 insertions(+), 881 deletions(-)
-
-
-ATB,
-
-Mark.
+diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
+index e829d3ebc5f..7e264589cb8 100644
+--- a/tests/tcg/multiarch/gdbstub/prot-none.py
++++ b/tests/tcg/multiarch/gdbstub/prot-none.py
+@@ -20,7 +20,7 @@ def probe_proc_self_mem():
+ 
+ def run_test():
+     """Run through the tests one by one"""
+-    if not probe_proc_self_mem:
++    if not probe_proc_self_mem():
+         print("SKIP: /proc/self/mem is not usable")
+         exit(0)
+     gdb.Breakpoint("break_here")
+-- 
+2.43.0
 
 
