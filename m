@@ -4,135 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEB8C48285
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 18:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5205DC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 18:26:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVFEp-0002B5-UF; Wed, 31 Jan 2024 13:23:07 -0500
+	id 1rVFHy-0003IC-Qt; Wed, 31 Jan 2024 13:26:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rVFEo-0002Am-CQ
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:23:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rVFEm-0000fO-QT
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:23:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706725383;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sDQ0yzMF/HrDShmPKAZIfOiqbAfoG8ZxqpcFIkOi1jQ=;
- b=ihe+s1iM3IAFlR7DOcuHLSn+BWjed8zNELmOYfSrJ+V7QxwjNl26sJQ8CS6sQXRguEkLpU
- n2wwhrai9ApRNcXgP2Cpu9TI/FioOHJ9wn/FRCG+Xj4JFehHyWWrk/ga+vVh7g2jwJXb6w
- Fr1OAR1xNgF3GAdsLNbaSSjAD9tM2/8=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-vtwoH_NyO2mZ5jUUX6Xdwg-1; Wed, 31 Jan 2024 13:23:01 -0500
-X-MC-Unique: vtwoH_NyO2mZ5jUUX6Xdwg-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-5110fdc81e0so8206e87.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 10:23:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <palmer@rivosinc.com>)
+ id 1rVFHx-0003HZ-3i
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:26:21 -0500
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <palmer@rivosinc.com>)
+ id 1rVFHl-0001Wq-P1
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 13:26:20 -0500
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5c229dabbb6so79807a12.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 10:26:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1706725566; x=1707330366;
+ darn=nongnu.org; 
+ h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:to:cc:subject:date:message-id:reply-to;
+ bh=xl8lOyhiLUDTPIVcSct4Ltd9837FiugwFKaP5eSD1yM=;
+ b=X36sTfDAVVnHWtX50Wb2R6d7RjJPyWS7mVgEj9sDZ3GAZvk2cTOY9bJRuzLSCTsJUo
+ 8ztWPQpYObVIZff80uLtlqUOE7swZ2rdPIJaVMJ0rh4jGoFC2PvWyEKLK+whZo592MQJ
+ fm087wVxcpQyZaxrmTvH6FePQe96Hw8GmbX0HDItIk2OCiZHuADa0pqx2n1hEe6iWqtA
+ LRQIjy14LzBAmJx3EwBu0DvKxbhXLm+Dv35VtracN4M/vd09IQtVWJkqAex7xYgdXVM+
+ XmCEoNob6BHcISRThwe8Co+O3DFd5MDJsv5CTFbfEIesHjpnulUpsLoTKrARlNbCGOzR
+ fkHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706725380; x=1707330180;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sDQ0yzMF/HrDShmPKAZIfOiqbAfoG8ZxqpcFIkOi1jQ=;
- b=i2iRuPhrgjeAMZpEwlCsV/ARiZ9eiLnoqtygb8xeNpi0xrWhSQVSK4CjHsP7pJrmnX
- nKcXjrS9XHPdzL5WgCXyLuEfHUpk9LiAOfnEhwDYbrfQqpGT1EkFTb7KwrrUEt8aMB6F
- tLzThoIM/jd0vJ+mH/KYM5+5GDF9xX/HppM8EVTJI7Daj+m+VwlG2LPXaP81iDTV2/Mq
- J2jQu0oue/24ixGIppnFfHmKSEm8nRPo1EUfh6epZbIEv+ZHJ25r/naBxjIT3O70uJ9d
- 1w2uzVk7H9hYUorkUiuNmXSQ+sTaG+HXHN0E+jGc+Ubcqvw/rp3KE94ZwUhvclj2qPdR
- tNIw==
-X-Gm-Message-State: AOJu0YxHLctEeOwIdDDGHAOS/V2q/HAxEeGykmlRKPeOucZA9IHm+Hie
- EvRBlBfsYrPnMJ5vSSwXOxCxn3IzyQtMgFfSCbfkxF0MAhEvoPKyaSnxeHNdE89aSPwqhOS8c+P
- iZu/PRvz4uKkTPb7OU1OaEXxuCIASdQ0QC2ZPjdp4YKhvqEYjxPUu
-X-Received: by 2002:a05:6512:3590:b0:50e:ca86:658a with SMTP id
- m16-20020a056512359000b0050eca86658amr221493lfr.45.1706725380017; 
- Wed, 31 Jan 2024 10:23:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEaK9jwRglidl8ZhFSsUcIBlKhdhs7+mb0lVPvrdfznZ/4PRLw5c3v9gUdSVoP2uzPCfzgO3Q==
-X-Received: by 2002:a05:6512:3590:b0:50e:ca86:658a with SMTP id
- m16-20020a056512359000b0050eca86658amr221401lfr.45.1706725377589; 
- Wed, 31 Jan 2024 10:22:57 -0800 (PST)
-Received: from [192.168.3.108] (p5b0c64a0.dip0.t-ipconnect.de. [91.12.100.160])
- by smtp.gmail.com with ESMTPSA id
- f6-20020a7bc8c6000000b0040e621feca9sm2221478wml.17.2024.01.31.10.22.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jan 2024 10:22:57 -0800 (PST)
-Message-ID: <243002e8-7647-4638-98a4-520edf52802a@redhat.com>
-Date: Wed, 31 Jan 2024 19:22:56 +0100
+ d=1e100.net; s=20230601; t=1706725566; x=1707330366;
+ h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
+ :subject:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xl8lOyhiLUDTPIVcSct4Ltd9837FiugwFKaP5eSD1yM=;
+ b=pzNttJSS6MxDgmDhTSqAR+h6dv9RbY5VGL5dGkUzppdBnafPMC2vwhYkw8QKjpo7Wg
+ HUDyOQI6uFYZmPj1Wf39RmmjZl0J0m4H79C7Wq0qVQbkTEpTChM+dwfdAz9+vGb3Nga6
+ kUddKCB+Jjv+dJXQ8VIq5iGtPFAji/eAKt4Y49HfL7pdcIpY6/mDs0s4klWq2bB+QILu
+ urXJaKSxC3aT1PbzFRZA0pQ2iX93g3UWF782wgYFYgXp9yey7GIGBsK0uuVskGqTrMG4
+ A1bvXQMMooJBp5dhj9sr09xzBvj5Xfmlx6tJ1I2vK14JnGhm2q8olw8QnOghhEU1P3JQ
+ mxow==
+X-Gm-Message-State: AOJu0YxkP0JCjrZ+ragbT/zULAsIUFPDkoZtxw6WQDojjUD4VeFbGfyx
+ 47a3VqRr/8t+j5yrWpRrZp8yoSAfShM+uHlc7c09aWTk2sV3rp+BSg/YDGOFSj/6AyaQGlbQHM7
+ /
+X-Google-Smtp-Source: AGHT+IH9XRp4PliDG4VbzcYWZ5osjMSIhTztVv1ivXGQ58iGHiM5di/MzXV1xl467UVW19DXXUhFQg==
+X-Received: by 2002:a17:903:2286:b0:1d9:1df6:6e23 with SMTP id
+ b6-20020a170903228600b001d91df66e23mr2040660plh.39.1706725566314; 
+ Wed, 31 Jan 2024 10:26:06 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCXlA59mGIs/P9GLVPqZqFwa5XBGd8AKQPv/pxU5t843Qr96+EX4zKgVODvZxUVr2LubGPQKxc9OahwG2tlkho3cq3lt
+Received: from localhost ([12.44.203.122]) by smtp.gmail.com with ESMTPSA id
+ kr12-20020a170903080c00b001d8f82c61cdsm4740633plb.231.2024.01.31.10.26.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jan 2024 10:26:04 -0800 (PST)
+Subject: [PATCH] RISC-V: Report the QEMU vendor/arch IDs on virtual CPUs
+Date: Wed, 31 Jan 2024 10:24:30 -0800
+Message-ID: <20240131182430.20174-1-palmer@rivosinc.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/1] oslib-posix: initialize backend memory objects in
- parallel
-To: Mark Kanda <mark.kanda@oracle.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, berrange@redhat.com
-References: <20240131165327.3154970-1-mark.kanda@oracle.com>
- <20240131165327.3154970-2-mark.kanda@oracle.com>
-Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240131165327.3154970-2-mark.kanda@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@rivosinc.com>
+From: Palmer Dabbelt <palmer@rivosinc.com>
+To: qemu-riscv@nongnu.org
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=palmer@rivosinc.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,31 +93,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31.01.24 17:53, Mark Kanda wrote:
-> QEMU initializes preallocated backend memory as the objects are parsed from
-> the command line. This is not optimal in some cases (e.g. memory spanning
-> multiple NUMA nodes) because the memory objects are initialized in series.
-> 
-> Allow the initialization to occur in parallel (asynchronously). In order to
-> ensure optimal thread placement, asynchronous initialization requires prealloc
-> context threads to be in use.
-> 
-> Signed-off-by: Mark Kanda <mark.kanda@oracle.com>
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> ---
+Right now we just report 0 for marchid/mvendorid in QEMU.  That's legal,
+but it's tricky for users that want to check if they're running on QEMU
+to do so.  This sets marchid to 42, which I've proposed as the QEMU
+architecture ID (mvendorid remains 0, just explicitly set, as that's how
+the ISA handles open source implementations).
 
-So, this LGTM. There might be ways to not rely on phases to achieve what 
-we want to achieve (e.g., let the machine set an internal property on 
-memory backends we create from the cmdline), but this should do as well.
+Link: https://github.com/riscv/riscv-isa-manual/pull/1213
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+---
+ target/riscv/cpu.c          | 16 ++++++++++++++++
+ target/riscv/cpu_vendorid.h |  3 +++
+ 2 files changed, 19 insertions(+)
 
-I'll wait a bit for more feedback. If there is none, I'll route this 
-through my tree (after doing a quick sanity test).
-
-Thanks!
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 8cbfc7e781..1aef186f87 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -415,6 +415,9 @@ static void riscv_any_cpu_init(Object *obj)
+     cpu->cfg.ext_zicsr = true;
+     cpu->cfg.mmu = true;
+     cpu->cfg.pmp = true;
++
++    cpu->cfg.mvendorid = QEMU_MVENDORID;
++    cpu->cfg.marchid = QEMU_MARCHID;
+ }
+ 
+ static void riscv_max_cpu_init(Object *obj)
+@@ -432,6 +435,8 @@ static void riscv_max_cpu_init(Object *obj)
+     set_satp_mode_max_supported(RISCV_CPU(obj), mlx == MXL_RV32 ?
+                                 VM_1_10_SV32 : VM_1_10_SV57);
+ #endif
++    cpu->cfg.mvendorid = QEMU_MVENDORID;
++    cpu->cfg.marchid = QEMU_MARCHID;
+ }
+ 
+ #if defined(TARGET_RISCV64)
+@@ -445,6 +450,8 @@ static void rv64_base_cpu_init(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
+ #endif
++    cpu->cfg.mvendorid = QEMU_MVENDORID;
++    cpu->cfg.marchid = QEMU_MARCHID;
+ }
+ 
+ static void rv64_sifive_u_cpu_init(Object *obj)
+@@ -569,6 +576,8 @@ static void rv128_base_cpu_init(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
+ #endif
++    cpu->cfg.mvendorid = QEMU_MVENDORID;
++    cpu->cfg.marchid = QEMU_MARCHID;
+ }
+ 
+ static void rv64i_bare_cpu_init(Object *obj)
+@@ -591,6 +600,8 @@ static void rv64i_bare_cpu_init(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV64);
+ #endif
++    cpu->cfg.mvendorid = QEMU_MVENDORID;
++    cpu->cfg.marchid = QEMU_MARCHID;
+ }
+ #else
+ static void rv32_base_cpu_init(Object *obj)
+@@ -603,6 +614,8 @@ static void rv32_base_cpu_init(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+     set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV32);
+ #endif
++    cpu->cfg.mvendorid = QEMU_MVENDORID;
++    cpu->cfg.marchid = QEMU_MARCHID;
+ }
+ 
+ static void rv32_sifive_u_cpu_init(Object *obj)
+@@ -672,6 +685,9 @@ static void rv32_imafcu_nommu_cpu_init(Object *obj)
+     cpu->cfg.ext_zifencei = true;
+     cpu->cfg.ext_zicsr = true;
+     cpu->cfg.pmp = true;
++
++    cpu->cfg.mvendorid = QEMU_MVENDORID;
++    cpu->cfg.marchid = QEMU_MARCHID;
+ }
+ #endif
+ 
+diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
+index 96b6b9c2cb..486832cd53 100644
+--- a/target/riscv/cpu_vendorid.h
++++ b/target/riscv/cpu_vendorid.h
+@@ -7,4 +7,7 @@
+ #define VEYRON_V1_MIMPID        0x111
+ #define VEYRON_V1_MVENDORID     0x61f
+ 
++#define QEMU_VIRT_MVENDORID     0
++#define QEMU_VIRT_MARCHID       42
++
+ #endif /*  TARGET_RISCV_CPU_VENDORID_H */
 -- 
-Cheers,
-
-David / dhildenb
+2.43.0
 
 
