@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7ACFC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6694FC47DB3
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9Ce-0000Tp-EE; Wed, 31 Jan 2024 06:56:28 -0500
+	id 1rV9Ch-0000fc-0x; Wed, 31 Jan 2024 06:56:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9CU-0000B2-0p; Wed, 31 Jan 2024 06:56:19 -0500
+ id 1rV9CX-0000Kf-Nc; Wed, 31 Jan 2024 06:56:23 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9CF-0003wN-5L; Wed, 31 Jan 2024 06:56:16 -0500
+ id 1rV9CV-0003yA-Dj; Wed, 31 Jan 2024 06:56:20 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 320E4490C5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D80F490CA;
  Wed, 31 Jan 2024 14:56:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5BE8F7026E;
+ by tsrv.corpit.ru (Postfix) with SMTP id B43FB70273;
  Wed, 31 Jan 2024 14:55:50 +0300 (MSK)
-Received: (nullmailer pid 2263933 invoked by uid 1000);
+Received: (nullmailer pid 2263948 invoked by uid 1000);
  Wed, 31 Jan 2024 11:55:49 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 07/21] hyperv: Clean up includes
-Date: Wed, 31 Jan 2024 14:55:35 +0300
-Message-Id: <20240131115549.2263854-8-mjt@tls.msk.ru>
+Subject: [PULL 12/21] include: Clean up includes
+Date: Wed, 31 Jan 2024 14:55:40 +0300
+Message-Id: <20240131115549.2263854-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240131115549.2263854-1-mjt@tls.msk.ru>
 References: <20240131115549.2263854-1-mjt@tls.msk.ru>
@@ -64,7 +64,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Peter Maydell <peter.maydell@linaro.org>
 
 This commit was created with scripts/clean-includes:
- ./scripts/clean-includes --git hyperv hw/hyperv/*.[ch]
+ ./scripts/clean-includes --git include include/*/*.h include/*/*/*.h
 
 All .c should include qemu/osdep.h first.  The script performs three
 related cleanups:
@@ -77,89 +77,89 @@ related cleanups:
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/hyperv/hv-balloon-internal.h           | 1 -
- hw/hyperv/hv-balloon-our_range_memslots.c | 1 +
- hw/hyperv/hv-balloon-our_range_memslots.h | 1 -
- hw/hyperv/hv-balloon-page_range_tree.c    | 1 +
- hw/hyperv/hv-balloon-page_range_tree.h    | 1 -
- hw/hyperv/hv-balloon.c                    | 1 +
- 6 files changed, 3 insertions(+), 3 deletions(-)
+ include/hw/arm/raspberrypi-fw-defs.h | 1 -
+ include/hw/mem/memory-device.h       | 1 -
+ include/hw/ppc/spapr_nested.h        | 1 -
+ include/hw/xen/xen-hvm-common.h      | 1 -
+ include/qemu/qtree.h                 | 1 -
+ include/ui/rect.h                    | 2 --
+ 6 files changed, 7 deletions(-)
 
-diff --git a/hw/hyperv/hv-balloon-internal.h b/hw/hyperv/hv-balloon-internal.h
-index 164c2e5825..ee53a28a26 100644
---- a/hw/hyperv/hv-balloon-internal.h
-+++ b/hw/hyperv/hv-balloon-internal.h
+diff --git a/include/hw/arm/raspberrypi-fw-defs.h b/include/hw/arm/raspberrypi-fw-defs.h
+index 4551fe7450..579cf0d554 100644
+--- a/include/hw/arm/raspberrypi-fw-defs.h
++++ b/include/hw/arm/raspberrypi-fw-defs.h
 @@ -10,7 +10,6 @@
- #ifndef HW_HYPERV_HV_BALLOON_INTERNAL_H
- #define HW_HYPERV_HV_BALLOON_INTERNAL_H
+ #ifndef INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_
+ #define INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_
  
 -#include "qemu/osdep.h"
  
- #define HV_BALLOON_PFN_SHIFT 12
- #define HV_BALLOON_PAGE_SIZE (1 << HV_BALLOON_PFN_SHIFT)
-diff --git a/hw/hyperv/hv-balloon-our_range_memslots.c b/hw/hyperv/hv-balloon-our_range_memslots.c
-index 99bae870f3..1505a395cf 100644
---- a/hw/hyperv/hv-balloon-our_range_memslots.c
-+++ b/hw/hyperv/hv-balloon-our_range_memslots.c
-@@ -7,6 +7,7 @@
-  * See the COPYING file in the top-level directory.
-  */
+ enum rpi_firmware_property_tag {
+     RPI_FWREQ_PROPERTY_END =                           0,
+diff --git a/include/hw/mem/memory-device.h b/include/hw/mem/memory-device.h
+index a1d62cc551..e0571c8a31 100644
+--- a/include/hw/mem/memory-device.h
++++ b/include/hw/mem/memory-device.h
+@@ -14,7 +14,6 @@
+ #define MEMORY_DEVICE_H
  
-+#include "qemu/osdep.h"
- #include "hv-balloon-internal.h"
- #include "hv-balloon-our_range_memslots.h"
- #include "trace.h"
-diff --git a/hw/hyperv/hv-balloon-our_range_memslots.h b/hw/hyperv/hv-balloon-our_range_memslots.h
-index b6f592d34b..df3b686bc7 100644
---- a/hw/hyperv/hv-balloon-our_range_memslots.h
-+++ b/hw/hyperv/hv-balloon-our_range_memslots.h
-@@ -10,7 +10,6 @@
- #ifndef HW_HYPERV_HV_BALLOON_OUR_RANGE_MEMSLOTS_H
- #define HW_HYPERV_HV_BALLOON_OUR_RANGE_MEMSLOTS_H
- 
--#include "qemu/osdep.h"
- 
- #include "exec/memory.h"
+ #include "hw/qdev-core.h"
+-#include "qemu/typedefs.h"
+ #include "qapi/qapi-types-machine.h"
  #include "qom/object.h"
-diff --git a/hw/hyperv/hv-balloon-page_range_tree.c b/hw/hyperv/hv-balloon-page_range_tree.c
-index e178d8b413..dfb14852f4 100644
---- a/hw/hyperv/hv-balloon-page_range_tree.c
-+++ b/hw/hyperv/hv-balloon-page_range_tree.c
-@@ -7,6 +7,7 @@
-  * See the COPYING file in the top-level directory.
-  */
  
-+#include "qemu/osdep.h"
- #include "hv-balloon-internal.h"
- #include "hv-balloon-page_range_tree.h"
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index d383486476..d312a5d61d 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -1,7 +1,6 @@
+ #ifndef HW_SPAPR_NESTED_H
+ #define HW_SPAPR_NESTED_H
  
-diff --git a/hw/hyperv/hv-balloon-page_range_tree.h b/hw/hyperv/hv-balloon-page_range_tree.h
-index 07a9ae0da6..333772b86d 100644
---- a/hw/hyperv/hv-balloon-page_range_tree.h
-+++ b/hw/hyperv/hv-balloon-page_range_tree.h
-@@ -10,7 +10,6 @@
- #ifndef HW_HYPERV_HV_BALLOON_PAGE_RANGE_TREE_H
- #define HW_HYPERV_HV_BALLOON_PAGE_RANGE_TREE_H
+-#include "qemu/osdep.h"
+ #include "target/ppc/cpu.h"
+ 
+ /*
+diff --git a/include/hw/xen/xen-hvm-common.h b/include/hw/xen/xen-hvm-common.h
+index 4e9904f1a6..4b1d728f35 100644
+--- a/include/hw/xen/xen-hvm-common.h
++++ b/include/hw/xen/xen-hvm-common.h
+@@ -1,7 +1,6 @@
+ #ifndef HW_XEN_HVM_COMMON_H
+ #define HW_XEN_HVM_COMMON_H
+ 
+-#include "qemu/osdep.h"
+ #include "qemu/units.h"
+ 
+ #include "cpu.h"
+diff --git a/include/qemu/qtree.h b/include/qemu/qtree.h
+index 69fe74b50d..dc2b14d258 100644
+--- a/include/qemu/qtree.h
++++ b/include/qemu/qtree.h
+@@ -42,7 +42,6 @@
+ #ifndef QEMU_QTREE_H
+ #define QEMU_QTREE_H
  
 -#include "qemu/osdep.h"
  
- /* PageRange */
- typedef struct PageRange {
-diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
-index 66f297c1d7..0238365712 100644
---- a/hw/hyperv/hv-balloon.c
-+++ b/hw/hyperv/hv-balloon.c
-@@ -7,6 +7,7 @@
-  * See the COPYING file in the top-level directory.
-  */
+ #ifdef HAVE_GLIB_WITH_SLICE_ALLOCATOR
  
-+#include "qemu/osdep.h"
- #include "hv-balloon-internal.h"
+diff --git a/include/ui/rect.h b/include/ui/rect.h
+index 68f05d78a8..7ebf47ebcd 100644
+--- a/include/ui/rect.h
++++ b/include/ui/rect.h
+@@ -4,8 +4,6 @@
+ #ifndef QEMU_RECT_H
+ #define QEMU_RECT_H
  
- #include "exec/address-spaces.h"
+-#include <stdint.h>
+-#include <stdbool.h>
+ 
+ typedef struct QemuRect {
+     int16_t x;
 -- 
 2.39.2
 
