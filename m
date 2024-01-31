@@ -4,86 +4,174 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB39AC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 08:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B469C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 08:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV6JX-0001vN-D1; Wed, 31 Jan 2024 03:51:23 -0500
+	id 1rV6JV-0001uQ-Bd; Wed, 31 Jan 2024 03:51:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1rV6JR-0001u9-Ia
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:51:17 -0500
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1rV6JP-0007qD-JJ
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:51:17 -0500
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-51124d43943so635099e87.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 00:51:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1706691073; x=1707295873; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e4h/3nnPQ8lnDqMYJQ1DshvzX1Bc/jBjk24rZPsboDU=;
- b=Q+FkKS3pg8S9D4DeQDRGiO5mYibsrvzSXj9hCa2xpw9q+4ediJyu4+cLa5r5WELms7
- 67d3d4BukJanKFTaqbg1wv7XPi2aP3BfhR74suQM8/VGvLZ1rUkM0pjN5ei8/GY+j14m
- 23j20kaP8tJlAEy5mt8cTyRlQpuYvmnMsq5ZTamwRktpKv9E4+ixgoTwmrPFk2CKAnt4
- BpOpuDKFGX5GZVAgMJGmszVcoOD0iRK0mLuEFa4XA/cWCa0uIZLXV1c80wk4B+sqKQZq
- MquwlJbWrk+leOJPa7j0LWhVuRCWzH9F4dYy9NcgMqaB8H7BgcUCDxXOgk/PONy8xaGB
- 9dMA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV6JQ-0001tt-Uo
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:51:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rV6JO-0007py-7v
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 03:51:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706691072;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=aSYh9qkgdH68/vTrBmEMSXdOX8B+uBVyNyQ8m8sSujM=;
+ b=Ra1HnEXtskTMdfK71AKJzP7849m1R2U+qKA70ZFXcPPbT+wdPjDRsdcBv0OCHBAQsTBjXi
+ Hqv2REYi2NiP/XRRcZau+FV1hZnrx07AdRw7XW6xkT2F3owCNE7e8Fz1t8KCVN88r3MdH1
+ dKt6FNjnfWsSje4IPSK/F1cN7xAL7vM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-150-KEvTLbL_PO-6SBqolH6Mww-1; Wed, 31 Jan 2024 03:51:06 -0500
+X-MC-Unique: KEvTLbL_PO-6SBqolH6Mww-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33aebf85ce9so1486094f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 00:51:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706691073; x=1707295873;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=e4h/3nnPQ8lnDqMYJQ1DshvzX1Bc/jBjk24rZPsboDU=;
- b=emgRWF+r/iW6Kq7Fb1cIzt6hA2VmKPZynvJ5Dz4hs4Fd5A5GSf58NFeAO7Or3otSMu
- bLvPJki5pRYhpuwCJFY5qB4CxWBAM09DNVCfq2SthcogFOJhywEhqD+BzMUWXxXNxWhb
- vPsk/+69PqkesDiCnBqfg1mDP1KwbYnj+Tqq8oKJ7Ajffjdew+2NYFOFYwUaRnU6hx4j
- nAsn7NJnVD3WIxf2vn35RaGtT6QkA8SfuaL2IjUDfgCJTgnP8FKzIp1nobmISW/2RBTY
- 9KdWn0FHkN1Oz+UjRo8Cd7PKnn0rCbOCU66vCxv66CHe+hkxa9IT1+uTHMaUZOcgdTXj
- JROQ==
-X-Gm-Message-State: AOJu0Yx2PQfRVEh9ioUJljeFXecJAzVSb+pdIf9Vt+0D9Ns05BVk+e58
- dutoKYhKb+9qBhsWQ7egnFeT/agfFY/TSYKooILWxG4hmbAP6/x4XY7bWCR07cJZZY3HXhtnXV8
- =
-X-Google-Smtp-Source: AGHT+IGs/9949DPA8sdmmtLemwNf6uWUnk3kuyBkOfnfv1ZgZbkHVq6CiA+SBZF+lheNQWwh1jxlQQ==
-X-Received: by 2002:a05:6512:3092:b0:50d:1c9d:59e4 with SMTP id
- z18-20020a056512309200b0050d1c9d59e4mr853925lfd.47.1706691073040; 
- Wed, 31 Jan 2024 00:51:13 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXDYY265u549utEEB7gQkiGGb4xfpLe4jc21uCG5k8gM2WzmrATkv6Kvn5s226dmOssumjmRu62PWSEPAFmshlYmGwyP+BakTb/GipL4DxZo1OUorw+n4AvAlW/
-Received: from chigot-Dell.home ([2a01:cb15:8123:8100:aea2:cdf3:9482:a36])
- by smtp.gmail.com with ESMTPSA id
- n28-20020a05600c181c00b0040efd216050sm909926wmp.35.2024.01.31.00.51.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jan 2024 00:51:12 -0800 (PST)
-From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 4/9] intc/grlib_irqmp: implements multicore irq
-Date: Wed, 31 Jan 2024 09:50:42 +0100
-Message-Id: <20240131085047.18458-5-chigot@adacore.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240131085047.18458-1-chigot@adacore.com>
-References: <20240131085047.18458-1-chigot@adacore.com>
+ d=1e100.net; s=20230601; t=1706691065; x=1707295865;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aSYh9qkgdH68/vTrBmEMSXdOX8B+uBVyNyQ8m8sSujM=;
+ b=vphARZqqtj+ZElpDK86DLHcj5pL4DK5i2mEDUWSIeYass8VwJMnp5TUtQNoxdBkzRJ
+ zzjzEpqOijrdoQT3q2x9HqIEBMHlCzzIVT8Y75+JG28ArqRyJaWgreVIeyv7y21efRN0
+ PulO0tulCbnMJGw06HSHDmBKx/qxITY9kkXxfU58k+2FgXfsyn7O7jex7AViAH7mqZwS
+ wf+FbWmVgzeHDN80zrMAFbVh4aZgLXEO6kWyay24+cIpOe1uwEUyu26nPSDVkQU0t4dq
+ v2nLP7RZN+unKQvwPMT0H4QhF3NoDuDP7jIvzfIkJAiQncEl6afFhWWBfZLuoDKSVp8f
+ oIpQ==
+X-Gm-Message-State: AOJu0YxLQ785HH2RJVGohke+ay6gfTfQ7cuzfMEuEme9f//DYOV4QisK
+ 6KRiEM20MsPDsDwuJrhtx1oTzzAuT8oW8B8ioTEe1WMF4a6L5qNnyjtcUiiVe4z5QX95kT2aA70
+ wThcsMYMnWgBpy7g7khIbwZ3MFu6ib5ksV1A4DcUNW070B593Wmgo
+X-Received: by 2002:adf:f710:0:b0:33a:fd5d:ae40 with SMTP id
+ r16-20020adff710000000b0033afd5dae40mr738878wrp.25.1706691065205; 
+ Wed, 31 Jan 2024 00:51:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEiuQBVJYD01HOD65UG98BbOrQLNZE3UnKvIM5aSZes+b6ZVGOP+R2JokdYLHYx3/tXBfa2vg==
+X-Received: by 2002:adf:f710:0:b0:33a:fd5d:ae40 with SMTP id
+ r16-20020adff710000000b0033afd5dae40mr738833wrp.25.1706691064917; 
+ Wed, 31 Jan 2024 00:51:04 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
+ [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
+ r6-20020adfca86000000b0033aed7423e8sm7490515wrh.11.2024.01.31.00.51.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Jan 2024 00:51:04 -0800 (PST)
+Message-ID: <da60e946-a60d-4754-a869-6c021938d24d@redhat.com>
+Date: Wed, 31 Jan 2024 09:51:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=chigot@adacore.com; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 35/47] hw/mips/mipssim: use qemu_create_nic_device()
+Content-Language: en-US
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
+ <gaosong@loongson.cn>, Thomas Huth <huth@tuxfamily.org>,
+ Laurent Vivier <laurent@vivier.eu>, Huacai Chen <chenhuacai@kernel.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jason Wang <jasowang@redhat.com>,
+ Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Bin Meng
+ <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
+ David Woodhouse <dwmw@amazon.co.uk>
+References: <20240126173228.394202-1-dwmw2@infradead.org>
+ <20240126173228.394202-36-dwmw2@infradead.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240126173228.394202-36-dwmw2@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,147 +187,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there is an ncpus property, use it in order to deliver the IRQ to
-multiple CPU.
+On 26/01/2024 18.25, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> The MIPS SIM platform instantiates its NIC only if a corresponding
+> configuration exists for it. Use qemu_create_nic_device() function for
+> that.
+> 
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> ---
+>   hw/mips/mipssim.c | 13 +++++++------
+>   1 file changed, 7 insertions(+), 6 deletions(-)
 
-Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
-Signed-off-by: Clément Chigot <chigot@adacore.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/intc/grlib_irqmp.c         | 41 +++++++++++++++++------------------
- hw/sparc/leon3.c              |  3 ++-
- include/hw/intc/grlib_irqmp.h |  2 +-
- 3 files changed, 23 insertions(+), 23 deletions(-)
-
-diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
-index 1e073bd232..144b121d48 100644
---- a/hw/intc/grlib_irqmp.c
-+++ b/hw/intc/grlib_irqmp.c
-@@ -70,7 +70,7 @@ struct IRQMP {
-     unsigned int ncpus;
-     IRQMPState *state;
-     qemu_irq start_signal[IRQMP_MAX_CPU];
--    qemu_irq irq;
-+    qemu_irq irq[IRQMP_MAX_CPU];
- };
- 
- struct IRQMPState {
-@@ -89,37 +89,35 @@ struct IRQMPState {
- 
- static void grlib_irqmp_check_irqs(IRQMPState *state)
- {
--    uint32_t      pend   = 0;
--    uint32_t      level0 = 0;
--    uint32_t      level1 = 0;
-+    int i;
- 
-     assert(state != NULL);
-     assert(state->parent != NULL);
- 
--    /* IRQ for CPU 0 (no SMP support) */
--    pend = (state->pending | state->force[0])
--        & state->mask[0];
--
--    level0 = pend & ~state->level;
--    level1 = pend &  state->level;
-+    for (i = 0; i < state->parent->ncpus; i++) {
-+        uint32_t pend = (state->pending | state->force[i]) & state->mask[i];
-+        uint32_t level0 = pend & ~state->level;
-+        uint32_t level1 = pend &  state->level;
- 
--    trace_grlib_irqmp_check_irqs(state->pending, state->force[0],
--                                 state->mask[0], level1, level0);
-+        trace_grlib_irqmp_check_irqs(state->pending, state->force[i],
-+                                     state->mask[i], level1, level0);
- 
--    /* Trigger level1 interrupt first and level0 if there is no level1 */
--    qemu_set_irq(state->parent->irq, level1 ?: level0);
-+        /* Trigger level1 interrupt first and level0 if there is no level1 */
-+        qemu_set_irq(state->parent->irq[i], level1 ?: level0);
-+    }
- }
- 
--static void grlib_irqmp_ack_mask(IRQMPState *state, uint32_t mask)
-+static void grlib_irqmp_ack_mask(IRQMPState *state, unsigned int cpu,
-+                                 uint32_t mask)
- {
-     /* Clear registers */
-     state->pending  &= ~mask;
--    state->force[0] &= ~mask; /* Only CPU 0 (No SMP support) */
-+    state->force[cpu] &= ~mask;
- 
-     grlib_irqmp_check_irqs(state);
- }
- 
--void grlib_irqmp_ack(DeviceState *dev, int intno)
-+void grlib_irqmp_ack(DeviceState *dev, unsigned int cpu, int intno)
- {
-     IRQMP        *irqmp = GRLIB_IRQMP(dev);
-     IRQMPState   *state;
-@@ -133,7 +131,7 @@ void grlib_irqmp_ack(DeviceState *dev, int intno)
- 
-     trace_grlib_irqmp_ack(intno);
- 
--    grlib_irqmp_ack_mask(state, mask);
-+    grlib_irqmp_ack_mask(state, cpu, mask);
- }
- 
- static void grlib_irqmp_set_irq(void *opaque, int irq, int level)
-@@ -159,7 +157,6 @@ static void grlib_irqmp_set_irq(void *opaque, int irq, int level)
-             s->pending |= 1 << irq;
-         }
-         grlib_irqmp_check_irqs(s);
--
-     }
- }
- 
-@@ -263,7 +260,9 @@ static void grlib_irqmp_write(void *opaque, hwaddr addr,
- 
-     case CLEAR_OFFSET:
-         value &= ~1; /* clean up the value */
--        grlib_irqmp_ack_mask(state, value);
-+        for (i = 0; i < irqmp->ncpus; i++) {
-+            grlib_irqmp_ack_mask(state, i, value);
-+        }
-         return;
- 
-     case MP_STATUS_OFFSET:
-@@ -367,7 +366,7 @@ static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
-      */
-     qdev_init_gpio_out_named(dev, irqmp->start_signal, "grlib-start-cpu",
-                              IRQMP_MAX_CPU);
--    qdev_init_gpio_out_named(dev, &irqmp->irq, "grlib-irq", 1);
-+    qdev_init_gpio_out_named(dev, irqmp->irq, "grlib-irq", irqmp->ncpus);
-     memory_region_init_io(&irqmp->iomem, OBJECT(dev), &grlib_irqmp_ops, irqmp,
-                           "irqmp", IRQMP_REG_SIZE);
- 
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index b72761b959..7866f0a049 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -170,7 +170,8 @@ static void leon3_cache_control_int(CPUSPARCState *env)
- 
- static void leon3_irq_ack(CPUSPARCState *env, int intno)
- {
--    grlib_irqmp_ack(env->irq_manager, intno);
-+    /* No SMP support yet, only CPU #0 available so far.  */
-+    grlib_irqmp_ack(env->irq_manager, 0, intno);
- }
- 
- /*
-diff --git a/include/hw/intc/grlib_irqmp.h b/include/hw/intc/grlib_irqmp.h
-index c5a90cbb3e..a76acbf940 100644
---- a/include/hw/intc/grlib_irqmp.h
-+++ b/include/hw/intc/grlib_irqmp.h
-@@ -36,6 +36,6 @@
- /* IRQMP */
- #define TYPE_GRLIB_IRQMP "grlib-irqmp"
- 
--void grlib_irqmp_ack(DeviceState *dev, int intno);
-+void grlib_irqmp_ack(DeviceState *dev, unsigned int cpu, int intno);
- 
- #endif /* GRLIB_IRQMP_H */
--- 
-2.25.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
