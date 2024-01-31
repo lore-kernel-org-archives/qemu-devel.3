@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48468C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11902C47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:00:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9DJ-0002KA-KE; Wed, 31 Jan 2024 06:57:09 -0500
+	id 1rV9CJ-0008GV-Cr; Wed, 31 Jan 2024 06:56:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9DI-0002Hx-3x; Wed, 31 Jan 2024 06:57:08 -0500
+ id 1rV9CI-0008GI-Bn; Wed, 31 Jan 2024 06:56:06 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9DG-00041l-Gw; Wed, 31 Jan 2024 06:57:07 -0500
+ id 1rV9CG-0003we-OR; Wed, 31 Jan 2024 06:56:06 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C6629490CF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 401D9490C6;
  Wed, 31 Jan 2024 14:56:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 08EE670278;
- Wed, 31 Jan 2024 14:55:51 +0300 (MSK)
-Received: (nullmailer pid 2263963 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 76E9C7026F;
+ Wed, 31 Jan 2024 14:55:50 +0300 (MSK)
+Received: (nullmailer pid 2263936 invoked by uid 1000);
  Wed, 31 Jan 2024 11:55:49 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, qemu-trivial@nongnu.org,
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 17/21] hw/i386: Add `\n` to hint message
-Date: Wed, 31 Jan 2024 14:55:45 +0300
-Message-Id: <20240131115549.2263854-18-mjt@tls.msk.ru>
+Subject: [PULL 08/21] disas/riscv: Clean up includes
+Date: Wed, 31 Jan 2024 14:55:36 +0300
+Message-Id: <20240131115549.2263854-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240131115549.2263854-1-mjt@tls.msk.ru>
 References: <20240131115549.2263854-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,39 +62,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Greg Kurz <groug@kaod.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-error_printf() doesn't add newlines.
+This commit was created with scripts/clean-includes:
+ ./scripts/clean-includes --git disas/riscv disas/riscv*[ch]
 
-Signed-off-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+All .c should include qemu/osdep.h first.  The script performs three
+related cleanups:
+
+* Ensure .c files include qemu/osdep.h first.
+* Including it in a .h is redundant, since the .c  already includes
+  it.  Drop such inclusions.
+* Likewise, including headers qemu/osdep.h includes is redundant.
+  Drop these, too.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/i386/acpi-build.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ disas/riscv-xthead.c   | 1 +
+ disas/riscv-xventana.c | 1 +
+ disas/riscv.h          | 1 -
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index edc979379c..e990b0ae92 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -2697,7 +2697,7 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-                         " migration may not work",
-                         tables_blob->len, legacy_table_size);
-             error_printf("Try removing CPUs, NUMA nodes, memory slots"
--                         " or PCI bridges.");
-+                         " or PCI bridges.\n");
-         }
-         g_array_set_size(tables_blob, legacy_table_size);
-     } else {
-@@ -2709,7 +2709,7 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-                         " migration may not work",
-                         tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
-             error_printf("Try removing CPUs, NUMA nodes, memory slots"
--                         " or PCI bridges.");
-+                         " or PCI bridges.\n");
-         }
-         acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
-     }
+diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
+index 99da679d16..fcca326d1c 100644
+--- a/disas/riscv-xthead.c
++++ b/disas/riscv-xthead.c
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include "qemu/osdep.h"
+ #include "disas/riscv.h"
+ #include "disas/riscv-xthead.h"
+ 
+diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
+index a0224d1fb3..cd694f15f3 100644
+--- a/disas/riscv-xventana.c
++++ b/disas/riscv-xventana.c
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include "qemu/osdep.h"
+ #include "disas/riscv.h"
+ #include "disas/riscv-xventana.h"
+ 
+diff --git a/disas/riscv.h b/disas/riscv.h
+index 19e5ed2ce6..16a08e4895 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -7,7 +7,6 @@
+ #ifndef DISAS_RISCV_H
+ #define DISAS_RISCV_H
+ 
+-#include "qemu/osdep.h"
+ #include "target/riscv/cpu_cfg.h"
+ 
+ /* types */
 -- 
 2.39.2
 
