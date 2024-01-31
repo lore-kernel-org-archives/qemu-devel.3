@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11902C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0A4C47DB3
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 12:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV9CJ-0008GV-Cr; Wed, 31 Jan 2024 06:56:07 -0500
+	id 1rV9Cs-00019V-Jo; Wed, 31 Jan 2024 06:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9CI-0008GI-Bn; Wed, 31 Jan 2024 06:56:06 -0500
+ id 1rV9Cq-00018M-Tw; Wed, 31 Jan 2024 06:56:41 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rV9CG-0003we-OR; Wed, 31 Jan 2024 06:56:06 -0500
+ id 1rV9Cp-0003yC-G8; Wed, 31 Jan 2024 06:56:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 401D9490C6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8C11A490CB;
  Wed, 31 Jan 2024 14:56:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 76E9C7026F;
+ by tsrv.corpit.ru (Postfix) with SMTP id C2E8F70274;
  Wed, 31 Jan 2024 14:55:50 +0300 (MSK)
-Received: (nullmailer pid 2263936 invoked by uid 1000);
+Received: (nullmailer pid 2263951 invoked by uid 1000);
  Wed, 31 Jan 2024 11:55:49 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 08/21] disas/riscv: Clean up includes
-Date: Wed, 31 Jan 2024 14:55:36 +0300
-Message-Id: <20240131115549.2263854-9-mjt@tls.msk.ru>
+Subject: [PULL 13/21] cxl: Clean up includes
+Date: Wed, 31 Jan 2024 14:55:41 +0300
+Message-Id: <20240131115549.2263854-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240131115549.2263854-1-mjt@tls.msk.ru>
 References: <20240131115549.2263854-1-mjt@tls.msk.ru>
@@ -64,8 +64,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-This commit was created with scripts/clean-includes:
- ./scripts/clean-includes --git disas/riscv disas/riscv*[ch]
+This commit was created with scripts/clean-includes.
 
 All .c should include qemu/osdep.h first.  The script performs three
 related cleanups:
@@ -79,50 +78,29 @@ related cleanups:
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- disas/riscv-xthead.c   | 1 +
- disas/riscv-xventana.c | 1 +
- disas/riscv.h          | 1 -
- 3 files changed, 2 insertions(+), 1 deletion(-)
+ hw/cxl/cxl-events.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
-index 99da679d16..fcca326d1c 100644
---- a/disas/riscv-xthead.c
-+++ b/disas/riscv-xthead.c
-@@ -4,6 +4,7 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
+index bee6dfaf14..affcf8a34d 100644
+--- a/hw/cxl/cxl-events.c
++++ b/hw/cxl/cxl-events.c
+@@ -7,11 +7,9 @@
+  * COPYING file in the top-level directory.
   */
  
-+#include "qemu/osdep.h"
- #include "disas/riscv.h"
- #include "disas/riscv-xthead.h"
- 
-diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
-index a0224d1fb3..cd694f15f3 100644
---- a/disas/riscv-xventana.c
-+++ b/disas/riscv-xventana.c
-@@ -4,6 +4,7 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-+#include "qemu/osdep.h"
- #include "disas/riscv.h"
- #include "disas/riscv-xventana.h"
- 
-diff --git a/disas/riscv.h b/disas/riscv.h
-index 19e5ed2ce6..16a08e4895 100644
---- a/disas/riscv.h
-+++ b/disas/riscv.h
-@@ -7,7 +7,6 @@
- #ifndef DISAS_RISCV_H
- #define DISAS_RISCV_H
- 
--#include "qemu/osdep.h"
- #include "target/riscv/cpu_cfg.h"
- 
- /* types */
+-#include <stdint.h>
+-
+ #include "qemu/osdep.h"
++
+ #include "qemu/bswap.h"
+-#include "qemu/typedefs.h"
+ #include "qemu/error-report.h"
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
 -- 
 2.39.2
 
