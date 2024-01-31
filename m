@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D63C47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D06AAC47DDF
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV7Ph-0004aZ-OO; Wed, 31 Jan 2024 05:01:49 -0500
+	id 1rV7Ps-0004ro-Td; Wed, 31 Jan 2024 05:02:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rV7PM-0004Px-MF
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:30 -0500
+ id 1rV7PW-0004YK-Um
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:41 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rV7PH-0008Lk-Jd
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:25 -0500
+ id 1rV7PU-0008RJ-NE
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706695283; x=1738231283;
+ t=1706695296; x=1738231296;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=dqVAp/mlK/ZWsBxRXuBhw678ydijj1fK6M7bq7JhVtE=;
- b=IblzPJJZ1Ru8OeXzTDk7k7UIApG2Qzlmv7K5B4kSYx7lFdi3gjXekuI1
- sMbAaKTg16ZJ4d7owSad7kBGBNJn7B8aeI+RdhuJN488Y2wt3TQd+DYlR
- iIg/3xzFXD38DXVM6kopQvfz6An6NKPklxj3oJYNKwBzhwCcO0q9m+9t3
- I+2YOTRr1sLSOaslVrLsMx4lVUbKpvY8CWSE83GpcKZ6RgNsBcNO0FnWw
- 12N3gCiFtA7xPCkb8FL0MAOywj+ZCG3uNhA1TBYaAloHIkAT7wfCzp9O5
- B6Bj/jcxJI3glax1IbJqbi2TCLssu57hfryZ3YvLjmJw8WnGEVJuE/8vo A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="25032812"
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="25032812"
+ bh=zAYrvGnilidyHb6EeYs3757tIsjHx3c4fVsdy35rO84=;
+ b=JUADsvqzUTSi+20XLbkYP1YlQqQWDAgRCFqgC52vcQAhJW2jD+jzZAK5
+ UOS4W5OOuB+DTcp2vAvWxHu06CBSqlkePgfA4FZv/xSPjz5qqNwdHpWLQ
+ N4ObIQhEW1bVxCUXKeqwZQ0+zTBHb8Tmyb+Poi2MPHYATo7C0MBid2uEv
+ aMzr1uBFkaM//iM9LLsHYuNocbU7jZ2HE0CMc9SjfWIDh7SS5aeH/vFWz
+ Zx6ZtHAVUzZQ2NrhbcEzbnJ0OdXPHrrc29W9C810KuynSqS8OqVLJrAW/
+ hHehivOwS8cHTbNesPjRSnXSjTglL/Ls2QAvwNgt/ZCsXkAYMs4mzsss8 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="25032847"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="25032847"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 02:01:22 -0800
+ 31 Jan 2024 02:01:35 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
-   d="scan'208";a="4036057"
+   d="scan'208";a="4036122"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 31 Jan 2024 02:01:17 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 31 Jan 2024 02:01:30 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -57,10 +57,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v8 09/21] i386/cpu: Introduce bitmap to cache available CPU
- topology levels
-Date: Wed, 31 Jan 2024 18:13:38 +0800
-Message-Id: <20240131101350.109512-10-zhao1.liu@linux.intel.com>
+Subject: [PATCH v8 12/21] i386: Introduce module level cpu topology to
+ CPUX86State
+Date: Wed, 31 Jan 2024 18:13:41 +0800
+Message-Id: <20240131101350.109512-13-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
 References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
@@ -91,177 +91,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Currently, QEMU checks the specify number of topology domains to detect
-if there's extended topology levels (e.g., checking nr_dies).
+Intel CPUs implement module level on hybrid client products (e.g.,
+ADL-N, MTL, etc) and E-core server products.
 
-With this bitmap, the extended CPU topology (the levels other than SMT,
-core and package) could be easier to detect without touching the
-topology details.
+A module contains a set of cores that share certain resources (in
+current products, the resource usually includes L2 cache, as well as
+module scoped features and MSRs).
 
-This is also in preparation for the follow-up to decouple CPUID[0x1F]
-subleaf with specific topology level.
+Module level support is the prerequisite for L2 cache topology on
+module level. With module level, we can implement the Guest's CPU
+topology and future cache topology to be consistent with the Host's on
+Intel hybrid client/E-core server platforms.
 
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v7:
- * New commit to response Xiaoyao's suggestion about the gloabl variable
-   to cache topology levels. (Xiaoyao)
+ * Mapped x86 module to smp module instead of cluster.
+ * Re-wrote the commit message to explain the reason why we needs module
+   level.
+ * Dropped Michael/Babu's ACKed/Tested tags since the code change.
+ * Re-added Yongwei's Tested tag For his re-testing.
+
+Changes since v1:
+ * The background of the introduction of the "cluster" parameter and its
+   exact meaning were revised according to Yanan's explanation. (Yanan)
 ---
- hw/i386/x86.c              |  5 ++++-
- include/hw/i386/topology.h | 23 +++++++++++++++++++++++
- target/i386/cpu.c          | 18 +++++++++++++++---
- target/i386/cpu.h          |  4 ++++
- target/i386/kvm/kvm.c      |  3 ++-
- 5 files changed, 48 insertions(+), 5 deletions(-)
+ hw/i386/x86.c     | 5 +++++
+ target/i386/cpu.c | 1 +
+ target/i386/cpu.h | 3 +++
+ 3 files changed, 9 insertions(+)
 
 diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 2b6291ad8d5f..5a42e3757099 100644
+index 5a42e3757099..2ead995b0197 100644
 --- a/hw/i386/x86.c
 +++ b/hw/i386/x86.c
-@@ -309,7 +309,10 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+@@ -309,6 +309,11 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
  
      init_topo_info(&topo_info, x86ms);
  
--    env->nr_dies = ms->smp.dies;
-+    if (ms->smp.dies > 1) {
-+        env->nr_dies = ms->smp.dies;
-+        set_bit(CPU_TOPO_LEVEL_DIE, env->avail_cpu_topo);
++    if (ms->smp.modules > 1) {
++        env->nr_modules = ms->smp.modules;
++        /* TODO: Expose module level in CPUID[0x1F]. */
 +    }
- 
-     /*
-      * If APIC ID is not set,
-diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-index d4eeb7ab8290..befeb92b0b19 100644
---- a/include/hw/i386/topology.h
-+++ b/include/hw/i386/topology.h
-@@ -60,6 +60,21 @@ typedef struct X86CPUTopoInfo {
-     unsigned threads_per_core;
- } X86CPUTopoInfo;
- 
-+/*
-+ * CPUTopoLevel is the general i386 topology hierarchical representation,
-+ * ordered by increasing hierarchical relationship.
-+ * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
-+ * or AMD (CPUID[0x80000026]).
-+ */
-+enum CPUTopoLevel {
-+    CPU_TOPO_LEVEL_INVALID,
-+    CPU_TOPO_LEVEL_SMT,
-+    CPU_TOPO_LEVEL_CORE,
-+    CPU_TOPO_LEVEL_DIE,
-+    CPU_TOPO_LEVEL_PACKAGE,
-+    CPU_TOPO_LEVEL_MAX,
-+};
 +
- /* Return the bit width needed for 'count' IDs */
- static unsigned apicid_bitwidth_for_count(unsigned count)
- {
-@@ -168,4 +183,12 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
-     return x86_apicid_from_topo_ids(topo_info, &topo_ids);
- }
- 
-+/*
-+ * Check whether there's extended topology level (die)?
-+ */
-+static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
-+{
-+    return test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
-+}
-+
- #endif /* HW_I386_TOPOLOGY_H */
+     if (ms->smp.dies > 1) {
+         env->nr_dies = ms->smp.dies;
+         set_bit(CPU_TOPO_LEVEL_DIE, env->avail_cpu_topo);
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index b32833f65dd6..607d8eff017b 100644
+index 81d2f0c42a0c..f1a0aa77a873 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6281,7 +6281,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         break;
-     case 0x1F:
-         /* V2 Extended Topology Enumeration Leaf */
--        if (topo_info.dies_per_pkg < 2) {
-+        if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-             *eax = *ebx = *ecx = *edx = 0;
-             break;
-         }
-@@ -7107,7 +7107,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-          * cpu->vendor_cpuid_only has been unset for compatibility with older
-          * machine types.
-          */
--        if ((env->nr_dies > 1) &&
-+        if (x86_has_extended_topo(env->avail_cpu_topo) &&
-             (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
-             x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
-         }
-@@ -7608,13 +7608,25 @@ static void x86_cpu_post_initfn(Object *obj)
-     accel_cpu_instance_init(CPU(obj));
- }
- 
-+static void x86_cpu_init_default_topo(X86CPU *cpu)
-+{
-+    CPUX86State *env = &cpu->env;
-+
-+    env->nr_dies = 1;
-+
-+    /* SMT, core and package levels are set by default. */
-+    set_bit(CPU_TOPO_LEVEL_SMT, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_CORE, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_PACKAGE, env->avail_cpu_topo);
-+}
-+
- static void x86_cpu_initfn(Object *obj)
+@@ -7700,6 +7700,7 @@ static void x86_cpu_init_default_topo(X86CPU *cpu)
  {
-     X86CPU *cpu = X86_CPU(obj);
-     X86CPUClass *xcc = X86_CPU_GET_CLASS(obj);
      CPUX86State *env = &cpu->env;
  
--    env->nr_dies = 1;
-+    x86_cpu_init_default_topo(cpu);
++    env->nr_modules = 1;
+     env->nr_dies = 1;
  
-     object_property_add(obj, "feature-words", "X86CPUFeatureWordInfo",
-                         x86_cpu_get_feature_words,
+     /* SMT, core and package levels are set by default. */
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 7f0786e8b98f..f341affd5a59 100644
+index 8a7450f265a1..d0951a0fec27 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -24,6 +24,7 @@
- #include "cpu-qom.h"
- #include "kvm/hyperv-proto.h"
- #include "exec/cpu-defs.h"
-+#include "hw/i386/topology.h"
- #include "qapi/qapi-types-common.h"
- #include "qemu/cpu-float.h"
- #include "qemu/timer.h"
-@@ -1885,6 +1886,9 @@ typedef struct CPUArchState {
- 
+@@ -1892,6 +1892,9 @@ typedef struct CPUArchState {
      /* Number of dies within this CPU package. */
      unsigned nr_dies;
+ 
++    /* Number of modules within this CPU package. */
++    unsigned nr_modules;
 +
-+    /* Bitmap of available CPU topology levels for this CPU. */
-+    DECLARE_BITMAP(avail_cpu_topo, CPU_TOPO_LEVEL_MAX);
+     /* Bitmap of available CPU topology levels for this CPU. */
+     DECLARE_BITMAP(avail_cpu_topo, CPU_TOPO_LEVEL_MAX);
  } CPUX86State;
- 
- struct kvm_msrs;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 76a66246eb72..25d438e0b586 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -50,6 +50,7 @@
- #include "hw/i386/apic_internal.h"
- #include "hw/i386/apic-msidef.h"
- #include "hw/i386/intel_iommu.h"
-+#include "hw/i386/topology.h"
- #include "hw/i386/x86-iommu.h"
- #include "hw/i386/e820_memory_layout.h"
- 
-@@ -1913,7 +1914,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-             break;
-         }
-         case 0x1f:
--            if (env->nr_dies < 2) {
-+            if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-                 break;
-             }
-             /* fallthrough */
 -- 
 2.34.1
 
