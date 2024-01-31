@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD18C47DB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 14:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B167AC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 15:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVC1d-0002oK-FX; Wed, 31 Jan 2024 09:57:17 -0500
+	id 1rVC71-0005tm-4f; Wed, 31 Jan 2024 10:02:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rVC1c-0002o6-E9
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 09:57:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.kanda@oracle.com>)
+ id 1rVC6o-0005pa-Ka
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 10:02:46 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rVC1a-0001mB-TH
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 09:57:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706713034;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ETGcb5D5wCkdTjFS4wUq3RZooG7XYtSHFFh/E7tLRKE=;
- b=TEXinp6N7nEr8irn7ellOeWW3lx4mmeko2WrreVZKvgpfEh/ge6mL6pfjWJCZUBZGJ7ZeP
- VnEn1miOjyjeHxtrK/b1kPXfyICaUb/HcBHAEd2bsFnLIzbW1Fc4LRLrrrtJsvvMPhze9Z
- z74bO5+86j2j3KduJ7vCc77lxrpuwk4=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-QdxFuyKxNfu-2ky8bCe9_A-1; Wed, 31 Jan 2024 09:57:12 -0500
-X-MC-Unique: QdxFuyKxNfu-2ky8bCe9_A-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-5111abb53aeso1841693e87.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 06:57:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706713030; x=1707317830;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ETGcb5D5wCkdTjFS4wUq3RZooG7XYtSHFFh/E7tLRKE=;
- b=UkzrFQxYfRKGLYy/1efAvM7udeY/dN3E9lltWLqiF3n9MKiuCEjk5gxmsBAsk2RpEx
- mgl5OaGZWRNt63LAocNiiGw49JLPl7i0Dw1n1e1XVUOeIfvut0QXYf4Dr9SKbbWi1fyP
- 2Tn6lvStHuedsaXL4DmvniVrrHvlhrvpkRnz+QILnT36YZXdDuRN1SogSwf6jlTEqgXC
- 42PF2DdjRtEjhnHjFtecMpwGxwpQcyXWx+d2f5/e0jg3Hg5oEpWS2g95qgeRjHUkzPih
- TEbP0RKc3kFNKQCCuGQL5SVkifkSqhgiW6yIT+yNxgfWnkOG4INoOHr57r/XlGhFdr36
- 2MYg==
-X-Gm-Message-State: AOJu0Yyj3bqnFP9udXLbZ1QgFsfljhcjyAU6IFOXmrMwzwA3qHkq9g7F
- hGG4UAk/8BGF8UKsB6U9iUT0GrS6CROtg6JR/BSYwCJqjw9hJvtJKY7ReheUYfsl0CCSL/AlAxC
- GSCHGU89r8YQo2tximH6NyWZlm3Kaxi+jUw/zda06w7xu82reEyV/
-X-Received: by 2002:ac2:4e6e:0:b0:511:ecf:e5d5 with SMTP id
- y14-20020ac24e6e000000b005110ecfe5d5mr1224352lfs.6.1706713030648; 
- Wed, 31 Jan 2024 06:57:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGQUJLMV0Tp7KXIxnK+nwruVdWMNVxIF4GUzjHTiuz7T/7QKGBfEgDDmGZq6bJJYKhqE5/0pA==
-X-Received: by 2002:ac2:4e6e:0:b0:511:ecf:e5d5 with SMTP id
- y14-20020ac24e6e000000b005110ecfe5d5mr1224339lfs.6.1706713030207; 
- Wed, 31 Jan 2024 06:57:10 -0800 (PST)
-Received: from [10.32.64.237] (nat-pool-muc-t.redhat.com. [149.14.88.26])
- by smtp.gmail.com with ESMTPSA id
- i3-20020a05600c354300b0040ef79b2fa6sm1836428wmq.33.2024.01.31.06.57.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jan 2024 06:57:09 -0800 (PST)
-Message-ID: <00584dd7-f89f-4595-903b-54fbff260983@redhat.com>
-Date: Wed, 31 Jan 2024 15:57:09 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.kanda@oracle.com>)
+ id 1rVC6W-0002jK-Ng
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 10:02:30 -0500
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 40VEwq3j005475; Wed, 31 Jan 2024 15:02:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=APiJ5xnwS0W0NmoJ1J0/Bq1qWxGZOIGk1zTwyJH8FFA=;
+ b=jyWlqvzvFIE9UIQMVmQ5fHZAjohIaO9MriqjimtChvjMueRiXqLzQ+8dYajsm6I8NNXS
+ iD/vYVwf3xd7YV1JXxsDJbq93kF6XCKD2fBOlNq2SY8VVilhyj4tPK2fJm4ewYlLuDNo
+ 6bF685XZfw3NI8VuZx5ErT1/glIVr/IeREFjXFlC3eQ7wJsYp/EMkQ4o8we2Y/nTs5Nk
+ UcEGZPTQ3u4zg/+oi7SmRqJjUwY1UIR4qLZEpPmTRuLMljAuEGRV+xAVIepRmmxk2iL/
+ DwKhAWtiXKf+g9veCsH7bYbp6B7raPchjSejQRkQ7zyhUG2BoAbTtfQkOt82TJNQjQEZ xg== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3vvsvdt1fm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 31 Jan 2024 15:02:15 +0000
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 40VE8co4005325; Wed, 31 Jan 2024 15:02:14 GMT
+Received: from nam11-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11lp2168.outbound.protection.outlook.com [104.47.58.168])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3vvr9exm5h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 31 Jan 2024 15:02:14 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DA9Rn7tkbSpNzAmJjE2IUxlWrmzaKH1i2La2B55jyRrHwUPvJmsFjrmIRRgn+PePrOs7Ra6rQ2iZghCemhHqYMZmUpNuFe60lLMP8bqZJw2w/uoUpKgBfO3szOoGcyI6k1zcuNaUeM0QXpOcKc7Lx3DUdMYjs1KpmM59HRUv8JdHIcYzv9AvwCuNaVI4N/UW9BFPKZsCw0Ua3hMUm1zxSwHOiOmt54VVPwTJswKC3uHcBrDFqN9UIQTQ46LfZwH+BN7xVkK6DCXEuxluY0iLNkdtH0Gd/tuwaED0mOQAENm3BtsPlRMSIHRCPDZ8iWjqyuYEHERIU+DO4onywIiboA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=APiJ5xnwS0W0NmoJ1J0/Bq1qWxGZOIGk1zTwyJH8FFA=;
+ b=XBsiHNXWPn2hw5N1Sy7oBBEEgl7+kDgwdWDbSgzGtS2cQ+b5mXYO+y2j51IjhnshEiuEW0bMzkV+vmbCNnZeEPlP5JtpB6ialJSUY2nOE3qB1JJE2KAlXo4CTuKL4KBLg8EwN0aseqcM27mRGoS8OkinK2Zc4dEOzKM8M6/RyO9FAbCcNhAu6ccUn7r1KsOa1Ei3EA+RsNB/HEeS1bd06AQWrj84XHp9zSiTUK86bIrjzJcHUXBj06xP5eUcfG5JQ0dw6HLq3wEnQbW2D0xHxqJSJXMJuC2fBQq7hE4adGG/HbatJDVIClEC0HHRwC0oPL5sokvMa9WadRULiv9dog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=APiJ5xnwS0W0NmoJ1J0/Bq1qWxGZOIGk1zTwyJH8FFA=;
+ b=mKT8u1qfXzE1q3//kUZXVosPpsLiRMzys+BFi+MtGHDLvd5n4LsTfmyMSDbc/u/ePmCobj/TiuytGg8x2WxDbqubVO0A+gC5/HcEFd+jwzFVvjFLmn4U3obt9bdz5Vl/1RNzygWPqmqVw0BvQATBmIwQzZhmFI2k9v48vlEwTTs=
+Received: from SA1PR10MB5841.namprd10.prod.outlook.com (2603:10b6:806:22b::16)
+ by CH0PR10MB4986.namprd10.prod.outlook.com (2603:10b6:610:c7::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.24; Wed, 31 Jan
+ 2024 15:02:12 +0000
+Received: from SA1PR10MB5841.namprd10.prod.outlook.com
+ ([fe80::3634:659b:e407:a535]) by SA1PR10MB5841.namprd10.prod.outlook.com
+ ([fe80::3634:659b:e407:a535%7]) with mapi id 15.20.7249.023; Wed, 31 Jan 2024
+ 15:02:12 +0000
+Message-ID: <e54455cc-d702-4ab0-90aa-5035708322bb@oracle.com>
+Date: Wed, 31 Jan 2024 09:02:09 -0600
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 1/1] oslib-posix: initialize backend memory objects in
  parallel
 Content-Language: en-US
-To: Mark Kanda <mark.kanda@oracle.com>, qemu-devel@nongnu.org
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, berrange@redhat.com
 References: <20240131134843.3074922-1-mark.kanda@oracle.com>
  <20240131134843.3074922-2-mark.kanda@oracle.com>
@@ -79,64 +86,93 @@ References: <20240131134843.3074922-1-mark.kanda@oracle.com>
  <578395fd-9538-4d3d-85ea-f5e9b95b8bd7@oracle.com>
  <7686daa5-c175-4b2c-a6ad-72d3c78b2249@redhat.com>
  <6a5773e2-6887-4cd6-995a-209affd71b74@oracle.com>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <6a5773e2-6887-4cd6-995a-209affd71b74@oracle.com>
+ <00584dd7-f89f-4595-903b-54fbff260983@redhat.com>
+From: Mark Kanda <mark.kanda@oracle.com>
+In-Reply-To: <00584dd7-f89f-4595-903b-54fbff260983@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-ClientProxiedBy: SA1P222CA0067.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:2c1::17) To SA1PR10MB5841.namprd10.prod.outlook.com
+ (2603:10b6:806:22b::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA1PR10MB5841:EE_|CH0PR10MB4986:EE_
+X-MS-Office365-Filtering-Correlation-Id: bcd398c1-be27-4e94-364a-08dc226d9afe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: YRY/T10OG/ZnWpuFmJ6M3VOjRNkUZN9X/DFWHB5zajO5I6Gg6NmjvvwasUpgYwl7LdpDny4gqVlMsNntxTsV3XAJC2+J9riA+ixYQ8VrkjyWsnvfiaqycVzF/lOs3F86tni3JbEA/wwP0YarzfRSkvngmA5yrzPDNp+Z/mWQk2jndhszsbo+wmiY0jrddNiF9PrZiiO+C+Bpght/x6XoEkyMOAeTu8pRHXAUCNOFtvv4GlzXxX5/FR4So1PDyNDc8O/USXXUoD7dpApB2he/lcPDU1ciqNPBxjXgI1ZjiRm+P9+3w0KHIskXhP+mAnju3MlJssuqy8nM/ghNr07Xi4zW3kYVYVIwIFEjC8/ftjEfVPHJTeQCfU0iKDhemp7r6+kNYHcxqV1tqPnXjUizOG9EYEsLFBkFBKnhGaJwzsTgCYnsjWJIysfofVvTQdsHb6nHvvRd25BdGYZIs2bd3uqBXil2HVfVOKMQ1hiHUGGTo21p2Bdu+gjNRlLHwYnX13echrwITZ8c2czTaVIHdUWqtXJv1b3YqNC1lJRQEuHdMqSlRkM3li89/8KK/qkCiUon7TFrZBRvVhGIjT8ZEVs3bmlP12+6f3iwB6bCCDieUhbLaSJrK3ZSXcfsVkvDDVCeBPEFmfdmSZ1fkGxLPQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR10MB5841.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366004)(39860400002)(346002)(136003)(396003)(376002)(230922051799003)(186009)(64100799003)(451199024)(1800799012)(31686004)(41300700001)(36756003)(31696002)(86362001)(38100700002)(2616005)(26005)(6512007)(6506007)(6486002)(2906002)(478600001)(53546011)(66946007)(316002)(6666004)(66556008)(66476007)(44832011)(4326008)(5660300002)(8676002)(8936002)(45980500001)(43740500002);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OGFLZXpvMkFkK3RoWFdzc0xQemxscGhKZyt4cXM0TWM1M2JZemxBK0hQK0lD?=
+ =?utf-8?B?K0pLcVQxMXdCYmNKbVI0WXdUQ3VaVG9GWXhoR2w4cVVzK0tmei82SmF5cTl5?=
+ =?utf-8?B?QmpLekZNbXpOMFAvWWhXc2FBQTRCRUI4WEtvQ3dtZTg3Q3ZEY29Xb1dvckVu?=
+ =?utf-8?B?R1hmcGhoS1VBZG5zN1lSaGhCOW5EQ1VKWWJpdUF6ZzJHTWozVVc0TzJ4d0lN?=
+ =?utf-8?B?UHJvMTd3eDYvanl4SVlJSHdrUUpIbFRMbXZLTjZZeHNWb0V6U3NIRTcyQ1p6?=
+ =?utf-8?B?azZwaDlYaDQ0K0oyUXZiQWJzaWlGa0RmMHc2Wm5iQTl3bDFySlZLM2dSYjhw?=
+ =?utf-8?B?Z0EyR3JPTUZxb2dROTVyaW9iOVd1Q2d5L3ptZXE0VFBmRHo4b2IwaFFKdDha?=
+ =?utf-8?B?TVJQQnFqQ05rZjJUVzJKaGl1V0N5d2FiUTRpV2ZiNzZzRWh1VklFZE5xczFu?=
+ =?utf-8?B?VmNBaTUyQkxEQnQwU1JRZm9MSWFMRDgyTFkrdTVDbzl3YkNwbG5OLzJ4YVJ1?=
+ =?utf-8?B?dmNmdnA5MVJkZnJoYzJLc0d3VElwYVI0ek1iS2pYZkJoRVQwbFR5YlNWcVZR?=
+ =?utf-8?B?OFRwOEh0MWhNTytjVzZyZjFzbHhIODF3b3VpM0hHUFBhdldKTFlqcVltc1dj?=
+ =?utf-8?B?NDdKZlRhWHFCc0ZZdm0xeVo2YWk0UHFCalE3V2lqWVg5WTlCdjdkNkZyZEx6?=
+ =?utf-8?B?b2djWTNLcGFZcGwyYnB6aFpuQmk4ZWVpTmlUMytIMWYyTTRRTmtoOUdVVTNO?=
+ =?utf-8?B?YXVoRUJiMExPTHFxQm5JUCtqYWwvNEdnVjFCb3RQQ0MzYittRzlXejY1WXJZ?=
+ =?utf-8?B?RFdubXhneXRTa2pYN2VWcnd6Qy9WWi9Ndzd1UFVOQ2ZJMGZLcm41WUxXaThq?=
+ =?utf-8?B?UGlLOThSM0VJblpiRWtJSkdGY1VVYWViRktKanlCK2tpNmZTSDUxQmxRZkR3?=
+ =?utf-8?B?Y2hlQ0VzMzcwWFNJeWc0M0VLRE4ydStGQ3YzbTFBcEZhUks5UXhuTHJUTStj?=
+ =?utf-8?B?aElxY3k2K2gzQXgxVHo1MnhIYXNLNlVDT1Y0R3RmZVFlWmpqVEYyMUpVckdp?=
+ =?utf-8?B?VzU1UVFqY0dZL1dSUzM3ZnoxeTMrdVR1LzZGcmJEODhMWEw3eHd4SHFIRW5Y?=
+ =?utf-8?B?ZENzbG5vRzRVWXlGalN1NjJOVC95ekw5K01yWVNGbWM4SXhsWXVkMUQxaE9L?=
+ =?utf-8?B?NEQrY1FPdE5MY1NmZXBHRm5MbkxicnRJM3pqaXdoUzAvVWhWTFJudVBPcVhJ?=
+ =?utf-8?B?R3JVM0xya2R3UHNrNnYrcTFlSFVWZ1BHVTRpZlJNdFhCUExVenM3MXpUcnp0?=
+ =?utf-8?B?SzFGK0NuMDJpOG93cnpmTmt3bU5samdyaktGTEtHK1o1VVpnNFgyR3BLRkt5?=
+ =?utf-8?B?NGkrbWwzQ3FDQjY1NVlqSEU5M3RkR3puMGZROEdldXVldUpqbjh6alk3aCtt?=
+ =?utf-8?B?ZW9JUzFKaWpmeWxCNEFBdDQ1YWtqNFlOeTRQT0hZaElPeDFRdjdjdEo3TjVn?=
+ =?utf-8?B?VGRBNk5qMVE0TDhob2RSR0pCQnlaYlRObk9PZHpPQ05LaEV1Njk5OC9lOVFH?=
+ =?utf-8?B?b0k5QXg3YW1URm5nTlVnOU80Z2VrQWtSRmUxMkdZN0JhOUZXWDR4S2NpVHhW?=
+ =?utf-8?B?dkJTREYwTzJMS2Y4RUpPNzR4L0kwNEkxMmNScXVxQ3NuTDZkUmZNcmM2V0M4?=
+ =?utf-8?B?RkF4WU15aTVQWk1tVjg5ZVRrSUF2M1d1Vnphb3p3SEdNYkZDNkVuZ0dzT1JL?=
+ =?utf-8?B?YS9naGQ5b3dkU0dpQ1lCTzNnckw4M2JlM1BVa3Z1M1dBRW9lTXcxa25rUUov?=
+ =?utf-8?B?SWFyV21LZVdxWlpEaENLeFB5STBQbXRFdFoyeXBCcm1OSEk2S1VmeitNUEtD?=
+ =?utf-8?B?ck9GZEw3SUFKa2JXdEhKbHM5ekRHM2lIS2grRVhja0dDYWZQQWx5U3duYiti?=
+ =?utf-8?B?UFE1YTQ0MFlqUE9mZjJmZk9Jb1JQQzZVbyt5c0VMamp0dis2T0cxTDRGNEli?=
+ =?utf-8?B?QU8yNGF3d2tWTlc4c2RaOTJRSE8rbGo0T3JDa1JzVlozYWR5clQ4S2sxS1l4?=
+ =?utf-8?B?VHdtNUNKWCsyMmpGdk01eWRsR0dXeTZVdGRUVW8wRUVYb21MWWFvNkNMek1D?=
+ =?utf-8?Q?jzC39lV+Gey8RIrvn7cIepjEq?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ctOhv8zNmiFv7Xu8+yU/Td6ZUoAKSE9uTRMJl2QLtfXa0I74uISnoBUDX1JByo28onmRtVaFwYd3056AYMXuTO4AmfEd7PwIi9Fu4J5oHK8MExuLGqJIqY7U7s9pcLyCn85pfPwXcXg4VwPWNvgI3+Jxj2/CaleU8J7b1tdoVuTRJ4c6at7SjkUe9CXCzNYHmbiQ+h5iRrKmPcnohPzU+7pGesL0KgFqPLbVcyi2cwtXRUvaJWCrVWs4OqXXyk5unOuYd8PdJQFChiCfcIBj6oObb8V4ydk5CDdYv2sX6PQa3BE2Hq/Z0T3lvtWAsS4g8i5jjyZowDQy8NW5pNrya3R4dyf26yzACiQR114TwqXvUjA5oQVGMgufn8GHwewj4XMx9/4E5QZOF71jbMZg+bs8WmndMDDPIg7KBH5R8Xa3pAoQ70V1fxymObe6uAXmFfJLjYFUBQv3Vpn4vlAx+Ye61r6VbtU9fkRXSRUxA+lMljYGF5BXgC+FGTyohzFPV+bGkM5mli3LqcX30nCA8CXUsj5N9yMgnhOFWgJqgEHml5WZxZx3xh4O2yPzhmZScwYJ5Gm5hfyA5ldDlN+AOKrGuV8hjmhAJCxJTSUahfA=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bcd398c1-be27-4e94-364a-08dc226d9afe
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR10MB5841.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jan 2024 15:02:12.7961 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qzorrtWEFxWYc75Tqq2Zkk5Hsx3Mh7LC8n3m/2Jvnbh78KPvwG9KuLry2TvK2kazyUNesKeyu/0Xl9Dc/ZUg1Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR10MB4986
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-01-31_08,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 spamscore=0
+ phishscore=0 adultscore=0 mlxlogscore=999 suspectscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2401310115
+X-Proofpoint-ORIG-GUID: 3M8GgfddFjT1pek9xf_cRY4gjKxKc9g8
+X-Proofpoint-GUID: 3M8GgfddFjT1pek9xf_cRY4gjKxKc9g8
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=mark.kanda@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,61 +189,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31.01.24 15:48, Mark Kanda wrote:
-> On 1/31/24 8:30 AM, David Hildenbrand wrote:
+
+
+On 1/31/24 8:57 AM, David Hildenbrand wrote:
+> On 31.01.24 15:48, Mark Kanda wrote:
+>> On 1/31/24 8:30 AM, David Hildenbrand wrote:
+>>>>
+>>>> OK. I'll call it 'PHASE_LATE_BACKENDS_CREATED' (to make it consistent
+>>>> with code comments/function name).
 >>>
->>> OK. I'll call it 'PHASE_LATE_BACKENDS_CREATED' (to make it consistent
->>> with code comments/function name).
+>>> But then, you should set it at the very end of the function (not sure
+>>> if that would be a problem with the other devices that are getting
+>>> created in between -- if they would be using one of these memory
+>>> backends; likely not).
+>>>
 >>
->> But then, you should set it at the very end of the function (not sure
->> if that would be a problem with the other devices that are getting
->> created in between -- if they would be using one of these memory
->> backends; likely not).
+>> I think I misunderstood your suggestion. I was planning to add it a
+>> 'phase_advance(PHASE_LATE_BACKENDS_CREATED)' to qemu_init():
 >>
-> 
-> I think I misunderstood your suggestion. I was planning to add it a
-> 'phase_advance(PHASE_LATE_BACKENDS_CREATED)' to qemu_init():
-> 
->      @@ -3703,6 +3703,7 @@ void qemu_init(int argc, char **argv)
->             * over memory-backend-file objects).
->             */
->            qemu_create_late_backends();
->      +    phase_advance(PHASE_LATE_BACKENDS_CREATED);
-> 
-> And use PHASE_LATE_BACKENDS_CREATED (instead of
-> PHASE_MACHINE_INITIALIZED) for the async bool in
-> host_memory_backend_memory_complete().
-> 
-> I was planning to leave this call where it is:
-> 
->      @@ -2009,6 +2009,14 @@ static void qemu_create_late_backends(void)
-> 
->            object_option_foreach_add(object_create_late);
-> 
->      +    /*
->      +     * Wait for any outstanding memory prealloc from created memory
->      +     * backends to complete.
->      +     */
->      +    if (!qemu_finish_async_mem_prealloc(&error_fatal)) {
->      +        exit(1);
->      +    }
->      +
->            if (tpm_init() < 0) {
->                exit(1);
->            }
-> 
+>>      @@ -3703,6 +3703,7 @@ void qemu_init(int argc, char **argv)
+>>             * over memory-backend-file objects).
+>>             */
+>>            qemu_create_late_backends();
+>>      +    phase_advance(PHASE_LATE_BACKENDS_CREATED);
+>>
+>> And use PHASE_LATE_BACKENDS_CREATED (instead of
+>> PHASE_MACHINE_INITIALIZED) for the async bool in
+>> host_memory_backend_memory_complete().
+>>
+>> I was planning to leave this call where it is:
+>>
+>>      @@ -2009,6 +2009,14 @@ static void qemu_create_late_backends(void)
+>>
+>>            object_option_foreach_add(object_create_late);
+>>
+>>      +    /*
+>>      +     * Wait for any outstanding memory prealloc from created 
+>> memory
+>>      +     * backends to complete.
+>>      +     */
+>>      +    if (!qemu_finish_async_mem_prealloc(&error_fatal)) {
+>>      +        exit(1);
+>>      +    }
+>>      +
+>>            if (tpm_init() < 0) {
+>>                exit(1);
+>>            }
+>>
+>
+> Yes. The only "suboptimal" things is that if someone where to create a 
+> memory backend between qemu_finish_async_mem_prealloc() and 
+> phase_advance(PHASE_LATE_BACKENDS_CREATED), it would never get 
+> preallocated.
+>
+> That likely won't ever happen by any of the remaining stuff in 
+> qemu_create_late_backends(), especially not with "prealloc=on" and 
+> thread-contexts set.
+>
 
-Yes. The only "suboptimal" things is that if someone where to create a 
-memory backend between qemu_finish_async_mem_prealloc() and 
-phase_advance(PHASE_LATE_BACKENDS_CREATED), it would never get preallocated.
+Yep. OK, I'll go with that.
 
-That likely won't ever happen by any of the remaining stuff in 
-qemu_create_late_backends(), especially not with "prealloc=on" and 
-thread-contexts set.
-
--- 
-Cheers,
-
-David / dhildenb
-
+Thanks again!
 
