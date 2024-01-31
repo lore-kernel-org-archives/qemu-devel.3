@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E6DBC47258
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264DBC47258
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 10:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rV7PJ-0004Pa-C3; Wed, 31 Jan 2024 05:01:25 -0500
+	id 1rV7Qo-0006A0-Vj; Wed, 31 Jan 2024 05:03:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rV7PF-0004PN-9x
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:21 -0500
+ id 1rV7Po-000510-Dm
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:59 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rV7PD-0008Lk-Ba
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:21 -0500
+ id 1rV7Pm-0008RJ-6P
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 05:01:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706695279; x=1738231279;
+ t=1706695314; x=1738231314;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=cOydRttf84q3Jkoe8+e7FBE3nU5gyeAi/0KZhDKalVw=;
- b=ZrDriRtF5gS/0MCjjCPAg0M5iplThC9ArGBuQxyS5bLZ4/8QONBhD13w
- XTvZM41YEjWdXCx7Ab5ZsB4UEY7Q6P9dQgjQZ3sIorKJE2etAdrh46y3S
- tBFKYClVyx6tQq5qO4EMu1dQc5qdfc3P+nN7URTJnXzq6qg6QR7meBzUR
- HTGBEvJ1FPZ8g+3JkwDIj4lYwHM/umQLXfPC7V7FaT5SNgT+jbo9oYXVv
- RE9hJ+9OZUn3QRgB5LfTWiC5sybtuT4tvCuG/LxbFuML05pQgltYD5xDj
- Il8SlqiI2mRB/7Tk4NlDywiUfWoUUGduON4Rpb+g0+eGF/bsueVgR8rar g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="25032727"
-X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="25032727"
+ bh=hmlxyCo22/1tqXZKgYw1E8FKhIHg29OrZePZuTVte9s=;
+ b=AsKNyJprcPvt4hqVk2KxzyKLz88xoIeYpc1AjmExpufX5wzr4cgqTEVc
+ vpLtSgMwTXG446rNlM9kc5N9pd2zaGgbJ6coIkLvWsl+KDku63DyaSbcJ
+ 6RvDAnr69AdH79hH1WEqAKbt8NLx0ebBbfAqlqYGTiLjG0CoGR9bFKP8Z
+ vq3VxNtp/CIGANMqZbdjpE3YqS/fkcYTxJs17a9HOEh6V0fVxt7yAUsOQ
+ R5WEe92iOVj0OqEybmWBDRRPMWEFnrxjn9e71SiAtfo1hqwVib4sBb04/
+ nz5PxG47HxHlNsIT4XOjt/PQN+33eR4hoz8fnQdLl7JORxHF/AfqZeONf Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="25032963"
+X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; d="scan'208";a="25032963"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 02:01:18 -0800
+ 31 Jan 2024 02:01:53 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,231,1701158400"; 
-   d="scan'208";a="4036039"
+   d="scan'208";a="4036243"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 31 Jan 2024 02:01:13 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 31 Jan 2024 02:01:48 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -56,12 +56,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Babu Moger <babu.moger@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Robert Hoo <robert.hu@linux.intel.com>
-Subject: [PATCH v8 08/21] i386/cpu: Consolidate the use of topo_info in
- cpu_x86_cpuid()
-Date: Wed, 31 Jan 2024 18:13:37 +0800
-Message-Id: <20240131101350.109512-9-zhao1.liu@linux.intel.com>
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v8 16/21] i386/cpu: Introduce module-id to X86CPU
+Date: Wed, 31 Jan 2024 18:13:45 +0800
+Message-Id: <20240131101350.109512-17-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
 References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
@@ -92,163 +90,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-In cpu_x86_cpuid(), there are many variables in representing the cpu
-topology, e.g., topo_info, cs->nr_cores and cs->nr_threads.
+Introduce module-id to be consistent with the module-id field in
+CpuInstanceProperties.
 
-Since the names of cs->nr_cores/cs->nr_threads does not accurately
-represent its meaning, the use of cs->nr_cores/cs->nr_threads is prone
-to confusion and mistakes.
+Following the legacy smp check rules, also add the module_id validity
+into x86_cpu_pre_plug().
 
-And the structure X86CPUTopoInfo names its members clearly, thus the
-variable "topo_info" should be preferred.
-
-In addition, in cpu_x86_cpuid(), to uniformly use the topology variable,
-replace env->dies with topo_info.dies_per_pkg as well.
-
-Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
 Changes since v7:
- * Renamed cpus_per_pkg to threads_per_pkg. (Xiaoyao)
- * Dropped Michael/Babu's Acked/Tested tags since the code change.
+ * Introduced module_id instead of cluster_id.
+ * Dropped Michael/Babu's ACKed/Tested tags since the code change.
  * Re-added Yongwei's Tested tag For his re-testing.
- * Added Xiaoyao's Reviewed tag.
+
+Changes since v6:
+ * Updated the comment when check cluster-id. Since there's no
+   v8.2, the cluster-id support should at least start from v9.0.
+
+Changes since v5:
+ * Updated the comment when check cluster-id. Since current QEMU is
+   v8.2, the cluster-id support should at least start from v8.3.
 
 Changes since v3:
- * Fixed typo. (Babu)
-
-Changes since v1:
- * Extracted cores_per_socket from the code block and use it as a local
-   variable for cpu_x86_cpuid(). (Yanan)
- * Removed vcpus_per_socket variable and use cpus_per_pkg directly.
-   (Yanan)
- * Replaced env->dies with topo_info.dies_per_pkg in cpu_x86_cpuid().
+ * Used the imperative in the commit message. (Babu)
 ---
- target/i386/cpu.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ hw/i386/x86.c     | 33 +++++++++++++++++++++++++--------
+ target/i386/cpu.c |  2 ++
+ target/i386/cpu.h |  1 +
+ 3 files changed, 28 insertions(+), 8 deletions(-)
 
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 7e81b049d818..3ad921ecaac7 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -339,6 +339,14 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+             cpu->die_id = 0;
+         }
+ 
++        /*
++         * module-id was optional in QEMU 9.0 and older, so keep it optional
++         * if there's only one module per die.
++         */
++        if (cpu->module_id < 0 && ms->smp.modules == 1) {
++            cpu->module_id = 0;
++        }
++
+         if (cpu->socket_id < 0) {
+             error_setg(errp, "CPU socket-id is not set");
+             return;
+@@ -355,6 +363,14 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+                        cpu->die_id, ms->smp.dies - 1);
+             return;
+         }
++        if (cpu->module_id < 0) {
++            error_setg(errp, "CPU module-id is not set");
++            return;
++        } else if (cpu->module_id > ms->smp.modules - 1) {
++            error_setg(errp, "Invalid CPU module-id: %u must be in range 0:%u",
++                       cpu->module_id, ms->smp.modules - 1);
++            return;
++        }
+         if (cpu->core_id < 0) {
+             error_setg(errp, "CPU core-id is not set");
+             return;
+@@ -374,16 +390,9 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+ 
+         topo_ids.pkg_id = cpu->socket_id;
+         topo_ids.die_id = cpu->die_id;
++        topo_ids.module_id = cpu->module_id;
+         topo_ids.core_id = cpu->core_id;
+         topo_ids.smt_id = cpu->thread_id;
+-
+-        /*
+-         * TODO: This is the temporary initialization for topo_ids.module_id to
+-         * avoid "maybe-uninitialized" compilation errors. Will remove when
+-         * X86CPU supports module_id.
+-         */
+-        topo_ids.module_id = 0;
+-
+         cpu->apic_id = x86_apicid_from_topo_ids(&topo_info, &topo_ids);
+     }
+ 
+@@ -428,6 +437,14 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+     }
+     cpu->die_id = topo_ids.die_id;
+ 
++    if (cpu->module_id != -1 && cpu->module_id != topo_ids.module_id) {
++        error_setg(errp, "property module-id: %u doesn't match set apic-id:"
++            " 0x%x (module-id: %u)", cpu->module_id, cpu->apic_id,
++            topo_ids.module_id);
++        return;
++    }
++    cpu->module_id = topo_ids.module_id;
++
+     if (cpu->core_id != -1 && cpu->core_id != topo_ids.core_id) {
+         error_setg(errp, "property core-id: %u doesn't match set apic-id:"
+             " 0x%x (core-id: %u)", cpu->core_id, cpu->apic_id,
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 65944645db5c..b32833f65dd6 100644
+index bc7b3d7c0eb0..6af734dd73c8 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6016,11 +6016,16 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-     uint32_t limit;
-     uint32_t signature[3];
-     X86CPUTopoInfo topo_info;
-+    uint32_t cores_per_pkg;
-+    uint32_t threads_per_pkg;
+@@ -7919,12 +7919,14 @@ static Property x86_cpu_properties[] = {
+     DEFINE_PROP_UINT32("apic-id", X86CPU, apic_id, 0),
+     DEFINE_PROP_INT32("thread-id", X86CPU, thread_id, 0),
+     DEFINE_PROP_INT32("core-id", X86CPU, core_id, 0),
++    DEFINE_PROP_INT32("module-id", X86CPU, module_id, 0),
+     DEFINE_PROP_INT32("die-id", X86CPU, die_id, 0),
+     DEFINE_PROP_INT32("socket-id", X86CPU, socket_id, 0),
+ #else
+     DEFINE_PROP_UINT32("apic-id", X86CPU, apic_id, UNASSIGNED_APIC_ID),
+     DEFINE_PROP_INT32("thread-id", X86CPU, thread_id, -1),
+     DEFINE_PROP_INT32("core-id", X86CPU, core_id, -1),
++    DEFINE_PROP_INT32("module-id", X86CPU, module_id, -1),
+     DEFINE_PROP_INT32("die-id", X86CPU, die_id, -1),
+     DEFINE_PROP_INT32("socket-id", X86CPU, socket_id, -1),
+ #endif
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 08d4414692c9..29837ca69859 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2044,6 +2044,7 @@ struct ArchCPU {
+     int32_t node_id; /* NUMA node this CPU belongs to */
+     int32_t socket_id;
+     int32_t die_id;
++    int32_t module_id;
+     int32_t core_id;
+     int32_t thread_id;
  
-     topo_info.dies_per_pkg = env->nr_dies;
-     topo_info.cores_per_die = cs->nr_cores / env->nr_dies;
-     topo_info.threads_per_core = cs->nr_threads;
- 
-+    cores_per_pkg = topo_info.cores_per_die * topo_info.dies_per_pkg;
-+    threads_per_pkg = cores_per_pkg * topo_info.threads_per_core;
-+
-     /* Calculate & apply limits for different index ranges */
-     if (index >= 0xC0000000) {
-         limit = env->cpuid_xlevel2;
-@@ -6056,8 +6061,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             *ecx |= CPUID_EXT_OSXSAVE;
-         }
-         *edx = env->features[FEAT_1_EDX];
--        if (cs->nr_cores * cs->nr_threads > 1) {
--            *ebx |= (cs->nr_cores * cs->nr_threads) << 16;
-+        if (threads_per_pkg > 1) {
-+            *ebx |= threads_per_pkg << 16;
-             *edx |= CPUID_HT;
-         }
-         if (!cpu->enable_pmu) {
-@@ -6097,15 +6102,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-              */
-             if (*eax & 31) {
-                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
--                int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
--                if (cs->nr_cores > 1) {
-+
-+                if (cores_per_pkg > 1) {
-                     addressable_cores_width = apicid_pkg_offset(&topo_info) -
-                                               apicid_core_offset(&topo_info);
- 
-                     *eax &= ~0xFC000000;
-                     *eax |= ((1 << addressable_cores_width) - 1) << 26;
-                 }
--                if (host_vcpus_per_cache > vcpus_per_socket) {
-+                if (host_vcpus_per_cache > threads_per_pkg) {
-                     /* Share the cache at package level. */
-                     addressable_threads_width = apicid_pkg_offset(&topo_info);
- 
-@@ -6251,12 +6256,12 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         switch (count) {
-         case 0:
-             *eax = apicid_core_offset(&topo_info);
--            *ebx = cs->nr_threads;
-+            *ebx = topo_info.threads_per_core;
-             *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
-             break;
-         case 1:
-             *eax = apicid_pkg_offset(&topo_info);
--            *ebx = cs->nr_cores * cs->nr_threads;
-+            *ebx = threads_per_pkg;
-             *ecx |= CPUID_TOPOLOGY_LEVEL_CORE;
-             break;
-         default:
-@@ -6276,7 +6281,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         break;
-     case 0x1F:
-         /* V2 Extended Topology Enumeration Leaf */
--        if (env->nr_dies < 2) {
-+        if (topo_info.dies_per_pkg < 2) {
-             *eax = *ebx = *ecx = *edx = 0;
-             break;
-         }
-@@ -6286,7 +6291,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         switch (count) {
-         case 0:
-             *eax = apicid_core_offset(&topo_info);
--            *ebx = cs->nr_threads;
-+            *ebx = topo_info.threads_per_core;
-             *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
-             break;
-         case 1:
-@@ -6296,7 +6301,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             break;
-         case 2:
-             *eax = apicid_pkg_offset(&topo_info);
--            *ebx = cs->nr_cores * cs->nr_threads;
-+            *ebx = threads_per_pkg;
-             *ecx |= CPUID_TOPOLOGY_LEVEL_DIE;
-             break;
-         default:
-@@ -6520,7 +6525,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-          * discards multiple thread information if it is set.
-          * So don't set it here for Intel to make Linux guests happy.
-          */
--        if (cs->nr_cores * cs->nr_threads > 1) {
-+        if (threads_per_pkg > 1) {
-             if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
-                 env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
-                 env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
-@@ -6586,7 +6591,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-              *eax |= (cpu_x86_virtual_addr_width(env) << 8);
-         }
-         *ebx = env->features[FEAT_8000_0008_EBX];
--        if (cs->nr_cores * cs->nr_threads > 1) {
-+        if (threads_per_pkg > 1) {
-             /*
-              * Bits 15:12 is "The number of bits in the initial
-              * Core::X86::Apic::ApicId[ApicId] value that indicate
-@@ -6594,7 +6599,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-              * Bits 7:0 is "The number of threads in the package is NC+1"
-              */
-             *ecx = (apicid_pkg_offset(&topo_info) << 12) |
--                   ((cs->nr_cores * cs->nr_threads) - 1);
-+                   (threads_per_pkg - 1);
-         } else {
-             *ecx = 0;
-         }
 -- 
 2.34.1
 
