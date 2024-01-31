@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89727C46CD2
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 01:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85EF4C46CD2
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jan 2024 01:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rUzNG-0006D2-7U; Tue, 30 Jan 2024 20:26:46 -0500
+	id 1rUziZ-0001jt-20; Tue, 30 Jan 2024 20:48:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUzNB-0006CY-US
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 20:26:42 -0500
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rUzN9-0000Jv-RW
- for qemu-devel@nongnu.org; Tue, 30 Jan 2024 20:26:41 -0500
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-7d2e19120b5so2004108241.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 17:26:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706664398; x=1707269198; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h93BkgVFUuRnPb2+mPK0buA3QG1DHMAEwTXxdNF0ziU=;
- b=iTyE2Di7KyVss4o4vLHpIoL5kFgbadoD5FRvdU8iUn4779ISfU7J/1tLlF4I0gbcKI
- BwlwhLzX5Xb5WznCEx7BYIsY46A+VGCYD0dac/KiIlTSqexAqH5iQudp3w8jSdxDs6GQ
- Sgd81x7pa177fNAb3LaVeHQMfxht77F+VNtPPGEy9kdRwXQp1ikx3WdQLSgJt1ixnp68
- DzWjSCPz1TTxoy65nziK3s+fax0MGDjupdLXkHHnwk4K9M2di7CuhdLQmgRaovBHaPIf
- hW23e3kxThTHoOGD8rGR9hJDv7JufUdoaRpX7+zQXiX/D/TQjKUiphSGPdlk0/PJvEtQ
- mhsw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUziX-0001jX-4C
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 20:48:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rUziV-0004nE-Ln
+ for qemu-devel@nongnu.org; Tue, 30 Jan 2024 20:48:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706665722;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GwVZOpYWkIv38F4n8QzYkcfzUqxwluEIlAm74d8UUOs=;
+ b=cL5HqaR6klM595rgYWDCl/+xTt1EPLzkFCjPCVqKM0oL+TvHNv2J1EgIiSY1E/jXU7tMTO
+ APlWY0HicGZWr5D71Rl7hUo1BUXVwcgFOSHNVbXoc2iIw/Od5Uoa8PssMOyh31UgwRgm8C
+ lNkGAYau0QgvVL/2zqpH1gAUiol5YSg=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-600-6FdsPWW-N8mYOzYTPdK2Hw-1; Tue, 30 Jan 2024 20:48:40 -0500
+X-MC-Unique: 6FdsPWW-N8mYOzYTPdK2Hw-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-295b4ab28b5so285105a91.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jan 2024 17:48:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706664398; x=1707269198;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=h93BkgVFUuRnPb2+mPK0buA3QG1DHMAEwTXxdNF0ziU=;
- b=vmuXcI4NWWhkLmnypF2Ex6kGy1x0H0mHWUjV8TyoV4nanjS2hmCdb7U5OpMSXdkP0/
- 5NFbohYWqrGQj+y5TQXRLJm7ErzC9gZ5ozqxcoxejuTVWdBGxx+aNKN8691lqRpewIGV
- W5H6Mw7hyweLpUhIM7g1R18u/tKCK2LYsM7TRNfv1roef7E4Onm7zmNzcxoNo3SYYBW7
- ONV/0zfO73y32f3wcXceXCQvPNpTcjzCXDMYz8FPqc+9hlY+MLUrbAfcFcZ6CeJRR6w4
- 5HCo4nnlbdkvYh/sYuYVpaqJaQRa/pGndj+QehAhHYJJcH3VomOT9XUrNjjSfBd8j8Mb
- Go3Q==
-X-Gm-Message-State: AOJu0YwOgWFHjc2VzG0ICYsyQR0aTBxRY21BlGzulhnSg59xskJFYRpk
- OIzjJMtLOpd4wUlKJgT/srArjcbgaYjab3VtE7zdWI+8cShIZGVbMLtoit+j58V/M1I17SDu5z5
- khu45br/CSC4AWkKbAvlbiBDrpYI=
-X-Google-Smtp-Source: AGHT+IEyWGLO3/jvjHtdjXsT7PNhenjAm0xbQRnRwO0JBpDoipIMfct79gY1WGUaNOu7+iZ+11d5WShu6OqllnLtNJ4=
-X-Received: by 2002:a67:f90a:0:b0:46b:3fe2:4ae6 with SMTP id
- t10-20020a67f90a000000b0046b3fe24ae6mr93787vsq.27.1706664398424; Tue, 30 Jan
- 2024 17:26:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706665719; x=1707270519;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GwVZOpYWkIv38F4n8QzYkcfzUqxwluEIlAm74d8UUOs=;
+ b=UlKTdDwSBS9jVwBimzGGGLz5WkE+A6mH6MYrURjBE647oid5GhjIZ8yrZUrTnlUU/B
+ bSSFrv/y/pil357UT5rq4v2tCV2hpXDwiDduY/gwksprQAZel+6LXCPZXQ2gK5OjZYiC
+ rfAJspUnWPZhFY7v7eD1eic+Xo92LiSeHObuVrqMB+sRmwRJwOxtpuSp2/PrJOBSO944
+ pyQzi765fChrYBGRspiYuwIFGLEsTQs4V8kU6HpZtqBbYXvq5TDHeyxenTQF0NrbeXQs
+ vrbwZu3Lye/MoNecmneu9O8fx+aIA977ePlVon+rVW9BwhBos9ModEk3inrFu9/EZLqz
+ kV7w==
+X-Gm-Message-State: AOJu0Yytvdnzd36bwQZR4J+IUzexowwSIeTFj4svQFSlX5OPQN3QV8Zu
+ teMatW26JE38RNObYlJ/zGrGpkgAtXC09h0fKxN4gpIqZ/aCA/GXGECXS6S1vc6Wqi12napl30r
+ l/NOC8547m3qXxsYYaFYMXbiMC/k1vJ2/GOgV5KulEI87IeoB37JA
+X-Received: by 2002:a17:90a:c906:b0:295:af17:239 with SMTP id
+ v6-20020a17090ac90600b00295af170239mr471630pjt.0.1706665719149; 
+ Tue, 30 Jan 2024 17:48:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrnReEQLFNfNCsI0SPAhPVJ9QqlA0WJazGBc+mYoOSsrPYYjP9uozjYHnSDXx2RVa/0Oj1MA==
+X-Received: by 2002:a17:90a:c906:b0:295:af17:239 with SMTP id
+ v6-20020a17090ac90600b00295af170239mr471614pjt.0.1706665718692; 
+ Tue, 30 Jan 2024 17:48:38 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ t3-20020a17090b018300b0029564dec437sm71613pjs.6.2024.01.30.17.48.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jan 2024 17:48:38 -0800 (PST)
+Date: Wed, 31 Jan 2024 09:48:31 +0800
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?=E2=80=9CWilliam?= Roche <william.roche@oracle.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, lizhijian@fujitsu.com,
+ pbonzini@redhat.com, leobras@redhat.com, joao.m.martins@oracle.com,
+ lidongchen@tencent.com
+Subject: Re: [PATCH v1 1/1] migration: prevent migration when VM has poisoned
+ memory
+Message-ID: <Zbmm74bJ7Zk4HUR3@x1n>
+References: <ZUwCZdZj-vZD1NJC@x1n>
+ <20240130190640.139364-1-william.roche@oracle.com>
+ <20240130190640.139364-2-william.roche@oracle.com>
 MIME-Version: 1.0
-References: <CAJSP0QU2M0e56M0S9ztMDO7eyqFB-p1KgwxJhzwkxt=CuS_PqA@mail.gmail.com>
- <mhng-e7014372-2334-430e-b22e-17227af21bd9@palmer-ri-x1c9a>
-In-Reply-To: <mhng-e7014372-2334-430e-b22e-17227af21bd9@palmer-ri-x1c9a>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 31 Jan 2024 11:26:11 +1000
-Message-ID: <CAKmqyKMAQ1vrf9QnCx17DbKgGTqgDd58y46RLwZvzW4Sk4zyjA@mail.gmail.com>
-Subject: Re: Call for GSoC/Outreachy internship project ideas
-To: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: stefanha@gmail.com, Alistair Francis <Alistair.Francis@wdc.com>,
- dbarboza@ventanamicro.com, 
- qemu-devel@nongnu.org, kvm@vger.kernel.org, afaria@redhat.com, 
- alex.bennee@linaro.org, eperezma@redhat.com, gmaglione@redhat.com, 
- marcandre.lureau@redhat.com, rjones@redhat.com, sgarzare@redhat.com, 
- imp@bsdimp.com, philmd@linaro.org, pbonzini@redhat.com, thuth@redhat.com, 
- danielhb413@gmail.com, gaosong@loongson.cn, akihiko.odaki@daynix.com, 
- shentey@gmail.com, npiggin@gmail.com, seanjc@google.com, 
- Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240130190640.139364-2-william.roche@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,118 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 10:30=E2=80=AFAM Palmer Dabbelt <palmer@dabbelt.com=
-> wrote:
->
-> On Tue, 30 Jan 2024 12:28:27 PST (-0800), stefanha@gmail.com wrote:
-> > On Tue, 30 Jan 2024 at 14:40, Palmer Dabbelt <palmer@dabbelt.com> wrote=
-:
-> >>
-> >> On Mon, 15 Jan 2024 08:32:59 PST (-0800), stefanha@gmail.com wrote:
-> >> > Dear QEMU and KVM communities,
-> >> > QEMU will apply for the Google Summer of Code and Outreachy internsh=
-ip
-> >> > programs again this year. Regular contributors can submit project
-> >> > ideas that they'd like to mentor by replying to this email before
-> >> > January 30th.
-> >>
-> >> It's the 30th, sorry if this is late but I just saw it today.  +Alista=
-ir
-> >> and Daniel, as I didn't sync up with anyone about this so not sure if
-> >> someone else is looking already (we're not internally).
-> >>
-> >> > Internship programs
-> >> > ---------------------------
-> >> > GSoC (https://summerofcode.withgoogle.com/) and Outreachy
-> >> > (https://www.outreachy.org/) offer paid open source remote work
-> >> > internships to eligible people wishing to participate in open source
-> >> > development. QEMU has been part of these internship programs for man=
-y
-> >> > years. Our mentors have enjoyed helping talented interns make their
-> >> > first open source contributions and some former interns continue to
-> >> > participate today.
-> >> >
-> >> > Who can mentor
-> >> > ----------------------
-> >> > Regular contributors to QEMU and KVM can participate as mentors.
-> >> > Mentorship involves about 5 hours of time commitment per week to
-> >> > communicate with the intern, review their patches, etc. Time is also
-> >> > required during the intern selection phase to communicate with
-> >> > applicants. Being a mentor is an opportunity to help someone get
-> >> > started in open source development, will give you experience with
-> >> > managing a project in a low-stakes environment, and a chance to
-> >> > explore interesting technical ideas that you may not have time to
-> >> > develop yourself.
-> >> >
-> >> > How to propose your idea
-> >> > ----------------------------------
-> >> > Reply to this email with the following project idea template filled =
-in:
-> >> >
-> >> > =3D=3D=3D TITLE =3D=3D=3D
-> >> >
-> >> > '''Summary:''' Short description of the project
-> >> >
-> >> > Detailed description of the project that explains the general idea,
-> >> > including a list of high-level tasks that will be completed by the
-> >> > project, and provides enough background for someone unfamiliar with
-> >> > the codebase to do research. Typically 2 or 3 paragraphs.
-> >> >
-> >> > '''Links:'''
-> >> > * Wiki links to relevant material
-> >> > * External links to mailing lists or web sites
-> >> >
-> >> > '''Details:'''
-> >> > * Skill level: beginner or intermediate or advanced
-> >> > * Language: C/Python/Rust/etc
-> >>
-> >> I'm not 100% sure this is a sane GSoC idea, as it's a bit open ended a=
-nd
-> >> might have some tricky parts.  That said it's tripping some people up
-> >> and as far as I know nobody's started looking at it, so I figrued I'd
-> >> write something up.
-> >>
-> >> I can try and dig up some more links if folks thing it's interesting,
-> >> IIRC there's been a handful of bug reports related to very small loops
-> >> that run ~10x slower when vectorized.  Large benchmarks like SPEC have
-> >> also shown slowdowns.
-> >
-> > Hi Palmer,
-> > Performance optimization can be challenging for newcomers. I wouldn't
-> > recommend it for a GSoC project unless you have time to seed the
-> > project idea with specific optimizations to implement based on your
-> > experience and profiling. That way the intern has a solid starting
-> > point where they can have a few successes before venturing out to do
-> > their own performance analysis.
->
-> Ya, I agree.  That's part of the reason why I wasn't sure if it's a
-> good idea.  At least for this one I think there should be some easy to
-> understand performance issue, as the loops that go very slowly consist
-> of a small number of instructions and go a lot slower.
->
-> I'm actually more worried about this running into a rabbit hole of
-> adding new TCG operations or even just having no well defined mappings
-> between RVV and AVX, those might make the project really hard.
->
-> > Do you have the time to profile and add specifics to the project idea
-> > by Feb 21st? If that sounds good to you, I'll add it to the project
-> > ideas list and you can add more detailed tasks in the coming weeks.
->
-> I can at least dig up some of the examples I ran into, there's been a
-> handful filtering in over the last year or so.
->
-> This one
-> <https://gist.github.com/compnerd/daa7e68f7b4910cb6b27f856e6c2beba>
-> still has a much more than 10x slowdown (73ms -> 13s) with
-> vectorization, for example.
+On Tue, Jan 30, 2024 at 07:06:40PM +0000, “William Roche wrote:
+> From: William Roche <william.roche@oracle.com>
+> 
+> A memory page poisoned from the hypervisor level is no longer readable.
+> The migration of a VM will crash Qemu when it tries to read the
+> memory address space and stumbles on the poisoned page with a similar
+> stack trace:
+> 
+> Program terminated with signal SIGBUS, Bus error.
+> #0  _mm256_loadu_si256
+> #1  buffer_zero_avx2
+> #2  select_accel_fn
+> #3  buffer_is_zero
+> #4  save_zero_page
+> #5  ram_save_target_page_legacy
+> #6  ram_save_host_page
+> #7  ram_find_and_save_block
+> #8  ram_save_iterate
+> #9  qemu_savevm_state_iterate
+> #10 migration_iteration_run
+> #11 migration_thread
+> #12 qemu_thread_start
+> 
+> To avoid this VM crash during the migration, prevent the migration
+> when a known hardware poison exists on the VM.
+> 
+> Signed-off-by: William Roche <william.roche@oracle.com>
 
-It's probably worth creating a Gitlab issue for this and adding all of
-the examples there. That way we have a single place to store them all
+I queued it for now, while it'll always good to get feedback from either
+Paolo or anyone else, as the pull won't happen in one week.  If no
+objection it'll be included the next migration pull.
 
-Alistair
+Thanks,
 
->
-> > Thanks,
-> > Stefan
->
+-- 
+Peter Xu
+
 
