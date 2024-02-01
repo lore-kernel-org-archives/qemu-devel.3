@@ -4,81 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63553C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8F3C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVZm9-0004Jq-Vx; Thu, 01 Feb 2024 11:18:54 -0500
+	id 1rVZoA-00065G-Dx; Thu, 01 Feb 2024 11:20:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVZlg-0004Gx-MU
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:18:24 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVZlf-0003KX-5c
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:18:24 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-55a90a0a1a1so1661232a12.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 08:18:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706804300; x=1707409100; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2/odLJmMeHyuqRUqzmdAcU+qyr3LEbWvoXulvRLZ69w=;
- b=rlLzP4LfhEsHCrYS/sMf8cnGwK08UT9Ri+SmBZAtP0BApkBTnvRG5qrjE/DY4yNcJS
- D215t4FN2yTXfoNMIVFH5EttxUYxSt5fjZCMZhu+EltlOp2fGe/JYqW7tpN9/2cZZ5M4
- Ko2VIGjGivzndUAc8YSygUnDCVC6NE84DPvQ9n1UWw9xuPj4Y5PPcH9gVfavU4XQ+QWa
- 3X09Monzj9wTi2dvblzCUdbO1ex7t2XuOlmowCDU9qsXEAaHxGAfQYwxhwIFFzVaWsAT
- NeKxyWUtBFEldpOXgklfifpIQgtq5NHqBWUfoGYnI3drYvwhnfS/Hw+fGfbBtRCw2lL+
- ZCPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706804300; x=1707409100;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2/odLJmMeHyuqRUqzmdAcU+qyr3LEbWvoXulvRLZ69w=;
- b=Wn3hqimZibp0tMwKX25u37dQSEVqYOgalYpEMeWzRh4gCzWFgXV9OsSPsHKTz5RErh
- V2xSTtqspBAd+dXNlIjn/B0uPOjJxw7Dn6U0wTLMbF79GRlU6964ft4G1LnzeE+dbeeD
- lpxZluLL4gdBVsyteOsGBrVoB2yXljMKUOc23At3ooPfUUKaMioPxBS39Qrkj7jTPPx/
- xIz7ZALruim5010Dm6IJu5x1h4toEYOg2+hRqtRTkGyEiuQZ3KCBFlMZ1U0Oyna1QFYy
- RpQoqGOsAim19vRVnkstFIedySbQVOyu0rFB4KmPYfw4U1U6HG86WYtxJqK3W268BrAZ
- JqCw==
-X-Gm-Message-State: AOJu0YwYei9L6DtxLOvbLJlcE8OmdAkdnu0LiBGiCy5XfkzlIpy/S0EI
- rdEyg/bEmJ6Bs3TTDYM+k6w9WvYwRINpiMhDXMtK8WCNJ9UG99gp6vpIrwLzPO+dwVVJjU2wfFv
- 66sveLDGl+BQeGusof/5UUL9zAcW82bga61ddBg==
-X-Google-Smtp-Source: AGHT+IHIfbfdx+wBpHt+B0kRrVMBDpNPQ6O0osw9lwKIOw9o6Xd3mXC1zaV5obugAropGrqW6qF06cw7lhIqMnJtxlw=
-X-Received: by 2002:a50:e606:0:b0:55e:fcfa:607b with SMTP id
- y6-20020a50e606000000b0055efcfa607bmr4153847edm.32.1706804300171; Thu, 01 Feb
- 2024 08:18:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
+ id 1rVZnv-00060A-6q; Thu, 01 Feb 2024 11:20:43 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
+ id 1rVZnn-00046L-Ap; Thu, 01 Feb 2024 11:20:42 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQkf30k39z4wcW;
+ Fri,  2 Feb 2024 03:20:27 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQkdZ2ZRRz4wcN;
+ Fri,  2 Feb 2024 03:20:02 +1100 (AEDT)
+Message-ID: <fcd5cf8a-68f7-45c4-a09f-e7870ed7ffa1@kaod.org>
+Date: Thu, 1 Feb 2024 17:19:54 +0100
 MIME-Version: 1.0
-References: <20240130190317.25692-1-philmd@linaro.org>
- <20240130190317.25692-2-philmd@linaro.org>
-In-Reply-To: <20240130190317.25692-2-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 16:18:09 +0000
-Message-ID: <CAFEAcA9+HHFsE9KX_54aFwSAp_GKKHX6s+O4thMQ2K_n9FuRMw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] hw/arm/stellaris: Convert ADC controller to
- Resettable interface
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 22/47] hw/arm/aspeed: use qemu_configure_nic_device()
+Content-Language: en-US
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rob Herring <robh@kernel.org>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
+ <gaosong@loongson.cn>, Thomas Huth <huth@tuxfamily.org>,
+ Laurent Vivier <laurent@vivier.eu>, Huacai Chen <chenhuacai@kernel.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jason Wang <jasowang@redhat.com>,
+ Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Bin Meng
+ <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ xen-devel@lists.xenproject.org, David Woodhouse <dwmw@amazon.co.uk>
+References: <20240126173228.394202-1-dwmw2@infradead.org>
+ <20240126173228.394202-23-dwmw2@infradead.org>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240126173228.394202-23-dwmw2@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, SPF_HELO_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,16 +109,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jan 2024 at 19:03, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 1/26/24 18:24, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> Acked-by: Cédric Le Goater <clg@kaod.org>
+
+and
+
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Thanks,
+
+C.
+
+
 > ---
->  hw/arm/stellaris.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>   hw/arm/aspeed.c | 9 ++++-----
+>   1 file changed, 4 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index cc59176563..bed5e4f40b 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -356,7 +356,6 @@ static void aspeed_machine_init(MachineState *machine)
+>       AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
+>       AspeedSoCClass *sc;
+>       int i;
+> -    NICInfo *nd = &nd_table[0];
+>   
+>       bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
+>       object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
+> @@ -371,10 +370,10 @@ static void aspeed_machine_init(MachineState *machine)
+>                                &error_fatal);
+>   
+>       for (i = 0; i < sc->macs_num; i++) {
+> -        if ((amc->macs_mask & (1 << i)) && nd->used) {
+> -            qemu_check_nic_model(nd, TYPE_FTGMAC100);
+> -            qdev_set_nic_properties(DEVICE(&bmc->soc->ftgmac100[i]), nd);
+> -            nd++;
+> +        if ((amc->macs_mask & (1 << i)) &&
+> +            !qemu_configure_nic_device(DEVICE(&bmc->soc->ftgmac100[i]),
+> +                                       true, NULL)) {
+> +            break; /* No configs left; stop asking */
+>           }
+>       }
+>   
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
