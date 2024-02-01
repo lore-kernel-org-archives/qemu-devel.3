@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05ED1C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 05:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0FCC47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 06:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVPvd-0006Ch-1g; Thu, 01 Feb 2024 00:48:01 -0500
+	id 1rVQ8e-00084k-K2; Thu, 01 Feb 2024 01:01:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVPvc-0006CU-Cb
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:48:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVQ8d-00084P-7x
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:01:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVPvZ-0006nN-Qf
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:48:00 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVQ8Z-0002PA-Ic
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:01:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706766477;
+ s=mimecast20190719; t=1706767281;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pWBmzfKHBijB3txDMi+RTxKzLxuhin9HzTm/96/+sAg=;
- b=ApGQ9q6TTv7B5jRZxgjrB53C7ZHc0pO2/XW9ee0Pj4Ij0NPSQU6SyBnVE9WZYGdnvb1LLj
- yEp74tBSRFMdRtOUsf0AUIpanAI+vFXUHcDqlxiNghF29W1wC5Ux722lMb02ch4NtU9jxT
- db7R93BtvtbsJ6uIXiVlY1VVagltFzc=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y7igkYjN8JA6rNREmhVY153GCQ3nZz6UQTL0IUKEtak=;
+ b=R8oan1ThlbOEVVVpv69kGoDDhz9PJh/0kOyo2noT2ypZSkVZhbNKTbzNLUGv8qNA5Qnu1G
+ Ze8NvqOk9GffeSOljPNL5YA1iXfo5bYY72J9KWJSDPdLUvJDiGKoW0LhmOhFNk0Xxj+zyW
+ ZQ4Pz/ZXs+Ug78UaOTvYXm5KP0uhxYk=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326--uRf3uSvO0SLLlCh2T4znw-1; Thu, 01 Feb 2024 00:47:54 -0500
-X-MC-Unique: -uRf3uSvO0SLLlCh2T4znw-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5cf53f904f9so141758a12.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 21:47:54 -0800 (PST)
+ us-mta-101-qNLwpntqPQ6MiOazkj3AIQ-1; Thu, 01 Feb 2024 01:01:20 -0500
+X-MC-Unique: qNLwpntqPQ6MiOazkj3AIQ-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-28e7e94a63aso102354a91.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 22:01:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706766473; x=1707371273;
+ d=1e100.net; s=20230601; t=1706767279; x=1707372079;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pWBmzfKHBijB3txDMi+RTxKzLxuhin9HzTm/96/+sAg=;
- b=NAoNamW9OSEmzGfVctB9KSUvB7+dfvKJh7gI5RAk8bUh8RiDXPAXp2jYh1JrymX3s6
- SOlhdREw7PU4YajIoyZ/tQGI92opRU4WltRb+mW8pDe1Bol7jyWBg49XpWyDsbNyBAuW
- mGWTVI47gtwXVm3GM2mb2HQAQ5PUDntf9K9qefr+Y612NTbXDUMV2v7tBDPpzdqonUD8
- gCbrNEJIb2OO9E7VF3q41rjbaaXpeVgcH6W1V2UPSKmAO/Xlu6tU7c3kp9mDb16QepF0
- MfmnwMLxvp7WXpKW+KctGEHDY9XpQFK4YkMhyfuiL5YKsK12ta4NIRdcMOnAvS8LnNqK
- R0JQ==
-X-Gm-Message-State: AOJu0Yw2bgIxIQRMLFXgS1zU+Plb+CWzQtj/bG9EdC+/u5JsN6KpInaR
- m0WSjq5KlswO2XSGkCoNkXp1tGN+r4eC4Dcd7t1Y+R6MPiBMRpHxnW66DnKgOgRt8/0VYKa5InN
- /sPBy/o4ZRGKCXmXocl0/gte5xl1/kWLYS+SJ96HPg0DkzpZJuDti
-X-Received: by 2002:a05:6a00:4b:b0:6dd:86b1:7d93 with SMTP id
- i11-20020a056a00004b00b006dd86b17d93mr1683093pfk.0.1706766472995; 
- Wed, 31 Jan 2024 21:47:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCUUmtBxVX0rTI18AlIAuh6sDNb/bEuCj983BXx1OoLmhApppmpJSEjpAzm/vgDe+43+Pw+Q==
-X-Received: by 2002:a05:6a00:4b:b0:6dd:86b1:7d93 with SMTP id
- i11-20020a056a00004b00b006dd86b17d93mr1683083pfk.0.1706766472570; 
- Wed, 31 Jan 2024 21:47:52 -0800 (PST)
+ bh=y7igkYjN8JA6rNREmhVY153GCQ3nZz6UQTL0IUKEtak=;
+ b=UZ07iWznlFzv+erp6ePWVXdN1+GAEg/06yR9KmJ+MmRRo9IKkQgGDXhRt2cmEPnERQ
+ MAinZdw/muVSg0RoQ0bkXuy11htOwnH9tsEUJIP/M7xDqPahx5L597H0znKbO7y38aZu
+ h6ggF6M1hlSTjgcshK8FxLQZQIPSKjUcMQMrF26oMjNeNg/HLigS7VgDcKiYCUKC8obC
+ uqG0QYACqZmQ9lPHGx5wrHPs2BXZnBe73cmV2nrhDa/87zGujZ2yFJSIemBNITqgOABz
+ rEIZ3Niqzf/eS0LFPMncBUjSBYSOY3w0p2rBugvN+o6Naj1k1CGKCu3HPN2T+tEakuTz
+ e2fg==
+X-Gm-Message-State: AOJu0YzpSiGKwvsuZIk9VPltiaJ+qT6Y956XOgb+ArsaQoVZciey7auo
+ josa1NZA+cgkD+E9FfiWYKPH2dMmEwUNGUXO7S7n9J1YZOGmM8gphbhNyRmFr2AdYQpiHkHXueb
+ 3kG3hD0NelXV1mCIpUtf0POxH78Pt/K2aXWJgyLZ479He3ChmoJfqVWUP6+q0FhaxPCFmZQejlU
+ 7w27L9MgCK3TxkyMwDtjXXPhABvJUJPi+GN/gQ
+X-Received: by 2002:a17:903:2348:b0:1d9:143:a254 with SMTP id
+ c8-20020a170903234800b001d90143a254mr1742331plh.2.1706767279138; 
+ Wed, 31 Jan 2024 22:01:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFRV6j6eW2HVOHKNu6OIX3NjA3BWnvxUTxRZwdPsKKvjWO3cUHEmMNDSWPVkPlTBZYXSbsSHg==
+X-Received: by 2002:a17:903:2348:b0:1d9:143:a254 with SMTP id
+ c8-20020a170903234800b001d90143a254mr1742300plh.2.1706767278609; 
+ Wed, 31 Jan 2024 22:01:18 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXA8hV3+zVIL2pFfzyuyus1l4buM0mxPuSYKXCsISXOc6NVRV7drK4RkmMeBjFUeKTswC0Afwvbd/HRhPCkkOvf9ZmIGkkP83W3T83n9382PIMBRl3Wk001egOxNvFkLTcUb/N3GYkmNn/kCv3ZMSSBedQQibeDmIqD7MnSPDDtwwVbmVvRn1coyRqBMBbh53qegvWQ3r+sAnGjD3lEERc=
+ AJvYcCV3rRRqIHPdh94gIqzwjk9TTwDVA8f62jKR9U/LKa2CkDODi7NsFiCBdotTI3qqPqvS9JVHSCYGcKPXkTMzuA3D2oTs73OQ5b9yVMfmxSgllksixYOw41XWLrbIseNIMjz29Q0Oyl/8wFDv7lRS/Qq8YJ5Ai7gTMB4a8NkM5TjBPOQsKkfmlDWgIni1/kHyK/gEhk1lDw==
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- j8-20020a056a00234800b006d6b91c6eb6sm11257141pfj.13.2024.01.31.21.47.50
+ u17-20020a170902a61100b001d6f8b31ddcsm10056914plq.3.2024.01.31.22.01.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jan 2024 21:47:52 -0800 (PST)
-Date: Thu, 1 Feb 2024 13:47:45 +0800
+ Wed, 31 Jan 2024 22:01:18 -0800 (PST)
+Date: Thu, 1 Feb 2024 14:01:12 +0800
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Bryan Zhang <bryan.zhang@bytedance.com>,
- Prasad Pandit <ppandit@redhat.com>, Yuan Liu <yuan1.liu@intel.com>,
- Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH 00/14] migration/multifd: Refactor ->send_prepare() and
- cleanups
-Message-ID: <ZbswgRJTXP4yKiuf@x1n>
+To: qemu-devel@nongnu.org
+Cc: Bryan Zhang <bryan.zhang@bytedance.com>,
+ Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Yuan Liu <yuan1.liu@intel.com>, Avihai Horon <avihaih@nvidia.com>,
+ Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH 14/14] migration/multifd: Forbid spurious wakeups
+Message-ID: <ZbszqD8flNOWKRcK@x1n>
 References: <20240131103111.306523-1-peterx@redhat.com>
- <871q9xjey8.fsf@suse.de>
+ <20240131103111.306523-15-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <871q9xjey8.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240131103111.306523-15-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,95 +103,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 07:49:51PM -0300, Fabiano Rosas wrote:
-> peterx@redhat.com writes:
+On Wed, Jan 31, 2024 at 06:31:11PM +0800, peterx@redhat.com wrote:
+> From: Peter Xu <peterx@redhat.com>
 > 
-> > From: Peter Xu <peterx@redhat.com>
-> >
-> > This patchset contains quite a few refactorings to current multifd:
-> >
-> >   - It picked up some patches from an old series of mine [0] (the last
-> >     patches were dropped, though; I did the cleanup slightly differently):
-> >
-> >     I still managed to include one patch to split pending_job, but I
-> >     rewrote the patch here.
-> >
-> >   - It tries to cleanup multiple multifd paths here and there, the ultimate
-> >     goal is to redefine send_prepare() to be something like:
-> >
-> >       p->pages ----------->  send_prepare() -------------> IOVs
-> >
-> >     So that there's no obvious change yet on multifd_ops besides redefined
-> >     interface for send_prepare().  We may want a separate OPs for file
-> >     later.
-> >
-> > For 2), one benefit is already presented by Fabiano in his other series [1]
-> > on cleaning up zero copy, but this patchset addressed it quite differently,
-> > and hopefully also more gradually.  The other benefit is for sure if we
-> > have a more concrete API for send_prepare() and if we can reach an initial
-> > consensus, then we can have the recent compression accelerators rebased on
-> > top of this one.
-> >
-> > This also prepares for the case where the input can be extended to even not
-> > any p->pages, but arbitrary data (like VFIO's potential use case in the
-> > future?).  But that will also for later even if reasonable.
-> >
-> > Please have a look.  Thanks,
-> >
-> > [0] https://lore.kernel.org/r/20231022201211.452861-1-peterx@redhat.com
-> > [1] https://lore.kernel.org/qemu-devel/20240126221943.26628-1-farosas@suse.de
-> >
-> > Peter Xu (14):
-> >   migration/multifd: Drop stale comment for multifd zero copy
-> >   migration/multifd: multifd_send_kick_main()
-> >   migration/multifd: Drop MultiFDSendParams.quit, cleanup error paths
-> >   migration/multifd: Postpone reset of MultiFDPages_t
-> >   migration/multifd: Drop MultiFDSendParams.normal[] array
-> >   migration/multifd: Separate SYNC request with normal jobs
-> >   migration/multifd: Simplify locking in sender thread
-> >   migration/multifd: Drop pages->num check in sender thread
-> >   migration/multifd: Rename p->num_packets and clean it up
-> >   migration/multifd: Move total_normal_pages accounting
-> >   migration/multifd: Move trace_multifd_send|recv()
-> >   migration/multifd: multifd_send_prepare_header()
-> >   migration/multifd: Move header prepare/fill into send_prepare()
-> >   migration/multifd: Forbid spurious wakeups
-> >
-> >  migration/multifd.h      |  34 +++--
-> >  migration/multifd-zlib.c |  11 +-
-> >  migration/multifd-zstd.c |  11 +-
-> >  migration/multifd.c      | 291 +++++++++++++++++++--------------------
-> >  4 files changed, 182 insertions(+), 165 deletions(-)
+> Now multifd's logic is designed to have no spurious wakeup.  I still
+> remember a talk to Juan and he seems to agree we should drop it now, and if
+> my memory was right it was there because multifd used to hit that when
+> still debugging.
 > 
-> This series didn't survive my 9999 iterations test on the opensuse
-> machine.
+> Let's drop it and see what can explode; as long as it's not reaching
+> soft-freeze.
 > 
-> # Running /x86_64/migration/multifd/tcp/tls/x509/reject-anon-client
-> ...
-> kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/multifd.c | 3 ---
+>  1 file changed, 3 deletions(-)
 > 
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 0f22646f95..bd0e3ea1a5 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -766,9 +766,6 @@ static void *multifd_send_thread(void *opaque)
+>              p->pending_sync = false;
+>              qemu_mutex_unlock(&p->mutex);
+>              qemu_sem_post(&p->sem_sync);
+> -        } else {
+> -            qemu_mutex_unlock(&p->mutex);
+> -            /* sometimes there are spurious wakeups */
+>          }
+>      }
+>  
+> -- 
+> 2.43.0
 > 
-> #0  0x00005575dda06399 in qemu_mutex_lock_impl (mutex=0x18, file=0x5575ddce9cc3 "../util/qemu-thread-posix.c", line=275) at ../util/qemu-thread-posix.c:92
-> #1  0x00005575dda06a94 in qemu_sem_post (sem=0x18) at ../util/qemu-thread-posix.c:275
-> #2  0x00005575dd56a512 in multifd_send_thread (opaque=0x5575df054ef8) at ../migration/multifd.c:720
-> #3  0x00005575dda0709b in qemu_thread_start (args=0x7fd404001d50) at ../util/qemu-thread-posix.c:541
-> #4  0x00007fd45e8a26ea in start_thread (arg=0x7fd3faffd700) at pthread_create.c:477
-> #5  0x00007fd45cd2150f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
-> 
-> The multifd thread is posting channels_ready with an already freed
-> multifd_send_state.
-> 
-> This is the bug Avihai has hit. We're going into multifd_save_cleanup()
-> so early that multifd_new_send_channel_async() hasn't even had the
-> chance to set p->running. So it misses the join and frees everything up
-> while a second multifd thread is just starting.
 
-Thanks for doing that.
+While removing this is still the goal, I just noticed that _if_ something
+spurious wakeup happens then this will not crash qemu, but instead it'll
+cause mutex locked forever and deadlock.
 
-Would this series makes that bug easier to happen?  I didn't do a lot of
-test on it, it only survived the smoke test and the kicked CI job.  I think
-we can still decide to fix that issues separately; but if this series makes
-that easier to happen then that's definitely bad..
+A deadlock is less wanted than a crash in this case, so when I repost, I'll
+make sure it crashes and does it hard, like squashing this in:
+
+====
+diff --git a/migration/multifd.c b/migration/multifd.c
+index bd0e3ea1a5..89011f75d9 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -751,7 +751,9 @@ static void *multifd_send_thread(void *opaque)
+             p->next_packet_size = 0;
+             p->pending_job = false;
+             qemu_mutex_unlock(&p->mutex);
+-        } else if (p->pending_sync) {
++        } else {
++            /* If not a normal job, must be a sync request */
++            assert(p->pending_sync);
+             p->flags = MULTIFD_FLAG_SYNC;
+             multifd_send_fill_packet(p);
+             ret = qio_channel_write_all(p->c, (void *)p->packet,
+====
+
+Fabiano, I'll keep your ACK, but let me know otherwise..
 
 -- 
 Peter Xu
