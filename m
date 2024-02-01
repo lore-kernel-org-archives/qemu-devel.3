@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C348FC47DB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 02:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 555C2C47DB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 02:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVMPX-0007G7-AJ; Wed, 31 Jan 2024 21:02:39 -0500
+	id 1rVN3n-00062y-UC; Wed, 31 Jan 2024 21:44:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVMPV-0007Fq-S4; Wed, 31 Jan 2024 21:02:37 -0500
-Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVMPT-0006Ny-U1; Wed, 31 Jan 2024 21:02:37 -0500
-Received: by mail-vs1-xe34.google.com with SMTP id
- ada2fe7eead31-46b2e88a808so162489137.0; 
- Wed, 31 Jan 2024 18:02:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706752953; x=1707357753; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LU10jKjpHLrMn1M9rCn0l6ewu1910EPFvmlq9YgmiBk=;
- b=LbHhbficgCsKK1mcgvjvVJb2/INyi68VT+9O+nILpRNeSjNxS0UU/9bnqf1jFMHzok
- JnMmalmqvs3Bo1trUBxB8Co9pM2lgxAIhF2HLOblXIBnNxO3oeAGKnlO+r6Z7dBNXQpR
- R7RaoBULyaNg+jEPKvE1UEvvSfPFvjVOJrbkHi5iR0kzpETFuglk0+OBLaKehKuH0aZ+
- 27U9prj3O2AEl+ZZ78ibeX8cR1YHU1Irl/27itxp/Gi9MXxVjCbeLx0Eqx5Quqbfgfxh
- f/+o2wBLSonU2SLPD/ocbHfwLv0hpQ0SRMdDa7fKJ/Sgx4aNWzxsDGeonSN3K5xy8rOl
- Pf+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706752953; x=1707357753;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LU10jKjpHLrMn1M9rCn0l6ewu1910EPFvmlq9YgmiBk=;
- b=dPUlQVIK61QZ0mR0JANe3v1Dpoz8tFSJb1FYkLworg9nqMCkzd2dvKVjKkuYxgscHS
- /Ceqwl9eCEYDH/tkjHTeurbiurQYXmrjLIcty9yP74I/gTQdaLv1gXlinlBtZyBSPtES
- dEqWZRlqOV1Z1YhxOAiFMy514GnNsRhE4Se1hkaNBNou5dexKBJUK1YUcxDZvudhAEax
- f2jbU8tk8kmbvoi6QaMR5vm+I5dDN5ukN4fZ0I84WtyPrK1Ql1L7fjg7yxH0z+uE1RGs
- Tee22nIsi6YMtAw8Yf3xsZ7j18wvtTIZxllpUd/MNYpPapxLS9ixs84vovkkVF4d7bCi
- JtXg==
-X-Gm-Message-State: AOJu0YyrCwjUbGaaQ+YgMYjKzM08YCxZn/hbzf+tJewB3XIe6Jh2Ix5P
- OrwifOs913CX/XS6s6KCBHlsHUMB+Ss2t0nVTkCPVpnZiafk5ZbMjQDxut8m37S8MpU9L64b+LL
- 0Z6+dUGoi4AC8+5VIaHoe/FguBXs=
-X-Google-Smtp-Source: AGHT+IGjiqrmLriMQ5vYEfob5BTRNv8uirAO6DMAxGHbcDbP+AFxRdDqEhj24jc2cmcPHz9APnvmEc4IB5C9PPHEviM=
-X-Received: by 2002:a05:6102:1958:b0:469:94f8:1249 with SMTP id
- jl24-20020a056102195800b0046994f81249mr3463444vsb.16.1706752953432; Wed, 31
- Jan 2024 18:02:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rVN3l-00062q-TG
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 21:44:13 -0500
+Received: from mgamail.intel.com ([134.134.136.65])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rVN3j-0005vb-6t
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 21:44:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706755451; x=1738291451;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Yc3gR68rS4/B0kEheqFMJGBIql3pAV51T/Q4R/eXbuk=;
+ b=LWHjFYq2+3HPKODXokddByuxseBX4U6viRpfcoCg8VM2yZEFv/zA0GMv
+ WBNVWIlNJyq+RIZ6WsOSGPgJBjrZovoRcC0yeXedlCHzsL6V2b+jFhbsL
+ mM5M/N9+MON/IEzh5MM2+ZE1BW3R05rMdJ7/e1qnRRljkzn4IbtqCvj4I
+ PpMMMhPynwQWi7i7fNST8dhFJWZj4ALi37tc10lykA2zmemzNl+mfdUhE
+ 7r5VFDK72WKPonj4jY8LiJ8y9sO5vJb4+KWzOz5NMLhWgKG1xx+ecfjKR
+ SPBfb47Zzi049NtF0chJd1qNgknv+ETyMtDqIkMtgdJYC7iQ+DphCQ17e Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="407506889"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="407506889"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jan 2024 18:44:07 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="788810725"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="788810725"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orsmga002.jf.intel.com with ESMTP; 31 Jan 2024 18:44:02 -0800
+Date: Thu, 1 Feb 2024 10:57:32 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Babu Moger <babu.moger@amd.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+Message-ID: <ZbsInI6Z66edm3eH@intel.com>
+References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
+ <Zbog2vDrrWFbujrs@redhat.com>
 MIME-Version: 1.0
-References: <20240129192207.2946870-1-me@deliversmonkey.space>
-In-Reply-To: <20240129192207.2946870-1-me@deliversmonkey.space>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 1 Feb 2024 12:02:06 +1000
-Message-ID: <CAKmqyKMoumWhQKkT4UW8h-UPah-8Z39gGzmTnza-BPktpct-LA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/6] Pointer Masking update for Zjpm v0.8
-To: Alexey Baturo <baturo.alexey@gmail.com>
-Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe34.google.com
-X-Spam_score_int: 13
-X-Spam_score: 1.3
-X-Spam_bar: +
-X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, TVD_PH_BODY_ACCOUNTS_POST=0.602, TVD_PH_BODY_META_ALL=2.567,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zbog2vDrrWFbujrs@redhat.com>
+Received-SPF: none client-ip=134.134.136.65;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -55
+X-Spam_score: -5.6
+X-Spam_bar: -----
+X-Spam_report: (-5.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,93 +92,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 5:23=E2=80=AFAM Alexey Baturo <baturo.alexey@gmail.=
-com> wrote:
->
-> From: Alexey Baturo <baturo.alexey@gmail.com>
->
-> Hi,
->
-> This patch series targets Zjpm v0.8 extension.
-> The spec itself could be found here: https://github.com/riscv/riscv-j-ext=
-ension/blob/8088461d8d66a7676872b61c908cbeb7cf5c5d1d/zjpm-spec.pdf
-> This patch series is updated after the suggested comments:
-> - add "x-" to the extension names to indicate experimental
+Hi Daniel,
 
-Do you mind rebasing this on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
+On Wed, Jan 31, 2024 at 10:28:42AM +0000, Daniel P. Berrangé wrote:
+> Date: Wed, 31 Jan 2024 10:28:42 +0000
+> From: "Daniel P. Berrangé" <berrange@redhat.com>
+> Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+> 
+> On Wed, Jan 31, 2024 at 06:13:29PM +0800, Zhao Liu wrote:
+> > From: Zhao Liu <zhao1.liu@intel.com>
 
-Alistair
+[snip]
 
->
-> [v4]:
-> Patch series updated after the suggested comments:
-> - removed J-letter extension as it's unused
-> - renamed and fixed function to detect if address should be sign-extended
-> - zeroed unused context variables and moved computation logic to another =
-patch
-> - bumped pointer masking version_id and minimum_version_id by 1
->
-> Thanks
->
-> [v3]:
-> There patches are updated after Richard's comments:
-> - moved new tb flags to the end
-> - used tcg_gen_(s)extract to get the final address
-> - properly handle CONFIG_USER_ONLY
->
-> Thanks
->
-> [v2]:
-> As per Richard's suggestion I made pmm field part of tb_flags.
-> It allowed to get rid of global variable to store pmlen.
-> Also it allowed to simplify all the machinery around it.
->
-> Thanks
->
-> [v1]:
-> Hi all,
->
-> It looks like Zjpm v0.8 is almost frozen and we don't expect it change dr=
-astically anymore.
-> Compared to the original implementation with explicit base and mask CSRs,=
- we now only have
-> several fixed options for number of masked bits which are set using exist=
-ing CSRs.
-> The changes have been tested with handwritten assembly tests and LLVM HWA=
-SAN
-> test suite.
->
-> Thanks
->
-> Alexey Baturo (6):
->   target/riscv: Remove obsolete pointer masking extension code.
->   target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
->     of Zjpm v0.8
->   target/riscv: Add helper functions to calculate current number of
->     masked bits for pointer masking
->   target/riscv: Add pointer masking tb flags
->   target/riscv: Update address modify functions to take into account
->     pointer masking
->   target/riscv: Enable updates for pointer masking variables and thus
->     enable pointer masking extension
->
->  target/riscv/cpu.c           |  22 ++-
->  target/riscv/cpu.h           |  46 +++--
->  target/riscv/cpu_bits.h      |  90 +---------
->  target/riscv/cpu_cfg.h       |   3 +
->  target/riscv/cpu_helper.c    |  97 +++++-----
->  target/riscv/csr.c           | 337 ++---------------------------------
->  target/riscv/machine.c       |  20 +--
->  target/riscv/pmp.c           |  13 +-
->  target/riscv/pmp.h           |  11 +-
->  target/riscv/tcg/tcg-cpu.c   |   5 +-
->  target/riscv/translate.c     |  46 ++---
->  target/riscv/vector_helper.c |  15 +-
->  12 files changed, 158 insertions(+), 547 deletions(-)
->
-> --
-> 2.34.1
->
->
+> > However, after digging deeper into the description and use cases of
+> > cluster in the device tree [3], I realized that the essential
+> > difference between clusters and modules is that cluster is an extremely
+> > abstract concept:
+> >   * Cluster supports nesting though currently QEMU doesn't support
+> >     nested cluster topology. However, modules will not support nesting.
+> >   * Also due to nesting, there is great flexibility in sharing resources
+> >     on clusters, rather than narrowing cluster down to sharing L2 (and
+> >     L3 tags) as the lowest topology level that contains cores.
+> >   * Flexible nesting of cluster allows it to correspond to any level
+> >     between the x86 package and core.
+> > 
+> > Based on the above considerations, and in order to eliminate the naming
+> > confusion caused by the mapping between general cluster and x86 module
+> > in v7, we now formally introduce smp.modules as the new topology level.
+> 
+> What is the Linux kernel calling this topology level on x86 ?
+> It will be pretty unfortunate if Linux and QEMU end up with
+> different names for the same topology level.
+> 
+
+Now Intel's engineers in the Linux kernel are starting to use "module"
+to refer to this layer of topology [4] to avoid confusion, where
+previously the scheduler developers referred to the share L2 hierarchy
+collectively as "cluster".
+
+Looking at it this way, it makes more sense for QEMU to use the
+"module" for x86.
+
+[4]: https://lore.kernel.org/lkml/20231116142245.1233485-3-kan.liang@linux.intel.com/
+
+Thanks,
+Zhao
+
 
