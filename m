@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F55C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 11:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9607FC47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 11:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVVNq-0005aU-99; Thu, 01 Feb 2024 06:37:30 -0500
+	id 1rVVg7-0003T6-2M; Thu, 01 Feb 2024 06:56:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rVVNn-0005a5-W3; Thu, 01 Feb 2024 06:37:28 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rVVNk-0000BI-Fu; Thu, 01 Feb 2024 06:37:25 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E32449633;
- Thu,  1 Feb 2024 14:38:16 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CF2737131D;
- Thu,  1 Feb 2024 14:37:16 +0300 (MSK)
-Message-ID: <08d8afac-d807-4fe1-9ef4-b7a338c145b2@tls.msk.ru>
-Date: Thu, 1 Feb 2024 14:37:16 +0300
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVVfx-0003HE-Ue
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 06:56:19 -0500
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVVfh-0003aR-Ig
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 06:56:12 -0500
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2d07d74bdeeso2787761fa.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 03:55:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706788552; x=1707393352; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WQg+YxVx7YVUdjzoWcNsVTdniYUBxvxHDaB8H5+ilsA=;
+ b=rfSAYEPRaaE7TcvAfsqP3SkrWkLYjuPkmz+1XmWit5vaLIM3LX2qz6m4RycXVVzVDV
+ 5hlIt4h1vYTtfwg2qHNCxKNaxwKGiPgophzZhehzvecaDx5ENyY4lyT8bkkAHJUC6dkf
+ r4wGpDqUZrScqDjwuYyitLdqg/CglJSTtRear+HzuzoIExpclyBYbhxodMhXNAFFaKYm
+ WRjz9eXI+qYxTynW62f2rzuIaU92o8kwSVFMlCOM5osn1zq8voOk9EXJ2PQgbCJIuD+C
+ jtjyxqnSNN/R9FKfmQI4gXWVYXFf32FktDBQCL8D8Tx+AyZ7++A9BHB7FyxlRIsZInIk
+ bxfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706788552; x=1707393352;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WQg+YxVx7YVUdjzoWcNsVTdniYUBxvxHDaB8H5+ilsA=;
+ b=D9EWWurIh85sm/a+nRk1xlQPqrqpMYQyXOjWvR5ud2hZ7iqujMcJQHY52fLuAL1ijZ
+ sfGfNs5rmkdJfiCWvQLgMn3z7EWGESX+6gVOgvgD2csG8az0CxKoGw3gGe0/xJy9/p/F
+ W0W6tVTXkisTQLleGiR803WRKo7zvpxBtsYVQsNHxRYcojAHo1pjb9tQ/zHZAyKXQo0L
+ UAhN/dQB+H9DTnqW9RjYM/aBfI18kW0lqvkvdJqTaEa7H7QRKf3kGASYhT51sOu36s/h
+ pnWEfTDc9Gz+x5iRbMHSkvDkjzSEXJrZKJyTYEXOdk2bTJCjbA6cN/ih51eCJik0ZYU/
+ jJpA==
+X-Gm-Message-State: AOJu0YxcozyPiK2sgeFnbxbGvVUUJNDu7ozKJF/+CBZVILNP0gE5V4AP
+ qBxG3/OgM5Cfr0nRLnsJYwOrIOPsCKs2dY3v3k0Pm07Qb298hvLB624GvCyKiivNOtcpaqGzvRI
+ p
+X-Google-Smtp-Source: AGHT+IEtRf+AEGiWNM4oCcu+nLpz/NCqAA8/WXp6g+jhNYnH7SPdDFzcZh4+Q5ip7b6hM+nqc3HG4A==
+X-Received: by 2002:a2e:a682:0:b0:2cf:1b96:5af5 with SMTP id
+ q2-20020a2ea682000000b002cf1b965af5mr1137561lje.17.1706788551911; 
+ Thu, 01 Feb 2024 03:55:51 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ v7-20020a5d4a47000000b0033aef37ec94sm9984105wrs.113.2024.02.01.03.55.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Feb 2024 03:55:51 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 15D355F7AF;
+ Thu,  1 Feb 2024 11:55:51 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] kconfig: use "select" to enable semihosting
+In-Reply-To: <20240129115809.1039924-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Mon, 29 Jan 2024 12:58:09 +0100")
+References: <20240129115809.1039924-1-pbonzini@redhat.com>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Thu, 01 Feb 2024 11:55:51 +0000
+Message-ID: <87o7d0mm9k.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pflash: fix sectors vs bytes confusion in
- blk_pread_nonzeroes()
-Content-Language: en-US
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Xiang Zheng <zhengxiang9@huawei.com>
-References: <20240130002712.257815-1-stefanha@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240130002712.257815-1-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,37 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-30.01.2024 03:27, Stefan Hajnoczi wrote:
-> The following expression is incorrect because blk_pread_nonzeroes()
-> deals in units of bytes, not sectors:
-> 
->    bytes = MIN(size - offset, BDRV_REQUEST_MAX_SECTORS)
->                                                ^^^^^^^
-> 
-> BDRV_REQUEST_MAX_BYTES is the appropriate constant.
-> 
-> Fixes: a4b15a8b9ef2 ("pflash: Only read non-zero parts of backend image")
-> Cc: Xiang Zheng <zhengxiang9@huawei.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->   hw/block/block.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/block/block.c b/hw/block/block.c
-> index 9f52ee6e72..ff503002aa 100644
-> --- a/hw/block/block.c
-> +++ b/hw/block/block.c
-> @@ -30,7 +30,7 @@ static int blk_pread_nonzeroes(BlockBackend *blk, hwaddr size, void *buf)
->       BlockDriverState *bs = blk_bs(blk);
->   
->       for (;;) {
-> -        bytes = MIN(size - offset, BDRV_REQUEST_MAX_SECTORS);
-> +        bytes = MIN(size - offset, BDRV_REQUEST_MAX_BYTES);
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Hmm.  This smells like a -stable material, but you know better not
-to Cc: qemu-stable@ for unrelated stuff...  Is it not for stable?
+> Just like all other dependencies, these can be expressed in Kconfig
+> files rather than in the default configurations.
 
-Thanks,
+Queued to semihosting/next, thanks.
 
-/mjt
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
