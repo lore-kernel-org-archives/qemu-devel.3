@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686B6C47DDB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 10:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B4AC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 10:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVUOG-0003io-QJ; Thu, 01 Feb 2024 05:33:52 -0500
+	id 1rVUOG-0003ia-25; Thu, 01 Feb 2024 05:33:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1rVUOF-0003iX-RE
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:33:51 -0500
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ id 1rVUOC-0003hg-MQ
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:33:49 -0500
+Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1rVUOD-0004qx-Ie
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:33:51 -0500
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-3637b935e80so2470745ab.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 02:33:49 -0800 (PST)
+ id 1rVUO9-0004ps-J5
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:33:48 -0500
+Received: by mail-il1-x131.google.com with SMTP id
+ e9e14a558f8ab-3638e3ace68so2849805ab.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 02:33:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706783626; x=1707388426; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706783623; x=1707388423; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qjpON3cPks6DBAlROmi6sm64J8dDNhFlT1cYucf3+UQ=;
- b=PfbIYp3Z9JM0Ba+3p6N+FQoQPqpQ/pnczv6mf5+EQKsJsP023G95SoyCuPOtrzU3Z8
- X6tTzKqviFx46T63yumKuo14oOrMdBtnAL8ysfk3rJUYnudRVh3Af4T8AIYY5/kO8SU7
- LH9/6rgCE1Fqu7sdBR2JcbPxdn7sORDO/3tSS5Fd7m+R8Yj0TVxedG0wI+q3SUyWhgVP
- Pun/rF57V9BdY5kwTz1DzZZyfB+WRxnL55SF6s+vgM3i8NK67Vc5Ivt/NidLO1S6utGS
- N1IW1Su+goIuEkTOoXchXxiNLbtcUOBLHpMyCqrDcvt5mX8TVNzrlcIYRH7wqwauTCUw
- aIFw==
+ bh=fFcNQALLp828WUobDdICu7UURWQLSRkGcGCql/AlsZ8=;
+ b=P7dq2QVnG8mNlOJdbdTfdI3UUWuPhbZnMw27ngKLPidsHe33qpOJ6dBOe2kLbA3O2H
+ 2/fOFrWRG6JGfoHSYW4sasHHY2pC424UghC2r713nwhikRnA8ibxsaYGjAN3uGOsNo+w
+ h4s3qIldN7uIfmap5aHPqu5tod95xJvTho2Z2KIX7VZytnAHUrAWV2pUrqE8tlr5RhyP
+ uCsZ7lKm5CXasYdasuERHPnDR0fmctvX6/1NSPS32OHpLoFoxAjLSCVeuAdT2VHxUViD
+ srtQR2OoD8w5+1GPZnPq1Wcsmz78aJEbFmOG1/cYT0M8QcQi/IP3V5C/U8t2GbdKFzop
+ 1CjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706783626; x=1707388426;
+ d=1e100.net; s=20230601; t=1706783623; x=1707388423;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qjpON3cPks6DBAlROmi6sm64J8dDNhFlT1cYucf3+UQ=;
- b=D6gbEyDdfzyf54sQdxSwK+t3TxF3pqOBSooxHnfsv8IVdEQN83SfAiVmtNV3aNaofu
- W/tcZxhWMBeGujB+1JiiefGjwVgRnEm/0CymhAb9/JM0lUFFwXTDlaLR5YcAfyvkps3H
- v6MhYrgP3SUGen/aGvrQYnJ2FYCw+R1xv+06TMk9rZbgmqAb0ci8gGRSoEVxdOHquSiP
- 67YBcv1XWSEnlwhOynNBEq5fGEVgJwUuaQYisdk7ZwzAr0J6SgbcuW4eZUSeaKXjaOEe
- UqUGI9k/I6vnk5nOOzTUp+URhL3OeP65rnjT6s81j+8M7CkrIKLaLgS7/OVSyEOjb1oC
- 16JA==
-X-Gm-Message-State: AOJu0YwFN96OdxTjZEBWY0LjJOJeaMymLywjJJMni7YRRmxXGJt9azJd
- cDg21OQBX74gxCLweGYU/Dk9gIgFT8rLHfsBVbC6dB/mM069fECzKm5JAAJQzR0=
-X-Google-Smtp-Source: AGHT+IFn4uMUn62uoHFUGjtDhsXxJjNljyW+3VU3zWSbcn2YIEWVXbjvmhmxko822Cs4Qi2JgC4zLw==
-X-Received: by 2002:a05:6e02:f02:b0:363:a7dd:f05a with SMTP id
- x2-20020a056e020f0200b00363a7ddf05amr78869ilj.4.1706783626402; 
- Thu, 01 Feb 2024 02:33:46 -0800 (PST)
+ bh=fFcNQALLp828WUobDdICu7UURWQLSRkGcGCql/AlsZ8=;
+ b=RMVuOMRZ1HTJU6AkuQDZU2azrimr9FQ5IFu2aLlpCXMoVsRdVLqDqx6+7XE80MCrZ5
+ U3aJE+upncbu1+hGOqwCG+iexjOQuj6pdb7rWc+/0qhpWYzKOuNwxm5ljfd4rNr68kEA
+ W6c/nddstHoE7UgYWwN3qgh3s3Q2EIMaeaVyNI0+VQbMtCS59s9IbGEvchaN8GZqEamS
+ PCoYjN+ARVb3y2aylpWPjYnCz6l78M2i9KnF7HgP8JKO7IiHASpy9bpjqy0xVancyNiJ
+ HgwSk2rXmIjCaoA8QnP5y14c2Yx4vAFWhmQDQK9LMxS+V2qa1HUKZwTIsN6MlgafEhhp
+ PO9A==
+X-Gm-Message-State: AOJu0YyV+R1yntZpwDQHW6OW8NjePj4WEcColqJtz6WysNUyaCuYNvee
+ ePssEw75pH0Zme0K8GwXVPg/3Ytiot531yluzX5Z9UaboRM1JCfdEQ8ob+pGC8E=
+X-Google-Smtp-Source: AGHT+IHbwNqUD3hP0AqE9UAktNEGUrE7p7Fw0jgqVnYZo4ZgjzuQ8jDrwN4VkXWyooPXKk+SUkoKqg==
+X-Received: by 2002:a92:d64a:0:b0:363:a47b:7b95 with SMTP id
+ x10-20020a92d64a000000b00363a47b7b95mr736543ilp.5.1706783623226; 
+ Thu, 01 Feb 2024 02:33:43 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXK6OqsrVumSd1kshGo02qOnvfsGUJYJVIZRTYm93hEANB9X6lA0ZCNqdUe0Nq98fq2V4tM+S/SpGTUmpwdvgKnFBJetLIfjsrQHQAoIHLe5E8g174BQ49ERwGyPyoFb8yehmjIPby47nAGixEUFJe3vzh4xc6E3p2ENcw9LalISV0vMWdlaHTOYW66IfHaAhiLO75FTk7mFtaGLrc6TWza6JpQlfNGlk7arKpTGcNLPpCJ8V28ROfOgxlm5elp+57Ip/QxZsbpdOm/TZQnEIMafiIMeCv1NZaHe2UZ
+ AJvYcCXTFnJK3VOmWhpyJ3LIjVfKIPEz9eYLrkgkclaxsLzr+Xo5QpmnKYjLbuXQpGiuYViJkmxfPAZZYsYElePHYKylftCqN121+XXzcwZeJ2ojFxV4sVeQtzWe3AAqLBx0FWxn5DqUhMXq/vwlq49y60cLKykyWfHJ7RcAC5ZqXTJiEiEKK4a3eaQuOoe2OuEZXsqUyRJymaDXEcuLfJdpQrG1KRy1pixng5z0T5f4hSZXI3g0f34llbkNtJvsG2tm4qINowAgGY/0Snxrqob30XdLONXBDEQwtX3ilOc6
 Received: from taylor-ubuntu.hsd1.co.comcast.net
  (c-73-169-12-54.hsd1.co.comcast.net. [73.169.12.54])
  by smtp.gmail.com with ESMTPSA id
- q3-20020a92c003000000b00361b6a1e6aasm3152089ild.87.2024.02.01.02.33.45
+ q3-20020a92c003000000b00361b6a1e6aasm3152089ild.87.2024.02.01.02.33.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 02:33:45 -0800 (PST)
+ Thu, 01 Feb 2024 02:33:42 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
  quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
  ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH v2 3/3] Hexagon (target/hexagon) Enable more short-circuit
- packets (HVX)
-Date: Thu,  1 Feb 2024 03:33:40 -0700
-Message-Id: <20240201103340.119081-4-ltaylorsimpson@gmail.com>
+Subject: [PATCH v2 1/3] Hexagon (target/hexagon) Analyze reads before writes
+Date: Thu,  1 Feb 2024 03:33:38 -0700
+Message-Id: <20240201103340.119081-2-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240201103340.119081-1-ltaylorsimpson@gmail.com>
 References: <20240201103340.119081-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,452 +99,452 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Look for read-after-write instead of overlap of reads and writes
+We divide gen_analyze_funcs.py into 3 phases
+    Declare the operands
+    Analyze the register reads
+    Analyze the register writes
 
-HVX instructions with helpers have pass-by-reference semantics, so
-we check for overlaps of reads and writes within the same instruction.
+We also create special versions of ctx_log_*_read for new operands
+    Check that the operand is written before the read
+
+This is a precursor to improving the analysis for short-circuiting
+the packet semantics in a subsequent commit
 
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- target/hexagon/translate.h          | 88 +++++++++++++++++++++++------
- target/hexagon/translate.c          | 58 ++-----------------
- target/hexagon/gen_analyze_funcs.py | 19 ++++---
- target/hexagon/hex_common.py        | 45 ++++++++++-----
- 4 files changed, 115 insertions(+), 95 deletions(-)
+ target/hexagon/translate.h          | 26 +++++++++++-
+ target/hexagon/README               |  9 +++--
+ target/hexagon/gen_analyze_funcs.py | 34 ++++++++++------
+ target/hexagon/hex_common.py        | 63 +++++++++++++++--------------
+ 4 files changed, 83 insertions(+), 49 deletions(-)
 
 diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-index d5e7f49ad8..00cc2bcd63 100644
+index 4dd59c6726..f06d71fc53 100644
 --- a/target/hexagon/translate.h
 +++ b/target/hexagon/translate.h
-@@ -50,23 +50,27 @@ typedef struct DisasContext {
-     int tmp_vregs_num[VECTOR_TEMPS_MAX];
-     int vreg_log[NUM_VREGS];
-     int vreg_log_idx;
-+    DECLARE_BITMAP(vregs_written, NUM_VREGS);
-+    DECLARE_BITMAP(insn_vregs_written, NUM_VREGS);
-     DECLARE_BITMAP(vregs_updated_tmp, NUM_VREGS);
-     DECLARE_BITMAP(vregs_updated, NUM_VREGS);
-     DECLARE_BITMAP(vregs_select, NUM_VREGS);
-     DECLARE_BITMAP(predicated_future_vregs, NUM_VREGS);
-     DECLARE_BITMAP(predicated_tmp_vregs, NUM_VREGS);
--    DECLARE_BITMAP(vregs_read, NUM_VREGS);
-+    DECLARE_BITMAP(insn_vregs_read, NUM_VREGS);
-     int qreg_log[NUM_QREGS];
-     int qreg_log_idx;
--    DECLARE_BITMAP(qregs_read, NUM_QREGS);
-+    DECLARE_BITMAP(qregs_written, NUM_QREGS);
-+    DECLARE_BITMAP(insn_qregs_written, NUM_QREGS);
-+    DECLARE_BITMAP(insn_qregs_read, NUM_QREGS);
-     bool pre_commit;
-     bool need_commit;
-     TCGCond branch_cond;
-     target_ulong branch_dest;
-     bool is_tight_loop;
-     bool short_circuit;
--    bool has_hvx_helper;
-     bool read_after_write;
-+    bool has_hvx_overlap;
-     TCGv new_value[TOTAL_PER_THREAD_REGS];
-     TCGv new_pred_value[NUM_PREGS];
-     TCGv pred_written;
-@@ -146,10 +150,25 @@ intptr_t ctx_future_vreg_off(DisasContext *ctx, int regnum,
- intptr_t ctx_tmp_vreg_off(DisasContext *ctx, int regnum,
-                           int num, bool alloc_ok);
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -75,6 +75,8 @@ typedef struct DisasContext {
+     TCGv dczero_addr;
+ } DisasContext;
  
-+static inline void ctx_start_hvx_insn(DisasContext *ctx)
++bool is_gather_store_insn(DisasContext *ctx);
++
+ static inline void ctx_log_pred_write(DisasContext *ctx, int pnum)
+ {
+     if (!test_bit(pnum, ctx->pregs_written)) {
+@@ -89,6 +91,12 @@ static inline void ctx_log_pred_read(DisasContext *ctx, int pnum)
+     set_bit(pnum, ctx->pregs_read);
+ }
+ 
++static inline void ctx_log_pred_read_new(DisasContext *ctx, int pnum)
 +{
-+    bitmap_zero(ctx->insn_vregs_written, NUM_VREGS);
-+    bitmap_zero(ctx->insn_vregs_read, NUM_VREGS);
-+    bitmap_zero(ctx->insn_qregs_written, NUM_QREGS);
-+    bitmap_zero(ctx->insn_qregs_read, NUM_QREGS);
++    g_assert(test_bit(pnum, ctx->pregs_written));
++    set_bit(pnum, ctx->pregs_read);
 +}
 +
- static inline void ctx_log_vreg_write(DisasContext *ctx,
-                                       int rnum, VRegWriteType type,
--                                      bool is_predicated)
-+                                      bool is_predicated, bool has_helper)
+ static inline void ctx_log_reg_write(DisasContext *ctx, int rnum,
+                                      bool is_predicated)
  {
-+    if (has_helper) {
-+        set_bit(rnum, ctx->insn_vregs_written);
-+        if (test_bit(rnum, ctx->insn_vregs_read)) {
-+            ctx->has_hvx_overlap = true;
-+        }
-+    }
-+    set_bit(rnum, ctx->vregs_written);
-     if (type != EXT_TMP) {
-         if (!test_bit(rnum, ctx->vregs_updated)) {
-             ctx->vreg_log[ctx->vreg_log_idx] = rnum;
-@@ -175,42 +194,77 @@ static inline void ctx_log_vreg_write(DisasContext *ctx,
- 
- static inline void ctx_log_vreg_write_pair(DisasContext *ctx,
-                                            int rnum, VRegWriteType type,
--                                           bool is_predicated)
-+                                           bool is_predicated, bool has_helper)
- {
--    ctx_log_vreg_write(ctx, rnum ^ 0, type, is_predicated);
--    ctx_log_vreg_write(ctx, rnum ^ 1, type, is_predicated);
-+    ctx_log_vreg_write(ctx, rnum ^ 0, type, is_predicated, has_helper);
-+    ctx_log_vreg_write(ctx, rnum ^ 1, type, is_predicated, has_helper);
+@@ -120,6 +128,12 @@ static inline void ctx_log_reg_read(DisasContext *ctx, int rnum)
+     set_bit(rnum, ctx->regs_read);
  }
  
--static inline void ctx_log_vreg_read(DisasContext *ctx, int rnum)
-+static inline void ctx_log_vreg_read(DisasContext *ctx, int rnum,
-+                                     bool has_helper)
++static inline void ctx_log_reg_read_new(DisasContext *ctx, int rnum)
++{
++    g_assert(test_bit(rnum, ctx->regs_written));
++    set_bit(rnum, ctx->regs_read);
++}
++
+ static inline void ctx_log_reg_read_pair(DisasContext *ctx, int rnum)
  {
--    set_bit(rnum, ctx->vregs_read);
-+    if (has_helper) {
-+        set_bit(rnum, ctx->insn_vregs_read);
-+        if (test_bit(rnum, ctx->insn_vregs_written)) {
-+            ctx->has_hvx_overlap = true;
-+        }
-+    }
-+    if (test_bit(rnum, ctx->vregs_written)) {
-+        ctx->read_after_write = true;
-+    }
+     ctx_log_reg_read(ctx, rnum);
+@@ -171,6 +185,15 @@ static inline void ctx_log_vreg_read(DisasContext *ctx, int rnum)
+     set_bit(rnum, ctx->vregs_read);
  }
  
--static inline void ctx_log_vreg_read_new(DisasContext *ctx, int rnum)
-+static inline void ctx_log_vreg_read_new(DisasContext *ctx, int rnum,
-+                                         bool has_helper)
++static inline void ctx_log_vreg_read_new(DisasContext *ctx, int rnum)
++{
++    g_assert(is_gather_store_insn(ctx) ||
++             test_bit(rnum, ctx->vregs_updated) ||
++             test_bit(rnum, ctx->vregs_select) ||
++             test_bit(rnum, ctx->vregs_updated_tmp));
++    set_bit(rnum, ctx->vregs_read);
++}
++
+ static inline void ctx_log_vreg_read_pair(DisasContext *ctx, int rnum)
  {
-     g_assert(is_gather_store_insn(ctx) ||
-              test_bit(rnum, ctx->vregs_updated) ||
-              test_bit(rnum, ctx->vregs_select) ||
-              test_bit(rnum, ctx->vregs_updated_tmp));
--    set_bit(rnum, ctx->vregs_read);
-+    if (has_helper) {
-+        set_bit(rnum, ctx->insn_vregs_read);
-+        if (test_bit(rnum, ctx->insn_vregs_written)) {
-+            ctx->has_hvx_overlap = true;
-+        }
-+    }
-+    if (is_gather_store_insn(ctx)) {
-+        ctx->read_after_write = true;
-+    }
- }
+     ctx_log_vreg_read(ctx, rnum ^ 0);
+@@ -205,7 +228,6 @@ extern TCGv hex_vstore_addr[VSTORES_MAX];
+ extern TCGv hex_vstore_size[VSTORES_MAX];
+ extern TCGv hex_vstore_pending[VSTORES_MAX];
  
--static inline void ctx_log_vreg_read_pair(DisasContext *ctx, int rnum)
-+static inline void ctx_log_vreg_read_pair(DisasContext *ctx, int rnum,
-+                                          bool has_helper)
- {
--    ctx_log_vreg_read(ctx, rnum ^ 0);
--    ctx_log_vreg_read(ctx, rnum ^ 1);
-+    ctx_log_vreg_read(ctx, rnum ^ 0, has_helper);
-+    ctx_log_vreg_read(ctx, rnum ^ 1, has_helper);
- }
+-bool is_gather_store_insn(DisasContext *ctx);
+ void process_store(DisasContext *ctx, int slot_num);
  
- static inline void ctx_log_qreg_write(DisasContext *ctx,
--                                      int rnum)
-+                                      int rnum, bool has_helper)
- {
-+    if (has_helper) {
-+        set_bit(rnum, ctx->insn_qregs_written);
-+        if (test_bit(rnum, ctx->insn_qregs_read)) {
-+            ctx->has_hvx_overlap = true;
-+        }
-+    }
-+    set_bit(rnum, ctx->qregs_written);
-     ctx->qreg_log[ctx->qreg_log_idx] = rnum;
-     ctx->qreg_log_idx++;
- }
- 
--static inline void ctx_log_qreg_read(DisasContext *ctx, int qnum)
-+static inline void ctx_log_qreg_read(DisasContext *ctx,
-+                                     int qnum, bool has_helper)
- {
--    set_bit(qnum, ctx->qregs_read);
-+    if (has_helper) {
-+        set_bit(qnum, ctx->insn_qregs_read);
-+        if (test_bit(qnum, ctx->insn_qregs_written)) {
-+            ctx->has_hvx_overlap = true;
-+        }
-+    }
-+    if (test_bit(qnum, ctx->qregs_written)) {
-+        ctx->read_after_write = true;
-+    }
- }
- 
- extern TCGv hex_gpr[TOTAL_PER_THREAD_REGS];
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 751ca71790..ed4b4acd1d 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -378,60 +378,10 @@ static bool need_commit(DisasContext *ctx)
-         return true;
+ FIELD(PROBE_PKT_SCALAR_STORE_S0, MMU_IDX,       0, 2)
+diff --git a/target/hexagon/README b/target/hexagon/README
+index 746ebec378..c1d8c8d0ab 100644
+--- a/target/hexagon/README
++++ b/target/hexagon/README
+@@ -183,10 +183,11 @@ when the override is present.
      }
  
--    if (pkt->num_insns == 1) {
--        if (pkt->pkt_has_hvx) {
--            /*
--             * The HVX instructions with generated helpers use
--             * pass-by-reference, so they need the read/write overlap
--             * check below.
--             * The HVX instructions with overrides are OK.
--             */
--            if (!ctx->has_hvx_helper) {
--                return false;
--            }
--        } else {
--            return false;
--        }
--    }
--
--    if (ctx->read_after_write) {
-+    if (ctx->read_after_write || ctx->has_hvx_overlap) {
-         return true;
-     }
+ We also generate an analyze_<tag> function for each instruction.  Currently,
+-these functions record the writes to registers by calling ctx_log_*.  During
+-gen_start_packet, we invoke the analyze_<tag> function for each instruction in
+-the packet, and we mark the implicit writes.  After the analysis is performed,
+-we initialize the result register for each of the predicated assignments.
++these functions record the reads and writes to registers by calling ctx_log_*.
++During gen_start_packet, we invoke the analyze_<tag> function for each instruction in
++the packet, and we mark the implicit writes.  The analysis determines if the packet
++semantics can be short-circuited.  If not, we initialize the result register for each
++of the predicated assignments.
  
--    /* Check for overlap between HVX reads and writes */
--    for (int i = 0; i < ctx->vreg_log_idx; i++) {
--        int vnum = ctx->vreg_log[i];
--        if (test_bit(vnum, ctx->vregs_read)) {
--            return true;
--        }
--    }
--    if (!bitmap_empty(ctx->vregs_updated_tmp, NUM_VREGS)) {
--        int i = find_first_bit(ctx->vregs_updated_tmp, NUM_VREGS);
--        while (i < NUM_VREGS) {
--            if (test_bit(i, ctx->vregs_read)) {
--                return true;
--            }
--            i = find_next_bit(ctx->vregs_updated_tmp, NUM_VREGS, i + 1);
--        }
--    }
--    if (!bitmap_empty(ctx->vregs_select, NUM_VREGS)) {
--        int i = find_first_bit(ctx->vregs_select, NUM_VREGS);
--        while (i < NUM_VREGS) {
--            if (test_bit(i, ctx->vregs_read)) {
--                return true;
--            }
--            i = find_next_bit(ctx->vregs_select, NUM_VREGS, i + 1);
--        }
--    }
--
--    /* Check for overlap between HVX predicate reads and writes */
--    for (int i = 0; i < ctx->qreg_log_idx; i++) {
--        int qnum = ctx->qreg_log[i];
--        if (test_bit(qnum, ctx->qregs_read)) {
--            return true;
--        }
--    }
--
-     return false;
- }
- 
-@@ -453,8 +403,8 @@ static void mark_implicit_pred_reads(DisasContext *ctx)
- static void analyze_packet(DisasContext *ctx)
- {
-     Packet *pkt = ctx->pkt;
--    ctx->has_hvx_helper = false;
-     ctx->read_after_write = false;
-+    ctx->has_hvx_overlap = false;
-     for (int i = 0; i < pkt->num_insns; i++) {
-         Insn *insn = &pkt->insn[i];
-         ctx->insn = insn;
-@@ -485,13 +435,13 @@ static void gen_start_packet(DisasContext *ctx)
-     ctx->future_vregs_idx = 0;
-     ctx->tmp_vregs_idx = 0;
-     ctx->vreg_log_idx = 0;
-+    bitmap_zero(ctx->vregs_written, NUM_VREGS);
-     bitmap_zero(ctx->vregs_updated_tmp, NUM_VREGS);
-     bitmap_zero(ctx->vregs_updated, NUM_VREGS);
-     bitmap_zero(ctx->vregs_select, NUM_VREGS);
-     bitmap_zero(ctx->predicated_future_vregs, NUM_VREGS);
-     bitmap_zero(ctx->predicated_tmp_vregs, NUM_VREGS);
--    bitmap_zero(ctx->vregs_read, NUM_VREGS);
--    bitmap_zero(ctx->qregs_read, NUM_QREGS);
-+    bitmap_zero(ctx->qregs_written, NUM_QREGS);
-     ctx->qreg_log_idx = 0;
-     for (i = 0; i < STORES_MAX; i++) {
-         ctx->store_width[i] = 0;
+ In addition to instruction semantics, we use a generator to create the decode
+ tree.  This generation is a four step process.
 diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
-index 890e6a3a95..81e1d9cfa3 100755
+index a9af666cef..890e6a3a95 100755
 --- a/target/hexagon/gen_analyze_funcs.py
 +++ b/target/hexagon/gen_analyze_funcs.py
-@@ -43,6 +43,16 @@ def gen_analyze_func(f, tag, regs, imms):
-     f.write("{\n")
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python3
+ 
+ ##
+-##  Copyright(c) 2022-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++##  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+ ##
+ ##  This program is free software; you can redistribute it and/or modify
+ ##  it under the terms of the GNU General Public License as published by
+@@ -44,15 +44,25 @@ def gen_analyze_func(f, tag, regs, imms):
  
      f.write("    Insn *insn G_GNUC_UNUSED = ctx->insn;\n")
-+    if (hex_common.is_hvx_insn(tag)):
-+        if hex_common.has_hvx_helper(tag):
-+            f.write(
-+                "    const bool G_GNUC_UNUSED insn_has_hvx_helper = true;\n"
-+            )
-+            f.write("    ctx_start_hvx_insn(ctx);\n")
-+        else:
-+            f.write(
-+                "    const bool G_GNUC_UNUSED insn_has_hvx_helper = false;\n"
-+            )
  
-     ## Declare all the registers
-     for regno, register in enumerate(regs):
-@@ -64,15 +74,6 @@ def gen_analyze_func(f, tag, regs, imms):
+-    i = 0
+-    ## Analyze all the registers
+-    for regtype, regid in regs:
+-        reg = hex_common.get_register(tag, regtype, regid)
++    ## Declare all the registers
++    for regno, register in enumerate(regs):
++        reg_type, reg_id = register
++        reg = hex_common.get_register(tag, reg_type, reg_id)
++        reg.decl_reg_num(f, regno)
++
++    ## Analyze the register reads
++    for regno, register in enumerate(regs):
++        reg_type, reg_id = register
++        reg = hex_common.get_register(tag, reg_type, reg_id)
++        if reg.is_read():
++            reg.analyze_read(f, regno)
++
++    ## Analyze the register writes
++    for regno, register in enumerate(regs):
++        reg_type, reg_id = register
++        reg = hex_common.get_register(tag, reg_type, reg_id)
          if reg.is_written():
-             reg.analyze_write(f, tag, regno)
+-            reg.analyze_write(f, tag, i)
+-        else:
+-            reg.analyze_read(f, i)
+-        i += 1
++            reg.analyze_write(f, tag, regno)
  
--    has_generated_helper = not hex_common.skip_qemu_helper(
--        tag
--    ) and not hex_common.is_idef_parser_enabled(tag)
--
--    ## Mark HVX instructions with generated helpers
--    if (has_generated_helper and
--        "A_CVI" in hex_common.attribdict[tag]):
--        f.write("    ctx->has_hvx_helper = true;\n")
--
-     f.write("}\n\n")
+     has_generated_helper = not hex_common.skip_qemu_helper(
+         tag
+@@ -89,13 +99,13 @@ def main():
+     tagimms = hex_common.get_tagimms()
+ 
+     with open(sys.argv[-1], "w") as f:
+-        f.write("#ifndef HEXAGON_TCG_FUNCS_H\n")
+-        f.write("#define HEXAGON_TCG_FUNCS_H\n\n")
++        f.write("#ifndef HEXAGON_ANALYZE_FUNCS_C_INC\n")
++        f.write("#define HEXAGON_ANALYZE_FUNCS_C_INC\n\n")
+ 
+         for tag in hex_common.tags:
+             gen_analyze_func(f, tag, tagregs[tag], tagimms[tag])
+ 
+-        f.write("#endif    /* HEXAGON_TCG_FUNCS_H */\n")
++        f.write("#endif    /* HEXAGON_ANALYZE_FUNCS_C_INC */\n")
  
  
+ if __name__ == "__main__":
 diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 33801e4bd7..9e7f613e3c 100755
+index 195620c7ec..33801e4bd7 100755
 --- a/target/hexagon/hex_common.py
 +++ b/target/hexagon/hex_common.py
-@@ -241,6 +241,16 @@ def is_idef_parser_enabled(tag):
-     return tag in idef_parser_enabled
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python3
  
+ ##
+-##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+ ##
+ ##  This program is free software; you can redistribute it and/or modify
+ ##  it under the terms of the GNU General Public License as published by
+@@ -425,7 +425,6 @@ def log_write(self, f, tag):
+             gen_log_reg_write(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         predicated = "true" if is_predicated(tag) else "false"
+         f.write(code_fmt(f"""\
+             ctx_log_reg_write(ctx, {self.reg_num}, {predicated});
+@@ -438,7 +437,6 @@ def decl_tcg(self, f, tag, regno):
+             TCGv {self.reg_tcg()} = hex_gpr[{self.reg_num}];
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_reg_read(ctx, {self.reg_num});
+         """))
+@@ -449,9 +447,8 @@ def decl_tcg(self, f, tag, regno):
+             TCGv {self.reg_tcg()} = get_result_gpr(ctx, insn->regno[{regno}]);
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+-            ctx_log_reg_read(ctx, {self.reg_num});
++            ctx_log_reg_read_new(ctx, {self.reg_num});
+         """))
  
-+def is_hvx_insn(tag):
-+    return "A_CVI" in attribdict[tag]
-+
-+
-+def has_hvx_helper(tag):
-+    return (is_hvx_insn(tag) and
-+            not skip_qemu_helper(tag) and
-+            not is_idef_parser_enabled(tag))
-+
-+
- def imm_name(immlett):
-     return f"{immlett}iV"
+ class GprReadWrite(Register, Single, ReadWrite):
+@@ -471,8 +468,11 @@ def log_write(self, f, tag):
+         f.write(code_fmt(f"""\
+             gen_log_reg_write(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
++    def analyze_read(self, f, regno):
++        f.write(code_fmt(f"""\
++            ctx_log_reg_read(ctx, {self.reg_num});
++        """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         predicated = "true" if is_predicated(tag) else "false"
+         f.write(code_fmt(f"""\
+             ctx_log_reg_write(ctx, {self.reg_num}, {predicated});
+@@ -493,7 +493,6 @@ def log_write(self, f, tag):
+             gen_write_ctrl_reg(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         predicated = "true" if is_predicated(tag) else "false"
+         f.write(code_fmt(f"""\
+             ctx_log_reg_write(ctx, {self.reg_num}, {predicated});
+@@ -511,7 +510,6 @@ def decl_tcg(self, f, tag, regno):
+             gen_read_ctrl_reg(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_reg_read(ctx, {self.reg_num});
+         """))
+@@ -532,7 +530,6 @@ def idef_arg(self, declared):
+         declared.append(self.reg_tcg())
+         declared.append("CS")
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_reg_read(ctx, {self.reg_num});
+         """))
+@@ -548,7 +545,6 @@ def log_write(self, f, tag):
+             gen_log_pred_write(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_pred_write(ctx, {self.reg_num});
+         """))
+@@ -560,7 +556,6 @@ def decl_tcg(self, f, tag, regno):
+             TCGv {self.reg_tcg()} = hex_pred[{self.reg_num}];
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_pred_read(ctx, {self.reg_num});
+         """))
+@@ -571,9 +566,8 @@ def decl_tcg(self, f, tag, regno):
+             TCGv {self.reg_tcg()} = get_result_pred(ctx, insn->regno[{regno}]);
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+-            ctx_log_pred_read(ctx, {self.reg_num});
++            ctx_log_pred_read_new(ctx, {self.reg_num});
+         """))
  
-@@ -704,7 +714,8 @@ def analyze_write(self, f, tag, regno):
+ class PredReadWrite(Register, Single, ReadWrite):
+@@ -587,8 +581,11 @@ def log_write(self, f, tag):
+         f.write(code_fmt(f"""\
+             gen_log_pred_write(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
++    def analyze_read(self, f, regno):
++        f.write(code_fmt(f"""\
++            ctx_log_pred_read(ctx, {self.reg_num});
++        """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_pred_write(ctx, {self.reg_num});
+         """))
+@@ -605,7 +602,6 @@ def log_write(self, f, tag):
+             gen_log_reg_write_pair(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         predicated = "true" if is_predicated(tag) else "false"
+         f.write(code_fmt(f"""\
+             ctx_log_reg_write_pair(ctx, {self.reg_num}, {predicated});
+@@ -621,7 +617,6 @@ def decl_tcg(self, f, tag, regno):
+                                     hex_gpr[{self.reg_num} + 1]);
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_reg_read_pair(ctx, {self.reg_num});
+         """))
+@@ -640,8 +635,11 @@ def log_write(self, f, tag):
+         f.write(code_fmt(f"""\
+             gen_log_reg_write_pair(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
++    def analyze_read(self, f, regno):
++        f.write(code_fmt(f"""\
++            ctx_log_reg_read_pair(ctx, {self.reg_num});
++        """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         predicated = "true" if is_predicated(tag) else "false"
+         f.write(code_fmt(f"""\
+             ctx_log_reg_write_pair(ctx, {self.reg_num}, {predicated});
+@@ -663,7 +661,6 @@ def log_write(self, f, tag):
+             gen_write_ctrl_reg_pair(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
+         predicated = "true" if is_predicated(tag) else "false"
+         f.write(code_fmt(f"""\
+             ctx_log_reg_write_pair(ctx, {self.reg_num}, {predicated});
+@@ -681,7 +678,6 @@ def decl_tcg(self, f, tag, regno):
+             gen_read_ctrl_reg_pair(ctx, {self.reg_num}, {self.reg_tcg()});
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_reg_read_pair(ctx, {self.reg_num});
+         """))
+@@ -705,7 +701,6 @@ def helper_hvx_desc(self, f):
+             /* {self.reg_tcg()} is *(MMVector *)({self.helper_arg_name()}) */
+         """))
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
          newv = hvx_newv(tag)
          predicated = "true" if is_predicated(tag) else "false"
          f.write(code_fmt(f"""\
--            ctx_log_vreg_write(ctx, {self.reg_num}, {newv}, {predicated});
-+            ctx_log_vreg_write(ctx, {self.reg_num}, {newv}, {predicated},
-+                               insn_has_hvx_helper);
-         """))
- 
- class VRegSource(Register, Hvx, OldSource):
-@@ -724,7 +735,7 @@ def helper_hvx_desc(self, f):
+@@ -728,7 +723,6 @@ def helper_hvx_desc(self, f):
+             /* {self.reg_tcg()} is *(MMVector *)({self.helper_arg_name()}) */
          """))
      def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
+         f.write(code_fmt(f"""\
+             ctx_log_vreg_read(ctx, {self.reg_num});
+         """))
+@@ -746,9 +740,8 @@ def helper_hvx_desc(self, f):
+             /* {self.reg_tcg()} is *(MMVector *)({self.helper_arg_name()}) */
+         """))
+     def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
          f.write(code_fmt(f"""\
 -            ctx_log_vreg_read(ctx, {self.reg_num});
-+            ctx_log_vreg_read(ctx, {self.reg_num}, insn_has_hvx_helper);
-         """))
- 
- class VRegNewSource(Register, Hvx, NewSource):
-@@ -741,7 +752,7 @@ def helper_hvx_desc(self, f):
-         """))
-     def analyze_read(self, f, regno):
-         f.write(code_fmt(f"""\
--            ctx_log_vreg_read_new(ctx, {self.reg_num});
-+            ctx_log_vreg_read_new(ctx, {self.reg_num}, insn_has_hvx_helper);
++            ctx_log_vreg_read_new(ctx, {self.reg_num});
          """))
  
  class VRegReadWrite(Register, Hvx, ReadWrite):
-@@ -767,13 +778,14 @@ def helper_hvx_desc(self, f):
-         """))
-     def analyze_read(self, f, regno):
+@@ -772,8 +765,11 @@ def helper_hvx_desc(self, f):
          f.write(code_fmt(f"""\
--            ctx_log_vreg_read(ctx, {self.reg_num});
-+            ctx_log_vreg_read(ctx, {self.reg_num}, insn_has_hvx_helper);
+             /* {self.reg_tcg()} is *(MMVector *)({self.helper_arg_name()}) */
          """))
++    def analyze_read(self, f, regno):
++        f.write(code_fmt(f"""\
++            ctx_log_vreg_read(ctx, {self.reg_num});
++        """))
      def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
          newv = hvx_newv(tag)
          predicated = "true" if is_predicated(tag) else "false"
          f.write(code_fmt(f"""\
--            ctx_log_vreg_write(ctx, {self.reg_num}, {newv}, {predicated});
-+            ctx_log_vreg_write(ctx, {self.reg_num}, {newv}, {predicated},
-+                               insn_has_hvx_helper);
-         """))
- 
- class VRegTmp(Register, Hvx, ReadWrite):
-@@ -801,13 +813,14 @@ def helper_hvx_desc(self, f):
-         """))
-     def analyze_read(self, f, regno):
+@@ -803,8 +799,11 @@ def helper_hvx_desc(self, f):
          f.write(code_fmt(f"""\
--            ctx_log_vreg_read(ctx, {self.reg_num});
-+            ctx_log_vreg_read(ctx, {self.reg_num}, insn_has_hvx_helper);
+             /* {self.reg_tcg()} is *(MMVector *)({self.helper_arg_name()}) */
          """))
++    def analyze_read(self, f, regno):
++        f.write(code_fmt(f"""\
++            ctx_log_vreg_read(ctx, {self.reg_num});
++        """))
      def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
          newv = hvx_newv(tag)
          predicated = "true" if is_predicated(tag) else "false"
          f.write(code_fmt(f"""\
--            ctx_log_vreg_write(ctx, {self.reg_num}, {newv}, {predicated});
-+            ctx_log_vreg_write(ctx, {self.reg_num}, {newv}, {predicated},
-+                               insn_has_hvx_helper);
+@@ -830,7 +829,6 @@ def helper_hvx_desc(self, f):
+             /* {self.reg_tcg()} is *(MMVectorPair *)({self.helper_arg_name()}) */
          """))
- 
- class VRegPairDest(Register, Hvx, Dest):
-@@ -832,7 +845,8 @@ def analyze_write(self, f, tag, regno):
+     def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
          newv = hvx_newv(tag)
          predicated = "true" if is_predicated(tag) else "false"
          f.write(code_fmt(f"""\
--            ctx_log_vreg_write_pair(ctx, {self.reg_num}, {newv}, {predicated});
-+            ctx_log_vreg_write_pair(ctx, {self.reg_num}, {newv}, {predicated},
-+                                    insn_has_hvx_helper);
-         """))
- 
- class VRegPairSource(Register, Hvx, OldSource):
-@@ -859,7 +873,7 @@ def helper_hvx_desc(self, f):
+@@ -860,7 +858,6 @@ def helper_hvx_desc(self, f):
+             /* {self.reg_tcg()} is *(MMVectorPair *)({self.helper_arg_name()}) */
          """))
      def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
          f.write(code_fmt(f"""\
--            ctx_log_vreg_read_pair(ctx, {self.reg_num});
-+            ctx_log_vreg_read_pair(ctx, {self.reg_num}, insn_has_hvx_helper);
+             ctx_log_vreg_read_pair(ctx, {self.reg_num});
          """))
- 
- class VRegPairReadWrite(Register, Hvx, ReadWrite):
-@@ -891,13 +905,14 @@ def helper_hvx_desc(self, f):
-         """))
-     def analyze_read(self, f, regno):
+@@ -892,8 +889,11 @@ def helper_hvx_desc(self, f):
          f.write(code_fmt(f"""\
--            ctx_log_vreg_read_pair(ctx, {self.reg_num});
-+            ctx_log_vreg_read_pair(ctx, {self.reg_num}, insn_has_hvx_helper);
+             /* {self.reg_tcg()} is *(MMVectorPair *)({self.helper_arg_name()}) */
          """))
++    def analyze_read(self, f, regno):
++        f.write(code_fmt(f"""\
++            ctx_log_vreg_read_pair(ctx, {self.reg_num});
++        """))
      def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
          newv = hvx_newv(tag)
          predicated = "true" if is_predicated(tag) else "false"
          f.write(code_fmt(f"""\
--            ctx_log_vreg_write_pair(ctx, {self.reg_num}, {newv}, {predicated});
-+            ctx_log_vreg_write_pair(ctx, {self.reg_num}, {newv}, {predicated},
-+                                    insn_has_hvx_helper);
-         """))
- 
- class QRegDest(Register, Hvx, Dest):
-@@ -920,7 +935,7 @@ def helper_hvx_desc(self, f):
+@@ -919,7 +919,6 @@ def helper_hvx_desc(self, f):
+             /* {self.reg_tcg()} is *(MMQReg *)({self.helper_arg_name()}) */
          """))
      def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
          f.write(code_fmt(f"""\
--            ctx_log_qreg_write(ctx, {self.reg_num});
-+            ctx_log_qreg_write(ctx, {self.reg_num}, insn_has_hvx_helper);
+             ctx_log_qreg_write(ctx, {self.reg_num});
          """))
- 
- class QRegSource(Register, Hvx, OldSource):
-@@ -941,7 +956,7 @@ def helper_hvx_desc(self, f):
+@@ -941,7 +940,6 @@ def helper_hvx_desc(self, f):
+             /* {self.reg_tcg()} is *(MMQReg *)({self.helper_arg_name()}) */
          """))
      def analyze_read(self, f, regno):
+-        self.decl_reg_num(f, regno)
          f.write(code_fmt(f"""\
--            ctx_log_qreg_read(ctx, {self.reg_num});
-+            ctx_log_qreg_read(ctx, {self.reg_num}, insn_has_hvx_helper);
+             ctx_log_qreg_read(ctx, {self.reg_num});
          """))
- 
- class QRegReadWrite(Register, Hvx, ReadWrite):
-@@ -967,11 +982,11 @@ def helper_hvx_desc(self, f):
-         """))
-     def analyze_read(self, f, regno):
+@@ -967,8 +965,11 @@ def helper_hvx_desc(self, f):
          f.write(code_fmt(f"""\
--            ctx_log_qreg_read(ctx, {self.reg_num});
-+            ctx_log_qreg_read(ctx, {self.reg_num}, insn_has_hvx_helper);
+             /* {self.reg_tcg()} is *(MMQReg *)({self.helper_arg_name()}) */
          """))
++    def analyze_read(self, f, regno):
++        f.write(code_fmt(f"""\
++            ctx_log_qreg_read(ctx, {self.reg_num});
++        """))
      def analyze_write(self, f, tag, regno):
+-        self.decl_reg_num(f, regno)
          f.write(code_fmt(f"""\
--            ctx_log_qreg_write(ctx, {self.reg_num});
-+            ctx_log_qreg_write(ctx, {self.reg_num}, insn_has_hvx_helper);
+             ctx_log_qreg_write(ctx, {self.reg_num});
          """))
- 
- def init_registers():
 -- 
 2.34.1
 
