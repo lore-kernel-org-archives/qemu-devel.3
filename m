@@ -4,81 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B458C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E93C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:21:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVWs1-00036F-QH; Thu, 01 Feb 2024 08:12:46 -0500
+	id 1rVWzQ-0005Ln-M0; Thu, 01 Feb 2024 08:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVWrv-00035O-J6
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:12:41 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1rVWzL-0005LD-Q0
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:20:19 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVWrs-00035h-5p
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:12:37 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-55fcceb5f34so287976a12.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:12:35 -0800 (PST)
+ id 1rVWzK-0004eY-9j
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:20:19 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-55f03ede12cso1174289a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:20:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706793154; x=1707397954; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706793616; x=1707398416; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IEOCIMWL3VuVKDjq1KTj5OqvLS5MqW+zEmHNDqgSKCU=;
- b=IerdaSk5RqpvU4EvMPJZ1G5ZFvpVal8aF8pUE5zQrJQvYroQea29z+AwKOrMClAhVY
- uM+1nVX8dV7l9arbcRYPgOhM6ms1gcAgnJpV3pLYHZwUYJqxFvHG81oy4cuQrySMK13q
- AhGro9E5+RT1mL7cvKxKeT2uzRlZPRpLSDwJUfUKehoNE0PWrWTszsijqNLTvuliLNuy
- uScifZbGWO7ZmoV+FDANKeCLnHydS0s2DpfdT2PKjtN62VocEeF9cyzThPVyPKD5hUP6
- NDcJMKCLPgAbCsI+vIfMXBveO94dTOfX5lt6FtLkGNrB2CDCBMd/o5VtyIjf473JHocw
- 5j9g==
+ bh=CYLwbcJKd9Ihw9QGaPLNzCC2RliKyra+kACTOhZuxMU=;
+ b=R6RbUZ/9zsSZFAcEmUP62Uoi/sgUL4IM2JDv7hB9b4qzMJUhQl1Nw/unh3rr+nHWbo
+ Af7TM2dLDFt+1FSkm3RJgQn+WpsTzchD4zZdi+pjiwlzH1iChG9lREukKGbvbwoMAPBV
+ su6zJ1p5aOniDK2C5v8+Ft3N9h/+maeV+gI3apgACKdinWyKz0+fMOlmb7fHWnKypz1Y
+ qfeq8PORk3XpIH6pvmxMbgh5IWnr39cD2TStUkyWnTBgr6wIzuWVGvSaqLo+L1QiE0YL
+ USpcJlBJsE9mR9bxAq09sKwnLROvbhtFMZ643lsRsK7YLBGN8h7NEZx57HaH2WadV+RF
+ +sfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706793154; x=1707397954;
+ d=1e100.net; s=20230601; t=1706793616; x=1707398416;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=IEOCIMWL3VuVKDjq1KTj5OqvLS5MqW+zEmHNDqgSKCU=;
- b=pT0n57fuylAixnM05EgaYUOFX5eHDBdqyr1o3hAtSM3pjTNNYFlhP/1r8JxSuLRKCc
- UlCSdQ/AheXj/PMbyIMm4Orf8U8EohMhNM9ooXEsQlqzGG81+sgB0XutGJ8w/ljj/7Yn
- TCKcTeP/GH9WJE+rdWtlTdjHjrB2G1+S9T3YKCu5K3gkshpxsvxSQJ9VXlTM6LAq4Jbm
- W6m8VOYuNXi1ZNr+2jBDtHsmTnkHUtynHFTFBIzV84ycJMztwIKwVn/zeai7a4f3olg7
- LdzgrES7C3HYs1RnIh3wpwukX1z9wrvy1oIDvqVz0Ujr+L4r/e5TMnpGqUo7gE0DJKWM
- IA6Q==
-X-Gm-Message-State: AOJu0YyL3yO0zbk69dWUVMt6fuhU/e7IGw5G/cscY+5AG261AaQ6HvBR
- HNSmCaPrRfwOmI9wgjb+ud08QOK5uzyAYkTkRTCAqbigjDyH1ha6snct6j3BIPyOp/IoyhulGgt
- wEmMEp6NCQryptQT6sLXVlThTkSm6k78107xcFg==
-X-Google-Smtp-Source: AGHT+IFXWxcE59UUQSIEJDGfdMaqYilACqhVAhjyscDVyUldv5RCgxzgprhevI2+oVE7leD1F/Ewef4JRFmR5yxVr24=
-X-Received: by 2002:aa7:c156:0:b0:55f:cc6d:9d02 with SMTP id
- r22-20020aa7c156000000b0055fcc6d9d02mr503960edp.25.1706793154180; Thu, 01 Feb
- 2024 05:12:34 -0800 (PST)
+ bh=CYLwbcJKd9Ihw9QGaPLNzCC2RliKyra+kACTOhZuxMU=;
+ b=jCvQdozXrC0dhe6IU+hTZUxab0oacBpFYCr/8f8tTaaoz/dG9YCTEds9kerABrXftq
+ /iMtVnLnIpFGrGWHaRWE2eNGr44OPRFA3RzljdZtfoowtP0DZVh7/prpDmg2iEyJJy+N
+ Ih1FhmFOnkQeTuOl1hwOsPk72uDjJPV847tw/AYa5Y3verUjOf1UnTfjENyGI4UtZs4B
+ eQvOS1/2rmdjCF0Kb4/IHaj5L18YcaEIh0p5ck1n6qTz3vsegqiWV4B2kZlEgop4b3rQ
+ q/Y/VUOEfB1NaKNkDLHhD5vUr4BXTHE3urKdiEgE7QsUREc7/SYXWwho7IeWr8trnu+O
+ llwg==
+X-Gm-Message-State: AOJu0Yw4asoPekAwupW0vW5mpz4Jd81FX6YaS9KEuOX6uqn77vbNXZL3
+ 2/V3pAwS80J0ErnuYeFwa+9dBFOSnqQGpp2I5XlQxjlx18Np9zhqblKiykyvei5nAnZ+W7IwwlZ
+ 0TnlP647/imwoTxpZ0IEzturN50r1XQtQhmfSFqKDVoCXRYne
+X-Google-Smtp-Source: AGHT+IGMsbpnUtny9FzKOz/MCtsvU5fZZgmUds85OkHrAtQ/yXVRKV5aUVI/0J22+0CzMdbm9rC3csC5cCdkl/o8dSw=
+X-Received: by 2002:aa7:c718:0:b0:55f:43e2:56c8 with SMTP id
+ i24-20020aa7c718000000b0055f43e256c8mr1629327edq.38.1706793616269; Thu, 01
+ Feb 2024 05:20:16 -0800 (PST)
 MIME-Version: 1.0
-References: <CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com>
- <CAGEDW0fWCfuG3KrNSwDjNVGAZVL9NJgF26Jqyd840HfQdNGLbA@mail.gmail.com>
- <CAAg4Pard=zh_5p650UcNdQEoQWZLM6G7KRqdPQHLmaR4oZMJ3w@mail.gmail.com>
- <CAGEDW0dVEk-QXuL=DPVvSP4t5cafz6N-r_SrCxgFnBfFOsixSA@mail.gmail.com>
- <CAAg4PaqgZcTXkWuys7FZjQdRChTkKj-ZnJQCdxpTMCxy4Hghow@mail.gmail.com>
- <20230823175056.00001a84@Huawei.com>
- <CAAg4ParSB4_2FU2bu96A=3tSNuwHqZwK0wCS18EJoPAq9kYEkw@mail.gmail.com>
- <CAAg4Pap9KzkgX=fgE7vNJYxEpGbHA-NVsgBY5npXizUbMhjp9A@mail.gmail.com>
- <20240126123926.000051bd@Huawei.com> <ZbPTL00WOo7UC0e6@memverge.com>
- <20240126171233.00002a2e@Huawei.com>
- <CAAg4ParQKj9FUe0DRX0Wmk1KT0bnxx2F7W=ic38781j7eVz+OQ@mail.gmail.com>
- <20240201130438.00001384@Huawei.com>
-In-Reply-To: <20240201130438.00001384@Huawei.com>
+References: <20240119163512.3810301-1-peter.maydell@linaro.org>
+In-Reply-To: <20240119163512.3810301-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 13:12:23 +0000
-Message-ID: <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
-Subject: Re: Crash with CXL + TCG on 8.2: Was Re: qemu cxl memory expander
- shows numa_node -1
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Sajjan Rao <sajjanr@gmail.com>, Gregory Price <gregory.price@memverge.com>,
- Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>, linux-cxl@vger.kernel.org, 
- qemu-devel@nongnu.org, richard.henderson@linaro.org
+Date: Thu, 1 Feb 2024 13:20:05 +0000
+Message-ID: <CAFEAcA-ow3XQ3cPeCE7Vva2KMCrRduZkQWnFQ1sTmTmbj=CPMw@mail.gmail.com>
+Subject: Re: [PATCH 0/5] buses: switch to 3-phase-reset
+To: qemu-devel@nongnu.org
+Cc: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,20 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 1 Feb 2024 at 13:04, Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
->
+On Fri, 19 Jan 2024 at 16:35, Peter Maydell <peter.maydell@linaro.org> wrote:
+> This patchset switches the handful of bus types that implement a
+> reset method over to using the 3-phase-reset APIs, and then removes
+> the transitional infrastructure from the core bus class that was
+> supporting the ability to have bus types that use old-style reset.
 
+Thanks all for the review and testing. It seems like there
+weren't any negative reports, so I'm going to take this via
+the target-arm.next queue. We're still early in the 9.0
+release cycle so we have plenty of time for debugging or
+(if necessary) reverting if any unexpected consequences
+turn up...
 
-
-
-> root@localhost:~/devmem2# numactl --membind=1 touch a
-> qemu: fatal: cpu_io_recompile: could not find TB for pc=(nil)
-
-Can you run QEMU under gdb and give the backtrace when it stops
-on the abort() ? That will probably have a helpful clue. I
-suspect something is failing to pass a valid retaddr in
-when it calls a load/store function.
-
-thanks
 -- PMM
 
