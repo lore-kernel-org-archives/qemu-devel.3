@@ -4,77 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C14EC4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:36:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83329C4828C
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXDv-00035r-OM; Thu, 01 Feb 2024 08:35:23 -0500
+	id 1rVXOX-0005bU-2s; Thu, 01 Feb 2024 08:46:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVXDt-00034x-EL
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:35:21 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVXDr-0007tO-NJ
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:35:21 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2cf4fafa386so13157061fa.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706794517; x=1707399317; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=egtVNHdPlVSG5IaGePCFxxdaqS6UKSy81x3r0gBVD+g=;
- b=Aq1AzGU2njzqNp84ny7mZQYrMtdUaviBZJ3uOokP3koqoCB6XCaPkTBZwsXO6zJF4e
- U8lgZidcYbq4aNPs4c926TubpToLqlohweCY1eXWXsofm6CAAEvSf4Skoivuwy/0QtAM
- bUpONr0n/80iKwmB8H7Bx6Y4yVEuMGj5ZP2KIGM70WD308qMRdTSpBI8s25UOfyon6Bp
- vqguaFdM+vyL3QXd0ryHzxSMiU8TgnHF71jgT+BXJ2uIdP244HjODwdKKI16U12gdPUG
- osMiWeCY03ryt1OB2sPJggVr2/AcQEjS0V/9x3pE05sRI3amReDzrhIF8kN9VsVDi8+b
- 1VVg==
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rVXOT-0005b7-Hy
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:46:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rVXOQ-0002Ao-UA
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:46:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706795173;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZnWg0qluTscQcGCgWuSCGrjw6wta2H09onDP5jzUyzc=;
+ b=TNIoiHrcBnZZiLIld+g9TLIxv4q3oY83SC7swuR3M/VF/fxjlnTCUMmFdptCzJyHwjyVh2
+ JUW3XVY1ae4WJviNZjlADxB3BQhKrGjG67ZWHtnqBPlY4bP7XNtdFef3YUT/S21u0pqoCh
+ 1Fw5Du69VtOBLfAwPm7VRfbi0aH17CI=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-259-WbiL6VuHNKGT92rDBe-W9g-1; Thu, 01 Feb 2024 08:46:11 -0500
+X-MC-Unique: WbiL6VuHNKGT92rDBe-W9g-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-42ab80d5317so10172131cf.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:46:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706794517; x=1707399317;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=egtVNHdPlVSG5IaGePCFxxdaqS6UKSy81x3r0gBVD+g=;
- b=NoZdpQi1jhn6xCmtmoUBaxe7KDZWXLZUNkHyY6onPOkrZaXJ8XE1sQlEYIgcPeJfVb
- vUbvpRNfPrANWd+eIwDAhYA0FF/bRoC1AcE212SK88vcoxMuVep0um8O03FSCudWdz+F
- NQVK9VkwsAhChL7FrjMWIUajMKJVzN3SRGK2wFKbchWlnSo5bvdrvxUganb/49wJVFmV
- ZTfqoKpF9f43LV36vz3QslCA6rgx6CuA+BCin2713nlGVVCOu4gI3tH/zFm+AZmo7nEf
- N0n0dWuCr+zOXGI2bN8USjdkrVXC9n7r9+mZPAIcMr40QZlW13wcT042t/foLxgQdNnE
- mYSw==
-X-Gm-Message-State: AOJu0YzLEqdOIVgTW8sOULRwkDgEgG2FtFHhEgLlekaPmepYUqnQs6k+
- CT73AfcOzG5OYA4AW/QxQ3Vs+LzRmeDCviq1/xNV1clPGPOCjdNQ22Z3qHGdvFkn4ksmpExGfGo
- xQ5ZtL/NFjCU7s/K4aZhxCGvquqXsvwmEoxgKpkzRsQTlmc1S
-X-Google-Smtp-Source: AGHT+IGmr5R0hnGVaWkfaDPj6Y6XbKkl5gbksD+9gr7Si/nAn6y4s9yTWF7WZCTax6OjpfFfRIBGrAwUMkX9gm6YLZc=
-X-Received: by 2002:a2e:a607:0:b0:2d0:73dd:d125 with SMTP id
- v7-20020a2ea607000000b002d073ddd125mr1378321ljp.3.1706794517489; Thu, 01 Feb
- 2024 05:35:17 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706795171; x=1707399971;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZnWg0qluTscQcGCgWuSCGrjw6wta2H09onDP5jzUyzc=;
+ b=KKnkJH7fcapkKMsKVF1PGf3jOYIXHwBwtj4WDZmFW01YqCc9hoJLxVX79OGJOa5t0o
+ E+d23wdKMU3avpWcnT4hrplMA3MRaCacjp4WWKXfu7p7b9kLxD8d95i71+xmO3C6cyj9
+ dm5cF4TAA6rVbOLuo0oH+VBr8TOcRxIhus4gMSmuZXc2PMb59G5+5qP+s4s7qrDZodbI
+ cDq0FaKmS00oBfPd4ZdAdp7AeeqB+jiBuAPXDteyBS6AemPhWk2r+jCSTWr6R8MDVo8h
+ 2VolIPdG+9fw2wpcMMeYGQ7iMvHiMrP3lo1UfhEmVSHNT/7dWvPzCoj+zmICXDp+FRn3
+ 0kjg==
+X-Gm-Message-State: AOJu0YydSWXunlobZlmJNz50x3Nxxwkv9e598hCSEF3Z36rBP48oyAWJ
+ x0klSvfT0wTBjb0xHlVUvaYX/eUBA9aHsABKrNa63Fon/TOoZLwEJMchGz3Lx89Nq8mqQkCOLea
+ AGzb+G5herhpCYbbLBenetW1HZtc1lAgP4HCaIh3ZtTTePSA1fN43
+X-Received: by 2002:a05:622a:48e:b0:42b:ff2:639b with SMTP id
+ p14-20020a05622a048e00b0042b0ff2639bmr5427979qtx.9.1706795171261; 
+ Thu, 01 Feb 2024 05:46:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEeK3q58LNAm0gxWqciJ8052o9LhPo8ZLRHRQSmoXdgz0RAuVX0MfoisTDZ87xG7OTQABQJig==
+X-Received: by 2002:a05:622a:48e:b0:42b:ff2:639b with SMTP id
+ p14-20020a05622a048e00b0042b0ff2639bmr5427969qtx.9.1706795170941; 
+ Thu, 01 Feb 2024 05:46:10 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCWQv5liLhsXXI/Fg2dh/u3kQPmnjBfYGUHTShvlYF08l0ufttkBvD7YVowhjD6IUJPKBEMh6AXnkLdUgrr6IP3BDPwk/fugYKgfSI2su6lDPXpbucyeKj4a7g==
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ez13-20020a05622a4c8d00b0042bf33fa059sm667761qtb.45.2024.02.01.05.46.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Feb 2024 05:46:10 -0800 (PST)
+Message-ID: <d5085c5a-d31d-4210-a500-f1e3687b97a1@redhat.com>
+Date: Thu, 1 Feb 2024 14:46:08 +0100
 MIME-Version: 1.0
-References: <20240122163607.459769-1-peter.maydell@linaro.org>
-In-Reply-To: <20240122163607.459769-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 13:35:06 +0000
-Message-ID: <CAFEAcA_GdUWy_UoTBUDc0zSj5WVWRCvu6QS0ZZ+GRnbFaJ_F4w@mail.gmail.com>
-Subject: Re: [PATCH 0/2] system: Fix handling of '-serial none -serial
- something'
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bohdan Kostiv <bogdan.kostiv@gmail.com>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/pci-host/raven.c: Mark raven_io_ops as implementing
+ unaligned accesses
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+References: <20240112134640.1775041-1-peter.maydell@linaro.org>
+ <eaf71668-fe0d-45db-817e-fe052df91c17@redhat.com>
+ <CAFEAcA-jV1z0M+i=pjrgJ6DJc2ofnjeSvUqtkpxzWVbU1S3gWA@mail.gmail.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <CAFEAcA-jV1z0M+i=pjrgJ6DJc2ofnjeSvUqtkpxzWVbU1S3gWA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,29 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jan 2024 at 16:36, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> (This patchset fixes a bug reported by Bohdan Kostiv at
-> https://lore.kernel.org/qemu-devel/CAA3Sv1LQ8yDUNLCB5WqLVZjsHffrU0uSbL_YYJW_m+Db2PhEeQ@mail.gmail.com/
->  -- my patch 1 avoids a bug in his suggested change, and
-> patch 2 is new, improving the documentation.)
->
-> Currently if the user passes multiple -serial options on the command
-> line, we mostly treat those as applying to the different serial
-> devices in order, so that for example
->  -serial stdio -serial file:filename
-> will connect the first serial port to stdio and the second to the
-> named file.
->
-> The exception to this is the '-serial none' serial device type.  This
-> means "don't allocate this serial device", but a bug means that
-> following -serial options are not correctly handled, so that
->  -serial none -serial stdio
-> has the unexpected effect that stdio is connected to the first serial
-> port, not the second.
+On 2/1/24 14:32, Peter Maydell wrote:
+> On Tue, 23 Jan 2024 at 11:03, Cédric Le Goater <clegoate@redhat.com> wrote:
+>>
+>> On 1/12/24 14:46, Peter Maydell wrote:
+>>> The raven_io_ops MemoryRegionOps is the only one in the source tree
+>>> which sets .valid.unaligned to indicate that it should support
+>>> unaligned accesses and which does not also set .impl.unaligned to
+>>> indicate that its read and write functions can do the unaligned
+>>> handling themselves.  This is a problem, because at the moment the
+>>> core memory system does not implement the support for handling
+>>> unaligned accesses by doing a series of aligned accesses and
+>>> combining them (system/memory.c:access_with_adjusted_size() has a
+>>> TODO comment noting this).
+>>>
+>>> Fortunately raven_io_read() and raven_io_write() will correctly deal
+>>> with the case of being passed an unaligned address, so we can fix the
+>>> missing unaligned access support by setting .impl.unaligned in the
+>>> MemoryRegionOps struct.
+>>>
+>>> Fixes: 9a1839164c9c8f06 ("raven: Implement non-contiguous I/O region")
+>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>> ---
+>>> Spotted by code inspection: I was looking for devices whose behaviour
+>>> might be changed by a patch I'm reviewing that adds that missing
+>>> support for unaligned accesses in the core memory system. But even
+>>> if we do implement it there, it's more efficient for the raven MR
+>>> to correctly mark it as handling unaligned accesses itself.
+>>>
+>>> Tested with 'make check' and 'make check-avocado' only.
+>>
+>> It doesn't affect the prep machine boot with OpenBIOS and a
+>> "Debian GNU/Linux 3.0 6015" image.
+>>
+>> Tested-by: Cédric Le Goater <clg@redhat.com>
+>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> 
+> Thanks for the review -- is this patch going to go via a
+> ppc queue, or should I throw it in with my upcoming
+> target-arm pullreq?
 
-I'll take this series via target-arm.next.
+Please take it through target-arm. PPC is in low power state AFAICT.
 
-thanks
--- PMM
+Thanks,
+
+C.
+
+
+
 
