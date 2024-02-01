@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D41C47DDB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 10:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A820AC47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 10:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVTvF-00059L-1g; Thu, 01 Feb 2024 05:03:53 -0500
+	id 1rVU5r-0005qO-5b; Thu, 01 Feb 2024 05:14:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVTuQ-0004Qk-Kn
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:03:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rVU5m-0005oA-Rw
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:14:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVTuP-0007Ar-7B
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:03:02 -0500
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rVU5k-0000oh-H3
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 05:14:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706781780;
+ s=mimecast20190719; t=1706782483;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SZew4YVwq0m+V5pewsZsSDxudIYM6j0emY5beWaKMrs=;
- b=ZVH5ryUFOvdAmBBPDzr8bbcAv3x9N+C3H4KcF5D9U19hkAvmj+PR+AuennfLn/foO8HOVn
- fwA+/52mmIEJVRTTsJjFBTVu8QODrA7DqObpzoeAF1s8AlypO9RWKwjD82ldevivg2lSFn
- 2uQleZtCp4nXSmwJEKHNbEIJZAZxUNo=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=E3b8Uy72YDNT3+4muhxL6cH+j/c296lQm9jjUO9tf4g=;
+ b=F9RVXxzkuOyX11DPEWj6d3vzXeA4RQ01xvWJrVPzEOTcavNV1UGq4GESpNhM70qezDYUg1
+ Nu4IaOGdX+BTxNWytf8A7HaPL2A7kKQVQ0my5aIIKlCNG5Frb/x9WFYUPPp33Y6SgcCAp3
+ ZrpBokDo1VWolfdTOYT0QEh4JNKl+4E=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-L5cB6PBVN1GA3fWQOo5z3Q-1; Thu, 01 Feb 2024 05:02:57 -0500
-X-MC-Unique: L5cB6PBVN1GA3fWQOo5z3Q-1
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-5d57b2d2758so207474a12.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 02:02:57 -0800 (PST)
+ us-mta-284--1qcFEKRP0iBE1gJ1_PtXw-1; Thu, 01 Feb 2024 05:14:39 -0500
+X-MC-Unique: -1qcFEKRP0iBE1gJ1_PtXw-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-dc6b5d1899eso2465681276.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 02:14:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706781776; x=1707386576;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SZew4YVwq0m+V5pewsZsSDxudIYM6j0emY5beWaKMrs=;
- b=VTq7fTwT/3rzNIlOm/xx7mwqM4GcCxXLGDfLHXtKrRZWuWKvKc/Nfed3NnebGhUA8P
- 9rMo+3UWG7BDXHX8Xeh4P6JZAjWK3aS2+IcaPx3ng4t+zXEhzGgt+omHtuUh4EcdzAQh
- ev09EmIkhw10zIXCsIndw9bwJPbXfyHinM1WT+pt5A7q3t7kn1YXcInhxNBsx5ORRDkO
- aFNlqVFOuWkQXgxz4KzreWAvfuYUw5+WYQeamRK2Sv1dHE01eg7sgETfkoUGqrlyxCQt
- raVaBSHKR7SMGuGRbLlUE5ghzOJdWTYxNwUvTbvakJN+OCNrHGbo8kOwn5suiLt3xBZO
- N98A==
-X-Gm-Message-State: AOJu0YzjCC5J1AiSAjpA9GaM3UMI0efrjFYL3sbj3mBblCew9Z07u14a
- zUY8dSG65upcyjl6g0wEt885JthbMHIJ+/MZC9O+J1Cg9x4qe0qju4st8whEjKouHhW35HPXA4e
- 7FoSO/fQM38QvUxR5CP8bOKPSdp5CUrDiks9RfJmBJsZ/HsVhFbhE
-X-Received: by 2002:a05:6a21:789c:b0:19e:3a9f:7e37 with SMTP id
- bf28-20020a056a21789c00b0019e3a9f7e37mr2327936pzc.0.1706781776227; 
- Thu, 01 Feb 2024 02:02:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE1c6l8LNXs8uAc5c7yXcE96+jgWjoFlSqM24X6M3oZfsbl9hxrz9knBvTMbX1njU6o79Gkyg==
-X-Received: by 2002:a05:6a21:789c:b0:19e:3a9f:7e37 with SMTP id
- bf28-20020a056a21789c00b0019e3a9f7e37mr2327906pzc.0.1706781775534; 
- Thu, 01 Feb 2024 02:02:55 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXV2jbl2WDBuZh61QeCLWLls86epgYeAlpaFIioCyhp465Zuwe51wfIenTy9Ny8LvfnZ47uwNj3uqgbJ/EjifuqLNKvQ3s5moeMKnS7oFmqGW80xsoyanv98w6TWVOZ0jbgXcoEp6BkyMpGD7nzKCFlv9cTI/lFpLzSIhQ9A3CRtOy/0Sr7NepDDYgmg1Vyl4IGYjlKRdxCRFSiLyslAPg=
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- hq4-20020a056a00680400b006ddc71607a7sm11500241pfb.191.2024.02.01.02.02.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 02:02:55 -0800 (PST)
-Date: Thu, 1 Feb 2024 18:02:48 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Bryan Zhang <bryan.zhang@bytedance.com>,
- Prasad Pandit <ppandit@redhat.com>, Yuan Liu <yuan1.liu@intel.com>,
- Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH 12/14] migration/multifd: multifd_send_prepare_header()
-Message-ID: <ZbtsSElMkRWoAMgZ@x1n>
-References: <20240131103111.306523-1-peterx@redhat.com>
- <20240131103111.306523-13-peterx@redhat.com>
- <87a5oljiih.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1706782478; x=1707387278;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=E3b8Uy72YDNT3+4muhxL6cH+j/c296lQm9jjUO9tf4g=;
+ b=kOaB4SXAzOHfedrJEgO+hYzZy6UhPZ9Ax94Nk+4TI+w1XQYhwTcr8ZYBEfdpBcJyWA
+ rHl0Yyon3tnWUEgyz1yurv5X7ySVgHdN0OSu8Dg0VFu0/3KY5/CMb3sZ036uP9jgFZjY
+ kUVFBFkmnaWC1Zkchdw9ZPiis+dLhzsDn4HSiOTVRrV5RcmAqi5p65EusuntViCaV5ja
+ +y1Z510a706k7A6icAFTX2LD1bHgt+FXwdXef60d6RLziqD2djjj3BKpPfVvFMiS9IRt
+ jnhDlxbYM21aUq5LvukEqnNSNdBj5zxAC2aV8JV472KN7qb3fPSBrUEHF05GD/f7pQNy
+ Bx0A==
+X-Gm-Message-State: AOJu0YzAL76PAJxlw2qqfVU+UehBy+OYegJOLJ2l1pNil2jEWQ6g8Gfg
+ o0kBAI/m2SewP6qg3iucVynRAgQmGSfYpf58Vsfuc3rhD0y9gGi7cz6/9TydE8g+qKzBaQHH5R+
+ 5kWUpiztEuhlrgEglgWgf2T8o0TPxy4DW3PsYs1WjZ0HNHloaqGiB+Nojw7qvH/lJlXd2ZSf/MZ
+ wVqNakDroSs8I7xwyC1VSpHXSTwCY=
+X-Received: by 2002:a25:6402:0:b0:dc2:58af:2af7 with SMTP id
+ y2-20020a256402000000b00dc258af2af7mr4386095ybb.22.1706782478514; 
+ Thu, 01 Feb 2024 02:14:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFgr9C8eCKZCVRHxv5KfnaoRPhu/9aJ45oUWUymR2q/EJVgzme1CZ+1RNVKWThoJF3MWHAfkLlwPKAvtCYwOtg=
+X-Received: by 2002:a25:6402:0:b0:dc2:58af:2af7 with SMTP id
+ y2-20020a256402000000b00dc258af2af7mr4386083ybb.22.1706782478216; Thu, 01 Feb
+ 2024 02:14:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87a5oljiih.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20240111190222.496695-1-eperezma@redhat.com>
+ <20240111190222.496695-2-eperezma@redhat.com>
+ <92ecfd90-8d06-4669-b260-a7a3b106277e@oracle.com>
+In-Reply-To: <92ecfd90-8d06-4669-b260-a7a3b106277e@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 1 Feb 2024 11:14:02 +0100
+Message-ID: <CAJaqyWf4ADFiF2V=yOJUviLUAN00-5vfbrxW_uAMeEjC91MEXA@mail.gmail.com>
+Subject: Re: [PATCH 1/6] vdpa: check for iova tree initialized at
+ net_client_start
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Dragos Tatulea <dtatulea@nvidia.com>, Zhu Lingshan <lingshan.zhu@intel.com>, 
+ Jason Wang <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
+ Parav Pandit <parav@mellanox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,17 +104,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 06:32:54PM -0300, Fabiano Rosas wrote:
-> > +            if (!use_zero_copy_send) {
-> > +                /*
-> > +                 * Only !zero_copy needs the header in IOV; zerocopy will
-> > +                 * send it separately.
-> 
-> Could use the same spelling for both mentions to zero copy.
+On Wed, Jan 31, 2024 at 11:07=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com>=
+ wrote:
+>
+> Hi Eugenio,
+>
+> Maybe there's some patch missing, but I saw this core dump when x-svq=3Do=
+n
+> is specified while waiting for the incoming migration on destination host=
+:
+>
+> (gdb) bt
+> #0  0x00005643b24cc13c in vhost_iova_tree_map_alloc (tree=3D0x0,
+> map=3Dmap@entry=3D0x7ffd58c54830) at ../hw/virtio/vhost-iova-tree.c:89
+> #1  0x00005643b234f193 in vhost_vdpa_listener_region_add
+> (listener=3D0x5643b4403fd8, section=3D0x7ffd58c548d0) at
+> /home/opc/qemu-upstream/include/qemu/int128.h:34
+> #2  0x00005643b24e6a61 in address_space_update_topology_pass
+> (as=3Das@entry=3D0x5643b35a3840 <address_space_memory>,
+> old_view=3Dold_view@entry=3D0x5643b442b5f0,
+> new_view=3Dnew_view@entry=3D0x5643b44a2130, adding=3Dadding@entry=3Dtrue)=
+ at
+> ../system/memory.c:1004
+> #3  0x00005643b24e6e60 in address_space_set_flatview (as=3D0x5643b35a3840
+> <address_space_memory>) at ../system/memory.c:1080
+> #4  0x00005643b24ea750 in memory_region_transaction_commit () at
+> ../system/memory.c:1132
+> #5  0x00005643b24ea750 in memory_region_transaction_commit () at
+> ../system/memory.c:1117
+> #6  0x00005643b241f4c1 in pc_memory_init
+> (pcms=3Dpcms@entry=3D0x5643b43c8400,
+> system_memory=3Dsystem_memory@entry=3D0x5643b43d18b0,
+> rom_memory=3Drom_memory@entry=3D0x5643b449a960, pci_hole64_size=3D<optimi=
+zed
+> out>) at ../hw/i386/pc.c:954
+> #7  0x00005643b240d088 in pc_q35_init (machine=3D0x5643b43c8400) at
+> ../hw/i386/pc_q35.c:222
+> #8  0x00005643b21e1da8 in machine_run_board_init (machine=3D<optimized
+> out>, mem_path=3D<optimized out>, errp=3D<optimized out>,
+> errp@entry=3D0x5643b35b7958 <error_fatal>)
+>      at ../hw/core/machine.c:1509
+> #9  0x00005643b237c0f6 in qmp_x_exit_preconfig () at ../system/vl.c:2613
+> #10 0x00005643b237c0f6 in qmp_x_exit_preconfig (errp=3D<optimized out>) a=
+t
+> ../system/vl.c:2704
+> #11 0x00005643b237fcdd in qemu_init (errp=3D<optimized out>) at
+> ../system/vl.c:3753
+> #12 0x00005643b237fcdd in qemu_init (argc=3D<optimized out>,
+> argv=3D<optimized out>) at ../system/vl.c:3753
+> #13 0x00005643b2158249 in main (argc=3D<optimized out>, argv=3D<optimized
+> out>) at ../system/main.c:47
+>
+> Shall we create the iova tree early during vdpa dev int for the x-svq=3Do=
+n
+> case?
+>
+> +    if (s->always_svq) {
+> +        /* iova tree is needed because of SVQ */
+> +        shared->iova_tree =3D vhost_iova_tree_new(shared->iova_range.fir=
+st,
+> + shared->iova_range.last);
+> +    }
+> +
+>
 
-Will do.
+Right.
 
--- 
-Peter Xu
+As your series will make the maps permanent in the best case, I think
+it is wise to follow the same path as with the memory listener and
+create always, not conditionally.
+
+I'll send a new series by today with this fix and the other one that
+Lei detected.
+
+Thanks!
+
+> Regards,
+> -Siwei
+>
+> On 1/11/2024 11:02 AM, Eugenio P=C3=A9rez wrote:
+> > To map the guest memory while it is migrating we need to create the
+> > iova_tree, as long as the destination uses x-svq=3Don. Checking to not
+> > override it.
+> >
+> > The function vhost_vdpa_net_client_stop clear it if the device is
+> > stopped. If the guest starts the device again, the iova tree is
+> > recreated by vhost_vdpa_net_data_start_first or vhost_vdpa_net_cvq_star=
+t
+> > if needed, so old behavior is kept.
+> >
+> > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > ---
+> >   net/vhost-vdpa.c | 4 +++-
+> >   1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> > index 3726ee5d67..e11b390466 100644
+> > --- a/net/vhost-vdpa.c
+> > +++ b/net/vhost-vdpa.c
+> > @@ -341,7 +341,9 @@ static void vhost_vdpa_net_data_start_first(VhostVD=
+PAState *s)
+> >
+> >       migration_add_notifier(&s->migration_state,
+> >                              vdpa_net_migration_state_notifier);
+> > -    if (v->shadow_vqs_enabled) {
+> > +
+> > +    /* iova_tree may be initialized by vhost_vdpa_net_load_setup */
+> > +    if (v->shadow_vqs_enabled && !v->shared->iova_tree) {
+> >           v->shared->iova_tree =3D vhost_iova_tree_new(v->shared->iova_=
+range.first,
+> >                                                      v->shared->iova_ra=
+nge.last);
+> >       }
+>
 
 
