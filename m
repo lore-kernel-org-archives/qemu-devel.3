@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A52C4C48286
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C872DC4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:46:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaBg-0003Qj-Bz; Thu, 01 Feb 2024 11:45:18 -0500
+	id 1rVaCz-0004y2-Cr; Thu, 01 Feb 2024 11:46:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaB5-0002wD-Dn
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:39 -0500
+ id 1rVaB2-0002tt-1V
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:36 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaAu-0002Tr-LZ
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:38 -0500
+ id 1rVaAt-0002Rk-Uj
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:To:From:Reply-To:
  Cc:Content-Type:Content-ID:Content-Description;
- bh=mMqmzYHdP9y/z29knSdyyl/j1smIAiKPsHboaiDoM8A=; b=NF+mzlBi2DUXjLUWt2oYxQ5rNg
- fth1fWhQUWyxt2PZmJuQ1ufN6827/piC0i8d/6HReljxKQVkfpxzPcctqdUHGK+Jwz2F0gHyiHn4k
- kdSqnWLIEX+Dz9ps2/tBxmu7y0ZhAbhIyBCrDAJWDnwXPx6UdclCe3kWaykmnMnsWGcua1jomAykM
- JX9f2eRCPG+WYcJniqroBmwoE1hUIXO4jvAYFGfwQPrzA06pZDhoxyIYLudDObUSFAMQJO0MBcnS1
- zgtvsmz+KsR9FGlJmyTsntPapzQCG0dnmuMUkYs3hq8rAczC6H8V7OrCoviQt0tcjv4GKgJqCDwqQ
- Ijwf66rQ==;
+ bh=RCl8hqYlbROKaeF8tiGKXTzuLjfG6ujmrLDps4PRhaM=; b=cyc6mUeJ8/CiLQeqFQsxzonMq+
+ Js72u7dOnhXJIFA4S8aUD92IjsOkwbeNDzyjnENnBqB1ejL8zjI/A7UpETrr1t8O2g/v0i+4iJbEs
+ zwOS+dE66E+ch+B/ERWZrPZARg2Rx0KynymcgFnlFB4cOBOzLW0TX1k2OV98AeDb+1D7+oDWPne/O
+ Xutzkqub1ZMPwtmvXf3DI3g3kWqI7JAVc9PjgAIPt7IkKLoyHB4DgQIt2XJxSs7YeJ8Ctkf3nPqfW
+ 4F4TRgW/CUM+kATq8L6GK/ezah4p8iy8MfuPySakRh+rj6as9QwjGnywA7CKZXQbE+4pQ2qEFqGSs
+ gjwK0cIQ==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVaAf-0000000GIdt-3p4J for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:15 +0000
+ id 1rVaAf-0000000GIdH-0T5m for qemu-devel@nongnu.org;
+ Thu, 01 Feb 2024 16:44:14 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVaAg-00000003IP6-3ppq for qemu-devel@nongnu.org;
+ Hat Linux)) id 1rVaAg-00000003IND-0R9c for qemu-devel@nongnu.org;
  Thu, 01 Feb 2024 16:44:14 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/47] net: make nb_nics and nd_table[] static in net/net.c
-Date: Thu,  1 Feb 2024 16:44:12 +0000
-Message-ID: <20240201164412.785520-48-dwmw2@infradead.org>
+Subject: [PULL 21/47] hw/arm/allwinner: use qemu_configure_nic_device()
+Date: Thu,  1 Feb 2024 16:43:46 +0000
+Message-ID: <20240201164412.785520-22-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201164412.785520-1-dwmw2@infradead.org>
 References: <20240201164412.785520-1-dwmw2@infradead.org>
@@ -78,60 +78,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Also remove the stale declaration of host_net_devices; the actual
-definition was removed long ago in commit 7cc28cb06104 ("net: Remove
-the deprecated 'host_net_add' and 'host_net_remove' HMP commands")
-
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- include/net/net.h | 4 ----
- net/net.c         | 3 +++
- system/globals.c  | 2 --
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ hw/arm/allwinner-a10.c |  6 +-----
+ hw/arm/allwinner-h3.c  |  6 +-----
+ hw/arm/allwinner-r40.c | 27 ++-------------------------
+ 3 files changed, 4 insertions(+), 35 deletions(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index 588ee55f28..b1f9b35fcc 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -301,10 +301,6 @@ struct NICInfo {
-     int nvectors;
- };
+diff --git a/hw/arm/allwinner-a10.c b/hw/arm/allwinner-a10.c
+index 581dd45edf..57d5d80159 100644
+--- a/hw/arm/allwinner-a10.c
++++ b/hw/arm/allwinner-a10.c
+@@ -138,11 +138,7 @@ static void aw_a10_realize(DeviceState *dev, Error **errp)
+     sysbus_realize(SYS_BUS_DEVICE(&s->dramc), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->dramc), 0, AW_A10_DRAMC_BASE);
  
--extern int nb_nics;
--extern NICInfo nd_table[MAX_NICS];
--extern const char *host_net_devices[];
+-    /* FIXME use qdev NIC properties instead of nd_table[] */
+-    if (nd_table[0].used) {
+-        qemu_check_nic_model(&nd_table[0], TYPE_AW_EMAC);
+-        qdev_set_nic_properties(DEVICE(&s->emac), &nd_table[0]);
+-    }
++    qemu_configure_nic_device(DEVICE(&s->emac), true, NULL);
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->emac), errp)) {
+         return;
+     }
+diff --git a/hw/arm/allwinner-h3.c b/hw/arm/allwinner-h3.c
+index 380e0ec11d..6870c3fe96 100644
+--- a/hw/arm/allwinner-h3.c
++++ b/hw/arm/allwinner-h3.c
+@@ -371,11 +371,7 @@ static void allwinner_h3_realize(DeviceState *dev, Error **errp)
+                               "sd-bus");
+ 
+     /* EMAC */
+-    /* FIXME use qdev NIC properties instead of nd_table[] */
+-    if (nd_table[0].used) {
+-        qemu_check_nic_model(&nd_table[0], TYPE_AW_SUN8I_EMAC);
+-        qdev_set_nic_properties(DEVICE(&s->emac), &nd_table[0]);
+-    }
++    qemu_configure_nic_device(DEVICE(&s->emac), true, NULL);
+     object_property_set_link(OBJECT(&s->emac), "dma-memory",
+                              OBJECT(get_system_memory()), &error_fatal);
+     sysbus_realize(SYS_BUS_DEVICE(&s->emac), &error_fatal);
+diff --git a/hw/arm/allwinner-r40.c b/hw/arm/allwinner-r40.c
+index eef1fc196e..b8c7202133 100644
+--- a/hw/arm/allwinner-r40.c
++++ b/hw/arm/allwinner-r40.c
+@@ -318,7 +318,6 @@ static void allwinner_r40_init(Object *obj)
+ 
+ static void allwinner_r40_realize(DeviceState *dev, Error **errp)
+ {
+-    const char *r40_nic_models[] = { "gmac", "emac", NULL };
+     AwR40State *s = AW_R40(dev);
+ 
+     /* CPUs */
+@@ -512,31 +511,8 @@ static void allwinner_r40_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->dramc), 2,
+                     s->memmap[AW_R40_DEV_DRAMPHY]);
+ 
+-    /* nic support gmac and emac */
+-    for (int i = 0; i < ARRAY_SIZE(r40_nic_models) - 1; i++) {
+-        NICInfo *nic = &nd_table[i];
 -
- /* from net.c */
- extern NetClientStateList net_clients;
- bool netdev_is_modern(const char *optstr);
-diff --git a/net/net.c b/net/net.c
-index d705e9b0fd..a2f0c828bb 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -77,6 +77,9 @@ static NetdevQueue nd_queue = QSIMPLEQ_HEAD_INITIALIZER(nd_queue);
+-        if (!nic->used) {
+-            continue;
+-        }
+-        if (qemu_show_nic_models(nic->model, r40_nic_models)) {
+-            exit(0);
+-        }
+-
+-        switch (qemu_find_nic_model(nic, r40_nic_models, r40_nic_models[0])) {
+-        case 0: /* gmac */
+-            qdev_set_nic_properties(DEVICE(&s->gmac), nic);
+-            break;
+-        case 1: /* emac */
+-            qdev_set_nic_properties(DEVICE(&s->emac), nic);
+-            break;
+-        default:
+-            exit(1);
+-            break;
+-        }
+-    }
+-
+     /* GMAC */
++    qemu_configure_nic_device(DEVICE(&s->gmac), true, "gmac");
+     object_property_set_link(OBJECT(&s->gmac), "dma-memory",
+                                      OBJECT(get_system_memory()), &error_fatal);
+     sysbus_realize(SYS_BUS_DEVICE(&s->gmac), &error_fatal);
+@@ -545,6 +521,7 @@ static void allwinner_r40_realize(DeviceState *dev, Error **errp)
+                        qdev_get_gpio_in(DEVICE(&s->gic), AW_R40_GIC_SPI_GMAC));
  
- static GHashTable *nic_model_help;
- 
-+static int nb_nics;
-+static NICInfo nd_table[MAX_NICS];
-+
- /***********************************************************/
- /* network device redirectors */
- 
-diff --git a/system/globals.c b/system/globals.c
-index e83b5428d1..b6d4e72530 100644
---- a/system/globals.c
-+++ b/system/globals.c
-@@ -36,8 +36,6 @@ int display_opengl;
- const char* keyboard_layout;
- bool enable_mlock;
- bool enable_cpu_pm;
--int nb_nics;
--NICInfo nd_table[MAX_NICS];
- int autostart = 1;
- int vga_interface_type = VGA_NONE;
- bool vga_interface_created;
+     /* EMAC */
++    qemu_configure_nic_device(DEVICE(&s->emac), true, "emac");
+     sysbus_realize(SYS_BUS_DEVICE(&s->emac), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->emac), 0, s->memmap[AW_R40_DEV_EMAC]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emac), 0,
 -- 
 2.43.0
 
