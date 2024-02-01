@@ -4,136 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A589FC4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 18:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 678C8C48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 18:56:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVcBU-0002ro-Qt; Thu, 01 Feb 2024 13:53:12 -0500
+	id 1rVcEj-0004sf-Lu; Thu, 01 Feb 2024 13:56:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVcBT-0002r9-35
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:53:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1rVcEg-0004iw-4l
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:56:30 -0500
+Received: from mail-bn8nam11on20700.outbound.protection.outlook.com
+ ([2a01:111:f400:7eae::700]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVcBG-0001kU-Lw
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:53:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706813577;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fT5v8IMyIAf/RHy2BqiO1lvyiu0e8BmCwKjeDEOSvu0=;
- b=ZeyeRto0gtv3MQJH6lDIjZGCN/bRw0TIsxYkaqra+9E/d8GHW0XH5ZmT1WBdYbzDjf6+1M
- 2Qe4/soZUFAgLrYJisJOzHsmrr9uzw9gthG9uMJv9Jwr2yMsecxvHp8Sf0QiaA+brBdHvQ
- AxXfUCBfgTZ0KApYXYzI+5oud95vKM8=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-3tBQRag2NS68sxSwB0Dj8w-1; Thu, 01 Feb 2024 13:52:56 -0500
-X-MC-Unique: 3tBQRag2NS68sxSwB0Dj8w-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a35247a5d8cso117200966b.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 10:52:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706813575; x=1707418375;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fT5v8IMyIAf/RHy2BqiO1lvyiu0e8BmCwKjeDEOSvu0=;
- b=VbGp5b/BETXMktd4gbPswuxu3v9etWTRmYXSf6nEmqCzLK1L8sn932l1JDtyXQgZg9
- nzUPZ7OgYstAziOk0D9lSGfEHN3RM0qElAVJjrhjQrFzKT+bbSMTfx+igu+3Aof0g3jY
- ZuATOjuS9DutGJTgoyv4eHkQIG99/M1TRC/1Z/c6t+ZLzLcAyplKcGcjSWP939MpXw0b
- vDFSsf1eBJVo9hTZdwd8sVyloBEqnFXEzv9pAcV74/L0ND1HLdVrXg8Gpa8oRv38kKy+
- vjjmcgD2/xYThtb+YrZnzP6aYbMgt6VzftqiPgCV6V2/2HwoiFmGeCiQn+RfFVYJyShg
- StSg==
-X-Gm-Message-State: AOJu0YzP2ud3e7IMlwP/39JBFwiMEF5ee0SGZxUCH7YDFhZp+Vu0eGtu
- cXdcJ/IuPpSi2buCbyfevbrNNRTgX0pHUAZ2pn8ZV8SbPb6F2A2ukN/35PPTZRA3/+eb9BXEO63
- oxjfp/inrOQei4k0lG6r2J0+EOknVTP6dmFjl3fnCn1odGa7jOM52
-X-Received: by 2002:a17:907:7711:b0:a36:f27b:f0f with SMTP id
- kw17-20020a170907771100b00a36f27b0f0fmr194924ejc.8.1706813575097; 
- Thu, 01 Feb 2024 10:52:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGcgGIPvEr/3WxU7PWKQpGIjOP1IX8s0SNfQmep28nedgf4pi2TAlEgvHA324s1RSeLJ1JOMQ==
-X-Received: by 2002:a17:907:7711:b0:a36:f27b:f0f with SMTP id
- kw17-20020a170907771100b00a36f27b0f0fmr194917ejc.8.1706813574780; 
- Thu, 01 Feb 2024 10:52:54 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXxZv2MrU2299Bmry3ybx3PeEl3cmuTpEh0P9UfW/AwxnSuNGDzLT4g6cInxFSBRdOHyovXQkF9SGjNt5tAJ8V4hJovtjug79YW/YFiCuX2crvyxgA4TzJF2DayoLW21qP0O/5bPIZUKK4=
-Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
- [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- v9-20020a1709060b4900b00a35cffe5498sm59030ejg.181.2024.02.01.10.52.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Feb 2024 10:52:54 -0800 (PST)
-Message-ID: <5553d942-5da1-4930-b404-2b71a6fd37ca@redhat.com>
-Date: Thu, 1 Feb 2024 19:52:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] target/arm: Move v7m-related code from cpu32.c
- into a separate file
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
+ id 1rVcEd-0004dg-VT
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:56:29 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KO2ZNh7Xapk9+JJv0iIw2uhma0L24phYyZxZ++nB0UHaPe27RJW8H/fZ7EVmhNMMDrbgzzau307wHyHinV6Fg58nCe7+fTbhi3ppmNM2ZStruK3IAnxbzjSMgTjJOZXP0ZUTjfXsq01kEOuhcoZ7gsPNIn8M2AFj7sBsFmsIrUQtnhFTDBS27xaXUMfFjkAV2HbBlbwR2F9scsUuhHCSytFQP/OsIbZ3v2X0qINeRapofgA0l7HQvBJllifYCNemybV2cNIVwFQV+16EUNqQtMXi4LbUxNfUgJWc9fZxrkIA+Jx1uuszUvyUi5daki+8NblqEfmbcML7b050kgGFmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zj3RLAxQo/9djh5Q9wqud9APxGYPxavymNQ4Jzzj7Ow=;
+ b=Bz5GZauEjkNi+93F1+Je/2fNRQuaaEevucqLe4YeUs8y5Nr7vApxaYtYqMYr9L9xvndamXp6OrIlzWH0cK7YCTRlN9rNaHYJq/UzZxAWKWQZH8fIaDNmMh4Kiuqq8piZ2cqBRETZrJ2DaXsIArcwCLWWOYsG2hmho7xm2xHH232MSfXSpJdwh0/svXfuHw3ogKjzBYAaKUnsqDY60OzVJse/M1M42AD1/vI2kRHhUZExt7dTqozc23XkwkJbZ4hVHBj+rS7sLGs7S0PQretga28mQu12S8fLSa3Vi77zRf2SaKDktjfbD2fdAy+i73v6v7iLTHN9PaAW55YuzCjsEA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
+ dkim=pass header.d=memverge.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zj3RLAxQo/9djh5Q9wqud9APxGYPxavymNQ4Jzzj7Ow=;
+ b=rhL9zjENyVYHCfGKfIjbNDxP8g0IvOmhreVtmgjVH8Y/0bTwOj+cItJwOE2AaL7O1005MTvdBSAtoXHZpQ8cST+GDXMmAnNglexdbO4gmrSq4z6UpLlZNxj//jqpytNR2TSMk8BTbSmazS8ykVmXpqSM7/dfFLe2QfjsbXymfP8=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=memverge.com;
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
+ by DM4PR17MB5874.namprd17.prod.outlook.com (2603:10b6:8:43::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.29; Thu, 1 Feb
+ 2024 18:56:17 +0000
+Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::7a04:dc86:2799:2f15]) by SJ0PR17MB5512.namprd17.prod.outlook.com
+ ([fe80::7a04:dc86:2799:2f15%5]) with mapi id 15.20.7249.025; Thu, 1 Feb 2024
+ 18:56:17 +0000
+Date: Thu, 1 Feb 2024 13:56:09 -0500
+From: Gregory Price <gregory.price@memverge.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20240129081835.137726-1-thuth@redhat.com>
- <20240129081835.137726-2-thuth@redhat.com>
- <CAFEAcA_mf-iGD_P3DB=dw4n=qpFyNODtAz1jFKUdjFkM1eWVuQ@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAFEAcA_mf-iGD_P3DB=dw4n=qpFyNODtAz1jFKUdjFkM1eWVuQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sajjan Rao <sajjanr@gmail.com>,
+ Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>,
+ linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org
+Subject: Re: Crash with CXL + TCG on 8.2: Was Re: qemu cxl memory expander
+ shows numa_node -1
+Message-ID: <ZbvpSaOXzZkqDd6c@memverge.com>
+References: <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
+ <20240201140100.000016ce@huawei.com>
+ <CAFEAcA9DW8AuMwDr_qyDXPWJcLsvD773XTr1stwuagHWc6p72g@mail.gmail.com>
+ <87msskkyce.fsf@draig.linaro.org>
+ <CAFEAcA_a_AyQ=Epz3_+CheAT8Crsk9mOu894wbNW_FywamkZiw@mail.gmail.com>
+ <20240201162150.000022cf@huawei.com>
+ <87h6iskuad.fsf@draig.linaro.org>
+ <20240201170822.00005bad@Huawei.com>
+ <87r0hwjdvl.fsf@draig.linaro.org>
+ <CAFEAcA_xDH=rZzXnjNMQTKGJ+-E4Q=A_bEtKLgYYx6x04h0Jkw@mail.gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA_xDH=rZzXnjNMQTKGJ+-E4Q=A_bEtKLgYYx6x04h0Jkw@mail.gmail.com>
+X-ClientProxiedBy: SJ0PR13CA0033.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c2::8) To SJ0PR17MB5512.namprd17.prod.outlook.com
+ (2603:10b6:a03:394::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|DM4PR17MB5874:EE_
+X-MS-Office365-Filtering-Correlation-Id: d7103bf0-f079-427c-b27e-08dc235778a2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: AFkgh22sYiue2S90ZOpklpQlc6yXmZu6wlDn7RNOAHPGqI6MvOxIxd4NnopLSoF5PQL7Q5k/0KvEEikGu+3d8grb0LEpV0ySFMgPyu2yCWkgQTOxsY1ADBNEn52A6x9BJjEZ4i9wVStiseh191KxtgiUZwcLldSiN1NZfbA9crgcKrEMQoqBB9m0jg6tvwRKzbgMPXpkQ82OxzPGJDcU80H4oD//u1bnnmNWmvuSE4ZdcV5rGfWCMiWo3RRQ8v9PglkrUfvPAuPDA1EU2gSa0IKlDi4mpyo6ihlr+LKksxHm/LOu0qRrbO68V2ymSNVRyX0AJMuO3ZGWR5lGLZBMupziRkomf513nIGcD9xDubUYenSvty0L1/S6QGsEmMUQpERZvs1YcnUM3iqUDWIY9Zmxot24CTRglbHXYqTj6oR+s4W85Tl1syevboIeWWTMSjDfCD9y47ZCI0yRPdmtI1TaB+Sdx0GrxOusQaAk4tUN5gyrkVWH1BxdK9WQQU2+ETIwQfxuFLlnDkmkqXH04jCwdiVb98R177FV3vR+j70LpuPUo5RhdTQtOLBYpENo
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(39850400004)(136003)(366004)(376002)(396003)(346002)(230922051799003)(1800799012)(451199024)(186009)(64100799003)(83380400001)(36756003)(86362001)(41300700001)(66574015)(26005)(38100700002)(2616005)(6512007)(6506007)(6486002)(2906002)(478600001)(6916009)(66946007)(66556008)(66476007)(316002)(6666004)(54906003)(4326008)(44832011)(5660300002)(8676002)(8936002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?nBu/3uDFc9JgsmYUCPOCVMJnJuW21HpwCZeo6RI7hkcARs8Xl2wdWJbDft?=
+ =?iso-8859-1?Q?P9UUsVqxxkbJdcjxciNXm8HF+b33ZWojR+6RMbxYiQiWZQK3dAXCQsQrCg?=
+ =?iso-8859-1?Q?e1g3jjKYzQ8vanPjVPtHE2UyzCspB4gjPEyNU3Pu3ffYkMu0bN9oeUQ39Z?=
+ =?iso-8859-1?Q?6F0j6wERelh9cmGMM5HB9Cc4Pql+TfcgBtbNB1GD8xsuiA55y1crgytY8v?=
+ =?iso-8859-1?Q?rrq9ChnUxVf/cnCVxk4keGtAVfE7RG//Wn3ADt2sBGb0IpXqk4lk6usWSz?=
+ =?iso-8859-1?Q?5QUHHPqO0o5ES4UrzEN0K/Jz6gWaj4mMHjFUqQEjC8YROjVwKZad8QYb1U?=
+ =?iso-8859-1?Q?DhMNDd4eluLPH98+S0y+yEMLpivWoJ2Of5ZNEEaJD/s6fjDOObGrGeZPxC?=
+ =?iso-8859-1?Q?daGSCQlL1SzJG/aPNpLkZJ7tLlrLq9Var4lI7A1fj8HDOtR2LbD/QJgmwr?=
+ =?iso-8859-1?Q?NnmYHI1IDGUGHqTbUdPupkF6DBxAOyIsCXcXMLPsT+Otu2RtBbrcnsqvwe?=
+ =?iso-8859-1?Q?B+FLAuAgAmP5dManDfOP2MOxaI/ObWagfPNuWAhW+NSMPrlmZR3W35U6rf?=
+ =?iso-8859-1?Q?UDVo+viyX1clJj4ZcGFHNvZMwlx6+Q0QUXtJB0Ird/FeYZ5Wk+rY53APyj?=
+ =?iso-8859-1?Q?hHiuK6eIBxAwr1jkJl7E24i4rCewiYJKUKccCUyPx8thV7v4jxK4DMsoq1?=
+ =?iso-8859-1?Q?cigW001/OGZ2jfSk/kwmNFXZxHt+J1XR1x4ZxFd2QgX/1pnqivdECVWRZY?=
+ =?iso-8859-1?Q?XPNrgsX3dXLnv9096j1xtPntV0cnX4JTS1U/q/8hUwyIU89L+p1ouw2Fby?=
+ =?iso-8859-1?Q?EfyCp+hM6WCO9I/8baEhDkNfAR969EfU5KLYTRxbwRl5L0BYIEaXSgtNT4?=
+ =?iso-8859-1?Q?n2iTjdwYY3h5DNHg2kBIpqWu5VR6LM0S5vdE9vJGd+m+y3X9WmnC6vXurB?=
+ =?iso-8859-1?Q?ixGIDMJInWxepzA4rKsM0AiZ6DGtOPpr+H3cjKwBlsEAdPViXkyt2lUDRB?=
+ =?iso-8859-1?Q?ToKft5rV0K6svi+akizjiJWofD+uVYrK2jiSClEtmdaBiVzIyurXyaa4iZ?=
+ =?iso-8859-1?Q?BDQmM+P0Xt80oRXdyrIjA2eUYP55EPuRER5D9fQLPrrrSK3F7dKmm5VuDt?=
+ =?iso-8859-1?Q?SQi6Pg/WR2uYr3lqtVDSWCDMD6eBpk1CnwH8Hra3iFRz39O2UC410cHFSS?=
+ =?iso-8859-1?Q?te0KeKOqsoHtoIL+hHG/Sp82IjxoWvTPvDbacQfJSgn8+JqoWY6BZMFHxf?=
+ =?iso-8859-1?Q?MKhZulva95j4GZJ726W2ZBva9ZBXJjmmO7GRyRtm719O6rRdBydpboYtlj?=
+ =?iso-8859-1?Q?WiMo/H0ZPMux1jACDPgNS21YDSM4iAQ9wL1mku+ag2FY1zc29rU/boFRh+?=
+ =?iso-8859-1?Q?Lr9gFpcxk77pKtjoWc6ChMqX/fPsW81kXCSpKghlpNL5qRJPK3e41GQkKe?=
+ =?iso-8859-1?Q?2EFgG/KDnMP1yk+irXIFmBTYz6T6grqZv1HL86V27YLWM8nSVU6R5lYLg4?=
+ =?iso-8859-1?Q?DGkJYTpZ1qhOQAjfm0MeIxyDBl6Y6SsI/iyLWe2Pt9fr6+Jer+GFAcLIu1?=
+ =?iso-8859-1?Q?pbSdMClpdtmfKdIBOHYjq+dP5UvTSZGc1WqSSoBnSNtnQl5RBO8CsMacl9?=
+ =?iso-8859-1?Q?KlWhzOhTi1iWG5M5SEm1nY9Vyd4ZmffJmzUq3bhlhnUi8PhqPqRIk4mA?=
+ =?iso-8859-1?Q?=3D=3D?=
+X-OriginatorOrg: memverge.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d7103bf0-f079-427c-b27e-08dc235778a2
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Feb 2024 18:56:17.4818 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5LLUl8IZhzJlcnkDWPfgmiMR3KVcEKDIxGo+OFexH2LwNsd7HLwTKadwuCGzFHsKzHFR+0pW4t51wl8w0gGQEzVR9LrNEbkCbfk30EFa/x0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR17MB5874
+Received-SPF: pass client-ip=2a01:111:f400:7eae::700;
+ envelope-from=gregory.price@memverge.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,138 +153,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/02/2024 15.17, Peter Maydell wrote:
-> On Mon, 29 Jan 2024 at 08:18, Thomas Huth <thuth@redhat.com> wrote:
->>
->> Move the code to a separate file so that we do not have to compile
->> it anymore if CONFIG_ARM_V7M is not set.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   target/arm/tcg/cpu-v7m.c   | 290 +++++++++++++++++++++++++++++++++++++
->>   target/arm/tcg/cpu32.c     | 261 ---------------------------------
->>   target/arm/meson.build     |   3 +
->>   target/arm/tcg/meson.build |   3 +
->>   4 files changed, 296 insertions(+), 261 deletions(-)
->>   create mode 100644 target/arm/tcg/cpu-v7m.c
->>
->> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
->> new file mode 100644
->> index 0000000000..89a25444a2
->> --- /dev/null
->> +++ b/target/arm/tcg/cpu-v7m.c
->> @@ -0,0 +1,290 @@
->> +/*
->> + * QEMU ARMv7-M TCG-only CPUs.
->> + *
->> + * Copyright (c) 2012 SUSE LINUX Products GmbH
->> + *
->> + * This code is licensed under the GNU GPL v2 or later.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "cpu.h"
->> +#include "hw/core/tcg-cpu-ops.h"
->> +#include "internals.h"
->> +
->> +#if !defined(CONFIG_USER_ONLY)
->> +
->> +#include "hw/intc/armv7m_nvic.h"
->> +
->> +static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
->> +{
->> +    CPUClass *cc = CPU_GET_CLASS(cs);
->> +    ARMCPU *cpu = ARM_CPU(cs);
->> +    CPUARMState *env = &cpu->env;
->> +    bool ret = false;
->> +
->> +    /*
->> +     * ARMv7-M interrupt masking works differently than -A or -R.
->> +     * There is no FIQ/IRQ distinction. Instead of I and F bits
->> +     * masking FIQ and IRQ interrupts, an exception is taken only
->> +     * if it is higher priority than the current execution priority
->> +     * (which depends on state like BASEPRI, FAULTMASK and the
->> +     * currently active exception).
->> +     */
->> +    if (interrupt_request & CPU_INTERRUPT_HARD
->> +        && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
->> +        cs->exception_index = EXCP_IRQ;
->> +        cc->tcg_ops->do_interrupt(cs);
->> +        ret = true;
->> +    }
->> +    return ret;
->> +}
->> +
->> +#endif /* !CONFIG_USER_ONLY */
+On Thu, Feb 01, 2024 at 06:04:26PM +0000, Peter Maydell wrote:
+> On Thu, 1 Feb 2024 at 17:25, Alex Bennée <alex.bennee@linaro.org> wrote:
+> >
+> > Jonathan Cameron <Jonathan.Cameron@Huawei.com> writes:
+> > >> > #21 0x0000555555ca3e5d in do_st8_mmu (cpu=0x5555578e0cb0, addr=23937, val=18386491784638059520, oi=6, ra=140736029817822) at ../../accel/tcg/cputlb.c:2853
+> > >> > #22 0x00007fffa9107c63 in code_gen_buffer ()
+> > >>
+> > >> No thats different - we are actually writing to the MMIO region here.
+> > >> But the fact we hit cpu_abort because we can't find the TB we are
+> > >> executing is a little problematic.
+> > >>
+> > >> Does ra properly point to the code buffer here?
+> > >
+> > > Err.  How would I tell?
+> >
+> > (gdb) p/x 140736029817822
+> > $1 = 0x7fffa9107bde
+> >
+> > seems off because code_gen_buffer starts at 0x00007fffa9107c63
 > 
-> I wonder if this function could go in target/arm/tcg/m_helper.c:
-> it looks a bit odd in this file, which is mostly initfns for
-> specific CPU types. But it was in cpu32.c so I'm happy that
-> we just move it to cpu-v7m.c for now.
-
-The only user of this function are the arm_v7m_tcg_ops that are defined 
-later in the cpu-v7m.c file, so I think it makes sense to keep it here.
-
->> diff --git a/target/arm/meson.build b/target/arm/meson.build
->> index 46b5a21eb3..2e10464dbb 100644
->> --- a/target/arm/meson.build
->> +++ b/target/arm/meson.build
->> @@ -26,6 +26,8 @@ arm_system_ss.add(files(
->>     'ptw.c',
->>   ))
->>
->> +arm_user_ss = ss.source_set()
->> +
->>   subdir('hvf')
->>
->>   if 'CONFIG_TCG' in config_all_accel
->> @@ -36,3 +38,4 @@ endif
->>
->>   target_arch += {'arm': arm_ss}
->>   target_system_arch += {'arm': arm_system_ss}
->> +target_user_arch += {'arm': arm_user_ss}
->> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
->> index 6fca38f2cc..3b1a9f0fc5 100644
->> --- a/target/arm/tcg/meson.build
->> +++ b/target/arm/tcg/meson.build
->> @@ -55,3 +55,6 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->>   arm_system_ss.add(files(
->>     'psci.c',
->>   ))
->> +
->> +arm_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
->> +arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
+> The code_gen_buffer doesn't *start* at 0x00007fffa9107c63 --
+> that is our return address into it, which is to say it's just
+> after the call insn to the do_st8_mmu helper. The 'ra' argument
+> to the helper function is going to be a number slightly lower
+> than that, because it points within the main lump of generated
+> code for the TB, whereas the helper call is done as part of
+> an out-of-line lump of common code at the end of the TB.
 > 
-> Why do we need to add this new arm_user_ss() sourceset,
-> when we didn't need it for the A/R profile CPUs?
+> The 'ra' here is fine -- the problem is that we don't
+> pass it all the way down the callstack and instead end
+> up using 0 as a 'ra' within the ptw code.
+> 
+> -- PMM
 
-cpu32.c gets added to the arm_ss source set which is linked into all 
-possible arm-related binaries (qemu-system-aarch64, qemu-system-arm, 
-qemu-aarch64 and qemu-arm).
-
-The goal of this rework is to have the v7m code only linked into the 
-binaries that need it, i.e. qemu-system-arm/aarch64 if CONFIG_ARM_V7M is 
-set, or the 32-bit qemu-arm linux-user binary.
-
-> What goes wrong if we add it to arm_ss() the way we do cpu32.c?
-
-The problem is that CONFIG_ARM_V7M is not set for the linux-user builds, so 
-the code does not get included in the "qemu-arm" binary anymore.
-Now, the obvious answer to that statement is of course: Let's add 
-CONFIG_ARM_V7M to configs/targets/arm-linux-user.mak, too! ... but I tried 
-that already, and it also does not work, since then we'll suddenly try to 
-include the hw/intc/armv7m_nvic.c stuff into the qemu-arm binary, which of 
-course also does not work. It might be possible to rework that by moving 
-armv7m_nvic.c from specific_ss to system_ss, but looks like that will 
-require a *lot* of other reworks (e.g. arm_feature() is not available for 
-common code). Another solution might be to move armv7m_nvic.c into the 
-hw/arm/ directory and add it there to arm_ss instead ... it's then a little 
-bit weird that this is the only interrupt controller there, but at least the 
-changes would be quite trivial. What do you think?
-
-  Thomas
+Is there any particular reason not to, as below?
+~Gregory
 
 
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 5b86f439ad..2f581b9bfb 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -59,14 +59,14 @@ typedef struct PTETranslate {
+     hwaddr gaddr;
+ } PTETranslate;
+
+-static bool ptw_translate(PTETranslate *inout, hwaddr addr)
++static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
+ {
+     CPUTLBEntryFull *full;
+     int flags;
+
+     inout->gaddr = addr;
+     flags = probe_access_full(inout->env, addr, 0, MMU_DATA_STORE,
+-                              inout->ptw_idx, true, &inout->haddr, &full, 0);
++                              inout->ptw_idx, true, &inout->haddr, &full, ra);
+
+     if (unlikely(flags & TLB_INVALID_MASK)) {
+         TranslateFault *err = inout->err;
+@@ -82,20 +82,20 @@ static bool ptw_translate(PTETranslate *inout, hwaddr addr)
+     return true;
+ }
+
+-static inline uint32_t ptw_ldl(const PTETranslate *in)
++static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
+ {
+     if (likely(in->haddr)) {
+         return ldl_p(in->haddr);
+     }
+-    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
++    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+
+-static inline uint64_t ptw_ldq(const PTETranslate *in)
++static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
+ {
+     if (likely(in->haddr)) {
+         return ldq_p(in->haddr);
+     }
+-    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
++    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+
+ /*
+@@ -132,7 +132,8 @@ static inline bool ptw_setl(const PTETranslate *in, uint32_t old, uint32_t set)
+ }
+
+ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+-                          TranslateResult *out, TranslateFault *err)
++                          TranslateResult *out, TranslateFault *err,
++                          uint64_t ra)
+ {
+     const int32_t a20_mask = x86_get_a20_mask(env);
+     const target_ulong addr = in->addr;
+@@ -166,11 +167,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+                  */
+                 pte_addr = ((in->cr3 & ~0xfff) +
+                             (((addr >> 48) & 0x1ff) << 3)) & a20_mask;
+-                if (!ptw_translate(&pte_trans, pte_addr)) {
++                if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+                     return false;
+                 }
+             restart_5:
+-                pte = ptw_ldq(&pte_trans);
++                pte = ptw_ldq(&pte_trans, ra);
+                 if (!(pte & PG_PRESENT_MASK)) {
+                     goto do_fault;
+                 }
+@@ -191,11 +192,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+              */
+             pte_addr = ((pte & PG_ADDRESS_MASK) +
+                         (((addr >> 39) & 0x1ff) << 3)) & a20_mask;
+-            if (!ptw_translate(&pte_trans, pte_addr)) {
++            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+                 return false;
+             }
+         restart_4:
+-            pte = ptw_ldq(&pte_trans);
++            pte = ptw_ldq(&pte_trans, ra);
+             if (!(pte & PG_PRESENT_MASK)) {
+                 goto do_fault;
+             }
+@@ -212,11 +213,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+              */
+             pte_addr = ((pte & PG_ADDRESS_MASK) +
+                         (((addr >> 30) & 0x1ff) << 3)) & a20_mask;
+-            if (!ptw_translate(&pte_trans, pte_addr)) {
++            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+                 return false;
+             }
+         restart_3_lma:
+-            pte = ptw_ldq(&pte_trans);
++            pte = ptw_ldq(&pte_trans, ra);
+             if (!(pte & PG_PRESENT_MASK)) {
+                 goto do_fault;
+             }
+@@ -239,12 +240,12 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+              * Page table level 3
+              */
+             pte_addr = ((in->cr3 & ~0x1f) + ((addr >> 27) & 0x18)) & a20_mask;
+-            if (!ptw_translate(&pte_trans, pte_addr)) {
++            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+                 return false;
+             }
+             rsvd_mask |= PG_HI_USER_MASK;
+         restart_3_nolma:
+-            pte = ptw_ldq(&pte_trans);
++            pte = ptw_ldq(&pte_trans, ra);
+             if (!(pte & PG_PRESENT_MASK)) {
+                 goto do_fault;
+             }
+@@ -262,11 +263,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          */
+         pte_addr = ((pte & PG_ADDRESS_MASK) +
+                     (((addr >> 21) & 0x1ff) << 3)) & a20_mask;
+-        if (!ptw_translate(&pte_trans, pte_addr)) {
++        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+             return false;
+         }
+     restart_2_pae:
+-        pte = ptw_ldq(&pte_trans);
++        pte = ptw_ldq(&pte_trans, ra);
+         if (!(pte & PG_PRESENT_MASK)) {
+             goto do_fault;
+         }
+@@ -289,10 +290,10 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          */
+         pte_addr = ((pte & PG_ADDRESS_MASK) +
+                     (((addr >> 12) & 0x1ff) << 3)) & a20_mask;
+-        if (!ptw_translate(&pte_trans, pte_addr)) {
++        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+             return false;
+         }
+-        pte = ptw_ldq(&pte_trans);
++        pte = ptw_ldq(&pte_trans, ra);
+         if (!(pte & PG_PRESENT_MASK)) {
+             goto do_fault;
+         }
+@@ -307,11 +308,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          * Page table level 2
+          */
+         pte_addr = ((in->cr3 & ~0xfff) + ((addr >> 20) & 0xffc)) & a20_mask;
+-        if (!ptw_translate(&pte_trans, pte_addr)) {
++        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+             return false;
+         }
+     restart_2_nopae:
+-        pte = ptw_ldl(&pte_trans);
++        pte = ptw_ldl(&pte_trans, ra);
+         if (!(pte & PG_PRESENT_MASK)) {
+             goto do_fault;
+         }
+@@ -336,10 +337,10 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+          * Page table level 1
+          */
+         pte_addr = ((pte & ~0xfffu) + ((addr >> 10) & 0xffc)) & a20_mask;
+-        if (!ptw_translate(&pte_trans, pte_addr)) {
++        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
+             return false;
+         }
+-        pte = ptw_ldl(&pte_trans);
++        pte = ptw_ldl(&pte_trans, ra);
+         if (!(pte & PG_PRESENT_MASK)) {
+             goto do_fault;
+         }
+@@ -529,7 +530,8 @@ static G_NORETURN void raise_stage2(CPUX86State *env, TranslateFault *err,
+
+ static bool get_physical_address(CPUX86State *env, vaddr addr,
+                                  MMUAccessType access_type, int mmu_idx,
+-                                 TranslateResult *out, TranslateFault *err)
++                                 TranslateResult *out, TranslateFault *err,
++                                 uint64_t ra)
+ {
+     TranslateParams in;
+     bool use_stage2 = env->hflags2 & HF2_NPT_MASK;
+@@ -548,7 +550,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+             in.mmu_idx = MMU_USER_IDX;
+             in.ptw_idx = MMU_PHYS_IDX;
+
+-            if (!mmu_translate(env, &in, out, err)) {
++            if (!mmu_translate(env, &in, out, err, ra)) {
+                 err->stage2 = S2_GPA;
+                 return false;
+             }
+@@ -575,7 +577,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+                     return false;
+                 }
+             }
+-            return mmu_translate(env, &in, out, err);
++            return mmu_translate(env, &in, out, err, ra);
+         }
+         break;
+     }
+@@ -601,7 +603,7 @@ bool x86_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+     TranslateResult out;
+     TranslateFault err;
+
+-    if (get_physical_address(env, addr, access_type, mmu_idx, &out, &err)) {
++    if (get_physical_address(env, addr, access_type, mmu_idx, &out, &err, retaddr)) {
+         /*
+          * Even if 4MB pages, we map only one 4KB page in the cache to
+          * avoid filling it too fast.
 
