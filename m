@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFC1C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 15:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA6FC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 15:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVYpE-0002H2-Rn; Thu, 01 Feb 2024 10:18:00 -0500
+	id 1rVYpa-0002Nb-Jo; Thu, 01 Feb 2024 10:18:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVYpD-0002Gf-Bf
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:17:59 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVYpB-0005Fr-FR
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:17:59 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-40ef6f10b56so8797575e9.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 07:17:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706800674; x=1707405474; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FUJvKbgUShvcNix3bLT53w7WZVTT9v8XQDwDHAtkVak=;
- b=sHj15k5WMep/bBrZRnOR3/KR0vGxcYUWGzt09ZKJhy74JTd/V0+xuGGR7V0ROOp+g+
- OQdJUnNWwl0+I/Si4BOY//jo991Iih+4hDBDgMDc/ZR919vSNZhgbt2ihRlyGWO3Pwhx
- dULaGHsnrSPF78M3zy42PMLI4xXwMs9C84VXQe7fspl5BYx4mn/fXR3FX6S+1RbbnV7n
- 9GN8Fl/VNXoz+K3lPHxiUKs/px3dlfggueS2Y+OmSb1DDe2+EpVcckYziBqmGNEU/2uq
- lnXqonseVTHQJ8/s/F02gCH4iapOkJbiSLsHeSJZXiP9IwvjIRw3HpIH2k6xHpEYwMmv
- usRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706800674; x=1707405474;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FUJvKbgUShvcNix3bLT53w7WZVTT9v8XQDwDHAtkVak=;
- b=MMdc8EdCSsFa4Y7ZlvNO6sOmZvF0DAFzZqPh/bcUbR8CQRxql1Vor7EMiET9kKgHiQ
- UhdXqvVAwYpdfkHqE88aMs2h0GzjLB0ktYxjs65zXEHCfLbqS5FTXgGCph1PF8HufrRZ
- CXksDpKoSQaQ1buepE6fAOREZI9IUS18l/p7IWOInEN+j9mMav/SljP9ZXNSE8Dy0Lp9
- hQEDfBk5JVvea/zFx5l90MUb0NRlEVSfDGT1DxUw5EPAeKlqxZyo7iS9Y6PtuJbN073g
- 8nHSiUI3Q1EE+/2V7tulnYprMDeWLUyGSRJSr13L7VCUiVR2+dTMxZfkU5JiJReQkqoF
- S4uQ==
-X-Gm-Message-State: AOJu0Yx9bqcP2TwuLI3IOmOCOwiwjdldbgKCnwY4oGqA/UgmJMqtMJVI
- ZKO+qO4Qm9mBb2Ub/Lhz7G0NdWj+klurB9iLZaXnm/JZo69esPNPy+GrLyQqRgg=
-X-Google-Smtp-Source: AGHT+IHqNwbRTDKuNiWXp7JHfZveH2s2JcoTDYTaoUHFAp2OjWDl1l6e2VV1HDTAk/opSHtq1uXvtA==
-X-Received: by 2002:a05:600c:358b:b0:40e:af03:5f8d with SMTP id
- p11-20020a05600c358b00b0040eaf035f8dmr1847495wmq.8.1706800674616; 
- Thu, 01 Feb 2024 07:17:54 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUwc5clXq2gzWSAW4WkBMQ3Rd7Wh/mSXpU5AAOkNNm4b3xrwJaIRZUQMBRubhJk87/NO5ZUUkLzSB6nJCH+rFR9OcohTIhDWN1TDdVk4QgFbQxF4lhlFfpgtzi5pWljpmOBobzfqnWJBFfSW+xMC+5p0UVXLPSkZ8I6ZPGYH0D5uAW3y+Km0jk+vhYgk3wDqqkEJVYOtWAAuENEx1Swrw0pJCIA4ETONZ74dRAeEAAcATVjAcVP5b9IBAaOGV1rDaNE02SUAjE3qcUNh/U=
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- m39-20020a05600c3b2700b0040fb7695620sm3086165wms.0.2024.02.01.07.17.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 07:17:54 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CCD655F7AF;
- Thu,  1 Feb 2024 15:17:53 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,  Sajjan Rao
- <sajjanr@gmail.com>,  Gregory Price <gregory.price@memverge.com>,
- Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>,
- linux-cxl@vger.kernel.org,  qemu-devel@nongnu.org,
- richard.henderson@linaro.org
-Subject: Re: Crash with CXL + TCG on 8.2: Was Re: qemu cxl memory expander
- shows numa_node -1
-In-Reply-To: <CAFEAcA9DW8AuMwDr_qyDXPWJcLsvD773XTr1stwuagHWc6p72g@mail.gmail.com>
- (Peter Maydell's message of "Thu, 1 Feb 2024 14:35:56 +0000")
-References: <CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com>
- <CAGEDW0fWCfuG3KrNSwDjNVGAZVL9NJgF26Jqyd840HfQdNGLbA@mail.gmail.com>
- <CAAg4Pard=zh_5p650UcNdQEoQWZLM6G7KRqdPQHLmaR4oZMJ3w@mail.gmail.com>
- <CAGEDW0dVEk-QXuL=DPVvSP4t5cafz6N-r_SrCxgFnBfFOsixSA@mail.gmail.com>
- <CAAg4PaqgZcTXkWuys7FZjQdRChTkKj-ZnJQCdxpTMCxy4Hghow@mail.gmail.com>
- <20230823175056.00001a84@Huawei.com>
- <CAAg4ParSB4_2FU2bu96A=3tSNuwHqZwK0wCS18EJoPAq9kYEkw@mail.gmail.com>
- <CAAg4Pap9KzkgX=fgE7vNJYxEpGbHA-NVsgBY5npXizUbMhjp9A@mail.gmail.com>
- <20240126123926.000051bd@Huawei.com> <ZbPTL00WOo7UC0e6@memverge.com>
- <20240126171233.00002a2e@Huawei.com>
- <CAAg4ParQKj9FUe0DRX0Wmk1KT0bnxx2F7W=ic38781j7eVz+OQ@mail.gmail.com>
- <20240201130438.00001384@Huawei.com>
- <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
- <20240201140100.000016ce@huawei.com>
- <CAFEAcA9DW8AuMwDr_qyDXPWJcLsvD773XTr1stwuagHWc6p72g@mail.gmail.com>
-User-Agent: mu4e 1.11.27; emacs 29.1
-Date: Thu, 01 Feb 2024 15:17:53 +0000
-Message-ID: <87msskkyce.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1rVYpZ-0002N2-DN; Thu, 01 Feb 2024 10:18:21 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1rVYpX-0005HK-KY; Thu, 01 Feb 2024 10:18:21 -0500
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 411F2TbD011713; Thu, 1 Feb 2024 15:18:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=8fkg77FbDWy0hbvoBxffAB6euUeRDNQrJo+6qYBrAoY=;
+ b=szJNy4Q4qfhamIZHu8njY8BosCVZs+Au0zy2u6rYmPIbHNtjUquWv4LfJtNT/M4eGJJc
+ Sd6fg2TAcNyyIdpq18f4ZKu1WFhTr3qv726veH69XQkbXoWB74rZqwfiGAlp/S2DjfXx
+ JACYMOg2GHX8nVRkqGNdbOlhPLQphw0LiRoP9K4nTcOSfE9watlWvElF72eJ8s7WYYQq
+ UQCL/tUxkvwMgxnT1uXF6WbLBUgNqXc4caumIyzs3fuKZedTM/KySa4ghw6HeyDe9Fk0
+ Zi495VjK9FoIm6nXPf/wqU5SOe5tL5/6xSdQvL9jiWUhdKGLC+PGoaPLiDKfp7YYPzub YQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0dkagh7g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Feb 2024 15:18:06 +0000
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 411F2axA012276;
+ Thu, 1 Feb 2024 15:18:06 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0dkagh4h-3
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Feb 2024 15:18:06 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 411C5WcF007168; Thu, 1 Feb 2024 14:53:10 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwev2mc16-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Feb 2024 14:53:10 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 411Er8gN22086272
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 1 Feb 2024 14:53:08 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D7F820040;
+ Thu,  1 Feb 2024 14:53:08 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5FF6F20043;
+ Thu,  1 Feb 2024 14:53:06 +0000 (GMT)
+Received: from [9.109.208.159] (unknown [9.109.208.159])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Feb 2024 14:53:06 +0000 (GMT)
+Message-ID: <3d4a6a18-c81c-420e-948a-35746c1988ca@linux.ibm.com>
+Date: Thu, 1 Feb 2024 20:23:05 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7] ppc: Enable 2nd DAWR support on p10
+Content-Language: en-US
+To: Nicholas Piggin <npiggin@gmail.com>, danielhb413@gmail.com, clg@kaod.org, 
+ david@gibson.dropbear.id.au, harshpb@linux.ibm.com,
+ pbonzini@redhat.com, qemu-ppc@nongnu.org, kvm@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+References: <170063834599.621665.9541440879278084501.stgit@ltcd48-lp2.aus.stglab.ibm.com>
+ <CYM2N4QA6ZDB.8JC8WRV7JPK3@wheely>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+In-Reply-To: <CYM2N4QA6ZDB.8JC8WRV7JPK3@wheely>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nVm7AfGLWHKW8pLAI1svBmbSMGd2tnkv
+X-Proofpoint-GUID: JuKde7F9O9QJRtCoMD5umU3Y3KzS4JfL
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-01_03,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=922 spamscore=0
+ mlxscore=0 phishscore=0 suspectscore=0 impostorscore=0 clxscore=1015
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402010120
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,115 +118,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Thanks for the review Nick!
 
-> On Thu, 1 Feb 2024 at 14:01, Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
->> > Can you run QEMU under gdb and give the backtrace when it stops
->> > on the abort() ? That will probably have a helpful clue. I
->> > suspect something is failing to pass a valid retaddr in
->> > when it calls a load/store function.
->
->> [Switching to Thread 0x7ffff56ff6c0 (LWP 21916)]
->> __pthread_kill_implementation (no_tid=3D0, signo=3D6, threadid=3D<optimi=
-zed out>) at ./nptl/pthread_kill.c:44
->> 44      ./nptl/pthread_kill.c: No such file or directory.
->> (gdb) bt
->> #0  __pthread_kill_implementation (no_tid=3D0, signo=3D6, threadid=3D<op=
-timized out>) at ./nptl/pthread_kill.c:44
->> #1  __pthread_kill_internal (signo=3D6, threadid=3D<optimized out>) at .=
-/nptl/pthread_kill.c:78
->> #2  __GI___pthread_kill (threadid=3D<optimized out>, signo=3Dsigno@entry=
-=3D6) at ./nptl/pthread_kill.c:89
->> #3  0x00007ffff77c43b6 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysdeps=
-/posix/raise.c:26
->> #4  0x00007ffff77aa87c in __GI_abort () at ./stdlib/abort.c:79
->> #5  0x0000555555c0d4ce in cpu_abort
->>     (cpu=3Dcpu@entry=3D0x555556fd9000, fmt=3Dfmt@entry=3D0x555555fe3378 =
-"cpu_io_recompile: could not find TB for pc=3D%p")
->>     at ../../cpu-target.c:359
->> #6  0x0000555555c59435 in cpu_io_recompile (cpu=3Dcpu@entry=3D0x555556fd=
-9000, retaddr=3Dretaddr@entry=3D0) at ../../accel/tcg/translate-all.c:611
->> #7  0x0000555555c5c956 in io_prepare
->>     (retaddr=3D0, addr=3D19595792376, attrs=3D..., xlat=3D<optimized out=
->, cpu=3D0x555556fd9000, out_offset=3D<synthetic pointer>)
->>     at ../../accel/tcg/cputlb.c:1339
+On 1/23/24 17:36, Nicholas Piggin wrote:
+> On Wed Nov 22, 2023 at 5:32 PM AEST, Shivaprasad G Bhat wrote:
+>> Extend the existing watchpoint facility from TCG DAWR0 emulation
+>> to DAWR1 on POWER10.
+>>
+>> As per the PAPR, bit 0 of byte 64 in pa-features property
+>> indicates availability of 2nd DAWR registers. i.e. If this bit is set, 2nd
+>> DAWR is present, otherwise not. Use KVM_CAP_PPC_DAWR1 capability to find
+>> whether kvm supports 2nd DAWR or not. If it's supported, allow user to set
+>> the pa-feature bit in guest DT using cap-dawr1 machine capability.
 <snip>
->> #21 tb_htable_lookup (cpu=3D<optimized out>, pc=3Dpc@entry=3D18446744072=
-116178925, cs_base=3D0, flags=3D415285936, cflags=3D4278353920)
->>     at ../../accel/tcg/cpu-exec.c:231
->> #22 0x0000555555c50c08 in tb_lookup
->>     (cpu=3Dcpu@entry=3D0x555556fd9000, pc=3Dpc@entry=3D18446744072116178=
-925, cs_base=3Dcs_base@entry=3D0, flags=3D<optimized out>, cflags=3D<optimi=
-zed out>) at ../../accel/tcg/cpu-exec.c:267
->> #23 0x0000555555c51e23 in helper_lookup_tb_ptr (env=3D0x555556fdb7c0) at=
- ../../accel/tcg/cpu-exec.c:423
->> #24 0x00007fffa9076ead in code_gen_buffer ()
->> #25 0x0000555555c50fab in cpu_tb_exec (cpu=3Dcpu@entry=3D0x555556fd9000,=
- itb=3D<optimized out>, tb_exit=3Dtb_exit@entry=3D0x7ffff56fe708)
->>     at ../../accel/tcg/cpu-exec.c:458
->> #26 0x0000555555c51492 in cpu_loop_exec_tb
->>     (tb_exit=3D0x7ffff56fe708, last_tb=3D<synthetic pointer>, pc=3D18446=
-744072116179169, tb=3D<optimized out>, cpu=3D0x555556fd9000)
->>     at ../../accel/tcg/cpu-exec.c:920
->> #27 cpu_exec_loop (cpu=3Dcpu@entry=3D0x555556fd9000, sc=3Dsc@entry=3D0x7=
-ffff56fe7a0) at ../../accel/tcg/cpu-exec.c:1041
->> #28 0x0000555555c51d11 in cpu_exec_setjmp (cpu=3Dcpu@entry=3D0x555556fd9=
-000, sc=3Dsc@entry=3D0x7ffff56fe7a0) at ../../accel/tcg/cpu-exec.c:1058
->> #29 0x0000555555c523b4 in cpu_exec (cpu=3Dcpu@entry=3D0x555556fd9000) at=
- ../../accel/tcg/cpu-exec.c:1084
->> #30 0x0000555555c74053 in tcg_cpus_exec (cpu=3Dcpu@entry=3D0x555556fd900=
-0) at ../../accel/tcg/tcg-accel-ops.c:76
->> #31 0x0000555555c741a0 in mttcg_cpu_thread_fn (arg=3Darg@entry=3D0x55555=
-6fd9000) at ../../accel/tcg/tcg-accel-ops-mttcg.c:95
->> #32 0x0000555555dfb580 in qemu_thread_start (args=3D0x55555703c3e0) at .=
-./../util/qemu-thread-posix.c:541
->> #33 0x00007ffff78176ba in start_thread (arg=3D<optimized out>) at ./nptl=
-/pthread_create.c:444
->> #34 0x00007ffff78a60d0 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64=
-/clone3.S:81
+> I don't really like the macros. I have nightmares from Linux going
+> overboard with defining functions using spaghetti of generator macros.
 >
-> So, that looks like:
->  * we call cpu_tb_exec(), which executes some generated code
->  * that generated code calls the lookup_tb_ptr helper to see
->    if we have a generated TB already for the address we're going
->    to execute next
->  * lookup_tb_ptr probes the TLB to see if we know the host RAM
->    address for the guest address
->  * this results in a TLB walk for an instruction fetch
->  * the page table descriptor load is to IO memory
->  * io_prepare assumes it needs to do a TLB recompile, because
->    can_do_io is clear
+> Could you just make most functions accept either SPR number or number
+> (0, 1), or simply use if/else, to select between them?
 >
-> I am not surprised that the corner case of "the guest put its
-> page tables in an MMIO device" has not yet come up :-)
+> Splitting the change in 2 would be good, first add regs + TCG, then the
+> spapr bits.
+Sure.
+> [snip]
 >
-> I'm really not sure how the icount handling should interact
-> with that...
+>> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+>> index a05bdf78c9..022b984e00 100644
+>> --- a/target/ppc/misc_helper.c
+>> +++ b/target/ppc/misc_helper.c
+>> @@ -204,16 +204,24 @@ void helper_store_ciabr(CPUPPCState *env, target_ulong value)
+>>       ppc_store_ciabr(env, value);
+>>   }
+>>
+>> -void helper_store_dawr0(CPUPPCState *env, target_ulong value)
+>> -{
+>> -    ppc_store_dawr0(env, value);
+>> +#define HELPER_STORE_DAWR(id)                                                 \
+>> +void helper_store_dawr##id(CPUPPCState *env, target_ulong value)              \
+>> +{                                                                             \
+>> +    env->spr[SPR_DAWR##id] = value;                                           \
+>>   }
+>>
+>> -void helper_store_dawrx0(CPUPPCState *env, target_ulong value)
+>> -{
+>> -    ppc_store_dawrx0(env, value);
+>> +#define HELPER_STORE_DAWRX(id)                                                \
+>> +void helper_store_dawrx##id(CPUPPCState *env, target_ulong value)             \
+>> +{                                                                             \
+>> +    env->spr[SPR_DAWRX##id] = value;                                          \
+>>   }
+> Did we lose the calls to ppc_store_dawr*? That will
+> break direct register access (i.e., powernv) if so.
 
-Its not just icount - we need to handle it for all modes now. That said
-seeing as we are at the end of a block shouldn't can_do_io be set?
+Yes. My test cases were more focussed on caps-dawr1 with pSeries
 
-Does:
+usecases, and missed this. I have taken care in the next version.
 
-modified   accel/tcg/translator.c
-@@ -201,6 +201,8 @@ void translator_loop(CPUState *cpu, TranslationBlock *t=
-b, int *max_insns,
-         }
-     }
-=20
-+    set_can_do_io(db, true);
-+
-     /* Emit code to exit the TB, as indicated by db->is_jmp.  */
-     ops->tb_stop(db, cpu);
-     gen_tb_end(tb, cflags, icount_start_insn, db->num_insns);
+>> +HELPER_STORE_DAWR(0)
+>> +HELPER_STORE_DAWRX(0)
+>> +
+>> +HELPER_STORE_DAWR(1)
+>> +HELPER_STORE_DAWRX(1)
+> I would say open-code all these too instead of generating. If we
+> ever grew to >= 4 of them maybe, but as is this saves 2 lines,
+> and makes 'helper_store_dawrx0' more difficult to grep for.
 
-do the trick?
+I open coded all of the functions with barely 12 lines more adding up
 
->
-> -- PMM
+without macros.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+The next version posted at
+
+https://lore.kernel.org/qemu-devel/170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com/T/#t
+
+
+Thanks,
+
+Shivaprasad
+
 
