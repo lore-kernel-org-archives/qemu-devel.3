@@ -4,139 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 006D3C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3463C48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaZU-0006Bk-Bt; Thu, 01 Feb 2024 12:09:52 -0500
+	id 1rVaf3-0007Oq-2d; Thu, 01 Feb 2024 12:15:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rVaZS-0006BS-6O
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:09:50 -0500
-Received: from mail-bn8nam12on2114.outbound.protection.outlook.com
- ([40.107.237.114] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregory.price@memverge.com>)
- id 1rVaZK-0001bb-LY
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:09:49 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ksTPpOkA6kfCFTVLLAMTkvuNbBxiteFaXCXyRYxV4KGX2sX6zH9fp83LiAKDWqoc4VZrMkvdba9YAq+YNXWuUacP4LxEyqcK8oydM6aQ5JXW33Hrj+wPdZbgvzVntQufEJljcGGeEXHgTfXdc0wys+mjZ0WGjKD38gI4dc9imI/OF+Lrtsi7tP7fHeijOBk+M/qv6rObiNocG5kvOthIPfVcIWpyS0KRgK4QMDStYGQluWtk3bhFhaVN4zmSBQH79vM4z7CusOP2CPmTXJJ4Sp3S+Ral4pr/1xIez7QM2qDRRWXQmFUke313oVUiovTrD84xRnvyAFq6QjlcUGEjlw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UbM7ZuuFUzMsuX4ubYsmfJMWYdpQIWczUtFu5LQFxis=;
- b=KgocCyxDtOXFIPsg0VLQAV0h6UJ76/ctB0m3cRkPi4Hi5ScVMQfe0d2jawFL7atTzNXRcTN+AEylwx8DsVzhaESoRbxht4DV6en0WAtxvUUrOSfK/JlcdWQLE9volG+SGSPNyTM1ZgYwnPSc4A4L8AS4fAK++Lv4qUKosOEL91T5M2DA+CQc9t5XZXmPTkONTmQFfqXN7mOEkvnYElWD1E6w7n4iOi4Ss+x6KaPdcAG89V18btFaVOu4AA/L8N8oYDwesImvTuTjUmsiPwj1RQip0sn18UHV/dge0OqWREG1jT9AcPiWfYkxXCuVZaX3hRJDxuCnD6flJ4Iua0Nsdg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=memverge.com; dmarc=pass action=none header.from=memverge.com;
- dkim=pass header.d=memverge.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=memverge.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UbM7ZuuFUzMsuX4ubYsmfJMWYdpQIWczUtFu5LQFxis=;
- b=qJkU3WX8GAsgcFA1goRfMy9N/QGRfX2TtbLjp5+ImNAR/3SBVzjtBR15CqgfKXJLABvYo9Vkfcwu8ArEVhDLO8jZ5BxfCzHprc42FtIxcx8hLp6FFmIe6S8q383MbieKzCzkl1FawXa5lukhf/dCqGcbFzKA7IvzLBq+vOc7r2w=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=memverge.com;
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com (2603:10b6:a03:394::19)
- by PH0PR17MB5551.namprd17.prod.outlook.com (2603:10b6:510:b2::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.29; Thu, 1 Feb
- 2024 17:04:32 +0000
-Received: from SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::7a04:dc86:2799:2f15]) by SJ0PR17MB5512.namprd17.prod.outlook.com
- ([fe80::7a04:dc86:2799:2f15%5]) with mapi id 15.20.7249.025; Thu, 1 Feb 2024
- 17:04:32 +0000
-Date: Thu, 1 Feb 2024 12:04:25 -0500
-From: Gregory Price <gregory.price@memverge.com>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Peter Maydell <peter.maydell@linaro.org>, Sajjan Rao <sajjanr@gmail.com>,
- Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
- richard.henderson@linaro.org
-Subject: Re: Crash with CXL + TCG on 8.2: Was Re: qemu cxl memory expander
- shows numa_node -1
-Message-ID: <ZbvPGV0a3xOMsAMG@memverge.com>
-References: <20240126171233.00002a2e@Huawei.com>
- <CAAg4ParQKj9FUe0DRX0Wmk1KT0bnxx2F7W=ic38781j7eVz+OQ@mail.gmail.com>
- <20240201130438.00001384@Huawei.com>
- <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
- <20240201140100.000016ce@huawei.com>
- <CAFEAcA9DW8AuMwDr_qyDXPWJcLsvD773XTr1stwuagHWc6p72g@mail.gmail.com>
- <87msskkyce.fsf@draig.linaro.org>
- <CAFEAcA_a_AyQ=Epz3_+CheAT8Crsk9mOu894wbNW_FywamkZiw@mail.gmail.com>
- <20240201162150.000022cf@huawei.com>
- <87h6iskuad.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h6iskuad.fsf@draig.linaro.org>
-X-ClientProxiedBy: SJ0PR13CA0181.namprd13.prod.outlook.com
- (2603:10b6:a03:2c3::6) To SJ0PR17MB5512.namprd17.prod.outlook.com
- (2603:10b6:a03:394::19)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVaf0-0007Oh-JY
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:15:34 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVaej-000365-Rr
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:15:34 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3394b892691so634281f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 09:15:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706807712; x=1707412512; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hnlv+kbWuEuFLor8byMvVQAq0p8rrW5AFvzLRa6AGXk=;
+ b=ZOmAPvFdketWOSKN4FSJFGGYe2CQrktSIpXUDsWOXyicPsdK3A/Q7j4dJ8fGb4ak/u
+ SjLQX/LjvqJEo+6/W/yAJR99p5VByXQlB5q3wKXlVq8qdPs6hJC+18cXwemtt9mZM3i7
+ QuWCrObO7ZPCQ+dsoVXTKsuuKcc+VeQZjpYAP5P3nstUYrpII0Bm7WafxNnVLREBsqtJ
+ ++rWo9GiKVrarLHw2G/SCzXslzlRxuEVC2E1Z8fV6V+vqbNJOwN0JxyXm5cjBE37eCXr
+ RCPtXp4nRD0k/i8tcf2IWMpl+LiMCWUb+MGZ7tS81ZDlewL0txdYBtd7y/sqJPCWcEot
+ O0MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706807712; x=1707412512;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hnlv+kbWuEuFLor8byMvVQAq0p8rrW5AFvzLRa6AGXk=;
+ b=BTR6KuOtVg7ZnmLFvFedvaiGXgGgUKFijm32NskT8G8Qxskvd11ScBVO3ZpZomqG60
+ 4IcRMBF14DW6mg0y+foMb0TKuaRGqxSSZx+wxv5WI+wxgwwQ8nRIG1c6CLzOXF43ic0v
+ 0eV1uo1+i4YVh0pAosbyGjouITjBJELYV/87xa61zMR0kkd6SECwbqsoo2Yqf6RgXuHS
+ //TSbp+kR/igOThNeKnwzoo91Qks2lySCnTkkbfWwL6LgCod0LkX3C48IodVqRZonf/U
+ DZQxjlfNMc8wX3oUQSEz7qrriq6mI9AnPmHQ+KR1Ri609p4+AoM7pEHvJCjsLca6NP4F
+ eoxg==
+X-Gm-Message-State: AOJu0YxTbyq9+hg7EnbJo76FMOGukYw9qGAK6CV28kOCtb3nE74WSVlx
+ HEakb1gSsmUglEtBGApdoS9VXIYUtLVB3/BM2T4xURcS0Z9TZZzdcdfgMr9hu1o=
+X-Google-Smtp-Source: AGHT+IHsKkyAYqqx5rfl+suDUo6UtwbLkb5V3LCEnY/Ezxik8x6zfghodvhsnaIev4bd3gwpDqMnpQ==
+X-Received: by 2002:adf:f406:0:b0:33a:ebf1:2bf9 with SMTP id
+ g6-20020adff406000000b0033aebf12bf9mr5767386wro.21.1706807711440; 
+ Thu, 01 Feb 2024 09:15:11 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCXgCVQmRFWQARUR95ECv6HpIXcysc5j1shtXN76JLQtcCZjk9olx40M7dtS8oa52rfJN5JSwt7CcTSKT6I17eyE1gMisCNTvHi2gavTqeLYjTGdJcLlHHQ+
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ fa1-20020a056000258100b0033af5716a7fsm9034328wrb.61.2024.02.01.09.15.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Feb 2024 09:15:11 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BC2D75F7AF;
+ Thu,  1 Feb 2024 17:15:10 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Riku Voipio <riku.voipio@iki.fi>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 1/2] gdbstub: Implement catching syscalls
+In-Reply-To: <20240116094411.216665-2-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Tue, 16 Jan 2024 10:41:53 +0100")
+References: <20240116094411.216665-1-iii@linux.ibm.com>
+ <20240116094411.216665-2-iii@linux.ibm.com>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Thu, 01 Feb 2024 17:15:10 +0000
+Message-ID: <8734uckswx.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR17MB5512:EE_|PH0PR17MB5551:EE_
-X-MS-Office365-Filtering-Correlation-Id: f527609a-4bff-40d9-a0f4-08dc2347dc1b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: WFd3iqGMLEsFq+Msk2H+k5l0tdEwg/ld8nKXI8vTapmzbVzU2dYz2tNZOmWnygonzKf09V3D2JxzZZ2hCoRSlzwkW0DlavW6FhIEZlUefsLKf0lXWIoGQjqcrqlfL9Mc+xRTf8kr4paceGYVK77FsQHqtpW5rHvAo4560DpGIp3ZsBav+xjtOG0HLlPkTafv57G6zDHFfMLRbZRdHGBM/wi34vNSJZS+tYqh7mf5Bnwqba21Jfd9z3v7HYvFg3ujbMWLU5iuSVNxfIBnLFz9KepCsMad41uoF6iF5K6A0hgiMv0DDRL9qoll63JoE5RbmMppRfP5ThVH90qvw8ngXu5b6EWzd2XwV9+ugq6OQpF04evatEbUnnwo99FzIqaMXMF8DL7dyL2jLzIZIv8WlrYW5epWSx3adduBQN6ne5IdmDGi8Uh7RA7obD/isWHwOMtt0OWHE4DF+JdZb8d0Vo1l62yHl7l4CDV/bAHbpDKWs9uKxucFM6pOSMwB0juqzl0vJYXxbbPF6/UTxZvusVmpFNqpeIRmb1b3sHF5eJOJ3FSHDRNRfYw8zyDqRpdl
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR17MB5512.namprd17.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(396003)(366004)(39840400004)(346002)(376002)(136003)(230922051799003)(186009)(451199024)(64100799003)(1800799012)(83380400001)(26005)(66574015)(2906002)(2616005)(41300700001)(38100700002)(6916009)(54906003)(8676002)(8936002)(66946007)(66476007)(66556008)(316002)(5660300002)(4326008)(44832011)(6506007)(6666004)(6512007)(6486002)(478600001)(86362001)(36756003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?GmTGCJ8Z1P6+qx2gPIxaQ4NLnDKeZXuxbExD/adMbf2Z/bBjIGiMpgqSZj?=
- =?iso-8859-1?Q?dk7fvcorNDvg6/TKIPahLvKI0sxQxtqV2oQVarxCPBbte4M73HjnrbdWrS?=
- =?iso-8859-1?Q?vfnKxXjsJTOG737E5YbVy9BEIhP4q3f25dHzmhHCbTfItjPy4ZovTNk7KC?=
- =?iso-8859-1?Q?VXUuiZD4gnuQJQOwWVVtpFVyfEQriDLebOiXQM+mS6R/Fc4SER2CIpUt7e?=
- =?iso-8859-1?Q?LTzsugwFKrM9m6dYQ+MFeuBAEA9J0iphtkIUIRaTfk/hORkWtVeCuP8HSq?=
- =?iso-8859-1?Q?5+9HWbJOyRoBo3UpFrriklEGHFkPEi5VC0C9wKBaPhUzrWzD1W9wV1U8H9?=
- =?iso-8859-1?Q?8KHgb3gtJCD2AU6CcHLQ93To8Pl1mntFVApT+vIV0SvFF+E8pFUGGKcriu?=
- =?iso-8859-1?Q?CXWtTIyVj0zxLfl5uurWgytC5HsgJbM1f8/1AQZvludrSMsYyIHnzxZnpS?=
- =?iso-8859-1?Q?6A4xoMefnT8GE9IsREmFur2SAOSVIkNyUcsbLgdqtHe4YROnbvPKRs8Aq+?=
- =?iso-8859-1?Q?lo2SuQHP38PgayxmqlLt9uypnwtqX5PHBtrHNuUvVB3sQlMq/Ep2kkH7Zy?=
- =?iso-8859-1?Q?+hyvaa18dgJXHdYu9oYC7OCo2DjLMjfW/h1Xznl1ncFR0TUnElB5N78Dal?=
- =?iso-8859-1?Q?wJf7cVv8dPferuCk+7xeKpoC2oAZYYU0vF/F/dAMKr5uvbBDt+UKFmXjQT?=
- =?iso-8859-1?Q?hRISc9s9ArL2f9a25VX7c008Elh/jHiVB7fVbk9gypT37lbhgkD/gnNJUt?=
- =?iso-8859-1?Q?5Mnsz/qTc4AazazWu63wdDmXJ5scf6T9ZKOvzdIFRz+K5NfMxmWSrSGzCK?=
- =?iso-8859-1?Q?0DsVlBHYlEe8QRD60ftPMd1GrkT6rNOJ3/q6kYZPe3miB2P2EsDr7tdLH1?=
- =?iso-8859-1?Q?SwPr+5XUdMgforGkXDA67UdBRuP3Hw3gVF6Bh/BfMthQhCKqtbjv0OLywn?=
- =?iso-8859-1?Q?GUQUkr6WPnzKVdQaH4oECw6f9cJzQEWmiqMAqVeWXo9BLmX3gIKj7ZQV/E?=
- =?iso-8859-1?Q?LnR+G6vqOcqEyo/slYpmx6JYgKZ1ETVKQjNdowA6FARwUgnilyMK7JTVxQ?=
- =?iso-8859-1?Q?IoRGtpSFOqvvzKFsvZln5CTcyf0l8qxNNzXtspudp5PiGiqc42g+St9Yb7?=
- =?iso-8859-1?Q?5SbS/UvZUcJzo3MA/8jMHJgGFQSLpG2E9ubB+4GDcWySVMOsvfNsvVguZE?=
- =?iso-8859-1?Q?vb7cXBr4gPwNQf/iJDTiPP7OK74BWgToiV4se21mEZzOOXmz7hK5a4psY8?=
- =?iso-8859-1?Q?CW3lUIb3Bs1ntDBIiHCiPEZ8Ikt8fwatL4j1Q7dny7DbEqOPdyNfVqosnG?=
- =?iso-8859-1?Q?jaGVLKC56pIeJcriWGLLSwllNIzgrpTaiFAR2I98uV4LZgVS3CZF7oopWj?=
- =?iso-8859-1?Q?Xah6K/M+5/f0MPwWnqPOQpRwg58h7yt2H5Q5NcMAW4D6MUu521VjQVp5ST?=
- =?iso-8859-1?Q?v6hdbw+Wn5Vte8m07P1HifjNSj7ELxE1rBNpoSeCQNAIKVs3cjDd/0wZbF?=
- =?iso-8859-1?Q?3vtKzKVgFHj8rnJuL5MTOdjwE2UYA/KTgNzblK86RfAy3RQJVqYXetvvHB?=
- =?iso-8859-1?Q?EFg8JF29KPhBjPSDqcV4Z7atCcPIqh11PJZ021idO8RzW8Cl5wpbkw+NcR?=
- =?iso-8859-1?Q?10FBf5sTWN59nYFIxonFIYaQn/8Vz/+YIYDP9rVgN6pmXbBoYSJGpfDw?=
- =?iso-8859-1?Q?=3D=3D?=
-X-OriginatorOrg: memverge.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f527609a-4bff-40d9-a0f4-08dc2347dc1b
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR17MB5512.namprd17.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Feb 2024 17:04:32.4121 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 5c90cb59-37e7-4c81-9c07-00473d5fb682
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uekkmYYo8Ra5gGN5E/SFSSv+VgJLoVG+MBLi1m13O4XiU3k3Eu7NavrrM4wPeQRBqfNgxzLiClqpsIvrLvJCIkKXH8uuikqAKHYRF2PItPA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR17MB5551
-Received-SPF: pass client-ip=40.107.237.114;
- envelope-from=gregory.price@memverge.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- WEIRD_PORT=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,138 +100,388 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 01, 2024 at 04:45:30PM +0000, Alex Bennée wrote:
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
-> 
-> > On Thu, 1 Feb 2024 16:00:56 +0000
-> > Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> >> On Thu, 1 Feb 2024 at 15:17, Alex Bennée <alex.bennee@linaro.org> wrote:
-> >> >
-> >> > Peter Maydell <peter.maydell@linaro.org> writes:  
-> >> > > So, that looks like:
-> >> > >  * we call cpu_tb_exec(), which executes some generated code
-> >> > >  * that generated code calls the lookup_tb_ptr helper to see
-> >> > >    if we have a generated TB already for the address we're going
-> >> > >    to execute next
-> >> > >  * lookup_tb_ptr probes the TLB to see if we know the host RAM
-> >> > >    address for the guest address
-> >> > >  * this results in a TLB walk for an instruction fetch
-> >> > >  * the page table descriptor load is to IO memory
-> >> > >  * io_prepare assumes it needs to do a TLB recompile, because
-> >> > >    can_do_io is clear
-> >> > >
-> >> > > I am not surprised that the corner case of "the guest put its
-> >> > > page tables in an MMIO device" has not yet come up :-)
-> >> > >
-> >> > > I'm really not sure how the icount handling should interact
-> >> > > with that...  
-> >> >
-> >> > Its not just icount - we need to handle it for all modes now. That said
-> >> > seeing as we are at the end of a block shouldn't can_do_io be set?  
-> >> 
-> >> The lookup_tb_ptr helper gets called from tcg_gen_goto_tb(),
-> >> which happens earlier than the tb_stop callback (it can
-> >> happen in the trans function for branch etc insns, for
-> >> example).
-> >> 
-> >> I think it should be OK to clear can_do_io at the start
-> >> of the lookup_tb_ptr helper, something like:
-> >> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> >> index 977576ca143..7818537f318 100644
-> >> --- a/accel/tcg/cpu-exec.c
-> >> +++ b/accel/tcg/cpu-exec.c
-> >> @@ -396,6 +396,15 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
-> >>      uint64_t cs_base;
-> >>      uint32_t flags, cflags;
-> >> 
-> >> +    /*
-> >> +     * By definition we've just finished a TB, so I/O is OK.
-> >> +     * Avoid the possibility of calling cpu_io_recompile() if
-> >> +     * a page table walk triggered by tb_lookup() calling
-> >> +     * probe_access_internal() happens to touch an MMIO device.
-> >> +     * The next TB, if we chain to it, will clear the flag again.
-> >> +     */
-> >> +    cpu->neg.can_do_io = true;
-> >> +
-> >>      cpu_get_tb_cpu_state(env, &pc, &cs_base, &flags);
-> >> 
-> >>      cflags = curr_cflags(cpu);
-> >> 
-> >> -- PMM
-> >
-> > No joy.  Seems like a very similar backtrace.
-> >
-> > Thread 5 "qemu-system-x86" received signal SIGABRT, Aborted.
-> > [Switching to Thread 0x7ffff4efe6c0 (LWP 23937)]
-> > __pthread_kill_implementation (no_tid=0, signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:44
-> > 44      ./nptl/pthread_kill.c: No such file or directory.
-> > (gdb) bt
-> > #0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:44
-> > #1  __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
-> > #2  __GI___pthread_kill (threadid=<optimized out>, signo=signo@entry=6) at ./nptl/pthread_kill.c:89
-> > #3  0x00007ffff77c43b6 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-> > #4  0x00007ffff77aa87c in __GI_abort () at ./stdlib/abort.c:79
-> > #5  0x0000555555c4d19e in cpu_abort (cpu=cpu@entry=0x5555578e0cb0, fmt=fmt@entry=0x555556048ee8 "cpu_io_recompile: could not find TB for pc=%p") at ../../cpu-target.c:373
-> > #6  0x0000555555c9cb25 in cpu_io_recompile (cpu=cpu@entry=0x5555578e0cb0, retaddr=retaddr@entry=0) at ../../accel/tcg/translate-all.c:611
-> > #7  0x0000555555c9f744 in io_prepare (retaddr=0, addr=19595790664, attrs=..., xlat=<optimized out>, cpu=0x5555578e0cb0, out_offset=<synthetic pointer>) at ../../accel/tcg/cputlb.c:1339
-> > #8  do_ld_mmio_beN (cpu=0x5555578e0cb0, full=0x7ffe88012890, ret_be=ret_be@entry=0, addr=19595790664, size=size@entry=8, mmu_idx=4, type=MMU_DATA_LOAD, ra=0) at ../../accel/tcg/cputlb.c:2030
-> > #9  0x0000555555ca0ecd in do_ld_8 (cpu=cpu@entry=0x5555578e0cb0, p=p@entry=0x7ffff4efcdd0, mmu_idx=<optimized out>, type=type@entry=MMU_DATA_LOAD, memop=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/cputlb.c:2356
-> > #10 0x0000555555ca332f in do_ld8_mmu (cpu=cpu@entry=0x5555578e0cb0, addr=addr@entry=19595790664, oi=oi@entry=52, ra=ra@entry=0, access_type=access_type@entry=MMU_DATA_LOAD) at ../../accel/tcg/cputlb.c:2439
-> > #11 0x0000555555ca5e69 in cpu_ldq_mmu (ra=0, oi=52, addr=19595790664, env=0x5555578e3470) at ../../accel/tcg/ldst_common.c.inc:169
-> > #12 cpu_ldq_le_mmuidx_ra (env=0x5555578e3470, addr=19595790664, mmu_idx=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/ldst_common.c.inc:301
-> > #13 0x0000555555b4b5de in ptw_ldq (in=0x7ffff4efcf10) at ../../target/i386/tcg/sysemu/excp_helper.c:98
-> > #14 ptw_ldq (in=0x7ffff4efcf10) at ../../target/i386/tcg/sysemu/excp_helper.c:93
-> > #15 mmu_translate (env=env@entry=0x5555578e3470, in=0x7ffff4efcfd0, out=0x7ffff4efcfa0, err=err@entry=0x7ffff4efcfb0) at ../../target/i386/tcg/sysemu/excp_helper.c:173
-> > #16 0x0000555555b4c3f3 in get_physical_address (err=0x7ffff4efcfb0, out=0x7ffff4efcfa0, mmu_idx=0, access_type=MMU_DATA_STORE, addr=18386491786698339392, env=0x5555578e3470) at ../../target/i386/tcg/sysemu/excp_helper.c:578
-> > #17 x86_cpu_tlb_fill (cs=0x5555578e0cb0, addr=18386491786698339392, size=<optimized out>, access_type=MMU_DATA_STORE, mmu_idx=0, probe=<optimized out>, retaddr=140736029817822) at ../../target/i386/tcg/sysemu/excp_helper.c:604
-> > #18 0x0000555555ca0df9 in tlb_fill (retaddr=140736029817822, mmu_idx=0, access_type=MMU_DATA_STORE, size=<optimized out>, addr=18386491786698339392, cpu=0x7ffff4efd120) at ../../accel/tcg/cputlb.c:1315
-> > #19 mmu_lookup1 (cpu=cpu@entry=0x5555578e0cb0, data=data@entry=0x7ffff4efd120, mmu_idx=0, access_type=access_type@entry=MMU_DATA_STORE, ra=ra@entry=140736029817822) at ../../accel/tcg/cputlb.c:1713
-> > #20 0x0000555555ca2b71 in mmu_lookup (cpu=0x5555578e0cb0, addr=18386491786698339392, oi=<optimized out>, ra=140736029817822, type=MMU_DATA_STORE, l=0x7ffff4efd120) at ../../accel/tcg/cputlb.c:1803
-> > #21 0x0000555555ca3e5d in do_st8_mmu (cpu=0x5555578e0cb0, addr=23937, val=18386491784638059520, oi=6, ra=140736029817822) at ../../accel/tcg/cputlb.c:2853
-> > #22 0x00007fffa9107c63 in code_gen_buffer ()
-> 
-> No thats different - we are actually writing to the MMIO region here.
-> But the fact we hit cpu_abort because we can't find the TB we are
-> executing is a little problematic.
-> 
-> Does ra properly point to the code buffer here?
-> 
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-What if the code block is ALSO in CXL (MMIO)? :D
+> GDB supports stopping on syscall entry and exit using the "catch
+> syscall" command. It relies on 3 packets, which are currently not
+> supported by QEMU:
+>
+> * qSupported:QCatchSyscalls+ [1]
+> * QCatchSyscalls: [2]
+> * T05syscall_entry: and T05syscall_return: [3]
+>
+> Implement generation and handling of these packets.
+>
+> [1] https://sourceware.org/gdb/current/onlinedocs/gdb.html/General-Query-=
+Packets.html#qSupported
+> [2] https://sourceware.org/gdb/current/onlinedocs/gdb.html/General-Query-=
+Packets.html#QCatchSyscalls
+> [3] https://sourceware.org/gdb/current/onlinedocs/gdb.html/Stop-Reply-Pac=
+kets.html
+>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>  gdbstub/gdbstub.c            |   9 +++
+>  gdbstub/internals.h          |   2 +
+>  gdbstub/user-target.c        |   5 ++
+>  gdbstub/user.c               | 104 ++++++++++++++++++++++++++++++++++-
+>  include/gdbstub/user.h       |  29 +++++++++-
+>  include/user/syscall-trace.h |   7 ++-
+>  6 files changed, 151 insertions(+), 5 deletions(-)
+>
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index 46d752bbc2c..7e73e916bdc 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -1617,6 +1617,7 @@ static void handle_query_supported(GArray *params, =
+void *user_ctx)
+>      if (gdbserver_state.c_cpu->opaque) {
+>          g_string_append(gdbserver_state.str_buf, ";qXfer:auxv:read+");
+>      }
+> +    g_string_append(gdbserver_state.str_buf, ";QCatchSyscalls+");
+>  #endif
+>      g_string_append(gdbserver_state.str_buf, ";qXfer:exec-file:read+");
+>  #endif
+> @@ -1810,6 +1811,14 @@ static const GdbCmdParseEntry gdb_gen_set_table[] =
+=3D {
+>          .schema =3D "l0"
+>      },
+>  #endif
+> +#if defined(CONFIG_USER_ONLY)
+> +    {
+> +        .handler =3D gdb_handle_set_catch_syscalls,
+> +        .cmd =3D "CatchSyscalls:",
+> +        .cmd_startswith =3D 1,
+> +        .schema =3D "s0",
+> +    },
+> +#endif
+>  };
+>=20=20
+>  static void handle_gen_query(GArray *params, void *user_ctx)
+> diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+> index 5c0c725e54c..56b7c13b750 100644
+> --- a/gdbstub/internals.h
+> +++ b/gdbstub/internals.h
+> @@ -136,6 +136,7 @@ void gdb_append_thread_id(CPUState *cpu, GString *buf=
+);
+>  int gdb_get_cpu_index(CPUState *cpu);
+>  unsigned int gdb_get_max_cpus(void); /* both */
+>  bool gdb_can_reverse(void); /* softmmu, stub for user */
+> +int gdb_target_sigtrap(void); /* user */
+>=20=20
+>  void gdb_create_default_process(GDBState *s);
+>=20=20
+> @@ -194,6 +195,7 @@ void gdb_handle_v_file_close(GArray *params, void *us=
+er_ctx); /* user */
+>  void gdb_handle_v_file_pread(GArray *params, void *user_ctx); /* user */
+>  void gdb_handle_v_file_readlink(GArray *params, void *user_ctx); /* user=
+ */
+>  void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx); /*=
+ user */
+> +void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx); /* u=
+ser */
+>=20=20
+>  void gdb_handle_query_attached(GArray *params, void *user_ctx); /* both =
+*/
+>=20=20
+> diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+> index c4bba4c72c7..b7d4c37cd81 100644
+> --- a/gdbstub/user-target.c
+> +++ b/gdbstub/user-target.c
+> @@ -418,3 +418,8 @@ void gdb_handle_query_xfer_exec_file(GArray *params, =
+void *user_ctx)
+>                      ts->bprm->filename + offset);
+>      gdb_put_strbuf();
+>  }
+> +
+> +int gdb_target_sigtrap(void)
+> +{
+> +    return TARGET_SIGTRAP;
+> +}
+> diff --git a/gdbstub/user.c b/gdbstub/user.c
+> index dbe1d9b8875..01dd7169258 100644
+> --- a/gdbstub/user.c
+> +++ b/gdbstub/user.c
+> @@ -10,6 +10,7 @@
+>   */
+>=20=20
+>  #include "qemu/osdep.h"
+> +#include "qemu/bitops.h"
+>  #include "qemu/cutils.h"
+>  #include "qemu/sockets.h"
+>  #include "exec/hwaddr.h"
+> @@ -21,11 +22,25 @@
+>  #include "trace.h"
+>  #include "internals.h"
+>=20=20
+> +enum GDBCatchSyscallsState {
+> +    GDB_CATCH_SYSCALLS_NONE,
+> +    GDB_CATCH_SYSCALLS_ALL,
+> +    GDB_CATCH_SYSCALLS_SELECTED,
+> +};
+> +#define GDB_NR_SYSCALLS 1024
+> +typedef unsigned long GDBSyscallsMask[BITS_TO_LONGS(GDB_NR_SYSCALLS)];
+> +
+>  /* User-mode specific state */
+>  typedef struct {
+>      int fd;
+>      char *socket_path;
+>      int running_state;
+> +    /*
+> +     * Store syscalls mask without memory allocation in order to avoid
+> +     * implementing synchronization.
+> +     */
+> +    enum GDBCatchSyscallsState catch_syscalls_state;
+> +    GDBSyscallsMask catch_syscalls_mask;
+>  } GDBUserState;
+>=20=20
+>  static GDBUserState gdbserver_user_state;
+> @@ -121,7 +136,7 @@ void gdb_qemu_exit(int code)
+>      exit(code);
+>  }
+>=20=20
+> -int gdb_handlesig(CPUState *cpu, int sig)
+> +int gdb_handlesig_reason(CPUState *cpu, int sig, const char *reason)
+>  {
+>      char buf[256];
+>      int n;
+> @@ -141,6 +156,9 @@ int gdb_handlesig(CPUState *cpu, int sig)
+>                              "T%02xthread:", gdb_target_signal_to_gdb(sig=
+));
+>              gdb_append_thread_id(cpu, gdbserver_state.str_buf);
+>              g_string_append_c(gdbserver_state.str_buf, ';');
+> +            if (reason) {
+> +                g_string_append(gdbserver_state.str_buf, reason);
+> +            }
+>              gdb_put_strbuf();
+>              gdbserver_state.allow_stop_reply =3D false;
+>          }
+> @@ -499,3 +517,87 @@ void gdb_syscall_handling(const char *syscall_packet)
+>      gdb_put_packet(syscall_packet);
+>      gdb_handlesig(gdbserver_state.c_cpu, 0);
+>  }
+> +
+> +static bool should_catch_syscall(int num)
+> +{
+> +    switch (gdbserver_user_state.catch_syscalls_state) {
+> +    case GDB_CATCH_SYSCALLS_NONE:
+> +        return false;
+> +    case GDB_CATCH_SYSCALLS_ALL:
+> +        return true;
+> +    case GDB_CATCH_SYSCALLS_SELECTED:
+> +        if (num < 0 || num >=3D GDB_NR_SYSCALLS) {
+> +            return false;
+> +        } else {
+> +            return test_bit(num, gdbserver_user_state.catch_syscalls_mas=
+k);
+> +        }
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +void gdb_syscall_entry(CPUState *cs, int num)
+> +{
+> +    char reason[32];
+> +
+> +    if (should_catch_syscall(num)) {
+> +        snprintf(reason, sizeof(reason), "syscall_entry:%x;", num);
+> +        gdb_handlesig_reason(cs, gdb_target_sigtrap(), reason);
+> +    }
+> +}
+> +
+> +void gdb_syscall_return(CPUState *cs, int num)
+> +{
+> +    char reason[32];
+> +
+> +    if (should_catch_syscall(num)) {
+> +        snprintf(reason, sizeof(reason), "syscall_return:%x;", num);
+> +        gdb_handlesig_reason(cs, gdb_target_sigtrap(), reason);
+> +    }
+> +}
 
-tb_gen_code():
+I'm not super keen on re-introducing snprintf's as we've been slowly
+eradicating them from the code base. How about:
 
-531     /*
-532      * If the TB is not associated with a physical RAM page then it must be
-533      * a temporary one-insn TB, and we have nothing left to do. Return early
-534      * before attempting to link to other TBs or add to the lookup table.
-535      */
-536     if (tb_page_addr0(tb) == -1) {
-537         assert_no_pages_locked();
-538         return tb;
-539     }
-540
-541     /*
-542      * Insert TB into the corresponding region tree before publishing it
-543      * through QHT. Otherwise rewinding happened in the TB might fail to
-544      * lookup itself using host PC.
-545      */
-546     tcg_tb_insert(tb);
+    g_autoptr(GString) reason =3D g_string_printf("syscall_return:%x;", num=
+);
+    gdb_handlesig_reason(cs, gdb_target_sigtrap(), reason);
 
+> +
+> +void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx)
+> +{
+> +    enum GDBCatchSyscallsState catch_syscalls_state;
+> +    const char *param =3D get_param(params, 0)->data;
+> +    GDBSyscallsMask catch_syscalls_mask;
+> +    bool catch_syscalls_none;
+> +    unsigned int num;
+> +    const char *p;
+> +
 
-> > #23 0x0000555555c9395b in cpu_tb_exec (cpu=cpu@entry=0x5555578e0cb0, itb=itb@entry=0x7fffa9107980 <code_gen_buffer+17856851>, tb_exit=tb_exit@entry=0x7ffff4efd718) at ../../accel/tcg/cpu-exec.c:442
-> > #24 0x0000555555c93ec0 in cpu_loop_exec_tb (tb_exit=0x7ffff4efd718, last_tb=<synthetic pointer>, pc=<optimized out>, tb=0x7fffa9107980 <code_gen_buffer+17856851>, cpu=0x5555578e0cb0) at ../../accel/tcg/cpu-exec.c:897
-> > #25 cpu_exec_loop (cpu=cpu@entry=0x5555578e0cb0, sc=sc@entry=0x7ffff4efd7b0) at ../../accel/tcg/cpu-exec.c:1012
-> > #26 0x0000555555c946d1 in cpu_exec_setjmp (cpu=cpu@entry=0x5555578e0cb0, sc=sc@entry=0x7ffff4efd7b0) at ../../accel/tcg/cpu-exec.c:1029
-> > #27 0x0000555555c94ebc in cpu_exec (cpu=cpu@entry=0x5555578e0cb0) at ../../accel/tcg/cpu-exec.c:1055
-> > #28 0x0000555555cb8f53 in tcg_cpu_exec (cpu=cpu@entry=0x5555578e0cb0) at ../../accel/tcg/tcg-accel-ops.c:76
-> > #29 0x0000555555cb90b0 in mttcg_cpu_thread_fn (arg=arg@entry=0x5555578e0cb0) at ../../accel/tcg/tcg-accel-ops-mttcg.c:95
-> > #30 0x0000555555e57180 in qemu_thread_start (args=0x555557956000) at ../../util/qemu-thread-posix.c:541
-> > #31 0x00007ffff78176ba in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:444
-> > #32 0x00007ffff78a60d0 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
-> 
-> -- 
-> Alex Bennée
-> Virtualisation Tech Lead @ Linaro
+Perhaps a little comment:
+
+  /* terminating with 0/1 to disable/enable all */
+
+> +    catch_syscalls_none =3D strcmp(param, "0") =3D=3D 0;
+> +    if (catch_syscalls_none || strcmp(param, "1") =3D=3D 0) {
+> +        gdbserver_user_state.catch_syscalls_state =3D
+> +            catch_syscalls_none ? GDB_CATCH_SYSCALLS_NONE :
+> +                                  GDB_CATCH_SYSCALLS_ALL;
+> +        gdb_put_packet("OK");
+> +        return;
+> +    }
+
+  /* otherwise decode the following list of syscalls... */
+
+?
+
+> +    if (param[0] =3D=3D '1' && param[1] =3D=3D ';') {
+> +        catch_syscalls_state =3D GDB_CATCH_SYSCALLS_SELECTED;
+> +        memset(catch_syscalls_mask, 0, sizeof(catch_syscalls_mask));
+> +        for (p =3D &param[2];; p++) {
+> +            if (qemu_strtoui(p, &p, 16, &num) || (*p && *p !=3D ';')) {
+> +                goto err;
+> +            }
+> +            if (num >=3D GDB_NR_SYSCALLS) {
+> +                /* Fall back to reporting all syscalls. */
+> +                catch_syscalls_state =3D GDB_CATCH_SYSCALLS_ALL;
+
+Is this the right thing or maybe we should error because gdb sent us
+something strange? In fact you could do:
+
+           if (qemu_strtoui(p, &p, 16, &num) ||
+               (*p && *p !=3D ';') ||
+               num >=3D GDB_NR_SYSCALLS) {
+               gdb_put_packet("E00");
+               return;
+           }
+
+and skip the goto err
+
+> +            } else {
+> +                set_bit(num, catch_syscalls_mask);
+> +            }
+> +            if (!*p) {
+> +                break;
+> +            }
+
+Could this be in the for loop?
+
+  for(p =3D &param[2]; *p; p++)
+=20=20
+
+> +        }
+> +        gdbserver_user_state.catch_syscalls_state =3D catch_syscalls_sta=
+te;
+> +        memcpy(gdbserver_user_state.catch_syscalls_mask, catch_syscalls_=
+mask,
+> +               sizeof(catch_syscalls_mask));
+> +        gdb_put_packet("OK");
+> +        return;
+> +    }
+> +
+> +err:
+> +    gdb_put_packet("E00");
+> +}
+> diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
+> index d392e510c59..68b6534130c 100644
+> --- a/include/gdbstub/user.h
+> +++ b/include/gdbstub/user.h
+> @@ -10,9 +10,10 @@
+>  #define GDBSTUB_USER_H
+>=20=20
+>  /**
+> - * gdb_handlesig() - yield control to gdb
+> + * gdb_handlesig_reason() - yield control to gdb
+>   * @cpu: CPU
+>   * @sig: if non-zero, the signal number which caused us to stop
+> + * @reason: stop reason for stop reply packet or NULL
+>   *
+>   * This function yields control to gdb, when a user-mode-only target
+>   * needs to stop execution. If @sig is non-zero, then we will send a
+> @@ -24,7 +25,18 @@
+>   * or 0 if no signal should be delivered, ie the signal that caused
+>   * us to stop should be ignored.
+>   */
+> -int gdb_handlesig(CPUState *, int);
+> +int gdb_handlesig_reason(CPUState *, int, const char *);
+> +
+> +/**
+> + * gdb_handlesig() - yield control to gdb
+> + * @cpu CPU
+> + * @sig: if non-zero, the signal number which caused us to stop
+> + * @see gdb_handlesig_reason()
+> + */
+> +static inline int gdb_handlesig(CPUState *cpu, int sig)
+> +{
+> +    return gdb_handlesig_reason(cpu, sig, NULL);
+> +}
+>=20=20
+>  /**
+>   * gdb_signalled() - inform remote gdb of sig exit
+> @@ -39,5 +51,18 @@ void gdb_signalled(CPUArchState *as, int sig);
+>   */
+>  void gdbserver_fork(CPUState *cs);
+>=20=20
+> +/**
+> + * gdb_syscall_entry() - inform gdb of syscall entry and yield control t=
+o it
+> + * @cs: CPU
+> + * @num: syscall number
+> + */
+> +void gdb_syscall_entry(CPUState *cs, int num);
+> +
+> +/**
+> + * gdb_syscall_entry() - inform gdb of syscall return and yield control =
+to it
+> + * @cs: CPU
+> + * @num: syscall number
+> + */
+> +void gdb_syscall_return(CPUState *cs, int num);
+>=20=20
+>  #endif /* GDBSTUB_USER_H */
+> diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
+> index 557f881a79b..b48b2b2d0ae 100644
+> --- a/include/user/syscall-trace.h
+> +++ b/include/user/syscall-trace.h
+> @@ -11,6 +11,7 @@
+>  #define SYSCALL_TRACE_H
+>=20=20
+>  #include "exec/user/abitypes.h"
+> +#include "gdbstub/user.h"
+>  #include "qemu/plugin.h"
+>  #include "trace/trace-root.h"
+>=20=20
+> @@ -20,7 +21,7 @@
+>   * could potentially unify the -strace code here as well.
+>   */
+>=20=20
+> -static inline void record_syscall_start(void *cpu, int num,
+> +static inline void record_syscall_start(CPUState *cpu, int num,
+>                                          abi_long arg1, abi_long arg2,
+>                                          abi_long arg3, abi_long arg4,
+>                                          abi_long arg5, abi_long arg6,
+> @@ -29,11 +30,13 @@ static inline void record_syscall_start(void *cpu, in=
+t num,
+>      qemu_plugin_vcpu_syscall(cpu, num,
+>                               arg1, arg2, arg3, arg4,
+>                               arg5, arg6, arg7, arg8);
+> +    gdb_syscall_entry(cpu, num);
+>  }
+>=20=20
+> -static inline void record_syscall_return(void *cpu, int num, abi_long re=
+t)
+> +static inline void record_syscall_return(CPUState *cpu, int num, abi_lon=
+g ret)
+>  {
+>      qemu_plugin_vcpu_syscall_ret(cpu, num, ret);
+> +    gdb_syscall_return(cpu, num);
+
+This clean-up belongs in a separate patch.
+
+>  }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
