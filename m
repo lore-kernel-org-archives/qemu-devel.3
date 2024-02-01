@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18219C48286
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 19:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C64DC48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 20:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVdDb-00053E-2m; Thu, 01 Feb 2024 14:59:27 -0500
+	id 1rVdWo-00024f-D5; Thu, 01 Feb 2024 15:19:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rVdDV-00052U-S4
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 14:59:21 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rVdDS-0001qk-W6
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 14:59:21 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1d746856d85so10218825ad.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 11:59:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706817556; x=1707422356; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BMvVeyGQAKcLy19Wng8scvDqqyK6VsFbdgmF17TbVuU=;
- b=kjXid4ZNnHCoWrS+79TObMOqLJfmJk9DaKoDkTd4qw+pn88uONvkAHOc1cc+iRBSDF
- xpRgyllmge2hl607cM185J5vEVzxue6EwUArvOqiifRadKC9mwaWeNYzvb47Pa/Nd6BU
- VikqB3rFNvN4Jh9q7x7cUqulZdl+UN9nRvKCtn3732v6Re8YE3/unzL4ojcfMd/CUNNf
- xGqtiBgjQiJUywvy0XgiaJz+NF3UXmxNp24s0PaI4HxjlEu0tyENPISEmAhKbLb3pUAK
- qGJdhrprueepponkJY0Nnf3Jjc9HyE/Kx/cVijMcVRNY3L0MoAK80YUbNMZWl1RZcFEs
- CJHw==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rVdWk-000249-8W
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 15:19:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rVdWf-0001ec-2C
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 15:19:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706818747;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LOkzmmBUqR6mrhDTlbb9FzVhJ1j4bAUpu/WIXg/ForM=;
+ b=c2vTBdEesNYHB8mV6fKZJFZ60nMi2mlm/i71waQKGcPcYcpfXZ2/tUa3GPOK0NNuRt8aSL
+ swzv0p/7LLR3woOOOB6G/uupeaa6xqYcPMbq8EWsbT/jdRG1P+uLCXNQBYKn8j0/7nnYxT
+ m5rkZL3SxJRFVzWV1XbOB2Gdo/90/QA=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-625-on3F7urOMDyH53FQUeQJeQ-1; Thu, 01 Feb 2024 15:19:06 -0500
+X-MC-Unique: on3F7urOMDyH53FQUeQJeQ-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-290f607c1dfso1153915a91.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 12:19:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706817556; x=1707422356;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BMvVeyGQAKcLy19Wng8scvDqqyK6VsFbdgmF17TbVuU=;
- b=Ge0r0/LrUpXHrdXDSsr90YGN4XpeXl3yrhLiUTzBhfhXbN/fQes9jZBzQ3b7fkvaLF
- TRIXrRco5fnTno9j6vSPxhThpUzPTNB2iLEvC1m8GD3t1AOjOW9M8RuiSISKYG89s3+b
- ZDy86auORRzJ1LEuaL0E8iqzn7NUhqPRJkcy4jM+otR1Sx3x6PwuUzSjBmJ/yhHMFJib
- tu18kCL5IHAGUBNTuUD+8dKmaMeTuRI5dbooxmIlg+XmatUZBjXwav6W37d77yl26shO
- 8LWp7qDP3L6P8nWoWrZdl2QiEzPtQLbeMFGXYStI/pn40loYy402U2iKowaxOQEz/cmH
- RKDw==
-X-Gm-Message-State: AOJu0YyQGx1XpbeLGpCienUDTR61su7A6W3MCIkQ73nNH/zfll5p37ct
- Fys3UMMiA4RbPNjinQiyKM1is1Ol5Q6WN3X2/Vsq0F8hhBGBOto2
-X-Google-Smtp-Source: AGHT+IGX7zMsQOTtRtzsvdu2rWo4Cqx7IT1uaxp/xRQmtpEy0IyGdc4BAdIPoVmuIZyX2hd295Rp1Q==
-X-Received: by 2002:a17:903:110f:b0:1d9:4ede:66b5 with SMTP id
- n15-20020a170903110f00b001d94ede66b5mr108700plh.15.1706817556464; 
- Thu, 01 Feb 2024 11:59:16 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCWpqdOuR9cVXtqyFkEPYnbc3oh0PscqNphdmeRRh+npanra86IEt+y6bIaJuFVRBietlJhuzQC6o52dLd3xEbiIOR74AItQTlCzOpGKaheHE/E8rJaYVY+x0sQJxwxuU2j/wOFtVneI1QSlYmE2FFp5vYeZ+FqFFHTtA5pJOmOJzZqqQ8krPGiRWGemysrv0r4+xfyNKzU7WqM6l/lgGho7T8WLzNurnWgE6NoYcYaR6lVB2owTRLE1LGWjut8xn07cInghTXWRoEK3ACbgW1HS6CJdhhNosOiLukIHaRKtlQOOSMbVMaMXyRHZTBvF0GPCgqItrJ51KzPB7vqkTbxxTPop3o2zr4RZ4tB+snHtxXX9O7yb+w==
-Received: from debian ([2601:641:300:14de:e8a1:d128:e5c4:4d0c])
- by smtp.gmail.com with ESMTPSA id
- d5-20020a170902ef0500b001d8ee46170dsm212942plx.84.2024.02.01.11.59.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 11:59:16 -0800 (PST)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Thu, 1 Feb 2024 11:58:43 -0800
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net,
- nmtadam.samsung@gmail.com, nifan@outlook.com,
- jim.harris@samsung.com, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v3 2/9] hw/cxl/cxl-mailbox-utils: Add dynamic capacity
- region representative and mailbox command support
-Message-ID: <Zbv3806dVKTqjF0u@debian>
-References: <20231107180907.553451-1-nifan.cxl@gmail.com>
- <20231107180907.553451-3-nifan.cxl@gmail.com>
- <20240124145118.00002f7d@Huawei.com>
+ d=1e100.net; s=20230601; t=1706818745; x=1707423545;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LOkzmmBUqR6mrhDTlbb9FzVhJ1j4bAUpu/WIXg/ForM=;
+ b=Ivx7qKAbNVpv2N818CzB6WjdLR3VA3hHKssUNfTcZo98JNFJlloSG2/kV+jfju9Plv
+ WWpiSmRN5wu+WEH1Rzy1Iyyrv12tiVF42k5RQDKk9QZsX5NyiSATTXOXbZ5EfRFtdCd2
+ Nogi4RMYKznt84Dpiv+48L6LONFhXVpFAP8HmRL154GaGbQqWcSw5jhcXN8GClaQOr39
+ lhVTeM6YMHnFvewhmAHSydagIoY4GM4i4qT6Mjvg/7QDUqyeh7HchK3jLROI/7Hxu6S/
+ 05aCDHReVAOSqZCpJ89qdAbhCoiW2Pm0BtkpFFOD3ROGEVLa+bMhbPSQQNS5wWN2G681
+ IpQw==
+X-Gm-Message-State: AOJu0Ywv+Hp1Da3D3ecFQPoFuvviIg61k/ZaR1FQBl/JeHjpjmSv01AR
+ NT4YjPuimD0ZUu+DtzSFwoxx/fbU0yfGQuNifvLbqQhHaL4eQfOLKUr2w2o6LAXwnUq2j7+X9ub
+ zkRcWAVl5tSa1fCqrzshs9BP3iwM7eo3Vlpg5Wk86IA77ZrnOM1V6TWl43CH2NIzyHp4kqtNapB
+ C4z0eP74HZue5+bkbC4Xe7sYdRI7s=
+X-Received: by 2002:a17:90a:1f81:b0:290:4637:1808 with SMTP id
+ x1-20020a17090a1f8100b0029046371808mr114755pja.26.1706818745038; 
+ Thu, 01 Feb 2024 12:19:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLWQ9vQn6T/amWmuveXAFTZu10qMxuqchxg8jkB1HOnoIMgFbO2Ccvc3DThUdvMm1nbdLnJ74oBkKupjmopbs=
+X-Received: by 2002:a17:90a:1f81:b0:290:4637:1808 with SMTP id
+ x1-20020a17090a1f8100b0029046371808mr114738pja.26.1706818744763; Thu, 01 Feb
+ 2024 12:19:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240124145118.00002f7d@Huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240117112407.22462-1-philmd@linaro.org>
+ <5ae6d41e-e291-4fa1-94a1-6ec22cd809be@redhat.com>
+ <8ae6c891-522d-435a-be63-2e5a5c9d6394@linaro.org>
+In-Reply-To: <8ae6c891-522d-435a-be63-2e5a5c9d6394@linaro.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 1 Feb 2024 15:18:53 -0500
+Message-ID: <CAFn=p-b1ejotX2coQcvbOvAQGeLuSJEnk+SF=n=68X1gB=MCgg@mail.gmail.com>
+Subject: Re: [RFC PATCH] tests/vm/netbsd: Remove missing py311-expat package
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
+ Beraldo Leal <bleal@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Ryo ONODERA <ryoon@netbsd.org>, Kyle Evans <kevans@freebsd.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Reinoud Zandijk <reinoud@netbsd.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,158 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 02:51:18PM +0000, Jonathan Cameron wrote:
-> On Tue,  7 Nov 2023 10:07:06 -0800
-> nifan.cxl@gmail.com wrote:
-> 
-> > From: Fan Ni <fan.ni@samsung.com>
-> > 
-> > Per cxl spec 3.0, add dynamic capacity region representative based on
-> > Table 8-126 and extend the cxl type3 device definition to include dc region
-> > information. Also, based on info in 8.2.9.8.9.1, add 'Get Dynamic Capacity
-> > Configuration' mailbox support.
-> > 
-> > Note: decode_len of a dc region is aligned to 256*MiB, need to be divided by
-> > 256 * MiB before returned to the host for "Get Dynamic Capacity Configuration"
-> > mailbox command.
-> > 
-> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
-> 
-> Hi Fan,
-> 
-> I'm looking at how to move these much earlier in my tree on basis that
-> they should be our main focus for merging in this QEMU cycle.
-> 
-> Whilst I do that rebase, I'm taking a closer look at the code.
-> I'm targetting rebasing on upstream qemu + the two patch sets I just
-> sent out:
-> [PATCH 00/12 qemu] CXL emulation fixes and minor cleanup. 
-> [PATCH 0/5 qemu] hw/cxl: Update CXL emulation to reflect and reference r3.1
-> 
-> It would be good to document why these commands should be optional (which I think
-> comes down to the annoying fact that Get Dynamic Capacity Configuration isn't
-> allowed to return 0 regions, but instead should not be available as a command
-> if DCD isn't supported.
-> 
-> Note this requires us to carry Gregory's patches to make the CCI command list
-> constructed at runtime rather than baked in ahead of this set.
-> 
-> So another question is should we jump directly to the r3.1 version of DCD?
-> I think we probably should as it includes some additions that are necessary
-> for a bunch of the potential use cases.
-> 
+On Wed, Jan 17, 2024 at 9:03=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 17/1/24 13:10, Thomas Huth wrote:
+> > On 17/01/2024 12.24, Philippe Mathieu-Daud=C3=A9 wrote:
+> >> Per commits a9dbde71da ("mkvenv: add better error message for
+> >> broken or missing ensurepip") and 1dee66c693 ("tests/vm: add
+> >> py310-expat to NetBSD"), we need py-expat to use ensurepip.
+> >>
+> >> However the py311-expat package isn't available anymore:
+> >>
+> >>    ### Installing packages ...
+> >>    processing remote summary
+> >> (http://cdn.NetBSD.org/pub/pkgsrc/packages/NetBSD/amd64/9.3/All)...
+> >>    database for
+> >> http://cdn.NetBSD.org/pub/pkgsrc/packages/NetBSD/amd64/9.3/All is
+> >> up-to-date
+> >>    py311-expat is not available in the repository
+> >>    ...
+> >>    calculating dependencies.../py311-expat is not available in the
+> >> repository
+> >>    pkg_install error log can be found in
+> >> /var/db/pkgin/pkg_install-err.log
+> >>
+> >> Dropping it from the default packages list allows creating the
+> >> NetBSD VM and build / test QEMU, without error from ensurepip.
+> >>
+> >> This reverts commit 1dee66c693 ("tests/vm: add py310-expat to NetBSD")=
+.
+> >>
+> >> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2109
+> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >> ---
+> >> RFC because ensurepip seems important due to cited commits
+> >>      but I'm not sure where it is used, and this fixes my CI build.
+> >
+> > Thanks for tackling it, I also ran into this problem already and just
+> > did not have enough spare time yet to investigate.
+> >
+> > I searched a little bit, and found this text here:
+> > https://mail-index.netbsd.org/netbsd-announce/2024/01/01/msg000360.html
+> >
+> > "
+> > - Several packages have been folded into base packages.  While the
+> >     result is simpler, those updating may need to force-remove the
+> >     secondary packages, depending on the update method.  When doing
+> >     make replace, one has to pkg_delete -f the secondary packages.
+> >     pkgin handles at least the python packages correctly, removing the
+> >     split package when updating python.  Specific packages and the
+> >     former packages now included:
+> >
+> >       * cairo: cairo-gobject
+> >       * python: py-cElementTree py-curses py-cursespanel py-expat
+> >         py-readline py-sqlite3
+> > "
+>
+> Thanks for digging, I'll update the description.
+>
+> > So it seems like the py-expat package has simply been merged into a bas=
+e
+> > package now. Thus I think your patch is fine. It also fixes the problem
+> > for me, so:
+> >
+> > Tested-by: Thomas Huth <thuth@redhat.com>
+> > Reviewed-by: Thomas Huth <thuth@redhat.com>
+> >
+>
 
-Based on cxl spec r3.1, the get dynamic capacity configuration output
-payload (Table 8-164) have 4 extra items after the variable region configuration
-structure. That is not allowed by the compiler, should we move the
-new-added 4 items before the variable region configuration structures?
+Quite late, but thank you both. If py-expat was folded in, then this
+is definitely safe. mkvenv.py could possibly use a small update to its
+error message hint:
 
-Fan
+            "(Hint: NetBSD's pkgsrc debundles this to e.g. 'py310-expat'.)"
 
-> 
-> > ---
-> >  hw/cxl/cxl-mailbox-utils.c  | 80 +++++++++++++++++++++++++++++++++++++
-> >  hw/mem/cxl_type3.c          |  6 +++
-> >  include/hw/cxl/cxl_device.h | 17 ++++++++
-> >  3 files changed, 103 insertions(+)
-> > 
-> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > index 8eceedfa87..f80dd6474f 100644
-> > --- a/hw/cxl/cxl-mailbox-utils.c
-> > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > @@ -80,6 +80,8 @@ enum {
-> >          #define GET_POISON_LIST        0x0
-> >          #define INJECT_POISON          0x1
-> >          #define CLEAR_POISON           0x2
-> > +    DCD_CONFIG  = 0x48,
-> > +        #define GET_DC_CONFIG          0x0
-> >      PHYSICAL_SWITCH = 0x51,
-> >          #define IDENTIFY_SWITCH_DEVICE      0x0
-> >          #define GET_PHYSICAL_PORT_STATE     0x1
-> > @@ -1210,6 +1212,74 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
-> >      return CXL_MBOX_SUCCESS;
-> >  }
-> >  
-> > +/*
-> > + * CXL r3.0 section 8.2.9.8.9.1: Get Dynamic Capacity Configuration
-> 
-> As per the patch set I just sent out, I want to standardize on references
-> to r3.1 because it's all that is easy to get.  However if we decide to r3.0
-> DCD first the upgrade it later, then clearly these need to stick to r3.0 for
-> now.
-> 
-> > + * (Opcode: 4800h)
-> > + */
-> > +static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
-> > +                                             uint8_t *payload_in,
-> > +                                             size_t len_in,
-> > +                                             uint8_t *payload_out,
-> > +                                             size_t *len_out,
-> > +                                             CXLCCI *cci)
-> > +{
-> > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> > +    struct get_dyn_cap_config_in_pl {
-> > +        uint8_t region_cnt;
-> > +        uint8_t start_region_id;
-> > +    } QEMU_PACKED;
-> > +
-> > +    struct get_dyn_cap_config_out_pl {
-> > +        uint8_t num_regions;
-> > +        uint8_t rsvd1[7];
-> 
-> This changed in r3.1 (errata? - I haven't checked)
-> Should be 'regions returned' in first byte.
-> 
-> > +        struct {
-> > +            uint64_t base;
-> > +            uint64_t decode_len;
-> > +            uint64_t region_len;
-> > +            uint64_t block_size;
-> > +            uint32_t dsmadhandle;
-> 
-> > +            uint8_t flags;
-> > +            uint8_t rsvd2[3];
-> > +        } QEMU_PACKED records[];
-> 
-> There are two fields after this as well.
-> Total number of supported extents and number of available extents.
-> 
-> That annoyingly means we can't use the structure to tell us where
-> to find all the fields...
-> 
-> 
-> > +    } QEMU_PACKED;
-> > +
-> > +    struct get_dyn_cap_config_in_pl *in = (void *)payload_in;
-> > +    struct get_dyn_cap_config_out_pl *out = (void *)payload_out;
-> > +    uint16_t record_count = 0, i;
-> 
-> Better to split that on to 2 lines. Never hide setting a value
-> in the middle of a set of declarations.
-> 
-> > +    uint16_t out_pl_len;
-> > +    uint8_t start_region_id = in->start_region_id;
-> > +
-> > +    if (start_region_id >= ct3d->dc.num_regions) {
-> > +        return CXL_MBOX_INVALID_INPUT;
-> > +    }
-> > +
-> > +    record_count = MIN(ct3d->dc.num_regions - in->start_region_id,
-> > +            in->region_cnt);
-> > +
-> > +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
-> 
-> For r3.1 + 8 for the two trailing fields.
-> 
-> > +    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-> > +
-> > +    memset(out, 0, out_pl_len);
-> 
-> As part of the cci rework we started zeroing the whole mailbox payload space
-> after copying out the input payload.
-> https://elixir.bootlin.com/qemu/latest/source/hw/cxl/cxl-device-utils.c#L204
-> 
-> So shouldn't need this (unless we have a bug)
-> 
-> Jonathan
+I don't know if this is safe to remove in its entirety just yet,
+because I don't know right away if any NetBSD distributions that we
+consider "supported" still use a de-bundled py-expat. (Maybe this
+error is still helpful for certain users in some cases we technically
+support?)
+
+If that's not the case, then we can simplify mkvenv and remove this
+error handling case entirely.
+
+--js
+
 
