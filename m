@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1680C4828C
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53370C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:05:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXd8-0000VL-BX; Thu, 01 Feb 2024 09:01:26 -0500
+	id 1rVXd7-0000Uy-TA; Thu, 01 Feb 2024 09:01:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1rVXd0-0000Rf-2g; Thu, 01 Feb 2024 09:01:20 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1rVXcu-0000R5-Q5; Thu, 01 Feb 2024 09:01:12 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1rVXcy-0005M9-Ia; Thu, 01 Feb 2024 09:01:17 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a26f73732c5so140269466b.3; 
- Thu, 01 Feb 2024 06:01:14 -0800 (PST)
+ id 1rVXcq-0005Kl-Gv; Thu, 01 Feb 2024 09:01:12 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a2f79e79f0cso123205366b.2; 
+ Thu, 01 Feb 2024 06:01:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706796073; x=1707400873; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pHG3fRFIEdXtO4/0BiGBMl5kPd2uNPVRIA8jKGOUdA8=;
- b=Y2dNjGCvw3NUXiWiq/cppNDqrtZKClK2uhXiH94X7ZQE2GZp3b5wCfqQn6Zz31f6NK
- 84tiSNmjohYtzz1JEt/Dst0qDVdjt99wMUHCJF6+dH7pVq9LGMb0uNrPXnJTX0cmEgIl
- y+8agKuxABrTGHwTe5C1GxOuHp5fdM3jsCj1kf1IXwBXZWF3TZfyJ+uqMRm8GFseoxzn
- THdUZwan6O58lJdpYet7SzAOrYbP5d2Jns5wbQ5T9KFMCXC3G0c2R8q46TJ2fApfqh9c
- BNTNgWBEx69lNtq9gzv83ZghF5Q71DBKEvVMFxwcg1Qyh3LXwSI4iNiZyMrCf8hk47nr
- 4sLQ==
+ d=gmail.com; s=20230601; t=1706796066; x=1707400866; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=U7XjHbwwvWEkeLfzO8kMCvPK8+1IkX1iR4uHS3wTHDo=;
+ b=h5ayomFL0eQ7fA/lcRucDMJWWtNIkm6WDQgPeeO0gBeXwQ42XJY4wwyFTb5UgCSnOq
+ 52LoZw4dJkk8Hh4xOS8BSB5N6MyNAWSmf7Bf3OA/pd1tkActgiKspTSvtO31lNUZEisc
+ 1ifPk74yuxyX+0cx3EKHbhHDzFTwoupHHH+hXCQuBgo47PMNOOh65qVALG1vsV3GXUD1
+ W/DeWtxPniqlOdCOXpF+Kzu2jefI4VNWh0xhqUE/eIXaNERW2/g/5ttoWnJoJeJfiIga
+ D9IoHxUaLWT/rpABKIIEo9n/JVGIHYsxHB+RGaXKPMULTt84pwRvPCYrnQVXOiYDAPNR
+ cHRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706796073; x=1707400873;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pHG3fRFIEdXtO4/0BiGBMl5kPd2uNPVRIA8jKGOUdA8=;
- b=MfAiyez6Xoz1F9y/qTUjVL0wmWNbTG+b77D0o/wYS/H9ECJAxBt/iG0rQ6zfhsQiis
- 6LVnQI0tKNNr1Huh0ErDdXhPnTB8Z6sPcbdJXrdG5Qwqg3m5SQugLG1q9vLZc13xIbka
- mUQQgU5OuJsjELsk9JFkHpGcRoSe5VLZxEzadxzuUOshG9afmPPGWkTkROLnZQUVrw5Q
- P9iZ+RsaEEa2wyKlvBGqD63nfkgXsczy2ejyuiD+W9F67VIv8qMbTPyoz17VYV/gPPPM
- D2FSmnAHjhMu26Q/UASNzuZCyOiO3/ZtqShNoiDVJ5qQrAHKbpVIAoiF5dPmLegp1G5h
- q9Jw==
-X-Gm-Message-State: AOJu0YxSp/w9WVQb7Sn8dL1/czXJzzdy4pwgWAAgqsh/j5f7o60DPJQb
- yLJvBErWki6F1JZc1wEhjCga8A81pczWggqVZW0e9h6bKZPP1KOM
-X-Google-Smtp-Source: AGHT+IH/E7Z7iqcNDtj+iBmG9av3L+fBDCoYiImEEmkuuAfVNVJfsWGCz6uxSc3BSCWPzZdEY1UBtg==
-X-Received: by 2002:a17:906:b754:b0:a35:fd93:8be3 with SMTP id
- fx20-20020a170906b75400b00a35fd938be3mr1451889ejb.2.1706796068704; 
- Thu, 01 Feb 2024 06:01:08 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706796066; x=1707400866;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=U7XjHbwwvWEkeLfzO8kMCvPK8+1IkX1iR4uHS3wTHDo=;
+ b=u7jOMbGCekj5+KeVzLuIYW5mRPb+XhbMSOXROkH4ltx1EgWIjA/X3cRLsmADmsAQyE
+ j/U6Ynm+6aBLUk1nTFvvim/LvFSowFmFQwjULnP7zQHZo+WjbSCa3N4mfD4XRzsVUapY
+ dnfjsQEnFKhyfVMUeaT7Byd23SWEL76Hg2No3TcQXuNeFS7AKIO+51Dj70Y1rw0cWsV6
+ Wb96kLprBRdm5ASJPS7i/Qz4rneXwALT2ECzySBH//j0iREtLC5EA/fdsCvn/Eryau/S
+ eG18VDiQ7AWCcQLlzy+5WQylzTTO0USqt1z/eFtLcooZKe5Mkrsq/i+4NLExNxowO2tT
+ Itsg==
+X-Gm-Message-State: AOJu0Yz+yMgKvq9HUfWYkfaTnglE+zWeJmts5CKuauaem5bubLiaQmhO
+ i0x0+7wCYE9qRLTE7lnDfLpxUsVIQqq8XebPlmjk0uLLTCeqexhM
+X-Google-Smtp-Source: AGHT+IHRwBo+FTRI1v0U6rE5ApNlVnbyhdkseHsTT3BvavWLTlFTsq1Vd22suMjWf0cuvGDaAIB7IQ==
+X-Received: by 2002:a17:906:3b19:b0:a35:7192:1f with SMTP id
+ g25-20020a1709063b1900b00a357192001fmr3724841ejf.49.1706796061091; 
+ Thu, 01 Feb 2024 06:01:01 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCVV5TLfVN+exMKZtk4r6lTBIDQLvO4xXXzEsGEtrpHIVyVmP5ylF+g8HMI+lyXRSIATjE9xm0gzdbRed0XgfWeluJAoYirM9LS9tElcunib6eCsW1oeJAKXshOoz6jnARIdIoRe4sUaq0fKWJ7MOfj9rEsoiQt4uOK7Xvadmo317qkrv2n5TZgByX7mMiPBSvLfJ71P6B86f5rR6htwPlkeiZKi/xIMJO7wRoSa9KvaXCBxezhyAU/y4nvR8ze3xwVEvbLjwRQUTWFkgS541nNTH3uV7q72sgTg4PsHEhhUeu8q5V1hu+2om4aRidA504pfZtZMHOqXo1/YpDUV2xB3pTmVJuBNqNggzjTlBc7Yh3sGhVh+rkGUSDA=
+ AJvYcCXlDpHbq7DlTy9b/4dNfR+ZoQZ3h96n0KS/ztheCBsWdf0EGcvQHFxArjD4D4t1JElDnP75BtzOJ/Ma+GhgLVmcXUCrn6i5oaAg8quyDi4DlKHuwRAZUe+1bWDBg4Wb8aXRnTt5IGpmhjKlTo5I7or/tewNEMRE+LpB8XJt7fzko8goP0ncXZg5K6VuTw/GzmyAo25PkfGXHZhdqeszXGuBsAjhTV1V9Tn06aeGDNg2773rWVRvPGV8xaWN8WkzCAGA+UWVX1f/5pTrIIn6utu4EY3bKY66HafwEPRGg0WG3o/VIpmKv1Mwe/Y1iGi5PjJpZctEwWifTjJRv9pRYiTs
 Received: from freya.midgard (broadband-188-255-126-251.ip.moscow.rt.ru.
  [188.255.126.251]) by smtp.gmail.com with ESMTPSA id
- un6-20020a170907cb8600b00a36a7f0f087sm902728ejc.222.2024.02.01.06.01.07
+ un6-20020a170907cb8600b00a36a7f0f087sm902728ejc.222.2024.02.01.06.00.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 06:01:08 -0800 (PST)
+ Thu, 01 Feb 2024 06:01:00 -0800 (PST)
 From: Alexey Baturo <baturo.alexey@gmail.com>
 X-Google-Original-From: Alexey Baturo <me@deliversmonkey.space>
 To: 
 Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, Alistair.Francis@wdc.com,
  sagark@eecs.berkeley.edu, kbastian@mail.uni-paderborn.de,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v6 5/6] target/riscv: Update address modify functions to take
- into account pointer masking
-Date: Thu,  1 Feb 2024 14:00:46 +0000
-Message-Id: <20240201140047.3456114-6-me@deliversmonkey.space>
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: [PATCH v6 0/6] Pointer Masking update for Zjpm v0.8
+Date: Thu,  1 Feb 2024 14:00:41 +0000
+Message-Id: <20240201140047.3456114-1-me@deliversmonkey.space>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240201140047.3456114-1-me@deliversmonkey.space>
-References: <20240201140047.3456114-1-me@deliversmonkey.space>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=baturo.alexey@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
@@ -102,86 +97,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexey Baturo <baturo.alexey@gmail.com>
 
-Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+Hi,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/translate.c     | 22 ++++++++++++++++------
- target/riscv/vector_helper.c | 13 +++++++++++++
- 2 files changed, 29 insertions(+), 6 deletions(-)
+This patch series is rebased on https://github.com/alistair23/qemu/tree/riscv-to-apply.next 
 
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index e40a31f8db..f2b00fcdb8 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -579,8 +579,10 @@ static TCGv get_address(DisasContext *ctx, int rs1, int imm)
-     TCGv src1 = get_gpr(ctx, rs1, EXT_NONE);
- 
-     tcg_gen_addi_tl(addr, src1, imm);
--    if (get_address_xl(ctx) == MXL_RV32) {
--        tcg_gen_ext32u_tl(addr, addr);
-+    if (ctx->addr_signed) {
-+        tcg_gen_sextract_tl(addr, addr, 0, ctx->addr_width);
-+    } else {
-+        tcg_gen_extract_tl(addr, addr, 0, ctx->addr_width);
-     }
- 
-     return addr;
-@@ -593,8 +595,10 @@ static TCGv get_address_indexed(DisasContext *ctx, int rs1, TCGv offs)
-     TCGv src1 = get_gpr(ctx, rs1, EXT_NONE);
- 
-     tcg_gen_add_tl(addr, src1, offs);
--    if (get_xl(ctx) == MXL_RV32) {
--        tcg_gen_ext32u_tl(addr, addr);
-+    if (ctx->addr_signed) {
-+        tcg_gen_sextract_tl(addr, addr, 0, ctx->addr_width);
-+    } else {
-+        tcg_gen_extract_tl(addr, addr, 0, ctx->addr_width);
-     }
-     return addr;
- }
-@@ -1180,8 +1184,14 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->xl = FIELD_EX32(tb_flags, TB_FLAGS, XL);
-     ctx->address_xl = FIELD_EX32(tb_flags, TB_FLAGS, AXL);
-     ctx->cs = cs;
--    ctx->addr_width = 0;
--    ctx->addr_signed = false;
-+    if (get_xl(ctx) == MXL_RV32) {
-+        ctx->addr_width = 32;
-+        ctx->addr_signed = false;
-+    } else {
-+        int pm_pmm = FIELD_EX32(tb_flags, TB_FLAGS, PM_PMM);
-+        ctx->addr_width = 64 - riscv_pm_get_pmlen(pm_pmm);
-+        ctx->addr_signed = FIELD_EX32(tb_flags, TB_FLAGS, PM_SIGNEXTEND);
-+    }
-     ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
-     ctx->zero = tcg_constant_tl(0);
-     ctx->virt_inst_excp = false;
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index f6be88dcf0..9d1d627d64 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -105,6 +105,19 @@ static inline uint32_t vext_max_elems(uint32_t desc, uint32_t log2_esz)
- 
- static inline target_ulong adjust_addr(CPURISCVState *env, target_ulong addr)
- {
-+    RISCVPmPmm pmm = riscv_pm_get_pmm(env);
-+    if (pmm == PMM_FIELD_DISABLED) {
-+        return addr;
-+    }
-+    int pmlen = riscv_pm_get_pmlen(pmm);
-+    bool signext = riscv_cpu_virt_mem_enabled(env);
-+    addr = addr << pmlen;
-+    /* sign/zero extend masked address by N-1 bit */
-+    if (signext) {
-+        addr = (target_long)addr >> pmlen;
-+    } else {
-+        addr = addr >> pmlen;
-+    }
-     return addr;
- }
- 
+Thanks
+
+[v5]:
+This patch series targets Zjpm v0.8 extension.
+The spec itself could be found here: https://github.com/riscv/riscv-j-extension/blob/8088461d8d66a7676872b61c908cbeb7cf5c5d1d/zjpm-spec.pdf
+This patch series is updated after the suggested comments:
+- add "x-" to the extension names to indicate experimental
+
+[v4]:
+Patch series updated after the suggested comments:
+- removed J-letter extension as it's unused
+- renamed and fixed function to detect if address should be sign-extended
+- zeroed unused context variables and moved computation logic to another patch
+- bumped pointer masking version_id and minimum_version_id by 1
+
+[v3]:
+There patches are updated after Richard's comments:
+- moved new tb flags to the end
+- used tcg_gen_(s)extract to get the final address
+- properly handle CONFIG_USER_ONLY
+
+[v2]:
+As per Richard's suggestion I made pmm field part of tb_flags.
+It allowed to get rid of global variable to store pmlen.
+Also it allowed to simplify all the machinery around it.
+
+[v1]:
+It looks like Zjpm v0.8 is almost frozen and we don't expect it change drastically anymore.
+Compared to the original implementation with explicit base and mask CSRs, we now only have
+several fixed options for number of masked bits which are set using existing CSRs.
+The changes have been tested with handwritten assembly tests and LLVM HWASAN
+test suite.
+
+Alexey Baturo (6):
+  target/riscv: Remove obsolete pointer masking extension code.
+  target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
+    of Zjpm v0.8
+  target/riscv: Add helper functions to calculate current number of
+    masked bits for pointer masking
+  target/riscv: Add pointer masking tb flags
+  target/riscv: Update address modify functions to take into account
+    pointer masking
+  target/riscv: Enable updates for pointer masking variables and thus
+    enable pointer masking extension
+
+ target/riscv/cpu.c           | 22 ++++----
+ target/riscv/cpu.h           | 47 ++++++++---------
+ target/riscv/cpu_bits.h      | 90 ++-------------------------------
+ target/riscv/cpu_cfg.h       |  3 ++
+ target/riscv/cpu_helper.c    | 97 ++++++++++++++++++++----------------
+ target/riscv/csr.c           | 41 ++++-----------
+ target/riscv/machine.c       | 22 +++-----
+ target/riscv/pmp.c           | 13 +++--
+ target/riscv/pmp.h           | 11 ++--
+ target/riscv/tcg/tcg-cpu.c   |  5 +-
+ target/riscv/translate.c     | 46 +++++++----------
+ target/riscv/vector_helper.c | 15 +++++-
+ 12 files changed, 160 insertions(+), 252 deletions(-)
+
 -- 
 2.34.1
 
