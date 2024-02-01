@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AB9C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FBEEC48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaD8-0005h3-3I; Thu, 01 Feb 2024 11:46:46 -0500
+	id 1rVaD5-0005Ms-NJ; Thu, 01 Feb 2024 11:46:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaB4-0002vI-2I
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:39 -0500
+ id 1rVaB2-0002v7-Vp
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:37 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaAt-0002Pp-Sq
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:37 -0500
+ id 1rVaAt-0002Ts-RX
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:To:From:Reply-To:
  Cc:Content-Type:Content-ID:Content-Description;
- bh=5UKFkHiz+IiNYOcDnAfWAdDSJCkk6kLbMMON/gDXwYM=; b=PRo09XwWz4rY3IcEXHXbqll7eq
- U2yd34Nh5YdErMvdu2x4J/LA1wBy8rokt50v09pDmmzjGlk6FmrBRut8SqDMzVpz6T3ck3zUVHXCd
- N+Ov+D+hUfedvuR6JX6RzdTHP4CkV+58aO2FbTn8V/cKet91IqWlI+C5LZKRkrKw/aeAKQBY+4Fr/
- TQmEFyDNw3rEbU0yjUcgLRW6+bdgOhbt2FQDVIo14PQD4R1n4xGT10gwcY9JhvrlknArtchlO1Fwl
- DH759daDTzLoywdE2WSnkLLxTOWKWi7UmlCgeLfaNib1S5F1/c2u1yswgPS25E34UL0bx+KVqcdcI
- SD7CYoWA==;
+ bh=mX/hl3L+uzP16qDkLnKIjlw9AZT6Th7nY6ik791ai64=; b=KeAFudZpNkpdLQhrbPEchfbIzn
+ cj5W54SNpt/VZF5MMo6prJlIJgIl8Kcht8oD5KDcUE41ZKfs0yDfmzVxxwQc6uqmIGwYLOxx+KJqR
+ D9D+THyPneXQaSQc2yxDi3J0J7jA6Avmfz6/Q2DDyzNYfx7E8YdhdVquQzdYbXxDKvYJJheoWSn4e
+ KjEBp8xt5fH8RqUpIabgG2wgfptt/2jqezX4aQapW9YQqn0HzC4L6gWRSSm1xGoFsnz/g4VXANAJo
+ d/bxCoovG2Lg7JgifVz960uusavMY8biHFVVlXO4UJhKY88BScXwh2k4EWWWcenfYmk07+vkOyyBy
+ gF71dMvg==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVaAe-0000000GIcy-2hSt for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:14 +0000
+ id 1rVaAf-0000000GIdo-3E7W for qemu-devel@nongnu.org;
+ Thu, 01 Feb 2024 16:44:15 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVaAf-00000003IMK-253F for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:13 +0000
+ Hat Linux)) id 1rVaAg-00000003IOo-3SlE for qemu-devel@nongnu.org;
+ Thu, 01 Feb 2024 16:44:14 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/47] hw/arm/sbsa-ref: use pci_init_nic_devices()
-Date: Thu,  1 Feb 2024 16:43:33 +0000
-Message-ID: <20240201164412.785520-9-dwmw2@infradead.org>
+Subject: [PULL 43/47] hw/xtensa/xtfpga: use qemu_create_nic_device()
+Date: Thu,  1 Feb 2024 16:44:08 +0000
+Message-ID: <20240201164412.785520-44-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201164412.785520-1-dwmw2@infradead.org>
 References: <20240201164412.785520-1-dwmw2@infradead.org>
@@ -79,26 +79,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: David Woodhouse <dwmw@amazon.co.uk>
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Leif Lindholm <quic_llindhol@quicinc.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/arm/sbsa-ref.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ hw/xtensa/xtfpga.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index 85cb68d546..f2adf30337 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -673,9 +673,7 @@ static void create_pcie(SBSAMachineState *sms)
+diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+index fbad1c83a3..f49e6591dc 100644
+--- a/hw/xtensa/xtfpga.c
++++ b/hw/xtensa/xtfpga.c
+@@ -141,14 +141,16 @@ static void xtfpga_net_init(MemoryRegion *address_space,
+         hwaddr base,
+         hwaddr descriptors,
+         hwaddr buffers,
+-        qemu_irq irq, NICInfo *nd)
++        qemu_irq irq)
+ {
+     DeviceState *dev;
+     SysBusDevice *s;
+     MemoryRegion *ram;
  
-     pci = PCI_HOST_BRIDGE(dev);
-     if (pci->bus) {
--        for (i = 0; i < nb_nics; i++) {
--            pci_nic_init_nofail(&nd_table[i], pci->bus, mc->default_nic, NULL);
--        }
-+        pci_init_nic_devices(pci->bus, mc->default_nic);
+-    dev = qdev_new("open_eth");
+-    qdev_set_nic_properties(dev, nd);
++    dev = qemu_create_nic_device("open_eth", true, NULL);
++    if (!dev) {
++        return;
++    }
+ 
+     s = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(s, &error_fatal);
+@@ -301,10 +303,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+         memory_region_add_subregion(system_memory, board->io[1], io);
      }
+     xtfpga_fpga_init(system_io, 0x0d020000, freq);
+-    if (nd_table[0].used) {
+-        xtfpga_net_init(system_io, 0x0d030000, 0x0d030400, 0x0d800000,
+-                        extints[1], nd_table);
+-    }
++    xtfpga_net_init(system_io, 0x0d030000, 0x0d030400, 0x0d800000, extints[1]);
  
-     pci_create_simple(pci->bus, -1, "bochs-display");
+     serial_mm_init(system_io, 0x0d050020, 2, extints[0],
+                    115200, serial_hd(0), DEVICE_NATIVE_ENDIAN);
 -- 
 2.43.0
 
