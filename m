@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67ED7C47DDB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 07:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62089C47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 07:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVRXG-0005ag-BI; Thu, 01 Feb 2024 02:30:58 -0500
+	id 1rVRYG-0007Hc-6I; Thu, 01 Feb 2024 02:32:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rVRXE-0005XG-TX
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:30:56 -0500
+ id 1rVRYC-0006ub-VC
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:31:58 -0500
 Received: from mgamail.intel.com ([192.55.52.120])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rVRXD-0001fn-3H
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:30:56 -0500
+ id 1rVRYA-0001hD-C8
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:31:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706772655; x=1738308655;
+ t=1706772714; x=1738308714;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=D4cTHuJ5P52PDk7zGzN3Kqt39x1mp1P+J3KDpszCppQ=;
- b=OL6vd2qSfvTRzigpy0IV2B3xNCkoVDo5d87uW1rIn+bIMZCJlhAfDU8L
- JKXKRA9Cj9L2GcWmd14XzUyb2+BsU+cugx/YS+DZO4o0qW0zcoBa4+8yo
- e/b/PRv2+IAA3nsUDjRAUKMfJcVYsjSWnieZjO1ZcuMx2YJ6ytXvBZvpQ
- s1Tk7x35MUPvORYRdcoh/V95YvgzRf4GU9n3/w5yckYZnWd1XHDgynY9A
- +4X3OBOj1u0UjMCqo3R4Be059442kv4vg+Tw1sQVrmEhftWzI2OBUnrMG
- X9eYeJb06gNsitQgQ2eRBPgPV2NK3mkk1AeyduObxtGBUevsmtlHn0YY2 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402676716"
-X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="402676716"
+ bh=SxIm2x19TwG5HPffy2XnHOf3K+46VOZDLtqOFlpVjxc=;
+ b=Ss97+wJ3i5FPUzbgH8T9QxxGHpRu/SOxDEe4s/XBDSdjHPttAat5BH1U
+ xiIkH/inH/mZlC7nM82Y+iYOY8T3M0EKzd4hHL/1H0pcl5uyzSedMjtOI
+ /id1AQAFUf4JWMXau+8/1NspKZuwtMDdCm4MW7xVRIxfrB0fjifbjD3j4
+ z4UJF3eGF64j9TK9vfxKLd+5BSe4Qi8BDmOAxZBby0Jp04qAE+iZU3F72
+ D4Ls8FEGTh8f5pXunhFlqQaOdNcy43bSSqHiKZcUkHxtmmqI7k7zVbVfO
+ U+0exeUSvVLpsqrTalPy5HgaXE94c1fSInxHN5RMrL1kp6fnsobLGv9cE A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402677024"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="402677024"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 23:30:53 -0800
+ 31 Jan 2024 23:31:51 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; 
-   d="scan'208";a="4443256"
+   d="scan'208";a="4443435"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 23:30:48 -0800
+ 31 Jan 2024 23:31:46 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, yi.y.sun@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH rfcv2 07/18] vfio/container: Implement host_iommu_device_init
- callback in legacy mode
-Date: Thu,  1 Feb 2024 15:28:07 +0800
-Message-Id: <20240201072818.327930-8-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH rfcv2 18/18] intel_iommu: Block migration if cap is updated
+Date: Thu,  1 Feb 2024 15:28:18 +0800
+Message-Id: <20240201072818.327930-19-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240201072818.327930-1-zhenzhong.duan@intel.com>
 References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
@@ -83,39 +86,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This callback will be used to initialize base and public elements
-in IOMMULegacyDevice.
+When there is VFIO device and vIOMMU cap/ecap is updated based on host
+IOMMU cap/ecap, migration should be blocked.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/container.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/i386/intel_iommu.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index bd25b9fbad..8fafd4b4e5 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1120,6 +1120,12 @@ out_single:
-     return ret;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 72cc8b2c71..7f9ff653b2 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -39,6 +39,7 @@
+ #include "hw/i386/apic_internal.h"
+ #include "kvm/kvm_i386.h"
+ #include "migration/vmstate.h"
++#include "migration/blocker.h"
+ #include "trace.h"
+ 
+ #define S_AW_BITS (VTD_MGAW_FROM_CAP(s->cap) + 1)
+@@ -3829,6 +3830,8 @@ static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+     return 0;
  }
  
-+static void vfio_legacy_host_iommu_device_init(VFIODevice *vbasedev)
-+{
-+    host_iommu_base_device_init(&vbasedev->base_hdev, HID_LEGACY,
-+                                sizeof(IOMMULegacyDevice));
-+}
++static Error *vtd_mig_blocker;
 +
- static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
- {
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
-@@ -1132,6 +1138,7 @@ static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
-     vioc->set_dirty_page_tracking = vfio_legacy_set_dirty_page_tracking;
-     vioc->query_dirty_bitmap = vfio_legacy_query_dirty_bitmap;
-     vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
-+    vioc->host_iommu_device_init = vfio_legacy_host_iommu_device_init;
- };
+ static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+                                   IOMMUFDDevice *idev,
+                                   Error **errp)
+@@ -3860,8 +3863,17 @@ static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+         tmp_cap |= VTD_CAP_MGAW(host_mgaw + 1);
+     }
  
- static const TypeInfo types[] = {
+-    s->cap = tmp_cap;
+-    return 0;
++    if (s->cap != tmp_cap) {
++        if (vtd_mig_blocker == NULL) {
++            error_setg(&vtd_mig_blocker,
++                       "cap/ecap update from host IOMMU block migration");
++            ret = migrate_add_blocker(&vtd_mig_blocker, errp);
++        }
++        if (!ret) {
++            s->cap = tmp_cap;
++        }
++    }
++    return ret;
+ }
+ 
+ static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
 -- 
 2.34.1
 
