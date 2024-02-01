@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E01E8C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 07:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECD6C47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 07:31:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVRX5-0005KK-VR; Thu, 01 Feb 2024 02:30:48 -0500
+	id 1rVRWq-0005Dj-GN; Thu, 01 Feb 2024 02:30:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rVRWy-0005IZ-KU
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:30:42 -0500
+ id 1rVRWo-0005Cw-NB
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:30:31 -0500
 Received: from mgamail.intel.com ([192.55.52.120])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rVRWs-0001bF-Pu
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:30:39 -0500
+ id 1rVRWh-0001Up-Fh
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:30:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706772634; x=1738308634;
+ t=1706772623; x=1738308623;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=N3xsv2GtRVX6aSgVHRkuCisTKekGHMSdCU/SFK0nNzk=;
- b=MsFKUGqbGoQUacOgpGOHqsucBigpWLKA+yhjm/Y5rEpMaQfe/91RN4b6
- tNNeqdE5CtYNlFe3D2HkWPGzEmgTpuzjBs2lzKw0MaEwaaMLq6A+dOC6B
- GsNAV5Duu+jUo0+lcQkAqVK+rLdrB3j88RPI5nWsmuv4zwiPnPS67NMQM
- fVZEGRqkcEaqi6Pijmt5dAilQJbrfcTNSDvbsvWUnYEuWKrqCmLmqpajp
- p9UWaKVyvR6B6VY1raSL3Wkb57sUBcGGelp5A3r3HwSnkGRJ6y2/W0F3m
- QnfDP5tLfJO3gfbh9nZW4fJBKkT1lMiVHu33S6jdo9mCIrtoxWbv9Hcdo w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402676650"
-X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="402676650"
+ bh=Lhqz2iRToADp66tcHjAaagZoKGFICWwlIhQ9qtn5y64=;
+ b=gt6gb1x4LBgYXrwMXz22NDrugrqP7U9FBNj6Cj4cbiq3PYxaCaPn3GCh
+ 15RkxdDskKmd/CykYAkOj4dL6O6+emRsYOdM+WwqBta5KvWdNScz+KB31
+ EbvJbUC6FeOnbjFwB1FeON3pvIOlHHSo3jNc1VzpI4fVB3si6I1dJHR2O
+ kgAg9986uJ6q3Ih9v2GrDOgptyT3zOYWBgcqGsn5PUO55zRHR9b/66ANO
+ ouB4AULwWyuIxcfWjD6QwpiGwHorldD2DHR4Cc6zr4bxwxEaAtE1PjTZA
+ HfTnRoiqMqTUMgdB9VDhWJgv3C0hdTmXcK+dIsiGpFDRgpdNvDqnBgRTu A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402676610"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="402676610"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 23:30:31 -0800
+ 31 Jan 2024 23:30:22 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; 
-   d="scan'208";a="4443189"
+   d="scan'208";a="4443140"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 23:30:27 -0800
+ 31 Jan 2024 23:30:18 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -50,9 +50,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, yi.y.sun@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH rfcv2 03/18] vfio: Introduce IOMMULegacyDevice
-Date: Thu,  1 Feb 2024 15:28:03 +0800
-Message-Id: <20240201072818.327930-4-zhenzhong.duan@intel.com>
+Subject: [PATCH rfcv2 01/18] Introduce a common abstract struct HostIOMMUDevice
+Date: Thu,  1 Feb 2024 15:28:01 +0800
+Message-Id: <20240201072818.327930-2-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240201072818.327930-1-zhenzhong.duan@intel.com>
 References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
@@ -82,46 +82,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similar as IOMMUFDDevice, IOMMULegacyDevice represents a device in
-legacy mode and can be used as a communication interface between
-devices (i.e., VFIO, VDPA) and vIOMMU.
+HostIOMMUDevice will be inherited by two sub classes,
+legacy and iommufd currently.
 
-Currently it includes nothing legacy specific, but could be extended
-with any wanted info of legacy mode when necessary.
-
-IOMMULegacyDevice is willingly not a QOM object because we don't want
-it to be visible from the user interface.
+Introduce a helper function host_iommu_base_device_init to initialize it.
 
 Suggested-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/vfio/vfio-common.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/sysemu/host_iommu_device.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+ create mode 100644 include/sysemu/host_iommu_device.h
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 9b7ef7d02b..8bfb9cbe94 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -31,6 +31,7 @@
- #endif
- #include "sysemu/sysemu.h"
- #include "hw/vfio/vfio-container-base.h"
-+#include "sysemu/host_iommu_device.h"
- 
- #define VFIO_MSG_PREFIX "vfio %s: "
- 
-@@ -97,6 +98,11 @@ typedef struct VFIOIOMMUFDContainer {
-     uint32_t ioas_id;
- } VFIOIOMMUFDContainer;
- 
-+/* Abstraction of host IOMMU legacy device */
-+typedef struct IOMMULegacyDevice {
-+    HostIOMMUDevice base;
-+} IOMMULegacyDevice;
+diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+new file mode 100644
+index 0000000000..fe80ab25fb
+--- /dev/null
++++ b/include/sysemu/host_iommu_device.h
+@@ -0,0 +1,22 @@
++#ifndef HOST_IOMMU_DEVICE_H
++#define HOST_IOMMU_DEVICE_H
 +
- typedef struct VFIODeviceOps VFIODeviceOps;
- 
- typedef struct VFIODevice {
++typedef enum HostIOMMUDevice_Type {
++    HID_LEGACY,
++    HID_IOMMUFD,
++    HID_MAX,
++} HostIOMMUDevice_Type;
++
++typedef struct HostIOMMUDevice {
++    HostIOMMUDevice_Type type;
++    size_t size;
++} HostIOMMUDevice;
++
++static inline void host_iommu_base_device_init(HostIOMMUDevice *dev,
++                                               HostIOMMUDevice_Type type,
++                                               size_t size)
++{
++    dev->type = type;
++    dev->size = size;
++}
++#endif
 -- 
 2.34.1
 
