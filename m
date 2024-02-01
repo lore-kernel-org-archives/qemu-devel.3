@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65EF6C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 19:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0245C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 19:26:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVcUh-00078e-AW; Thu, 01 Feb 2024 14:13:03 -0500
+	id 1rVcgW-0001u2-QJ; Thu, 01 Feb 2024 14:25:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVcUe-00071b-7P
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 14:13:00 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVcgW-0001to-6y
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 14:25:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVcUR-0003Nn-1Q
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 14:12:59 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVcgU-0001ph-Qt
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 14:25:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706814764;
+ s=mimecast20190719; t=1706815513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QeY90C/M6YFuPuQHcmNve7Rbyg/pCNt8n114D/xO/TE=;
- b=h5z/t1LK+XCrxSyZNHlR6fIkMKhQQZuhBejdI6OEaPPLrPcSOca3owKd95ydDLan2b+U4Y
- yrJ1du7AZW0c+/lSIk3s+crFb0jL7XeNZ9u4xr2f3LXybkpAnF2jk2nQBfVxHb1gxWcul6
- LPSP++x/usMV9MuTpl6++OKaZrP9i+M=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1pymmuAcrkj7CRqmIcYx/9SdQjZc3Gb30MeSUSMaiPQ=;
+ b=hpCaNl4rGr7AJU6WwemgX+jn12zewl764xLoEzOhSD4Le4xoM08LcITLYC/wned9pl+K4Y
+ WuxG1l1KcFiELMARU5jsfP2uZxliIbtk8KaY6wz6oIP/9QKi7tSMDYpSg1GV1GUjBl/85A
+ lhwL+WzYorHL5tDKghcTeSpU26qz3aM=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-QIny9-OVOAGQ1D6AbwPAOw-1; Thu, 01 Feb 2024 14:12:42 -0500
-X-MC-Unique: QIny9-OVOAGQ1D6AbwPAOw-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-78407a01a83so170473485a.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 11:12:42 -0800 (PST)
+ us-mta-194-uV2CZR5TP1uRK-ktbViTjQ-1; Thu, 01 Feb 2024 14:25:10 -0500
+X-MC-Unique: uV2CZR5TP1uRK-ktbViTjQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a36650b64d4so72267266b.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 11:25:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706814761; x=1707419561;
+ d=1e100.net; s=20230601; t=1706815509; x=1707420309;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QeY90C/M6YFuPuQHcmNve7Rbyg/pCNt8n114D/xO/TE=;
- b=i/UPM5LuM754mpqrbZIbjwLJbiAaT08P/XoO7vWaMooKa6iOKTvFNBKJe0lfSaCYsS
- +7vsjPCQO6H8KjMGxhaURhnoI32cPdmyIt/pN0CewFY4lgQ/ZTShlad7lOTLFGWPwOwn
- +X6dHn/V34PBsyFghWc6uAPZ8PNa2QI5HHWF74AiTBuN6svsdrE5F3IUX9DJKSFaqjZ/
- NLdmbf7DqXQuxgyDJBFQdBnbE7GRGKDuduUeH2ry9++3bd393bji10p1gAPIvS5SfYRW
- QQYj1P6XWtZ8hwEDz07YbMjbsl0yT6tMyhR1HQoZT0a8+AmdHHlQmQTyn+abIt6ZdoSO
- d0Ng==
-X-Gm-Message-State: AOJu0Yyyv4i7ClSH8C2cn0+Zjh6N10wySnGibcwt5CG0VUu6RLpi57+0
- nOb0mPtOJFGJj+quVhRXIqbjH2DQMS6bgUMNN7pj/F+0i+DuaBJsPLuVIF3ZSTkLIOGbDolaS8L
- ku2oFtjCzpyiDCCwzU+kQqfWa5OKMR/ielrqzAYrHmoCFoSQGE5Z9
-X-Received: by 2002:a05:620a:3889:b0:785:416a:b4cd with SMTP id
- qp9-20020a05620a388900b00785416ab4cdmr3207660qkn.60.1706814761771; 
- Thu, 01 Feb 2024 11:12:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNPIfxayQFo4UXO8R7TucwewRiAQkh48Gk6I+DFRgvNYdN3H9g7tSM/5978n/m3wCd+Ljc3Q==
-X-Received: by 2002:a05:620a:3889:b0:785:416a:b4cd with SMTP id
- qp9-20020a05620a388900b00785416ab4cdmr3207641qkn.60.1706814761365; 
- Thu, 01 Feb 2024 11:12:41 -0800 (PST)
+ bh=1pymmuAcrkj7CRqmIcYx/9SdQjZc3Gb30MeSUSMaiPQ=;
+ b=i8X4Z9xzCkpdRBOsLL27R2kYQzP25MdUH/kWDgsv4Iw8h43BnoQe8xXeEltdhUgLCh
+ z9HeSfCA2I1MvLKs6OOOm1AUwBWwHZhsRz24TUmkw+pSFIxN1Ay6gafB5BlTXIrY3yi/
+ WuroZAlnTyurvelPaj8AKS4Gh/Tq29DoE3SpNykVoQ/ngfUDnmQxiaLYKQkuEilseO5n
+ qaa2Nnjw64MoqL5s9AIF/xQTyM/XN8WVVFzgvHBIEn+jBZ3f/3aXQYmcX7CqshPZpkcy
+ wg04jMddvrsTVDmnMel+YQlN9M6AcRICE8UbhI9mQSqF5ji7hVMuw0Ruh7b/CBHyAEM5
+ EGUA==
+X-Gm-Message-State: AOJu0YyQ5hLYapCJsTijKprdgFNUn/VL7R74nvkKSDzvlFZ4Vdh+TwtU
+ +aayhzLKVgjwKK68asFgdaxiaRsQEm9OZ2UqmslNdN9TIvsMhU+8fmtzQsDsvT9EFOuLXNqtsGQ
+ w30lrsvCLaiP6bPHrGQXyqRgYJ0vwLNl8X2lMdy1F8LzWRnUUGDD7
+X-Received: by 2002:a17:906:3bdb:b0:a28:c5dc:4802 with SMTP id
+ v27-20020a1709063bdb00b00a28c5dc4802mr4600710ejf.31.1706815508935; 
+ Thu, 01 Feb 2024 11:25:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG6mU5bLWLPaoiHY6a1Z/VJEWXe/Rp2M/XCgTT8dFkVwkCm3oK4vJe/eYcOyOc7uS57VSvpFA==
+X-Received: by 2002:a17:906:3bdb:b0:a28:c5dc:4802 with SMTP id
+ v27-20020a1709063bdb00b00a28c5dc4802mr4600701ejf.31.1706815508641; 
+ Thu, 01 Feb 2024 11:25:08 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCVtdiICq4pXej8xf3PjZu9MT1K60R0zAihdWP3cfE2/PpGfXQvNG23XT9DOaIidCLMIS97wfWceSCnvvdhaM8Iy58mvJaVmbrjAwiwIakNJd4CqGvOJDH0lqkOwuGKIdeOkD1NGrLmtUCA=
+ AJvYcCWDKtx2yEGol9iksyeD4rN7sF2AgGmI+vrqyzlst0hksZRZt8hIeCCr5dEeResg5grj6m2XiWcs46z+qPcQP44qQrb6MIMCriFW9bqGW1b/S47AiM9Lr0uMqP9afHPIzl2vzcoQU4xC6AIpV5a30dbfBtAe1h/K7JhTNa6uaMT+0r8=
 Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
  [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- m6-20020ae9e006000000b00783dc97436dsm68152qkk.13.2024.02.01.11.12.39
+ u17-20020a17090657d100b00a36c6ddf0e4sm84833ejr.144.2024.02.01.11.25.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Feb 2024 11:12:40 -0800 (PST)
-Message-ID: <d0ed3f33-b641-4e46-bfaa-f21fbcecbeb8@redhat.com>
-Date: Thu, 1 Feb 2024 20:12:38 +0100
+ Thu, 01 Feb 2024 11:25:08 -0800 (PST)
+Message-ID: <bffd1672-c084-4177-8a5a-51e0dbcf38be@redhat.com>
+Date: Thu, 1 Feb 2024 20:25:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] target/arm/tcg/m_helper.c: Include the full
- helpers only with CONFIG_ARM_V7M
+Subject: Re: [PATCH] hw/ide: Add the possibility to disable the CompactFlash
+ device in the build
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20240129081835.137726-1-thuth@redhat.com>
- <20240129081835.137726-3-thuth@redhat.com>
- <CAFEAcA-yL8BAdtkF2xaWJOeFPUWRoBbuvPSEeorwjyei3oFjDQ@mail.gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ Miroslav Rezanina <mrezanin@redhat.com>
+References: <20240201082916.20857-1-thuth@redhat.com>
+ <alpine.LMD.2.03.2402011326360.16176@eik.bme.hu>
+ <13ab647c-df89-49ab-8f76-8ce57d519aab@redhat.com>
+ <alpine.LMD.2.03.2402011352080.16176@eik.bme.hu>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -122,18 +123,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAFEAcA-yL8BAdtkF2xaWJOeFPUWRoBbuvPSEeorwjyei3oFjDQ@mail.gmail.com>
+In-Reply-To: <alpine.LMD.2.03.2402011352080.16176@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,62 +151,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/02/2024 15.19, Peter Maydell wrote:
-> On Mon, 29 Jan 2024 at 08:18, Thomas Huth <thuth@redhat.com> wrote:
+On 01/02/2024 13.54, BALATON Zoltan wrote:
+> On Thu, 1 Feb 2024, Thomas Huth wrote:
+>> On 01/02/2024 13.39, BALATON Zoltan wrote:
+>>> On Thu, 1 Feb 2024, Thomas Huth wrote:
+>>>> For distros like downstream RHEL, it would be helpful to allow to disable
+>>>> the CompactFlash device. For making this possible, we need a separate
+>>>> Kconfig switch for this device, and the code should reside in a separate
+>>>> file.
+>>>>
+>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>> ---
+>>>> hw/ide/qdev-ide.h  | 41 ++++++++++++++++++++++++++++++++
+>>>> hw/ide/cf.c        | 58 ++++++++++++++++++++++++++++++++++++++++++++++
+>>>> hw/ide/qdev.c      | 51 ++--------------------------------------
+>>>> hw/ide/Kconfig     |  4 ++++
+>>>> hw/ide/meson.build |  1 +
+>>>> 5 files changed, 106 insertions(+), 49 deletions(-)
+>>>> create mode 100644 hw/ide/qdev-ide.h
+>>>> create mode 100644 hw/ide/cf.c
+>>>>
+>>>> diff --git a/hw/ide/qdev-ide.h b/hw/ide/qdev-ide.h
+>>>> new file mode 100644
+>>>> index 0000000000..3dd977466c
+>>>> --- /dev/null
+>>>> +++ b/hw/ide/qdev-ide.h
+>>>
+>>> This may be unrelated to this patch but we already have 
+>>> include/hw/ide/internal.h which may be a place these should go in but 
+>>> that header is in inlcude because some files outside hw/ide include it. 
+>>> I've found three places that include ide/internal.h: hw/arm/sbsa-ref.c, 
+>>> hw/i386/pc.c and hw/misc/macio.h. Only macio is really needing internal 
+>>> IDE parts the other two just uses some functions so macio is probably the 
+>>> reason this wasn't cleaned up yet. In any case, maybe this could go in 
+>>> include/hw/ide/internal.h to avoid introducing a new header or somehow 
+>>> make this a local header where non-public parts of hw/ide/internal.h 
+>>> could be moved in the future. Such as rename include/hw/ide/internal.h to 
+>>> ide.h and name this one internal.h maybe?
 >>
->> If CONFIG_ARM_V7M is not set, we don't want to include the full-fledged
->> helper functions that require additional functions for linking. The
->> reduced set of the linux-user functions works fine as stubs in this
->> case, so change the #ifdef statement accordingly.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   target/arm/tcg/m_helper.c | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
->> index d1f1e02acc..a5a6e96fc3 100644
->> --- a/target/arm/tcg/m_helper.c
->> +++ b/target/arm/tcg/m_helper.c
->> @@ -22,6 +22,7 @@
->>   #endif
->>   #if !defined(CONFIG_USER_ONLY)
->>   #include "hw/intc/armv7m_nvic.h"
->> +#include CONFIG_DEVICES
->>   #endif
->>
->>   static void v7m_msr_xpsr(CPUARMState *env, uint32_t mask,
->> @@ -69,7 +70,7 @@ uint32_t arm_v7m_mrs_control(CPUARMState *env, uint32_t secure)
->>       return value;
->>   }
->>
->> -#ifdef CONFIG_USER_ONLY
->> +#if defined(CONFIG_USER_ONLY) || !defined(CONFIG_ARM_V7M)
+>> I don't like headers that much that just collect a lot of only slightly 
+>> related things. That only causes problems again when you have to 
+>> unentangle the stuff one day. So what's wrong with having a dedicated 
+>> header for the stuff in hw/ide/qdev.c ?
 > 
-> This looks a bit odd. If we don't have CONFIG_ARM_V7M
-> why are we compiling this file at all?
+> Maybe that it's not obvious from the name that it belongs to qdev.c as the 
+> names are not the same.
 
-We'll get failures during linking otherwise. target/arm/helper.h still 
-defines code that requires the v7m_* helper functions:
+I didn't want to just name the header "qdev.h" since that could easily be 
+confused in #include statements...
+IMHO qdev.c is already a very bad idea for a file name here... maybe 
+something like ide-dev.c and ide-dev.h would be better?
 
-/usr/bin/ld: libqemu-arm-softmmu.fa.p/target_arm_tcg_translate.c.o: 
-qemu/target/arm/helper.h:76: undefined reference to `helper_v7m_vlldm'
-/usr/bin/ld: libqemu-arm-softmmu.fa.p/target_arm_tcg_translate.c.o: 
-qemu/target/arm/helper.h:75: undefined reference to `helper_v7m_vlstm'
-/usr/bin/ld: libqemu-arm-softmmu.fa.p/target_arm_tcg_translate.c.o: 
-qemu/target/arm/helper.h:73: undefined reference to 
-`helper_v7m_preserve_fp_state'
+> Also some of the qdev stuff that should be in this 
+> header are in include/hw/ide/internal.h so these will still be split 
+> arbitrarily.
 
-etc.
+Oh, well, it seems to be a mess already... hw/ide/pci.h includes the 
+internal.h header and thus opens the internal definitions to all PCI-based 
+IDE devices :-/
 
-And then other files are depending on these helpers, too, e.g. 
-target/arm/tcg/translate-vfp.c calls gen_helper_v7m_preserve_fp_state() etc. 
-... I guess it might be possible to disable all those spots with some 
-#ifdefs, too, but it's getting quite ugly that way. It's way nicer to use 
-the stub functions that we have in m_helper already anyway.
+If we can agree on a better name for qdev-ide.h, I can try to clean that 
+mess up a little bit...
 
   Thomas
-
-
 
 
