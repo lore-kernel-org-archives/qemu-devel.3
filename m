@@ -4,110 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C618C4828C
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D3CC4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVX2O-0006Px-Df; Thu, 01 Feb 2024 08:23:28 -0500
+	id 1rVX9k-000843-9x; Thu, 01 Feb 2024 08:31:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVX2L-0006Pa-UT
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:23:25 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVX9B-0007u0-Cv
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:30:29 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVX2H-0005HO-Rn
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:23:24 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVX98-0006vP-0o
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:30:28 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id AEB7D22147;
- Thu,  1 Feb 2024 13:23:19 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C65A41FBBF;
+ Thu,  1 Feb 2024 13:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706793799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706794222; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9SSVDW8uYIbqv1wY3ghNR+a4Of8ubLQedhlEsTqzw4=;
- b=sBVwBPAqwAc/IgourOyZIkoBn2ZhAtOIvT1JzMvCNFYDQS7VvI2OzgR6JMsFwh1qU1vqXN
- OcN6lVcakSGDfqtWWpTA5IedrEgAcz7IP8HMrxtsSi5NkuUMGorhqKHtTAHMEBG0290DB3
- GrdhJwN6ZC0Tyg+9qqnaP3GzwCMf6sw=
+ bh=jpcNXmMyNLwKukTYEEGKd4y/mGysO/eA254UvWJLmJk=;
+ b=AnM2aJsxnluR3+VciI7s59WHrY5XUEdKFLkROo3J28Cg5RrcrwLclg6ruhwQMyBtigev3l
+ eeMYlX1Z9GMa/pYpE9Rz9301Ou4lTHOovQ23MARw1Ef1Ghn9oiaAQt4FC7YSGsLExJ2O1K
+ hfY7WgfP7ZZW6x5c/q7iRXiQJ/TN5BM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706793799;
+ s=susede2_ed25519; t=1706794222;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9SSVDW8uYIbqv1wY3ghNR+a4Of8ubLQedhlEsTqzw4=;
- b=4S5B6I8cjVgFiNOUe/R4x1zUkgJfLJsPFqABGCU/O9VCOK/URIhsiSKfjWaJmQF2hiK9he
- 29WCARA0GBHCXJBQ==
+ bh=jpcNXmMyNLwKukTYEEGKd4y/mGysO/eA254UvWJLmJk=;
+ b=xGrCLi/no6MqbhQ9/3Y3MxWMd1QWjiSK2Z0ZXs8rGURk2hVkBKsRhJw8CVy9opCrXZG8kk
+ Vfw0ElmNuaCmN4BA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706793799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706794222; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9SSVDW8uYIbqv1wY3ghNR+a4Of8ubLQedhlEsTqzw4=;
- b=sBVwBPAqwAc/IgourOyZIkoBn2ZhAtOIvT1JzMvCNFYDQS7VvI2OzgR6JMsFwh1qU1vqXN
- OcN6lVcakSGDfqtWWpTA5IedrEgAcz7IP8HMrxtsSi5NkuUMGorhqKHtTAHMEBG0290DB3
- GrdhJwN6ZC0Tyg+9qqnaP3GzwCMf6sw=
+ bh=jpcNXmMyNLwKukTYEEGKd4y/mGysO/eA254UvWJLmJk=;
+ b=AnM2aJsxnluR3+VciI7s59WHrY5XUEdKFLkROo3J28Cg5RrcrwLclg6ruhwQMyBtigev3l
+ eeMYlX1Z9GMa/pYpE9Rz9301Ou4lTHOovQ23MARw1Ef1Ghn9oiaAQt4FC7YSGsLExJ2O1K
+ hfY7WgfP7ZZW6x5c/q7iRXiQJ/TN5BM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706793799;
+ s=susede2_ed25519; t=1706794222;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9SSVDW8uYIbqv1wY3ghNR+a4Of8ubLQedhlEsTqzw4=;
- b=4S5B6I8cjVgFiNOUe/R4x1zUkgJfLJsPFqABGCU/O9VCOK/URIhsiSKfjWaJmQF2hiK9he
- 29WCARA0GBHCXJBQ==
+ bh=jpcNXmMyNLwKukTYEEGKd4y/mGysO/eA254UvWJLmJk=;
+ b=xGrCLi/no6MqbhQ9/3Y3MxWMd1QWjiSK2Z0ZXs8rGURk2hVkBKsRhJw8CVy9opCrXZG8kk
+ Vfw0ElmNuaCmN4BA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 36C6D139AB;
- Thu,  1 Feb 2024 13:23:19 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4FC76139AB;
+ Thu,  1 Feb 2024 13:30:22 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id fUE5AEebu2UlRAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 01 Feb 2024 13:23:19 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id X8MbBu6cu2UaRgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 01 Feb 2024 13:30:22 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Hao Xiang <hao.xiang@bytedance.com>
-Cc: Peter Xu <peterx@redhat.com>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Bryan Zhang
- <bryan.zhang@bytedance.com>
-Subject: Re: [External] Re: [PATCH 0/5] migration/multifd: Prerequisite
- cleanups for ongoing work
-In-Reply-To: <CAAYibXiUg5pkBhQA=QFZ7jgBXRFN81L3bQETFdEnSquyY95hHA@mail.gmail.com>
-References: <20240126221943.26628-1-farosas@suse.de>
- <PH7PR11MB5941BDAB9743C53A9E08CC3CA37E2@PH7PR11MB5941.namprd11.prod.outlook.com>
- <ZbdVhLTLo5udNfeL@x1n> <87jznse211.fsf@suse.de> <ZboS9CPIuxIc9PTf@x1n>
- <8734udljwz.fsf@suse.de>
- <CAAYibXiUg5pkBhQA=QFZ7jgBXRFN81L3bQETFdEnSquyY95hHA@mail.gmail.com>
-Date: Thu, 01 Feb 2024 10:23:16 -0300
-Message-ID: <87v878iaij.fsf@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Bryan Zhang <bryan.zhang@bytedance.com>, Prasad
+ Pandit <ppandit@redhat.com>, Yuan Liu <yuan1.liu@intel.com>, Avihai Horon
+ <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH 03/14] migration/multifd: Drop MultiFDSendParams.quit,
+ cleanup error paths
+In-Reply-To: <ZbtkQLnPJDmXK912@x1n>
+References: <20240131103111.306523-1-peterx@redhat.com>
+ <20240131103111.306523-4-peterx@redhat.com> <87zfwlk0gr.fsf@suse.de>
+ <ZbtkQLnPJDmXK912@x1n>
+Date: Thu, 01 Feb 2024 10:30:19 -0300
+Message-ID: <87sf2cia6s.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sBVwBPAq;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4S5B6I8c
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; TO_DN_EQ_ADDR_SOME(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
- BAYES_HAM(-3.00)[100.00%]; ARC_NA(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[]
-X-Rspamd-Queue-Id: AEB7D22147
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -130,118 +117,340 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hao Xiang <hao.xiang@bytedance.com> writes:
+Peter Xu <peterx@redhat.com> writes:
 
-> On Wed, Jan 31, 2024 at 5:19=E2=80=AFAM Fabiano Rosas <farosas@suse.de> w=
-rote:
->>
->> Peter Xu <peterx@redhat.com> writes:
->>
->> > On Mon, Jan 29, 2024 at 09:51:06AM -0300, Fabiano Rosas wrote:
->> >> Peter Xu <peterx@redhat.com> writes:
->> >>
->> >> > On Mon, Jan 29, 2024 at 01:41:01AM +0000, Liu, Yuan1 wrote:
->> >> >> Because this change has an impact on the previous live migration
->> >> >> With IAA Patch, does the submission of the next version needs
->> >> >> to be submitted based on this change?
->> >> >
->> >> > I'd say hold off a little while until we're more certain on the pla=
-nned
->> >> > interface changes, to avoid you rebase your code back and forth; un=
-less
->> >> > you're pretty confident that this will be the right approach.
->> >> >
->> >> > I apologize on not having looked at any of the QAT/IAA compression =
-/ zero
->> >> > detection series posted on the list; I do plan to read them very so=
-on too
->> >> > after Fabiano.  So I may not have a complete full picture here yet,=
- please
->> >> > bare with me.
->> >> >
->> >> > If this series is trying to provide a base ground for all the effor=
-ts,
->> >> > it'll be great if we can thoroughly discuss here and settle an appr=
-oach
->> >> > soon that will satisfy everyone.
->> >>
->> >> Just a summary if it helps:
->> >>
->> >> For compression work (IAA/QPL, QAT) the discussion is around having a
->> >> new "compression acceleration" option that enables the accelerators a=
-nd
->> >> is complementary to the existing zlib compression method. We'd choose
->> >> those automatically based on availability and we'd make HW accelerated
->> >> compression produce a stream that is compatible with QEMU's zlib stre=
-am
->> >> so we could migrate between solutions.
->> >>
->> >> For zero page work and zero page acceleration (DSA), the question is =
-how
->> >> to fit zero page detection into multifd and whether we need a new hook
->> >> multifd_ops->zero_page_detect() (or similar) to allow client code to
->> >> provide it's own zero page detection methods. My worry here is that
->> >> teaching multifd to recognize zero pages is one more coupling to the
->> >> "pages" data type. Ideallly we'd find a way to include that operation=
- as
->> >> a prepare() responsibility and the client code would deal with it.
+> On Wed, Jan 31, 2024 at 12:05:08PM -0300, Fabiano Rosas wrote:
+>> peterx@redhat.com writes:
+>> 
+>> > From: Peter Xu <peterx@redhat.com>
 >> >
->> > Thanks Fabiano.
+>> > Multifd send side has two fields to indicate error quits:
+>> >
+>> >   - MultiFDSendParams.quit
+>> >   - &multifd_send_state->exiting
+>> >
+>> > Merge them into the global one.  The replacement is done by changing all
+>> > p->quit checks into the global var check.  The global check doesn't need
+>> > any lock.
+>> >
+>> > A few more things done on top of this altogether:
+>> >
+>> >   - multifd_send_terminate_threads()
+>> >
+>> >     Moving the xchg() of &multifd_send_state->exiting upper, so as to cover
+>> >     the tracepoint, migrate_set_error() and migrate_set_state().
+>> 
+>> Good.
+>> 
+>> >
+>> >   - multifd_send_sync_main()
+>> >
+>> >     In the 2nd loop, add one more check over the global var to make sure we
+>> >     don't keep the looping if QEMU already decided to quit.
+>> 
+>> Yes, also because we don't necessarily enter at multifd_send_page()
+>> every time.
+>> 
+>> >
+>> >   - multifd_tls_outgoing_handshake()
+>> >
+>> >     Use multifd_send_terminate_threads() to set the error state.  That has
+>> >     a benefit of updating MigrationState.error to that error too, so we can
+>> >     persist that 1st error we hit in that specific channel.
+>> 
+>> Makes sense.
+>> 
+>> >
+>> >   - multifd_new_send_channel_async()
+>> >
+>> >     Take similar approach like above, drop the migrate_set_error() because
+>> >     multifd_send_terminate_threads() already covers that.  Unwrap the helper
+>> >     multifd_new_send_channel_cleanup() along the way; not really needed.
+>> >
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  migration/multifd.h |  2 --
+>> >  migration/multifd.c | 85 ++++++++++++++++++---------------------------
+>> >  2 files changed, 33 insertions(+), 54 deletions(-)
+>> >
+>> > diff --git a/migration/multifd.h b/migration/multifd.h
+>> > index 35d11f103c..7c040cb85a 100644
+>> > --- a/migration/multifd.h
+>> > +++ b/migration/multifd.h
+>> > @@ -95,8 +95,6 @@ typedef struct {
+>> >      QemuMutex mutex;
+>> >      /* is this channel thread running */
+>> >      bool running;
+>> > -    /* should this thread finish */
+>> > -    bool quit;
+>> >      /* multifd flags for each packet */
+>> >      uint32_t flags;
+>> >      /* global number of generated multifd packets */
+>> > diff --git a/migration/multifd.c b/migration/multifd.c
+>> > index b8d2c96533..2c98023d67 100644
+>> > --- a/migration/multifd.c
+>> > +++ b/migration/multifd.c
+>> > @@ -372,6 +372,11 @@ struct {
+>> >      MultiFDMethods *ops;
+>> >  } *multifd_send_state;
+>> >  
+>> > +static bool multifd_send_should_exit(void)
+>> > +{
+>> > +    return qatomic_read(&multifd_send_state->exiting);
+>> > +}
+>> > +
+>> >  /*
+>> >   * The migration thread can wait on either of the two semaphores.  This
+>> >   * function can be used to kick the main thread out of waiting on either of
+>> > @@ -409,7 +414,7 @@ static int multifd_send_pages(void)
+>> >      MultiFDSendParams *p = NULL; /* make happy gcc */
+>> >      MultiFDPages_t *pages = multifd_send_state->pages;
+>> >  
+>> > -    if (qatomic_read(&multifd_send_state->exiting)) {
+>> > +    if (multifd_send_should_exit()) {
+>> >          return -1;
+>> >      }
+v>> >  
+>> > @@ -421,14 +426,11 @@ static int multifd_send_pages(void)
+>> >       */
+>> >      next_channel %= migrate_multifd_channels();
+>> >      for (i = next_channel;; i = (i + 1) % migrate_multifd_channels()) {
+>> > -        p = &multifd_send_state->params[i];
+>> > -
+>> > -        qemu_mutex_lock(&p->mutex);
+>> > -        if (p->quit) {
+>> > -            error_report("%s: channel %d has already quit!", __func__, i);
+>> > -            qemu_mutex_unlock(&p->mutex);
+>> > +        if (multifd_send_should_exit()) {
+>> >              return -1;
+>> >          }
+>> > +        p = &multifd_send_state->params[i];
+>> > +        qemu_mutex_lock(&p->mutex);
+>> >          if (!p->pending_job) {
+>> >              p->pending_job++;
+>> >              next_channel = (i + 1) % migrate_multifd_channels();
+>> 
+>> Hm, I'm not sure it's correct to check 'exiting' outside of the
+>> lock. While it is an atomic operation, it is not atomic in relation to
+>> pending_job...
+>> 
+>> ... looking closer, it seems that we can do what you suggest because
+>> p->pending_job is not touched by the multifd_send_thread in case of
+>> error, which means this function will indeed miss the 'exiting' flag,
+>> but pending_job > 0 means it will loop to the next channel and _then_ it
+>> will see the 'exiting' flag.
 >
-> Hi Fabiano,
+> It could still be the last channel we iterate, then IIUC we can still try
+> to assign a job to a thread even if a concurrent error is set there.
 >
-> Your current refactoring assumes that compression ops and multifd
-> socket ops are mutually exclusive. Both of them need to implement the
-> entire MultiFDMethods interface. I think this works fine for now. Once
-> we introduce multifd zero page checking and we add a new interface for
-> that, we are adding a new method zero_page_detect() on the
-> MultiFDMethods interface. If we do that, zero_page_detect() needs to
-> be implemented in multifd_socket_ops and it also needs to be
-> implemented in zlib and zstd. On top of that, if we add an accelerator
-> to offload zero_page_detect(), that accelerator configuration can
-> co-exist with compression or socket. That makes things quite
-> complicated in my opinion.
+> However IMHO it's okay; the error in the sender thread should ultimately
+> set migrate_set_error() and the main thread should detect that in the
+> migration loop, then we'll still quit.  The extra queued job shouldn't
+> matter, IMHO.
+>
+>> 
+>> > @@ -483,6 +485,16 @@ static void multifd_send_terminate_threads(Error *err)
+>> >  {
+>> >      int i;
+>> >  
+>> > +    /*
+>> > +     * We don't want to exit each threads twice.  Depending on where
+>> > +     * we get the error, or if there are two independent errors in two
+>> > +     * threads at the same time, we can end calling this function
+>> > +     * twice.
+>> > +     */
+>> > +    if (qatomic_xchg(&multifd_send_state->exiting, 1)) {
+>> > +        return;
+>> > +    }
+>> > +
+>> >      trace_multifd_send_terminate_threads(err != NULL);
+>> >  
+>> >      if (err) {
+>> > @@ -497,26 +509,13 @@ static void multifd_send_terminate_threads(Error *err)
+>> >          }
+>> >      }
+>> >  
+>> > -    /*
+>> > -     * We don't want to exit each threads twice.  Depending on where
+>> > -     * we get the error, or if there are two independent errors in two
+>> > -     * threads at the same time, we can end calling this function
+>> > -     * twice.
+>> > -     */
+>> > -    if (qatomic_xchg(&multifd_send_state->exiting, 1)) {
+>> > -        return;
+>> > -    }
+>> > -
+>> >      for (i = 0; i < migrate_multifd_channels(); i++) {
+>> >          MultiFDSendParams *p = &multifd_send_state->params[i];
+>> >  
+>> > -        qemu_mutex_lock(&p->mutex);
+>> > -        p->quit = true;
+>> 
+>> Now that you removed this, we decoupled kicking the threads from setting
+>> the exit/error, so this function could be split in two.
+>> 
+>> We could set the exiting flag at the places the error occurred (multifd
+>> threads, thread creation, etc) and "terminate the threads" at
+>> multifd_save_cleanup(). That second part we already do actually:
+>> 
+>> void multifd_save_cleanup(void) {
+>> ...
+>>     multifd_send_terminate_threads(NULL);
+>>                                    ^see?
+>>     for (i = 0; i < migrate_multifd_channels(); i++) {
+>>         MultiFDSendParams *p = &multifd_send_state->params[i];
+>> 
+>>         if (p->running) {
+>>             qemu_thread_join(&p->thread);
+>>         }
+>>     }
+>> ...
+>> }
+>> 
+>> I think there's no reason anymore for the channels to kick each
+>> other. They would all be waiting at p->sem and multifd_send_cleanup()
+>> would kick + join them.
+>
+> Sounds good here.
+>
+> I'll attach one patch like this, feel free to have an early look:
+>
+> =====
+>
+> From f9a3d63d5cca0068daaea4c72392803f4b29dcb5 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Thu, 1 Feb 2024 17:01:54 +0800
+> Subject: [PATCH] migration/multifd: Split multifd_send_terminate_threads()
+>
+> Split multifd_send_terminate_threads() into two functions:
+>
+>   - multifd_send_set_error(): used when an error happened on the sender
+>     side, set error and quit state only
+>
+>   - multifd_send_terminate_threads(): used only by the main thread to kick
+>     all multifd send threads out of sleep, for the last recycling.
+>
+> Use multifd_send_set_error() in the three old call sites where only the
+> error will be set.
+>
+> Use multifd_send_terminate_threads() in the last one where the main thread
+> will kick the multifd threads at last in multifd_save_cleanup().
+>
+> Both helpers will need to set quitting=1.
+>
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-Peter has proposed an alternate scheme. Take a look at his series. But
-it basically keeps the compression as is and moves some code into the
-prepare() phase:
+New patch looks good.
 
-https://lore.kernel.org/r/20240131103111.306523-1-peterx@redhat.com
+> ---
+>  migration/multifd.c    | 27 ++++++++++++++++++---------
+>  migration/trace-events |  2 +-
+>  2 files changed, 19 insertions(+), 10 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index c71e74b101..95dc29c8c7 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -536,10 +536,9 @@ int multifd_queue_page(RAMBlock *block, ram_addr_t offset)
+>      return 1;
+>  }
+>  
+> -static void multifd_send_terminate_threads(Error *err)
+> +/* Multifd send side hit an error; remember it and prepare to quit */
+> +static void multifd_send_set_error(Error *err)
+>  {
+> -    int i;
+> -
+>      /*
+>       * We don't want to exit each threads twice.  Depending on where
+>       * we get the error, or if there are two independent errors in two
+> @@ -550,8 +549,6 @@ static void multifd_send_terminate_threads(Error *err)
+>          return;
+>      }
+>  
+> -    trace_multifd_send_terminate_threads(err != NULL);
+> -
+>      if (err) {
+>          MigrationState *s = migrate_get_current();
+>          migrate_set_error(s, err);
+> @@ -563,7 +560,19 @@ static void multifd_send_terminate_threads(Error *err)
+>                                MIGRATION_STATUS_FAILED);
+>          }
+>      }
+> +}
+> +
+> +static void multifd_send_terminate_threads(void)
+> +{
+> +    int i;
+> +
+> +    trace_multifd_send_terminate_threads();
+>  
+> +    /*
+> +     * Tell everyone we're quitting.  No xchg() needed here; we simply
+> +     * always set it.
+> +     */
+> +    qatomic_set(&multifd_send_state->exiting, 1);
+>      for (i = 0; i < migrate_multifd_channels(); i++) {
+>          MultiFDSendParams *p = &multifd_send_state->params[i];
+>  
+> @@ -586,7 +595,7 @@ void multifd_save_cleanup(void)
+>      if (!migrate_multifd()) {
+>          return;
+>      }
+> -    multifd_send_terminate_threads(NULL);
+> +    multifd_send_terminate_threads();
+>      for (i = 0; i < migrate_multifd_channels(); i++) {
+>          MultiFDSendParams *p = &multifd_send_state->params[i];
 
-> Can we create an instance of MultiFDMethods at runtime and fill each
-> method depending on the configuration? If methods are not filled, we
-> fallback to fill it with the default implementation (like what
-> socket.c provides) For instance, if zstd is enabled and zero page
-> checking using CPU, the interface will be filled with all the
-> functions zstd currently implements and since zstd doesn't implement
-> zero_page_detect(), we will fallback to fill zero_page_detect() with
-> the default multifd zero page checking implementation.
+We could then move the qemu_thread_join loop into
+multifd_send_terminate_threads().
 
-Take a look whether incorporating zero_page_detect() in the prepare()
-phase would work. We're trying to walk toward a multifd_ops model that
-is not tied to the pages concept.
+(and fix all the bugs we have so that we only progress past
+multifd_send_terminate_threads() once all threads have exited and no
+more thread is going to spawn)
 
->> >
->> > Since I'm preparing the old series to post for some fundamental cleanu=
-ps
->> > around multifd, and when I'm looking around the code, I noticed that
->> > _maybe_ it'll also be eaiser to apply such a series if we can cleanup =
-more
->> > things then move towards a clean base to add more accelerators.
->> >
->> > I agree many ideas in your this series, but I may address it slightly
->> > different (e.g., I want to avoid send(), but you can consider that in =
-the
->> > fixed-ram series instead), also it'll be after some other cleanup I pl=
-an to
->> > give a stab at which is not yet covered in this series.  I hope I can =
-add
->> > your "Co-developed-by" in some of the patches there.  If you haven't s=
-pend
->> > more time on new version of this series, please wait 1-2 days so I can=
- post
->> > my thoughts.
->>
->> Sure, go ahead.
->>
+>  
+> @@ -778,7 +787,7 @@ out:
+>      if (ret) {
+>          assert(local_err);
+>          trace_multifd_send_error(p->id);
+> -        multifd_send_terminate_threads(local_err);
+> +        multifd_send_set_error(local_err);
+>          multifd_send_kick_main(p);
+>          error_free(local_err);
+>      }
+> @@ -814,7 +823,7 @@ static void multifd_tls_outgoing_handshake(QIOTask *task,
+>  
+>      trace_multifd_tls_outgoing_handshake_error(ioc, error_get_pretty(err));
+>  
+> -    multifd_send_terminate_threads(err);
+> +    multifd_send_set_error(err);
+>      multifd_send_kick_main(p);
+>      error_free(err);
+>  }
+> @@ -896,7 +905,7 @@ static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
+>      }
+>  
+>      trace_multifd_new_send_channel_async_error(p->id, local_err);
+> -    multifd_send_terminate_threads(local_err);
+> +    multifd_send_set_error(local_err);
+>      multifd_send_kick_main(p);
+>      object_unref(OBJECT(ioc));
+>      error_free(local_err);
+> diff --git a/migration/trace-events b/migration/trace-events
+> index de4a743c8a..298ad2b0dd 100644
+> --- a/migration/trace-events
+> +++ b/migration/trace-events
+> @@ -141,7 +141,7 @@ multifd_send_error(uint8_t id) "channel %u"
+>  multifd_send_sync_main(long packet_num) "packet num %ld"
+>  multifd_send_sync_main_signal(uint8_t id) "channel %u"
+>  multifd_send_sync_main_wait(uint8_t id) "channel %u"
+> -multifd_send_terminate_threads(bool error) "error %d"
+> +multifd_send_terminate_threads(void) ""
+>  multifd_send_thread_end(uint8_t id, uint64_t packets, uint64_t normal_pages) "channel %u packets %" PRIu64 " normal pages %"  PRIu64
+>  multifd_send_thread_start(uint8_t id) "%u"
+>  multifd_tls_outgoing_handshake_start(void *ioc, void *tioc, const char *hostname) "ioc=%p tioc=%p hostname=%s"
+> -- 
+> 2.43.0
 
