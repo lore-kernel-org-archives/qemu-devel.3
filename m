@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD658C4828F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D115EC48291
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 15:25:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVYw0-0005L6-E7; Thu, 01 Feb 2024 10:25:00 -0500
+	id 1rVYwk-0005nN-PH; Thu, 01 Feb 2024 10:25:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVYvy-0005IC-TW
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:24:58 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1rVYwh-0005gY-HK
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:25:43 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVYvs-0006Uj-Ft
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:24:57 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-55a8fd60af0so1503591a12.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 07:24:52 -0800 (PST)
+ id 1rVYwf-0006jY-Vm
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:25:43 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-55eed368b0bso1921448a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 07:25:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706801091; x=1707405891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706801140; x=1707405940; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=PITD+fCruBbKJL9WGFStG0Xh2YCHJSktby9ovEWQQGg=;
- b=baXX/iCQLgAmkKvxj3B8xaieZN1uGIy39R71dlA0a9owJYOpPmd6tYNyKOHr968js9
- cq39hV8RTgXdyiOsTyp8xb8PijgElorQOohFlvVdOeQYHH2NpZZ3KwsjJVASjF92NUvI
- MWvPJlIp7aiQU2lhHdaJOQbZJ8OCVUbnPeO1h44cuhqfbbTKT7MqAmNZerxjVKEolaga
- QWoGuywZM6bwuol8njEC3r2nSCAzDn4rxKQQOTFvxyNlutjQNpwRWTUVQCA1aNsFEeeA
- gcUtYrSm4CWd+FjrZ4bQt/8kK2foL9NE4i4LHEOqhLSGm6v5vm/kQbPnsfiqNhJ6pRew
- af7g==
+ bh=P81bZc09JLdONIL0Ovoy2Kr/nCbiqlVDh16Y88Zh264=;
+ b=fQWFHE7pT2AK2SCmz1cqn0muiJ+or3jRysR8nVI5ZmpclVqIp1+ZcwHtLRDWlE3lib
+ VJ32IoGJX4R3/YQH+iDjNdTYIMFCKGXB5ct1U9aXTMwnkVqJOoLs2GFG6nEH9mnIJlXw
+ eKmWD21OBPgseQw+Vr6S/5U1nbG/J8k83QjWBTZIbJwJezu0I4waCkUL9vDIjZnYcxsH
+ toh6UCAPkCCVIU31ymVLGekCvfJ8WJhzayVugyAoF1qonvmc1FKgLZdOtwSeHH1jMdlj
+ XS+EWQ7eFgUX6D6NoEXkPnw/obyfnNtx4LMB1p34a3MeIX0vqvyl2+Xrp9se6FK7MGwD
+ DiQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706801091; x=1707405891;
+ d=1e100.net; s=20230601; t=1706801140; x=1707405940;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PITD+fCruBbKJL9WGFStG0Xh2YCHJSktby9ovEWQQGg=;
- b=bfjwim3OXAUVnm3kkx9CKDOXNcarf/g9fCxA5O+xMY/8papqanbLoRiL10yMq2ojkz
- 2TPi0FWeDCQ9sNc1RVyoOmaifV/9V9HlPpUqeJ60kfUD4EcNjLiqQN4xEZPLFhRTwtfT
- LdkvTV4Z8O+pF/vGCT3AYTUCDsZDp9mcCoBWNM2XWp8P/4lYAQxvt0dOM0g9nTTo6WOo
- OxNKw+2A7ENTAXr68MpVwSSm3r6V7OwIieN2e2EEENgD6u0puVWY09oBpu/1P3o9E56H
- QmHPJACvqVUVyv0VWTNYR6zEvcrdDtCAowzjb7B9DBpRoAc29L4hlQNHhXDaHyPF8Gdw
- oDNg==
-X-Gm-Message-State: AOJu0YwbwrBgVgh7xvubu11gHiZJLavwYIKMYwVXnaxhPDOWMErA4POM
- s22F7w2w7lrKaMiv5YCCB2HcNSpDRcHGSTVbANBK9HMe0jaSJn5fkAL56g6NMBp1xvxeLJQ5/CH
- bvxiulBZs9nsfeU/k50ZfGeLWUDoWS7fXl4d2K5xAQOeDgVQG
-X-Google-Smtp-Source: AGHT+IEJwZoEp8lf1iAd5kJWOghwlQop5dFyOE6Jqld3zxLokrGrKXmygih7QAlU9SHLT73MwFATF6AlUxiR1O5Rd7Q=
-X-Received: by 2002:a05:6402:142:b0:55e:ec49:7aac with SMTP id
- s2-20020a056402014200b0055eec497aacmr3471596edu.40.1706801090822; Thu, 01 Feb
- 2024 07:24:50 -0800 (PST)
+ bh=P81bZc09JLdONIL0Ovoy2Kr/nCbiqlVDh16Y88Zh264=;
+ b=IBeC3oRiz8LsqhevBx0rEc91pvRh0I8pKn9RNHePsdw9x68NZHYAbT2wds/Ju3Bzn3
+ nzgmBWabHC7SGRyH/ZwZcV0vZumJWDXecTADhJ6ApYKVnC8w3udpf/HC4m1V2MoZXbGJ
+ gQ39xSW7YOl8eatuKmFSOOvWCFzQkbsjiIuFqb0eHMF7FBmf5g7DBbctl2cdnrxWXr/2
+ WkD82OYCgqlx/FCnsJJDBDNdd0nzGsaejzBmNLkA2mEXg2iyhIGS0is2NTwWKa3NrAlt
+ DlsICxjTbwATNrqluxlws/Qq07MBPjkuMe1jVacOXgciJ+3xdqcO2GooOk3elRnxyx9p
+ +G/w==
+X-Gm-Message-State: AOJu0YwnGOKIC9M+zSSpbT524uw6y038sumSuOiAldnekpNCNMTkZ7hx
+ bHl1NOXJXntKOy+7xmu9NauUscQToK+atmBtHpKjkrKgx7p/fEr42WCAK371Ovsl2ny+7QyVspK
+ fW0Qgyaeb4leEdWJdya2Tm53LfbEJpgOaMF8cLFgFqHGGrCSg
+X-Google-Smtp-Source: AGHT+IGKN1v9S9jrGm22kSKru/hDOHHOUf2ZCOnU6gL37MPD1U2fZ9T7Ol6mHYLHj2gTupxvFtq5RKQpDHaSPghnS1c=
+X-Received: by 2002:a05:6402:28a7:b0:55f:16d2:46a8 with SMTP id
+ eg39-20020a05640228a700b0055f16d246a8mr5007383edb.3.1706801140592; Thu, 01
+ Feb 2024 07:25:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20240126005541.1839038-1-komlodi@google.com>
- <20240126005541.1839038-2-komlodi@google.com>
-In-Reply-To: <20240126005541.1839038-2-komlodi@google.com>
+ <20240126005541.1839038-4-komlodi@google.com>
+In-Reply-To: <20240126005541.1839038-4-komlodi@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 15:24:40 +0000
-Message-ID: <CAFEAcA9xf3WvNPiTp2LRP_8Tuv=KDGMLDSwOtD+S0UDK5UVDZA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] hw/i2c: core: Add reset
+Date: Thu, 1 Feb 2024 15:25:30 +0000
+Message-ID: <CAFEAcA9V8j=72YN1VXx_WTAEjJ8caSd_qhdEwXV79xQ1DDMN0A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] hw/i2c: smbus_slave: Reset state on reset
 To: Joe Komlodi <komlodi@google.com>
 Cc: qemu-devel@nongnu.org, venture@google.com, minyard@acm.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,103 +90,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 26 Jan 2024 at 00:56, Joe Komlodi <komlodi@google.com> wrote:
 >
-> It's possible for a reset to come in the middle of a transaction, which
-> causes the bus to be in an old state when a new transaction comes in.
+> If a reset comes while the SMBus device is not in its idle state, it's
+> possible for it to get confused on valid transactions post-reset.
 >
 > Signed-off-by: Joe Komlodi <komlodi@google.com>
 > ---
->  hw/i2c/core.c        | 30 +++++++++++++++++++++++++-----
->  include/hw/i2c/i2c.h |  6 +++++-
->  2 files changed, 30 insertions(+), 6 deletions(-)
+>  hw/i2c/smbus_slave.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 >
-> diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-> index 4cf30b2c86..def4f134d0 100644
-> --- a/hw/i2c/core.c
-> +++ b/hw/i2c/core.c
-> @@ -23,11 +23,31 @@ static Property i2c_props[] = {
->      DEFINE_PROP_END_OF_LIST(),
->  };
+> diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
+> index e24a1ef472..58abde29de 100644
+> --- a/hw/i2c/smbus_slave.c
+> +++ b/hw/i2c/smbus_slave.c
+> @@ -201,10 +201,19 @@ static int smbus_i2c_send(I2CSlave *s, uint8_t data)
+>      return 0;
+>  }
 >
-> -static const TypeInfo i2c_bus_info = {
-> -    .name = TYPE_I2C_BUS,
-> -    .parent = TYPE_BUS,
-> -    .instance_size = sizeof(I2CBus),
-> -};
-> +static void i2c_bus_enter_reset(Object *obj, ResetType type)
+> +static void smbus_device_enter_reset(Object *obj, ResetType type)
 > +{
-> +    I2CBus *bus = I2C_BUS(obj);
-> +    I2CNode *node, *next;
-> +
-> +    bus->broadcast = false;
-> +    QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
-> +        QLIST_REMOVE(node, next);
-> +        g_free(node);
-> +    }
-
-Doesn't it confuse the device that's partway through a
-transaction if we just forget about the transaction entirely
-without terminating it somehow? I'm not sure what real hardware
-does in this situation, though.
-
+> +    SMBusDevice *dev = SMBUS_DEVICE(obj);
+> +    dev->mode = SMBUS_IDLE;
+> +    dev->data_len = 0;
 > +}
 > +
-> +static void i2c_bus_class_init(ObjectClass *klass, void *data)
-> +{
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +    rc->phases.enter = i2c_bus_enter_reset;
-> +}
-> +
-> + static const TypeInfo i2c_bus_info = {
-> +     .name = TYPE_I2C_BUS,
-> +     .parent = TYPE_BUS,
-> +     .instance_size = sizeof(I2CBus),
-> +     .class_size = sizeof(I2CBusClass),
-> +     .class_init = i2c_bus_class_init,
-> + };
-
-Looks like you have stray extra spaces in front of this
-type definition (which has then caused 'diff' to not notice
-that you're only adding fields to the existing struct).
-
->
->  static int i2c_bus_pre_save(void *opaque)
+>  static void smbus_device_class_init(ObjectClass *klass, void *data)
 >  {
-> diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-> index 2a3abacd1b..420868a269 100644
-> --- a/include/hw/i2c/i2c.h
-> +++ b/include/hw/i2c/i2c.h
-> @@ -64,7 +64,7 @@ struct I2CSlave {
->  };
+>      I2CSlaveClass *sc = I2C_SLAVE_CLASS(klass);
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 >
->  #define TYPE_I2C_BUS "i2c-bus"
-> -OBJECT_DECLARE_SIMPLE_TYPE(I2CBus, I2C_BUS)
-> +OBJECT_DECLARE_TYPE(I2CBus, I2CBusClass, I2C_BUS)
->
->  typedef struct I2CNode I2CNode;
->
-> @@ -83,6 +83,10 @@ struct I2CPendingMaster {
->  typedef QLIST_HEAD(I2CNodeList, I2CNode) I2CNodeList;
->  typedef QSIMPLEQ_HEAD(I2CPendingMasters, I2CPendingMaster) I2CPendingMasters;
->
-> +struct I2CBusClass {
-> +    DeviceClass parent_class;
-> +};
+> +    rc->phases.enter = smbus_device_enter_reset;
+>      sc->event = smbus_i2c_event;
+>      sc->recv = smbus_i2c_recv;
+>      sc->send = smbus_i2c_send;
+> -
 
-This isn't correct -- a FooBusClass's parent_class field
-should be a BusClass. But since you don't define any new
-fields in it, you don't need to define the struct at all.
-
-Instead, your TypeInfo for the TYPE_I2C_BUS can add a
-.class_init member, and leave the .class_size unset
-(it will then inherit the class-size from the parent
-class, which will be sizeof(BusClass)).
-
-> +
->  struct I2CBus {
->      BusState qbus;
->      I2CNodeList current_devs;
-> --
-> 2.43.0.429.g432eaa2c6b-goog
+This should probably be the 'hold' phase of reset, unless there's
+a strong reason to do it in the 'enter' phase.
 
 thanks
 -- PMM
