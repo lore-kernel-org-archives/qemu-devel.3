@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B39CEC48291
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF82C48294
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXp9-00017n-GL; Thu, 01 Feb 2024 09:13:51 -0500
+	id 1rVXoZ-0000vw-0N; Thu, 01 Feb 2024 09:13:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVXol-0000yh-0Y; Thu, 01 Feb 2024 09:13:28 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rVXoV-0000us-Vy; Thu, 01 Feb 2024 09:13:12 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVXof-0007mj-Jo; Thu, 01 Feb 2024 09:13:24 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQgqN4G8Lz4wcV;
- Fri,  2 Feb 2024 01:13:20 +1100 (AEDT)
+ id 1rVXoQ-0007kK-Tx; Thu, 01 Feb 2024 09:13:11 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQgq31hwTz4wcR;
+ Fri,  2 Feb 2024 01:13:03 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQgqL5RSZz4wcM;
- Fri,  2 Feb 2024 01:13:18 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQgq16lH9z4wcM;
+ Fri,  2 Feb 2024 01:13:01 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 08/17] hw/fsi: Introduce IBM's scratchpad device
-Date: Thu,  1 Feb 2024 15:12:44 +0100
-Message-ID: <20240201141253.806055-9-clg@kaod.org>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 01/17] tests/avocado/machine_aspeed.py: Update buildroot images
+ to 2023.11
+Date: Thu,  1 Feb 2024 15:12:37 +0100
+Message-ID: <20240201141253.806055-2-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201141253.806055-1-clg@kaod.org>
 References: <20240201141253.806055-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,158 +66,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ninad Palsule <ninad@linux.ibm.com>
+Compared to mainline buildroot, these images have some customization :
 
-This is a part of patchset where IBM's Flexible Service Interface is
-introduced.
+- Linux version is bumped to 6.6.3 and built with a custom config
+- U-Boot is switched to the one provided by OpenBMC for more support
+- defconfigs extra tools for dev
 
-The scratchpad provides a set of non-functional registers. The firmware
-is free to use them, hardware does not support any special management
-support. The scratchpad registers can be read or written from LBUS
-slave. The scratch pad is managed under FSI CFAM state.
+See branch [1] for more details.
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-[ clg: - moved object FSIScratchPad under FSICFAMState
-       - moved FSIScratchPad code under cfam.c ]
+There are a few changes since last update, commit ed1f5ff84209. Images
+all have a password now and I2C devices have been updated in the Linux
+ast2600-evb device tree [2]. Do the necessary adjustements.
+
+[1] https://github.com/legoater/buildroot/commits/aspeed-2023.11
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9deb10cf160e
+
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- include/hw/fsi/lbus.h | 11 ++++++
- hw/fsi/lbus.c         | 78 +++++++++++++++++++++++++++++++++++++++++--
- hw/fsi/trace-events   |  2 ++
- 3 files changed, 89 insertions(+), 2 deletions(-)
+ tests/avocado/machine_aspeed.py | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/fsi/lbus.h b/include/hw/fsi/lbus.h
-index e8a22e22a8fa..558268c013f5 100644
---- a/include/hw/fsi/lbus.h
-+++ b/include/hw/fsi/lbus.h
-@@ -29,4 +29,15 @@ typedef struct FSILBus {
-     MemoryRegion mr;
- } FSILBus;
+diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
+index 6fa5459a07bf..cec018142453 100644
+--- a/tests/avocado/machine_aspeed.py
++++ b/tests/avocado/machine_aspeed.py
+@@ -155,6 +155,7 @@ def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'
+         time.sleep(0.1)
+         exec_command(self, 'root')
+         time.sleep(0.1)
++        exec_command(self, "passw0rd")
  
-+#define TYPE_FSI_SCRATCHPAD "fsi.scratchpad"
-+#define SCRATCHPAD(obj) OBJECT_CHECK(FSIScratchPad, (obj), TYPE_FSI_SCRATCHPAD)
-+
-+#define FSI_SCRATCHPAD_NR_REGS 4
-+
-+typedef struct FSIScratchPad {
-+        FSILBusDevice parent;
-+
-+        uint32_t regs[FSI_SCRATCHPAD_NR_REGS];
-+} FSIScratchPad;
-+
- #endif /* FSI_LBUS_H */
-diff --git a/hw/fsi/lbus.c b/hw/fsi/lbus.c
-index 44d2319087a8..20495f42fd99 100644
---- a/hw/fsi/lbus.c
-+++ b/hw/fsi/lbus.c
-@@ -8,11 +8,12 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/fsi/lbus.h"
--
- #include "hw/qdev-properties.h"
--
-+#include "qemu/log.h"
- #include "trace.h"
+     def do_test_arm_aspeed_buildroot_poweroff(self):
+         exec_command_and_wait_for_pattern(self, 'poweroff',
+@@ -167,14 +168,14 @@ def test_arm_ast2500_evb_buildroot(self):
+         """
  
-+#define TO_REG(offset) ((offset) >> 2)
-+
- static void fsi_lbus_init(Object *o)
- {
-     FSILBus *lbus = FSI_LBUS(o);
-@@ -34,10 +35,83 @@ static const TypeInfo fsi_lbus_device_type_info = {
-     .abstract = true,
- };
+         image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
+-                     'images/ast2500-evb/buildroot-2022.11-2-g15d3648df9/flash.img')
+-        image_hash = ('f96d11db521fe7a2787745e9e391225deeeec3318ee0fc07c8b799b8833dd474')
++                     'images/ast2500-evb/buildroot-2023.11/flash.img')
++        image_hash = ('c23db6160cf77d0258397eb2051162c8473a56c441417c52a91ba217186e715f')
+         image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+                                       algorithm='sha256')
  
-+static uint64_t fsi_scratchpad_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    FSIScratchPad *s = SCRATCHPAD(opaque);
-+    int reg = TO_REG(addr);
-+
-+    trace_fsi_scratchpad_read(addr, size);
-+
-+    if (reg >= FSI_SCRATCHPAD_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return 0;
-+    }
-+
-+    return s->regs[reg];
-+}
-+
-+static void fsi_scratchpad_write(void *opaque, hwaddr addr, uint64_t data,
-+                                 unsigned size)
-+{
-+    FSIScratchPad *s = SCRATCHPAD(opaque);
-+
-+    trace_fsi_scratchpad_write(addr, size, data);
-+    int reg = TO_REG(addr);
-+
-+    if (reg >= FSI_SCRATCHPAD_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return;
-+    }
-+
-+    s->regs[reg] = data;
-+}
-+
-+static const struct MemoryRegionOps scratchpad_ops = {
-+    .read = fsi_scratchpad_read,
-+    .write = fsi_scratchpad_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static void fsi_scratchpad_realize(DeviceState *dev, Error **errp)
-+{
-+    FSILBusDevice *ldev = FSI_LBUS_DEVICE(dev);
-+
-+    memory_region_init_io(&ldev->iomem, OBJECT(ldev), &scratchpad_ops,
-+                          ldev, TYPE_FSI_SCRATCHPAD, 0x400);
-+}
-+
-+static void fsi_scratchpad_reset(DeviceState *dev)
-+{
-+    FSIScratchPad *s = SCRATCHPAD(dev);
-+
-+    memset(s->regs, 0, sizeof(s->regs));
-+}
-+
-+static void fsi_scratchpad_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->bus_type = TYPE_FSI_LBUS;
-+    dc->realize = fsi_scratchpad_realize;
-+    dc->reset = fsi_scratchpad_reset;
-+}
-+
-+static const TypeInfo fsi_scratchpad_info = {
-+    .name = TYPE_FSI_SCRATCHPAD,
-+    .parent = TYPE_FSI_LBUS_DEVICE,
-+    .instance_size = sizeof(FSIScratchPad),
-+    .class_init = fsi_scratchpad_class_init,
-+};
-+
- static void fsi_lbus_register_types(void)
- {
-     type_register_static(&fsi_lbus_info);
-     type_register_static(&fsi_lbus_device_type_info);
-+    type_register_static(&fsi_scratchpad_info);
- }
+         self.vm.add_args('-device',
+                          'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
+-        self.do_test_arm_aspeed_buildroot_start(image_path, '0x0')
++        self.do_test_arm_aspeed_buildroot_start(image_path, '0x0', 'Aspeed AST2500 EVB')
  
- type_init(fsi_lbus_register_types);
-diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
-index e69de29bb2d1..c5753e27910a 100644
---- a/hw/fsi/trace-events
-+++ b/hw/fsi/trace-events
-@@ -0,0 +1,2 @@
-+fsi_scratchpad_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-+fsi_scratchpad_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
+         exec_command_and_wait_for_pattern(self,
+              'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
+@@ -195,8 +196,8 @@ def test_arm_ast2600_evb_buildroot(self):
+         """
+ 
+         image_url = ('https://github.com/legoater/qemu-aspeed-boot/raw/master/'
+-                     'images/ast2600-evb/buildroot-2022.11-2-g15d3648df9/flash.img')
+-        image_hash = ('e598d86e5ea79671ca8b59212a326c911bc8bea728dec1a1f5390d717a28bb8b')
++                     'images/ast2600-evb/buildroot-2023.11/flash.img')
++        image_hash = ('b62808daef48b438d0728ee07662290490ecfa65987bb91294cafb1bb7ad1a68')
+         image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+                                       algorithm='sha256')
+ 
+@@ -206,17 +207,17 @@ def test_arm_ast2600_evb_buildroot(self):
+                          'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
+         self.vm.add_args('-device',
+                          'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
+-        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00')
++        self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
+ 
+         exec_command_and_wait_for_pattern(self,
+              'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
+              'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
+         exec_command_and_wait_for_pattern(self,
+-                             'cat /sys/class/hwmon/hwmon0/temp1_input', '0')
++                             'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
+         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+                     property='temperature', value=18000);
+         exec_command_and_wait_for_pattern(self,
+-                             'cat /sys/class/hwmon/hwmon0/temp1_input', '18000')
++                             'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
+ 
+         exec_command_and_wait_for_pattern(self,
+              'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
+@@ -261,7 +262,6 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+         self.vm.add_args('-device',
+                          'tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e')
+         self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00', 'Aspeed AST2600 EVB')
+-        exec_command(self, "passw0rd")
+ 
+         exec_command_and_wait_for_pattern(self,
+             'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
 -- 
 2.43.0
 
