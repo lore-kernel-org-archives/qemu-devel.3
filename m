@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7154C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1203C48291
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXpQ-0001Y0-1g; Thu, 01 Feb 2024 09:14:09 -0500
+	id 1rVXpN-0001Xd-De; Thu, 01 Feb 2024 09:14:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVXoq-00010C-Ni; Thu, 01 Feb 2024 09:13:37 -0500
+ id 1rVXpB-0001Iq-8d; Thu, 01 Feb 2024 09:13:53 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVXoh-0007n4-Su; Thu, 01 Feb 2024 09:13:28 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQgqQ6KTWz4wcb;
- Fri,  2 Feb 2024 01:13:22 +1100 (AEDT)
+ id 1rVXp3-0007qt-Ut; Thu, 01 Feb 2024 09:13:51 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQgqm707cz4wcq;
+ Fri,  2 Feb 2024 01:13:40 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQgqP0lH6z4wcM;
- Fri,  2 Feb 2024 01:13:20 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQgql3B42z4wcM;
+ Fri,  2 Feb 2024 01:13:39 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
+Cc: Ninad Palsule <ninad@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 09/17] hw/fsi: Introduce IBM's FSI Bus
-Date: Thu,  1 Feb 2024 15:12:45 +0100
-Message-ID: <20240201141253.806055-10-clg@kaod.org>
+Subject: [PULL 17/17] hw/fsi: Update MAINTAINER list
+Date: Thu,  1 Feb 2024 15:12:53 +0100
+Message-ID: <20240201141253.806055-18-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201141253.806055-1-clg@kaod.org>
 References: <20240201141253.806055-1-clg@kaod.org>
@@ -67,87 +66,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ninad Palsule <ninad@linux.ibm.com>
 
-This is a part of patchset where FSI bus is introduced.
+Add maintainer for IBM FSI model
 
-The FSI bus is a simple bus where FSI master is attached.
-
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
-[ clg: - removed include/hw/fsi/engine-scratchpad.h and
-       	 hw/fsi/engine-scratchpad.c
-       - dropped FSI_SCRATCHPAD
-       - included FSIBus definition
-       - dropped hw/fsi/trace-events changes ]
+[ clg: - slight change in commit log
+       - fixed file list ]
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- include/hw/fsi/fsi.h | 19 +++++++++++++++++++
- hw/fsi/fsi.c         | 22 ++++++++++++++++++++++
- hw/fsi/meson.build   |  2 +-
- 3 files changed, 42 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/fsi/fsi.h
- create mode 100644 hw/fsi/fsi.c
+ MAINTAINERS | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/hw/fsi/fsi.h b/include/hw/fsi/fsi.h
-new file mode 100644
-index 000000000000..50e8f5c888f1
---- /dev/null
-+++ b/include/hw/fsi/fsi.h
-@@ -0,0 +1,19 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2024 IBM Corp.
-+ *
-+ * IBM Flexible Service Interface
-+ */
-+#ifndef FSI_FSI_H
-+#define FSI_FSI_H
+diff --git a/MAINTAINERS b/MAINTAINERS
+index dfaca8323e91..2f9741b898e8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3585,6 +3585,15 @@ F: tests/qtest/adm1272-test.c
+ F: tests/qtest/max34451-test.c
+ F: tests/qtest/isl_pmbus_vr-test.c
+ 
++FSI
++M: Ninad Palsule <ninad@linux.ibm.com>
++R: Cédric Le Goater <clg@kaod.org>
++S: Maintained
++F: hw/fsi/*
++F: include/hw/fsi/*
++F: docs/specs/fsi.rst
++F: tests/qtest/aspeed_fsi-test.c
 +
-+#include "hw/qdev-core.h"
-+
-+#define TYPE_FSI_BUS "fsi.bus"
-+OBJECT_DECLARE_SIMPLE_TYPE(FSIBus, FSI_BUS)
-+
-+typedef struct FSIBus {
-+    BusState bus;
-+} FSIBus;
-+
-+#endif /* FSI_FSI_H */
-diff --git a/hw/fsi/fsi.c b/hw/fsi/fsi.c
-new file mode 100644
-index 000000000000..60cb03f7a24e
---- /dev/null
-+++ b/hw/fsi/fsi.c
-@@ -0,0 +1,22 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2024 IBM Corp.
-+ *
-+ * IBM Flexible Service Interface
-+ */
-+#include "qemu/osdep.h"
-+
-+#include "hw/fsi/fsi.h"
-+
-+static const TypeInfo fsi_bus_info = {
-+    .name = TYPE_FSI_BUS,
-+    .parent = TYPE_BUS,
-+    .instance_size = sizeof(FSIBus),
-+};
-+
-+static void fsi_bus_register_types(void)
-+{
-+    type_register_static(&fsi_bus_info);
-+}
-+
-+type_init(fsi_bus_register_types);
-diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
-index 93ba19dd0411..574f5f928903 100644
---- a/hw/fsi/meson.build
-+++ b/hw/fsi/meson.build
-@@ -1 +1 @@
--system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c'))
-+system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c'))
+ Firmware schema specifications
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Daniel P. Berrange <berrange@redhat.com>
 -- 
 2.43.0
 
