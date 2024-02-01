@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D193EC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D90D2C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:37:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVY3a-0008Eu-4D; Thu, 01 Feb 2024 09:28:47 -0500
+	id 1rVYB2-0002li-5d; Thu, 01 Feb 2024 09:36:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rVY3O-0008DT-DK
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:28:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rVY3K-0002lj-34
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:28:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706797707;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CajPz1nHQQzy3nX4R4dipqZ1slk1USNSzwrmRC9XTSc=;
- b=OHLFl+TkVBzYC6B7b6qz+luq4jMbmFgylna7iV1paCpG5pXVGgIbC2NdGXyxFMhXx3CHlp
- rV08V1vJvsN+FW4BMWJKwVD5fuA5+xbfU1RBUYbhUrIQj2EURQ3Oh6GD8Du6sHGa3aY6F5
- EI3exgWRrGHC/inBq4Tj9WFnNClh3qk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-WR15J_dsMeKZWBoDX9JFAw-1; Thu,
- 01 Feb 2024 09:28:25 -0500
-X-MC-Unique: WR15J_dsMeKZWBoDX9JFAw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F00C41E441CA;
- Thu,  1 Feb 2024 14:28:24 +0000 (UTC)
-Received: from localhost (unknown [10.39.193.41])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 530CCC259DD;
- Thu,  1 Feb 2024 14:28:24 +0000 (UTC)
-Date: Thu, 1 Feb 2024 09:28:17 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
- thread
-Message-ID: <20240201142817.GA516672@fedora>
-References: <20231221212339.164439-1-kwolf@redhat.com>
- <20231221212339.164439-12-kwolf@redhat.com>
- <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
- <Za_zAj11uwavd2va@redhat.com>
- <08a66849-f190-4756-9b01-666f0d66afb6@redhat.com>
- <ZbOxI9Ar-YDn51Z0@redhat.com>
- <4c4173f2-b8fc-4c6f-88e1-8c31c4411837@redhat.com>
- <20240131203537.GC396296@fedora>
- <0a3e8d2a-add1-432b-b6b9-456ee0b17882@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVYAw-0002kW-W9
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:36:23 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVYAt-0004wB-DI
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:36:22 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-55eedf5a284so1269052a12.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 06:36:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706798167; x=1707402967; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4Oqj8byilzWau5Z8Gm2D8U0OPajJSZThxnSWrA9epyE=;
+ b=jxbC/+MXembJOFChQEfJeeUXZQpjv/N3MQiCk/iH6PgLKXC95K3TmKlR6K45oGp3FZ
+ kD+ufWLWfImcp+ApelY/1oaVfZhr/HahwJbbIUVHy5QoUmigAGWSgarfvCHgrpnc8/Cd
+ 996Gj+jSpR6+INQdbgvGlZDOQTU6/GGq5thoxK78p3RAEmu8wtvOBatckBRK8HV2ImDk
+ rdPFIayCN2oCk7gVmTzXMkVOvSZCmS2I4xnbK4k4dz4tuEyPeLTQVZLZZRTdVrK1vy6r
+ 296psP/mhIWVlD6mursYMh5w+ls4Vr93vroacaRTd6tB0WLIfoDpfIqzxrN5SL6UOjeI
+ 58Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706798167; x=1707402967;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4Oqj8byilzWau5Z8Gm2D8U0OPajJSZThxnSWrA9epyE=;
+ b=tX0r0Edqpl0TMCA6fXPnFxYfUbU6zZBRHgD6IoZg7wfaI8uddNgyG0OWeLRFrpC8A1
+ pdbB+VlFDTJluZDRtgrvz46j3AxcRJQlgX71zozsyf8j8FHS3Os3VZwn9pbVwrGSkle+
+ ClEEEmCvF8ldAcWJoCkeK4cXowvi+0c7y1S4wLmMD5cblaja+M+aq8/yNaIMrAjNDuiG
+ BNrWogUw+CuvVtyU8+bzPlzBgyvuKNx+tA5q+lqO9fuvgR9UTk2pIRoexp5wa8CZ2pNy
+ NRbOFN2W6ChZTGVMr7EN60VCx0FXX+0S9M+FGEQ0cbBxOws9d2LMvNVNVh9ICiH+Oh6q
+ Fw0Q==
+X-Gm-Message-State: AOJu0Yxq4B8f6WktT2YOv4g4C/5AwSGEPvnItimcpWhU2T+K/MSl5Vmp
+ P7rO+QbGUitKe4FfrDhc3sz3R129xjeCmATTBCUdOWFZvUEkg5FKTq3BtbIpIPLarRZX3546EWC
+ TBNur2bsguLujxhu9OZfoLjWqJPDyUVDXvmCb3Q==
+X-Google-Smtp-Source: AGHT+IGYtDe22QnfKjmFKY8vtp2Pxpjb6bmXSsnNKBz726OvWj5FMSyFyoaudS4lLjKeYOb5+NiTuuqBcUuVrC1gp/w=
+X-Received: by 2002:a05:6402:40c8:b0:55f:adc6:4ee7 with SMTP id
+ z8-20020a05640240c800b0055fadc64ee7mr2203583edb.32.1706798167061; Thu, 01 Feb
+ 2024 06:36:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="M8548pL5o7nGjaXD"
-Content-Disposition: inline
-In-Reply-To: <0a3e8d2a-add1-432b-b6b9-456ee0b17882@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+References: <CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com>
+ <CAGEDW0fWCfuG3KrNSwDjNVGAZVL9NJgF26Jqyd840HfQdNGLbA@mail.gmail.com>
+ <CAAg4Pard=zh_5p650UcNdQEoQWZLM6G7KRqdPQHLmaR4oZMJ3w@mail.gmail.com>
+ <CAGEDW0dVEk-QXuL=DPVvSP4t5cafz6N-r_SrCxgFnBfFOsixSA@mail.gmail.com>
+ <CAAg4PaqgZcTXkWuys7FZjQdRChTkKj-ZnJQCdxpTMCxy4Hghow@mail.gmail.com>
+ <20230823175056.00001a84@Huawei.com>
+ <CAAg4ParSB4_2FU2bu96A=3tSNuwHqZwK0wCS18EJoPAq9kYEkw@mail.gmail.com>
+ <CAAg4Pap9KzkgX=fgE7vNJYxEpGbHA-NVsgBY5npXizUbMhjp9A@mail.gmail.com>
+ <20240126123926.000051bd@Huawei.com> <ZbPTL00WOo7UC0e6@memverge.com>
+ <20240126171233.00002a2e@Huawei.com>
+ <CAAg4ParQKj9FUe0DRX0Wmk1KT0bnxx2F7W=ic38781j7eVz+OQ@mail.gmail.com>
+ <20240201130438.00001384@Huawei.com>
+ <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
+ <20240201140100.000016ce@huawei.com>
+In-Reply-To: <20240201140100.000016ce@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 1 Feb 2024 14:35:56 +0000
+Message-ID: <CAFEAcA9DW8AuMwDr_qyDXPWJcLsvD773XTr1stwuagHWc6p72g@mail.gmail.com>
+Subject: Re: Crash with CXL + TCG on 8.2: Was Re: qemu cxl memory expander
+ shows numa_node -1
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Sajjan Rao <sajjanr@gmail.com>, Gregory Price <gregory.price@memverge.com>,
+ Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>, linux-cxl@vger.kernel.org, 
+ qemu-devel@nongnu.org, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,296 +103,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 1 Feb 2024 at 14:01, Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
+> > Can you run QEMU under gdb and give the backtrace when it stops
+> > on the abort() ? That will probably have a helpful clue. I
+> > suspect something is failing to pass a valid retaddr in
+> > when it calls a load/store function.
 
---M8548pL5o7nGjaXD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> [Switching to Thread 0x7ffff56ff6c0 (LWP 21916)]
+> __pthread_kill_implementation (no_tid=0, signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:44
+> 44      ./nptl/pthread_kill.c: No such file or directory.
+> (gdb) bt
+> #0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:44
+> #1  __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
+> #2  __GI___pthread_kill (threadid=<optimized out>, signo=signo@entry=6) at ./nptl/pthread_kill.c:89
+> #3  0x00007ffff77c43b6 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+> #4  0x00007ffff77aa87c in __GI_abort () at ./stdlib/abort.c:79
+> #5  0x0000555555c0d4ce in cpu_abort
+>     (cpu=cpu@entry=0x555556fd9000, fmt=fmt@entry=0x555555fe3378 "cpu_io_recompile: could not find TB for pc=%p")
+>     at ../../cpu-target.c:359
+> #6  0x0000555555c59435 in cpu_io_recompile (cpu=cpu@entry=0x555556fd9000, retaddr=retaddr@entry=0) at ../../accel/tcg/translate-all.c:611
+> #7  0x0000555555c5c956 in io_prepare
+>     (retaddr=0, addr=19595792376, attrs=..., xlat=<optimized out>, cpu=0x555556fd9000, out_offset=<synthetic pointer>)
+>     at ../../accel/tcg/cputlb.c:1339
+> #8  do_ld_mmio_beN
+>     (cpu=0x555556fd9000, full=0x7fffee0d96e0, ret_be=ret_be@entry=0, addr=19595792376, size=size@entry=8, mmu_idx=4, type=MMU_DATA_LOAD, ra=0) at ../../accel/tcg/cputlb.c:2030
+> #9  0x0000555555c5dfad in do_ld_8
+>     (cpu=cpu@entry=0x555556fd9000, p=p@entry=0x7ffff56fddc0, mmu_idx=<optimized out>, type=type@entry=MMU_DATA_LOAD, memop=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/cputlb.c:2356
+> #10 0x0000555555c6026f in do_ld8_mmu
+>     (cpu=cpu@entry=0x555556fd9000, addr=addr@entry=19595792376, oi=oi@entry=52, ra=ra@entry=0, access_type=access_type@entry=MMU_DATA_LOAD) at ../../accel/tcg/cputlb.c:2439
+> #11 0x0000555555c629f9 in cpu_ldq_mmu (ra=0, oi=52, addr=19595792376, env=0x555556fdb7c0) at ../../accel/tcg/ldst_common.c.inc:169
+> #12 cpu_ldq_le_mmuidx_ra (env=0x555556fdb7c0, addr=19595792376, mmu_idx=<optimized out>, ra=ra@entry=0)
+>     at ../../accel/tcg/ldst_common.c.inc:301
+> #13 0x0000555555b18ede in ptw_ldq (in=0x7ffff56fdf00) at ../../target/i386/tcg/sysemu/excp_helper.c:98
+> #14 ptw_ldq (in=0x7ffff56fdf00) at ../../target/i386/tcg/sysemu/excp_helper.c:93
+> #15 mmu_translate (env=env@entry=0x555556fdb7c0, in=in@entry=0x7ffff56fdfa0, out=out@entry=0x7ffff56fdf70, err=err@entry=0x7ffff56fdf80)
+>     at ../../target/i386/tcg/sysemu/excp_helper.c:173
+> #16 0x0000555555b19c95 in get_physical_address
+>     (err=0x7ffff56fdf80, out=0x7ffff56fdf70, mmu_idx=0, access_type=MMU_INST_FETCH, addr=18446744072116178925, env=0x555556fdb7c0)
+>     at ../../target/i386/tcg/sysemu/excp_helper.c:578
+> #17 x86_cpu_tlb_fill
+>     (cs=0x555556fd9000, addr=18446744072116178925, size=<optimized out>, access_type=MMU_INST_FETCH, mmu_idx=0, probe=<optimized out>, retaddr=0) at ../../target/i386/tcg/sysemu/excp_helper.c:604
+> #18 0x0000555555c5dd2b in probe_access_internal
+>     (cpu=<optimized out>, addr=18446744072116178925, fault_size=fault_size@entry=1, access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=0, nonfault=nonfault@entry=false, phost=0x7ffff56fe0d0, pfull=0x7ffff56fe0c8, retaddr=0, check_mem_cbs=false)
+>     at ../../accel/tcg/cputlb.c:1432
+> #19 0x0000555555c61ff8 in get_page_addr_code_hostp (env=<optimized out>, addr=addr@entry=18446744072116178925, hostp=hostp@entry=0x0)
+>     at ../../accel/tcg/cputlb.c:1603
+> #20 0x0000555555c50a2b in get_page_addr_code (addr=18446744072116178925, env=<optimized out>)
+>     at /home/jic23/src/qemu/include/exec/exec-all.h:594
+> #21 tb_htable_lookup (cpu=<optimized out>, pc=pc@entry=18446744072116178925, cs_base=0, flags=415285936, cflags=4278353920)
+>     at ../../accel/tcg/cpu-exec.c:231
+> #22 0x0000555555c50c08 in tb_lookup
+>     (cpu=cpu@entry=0x555556fd9000, pc=pc@entry=18446744072116178925, cs_base=cs_base@entry=0, flags=<optimized out>, cflags=<optimized out>) at ../../accel/tcg/cpu-exec.c:267
+> #23 0x0000555555c51e23 in helper_lookup_tb_ptr (env=0x555556fdb7c0) at ../../accel/tcg/cpu-exec.c:423
+> #24 0x00007fffa9076ead in code_gen_buffer ()
+> #25 0x0000555555c50fab in cpu_tb_exec (cpu=cpu@entry=0x555556fd9000, itb=<optimized out>, tb_exit=tb_exit@entry=0x7ffff56fe708)
+>     at ../../accel/tcg/cpu-exec.c:458
+> #26 0x0000555555c51492 in cpu_loop_exec_tb
+>     (tb_exit=0x7ffff56fe708, last_tb=<synthetic pointer>, pc=18446744072116179169, tb=<optimized out>, cpu=0x555556fd9000)
+>     at ../../accel/tcg/cpu-exec.c:920
+> #27 cpu_exec_loop (cpu=cpu@entry=0x555556fd9000, sc=sc@entry=0x7ffff56fe7a0) at ../../accel/tcg/cpu-exec.c:1041
+> #28 0x0000555555c51d11 in cpu_exec_setjmp (cpu=cpu@entry=0x555556fd9000, sc=sc@entry=0x7ffff56fe7a0) at ../../accel/tcg/cpu-exec.c:1058
+> #29 0x0000555555c523b4 in cpu_exec (cpu=cpu@entry=0x555556fd9000) at ../../accel/tcg/cpu-exec.c:1084
+> #30 0x0000555555c74053 in tcg_cpus_exec (cpu=cpu@entry=0x555556fd9000) at ../../accel/tcg/tcg-accel-ops.c:76
+> #31 0x0000555555c741a0 in mttcg_cpu_thread_fn (arg=arg@entry=0x555556fd9000) at ../../accel/tcg/tcg-accel-ops-mttcg.c:95
+> #32 0x0000555555dfb580 in qemu_thread_start (args=0x55555703c3e0) at ../../util/qemu-thread-posix.c:541
+> #33 0x00007ffff78176ba in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:444
+> #34 0x00007ffff78a60d0 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
 
-On Thu, Feb 01, 2024 at 03:10:12PM +0100, Hanna Czenczek wrote:
-> On 31.01.24 21:35, Stefan Hajnoczi wrote:
-> > On Fri, Jan 26, 2024 at 04:24:49PM +0100, Hanna Czenczek wrote:
-> > > On 26.01.24 14:18, Kevin Wolf wrote:
-> > > > Am 25.01.2024 um 18:32 hat Hanna Czenczek geschrieben:
-> > > > > On 23.01.24 18:10, Kevin Wolf wrote:
-> > > > > > Am 23.01.2024 um 17:40 hat Hanna Czenczek geschrieben:
-> > > > > > > On 21.12.23 22:23, Kevin Wolf wrote:
-> > > > > > > > From: Stefan Hajnoczi<stefanha@redhat.com>
-> > > > > > > >=20
-> > > > > > > > Stop depending on the AioContext lock and instead access
-> > > > > > > > SCSIDevice->requests from only one thread at a time:
-> > > > > > > > - When the VM is running only the BlockBackend's AioContext=
- may access
-> > > > > > > >       the requests list.
-> > > > > > > > - When the VM is stopped only the main loop may access the =
-requests
-> > > > > > > >       list.
-> > > > > > > >=20
-> > > > > > > > These constraints protect the requests list without the nee=
-d for locking
-> > > > > > > > in the I/O code path.
-> > > > > > > >=20
-> > > > > > > > Note that multiple IOThreads are not supported yet because =
-the code
-> > > > > > > > assumes all SCSIRequests are executed from a single AioCont=
-ext. Leave
-> > > > > > > > that as future work.
-> > > > > > > >=20
-> > > > > > > > Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
-> > > > > > > > Reviewed-by: Eric Blake<eblake@redhat.com>
-> > > > > > > > Message-ID:<20231204164259.1515217-2-stefanha@redhat.com>
-> > > > > > > > Signed-off-by: Kevin Wolf<kwolf@redhat.com>
-> > > > > > > > ---
-> > > > > > > >      include/hw/scsi/scsi.h |   7 +-
-> > > > > > > >      hw/scsi/scsi-bus.c     | 181 +++++++++++++++++++++++++=
-+++-------------
-> > > > > > > >      2 files changed, 131 insertions(+), 57 deletions(-)
-> > > > > > > My reproducer forhttps://issues.redhat.com/browse/RHEL-3934  =
-now breaks more
-> > > > > > > often because of this commit than because of the original bug=
-, i.e. when
-> > > > > > > repeatedly hot-plugging and unplugging a virtio-scsi and a sc=
-si-hd device,
-> > > > > > > this tends to happen when unplugging the scsi-hd:
-> > > Note: We (on issues.redhat.com) have a separate report that seems to =
-be
-> > > concerning this very problem: https://issues.redhat.com/browse/RHEL-1=
-9381
-> > >=20
-> > > > > > > {"execute":"device_del","arguments":{"id":"stg0"}}
-> > > > > > > {"return": {}}
-> > > > > > > qemu-system-x86_64: ../block/block-backend.c:2429: blk_get_ai=
-o_context:
-> > > > > > > Assertion `ctx =3D=3D blk->ctx' failed.
-> > > > > [...]
-> > > > >=20
-> > > > > > > I don=E2=80=99t know anything about the problem yet, but as u=
-sual, I like
-> > > > > > > speculation and discovering how wrong I was later on, so one =
-thing I came
-> > > > > > > across that=E2=80=99s funny about virtio-scsi is that request=
-s can happen even while
-> > > > > > > a disk is being attached or detached.=C2=A0 That is, Linux se=
-ems to probe all
-> > > > > > > LUNs when a new virtio-scsi device is being attached, and it =
-won=E2=80=99t stop just
-> > > > > > > because a disk is being attached or removed.=C2=A0 So maybe t=
-hat=E2=80=99s part of the
-> > > > > > > problem, that we get a request while the BB is being detached=
-, and
-> > > > > > > temporarily in an inconsistent state (BDS context differs fro=
-m BB context).
-> > > > > > I don't know anything about the problem either, but since you a=
-lready
-> > > > > > speculated about the cause, let me speculate about the solution:
-> > > > > > Can we hold the graph writer lock for the tran_commit() call in
-> > > > > > bdrv_try_change_aio_context()? And of course take the reader lo=
-ck for
-> > > > > > blk_get_aio_context(), but that should be completely unproblema=
-tic.
-> > > > > Actually, now that completely unproblematic part is giving me tro=
-uble.=C2=A0 I
-> > > > > wanted to just put a graph lock into blk_get_aio_context() (makin=
-g it a
-> > > > > coroutine with a wrapper)
-> > > > Which is the first thing I neglected and already not great. We have
-> > > > calls of blk_get_aio_context() in the SCSI I/O path, and creating a
-> > > > coroutine and doing at least two context switches simply for this c=
-all
-> > > > is a lot of overhead...
-> > > >=20
-> > > > > but callers of blk_get_aio_context() generally assume the context=
- is
-> > > > > going to stay the BB=E2=80=99s context for as long as their AioCo=
-ntext *
-> > > > > variable is in scope.
-> > > > I'm not so sure about that. And taking another step back, I'm actua=
-lly
-> > > > also not sure how much it still matters now that they can submit I/O
-> > > > from any thread.
-> > > That=E2=80=99s my impression, too, but =E2=80=9Cnot sure=E2=80=9D doe=
-sn=E2=80=99t feel great. :)
-> > > scsi_device_for_each_req_async_bh() specifically double-checks whethe=
-r it=E2=80=99s
-> > > still in the right context before invoking the specified function, so=
- it
-> > > seems there was some intention to continue to run in the context asso=
-ciated
-> > > with the BB.
-> > >=20
-> > > (Not judging whether that intent makes sense or not, yet.)
-> > >=20
-> > > > Maybe the correct solution is to remove the assertion from
-> > > > blk_get_aio_context() and just always return blk->ctx. If it's in t=
-he
-> > > > middle of a change, you'll either get the old one or the new one. E=
-ither
-> > > > one is fine to submit I/O from, and if you care about changes for o=
-ther
-> > > > reasons (like SCSI does), then you need explicit code to protect it
-> > > > anyway (which SCSI apparently has, but it doesn't work).
-> > > I think most callers do just assume the BB stays in the context they =
-got
-> > > (without any proof, admittedly), but I agree that under re-evaluation=
-, it
-> > > probably doesn=E2=80=99t actually matter to them, really. And yes, ba=
-sically, if the
-> > > caller doesn=E2=80=99t need to take a lock because it doesn=E2=80=99t=
- really matter whether
-> > > blk->ctx changes while its still using the old value, blk_get_aio_con=
-text()
-> > > in turn doesn=E2=80=99t need to double-check blk->ctx against the roo=
-t node=E2=80=99s
-> > > context either, and nobody needs a lock.
-> > >=20
-> > > So I agree, it=E2=80=99s on the caller to protect against a potential=
-ly changing
-> > > context, blk_get_aio_context() should just return blk->ctx and not ch=
-eck
-> > > against the root node.
-> > >=20
-> > > (On a tangent: blk_drain() is a caller of blk_get_aio_context(), and =
-it
-> > > polls that context.=C2=A0 Why does it need to poll that context speci=
-fically when
-> > > requests may be in any context?=C2=A0 Is it because if there are requ=
-ests in the
-> > > main thread, we must poll that, but otherwise it=E2=80=99s fine to po=
-ll any thread,
-> > > and we can only have requests in the main thread if that=E2=80=99s th=
-e BB=E2=80=99s
-> > > context?)
-> > >=20
-> > > > > I was tempted to think callers know what happens to the BB they p=
-ass
-> > > > > to blk_get_aio_context(), and it won=E2=80=99t change contexts so=
- easily, but
-> > > > > then I remembered this is exactly what happens in this case; we r=
-un
-> > > > > scsi_device_for_each_req_async_bh() in one thread (which calls
-> > > > > blk_get_aio_context()), and in the other, we change the BB=E2=80=
-=99s context.
-> > > > Let's think a bit more about scsi_device_for_each_req_async()
-> > > > specifically. This is a function that runs in the main thread. Noth=
-ing
-> > > > will change any AioContext assignment if it doesn't call it. It wan=
-ts to
-> > > > make sure that scsi_device_for_each_req_async_bh() is called in the
-> > > > same AioContext where the virtqueue is processed, so it schedules a=
- BH
-> > > > and waits for it.
-> > > I don=E2=80=99t quite follow, it doesn=E2=80=99t wait for the BH.=C2=
-=A0 It uses
-> > > aio_bh_schedule_oneshot(), not aio_wait_bh_oneshot().=C2=A0 While you=
-=E2=80=99re right
-> > > that if it did wait, the BB context might still change, in practice we
-> > > wouldn=E2=80=99t have the problem at hand because the caller is actua=
-lly the one to
-> > > change the context, concurrently while the BH is running.
-> > >=20
-> > > > Waiting for it means running a nested event loop that could do anyt=
-hing,
-> > > > including changing AioContexts. So this is what needs the locking, =
-not
-> > > > the blk_get_aio_context() call in scsi_device_for_each_req_async_bh=
-().
-> > > > If we lock before the nested event loop and unlock in the BH, the c=
-heck
-> > > > in the BH can become an assertion. (It is important that we unlock =
-in
-> > > > the BH rather than after waiting because if something takes the wri=
-ter
-> > > > lock, we need to unlock during the nested event loop of bdrv_wrlock=
-() to
-> > > > avoid a deadlock.)
-> > > >=20
-> > > > And spawning a coroutine for this looks a lot more acceptable becau=
-se
-> > > > it's on a slow path anyway.
-> > > >=20
-> > > > In fact, we probably don't technically need a coroutine to take the
-> > > > reader lock here. We can have a new graph lock function that asserts
-> > > > that there is no writer (we know because we're running in the main =
-loop)
-> > > > and then atomically increments the reader count. But maybe that alr=
-eady
-> > > > complicates things again...
-> > > So as far as I understand we can=E2=80=99t just use aio_wait_bh_onesh=
-ot() and wrap
-> > > it in bdrv_graph_rd{,un}lock_main_loop(), because that doesn=E2=80=99=
-t actually lock
-> > > the graph.=C2=A0 I feel like adding a new graph lock function for thi=
-s quite
-> > > highly specific case could be dangerous, because it seems easy to use=
- the
-> > > wrong way.
-> > >=20
-> > > Just having a trampoline coroutine to call bdrv_graph_co_rd{,un}lock(=
-) seems
-> > > simple enough and reasonable here (not a hot path).=C2=A0 Can we have=
- that
-> > > coroutine then use aio_wait_bh_oneshot() with the existing _bh functi=
-on, or
-> > > should that be made a coroutine, too?
-> > There is a reason for running in the context associated with the BB: the
-> > virtio-scsi code assumes all request processing happens in the BB's
-> > AioContext. The SCSI request list and other SCSI emulation code is not
-> > thread-safe!
->=20
-> One peculiarity about virtio-scsi, as far as I understand, is that its
-> context is not necessarily the BB=E2=80=99s context, because one virtio-s=
-csi device
-> may have many BBs.=C2=A0 While the BBs are being hot-plugged or un-plugge=
-d, their
-> context may change (as is happening here), but that doesn=E2=80=99t stop =
-SCSI
-> request processing, because SCSI requests happen independently of whether
-> there are devices on the SCSI bus.
->=20
-> If SCSI request processing is not thread-safe, doesn=E2=80=99t that mean =
-it always
-> must be done in the very same context, i.e. the context the virtio-scsi
-> device was configured to use?=C2=A0 Just because a new scsi-hd BB is adde=
-d or
-> removed, and so we temporarily have a main context BB associated with the
-> virtio-scsi device, I don=E2=80=99t think we should switch to processing =
-requests in
-> the main context.
+So, that looks like:
+ * we call cpu_tb_exec(), which executes some generated code
+ * that generated code calls the lookup_tb_ptr helper to see
+   if we have a generated TB already for the address we're going
+   to execute next
+ * lookup_tb_ptr probes the TLB to see if we know the host RAM
+   address for the guest address
+ * this results in a TLB walk for an instruction fetch
+ * the page table descriptor load is to IO memory
+ * io_prepare assumes it needs to do a TLB recompile, because
+   can_do_io is clear
 
-This case is not supposed to happen because virtio_scsi_hotplug()
-immediately places the BB into the virtio-scsi device's AioContext by
-calling blk_set_aio_context().
+I am not surprised that the corner case of "the guest put its
+page tables in an MMIO device" has not yet come up :-)
 
-The AioContext invariant is checked at several points in the SCSI
-request lifecycle by this function:
+I'm really not sure how the icount handling should interact
+with that...
 
-  static inline void virtio_scsi_ctx_check(VirtIOSCSI *s, SCSIDevice *d)
-  {  =20
-      if (s->dataplane_started && d && blk_is_available(d->conf.blk)) {
-          assert(blk_get_aio_context(d->conf.blk) =3D=3D s->ctx);
-      }=20
-  }
-
-Did you find a scenario where the virtio-scsi AioContext is different
-=66rom the scsi-hd BB's Aiocontext?
-
-Stefan
-
---M8548pL5o7nGjaXD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmW7qoEACgkQnKSrs4Gr
-c8geIwf+J239UttWObkNIWdTT9B8R5K5gQB1J1EBooHy8y8cZEiSwjNdENCMgARR
-txt+WGqikB2N4C0l46Nrezo/HS9Oyfy3HwqvzXvDZRAU5y1q/88L+ljG8sKv1KM+
-z6dz+B5ga5tqGLz8GZNoWyq6vccawTFesRO0swZ79sZRAKqXODqWHb5YDPCwVJsa
-mvoGCxp9P0bSuUk95rspPrKPLc7nj2SlCC907KVr2JID3xTktNR3owCsLktx1/f/
-FfhPK5XSd7Mnk9dx6FwXIjOJTeJNSl6EriqbfY4j5jxMA1tRKylM0uQtv1O1tKeG
-gZCYqOALkiWPjcleouzE+LESgqgHFw==
-=bSJc
------END PGP SIGNATURE-----
-
---M8548pL5o7nGjaXD--
-
+-- PMM
 
