@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B05C48292
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D39C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXpW-0001Zm-GP; Thu, 01 Feb 2024 09:14:16 -0500
+	id 1rVXpH-0001PH-H2; Thu, 01 Feb 2024 09:13:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVXpB-0001Io-8l; Thu, 01 Feb 2024 09:13:53 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ id 1rVXof-0000xm-9i; Thu, 01 Feb 2024 09:13:24 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVXp3-0007qa-Gs; Thu, 01 Feb 2024 09:13:52 -0500
+ id 1rVXoc-0007n4-In; Thu, 01 Feb 2024 09:13:20 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQgqf4KrJz4wcR;
- Fri,  2 Feb 2024 01:13:34 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQgqH5Hq5z4wcQ;
+ Fri,  2 Feb 2024 01:13:15 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQgqc43QNz4wcM;
- Fri,  2 Feb 2024 01:13:32 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQgqF5303z4wcM;
+ Fri,  2 Feb 2024 01:13:13 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 14/17] hw/arm: Hook up FSI module in AST2600
-Date: Thu,  1 Feb 2024 15:12:50 +0100
-Message-ID: <20240201141253.806055-15-clg@kaod.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gavin Shan <gshan@redhat.com>
+Subject: [PULL 06/17] hw/arm/aspeed: Check for CPU types in
+ machine_run_board_init()
+Date: Thu,  1 Feb 2024 15:12:42 +0100
+Message-ID: <20240201141253.806055-7-clg@kaod.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201141253.806055-1-clg@kaod.org>
 References: <20240201141253.806055-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,199 +68,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ninad Palsule <ninad@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This patchset introduces IBM's Flexible Service Interface(FSI).
+Aspeed SoCs use a single CPU type (set as AspeedSoCClass::cpu_type).
+Convert it to a NULL-terminated array (of a single non-NULL element).
 
-Time for some fun with inter-processor buses. FSI allows a service
-processor access to the internal buses of a host POWER processor to
-perform configuration or debugging.
+Set MachineClass::valid_cpu_types[] to use the common machine code
+to provide hints when the requested CPU is invalid (see commit
+e702cbc19e ("machine: Improve is_cpu_type_supported()").
 
-FSI has long existed in POWER processes and so comes with some baggage,
-including how it has been integrated into the ASPEED SoC.
-
-Working backwards from the POWER processor, the fundamental pieces of
-interest for the implementation are:
-
-1. The Common FRU Access Macro (CFAM), an address space containing
-   various "engines" that drive accesses on buses internal and external
-   to the POWER chip. Examples include the SBEFIFO and I2C masters. The
-   engines hang off of an internal Local Bus (LBUS) which is described
-   by the CFAM configuration block.
-
-2. The FSI slave: The slave is the terminal point of the FSI bus for
-   FSI symbols addressed to it. Slaves can be cascaded off of one
-   another. The slave's configuration registers appear in address space
-   of the CFAM to which it is attached.
-
-3. The FSI master: A controller in the platform service processor (e.g.
-   BMC) driving CFAM engine accesses into the POWER chip. At the
-   hardware level FSI is a bit-based protocol supporting synchronous and
-   DMA-driven accesses of engines in a CFAM.
-
-4. The On-Chip Peripheral Bus (OPB): A low-speed bus typically found in
-   POWER processors. This now makes an appearance in the ASPEED SoC due
-   to tight integration of the FSI master IP with the OPB, mainly the
-   existence of an MMIO-mapping of the CFAM address straight onto a
-   sub-region of the OPB address space.
-
-5. An APB-to-OPB bridge enabling access to the OPB from the ARM core in
-   the AST2600. Hardware limitations prevent the OPB from being directly
-   mapped into APB, so all accesses are indirect through the bridge.
-
-The implementation appears as following in the qemu device tree:
-
-    (qemu) info qtree
-    bus: main-system-bus
-      type System
-      ...
-      dev: aspeed.apb2opb, id ""
-        gpio-out "sysbus-irq" 1
-        mmio 000000001e79b000/0000000000001000
-        bus: opb.1
-          type opb
-          dev: fsi.master, id ""
-            bus: fsi.bus.1
-              type fsi.bus
-              dev: cfam.config, id ""
-              dev: cfam, id ""
-                bus: fsi.lbus.1
-                  type lbus
-                  dev: scratchpad, id ""
-                    address = 0 (0x0)
-        bus: opb.0
-          type opb
-          dev: fsi.master, id ""
-            bus: fsi.bus.0
-              type fsi.bus
-              dev: cfam.config, id ""
-              dev: cfam, id ""
-                bus: fsi.lbus.0
-                  type lbus
-                  dev: scratchpad, id ""
-                    address = 0 (0x0)
-
-The LBUS is modelled to maintain the qdev bus hierarchy and to take
-advantage of the object model to automatically generate the CFAM
-configuration block. The configuration block presents engines in the
-order they are attached to the CFAM's LBUS. Engine implementations
-should subclass the LBusDevice and set the 'config' member of
-LBusDeviceClass to match the engine's type.
-
-CFAM designs offer a lot of flexibility, for instance it is possible for
-a CFAM to be simultaneously driven from multiple FSI links. The modeling
-is not so complete; it's assumed that each CFAM is attached to a single
-FSI slave (as a consequence the CFAM subclasses the FSI slave).
-
-As for FSI, its symbols and wire-protocol are not modelled at all. This
-is not necessary to get FSI off the ground thanks to the mapping of the
-CFAM address space onto the OPB address space - the models follow this
-directly and map the CFAM memory region into the OPB's memory region.
-Future work includes supporting more advanced accesses that drive the
-FSI master directly rather than indirectly via the CFAM mapping, which
-will require implementing the FSI state machine and methods for each of
-the FSI symbols on the slave. Further down the track we can also look at
-supporting the bitbanged SoftFSI drivers in Linux by extending the FSI
-slave model to resolve sequences of GPIO IRQs into FSI symbols, and
-calling the associated symbol method on the slave to map the access onto
-the CFAM.
-
-Testing:
-    Tested by reading cfam config address 0 on rainier machine type.
-
-    root@p10bmc:~# pdbg -a getcfam 0x0
-    p0: 0x0 = 0xc0022d15
-
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- include/hw/arm/aspeed_soc.h |  4 ++++
- hw/arm/aspeed_ast2600.c     | 19 +++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ include/hw/arm/aspeed_soc.h |  3 ++-
+ hw/arm/aspeed.c             |  1 +
+ hw/arm/aspeed_ast10x0.c     |  6 +++++-
+ hw/arm/aspeed_ast2400.c     | 12 ++++++++++--
+ hw/arm/aspeed_ast2600.c     |  6 +++++-
+ hw/arm/aspeed_soc_common.c  |  5 ++++-
+ 6 files changed, 27 insertions(+), 6 deletions(-)
 
 diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 0db5a41e7170..9d0af84a8cff 100644
+index a060a5991874..0db5a41e7170 100644
 --- a/include/hw/arm/aspeed_soc.h
 +++ b/include/hw/arm/aspeed_soc.h
-@@ -36,6 +36,7 @@
- #include "hw/misc/aspeed_lpc.h"
- #include "hw/misc/unimp.h"
- #include "hw/misc/aspeed_peci.h"
-+#include "hw/fsi/aspeed_apb2opb.h"
- #include "hw/char/serial.h"
+@@ -128,7 +128,8 @@ struct AspeedSoCClass {
+     DeviceClass parent_class;
  
- #define ASPEED_SPIS_NUM  2
-@@ -90,6 +91,7 @@ struct AspeedSoCState {
-     UnimplementedDeviceState udc;
-     UnimplementedDeviceState sgpiom;
-     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
-+    AspeedAPB2OPBState fsi[2];
- };
+     const char *name;
+-    const char *cpu_type;
++    /** valid_cpu_types: NULL terminated array of a single CPU type. */
++    const char * const *valid_cpu_types;
+     uint32_t silicon_rev;
+     uint64_t sram_size;
+     uint64_t secsram_size;
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index d2d490a6d142..fc8355cdce14 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1149,6 +1149,7 @@ static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
+     mc->default_cpus = sc->num_cpus;
+     mc->min_cpus = sc->num_cpus;
+     mc->max_cpus = sc->num_cpus;
++    mc->valid_cpu_types = sc->valid_cpu_types;
+ }
  
- #define TYPE_ASPEED_SOC "aspeed-soc"
-@@ -216,6 +218,8 @@ enum {
-     ASPEED_DEV_SGPIOM,
-     ASPEED_DEV_JTAG0,
-     ASPEED_DEV_JTAG1,
-+    ASPEED_DEV_FSI1,
-+    ASPEED_DEV_FSI2,
- };
+ static void aspeed_machine_class_init(ObjectClass *oc, void *data)
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+index dca601a3f9b6..c3b5116a6a9d 100644
+--- a/hw/arm/aspeed_ast10x0.c
++++ b/hw/arm/aspeed_ast10x0.c
+@@ -417,13 +417,17 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
  
- #define ASPEED_SOC_SPI_BOOT_ADDR 0x0
+ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
++        NULL
++    };
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(dc);
+ 
+     dc->realize = aspeed_soc_ast1030_realize;
+ 
+     sc->name = "ast1030-a1";
+-    sc->cpu_type = ARM_CPU_TYPE_NAME("cortex-m4"); /* TODO cortex-m4f */
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev = AST1030_A1_SILICON_REV;
+     sc->sram_size = 0xc0000;
+     sc->secsram_size = 0x40000; /* 256 * KiB */
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index 3baf95916d46..8829561bb6c2 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -503,6 +503,10 @@ static void aspeed_ast2400_soc_realize(DeviceState *dev, Error **errp)
+ 
+ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("arm926"),
++        NULL
++    };
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
+@@ -511,7 +515,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+     dc->user_creatable = false;
+ 
+     sc->name         = "ast2400-a1";
+-    sc->cpu_type     = ARM_CPU_TYPE_NAME("arm926");
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2400_A1_SILICON_REV;
+     sc->sram_size    = 0x8000;
+     sc->spis_num     = 1;
+@@ -527,6 +531,10 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+ 
+ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("arm1176"),
++        NULL
++    };
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
+@@ -535,7 +543,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+     dc->user_creatable = false;
+ 
+     sc->name         = "ast2500-a1";
+-    sc->cpu_type     = ARM_CPU_TYPE_NAME("arm1176");
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2500_A1_SILICON_REV;
+     sc->sram_size    = 0x9000;
+     sc->spis_num     = 2;
 diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 46baba0e4195..4ee32ea99dbc 100644
+index b264433cf095..46baba0e4195 100644
 --- a/hw/arm/aspeed_ast2600.c
 +++ b/hw/arm/aspeed_ast2600.c
-@@ -76,6 +76,8 @@ static const hwaddr aspeed_soc_ast2600_memmap[] = {
-     [ASPEED_DEV_UART12]    = 0x1E790600,
-     [ASPEED_DEV_UART13]    = 0x1E790700,
-     [ASPEED_DEV_VUART]     = 0x1E787000,
-+    [ASPEED_DEV_FSI1]      = 0x1E79B000,
-+    [ASPEED_DEV_FSI2]      = 0x1E79B100,
-     [ASPEED_DEV_I3C]       = 0x1E7A0000,
-     [ASPEED_DEV_SDRAM]     = 0x80000000,
- };
-@@ -133,6 +135,8 @@ static const int aspeed_soc_ast2600_irqmap[] = {
-     [ASPEED_DEV_ETH4]      = 33,
-     [ASPEED_DEV_KCS]       = 138,   /* 138 -> 142 */
-     [ASPEED_DEV_DP]        = 62,
-+    [ASPEED_DEV_FSI1]      = 100,
-+    [ASPEED_DEV_FSI2]      = 101,
-     [ASPEED_DEV_I3C]       = 102,   /* 102 -> 107 */
- };
- 
-@@ -266,6 +270,10 @@ static void aspeed_soc_ast2600_init(Object *obj)
-     object_initialize_child(obj, "emmc-boot-controller",
-                             &s->emmc_boot_controller,
-                             TYPE_UNIMPLEMENTED_DEVICE);
-+
-+    for (i = 0; i < ASPEED_FSI_NUM; i++) {
-+        object_initialize_child(obj, "fsi[*]", &s->fsi[i], TYPE_ASPEED_APB2OPB);
-+    }
- }
- 
- /*
-@@ -625,6 +633,17 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-         return;
-     }
-     aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sbc), 0, sc->memmap[ASPEED_DEV_SBC]);
-+
-+    /* FSI */
-+    for (i = 0; i < ASPEED_FSI_NUM; i++) {
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->fsi[i]), errp)) {
-+            return;
-+        }
-+        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fsi[i]), 0,
-+                        sc->memmap[ASPEED_DEV_FSI1 + i]);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->fsi[i]), 0,
-+                           aspeed_soc_get_irq(s, ASPEED_DEV_FSI1 + i));
-+    }
- }
+@@ -629,13 +629,17 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
  
  static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
+ {
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-a7"),
++        NULL
++    };
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+ 
+     dc->realize      = aspeed_soc_ast2600_realize;
+ 
+     sc->name         = "ast2600-a3";
+-    sc->cpu_type     = ARM_CPU_TYPE_NAME("cortex-a7");
++    sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2600_A3_SILICON_REV;
+     sc->sram_size    = 0x16400;
+     sc->spis_num     = 2;
+diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+index 36ca189ce960..123a0c432cfd 100644
+--- a/hw/arm/aspeed_soc_common.c
++++ b/hw/arm/aspeed_soc_common.c
+@@ -20,7 +20,10 @@
+ 
+ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc)
+ {
+-    return sc->cpu_type;
++    assert(sc->valid_cpu_types);
++    assert(sc->valid_cpu_types[0]);
++    assert(!sc->valid_cpu_types[1]);
++    return sc->valid_cpu_types[0];
+ }
+ 
+ qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev)
 -- 
 2.43.0
 
