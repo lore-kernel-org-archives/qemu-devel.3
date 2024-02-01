@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD818C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 22:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC000C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 23:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVfm2-0006Df-Q8; Thu, 01 Feb 2024 17:43:10 -0500
+	id 1rVgCp-0000aS-KB; Thu, 01 Feb 2024 18:10:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rVflu-00069X-PC
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 17:43:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rVflp-0006aK-Sd
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 17:43:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706827374;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HRuhZWiF06Tp20gjR8Q/NfKBJU7LeSLPPudzwY0KDmk=;
- b=VJzldOkEGKHPzQs4iNtFJIoZhx1CgDgRE2cmGXvJWK0FPDYjyMF4jFpomHD1bB65AiN4FU
- RuUfMCvr/iR3Nm3nIWYd/yFTQfBuQdt1xFqCBBPxkb0j3J5GdqyFHWCxnUgA6p3cpPbPFI
- FAZE1FqjYE5E9XlJht3JugSTwdU5GyI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-110-D5Ld1syYOQKYRcH2fUvcqA-1; Thu, 01 Feb 2024 17:42:51 -0500
-X-MC-Unique: D5Ld1syYOQKYRcH2fUvcqA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E6EBE185A781;
- Thu,  1 Feb 2024 22:42:50 +0000 (UTC)
-Received: from scv.redhat.com (unknown [10.22.18.40])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AE4CA2166B33;
- Thu,  1 Feb 2024 22:42:50 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 01/20] qapi: sort pylint suppressions
-Date: Thu,  1 Feb 2024 17:42:27 -0500
-Message-ID: <20240201224246.39480-2-jsnow@redhat.com>
-In-Reply-To: <20240201224246.39480-1-jsnow@redhat.com>
-References: <20240201224246.39480-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rVgCg-0000Xg-6U
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 18:10:42 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rVgCZ-0003Up-L2
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 18:10:38 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a354408e6bfso448961766b.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 15:10:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1706829032; x=1707433832; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eNZ7MKiicg2Ou2NqE/YMLDKvR4Fq9GTpuzKjLeAck9o=;
+ b=XHyAc8rYCLzMexIHss6ocucKw+HpIZzp60dpILiwwPywXeohK7n8+Js+N9ZUqiXOYW
+ elXdiuTmeQ0t1/Y4mFd/GriFcEKg5mveW6tu5/1SvmRaqf/ojIfhOBK0slqHyziUvi8F
+ 6R01YldlH37WsLMJSLRF5LXHO4Ru+ooYesSjcHKSTUSWtymoxFD7hUuzV3Df0fubVumr
+ YRkjJxAPFkiCmo6zfcyUEgiugU+37DFLPtLKB8U/D9uWlqj+u51uhC6KTuSvXUslhmKP
+ 9s9QPFq5/oKtBDiFWTMO9lXBjn+zgi+lh7wRPGNEVQ0XDAFsCct+tQiPkZEHxQPK3FDy
+ UbEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706829032; x=1707433832;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eNZ7MKiicg2Ou2NqE/YMLDKvR4Fq9GTpuzKjLeAck9o=;
+ b=U9DALAIz1vzz78zVjq8nEGEUpFy4LQp+QOEYPKgOOA0OYp2aqIvibBlPJ679nCFVO4
+ h65XDRUtYj2Jx0PlZvGY3WkbMgk5vzD8WboJBC3tRdTwy37zqBNJCJMxUxM/Rgsin8jZ
+ qqo7ZAgP7urphgvlLgkhWchJUp8J+8wTe3MLbz0ATyL8hqwU8Yxin6lCsjaeqx7fxByo
+ FTaIfTBpKB7JqpZlikwDXc3ZRezmyMdwiCHlF1Ls7tSaw0cYcNNwwAfY7rX/Wm2agbKl
+ RHo9vE9VGBem6MOEN4XB8xhmV/k13Tiq0T9L7Ph1dB4ratJI+FGKXpFk3GenRCNHtRir
+ 68Rw==
+X-Gm-Message-State: AOJu0YzBXyh0Uu7gLwwxM8wek3i6IPXzFTZkSSR/U60ykkZHQoHgoU6A
+ ugRySo5IL98Fd7VsPFEpPMl1n1pZpPwsk5QVJH89awfXx3ofocsnutANAHKgmuuAAVHMkiDHUT2
+ Osiy+SnmYObFf7hW9+7dGgh37tJE9z+M/wIPmHg==
+X-Google-Smtp-Source: AGHT+IFYjLS1BsIM6EAZEfAMXdexMZXl6ffD7XNVBDYv0WIbgcfK4jNy1mFmcb3FKaltHxZ2KaTbJCIK4SdDKFZSaPI=
+X-Received: by 2002:a17:906:6bc1:b0:a26:f7ea:7cb6 with SMTP id
+ t1-20020a1709066bc100b00a26f7ea7cb6mr329748ejs.16.1706829031811; Thu, 01 Feb
+ 2024 15:10:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240104004452.324068-1-hao.xiang@bytedance.com>
+ <20240104004452.324068-16-hao.xiang@bytedance.com> <ZbsrEcDbm_F4U0Hj@x1n>
+In-Reply-To: <ZbsrEcDbm_F4U0Hj@x1n>
+From: Hao Xiang <hao.xiang@bytedance.com>
+Date: Thu, 1 Feb 2024 15:10:20 -0800
+Message-ID: <CAAYibXgasZU96zKmg688xKTBBUdUjOB4TvpQCbm=A5qq2AeBwg@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v3 15/20] migration/multifd: Add test hook
+ to set normal page ratio.
+To: Peter Xu <peterx@redhat.com>
+Cc: farosas@suse.de, peter.maydell@linaro.org, marcandre.lureau@redhat.com, 
+ bryan.zhang@bytedance.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,34 +92,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- scripts/qapi/pylintrc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On Wed, Jan 31, 2024 at 9:24=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Thu, Jan 04, 2024 at 12:44:47AM +0000, Hao Xiang wrote:
+> > +# @multifd-normal-page-ratio: Test hook setting the normal page ratio.
+> > +#     (Since 8.2)
+>
+> Please remember to touch all of them to 9.0 when repost, thanks.
+>
 
-diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
-index 90546df5345..1342412c3cf 100644
---- a/scripts/qapi/pylintrc
-+++ b/scripts/qapi/pylintrc
-@@ -16,13 +16,13 @@ ignore-patterns=schema.py,
- # --enable=similarities". If you want to run only the classes checker, but have
- # no Warning level messages displayed, use "--disable=all --enable=classes
- # --disable=W".
--disable=fixme,
-+disable=consider-using-f-string,
-+        fixme,
-         missing-docstring,
-         too-many-arguments,
-         too-many-branches,
--        too-many-statements,
-         too-many-instance-attributes,
--        consider-using-f-string,
-+        too-many-statements,
-         useless-option-value,
- 
- [REPORTS]
--- 
-2.43.0
+Will do.
 
+> --
+> Peter Xu
+>
 
