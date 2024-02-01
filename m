@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445F8C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B51FC4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVazN-0002Pm-Un; Thu, 01 Feb 2024 12:36:37 -0500
+	id 1rVb28-0003oZ-D5; Thu, 01 Feb 2024 12:39:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVazK-0002MB-HB
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:36:34 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVb26-0003oQ-LK
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:39:26 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVazI-0003En-Si
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:36:34 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-55eedf5a284so1565715a12.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 09:36:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVb24-0003bP-S1
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:39:26 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-40ef6da20feso7153085e9.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 09:39:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706808991; x=1707413791; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=o7HgMUcJYDwFYei9UXNeIyNP7q17jjzr/VJlzAOm+Hw=;
- b=zjXQ8v0r6V4DJjhc/XQVsyTeOgAaAw/SG9omhPRVn7iaveFNxU2EpXHrJGqbuxcATJ
- jHqeWzip24GHgyzfu8cc5w0ukr96OhbzFQR4nlY/jGoRXd/5f4npb5pfhvMdSMbhf/t8
- wOljCm2hGSNgu5OoblTtrY3NhNCHxp505WCS6d+5U54PeZ9muCyNKzu9uL+5xzFiT8EO
- qlnO479YbkTj+QW2imb82cGWlni72iErhtEkWGQWmUIbcwXfyaQy92777kGd4FPk0hDY
- CXoT9yQ5Cx+eBSxasA1elAfDJj66QQs51fGdE98FQpC1mXtjZMdG7G/2U/SLwnoaNvJ9
- 51tQ==
+ d=linaro.org; s=google; t=1706809163; x=1707413963; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RzoZDvDII/Op/k856KqiHsOD8jArS3pDpqkAcYGo0Nw=;
+ b=sB1kOSOxzX3bpEJZpkmUaNAA7PzqP4QF4H1udPSrD9BwrROqCgL8cwuvyT00JaBUDr
+ wr/Cl9Wp5ZK5/kOfYjZ9u5WB6Pe+yEDTx9zjTjImHxA58sT4VNUt0w8Y4x/vfQnxjtP3
+ nH1lEXVU6ml9z4zq/25OeMIy4DGti4IxL7GR0a5lNn89qCy3PxHqQHa+ldoi0BNDI1F7
+ kI8WSvTTHmY54t/LtVcSLDqR8Q+Z3oImzdvu9QqcnH2m997SnKstQOKUnaANFtPuuyZu
+ FBBXuFI+tl1DOG9eI5XhKaZC++GarzecJv6y1p5O1sJcfYu+tItBHheq8wP54CN20Ldp
+ iqTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706808991; x=1707413791;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o7HgMUcJYDwFYei9UXNeIyNP7q17jjzr/VJlzAOm+Hw=;
- b=W3aqr7B2dytNqoGs3LfctGnTQOCdfGJ5HQbniuinA+mLgkE5dSm5U90nIjgMiodC0Z
- Pf3Dm5ALgmkKyJ2YBMx+Rz+64ZteDiSCHd5Ch8auTzmIXMFyCMfLDzGQMAO192rU/RrH
- P0rV6GNDIY0cqDyUlLqjT/NFo/iXMhfyaEErnxZc49aEa7A/E0GovTj/zKI3Fy0B3dbA
- 4vnlX5xLq4wY4pXYVLPFNjSCfJUSkGhURdppjftI9z4mfnnyfUP7w6ktlOV3y/83APCP
- qvF2t+4+QPhG6iceyxTyCen9D13LMpgwaHzNQaXUkuOo6TZnbQYbPhWh+quAK+d8H80j
- BXaA==
-X-Gm-Message-State: AOJu0YzDa9aQhbmtb/9zWhrlPGkhl2YjbYGUMUMw7UOycYirVZIoC7gA
- non9JCHufiBuvmtr8BqHG0/K7GmVRC2Rp6P4FubQxe3Chg4EnnpcL2l9q7H3MiOL9RwpnEFz+ca
- /ief54MXZws1pVVv8Bf/XOH2PaabBKWaF8iqmTw==
-X-Google-Smtp-Source: AGHT+IHjj3Lac5j+821ojvbiRkLxzz99cZIiSugOl0Tho1G4mysYKnH7WqHcIlUS+Wy17wsb7DOXgLr6YuOrHDYBBbo=
-X-Received: by 2002:aa7:dcc6:0:b0:55f:6b8:b2f7 with SMTP id
- w6-20020aa7dcc6000000b0055f06b8b2f7mr2255153edu.8.1706808991065; Thu, 01 Feb
- 2024 09:36:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706809163; x=1707413963;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RzoZDvDII/Op/k856KqiHsOD8jArS3pDpqkAcYGo0Nw=;
+ b=R1EIAJBrJcPLoZU2Z9DuIAll6eAlkepVo0AzOq/wmOY07kHDsusFNHRpsh0pVBXAFg
+ b2etSBqUgPqblWOhiFitjcKaAvtli1lPQjuvkxbzCdO5dbdp/ZigKN2rnxnsUrd/WE5t
+ rmpynH/UEbv+xv6zqs6wXyOuuUl5zgf5jS6Vn9ORoMoRNxEn9bC9vTKvxvHuKZ9XPI8Q
+ V2ZIBt9KOpnoyzxoBY7vFP9cQPaKJM4qF7RuAdkae9BF62ol8NzzeiJnGjO5RShEkWGs
+ +izxMU4iMCyVdZnGzX7RWzmiLZfb5BCrXi91pof3Bw2vVuMszXGmQpRdEVy71ODuJha4
+ sfMA==
+X-Gm-Message-State: AOJu0Yzr+QvKOPM1Icce9T9cISAPa/z3E09e1oaczV+Y60cl4Sej5oDI
+ s6cHQhanAdYxOSaheEHF7MFHh84g6qUrp/TzTOckMHaD1XZ0b+IB8fBbSUF0BxM=
+X-Google-Smtp-Source: AGHT+IEtGiborKIfQbJLWBuCUv3huaGcPbA7q0BWb9JZD3oxvCoNvcOtJRpS2hpUEL26RpAa9e6Xkw==
+X-Received: by 2002:a05:600c:1c0a:b0:40e:e8e3:40c2 with SMTP id
+ j10-20020a05600c1c0a00b0040ee8e340c2mr8118047wms.12.1706809163021; 
+ Thu, 01 Feb 2024 09:39:23 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCVOcVhgl2NT50x2K+iQRLmWZxW6bkz8eMXCrH2OwknGbH9+8scUaFH+cL7tVOQm48Uf2NvmOwxUIKNn1dIsfgqPw8b2/vZZAVDYDLvoVmmKo3xv8LeZYL6jxy6ARvrkem9jVY3EPVCwFzEGHl4WBKK2SVWVRKFfv41N99SCs5i0SXqkBSUI+1e+Ewg/xtC3wRtBI3miu+abWrpvw8/nHHeqYKOG3NXSQsEgPPFAHzOJaRZv/tTGgO52v3Zu/XacebJd9xzgvm7Z3DwwOWiWYd35uQp/bqPYtOU4zzFK6LxucK7I3N+1QZypAVgJ408LmgRQ3iU4NwxlqH4B6+Z8n1ZbBYFIoz+AX0JTjl6v8n0n6rCKKr49WCZBKnhU93ngVwzqMnnJozvvHsHFXtiMMdYbmq1C+JwGHUKpEX7GIr1P8gB5PWtEGmvMO7t+tjTd71C7+rwZzdCMrQdEQIAs+C6nsh24NOWIqfQx6zEVup2jeaeUQXK2DZRijyLfsqumNFnFMQanhb44SRxDNuwj6I0Lv69SYccZLbPyBLC+SGH8uaBcViwNlJXewA5ybtYHCRurYNYU94jMq9EyuytWWl6QrV6pApWDllnpp+n3AzUiEVBJCorGnN3LisRKwbkeTNwC8nL2RyCq97/mPg==
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ o7-20020a05600c510700b0040e880ac6ecsm5096977wms.35.2024.02.01.09.39.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Feb 2024 09:39:22 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 50CBE5F7AF;
+ Thu,  1 Feb 2024 17:39:22 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: stefanha@gmail.com,  Alistair Francis <Alistair.Francis@wdc.com>,
+ dbarboza@ventanamicro.com,  qemu-devel@nongnu.org,  kvm@vger.kernel.org,
+ afaria@redhat.com,  eperezma@redhat.com,  gmaglione@redhat.com,
+ marcandre.lureau@redhat.com,  rjones@redhat.com,  sgarzare@redhat.com,
+ imp@bsdimp.com,  philmd@linaro.org,  pbonzini@redhat.com,
+ thuth@redhat.com,  danielhb413@gmail.com,  gaosong@loongson.cn,
+ akihiko.odaki@daynix.com,  shentey@gmail.com,  npiggin@gmail.com,
+ seanjc@google.com,  Marc Zyngier <maz@kernel.org>
+Subject: Re: Call for GSoC/Outreachy internship project ideas
+In-Reply-To: <mhng-e7014372-2334-430e-b22e-17227af21bd9@palmer-ri-x1c9a>
+ (Palmer Dabbelt's message of "Tue, 30 Jan 2024 16:29:34 -0800 (PST)")
+References: <mhng-e7014372-2334-430e-b22e-17227af21bd9@palmer-ri-x1c9a>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Thu, 01 Feb 2024 17:39:22 +0000
+Message-ID: <87le84jd85.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240131002800.989285-1-nabihestefan@google.com>
-In-Reply-To: <20240131002800.989285-1-nabihestefan@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 17:36:20 +0000
-Message-ID: <CAFEAcA9dC=voU+1jRqrnVgk1_-WQhz5R=+7qq1um4mEnWNY8cg@mail.gmail.com>
-Subject: Re: [PATCH v16 0/6] Implementation of GMAC Networking Module
-To: Nabih Estefan <nabihestefan@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- wuhaotsh@google.com, jasowang@redhat.com, avi.fishman@nuvoton.com, 
- kwliu@nuvoton.com, tomer.maimon@nuvoton.com, Hila.Miranda-Kuzi@nuvoton.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,23 +106,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 31 Jan 2024 at 00:28, Nabih Estefan <nabihestefan@google.com> wrote:
+Palmer Dabbelt <palmer@dabbelt.com> writes:
+
+> On Tue, 30 Jan 2024 12:28:27 PST (-0800), stefanha@gmail.com wrote:
+>> On Tue, 30 Jan 2024 at 14:40, Palmer Dabbelt <palmer@dabbelt.com> wrote:
+>>>
+>>> On Mon, 15 Jan 2024 08:32:59 PST (-0800), stefanha@gmail.com wrote:
+>>> > Dear QEMU and KVM communities,
+>>> > QEMU will apply for the Google Summer of Code and Outreachy internship
+>>> > programs again this year. Regular contributors can submit project
+>>> > ideas that they'd like to mentor by replying to this email before
+>>> > January 30th.
+>>>
+>>> It's the 30th, sorry if this is late but I just saw it today.  +Alistair
+>>> and Daniel, as I didn't sync up with anyone about this so not sure if
+>>> someone else is looking already (we're not internally).
+<snip>
+>> Hi Palmer,
+>> Performance optimization can be challenging for newcomers. I wouldn't
+>> recommend it for a GSoC project unless you have time to seed the
+>> project idea with specific optimizations to implement based on your
+>> experience and profiling. That way the intern has a solid starting
+>> point where they can have a few successes before venturing out to do
+>> their own performance analysis.
 >
-> From: Nabih Estefan Diaz <nabihestefan@google.com>
-
-> Hao Wu (2):
->   hw/net: Add NPCMXXX GMAC device
->   hw/arm: Add GMAC devices to NPCM7XX SoC
+> Ya, I agree.  That's part of the reason why I wasn't sure if it's a
+> good idea.  At least for this one I think there should be some easy to
+> understand performance issue, as the loops that go very slowly consist
+> of a small number of instructions and go a lot slower.
 >
-> Nabih Estefan Diaz (4):
->   tests/qtest: Creating qtest for GMAC Module
->   hw/net: GMAC Rx Implementation
->   hw/net: GMAC Tx Implementation
->   tests/qtest: Adding PCS Module test to GMAC Qtest
+> I'm actually more worried about this running into a rabbit hole of
+> adding new TCG operations or even just having no well defined mappings
+> between RVV and AVX, those might make the project really hard.
 
+You shouldn't have a hard guest-target mapping. But are you already
+using the TCGVec types and they are not expanding to AVX when its
+available?
 
+Remember for anything float we will end up with softfloat anyway so we
+can't use SIMD on the backend.
 
-Applied to target-arm.next, thanks.
+>
+>> Do you have the time to profile and add specifics to the project idea
+>> by Feb 21st? If that sounds good to you, I'll add it to the project
+>> ideas list and you can add more detailed tasks in the coming weeks.
+>
+> I can at least dig up some of the examples I ran into, there's been a
+> handful filtering in over the last year or so.
+>
+> This one
+> <https://gist.github.com/compnerd/daa7e68f7b4910cb6b27f856e6c2beba>
+> still has a much more than 10x slowdown (73ms -> 13s) with
+> vectorization, for example.
+>
+>> Thanks,
+>> Stefan
 
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
