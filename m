@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE80C47DDB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 12:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 730C4C47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVWfJ-0004mp-74; Thu, 01 Feb 2024 07:59:37 -0500
+	id 1rVWhf-0006FC-3x; Thu, 01 Feb 2024 08:02:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rVWfH-0004mJ-5g; Thu, 01 Feb 2024 07:59:35 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rVWfE-0008PC-RQ; Thu, 01 Feb 2024 07:59:34 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4EC4C49694;
- Thu,  1 Feb 2024 16:00:29 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3A915715D9;
- Thu,  1 Feb 2024 15:59:30 +0300 (MSK)
-Message-ID: <0c2b8043-540e-4be8-954a-c9c134cdaa1b@tls.msk.ru>
-Date: Thu, 1 Feb 2024 15:59:30 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVWhN-0006BQ-Ef
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:01:48 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVWhL-0000Xg-Od
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:01:45 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-55fcceb5f34so273644a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:01:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706792501; x=1707397301; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GAdUFwzti1+9WNHY0F9MBZdywydLXG62Qp0LZhpz+d4=;
+ b=JYOUZ5pPRfMQ/YR8Z43qGlDK9XV3pUScx3zIZRz3WsYwxLD3CXpCATZeB6Z8JSmWNp
+ sZD/HAMSkeeApgnpLyVVkHRuyovytfBtanJoaJPnWKvjmrKOpnNngiTw3lihTe92Tu4S
+ Lb8n0Zg/btvMecsEONVd9h2f/TFoFumeGGeT/KyyoFg+D45f/o1hlGTmEq0VsaBabfjc
+ ntNyY6/lAAVc97oQkJ0qV3eSKZ3/uWI+26YYMNGSHS3bGuXFExURRrSHCXPEPDT9Rn/W
+ DhpvMHSw8yVWsfRs1C4ZKfeZgGVXxjNQqWTJE2Ma/YvXRmBfLA4CYnV5RGVMMk6PBmup
+ bErg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706792501; x=1707397301;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GAdUFwzti1+9WNHY0F9MBZdywydLXG62Qp0LZhpz+d4=;
+ b=exlu0Ecxcf3Nge+Ev9cGrX7v8bicHyfy6/czAxWeIJRtW/WMBV7tzU3JU4ixjXSH/O
+ J9nZEWpIWKNY79isQ53GhXLnBx2K/rCUODQbvvd8ONorixLA6IBn7Ou6yROkZsCSgAPh
+ aQmebZdOBeEgMukdvifbzuQJoL2x30AwO2hb0kFSguOeLgr6/FtbBi0oDMUNhr9ij3Ff
+ z24KM4wzBXtDmpMnVXiXgNrxSwG3NjoSV3qEWAgqSD7ZmqrsgX934iXQlHnByJVhrX7Q
+ dzMQIrQBxu8oPrfOwEkKePHXetrxBk6ppFrAl4psLUky3iqYSRsJgH0DrxGPEWDuQpTW
+ 8AmQ==
+X-Gm-Message-State: AOJu0YzHUvZr/260Z+2UxvE34DYewS/TN8oa5Zfjrfu1rh+7iujtFt1G
+ dFzqJzusj8obr/Bx8j3q4+J2vkJDIwa/XgcNT3bsuEhLDh21y0p/rLFDrL6UOEXwHywo+Jr4A/s
+ 8peOaIziNMmPENVhBcIcusF7Y5e63R+2EI2tQKg==
+X-Google-Smtp-Source: AGHT+IGchpNugBXd0UWR0L4HfPB7rrrlfbTAhVXgZASVhwQPdfaEYxkablu0FrwKuJEfi6Bkh0r1DqwG91UEW5mupLU=
+X-Received: by 2002:aa7:ccd1:0:b0:55f:19a4:e5f with SMTP id
+ y17-20020aa7ccd1000000b0055f19a40e5fmr3378502edt.20.1706792500777; Thu, 01
+ Feb 2024 05:01:40 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: building qemu on a system with libxkbcommon installed but not
- xkeyboard-config produces an core dump
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Zhang Wen <zhw2101024@gmail.com>, qemu-trivial@nongnu.org,
- pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org
-References: <94cf974b-05ec-41c2-8d0b-43ffbc8bdeac@gmail.com>
- <904ef958-0e3d-48da-a4a7-5c1514c04472@tls.msk.ru>
- <e441b771-0a08-4f2c-b7a7-f6fdd787bc1c@tls.msk.ru>
- <CAFEAcA-C-pGGYY1bfE0ZatZP-imGmq=4-579TEnEZWFLeLxZLQ@mail.gmail.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CAFEAcA-C-pGGYY1bfE0ZatZP-imGmq=4-579TEnEZWFLeLxZLQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240201122835.1712347-1-alex.bennee@linaro.org>
+ <20240201122835.1712347-5-alex.bennee@linaro.org>
+In-Reply-To: <20240201122835.1712347-5-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 1 Feb 2024 13:01:29 +0000
+Message-ID: <CAFEAcA-1tG=xF5x=v8k-pMXwqmDuDjxJuarXj-Ao8S+DSGdB-g@mail.gmail.com>
+Subject: Re: [PATCH 4/5] Revert "hw/elf_ops: Ignore loadable segments with
+ zero size"
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>, Bin Meng <bin.meng@windriver.com>, 
+ Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, devel@lists.libvirt.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Max Filippov <jcmvbkbc@gmail.com>, Marek Vasut <marex@denx.de>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-riscv@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>, 
+ Beraldo Leal <bleal@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Chris Wulff <crwulff@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,36 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-01.02.2024 15:57, Peter Maydell пишет:
-> On Thu, 1 Feb 2024 at 12:50, Michael Tokarev <mjt@tls.msk.ru> wrote:
->>
->> 01.02.2024 15:11, Michael Tokarev wrote:
->>> 31.01.2024 11:13, Zhang Wen:
->>>> With this patch, qemu requires keyboard-config when libxkbcommon is found on the system. So if the qemu is configured when libxkbcommon is installed
->>>> but not keyboard-config, the configure stage will produce an error message, thus avoid coredump in the build stage.
->>>
->>> I'm not sure what you're talking about.  What *is* keyboard-config anyway?
->>>
->>> On a debian system there's no such thing.  There's keyboard-configuration
->>> package but it has nothing to do with that.  It looks like if we apply
->>> such patch, it will be impossible to build qemu on debian.
->>
->> Aha, I found it.  On debian it is /usr/share/pkgconfig/keyboard-config.pc,
->> which is a part of xkb-data package.  And libxkbcommon Depends on xkb-data.
->> It looks like the distribution here is wrong, there should be no libxkbcommon
->> without xkb-data which includes keyboard-config.
-> 
-> Are we talking about "keyboard-config" or "xkeyboard-config" here?
-> The commit message says "keyboard-config" but the patch itself
-> says "xkeyboard-config".
+On Thu, 1 Feb 2024 at 12:30, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> This regressed qemu-system-xtensa:
+>
+>     TEST    test_load_store on xtensa
+>   qemu-system-xtensa: Some ROM regions are overlapping
+>   These ROM regions might have been loaded by direct user request or by d=
+efault.
+>   They could be BIOS/firmware images, a guest kernel, initrd or some othe=
+r file loaded into guest memory.
+>   Check whether you intended to load all this guest code, and whether it =
+has been built to load to the correct addresses.
+>
+>   The following two regions overlap (in the memory address space):
+>     test_load_store ELF program header segment 1 (addresses 0x00000000000=
+01000 - 0x0000000000001f26)
+>     test_load_store ELF program header segment 2 (addresses 0x00000000000=
+01ab8 - 0x0000000000001ab8)
 
-It is xkeyboard-config.pc, - I hit the same trap with the wrong commit
-message.
+Hmm -- this second segment is zero length, so why did we create
+a ROM blob for it? The commit being reverted here looks like it
+ought to be expanding the set of things for which we say
+"zero size, ignore entirely"...
 
-$ dpkg -L xkb-data | fgrep .pc
-/usr/share/pkgconfig/xkeyboard-config.pc
-$ dpkg -s libxkbcommon0 | grep Depends
-Depends: xkb-data, libc6 (>= 2.33)
+Anyway, revert given we have a regression is the first thing
+to do if there's not an immediately obvious fix.
 
-/mjt
+-- PMM
 
