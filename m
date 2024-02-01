@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA378C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98E5C48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaB5-0002vM-VH; Thu, 01 Feb 2024 11:44:40 -0500
+	id 1rVaBc-0003IQ-T7; Thu, 01 Feb 2024 11:45:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+1220c4869a9b484313cc+7466+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rVaAq-0002qk-Tw
+ id 1rVaAq-0002qe-Qi
  for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:25 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+1220c4869a9b484313cc+7466+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rVaAm-0002U1-9u
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:23 -0500
+ id 1rVaAm-0002T0-A7
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:To:From:Reply-To:
  Cc:Content-Type:Content-ID:Content-Description;
- bh=bWvWof/1cmcc1j4iR+WvmK21dtpKtWiHn2Gmk5c5D+g=; b=VUnPwvHEyNOBgqxJMYIf/eC+QF
- EUrvA3SmO+CPVnw6i0BKegDC63H4tk76q9kq/7PvPZLubieq7VP/vzQeN7kEe72s0Uhet0REyGXzp
- jIHGtK0+5FSBA/wCLEqtcyWlGv+Id4iqhqifmnTnIDDT50/DJVl4KymmhZMlrOw8MtIYee4TSXc1v
- siKdGDQemduNxuAWX4TcNkaCAsINPd/9/Paa/V1W6JNuztTsOYxNd1qs3NJTGoQEA55XKURqBXSNg
- stVYhdwGucYiOQU+hCir6POp7NFrrCaZFXaU+EOHvhCVOI+uwh6wYdURtIpLE5zIdoIzeioTiC+Zm
- 2ayKhZ6A==;
+ bh=X8HABeQWYWDEMC8Cu9m1h/KbQFN3HQ6PU+iqyRJhTPQ=; b=Oxh3VZtBf7VklEgH7RMYqZXMaj
+ e4GOexI0Z0KDJH5HzJ0ExSAjIRomoT3EUPmjqrcmw9cEitjfHp6HKr+5mDxrT3EgYpulaGOoHQ+tD
+ SvrADFSJuPi5xWCqDExZIPbUhqfNTnfKH3tD3DvorNXx0Nq8eeKariTW/nB74ukIRMijp2kLscRCS
+ 5PoLMK6h94tF0KojxHdj5m7elACG8mMMEsrnJu/9dmLowChdeIuGwIxSke0WmWQcJC5Z4VdxXOGFZ
+ vYN4pMHhYssY9C4NVik0Tj7VnTDm8Sw65zs8WFV++g0Y6A+mZ/bG6gH4WQZ9HVYemnosQvzVN37Zs
+ 9edTMaLw==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVaAh-00000009cMP-1qSw for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:15 +0000
-Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVaAg-00000003IOs-3Ygv for qemu-devel@nongnu.org;
+ id 1rVaAg-00000009cM1-0ue9 for qemu-devel@nongnu.org;
  Thu, 01 Feb 2024 16:44:14 +0000
+Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
+ Hat Linux)) id 1rVaAf-00000003IMO-2Mu9 for qemu-devel@nongnu.org;
+ Thu, 01 Feb 2024 16:44:13 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 44/47] net: remove qemu_check_nic_model()
-Date: Thu,  1 Feb 2024 16:44:09 +0000
-Message-ID: <20240201164412.785520-45-dwmw2@infradead.org>
+Subject: [PULL 09/47] hw/arm/virt: use pci_init_nic_devices()
+Date: Thu,  1 Feb 2024 16:43:34 +0000
+Message-ID: <20240201164412.785520-10-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201164412.785520-1-dwmw2@infradead.org>
 References: <20240201164412.785520-1-dwmw2@infradead.org>
@@ -78,52 +78,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-There are no callers of this function any more, as they have all been
-converted to qemu_{create,configure}_nic_device().
-
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- include/net/net.h |  1 -
- net/net.c         | 13 -------------
- 2 files changed, 14 deletions(-)
+ hw/arm/virt.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index 728ca965af..00ee1af7ab 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -204,7 +204,6 @@ int qemu_set_vnet_le(NetClientState *nc, bool is_le);
- int qemu_set_vnet_be(NetClientState *nc, bool is_be);
- void qemu_macaddr_default_if_unset(MACAddr *macaddr);
- int qemu_show_nic_models(const char *arg, const char *const *models);
--void qemu_check_nic_model(NICInfo *nd, const char *model);
- int qemu_find_nic_model(NICInfo *nd, const char * const *models,
-                         const char *default_model);
- /**
-diff --git a/net/net.c b/net/net.c
-index 4651b3f443..ffd4b42d5a 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -992,19 +992,6 @@ int qemu_show_nic_models(const char *arg, const char *const *models)
-     return 1;
- }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index e6ead2c5c8..368c2a415a 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1457,9 +1457,7 @@ static void create_pcie(VirtMachineState *vms)
+     pci->bypass_iommu = vms->default_bus_bypass_iommu;
+     vms->bus = pci->bus;
+     if (vms->bus) {
+-        for (i = 0; i < nb_nics; i++) {
+-            pci_nic_init_nofail(&nd_table[i], pci->bus, mc->default_nic, NULL);
+-        }
++        pci_init_nic_devices(pci->bus, mc->default_nic);
+     }
  
--void qemu_check_nic_model(NICInfo *nd, const char *model)
--{
--    const char *models[2];
--
--    models[0] = model;
--    models[1] = NULL;
--
--    if (qemu_show_nic_models(nd->model, models))
--        exit(0);
--    if (qemu_find_nic_model(nd, models, model) < 0)
--        exit(1);
--}
--
- int qemu_find_nic_model(NICInfo *nd, const char * const *models,
-                         const char *default_model)
- {
+     nodename = vms->pciehb_nodename = g_strdup_printf("/pcie@%" PRIx64, base);
 -- 
 2.43.0
 
