@@ -4,78 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 555C2C47DB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 02:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5683AC47258
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 02:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVN3n-00062y-UC; Wed, 31 Jan 2024 21:44:16 -0500
+	id 1rVNFw-0008CC-Vg; Wed, 31 Jan 2024 21:56:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rVN3l-00062q-TG
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 21:44:13 -0500
-Received: from mgamail.intel.com ([134.134.136.65])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVNFt-0008Bw-Rk
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 21:56:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rVN3j-0005vb-6t
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 21:44:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706755451; x=1738291451;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=Yc3gR68rS4/B0kEheqFMJGBIql3pAV51T/Q4R/eXbuk=;
- b=LWHjFYq2+3HPKODXokddByuxseBX4U6viRpfcoCg8VM2yZEFv/zA0GMv
- WBNVWIlNJyq+RIZ6WsOSGPgJBjrZovoRcC0yeXedlCHzsL6V2b+jFhbsL
- mM5M/N9+MON/IEzh5MM2+ZE1BW3R05rMdJ7/e1qnRRljkzn4IbtqCvj4I
- PpMMMhPynwQWi7i7fNST8dhFJWZj4ALi37tc10lykA2zmemzNl+mfdUhE
- 7r5VFDK72WKPonj4jY8LiJ8y9sO5vJb4+KWzOz5NMLhWgKG1xx+ecfjKR
- SPBfb47Zzi049NtF0chJd1qNgknv+ETyMtDqIkMtgdJYC7iQ+DphCQ17e Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="407506889"
-X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="407506889"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 18:44:07 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="788810725"
-X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="788810725"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orsmga002.jf.intel.com with ESMTP; 31 Jan 2024 18:44:02 -0800
-Date: Thu, 1 Feb 2024 10:57:32 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Babu Moger <babu.moger@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
-Message-ID: <ZbsInI6Z66edm3eH@intel.com>
-References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
- <Zbog2vDrrWFbujrs@redhat.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVNFs-00082A-Cn
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 21:56:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706756203;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jKi8/XIw9hAyaHEYNFNIVgGNgyrD8Np/zamw5fJ8Ru8=;
+ b=ht3q/sxnLFeJSmruhtDnZX++HOigKRbzQwxauHtuUljk0SNwUilDSE8TjsUPjHk2MDwPxe
+ 6sapsn+FD1+k+NW9cFIIotJXlQdZ3UcSjFkKhqsnajqSlIudHgQuMeLAhHXxOe9IldG0To
+ 68D25T9UBj/K5DjKsRYTv92V51xGT/I=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-502-8LtXEkmZNcmecsDfoir_fQ-1; Wed, 31 Jan 2024 21:56:40 -0500
+X-MC-Unique: 8LtXEkmZNcmecsDfoir_fQ-1
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-6dde498715fso58205b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 18:56:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706756199; x=1707360999;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jKi8/XIw9hAyaHEYNFNIVgGNgyrD8Np/zamw5fJ8Ru8=;
+ b=fSW+KOmA824whBr8Z/czmKlXFazcszn5Jr0mLuo+iXuSt6solEK5dTS7M7t5W7ZkEG
+ Rd+1uyTby8D9JBc+bhTmaY8p2XtiX0vGf2pjGlHxM4D3TgeFL7mIPJrv8WLNjei8jINn
+ M3YU3aVO8kemfCEC+mj0OrhB2IOBGmHuYWjDAAWB2myN+tZSnFjjXSAFb8N+WKmf3SOO
+ HbI0Ksk1Gufl2tZsy9/o2Dwqgzfhqpf4Z1rqZtimVtzQ8Ru4qjr87a1Wc0iquf7I1a7y
+ v1qDb3TjBR50KOkttSYgQDQ/SE62GbjqhAO1zelZ1DeK+Ep1Bj10zHiP6Yn3bMvC1vc+
+ Z5HQ==
+X-Gm-Message-State: AOJu0Yy7wDvlgVwD4F9Na/5lxtr30SRKzuBIBop860ddiSvI/DGM2mmD
+ Gxdd/4iYrpNjeY1zP3gPY3z++6IyxREZKb0v9RdYCW2ni64tjrr21Bw2HrLjkacuB4EzzHOWUCT
+ 9c0h++gsOTaZMzUjV8kF4TDRK2s4GCjfvt0TK6K3sYQ8tyB+kijekGS3TOl/tCRM=
+X-Received: by 2002:a05:6a20:7d8c:b0:19e:3390:4a42 with SMTP id
+ v12-20020a056a207d8c00b0019e33904a42mr1414306pzj.3.1706756199611; 
+ Wed, 31 Jan 2024 18:56:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFUprg4ub1ydaklmz0bCu9z9Mxn9V7xJ+/hJ+Mwm7hjJlqKFJ2foP2G3+nNfrrSvnEAouKg2w==
+X-Received: by 2002:a05:6a20:7d8c:b0:19e:3390:4a42 with SMTP id
+ v12-20020a056a207d8c00b0019e33904a42mr1414299pzj.3.1706756199260; 
+ Wed, 31 Jan 2024 18:56:39 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCXiON8FoJqDOAB/0mUlmyiUp5MQamwjOizdOfkVr0wH9CKbhRGpNrEHqMwve0Vj0WSei68nVuMQ1vCCcuotuUdps1Lbn88TsoE6NgMZXGfM4heMpz1Ik+YhURptlOh/7g==
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ o18-20020a17090323d200b001d8cb103327sm7205999plh.215.2024.01.31.18.56.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jan 2024 18:56:38 -0800 (PST)
+Date: Thu, 1 Feb 2024 10:56:32 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL 06/15] tests/qtest/migration: Don't use -cpu max for aarch64
+Message-ID: <ZbsIYKJ5fYG6zsVi@x1n>
+References: <CAFEAcA-x4WqvPsN-KZOA3SPN0F=vvYi=NFZ2qom2iT7-CN0RSg@mail.gmail.com>
+ <87il3g6t7b.fsf@suse.de> <ZbcSqyGNLGu7ugBb@x1n>
+ <87sf2ge3qu.fsf@suse.de> <87y1c7ogze.fsf@suse.de>
+ <CAFEAcA_BPf4LSh-JF1NVVVdaLoKgUcsnGeP7sHt-f73r4zyh7g@mail.gmail.com>
+ <ZbjT5OYpzNJjkMw9@x1n> <87wmrqbjnl.fsf@suse.de>
+ <ZbnG3qkMBPdsQxan@x1n> <878r45lkeb.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zbog2vDrrWFbujrs@redhat.com>
-Received-SPF: none client-ip=134.134.136.65;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -55
-X-Spam_score: -5.6
-X-Spam_bar: -----
-X-Spam_report: (-5.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+In-Reply-To: <878r45lkeb.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,50 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On Wed, Jan 31, 2024 at 10:09:16AM -0300, Fabiano Rosas wrote:
+> If we ask for KVM and it falls back to TCG, we need a cpu that supports
+> both. We don't have that. I've put some command-line combinations at the
+> end of the email[1], take a look.
 
-On Wed, Jan 31, 2024 at 10:28:42AM +0000, Daniel P. Berrangé wrote:
-> Date: Wed, 31 Jan 2024 10:28:42 +0000
-> From: "Daniel P. Berrangé" <berrange@redhat.com>
-> Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
-> 
-> On Wed, Jan 31, 2024 at 06:13:29PM +0800, Zhao Liu wrote:
-> > From: Zhao Liu <zhao1.liu@intel.com>
+Thanks a lot, Fabiano.  I think I have a better picture now.
 
-[snip]
+Now the question is whether it'll be worthwhile we (migration) explicitly
+provide code to workaround such issue in qtest, or we wait for ARM side
+until we have a processor that can be both stable and support KVM+TCG.
 
-> > However, after digging deeper into the description and use cases of
-> > cluster in the device tree [3], I realized that the essential
-> > difference between clusters and modules is that cluster is an extremely
-> > abstract concept:
-> >   * Cluster supports nesting though currently QEMU doesn't support
-> >     nested cluster topology. However, modules will not support nesting.
-> >   * Also due to nesting, there is great flexibility in sharing resources
-> >     on clusters, rather than narrowing cluster down to sharing L2 (and
-> >     L3 tags) as the lowest topology level that contains cores.
-> >   * Flexible nesting of cluster allows it to correspond to any level
-> >     between the x86 package and core.
-> > 
-> > Based on the above considerations, and in order to eliminate the naming
-> > confusion caused by the mapping between general cluster and x86 module
-> > in v7, we now formally introduce smp.modules as the new topology level.
-> 
-> What is the Linux kernel calling this topology level on x86 ?
-> It will be pretty unfortunate if Linux and QEMU end up with
-> different names for the same topology level.
-> 
+I actually personally prefer to wait - it's not too bad after all, because
+it only affects the new "n-1" migration test.  Most of the migration
+functionality will still be covered there in CI for ARM.
 
-Now Intel's engineers in the Linux kernel are starting to use "module"
-to refer to this layer of topology [4] to avoid confusion, where
-previously the scheduler developers referred to the share L2 hierarchy
-collectively as "cluster".
+Meanwhile, AFAIU we do have a plan upstream to have a stable aarch64 cpu
+model sooner or later that at least support KVM.  If that will also be able
+to support TCG then goal achieved.  Or vice versa, if we would be able to
+add KVM support to some stable TCG-only cores (like neoverse-n1).
 
-Looking at it this way, it makes more sense for QEMU to use the
-"module" for x86.
+Do we have a plan in this area?  Copy both Peter & Eric.
 
-[4]: https://lore.kernel.org/lkml/20231116142245.1233485-3-kan.liang@linux.intel.com/
+If we can have that in 9.0 then that'll be perfect; we can already start to
+switch migration tests to use the cpu model.
 
-Thanks,
-Zhao
+As of now, maybe we can (1) fix the gic-version in migration-test.c to be
+stable; this seems a separate issue just to get prepared when a new model
+comes, then (2) document above decision in migration-compat-aarch64 test in
+.gitlab-ci.d/, if we can reach consensus.  Then we only rely on x86 for
+"n-1" migration tests until later.
+
+-- 
+Peter Xu
 
 
