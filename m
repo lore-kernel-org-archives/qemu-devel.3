@@ -4,63 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F3DC48286
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7988EC4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaC2-0003mY-QX; Thu, 01 Feb 2024 11:45:40 -0500
+	id 1rVaEr-0000yU-QO; Thu, 01 Feb 2024 11:48:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+1220c4869a9b484313cc+7466+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rVaB8-0002yY-1E
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:42 -0500
-Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+1220c4869a9b484313cc+7466+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1rVaAv-0002Uz-HU
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:To:
- From:Reply-To:Cc:Content-ID:Content-Description;
- bh=SETeMI08AM2lMjqffLMkXtCwCyDYFW94A6cTEws52F8=; b=ddMt9CQdO0FifPWxQ9ap+iZXIg
- pRlKQbR1riMAUXpJSrfHescjJxguqtlGOP+2I1sLiFXsjWOD9PGpW8oFRb4bd9F7AO7vlOXip1Oin
- aTBfZ/r4TCn/cT3poUnCHz6q2hr8LKqZZXNShRsj6WiSMgqebEAeSQhedLlI7JNC69B5QP4t2rbRw
- 0NpH4Axo2jUe53WkdPOgldMOdjSFKTtXp7h+tCIm9ZCzfjyOoRv0eHgngjp3HA3wFOeveObofXiqK
- JDGTBvBaZbLC9JlBxJEk9ALnxgOxUyL9uBcBh+QLK//iP3g9AiiADhnRLBkeohN92UT2O4V7F8uVq
- 5aKhahJA==;
-Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
- by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVaAh-00000009cM6-1umv for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:15 +0000
-Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVaAg-00000003INH-0Xyc for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:14 +0000
-From: David Woodhouse <dwmw2@infradead.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 22/47] hw/arm/aspeed: use qemu_configure_nic_device()
-Date: Thu,  1 Feb 2024 16:43:47 +0000
-Message-ID: <20240201164412.785520-23-dwmw2@infradead.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240201164412.785520-1-dwmw2@infradead.org>
-References: <20240201164412.785520-1-dwmw2@infradead.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVaEl-0000gm-Ly
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:48:29 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVaEg-0003g2-TX
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:48:25 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-40fc22e53f1so4719795e9.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 08:48:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706806101; x=1707410901; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=af1ngahCdsTagYqFBoSKMTBXtOpsxoFzjPhN1zlaao4=;
+ b=VT2m1A7tO9AgnV1xMKJpvzRdpptL0RXLMXxZKK+aphjO/ln6z2i/BZB7xl1Ps1SYOe
+ 2mSZji29uYTSOZbUrS13ha1kt4KZ7nwRNXaCtLNyZtPiIEW0IoatwzfPs/UAyYbNfF20
+ DFdQvT/dKZ1wdoR+Xz7w9GdCYRlgaPTNoAbVmm0jiqzAxK2Zr0M1VdSk7koE79y4kB6v
+ SCTko0TK/CTGHcGZ9M5GEyJYq7J8++3WAgpun++Hr1VSiHo4erIKXZkjoesxpmhWjxzS
+ rpvMtcX2nioNUCHSkmBg5PLWjX75cvfutuIbwtCyaOyBObCHsJWrfsnvB9yEIQG2lV1M
+ sCKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706806101; x=1707410901;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=af1ngahCdsTagYqFBoSKMTBXtOpsxoFzjPhN1zlaao4=;
+ b=kMCPaIoLwkb4bWOVFppfYU+3k86x+9WiyTUm3WUtX8KmCpn3ZMFw4tKVNtOTmo5Cnk
+ Ezx3wJ2yZl662V/3ewCTSTxbtniWnquvF+Jo3/5nFZvMHAgcDPJA1dsfsvdbej8b+IDr
+ 5oFIDp9m0QAC1WM+pa0bQM3BZYn/+vHWOR6CI4wD0z6gdX/iF6xRaBSnjjB/qiwS7d4a
+ ab4piTLgP1FvrJY08E46pwDmJWoQzvyaf7ipwX4+kttOQlYzL8vL0uv+mnQV8tXUCcc6
+ wz3v0pCt6wOjNaHZNx9sA5Q5f15ZiRy2YcOtbv6U8OWRz6WdD7T1Qx5MxoMhQOd0gkH/
+ mkVQ==
+X-Gm-Message-State: AOJu0Yx7cu6TTJscGc7ikcIeInKnlVJLf8k8q8fiZIvCFIthSO4X0DMM
+ ohgwWv4AdQQ4tqguefKs2XTM9OhyPeCuZ0ATZn5ozCg/nGpD5ibJJJ4p0HHdVI8=
+X-Google-Smtp-Source: AGHT+IHc1DClqv+f5EsuSI+LBG5BpjaOm/u/v8rB009TqV6aeMEOYrzh1QAYk5MFfVlXFgB6AfY0+w==
+X-Received: by 2002:a05:6000:a07:b0:33b:fed:656f with SMTP id
+ co7-20020a0560000a0700b0033b0fed656fmr3891555wrb.53.1706806101299; 
+ Thu, 01 Feb 2024 08:48:21 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCX7zyQmLlaqPtnvz7FtRM/sPg7HvauBdzIDIcbgQ5YSrreEgqE/ARNr8jVLZccckfDjJBlRWeE69M2VVGXfc2aXGq+Ty31w3otl2dBCm5qwAKgFL0z5VLMhNoDcMsXVhykNbWWHWecaHxhhhhHgyrEzPegxAkzo
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ t18-20020adfe112000000b0033ade19da41sm15868401wrz.76.2024.02.01.08.48.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Feb 2024 08:48:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A0F9A5F7AF;
+ Thu,  1 Feb 2024 16:48:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Laurent Vivier <laurent@vivier.eu>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/3] gdbstub: Implement follow-fork-mode child
+In-Reply-To: <bd14786900838155c9f1d2e82adc5e4d68207ee9.camel@linux.ibm.com>
+ (Ilya Leoshkevich's message of "Thu, 01 Feb 2024 17:22:07 +0100")
+References: <20240131205031.144607-1-iii@linux.ibm.com>
+ <20240131205031.144607-3-iii@linux.ibm.com>
+ <877cjomlk9.fsf@draig.linaro.org>
+ <bd14786900838155c9f1d2e82adc5e4d68207ee9.camel@linux.ibm.com>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Thu, 01 Feb 2024 16:48:20 +0000
+Message-ID: <87bk90ku5n.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
- envelope-from=BATV+1220c4869a9b484313cc+7466+infradead.org+dwmw2@desiato.srs.infradead.org;
- helo=desiato.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,43 +105,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Acked-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
----
- hw/arm/aspeed.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+> On Thu, 2024-02-01 at 12:11 +0000, Alex Benn=C3=A9e wrote:
+>> Ilya Leoshkevich <iii@linux.ibm.com> writes:
+>>=20
+>> > Currently it's not possible to use gdbstub for debugging linux-user
+>> > code that runs in a forked child, which is normally done using the
+>> > `set
+>> > follow-fork-mode child` GDB command. Purely on the protocol level,
+>> > the
+>> > missing piece is the fork-events feature.
+>> >=20
+>> > However, a deeper problem is supporting $Hg switching between
+>> > different
+>> > processes - right now it can do only threads. Implementing this for
+>> > the
+>> > general case would be quite complicated, but, fortunately, for the
+>> > follow-fork-mode case there are a few factors that greatly simplify
+>> > things: fork() happens in the exclusive section, there are only two
+>> > processes involved, and before one of them is resumed, the second
+>> > one
+>> > is detached.
+>> >=20
+>> > This makes it possible to implement a simplified scheme: the parent
+>> > and
+>> > the child share the gdbserver socket, it's used only by one of them
+>> > at
+>> > any given time, which is coordinated through a separate socketpair.
+>> > The
+>> > processes can read from the gdbserver socket only one byte at a
+>> > time,
+>> > which is not great for performance, but, fortunately, the
+>> > follow-fork-mode involves only a few messages.
+>> >=20
+>> > Add the hooks for the user-specific handling of $qSupported, $Hg,
+>> > and
+>> > $D. Advertise the fork-events support, and remember whether GDB has
+>> > it
+>> > as well. Implement the state machine that is initialized on fork(),
+>> > decides the current owner of the gdbserver socket, and is
+>> > terminated
+>> > when one of the two processes is detached. The logic for the parent
+>> > and
+>> > the child is the same, only the initial state is different.
+>> >=20
+>> > Handle the `stepi` of a syscall corner case by disabling the
+>> > single-stepping in detached processes.
+>> >=20
+>> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>> > ---
+>> > =C2=A0gdbstub/gdbstub.c=C2=A0=C2=A0 |=C2=A0 29 ++++--
+>> > =C2=A0gdbstub/internals.h |=C2=A0=C2=A0 3 +
+>> > =C2=A0gdbstub/user.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 210
+>> > +++++++++++++++++++++++++++++++++++++++++++-
+>> > =C2=A03 files changed, 234 insertions(+), 8 deletions(-)
+>
+> [...]
+> =C2=A0
+>> > diff --git a/gdbstub/user.c b/gdbstub/user.c
+>> > index 120eb7fc117..962f4cb74e7 100644
+>> > --- a/gdbstub/user.c
+>> > +++ b/gdbstub/user.c
+>> > @@ -10,6 +10,7 @@
+>> > =C2=A0 */
+>> > =C2=A0
+>> > =C2=A0#include "qemu/osdep.h"
+>> > +#include <sys/syscall.h>
+>> > =C2=A0#include "qemu/bitops.h"
+>> > =C2=A0#include "qemu/cutils.h"
+>> > =C2=A0#include "qemu/sockets.h"
+>> > @@ -25,6 +26,41 @@
+>> > =C2=A0#define GDB_NR_SYSCALLS 1024
+>> > =C2=A0typedef unsigned long
+>> > GDBSyscallsMask[BITS_TO_LONGS(GDB_NR_SYSCALLS)];
+>> > =C2=A0
+>> > +/*
+>> > + * Forked child talks to its parent in order to let GDB enforce
+>> > the
+>> > + * follow-fork-mode. This happens inside a start_exclusive()
+>> > section, so that
+>> > + * the other threads, which may be forking too, do not interfere.
+>> > The
+>> > + * implementation relies on GDB not sending $vCont until it has
+>> > detached
+>> > + * either from the parent (follow-fork-mode child) or from the
+>> > child
+>> > + * (follow-fork-mode parent).
+>> > + *
+>> > + * The parent and the child share the GDB socket; at any given
+>> > time only one
+>> > + * of them is allowed to use it, as is reflected in the respective
+>> > fork_state.
+>> > + * This is negotiated via the fork_sockets pair as a reaction to
+>> > $Hg.
+>> > + */
+>> > +enum GDBForkState {
+>> > +=C2=A0=C2=A0=C2=A0 /* Fully owning the GDB socket. */
+>> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_ENABLED,
+>> > +=C2=A0=C2=A0=C2=A0 /* Working with the GDB socket; the peer is inacti=
+ve. */
+>> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_ACTIVE,
+>> > +=C2=A0=C2=A0=C2=A0 /* Handing off the GDB socket to the peer. */
+>> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_DEACTIVATING,
+>> > +=C2=A0=C2=A0=C2=A0 /* The peer is working with the GDB socket. */
+>> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_INACTIVE,
+>> > +=C2=A0=C2=A0=C2=A0 /* Asking the peer to close its GDB socket fd. */
+>> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_ENABLING,
+>> > +=C2=A0=C2=A0=C2=A0 /* Asking the peer to take over, closing our GDB s=
+ocket fd. */
+>> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_DISABLING,
+>> > +=C2=A0=C2=A0=C2=A0 /* The peer has taken over, our GDB socket fd is c=
+losed. */
+>> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_DISABLED,
+>> > +};
+>>=20
+>> gulp - thats a potentially fairly complex state diagram. Do we just
+>> work
+>> through the states sequentially?
+>
+> Unfortunately no. I had less states at some point, but then realized
+> it was better to have these things laid out explicitly. Let me try to
+> summarize the possible transitions:
+>
+> GDB_FORK_ENABLED: Terminal state; GDB follows the current process.
+> GDB_FORK_DISABLED: Terminal state; GDB follows the other process.
+> GDB_FORK_ACTIVE -> GDB_FORK_DEACTIVATING: On $Hg.
+> GDB_FORK_ACTIVE -> GDB_FORK_ENABLING: On $D.
+> GDB_FORK_ACTIVE -> GDB_FORK_DISABLING: On $D.
+> GDB_FORK_ACTIVE -> GDB_FORK_DISABLED: On communication error.
+> GDB_FORK_DEACTIVATING -> GDB_FORK_INACTIVE: On gdb_read_byte() return.
+> GDB_FORK_DEACTIVATING -> GDB_FORK_DISABLED: On communication error.
+> GDB_FORK_INACTIVE -> GDB_FORK_ACTIVE: On $Hg in peer.
+> GDB_FORK_INACTIVE -> GDB_FORK_ENABLE: On $D in peer.
+> GDB_FORK_INACTIVE -> GDB_FORK_DISABLE: On $D in peer.
+> GDB_FORK_INACTIVE -> GDB_FORK_DISABLED: On communication error.
+> GDB_FORK_ENABLING -> GDB_FORK_ENABLED: On gdb_read_byte() return.
+> GDB_FORK_ENABLING -> GDB_FORK_DISABLED: On communication error.
+> GDB_FORK_DISABLING -> GDB_FORK_DISABLED: On gdb_read_byte() return.
+>
+> Some states have only one meaningful transition:
+>
+> GDB_FORK_DEACTIVATING -> GDB_FORK_INACTIVE
+> GDB_FORK_ENABLING -> GDB_FORK_ENABLED
+>
+> and can in theory be squashed, but then the socketpair communication
+> would have to be moved to the respective user-hook, which would
+> complicate the error handling.
+>
+> [...]
+>
+>> > @@ -369,16 +421,168 @@ static void disable_gdbstub(void)
+>> > =C2=A0=C2=A0=C2=A0=C2=A0 CPU_FOREACH(cpu) {
+>> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu_breakpoint_remove=
+_all(cpu, BP_GDB);
+>> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* no cpu_watchpoint_=
+remove_all for user-mode */
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu_single_step(cpu, 0);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tb_flush(cpu);
+>> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+>> > =C2=A0}
+>> > =C2=A0
+>> > -/* Disable gdb stub for child processes.=C2=A0 */
+>> > =C2=A0void gdbserver_fork_end(pid_t pid)
+>> > =C2=A0{
+>> > -=C2=A0=C2=A0=C2=A0 if (pid !=3D 0 || !gdbserver_state.init ||
+>> > gdbserver_user_state.fd < 0) {
+>> > +=C2=A0=C2=A0=C2=A0 char b;
+>> > +=C2=A0=C2=A0=C2=A0 int fd;
+>> > +
+>> > +=C2=A0=C2=A0=C2=A0 if (!gdbserver_state.init || gdbserver_user_state.=
+fd < 0) {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+>> > +=C2=A0=C2=A0=C2=A0 }
+>> > +
+>> > +=C2=A0=C2=A0=C2=A0 if (pid =3D=3D -1) {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (gdbserver_user_state.f=
+ork_state !=3D GDB_FORK_DISABLED)
+>> > {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_=
+assert(gdbserver_user_state.fork_state =3D=3D
+>> > GDB_FORK_INACTIVE);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cl=
+ose(gdbserver_user_state.fork_sockets[0]);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cl=
+ose(gdbserver_user_state.fork_sockets[1]);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+>> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+>> > -=C2=A0=C2=A0=C2=A0 disable_gdbstub();
+>> > +
+>> > +=C2=A0=C2=A0=C2=A0 if (gdbserver_user_state.fork_state =3D=3D GDB_FOR=
+K_DISABLED) {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (pid =3D=3D 0) {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 di=
+sable_gdbstub();
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+>> > +=C2=A0=C2=A0=C2=A0 }
+>> > +
+>> > +=C2=A0=C2=A0=C2=A0 if (pid =3D=3D 0) {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 close(gdbserver_user_state=
+.fork_sockets[0]);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fd =3D gdbserver_user_stat=
+e.fork_sockets[1];
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert(gdbserver_state.p=
+rocess_num =3D=3D 1);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert(gdbserver_state.p=
+rocesses[0].pid =3D=3D
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fo=
+rk_peer_pid);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert(gdbserver_state.p=
+rocesses[0].attached);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_state.processes[=
+0].pid =3D getpid();
+>> > +=C2=A0=C2=A0=C2=A0 } else {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 close(gdbserver_user_state=
+.fork_sockets[1]);
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fd =3D gdbserver_user_stat=
+e.fork_sockets[0];
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fork_=
+state =3D GDB_FORK_ACTIVE;
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fork_=
+peer_pid =3D pid;
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fork_=
+peer_tid =3D pid;
+>> > +
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!gdbserver_state.allow=
+_stop_reply) {
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 go=
+to fail;
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_string_printf(gdbserver_=
+state.str_buf,
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "T%02=
+xfork:p%02x.%02x;thread:p%02x.%02x;",
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+>> > gdb_target_signal_to_gdb(gdb_target_sigtrap()),
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pid, =
+pid, (int)getpid(),
+>> > qemu_get_thread_id());
+>>=20
+>> I don't think I messed up the merge but:
+>>=20
+>> ../../gdbstub/user.c: In function =E2=80=98gdbserver_fork_end=E2=80=99:
+>> ../../gdbstub/user.c:461:50: error: implicit declaration of function
+>> =E2=80=98gdb_target_sigtrap=E2=80=99 [-Werror=3Dimplicit-function-declar=
+ation]
+>> =C2=A0 461 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0
+>> gdb_target_signal_to_gdb(gdb_target_sigtrap()),
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+>> ^~~~~~~~~~~~~~~~~~
+>> ../../gdbstub/user.c:461:50: error: nested extern declaration of
+>> =E2=80=98gdb_target_sigtrap=E2=80=99 [-Werror=3Dnested-externs]
+>> cc1: all warnings being treated as errors
+>>=20
+>> I cant see where gdb_target_sigtrap is from?
+>
+> This is from [1], which this series is Based-on. I can make one series
+> with both features if it's more convenient to review.
+>
+> [1]
+> https://patchew.org/QEMU/20240116094411.216665-1-iii@linux.ibm.com/
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index cc59176563..bed5e4f40b 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -356,7 +356,6 @@ static void aspeed_machine_init(MachineState *machine)
-     AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
-     AspeedSoCClass *sc;
-     int i;
--    NICInfo *nd = &nd_table[0];
- 
-     bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
-     object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
-@@ -371,10 +370,10 @@ static void aspeed_machine_init(MachineState *machine)
-                              &error_fatal);
- 
-     for (i = 0; i < sc->macs_num; i++) {
--        if ((amc->macs_mask & (1 << i)) && nd->used) {
--            qemu_check_nic_model(nd, TYPE_FTGMAC100);
--            qdev_set_nic_properties(DEVICE(&bmc->soc->ftgmac100[i]), nd);
--            nd++;
-+        if ((amc->macs_mask & (1 << i)) &&
-+            !qemu_configure_nic_device(DEVICE(&bmc->soc->ftgmac100[i]),
-+                                       true, NULL)) {
-+            break; /* No configs left; stop asking */
-         }
-     }
- 
--- 
-2.43.0
+Oops missed that one, looking at it now.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
