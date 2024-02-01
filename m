@@ -4,138 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB3BC47DDB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 08:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38052C47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 08:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVSWT-00064V-CF; Thu, 01 Feb 2024 03:34:13 -0500
+	id 1rVSnc-0002nm-Fp; Thu, 01 Feb 2024 03:51:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVSWR-0005qG-QU
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:34:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
+ id 1rVSnX-0002nE-4Z
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:51:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVSWB-00071O-6y
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:34:10 -0500
+ (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
+ id 1rVSnV-0002At-9l
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:51:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706776429;
+ s=mimecast20190719; t=1706777507;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=a3HOgSgbOZW2rFDJFA98zhgiTttlx39+WJ7NytTlSGk=;
- b=TlJcPqIUf7y4at9FWi9M5AQFUojIIqw4IMnWT4A1NGxXRNHCw024bNQlGbmNVOYnQewG4T
- nm7vmI4qeC2RsAG4ELNC/FR5HEe4SaGi5lRIaeokx7e7t0I6WNlajiTLPvhR5mAyPTW3Ss
- 1Aj/ii5WMCOVehrisxC2G3UK4PHe+co=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-1A2XI8wwML6lRduUPWyKGw-1; Thu, 01 Feb 2024 03:33:48 -0500
-X-MC-Unique: 1A2XI8wwML6lRduUPWyKGw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-40fb74433ebso3675505e9.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 00:33:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706776427; x=1707381227;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a3HOgSgbOZW2rFDJFA98zhgiTttlx39+WJ7NytTlSGk=;
- b=veOyY2f20STJzXmRtw/1saLsUnIDJjR9LStnT+8kC6xe9Kx1mS9vOXxk/6KZc8UPsg
- 8BlclG3j03FbQH9ln/4mL1/6yE2MhkVI+q3vt32rMHKtvkzMyJDHzLNPepu1ekr2u7pC
- HrHMelMkk8ddMTcIGy5415yOCAYSwX+9jBx16ZIeVR4WzcRLb1Iy2cEB7InvZIXTr+y9
- MP1x028Kq9qXgREqbDfc/7dViTyskDVt8OHhC6hapwN5C9L10snQtEpsaXmD3UW7bFu1
- C/0Sr9AcgJUZnucJS77iHoe+jBJJseX6Q7lzrwDUFLrli15kp845D5b79uRWyWQdQY+8
- cfTA==
-X-Gm-Message-State: AOJu0Yz99kNvs2lAxxxHfG0RiiDwNWwKCd/13J9hIoWuGQVYJhtZ8H3t
- USVkNEXXDc6MnKFXXT6GozWT10Drd+WCHxrXrdrBzaxJxjAd/UPbPKxPnOGbpOdRdMor5XKMDuk
- KsECrtOfiIW9273dB3U6xiuRFBbcP+6BcGCjp6UqfDrj4QcBtZSlN
-X-Received: by 2002:a05:600c:3b98:b0:40e:fc26:8719 with SMTP id
- n24-20020a05600c3b9800b0040efc268719mr1191461wms.35.1706776427327; 
- Thu, 01 Feb 2024 00:33:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+AJPqIIr8ZVDAyAzTP6YIherKtl84sUjwF4ARkl+QZzFcfba1VzEHkhSmiLqEGv2xAZPpDg==
-X-Received: by 2002:a05:600c:3b98:b0:40e:fc26:8719 with SMTP id
- n24-20020a05600c3b9800b0040efc268719mr1191432wms.35.1706776426982; 
- Thu, 01 Feb 2024 00:33:46 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
- [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- h9-20020a05600016c900b0033aedb71269sm10265216wrf.88.2024.02.01.00.33.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Feb 2024 00:33:46 -0800 (PST)
-Message-ID: <3a823710-b90f-4ac0-b888-849275ff9933@redhat.com>
-Date: Thu, 1 Feb 2024 09:33:45 +0100
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HVrefMOnjiHYiKBEqY4ofoeAwAOjB/FmRujOaXDuXkg=;
+ b=aQjBUf8faW0Hg4b+IHijWtbGpT20R/mPNft+zIslx5eoxmGXTwsgEzDL0IEwVu1rXvw2/t
+ tBBhJSljqj5gAMP4MHjdUphJxlyKfw0gMP6dGxVgQLzfG4AIb6Pl7mMrZ/DnPDfVm5C3ci
+ p3ECCLrIZ7Kz8r61GjVHCyNs7CUUMhY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-G1VobIXFMA2Haw6EYfPjeg-1; Thu,
+ 01 Feb 2024 03:51:44 -0500
+X-MC-Unique: G1VobIXFMA2Haw6EYfPjeg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 436201C068E0;
+ Thu,  1 Feb 2024 08:51:44 +0000 (UTC)
+Received: from virt-mtcollins-01.lab.eng.rdu2.redhat.com
+ (virt-mtcollins-01.lab.eng.rdu2.redhat.com [10.8.1.196])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 26E8F1BDB1;
+ Thu,  1 Feb 2024 08:51:44 +0000 (UTC)
+From: Shaoqin Huang <shahuang@redhat.com>
+To: qemu-arm@nongnu.org
+Cc: Eric Auger <eauger@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Sebastian Ott <sebott@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: [PATCH v6] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
+Date: Thu,  1 Feb 2024 03:51:24 -0500
+Message-Id: <20240201085124.152799-1-shahuang@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/isa/vt82c686: Consolidate the use of
- device_class_set_parent_realize()
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>, Eric Auger <eric.auger@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-References: <20240201084027.345459-1-zhao1.liu@linux.intel.com>
- <20240201084027.345459-2-zhao1.liu@linux.intel.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240201084027.345459-2-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=shahuang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,32 +83,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/02/2024 09.40, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Use device_class_set_parent_realize() to set parent realize() directly.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   hw/isa/vt82c686.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-> index d3e0f6d01fb6..a99eae4f6333 100644
-> --- a/hw/isa/vt82c686.c
-> +++ b/hw/isa/vt82c686.c
-> @@ -328,8 +328,8 @@ static void via_superio_class_init(ObjectClass *klass, void *data)
->       DeviceClass *dc = DEVICE_CLASS(klass);
->       ISASuperIOClass *sc = ISA_SUPERIO_CLASS(klass);
->   
-> -    sc->parent_realize = dc->realize;
-> -    dc->realize = via_superio_realize;
-> +    device_class_set_parent_realize(dc, via_superio_realize,
-> +                                    &sc->parent_realize);
->   }
->   
->   static const TypeInfo via_superio_info = {
+The KVM_ARM_VCPU_PMU_V3_FILTER provides the ability to let the VMM decide
+which PMU events are provided to the guest. Add a new option
+`kvm-pmu-filter` as -cpu sub-option to set the PMU Event Filtering.
+Without the filter, all PMU events are exposed from host to guest by
+default. The usage of the new sub-option can be found from the updated
+document (docs/system/arm/cpu-features.rst).
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Here is an example which shows how to use the PMU Event Filtering, when
+we launch a guest by use kvm, add such command line:
+
+  # qemu-system-aarch64 \
+        -accel kvm \
+        -cpu host,kvm-pmu-filter="D:0x11-0x11"
+
+Since the first action is deny, we have a global allow policy. This
+filters out the cycle counter (event 0x11 being CPU_CYCLES).
+
+And then in guest, use the perf to count the cycle:
+
+  # perf stat sleep 1
+
+   Performance counter stats for 'sleep 1':
+
+              1.22 msec task-clock                       #    0.001 CPUs utilized
+                 1      context-switches                 #  820.695 /sec
+                 0      cpu-migrations                   #    0.000 /sec
+                55      page-faults                      #   45.138 K/sec
+   <not supported>      cycles
+           1128954      instructions
+            227031      branches                         #  186.323 M/sec
+              8686      branch-misses                    #    3.83% of all branches
+
+       1.002492480 seconds time elapsed
+
+       0.001752000 seconds user
+       0.000000000 seconds sys
+
+As we can see, the cycle counter has been disabled in the guest, but
+other pmu events do still work.
+
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
+---
+v5->v6:
+  - Commit message improvement.
+  - Remove some unused code.
+  - Collect Reviewed-by, thanks Sebastian.
+  - Use g_auto(Gstrv) to replace the gchar **.          [Eric]
+
+v4->v5:
+  - Change the kvm-pmu-filter as a -cpu sub-option.     [Eric]
+  - Comment tweak.                                      [Gavin]
+  - Rebase to the latest branch.
+
+v3->v4:
+  - Fix the wrong check for pmu_filter_init.            [Sebastian]
+  - Fix multiple alignment issue.                       [Gavin]
+  - Report error by warn_report() instead of error_report(), and don't use
+  abort() since the PMU Event Filter is an add-on and best-effort feature.
+                                                        [Gavin]
+  - Add several missing {  } for single line of code.   [Gavin]
+  - Use the g_strsplit() to replace strtok().           [Gavin]
+
+v2->v3:
+  - Improve commits message, use kernel doc wording, add more explaination on
+    filter example, fix some typo error.                [Eric]
+  - Add g_free() in kvm_arch_set_pmu_filter() to prevent memory leak. [Eric]
+  - Add more precise error message report.              [Eric]
+  - In options doc, add pmu-filter rely on KVM_ARM_VCPU_PMU_V3_FILTER support in
+    KVM.                                                [Eric]
+
+v1->v2:
+  - Add more description for allow and deny meaning in 
+    commit message.                                     [Sebastian]
+  - Small improvement.                                  [Sebastian]
+
+ docs/system/arm/cpu-features.rst | 23 ++++++++++
+ target/arm/cpu.h                 |  3 ++
+ target/arm/kvm.c                 | 76 ++++++++++++++++++++++++++++++++
+ 3 files changed, 102 insertions(+)
+
+diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+index a5fb929243..26e306cc83 100644
+--- a/docs/system/arm/cpu-features.rst
++++ b/docs/system/arm/cpu-features.rst
+@@ -204,6 +204,29 @@ the list of KVM VCPU features and their descriptions.
+   the guest scheduler behavior and/or be exposed to the guest
+   userspace.
+ 
++``kvm-pmu-filter``
++  By default kvm-pmu-filter is disabled. This means that by default all pmu
++  events will be exposed to guest.
++
++  KVM implements PMU Event Filtering to prevent a guest from being able to
++  sample certain events. It depends on the KVM_ARM_VCPU_PMU_V3_FILTER
++  attribute supported in KVM. It has the following format:
++
++  kvm-pmu-filter="{A,D}:start-end[;{A,D}:start-end...]"
++
++  The A means "allow" and D means "deny", start is the first event of the
++  range and the end is the last one. The first registered range defines
++  the global policy(global ALLOW if the first @action is DENY, global DENY
++  if the first @action is ALLOW). The start and end only support hexadecimal
++  format now. For example:
++
++  kvm-pmu-filter="A:0x11-0x11;A:0x23-0x3a;D:0x30-0x30"
++
++  Since the first action is allow, we have a global deny policy. It
++  will allow event 0x11 (The cycle counter), events 0x23 to 0x3a are
++  also allowed except the event 0x30 which is denied, and all the other
++  events are denied.
++
+ TCG VCPU Features
+ =================
+ 
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index d3477b1601..2d860c227d 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -948,6 +948,9 @@ struct ArchCPU {
+ 
+     /* KVM steal time */
+     OnOffAuto kvm_steal_time;
++
++    /* KVM PMU Filter */
++    char *kvm_pmu_filter;
+ #endif /* CONFIG_KVM */
+ 
+     /* Uniprocessor system with MP extensions */
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 81813030a5..3f16f96f7e 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -496,6 +496,22 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
+     ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+ }
+ 
++static char *kvm_pmu_filter_get(Object *obj, Error **errp)
++{
++    ARMCPU *cpu = ARM_CPU(obj);
++
++    return g_strdup(cpu->kvm_pmu_filter);
++}
++
++static void kvm_pmu_filter_set(Object *obj, const char *pmu_filter,
++                               Error **errp)
++{
++    ARMCPU *cpu = ARM_CPU(obj);
++
++    g_free(cpu->kvm_pmu_filter);
++    cpu->kvm_pmu_filter = g_strdup(pmu_filter);
++}
++
+ /* KVM VCPU properties should be prefixed with "kvm-". */
+ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+ {
+@@ -517,6 +533,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+                              kvm_steal_time_set);
+     object_property_set_description(obj, "kvm-steal-time",
+                                     "Set off to disable KVM steal time.");
++
++    object_property_add_str(obj, "kvm-pmu-filter", kvm_pmu_filter_get,
++                            kvm_pmu_filter_set);
++    object_property_set_description(obj, "kvm-pmu-filter",
++                                    "PMU Event Filtering description for "
++                                    "guest PMU. (default: NULL, disabled)");
+ }
+ 
+ bool kvm_arm_pmu_supported(void)
+@@ -1706,6 +1728,58 @@ static bool kvm_arm_set_device_attr(ARMCPU *cpu, struct kvm_device_attr *attr,
+     return true;
+ }
+ 
++static void kvm_arm_pmu_filter_init(ARMCPU *cpu)
++{
++    static bool pmu_filter_init;
++    struct kvm_pmu_event_filter filter;
++    struct kvm_device_attr attr = {
++        .group      = KVM_ARM_VCPU_PMU_V3_CTRL,
++        .attr       = KVM_ARM_VCPU_PMU_V3_FILTER,
++        .addr       = (uint64_t)&filter,
++    };
++    int i;
++    g_auto(GStrv) event_filters;
++
++    if (!cpu->kvm_pmu_filter) {
++        return;
++    }
++    if (kvm_vcpu_ioctl(CPU(cpu), KVM_HAS_DEVICE_ATTR, &attr)) {
++        warn_report("The KVM doesn't support the PMU Event Filter!");
++        return;
++    }
++
++    /*
++     * The filter only needs to be initialized through one vcpu ioctl and it
++     * will affect all other vcpu in the vm.
++     */
++    if (pmu_filter_init) {
++        return;
++    } else {
++        pmu_filter_init = true;
++    }
++
++    event_filters = g_strsplit(cpu->kvm_pmu_filter, ";", -1);
++    for (i = 0; event_filters[i]; i++) {
++        unsigned short start = 0, end = 0;
++        char act;
++
++        sscanf(event_filters[i], "%c:%hx-%hx", &act, &start, &end);
++        if ((act != 'A' && act != 'D') || (!start && !end)) {
++            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
++            continue;
++        }
++
++        filter.base_event = start;
++        filter.nevents = end - start + 1;
++        filter.action = (act == 'A') ? KVM_PMU_EVENT_ALLOW :
++                                       KVM_PMU_EVENT_DENY;
++
++        if (!kvm_arm_set_device_attr(cpu, &attr, "PMU_V3_FILTER")) {
++            break;
++        }
++    }
++}
++
+ void kvm_arm_pmu_init(ARMCPU *cpu)
+ {
+     struct kvm_device_attr attr = {
+@@ -1716,6 +1790,8 @@ void kvm_arm_pmu_init(ARMCPU *cpu)
+     if (!cpu->has_pmu) {
+         return;
+     }
++
++    kvm_arm_pmu_filter_init(cpu);
+     if (!kvm_arm_set_device_attr(cpu, &attr, "PMU")) {
+         error_report("failed to init PMU");
+         abort();
+
+base-commit: bd2e12310b18b51aefbf834e6d54989fd175976f
+-- 
+2.40.1
 
 
