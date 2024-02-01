@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E65ADC47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 05:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05ED1C47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 05:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVPtd-0004uw-Jf; Thu, 01 Feb 2024 00:45:57 -0500
+	id 1rVPvd-0006Ch-1g; Thu, 01 Feb 2024 00:48:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rVPtc-0004ud-7h
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:45:56 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVPvc-0006CU-Cb
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:48:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rVPta-0006PV-Jg
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:45:55 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVPvZ-0006nN-Qf
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:48:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706766353;
+ s=mimecast20190719; t=1706766477;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pwmNk96nNmOhzgSRS5Oifn1NWwiXH8LxKvnwoJR5/uk=;
- b=buFUBqx3MJ9A+w+xl+SP46ZFN4NtGAtzv709v71tRZPQG6z1k//1xa/9aUT1LMNAZgAA9A
- C4uFytlibkrSdVNaPV6qUr++Mk0Yabe2PJcxdMFkUnzqX1VOiQebICGr26p9kD6PyPmeKa
- WBvBu93swvlgD/OvTRnvdsY2wjUu42w=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pWBmzfKHBijB3txDMi+RTxKzLxuhin9HzTm/96/+sAg=;
+ b=ApGQ9q6TTv7B5jRZxgjrB53C7ZHc0pO2/XW9ee0Pj4Ij0NPSQU6SyBnVE9WZYGdnvb1LLj
+ yEp74tBSRFMdRtOUsf0AUIpanAI+vFXUHcDqlxiNghF29W1wC5Ux722lMb02ch4NtU9jxT
+ db7R93BtvtbsJ6uIXiVlY1VVagltFzc=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-qI8l7zxYO8mHslfHBGXm8g-1; Thu, 01 Feb 2024 00:45:52 -0500
-X-MC-Unique: qI8l7zxYO8mHslfHBGXm8g-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-29608f00cbbso457239a91.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 21:45:51 -0800 (PST)
+ us-mta-326--uRf3uSvO0SLLlCh2T4znw-1; Thu, 01 Feb 2024 00:47:54 -0500
+X-MC-Unique: -uRf3uSvO0SLLlCh2T4znw-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5cf53f904f9so141758a12.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 21:47:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706766351; x=1707371151;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pwmNk96nNmOhzgSRS5Oifn1NWwiXH8LxKvnwoJR5/uk=;
- b=MENoAC1gc7yWJVvfKHg1EGaRV6ZsAiLsM1ZtJfslgbiEA/yTUPY3gFfY8KS+eP0rUo
- jpfILQOs5SSAJmWsk/oEXitSjPLY4m9Kx6zvUVq2JKi8J/GlUyf3Tr7sj9EotYlrTqYY
- JPF+WgF5CM2558QEujWXUkReHq37zWmsUBdEv2W1xDJtP28XLngUV1B1Anqzk3n7MRXw
- s578aOuNL8pAI806hElA3EOK/h80lwfb0siwE0A8mOd6f3i1iiC+cX+ve/awzXzjiKbc
- vJYQ99Fnrp2iun/pSiwCl2kHIZciTNcq8YoSXe7+L8QW6SSnE5mM9wrX52g57Cx1JyTj
- XVAw==
-X-Gm-Message-State: AOJu0YzaJJucv2ic4t+dt9wNiWjqhbmA7j6Yv4qOFFvnqVwaGl3/rVAP
- Qu0M9wlTMw5gRRMeZx1h3MNGlnIKfF5CelvhYh2cXkijlUCTA1bfX1EtvW1bqFaPnNjtKA6u8/V
- FDi1rMxPR/v5UCb2PLomJxplU0rOHXzBxsm8YN9M0MGcbzDaEgr8Wg6ANwhC8uAg/O7NFcLS0Wc
- KDbrZA4xFTqXYDr70I4L6X9Y5H90M=
-X-Received: by 2002:a17:90a:f689:b0:295:f5da:a8d8 with SMTP id
- cl9-20020a17090af68900b00295f5daa8d8mr2877678pjb.11.1706766351057; 
- Wed, 31 Jan 2024 21:45:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEd0Z+g61MzsPoZRZkBCtd86jx+Dx4r8RJnNiDKu/H3J6kInnZV7gbYvN/MQV94OEgHmsayZTt3YThzHYQJRQg=
-X-Received: by 2002:a17:90a:f689:b0:295:f5da:a8d8 with SMTP id
- cl9-20020a17090af68900b00295f5daa8d8mr2877671pjb.11.1706766350839; Wed, 31
- Jan 2024 21:45:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706766473; x=1707371273;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pWBmzfKHBijB3txDMi+RTxKzLxuhin9HzTm/96/+sAg=;
+ b=NAoNamW9OSEmzGfVctB9KSUvB7+dfvKJh7gI5RAk8bUh8RiDXPAXp2jYh1JrymX3s6
+ SOlhdREw7PU4YajIoyZ/tQGI92opRU4WltRb+mW8pDe1Bol7jyWBg49XpWyDsbNyBAuW
+ mGWTVI47gtwXVm3GM2mb2HQAQ5PUDntf9K9qefr+Y612NTbXDUMV2v7tBDPpzdqonUD8
+ gCbrNEJIb2OO9E7VF3q41rjbaaXpeVgcH6W1V2UPSKmAO/Xlu6tU7c3kp9mDb16QepF0
+ MfmnwMLxvp7WXpKW+KctGEHDY9XpQFK4YkMhyfuiL5YKsK12ta4NIRdcMOnAvS8LnNqK
+ R0JQ==
+X-Gm-Message-State: AOJu0Yw2bgIxIQRMLFXgS1zU+Plb+CWzQtj/bG9EdC+/u5JsN6KpInaR
+ m0WSjq5KlswO2XSGkCoNkXp1tGN+r4eC4Dcd7t1Y+R6MPiBMRpHxnW66DnKgOgRt8/0VYKa5InN
+ /sPBy/o4ZRGKCXmXocl0/gte5xl1/kWLYS+SJ96HPg0DkzpZJuDti
+X-Received: by 2002:a05:6a00:4b:b0:6dd:86b1:7d93 with SMTP id
+ i11-20020a056a00004b00b006dd86b17d93mr1683093pfk.0.1706766472995; 
+ Wed, 31 Jan 2024 21:47:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFCUUmtBxVX0rTI18AlIAuh6sDNb/bEuCj983BXx1OoLmhApppmpJSEjpAzm/vgDe+43+Pw+Q==
+X-Received: by 2002:a05:6a00:4b:b0:6dd:86b1:7d93 with SMTP id
+ i11-20020a056a00004b00b006dd86b17d93mr1683083pfk.0.1706766472570; 
+ Wed, 31 Jan 2024 21:47:52 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCXA8hV3+zVIL2pFfzyuyus1l4buM0mxPuSYKXCsISXOc6NVRV7drK4RkmMeBjFUeKTswC0Afwvbd/HRhPCkkOvf9ZmIGkkP83W3T83n9382PIMBRl3Wk001egOxNvFkLTcUb/N3GYkmNn/kCv3ZMSSBedQQibeDmIqD7MnSPDDtwwVbmVvRn1coyRqBMBbh53qegvWQ3r+sAnGjD3lEERc=
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ j8-20020a056a00234800b006d6b91c6eb6sm11257141pfj.13.2024.01.31.21.47.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jan 2024 21:47:52 -0800 (PST)
+Date: Thu, 1 Feb 2024 13:47:45 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Bryan Zhang <bryan.zhang@bytedance.com>,
+ Prasad Pandit <ppandit@redhat.com>, Yuan Liu <yuan1.liu@intel.com>,
+ Avihai Horon <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH 00/14] migration/multifd: Refactor ->send_prepare() and
+ cleanups
+Message-ID: <ZbswgRJTXP4yKiuf@x1n>
+References: <20240131103111.306523-1-peterx@redhat.com>
+ <871q9xjey8.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240124104006.335166-1-lvivier@redhat.com>
-In-Reply-To: <20240124104006.335166-1-lvivier@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Thu, 1 Feb 2024 13:45:39 +0800
-Message-ID: <CACGkMEtzqCA_x1hg-ddp0d-Q-+XLH01k2Pf0KziiYSeLmDwaXA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] e1000e: fix link state on resume
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <871q9xjey8.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -99,37 +103,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 6:40=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
- wrote:
->
-> On resume e1000e_vm_state_change() always calls e1000e_autoneg_resume()
-> that sets link_down to false, and thus activates the link even
-> if we have disabled it.
->
-> The problem can be reproduced starting qemu in paused state (-S) and
-> then set the link to down. When we resume the machine the link appears
-> to be up.
->
-> Reproducer:
->
->    # qemu-system-x86_64 ... -device e1000e,netdev=3Dnetdev0,id=3Dnet0 -S
->
->    {"execute": "qmp_capabilities" }
->    {"execute": "set_link", "arguments": {"name": "net0", "up": false}}
->    {"execute": "cont" }
->
-> To fix the problem, merge the content of e1000e_vm_state_change()
-> into e1000e_core_post_load() as e1000 does.
->
-> Buglink: https://issues.redhat.com/browse/RHEL-21867
-> Fixes: 6f3fbe4ed06a ("net: Introduce e1000e device emulation")
-> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
->
+On Wed, Jan 31, 2024 at 07:49:51PM -0300, Fabiano Rosas wrote:
+> peterx@redhat.com writes:
+> 
+> > From: Peter Xu <peterx@redhat.com>
+> >
+> > This patchset contains quite a few refactorings to current multifd:
+> >
+> >   - It picked up some patches from an old series of mine [0] (the last
+> >     patches were dropped, though; I did the cleanup slightly differently):
+> >
+> >     I still managed to include one patch to split pending_job, but I
+> >     rewrote the patch here.
+> >
+> >   - It tries to cleanup multiple multifd paths here and there, the ultimate
+> >     goal is to redefine send_prepare() to be something like:
+> >
+> >       p->pages ----------->  send_prepare() -------------> IOVs
+> >
+> >     So that there's no obvious change yet on multifd_ops besides redefined
+> >     interface for send_prepare().  We may want a separate OPs for file
+> >     later.
+> >
+> > For 2), one benefit is already presented by Fabiano in his other series [1]
+> > on cleaning up zero copy, but this patchset addressed it quite differently,
+> > and hopefully also more gradually.  The other benefit is for sure if we
+> > have a more concrete API for send_prepare() and if we can reach an initial
+> > consensus, then we can have the recent compression accelerators rebased on
+> > top of this one.
+> >
+> > This also prepares for the case where the input can be extended to even not
+> > any p->pages, but arbitrary data (like VFIO's potential use case in the
+> > future?).  But that will also for later even if reasonable.
+> >
+> > Please have a look.  Thanks,
+> >
+> > [0] https://lore.kernel.org/r/20231022201211.452861-1-peterx@redhat.com
+> > [1] https://lore.kernel.org/qemu-devel/20240126221943.26628-1-farosas@suse.de
+> >
+> > Peter Xu (14):
+> >   migration/multifd: Drop stale comment for multifd zero copy
+> >   migration/multifd: multifd_send_kick_main()
+> >   migration/multifd: Drop MultiFDSendParams.quit, cleanup error paths
+> >   migration/multifd: Postpone reset of MultiFDPages_t
+> >   migration/multifd: Drop MultiFDSendParams.normal[] array
+> >   migration/multifd: Separate SYNC request with normal jobs
+> >   migration/multifd: Simplify locking in sender thread
+> >   migration/multifd: Drop pages->num check in sender thread
+> >   migration/multifd: Rename p->num_packets and clean it up
+> >   migration/multifd: Move total_normal_pages accounting
+> >   migration/multifd: Move trace_multifd_send|recv()
+> >   migration/multifd: multifd_send_prepare_header()
+> >   migration/multifd: Move header prepare/fill into send_prepare()
+> >   migration/multifd: Forbid spurious wakeups
+> >
+> >  migration/multifd.h      |  34 +++--
+> >  migration/multifd-zlib.c |  11 +-
+> >  migration/multifd-zstd.c |  11 +-
+> >  migration/multifd.c      | 291 +++++++++++++++++++--------------------
+> >  4 files changed, 182 insertions(+), 165 deletions(-)
+> 
+> This series didn't survive my 9999 iterations test on the opensuse
+> machine.
+> 
+> # Running /x86_64/migration/multifd/tcp/tls/x509/reject-anon-client
+> ...
+> kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
+> 
+> 
+> #0  0x00005575dda06399 in qemu_mutex_lock_impl (mutex=0x18, file=0x5575ddce9cc3 "../util/qemu-thread-posix.c", line=275) at ../util/qemu-thread-posix.c:92
+> #1  0x00005575dda06a94 in qemu_sem_post (sem=0x18) at ../util/qemu-thread-posix.c:275
+> #2  0x00005575dd56a512 in multifd_send_thread (opaque=0x5575df054ef8) at ../migration/multifd.c:720
+> #3  0x00005575dda0709b in qemu_thread_start (args=0x7fd404001d50) at ../util/qemu-thread-posix.c:541
+> #4  0x00007fd45e8a26ea in start_thread (arg=0x7fd3faffd700) at pthread_create.c:477
+> #5  0x00007fd45cd2150f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+> 
+> The multifd thread is posting channels_ready with an already freed
+> multifd_send_state.
+> 
+> This is the bug Avihai has hit. We're going into multifd_save_cleanup()
+> so early that multifd_new_send_channel_async() hasn't even had the
+> chance to set p->running. So it misses the join and frees everything up
+> while a second multifd thread is just starting.
 
-I've queued this.
+Thanks for doing that.
 
-Thanks
+Would this series makes that bug easier to happen?  I didn't do a lot of
+test on it, it only survived the smoke test and the kicked CI job.  I think
+we can still decide to fix that issues separately; but if this series makes
+that easier to happen then that's definitely bad..
+
+-- 
+Peter Xu
 
 
