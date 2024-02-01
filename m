@@ -4,103 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949A0C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 15:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9D0C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 15:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVZJr-0001go-Qt; Thu, 01 Feb 2024 10:49:39 -0500
+	id 1rVZRb-00064g-P7; Thu, 01 Feb 2024 10:57:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVZJq-0001gS-KQ
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:49:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rVZRa-00062h-Jh
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:57:38 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVZJp-0003fg-57
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:49:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706802574;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l9llPGtEZFdQn+xADpDowAxYSr0kXL5lHYoJBsRWXt4=;
- b=KG6cqo0a91Iw90D99nU0MA5f/tpvG6qP32AYWouOcAwtxehgWbS3Icgfpqm5aCBBt5Hhjf
- xwmMwaq6T7+cc4Zqx2DzFPXJYqB8+j/XeBvP4XGAA2dMOfWwv8ETs2pGYqaFxANYkN7tFz
- lZOWT4jKnrM3U+Y7N2K77g22JoCsxVE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-aO3zNVklMNqCGj0Z1FI5Zg-1; Thu, 01 Feb 2024 10:49:33 -0500
-X-MC-Unique: aO3zNVklMNqCGj0Z1FI5Zg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-40fb505c97aso5920215e9.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 07:49:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706802572; x=1707407372;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l9llPGtEZFdQn+xADpDowAxYSr0kXL5lHYoJBsRWXt4=;
- b=X+SLffo/FdhX1Quh+E57d223c2k5rACmsVMQyOv+92zo42WX6H8VhByeoYVhsGRx8H
- q5Y7O1LlnwjvQiOM9ZMyYKLXHPb4v+xhznLO8NnVQc1rlPnCpp7mX5JN4bdfQKGqG8oo
- t4FzbZN36rgSD/hVe7X26CRAqHHnvx3VkDRN5+U5rjgJmeS9+cSy176JXPItQ9wHQAug
- 9c7iSLwVVPL2pbwooPmi0E8O+zAG3zh3ytYitR8DteNBlEjtGKM57ANhJgK/24SZmsAs
- neP9j4PUVm1IpRb9nVA8c/wr7KwUoPmi7xtOHw1cv60AHXff5f9IDA6ecmYjFV4vLF9A
- gm4Q==
-X-Gm-Message-State: AOJu0YwmRftjuiJsc1A7Sk5szvHuaymf7fJqxvPOmRw43r5Dc/YqLx8s
- NEj3Jv6EIWSXf/NeNyb3zKhFULFsGcarSpPDICiV8rzcATpU3YVuf3myPUuZgedGRHca7S3uu4L
- UdPtM5kTjlnVfAD9dlI/4U1tewNzXwtXdfBnePpT2oJecKYV90Oy4
-X-Received: by 2002:adf:e88e:0:b0:33a:e56f:1ddb with SMTP id
- d14-20020adfe88e000000b0033ae56f1ddbmr3628732wrm.46.1706802572251; 
- Thu, 01 Feb 2024 07:49:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEGxQkYKXG63n3X+1P6pnyejL0nA7VGBqa6APmRoAEWYlNeyfgqfWRn5B3+GtFoHWVnMnXdDw==
-X-Received: by 2002:adf:e88e:0:b0:33a:e56f:1ddb with SMTP id
- d14-20020adfe88e000000b0033ae56f1ddbmr3628718wrm.46.1706802571995; 
- Thu, 01 Feb 2024 07:49:31 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXFnku9DDfpK7qwVY9xtdlgIHfKQ+RzZcOYS3UwaHYlRBk1rDid/9r7Ifn1XG9ueYUAXvfDa2EHUs84238mMz5IaFyTMx18ofzlpif1af8XAI0oMNEZp6bq1bb50g==
-Received: from ?IPV6:2003:cf:d73b:4144:8f0d:1c55:f035:1a2b?
- (p200300cfd73b41448f0d1c55f0351a2b.dip0.t-ipconnect.de.
- [2003:cf:d73b:4144:8f0d:1c55:f035:1a2b])
- by smtp.gmail.com with ESMTPSA id
- bp20-20020a5d5a94000000b0033af280ec84sm10483812wrb.26.2024.02.01.07.49.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Feb 2024 07:49:31 -0800 (PST)
-Message-ID: <16ff4b66-54c7-4253-a564-7b9391f1bbb7@redhat.com>
-Date: Thu, 1 Feb 2024 16:49:30 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rVZRY-0005fQ-2v
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 10:57:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706803056; x=1738339056;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=h1q4KvAJn4CIoLG3naX5sp1wYlxPpERj17PvK1eyhmQ=;
+ b=NTg1ee7ra+biomx/f7PeZtb4EMyQFswTj1yuq9SvXrILDXVQ9tl6sMeA
+ 7SuLBoZDOF7hjGkVTwWb7uQPJVGwvWoPUtsZemLwL22T2bPAiRtBMq8qI
+ jf1XcFSPfbnVozHGBOHPCCP7+kz9Lbh6XRIUeh3THmn/wmbma0T4nNiB8
+ BI2F4SJStR0zyxcJP+wReE7Ok8sPaTxWNCtnGXDBM52MVQuywC+WzBiDj
+ fxiwxckUJsVBillhybbRxyF06dX5Js5XkmwD1cU2dCTT57WY0DGjz0XuF
+ Ji6jHbYNwHDXxrkZLBRyBnVAoO0J0dSEgmDFov6w/qJjbxOF47YC0+duC Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="3792440"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; 
+   d="scan'208";a="3792440"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Feb 2024 07:57:33 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; 
+   d="scan'208";a="4440963"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 01 Feb 2024 07:57:28 -0800
+Date: Fri, 2 Feb 2024 00:10:58 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Babu Moger <babu.moger@amd.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+Message-ID: <ZbvCktGZFj4v3I/P@intel.com>
+References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
+ <Zbog2vDrrWFbujrs@redhat.com> <ZbsInI6Z66edm3eH@intel.com>
+ <ZbtirK-orqCb5sba@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
- thread
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
-References: <20231221212339.164439-1-kwolf@redhat.com>
- <20231221212339.164439-12-kwolf@redhat.com>
- <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
- <Za_zAj11uwavd2va@redhat.com>
- <08a66849-f190-4756-9b01-666f0d66afb6@redhat.com>
- <ZbOxI9Ar-YDn51Z0@redhat.com>
- <4c4173f2-b8fc-4c6f-88e1-8c31c4411837@redhat.com>
- <20240131203537.GC396296@fedora>
- <0a3e8d2a-add1-432b-b6b9-456ee0b17882@redhat.com>
- <20240201142817.GA516672@fedora>
- <6cb18310-c0cf-4747-a71d-540adba262cf@redhat.com>
-In-Reply-To: <6cb18310-c0cf-4747-a71d-540adba262cf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
+In-Reply-To: <ZbtirK-orqCb5sba@redhat.com>
+Received-SPF: none client-ip=198.175.65.15;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,15 +93,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.02.24 16:25, Hanna Czenczek wrote:
+Hi Daniel,
 
-[...]
+On Thu, Feb 01, 2024 at 09:21:48AM +0000, Daniel P. Berrangé wrote:
+> Date: Thu, 1 Feb 2024 09:21:48 +0000
+> From: "Daniel P. Berrangé" <berrange@redhat.com>
+> Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+> 
+> On Thu, Feb 01, 2024 at 10:57:32AM +0800, Zhao Liu wrote:
+> > Hi Daniel,
+> > 
+> > On Wed, Jan 31, 2024 at 10:28:42AM +0000, Daniel P. Berrangé wrote:
+> > > Date: Wed, 31 Jan 2024 10:28:42 +0000
+> > > From: "Daniel P. Berrangé" <berrange@redhat.com>
+> > > Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+> > > 
+> > > On Wed, Jan 31, 2024 at 06:13:29PM +0800, Zhao Liu wrote:
+> > > > From: Zhao Liu <zhao1.liu@intel.com>
+> > 
+> > [snip]
+> > 
+> > > > However, after digging deeper into the description and use cases of
+> > > > cluster in the device tree [3], I realized that the essential
+> > > > difference between clusters and modules is that cluster is an extremely
+> > > > abstract concept:
+> > > >   * Cluster supports nesting though currently QEMU doesn't support
+> > > >     nested cluster topology. However, modules will not support nesting.
+> > > >   * Also due to nesting, there is great flexibility in sharing resources
+> > > >     on clusters, rather than narrowing cluster down to sharing L2 (and
+> > > >     L3 tags) as the lowest topology level that contains cores.
+> > > >   * Flexible nesting of cluster allows it to correspond to any level
+> > > >     between the x86 package and core.
+> > > > 
+> > > > Based on the above considerations, and in order to eliminate the naming
+> > > > confusion caused by the mapping between general cluster and x86 module
+> > > > in v7, we now formally introduce smp.modules as the new topology level.
+> > > 
+> > > What is the Linux kernel calling this topology level on x86 ?
+> > > It will be pretty unfortunate if Linux and QEMU end up with
+> > > different names for the same topology level.
+> > > 
+> > 
+> > Now Intel's engineers in the Linux kernel are starting to use "module"
+> > to refer to this layer of topology [4] to avoid confusion, where
+> > previously the scheduler developers referred to the share L2 hierarchy
+> > collectively as "cluster".
+> > 
+> > Looking at it this way, it makes more sense for QEMU to use the
+> > "module" for x86.
+> 
+> I was thinking specificially about what Linux calls this topology when
+> exposing it in sysfs and /proc/cpuinfo. AFAICT, it looks like it is
+> called 'clusters' in this context, and so this is the terminology that
+> applications and users are going to expect.
 
-> It just seems simpler to me to not rely on the BB's context at all.
+The cluster related topology information under "/sys/devices/system/cpu/
+cpu*/topology" indicates the L2 cache topology (CPUID[0x4]), not module
+level CPU topology (CPUID[0x1f]).
 
-Hm, I now see the problem is that the processing (and scheduling) is 
-largely done in generic SCSI code, which doesnâ€™t have access to 
-virtio-scsiâ€™s context, only to that of the BB.Â  That makes my idea quite 
-impossible. :/
+So far, kernel hasn't exposed module topology related sysfs. But we will
+add new "module" related information in sysfs. The relevant patches are
+ready internally, but not posted yet.
+
+In the future, we will use "module" in sysfs to indicate module level CPU
+topology, and "cluster" will be only used to refer to the l2 cache domain
+as it is now.
+
+> 
+> I think it would be a bad idea for QEMU to diverge from this and call
+> it modules.
+>
+
+This patch set mainly tries to configure the module level CPU topology
+for Guest, which will be aligned with the future module information in
+the sysfs, so that it doesn't violate the kernel x86 arch's definition
+or current end users' expectation for x86's cluster.
+
+Thanks,
+Zhao
 
 
