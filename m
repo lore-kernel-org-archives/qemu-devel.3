@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FBCC4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B56F6C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaDv-0007j0-DB; Thu, 01 Feb 2024 11:47:35 -0500
+	id 1rVaDn-0007CU-NF; Thu, 01 Feb 2024 11:47:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaB7-0002yW-Fw
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:42 -0500
+ id 1rVaB6-0002xh-Mc
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:41 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaAv-0002Qb-7z
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:41 -0500
+ id 1rVaAv-0002Tk-1Y
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:To:From:Reply-To:
  Cc:Content-Type:Content-ID:Content-Description;
- bh=IsEBwT+a/9aBHnvV7Yr1FI82jfvo4oBFxfzxJeL3Zis=; b=rq42cqYzyWxFpDk3fm0+D3DIqe
- VK1STEYJ77v7+NF9huhIY+AYda4YwZQvK/W58FLTDkrpWeBLXZxNBGNHrj1YauZ67yTV9rgSk7F0V
- 2bnyAgMI4aUno8y0OZDWpL4BwkugYz3mTx8zNY03FnAPO1bRgS7ucdMliGt4tTH1thW82T2DymWEF
- tlucJlU0z3wAguqvk51CJ9Truvhyfbnh8XC71J/VdufAUxaQO5KifEOhUYgp0ITM4epWvTqrwmVDZ
- XRG13UdhJgM0wrdXY6kKW0vpBNZs05L77A/VdY9oj+HAPe+Fc3iiyRMUz098E8r2NKSqrjeSsptb+
- +D8xgfQQ==;
+ bh=/MTEStVe8JsIJfw31uF1pPqlJs68QbDUjigCzt5wrRY=; b=MN83k/OsTtGDYfxCHsF1QRBpBS
+ H6KVR1OH6b7fXUxXcBrbp8Cf51izgrrmCF9bRph7zPJ6kqu5d8ZE+lMZTHsu8s44Ty1oWBzBEbWtZ
+ iF2RUzru7uTVMDB1soWEEm63xgjjlq8IiFZ3fXYf926158X3qyqN8U2nPoNgaMHvNCh58pdCZwDH4
+ MdT6ruEOjCzJCWqHW1QQ5yiT1ZYBbBYpLeVetd0uFOU1byMhKRoWi2BAY9cmwOlFsqDlexp1x0ehm
+ 6gMeq/DfiYT0tb7mX/04pJiZfh2WPoFUf06sxbbgoJ1armnu4kUQMuV0aGCPgrYhplKeZxttjg5cn
+ oete+4wA==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVaAe-0000000GId6-3eDE for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:14 +0000
+ id 1rVaAf-0000000GIdi-2iUh for qemu-devel@nongnu.org;
+ Thu, 01 Feb 2024 16:44:15 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVaAf-00000003IMq-3uLu for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:13 +0000
+ Hat Linux)) id 1rVaAg-00000003IOT-2wV4 for qemu-devel@nongnu.org;
+ Thu, 01 Feb 2024 16:44:14 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/47] hw/ppc/spapr: use qemu_get_nic_info() and
- pci_init_nic_devices()
-Date: Thu,  1 Feb 2024 16:43:41 +0000
-Message-ID: <20240201164412.785520-17-dwmw2@infradead.org>
+Subject: [PULL 38/47] hw/net/lasi_i82596: use qemu_create_nic_device()
+Date: Thu,  1 Feb 2024 16:44:03 +0000
+Message-ID: <20240201164412.785520-39-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201164412.785520-1-dwmw2@infradead.org>
 References: <20240201164412.785520-1-dwmw2@infradead.org>
@@ -79,56 +78,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-Avoid directly referencing nd_table[] by first instantiating any
-spapr-vlan devices using a qemu_get_nic_info() loop, then calling
-pci_init_nic_devices() to do the rest.
+Create the device only if there is a corresponding NIC config for it.
+Remove the explicit check on nd_table[0].used from hw/hppa/machine.c
+which (since commit d8a3220005d7) tries to do the same thing.
 
-No functional change intended.
+The lasi_82596 support has been disabled since it was first introduced,
+since enable_lasi_lan() has always been zero. This allows the user to
+enable it by explicitly requesting a NIC model 'lasi_82596' or just
+using the alias 'lasi'. Otherwise, it defaults to a PCI NIC as before.
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/ppc/spapr.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ hw/hppa/machine.c           | 11 ++++-------
+ hw/net/lasi_i82596.c        | 12 +++++++-----
+ include/hw/net/lasi_82596.h |  4 ++--
+ 3 files changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index e8dabc8614..0d72d286d8 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -2796,6 +2796,7 @@ static void spapr_machine_init(MachineState *machine)
-     MemoryRegion *sysmem = get_system_memory();
-     long load_limit, fw_size;
-     Error *resize_hpt_err = NULL;
-+    NICInfo *nd;
- 
-     if (!filename) {
-         error_report("Could not find LPAR firmware '%s'", bios_name);
-@@ -2996,21 +2997,12 @@ static void spapr_machine_init(MachineState *machine)
- 
-     phb = spapr_create_default_phb();
- 
--    for (i = 0; i < nb_nics; i++) {
--        NICInfo *nd = &nd_table[i];
--
--        if (!nd->model) {
--            nd->model = g_strdup("spapr-vlan");
--        }
--
--        if (g_str_equal(nd->model, "spapr-vlan") ||
--            g_str_equal(nd->model, "ibmveth")) {
--            spapr_vlan_create(spapr->vio_bus, nd);
--        } else {
--            pci_nic_init_nofail(&nd_table[i], phb->bus, nd->model, NULL);
--        }
-+    while ((nd = qemu_find_nic_info("spapr-vlan", true, "ibmveth"))) {
-+        spapr_vlan_create(spapr->vio_bus, nd);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index a1045b48cc..5ae4f176f6 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -362,14 +362,11 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
      }
  
-+    pci_init_nic_devices(phb->bus, NULL);
+     /* Network setup. */
+-    if (nd_table[0].used && enable_lasi_lan()) {
+-        lasi_82596_init(addr_space, translate(NULL, LASI_LAN_HPA),
+-                        qdev_get_gpio_in(lasi_dev, LASI_IRQ_LAN_HPA));
+-    }
++    lasi_82596_init(addr_space, translate(NULL, LASI_LAN_HPA),
++                    qdev_get_gpio_in(lasi_dev, LASI_IRQ_LAN_HPA),
++                    enable_lasi_lan());
+ 
+-    if (!enable_lasi_lan()) {
+-        pci_init_nic_devices(pci_bus, mc->default_nic);
+-    }
++    pci_init_nic_devices(pci_bus, mc->default_nic);
+ 
+     /* BMC board: HP Powerbar SP2 Diva (with console only) */
+     pci_dev = pci_new(-1, "pci-serial");
+diff --git a/hw/net/lasi_i82596.c b/hw/net/lasi_i82596.c
+index 09e830ba5f..fcf7fae941 100644
+--- a/hw/net/lasi_i82596.c
++++ b/hw/net/lasi_i82596.c
+@@ -118,19 +118,21 @@ static void lasi_82596_realize(DeviceState *dev, Error **errp)
+     i82596_common_init(dev, s, &net_lasi_82596_info);
+ }
+ 
+-SysBusI82596State *lasi_82596_init(MemoryRegion *addr_space,
+-                  hwaddr hpa, qemu_irq lan_irq)
++SysBusI82596State *lasi_82596_init(MemoryRegion *addr_space, hwaddr hpa,
++                                   qemu_irq lan_irq, gboolean match_default)
+ {
+     DeviceState *dev;
+     SysBusI82596State *s;
+     static const MACAddr HP_MAC = {
+         .a = { 0x08, 0x00, 0x09, 0xef, 0x34, 0xf6 } };
+ 
+-    qemu_check_nic_model(&nd_table[0], TYPE_LASI_82596);
+-    dev = qdev_new(TYPE_LASI_82596);
++    dev = qemu_create_nic_device(TYPE_LASI_82596, match_default, "lasi");
++    if (!dev) {
++        return NULL;
++    }
 +
-     for (i = 0; i <= drive_get_max_bus(IF_SCSI); i++) {
-         spapr_vscsi_create(spapr->vio_bus);
-     }
+     s = SYSBUS_I82596(dev);
+     s->state.irq = lan_irq;
+-    qdev_set_nic_properties(dev, &nd_table[0]);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     s->state.conf.macaddr = HP_MAC; /* set HP MAC prefix */
+ 
+diff --git a/include/hw/net/lasi_82596.h b/include/hw/net/lasi_82596.h
+index 3ef2f47ba2..439356ec19 100644
+--- a/include/hw/net/lasi_82596.h
++++ b/include/hw/net/lasi_82596.h
+@@ -25,7 +25,7 @@ struct SysBusI82596State {
+     int val_index:1;
+ };
+ 
+-SysBusI82596State *lasi_82596_init(MemoryRegion *addr_space,
+-                                    hwaddr hpa, qemu_irq irq);
++SysBusI82596State *lasi_82596_init(MemoryRegion *addr_space, hwaddr hpa,
++                                   qemu_irq irq, gboolean match_default);
+ 
+ #endif
 -- 
 2.43.0
 
