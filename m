@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7BDC4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6956C48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:50:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaAw-0002sD-AW; Thu, 01 Feb 2024 11:44:30 -0500
+	id 1rVaE4-0007uK-Rb; Thu, 01 Feb 2024 11:47:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaAo-0002q6-0R
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:22 -0500
+ id 1rVaB7-0002yF-Cn
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:42 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaAl-0002Rb-6Q
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:21 -0500
+ id 1rVaAv-0002Sc-2K
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:To:From:Reply-To:
  Cc:Content-Type:Content-ID:Content-Description;
- bh=OKm118/V6gxksMAtfnJ8Ufap3iGAGMSmq6JcPfpdm/s=; b=cUqX9MJOiEYyfJIVox0HrzpTM0
- ldwC14FaAsiRE+x3Z7QD8oL6Bc1+440d1+SIaTapK9O069E2Sx4FXuwQMNuHLmbDpFn9f+Q43QHUe
- SKHJsq2XHtW+o5CCAIfddV/pJROinDHhIfIjBcX+CyVivEjOfhQCyh+iLMgqxo7+vIrsyUJ5S9G9N
- Te3qNe6o5vS7HsVGtm6pzBGOPIZjQ1stP6tgqcGHJRm7Yo/0KAJf8Yt2shivUdZHkhMLz/r04eoaq
- DkLzTCPBxrxG74Ehdq+1KRPhIWRkeX+pbItCIrohvtzxnr+XD6g8ML2UPfs6h+0XD6MvBKGE59+1m
- UNUte/cg==;
+ bh=m7jMvVP0UpN6AMOjQGouoZqSl/IYWhHtH7lX+Ejn/NM=; b=DWjdfy5ZXbzudbvX+YP/FM+19o
+ 2771+Es9CzTgc5mc5Ts04xW22aq7n9Nb/U68h1kiISya0OkW6wTJpQCt+zUdpNByvVGbVoEYjTP6v
+ p2LW7sjJOZDlm98NYfHKSTkpAl8/7hHctsA9qEvzAHw4Y1ZTpWYbpLvUKJB8T103WfjArrVqK+ivP
+ NT33AHf96AMJ6SbCAwFS/zUG77sc8UbbMaAZBrRd6fG5RiLtASHO6ubK2aOQJHATaeC2JH7qOFu8M
+ rVe9e07LuJuqUa1r3s2czxc0PL7uVIh8tMG7UA1T/In0j5+hn/cMpnRTHSi8nwiuR6tIzY2g6Za3H
+ MIKE38+Q==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVaAf-0000000GId9-0HEW for qemu-devel@nongnu.org;
+ id 1rVaAf-0000000GIdT-2IoD for qemu-devel@nongnu.org;
  Thu, 01 Feb 2024 16:44:14 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVaAg-00000003IN3-03I9 for qemu-devel@nongnu.org;
+ Hat Linux)) id 1rVaAg-00000003IO4-2D6w for qemu-devel@nongnu.org;
  Thu, 01 Feb 2024 16:44:14 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/47] hw/sparc64/sun4u: use pci_init_nic_devices()
-Date: Thu,  1 Feb 2024 16:43:44 +0000
-Message-ID: <20240201164412.785520-20-dwmw2@infradead.org>
+Subject: [PULL 33/47] hw/m68k/q800: use qemu_find_nic_info()
+Date: Thu,  1 Feb 2024 16:43:58 +0000
+Message-ID: <20240201164412.785520-34-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201164412.785520-1-dwmw2@infradead.org>
 References: <20240201164412.785520-1-dwmw2@infradead.org>
@@ -78,60 +78,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-The first sunhme NIC gets placed a function 1 on slot 1 of PCI bus A,
-and the rest are dynamically assigned on PCI bus B.
+If a corresponding NIC configuration was found, it will have a MAC address
+already assigned, so use that. Else, generate and assign a default one.
 
-Previously, any PCI NIC would get the special treatment purely by
-virtue of being first in the list.
+Using qemu_find_nic_info() is simpler than the alternative of using
+qemu_configure_nic_device() and then having to fetch the "mac" property
+as a string and convert it.
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/sparc64/sun4u.c | 27 ++++++++-------------------
- 1 file changed, 8 insertions(+), 19 deletions(-)
+ hw/m68k/q800.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 24d53bf5fd..eda9b58a21 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -639,29 +639,18 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index b80a3b6d5f..fa7683bf76 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -48,6 +48,7 @@
+ #include "hw/display/macfb.h"
+ #include "hw/block/swim.h"
+ #include "net/net.h"
++#include "net/util.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "sysemu/qtest.h"
+@@ -270,6 +271,8 @@ static void q800_machine_init(MachineState *machine)
+     BusState *adb_bus;
+     NubusBus *nubus;
+     DriveInfo *dinfo;
++    NICInfo *nd;
++    MACAddr mac;
+     uint8_t rng_seed[32];
  
-     memset(&macaddr, 0, sizeof(MACAddr));
-     onboard_nic = false;
--    for (i = 0; i < nb_nics; i++) {
--        PCIBus *bus;
--        nd = &nd_table[i];
+     linux_boot = (kernel_filename != NULL);
+@@ -370,13 +373,6 @@ static void q800_machine_init(MachineState *machine)
+ 
+     /* MACSONIC */
+ 
+-    if (nb_nics > 1) {
+-        error_report("q800 can only have one ethernet interface");
+-        exit(1);
+-    }
 -
--        if (!nd->model || strcmp(nd->model, mc->default_nic) == 0) {
--            if (!onboard_nic) {
--                pci_dev = pci_new_multifunction(PCI_DEVFN(1, 1), mc->default_nic);
--                bus = pci_busA;
--                memcpy(&macaddr, &nd->macaddr.a, sizeof(MACAddr));
--                onboard_nic = true;
--            } else {
--                pci_dev = pci_new(-1, mc->default_nic);
--                bus = pci_busB;
--            }
--        } else {
--            pci_dev = pci_new(-1, nd->model);
--            bus = pci_busB;
--        }
- 
-+    nd = qemu_find_nic_info(mc->default_nic, true, NULL);
+-    qemu_check_nic_model(&nd_table[0], "dp83932");
+-
+     /*
+      * MacSonic driver needs an Apple MAC address
+      * Valid prefix are:
+@@ -386,14 +382,21 @@ static void q800_machine_init(MachineState *machine)
+      * 08:00:07 Apple
+      * (Q800 use the last one)
+      */
+-    nd_table[0].macaddr.a[0] = 0x08;
+-    nd_table[0].macaddr.a[1] = 0x00;
+-    nd_table[0].macaddr.a[2] = 0x07;
+-
+     object_initialize_child(OBJECT(machine), "dp8393x", &m->dp8393x,
+                             TYPE_DP8393X);
+     dev = DEVICE(&m->dp8393x);
+-    qdev_set_nic_properties(dev, &nd_table[0]);
++    nd = qemu_find_nic_info(TYPE_DP8393X, true, "dp83932");
 +    if (nd) {
-+        pci_dev = pci_new_multifunction(PCI_DEVFN(1, 1), mc->default_nic);
-         dev = &pci_dev->qdev;
-         qdev_set_nic_properties(dev, nd);
--        pci_realize_and_unref(pci_dev, bus, &error_fatal);
-+        pci_realize_and_unref(pci_dev, pci_busA, &error_fatal);
++        qdev_set_nic_properties(dev, nd);
++        memcpy(mac.a, nd->macaddr.a, sizeof(mac.a));
++    } else {
++        qemu_macaddr_default_if_unset(&mac);
++    }
++    mac.a[0] = 0x08;
++    mac.a[1] = 0x00;
++    mac.a[2] = 0x07;
++    qdev_prop_set_macaddr(dev, "mac", mac.a);
 +
-+        memcpy(&macaddr, &nd->macaddr.a, sizeof(MACAddr));
-+        onboard_nic = true;
+     qdev_prop_set_uint8(dev, "it_shift", 2);
+     qdev_prop_set_bit(dev, "big_endian", true);
+     object_property_set_link(OBJECT(dev), "dma_mr",
+@@ -414,7 +417,7 @@ static void q800_machine_init(MachineState *machine)
+     prom = memory_region_get_ram_ptr(&m->dp8393x_prom);
+     checksum = 0;
+     for (i = 0; i < 6; i++) {
+-        prom[i] = revbit8(nd_table[0].macaddr.a[i]);
++        prom[i] = revbit8(mac.a[i]);
+         checksum ^= prom[i];
      }
-+    pci_init_nic_devices(pci_busB, mc->default_nic);
- 
-     /* If we don't have an onboard NIC, grab a default MAC address so that
-      * we have a valid machine id */
+     prom[7] = 0xff - checksum;
 -- 
 2.43.0
 
