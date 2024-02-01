@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A1E9C4828C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CE7C48292
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 12:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVWBR-0007qy-Jf; Thu, 01 Feb 2024 07:28:45 -0500
+	id 1rVWBT-0007ry-CQ; Thu, 01 Feb 2024 07:28:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVWBP-0007pQ-KM
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:28:43 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1rVWBR-0007qZ-4T
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:28:45 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVWBN-0002Av-C2
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:28:43 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-55c2cf644f3so1113389a12.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 04:28:39 -0800 (PST)
+ id 1rVWBP-0002Bf-2C
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:28:44 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-55a90a0a1a1so1234211a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 04:28:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706790519; x=1707395319; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706790521; x=1707395321; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4TIyz7/5C01pE+WSqKNz5zxOPpiT8BdSgjCe1JUQ504=;
- b=iKFzcPNBT4hBJlKNTH47w2k7xk2xnvjUB0Lm5z+IxjbJfy/kbFDSE4MWl9oqQwJO2B
- zBcuNSvEul1e45KiHJ/gMvsc7/HfMocY4YC0o4AxiF91KDlf0QlKzOkj0EIAWUZf4EFv
- 77ZoAGIo4/aVBR35qYlDrqZ9scTZrnB8n0Jt52pmf9ab2sCGrdi56FAj7raReni6JmSs
- d9kgPIJgaMZey0sPkIGfsy4VkMwloiU4LteTRJf6fSDlS+6KQ1ohkJCW8v6lBJAUQ9WB
- kh9u8YuH7u+O7Ozu3sYRa0W2mvjR30Czo/wBbU8gTg35rKezoc8zT9AWt1WYypMy8Xl4
- tRiA==
+ bh=j3+17aNm4Vprn5dUFdZGH0//LOKhFu0gJMaab5yZQOU=;
+ b=xIioCV5/4kypAF5I4N0sFp48lHBk+K1/3Zf1HiT7ZoZ5tddrTcYIMiJUB8etzGz1D0
+ U2VaIHAlWSEIpr5IGjwBze7BDCn5Op6HdZQZ63vCkXKN93fRAjqxeWEtNI9ua79sikTY
+ p2EqCUJBaWVSGwHnQMtSN7xcN9ZPHVWLzgfo4Cb45vOIZeF8vcldvMSHlO13EL9ZuHW/
+ vefVcwolh8CCVDzP3uXBp9da4jp8XB9MT934LS1nJ90E3LWPMuX8BX+t1sKnvoG8zaqU
+ Vfg5abR1uSov1Af7MJUWNFEHOh0uPWcHqfxYj2tt56v70Ne9oZh9Nj3EllI4Ivdw76bf
+ BTSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706790519; x=1707395319;
+ d=1e100.net; s=20230601; t=1706790521; x=1707395321;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4TIyz7/5C01pE+WSqKNz5zxOPpiT8BdSgjCe1JUQ504=;
- b=ldu/uD9g0KyD8Qc6z/r4hBn65F6z3AvRoU21Ok4bXJj8dCLXYoQyoE553KrqZMgi9f
- RbZLhMoY0fpzBSHN0REeR9a1juppHfV50um242T9F8x8AZAK0mMkXl763/CZ6ET/mlLy
- h4QL9x+0ScJABPLvQ+DBMDwJhd3dE34GYf3LsB9RdxXtjGmAL8zpxLFOdNE7yATT6i/F
- tUcBYXf2BXzVuMfXhGRjXML27/1UqXAOvROClhYr9fIXOd9DcxRaBxIAsd0qM8kFiUH8
- jIQcV+Eo8BGsEQbrye5X6nrQvHTyIgZojmsiFN02zhm+IMJV4rth2UykoYkGQNGGQI7N
- F1TQ==
-X-Gm-Message-State: AOJu0YwAXaq5/BDc7kCSmCz/3dXQlgIBXpm+rDkILhGnRl/K9wDuOFMa
- rlQY0n8AtRbEPA87EQRGsKqhc2DomIOnba7qYeZMMDNcFT7scsJjnU/V35LnGBw=
-X-Google-Smtp-Source: AGHT+IHxgV7bzGmvJmYDMfkZzy3sm3ndOVRBWrFh7bUG5k2eu/yqJgeQqWkvo5P/d9q+uORlG1tyHQ==
-X-Received: by 2002:a50:c35a:0:b0:55e:dbb8:4c6b with SMTP id
- q26-20020a50c35a000000b0055edbb84c6bmr3262632edb.42.1706790518811; 
- Thu, 01 Feb 2024 04:28:38 -0800 (PST)
+ bh=j3+17aNm4Vprn5dUFdZGH0//LOKhFu0gJMaab5yZQOU=;
+ b=SnqrpnkivRPOLrnDyFAn2j1JWkoaQViO2WYkl48hC1GVKRHpB1JmablcA+642k+8SF
+ BhPWR7rTt047RQKmLGnkDDvqiyBoFpdb//gk21MIMbeXDrn3WzA54EJep5mq2iiLoVLY
+ hr/wjlCYEREGDQuc1JK/bLc80A6+uBgdYXaaQWgi3KydtrRYFdtekDKyf0sBFfJZ99jP
+ iqtdtwhGdu1MW8flCtdEyRCdZ23uE+MxgU1TXSMqSTt0NNLqkwLQdjIyrHCTPw29Wka9
+ e1jyyI7XwBAqpi9w8IoO3C+ALsarSY1Ymgy8fNflVrFpd5eLFeq/gOoXdW9vOCto8FQ5
+ FZaw==
+X-Gm-Message-State: AOJu0YwkvAAz/S46DAaJdbHWYi3JIzQkaiuNAOolIu+JbEg3tk102fFF
+ VnbKF7bYrplEkyn0gI9tKVOtoyR/LT+xPFRPOGet/ZH/y7g68ATU6ABDMPjiJE8=
+X-Google-Smtp-Source: AGHT+IE518aY9Zg+eW0NfNaa71Yqv2oSN/GwSxcHSYmRth6EnOr9d0+vlls0ehMypywlOjfWcp9eSA==
+X-Received: by 2002:a05:6402:4584:b0:55f:a534:cac9 with SMTP id
+ ig4-20020a056402458400b0055fa534cac9mr2654210edb.5.1706790521395; 
+ Thu, 01 Feb 2024 04:28:41 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXV63BBOD1doNfROSikQ+uHSekeSYo5CJveFGyWQ+kPkTaqLMFJZRuoSpP65MHERodTnenmx8G/AjLsGYLHOawz42s0Hk1E/qCLREc4mQVL2IBtyjHj8Ek/AdTy4YeY3WNBrlQtgv9jl2gqRqffF/pUwX4WQekAEWDopbI4KcrGyXi+3RuRRhdoFjl3R6t52FhAOJitPp9LND9aJ++sGJRLsUEizQt2GSRDd/j3kTkQVPtA5HcXA2dnG677nzvUTq8DI6/MsxaLprrdk7FUTlXvBXht2QC1Ypp+XmwRDEx/P1ngzbuD7Y/HgiHHWxYjPLbkZ4h3P2tHLVtUc/EVALkxYY4peXwzJ9a7jr7halPZkSzOBOHRJ7/M4HjFMG+zuEqXAM7X3njgAUud0U3e6yrYYXlIKI8N5M/CbdxVVH3PH9NV1BcdaQcc+2lPyREEutUKVxNeCI4kg7loti/s0AMaS73fqBWGvLvkFxBQmVp84EgSSH15eMRJ2JdL/YD7eOC9BAnCQJEXyqFfVslffqlj47LPMEPAlSiFD9vAAcKqZ/IcaC8VBOku4vqWHd4sEXWbqk6vqY9riklq8CnyfvMIbPiXCbv0fOW2dRzixEU3/wUwibpIZzqmbnw4QFmyZ0/hlWd3m3A=
+ AJvYcCUnNVDM+JdlDDIQig7S6oprTdpmYSyTZijeGzcAI+jkLqJ1FqUcmr3lHzWTvaWs6+7pIaS0izkUppDkh2b5xcrOJwjXMar9S3OKr4SIIFh73tWmBrh6fX16mTRi1qGNADIFwHOjBCGcHRR/cRU0gwlhVOxJEnrgCYIQJjX2WvLkssMTzFC23h5XguiqGhzVffzcYqf6qp2+lEH/GtgZIBeyxtF1HZxqdWlJjWKMjs6ZaQNhg9ZbEvZEFFFkzCseUNIIAgsj2a7Z43uIy6vIRCUjx1dySRh21n0t133gnT9WZU+PQMxjCM8Hn5hcyhfK4yB7XgSG3NotnX8uKH4IUN4vBUPBswWwzcDGRx/Jm15pMUx/f+N3px1QajvMd+3jPz3mtL+NFm/EGQAbpoylSknRrbJyxQiPjTwVFS7mjUpdAh2UGS8KLNeAoLLfH0WaMQ6+YU7ML9ureVgUs09wHFmsa7vzskLpOnt2BKMecUwKwavtJdDKvVId/w0Gdwfy4bSKZfHCNEO5goCFJzswkNmiXfDaJEhVLTyXumJfFl+1TsgGDbFcCf5JWPnaUlI7unvtrQshkLZLPzhy5pJe+cTQLNqhNP0zP5yRcgLfhCm8KuPWdA9YX9GwxyOSx+xOK8HHkCds6LA=
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- n17-20020aa7c791000000b0055f283314e1sm3153680eds.43.2024.02.01.04.28.36
+ p14-20020a056402500e00b0055c67e6454asm6815985eda.70.2024.02.01.04.28.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 04:28:36 -0800 (PST)
+ Thu, 01 Feb 2024 04:28:39 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A41CA5F9DC;
+ by draig.lan (Postfix) with ESMTP id C67425F9DD;
  Thu,  1 Feb 2024 12:28:35 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -78,18 +78,17 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Beraldo Leal <bleal@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Chris Wulff <crwulff@gmail.com>
-Subject: [PATCH 4/5] Revert "hw/elf_ops: Ignore loadable segments with zero
- size"
-Date: Thu,  1 Feb 2024 12:28:34 +0000
-Message-Id: <20240201122835.1712347-5-alex.bennee@linaro.org>
+Subject: [PATCH 5/5] kconfig: use "select" to enable semihosting
+Date: Thu,  1 Feb 2024 12:28:35 +0000
+Message-Id: <20240201122835.1712347-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240201122835.1712347-1-alex.bennee@linaro.org>
 References: <20240201122835.1712347-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,122 +111,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This regressed qemu-system-xtensa:
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-    TEST    test_load_store on xtensa
-  qemu-system-xtensa: Some ROM regions are overlapping
-  These ROM regions might have been loaded by direct user request or by default.
-  They could be BIOS/firmware images, a guest kernel, initrd or some other file loaded into guest memory.
-  Check whether you intended to load all this guest code, and whether it has been built to load to the correct addresses.
+Just like all other dependencies, these can be expressed in Kconfig
+files rather than in the default configurations.
 
-  The following two regions overlap (in the memory address space):
-    test_load_store ELF program header segment 1 (addresses 0x0000000000001000 - 0x0000000000001f26)
-    test_load_store ELF program header segment 2 (addresses 0x0000000000001ab8 - 0x0000000000001ab8)
-  make[1]: *** [Makefile:187: run-test_load_store] Error 1
-
-This reverts commit 62570f1434160d356311e1c217537e24a4ac85cd.
-
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20240129115809.1039924-1-pbonzini@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/hw/elf_ops.h | 75 +++++++++++++++++++++-----------------------
- 1 file changed, 36 insertions(+), 39 deletions(-)
+ configs/devices/m68k-softmmu/default.mak    | 2 --
+ configs/devices/mips-softmmu/common.mak     | 3 ---
+ configs/devices/nios2-softmmu/default.mak   | 2 --
+ configs/devices/riscv32-softmmu/default.mak | 2 --
+ configs/devices/riscv64-softmmu/default.mak | 2 --
+ configs/devices/xtensa-softmmu/default.mak  | 2 --
+ target/m68k/Kconfig                         | 1 +
+ target/mips/Kconfig                         | 1 +
+ target/nios2/Kconfig                        | 1 +
+ target/riscv/Kconfig                        | 2 ++
+ target/xtensa/Kconfig                       | 1 +
+ 11 files changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/elf_ops.h b/include/hw/elf_ops.h
-index 3e966ddd5a1..9c35d1b9da6 100644
---- a/include/hw/elf_ops.h
-+++ b/include/hw/elf_ops.h
-@@ -427,16 +427,6 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             file_size = ph->p_filesz; /* Size of the allocated data */
-             data_offset = ph->p_offset; /* Offset where the data is located */
+diff --git a/configs/devices/m68k-softmmu/default.mak b/configs/devices/m68k-softmmu/default.mak
+index 7f8619e4278..8dcaa28ed38 100644
+--- a/configs/devices/m68k-softmmu/default.mak
++++ b/configs/devices/m68k-softmmu/default.mak
+@@ -1,7 +1,5 @@
+ # Default configuration for m68k-softmmu
  
--            /*
--             * Some ELF files really do have segments of zero size;
--             * just ignore them rather than trying to set the wrong addr,
--             * or create empty ROM blobs, because the zero-length blob can
--             * falsely trigger the overlapping-ROM-blobs check.
--             */
--            if (mem_size == 0) {
--                continue;
--            }
+-CONFIG_SEMIHOSTING=y
 -
-             if (file_size > 0) {
-                 if (g_mapped_file_get_length(mapped_file) <
-                     file_size + data_offset) {
-@@ -540,38 +530,45 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-                 *pentry = ehdr.e_entry - ph->p_vaddr + ph->p_paddr;
-             }
+ # Boards:
+ #
+ CONFIG_AN5206=y
+diff --git a/configs/devices/mips-softmmu/common.mak b/configs/devices/mips-softmmu/common.mak
+index 7da99327a77..1a853841b27 100644
+--- a/configs/devices/mips-softmmu/common.mak
++++ b/configs/devices/mips-softmmu/common.mak
+@@ -1,8 +1,5 @@
+ # Common mips*-softmmu CONFIG defines
  
--            if (load_rom) {
--                g_autofree char *label =
--                    g_strdup_printf("%s ELF program header segment %d",
--                                    name, i);
+-# CONFIG_SEMIHOSTING is always required on this architecture
+-CONFIG_SEMIHOSTING=y
 -
--                /*
--                 * rom_add_elf_program() takes its own reference to
--                 * 'mapped_file'.
--                 */
--                rom_add_elf_program(label, mapped_file, data, file_size,
--                                    mem_size, addr, as);
--            } else {
--                MemTxResult res;
--
--                res = address_space_write(as ? as : &address_space_memory,
--                                          addr, MEMTXATTRS_UNSPECIFIED,
--                                          data, file_size);
--                if (res != MEMTX_OK) {
--                    goto fail;
--                }
--                /*
--                 * We need to zero'ify the space that is not copied
--                 * from file
--                 */
--                if (file_size < mem_size) {
--                    res = address_space_set(as ? as : &address_space_memory,
--                                            addr + file_size, 0,
--                                            mem_size - file_size,
--                                            MEMTXATTRS_UNSPECIFIED);
-+            /* Some ELF files really do have segments of zero size;
-+             * just ignore them rather than trying to create empty
-+             * ROM blobs, because the zero-length blob can falsely
-+             * trigger the overlapping-ROM-blobs check.
-+             */
-+            if (mem_size != 0) {
-+                if (load_rom) {
-+                    g_autofree char *label =
-+                        g_strdup_printf("%s ELF program header segment %d",
-+                                        name, i);
-+
-+                    /*
-+                     * rom_add_elf_program() takes its own reference to
-+                     * 'mapped_file'.
-+                     */
-+                    rom_add_elf_program(label, mapped_file, data, file_size,
-+                                        mem_size, addr, as);
-+                } else {
-+                    MemTxResult res;
-+
-+                    res = address_space_write(as ? as : &address_space_memory,
-+                                              addr, MEMTXATTRS_UNSPECIFIED,
-+                                              data, file_size);
-                     if (res != MEMTX_OK) {
-                         goto fail;
-                     }
-+                    /*
-+                     * We need to zero'ify the space that is not copied
-+                     * from file
-+                     */
-+                    if (file_size < mem_size) {
-+                        res = address_space_set(as ? as : &address_space_memory,
-+                                                addr + file_size, 0,
-+                                                mem_size - file_size,
-+                                                MEMTXATTRS_UNSPECIFIED);
-+                        if (res != MEMTX_OK) {
-+                            goto fail;
-+                        }
-+                    }
-                 }
-             }
+ CONFIG_ISA_BUS=y
+ CONFIG_PCI=y
+ CONFIG_PCI_DEVICES=y
+diff --git a/configs/devices/nios2-softmmu/default.mak b/configs/devices/nios2-softmmu/default.mak
+index 1bc4082ea99..e130d024e62 100644
+--- a/configs/devices/nios2-softmmu/default.mak
++++ b/configs/devices/nios2-softmmu/default.mak
+@@ -1,7 +1,5 @@
+ # Default configuration for nios2-softmmu
  
+-CONFIG_SEMIHOSTING=y
+-
+ # Boards:
+ #
+ CONFIG_NIOS2_10M50=y
+diff --git a/configs/devices/riscv32-softmmu/default.mak b/configs/devices/riscv32-softmmu/default.mak
+index d847bd5692e..94a236c9c25 100644
+--- a/configs/devices/riscv32-softmmu/default.mak
++++ b/configs/devices/riscv32-softmmu/default.mak
+@@ -3,8 +3,6 @@
+ # Uncomment the following lines to disable these optional devices:
+ #
+ #CONFIG_PCI_DEVICES=n
+-CONFIG_SEMIHOSTING=y
+-CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+ 
+ # Boards:
+ #
+diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
+index bc69301fa4a..3f680594484 100644
+--- a/configs/devices/riscv64-softmmu/default.mak
++++ b/configs/devices/riscv64-softmmu/default.mak
+@@ -3,8 +3,6 @@
+ # Uncomment the following lines to disable these optional devices:
+ #
+ #CONFIG_PCI_DEVICES=n
+-CONFIG_SEMIHOSTING=y
+-CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+ 
+ # Boards:
+ #
+diff --git a/configs/devices/xtensa-softmmu/default.mak b/configs/devices/xtensa-softmmu/default.mak
+index 4fe1bf00c94..49e4c9da88c 100644
+--- a/configs/devices/xtensa-softmmu/default.mak
++++ b/configs/devices/xtensa-softmmu/default.mak
+@@ -1,7 +1,5 @@
+ # Default configuration for Xtensa
+ 
+-CONFIG_SEMIHOSTING=y
+-
+ # Boards:
+ #
+ CONFIG_XTENSA_SIM=y
+diff --git a/target/m68k/Kconfig b/target/m68k/Kconfig
+index 23debad519a..9eae71486ff 100644
+--- a/target/m68k/Kconfig
++++ b/target/m68k/Kconfig
+@@ -1,2 +1,3 @@
+ config M68K
+     bool
++    select SEMIHOSTING
+diff --git a/target/mips/Kconfig b/target/mips/Kconfig
+index 6adf1453548..eb19c94c7d4 100644
+--- a/target/mips/Kconfig
++++ b/target/mips/Kconfig
+@@ -1,5 +1,6 @@
+ config MIPS
+     bool
++    select SEMIHOSTING
+ 
+ config MIPS64
+     bool
+diff --git a/target/nios2/Kconfig b/target/nios2/Kconfig
+index 1529ab8950d..c65550c861a 100644
+--- a/target/nios2/Kconfig
++++ b/target/nios2/Kconfig
+@@ -1,2 +1,3 @@
+ config NIOS2
+     bool
++    select SEMIHOSTING
+diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
+index b9e5932f13f..adb7de3f37d 100644
+--- a/target/riscv/Kconfig
++++ b/target/riscv/Kconfig
+@@ -1,5 +1,7 @@
+ config RISCV32
+     bool
++    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
+ 
+ config RISCV64
+     bool
++    select ARM_COMPATIBLE_SEMIHOSTING # for do_common_semihosting()
+diff --git a/target/xtensa/Kconfig b/target/xtensa/Kconfig
+index a3c8dc7f6d7..5e46049262d 100644
+--- a/target/xtensa/Kconfig
++++ b/target/xtensa/Kconfig
+@@ -1,2 +1,3 @@
+ config XTENSA
+     bool
++    select SEMIHOSTING
 -- 
 2.39.2
 
