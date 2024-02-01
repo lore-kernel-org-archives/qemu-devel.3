@@ -4,80 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E3B2C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6350DC4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVZrz-00009m-L6; Thu, 01 Feb 2024 11:24:55 -0500
+	id 1rVZsi-0000aA-KR; Thu, 01 Feb 2024 11:25:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVZrj-0008VM-C8
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:24:45 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVZre-0004hy-Is
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:24:37 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d051fb89fbso15822691fa.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 08:24:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706804672; x=1707409472; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=46NHSLFImFJJig2UxV3k7PaJBS9adhECauo8jMROZHI=;
- b=XO5/dXmrrYLRl48fa2VAc3qzqz115Kd2dsHsM73r52RnieePXMB6p14XkyxEVf+NN2
- lJHH8CgA1j1i+afuckmaf+qWL39pYvnBu2cbj06YMCKMaBvXXhNiXUOrD/4gzekOl+mS
- iYZ1tkd9fmD8ir2Gg/8lo34c/bWYPo8LDdw5jGonyHSgps7b3P6dBVHsh9mIUK/Jzbjq
- JeA/Ju8fqDU8GyEm8u0/N/+cd63/YMAEJ/sBGe1TpiPg+8PIxgrJeiqtkUi6SGSmRJu6
- tfO/W18gxczfCaWO8LceOv8EsLKFG2oFyZR5rWwZu//Hcc5GUGGMpA673e70WeAHb/1f
- xWtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706804672; x=1707409472;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=46NHSLFImFJJig2UxV3k7PaJBS9adhECauo8jMROZHI=;
- b=pKsilGA5jC4Npr+dT3hiV/KlcRX4rBv3qaxRkG2ouWbLsCkuTRiiz3GzH3YCfqspXN
- v5OA6xjFTjNk2zSBdCFOt2bU+WruV+5WHqh4kQ8tbmaBL2X7E/r46DiJEQPP30t6LSaR
- sr4RVX1e3+fca0ht87sHkrHRzHF2FijAVpN8LGXjGSlO5Bk+pgabR4ABTI1Ajl1GDGuN
- Cjvi1SyTR18plPljvieiLJQvGN0jjp76BlibeAXC1D3iCQs3bPIsorBeRvJiGHFfqB9+
- v1Ng0VmaKRmee1soC/O2Gn6BOxpHsDBQQhCfclmbbtbBija75yIsicTk5L3zMsmbaiPE
- A+og==
-X-Gm-Message-State: AOJu0YypzLFTEkvtSs42N1HF6scTjabcQjtzUGQKpDKo4c8JxY/okHsd
- o9F8nev23vYGDu+ck3M2X/1rn/enOjuc0261iZjl15oARWzHveUxr7J4DG1LQXebu4LN1kvJhV0
- Jk0I6p86dcXIfeZejwpzISK/2+BesODMLsT67AIov39JddHkm
-X-Google-Smtp-Source: AGHT+IFL14x9oeiZfjzo5pV0Y4YN2i74qoc5RaH/iXnJx8Y+gyHy/8PO5QCVcVXSZeJ558W0dqbWPEn/gF4tVMS1ZTQ=
-X-Received: by 2002:a2e:3318:0:b0:2d0:770d:5c1c with SMTP id
- d24-20020a2e3318000000b002d0770d5c1cmr1712965ljc.11.1706804672528; Thu, 01
- Feb 2024 08:24:32 -0800 (PST)
-MIME-Version: 1.0
-References: <20240130190317.25692-1-philmd@linaro.org>
- <20240130190317.25692-3-philmd@linaro.org>
-In-Reply-To: <20240130190317.25692-3-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 16:24:21 +0000
-Message-ID: <CAFEAcA_e3QOvfvJScUgtmjGacKZX1OHyY5a-BWSAhNURyO2Rgg@mail.gmail.com>
-Subject: Re: [PATCH 2/4] hw/arm/stellaris: Convert I2C controller to
- Resettable interface
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rVZsd-0000X8-L0
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:25:37 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rVZsX-00051A-8q
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:25:33 -0500
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 411Fp1Qh022947; Thu, 1 Feb 2024 16:25:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=nDNOHMYVOO3zdJqGH59gQiExbN3A/PPuCaFylZoOcFM=;
+ b=bCOIL86lLgjxwzcvPUf6diQp5iPSNpb9Hu1+Uy9gq4g/IhhgZhydSA62M4KLhhON8jsB
+ OlcF0lhTTbGRFzjmz+OfGSXTzW7LT/iPExIzZq12E2LEkrxmQ6qieuC61JnR5tVmCvWG
+ DAG6Wz9/zTYtR3A02SZ3fVezGH933kb6IQz4TpE74XgeRXkzvBVxFBeqv5ruu3nZlmsV
+ PKD7iLQhMmddqrLYEGvqFyYNDadvkbQXWK6mOAuHWNdZCc0Kxrzplt73Py3xAHSHum0k
+ 8Iavn7QUTJkyL3wXUvixLFF4fEMgYKuve2Q4U6s1oxcajG9CVk3MHBkKuTqIymSIHhFI 4w== 
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0e5x19g4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Feb 2024 16:25:18 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 411EIvEm010858; Thu, 1 Feb 2024 16:22:10 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vweckw391-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Feb 2024 16:22:10 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 411GM8FA42008864
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 1 Feb 2024 16:22:08 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5DA8B20043;
+ Thu,  1 Feb 2024 16:22:08 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 04E7620040;
+ Thu,  1 Feb 2024 16:22:08 +0000 (GMT)
+Received: from [9.171.74.74] (unknown [9.171.74.74])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Feb 2024 16:22:07 +0000 (GMT)
+Message-ID: <bd14786900838155c9f1d2e82adc5e4d68207ee9.camel@linux.ibm.com>
+Subject: Re: [PATCH 2/3] gdbstub: Implement follow-fork-mode child
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: Laurent Vivier <laurent@vivier.eu>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Date: Thu, 01 Feb 2024 17:22:07 +0100
+In-Reply-To: <877cjomlk9.fsf@draig.linaro.org>
+References: <20240131205031.144607-1-iii@linux.ibm.com>
+ <20240131205031.144607-3-iii@linux.ibm.com>
+ <877cjomlk9.fsf@draig.linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 8d2HYAKkcaRXZ0TB5BHp9VY_J-02ClMJ
+X-Proofpoint-ORIG-GUID: 8d2HYAKkcaRXZ0TB5BHp9VY_J-02ClMJ
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-01_04,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ priorityscore=1501 suspectscore=0 mlxscore=0 adultscore=0 clxscore=1015
+ impostorscore=0 phishscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402010128
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,72 +111,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jan 2024 at 19:03, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  hw/arm/stellaris.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-> index afbc83f1e6..284b95005f 100644
-> --- a/hw/arm/stellaris.c
-> +++ b/hw/arm/stellaris.c
-> @@ -607,8 +607,11 @@ static void stellaris_i2c_write(void *opaque, hwaddr=
- offset,
->      stellaris_i2c_update(s);
->  }
->
-> -static void stellaris_i2c_reset(stellaris_i2c_state *s)
-> +static void stellaris_i2c_reset_exit(Object *obj)
->  {
-> +    stellaris_i2c_state *s =3D STELLARIS_I2C(obj);
-> +
-> +    /* ??? For now we only implement the master interface.  */
->      if (s->mcs & STELLARIS_I2C_MCS_BUSBSY)
->          i2c_end_transfer(s->bus);
->
-> @@ -658,8 +661,6 @@ static void stellaris_i2c_init(Object *obj)
->      memory_region_init_io(&s->iomem, obj, &stellaris_i2c_ops, s,
->                            "i2c", 0x1000);
->      sysbus_init_mmio(sbd, &s->iomem);
-> -    /* ??? For now we only implement the master interface.  */
+On Thu, 2024-02-01 at 12:11 +0000, Alex Benn=C3=A9e wrote:
+> Ilya Leoshkevich <iii@linux.ibm.com> writes:
+>=20
+> > Currently it's not possible to use gdbstub for debugging linux-user
+> > code that runs in a forked child, which is normally done using the
+> > `set
+> > follow-fork-mode child` GDB command. Purely on the protocol level,
+> > the
+> > missing piece is the fork-events feature.
+> >=20
+> > However, a deeper problem is supporting $Hg switching between
+> > different
+> > processes - right now it can do only threads. Implementing this for
+> > the
+> > general case would be quite complicated, but, fortunately, for the
+> > follow-fork-mode case there are a few factors that greatly simplify
+> > things: fork() happens in the exclusive section, there are only two
+> > processes involved, and before one of them is resumed, the second
+> > one
+> > is detached.
+> >=20
+> > This makes it possible to implement a simplified scheme: the parent
+> > and
+> > the child share the gdbserver socket, it's used only by one of them
+> > at
+> > any given time, which is coordinated through a separate socketpair.
+> > The
+> > processes can read from the gdbserver socket only one byte at a
+> > time,
+> > which is not great for performance, but, fortunately, the
+> > follow-fork-mode involves only a few messages.
+> >=20
+> > Add the hooks for the user-specific handling of $qSupported, $Hg,
+> > and
+> > $D. Advertise the fork-events support, and remember whether GDB has
+> > it
+> > as well. Implement the state machine that is initialized on fork(),
+> > decides the current owner of the gdbserver socket, and is
+> > terminated
+> > when one of the two processes is detached. The logic for the parent
+> > and
+> > the child is the same, only the initial state is different.
+> >=20
+> > Handle the `stepi` of a syscall corner case by disabling the
+> > single-stepping in detached processes.
+> >=20
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> > =C2=A0gdbstub/gdbstub.c=C2=A0=C2=A0 |=C2=A0 29 ++++--
+> > =C2=A0gdbstub/internals.h |=C2=A0=C2=A0 3 +
+> > =C2=A0gdbstub/user.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 210
+> > +++++++++++++++++++++++++++++++++++++++++++-
+> > =C2=A03 files changed, 234 insertions(+), 8 deletions(-)
 
-I'm not 100%, but I think this comment is a general one,
-not reset specific, so it should stay in the init function.
+[...]
+=C2=A0
+> > diff --git a/gdbstub/user.c b/gdbstub/user.c
+> > index 120eb7fc117..962f4cb74e7 100644
+> > --- a/gdbstub/user.c
+> > +++ b/gdbstub/user.c
+> > @@ -10,6 +10,7 @@
+> > =C2=A0 */
+> > =C2=A0
+> > =C2=A0#include "qemu/osdep.h"
+> > +#include <sys/syscall.h>
+> > =C2=A0#include "qemu/bitops.h"
+> > =C2=A0#include "qemu/cutils.h"
+> > =C2=A0#include "qemu/sockets.h"
+> > @@ -25,6 +26,41 @@
+> > =C2=A0#define GDB_NR_SYSCALLS 1024
+> > =C2=A0typedef unsigned long
+> > GDBSyscallsMask[BITS_TO_LONGS(GDB_NR_SYSCALLS)];
+> > =C2=A0
+> > +/*
+> > + * Forked child talks to its parent in order to let GDB enforce
+> > the
+> > + * follow-fork-mode. This happens inside a start_exclusive()
+> > section, so that
+> > + * the other threads, which may be forking too, do not interfere.
+> > The
+> > + * implementation relies on GDB not sending $vCont until it has
+> > detached
+> > + * either from the parent (follow-fork-mode child) or from the
+> > child
+> > + * (follow-fork-mode parent).
+> > + *
+> > + * The parent and the child share the GDB socket; at any given
+> > time only one
+> > + * of them is allowed to use it, as is reflected in the respective
+> > fork_state.
+> > + * This is negotiated via the fork_sockets pair as a reaction to
+> > $Hg.
+> > + */
+> > +enum GDBForkState {
+> > +=C2=A0=C2=A0=C2=A0 /* Fully owning the GDB socket. */
+> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_ENABLED,
+> > +=C2=A0=C2=A0=C2=A0 /* Working with the GDB socket; the peer is inactiv=
+e. */
+> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_ACTIVE,
+> > +=C2=A0=C2=A0=C2=A0 /* Handing off the GDB socket to the peer. */
+> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_DEACTIVATING,
+> > +=C2=A0=C2=A0=C2=A0 /* The peer is working with the GDB socket. */
+> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_INACTIVE,
+> > +=C2=A0=C2=A0=C2=A0 /* Asking the peer to close its GDB socket fd. */
+> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_ENABLING,
+> > +=C2=A0=C2=A0=C2=A0 /* Asking the peer to take over, closing our GDB so=
+cket fd. */
+> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_DISABLING,
+> > +=C2=A0=C2=A0=C2=A0 /* The peer has taken over, our GDB socket fd is cl=
+osed. */
+> > +=C2=A0=C2=A0=C2=A0 GDB_FORK_DISABLED,
+> > +};
+>=20
+> gulp - thats a potentially fairly complex state diagram. Do we just
+> work
+> through the states sequentially?
 
-> -    stellaris_i2c_reset(s);
->  }
+Unfortunately no. I had less states at some point, but then realized
+it was better to have these things laid out explicitly. Let me try to
+summarize the possible transitions:
 
-I think that the i2c_end_transfer() should be in the
-"enter" phase, and the clearing of the state fields in
-"hold", and then the stellaris_i2c_update() call in "exit".
-Though usually we don't bother to do an update in reset
-if it's just "device has reset and now its outbound IRQ
-line is not set", so we could alternatively just delete that.
+GDB_FORK_ENABLED: Terminal state; GDB follows the current process.
+GDB_FORK_DISABLED: Terminal state; GDB follows the other process.
+GDB_FORK_ACTIVE -> GDB_FORK_DEACTIVATING: On $Hg.
+GDB_FORK_ACTIVE -> GDB_FORK_ENABLING: On $D.
+GDB_FORK_ACTIVE -> GDB_FORK_DISABLING: On $D.
+GDB_FORK_ACTIVE -> GDB_FORK_DISABLED: On communication error.
+GDB_FORK_DEACTIVATING -> GDB_FORK_INACTIVE: On gdb_read_byte() return.
+GDB_FORK_DEACTIVATING -> GDB_FORK_DISABLED: On communication error.
+GDB_FORK_INACTIVE -> GDB_FORK_ACTIVE: On $Hg in peer.
+GDB_FORK_INACTIVE -> GDB_FORK_ENABLE: On $D in peer.
+GDB_FORK_INACTIVE -> GDB_FORK_DISABLE: On $D in peer.
+GDB_FORK_INACTIVE -> GDB_FORK_DISABLED: On communication error.
+GDB_FORK_ENABLING -> GDB_FORK_ENABLED: On gdb_read_byte() return.
+GDB_FORK_ENABLING -> GDB_FORK_DISABLED: On communication error.
+GDB_FORK_DISABLING -> GDB_FORK_DISABLED: On gdb_read_byte() return.
 
->  /* Analogue to Digital Converter.  This is only partially implemented,
-> @@ -1382,7 +1383,9 @@ type_init(stellaris_machine_init)
->  static void stellaris_i2c_class_init(ObjectClass *klass, void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
->
-> +    rc->phases.exit =3D stellaris_i2c_reset_exit;
->      dc->vmsd =3D &vmstate_stellaris_i2c;
->  }
+Some states have only one meaningful transition:
 
-Also on the subject of resetting i2c controllers and buses:
-https://patchew.org/QEMU/20240126005541.1839038-1-komlodi@google.com/
-That patchset proposes that the bus should basically drop
-any pending transactions on the floor at reset; it would
-also be possible for the bus to do the "end any transfer
-in progress", so the individual controller model doesn't
-have to. No idea what the overall Right Thing is, so
-let's not block this tidyup on figuring out general i2c reset
-cleanups.
+GDB_FORK_DEACTIVATING -> GDB_FORK_INACTIVE
+GDB_FORK_ENABLING -> GDB_FORK_ENABLED
 
-thanks
--- PMM
+and can in theory be squashed, but then the socketpair communication
+would have to be moved to the respective user-hook, which would
+complicate the error handling.
+
+[...]
+
+> > @@ -369,16 +421,168 @@ static void disable_gdbstub(void)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 CPU_FOREACH(cpu) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu_breakpoint_remove_=
+all(cpu, BP_GDB);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* no cpu_watchpoint_r=
+emove_all for user-mode */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu_single_step(cpu, 0);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tb_flush(cpu);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> > =C2=A0}
+> > =C2=A0
+> > -/* Disable gdb stub for child processes.=C2=A0 */
+> > =C2=A0void gdbserver_fork_end(pid_t pid)
+> > =C2=A0{
+> > -=C2=A0=C2=A0=C2=A0 if (pid !=3D 0 || !gdbserver_state.init ||
+> > gdbserver_user_state.fd < 0) {
+> > +=C2=A0=C2=A0=C2=A0 char b;
+> > +=C2=A0=C2=A0=C2=A0 int fd;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 if (!gdbserver_state.init || gdbserver_user_state.f=
+d < 0) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0 if (pid =3D=3D -1) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (gdbserver_user_state.fo=
+rk_state !=3D GDB_FORK_DISABLED)
+> > {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_a=
+ssert(gdbserver_user_state.fork_state =3D=3D
+> > GDB_FORK_INACTIVE);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clo=
+se(gdbserver_user_state.fork_sockets[0]);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clo=
+se(gdbserver_user_state.fork_sockets[1]);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> > -=C2=A0=C2=A0=C2=A0 disable_gdbstub();
+> > +
+> > +=C2=A0=C2=A0=C2=A0 if (gdbserver_user_state.fork_state =3D=3D GDB_FORK=
+_DISABLED) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (pid =3D=3D 0) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dis=
+able_gdbstub();
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0 if (pid =3D=3D 0) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 close(gdbserver_user_state.=
+fork_sockets[0]);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fd =3D gdbserver_user_state=
+.fork_sockets[1];
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert(gdbserver_state.pr=
+ocess_num =3D=3D 1);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert(gdbserver_state.pr=
+ocesses[0].pid =3D=3D
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fo=
+rk_peer_pid);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert(gdbserver_state.pr=
+ocesses[0].attached);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_state.processes[0=
+].pid =3D getpid();
+> > +=C2=A0=C2=A0=C2=A0 } else {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 close(gdbserver_user_state.=
+fork_sockets[1]);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fd =3D gdbserver_user_state=
+.fork_sockets[0];
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fork_s=
+tate =3D GDB_FORK_ACTIVE;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fork_p=
+eer_pid =3D pid;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdbserver_user_state.fork_p=
+eer_tid =3D pid;
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!gdbserver_state.allow_=
+stop_reply) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 got=
+o fail;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_string_printf(gdbserver_s=
+tate.str_buf,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "T%02=
+xfork:p%02x.%02x;thread:p%02x.%02x;",
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> > gdb_target_signal_to_gdb(gdb_target_sigtrap()),
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pid, =
+pid, (int)getpid(),
+> > qemu_get_thread_id());
+>=20
+> I don't think I messed up the merge but:
+>=20
+> ../../gdbstub/user.c: In function =E2=80=98gdbserver_fork_end=E2=80=99:
+> ../../gdbstub/user.c:461:50: error: implicit declaration of function
+> =E2=80=98gdb_target_sigtrap=E2=80=99 [-Werror=3Dimplicit-function-declara=
+tion]
+> =C2=A0 461 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0
+> gdb_target_signal_to_gdb(gdb_target_sigtrap()),
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> ^~~~~~~~~~~~~~~~~~
+> ../../gdbstub/user.c:461:50: error: nested extern declaration of
+> =E2=80=98gdb_target_sigtrap=E2=80=99 [-Werror=3Dnested-externs]
+> cc1: all warnings being treated as errors
+>=20
+> I cant see where gdb_target_sigtrap is from?
+
+This is from [1], which this series is Based-on. I can make one series
+with both features if it's more convenient to review.
+
+[1] https://patchew.org/QEMU/20240116094411.216665-1-iii@linux.ibm.com/
 
