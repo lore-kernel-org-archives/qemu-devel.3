@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE4A1C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 05:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF4EC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 05:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVPrZ-0004Be-B6; Thu, 01 Feb 2024 00:43:49 -0500
+	id 1rVPtJ-0004tD-VN; Thu, 01 Feb 2024 00:45:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rVPrX-0004BF-6r
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:43:47 -0500
+ id 1rVPtJ-0004t5-1b
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:45:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rVPrV-0005mp-KN
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:43:46 -0500
+ id 1rVPtH-0006Kw-21
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 00:45:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706766223;
+ s=mimecast20190719; t=1706766334;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YJpJi1+UiDSN9viHr2MAK6EEpE/xKn8U60ndryd1v9c=;
- b=WQi2lkVq1URJ1KlC8zSaBEd9geYndS347Jr5qNt9V864f61ExVXR+sk84x03C2lnvtO5Na
- qhuYZFfwOP16JCGwAoNgNUH3hNeRRWswTZA5KDiVFPXUkrMgvmx5xcfLaqx8hcrC+vKCqI
- 2qgu7tmR5jAFcDOK56j5uat+E+oMEMU=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vrZJ/AowMt6oQJfUgFFl0nMCFgpFOf67HDJhCz5Bl3o=;
+ b=bPvtd1aGhWr7+kPAb+7PVPoULFuxTWCxXOrOCOseFtspgjMWHujUs24qEha/1m2MVpr85E
+ aiCfG1xqXs4hlVoaxjHF/n4t2z+e3BPkddkhUWZyHNHM/zbFiM5cnK1xdXogqwJO+DiP8C
+ kB46ZA/KcNV22u60HM9GUXxF+ig7Oj0=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-82uNIZuEN2iTONoiFi61zg-1; Thu, 01 Feb 2024 00:43:42 -0500
-X-MC-Unique: 82uNIZuEN2iTONoiFi61zg-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-59907104d88so652108eaf.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 21:43:42 -0800 (PST)
+ us-mta-624-R-i_GEIWOIiJuuqoQGpnSg-1; Thu, 01 Feb 2024 00:45:33 -0500
+X-MC-Unique: R-i_GEIWOIiJuuqoQGpnSg-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-295f98e03ccso314615a91.2
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 21:45:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706766222; x=1707371022;
+ d=1e100.net; s=20230601; t=1706766332; x=1707371132;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YJpJi1+UiDSN9viHr2MAK6EEpE/xKn8U60ndryd1v9c=;
- b=Ecfp4U6EmYrq9VqZ3HzOtMVq8Y/YNR3mwkPlU5rv3f4nhymj7YUX0U6vZJbTzKYXDH
- cT6l7lA6U3u6zGSLzp5Me3PAFvHvAKzQWMbr95JoaWIGvgiVTOdjMtRMvSS8Dg22Ond7
- Zm0wLPXW8LzAS6sS2/AqInTCOvwpHrs33JauM/7+6v8L6sqoigTJ7bvo52AJOCJQvVJB
- e2GiXMb1eKGaxy9GSTfwhoSnqB9tSIl/VbNahUJdsAe4lPXZJL6rn4bly1msRrG6q7f6
- Jtq/BDUBxnZTQbeq71hyfsRzZ4+HNKIfWLlnOXmkzUnO6q/jUD3Ab9atk1Hh8pYdibSv
- nOjQ==
-X-Gm-Message-State: AOJu0YyB5NIk8KZlPuJQx7qDXAE8yupKDDFIldFc3y61iIXWNHUEuPCo
- kNXbBJucbsTuSYG5N2nl+++bCWJ49wAoVlf9g5MFV9ASJiNTCNmBbJFZi+tnj6ki/NB4u8bIkLW
- jvfz9RX+oZvyM/burznQhPwmohE/483V1V8Q83c6yTzXyBhOzSQUfbe6cZ/wLR6MX7CBuslNWnc
- D8YyiN0cyJQzfhxv9lFu/BlCxIM1Y=
-X-Received: by 2002:a05:6358:7e83:b0:176:d1ed:aedf with SMTP id
- o3-20020a0563587e8300b00176d1edaedfmr3305453rwn.0.1706766221875; 
- Wed, 31 Jan 2024 21:43:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGrqZCUrZr2avc3zOwCF2uHMm4T25CrpnE0+49Hr/LAZcNJGf4Vczh7AXzN13H1WqpzRwQyTpcIu7sCWwcyBlM=
-X-Received: by 2002:a05:6358:7e83:b0:176:d1ed:aedf with SMTP id
- o3-20020a0563587e8300b00176d1edaedfmr3305448rwn.0.1706766221600; Wed, 31 Jan
- 2024 21:43:41 -0800 (PST)
+ bh=vrZJ/AowMt6oQJfUgFFl0nMCFgpFOf67HDJhCz5Bl3o=;
+ b=lAMNK4mUcs82seYTxKUR7jVuxOGutLdi2qXvSCBrmS87VQC5lgYZi0k+BKfEYlmBTH
+ lZ5y6U5zWwxIsJXUDSZlPUxj8xgGE4TFHHtTFlD3ZwsZbJjr+OhAS2//rYP8LTkhnCs6
+ KXCuhV02AkJq2NBm0ISVD22KUWB43TiCbWF9CkGYqnyRLLtL/QJj7AX0jHL1uGUcwADA
+ FGAUR64kvVE0OBcFmY64ZEGpNXvLwrKIMpzz3kOHZ3R4Ce6oRzz1BTM549QU7y+ytzTY
+ bSs9BNnLAiF5KzwVcfhhkVWAF0Fb5PbSdPwt2JwS/L50igDlEWucse/qLT8+6Vie+Tmc
+ Pq8g==
+X-Gm-Message-State: AOJu0YziHyVau5/1L3Q2toWjjnG+To3uslRA3Mg2YEQn91HVm10YT48y
+ 9wjjnEhPCvDfR8YsO/J/D+sEhLL2670gLIeX4qk3LiSfsg3+8M8WVuztnGIqVs86OD6y/nVtKkQ
+ rKt9aUvaZa97YyM8E/u7kyY0F/hvAWiW4AXSatvRkqFWlfF49/mD0AOu68XJ31IkHgG2f+naWz0
+ xpUK8OLYwVShwdG0M3laAZa1Kt1r8=
+X-Received: by 2002:a17:90a:f417:b0:295:b364:58f with SMTP id
+ ch23-20020a17090af41700b00295b364058fmr3733108pjb.26.1706766332060; 
+ Wed, 31 Jan 2024 21:45:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEyhRk+MFlQ64TqcWIVK7QuYw9pi9mcqa+n+OZ6blJukqh9bvv9FkXyiOb2PaC5x1B8LaicvpCB+pBoeW+1WgI=
+X-Received: by 2002:a17:90a:f417:b0:295:b364:58f with SMTP id
+ ch23-20020a17090af41700b00295b364058fmr3733098pjb.26.1706766331826; Wed, 31
+ Jan 2024 21:45:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20240129132407.1474202-1-eperezma@redhat.com>
-In-Reply-To: <20240129132407.1474202-1-eperezma@redhat.com>
+References: <20240124102904.334595-1-lvivier@redhat.com>
+In-Reply-To: <20240124102904.334595-1-lvivier@redhat.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Thu, 1 Feb 2024 13:43:30 +0800
-Message-ID: <CACGkMEvXNSkMy=WAv-Eiy4M_7kmqJFkv7RgDwqrgry_O2eT2hA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Move net backend cleanup to NIC cleanup
-To: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, si-wei.liu@oracle.com, 
- leiyang@redhat.com, yajunw@nvidia.com, Ani Sinha <anisinha@redhat.com>, 
- dtatulea@nvidia.com, mcoqueli@redhat.com
+Date: Thu, 1 Feb 2024 13:45:20 +0800
+Message-ID: <CACGkMEuijE=r_AavGpCDgsbFx42czcFHkLcadZXmJ7os2YGuBg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] igb: fix link state on resume
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
@@ -99,37 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 29, 2024 at 9:24=E2=80=AFPM Eugenio P=C3=A9rez <eperezma@redhat=
-.com> wrote:
+On Wed, Jan 24, 2024 at 6:30=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
+ wrote:
 >
-> Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
-> structures if peer nic is present") effectively delayed the backend
-> cleanup, allowing the frontend or the guest to access it resources as
-> long as the frontend NIC is still visible to the guest.
+> On resume igb_vm_state_change() always calls igb_autoneg_resume()
+> that sets link_down to false, and thus activates the link even
+> if we have disabled it.
 >
-> However it does not clean up the resources until the qemu process is
-> over.  This causes an effective leak if the device is deleted with
-> device_del, as there is no way to close the vdpa device.  This makes
-> impossible to re-add that device to this or other QEMU instances until
-> the first instance of QEMU is finished.
+> The problem can be reproduced starting qemu in paused state (-S) and
+> then set the link to down. When we resume the machine the link appears
+> to be up.
 >
-> Move the cleanup from qemu_cleanup to the NIC deletion.
+> Reproducer:
 >
-> Fixes: a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net structu=
-res if peer nic is present")
-> Acked-by: Jason Wang <jasowang@redhat.com>
-> Reported-by: Lei Yang <leiyang@redhat.com>
-> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+>    # qemu-system-x86_64 ... -device igb,netdev=3Dnetdev0,id=3Dnet0 -S
 >
-> Eugenio P=C3=A9rez (2):
->   net: parameterize the removing client from nc list
->   net: move backend cleanup to NIC cleanup
+>    {"execute": "qmp_capabilities" }
+>    {"execute": "set_link", "arguments": {"name": "net0", "up": false}}
+>    {"execute": "cont" }
 >
->  net/net.c        | 30 ++++++++++++++++++++----------
->  net/vhost-vdpa.c |  8 --------
->  2 files changed, 20 insertions(+), 18 deletions(-)
+> To fix the problem, merge the content of igb_vm_state_change()
+> into igb_core_post_load() as e1000 does.
 >
-> --
+> Buglink: https://issues.redhat.com/browse/RHEL-21867
+> Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
+> Cc: akihiko.odaki@daynix.com
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> ---
+>
+> Notes:
+>     v2: Add Fixes: and a comment about igb_intrmgr_resume() purpose.
+>
 
 Queued.
 
