@@ -4,57 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EBA5C47DDB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC2DC48286
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 07:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVRXi-00064V-RD; Thu, 01 Feb 2024 02:31:26 -0500
+	id 1rVRXh-00062f-VV; Thu, 01 Feb 2024 02:31:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rVRXf-0005y2-M2
+ id 1rVRXf-0005xS-IX
  for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:31:23 -0500
 Received: from mgamail.intel.com ([192.55.52.120])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rVRXc-0001hD-Rp
+ id 1rVRXb-0001h2-LZ
  for qemu-devel@nongnu.org; Thu, 01 Feb 2024 02:31:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706772680; x=1738308680;
+ t=1706772679; x=1738308679;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=KwVL3I9PgS4s8Z7KV0SvAHDS/KkgvNyyFOLt/4IucP0=;
- b=ZfbG9opJRQkXgCBNyLh6Puze+DFDpHZ28yQXa/GGV4zPeRlbrd1QOjhd
- DBf68QTkxqLuyGf3Oe2ZTkgssX5lWlA+iNlIq4k2K9/gJbrg2KIuYR5Wv
- IYslmgNRCBoEq8uQjs0xHKUeAZUrOS7iakatpge/N680WbQInO6zpFgUm
- wMzOmifr0IsepRgb7hN1iXU8yRld85/sgvHdrnFQQicTJj2NXtttnkw54
- 4rdqezoxxUZFK5XHMYlICyMBLXARfoq6esUaaZGI1j1KEO8SJ83aVjkIQ
- n1DGXz0EDhH+NaNnhdw7u4lH1/JGTtBHd4+YfzFyYiLdRX5ZkvqIZiH8R A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402676829"
-X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="402676829"
+ bh=pb+pcDN+DMxwXrY6c0YeGaqOsNGV5EP3UG4ckxSOIyU=;
+ b=RzAUl9z/GRZHN+rJ6j/MlSZnrbEIV5y0m17TkV+XuJcv7/+zZIzpBTNz
+ e/WBm8smNG70Jp16hWe1ODtNZebh1DgJXjTzX4at5xOTWw4GBFF1zLJT2
+ 3pTUhZf1cjynjlnsz6rfcEeDOcismy1e11O8H7bVV163fzbngog/4H91r
+ 3MNb7mSRCwZ7RF5WxoEe7ZjmPWJUYOCQC+biEGgBWX2OUTFBsptxXPCKc
+ A266xWmbG9p+ARHkU1ZZx8fHIkay9zNQHIZ8wFJLaTcPXxKE+yYRTIJOy
+ TgYzyE6Vrv+L80XGbSstOmL3GaFPOd857VMHKGPmQNQvIUO9W/fDU/pqy A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402676811"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="402676811"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 23:31:17 -0800
+ 31 Jan 2024 23:31:12 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; 
-   d="scan'208";a="4443327"
+   d="scan'208";a="4443313"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2024 23:31:13 -0800
+ 31 Jan 2024 23:31:07 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, yi.y.sun@intel.com, chao.p.peng@intel.com,
+ Yi Sun <yi.y.sun@linux.intel.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>
-Subject: [PATCH rfcv2 12/18] vfio: Initialize host IOMMU device and pass to
- vIOMMU
-Date: Thu,  1 Feb 2024 15:28:12 +0800
-Message-Id: <20240201072818.327930-13-zhenzhong.duan@intel.com>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH rfcv2 11/18] intel_iommu: Add set/unset_iommu_device callback
+Date: Thu,  1 Feb 2024 15:28:11 +0800
+Message-Id: <20240201072818.327930-12-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240201072818.327930-1-zhenzhong.duan@intel.com>
 References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
@@ -84,94 +87,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize host IOMMU device in vfio and pass to vIOMMU, so that vIOMMU
-could get hw IOMMU information.
+From: Yi Liu <yi.l.liu@intel.com>
 
-Support both iommufd and legacy backend.
+This adds set/unset_iommu_device() implementation in Intel vIOMMU.
+In set call, a pointer to host IOMMU device info is stored in hash
+table indexed by PCI BDF.
 
-Originally-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/pci.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ hw/i386/intel_iommu_internal.h | 14 +++++++
+ include/hw/i386/intel_iommu.h  |  2 +
+ hw/i386/intel_iommu.c          | 74 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 90 insertions(+)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index dedb64fc08..b23c5ea790 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3112,11 +3112,17 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index f8cf99bddf..3301f54b35 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -28,6 +28,8 @@
+ #ifndef HW_I386_INTEL_IOMMU_INTERNAL_H
+ #define HW_I386_INTEL_IOMMU_INTERNAL_H
+ #include "hw/i386/intel_iommu.h"
++#include "sysemu/host_iommu_device.h"
++#include "hw/vfio/vfio-common.h"
  
-     vfio_bars_register(vdev);
+ /*
+  * Intel IOMMU register specification
+@@ -537,4 +539,16 @@ typedef struct VTDRootEntry VTDRootEntry;
+ #define VTD_SL_IGN_COM              0xbff0000000000000ULL
+ #define VTD_SL_TM                   (1ULL << 62)
  
--    ret = vfio_add_capabilities(vdev, errp);
-+    ret = pci_device_set_iommu_device(pdev, &vbasedev->base_hdev, errp);
-     if (ret) {
-+        error_prepend(errp, "Failed to set iommu_device: ");
-         goto out_teardown;
-     }
- 
-+    ret = vfio_add_capabilities(vdev, errp);
-+    if (ret) {
-+        goto out_unset_idev;
-+    }
 +
-     if (vdev->vga) {
-         vfio_vga_quirk_setup(vdev);
-     }
-@@ -3133,7 +3139,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-             error_setg(errp,
-                        "cannot support IGD OpRegion feature on hotplugged "
-                        "device");
--            goto out_teardown;
-+            goto out_unset_idev;
-         }
++typedef struct VTDHostIOMMUDevice {
++    IntelIOMMUState *iommu_state;
++    PCIBus *bus;
++    uint8_t devfn;
++    union {
++        HostIOMMUDevice *dev;
++        IOMMULegacyDevice *ldev;
++        IOMMUFDDevice *idev;
++    };
++    QLIST_ENTRY(VTDHostIOMMUDevice) next;
++} VTDHostIOMMUDevice;
+ #endif
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 7fa0a695c8..bbc7b96add 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -292,6 +292,8 @@ struct IntelIOMMUState {
+     /* list of registered notifiers */
+     QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
  
-         ret = vfio_get_dev_region_info(vbasedev,
-@@ -3142,13 +3148,13 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
-         if (ret) {
-             error_setg_errno(errp, -ret,
-                              "does not support requested IGD OpRegion feature");
--            goto out_teardown;
-+            goto out_unset_idev;
-         }
- 
-         ret = vfio_pci_igd_opregion_init(vdev, opregion, errp);
-         g_free(opregion);
-         if (ret) {
--            goto out_teardown;
-+            goto out_unset_idev;
-         }
-     }
- 
-@@ -3234,6 +3240,8 @@ out_deregister:
-     if (vdev->intx.mmap_timer) {
-         timer_free(vdev->intx.mmap_timer);
-     }
-+out_unset_idev:
-+    pci_device_unset_iommu_device(pdev);
- out_teardown:
-     vfio_teardown_msi(vdev);
-     vfio_bars_exit(vdev);
-@@ -3262,6 +3270,7 @@ static void vfio_instance_finalize(Object *obj)
- static void vfio_exitfn(PCIDevice *pdev)
- {
-     VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-+    VFIODevice *vbasedev = &vdev->vbasedev;
- 
-     vfio_unregister_req_notifier(vdev);
-     vfio_unregister_err_notifier(vdev);
-@@ -3276,7 +3285,8 @@ static void vfio_exitfn(PCIDevice *pdev)
-     vfio_teardown_msi(vdev);
-     vfio_pci_disable_rp_atomics(vdev);
-     vfio_bars_exit(vdev);
--    vfio_migration_exit(&vdev->vbasedev);
-+    vfio_migration_exit(vbasedev);
-+    pci_device_unset_iommu_device(pdev);
++    GHashTable *vtd_host_iommu_dev;             /* VTDHostIOMMUDevice */
++
+     /* interrupt remapping */
+     bool intr_enabled;              /* Whether guest enabled IR */
+     dma_addr_t intr_root;           /* Interrupt remapping table pointer */
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 1a07faddb4..9b62441439 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -237,6 +237,13 @@ static gboolean vtd_as_equal(gconstpointer v1, gconstpointer v2)
+            (key1->pasid == key2->pasid);
  }
  
- static void vfio_pci_reset(DeviceState *dev)
++static gboolean vtd_as_idev_equal(gconstpointer v1, gconstpointer v2)
++{
++    const struct vtd_as_key *key1 = v1;
++    const struct vtd_as_key *key2 = v2;
++
++    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
++}
+ /*
+  * Note that we use pointer to PCIBus as the key, so hashing/shifting
+  * based on the pointer value is intended. Note that we deal with
+@@ -3812,6 +3819,68 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+     return vtd_dev_as;
+ }
+ 
++static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
++                                    HostIOMMUDevice *base_dev, Error **errp)
++{
++    IntelIOMMUState *s = opaque;
++    VTDHostIOMMUDevice *vtd_hdev;
++    struct vtd_as_key key = {
++        .bus = bus,
++        .devfn = devfn,
++    };
++    struct vtd_as_key *new_key;
++
++    assert(base_dev);
++
++    vtd_iommu_lock(s);
++
++    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
++
++    if (vtd_hdev) {
++        error_setg(errp, "IOMMUFD device already exist");
++        vtd_iommu_unlock(s);
++        return -EEXIST;
++    }
++
++    vtd_hdev = g_malloc0(sizeof(VTDHostIOMMUDevice));
++    vtd_hdev->bus = bus;
++    vtd_hdev->devfn = (uint8_t)devfn;
++    vtd_hdev->iommu_state = s;
++    vtd_hdev->dev = base_dev;
++
++    new_key = g_malloc(sizeof(*new_key));
++    new_key->bus = bus;
++    new_key->devfn = devfn;
++
++    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, vtd_hdev);
++
++    vtd_iommu_unlock(s);
++
++    return 0;
++}
++
++static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
++{
++    IntelIOMMUState *s = opaque;
++    VTDHostIOMMUDevice *vtd_hdev;
++    struct vtd_as_key key = {
++        .bus = bus,
++        .devfn = devfn,
++    };
++
++    vtd_iommu_lock(s);
++
++    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
++    if (!vtd_hdev) {
++        vtd_iommu_unlock(s);
++        return;
++    }
++
++    g_hash_table_remove(s->vtd_host_iommu_dev, &key);
++
++    vtd_iommu_unlock(s);
++}
++
+ /* Unmap the whole range in the notifier's scope. */
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+ {
+@@ -4107,6 +4176,8 @@ static AddressSpace *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+ 
+ static PCIIOMMUOps vtd_iommu_ops = {
+     .get_address_space = vtd_host_dma_iommu,
++    .set_iommu_device = vtd_dev_set_iommu_device,
++    .unset_iommu_device = vtd_dev_unset_iommu_device,
+ };
+ 
+ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+@@ -4230,6 +4301,9 @@ static void vtd_realize(DeviceState *dev, Error **errp)
+                                      g_free, g_free);
+     s->vtd_address_spaces = g_hash_table_new_full(vtd_as_hash, vtd_as_equal,
+                                       g_free, g_free);
++    s->vtd_host_iommu_dev = g_hash_table_new_full(vtd_as_hash,
++                                                  vtd_as_idev_equal,
++                                                  g_free, g_free);
+     vtd_init(s);
+     pci_setup_iommu(bus, &vtd_iommu_ops, dev);
+     /* Pseudo address space under root PCI bus. */
 -- 
 2.34.1
 
