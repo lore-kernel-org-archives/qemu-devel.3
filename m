@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF459C4828D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5594C4828E
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 18:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVbVU-0006ed-Lm; Thu, 01 Feb 2024 13:09:49 -0500
+	id 1rVbVT-0006eS-5b; Thu, 01 Feb 2024 13:09:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rVbVQ-0006cq-W9
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:09:45 -0500
+ id 1rVbVQ-0006cp-Va
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:09:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rVbVJ-00042w-T1
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:09:42 -0500
+ id 1rVbVM-00043G-TW
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 13:09:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706810977;
+ s=mimecast20190719; t=1706810980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=E8el8gCCXuVhCjpc7ukkrfGoeG+69dxznubjIiYUZLM=;
- b=FsaxtPManklnGKkUMqJkP1JT+fm6nQGO9da2X5QtGEeqTqVSHYxaRf4zA5mV7qS4x7W9b4
- EKGqVsMgediOZis3xQcyLenrJr97QjiJ0Y8goeWBOE0lYpOaNiVS0JWfi1cHPnNwBkIZSU
- bSaNyT/JkKquympiIuAwFz/bsmJT4RU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-E0q4a43hPhO9Cksu64n_mQ-1; Thu, 01 Feb 2024 13:09:35 -0500
-X-MC-Unique: E0q4a43hPhO9Cksu64n_mQ-1
+ bh=NQ5MQKpoaglbo+SrCkqWOxyld5Nq3GuPR3WL9SjLRQo=;
+ b=JQVfh/tCu5LKGSkejcXusKVULzEBIYLszfz/cp61FrdZy+VTm7H0XY9+LspXPbWjjBXnte
+ w+ZCBmSSvMaFwglrm9Ol1g47FiGrhrka3dBHsZd/YFnKS6gEXkMKCd5KLxs9ghUkpSraOt
+ igM7xrNtFKWOkYUUoYCKeyQwVPWx3aA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-F0dQo2F3PG2YZSGaojwGlw-1; Thu,
+ 01 Feb 2024 13:09:37 -0500
+X-MC-Unique: F0dQo2F3PG2YZSGaojwGlw-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4FD1C101A526;
- Thu,  1 Feb 2024 18:09:35 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4ABE41C54022;
+ Thu,  1 Feb 2024 18:09:37 +0000 (UTC)
 Received: from eperezma-thinkpadt480s.rmtes.csb (unknown [10.39.193.103])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 91F122026D66;
- Thu,  1 Feb 2024 18:09:33 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8C74B2026D66;
+ Thu,  1 Feb 2024 18:09:35 +0000 (UTC)
 From: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -53,9 +53,9 @@ Cc: Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Parav Pandit <parav@mellanox.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  Si-Wei Liu <si-wei.liu@oracle.com>, Zhu Lingshan <lingshan.zhu@intel.com>
-Subject: [PATCH v2 2/7] vdpa: reorder vhost_vdpa_set_backend_cap
-Date: Thu,  1 Feb 2024 19:09:19 +0100
-Message-ID: <20240201180924.487579-3-eperezma@redhat.com>
+Subject: [PATCH v2 3/7] vdpa: set backend capabilities at vhost_vdpa_init
+Date: Thu,  1 Feb 2024 19:09:20 +0100
+Message-ID: <20240201180924.487579-4-eperezma@redhat.com>
 In-Reply-To: <20240201180924.487579-1-eperezma@redhat.com>
 References: <20240201180924.487579-1-eperezma@redhat.com>
 MIME-Version: 1.0
@@ -86,91 +86,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It will be used directly by vhost_vdpa_init.
+The backend does not reset them until the vdpa file descriptor is closed
+so there is no harm in doing it only once.
+
+This allows the destination of a live migration to premap memory in
+batches, using VHOST_BACKEND_F_IOTLB_BATCH.
 
 Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
 ---
- hw/virtio/vhost-vdpa.c | 60 +++++++++++++++++++++---------------------
- 1 file changed, 30 insertions(+), 30 deletions(-)
+ hw/virtio/vhost-vdpa.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index ddae494ca8..33ae285f87 100644
+index 33ae285f87..bd4db7ba5f 100644
 --- a/hw/virtio/vhost-vdpa.c
 +++ b/hw/virtio/vhost-vdpa.c
-@@ -580,6 +580,36 @@ static void vhost_vdpa_init_svq(struct vhost_dev *hdev, struct vhost_vdpa *v)
-     v->shadow_vqs = g_steal_pointer(&shadow_vqs);
- }
- 
-+static int vhost_vdpa_set_backend_cap(struct vhost_dev *dev)
-+{
-+    struct vhost_vdpa *v = dev->opaque;
+@@ -620,6 +620,12 @@ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
+     v->dev = dev;
+     dev->opaque =  opaque ;
+     v->shared->listener = vhost_vdpa_memory_listener;
 +
-+    uint64_t features;
-+    uint64_t f = 0x1ULL << VHOST_BACKEND_F_IOTLB_MSG_V2 |
-+        0x1ULL << VHOST_BACKEND_F_IOTLB_BATCH |
-+        0x1ULL << VHOST_BACKEND_F_IOTLB_ASID |
-+        0x1ULL << VHOST_BACKEND_F_SUSPEND;
-+    int r;
-+
-+    if (vhost_vdpa_call(dev, VHOST_GET_BACKEND_FEATURES, &features)) {
-+        return -EFAULT;
++    ret = vhost_vdpa_set_backend_cap(dev);
++    if (unlikely(ret != 0)) {
++        return ret;
 +    }
 +
-+    features &= f;
-+
-+    if (vhost_vdpa_first_dev(dev)) {
-+        r = vhost_vdpa_call(dev, VHOST_SET_BACKEND_FEATURES, &features);
-+        if (r) {
-+            return -EFAULT;
-+        }
-+    }
-+
-+    dev->backend_cap = features;
-+    v->shared->backend_cap = features;
-+
-+    return 0;
-+}
-+
- static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
- {
-     struct vhost_vdpa *v = opaque;
-@@ -827,36 +857,6 @@ static int vhost_vdpa_set_features(struct vhost_dev *dev,
-     return vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_FEATURES_OK);
- }
+     vhost_vdpa_init_svq(dev, v);
  
--static int vhost_vdpa_set_backend_cap(struct vhost_dev *dev)
--{
--    struct vhost_vdpa *v = dev->opaque;
--
--    uint64_t features;
--    uint64_t f = 0x1ULL << VHOST_BACKEND_F_IOTLB_MSG_V2 |
--        0x1ULL << VHOST_BACKEND_F_IOTLB_BATCH |
--        0x1ULL << VHOST_BACKEND_F_IOTLB_ASID |
--        0x1ULL << VHOST_BACKEND_F_SUSPEND;
--    int r;
--
--    if (vhost_vdpa_call(dev, VHOST_GET_BACKEND_FEATURES, &features)) {
--        return -EFAULT;
--    }
--
--    features &= f;
--
--    if (vhost_vdpa_first_dev(dev)) {
--        r = vhost_vdpa_call(dev, VHOST_SET_BACKEND_FEATURES, &features);
--        if (r) {
--            return -EFAULT;
--        }
--    }
--
--    dev->backend_cap = features;
--    v->shared->backend_cap = features;
--
--    return 0;
--}
--
- static int vhost_vdpa_get_device_id(struct vhost_dev *dev,
-                                     uint32_t *device_id)
- {
+     error_propagate(&dev->migration_blocker, v->migration_blocker);
+@@ -1506,7 +1512,6 @@ const VhostOps vdpa_ops = {
+         .vhost_set_vring_kick = vhost_vdpa_set_vring_kick,
+         .vhost_set_vring_call = vhost_vdpa_set_vring_call,
+         .vhost_get_features = vhost_vdpa_get_features,
+-        .vhost_set_backend_cap = vhost_vdpa_set_backend_cap,
+         .vhost_set_owner = vhost_vdpa_set_owner,
+         .vhost_set_vring_endian = NULL,
+         .vhost_backend_memslots_limit = vhost_vdpa_memslots_limit,
 -- 
 2.43.0
 
