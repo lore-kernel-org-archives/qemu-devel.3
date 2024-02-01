@@ -4,134 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7507C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 06:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3766C47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 06:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVQhW-0008Lw-U9; Thu, 01 Feb 2024 01:37:30 -0500
+	id 1rVQmq-0001vz-98; Thu, 01 Feb 2024 01:43:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVQhV-0008LY-AN
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:37:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVQhT-0000bn-R6
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:37:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706769445;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=f0HWPLXwxlaOsHo6F4fJ+TichknKlUWhydNPvBI+eag=;
- b=b4oLZ0l4ylp9GXjRgSNuQxR3XIo1XvO42wUd4SdDzP8R/lGL0CpxtjFS8/BVu7NRlF6ssz
- ws2cNvRUuk6SyTLui7XqKuetdezIeQX2iUfFSwBtJ1PVdw3qqd2H7l5LXpsRV/Znnbm/cC
- NVfBKAQ99CXLxYFPjGkZLoGtUg7K858=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-bTTUsyB2PrOHGBbyyadp1g-1; Thu, 01 Feb 2024 01:37:24 -0500
-X-MC-Unique: bTTUsyB2PrOHGBbyyadp1g-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-40fb9d0cfb7so2535855e9.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 22:37:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rVQmo-0001vm-10
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:42:58 -0500
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rVQml-0001HK-60
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:42:57 -0500
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-42ab7522bf6so2899731cf.2
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 22:42:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706769773; x=1707374573; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vK3euHrVD3OszPyMZW1tBZmcPq2GoJAVrVGjAjvYsL8=;
+ b=egRsiq9btWkly7oN4FnqjBqj/WeAXtSA+4UplPFz0G9ozLg7gOWrc0dR16fGMjjsJh
+ tmIZ97o1zpo/rRWpZyoKzeDEdpoxrpEoFmzoMe2dLgPOKnkMAPBO9+5HjmJGQH4luWjO
+ D+6Cw3zPSfVY/CwoUis+tz9bFMKHaN4tFyfb41ApZEfmvpXQx4QVljrGd20FFfqcDXry
+ f91W2hyPq2Cd3CZ3F+OT3nX11qNPqtQ69Bptvmt6PwKnHU2gn7Lxr1WbHcPhoF4xC+dg
+ PRfRJTfDKoIhGv8jm9LTkOhMqgb3NmyPXqxSLs2zlgD4DgXHAxnFdNKMt7+f6DYiYJuB
+ sFHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706769443; x=1707374243;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f0HWPLXwxlaOsHo6F4fJ+TichknKlUWhydNPvBI+eag=;
- b=k1lxkTlYQKyWAFdSc/4Uq0HhkRkHEwEs3dwLdgJzNcHmBayXflG5zFpPThAN6q3m3J
- qpNZTL6SLYDPQeR3CSpROKDiuDb0n5EgDSYgEnRUkakNK3S825B8Nx6OAcuVFLJelJJC
- PW5CbSh2x+R3w2/FtGaz8A5c/eucnsHYNh2d/r9KBZXMr1neWQmu07D01IV5n3ryb4dq
- K7A4MFHi+rCsmxlUWxYKfVShUGgdUyAkFyKR0KxsKVp9/Wc3IcMHcPwISE0anPSizxkv
- 7EIlNISAD///PXJmfJh08JZn+QWdQ0D5w61fL7uQzUxCrJZrnOjB9/V+jblM7y8A2XSe
- V6Zg==
-X-Gm-Message-State: AOJu0YzsLBC1N7AZ42PLohPuWItRPKfzEbZbdlJ2jDowrEQiNEfJg4iT
- RkZEkF/gSxuH/3KjEJobaciMM3bNmdJpUM0lKvr8FbdXoMYl7z+fxQR+Lt7yqj93brgYxrHtJj4
- 9gOwaAVV9EmSNF4BOhSACsts/j/5HCfAJZcDZtvU+EiXoNS2xYQqX
-X-Received: by 2002:a05:600c:1549:b0:40e:ac4f:7156 with SMTP id
- f9-20020a05600c154900b0040eac4f7156mr2710728wmg.5.1706769443226; 
- Wed, 31 Jan 2024 22:37:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFbzzCw7wM4N2a2nmg5xAbQJVh7rTYcnP63p1jfcc+D5oFBo7hOgFTbJRBqyCzhpwbfr8Irww==
-X-Received: by 2002:a05:600c:1549:b0:40e:ac4f:7156 with SMTP id
- f9-20020a05600c154900b0040eac4f7156mr2710718wmg.5.1706769442954; 
- Wed, 31 Jan 2024 22:37:22 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
- [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- k38-20020a05600c1ca600b0040e5945307esm3485266wms.40.2024.01.31.22.37.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jan 2024 22:37:22 -0800 (PST)
-Message-ID: <01f5fb2d-28fa-484e-93b2-be49e42d4ec4@redhat.com>
-Date: Thu, 1 Feb 2024 07:37:21 +0100
+ d=1e100.net; s=20230601; t=1706769773; x=1707374573;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vK3euHrVD3OszPyMZW1tBZmcPq2GoJAVrVGjAjvYsL8=;
+ b=S5wnLT/MLE5pTxwldkD4bvp50jxH0m2a0vR0WNPSXw5VZp060RDbMnF5myx6adYKXp
+ mVBlsRAADRgUJxB9XV4maSFX9mXv+EH2fhCOIDMNIy1R5wHXO35lB5kelw+V/dihLGev
+ OhBJsv/y5TCmj/ZQ63yLn2e+PmwXtdMgxtUViBllZ8iJg7HdY2sxbbybiok5ZeQucgp1
+ N52rWpCIqfWxNVuldNCQZvueRC0XCCTsre5GA2x43O4B72q/rDL94uWNjRIc3J9GQ4LR
+ jNGueejjumCBRjERkZJqUf8K647OGMXUFlkVeucIXn0Bd1Hr2bcEXkut/VccuHOZaeQ3
+ xyMA==
+X-Gm-Message-State: AOJu0Yw2ACnFwXbAaq5ezwbhEi7rqWIfkLNRuPRNSYvV/SWPPOnK7AAs
+ mTkHamYLh4oN+CStlZkk4KOZgS7TiXFtnNaXNrEJHXDcLzzCuincckICKsTMymNADI80+DgAyuy
+ v1AGVLLlqgD75IOF/91p53OcTca4=
+X-Google-Smtp-Source: AGHT+IHg1bCJy1lZ2a04mJYldBsu4pZPnhAgj8IUtaNQuwHbk3I2IPYbLe3jUgf3G2DzjctkuLXfCl7oa8WdTCWHCt0=
+X-Received: by 2002:a05:622a:13d2:b0:42b:e02b:c33a with SMTP id
+ p18-20020a05622a13d200b0042be02bc33amr3866197qtk.28.1706769773459; Wed, 31
+ Jan 2024 22:42:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] tests/tcg/s390x: Test CONVERT TO BINARY
-Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Pavel Zbitskiy <pavel.zbitskiy@gmail.com>
-References: <20240131230938.325919-1-iii@linux.ibm.com>
- <20240131230938.325919-5-iii@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240131230938.325919-5-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240130234840.53122-1-dongwon.kim@intel.com>
+ <20240130234840.53122-2-dongwon.kim@intel.com>
+ <CAJ+F1CLzVDfCdy9XUGxAf1DN=ert+9JDs3Sq1HYve4Bdy7mFHw@mail.gmail.com>
+ <PH8PR11MB6879524941306A7B3FB17EE2FA7C2@PH8PR11MB6879.namprd11.prod.outlook.com>
+In-Reply-To: <PH8PR11MB6879524941306A7B3FB17EE2FA7C2@PH8PR11MB6879.namprd11.prod.outlook.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 1 Feb 2024 10:42:41 +0400
+Message-ID: <CAJ+F1C+4f7=GAa8gOhH+=Qv5WAQrypa=83R-+RVEAo4JjknLSw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] ui/gtk: skip drawing guest scanout when associated VC
+ is invisible
+To: "Kim, Dongwon" <dongwon.kim@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,83 +93,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/02/2024 00.07, Ilya Leoshkevich wrote:
-> Check the CVB's and CVBG's corner cases.
-> 
-> Co-developed-by: Pavel Zbitskiy <pavel.zbitskiy@gmail.com>
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   tests/tcg/s390x/Makefile.target |  1 +
->   tests/tcg/s390x/cvb.c           | 47 +++++++++++++++++++++++++++++++++
->   2 files changed, 48 insertions(+)
->   create mode 100644 tests/tcg/s390x/cvb.c
-> 
-> diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-> index 04e4bddd83d..e2aba2ec274 100644
-> --- a/tests/tcg/s390x/Makefile.target
-> +++ b/tests/tcg/s390x/Makefile.target
-> @@ -46,6 +46,7 @@ TESTS+=laalg
->   TESTS+=add-logical-with-carry
->   TESTS+=lae
->   TESTS+=cvd
-> +TESTS+=cvb
->   
->   cdsg: CFLAGS+=-pthread
->   cdsg: LDFLAGS+=-pthread
-> diff --git a/tests/tcg/s390x/cvb.c b/tests/tcg/s390x/cvb.c
-> new file mode 100644
-> index 00000000000..47b7a7965f4
-> --- /dev/null
-> +++ b/tests/tcg/s390x/cvb.c
-> @@ -0,0 +1,47 @@
-> +/*
-> + * Test the CONVERT TO DECIMAL instruction.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include <assert.h>
-> +#include <stdint.h>
-> +#include <stdlib.h>
-> +
-> +static int32_t cvb(uint64_t x)
-> +{
-> +    uint32_t ret;
-> +
-> +    asm("cvb %[ret],%[x]" : [ret] "=r" (ret) : [x] "R" (x));
-> +
-> +    return ret;
-> +}
-> +
-> +static int64_t cvbg(__uint128_t x)
-> +{
-> +    int64_t ret;
-> +
-> +    asm("cvbg %[ret],%[x]" : [ret] "=r" (ret) : [x] "T" (x));
-> +
-> +    return ret;
-> +}
-> +
-> +int main(void)
-> +{
-> +    __uint128_t m = (((__uint128_t)0x9223372036854775) << 16) | 0x8070;
-> +
-> +    assert(cvb(0xc) == 0);
-> +    assert(cvb(0x1c) == 1);
-> +    assert(cvb(0x25594c) == 25594);
-> +    assert(cvb(0x1d) == -1);
-> +    assert(cvb(0x2147483647c) == 0x7fffffff);
-> +    assert(cvb(0x2147483647d) == -0x7fffffff);
-> +
-> +    assert(cvbg(0xc) == 0);
-> +    assert(cvbg(0x1c) == 1);
-> +    assert(cvbg(0x25594c) == 25594);
-> +    assert(cvbg(0x1d) == -1);
-> +    assert(cvbg(m | 0xc) == 0x7fffffffffffffff);
-> +    assert(cvbg(m | 0xd) == -0x7fffffffffffffff);
-> +
-> +    return EXIT_SUCCESS;
-> +}
+Hi
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On Wed, Jan 31, 2024 at 10:56=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.co=
+m> wrote:
+>
+> Hi Marc-Andr=C3=A9,
+>
+> > https://docs.gtk.org/gtk3/method.Widget.is_visible.html
+>
+> This is what we had tried first but it didn't seem to work for the case o=
+f window minimization.
+> I see the visible flag for the GTK widget didn't seem to be toggled for s=
+ome reason. And when
 
+Right, because minimize !=3D visible. You can still get window preview
+with alt-tab and other compositor drawings.
+
+Iow, it should keep rendering even when minimized.
+
+> closing window, vc->window widget is destroyed so it is not possible to c=
+heck the flag using
+> this GTK function. Having extra flag bound to VC was most intuitive for t=
+he logic I wanted to
+> implement.
+>
+> Thanks!!
+> DW
+>
+> > Subject: Re: [PATCH 1/3] ui/gtk: skip drawing guest scanout when associ=
+ated
+> > VC is invisible
+> >
+> > Hi Dongwon
+> >
+> > On Wed, Jan 31, 2024 at 3:50=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+> > >
+> > > From: Dongwon Kim <dongwon.kim@intel.com>
+> > >
+> > > A new flag "visible" is added to show visibility status of the gfx co=
+nsole.
+> > > The flag is set to 'true' when the VC is visible but set to 'false'
+> > > when it is hidden or closed. When the VC is invisible, drawing guest
+> > > frames should be skipped as it will never be completed and it would
+> > > potentially lock up the guest display especially when blob scanout is=
+ used.
+> >
+> > Can't it skip drawing when the widget is not visible instead?
+> > https://docs.gtk.org/gtk3/method.Widget.is_visible.html
+> >
+> > >
+> > > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > > Cc: Gerd Hoffmann <kraxel@redhat.com>
+> > > Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> > >
+> > > Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> > > ---
+> > >  include/ui/gtk.h |  1 +
+> > >  ui/gtk-egl.c     |  8 ++++++++
+> > >  ui/gtk-gl-area.c |  8 ++++++++
+> > >  ui/gtk.c         | 10 +++++++++-
+> > >  4 files changed, 26 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/include/ui/gtk.h b/include/ui/gtk.h index
+> > > aa3d637029..2de38e5724 100644
+> > > --- a/include/ui/gtk.h
+> > > +++ b/include/ui/gtk.h
+> > > @@ -57,6 +57,7 @@ typedef struct VirtualGfxConsole {
+> > >      bool y0_top;
+> > >      bool scanout_mode;
+> > >      bool has_dmabuf;
+> > > +    bool visible;
+> > >  #endif
+> > >  } VirtualGfxConsole;
+> > >
+> > > diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c index 3af5ac5bcf..993c283191
+> > > 100644
+> > > --- a/ui/gtk-egl.c
+> > > +++ b/ui/gtk-egl.c
+> > > @@ -265,6 +265,10 @@ void
+> > gd_egl_scanout_dmabuf(DisplayChangeListener
+> > > *dcl,  #ifdef CONFIG_GBM
+> > >      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl=
+);
+> > >
+> > > +    if (!vc->gfx.visible) {
+> > > +        return;
+> > > +    }
+> > > +
+> > >      eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+> > >                     vc->gfx.esurface, vc->gfx.ectx);
+> > >
+> > > @@ -363,6 +367,10 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+> > >      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl=
+);
+> > >      GtkWidget *area =3D vc->gfx.drawing_area;
+> > >
+> > > +    if (!vc->gfx.visible) {
+> > > +        return;
+> > > +    }
+> > > +
+> > >      if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf-
+> > >draw_submitted) {
+> > >          graphic_hw_gl_block(vc->gfx.dcl.con, true);
+> > >          vc->gfx.guest_fb.dmabuf->draw_submitted =3D true; diff --git
+> > > a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c index 52dcac161e..04e07bd7ee
+> > > 100644
+> > > --- a/ui/gtk-gl-area.c
+> > > +++ b/ui/gtk-gl-area.c
+> > > @@ -285,6 +285,10 @@ void
+> > > gd_gl_area_scanout_flush(DisplayChangeListener *dcl,  {
+> > >      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl=
+);
+> > >
+> > > +    if (!vc->gfx.visible) {
+> > > +        return;
+> > > +    }
+> > > +
+> > >      if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf-
+> > >draw_submitted) {
+> > >          graphic_hw_gl_block(vc->gfx.dcl.con, true);
+> > >          vc->gfx.guest_fb.dmabuf->draw_submitted =3D true; @@ -299,6
+> > > +303,10 @@ void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
+> > > #ifdef CONFIG_GBM
+> > >      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl=
+);
+> > >
+> > > +    if (!vc->gfx.visible) {
+> > > +        return;
+> > > +    }
+> > > +
+> > >      gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
+> > >      egl_dmabuf_import_texture(dmabuf);
+> > >      if (!dmabuf->texture) {
+> > > diff --git a/ui/gtk.c b/ui/gtk.c
+> > > index 810d7fc796..02eb667d8a 100644
+> > > --- a/ui/gtk.c
+> > > +++ b/ui/gtk.c
+> > > @@ -1312,15 +1312,20 @@ static void gd_menu_quit(GtkMenuItem *item,
+> > > void *opaque)  static void gd_menu_switch_vc(GtkMenuItem *item, void
+> > > *opaque)  {
+> > >      GtkDisplayState *s =3D opaque;
+> > > -    VirtualConsole *vc =3D gd_vc_find_by_menu(s);
+> > > +    VirtualConsole *vc;
+> > >      GtkNotebook *nb =3D GTK_NOTEBOOK(s->notebook);
+> > >      gint page;
+> > >
+> > > +    vc =3D gd_vc_find_current(s);
+> > > +    vc->gfx.visible =3D false;
+> > > +
+> > > +    vc =3D gd_vc_find_by_menu(s);
+> > >      gtk_release_modifiers(s);
+> > >      if (vc) {
+> > >          page =3D gtk_notebook_page_num(nb, vc->tab_item);
+> > >          gtk_notebook_set_current_page(nb, page);
+> > >          gtk_widget_grab_focus(vc->focus);
+> > > +        vc->gfx.visible =3D true;
+> > >      }
+> > >  }
+> > >
+> > > @@ -1350,6 +1355,7 @@ static gboolean gd_tab_window_close(GtkWidget
+> > *widget, GdkEvent *event,
+> > >      VirtualConsole *vc =3D opaque;
+> > >      GtkDisplayState *s =3D vc->s;
+> > >
+> > > +    vc->gfx.visible =3D false;
+> > >      gtk_widget_set_sensitive(vc->menu_item, true);
+> > >      gd_widget_reparent(vc->window, s->notebook, vc->tab_item);
+> > >      gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(s->notebook),
+> > > @@ -1423,6 +1429,7 @@ static void gd_menu_untabify(GtkMenuItem *item,
+> > void *opaque)
+> > >          gd_update_geometry_hints(vc);
+> > >          gd_update_caption(s);
+> > >      }
+> > > +    vc->gfx.visible =3D true;
+> > >  }
+> > >
+> > >  static void gd_menu_show_menubar(GtkMenuItem *item, void *opaque)
+> > @@
+> > > -2471,6 +2478,7 @@ static void gtk_display_init(DisplayState *ds,
+> > > DisplayOptions *opts)  #ifdef CONFIG_GTK_CLIPBOARD
+> > >      gd_clipboard_init(s);
+> > >  #endif /* CONFIG_GTK_CLIPBOARD */
+> > > +    vc->gfx.visible =3D true;
+> > >  }
+> > >
+> > >  static void early_gtk_display_init(DisplayOptions *opts)
+> > > --
+> > > 2.34.1
+> > >
+> > >
+> >
+> >
+> > --
+> > Marc-Andr=C3=A9 Lureau
+
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
