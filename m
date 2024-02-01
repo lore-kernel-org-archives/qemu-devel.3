@@ -4,102 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD99C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4440C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:59:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVYMw-0006jL-OV; Thu, 01 Feb 2024 09:48:48 -0500
+	id 1rVYWy-0002dq-Ix; Thu, 01 Feb 2024 09:59:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1rVYMu-0006fD-DB; Thu, 01 Feb 2024 09:48:44 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1rVYMr-0007dw-F3; Thu, 01 Feb 2024 09:48:43 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 411DMab8007467; Thu, 1 Feb 2024 14:48:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : from : to : cc
- : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=pp1;
- bh=D36gZtpxOFLcMyfcAuMNznFeMfR1JI7UZXERls1aoNY=;
- b=iseYvR9jBJNYNmGHZoGQKnsKXwzC6byWr+rTHybDAQV3qd0ZrndXho0svPIvaByh7EQK
- H5uICEWtBsHB2ZGVHXXvKwBB/hYbO2gWWl8ggvXJL8dKz1Ex0tya+KgNjoGnmoXwp8V9
- 5T7Kr3vScE8pppJU8RihgIwZzboEmA+VXEXTsh4G1Eryw+C2vl/4eWhojdnHPJmSl09s
- mWqCzdDat0RXfgoEm4yFUNcup0EOAvd2MITi45n52a264bVncB102q/pfWuoBJe7TFe+
- Mxijf+74FM5+LxfF5qiKJZLd2Jr+bh39wAtgOOk6k04toYkUVCtS8fZfZes0NS/EzXR/ FA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0c4n2vxx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Feb 2024 14:48:29 +0000
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 411Dgrrt015344;
- Thu, 1 Feb 2024 14:48:26 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0c4n2vmw-4
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Feb 2024 14:48:26 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 411DPCHe011067; Thu, 1 Feb 2024 14:46:28 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwd5p4qev-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Feb 2024 14:46:27 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 411EkODa18416200
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 1 Feb 2024 14:46:24 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A57A620043;
- Thu,  1 Feb 2024 14:46:24 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CB22D20040;
- Thu,  1 Feb 2024 14:46:22 +0000 (GMT)
-Received: from ltc-boston1.aus.stglabs.ibm.com (unknown [9.40.193.18])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  1 Feb 2024 14:46:22 +0000 (GMT)
-Subject: [PATCH v8 1/2] ppc: Enable 2nd DAWR support on Power10 PowerNV machine
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-To: danielhb413@gmail.com, qemu-ppc@nongnu.org, david@gibson.dropbear.id.au,
- harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com, groug@kaod.org
-Cc: sbhat@linux.ibm.com, pbonzini@redhat.com, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Date: Thu, 01 Feb 2024 09:46:22 -0500
-Message-ID: <170679877410.188422.2597832350300436754.stgit@ltc-boston1.aus.stglabs.ibm.com>
-In-Reply-To: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
-References: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
-User-Agent: StGit/1.5
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVYWq-0002cU-3L
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:59:03 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVYWm-0001c5-72
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:58:59 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-55f0b2c79cdso1310030a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 06:58:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706799531; x=1707404331; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PvE5C8HCEnxkanwInSxFVTeh2/qCg7CiB21pHrxsEPI=;
+ b=a4yzwCf8fAEotaL625/dQp/7MlU94v0m8wns+gr5RS3Ib3o9SiLu+NQh/0MfrQzTcf
+ s8599fPwFZxrWmE2xBCRUUn3oDH9bnF5sZ9n7fWLzHY/PT0RJ8PzgmH7ywIMbBrtyU2/
+ v1lcnvxFfhIlivwr65MiQhD1+6ZwNN3wnaDLlermJj3HQAKUFohL0syDegepOreusveA
+ bTrD7kycPENtUZWfXIPpWq3MqhcAAb/XSd9W+n5Q57KH0u1uIX8Lh7dikDxWhcJgTntD
+ vSygSO3dF/RJvIKJorl1t92m6fbVhqCIFGMuXDyt2K7dIq2Knr84dXggZcoBHNnHirk4
+ qP6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706799531; x=1707404331;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PvE5C8HCEnxkanwInSxFVTeh2/qCg7CiB21pHrxsEPI=;
+ b=KqJPvyAEofq/FY3AEgTRn1Rg9+QeYa4gjCvX/zN2JKO5OI3VeM0a6TUOurMaHJo9Qw
+ Ja0GiscNAaHdaxGXTEp+KsOQaJ2Gre+J4ZqjcxoDdGv/Ys3nhy8vhSrvu/RtXAUBOKvd
+ NVKJo6SdcQh7YNGtK7ehMAJTapW2fZmqA7DrDeL3MogL76im/gnXtifV+s6jIUAwDSWk
+ qqjluLaIOPzksMmXp3BM+nPAEphXGyZT5FsMbrSsRbdHYxhvsxDmFcmO19MjRvChBWci
+ iZOiH0JmscVinTcod4TrjR8DW7a5UAXFBzoM2LonF0pQpqOSr+M4qWY7xR77RXNNU7oG
+ WtEg==
+X-Gm-Message-State: AOJu0Yza2mxWjsD5ZKQ1ykBarYMm/ysun+ozxPwZyAbxoDC+/WIt6c3t
+ BTeAawRSFL+RDpxucZCPYHfIlTRttOEpGJCdqjSHJlb2BK8iWI1qVAF1gxCtWeBWV9cnMDq4TYQ
+ /nRVuf1TKv5HopbvNBuIdgw0GzVQRaFxXhx6sYw==
+X-Google-Smtp-Source: AGHT+IHKaLWTdGacQ13wdcXWmm+Lfcdmcl5wI29fl8p4uOIvPnSqXMAC7yX0tTLH/Mi/6DWyEScGM0VKOtFeBPkCUTo=
+X-Received: by 2002:a50:ed91:0:b0:55f:4ce3:5988 with SMTP id
+ h17-20020a50ed91000000b0055f4ce35988mr3263343edr.8.1706799531593; Thu, 01 Feb
+ 2024 06:58:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 9S1DR3eqNH0H2GOQhqMwsNSew9HY2ryn
-X-Proofpoint-ORIG-GUID: Oy0BgFSyxQlkWOhQW9ptbdIpglvu1aVa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-01_02,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0
- spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- mlxlogscore=950 priorityscore=1501 mlxscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402010117
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20240129060055.2616989-1-linux@roeck-us.net>
+In-Reply-To: <20240129060055.2616989-1-linux@roeck-us.net>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 1 Feb 2024 14:58:40 +0000
+Message-ID: <CAFEAcA-pOdoSdRPDc-cpKyoRq0s309zR_0osDaLJqcdy9iy+6w@mail.gmail.com>
+Subject: Re: [PATCH] pci-host: designware: Limit value range of iATU viewport
+ register
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Nikita Ostrenkov <n.ostrenkov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,342 +89,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the existing watchpoint facility from TCG DAWR0 emulation
-to DAWR1 on POWER10.
+On Mon, 29 Jan 2024 at 06:00, Guenter Roeck <linux@roeck-us.net> wrote:
+>
+> The latest version of qemu (v8.2.0-869-g7a1dc45af5) crashes when booting
+> the mcimx7d-sabre emulation with Linux v5.11 and later.
+>
+> qemu-system-arm: ../system/memory.c:2750: memory_region_set_alias_offset: Assertion `mr->alias' failed.
+>
+> Problem is that the Designware PCIe emulation accepts the full value range
+> for the iATU Viewport Register. However, both hardware and emulation only
+> support four inbound and four outbound viewports.
+>
+> The Linux kernel determines the number of supported viewports by writing
+> 0xff into the viewport register and reading the value back. The expected
+> value when reading the register is the highest supported viewport index.
 
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
----
- target/ppc/cpu.c         |   45 ++++++++++++++++++++++++----------
- target/ppc/cpu.h         |    8 +++++-
- target/ppc/cpu_init.c    |   15 +++++++++++
- target/ppc/excp_helper.c |   61 ++++++++++++++++++++++++++--------------------
- target/ppc/helper.h      |    2 ++
- target/ppc/machine.c     |    3 ++
- target/ppc/misc_helper.c |   10 ++++++++
- target/ppc/spr_common.h  |    2 ++
- target/ppc/translate.c   |   12 +++++++++
- 9 files changed, 115 insertions(+), 43 deletions(-)
+This behaviour by the kernel seems to me to be out of spec.
+Looking at the "i.MX6 6Dual/6Quad Applications Processor Referenc
+Manual IMXDQRM" it says about the PCIE_PL_iATUVR register field
+Region_Index: "Must not be set to a value greater than 3"
+(there being 4 regions in this case).
+Plus it says elsewhere that software "should" write all-0s to
+reserved fields, and bits [7:4] are reserved in this register.
 
-diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
-index e3ad8e0c27..d5ac9bb888 100644
---- a/target/ppc/cpu.c
-+++ b/target/ppc/cpu.c
-@@ -130,11 +130,13 @@ void ppc_store_ciabr(CPUPPCState *env, target_ulong val)
-     ppc_update_ciabr(env);
- }
- 
--void ppc_update_daw0(CPUPPCState *env)
-+void ppc_update_daw(CPUPPCState *env, int rid)
- {
-     CPUState *cs = env_cpu(env);
--    target_ulong deaw = env->spr[SPR_DAWR0] & PPC_BITMASK(0, 60);
--    uint32_t dawrx = env->spr[SPR_DAWRX0];
-+    int spr_dawr = !rid ? SPR_DAWR0 : SPR_DAWR1;
-+    int spr_dawrx = !rid ? SPR_DAWRX0 : SPR_DAWRX1;
-+    target_ulong deaw = env->spr[spr_dawr] & PPC_BITMASK(0, 60);
-+    uint32_t dawrx = env->spr[spr_dawrx];
-     int mrd = extract32(dawrx, PPC_BIT_NR(48), 54 - 48);
-     bool dw = extract32(dawrx, PPC_BIT_NR(57), 1);
-     bool dr = extract32(dawrx, PPC_BIT_NR(58), 1);
-@@ -144,9 +146,9 @@ void ppc_update_daw0(CPUPPCState *env)
-     vaddr len;
-     int flags;
- 
--    if (env->dawr0_watchpoint) {
--        cpu_watchpoint_remove_by_ref(cs, env->dawr0_watchpoint);
--        env->dawr0_watchpoint = NULL;
-+    if (env->dawr_watchpoint[rid]) {
-+        cpu_watchpoint_remove_by_ref(cs, env->dawr_watchpoint[rid]);
-+        env->dawr_watchpoint[rid] = NULL;
-     }
- 
-     if (!dr && !dw) {
-@@ -166,28 +168,45 @@ void ppc_update_daw0(CPUPPCState *env)
-         flags |= BP_MEM_WRITE;
-     }
- 
--    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr0_watchpoint);
-+    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr_watchpoint[rid]);
- }
- 
- void ppc_store_dawr0(CPUPPCState *env, target_ulong val)
- {
-     env->spr[SPR_DAWR0] = val;
--    ppc_update_daw0(env);
-+    ppc_update_daw(env, 0);
- }
- 
--void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
-+static void ppc_store_dawrx(CPUPPCState *env, uint32_t val, int rid)
- {
-     int hrammc = extract32(val, PPC_BIT_NR(56), 1);
- 
-     if (hrammc) {
-         /* This might be done with a second watchpoint at the xor of DEAW[0] */
--        qemu_log_mask(LOG_UNIMP, "%s: DAWRX0[HRAMMC] is unimplemented\n",
--                      __func__);
-+        qemu_log_mask(LOG_UNIMP, "%s: DAWRX%d[HRAMMC] is unimplemented\n",
-+                      __func__, rid);
-     }
- 
--    env->spr[SPR_DAWRX0] = val;
--    ppc_update_daw0(env);
-+    env->spr[!rid ? SPR_DAWRX0 : SPR_DAWRX1] = val;
-+    ppc_update_daw(env, rid);
-+}
-+
-+void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
-+{
-+    ppc_store_dawrx(env, val, 0);
-+}
-+
-+void ppc_store_dawr1(CPUPPCState *env, target_ulong val)
-+{
-+    env->spr[SPR_DAWR1] = val;
-+    ppc_update_daw(env, 1);
-+}
-+
-+void ppc_store_dawrx1(CPUPPCState *env, uint32_t val)
-+{
-+    ppc_store_dawrx(env, val, 1);
- }
-+
- #endif
- #endif
- 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index f8101ffa29..18dcc438ea 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1236,7 +1236,7 @@ struct CPUArchState {
- #if defined(TARGET_PPC64)
-     ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
-     struct CPUBreakpoint *ciabr_breakpoint;
--    struct CPUWatchpoint *dawr0_watchpoint;
-+    struct CPUWatchpoint *dawr_watchpoint[2];
- #endif
-     target_ulong sr[32];   /* segment registers */
-     uint32_t nb_BATs;      /* number of BATs */
-@@ -1549,9 +1549,11 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value);
- void ppc_store_lpcr(PowerPCCPU *cpu, target_ulong val);
- void ppc_update_ciabr(CPUPPCState *env);
- void ppc_store_ciabr(CPUPPCState *env, target_ulong value);
--void ppc_update_daw0(CPUPPCState *env);
-+void ppc_update_daw(CPUPPCState *env, int rid);
- void ppc_store_dawr0(CPUPPCState *env, target_ulong value);
- void ppc_store_dawrx0(CPUPPCState *env, uint32_t value);
-+void ppc_store_dawr1(CPUPPCState *env, target_ulong value);
-+void ppc_store_dawrx1(CPUPPCState *env, uint32_t value);
- #endif /* !defined(CONFIG_USER_ONLY) */
- void ppc_store_msr(CPUPPCState *env, target_ulong value);
- 
-@@ -1737,9 +1739,11 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_PSPB              (0x09F)
- #define SPR_DPDES             (0x0B0)
- #define SPR_DAWR0             (0x0B4)
-+#define SPR_DAWR1             (0x0B5)
- #define SPR_RPR               (0x0BA)
- #define SPR_CIABR             (0x0BB)
- #define SPR_DAWRX0            (0x0BC)
-+#define SPR_DAWRX1            (0x0BD)
- #define SPR_HFSCR             (0x0BE)
- #define SPR_VRSAVE            (0x100)
- #define SPR_USPRG0            (0x100)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 23eb5522b6..c901559859 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5131,6 +5131,20 @@ static void register_book3s_207_dbg_sprs(CPUPPCState *env)
-                         KVM_REG_PPC_CIABR, 0x00000000);
- }
- 
-+static void register_book3s_310_dbg_sprs(CPUPPCState *env)
-+{
-+    spr_register_kvm_hv(env, SPR_DAWR1, "DAWR1",
-+                        SPR_NOACCESS, SPR_NOACCESS,
-+                        SPR_NOACCESS, SPR_NOACCESS,
-+                        &spr_read_generic, &spr_write_dawr1,
-+                        KVM_REG_PPC_DAWR1, 0x00000000);
-+    spr_register_kvm_hv(env, SPR_DAWRX1, "DAWRX1",
-+                        SPR_NOACCESS, SPR_NOACCESS,
-+                        SPR_NOACCESS, SPR_NOACCESS,
-+                        &spr_read_generic, &spr_write_dawrx1,
-+                        KVM_REG_PPC_DAWRX1, 0x00000000);
-+}
-+
- static void register_970_dbg_sprs(CPUPPCState *env)
- {
-     /* Breakpoints */
-@@ -6473,6 +6487,7 @@ static void init_proc_POWER10(CPUPPCState *env)
-     /* Common Registers */
-     init_proc_book3s_common(env);
-     register_book3s_207_dbg_sprs(env);
-+    register_book3s_310_dbg_sprs(env);
- 
-     /* Common TCG PMU */
-     init_tcg_pmu_power8(env);
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 2ec6429e36..32eba7f725 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -3314,39 +3314,46 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
- {
- #if defined(TARGET_PPC64)
-     CPUPPCState *env = cpu_env(cs);
-+    bool wt, wti, hv, sv, pr;
-+    uint32_t dawrx;
-+
-+    if ((env->insns_flags2 & PPC2_ISA207S) &&
-+        (wp == env->dawr_watchpoint[0])) {
-+        dawrx = env->spr[SPR_DAWRX0];
-+    } else if ((env->insns_flags2 & PPC2_ISA310) &&
-+               (wp == env->dawr_watchpoint[1])) {
-+        dawrx = env->spr[SPR_DAWRX1];
-+    } else {
-+        return false;
-+    }
- 
--    if (env->insns_flags2 & PPC2_ISA207S) {
--        if (wp == env->dawr0_watchpoint) {
--            uint32_t dawrx = env->spr[SPR_DAWRX0];
--            bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
--            bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
--            bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
--            bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
--            bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
--
--            if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
--                return false;
--            } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
--                return false;
--            } else if (!sv) {
-+    wt = extract32(dawrx, PPC_BIT_NR(59), 1);
-+    wti = extract32(dawrx, PPC_BIT_NR(60), 1);
-+    hv = extract32(dawrx, PPC_BIT_NR(61), 1);
-+    sv = extract32(dawrx, PPC_BIT_NR(62), 1);
-+    pr = extract32(dawrx, PPC_BIT_NR(62), 1);
-+
-+    if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
-+        return false;
-+    } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
-+        return false;
-+    } else if (!sv) {
-+        return false;
-+    }
-+
-+    if (!wti) {
-+        if (env->msr & ((target_ulong)1 << MSR_DR)) {
-+            if (!wt) {
-                 return false;
-             }
--
--            if (!wti) {
--                if (env->msr & ((target_ulong)1 << MSR_DR)) {
--                    if (!wt) {
--                        return false;
--                    }
--                } else {
--                    if (wt) {
--                        return false;
--                    }
--                }
-+        } else {
-+            if (wt) {
-+                return false;
-             }
--
--            return true;
-         }
-     }
-+
-+    return true;
- #endif
- 
-     return false;
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 86f97ee1e7..0c008bb725 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -28,6 +28,8 @@ DEF_HELPER_2(store_pcr, void, env, tl)
- DEF_HELPER_2(store_ciabr, void, env, tl)
- DEF_HELPER_2(store_dawr0, void, env, tl)
- DEF_HELPER_2(store_dawrx0, void, env, tl)
-+DEF_HELPER_2(store_dawr1, void, env, tl)
-+DEF_HELPER_2(store_dawrx1, void, env, tl)
- DEF_HELPER_2(store_mmcr0, void, env, tl)
- DEF_HELPER_2(store_mmcr1, void, env, tl)
- DEF_HELPER_3(store_pmc, void, env, i32, i64)
-diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-index 203fe28e01..082712ff16 100644
---- a/target/ppc/machine.c
-+++ b/target/ppc/machine.c
-@@ -325,7 +325,8 @@ static int cpu_post_load(void *opaque, int version_id)
-         /* Re-set breaks based on regs */
- #if defined(TARGET_PPC64)
-         ppc_update_ciabr(env);
--        ppc_update_daw0(env);
-+        ppc_update_daw(env, 0);
-+        ppc_update_daw(env, 1);
- #endif
-         /*
-          * TCG needs to re-start the decrementer timer and/or raise the
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index a9d41d2802..54e402b139 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -214,6 +214,16 @@ void helper_store_dawrx0(CPUPPCState *env, target_ulong value)
-     ppc_store_dawrx0(env, value);
- }
- 
-+void helper_store_dawr1(CPUPPCState *env, target_ulong value)
-+{
-+    ppc_store_dawr1(env, value);
-+}
-+
-+void helper_store_dawrx1(CPUPPCState *env, target_ulong value)
-+{
-+    ppc_store_dawrx1(env, value);
-+}
-+
- /*
-  * DPDES register is shared. Each bit reflects the state of the
-  * doorbell interrupt of a thread of the same core.
-diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
-index 8a9d6cd994..c987a50809 100644
---- a/target/ppc/spr_common.h
-+++ b/target/ppc/spr_common.h
-@@ -162,6 +162,8 @@ void spr_write_cfar(DisasContext *ctx, int sprn, int gprn);
- void spr_write_ciabr(DisasContext *ctx, int sprn, int gprn);
- void spr_write_dawr0(DisasContext *ctx, int sprn, int gprn);
- void spr_write_dawrx0(DisasContext *ctx, int sprn, int gprn);
-+void spr_write_dawr1(DisasContext *ctx, int sprn, int gprn);
-+void spr_write_dawrx1(DisasContext *ctx, int sprn, int gprn);
- void spr_write_ureg(DisasContext *ctx, int sprn, int gprn);
- void spr_read_purr(DisasContext *ctx, int gprn, int sprn);
- void spr_write_purr(DisasContext *ctx, int sprn, int gprn);
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 049f636927..ac2a53f3b8 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -593,6 +593,18 @@ void spr_write_dawrx0(DisasContext *ctx, int sprn, int gprn)
-     translator_io_start(&ctx->base);
-     gen_helper_store_dawrx0(tcg_env, cpu_gpr[gprn]);
- }
-+
-+void spr_write_dawr1(DisasContext *ctx, int sprn, int gprn)
-+{
-+    translator_io_start(&ctx->base);
-+    gen_helper_store_dawr1(tcg_env, cpu_gpr[gprn]);
-+}
-+
-+void spr_write_dawrx1(DisasContext *ctx, int sprn, int gprn)
-+{
-+    translator_io_start(&ctx->base);
-+    gen_helper_store_dawrx1(tcg_env, cpu_gpr[gprn]);
-+}
- #endif /* defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY) */
- 
- /* CTR */
+> Match that code by masking the supported viewport value range when the
+> register is written. With this change, the Linux kernel reports
+>
+> imx6q-pcie 33800000.pcie: iATU: unroll F, 4 ob, 4 ib, align 0K, limit 4G
+>
+> as expected and supported.
 
+However given this is presumably what the hardware does in this
+case where the guest does something out of spec, and we definitely
+need to do something to avoid asserting, we should take this patch.
 
+>
+> Fixes: d64e5eabc4c7 ("pci: Add support for Designware IP block")
+> Cc: Andrey Smirnov <andrew.smirnov@gmail.com>
+> Cc: Nikita Ostrenkov <n.ostrenkov@gmail.com>
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> ---
+>  hw/pci-host/designware.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+> index dd9e389c07..c25d50f1c6 100644
+> --- a/hw/pci-host/designware.c
+> +++ b/hw/pci-host/designware.c
+> @@ -340,6 +340,8 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+>          break;
+>
+>      case DESIGNWARE_PCIE_ATU_VIEWPORT:
+> +        val &= DESIGNWARE_PCIE_ATU_REGION_INBOUND |
+> +                (DESIGNWARE_PCIE_NUM_VIEWPORTS - 1);
+>          root->atu_viewport = val;
+>          break;
+
+Applied to target-arm.next, thanks.
+
+-- PMM
 
