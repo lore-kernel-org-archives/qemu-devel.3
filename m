@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FBEEC48286
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FBCC4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVaD5-0005Ms-NJ; Thu, 01 Feb 2024 11:46:43 -0500
+	id 1rVaDv-0007j0-DB; Thu, 01 Feb 2024 11:47:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaB2-0002v7-Vp
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:37 -0500
+ id 1rVaB7-0002yW-Fw
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:42 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+16c2638fe4346fda554c+7466+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVaAt-0002Ts-RX
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:36 -0500
+ id 1rVaAv-0002Qb-7z
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:44:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:To:From:Reply-To:
  Cc:Content-Type:Content-ID:Content-Description;
- bh=mX/hl3L+uzP16qDkLnKIjlw9AZT6Th7nY6ik791ai64=; b=KeAFudZpNkpdLQhrbPEchfbIzn
- cj5W54SNpt/VZF5MMo6prJlIJgIl8Kcht8oD5KDcUE41ZKfs0yDfmzVxxwQc6uqmIGwYLOxx+KJqR
- D9D+THyPneXQaSQc2yxDi3J0J7jA6Avmfz6/Q2DDyzNYfx7E8YdhdVquQzdYbXxDKvYJJheoWSn4e
- KjEBp8xt5fH8RqUpIabgG2wgfptt/2jqezX4aQapW9YQqn0HzC4L6gWRSSm1xGoFsnz/g4VXANAJo
- d/bxCoovG2Lg7JgifVz960uusavMY8biHFVVlXO4UJhKY88BScXwh2k4EWWWcenfYmk07+vkOyyBy
- gF71dMvg==;
+ bh=IsEBwT+a/9aBHnvV7Yr1FI82jfvo4oBFxfzxJeL3Zis=; b=rq42cqYzyWxFpDk3fm0+D3DIqe
+ VK1STEYJ77v7+NF9huhIY+AYda4YwZQvK/W58FLTDkrpWeBLXZxNBGNHrj1YauZ67yTV9rgSk7F0V
+ 2bnyAgMI4aUno8y0OZDWpL4BwkugYz3mTx8zNY03FnAPO1bRgS7ucdMliGt4tTH1thW82T2DymWEF
+ tlucJlU0z3wAguqvk51CJ9Truvhyfbnh8XC71J/VdufAUxaQO5KifEOhUYgp0ITM4epWvTqrwmVDZ
+ XRG13UdhJgM0wrdXY6kKW0vpBNZs05L77A/VdY9oj+HAPe+Fc3iiyRMUz098E8r2NKSqrjeSsptb+
+ +D8xgfQQ==;
 Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
  by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVaAf-0000000GIdo-3E7W for qemu-devel@nongnu.org;
- Thu, 01 Feb 2024 16:44:15 +0000
-Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVaAg-00000003IOo-3SlE for qemu-devel@nongnu.org;
+ id 1rVaAe-0000000GId6-3eDE for qemu-devel@nongnu.org;
  Thu, 01 Feb 2024 16:44:14 +0000
+Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
+ Hat Linux)) id 1rVaAf-00000003IMq-3uLu for qemu-devel@nongnu.org;
+ Thu, 01 Feb 2024 16:44:13 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/47] hw/xtensa/xtfpga: use qemu_create_nic_device()
-Date: Thu,  1 Feb 2024 16:44:08 +0000
-Message-ID: <20240201164412.785520-44-dwmw2@infradead.org>
+Subject: [PULL 16/47] hw/ppc/spapr: use qemu_get_nic_info() and
+ pci_init_nic_devices()
+Date: Thu,  1 Feb 2024 16:43:41 +0000
+Message-ID: <20240201164412.785520-17-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201164412.785520-1-dwmw2@infradead.org>
 References: <20240201164412.785520-1-dwmw2@infradead.org>
@@ -78,48 +79,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
+Avoid directly referencing nd_table[] by first instantiating any
+spapr-vlan devices using a qemu_get_nic_info() loop, then calling
+pci_init_nic_devices() to do the rest.
+
+No functional change intended.
+
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/xtensa/xtfpga.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ hw/ppc/spapr.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index fbad1c83a3..f49e6591dc 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -141,14 +141,16 @@ static void xtfpga_net_init(MemoryRegion *address_space,
-         hwaddr base,
-         hwaddr descriptors,
-         hwaddr buffers,
--        qemu_irq irq, NICInfo *nd)
-+        qemu_irq irq)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
-     MemoryRegion *ram;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index e8dabc8614..0d72d286d8 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2796,6 +2796,7 @@ static void spapr_machine_init(MachineState *machine)
+     MemoryRegion *sysmem = get_system_memory();
+     long load_limit, fw_size;
+     Error *resize_hpt_err = NULL;
++    NICInfo *nd;
  
--    dev = qdev_new("open_eth");
--    qdev_set_nic_properties(dev, nd);
-+    dev = qemu_create_nic_device("open_eth", true, NULL);
-+    if (!dev) {
-+        return;
-+    }
+     if (!filename) {
+         error_report("Could not find LPAR firmware '%s'", bios_name);
+@@ -2996,21 +2997,12 @@ static void spapr_machine_init(MachineState *machine)
  
-     s = SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(s, &error_fatal);
-@@ -301,10 +303,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
-         memory_region_add_subregion(system_memory, board->io[1], io);
+     phb = spapr_create_default_phb();
+ 
+-    for (i = 0; i < nb_nics; i++) {
+-        NICInfo *nd = &nd_table[i];
+-
+-        if (!nd->model) {
+-            nd->model = g_strdup("spapr-vlan");
+-        }
+-
+-        if (g_str_equal(nd->model, "spapr-vlan") ||
+-            g_str_equal(nd->model, "ibmveth")) {
+-            spapr_vlan_create(spapr->vio_bus, nd);
+-        } else {
+-            pci_nic_init_nofail(&nd_table[i], phb->bus, nd->model, NULL);
+-        }
++    while ((nd = qemu_find_nic_info("spapr-vlan", true, "ibmveth"))) {
++        spapr_vlan_create(spapr->vio_bus, nd);
      }
-     xtfpga_fpga_init(system_io, 0x0d020000, freq);
--    if (nd_table[0].used) {
--        xtfpga_net_init(system_io, 0x0d030000, 0x0d030400, 0x0d800000,
--                        extints[1], nd_table);
--    }
-+    xtfpga_net_init(system_io, 0x0d030000, 0x0d030400, 0x0d800000, extints[1]);
  
-     serial_mm_init(system_io, 0x0d050020, 2, extints[0],
-                    115200, serial_hd(0), DEVICE_NATIVE_ENDIAN);
++    pci_init_nic_devices(phb->bus, NULL);
++
+     for (i = 0; i <= drive_get_max_bus(IF_SCSI); i++) {
+         spapr_vscsi_create(spapr->vio_bus);
+     }
 -- 
 2.43.0
 
