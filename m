@@ -4,102 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E09C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 12:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE80C47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 12:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVWej-0004P7-PX; Thu, 01 Feb 2024 07:59:01 -0500
+	id 1rVWfJ-0004mp-74; Thu, 01 Feb 2024 07:59:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rVWea-0004KV-IR
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:58:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rVWfH-0004mJ-5g; Thu, 01 Feb 2024 07:59:35 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rVWeU-0008Ew-PS
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:58:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706792325;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9rb3s2tKUnRq3UoX3bYY+IDwr4UlkuwbF86foLjpioQ=;
- b=AewDKHkHFiqANu+Bk7P5DW0YMnSYm+xA2ALtDtLl93qh5dzjw32/ikIZC1On/DycxkmnK1
- 8Vg8iURMAnyOCvrBXlqgRHquJNOWK7XmJHiqCT2l9dYanKFch9sqAMkoHWEedk9lG/TXJ4
- 6P30rXhanZ71IYHtsHp8tJCk7IrVw+o=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-386-K0GwHxwUPfqeueDDA4-V9A-1; Thu, 01 Feb 2024 07:58:43 -0500
-X-MC-Unique: K0GwHxwUPfqeueDDA4-V9A-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-40fba0c4fbbso3871725e9.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 04:58:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706792322; x=1707397122;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9rb3s2tKUnRq3UoX3bYY+IDwr4UlkuwbF86foLjpioQ=;
- b=uLz7/6fYbeFeRI4CfyXqkMkHv3UItbErdtEka/2FW/lGC8zxsQdCIy5PparQ4rsuCL
- sbNvIzGyA/d/8Ff9eLtGJsVDeT0coqSYxOmq2Emw2oFCtS5rGNA/04BhEMlesy9KYwj4
- QQHxTWQvfaGU5ei4y//8udJ4mBRI1UhOLb2ImpA0sl7ZXTO5uGASqzqgDScTyz8/bZba
- 0ZftYfRa0HNF0osJomtqQ0aYd/EE9o7vlxafQCt7qBfY9MQLVusQxGRFxzC7VHLbXx0N
- 2qNNmSOTX09yJFxvNFR/TGyxfCKL7QuAvepRZFlQszxG+0Gq04/w+FdtCwYmit6TzwTs
- n1kQ==
-X-Gm-Message-State: AOJu0YyID3Jh2aI7JO2AMtlWGl4UFQspde32oIMJX1PLHFY6xUG8EfRL
- U2Yve+oJGK1zvDm6zJVdgCR30F/gjiPLD+Xw/i0nFoWZhVjCBskjKyL+oVyUC1mcSPnLmhaQeT6
- 8A2+H0dnyIR0SXHAxbmwQqX56EtgHWa8TrlKnu3m5qYBdJWyQRKc8
-X-Received: by 2002:a5d:55cb:0:b0:33b:1624:f15d with SMTP id
- i11-20020a5d55cb000000b0033b1624f15dmr1093985wrw.25.1706792322518; 
- Thu, 01 Feb 2024 04:58:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFmgX75hULVdBACc4FVRKpQrALfxFgiFurHNAOK7fdFXKugAPNEl0wahxdvA7wlXb7Z8j0oqw==
-X-Received: by 2002:a5d:55cb:0:b0:33b:1624:f15d with SMTP id
- i11-20020a5d55cb000000b0033b1624f15dmr1093969wrw.25.1706792322169; 
- Thu, 01 Feb 2024 04:58:42 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUaRo+VVj9XyP1KJ1YbChMBB/nL25s/jYYEK++KR6xi6cxLQqLI8Yh+BAztCWkymdTAUVNMPuQCr6IFkxPlu9mSfyGgTOCbrzOOzYPrqQHNdO9HVolAAmouqIwGpHMb+8DWTe+p7i+2t7Ks0WGIiU5Ml6EyAtWECOj5dXE+cs1xycZA63wIsaWq44A78+1siuVtuUsVlThW614tZxMOgMRSTD1diidZhfdaZUAEtBDnoyuIFU6YFc0SaSPRzchobA==
-Received: from redhat.com ([2.52.129.159]) by smtp.gmail.com with ESMTPSA id
- o16-20020a5d4750000000b0033b13922263sm1735375wrs.60.2024.02.01.04.58.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 04:58:41 -0800 (PST)
-Date: Thu, 1 Feb 2024 07:58:37 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Wentao Jia <wentao.jia@nephogine.com>
-Cc: Eugenio Perez Martin <eperezma@redhat.com>,
- Rick Zhong <zhaoyong.zhong@nephogine.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Jason Wang <jasowang@redhat.com>, Peter Xu <peterx@redhat.com>,
- Guo Zhi <qtxuning1999@sjtu.edu.cn>, Xinying Yu <xinying.yu@nephogine.com>
-Subject: Re: FW: [PATCH] vhost-user: add VIRTIO_F_IN_ORDER and
- VIRTIO_F_NOTIFICATION_DATA feature
-Message-ID: <20240201075513-mutt-send-email-mst@kernel.org>
-References: <CACGkMEu6X2L-eawwsy_pE1mVVDU7V=Qe_51YrK16W-kKu4BGxA@mail.gmail.com>
- <SN4PR13MB572738F10FAE449DDBD735D686732@SN4PR13MB5727.namprd13.prod.outlook.com>
- <CACGkMEtHQHmhBAF6WguUSHr+iFMmOjvTshqpGzkvE=QtkgVVPA@mail.gmail.com>
- <SN4PR13MB5727AF7CB6E6CF563B618F1386732@SN4PR13MB5727.namprd13.prod.outlook.com>
- <SN4PR13MB5727D5A7AD34F7169E2A236F86702@SN4PR13MB5727.namprd13.prod.outlook.com>
- <CAJaqyWc2P6iHrG9dR2X9YC=P7dw4=Y2RwRkr5H81hkj6ej_5hA@mail.gmail.com>
- <DM6PR13MB3988D0E01FE275F72E53397295702@DM6PR13MB3988.namprd13.prod.outlook.com>
- <SN4PR13MB5727A733210FBF7A3B72DDE886792@SN4PR13MB5727.namprd13.prod.outlook.com>
- <CAJaqyWdx+33QrtCkMDAMG=1au7jKCgw4bcmgC+zgEcXaeW=Fbg@mail.gmail.com>
- <SN4PR13MB5727E433825757E3E326EB9F86432@SN4PR13MB5727.namprd13.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rVWfE-0008PC-RQ; Thu, 01 Feb 2024 07:59:34 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4EC4C49694;
+ Thu,  1 Feb 2024 16:00:29 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3A915715D9;
+ Thu,  1 Feb 2024 15:59:30 +0300 (MSK)
+Message-ID: <0c2b8043-540e-4be8-954a-c9c134cdaa1b@tls.msk.ru>
+Date: Thu, 1 Feb 2024 15:59:30 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: building qemu on a system with libxkbcommon installed but not
+ xkeyboard-config produces an core dump
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Zhang Wen <zhw2101024@gmail.com>, qemu-trivial@nongnu.org,
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org
+References: <94cf974b-05ec-41c2-8d0b-43ffbc8bdeac@gmail.com>
+ <904ef958-0e3d-48da-a4a7-5c1514c04472@tls.msk.ru>
+ <e441b771-0a08-4f2c-b7a7-f6fdd787bc1c@tls.msk.ru>
+ <CAFEAcA-C-pGGYY1bfE0ZatZP-imGmq=4-579TEnEZWFLeLxZLQ@mail.gmail.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CAFEAcA-C-pGGYY1bfE0ZatZP-imGmq=4-579TEnEZWFLeLxZLQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <SN4PR13MB5727E433825757E3E326EB9F86432@SN4PR13MB5727.namprd13.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,283 +90,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 01, 2024 at 10:47:56AM +0000, Wentao Jia wrote:
-> Hi, Eugenio
+01.02.2024 15:57, Peter Maydell пишет:
+> On Thu, 1 Feb 2024 at 12:50, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>>
+>> 01.02.2024 15:11, Michael Tokarev wrote:
+>>> 31.01.2024 11:13, Zhang Wen:
+>>>> With this patch, qemu requires keyboard-config when libxkbcommon is found on the system. So if the qemu is configured when libxkbcommon is installed
+>>>> but not keyboard-config, the configure stage will produce an error message, thus avoid coredump in the build stage.
+>>>
+>>> I'm not sure what you're talking about.  What *is* keyboard-config anyway?
+>>>
+>>> On a debian system there's no such thing.  There's keyboard-configuration
+>>> package but it has nothing to do with that.  It looks like if we apply
+>>> such patch, it will be impossible to build qemu on debian.
+>>
+>> Aha, I found it.  On debian it is /usr/share/pkgconfig/keyboard-config.pc,
+>> which is a part of xkb-data package.  And libxkbcommon Depends on xkb-data.
+>> It looks like the distribution here is wrong, there should be no libxkbcommon
+>> without xkb-data which includes keyboard-config.
 > 
-> Thanks for you comments
-> 
-> It is a dilemma, our team mainly work on smartNIC vDPA, features
-> implementation in the QEMU emulated devices is a certain workload for
-> us.
+> Are we talking about "keyboard-config" or "xkeyboard-config" here?
+> The commit message says "keyboard-config" but the patch itself
+> says "xkeyboard-config".
 
-In this case the implementation is mostly trivial I have no idea
-why argue about it - just do it.
+It is xkeyboard-config.pc, - I hit the same trap with the wrong commit
+message.
 
-Implementing it in software will make it possible to e.g. test
-the driver without the device. Which is of value even to yourself.
-IOW - tough, you want a feature in please make it consumable
-by implementing a software fallback.
+$ dpkg -L xkb-data | fgrep .pc
+/usr/share/pkgconfig/xkeyboard-config.pc
+$ dpkg -s libxkbcommon0 | grep Depends
+Depends: xkb-data, libc6 (>= 2.33)
 
-
-
-
-
-> I have a proposal, clear these features except vhost, it will not affect emulated devices, do you agree the change?
-> 
-> partial codes for clear these features
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 7a2846fa1c..f4cf8b74da 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -822,6 +822,8 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
->      }
-> 
->      if (!get_vhost_net(nc->peer)) {
-> +        virtio_clear_feature(&features, VIRTIO_F_IN_ORDER);
-> +        virtio_clear_feature(&features, VIRTIO_F_NOTIFICATION_DATA);
->          return features;
->      }
-> 
-> Best Regards
-> Wentao Jia
-> 
-> -----Original Message-----
-> From: Eugenio Perez Martin <eperezma@redhat.com> 
-> Sent: Saturday, January 27, 2024 2:04 AM
-> To: Wentao Jia <wentao.jia@nephogine.com>
-> Cc: Rick Zhong <zhaoyong.zhong@nephogine.com>; qemu-devel@nongnu.org; mst@redhat.com; Jason Wang <jasowang@redhat.com>; Peter Xu <peterx@redhat.com>; Guo Zhi <qtxuning1999@sjtu.edu.cn>; Xinying Yu <xinying.yu@nephogine.com>
-> Subject: Re: FW: [PATCH] vhost-user: add VIRTIO_F_IN_ORDER and VIRTIO_F_NOTIFICATION_DATA feature
-> 
-> On Fri, Jan 26, 2024 at 9:59 AM Wentao Jia <wentao.jia@nephogine.com> wrote:
-> >
-> > Hi, Eugenio
-> >
-> > Thanks for you comments, Our team has made new change about the patch, 
-> > these features in hw/virtio/virtio.h:DEFINE_VIRTIO_COMMON_FEATURES,
-> > they are turned off by default , and can be turned on from at qemu 
-> > command line Do you have comments about this patch?
-> >
-> 
-> If the commandline is set to =on on an emulated device, we're back at square one: The guest will try to use these features in the emulator device and the kick or the descriptors exchange will fail.
-> 
-> Maybe we can propose their implementation in the emulated devices on Google Summer of Code? Would you be interested in mentoring this? I can help with it for sure.
-> 
-> On the other hand I'm not sure about the benefits of notification_data for emulated devices or even vhost-kernel. My understanding is that the data written cannot be passed with the eventfd, so QEMU should fully vmexit to the iowrite (which probably is slower in the event of a lot of notifications). Unless we can transmit the avail idx, the device must read the avail ring anyway.
-> 
-> So the question for MST / Jason is, Is this enough justification to maybe fail the initialization of virtio-net-pci devices with backends different than vhost-user of vdpa if notification_data=on? Should this be backed by profiled data?
-> 
-> In my opinion the emulated device should implement it and be =off by default, just for testing the driver implementation. But maybe it can be done on top after the early failure?
-> 
-> Thanks!
-> 
-> > Best Regards
-> > Wentao Jia
-> >
-> >
-> > VIRTIO_F_IN_ORDER and VIRTIO_F_NOTIFICATION_DATA feature are important 
-> > feature for dpdk vdpa packets transmitting performance, add these 
-> > features at vhost-user front-end to negotiation with backend.
-> >
-> > In this patch, these features are turned off by default, turn on the 
-> > features at qemu command line.
-> > ... notification_data=on,in_order=on ...
-> >
-> > Signed-off-by: Wentao Jia <wentao.jia@corigine.com>
-> > Signed-off-by: Xinying Yu <xinying.yu@corigine.com>
-> > Signed-off-by: Kyle Xu <zhenbing.xu@corigine.com>
-> > Reviewed-by:   Shujing Dong <shujing.dong@corigine.com>
-> > Reviewed-by:   Rick Zhong <zhaoyong.zhong@corigine.com>
-> > ---
-> >  hw/core/machine.c          | 2 ++
-> >  hw/net/vhost_net.c         | 2 ++
-> >  include/hw/virtio/virtio.h | 6 +++++-
-> >  3 files changed, 9 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c index 
-> > fb5afdcae4..40489c23a6 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -40,6 +40,7 @@ GlobalProperty hw_compat_8_1[] = {
-> >      { "ramfb", "x-migrate", "off" },
-> >      { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
-> >      { "igb", "x-pcie-flr-init", "off" },
-> > +    { "virtio-device", "notification_data", "off"},
-> >  };
-> >  const size_t hw_compat_8_1_len = G_N_ELEMENTS(hw_compat_8_1);
-> >
-> > @@ -65,6 +66,7 @@ GlobalProperty hw_compat_7_1[] = {
-> >      { "virtio-rng-pci", "vectors", "0" },
-> >      { "virtio-rng-pci-transitional", "vectors", "0" },
-> >      { "virtio-rng-pci-non-transitional", "vectors", "0" },
-> > +    { "virtio-device", "in_order", "off"},
-> >  };
-> >  const size_t hw_compat_7_1_len = G_N_ELEMENTS(hw_compat_7_1);
-> >
-> > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c index 
-> > e8e1661646..211ca859a6 100644
-> > --- a/hw/net/vhost_net.c
-> > +++ b/hw/net/vhost_net.c
-> > @@ -76,6 +76,8 @@ static const int user_feature_bits[] = {
-> >      VIRTIO_F_IOMMU_PLATFORM,
-> >      VIRTIO_F_RING_PACKED,
-> >      VIRTIO_F_RING_RESET,
-> > +    VIRTIO_F_IN_ORDER,
-> > +    VIRTIO_F_NOTIFICATION_DATA,
-> >      VIRTIO_NET_F_RSS,
-> >      VIRTIO_NET_F_HASH_REPORT,
-> >      VIRTIO_NET_F_GUEST_USO4,
-> > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h 
-> > index c8f72850bc..e6aa10f01b 100644
-> > --- a/include/hw/virtio/virtio.h
-> > +++ b/include/hw/virtio/virtio.h
-> > @@ -368,7 +368,11 @@ typedef struct VirtIORNGConf VirtIORNGConf;
-> >      DEFINE_PROP_BIT64("packed", _state, _field, \
-> >                        VIRTIO_F_RING_PACKED, false), \
-> >      DEFINE_PROP_BIT64("queue_reset", _state, _field, \
-> > -                      VIRTIO_F_RING_RESET, true)
-> > +                      VIRTIO_F_RING_RESET, true), \
-> > +    DEFINE_PROP_BIT64("in_order", _state, _field, \
-> > +                      VIRTIO_F_IN_ORDER, false), \
-> > +    DEFINE_PROP_BIT64("notification_data", _state, _field, \
-> > +                      VIRTIO_F_NOTIFICATION_DATA, false)
-> >
-> >  hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);  bool 
-> > virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
-> > --
-> > 2.31.1
-> >
-> > -----Original Message-----
-> > From: Rick Zhong <zhaoyong.zhong@nephogine.com>
-> > Sent: Friday, January 19, 2024 6:39 PM
-> > To: Eugenio Perez Martin <eperezma@redhat.com>; Wentao Jia 
-> > <wentao.jia@nephogine.com>
-> > Cc: qemu-devel@nongnu.org; mst@redhat.com; Jason Wang 
-> > <jasowang@redhat.com>; Peter Xu <peterx@redhat.com>; Guo Zhi 
-> > <qtxuning1999@sjtu.edu.cn>
-> > Subject: 回复: FW: [PATCH] vhost-user: add VIRTIO_F_IN_ORDER and 
-> > VIRTIO_F_NOTIFICATION_DATA feature
-> >
-> > Hi Eugenio,
-> >
-> > Thanks for your comments. Very helpful. Wentao and I will discuss and get back to you later.
-> >
-> > Also welcome for any comments from other guys.
-> >
-> > Best Regards,
-> > Rick Zhong
-> >
-> > -----邮件原件-----
-> > 发件人: Eugenio Perez Martin <eperezma@redhat.com>
-> > 发送时间: 2024年1月19日 18:26
-> > 收件人: Wentao Jia <wentao.jia@nephogine.com>
-> > 抄送: qemu-devel@nongnu.org; mst@redhat.com; Rick Zhong 
-> > <zhaoyong.zhong@nephogine.com>; Jason Wang <jasowang@redhat.com>; 
-> > Peter Xu <peterx@redhat.com>; Guo Zhi <qtxuning1999@sjtu.edu.cn>
-> > 主题: Re: FW: [PATCH] vhost-user: add VIRTIO_F_IN_ORDER and 
-> > VIRTIO_F_NOTIFICATION_DATA feature
-> >
-> > On Fri, Jan 19, 2024 at 7:42 AM Wentao Jia <wentao.jia@nephogine.com> wrote:
-> > >
-> > >
-> > > VIRTIO_F_IN_ORDER and VIRTIO_F_NOTIFICATION_DATA feature are 
-> > > important feature for dpdk vdpa packets transmitting performance, 
-> > > add the 2 features at vhost-user front-end to negotiation with backend.
-> > >
-> > > Signed-off-by: Kyle Xu <zhenbing.xu@corigine.com>
-> > > Signed-off-by: Wentao Jia <wentao.jia@corigine.com>
-> > > Reviewed-by:   Xinying Yu <xinying.yu@corigine.com>
-> > > Reviewed-by:   Shujing Dong <shujing.dong@corigine.com>
-> > > Reviewed-by:   Rick Zhong <zhaoyong.zhong@corigine.com>
-> > > ---
-> > >  hw/core/machine.c   | 2 ++
-> > >  hw/net/vhost_net.c  | 2 ++
-> > >  hw/net/virtio-net.c | 4 ++++
-> > >  3 files changed, 8 insertions(+)
-> > >
-> > > diff --git a/hw/core/machine.c b/hw/core/machine.c index
-> > > fb5afdcae4..e620f5e7d0 100644
-> > > --- a/hw/core/machine.c
-> > > +++ b/hw/core/machine.c
-> > > @@ -40,6 +40,7 @@ GlobalProperty hw_compat_8_1[] = {
-> > >      { "ramfb", "x-migrate", "off" },
-> > >      { "vfio-pci-nohotplug", "x-ramfb-migrate", "off" },
-> > >      { "igb", "x-pcie-flr-init", "off" },
-> > > +    { TYPE_VIRTIO_NET, "notification_data", "off"},
-> > >  };
-> >
-> > Assuming the default "true" in
-> > hw/net/virtio-net.c:virtio_net_properties is valid, this needs to be appended to the array of the QEMU version that introduced the property in the virtio_net_properties array, not the one that imported the macro from the kernel. This allows QEMU to know that old versions have these features disabled although the default set in hw/net/virtio-net.c:virtio_net_properties is true when migrating from / to these versions.
-> >
-> > You can check that this is added properly by migrating from / to a previous version of QEMU, with the combinations of true and false.
-> >
-> > You have an example in [1] with blk devices multiqueue. CCing Peter Xu as he knows more than me about this.
-> >
-> > This is very easy to miss when adding new features. Somebody who knows perl should add a test in checkpath.pl similar to the warning "added, moved or deleted file(s), does MAINTAINERS need updating?" when virtio properties are modified :).
-> >
-> > >  const size_t hw_compat_8_1_len = G_N_ELEMENTS(hw_compat_8_1);
-> > >
-> > > @@ -65,6 +66,7 @@ GlobalProperty hw_compat_7_1[] = {
-> > >      { "virtio-rng-pci", "vectors", "0" },
-> > >      { "virtio-rng-pci-transitional", "vectors", "0" },
-> > >      { "virtio-rng-pci-non-transitional", "vectors", "0" },
-> > > +    { TYPE_VIRTIO_NET, "in_order", "off"},
-> > >  };
-> > >  const size_t hw_compat_7_1_len = G_N_ELEMENTS(hw_compat_7_1);
-> > >
-> > > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c index
-> > > e8e1661646..211ca859a6 100644
-> > > --- a/hw/net/vhost_net.c
-> > > +++ b/hw/net/vhost_net.c
-> > > @@ -76,6 +76,8 @@ static const int user_feature_bits[] = {
-> > >      VIRTIO_F_IOMMU_PLATFORM,
-> > >      VIRTIO_F_RING_PACKED,
-> > >      VIRTIO_F_RING_RESET,
-> > > +    VIRTIO_F_IN_ORDER,
-> > > +    VIRTIO_F_NOTIFICATION_DATA,
-> > >      VIRTIO_NET_F_RSS,
-> > >      VIRTIO_NET_F_HASH_REPORT,
-> > >      VIRTIO_NET_F_GUEST_USO4,
-> > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c index
-> > > 7a2846fa1c..dc0a028934 100644
-> > > --- a/hw/net/virtio-net.c
-> > > +++ b/hw/net/virtio-net.c
-> > > @@ -3949,6 +3949,10 @@ static Property virtio_net_properties[] = {
-> > >                        VIRTIO_NET_F_GUEST_USO6, true),
-> > >      DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
-> > >                        VIRTIO_NET_F_HOST_USO, true),
-> > > +    DEFINE_PROP_BIT64("in_order", VirtIONet, host_features,
-> > > +                      VIRTIO_F_IN_ORDER, true),
-> > > +    DEFINE_PROP_BIT64("notification_data", VirtIONet, host_features,
-> > > +                      VIRTIO_F_NOTIFICATION_DATA, true),
-> >
-> > This default=true is wrong, and makes emulated devices show these features as available when they're not. You can test it by running qemu with the parameters:
-> >
-> > -netdev tap,id=hostnet0,vhost=off -device virtio-net-pci,netdev=hostnet0,...
-> >
-> > The emulated device must support both features before making them tunnables.
-> >
-> > On the other hand, all kinds of virtio devices can use in_order and notification_data, so they should be in include/hw/virtio/virtio.h:DEFINE_VIRTIO_COMMON_FEATURES. But not all of them benefit from in_order. One example of this is virtio-blk. It is usual that requests are completed out of order by the backend device, so my impression is that in_order will hurt its performance.
-> > I've never profiled it though, so I may be wrong :).
-> >
-> > Long story short: Maybe in_order should be false by default, and enabled just in virtio-net?
-> >
-> > You can see previous attempts of implementing this feature in qemu in [2]. CCing Guo too, as I don't know if he plans to continue this work soon.
-> >
-> > Please let me know if you need any help with these!
-> >
-> > Thanks!
-> >
-> > [1] 
-> > https://www.qemu.org/docs/master/devel/migration/compatibility.html#ho
-> > w-backwards-compatibility-works [2] 
-> > https://lists.gnu.org/archive/html/qemu-devel/2022-08/msg02772.html
-> >
-> > >      DEFINE_PROP_END_OF_LIST(),
-> > >  };
-> > >
-> > > --
-> > >
-> >
-> 
-
+/mjt
 
