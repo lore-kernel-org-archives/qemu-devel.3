@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A851C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF631C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVYKk-0005m7-DY; Thu, 01 Feb 2024 09:46:30 -0500
+	id 1rVYMe-0006Zv-55; Thu, 01 Feb 2024 09:48:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1rVYKi-0005lt-R2; Thu, 01 Feb 2024 09:46:28 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1rVYMc-0006ZX-Mj; Thu, 01 Feb 2024 09:48:26 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1rVYKg-0007EV-OZ; Thu, 01 Feb 2024 09:46:28 -0500
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ id 1rVYMa-0007YU-Km; Thu, 01 Feb 2024 09:48:26 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 411E1nbH025309; Thu, 1 Feb 2024 14:46:13 GMT
+ 411EYK0P023680; Thu, 1 Feb 2024 14:48:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=subject : from : to : cc
- : date : message-id : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=Bmx1ylp55yzqu7ofM8ntA08kJgrzUuPz8INfGq6Cpu0=;
- b=RReZhhHRUivNOYqIcNtL95qqv5gsm4WoyHNDC1j0mEYG1lK5h7nSCoEE+HxHVINXQH7B
- QgB+VjD9WKplRz71QyhWYfqZ1vWcFq/Jlx0FUaEXD8rLHB5zP6Px4dOdd7yYSmiSoDxL
- xnOzYMzchB7uNOB6DjYvWB1L34DbaD3yekVYPk2ce2AVe5iY7o7jTETIRnzI0jK2Bus3
- 7EfKgoOeXlB8PZww0Xbgxjo78qNEI3VjoXIGea9+9yxzQXbowdD0q+xUxNLfdFTTnky2
- eu8DIhqRNY3ErIICXIU4RngHICCwwp8dKcc1JOvJA5NVWI5vn213ZVXFPjqFBAzbes3E 6Q== 
+ : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Leqba0Wk9P5GGbwUCd+rQ2YN2BcrPM5njL6io32kLFk=;
+ b=PU5zC4f4SdWVXm4eiQroy9P0TtgpeDN8nux3FE9x6PFVatmxyOv7gmg8PdpFTi6rjBm5
+ EOJZFOuENoBrI0gpmEWtFGqIv//74YCWRxeUIAdqK6OVo64V4OuXe9n+hEn/ad7X2ZqT
+ 0TPg8YclTIGndxXnnpXY0dBUOulqJoaQzrt6Lyfl/kcObawLq11jSgQfBlgzluCOnMKa
+ 2ucMv5g4CbbYKtUPTJn0bjWQK4g2NrodLQDuQkJHbGng/z7lUqjcHDPqF8cuH31Mv/Hj
+ ik9X2gPLcw6aJHVoxINUV7xLfDo3mbnBNDAtohlU8EOtQBLXCS92r0S21o7EGV6BW2iq hw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0bswjwcw-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0bfbkrxj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Feb 2024 14:46:13 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 411EaMMi032725;
- Thu, 1 Feb 2024 14:46:12 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0bswjwcf-1
+ Thu, 01 Feb 2024 14:48:11 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 411DswXp004403;
+ Thu, 1 Feb 2024 14:48:11 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0bfbkrv9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Feb 2024 14:46:12 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 411CCrtH002190; Thu, 1 Feb 2024 14:46:11 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3vwc5tn09r-1
+ Thu, 01 Feb 2024 14:48:10 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 411Do4oW008359; Thu, 1 Feb 2024 14:46:41 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwdnmckc6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Feb 2024 14:46:11 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 411Ek9sc17826416
+ Thu, 01 Feb 2024 14:46:41 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 411EkcRC10093224
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 1 Feb 2024 14:46:09 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E793D2004B;
- Thu,  1 Feb 2024 14:46:08 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2367720040;
- Thu,  1 Feb 2024 14:46:07 +0000 (GMT)
+ Thu, 1 Feb 2024 14:46:38 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2E56A2004B;
+ Thu,  1 Feb 2024 14:46:38 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6B6AC20040;
+ Thu,  1 Feb 2024 14:46:36 +0000 (GMT)
 Received: from ltc-boston1.aus.stglabs.ibm.com (unknown [9.40.193.18])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  1 Feb 2024 14:46:06 +0000 (GMT)
-Subject: [PATCH v8 0/2] ppc: Enable 2nd DAWR support on Power10
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Feb 2024 14:46:36 +0000 (GMT)
+Subject: [PATCH v8 2/2] ppc: spapr: Enable 2nd DAWR on Power10 pSeries machine
 From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 To: danielhb413@gmail.com, qemu-ppc@nongnu.org, david@gibson.dropbear.id.au,
  harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com, groug@kaod.org
 Cc: sbhat@linux.ibm.com, pbonzini@redhat.com, kvm@vger.kernel.org,
  qemu-devel@nongnu.org
-Date: Thu, 01 Feb 2024 09:46:06 -0500
-Message-ID: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
+Date: Thu, 01 Feb 2024 09:46:35 -0500
+Message-ID: <170679878985.188422.6745903342602285494.stgit@ltc-boston1.aus.stglabs.ibm.com>
+In-Reply-To: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
+References: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
 User-Agent: StGit/1.5
-Content-Type: text/plain; charset="utf-8"
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: iRI054W2H_NHq0Hl0P9QCWM9u9mpmzCS
-X-Proofpoint-ORIG-GUID: YrLDlRNl6zbr6BK1WmvchqTTuPkN-oJx
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 62Qv25RKOvaahl6JNHYKjHIx940YlQgA
+X-Proofpoint-ORIG-GUID: 465ySTv3rh7mTY3YOTBDU8FesB_CH-MN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-01_02,2024-01-31_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- lowpriorityscore=0 adultscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- bulkscore=0 impostorscore=0 phishscore=0 mlxscore=0 clxscore=1011
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402010116
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ impostorscore=0 mlxscore=0
+ suspectscore=0 phishscore=0 spamscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0
+ mlxlogscore=416 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402010117
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -113,94 +115,272 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extends the existing watchpoint facility from TCG DAWR0 emulation to DAWR1 on
-Power10 for powernv in the first patch, and for pseries in the second patch
-with both TCG and KVM.
+As per the PAPR, bit 0 of byte 64 in pa-features property
+indicates availability of 2nd DAWR registers. i.e. If this bit is set, 2nd
+DAWR is present, otherwise not. Use KVM_CAP_PPC_DAWR1 capability to find
+whether kvm supports 2nd DAWR or not. If it's supported, allow user to set
+the pa-feature bit in guest DT using cap-dawr1 machine capability.
 
+Signed-off-by: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 ---
-Changelog:
-v7: https://lore.kernel.org/qemu-devel/170063834599.621665.9541440879278084501.stgit@ltcd48-lp2.aus.stglab.ibm.com/
-v7->v8:
-  - Fixed the missed out ppc_store_dawr* calls.
-  - Removed the macros and split the patch into 2 one just enabling the
-    facility for powernv and the next one doing the same for pseries guest.
-  - The macro removal barely increased the number of lines by 12 as against
-    the previous version.
+ hw/ppc/spapr.c         |    7 ++++++-
+ hw/ppc/spapr_caps.c    |   36 ++++++++++++++++++++++++++++++++++++
+ hw/ppc/spapr_hcall.c   |   25 ++++++++++++++++---------
+ include/hw/ppc/spapr.h |    6 +++++-
+ target/ppc/kvm.c       |   12 ++++++++++++
+ target/ppc/kvm_ppc.h   |   12 ++++++++++++
+ 6 files changed, 87 insertions(+), 11 deletions(-)
 
-v6: https://lore.kernel.org/qemu-devel/168871963321.58984.15628382614621248470.stgit@ltcd89-lp2/
-v6->v7:
-  - Sorry about the delay in sending out this version, I have dropped the
-    Reviewed-bys as suggested and converted the patch to RFC back again.
-  - Added the TCG support. Basically, converted the existing DAWR0 support
-    routines into macros for reuse by the DAWR1. Let me know if the macro
-    conversions should be moved to a separate independent patch.
-  - As the dawr1 works on TCG, the checks in cap_dawr1_apply() report a warning
-    now only for P9 or P9 compat modes for both KVM and TCG use cases.
-  - 'make test' passes for caps checks. Also, as suggested by Greg Kurz, the
-    'make test' after making the DAWR1 default 'on' and updating defaut cpu
-    to Power10, shows no failures.
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index e8dabc8614..91a97d72e7 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -262,7 +262,7 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
+         /* 54: DecFP, 56: DecI, 58: SHA */
+         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
+-        /* 60: NM atomic, 62: RNG */
++        /* 60: NM atomic, 62: RNG, 64: DAWR1 (ISA 3.1) */
+         0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
+     };
+     uint8_t *pa_features = NULL;
+@@ -303,6 +303,9 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+          * in pa-features. So hide it from them. */
+         pa_features[40 + 2] &= ~0x80; /* Radix MMU */
+     }
++    if (spapr_get_cap(spapr, SPAPR_CAP_DAWR1)) {
++        pa_features[66] |= 0x80;
++    }
+ 
+     _FDT((fdt_setprop(fdt, offset, "ibm,pa-features", pa_features, pa_size)));
+ }
+@@ -2138,6 +2141,7 @@ static const VMStateDescription vmstate_spapr = {
+         &vmstate_spapr_cap_fwnmi,
+         &vmstate_spapr_fwnmi,
+         &vmstate_spapr_cap_rpt_invalidate,
++        &vmstate_spapr_cap_dawr1,
+         NULL
+     }
+ };
+@@ -4717,6 +4721,7 @@ static void spapr_machine_class_init(ObjectClass *oc, void *data)
+     smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] = SPAPR_CAP_ON;
+     smc->default_caps.caps[SPAPR_CAP_FWNMI] = SPAPR_CAP_ON;
+     smc->default_caps.caps[SPAPR_CAP_RPT_INVALIDATE] = SPAPR_CAP_OFF;
++    smc->default_caps.caps[SPAPR_CAP_DAWR1] = SPAPR_CAP_OFF;
+ 
+     /*
+      * This cap specifies whether the AIL 3 mode for
+diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+index e889244e52..677f17cea6 100644
+--- a/hw/ppc/spapr_caps.c
++++ b/hw/ppc/spapr_caps.c
+@@ -655,6 +655,32 @@ static void cap_ail_mode_3_apply(SpaprMachineState *spapr,
+     }
+ }
+ 
++static void cap_dawr1_apply(SpaprMachineState *spapr, uint8_t val,
++                               Error **errp)
++{
++    ERRP_GUARD();
++
++    if (!val) {
++        return; /* Disable by default */
++    }
++
++    if (!ppc_type_check_compat(MACHINE(spapr)->cpu_type,
++                               CPU_POWERPC_LOGICAL_3_10, 0,
++                               spapr->max_compat_pvr)) {
++        warn_report("DAWR1 supported only on POWER10 and later CPUs");
++    }
++
++    if (kvm_enabled()) {
++        if (!kvmppc_has_cap_dawr1()) {
++            error_setg(errp, "DAWR1 not supported by KVM.");
++            error_append_hint(errp, "Try appending -machine cap-dawr1=off");
++        } else if (kvmppc_set_cap_dawr1(val) < 0) {
++            error_setg(errp, "Error enabling cap-dawr1 with KVM.");
++            error_append_hint(errp, "Try appending -machine cap-dawr1=off");
++        }
++    }
++}
++
+ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
+     [SPAPR_CAP_HTM] = {
+         .name = "htm",
+@@ -781,6 +807,15 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
+         .type = "bool",
+         .apply = cap_ail_mode_3_apply,
+     },
++    [SPAPR_CAP_DAWR1] = {
++        .name = "dawr1",
++        .description = "Allow 2nd Data Address Watchpoint Register (DAWR1)",
++        .index = SPAPR_CAP_DAWR1,
++        .get = spapr_cap_get_bool,
++        .set = spapr_cap_set_bool,
++        .type = "bool",
++        .apply = cap_dawr1_apply,
++    },
+ };
+ 
+ static SpaprCapabilities default_caps_with_cpu(SpaprMachineState *spapr,
+@@ -923,6 +958,7 @@ SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DECREMENTER);
+ SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
+ SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
+ SPAPR_CAP_MIG_STATE(rpt_invalidate, SPAPR_CAP_RPT_INVALIDATE);
++SPAPR_CAP_MIG_STATE(dawr1, SPAPR_CAP_DAWR1);
+ 
+ void spapr_caps_init(SpaprMachineState *spapr)
+ {
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index fcefd1d1c7..34c1c77c95 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -814,11 +814,12 @@ static target_ulong h_set_mode_resource_set_ciabr(PowerPCCPU *cpu,
+     return H_SUCCESS;
+ }
+ 
+-static target_ulong h_set_mode_resource_set_dawr0(PowerPCCPU *cpu,
+-                                                  SpaprMachineState *spapr,
+-                                                  target_ulong mflags,
+-                                                  target_ulong value1,
+-                                                  target_ulong value2)
++static target_ulong h_set_mode_resource_set_dawr(PowerPCCPU *cpu,
++                                                     SpaprMachineState *spapr,
++                                                     target_ulong mflags,
++                                                     target_ulong resource,
++                                                     target_ulong value1,
++                                                     target_ulong value2)
+ {
+     CPUPPCState *env = &cpu->env;
+ 
+@@ -831,8 +832,13 @@ static target_ulong h_set_mode_resource_set_dawr0(PowerPCCPU *cpu,
+         return H_P4;
+     }
+ 
+-    ppc_store_dawr0(env, value1);
+-    ppc_store_dawrx0(env, value2);
++    if (resource == H_SET_MODE_RESOURCE_SET_DAWR0) {
++        ppc_store_dawr0(env, value1);
++        ppc_store_dawrx0(env, value2);
++    } else {
++        ppc_store_dawr1(env, value1);
++        ppc_store_dawrx1(env, value2);
++    }
+ 
+     return H_SUCCESS;
+ }
+@@ -911,8 +917,9 @@ static target_ulong h_set_mode(PowerPCCPU *cpu, SpaprMachineState *spapr,
+                                             args[3]);
+         break;
+     case H_SET_MODE_RESOURCE_SET_DAWR0:
+-        ret = h_set_mode_resource_set_dawr0(cpu, spapr, args[0], args[2],
+-                                            args[3]);
++    case H_SET_MODE_RESOURCE_SET_DAWR1:
++        ret = h_set_mode_resource_set_dawr(cpu, spapr, args[0], args[1],
++                                           args[2], args[3]);
+         break;
+     case H_SET_MODE_RESOURCE_LE:
+         ret = h_set_mode_resource_le(cpu, spapr, args[0], args[2], args[3]);
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index e91791a1a9..2b13c9a00e 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -80,8 +80,10 @@ typedef enum {
+ #define SPAPR_CAP_RPT_INVALIDATE        0x0B
+ /* Support for AIL modes */
+ #define SPAPR_CAP_AIL_MODE_3            0x0C
++/* DAWR1 */
++#define SPAPR_CAP_DAWR1                 0x0D
+ /* Num Caps */
+-#define SPAPR_CAP_NUM                   (SPAPR_CAP_AIL_MODE_3 + 1)
++#define SPAPR_CAP_NUM                   (SPAPR_CAP_DAWR1 + 1)
+ 
+ /*
+  * Capability Values
+@@ -403,6 +405,7 @@ struct SpaprMachineState {
+ #define H_SET_MODE_RESOURCE_SET_DAWR0           2
+ #define H_SET_MODE_RESOURCE_ADDR_TRANS_MODE     3
+ #define H_SET_MODE_RESOURCE_LE                  4
++#define H_SET_MODE_RESOURCE_SET_DAWR1           5
+ 
+ /* Flags for H_SET_MODE_RESOURCE_LE */
+ #define H_SET_MODE_ENDIAN_BIG    0
+@@ -986,6 +989,7 @@ extern const VMStateDescription vmstate_spapr_cap_ccf_assist;
+ extern const VMStateDescription vmstate_spapr_cap_fwnmi;
+ extern const VMStateDescription vmstate_spapr_cap_rpt_invalidate;
+ extern const VMStateDescription vmstate_spapr_wdt;
++extern const VMStateDescription vmstate_spapr_cap_dawr1;
+ 
+ static inline uint8_t spapr_get_cap(SpaprMachineState *spapr, int cap)
+ {
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index 26fa9d0575..3d8a8f35b6 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -89,6 +89,7 @@ static int cap_large_decr;
+ static int cap_fwnmi;
+ static int cap_rpt_invalidate;
+ static int cap_ail_mode_3;
++static int cap_dawr1;
+ 
+ static uint32_t debug_inst_opcode;
+ 
+@@ -143,6 +144,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     cap_ppc_nested_kvm_hv = kvm_vm_check_extension(s, KVM_CAP_PPC_NESTED_HV);
+     cap_large_decr = kvmppc_get_dec_bits();
+     cap_fwnmi = kvm_vm_check_extension(s, KVM_CAP_PPC_FWNMI);
++    cap_dawr1 = kvm_vm_check_extension(s, KVM_CAP_PPC_DAWR1);
+     /*
+      * Note: setting it to false because there is not such capability
+      * in KVM at this moment.
+@@ -2109,6 +2111,16 @@ int kvmppc_set_fwnmi(PowerPCCPU *cpu)
+     return kvm_vcpu_enable_cap(cs, KVM_CAP_PPC_FWNMI, 0);
+ }
+ 
++bool kvmppc_has_cap_dawr1(void)
++{
++    return !!cap_dawr1;
++}
++
++int kvmppc_set_cap_dawr1(int enable)
++{
++    return kvm_vm_enable_cap(kvm_state, KVM_CAP_PPC_DAWR1, 0, enable);
++}
++
+ int kvmppc_smt_threads(void)
+ {
+     return cap_ppc_smt ? cap_ppc_smt : 1;
+diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+index 1975fb5ee6..493d6bb477 100644
+--- a/target/ppc/kvm_ppc.h
++++ b/target/ppc/kvm_ppc.h
+@@ -68,6 +68,8 @@ bool kvmppc_has_cap_htm(void);
+ bool kvmppc_has_cap_mmu_radix(void);
+ bool kvmppc_has_cap_mmu_hash_v3(void);
+ bool kvmppc_has_cap_xive(void);
++bool kvmppc_has_cap_dawr1(void);
++int kvmppc_set_cap_dawr1(int enable);
+ int kvmppc_get_cap_safe_cache(void);
+ int kvmppc_get_cap_safe_bounds_check(void);
+ int kvmppc_get_cap_safe_indirect_branch(void);
+@@ -377,6 +379,16 @@ static inline bool kvmppc_has_cap_xive(void)
+     return false;
+ }
+ 
++static inline bool kvmppc_has_cap_dawr1(void)
++{
++    return false;
++}
++
++static inline int kvmppc_set_cap_dawr1(int enable)
++{
++    abort();
++}
++
+ static inline int kvmppc_get_cap_safe_cache(void)
+ {
+     return 0;
 
-v5: https://lore.kernel.org/all/20210412114433.129702-1-ravi.bangoria@linux.ibm.com/
-v5->v6:
-  - The other patches in the original series already merged.
-  - Rebased to the top of the tree. So, the gen_spr_book3s_310_dbg() is renamed
-    to register_book3s_310_dbg_sprs() and moved to cpu_init.c accordingly.
-  - No functional changes.
-
-v4: https://lore.kernel.org/r/20210406053833.282907-1-ravi.bangoria@linux.ibm.com
-v3->v4:
-  - Make error message more proper.
-
-v3: https://lore.kernel.org/r/20210330095350.36309-1-ravi.bangoria@linux.ibm.com
-v3->v4:
-  - spapr_dt_pa_features(): POWER10 processor is compatible with 3.0
-    (PCR_COMPAT_3_00). No need to ppc_check_compat(3_10) for now as
-    ppc_check_compati(3_00) will also be true. ppc_check_compat(3_10)
-    can be added while introducing pa_features_310 in future.
-  - Use error_append_hint() for hints. Also add ERRP_GUARD().
-  - Add kvmppc_set_cap_dawr1() stub function for CONFIG_KVM=n.
-
-v2: https://lore.kernel.org/r/20210329041906.213991-1-ravi.bangoria@linux.ibm.com
-v2->v3:
-  - Don't introduce pa_features_310[], instead, reuse pa_features_300[]
-    for 3.1 guests, as there is no difference between initial values of
-    them atm.
-  - Call gen_spr_book3s_310_dbg() from init_proc_POWER10() instead of
-    init_proc_POWER8(). Also, Don't call gen_spr_book3s_207_dbg() from
-    gen_spr_book3s_310_dbg() as init_proc_POWER10() already calls it.
-
-v1: https://lore.kernel.org/r/20200723104220.314671-1-ravi.bangoria@linux.ibm.com
-v1->v2:
-  - Introduce machine capability cap-dawr1 to enable/disable
-    the feature. By default, 2nd DAWR is OFF for guests even
-    when host kvm supports it. User has to manually enable it
-    with -machine cap-dawr1=on if he wishes to use it.
-  - Split the header file changes into separate patch. (Sync
-    headers from v5.12-rc3)
-
-Shivaprasad G Bhat (2):
-      ppc: Enable 2nd DAWR support on Power10 PowerNV machine
-      ppc: spapr: Enable 2nd DAWR on Power10 pSeries machine
-
-
- hw/ppc/spapr.c           |  7 ++++-
- hw/ppc/spapr_caps.c      | 36 ++++++++++++++++++++++++
- hw/ppc/spapr_hcall.c     | 25 ++++++++++------
- include/hw/ppc/spapr.h   |  6 +++-
- target/ppc/cpu.c         | 45 ++++++++++++++++++++---------
- target/ppc/cpu.h         |  8 ++++--
- target/ppc/cpu_init.c    | 15 ++++++++++
- target/ppc/excp_helper.c | 61 ++++++++++++++++++++++------------------
- target/ppc/helper.h      |  2 ++
- target/ppc/kvm.c         | 12 ++++++++
- target/ppc/kvm_ppc.h     | 12 ++++++++
- target/ppc/machine.c     |  3 +-
- target/ppc/misc_helper.c | 10 +++++++
- target/ppc/spr_common.h  |  2 ++
- target/ppc/translate.c   | 12 ++++++++
- 15 files changed, 202 insertions(+), 54 deletions(-)
-
---
-Signature
 
 
