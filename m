@@ -4,77 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB77FC4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DF4C4828C
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXAj-000093-Ue; Thu, 01 Feb 2024 08:32:05 -0500
+	id 1rVXBo-00016z-7i; Thu, 01 Feb 2024 08:33:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVXAh-00008b-Rk
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:32:04 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1rVXBa-00013y-O0
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:33:01 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVXAg-0007Df-5L
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:32:03 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-55a035669d5so1270568a12.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:32:01 -0800 (PST)
+ id 1rVXBY-0007JY-Ho
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:32:58 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-55a179f5fa1so1260329a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706794319; x=1707399119; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VuhFH2l8wOsR9O+l3jGKybuHjpYO9eKRhIyGx1sDsFY=;
- b=EgHAEnDchXgJEtv+62/jr/AcAjwspABaK5EYPIYi+woHfCPal7vC+0lzscEFzriKdS
- U4dWkPf9AMh/YX9rXRH5SNDj36fd0PIJejPEphfmI2lIMTP+8xWXwMvZfJut0rx4SHOx
- LPKBKlr1NRfDUgBJHwttntJtzpTWuJcz1OJLELiOG0b6rhN/JP4EjGN1ljPjC7dQfyLx
- SvmB7Y+4RD/KnEe0R5ueYcgjLqqFwhP0PU9hnUxZrpAU6nykP8RcJ1x6kjviooW7jLG9
- 33NVMbc+yxgRhipWfOTHpPwG6vlhE/BeOZI2Js3wV59YX9nvn6I+Pe8KBAvVo5MOg5B5
- sukA==
+ d=linaro.org; s=google; t=1706794374; x=1707399174; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sTyLqxBvF7AffE5fzyt1MkAV5qLzgRzowEuXzJFsWjA=;
+ b=eljcTMpEeKjZ3GBwTG7zdMO3wZON6ppWc9+oZAWd88FaRH+k4skwsUqpSbhGjLdfgy
+ QdVQfaBtFhjRLcIJnsdu8iXAUwDBZkzXjkZcScnV/FAT6IVBkM7fkUxSOttUEwo+4Mvu
+ HFQU8XGRxVcDSw3IuA/r5oOUBB0vO3NlWVn7Bgn6teVcvotJrxbcv+SlYSZJxGbZldOM
+ XagBCd/uBWac0+jFdsSCzzq+s7fyuIoM50fbTMN0NQI4kRA6AfploqDVgrsLF+ObsSxU
+ /t+/SdBOXqNQjokuAGUUxdNC1+GinQ0dd8ST6Tc2bLErAQ2SeC0qwWLfwYDWpBf9W639
+ nfgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706794319; x=1707399119;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VuhFH2l8wOsR9O+l3jGKybuHjpYO9eKRhIyGx1sDsFY=;
- b=dDEJkKaWkn+7DFiXzJVGih6hE6H1wP54hRiUsLQ61CWCIimtpVQvYe4PuUYhWHGvtu
- cvYEarALjSMOA5v0bqUIVMj67hLLdeoZaP96kBss5doMNA+cjRZj1hVW3cm/cFkwSfb8
- 84Paqo9NlFm9fxCavCCyNXeiI1WxDlzxV5RYA0YEDKmKxDZRXTwOIglni23EsXdfOIhm
- gfcLhym5fOZjvJHxkoSiNJnyV4/CFaf/WanCG+sEA0HCLV89iK7t9+YxDZi1VNsbHr/T
- Mmpl/BYiw5cUj2aFUpNH34L8rrbec3glC5wSKkskhMpeONij0U0M487hnbarfwV5lfm1
- +hpA==
-X-Gm-Message-State: AOJu0YzYI0yKtWm6I5wLX2CVXfvAX6ocJDtSOkqOcLXmSyVVa5h1aBeT
- 1KDU6XcEJKxfaOrsXsyfx7MQqyT0HldB10TUhVGf0s6kVRhEOKMTB9Qm48TMW/GF/IXMmzGxQJ/
- 0MaYUADykRroAuYbOClLophSpcxZEIOvaimVfeQ==
-X-Google-Smtp-Source: AGHT+IEI4FYymGturWwN6iZKWvEgA5HNjZYUXaNZwlHw3QkL1nbmWG33HehdMbljCabjsiHdXUlmoVL+Xw+qf/lII3A=
-X-Received: by 2002:a05:6402:1219:b0:55f:d90a:e68b with SMTP id
- c25-20020a056402121900b0055fd90ae68bmr14462edw.20.1706794319275; Thu, 01 Feb
- 2024 05:31:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706794374; x=1707399174;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sTyLqxBvF7AffE5fzyt1MkAV5qLzgRzowEuXzJFsWjA=;
+ b=YfBF4BqR0nCuNO8wlSzMFoER5pM6aokRQFROxhZ5daUzN+76m4RlpEPuxOKmLJn4mw
+ Y+OBkGuwpTgWSnV0YARetIokWDksobjX1XZFCkDP/W/pYpTjqlhriRfJXD/aDCX2jScs
+ YAK1c6RYUibPQR20xkwiVI2xlOO5y1gxArYPnggQIxN5klrJ9Ups5iT4R4b6RJn7TdEV
+ NHew/7qsEc906Y7OfaFVU5RjJ6Myf5c6omVnaA5y4Uo9AHEqGBcFuXnn4seNXL7Xh7ws
+ UI4Hgn9uT1eZumQpb0K0Lt7cuFLBGJEVEhmRoT4V6QNbMyyhMUyHdfv/OMBEKpGvzPz5
+ 79Yw==
+X-Gm-Message-State: AOJu0YxTTfuViUqIejV3jo8nFCh8DObq5kiEBVUs/g9AcEhe/XOEtgM4
+ YqLppIzUMpYAd6Oi2Kdp1T9xupX5Z3WVcxUcEKoQgFYJdjIyR8+KNP6YwETB3T0jLSa8LFTssE1
+ OqHdLFnJzSGGBSwKZN3/0eijHkySzEhhqyXX/zg==
+X-Google-Smtp-Source: AGHT+IG8mSJVpBC789nuzoiKSyHuEXGMVVA669uf2tu8hGjD4/7loJXEuFV7rNpvMJOgQA+lyBXcqLRImcRruHdlehA=
+X-Received: by 2002:a50:9b57:0:b0:55f:3d12:eb3c with SMTP id
+ a23-20020a509b57000000b0055f3d12eb3cmr3687641edj.14.1706794374344; Thu, 01
+ Feb 2024 05:32:54 -0800 (PST)
 MIME-Version: 1.0
-References: <20240119163512.3810301-1-peter.maydell@linaro.org>
- <20240119163512.3810301-6-peter.maydell@linaro.org>
- <ZbnFWB1vJjW0CmzX@intel.com>
-In-Reply-To: <ZbnFWB1vJjW0CmzX@intel.com>
+References: <20240112134640.1775041-1-peter.maydell@linaro.org>
+ <eaf71668-fe0d-45db-817e-fe052df91c17@redhat.com>
+In-Reply-To: <eaf71668-fe0d-45db-817e-fe052df91c17@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 13:31:48 +0000
-Message-ID: <CAFEAcA_2LSsziLxigvkLcTPzwhn-7s8sCWsraFZr2BQRv0Vz=w@mail.gmail.com>
-Subject: Re: [PATCH 5/5] hw/core: Remove transitional infrastructure from
- BusClass
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Thu, 1 Feb 2024 13:32:43 +0000
+Message-ID: <CAFEAcA-jV1z0M+i=pjrgJ6DJc2ofnjeSvUqtkpxzWVbU1S3gWA@mail.gmail.com>
+Subject: Re: [PATCH] hw/pci-host/raven.c: Mark raven_io_ops as implementing
+ unaligned accesses
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,58 +92,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 31 Jan 2024 at 03:44, Zhao Liu <zhao1.liu@intel.com> wrote:
+On Tue, 23 Jan 2024 at 11:03, C=C3=A9dric Le Goater <clegoate@redhat.com> w=
+rote:
 >
-> On Fri, Jan 19, 2024 at 04:35:12PM +0000, Peter Maydell wrote:
-> > Date: Fri, 19 Jan 2024 16:35:12 +0000
-> > From: Peter Maydell <peter.maydell@linaro.org>
-> > Subject: [PATCH 5/5] hw/core: Remove transitional infrastructure from
-> >  BusClass
-> > X-Mailer: git-send-email 2.34.1
+> On 1/12/24 14:46, Peter Maydell wrote:
+> > The raven_io_ops MemoryRegionOps is the only one in the source tree
+> > which sets .valid.unaligned to indicate that it should support
+> > unaligned accesses and which does not also set .impl.unaligned to
+> > indicate that its read and write functions can do the unaligned
+> > handling themselves.  This is a problem, because at the moment the
+> > core memory system does not implement the support for handling
+> > unaligned accesses by doing a series of aligned accesses and
+> > combining them (system/memory.c:access_with_adjusted_size() has a
+> > TODO comment noting this).
 > >
-> > BusClass currently has transitional infrastructure to support
-> > subclasses which implement the legacy BusClass::reset method rather
-> > than the Resettable interface.  We have now removed all the users of
-> > BusClass::reset in the tree, so we can remove the transitional
-> > infrastructure.
+> > Fortunately raven_io_read() and raven_io_write() will correctly deal
+> > with the case of being passed an unaligned address, so we can fix the
+> > missing unaligned access support by setting .impl.unaligned in the
+> > MemoryRegionOps struct.
 > >
+> > Fixes: 9a1839164c9c8f06 ("raven: Implement non-contiguous I/O region")
 > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > > ---
-> >  include/hw/qdev-core.h |  2 --
-> >  hw/core/bus.c          | 67 ------------------------------------------
-> >  2 files changed, 69 deletions(-)
+> > Spotted by code inspection: I was looking for devices whose behaviour
+> > might be changed by a patch I'm reviewing that adds that missing
+> > support for unaligned accesses in the core memory system. But even
+> > if we do implement it there, it's more efficient for the raven MR
+> > to correctly mark it as handling unaligned accesses itself.
+> >
+> > Tested with 'make check' and 'make check-avocado' only.
 >
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> It doesn't affect the prep machine boot with OpenBIOS and a
+> "Debian GNU/Linux 3.0 6015" image.
 >
-> It seems the similar cleanup for DeviceClass needs a lot of effort.
+> Tested-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
 
-Yes and no. It's true that there are a lot of DeviceClass
-subclasses that implement the legacy reset method still.
-However, they are all "leaf" classes which provide a single
-reset method, and don't need to either chain up to a parent
-class reset implementation or allow a child class to
-inherit from them. So they don't affect any other classes
-in the system or block any other classes from being able
-to use a full three-phase reset. So I'm not too worried
-if we continue to have a lot of these leaf classes: the
-old reset method is then just a different way of having
-a device with a reset 'hold' method and no others.
+Thanks for the review -- is this patch going to go via a
+ppc queue, or should I throw it in with my upcoming
+target-arm pullreq?
 
-I did an earlier round of refactoring back in 2022 that did
-the cleanup of the non-leaf classes and the classes that
-need to chain up to their parent class reset, which mostly
-updated all of that kind of class to 3-phase. The one
-exception is that we still have a single user of
-device_class_set_parent_reset() in the s390 CPU, which
-is awkward to deal with because it interacts with an
-s390-specific handling of different levels of reset.
-
-I also want to look at providing a 3-phase equivalent
-of the qdev_register_reset() API at some point: that one
-is definitely blocking some useful improvements, including
-dealing with the vfio ordering issue, and also would let
-me clean up some M-profile ARM CPU reset hacks.
-
-thanks
 -- PMM
 
