@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE15C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 08:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB3BC47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 08:34:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVSVx-0003Rk-EO; Thu, 01 Feb 2024 03:33:41 -0500
+	id 1rVSWT-00064V-CF; Thu, 01 Feb 2024 03:34:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVSVn-0003BJ-RR
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:33:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVSWR-0005qG-QU
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:34:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVSVl-0006tV-Ma
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:33:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVSWB-00071O-6y
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:34:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706776408;
+ s=mimecast20190719; t=1706776429;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kN88OiUwlfiz9QVAM5hctUirK570ivcJojG41q0xe9c=;
- b=eY3Uq5ymSXHOU3UOzqbtWVX+OAxhEL7tmmv8/oHb4K5TGXKYZtySG1WqTGKvBmw3Sx4XIn
- YC7mjS0ecgzR+GRXk+C1eIBKu2nCYjyL1NEMzkLUaqCZsLN8CTd01kywXuG9pNa944mEgv
- 5rnaVk0vG+te7a4rmOXwOk1zJiyeqHY=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=a3HOgSgbOZW2rFDJFA98zhgiTttlx39+WJ7NytTlSGk=;
+ b=TlJcPqIUf7y4at9FWi9M5AQFUojIIqw4IMnWT4A1NGxXRNHCw024bNQlGbmNVOYnQewG4T
+ nm7vmI4qeC2RsAG4ELNC/FR5HEe4SaGi5lRIaeokx7e7t0I6WNlajiTLPvhR5mAyPTW3Ss
+ 1Aj/ii5WMCOVehrisxC2G3UK4PHe+co=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-393-waptMEtgNOSQ9sFkET00SA-1; Thu, 01 Feb 2024 03:33:26 -0500
-X-MC-Unique: waptMEtgNOSQ9sFkET00SA-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d07b30b9faso1848271fa.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 00:33:26 -0800 (PST)
+ us-mta-190-1A2XI8wwML6lRduUPWyKGw-1; Thu, 01 Feb 2024 03:33:48 -0500
+X-MC-Unique: 1A2XI8wwML6lRduUPWyKGw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-40fb74433ebso3675505e9.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 00:33:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706776405; x=1707381205;
+ d=1e100.net; s=20230601; t=1706776427; x=1707381227;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kN88OiUwlfiz9QVAM5hctUirK570ivcJojG41q0xe9c=;
- b=rrHas44j2+/URRnoVQeKDJlWBVACs8jgXNgQLeKQT/+XqyYAo0hWf6ErpUqTohX7ir
- eWz8YsHG3AOpOJJ6SLkuOeb+q+1w0DOBRflW9i0Y9ATsln2u4q2yApTtNwmIucLDpeCu
- ewYxftfJvK4Rs/lIBz//zsJUQySp3lnrQAsbVk9AnN+IR52CEJjvNM39/JcRNbsY6AUN
- MVNFe0HgLbew5zTG8g9lFJnSJyWTWtdvAh0JnUYAQP7ttvLTpQZeXMPNiQILj5jU2KCR
- gjOQ083uNhbovqWAAk5287k0jWb3QOnb63yyZ/BFWe+JcP1e6DW1WMij4KKm7dyWOvDR
- Iu5Q==
-X-Gm-Message-State: AOJu0Yz7Va9Au7i10W2KmkUB7durWqVYVujNgzYKREy0j8iCEbUZvKA5
- V/Tm73evprjus7d4oQrMkdijhcSvzNvWCcgCI47jz0beQ4/LnNpvmceKfxjAx0xMxLGhgweWXIz
- XClGvJEnShxGbttdqOXS9BQpNxBpotaZUshuJ0RrX0o6BszBH4SUA
-X-Received: by 2002:a2e:958d:0:b0:2d0:60f0:ce7f with SMTP id
- w13-20020a2e958d000000b002d060f0ce7fmr2510966ljh.26.1706776405413; 
- Thu, 01 Feb 2024 00:33:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEGH7Tw7dXiD8rSSGY0EmyTzNWjqCXb0yxcmJTTCx94Go1scNl3Plevsj75IBTKKr8UofZ8Fw==
-X-Received: by 2002:a2e:958d:0:b0:2d0:60f0:ce7f with SMTP id
- w13-20020a2e958d000000b002d060f0ce7fmr2510942ljh.26.1706776405231; 
- Thu, 01 Feb 2024 00:33:25 -0800 (PST)
+ bh=a3HOgSgbOZW2rFDJFA98zhgiTttlx39+WJ7NytTlSGk=;
+ b=veOyY2f20STJzXmRtw/1saLsUnIDJjR9LStnT+8kC6xe9Kx1mS9vOXxk/6KZc8UPsg
+ 8BlclG3j03FbQH9ln/4mL1/6yE2MhkVI+q3vt32rMHKtvkzMyJDHzLNPepu1ekr2u7pC
+ HrHMelMkk8ddMTcIGy5415yOCAYSwX+9jBx16ZIeVR4WzcRLb1Iy2cEB7InvZIXTr+y9
+ MP1x028Kq9qXgREqbDfc/7dViTyskDVt8OHhC6hapwN5C9L10snQtEpsaXmD3UW7bFu1
+ C/0Sr9AcgJUZnucJS77iHoe+jBJJseX6Q7lzrwDUFLrli15kp845D5b79uRWyWQdQY+8
+ cfTA==
+X-Gm-Message-State: AOJu0Yz99kNvs2lAxxxHfG0RiiDwNWwKCd/13J9hIoWuGQVYJhtZ8H3t
+ USVkNEXXDc6MnKFXXT6GozWT10Drd+WCHxrXrdrBzaxJxjAd/UPbPKxPnOGbpOdRdMor5XKMDuk
+ KsECrtOfiIW9273dB3U6xiuRFBbcP+6BcGCjp6UqfDrj4QcBtZSlN
+X-Received: by 2002:a05:600c:3b98:b0:40e:fc26:8719 with SMTP id
+ n24-20020a05600c3b9800b0040efc268719mr1191461wms.35.1706776427327; 
+ Thu, 01 Feb 2024 00:33:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG+AJPqIIr8ZVDAyAzTP6YIherKtl84sUjwF4ARkl+QZzFcfba1VzEHkhSmiLqEGv2xAZPpDg==
+X-Received: by 2002:a05:600c:3b98:b0:40e:fc26:8719 with SMTP id
+ n24-20020a05600c3b9800b0040efc268719mr1191432wms.35.1706776426982; 
+ Thu, 01 Feb 2024 00:33:46 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
  [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- h9-20020a05600016c900b0033aedb71269sm10265216wrf.88.2024.02.01.00.33.24
+ h9-20020a05600016c900b0033aedb71269sm10265216wrf.88.2024.02.01.00.33.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Feb 2024 00:33:24 -0800 (PST)
-Message-ID: <9007b675-1f23-4b2a-96d5-d19d8f2874e6@redhat.com>
-Date: Thu, 1 Feb 2024 09:33:24 +0100
+ Thu, 01 Feb 2024 00:33:46 -0800 (PST)
+Message-ID: <3a823710-b90f-4ac0-b888-849275ff9933@redhat.com>
+Date: Thu, 1 Feb 2024 09:33:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/isa/pc87312: Consolidate the use of
+Subject: Re: [PATCH 1/4] hw/isa/vt82c686: Consolidate the use of
  device_class_set_parent_realize()
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>, Eric Auger <eric.auger@redhat.com>, 
@@ -80,7 +80,7 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>, Eric Auger <eric.auger@redhat.com>,
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
 References: <20240201084027.345459-1-zhao1.liu@linux.intel.com>
- <20240201084027.345459-3-zhao1.liu@linux.intel.com>
+ <20240201084027.345459-2-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -124,19 +124,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240201084027.345459-3-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240201084027.345459-2-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,26 +158,24 @@ On 01/02/2024 09.40, Zhao Liu wrote:
 > 
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   hw/isa/pc87312.c | 4 ++--
+>   hw/isa/vt82c686.c | 4 ++--
 >   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/isa/pc87312.c b/hw/isa/pc87312.c
-> index ee23f3e164df..64dd17b537f2 100644
-> --- a/hw/isa/pc87312.c
-> +++ b/hw/isa/pc87312.c
-> @@ -338,10 +338,10 @@ static void pc87312_class_init(ObjectClass *klass, void *data)
+> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+> index d3e0f6d01fb6..a99eae4f6333 100644
+> --- a/hw/isa/vt82c686.c
+> +++ b/hw/isa/vt82c686.c
+> @@ -328,8 +328,8 @@ static void via_superio_class_init(ObjectClass *klass, void *data)
 >       DeviceClass *dc = DEVICE_CLASS(klass);
 >       ISASuperIOClass *sc = ISA_SUPERIO_CLASS(klass);
 >   
 > -    sc->parent_realize = dc->realize;
-> -    dc->realize = pc87312_realize;
->       dc->reset = pc87312_reset;
->       dc->vmsd = &vmstate_pc87312;
-> +    device_class_set_parent_realize(dc, pc87312_realize,
+> -    dc->realize = via_superio_realize;
+> +    device_class_set_parent_realize(dc, via_superio_realize,
 > +                                    &sc->parent_realize);
->       device_class_set_props(dc, pc87312_properties);
+>   }
 >   
->       sc->parallel = (ISASuperIOFuncs){
+>   static const TypeInfo via_superio_info = {
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
