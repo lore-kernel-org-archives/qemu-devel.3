@@ -4,81 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FAD0C47258
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 01:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B59DC47DB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 01:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVLcw-0005Dr-0T; Wed, 31 Jan 2024 20:12:26 -0500
+	id 1rVLiF-0006qS-V9; Wed, 31 Jan 2024 20:17:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rVLct-0005Da-Gd
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 20:12:23 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rVLcq-0006hd-Hi
- for qemu-devel@nongnu.org; Wed, 31 Jan 2024 20:12:23 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a358ec50b7cso63899366b.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 17:12:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1706749924; x=1707354724; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K0+AC3tjnkjGbPu/GBqlmOT3ENxvAS372s8HBGrR1Po=;
- b=BeJGEuJMHxLykD/6bkdHuzQt0NHaZaljial+ouFj+SBdglbH0e/IhxrxKeqFlbsG4z
- eAZ9hBjTS/0EhQMX3+MwoH8mYvUALrlUOqMzE+ZKqheF2R7DIJUKMoi03DYpAYTlof9U
- t8lhe6USzeetXW43XqKUc0+wpfLZvil2HY9UXu0TsBWuLAuAox65ghOOvVEd2TvVtQfx
- 9ZOwt/GBJOKZaZsOxI6SqCV5UOuDVyTIAngIA8BvfhVRz4Yo1PL/yZSscKwPDF+Gz9/k
- sSfIh3P3MerbCijHjJxvBuwluPq1CP4C0wt7Bz6d42mfZUDafm6iJkzEdA4yu0qyOTZT
- jTWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706749924; x=1707354724;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=K0+AC3tjnkjGbPu/GBqlmOT3ENxvAS372s8HBGrR1Po=;
- b=BTfoTMY+N4j0atJ8NmnMRK9lIg3a5DDWNmZUuPzmp3zloo+q5az29UNkYKzm+57D5Z
- bATlo0dkgVXWPeUXC7rKKlzLQvTSY3YofGIlV6KJowmhOByDhoJ5kjI9KvmJAzt0xxAe
- EpDJFHIMDZGKIZ1HvRjY9a7lXegQKHEhXLeU6VNHChYk/TRzxCcOsMLkgJgPTJz5df3K
- Knsvl3ZMH02pW1LRXBXFYz0HXCMdR+7siX7xuRLtVl5PS8Hnv7BqPSmIynTJAz7VhsCN
- qxTUTQdhAMCpVldw6mvvMzA2QgdJsbsXnaT5Mh6CgijbScTL7KUEEQHyFmOj9Q0y7r1f
- TIYg==
-X-Gm-Message-State: AOJu0Yw8W5TdWvkUqAJykYPh4IDyJs/vLbFYZeLkA62lgsxg7g8xjYSY
- PK4k8o2/MfYZflmpS0PqPN7UuIhZDXJIsQ30x6bl/GPTLGg58F8I6S8ROGoFmE4pfdttwFNpvYm
- wzuqix7YS02EH7LSu+lHSy3RbsXzTX86GArwjgg==
-X-Google-Smtp-Source: AGHT+IHEwUQgv3hhH5BF5wC+nTqOPR/EKL/MuE1Zatz9sCvpsSNQ774RhAiPD3+RZFVIZ2l2WAwy8MfHfNk7U0aP1R8=
-X-Received: by 2002:a17:906:e28c:b0:a36:4d6c:f85c with SMTP id
- gg12-20020a170906e28c00b00a364d6cf85cmr3170966ejb.16.1706749923868; Wed, 31
- Jan 2024 17:12:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rVLiD-0006qK-Kj
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 20:17:53 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rVLiA-0007Pn-Ev
+ for qemu-devel@nongnu.org; Wed, 31 Jan 2024 20:17:53 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Ax++g48bplg0MJAA--.7890S3;
+ Thu, 01 Feb 2024 09:17:44 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxVMw18bpl_RorAA--.39327S3; 
+ Thu, 01 Feb 2024 09:17:43 +0800 (CST)
+Subject: Re: [PATCH] tcg: Fixes set const_args[i] wrong value when
+ instructions imm is 0
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: c@jia.je, philmd@redhat.com, git@xen0n.name, maobibo@loongson.cn
+References: <20240131072740.2569850-1-gaosong@loongson.cn>
+ <70186760-61be-4b44-8c0f-eb6acb4587f2@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <5e5215e4-5d91-b113-3889-2e617af42f40@loongson.cn>
+Date: Thu, 1 Feb 2024 09:17:41 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240126221943.26628-1-farosas@suse.de>
- <PH7PR11MB5941BDAB9743C53A9E08CC3CA37E2@PH7PR11MB5941.namprd11.prod.outlook.com>
- <ZbdVhLTLo5udNfeL@x1n> <87jznse211.fsf@suse.de> <ZboS9CPIuxIc9PTf@x1n>
- <8734udljwz.fsf@suse.de>
-In-Reply-To: <8734udljwz.fsf@suse.de>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Wed, 31 Jan 2024 17:11:52 -0800
-Message-ID: <CAAYibXiUg5pkBhQA=QFZ7jgBXRFN81L3bQETFdEnSquyY95hHA@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH 0/5] migration/multifd: Prerequisite
- cleanups for ongoing work
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, "Liu, Yuan1" <yuan1.liu@intel.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <70186760-61be-4b44-8c0f-eb6acb4587f2@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8BxVMw18bpl_RorAA--.39327S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uw48Aw4xAr1DXF1rJFWUAwc_yoW8Ar4rpr
+ 4kta48GFyYkrs5Xr4UKryUWryUGr48tw1DAr1kXa4qyrZ8Jr1vqFW5WF4jgFy8JFWkAr1U
+ Ar1jvrnrZFyDAFcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.281,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,106 +84,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 5:19=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
-te:
+在 2024/2/1 上午5:16, Richard Henderson 写道:
+> On 1/31/24 17:27, Song Gao wrote:
+>> It seems that tcg_reg_alloc_op() set const_args[i] wrong value
+>> when instructions imm is 0. The LoongArch tcg_out_vec_op() cmp_vec
+>> use the wrong const_args[2].
+>> e.g
+>>     The wrong const_args[2] is 0.
+>>     IN: vslti.w v5, v4, 0x0   OUT: vslt.w  v1, v1, v0
+>>
+>>     The right const_args[2] is 1.
+>>     IN: vslti.w v5, v4, 0x0   OUT: vslti.w v1, v1, 0x0
+>>
+>> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2136
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   tcg/tcg.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/tcg/tcg.c b/tcg/tcg.c
+>> index e2c38f6d11..5b290123bc 100644
+>> --- a/tcg/tcg.c
+>> +++ b/tcg/tcg.c
+>> @@ -4808,7 +4808,7 @@ static void tcg_reg_alloc_op(TCGContext *s, 
+>> const TCGOp *op)
+>>           arg_ct = &def->args_ct[i];
+>>           ts = arg_temp(arg);
+>>   -        if (ts->val_type == TEMP_VAL_CONST
+>> +        if ((ts->val_type == TEMP_VAL_CONST || ts->kind == TEMP_CONST)
+>>               && tcg_target_const_match(ts->val, ts->type, 
+>> arg_ct->ct, TCGOP_VECE(op))) {
+>>               /* constant is OK for instruction */
+>>               const_args[i] = 1;
 >
-> Peter Xu <peterx@redhat.com> writes:
+> This is wrong.
 >
-> > On Mon, Jan 29, 2024 at 09:51:06AM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >>
-> >> > On Mon, Jan 29, 2024 at 01:41:01AM +0000, Liu, Yuan1 wrote:
-> >> >> Because this change has an impact on the previous live migration
-> >> >> With IAA Patch, does the submission of the next version needs
-> >> >> to be submitted based on this change?
-> >> >
-> >> > I'd say hold off a little while until we're more certain on the plan=
-ned
-> >> > interface changes, to avoid you rebase your code back and forth; unl=
-ess
-> >> > you're pretty confident that this will be the right approach.
-> >> >
-> >> > I apologize on not having looked at any of the QAT/IAA compression /=
- zero
-> >> > detection series posted on the list; I do plan to read them very soo=
-n too
-> >> > after Fabiano.  So I may not have a complete full picture here yet, =
-please
-> >> > bare with me.
-> >> >
-> >> > If this series is trying to provide a base ground for all the effort=
-s,
-> >> > it'll be great if we can thoroughly discuss here and settle an appro=
-ach
-> >> > soon that will satisfy everyone.
-> >>
-> >> Just a summary if it helps:
-> >>
-> >> For compression work (IAA/QPL, QAT) the discussion is around having a
-> >> new "compression acceleration" option that enables the accelerators an=
-d
-> >> is complementary to the existing zlib compression method. We'd choose
-> >> those automatically based on availability and we'd make HW accelerated
-> >> compression produce a stream that is compatible with QEMU's zlib strea=
-m
-> >> so we could migrate between solutions.
-> >>
-> >> For zero page work and zero page acceleration (DSA), the question is h=
-ow
-> >> to fit zero page detection into multifd and whether we need a new hook
-> >> multifd_ops->zero_page_detect() (or similar) to allow client code to
-> >> provide it's own zero page detection methods. My worry here is that
-> >> teaching multifd to recognize zero pages is one more coupling to the
-> >> "pages" data type. Ideallly we'd find a way to include that operation =
-as
-> >> a prepare() responsibility and the client code would deal with it.
-> >
-> > Thanks Fabiano.
-
-Hi Fabiano,
-
-Your current refactoring assumes that compression ops and multifd
-socket ops are mutually exclusive. Both of them need to implement the
-entire MultiFDMethods interface. I think this works fine for now. Once
-we introduce multifd zero page checking and we add a new interface for
-that, we are adding a new method zero_page_detect() on the
-MultiFDMethods interface. If we do that, zero_page_detect() needs to
-be implemented in multifd_socket_ops and it also needs to be
-implemented in zlib and zstd. On top of that, if we add an accelerator
-to offload zero_page_detect(), that accelerator configuration can
-co-exist with compression or socket. That makes things quite
-complicated in my opinion.
-
-Can we create an instance of MultiFDMethods at runtime and fill each
-method depending on the configuration? If methods are not filled, we
-fallback to fill it with the default implementation (like what
-socket.c provides) For instance, if zstd is enabled and zero page
-checking using CPU, the interface will be filled with all the
-functions zstd currently implements and since zstd doesn't implement
-zero_page_detect(), we will fallback to fill zero_page_detect() with
-the default multifd zero page checking implementation.
-
-> >
-> > Since I'm preparing the old series to post for some fundamental cleanup=
-s
-> > around multifd, and when I'm looking around the code, I noticed that
-> > _maybe_ it'll also be eaiser to apply such a series if we can cleanup m=
-ore
-> > things then move towards a clean base to add more accelerators.
-> >
-> > I agree many ideas in your this series, but I may address it slightly
-> > different (e.g., I want to avoid send(), but you can consider that in t=
-he
-> > fixed-ram series instead), also it'll be after some other cleanup I pla=
-n to
-> > give a stab at which is not yet covered in this series.  I hope I can a=
-dd
-> > your "Co-developed-by" in some of the patches there.  If you haven't sp=
-end
-> > more time on new version of this series, please wait 1-2 days so I can =
-post
-> > my thoughts.
+> I strongly suspect that the TEMP_CONST value 0 has been loaded into a 
+> register for use in another operation, and the register allocator sees 
+> that it is still there.
 >
-> Sure, go ahead.
+Ah, I'm not familiar with this piece of code,  I just try to fix the bug,
+and thanks for your suggestion.
+
+Thanks.
+Song Gao
 >
+> r~
+
 
