@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C54D8C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 08:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B0FC48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 08:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVSQG-0005Sq-1j; Thu, 01 Feb 2024 03:27:48 -0500
+	id 1rVSQK-0005oq-Er; Thu, 01 Feb 2024 03:27:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rVSPt-0005Li-2z; Thu, 01 Feb 2024 03:27:26 -0500
+ id 1rVSPx-0005Ln-0z; Thu, 01 Feb 2024 03:27:32 -0500
 Received: from mgamail.intel.com ([134.134.136.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rVSPr-0005Dg-MA; Thu, 01 Feb 2024 03:27:24 -0500
+ id 1rVSPv-0005Dg-IZ; Thu, 01 Feb 2024 03:27:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706776043; x=1738312043;
+ t=1706776047; x=1738312047;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1nl3+K8pURSX0PIUZSsR4an8ZGi/KzhHvmfuQLv3Au4=;
- b=AL6Tl+ZQ6lqM+1v6+fuh7BD99V9K//CbKUbkzfZ/+hgEZrsTvgIFzyDL
- T2v1zrynr8D7yneoAJlC/J+K8u3iQ0+uxruWZXoAHgzJTsKFCmJMU0nLm
- DIqAvf57vlRudEg2LreQfWtGA1pMgo6518/gBywULjTDieA3ALjDr95sh
- gxwNn4ZvAGiRrkwENipMCJ8tqb6KuzkDWL1XhBV/6K9YrRMZSBfwdrdMs
- CVbWYH1JIU7S6eVS4exiS6M3UNt3wWNC5lqB7cbIG0FDZ6RNA2+1LXL0s
- HmGCM4CO7lCcHpEdGRZIDun2RwwImZuwk4gHxjPNuHHS2HfTXAKe8qmGp w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="468077736"
-X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="468077736"
+ bh=W2zXcUI+fNUSyO0giWXgca5RMLOU6fi+ZTNvqH+/o3o=;
+ b=MC8OkAvuj5QboLSqH3RE5f+yV6cDObNw9GGTeR3HG4fTS4HymDEOOoGS
+ /efxrI+1WkwHUe6QQggiapzH86Ifp1J5dYHtrKVsrGTy05jYLQZ+zD2GP
+ JbX6ZW+haqqpaRfA5vVImVm9cLrZLjK+9GM/KTifsw1u7w8d+X6iv201y
+ VG+hd8owF88hYvz+0ACGNO3wREZII0l2NzCkkFTLQXnLtn+uARAIzRR9R
+ Mox1P47Uz/tHUnZK8CZh6fHvec28Bu3cULgFRyUQlg1AqYtPH6KQjvXc0
+ LUWg/1z1cFBUfvdhH/ff/OOvYSTVR/LfyWWyyAsbxNmCYz2/+Toa6HctW w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="468077746"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="468077746"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Feb 2024 00:27:21 -0800
+ 01 Feb 2024 00:27:25 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; 
-   d="scan'208";a="4348457"
+   d="scan'208";a="4348507"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 01 Feb 2024 00:27:17 -0800
+ by fmviesa003.fm.intel.com with ESMTP; 01 Feb 2024 00:27:21 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -53,10 +53,10 @@ To: Eric Auger <eric.auger@redhat.com>,
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, qemu-trivial@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 3/4] hw/intc/s390_flic: Consolidate the use of
+Subject: [PATCH 4/4] hw/arm/smmuv3: Consolidate the use of
  device_class_set_parent_realize()
-Date: Thu,  1 Feb 2024 16:40:26 +0800
-Message-Id: <20240201084027.345459-4-zhao1.liu@linux.intel.com>
+Date: Thu,  1 Feb 2024 16:40:27 +0800
+Message-Id: <20240201084027.345459-5-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240201084027.345459-1-zhao1.liu@linux.intel.com>
 References: <20240201084027.345459-1-zhao1.liu@linux.intel.com>
@@ -92,26 +92,24 @@ Use device_class_set_parent_realize() to set parent realize() directly.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/intc/s390_flic_kvm.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/arm/smmuv3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/s390_flic_kvm.c b/hw/intc/s390_flic_kvm.c
-index 4d5cbb2a2fb6..baaa30dcb734 100644
---- a/hw/intc/s390_flic_kvm.c
-+++ b/hw/intc/s390_flic_kvm.c
-@@ -646,9 +646,10 @@ static void kvm_s390_flic_class_init(ObjectClass *oc, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(oc);
-     S390FLICStateClass *fsc = S390_FLIC_COMMON_CLASS(oc);
-+    KVMS390FLICStateClass *kfsc = KVM_S390_FLIC_CLASS(oc);
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 68eeef3e1d4c..b3d8642a4990 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1857,8 +1857,8 @@ static void smmuv3_class_init(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_smmuv3;
+     resettable_class_set_parent_phases(rc, NULL, smmu_reset_hold, NULL,
+                                        &c->parent_phases);
+-    c->parent_realize = dc->realize;
+-    dc->realize = smmu_realize;
++    device_class_set_parent_realize(dc, smmu_realize,
++                                    &c->parent_realize);
+     device_class_set_props(dc, smmuv3_properties);
+ }
  
--    KVM_S390_FLIC_CLASS(oc)->parent_realize = dc->realize;
--    dc->realize = kvm_s390_flic_realize;
-+    device_class_set_parent_realize(dc, kvm_s390_flic_realize,
-+                                    &kfsc->parent_realize);
-     dc->vmsd = &kvm_s390_flic_vmstate;
-     dc->reset = kvm_s390_flic_reset;
-     fsc->register_io_adapter = kvm_s390_register_io_adapter;
 -- 
 2.34.1
 
