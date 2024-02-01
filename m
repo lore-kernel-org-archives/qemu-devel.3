@@ -4,51 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED6B4C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 07:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30292C47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 07:31:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVRR2-00048I-JP; Thu, 01 Feb 2024 02:24:32 -0500
+	id 1rVRX9-0005VQ-TX; Thu, 01 Feb 2024 02:30:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVRR0-00047U-83; Thu, 01 Feb 2024 02:24:30 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rVRX8-0005UK-Fo; Thu, 01 Feb 2024 02:30:50 -0500
+Received: from mgamail.intel.com ([192.55.52.120])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org>)
- id 1rVRQx-0008QB-1t; Thu, 01 Feb 2024 02:24:30 -0500
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TQVlL5x28z4wxv;
- Thu,  1 Feb 2024 18:24:14 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TQVlJ0VXlz4wd4;
- Thu,  1 Feb 2024 18:24:11 +1100 (AEDT)
-Message-ID: <c7231244-8ec0-4c7b-b1e2-31400501561d@kaod.org>
-Date: Thu, 1 Feb 2024 08:24:09 +0100
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rVRX4-0001ck-1Q; Thu, 01 Feb 2024 02:30:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706772646; x=1738308646;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=TgSkZfw+it2zJiFcuri/JTQyY0VaeQ1D5N/sRZjophw=;
+ b=JX6ODzplnBgH+po5S9cAPaejaiR/If0WC7RtpNl8YcSDQa5iMRo529xT
+ OX7iKnPsSuWu+18btu+0tFf4a3Cq0EiUMaWjBXfRnEE8Q0p0vDQGrXG4F
+ dJuhghg7xNXYAsWKmOReteCZyovjvIcGa1AT5G+vKTMRS5QSmLvVL27fl
+ e+VQ0ylxmyn38WdlXK+6Jo9vsGtNV+lECzxfm2phwnhC8SM07uiIRIhVE
+ zhrKtjSyvROskVY2i1sWRrkwE588OaC/3RTdxjLtJsU85sZ3HqTkRJ+58
+ YKDModsGZmBYHt76m3SpVdwSt5yCVshXNvY/1Z7eFKbRMU9G1k/G1Eilw w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="402676690"
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; d="scan'208";a="402676690"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jan 2024 23:30:42 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,234,1701158400"; 
+   d="scan'208";a="4443226"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jan 2024 23:30:37 -0800
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
+ yi.l.liu@intel.com, yi.y.sun@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Thomas Huth <thuth@redhat.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ qemu-s390x@nongnu.org (open list:S390 general arch...)
+Subject: [PATCH rfcv2 05/18] vfio: Remove redundant iommufd and devid elements
+ in VFIODevice
+Date: Thu,  1 Feb 2024 15:28:05 +0800
+Message-Id: <20240201072818.327930-6-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240201072818.327930-1-zhenzhong.duan@intel.com>
+References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 13/17] hw/fsi: Aspeed APB2OPB & On-chip peripheral bus
-Content-Language: en-US
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>
-References: <20240126133217.996306-1-clg@kaod.org>
- <20240126133217.996306-14-clg@kaod.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240126133217.996306-14-clg@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Qo6T=JK=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=192.55.52.120;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,521 +85,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here is an update version with a fix. I will include it in the next PR.
+iommufd and devid in VFIODevice are redundant with the ones
+in IOMMUFDDevice, so remove them.
 
-Thanks,
-
-C.
-
-
-
-
-From: Ninad Palsule <ninad@linux.ibm.com>
-
-This is a part of patchset where IBM's Flexible Service Interface is
-introduced.
-
-An APB-to-OPB bridge enabling access to the OPB from the ARM core in
-the AST2600. Hardware limitations prevent the OPB from being directly
-mapped into APB, so all accesses are indirect through the bridge.
-
-The On-Chip Peripheral Bus (OPB): A low-speed bus typically found in
-POWER processors. This now makes an appearance in the ASPEED SoC due
-to tight integration of the FSI master IP with the OPB, mainly the
-existence of an MMIO-mapping of the CFAM address straight onto a
-sub-region of the OPB address space.
-
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-[ clg: - moved FSIMasterState under AspeedAPB2OPBState
-        - modified fsi_opb_fsi_master_address() and
-          fsi_opb_opb2fsi_address()
-        - instroduced fsi_aspeed_apb2opb_init()
-        - reworked fsi_aspeed_apb2opb_realize()
-        - removed FSIMasterState object and fsi_opb_realize()
-        - simplified OPBus
-        - introduced fsi_aspeed_apb2opb_rw to fix endianness issue ]
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
+Suggested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
-  include/hw/fsi/aspeed_apb2opb.h |  46 ++++
-  hw/fsi/aspeed_apb2opb.c         | 367 ++++++++++++++++++++++++++++++++
-  hw/arm/Kconfig                  |   1 +
-  hw/fsi/Kconfig                  |   5 +
-  hw/fsi/meson.build              |   1 +
-  hw/fsi/trace-events             |   2 +
-  6 files changed, 422 insertions(+)
-  create mode 100644 include/hw/fsi/aspeed_apb2opb.h
-  create mode 100644 hw/fsi/aspeed_apb2opb.c
+ include/hw/vfio/vfio-common.h |  2 --
+ hw/vfio/ap.c                  |  2 +-
+ hw/vfio/ccw.c                 |  2 +-
+ hw/vfio/common.c              |  2 +-
+ hw/vfio/helpers.c             |  2 +-
+ hw/vfio/iommufd.c             | 26 ++++++++++++++------------
+ hw/vfio/pci.c                 |  2 +-
+ hw/vfio/platform.c            |  3 ++-
+ 8 files changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/include/hw/fsi/aspeed_apb2opb.h b/include/hw/fsi/aspeed_apb2opb.h
-new file mode 100644
-index 000000000000..f6a2387abf28
---- /dev/null
-+++ b/include/hw/fsi/aspeed_apb2opb.h
-@@ -0,0 +1,46 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2024 IBM Corp.
-+ *
-+ * ASPEED APB2OPB Bridge
-+ * IBM On-Chip Peripheral Bus
-+ */
-+#ifndef FSI_ASPEED_APB2OPB_H
-+#define FSI_ASPEED_APB2OPB_H
-+
-+#include "exec/memory.h"
-+#include "hw/fsi/fsi-master.h"
-+#include "hw/sysbus.h"
-+
-+#define TYPE_FSI_OPB "fsi.opb"
-+
-+#define TYPE_OP_BUS "opb"
-+OBJECT_DECLARE_SIMPLE_TYPE(OPBus, OP_BUS)
-+
-+typedef struct OPBus {
-+    BusState bus;
-+
-+    MemoryRegion mr;
-+    AddressSpace as;
-+} OPBus;
-+
-+#define TYPE_ASPEED_APB2OPB "aspeed.apb2opb"
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedAPB2OPBState, ASPEED_APB2OPB)
-+
-+#define ASPEED_APB2OPB_NR_REGS ((0xe8 >> 2) + 1)
-+
-+#define ASPEED_FSI_NUM 2
-+
-+typedef struct AspeedAPB2OPBState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+
-+    uint32_t regs[ASPEED_APB2OPB_NR_REGS];
-+    qemu_irq irq;
-+
-+    OPBus opb[ASPEED_FSI_NUM];
-+    FSIMasterState fsi[ASPEED_FSI_NUM];
-+} AspeedAPB2OPBState;
-+
-+#endif /* FSI_ASPEED_APB2OPB_H */
-diff --git a/hw/fsi/aspeed_apb2opb.c b/hw/fsi/aspeed_apb2opb.c
-new file mode 100644
-index 000000000000..ea50718b6a2b
---- /dev/null
-+++ b/hw/fsi/aspeed_apb2opb.c
-@@ -0,0 +1,367 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2024 IBM Corp.
-+ *
-+ * ASPEED APB-OPB FSI interface
-+ * IBM On-chip Peripheral Bus
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qom/object.h"
-+#include "qapi/error.h"
-+#include "trace.h"
-+
-+#include "hw/fsi/aspeed_apb2opb.h"
-+#include "hw/qdev-core.h"
-+
-+#define TO_REG(x) (x >> 2)
-+
-+#define APB2OPB_VERSION                    TO_REG(0x00)
-+#define APB2OPB_TRIGGER                    TO_REG(0x04)
-+
-+#define APB2OPB_CONTROL                    TO_REG(0x08)
-+#define   APB2OPB_CONTROL_OFF              BE_GENMASK(31, 13)
-+
-+#define APB2OPB_OPB2FSI                    TO_REG(0x0c)
-+#define   APB2OPB_OPB2FSI_OFF              BE_GENMASK(31, 22)
-+
-+#define APB2OPB_OPB0_SEL                   TO_REG(0x10)
-+#define APB2OPB_OPB1_SEL                   TO_REG(0x28)
-+#define   APB2OPB_OPB_SEL_EN               BIT(0)
-+
-+#define APB2OPB_OPB0_MODE                  TO_REG(0x14)
-+#define APB2OPB_OPB1_MODE                  TO_REG(0x2c)
-+#define   APB2OPB_OPB_MODE_RD              BIT(0)
-+
-+#define APB2OPB_OPB0_XFER                  TO_REG(0x18)
-+#define APB2OPB_OPB1_XFER                  TO_REG(0x30)
-+#define   APB2OPB_OPB_XFER_FULL            BIT(1)
-+#define   APB2OPB_OPB_XFER_HALF            BIT(0)
-+
-+#define APB2OPB_OPB0_ADDR                  TO_REG(0x1c)
-+#define APB2OPB_OPB0_WRITE_DATA            TO_REG(0x20)
-+
-+#define APB2OPB_OPB1_ADDR                  TO_REG(0x34)
-+#define APB2OPB_OPB1_WRITE_DATA                  TO_REG(0x38)
-+
-+#define APB2OPB_IRQ_STS                    TO_REG(0x48)
-+#define   APB2OPB_IRQ_STS_OPB1_TX_ACK      BIT(17)
-+#define   APB2OPB_IRQ_STS_OPB0_TX_ACK      BIT(16)
-+
-+#define APB2OPB_OPB0_WRITE_WORD_ENDIAN     TO_REG(0x4c)
-+#define   APB2OPB_OPB0_WRITE_WORD_ENDIAN_BE 0x0011101b
-+#define APB2OPB_OPB0_WRITE_BYTE_ENDIAN     TO_REG(0x50)
-+#define   APB2OPB_OPB0_WRITE_BYTE_ENDIAN_BE 0x0c330f3f
-+#define APB2OPB_OPB1_WRITE_WORD_ENDIAN     TO_REG(0x54)
-+#define APB2OPB_OPB1_WRITE_BYTE_ENDIAN     TO_REG(0x58)
-+#define APB2OPB_OPB0_READ_BYTE_ENDIAN      TO_REG(0x5c)
-+#define APB2OPB_OPB1_READ_BYTE_ENDIAN      TO_REG(0x60)
-+#define   APB2OPB_OPB0_READ_WORD_ENDIAN_BE  0x00030b1b
-+
-+#define APB2OPB_OPB0_READ_DATA         TO_REG(0x84)
-+#define APB2OPB_OPB1_READ_DATA         TO_REG(0x90)
-+
-+/*
-+ * The following magic values came from AST2600 data sheet
-+ * The register values are defined under section "FSI controller"
-+ * as initial values.
-+ */
-+static const uint32_t aspeed_apb2opb_reset[ASPEED_APB2OPB_NR_REGS] = {
-+     [APB2OPB_VERSION]                = 0x000000a1,
-+     [APB2OPB_OPB0_WRITE_WORD_ENDIAN] = 0x0044eee4,
-+     [APB2OPB_OPB0_WRITE_BYTE_ENDIAN] = 0x0055aaff,
-+     [APB2OPB_OPB1_WRITE_WORD_ENDIAN] = 0x00117717,
-+     [APB2OPB_OPB1_WRITE_BYTE_ENDIAN] = 0xffaa5500,
-+     [APB2OPB_OPB0_READ_BYTE_ENDIAN]  = 0x0044eee4,
-+     [APB2OPB_OPB1_READ_BYTE_ENDIAN]  = 0x00117717
-+};
-+
-+static void fsi_opb_fsi_master_address(FSIMasterState *fsi, hwaddr addr)
-+{
-+    memory_region_transaction_begin();
-+    memory_region_set_address(&fsi->iomem, addr);
-+    memory_region_transaction_commit();
-+}
-+
-+static void fsi_opb_opb2fsi_address(FSIMasterState *fsi, hwaddr addr)
-+{
-+    memory_region_transaction_begin();
-+    memory_region_set_address(&fsi->opb2fsi, addr);
-+    memory_region_transaction_commit();
-+}
-+
-+static uint64_t fsi_aspeed_apb2opb_read(void *opaque, hwaddr addr,
-+                                        unsigned size)
-+{
-+    AspeedAPB2OPBState *s = ASPEED_APB2OPB(opaque);
-+    unsigned int reg = TO_REG(addr);
-+
-+    trace_fsi_aspeed_apb2opb_read(addr, size);
-+
-+    if (reg >= ASPEED_APB2OPB_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out of bounds read: 0x%"HWADDR_PRIx" for %u\n",
-+                      __func__, addr, size);
-+        return 0;
-+    }
-+
-+    return s->regs[reg];
-+}
-+
-+static MemTxResult fsi_aspeed_apb2opb_rw(AddressSpace *as, hwaddr addr,
-+                                         MemTxAttrs attrs, uint32_t *data,
-+                                         uint32_t size, bool is_write)
-+{
-+    MemTxResult res;
-+
-+    if (is_write) {
-+        switch (size) {
-+        case 4:
-+            address_space_stl_le(as, addr, *data, attrs, &res);
-+            break;
-+        case 2:
-+            address_space_stw_le(as, addr, *data, attrs, &res);
-+            break;
-+        case 1:
-+            address_space_stb(as, addr, *data, attrs, &res);
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    } else {
-+        switch (size) {
-+        case 4:
-+            *data = address_space_ldl_le(as, addr, attrs, &res);
-+            break;
-+        case 2:
-+            *data = address_space_lduw_le(as, addr, attrs, &res);
-+            break;
-+        case 1:
-+            *data = address_space_ldub(as, addr, attrs, &res);
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+    return res;
-+}
-+
-+static void fsi_aspeed_apb2opb_write(void *opaque, hwaddr addr, uint64_t data,
-+                                     unsigned size)
-+{
-+    AspeedAPB2OPBState *s = ASPEED_APB2OPB(opaque);
-+    unsigned int reg = TO_REG(addr);
-+
-+    trace_fsi_aspeed_apb2opb_write(addr, size, data);
-+
-+    if (reg >= ASPEED_APB2OPB_NR_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out of bounds write: %"HWADDR_PRIx" for %u\n",
-+                      __func__, addr, size);
-+        return;
-+    }
-+
-+    switch (reg) {
-+    case APB2OPB_CONTROL:
-+        fsi_opb_fsi_master_address(&s->fsi[0],
-+                data & APB2OPB_CONTROL_OFF);
-+        break;
-+    case APB2OPB_OPB2FSI:
-+        fsi_opb_opb2fsi_address(&s->fsi[0],
-+                data & APB2OPB_OPB2FSI_OFF);
-+        break;
-+    case APB2OPB_OPB0_WRITE_WORD_ENDIAN:
-+        if (data != APB2OPB_OPB0_WRITE_WORD_ENDIAN_BE) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Bridge needs to be driven as BE (0x%x)\n",
-+                          __func__, APB2OPB_OPB0_WRITE_WORD_ENDIAN_BE);
-+        }
-+        break;
-+    case APB2OPB_OPB0_WRITE_BYTE_ENDIAN:
-+        if (data != APB2OPB_OPB0_WRITE_BYTE_ENDIAN_BE) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Bridge needs to be driven as BE (0x%x)\n",
-+                          __func__, APB2OPB_OPB0_WRITE_BYTE_ENDIAN_BE);
-+        }
-+        break;
-+    case APB2OPB_OPB0_READ_BYTE_ENDIAN:
-+        if (data != APB2OPB_OPB0_READ_WORD_ENDIAN_BE) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Bridge needs to be driven as BE (0x%x)\n",
-+                          __func__, APB2OPB_OPB0_READ_WORD_ENDIAN_BE);
-+        }
-+        break;
-+    case APB2OPB_TRIGGER:
-+    {
-+        uint32_t opb, op_mode, op_size, op_addr, op_data;
-+        MemTxResult result;
-+        bool is_write;
-+        int index;
-+        AddressSpace *as;
-+
-+        assert((s->regs[APB2OPB_OPB0_SEL] & APB2OPB_OPB_SEL_EN) ^
-+               (s->regs[APB2OPB_OPB1_SEL] & APB2OPB_OPB_SEL_EN));
-+
-+        if (s->regs[APB2OPB_OPB0_SEL] & APB2OPB_OPB_SEL_EN) {
-+            opb = 0;
-+            op_mode = s->regs[APB2OPB_OPB0_MODE];
-+            op_size = s->regs[APB2OPB_OPB0_XFER];
-+            op_addr = s->regs[APB2OPB_OPB0_ADDR];
-+            op_data = s->regs[APB2OPB_OPB0_WRITE_DATA];
-+        } else if (s->regs[APB2OPB_OPB1_SEL] & APB2OPB_OPB_SEL_EN) {
-+            opb = 1;
-+            op_mode = s->regs[APB2OPB_OPB1_MODE];
-+            op_size = s->regs[APB2OPB_OPB1_XFER];
-+            op_addr = s->regs[APB2OPB_OPB1_ADDR];
-+            op_data = s->regs[APB2OPB_OPB1_WRITE_DATA];
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Invalid operation: 0x%"HWADDR_PRIx" for %u\n",
-+                          __func__, addr, size);
-+            return;
-+        }
-+
-+        if (op_size & ~(APB2OPB_OPB_XFER_HALF | APB2OPB_OPB_XFER_FULL)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "OPB transaction failed: Unrecognized access width: %d\n",
-+                          op_size);
-+            return;
-+        }
-+
-+        op_size += 1;
-+        is_write = !(op_mode & APB2OPB_OPB_MODE_RD);
-+        index = opb ? APB2OPB_OPB1_READ_DATA : APB2OPB_OPB0_READ_DATA;
-+        as = &s->opb[opb].as;
-+
-+        result = fsi_aspeed_apb2opb_rw(as, op_addr, MEMTXATTRS_UNSPECIFIED,
-+                                       &op_data, op_size, is_write);
-+        if (result != MEMTX_OK) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: OPB %s failed @%08x\n",
-+                          __func__, is_write ? "write" : "read", op_addr);
-+            return;
-+        }
-+
-+        if (!is_write) {
-+            s->regs[index] = op_data;
-+        }
-+
-+        s->regs[APB2OPB_IRQ_STS] |= opb ? APB2OPB_IRQ_STS_OPB1_TX_ACK
-+            : APB2OPB_IRQ_STS_OPB0_TX_ACK;
-+        break;
-+    }
-+    }
-+
-+    s->regs[reg] = data;
-+}
-+
-+static const struct MemoryRegionOps aspeed_apb2opb_ops = {
-+    .read = fsi_aspeed_apb2opb_read,
-+    .write = fsi_aspeed_apb2opb_write,
-+    .valid.max_access_size = 4,
-+    .valid.min_access_size = 4,
-+    .impl.max_access_size = 4,
-+    .impl.min_access_size = 4,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static void fsi_aspeed_apb2opb_init(Object *o)
-+{
-+    AspeedAPB2OPBState *s = ASPEED_APB2OPB(o);
-+    int i;
-+
-+    for (i = 0; i < ASPEED_FSI_NUM; i++) {
-+        object_initialize_child(o, "fsi-master[*]", &s->fsi[i],
-+                                TYPE_FSI_MASTER);
-+    }
-+}
-+
-+static void fsi_aspeed_apb2opb_realize(DeviceState *dev, Error **errp)
-+{
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AspeedAPB2OPBState *s = ASPEED_APB2OPB(dev);
-+    int i;
-+
-+    /*
-+     * TODO: The OPBus model initializes the OPB address space in
-+     * the .instance_init handler and this is problematic for test
-+     * device-introspect-test. To avoid a memory corruption and a QEMU
-+     * crash, qbus_init() should be called from realize(). Something to
-+     * improve. Possibly, OPBus could also be removed.
-+     */
-+    for (i = 0; i < ASPEED_FSI_NUM; i++) {
-+        qbus_init(&s->opb[i], sizeof(s->opb[i]), TYPE_OP_BUS, DEVICE(s),
-+                  NULL);
-+    }
-+
-+    sysbus_init_irq(sbd, &s->irq);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_apb2opb_ops, s,
-+                          TYPE_ASPEED_APB2OPB, 0x1000);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+
-+    for (i = 0; i < ASPEED_FSI_NUM; i++) {
-+        if (!qdev_realize(DEVICE(&s->fsi[i]), BUS(&s->opb[i]), errp)) {
-+            return;
-+        }
-+
-+        memory_region_add_subregion(&s->opb[i].mr, 0x80000000,
-+                &s->fsi[i].iomem);
-+
-+        memory_region_add_subregion(&s->opb[i].mr, 0xa0000000,
-+                &s->fsi[i].opb2fsi);
-+    }
-+}
-+
-+static void fsi_aspeed_apb2opb_reset(DeviceState *dev)
-+{
-+    AspeedAPB2OPBState *s = ASPEED_APB2OPB(dev);
-+
-+    memcpy(s->regs, aspeed_apb2opb_reset, ASPEED_APB2OPB_NR_REGS);
-+}
-+
-+static void fsi_aspeed_apb2opb_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "ASPEED APB2OPB Bridge";
-+    dc->realize = fsi_aspeed_apb2opb_realize;
-+    dc->reset = fsi_aspeed_apb2opb_reset;
-+}
-+
-+static const TypeInfo aspeed_apb2opb_info = {
-+    .name = TYPE_ASPEED_APB2OPB,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_init = fsi_aspeed_apb2opb_init,
-+    .instance_size = sizeof(AspeedAPB2OPBState),
-+    .class_init = fsi_aspeed_apb2opb_class_init,
-+};
-+
-+static void aspeed_apb2opb_register_types(void)
-+{
-+    type_register_static(&aspeed_apb2opb_info);
-+}
-+
-+type_init(aspeed_apb2opb_register_types);
-+
-+static void fsi_opb_init(Object *o)
-+{
-+    OPBus *opb = OP_BUS(o);
-+
-+    memory_region_init(&opb->mr, 0, TYPE_FSI_OPB, UINT32_MAX);
-+    address_space_init(&opb->as, &opb->mr, TYPE_FSI_OPB);
-+}
-+
-+static const TypeInfo opb_info = {
-+    .name = TYPE_OP_BUS,
-+    .parent = TYPE_BUS,
-+    .instance_init = fsi_opb_init,
-+    .instance_size = sizeof(OPBus),
-+};
-+
-+static void fsi_opb_register_types(void)
-+{
-+    type_register_static(&opb_info);
-+}
-+
-+type_init(fsi_opb_register_types);
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index f927878152a8..db08a00a45bd 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -580,6 +580,7 @@ config ASPEED_SOC
-      select LED
-      select PMBUS
-      select MAX31785
-+    select FSI_APB2OPB_ASPEED
-  
-  config MPS2
-      bool
-diff --git a/hw/fsi/Kconfig b/hw/fsi/Kconfig
-index 9c34a418d700..9cee657a0f09 100644
---- a/hw/fsi/Kconfig
-+++ b/hw/fsi/Kconfig
-@@ -1,2 +1,7 @@
-+config FSI_APB2OPB_ASPEED
-+    bool
-+    depends on ASPEED_SOC
-+    select FSI
-+
-  config FSI
-      bool
-diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
-index 7803b3afd191..a18a076552fc 100644
---- a/hw/fsi/meson.build
-+++ b/hw/fsi/meson.build
-@@ -1 +1,2 @@
-  system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c','fsi-master.c'))
-+system_ss.add(when: 'CONFIG_FSI_APB2OPB_ASPEED', if_true: files('aspeed_apb2opb.c'))
-diff --git a/hw/fsi/trace-events b/hw/fsi/trace-events
-index bf417b6dc3c8..9e286d08d3c7 100644
---- a/hw/fsi/trace-events
-+++ b/hw/fsi/trace-events
-@@ -9,3 +9,5 @@ fsi_cfam_unimplemented_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%"
-  fsi_cfam_config_write_noaddr(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
-  fsi_master_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-  fsi_master_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
-+fsi_aspeed_apb2opb_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size=%d"
-+fsi_aspeed_apb2opb_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size=%d value=0x%"PRIx64
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 1bbad003ee..24e3eaaf3d 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -131,8 +131,6 @@ typedef struct VFIODevice {
+     OnOffAuto pre_copy_dirty_page_tracking;
+     bool dirty_pages_supported;
+     bool dirty_tracking;
+-    int devid;
+-    IOMMUFDBackend *iommufd;
+     union {
+         HostIOMMUDevice base_hdev;
+         IOMMULegacyDevice legacy_dev;
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index e157aa1ff7..11526d93d4 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -198,7 +198,7 @@ static void vfio_ap_unrealize(DeviceState *dev)
+ static Property vfio_ap_properties[] = {
+     DEFINE_PROP_STRING("sysfsdev", VFIOAPDevice, vdev.sysfsdev),
+ #ifdef CONFIG_IOMMUFD
+-    DEFINE_PROP_LINK("iommufd", VFIOAPDevice, vdev.iommufd,
++    DEFINE_PROP_LINK("iommufd", VFIOAPDevice, vdev.iommufd_dev.iommufd,
+                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+ #endif
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+index 90e4a53437..b1b75ffa2a 100644
+--- a/hw/vfio/ccw.c
++++ b/hw/vfio/ccw.c
+@@ -667,7 +667,7 @@ static Property vfio_ccw_properties[] = {
+     DEFINE_PROP_STRING("sysfsdev", VFIOCCWDevice, vdev.sysfsdev),
+     DEFINE_PROP_BOOL("force-orb-pfch", VFIOCCWDevice, force_orb_pfch, false),
+ #ifdef CONFIG_IOMMUFD
+-    DEFINE_PROP_LINK("iommufd", VFIOCCWDevice, vdev.iommufd,
++    DEFINE_PROP_LINK("iommufd", VFIOCCWDevice, vdev.iommufd_dev.iommufd,
+                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+ #endif
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 059bfdc07a..8b3b575c9d 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1505,7 +1505,7 @@ int vfio_attach_device(char *name, VFIODevice *vbasedev,
+     const VFIOIOMMUClass *ops =
+         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+ 
+-    if (vbasedev->iommufd) {
++    if (vbasedev->iommufd_dev.iommufd) {
+         ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+     }
+ 
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 6789870802..e5457ca326 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -626,7 +626,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
+             vbasedev->name = g_path_get_basename(vbasedev->sysfsdev);
+         }
+     } else {
+-        if (!vbasedev->iommufd) {
++        if (!vbasedev->iommufd_dev.iommufd) {
+             error_setg(errp, "Use FD passing only with iommufd backend");
+             return -EINVAL;
+         }
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 9bfddc1360..5d50549713 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -65,7 +65,7 @@ static void iommufd_cdev_kvm_device_del(VFIODevice *vbasedev)
+ 
+ static int iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
+ {
+-    IOMMUFDBackend *iommufd = vbasedev->iommufd;
++    IOMMUFDBackend *iommufd = vbasedev->iommufd_dev.iommufd;
+     struct vfio_device_bind_iommufd bind = {
+         .argsz = sizeof(bind),
+         .flags = 0,
+@@ -96,9 +96,10 @@ static int iommufd_cdev_connect_and_bind(VFIODevice *vbasedev, Error **errp)
+         goto err_bind;
+     }
+ 
+-    vbasedev->devid = bind.out_devid;
++    vbasedev->iommufd_dev.devid = bind.out_devid;
+     trace_iommufd_cdev_connect_and_bind(bind.iommufd, vbasedev->name,
+-                                        vbasedev->fd, vbasedev->devid);
++                                        vbasedev->fd,
++                                        vbasedev->iommufd_dev.devid);
+     return ret;
+ err_bind:
+     iommufd_cdev_kvm_device_del(vbasedev);
+@@ -111,7 +112,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
+ {
+     /* Unbind is automatically conducted when device fd is closed */
+     iommufd_cdev_kvm_device_del(vbasedev);
+-    iommufd_backend_disconnect(vbasedev->iommufd);
++    iommufd_backend_disconnect(vbasedev->iommufd_dev.iommufd);
+ }
+ 
+ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+@@ -181,7 +182,7 @@ out_free_path:
+ static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
+                                          Error **errp)
+ {
+-    int ret, iommufd = vbasedev->iommufd->fd;
++    int ret, iommufd = vbasedev->iommufd_dev.iommufd->fd;
+     struct vfio_device_attach_iommufd_pt attach_data = {
+         .argsz = sizeof(attach_data),
+         .flags = 0,
+@@ -203,7 +204,7 @@ static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
+ 
+ static int iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
+ {
+-    int ret, iommufd = vbasedev->iommufd->fd;
++    int ret, iommufd = vbasedev->iommufd_dev.iommufd->fd;
+     struct vfio_device_detach_iommufd_pt detach_data = {
+         .argsz = sizeof(detach_data),
+         .flags = 0,
+@@ -337,7 +338,7 @@ static int iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+     QLIST_FOREACH(bcontainer, &space->containers, next) {
+         container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+         if (bcontainer->ops != iommufd_vioc ||
+-            vbasedev->iommufd != container->be) {
++            vbasedev->iommufd_dev.iommufd != container->be) {
+             continue;
+         }
+         if (iommufd_cdev_attach_container(vbasedev, container, &err)) {
+@@ -358,15 +359,16 @@ static int iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+     }
+ 
+     /* Need to allocate a new dedicated container */
+-    ret = iommufd_backend_alloc_ioas(vbasedev->iommufd, &ioas_id, errp);
++    ret = iommufd_backend_alloc_ioas(vbasedev->iommufd_dev.iommufd,
++                                     &ioas_id, errp);
+     if (ret < 0) {
+         goto err_alloc_ioas;
+     }
+ 
+-    trace_iommufd_cdev_alloc_ioas(vbasedev->iommufd->fd, ioas_id);
++    trace_iommufd_cdev_alloc_ioas(vbasedev->iommufd_dev.iommufd->fd, ioas_id);
+ 
+     container = g_malloc0(sizeof(*container));
+-    container->be = vbasedev->iommufd;
++    container->be = vbasedev->iommufd_dev.iommufd;
+     container->ioas_id = ioas_id;
+ 
+     bcontainer = &container->bcontainer;
+@@ -479,7 +481,7 @@ static VFIODevice *iommufd_cdev_pci_find_by_devid(__u32 devid)
+         if (vbasedev_iter->bcontainer->ops != iommufd_vioc) {
+             continue;
+         }
+-        if (devid == vbasedev_iter->devid) {
++        if (devid == vbasedev_iter->iommufd_dev.devid) {
+             return vbasedev_iter;
+         }
+     }
+@@ -492,7 +494,7 @@ iommufd_cdev_dep_get_realized_vpdev(struct vfio_pci_dependent_device *dep_dev,
+ {
+     VFIODevice *vbasedev_tmp;
+ 
+-    if (dep_dev->devid == reset_dev->devid ||
++    if (dep_dev->devid == reset_dev->iommufd_dev.devid ||
+         dep_dev->devid == VFIO_PCI_DEVID_OWNED) {
+         return NULL;
+     }
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 4fa387f043..d1e1b8cb89 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3385,7 +3385,7 @@ static Property vfio_pci_dev_properties[] = {
+     DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice, msix_relo,
+                                 OFF_AUTOPCIBAR_OFF),
+ #ifdef CONFIG_IOMMUFD
+-    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
++    DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd_dev.iommufd,
+                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+ #endif
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+index a8d9b7da63..823a17b9c5 100644
+--- a/hw/vfio/platform.c
++++ b/hw/vfio/platform.c
+@@ -646,7 +646,8 @@ static Property vfio_platform_dev_properties[] = {
+                        mmap_timeout, 1100),
+     DEFINE_PROP_BOOL("x-irqfd", VFIOPlatformDevice, irqfd_allowed, true),
+ #ifdef CONFIG_IOMMUFD
+-    DEFINE_PROP_LINK("iommufd", VFIOPlatformDevice, vbasedev.iommufd,
++    DEFINE_PROP_LINK("iommufd", VFIOPlatformDevice,
++                     vbasedev.iommufd_dev.iommufd,
+                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+ #endif
+     DEFINE_PROP_END_OF_LIST(),
 -- 
-2.43.0
-
+2.34.1
 
 
