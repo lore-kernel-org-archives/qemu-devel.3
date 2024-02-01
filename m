@@ -4,114 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73722C47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 12:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7490AC47DDF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 12:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVVwi-0002Zf-G6; Thu, 01 Feb 2024 07:13:32 -0500
+	id 1rVWBR-0007qX-50; Thu, 01 Feb 2024 07:28:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVVwf-0002Ys-66
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:13:29 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1rVWBO-0007oa-C3
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:28:42 -0500
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVVwd-0007lN-GF
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:13:28 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-33b0e5d1e89so574279f8f.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 04:13:23 -0800 (PST)
+ id 1rVWBM-0002B1-Mi
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 07:28:42 -0500
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-51025cafb51so1315933e87.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 04:28:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706789601; x=1707394401; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1706790519; x=1707395319; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zn+/ye7RxQyRlRw4WUUebXTDcinacfZIyX6zTAbaIn4=;
- b=mN1GUcHMLJz8f9p4gtnnkCL7a2HPifNBUPrHdwz33jSNWnCpRPa/m7Ec0qGis/S+vi
- /FnFT2NU8BQ1ZJydRWoC9CjKbAppdJY8Ydw8qVXei33nj4P9ZOMQOv+ndSC/IUyt0V0T
- Mg2wazmZZ1RPQwsn6/CmTSW4FFSgXpiAq42BdbHY6yeSBSc1FfwRhPOksF5vC8zuVRAD
- vp2ZggvtvdWqVa/BRnVQQqibOsPiYuJdxjfpY0baC3JWZPdAydm3NPFYlRfmUBgS2Mvo
- ACqxW3IYzMO/bMDje/yUHvHIQGziJ9Ye6PIdfwklE2MbaSdlO2J890zBH/1WUwZTreeB
- Wrbw==
+ bh=4XrdlyPxX7fzqYNhg32fjbzatjpy7oOVQl+tyM0KqaA=;
+ b=Be7QVy0OcsXBX1JPeM0ie50iabaVOI5Ci8al4DAkdGDMo8wWIIvs7GDvWXnuHwl9Oi
+ Xuv+uQLz+QTkOD9H5fZOWlUPHVk/j74nk37WUWNIJoP4F1e88QLAPD8ilqz+DtbOnfFP
+ EhJsSJ3Ip/5JXjJt1KfjZ9WBUHBzSuQauWMKhKIrgk3q9Z0jggx6THDscO/PVi7TVBYJ
+ sxQ/DTmgPcn+tNhRbI0hc4bn9KtOp4HhwW3VBF+iZAoLaHF0RHHWWoYztBYI22iSlCVG
+ 6rMNIejYIfdsknIfIxuYaYlwpsxgZgFstHW82edp2rkkOITU6CgI8Vil3Bqr43oEgbtp
+ +p/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706789601; x=1707394401;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Zn+/ye7RxQyRlRw4WUUebXTDcinacfZIyX6zTAbaIn4=;
- b=u9obhgRJga0iOHi/ZLFDqAazKwLIpT6UQ0/qGdhMQQa/fQBGEaQ9KWGhfrHtuJxdOO
- dbwBP6Q80+Tt34QkpM33g7yrSNT0TsyR+dWZSCQ5KzyrvySPPrJCxfoUIRPMWXDRcZdC
- A10I5+N5UphMikWdz06TqgwyXbiq1ZCA9MvbFtdjdo+WGvT5oPgXSOcgXp8AeY4volWP
- /Md7up5NHq79vjL0hpo4Wnw7cWDZepKEKGFGtPTDD50JA/cLK3IwLLhhq99rML9GY2t8
- YbsThtEQoOMNdTvKFezU9SIlbi28f7CJwJZeCHmw7CEN5VwvQ7p5kKw11hg+VhQ2j3vN
- vJMw==
-X-Gm-Message-State: AOJu0YwaqLTf3fQlfr7ohnZqzIC5GC6o3qiBez9OV5vgER/Iowe80eGs
- eKULL6iKEnxHjHjepLpPbi07MvjjNONNYgj6I1LmYEUnPAeKJrVBaxiFEo75AhU=
-X-Google-Smtp-Source: AGHT+IGB+c/lx7/rnRNnfJu4qEBVda7ddx4u1ulU2BJtZyQ/78w2aLdMTk84i0f+BuwBtVoebq2VoA==
-X-Received: by 2002:a5d:4447:0:b0:33b:3b3:f486 with SMTP id
- x7-20020a5d4447000000b0033b03b3f486mr1480105wrr.35.1706789601434; 
- Thu, 01 Feb 2024 04:13:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706790519; x=1707395319;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4XrdlyPxX7fzqYNhg32fjbzatjpy7oOVQl+tyM0KqaA=;
+ b=EsrMJFE6gb6MDXOkNp7JfELyqcIdaYGUFpDQMVzgB8libgL9aUYnMBX9oBNDsz4L1l
+ 0bNEzRRFo9e8J+aW1WOEXmlkO7jAFJXd68P/7kU5Lb2VKAx1FSOvMCdR+ksbJUp1JbJx
+ A6XYzJzeDEp5qeMZwD69gZDyx6tflY7+Qg4nCj40lNxc3XFUr6zdq8toiIch5u20BSBQ
+ fcgllsqtrmfzFXdFMRFLWbcOHgH1rzJS/TE2qHtGW3uzkKImPSDlB4TeKb30PHj+cuc0
+ Pyi9HgXFZ76wJ0LeObQGxDC1dcZMovsUgKN0q7Vm5NjCQxy9zMqTkRBYmPgdByOTV41M
+ 1W1Q==
+X-Gm-Message-State: AOJu0YyI68gzANym5y0h++c6iZMUKDkl4QHib3z5Nv9OH9sq15w48UIy
+ GfwBhMQj1QRk5060snQY14R2PtWsmwb8/0fs/kKMA2qQxuCxh+EFar4KhOvl7Xo=
+X-Google-Smtp-Source: AGHT+IF4VcnBRVksAEaw+w29deD3wP0OybtEz/LnWIH0KI7WMl2EBZtalb8UQUF3rE+TntGNlHCZpw==
+X-Received: by 2002:a2e:87da:0:b0:2cd:10be:cf14 with SMTP id
+ v26-20020a2e87da000000b002cd10becf14mr2986281ljj.19.1706790519075; 
+ Thu, 01 Feb 2024 04:28:39 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCW7NpIoj1nuyTbHJHNrUV1q1+a+ZoQR0ItTb3f/oQYUUZVrgXtgpm3dkNBK5rXiaKfVm8BWuAMykidDaVGuytEQcsOmVz3tGkXSERqR4dwFZKUnUCzV73xTpbE83xBeiETdeImZKHNIH6ea+u4r6lVOZSFjWhHnzVp9uavqI3sa+2ZzA94ITDsauWVt6gD9CopbZ0pS6h8LhBE5Dwaz1HFO7jCKyf0EdxrfYQVVBBXTB8ee/iZHtx2qomM0/TuuO8QrspDq/Ztpwq+MqHo2qezd/bng15nSGVZqYvQYNb3PR4834i+tTqsm9P4SoH4PR10YH7An0ikm/TzFFu6yR0qqV5bmi3WZQfTygoiUa09D1v4g56ixhODzhl3OFwHuZOldnZKzaOQb1NYUBew36RPn5udbwnYJERL4+FHQ39t0eyJeIjq1CjBMeHkCOHWQd8lT+ECKM0BwVOgobJZ+MO5BC5F2R9WAhzYWzVw2aVjP7OypX/LJmZaiDMyl0ONRtF1pOw87XGLmtR1qnmwragJTwVAL9leH5V+n5Hj9DZIajRpdJBR/tuUbXmRLdQVbxG/BikYO6RFDZmQUfLuSVk1Bzein4A9LnBD/jncArDmdsKk94Q0RnTT996Gohnki8u6WvdJauVFrxqB2gYoTqXswVn9p6XJufLoBtCnCRA8vzHJdfUufve46X8awnnSXqr7pHZSQidZcSh0sL/FJMrw3tHKBC0HlP3kNx6GDIV8ZjTXbOgpQmMeEyB9SHxJG1eMMmtY/tRdiGEOa5LOMzkbFsPv9twF4L0Lh6y0P8bJE6LrdA21AWQ++jemdxkcjh21HGKKozF9yNEwCCJfFBdJuJWHaaNpUTR/3r+OelPo8N6aCRzO+nFCvPhFDUUv2YLtNzDrJsouhblvhfhnRNVg/Y7K3plK+Wey+gm7jyw0hfg3kAbOIR/O1MWv7BcpJeKz1iG
- bIYk94twoIFM6+aoGniZxwXfBzBiioRQSkd5j4D5FRUEeyW5f+BYSNn9Vi9A0R+u+gK0gf3uxfmLo4Z2yTaC1KSKjbsaIlxiCI+5DJCOceZnk14NZZKJVofGzfzzlNqczLaZOnw8uxrudRktM9ecWFOZvMZ6C6ZcgmvxCaqkQPYr9HzE9B7lXSZ++cy5whD3U0pdEQGuLpYZ9U17w4b22FnOeL/8OZLjS8br6ktHWkGqKhg6AKd+HxvzIpiZy2W/07Q20R/H2+tCBoNDKoNu4It9y5FrykveU=
+ AJvYcCUGFVNVFdNJffY+qNu7kMHsI1cqvd+apCOb/5CIEuNPVG4EavFeHAk3NTyJHf5zaJNOfMrfgh4k7ZPJXgGfH4WrHl4hVB7GHGfmnuUlZnxeTfkdK9pW3LNcvwoxzk4ug/6biWTBAQYzZynRXXDTe0+8oFBXgwsftNgksnrkilkI1jih2IDR1Mi2AuJ5gct7o5l0aqWtpTGrm73maDTsMAU/UZwSZqtwHV1c39dFZUrsFGPC6K8F7kErwWetM7jlVqsJEYUJCV+E7mRTpGQ79btH0QZL6OybOxKvOvfZYxEfGdcsJIULa16xehR9T+BR1aPC2UCJaCU+BoqoThGbN6Y8DEDr7PSVtB66LvjqY1hrjS3FV2g1zM2kz1A2Nw6kJLCPGHuuiQV0AR+yPnROccX+mq67ySiWo3i7ZLHen2k7i6cFbXP0NQNhsbgdGapwYSZLWKbW/tk+1kkgCijNBatX6a3Z+Yz8ZrOeFJ4qMQ4fog+2NDg0UgrwFwm0ymWjKvPcHRuPlxluXz8BGYICB5pe7j+dXoZmxD+l3JUvyFV035phMHj1PpRkUYQgVZn2zig+j0MAResXhmQxoPKW20BqPnv8qIKvu4cWVmn1B0KXeZonvnfZ35NAdsIYbObWnAz/xOJnWBw=
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- u18-20020a5d4352000000b003392b1ebf5csm15989811wrr.59.2024.02.01.04.13.20
+ h11-20020aa7c94b000000b00558a3268bbcsm6705553edt.53.2024.02.01.04.28.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 04:13:20 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EDD6A5F7AF;
- Thu,  1 Feb 2024 12:13:19 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Thu, 01 Feb 2024 04:28:36 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8E3D55F9DB;
+ Thu,  1 Feb 2024 12:28:35 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,
- kvm@vger.kernel.org,  Yoshinori Sato <ysato@users.sourceforge.jp>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Palmer Dabbelt
- <palmer@dabbelt.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,  Laurent
- Vivier <laurent@vivier.eu>,  Yanan Wang <wangyanan55@huawei.com>,
- qemu-ppc@nongnu.org,  Weiwei Li <liwei1518@gmail.com>,
- qemu-s390x@nongnu.org,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Peter Maydell
- <peter.maydell@linaro.org>,  Alexandre Iooss <erdnaxe@crans.org>,  John
- Snow <jsnow@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Wainer
- dos Santos Moschetta <wainersm@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- Alistair Francis <alistair.francis@wdc.com>,  David Woodhouse
- <dwmw2@infradead.org>,  Cleber Rosa <crosa@redhat.com>,  Beraldo Leal
- <bleal@redhat.com>,  Bin Meng <bin.meng@windriver.com>,  Nicholas Piggin
- <npiggin@gmail.com>,  Aurelien Jarno <aurelien@aurel32.net>,  Daniel
- Henrique Barboza <danielhb413@gmail.com>,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Thomas Huth <thuth@redhat.com>,  David
- Hildenbrand <david@redhat.com>,  qemu-riscv@nongnu.org,
- qemu-arm@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Song Gao
- <gaosong@loongson.cn>,  Eduardo Habkost <eduardo@habkost.net>,  Brian Cain
- <bcain@quicinc.com>,  Paul Durrant <paul@xen.org>
-Subject: Re: [PATCH v3 00/21] plugin updates (register access) for 9.0
- (pre-PR?)
-In-Reply-To: <20240122145610.413836-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?=
- message of "Mon, 22 Jan 2024 14:55:49 +0000")
-References: <20240122145610.413836-1-alex.bennee@linaro.org>
-User-Agent: mu4e 1.11.27; emacs 29.1
-Date: Thu, 01 Feb 2024 12:13:19 +0000
-Message-ID: <871q9wmlgg.fsf@draig.linaro.org>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, Bin Meng <bin.meng@windriver.com>,
+ Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, devel@lists.libvirt.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Marek Vasut <marex@denx.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-riscv@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Beraldo Leal <bleal@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chris Wulff <crwulff@gmail.com>
+Subject: [PATCH 3/5] configure: run plugin TCG tests again
+Date: Thu,  1 Feb 2024 12:28:33 +0000
+Message-Id: <20240201122835.1712347-4-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240201122835.1712347-1-alex.bennee@linaro.org>
+References: <20240201122835.1712347-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,36 +111,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-> Akihiko requested the register support not be merged in its current
-> state so it's time for another round of review. I've made a few tweaks
-> to simplify the register and CPU tracking code in execlog and removed
-> some stale API functions. However from my point of view its ready to
-> merge.
->
-> v3
-> --
->   - split from testing bits (merged)
->   - removed unused api funcs
->   - keep CPUs in a GArray instead of doing by hand
->
-> v2
-> --
->
->  - Review feedback for register API
->  - readthedocs update
->  - add expectation docs for plugins
->
-> The following still need review:
->
->   contrib/plugins: extend execlog to track register changes
->   gdbstub: expose api to find registers
+Commit 39fb3cfc28b ("configure: clean up plugin option handling", 2023-10-18)
+dropped the CONFIG_PLUGIN line from tests/tcg/config-host.mak, due to confusion
+caused by the shadowing of $config_host_mak.  However, TCG tests were still
+expecting it.  Oops.
 
-Gentle ping. I'm ready to merge but more review was requested:
+Put it back, in the meanwhile the shadowing is gone so it's clear that it goes
+in the tests/tcg configuration.
 
+Cc:  <alex.bennee@linaro.org>
+Fixes: 39fb3cfc28b ("configure: clean up plugin option handling", 2023-10-18)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-Id: <20240124115332.612162-1-pbonzini@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ configure | 3 +++
+ 1 file changed, 3 insertions(+)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/configure b/configure
+index 3d8e24ae011..ff058d6c486 100755
+--- a/configure
++++ b/configure
+@@ -1644,6 +1644,9 @@ fi
+ mkdir -p tests/tcg
+ echo "# Automatically generated by configure - do not modify" > tests/tcg/$config_host_mak
+ echo "SRC_PATH=$source_path" >> tests/tcg/$config_host_mak
++if test "$plugins" = "yes" ; then
++    echo "CONFIG_PLUGIN=y" >> tests/tcg/$config_host_mak
++fi
+ 
+ tcg_tests_targets=
+ for target in $target_list; do
+-- 
+2.39.2
+
 
