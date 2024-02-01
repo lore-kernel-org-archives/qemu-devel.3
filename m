@@ -4,79 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A273DC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE489C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 16:34:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVZvU-0001zw-N3; Thu, 01 Feb 2024 11:28:33 -0500
+	id 1rVa0W-0004U8-1p; Thu, 01 Feb 2024 11:33:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVZvT-0001zg-F2
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:28:31 -0500
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVZvR-0005XU-2J
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:28:30 -0500
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2cf33035d1dso11572721fa.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 08:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706804907; x=1707409707; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GdRWbu5FXaABeFEoDyxusWA9wF0lQKWgC0yG9ay+aEg=;
- b=wbAd4qT/UIpcVVOM/Gv3RtWwDmZK0eYybvWx99lvFuakn98xI+T3hqEmx0Cwx0u5zz
- HBkQ4BFXEnqH05C/aJ3LA7VYuVrNSxyobyflrKWV04NOw3ZXrFtw8a1DZUQmXZu4P+iq
- 9Ijt6OlCT72sVzrbGYn2S5fotQN5Ti1uf1aXbcyJILE/x5wOfMw2JulJ2I3VIO1Nz/25
- ISsX4f3Xc91Cq0rGMobq0EuLJoIoRly8O4ySR2/LsgCJM8NoLmA0CfzPVQ9YEctdwTuT
- jmrqFWKbzUY6pD3ljYZNP16eHEC3d20SvbxwdgFLWpI2cmzMIac4uoG39Ekb/b7wnha7
- vFVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706804907; x=1707409707;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GdRWbu5FXaABeFEoDyxusWA9wF0lQKWgC0yG9ay+aEg=;
- b=VCP6K5/mq7OQBIkjf+oOw/CE49QSL7bUQl1VIJtjahaNChK7ngxhGDGKXiLiTrRrB1
- vqdhvtnwYJ8VMAsbiepmVvgQy0RsCdifv3sbfcl+L/gh1EcafjEwBbyg+iO5sXP8hqqQ
- NTOsw8UKYdvSdcWQfQtJI3ymil/P6QadEnIPcr7WhUTO+b/DJiVlrWgMlCJ/heX+JwTz
- dv3sxRLMwQO9E2PFGGwI+djylws6AkmUg2tNbqkUIF+fhY9wktU1/QYnS0s5XYyCr43H
- 8SkxPNhQkyqgO+dgn55F3mW1JyDoKM3je9/VsxbfMvs0xGLzudtrM4X4Rd1uIiAsNq1J
- LU2g==
-X-Gm-Message-State: AOJu0YxNwhNPT03JlSphD2L3wUH26LUCJEYQZ+wi4T6tYARmLfBzyOII
- 5i/W4xDzb4w3nks0j+NHW7NrGZALRA5iwnqe+kp2XMdWNtv9lqR/obpn0Vf8I3oyKzQJDc14B5/
- wDuAJ483XT812R3Ev0H6BULvb403HXgBB8VTP0Q==
-X-Google-Smtp-Source: AGHT+IFDx61ru6IEuGzNC4RP+/4dltN5SIdQ08c90ryVxk9iU5UdLlxx4hBdxMKN11Ir1BiBHx1HK1zHBtoIn+LGdWE=
-X-Received: by 2002:a2e:b5a8:0:b0:2d0:6d69:7d25 with SMTP id
- f8-20020a2eb5a8000000b002d06d697d25mr2730187ljn.11.1706804907040; Thu, 01 Feb
- 2024 08:28:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rVa0S-0004I3-QV
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:33:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rVa0R-0006vM-0w
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 11:33:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706805216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7ysIHTwwsXYHAiIXu8TzApFUgYzVCNgqoFr6+QoQ4PU=;
+ b=Nejl+ghzmXYLOdiuoJaE4b8jkSqtWa6a+PzJZfNQ+oiwGHzBim9IdKQVeYj3o/Asoq1G1Y
+ +mRH1R0Kn4tU2dFRmjTxs4baTPD7FRT0aFHOT0IvSOqKsC6War9OE2SmcLwkDTgiCedWwj
+ rrPv0+vAZuLanAZe2m3mQLAXrf6GiiE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-638-qFlTZK-wMD6-D5cTZpCjVA-1; Thu, 01 Feb 2024 11:33:33 -0500
+X-MC-Unique: qFlTZK-wMD6-D5cTZpCjVA-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E69B21064DA2;
+ Thu,  1 Feb 2024 16:33:31 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.39.192.218])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B1A49492BC6;
+ Thu,  1 Feb 2024 16:33:29 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, jean-philippe@linaro.org, alex.williamson@redhat.com,
+ peter.maydell@linaro.org, zhenzhong.duan@intel.com, yanghliu@redhat.com
+Cc: mst@redhat.com,
+	clg@redhat.com,
+	jasowang@redhat.com
+Subject: [PATCH v2 0/3] VIRTIO-IOMMU: Introduce an aw-bits option
+Date: Thu,  1 Feb 2024 17:32:21 +0100
+Message-ID: <20240201163324.564525-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-References: <20240130190317.25692-1-philmd@linaro.org>
- <20240130190317.25692-4-philmd@linaro.org>
-In-Reply-To: <20240130190317.25692-4-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 16:28:16 +0000
-Message-ID: <CAFEAcA-w+=dy3_oiz63eg2AcS-vu93ZFrV1ZKF7iTC3eSYRHTQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] hw/arm/stellaris: Add missing QOM 'machine' parent
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,53 +82,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jan 2024 at 19:03, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> QDev objects created with qdev_new() need to manually add
-> their parent relationship with object_property_add_child().
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  hw/arm/stellaris.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-> index 284b95005f..bb88b3ebde 100644
-> --- a/hw/arm/stellaris.c
-> +++ b/hw/arm/stellaris.c
-> @@ -1247,10 +1247,13 @@ static void stellaris_init(MachineState *ms, stel=
-laris_board_info *board)
->                                     &error_fatal);
->
->              ssddev =3D qdev_new("ssd0323");
-> +            object_property_add_child(OBJECT(ms), "oled", OBJECT(ssddev)=
-);
->              qdev_prop_set_uint8(ssddev, "cs", 1);
->              qdev_realize_and_unref(ssddev, bus, &error_fatal);
->
->              gpio_d_splitter =3D qdev_new(TYPE_SPLIT_IRQ);
-> +            object_property_add_child(OBJECT(ms), "splitter",
-> +                                      OBJECT(gpio_d_splitter));
->              qdev_prop_set_uint32(gpio_d_splitter, "num-lines", 2);
->              qdev_realize_and_unref(gpio_d_splitter, NULL, &error_fatal);
->              qdev_connect_gpio_out(
-> @@ -1287,6 +1290,7 @@ static void stellaris_init(MachineState *ms, stella=
-ris_board_info *board)
->          DeviceState *gpad;
->
->          gpad =3D qdev_new(TYPE_STELLARIS_GAMEPAD);
-> +        object_property_add_child(OBJECT(ms), "gamepad", OBJECT(gpad));
->          for (i =3D 0; i < ARRAY_SIZE(gpad_keycode); i++) {
->              qlist_append_int(gpad_keycode_list, gpad_keycode[i]);
->          }
-> --
+In [1] and [2] we attempted to fix a case where a VFIO-PCI device
+protected with a virtio-iommu is assigned to an x86 guest. On x86
+the physical IOMMU may have an address width (gaw) of 39 or 48 bits
+whereas the virtio-iommu exposes a 64b input address space by default.
+Hence the guest may try to use the full 64b space and DMA MAP
+failures may be encountered. To work around this issue we endeavoured
+to pass usable host IOVA regions (excluding the out of range space) from
+VFIO to the virtio-iommu device so that the virtio-iommu driver can
+query those latter during the probe request and let the guest iommu
+kernel subsystem carve them out. 
 
-We create almost all the devices in this board with
-qdev_new(), and we don't use object_property_add_child()
-on any of them. What is it about these three devices in
-particular that means we need to call that function?
+However if there are several devices in the same iommu group,
+only the reserved regions of the first one are taken into
+account by the iommu subsystem of the guest. This generally
+works on baremetal because devices are not going to
+expose different reserved regions. However in our case, this
+may prevent from taking into account the host iommu geometry.
 
-thanks
--- PMM
+So the simplest solution to this problem looks to introduce an
+input address width option, aw-bits, which matches what is
+done on the intel-iommu. By default, from now on it is set
+to 39 bits with pc_q35 and 48 with arm virt. This replaces the
+previous default value of 64b. So we need to introduce a compat
+for machines older than 9.0 to behave similarly. We use
+hw_compat_8_2 to acheive that goal.
+
+Outstanding series [2] remains useful to let resv regions beeing
+communicated on time before the probe request.
+
+[1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
+    https://lore.kernel.org/all/20231019134651.842175-1-eric.auger@redhat.com/
+    - This is merged -
+
+[2] [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling for hotplugged devices
+    https://lore.kernel.org/all/20240117080414.316890-1-eric.auger@redhat.com/
+    - This is pending for review on the ML -
+
+This series can be found at:
+https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v2
+
+Applied on top of [3]
+[PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default page_size_mask
+https://lore.kernel.org/all/20240117132039.332273-1-eric.auger@redhat.com/
+
+History:
+v1 -> v2
+- Limit aw to 48b on ARM
+- Check aw is within [32,64]
+- Use hw_compat_8_2
+
+Eric Auger (3):
+  virtio-iommu: Add an option to define the input range width
+  virtio-iommu: Trace domain range limits as unsigned int
+  hw: Set virtio-iommu aw-bits default value on pc_q35_9.0 and arm virt
+
+ include/hw/virtio/virtio-iommu.h | 1 +
+ hw/arm/virt.c                    | 6 ++++++
+ hw/core/machine.c                | 5 ++++-
+ hw/i386/pc.c                     | 6 ++++++
+ hw/virtio/virtio-iommu.c         | 7 ++++++-
+ hw/virtio/trace-events           | 2 +-
+ 6 files changed, 24 insertions(+), 3 deletions(-)
+
+-- 
+2.41.0
+
 
