@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2EFC4828E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43B08C47DDB
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 08:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVSDT-0000C9-MR; Thu, 01 Feb 2024 03:14:36 -0500
+	id 1rVSDZ-0000DK-PQ; Thu, 01 Feb 2024 03:14:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1rVSDS-0000Bb-3s
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:14:34 -0500
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ id 1rVSDX-0000CS-4e
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:14:39 -0500
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1rVSDQ-0002oX-DV
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:14:33 -0500
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-59a27fbe832so314364eaf.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 00:14:31 -0800 (PST)
+ id 1rVSDV-0002p0-KX
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 03:14:38 -0500
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-6e133d5271cso321367a34.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 00:14:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1706775271; x=1707380071;
+ d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1706775276; x=1707380076;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e8xd9SGhmJ+pFOTZaX4mP+etfguksCBa8zBo7QZ+B6c=;
- b=i0n+qM1EcbKmn+w9UjVYqC1xwd8vkZffLF5L9s9nd38b08yn1KQpGfoI4YH9bBYDti
- 29uk9EXeQ9F6NJYZLVEYqLuLZsUFw7ui34hvG/1OKud+Vw3mS5nFHLFcDWXjcf99jvWD
- +Tp1kTZj/rowBTDuro/Ua1lhtDDAC6wq8V1X9+Am9JViVEFj4FM3uZHBoYPzPnGjoQBs
- r9vHcNl2kVYrQlESULc/udeGIcfWRLg4x/Gi2PgbYkPBJwRT8TC6w/sda1VDRLBLwz6C
- YoLb5nvejSyjRy6El76jmJ5w+i6KTl/XrYdJziAmZzR5ODkDbk+OJydUVJ5G8j+J1ZoJ
- /JfA==
+ bh=LDQr1Y/iBmlF6C2qWRRfab+jRm6FZFW5CoJITyGCHHM=;
+ b=przkP6n74q5McpKMY++9uflRWpH3ARXC5y8ZpOP6vEYmqdW8YC/kz/ZiOfh3h5phfQ
+ OhVxe31gbWCLEf7I/nTDtaiYPeTmrfEZ/okdzmV37TdpDzKP/nDGB/bOZM8Im0f70qUS
+ heC7o3UkNQcsJoR16vZOEx9XFsHNxD0NIVkbb1KYfnWdQCYioA96AQYB7QDd7Q/GWGRa
+ Uw67iROnxGwSZKJSvxiy2gJVaN5fHkZFJAa2zf06rSsEP5a6h8aslLFnLCDjk4pfLzUl
+ uHjUp5gaZ+rBL5+QI0RpfsukWerGpMpUA6ydF5V2OGn4mixz2ZzrRsBEq9v9yEmZ/him
+ Sx9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706775271; x=1707380071;
+ d=1e100.net; s=20230601; t=1706775276; x=1707380076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e8xd9SGhmJ+pFOTZaX4mP+etfguksCBa8zBo7QZ+B6c=;
- b=BqkGx/tDmvKG9c6DwKuV8qJUwPWFp/2WQePzm2g7K54I720k2l0xrF55Y3hv+30jZR
- BFbYhIWFPAfL1YehuWZCelUB0irGnSi02++8WdBIC3PYlrdqYJ/tT19AMuzEgUaCGl1K
- cv79WZc5jV5A/YXT9jQD45uD1nK46CZFIt1lF4CqrwjDR+DEeDZtQLBzNlGq2WfcdaVV
- UMoQSR2SFxNs8NZDrKQi9A7qUEcHEDl/VksO0jiZ4RZ+ImqLc3SKmYq+GQWz7QLhFFUm
- unLFyxqDRzjVV33JSkQIU9jvhdch3h+grNysKvrbi7+gRN0ry15QtYd/MXdSrJoSFBBg
- L1RQ==
-X-Gm-Message-State: AOJu0YzL9ZgGbWEX0ouG/W9aEdrOQnbddPpxbjECezJK+KIgqOZ6q2dQ
- cGiZBq5ejKhW6wKXCx9t7SxQsQA/NZ6q4UAuxdlWBgR0uNPp9OWIC1QSOPulH3/Ah5EarATc67S
- rZTw=
-X-Google-Smtp-Source: AGHT+IHr1Omf8WReIohi1a7UnbIk2Nj0aO4cbWL3O6dC0/PqR/WfYY8LdN9ueEggALMwQy4Ei8fXUQ==
-X-Received: by 2002:a05:6871:822:b0:214:7e6e:5bbe with SMTP id
- q34-20020a056871082200b002147e6e5bbemr1909819oap.16.1706775270876; 
- Thu, 01 Feb 2024 00:14:30 -0800 (PST)
+ bh=LDQr1Y/iBmlF6C2qWRRfab+jRm6FZFW5CoJITyGCHHM=;
+ b=pmNrt0ZQA3SKnRo6o5ML76hJPsu3GJaftPSE3DM2hsqefpRdxc3tNqMtnmce507VR9
+ +SRU0ZGsYIS+dMGFuJSqqNRvwn0jpSJIskaKFH1K9z0FQ0SVQ4Pqp+/XowgbAG/rYGiJ
+ REzuAdORs/S1BnDVnMqys2bVDQztmPnNL0XGlhvzYGuO3EuVsgjkfmWea2PKTtb6b7WR
+ 1xXldjpJGsCXB5n1TG3SD+01YSnyqnr9oIFLRzx2m8zRXJ7EV53F4FCLpQ3bPSbALXmq
+ bKpGn1zGJk0Hl8SUWSeg7jwxyD7LD/98RCVadQsJBtM+l+BS/B4PzYuatPlpDCUq3UrU
+ kOOA==
+X-Gm-Message-State: AOJu0YwoL9d6t4MKK8JhMd3eV6CZLhu6ch0RWJpJ9reIYi2SXCXuaBw4
+ xI9vriSetUGiMOOnjQxa08mlqnBukv2v/3S6Tt+x3xFvwf+TGokL2o8L5VHMx4GXV0AC7/hBINu
+ ngKU=
+X-Google-Smtp-Source: AGHT+IEOGoTLljgb7dltCH4+p6XtiVTgBcpz6YNz5k5LqkthPx2A0d9jqKBalp8pj8RB3X7jDzbpPA==
+X-Received: by 2002:a05:6830:6:b0:6e1:3d7a:a6ce with SMTP id
+ c6-20020a056830000600b006e13d7aa6cemr3974694otp.2.1706775276519; 
+ Thu, 01 Feb 2024 00:14:36 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXTnQL6E6EJ3/JfwBHM+88XRpBayJ6Ab4O9rPYt28oXr5Z3X1i81YjoAFkEaHPwRD3taAdJkXdG+cGaBh67ufp66JoKCgF3aSZR6pAmRr7j5Wsah65cRXTDi6MlwGGh/VAAxeZ4Fu02XasUWQiL2yyYIQwTNpBsE9ocUNg=
+ AJvYcCXA0bmWm9Tay1KW0b2ATc+wrSfsEq8Gqvo2gUK5J170KAK6wng/RUQeL8f3Ipy9tmpHneOyBsGuzez8J6wocaz42g==
 Received: from ThinkPad-T14-hirose.hq.igel.co.jp (napt.igel.co.jp.
  [219.106.231.132]) by smtp.gmail.com with ESMTPSA id
- 38-20020a631366000000b005d6c208fbd2sm11943780pgt.35.2024.02.01.00.14.27
+ 38-20020a631366000000b005d6c208fbd2sm11943780pgt.35.2024.02.01.00.14.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 00:14:30 -0800 (PST)
+ Thu, 01 Feb 2024 00:14:36 -0800 (PST)
 From: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
 To: qemu-devel@nongnu.org
 Cc: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] system/memory.c: support unaligned access
-Date: Thu,  1 Feb 2024 17:13:12 +0900
-Message-Id: <20240201081313.1339788-2-tomoyuki.hirose@igel.co.jp>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v2 2/2] hw/usb/hcd-xhci.c: allow unaligned access to
+ Capability Registers
+Date: Thu,  1 Feb 2024 17:13:13 +0900
+Message-Id: <20240201081313.1339788-3-tomoyuki.hirose@igel.co.jp>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240201081313.1339788-1-tomoyuki.hirose@igel.co.jp>
 References: <20240201081313.1339788-1-tomoyuki.hirose@igel.co.jp>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-oo1-xc2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-ot1-x32e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,78 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous code ignored 'impl.unaligned' and handled unaligned accesses
-as is. But this implementation cannot emulate specific registers of some
-devices that allow unaligned access such as xHCI Host Controller Capability
-Registers.
-This commit checks 'impl.unaligned' and if it is false, QEMU emulates
-unaligned access with multiple aligned access.
+According to xHCI spec rev 1.2, unaligned access to xHCI Host
+Controller Capability Registers is not prohibited. In Addition, the
+limit of access size is also unspecified. Actually, some real devices
+allow unaligned access and 8-byte access to these registers.
+This commit makes it possible to unaligned access and 8-byte access
+to Host Controller Capability Registers.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/143
 Signed-off-by: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
 ---
- system/memory.c | 38 +++++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 13 deletions(-)
+ hw/usb/hcd-xhci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index a229a79988..a7ca0c9f54 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -535,10 +535,17 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
-                                       MemTxAttrs attrs)
- {
-     uint64_t access_mask;
-+    unsigned access_mask_shift;
-+    unsigned access_mask_start_offset;
-+    unsigned access_mask_end_offset;
-     unsigned access_size;
--    unsigned i;
-     MemTxResult r = MEMTX_OK;
-     bool reentrancy_guard_applied = false;
-+    bool is_big_endian = memory_region_big_endian(mr);
-+    signed start_diff;
-+    signed current_offset;
-+    signed access_shift;
-+    hwaddr current_addr;
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index ad40232eb6..9e0b24c93e 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -3181,9 +3181,11 @@ static const MemoryRegionOps xhci_cap_ops = {
+     .read = xhci_cap_read,
+     .write = xhci_cap_write,
+     .valid.min_access_size = 1,
+-    .valid.max_access_size = 4,
++    .valid.max_access_size = 8,
++    .valid.unaligned = true,
+     .impl.min_access_size = 4,
+     .impl.max_access_size = 4,
++    .impl.unaligned = false,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
  
-     if (!access_size_min) {
-         access_size_min = 1;
-@@ -560,19 +567,24 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
-         reentrancy_guard_applied = true;
-     }
- 
--    /* FIXME: support unaligned access? */
-     access_size = MAX(MIN(size, access_size_max), access_size_min);
--    access_mask = MAKE_64BIT_MASK(0, access_size * 8);
--    if (memory_region_big_endian(mr)) {
--        for (i = 0; i < size; i += access_size) {
--            r |= access_fn(mr, addr + i, value, access_size,
--                        (size - access_size - i) * 8, access_mask, attrs);
--        }
--    } else {
--        for (i = 0; i < size; i += access_size) {
--            r |= access_fn(mr, addr + i, value, access_size, i * 8,
--                        access_mask, attrs);
--        }
-+    start_diff = mr->ops->impl.unaligned ? 0 : addr & (access_size - 1);
-+    current_addr = addr - start_diff;
-+    for (current_offset = -start_diff; current_offset < (signed)size;
-+         current_offset += access_size, current_addr += access_size) {
-+        access_shift = is_big_endian
-+                          ? (signed)size - (signed)access_size - current_offset
-+                          : current_offset;
-+        access_mask_shift = current_offset > 0 ? 0 : -current_offset;
-+        access_mask_start_offset = current_offset > 0 ? current_offset : 0;
-+        access_mask_end_offset = current_offset + access_size > size
-+                                     ? size
-+                                     : current_offset + access_size;
-+        access_mask = MAKE_64BIT_MASK(access_mask_shift * 8,
-+            (access_mask_end_offset - access_mask_start_offset) * 8);
-+
-+        r |= access_fn(mr, current_addr, value, access_size, access_shift * 8,
-+                       access_mask, attrs);
-     }
-     if (mr->dev && reentrancy_guard_applied) {
-         mr->dev->mem_reentrancy_guard.engaged_in_io = false;
 -- 
 2.39.2
 
