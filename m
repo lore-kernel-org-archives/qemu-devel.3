@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DF4C4828C
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE55C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 13:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXBo-00016z-7i; Thu, 01 Feb 2024 08:33:12 -0500
+	id 1rVXCh-0001vh-Ch; Thu, 01 Feb 2024 08:34:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVXBa-00013y-O0
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:33:01 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1rVXCg-0001v6-2y
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:34:06 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVXBY-0007JY-Ho
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:32:58 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-55a179f5fa1so1260329a12.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:32:55 -0800 (PST)
+ id 1rVXCe-0007Ty-97
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 08:34:05 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-55fcceb5f34so317752a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 05:34:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706794374; x=1707399174; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sTyLqxBvF7AffE5fzyt1MkAV5qLzgRzowEuXzJFsWjA=;
- b=eljcTMpEeKjZ3GBwTG7zdMO3wZON6ppWc9+oZAWd88FaRH+k4skwsUqpSbhGjLdfgy
- QdVQfaBtFhjRLcIJnsdu8iXAUwDBZkzXjkZcScnV/FAT6IVBkM7fkUxSOttUEwo+4Mvu
- HFQU8XGRxVcDSw3IuA/r5oOUBB0vO3NlWVn7Bgn6teVcvotJrxbcv+SlYSZJxGbZldOM
- XagBCd/uBWac0+jFdsSCzzq+s7fyuIoM50fbTMN0NQI4kRA6AfploqDVgrsLF+ObsSxU
- /t+/SdBOXqNQjokuAGUUxdNC1+GinQ0dd8ST6Tc2bLErAQ2SeC0qwWLfwYDWpBf9W639
- nfgA==
+ d=linaro.org; s=google; t=1706794443; x=1707399243; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=io87DHhBMjJIuCrn/6iiYfrsoMeo6aQOZ9fSI+L5OJg=;
+ b=kPWAHYWKO4EI70yaTPybqSh2mCcSioKnGI6jT++nr9xwMUfr2/AaYmiRa26vV7NzRn
+ NG1bc6zPv3A0YflnyYej+/kp+epOMcOkQBIf0ipADh6TrH5+iNIM+rGtZK5eMl6VqRcP
+ kx18bVSMH5Or3BxWPW7qh7SwlY18FqopDw1QbWzG5GFmyHcA4KfIxpteHp7sEOe+fo/1
+ A9Cb3H1CRUJmxcqt9II49mJIbT+IpK+6sDMaukGNsGUyX1HZA0BS/uv31aO0jU12609J
+ 83wScOjkshB5JopuyaGTuO9nUtFz+3XhteO8Rj4e7cIJBVElFoJJUGy7UE3VwsRwbQiE
+ /5WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706794374; x=1707399174;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sTyLqxBvF7AffE5fzyt1MkAV5qLzgRzowEuXzJFsWjA=;
- b=YfBF4BqR0nCuNO8wlSzMFoER5pM6aokRQFROxhZ5daUzN+76m4RlpEPuxOKmLJn4mw
- Y+OBkGuwpTgWSnV0YARetIokWDksobjX1XZFCkDP/W/pYpTjqlhriRfJXD/aDCX2jScs
- YAK1c6RYUibPQR20xkwiVI2xlOO5y1gxArYPnggQIxN5klrJ9Ups5iT4R4b6RJn7TdEV
- NHew/7qsEc906Y7OfaFVU5RjJ6Myf5c6omVnaA5y4Uo9AHEqGBcFuXnn4seNXL7Xh7ws
- UI4Hgn9uT1eZumQpb0K0Lt7cuFLBGJEVEhmRoT4V6QNbMyyhMUyHdfv/OMBEKpGvzPz5
- 79Yw==
-X-Gm-Message-State: AOJu0YxTTfuViUqIejV3jo8nFCh8DObq5kiEBVUs/g9AcEhe/XOEtgM4
- YqLppIzUMpYAd6Oi2Kdp1T9xupX5Z3WVcxUcEKoQgFYJdjIyR8+KNP6YwETB3T0jLSa8LFTssE1
- OqHdLFnJzSGGBSwKZN3/0eijHkySzEhhqyXX/zg==
-X-Google-Smtp-Source: AGHT+IG8mSJVpBC789nuzoiKSyHuEXGMVVA669uf2tu8hGjD4/7loJXEuFV7rNpvMJOgQA+lyBXcqLRImcRruHdlehA=
-X-Received: by 2002:a50:9b57:0:b0:55f:3d12:eb3c with SMTP id
- a23-20020a509b57000000b0055f3d12eb3cmr3687641edj.14.1706794374344; Thu, 01
- Feb 2024 05:32:54 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706794443; x=1707399243;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=io87DHhBMjJIuCrn/6iiYfrsoMeo6aQOZ9fSI+L5OJg=;
+ b=sQM6L+Jfs5bdLzJFkQTEZWgyV5X0sieUFLhxNluFUxUSGaFLxVhtpYo3Kh7X+Z9+EN
+ TJRjQde+/v7j4wbfzJa5AtlQwZ+s0dPEgThtGRh8hrNxQIJIpxVSZ+sn/mC6yYdgbsY+
+ KjYn7xBNLNg0luoWimTfLHonGtm8W+C2JrJWUlsVcexR3/ytG2V1v/+3E209DI7PJkKO
+ gSC3pUmOb1xJdC+ZNH8S81oi0l+i5yceq8bHjVVLcuVG1h0zBFHeuGqY6CaF72jycnAs
+ jhB7MQVsxLDGKgPPskZatzsJDgSmMga3Vb1VVwUq4rUwi0lOACCkbMPEJWcpFAJjHK5L
+ b6tQ==
+X-Gm-Message-State: AOJu0YxtiuECRMlIzZ9NKlyzZ0AwcOqluV+H6Q+phIZqhgp+Ej9RqJPT
+ DqbZ3UEjIxdTed8OuMva+cGg1Q2vR8aYvNHHA6mZC9I2IzDZ4FnYXwKWPDD3CirKqloQFEzFRTD
+ 9E+BJbo8HVGqLjBlq6cao9srsBMCLaRk94njUWg==
+X-Google-Smtp-Source: AGHT+IFEH2aw4DB4LH+E2j6IrvWbB/fYj6offWffTwasH1Y4pUrvWad6gmp+DEn0ewSibR/EdqNIfh94+byV7afRa5k=
+X-Received: by 2002:a50:ee19:0:b0:55f:d5a0:749b with SMTP id
+ g25-20020a50ee19000000b0055fd5a0749bmr261166eds.39.1706794442744; Thu, 01 Feb
+ 2024 05:34:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20240112134640.1775041-1-peter.maydell@linaro.org>
- <eaf71668-fe0d-45db-817e-fe052df91c17@redhat.com>
-In-Reply-To: <eaf71668-fe0d-45db-817e-fe052df91c17@redhat.com>
+References: <20240122143537.233498-1-peter.maydell@linaro.org>
+In-Reply-To: <20240122143537.233498-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 1 Feb 2024 13:32:43 +0000
-Message-ID: <CAFEAcA-jV1z0M+i=pjrgJ6DJc2ofnjeSvUqtkpxzWVbU1S3gWA@mail.gmail.com>
-Subject: Re: [PATCH] hw/pci-host/raven.c: Mark raven_io_ops as implementing
- unaligned accesses
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+Date: Thu, 1 Feb 2024 13:33:51 +0000
+Message-ID: <CAFEAcA_xH=fRR2iTr9+RgiA6n51FCakCsk60z=Mr6XmaujbebQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] virt: wire up NS EL2 virtual timer IRQ
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Ard Biesheuvel <ardb@kernel.org>, 
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,45 +91,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jan 2024 at 11:03, C=C3=A9dric Le Goater <clegoate@redhat.com> w=
-rote:
->
-> On 1/12/24 14:46, Peter Maydell wrote:
-> > The raven_io_ops MemoryRegionOps is the only one in the source tree
-> > which sets .valid.unaligned to indicate that it should support
-> > unaligned accesses and which does not also set .impl.unaligned to
-> > indicate that its read and write functions can do the unaligned
-> > handling themselves.  This is a problem, because at the moment the
-> > core memory system does not implement the support for handling
-> > unaligned accesses by doing a series of aligned accesses and
-> > combining them (system/memory.c:access_with_adjusted_size() has a
-> > TODO comment noting this).
-> >
-> > Fortunately raven_io_read() and raven_io_write() will correctly deal
-> > with the case of being passed an unaligned address, so we can fix the
-> > missing unaligned access support by setting .impl.unaligned in the
-> > MemoryRegionOps struct.
-> >
-> > Fixes: 9a1839164c9c8f06 ("raven: Implement non-contiguous I/O region")
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > Spotted by code inspection: I was looking for devices whose behaviour
-> > might be changed by a patch I'm reviewing that adds that missing
-> > support for unaligned accesses in the core memory system. But even
-> > if we do implement it there, it's more efficient for the raven MR
-> > to correctly mark it as handling unaligned accesses itself.
-> >
-> > Tested with 'make check' and 'make check-avocado' only.
->
-> It doesn't affect the prep machine boot with OpenBIOS and a
-> "Debian GNU/Linux 3.0 6015" image.
->
-> Tested-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+Ping for code review, please?
 
-Thanks for the review -- is this patch going to go via a
-ppc queue, or should I throw it in with my upcoming
-target-arm pullreq?
-
+thanks
 -- PMM
+
+On Mon, 22 Jan 2024 at 14:35, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This patchset wires up the NS EL2 virtual timer IRQ on the virt
+> board, similarly to what commit 058262e0a8b2 did for the sbsa-ref board.
+>
+> Version 1 was an RFC patchset, originally sent back in autumn:
+> https://patchew.org/QEMU/20230919101240.2569334-1-peter.maydell@linaro.org/
+> The main reason for it being an RFC is that the change, while correct,
+> triggers a bug in EDK2 guest firmware that makes EDK2 assert on bootup.
+> Since the RFC, we've upgraded our in-tree version of the EDK2 binaries
+> to a version that has the fix for that bug, so I think the QEMU side of
+> these patches is ready to go in now.
+>
+> To accommodate users who might still be using older EDK2 binaries,
+> we only expose the IRQ in the DTB and ACPI tables for virt-9.0 and
+> later machine types.
+>
+> If you see in the guest:
+>      ASSERT [ArmTimerDxe] /home/kraxel/projects/qemu/roms/edk2/ArmVirtPkg/Library/ArmVirtTimerFdtClientLib/ArmVirtTimerFdtClientLib.c(72): PropSize == 36 || PropSize == 48
+>
+> then your options are:
+>  * update your EDK2 binaries to edk2-stable202311 or newer
+>  * use the 'virt-8.2' versioned machine type
+>  * not use 'virtualization=on'
+>
+> I'll put something about this into the release notes when this
+> goes into git. (There are other reasons why you probably want a
+> newer EDK2 for AArch64 guests, so this is worth flagging up to our
+> downstream distros who don't take our pre-built firmware binaries.)
+>
+> changes v1->v2:
+>  * the change in DTB and ACPI tables is now tied to the machine version
+>  * handle change of the ARCH_TIMER_*_IRQ values from PPI numbers to INTIDs
+>  * bump the FADT header to indicate ACPI v6.3, since we might be using
+>    a 6.3 feature in the GTDT
+>  * the avocado tests now all pass, because we have updated our copy
+>    of EDK2 in pc-bios/ to a version which has the fix for the bug
+>    which would otherwise cause it to assert on bootup
+>  * patch 2 commit message improved to give details of the EDK2 assert and
+>    state the options for dealing with it (this will also go into the
+>    QEMU release notes)
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (3):
+>   tests/qtest/bios-tables-test: Allow changes to virt GTDT
+>   hw/arm/virt: Wire up non-secure EL2 virtual timer IRQ
+>   tests/qtest/bios-tables-tests: Update virt golden reference
+>
+>  include/hw/arm/virt.h     |   2 ++
+>  hw/arm/virt-acpi-build.c  |  20 +++++++++----
+>  hw/arm/virt.c             |  60 ++++++++++++++++++++++++++++++++------
+>  tests/data/acpi/virt/FACP | Bin 276 -> 276 bytes
+>  tests/data/acpi/virt/GTDT | Bin 96 -> 104 bytes
+>  5 files changed, 67 insertions(+), 15 deletions(-)
+>
 
