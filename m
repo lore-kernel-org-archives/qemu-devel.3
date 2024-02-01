@@ -4,77 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E04C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4538AC48286
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 17:45:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVb4D-00055M-PC; Thu, 01 Feb 2024 12:41:38 -0500
+	id 1rVb7D-0005wP-6V; Thu, 01 Feb 2024 12:44:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rVb4C-000558-7B
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:41:36 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <vkale@nvidia.com>) id 1rVb77-0005vr-05
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:44:37 -0500
+Received: from mail-sn1nam02on2046.outbound.protection.outlook.com
+ ([40.107.96.46] helo=NAM02-SN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rVb48-00041q-Qf
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:41:35 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TQmMw1sPbz6K8t3;
- Fri,  2 Feb 2024 01:38:20 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 9C95D1404F5;
- Fri,  2 Feb 2024 01:41:28 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 1 Feb
- 2024 17:41:28 +0000
-Date: Thu, 1 Feb 2024 17:41:27 +0000
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Sajjan Rao
- <sajjanr@gmail.com>, Gregory Price <gregory.price@memverge.com>, "Dimitrios
- Palyvos" <dimitrios.palyvos@zptcorp.com>, <linux-cxl@vger.kernel.org>,
- <qemu-devel@nongnu.org>, <richard.henderson@linaro.org>
-Subject: Re: Crash with CXL + TCG on 8.2: Was Re: qemu cxl memory expander
- shows numa_node -1
-Message-ID: <20240201174127.0000666c@Huawei.com>
-In-Reply-To: <CAFEAcA-5KhX+O0tCTdkPbkobNo1sprgebqs63ebzKc5v7KqYeg@mail.gmail.com>
-References: <CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com>
- <20230823175056.00001a84@Huawei.com>
- <CAAg4ParSB4_2FU2bu96A=3tSNuwHqZwK0wCS18EJoPAq9kYEkw@mail.gmail.com>
- <CAAg4Pap9KzkgX=fgE7vNJYxEpGbHA-NVsgBY5npXizUbMhjp9A@mail.gmail.com>
- <20240126123926.000051bd@Huawei.com>
- <ZbPTL00WOo7UC0e6@memverge.com>
- <20240126171233.00002a2e@Huawei.com>
- <CAAg4ParQKj9FUe0DRX0Wmk1KT0bnxx2F7W=ic38781j7eVz+OQ@mail.gmail.com>
- <20240201130438.00001384@Huawei.com>
- <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
- <20240201140100.000016ce@huawei.com>
- <CAFEAcA9DW8AuMwDr_qyDXPWJcLsvD773XTr1stwuagHWc6p72g@mail.gmail.com>
- <87msskkyce.fsf@draig.linaro.org>
- <CAFEAcA_a_AyQ=Epz3_+CheAT8Crsk9mOu894wbNW_FywamkZiw@mail.gmail.com>
- <20240201162150.000022cf@huawei.com>
- <87h6iskuad.fsf@draig.linaro.org>
- <20240201170822.00005bad@Huawei.com>
- <CAFEAcA-5KhX+O0tCTdkPbkobNo1sprgebqs63ebzKc5v7KqYeg@mail.gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <vkale@nvidia.com>) id 1rVb6l-0004kI-0Z
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 12:44:28 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mmi8okjit9odWQf3ot7PmqIYZlrTW1jEhE9bwMhlrcH1pRHehfY5NBJeqdWak2rfsap71qtEUKQVZgrrschxSoTeEcaXTde2+kxYR49hKWSbVfS44amY+13dgiBsZcMw+oJoECOxZTpIh/UmXjQV6pFx0KdgkJ0Z2kZHEQYmvIl3a1TM3JVymopnouAsN7u/3sIUIDysyneuSWzvnn/U21vsPldEV3+H4t1i+x5GUxNZXgUaG1yMfXXJZJjZ43VgwrLSPPYu4VhXDsbkrC79pWpCwEJlEPKEW76qsA+5SkiXJORn79ZjSnFmHXrmeg/AprzPVZzCuNfOciHDggD/gw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=13+JFrQYFdMc5ftL4mJHE5NKNAY54HJpu/25AAIfJ2g=;
+ b=aHiFpKBh8NdAuZCi5OC5kdDGrTVfW3CqQV9AYeMODt4xn0bc8uMHCqxFn9lBsueP1D+rxKhIjmBWcROUs0mYOk5uSE/NzH3LbNhDkM9KSrM0DcU3fSr7vwC0slQR4EIPHFtgwi2DTW5Y/50SKn6u0qg/k3advbIbShSjCRhIaW/lsv3UMmDRLeT8rUdAtomOuLUU0tyXHQcMZE/G+saNcgY/q2j1TzoKnGSz3gl/LMahJUwVGL41X4yZ/0W9ueIuV39orIi+Cu1EhSuTGBcbj6EFHkWQXu4lO7Aw+6MWoBW3fpnx71fQCMnNbZ+tDTiy5eWGmNS0v1uWNAkjiodykg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=13+JFrQYFdMc5ftL4mJHE5NKNAY54HJpu/25AAIfJ2g=;
+ b=qyXo/0NXcDmTwKUhu/2Zfo9fTuDNBsI+Vkg1sHMxhDJVj6MmoZdZU57Ile6gW2GiHpcDLbM7/Tw5Hb/BL4duaTxEBblAZCdZr6uanXZ5+CHJlYo+l1amFlMMS20lwPBOyod3em4PH1ObIS4ct+S3n84urtZqhS5jk+DS1bYNTAnDRQnvup2TJxxSh8uIYCmtKuGA1Yf0bfU0UXcCNcDsNsEySPFgbWqv1XKw77BTQGvkfmIE+QiBPRGKSMXeC7zrfr+V15hiMFXnuXIxoTeZyigrzR7JdBoOGkn4nI0VjjpN/Q80nDJeCvYNgch5/wvDHqk/8CuM71MrZ1+hNYRjIQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM4PR12MB5070.namprd12.prod.outlook.com (2603:10b6:5:389::22)
+ by CY5PR12MB6202.namprd12.prod.outlook.com (2603:10b6:930:25::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.32; Thu, 1 Feb
+ 2024 17:39:08 +0000
+Received: from DM4PR12MB5070.namprd12.prod.outlook.com
+ ([fe80::882:18fc:98cd:f5e6]) by DM4PR12MB5070.namprd12.prod.outlook.com
+ ([fe80::882:18fc:98cd:f5e6%6]) with mapi id 15.20.7270.009; Thu, 1 Feb 2024
+ 17:39:07 +0000
+Message-ID: <b83a9452-cbcc-4f4d-b0f7-b4957029e755@nvidia.com>
+Date: Thu, 1 Feb 2024 23:08:58 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/pci: migration: Skip config space check for vendor
+ specific capability during restore/load
+Content-Language: en-US
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, targupta@nvidia.com, cjia@nvidia.com,
+ acurrid@nvidia.com, zhiw@nvidia.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, avihaih@nvidia.com
+References: <20240130095617.31661-1-vkale@nvidia.com>
+ <4d6a45ed-ca8d-4e41-b536-c2502ff1ce8b@nvidia.com>
+ <20240130115832.462e76b7.alex.williamson@redhat.com>
+ <f6586fc8-d64c-4ff0-80ac-1eb18b5f486b@nvidia.com>
+ <20240131103817.50389f39.alex.williamson@redhat.com>
+X-Nvconfidentiality: public
+From: Vinayak Kale <vkale@nvidia.com>
+In-Reply-To: <20240131103817.50389f39.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN0PR01CA0051.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:49::10) To DM4PR12MB5070.namprd12.prod.outlook.com
+ (2603:10b6:5:389::22)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5070:EE_|CY5PR12MB6202:EE_
+X-MS-Office365-Filtering-Correlation-Id: 458f2931-1e7d-4a3f-3489-08dc234cb0e6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: x8AmY/gLl3rgTaReBtO5UViyitg4yhPT/ADRFKwWCedWv6N+lDFTJo7zhDNGYIAc8ep0RtecH56oGoLz7TbbL0EV9Qz/4h4rFV5Ax4xD8iv6BrltDu5FR8tPxZSlz0X8jOZ7tZ+BDur7FCBGmPanG2ua4nID7zZ7000dQ3b4h4njeSGqPcwYJWxdeTt8vmOxO2cOPItxNjQZLLqXZRNQ+lTgG/klVSsLkaxM4u9fyLIWn/P3UCgG+rPEP6Bh6sd2WPqoY2FCEugtG25XnuK9BiL/owejLFhIbN+v0OAwEgW4NoAcDzFyHQ1Ymy0a69eXRE1C6hPU5HI0ZfUzLWfF/9houMYGcSmxsz814TYNyk852eu7Sb2vHSg15rN7kzMDrTCMWNbxWdc0jRI5u37ABZo4SkvGi9VTkTC6rZXGfpPsNIdxcJfrT64oGc73r4UHW1ga4CxodGyMtbnf8salv614EuLFkdrj54IPgWdTskCCCb44LIvxIVEXeiWgfd9DwIQ7n4ovNwTbyr5XV/tLsRWv6qpBKtlkM7bc71lH/hMU4211b3l9YPlx4cRuWwZ5WAhik5UvOrRX+rShsFxm/bi9Es1b85FuhaWrpO4KZJzWXD4V60EOsaYVjqjy0FXR7Nlh7/Ukw6VT90TBFVVmnQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB5070.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(39860400002)(376002)(136003)(366004)(396003)(346002)(230922051799003)(64100799003)(186009)(451199024)(1800799012)(31686004)(66899024)(5660300002)(478600001)(66556008)(66476007)(2906002)(26005)(6486002)(6916009)(83380400001)(53546011)(6666004)(6506007)(8676002)(4326008)(316002)(8936002)(66946007)(107886003)(6512007)(2616005)(38100700002)(86362001)(31696002)(41300700001)(36756003)(45980500001)(43740500002);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OUo1WWxLRUdtYUYyWDN5WUVIdDNTckk4blZ4QlB0RFVZenk1RGRsdS82VEdn?=
+ =?utf-8?B?QmxRMWxWNG1hUkxnYlIxaE5ZZDlWZTdabXhoNldycHM0TEJnWXMyZWtQRGdh?=
+ =?utf-8?B?U09wOHRpbnRhMFh1YndCbnY0TS92aVI2RHhaU0hGRnR6WDFFWS8va0hSSnhz?=
+ =?utf-8?B?RndYUkRtSFo1amd6YUZ0UjlKbUdqYjY4NGJ0ZG1lblFBSjZXZWt5WG8zNmVP?=
+ =?utf-8?B?OVJvVERnU3hWb3NaTVQyVzJTZFNZeFcrelVtOEFkZ3Vya2xySjJXRTJrNThh?=
+ =?utf-8?B?eEpkVmVialFDbFVBWXltdzFVSDNTM0p0blNkWG9jOFRhSEltejZCQ05MTits?=
+ =?utf-8?B?cTRNMmhxRHF1QWo0bnFYNVpBVTkrZ24rcmtuTTRqS0JzVHJreDFNNVY1Qnps?=
+ =?utf-8?B?T3poR0lWMHliVndkWThWUjR6OGdoV2N4S2gvNlQ4NC9lK25PRGJjajFFZFJH?=
+ =?utf-8?B?eXVyTmk1YUo1NVBxeFRLeStlZjJNWW02U21SOVhmellaK1N1bGUxbm95OTc1?=
+ =?utf-8?B?elc3dTQvcFc1V29FMWZYSTc2MGc2TzUvVVFGbjNJSXVqalpia3o3Z1Qra1gy?=
+ =?utf-8?B?b3VYcnBRSjZZenJkeXBDZ09qLzIzaXVleGZ6Y25xVmFka3hKTTY0ZStXdEly?=
+ =?utf-8?B?M1M4dFNCRG9tTDYybWNuczl2Q1lVYjQ1alNhdkxJSG53ck9uNmdmYVpJQTAv?=
+ =?utf-8?B?aXpkRUVoUGZsOXZ6TmZ0M2d3Y1ZnbkRETjN4d3UxSHJxQmxqSm5QSHRyeER6?=
+ =?utf-8?B?SzVxNjcyWjl5RTBxRjVzTFhNK1h5azROOEM0RGxnTXoxOUo2alNpOFhXZnhY?=
+ =?utf-8?B?SENxbG54MmlROVJRSVJWQ0swaitIdTFybElsWDFxelNKWk5RcGxHMk9xMUdL?=
+ =?utf-8?B?U0M1THA4VUJhL2RlQnRaY1k1Qm9LbERkNmxtKzJGTldxcG1wVWxxbUVVOW03?=
+ =?utf-8?B?aStoUkpIWGNQeFN6MTJXTFdKNUcrckpBM0FPUVdpbXNva2ZpUlVIaUd5SEk5?=
+ =?utf-8?B?M215U09CZ2ZXWXlLK3hnVVRKd0U3QWZVTlkzeFZhVG5qa1RXajNyTVFJSVV6?=
+ =?utf-8?B?TkxPT09pOUZDcVlROTYyVkJ6RFp5V0Nxcld3Z1RCRGVTVkRUNGMvOHh0dEI0?=
+ =?utf-8?B?cWxsQ1ZvSlU4N2ZTeGRtTCtaMmtCcTJZTEpXK2FUVHNzeDllcUdrTm5aSHZx?=
+ =?utf-8?B?TWVaemlxb3V0OW9OTGRBT3poZ1Y1aklHbTlvemF0UjFzQ0lWTmhjd3VmLzFC?=
+ =?utf-8?B?QUxobXNaQVM4OWVITnZmWFQ2bGZaRkh4bVRXSkFwcTJxTlBnK1RDcEFCaFNF?=
+ =?utf-8?B?ek5WeGVYZ3dNNnZRSlN3cFFzR0d3bGszdllkRWJYSG4rWnFTNmlKTFI4ZmdD?=
+ =?utf-8?B?SHFrUXhub1FrZHhxU2plczlOTWxTVkN2aDlmWkxXc0RTazRrRkM3dkRKNFFM?=
+ =?utf-8?B?VWNvSHBaQ2dQM2JFazBYRjhYRmtJVmRPdWNDdWZPUWozcTlqTDVYdVFhdUhB?=
+ =?utf-8?B?V2NybVpvUW5wUWxqRjh3ZG1kQW5maWZjVE5uaTBxbGxCSGoyYmV2TldwUlRI?=
+ =?utf-8?B?SlBQT0lZMUFobnRZbGZpRUhXMGFaUDJLWnNIUFp6MU96eFFUZTh5RjdVbHZK?=
+ =?utf-8?B?bXRwdVZTV2lYQ1ZnL0Jvd1FzRWMyV2wrQUdwVkYxRlVBNEFrTkJiRHFGdHd1?=
+ =?utf-8?B?T05FbmFjNG5URnI4UWNxZStuVzlYRTZad1kyYTV0dDBFeFh5T1dRb0dmeGp4?=
+ =?utf-8?B?M2NjbFdMT08xVVQ1cDJQTkk0Y3E4UUFYcTRHeDVTeVIrYmlqQWIrK3ZSVDRG?=
+ =?utf-8?B?Ujhjb3g4cmhYV21hdG1iQzNXcnk3eWxkMzZLYkpUcDkvbkEwRHhaY3lrMEJw?=
+ =?utf-8?B?UG4xa2VITWZ0Wkk4RDJMZEZKUGh1WUtIMHJuZ1VjY1BUMFNwSDdWWHNJVjdD?=
+ =?utf-8?B?ZjF0SXpta3J2UmRXcTBJbWNHWUJYVCtHQ3ZQbTEwWWR3bFJ1KzlENUZKT1NE?=
+ =?utf-8?B?VEx4WVJ6T2RpZlZKZXZsUkxzRUpsbUk3S1dNWGZCUmlNeHJFMG1FRVZ5dUpC?=
+ =?utf-8?B?Yk5Ybk9LWlFiQzBObWw0Z2FGWjJzZGdOTTR5SnJBZkphWmw0eXFkZUFuRTZE?=
+ =?utf-8?Q?JqWmY27/P1mWd+Z29JBIQLVtH?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 458f2931-1e7d-4a3f-3489-08dc234cb0e6
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5070.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Feb 2024 17:39:07.5573 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7nY8P7+03B1NIDUkfsQiAZHhdO34Hk2BrmkoMCTSbz354xpoLdJm4/mTZlDFgOpx5LFR7A6lbOUH+mAkJhtACg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6202
+Received-SPF: softfail client-ip=40.107.96.46; envelope-from=vkale@nvidia.com;
+ helo=NAM02-SN1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,208 +148,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 1 Feb 2024 17:21:49 +0000
-Peter Maydell <peter.maydell@linaro.org> wrote:
 
-> On Thu, 1 Feb 2024 at 17:08, Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
-> >
-> > On Thu, 01 Feb 2024 16:45:30 +0000
-> > Alex Benn=E9e <alex.bennee@linaro.org> wrote:
-> > =20
-> > > Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
-> > > =20
-> > > > On Thu, 1 Feb 2024 16:00:56 +0000
-> > > > Peter Maydell <peter.maydell@linaro.org> wrote:
-> > > > =20
-> > > >> On Thu, 1 Feb 2024 at 15:17, Alex Benn=E9e <alex.bennee@linaro.org=
-> wrote: =20
-> > > >> >
-> > > >> > Peter Maydell <peter.maydell@linaro.org> writes: =20
-> > > >> > > So, that looks like:
-> > > >> > >  * we call cpu_tb_exec(), which executes some generated code
-> > > >> > >  * that generated code calls the lookup_tb_ptr helper to see
-> > > >> > >    if we have a generated TB already for the address we're goi=
-ng
-> > > >> > >    to execute next
-> > > >> > >  * lookup_tb_ptr probes the TLB to see if we know the host RAM
-> > > >> > >    address for the guest address
-> > > >> > >  * this results in a TLB walk for an instruction fetch
-> > > >> > >  * the page table descriptor load is to IO memory
-> > > >> > >  * io_prepare assumes it needs to do a TLB recompile, because
-> > > >> > >    can_do_io is clear
-> > > >> > >
-> > > >> > > I am not surprised that the corner case of "the guest put its
-> > > >> > > page tables in an MMIO device" has not yet come up :-)
-> > > >> > >
-> > > >> > > I'm really not sure how the icount handling should interact
-> > > >> > > with that... =20
-> > > >> >
-> > > >> > Its not just icount - we need to handle it for all modes now. Th=
-at said
-> > > >> > seeing as we are at the end of a block shouldn't can_do_io be se=
-t? =20
-> > > >>
-> > > >> The lookup_tb_ptr helper gets called from tcg_gen_goto_tb(),
-> > > >> which happens earlier than the tb_stop callback (it can
-> > > >> happen in the trans function for branch etc insns, for
-> > > >> example).
-> > > >>
-> > > >> I think it should be OK to clear can_do_io at the start
-> > > >> of the lookup_tb_ptr helper, something like:
-> > > >> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> > > >> index 977576ca143..7818537f318 100644
-> > > >> --- a/accel/tcg/cpu-exec.c
-> > > >> +++ b/accel/tcg/cpu-exec.c
-> > > >> @@ -396,6 +396,15 @@ const void *HELPER(lookup_tb_ptr)(CPUArchStat=
-e *env)
-> > > >>      uint64_t cs_base;
-> > > >>      uint32_t flags, cflags;
-> > > >>
-> > > >> +    /*
-> > > >> +     * By definition we've just finished a TB, so I/O is OK.
-> > > >> +     * Avoid the possibility of calling cpu_io_recompile() if
-> > > >> +     * a page table walk triggered by tb_lookup() calling
-> > > >> +     * probe_access_internal() happens to touch an MMIO device.
-> > > >> +     * The next TB, if we chain to it, will clear the flag again.
-> > > >> +     */
-> > > >> +    cpu->neg.can_do_io =3D true;
-> > > >> +
-> > > >>      cpu_get_tb_cpu_state(env, &pc, &cs_base, &flags);
-> > > >>
-> > > >>      cflags =3D curr_cflags(cpu);
-> > > >>
-> > > >> -- PMM =20
-> > > >
-> > > > No joy.  Seems like a very similar backtrace.
-> > > >
-> > > > Thread 5 "qemu-system-x86" received signal SIGABRT, Aborted.
-> > > > [Switching to Thread 0x7ffff4efe6c0 (LWP 23937)]
-> > > > __pthread_kill_implementation (no_tid=3D0, signo=3D6, threadid=3D<o=
-ptimized out>) at ./nptl/pthread_kill.c:44
-> > > > 44      ./nptl/pthread_kill.c: No such file or directory.
-> > > > (gdb) bt
-> > > > #0  __pthread_kill_implementation (no_tid=3D0, signo=3D6, threadid=
-=3D<optimized out>) at ./nptl/pthread_kill.c:44
-> > > > #1  __pthread_kill_internal (signo=3D6, threadid=3D<optimized out>)=
- at ./nptl/pthread_kill.c:78
-> > > > #2  __GI___pthread_kill (threadid=3D<optimized out>, signo=3Dsigno@=
-entry=3D6) at ./nptl/pthread_kill.c:89
-> > > > #3  0x00007ffff77c43b6 in __GI_raise (sig=3Dsig@entry=3D6) at ../sy=
-sdeps/posix/raise.c:26
-> > > > #4  0x00007ffff77aa87c in __GI_abort () at ./stdlib/abort.c:79
-> > > > #5  0x0000555555c4d19e in cpu_abort (cpu=3Dcpu@entry=3D0x5555578e0c=
-b0, fmt=3Dfmt@entry=3D0x555556048ee8 "cpu_io_recompile: could not find TB f=
-or pc=3D%p") at ../../cpu-target.c:373
-> > > > #6  0x0000555555c9cb25 in cpu_io_recompile (cpu=3Dcpu@entry=3D0x555=
-5578e0cb0, retaddr=3Dretaddr@entry=3D0) at ../../accel/tcg/translate-all.c:=
-611
-> > > > #7  0x0000555555c9f744 in io_prepare (retaddr=3D0, addr=3D195957906=
-64, attrs=3D..., xlat=3D<optimized out>, cpu=3D0x5555578e0cb0, out_offset=
-=3D<synthetic pointer>) at ../../accel/tcg/cputlb.c:1339
-> > > > #8  do_ld_mmio_beN (cpu=3D0x5555578e0cb0, full=3D0x7ffe88012890, re=
-t_be=3Dret_be@entry=3D0, addr=3D19595790664, size=3Dsize@entry=3D8, mmu_idx=
-=3D4, type=3DMMU_DATA_LOAD, ra=3D0) at ../../accel/tcg/cputlb.c:2030
-> > > > #9  0x0000555555ca0ecd in do_ld_8 (cpu=3Dcpu@entry=3D0x5555578e0cb0=
-, p=3Dp@entry=3D0x7ffff4efcdd0, mmu_idx=3D<optimized out>, type=3Dtype@entr=
-y=3DMMU_DATA_LOAD, memop=3D<optimized out>, ra=3Dra@entry=3D0) at ../../acc=
-el/tcg/cputlb.c:2356
-> > > > #10 0x0000555555ca332f in do_ld8_mmu (cpu=3Dcpu@entry=3D0x5555578e0=
-cb0, addr=3Daddr@entry=3D19595790664, oi=3Doi@entry=3D52, ra=3Dra@entry=3D0=
-, access_type=3Daccess_type@entry=3DMMU_DATA_LOAD) at ../../accel/tcg/cputl=
-b.c:2439
-> > > > #11 0x0000555555ca5e69 in cpu_ldq_mmu (ra=3D0, oi=3D52, addr=3D1959=
-5790664, env=3D0x5555578e3470) at ../../accel/tcg/ldst_common.c.inc:169
-> > > > #12 cpu_ldq_le_mmuidx_ra (env=3D0x5555578e3470, addr=3D19595790664,=
- mmu_idx=3D<optimized out>, ra=3Dra@entry=3D0) at ../../accel/tcg/ldst_comm=
-on.c.inc:301
-> > > > #13 0x0000555555b4b5de in ptw_ldq (in=3D0x7ffff4efcf10) at ../../ta=
-rget/i386/tcg/sysemu/excp_helper.c:98
-> > > > #14 ptw_ldq (in=3D0x7ffff4efcf10) at ../../target/i386/tcg/sysemu/e=
-xcp_helper.c:93
-> > > > #15 mmu_translate (env=3Denv@entry=3D0x5555578e3470, in=3D0x7ffff4e=
-fcfd0, out=3D0x7ffff4efcfa0, err=3Derr@entry=3D0x7ffff4efcfb0) at ../../tar=
-get/i386/tcg/sysemu/excp_helper.c:173
-> > > > #16 0x0000555555b4c3f3 in get_physical_address (err=3D0x7ffff4efcfb=
-0, out=3D0x7ffff4efcfa0, mmu_idx=3D0, access_type=3DMMU_DATA_STORE, addr=3D=
-18386491786698339392, env=3D0x5555578e3470) at ../../target/i386/tcg/sysemu=
-/excp_helper.c:578
-> > > > #17 x86_cpu_tlb_fill (cs=3D0x5555578e0cb0, addr=3D18386491786698339=
-392, size=3D<optimized out>, access_type=3DMMU_DATA_STORE, mmu_idx=3D0, pro=
-be=3D<optimized out>, retaddr=3D140736029817822) at ../../target/i386/tcg/s=
-ysemu/excp_helper.c:604
-> > > > #18 0x0000555555ca0df9 in tlb_fill (retaddr=3D140736029817822, mmu_=
-idx=3D0, access_type=3DMMU_DATA_STORE, size=3D<optimized out>, addr=3D18386=
-491786698339392, cpu=3D0x7ffff4efd120) at ../../accel/tcg/cputlb.c:1315
-> > > > #19 mmu_lookup1 (cpu=3Dcpu@entry=3D0x5555578e0cb0, data=3Ddata@entr=
-y=3D0x7ffff4efd120, mmu_idx=3D0, access_type=3Daccess_type@entry=3DMMU_DATA=
-_STORE, ra=3Dra@entry=3D140736029817822) at ../../accel/tcg/cputlb.c:1713
-> > > > #20 0x0000555555ca2b71 in mmu_lookup (cpu=3D0x5555578e0cb0, addr=3D=
-18386491786698339392, oi=3D<optimized out>, ra=3D140736029817822, type=3DMM=
-U_DATA_STORE, l=3D0x7ffff4efd120) at ../../accel/tcg/cputlb.c:1803
-> > > > #21 0x0000555555ca3e5d in do_st8_mmu (cpu=3D0x5555578e0cb0, addr=3D=
-23937, val=3D18386491784638059520, oi=3D6, ra=3D140736029817822) at ../../a=
-ccel/tcg/cputlb.c:2853
-> > > > #22 0x00007fffa9107c63 in code_gen_buffer () =20
-> > >
-> > > No thats different - we are actually writing to the MMIO region here.
-> > > But the fact we hit cpu_abort because we can't find the TB we are
-> > > executing is a little problematic.
-> > >
-> > > Does ra properly point to the code buffer here? =20
-> >
-> > Err.  How would I tell? =20
->=20
-> Well, a NULL pointer for the return address is definitely not in
-> the codegen buffer :-)
->=20
-> This is again a TLB fill case, but this time it's a data
-> access from a guest store insn. We had the correct ra when we
-> did the do_st8_mmu() down in frame 21: ra=3D140736029817822,
-> but as we go through the page table walk, we leave the ra
-> behind in x86_cpu_tlb_fill(), and so the ptw_ldq()
-> passes a zero ra down to the cpu_ldq_mmuidx_ra() (which
-> is generally meant to mean "I am not being called from
-> translated code and so can_do_io should be false").
->=20
-> I think that none of the page-table-walking handling
-> (either in target code or in general) has been designed
-> with the idea in mind that it might need to do something
-> for icount if the ptw touches an MMIO device. This is probably
-> not as simple as merely "plumb the ra value down through the
-> ptw code" -- somebody needs to think about whether doing
-> an io_recompile() is the right response to that situation.
-> And any "do an address translation for me" system insns
-> might or might not need to be dealt with differently.
->=20
-> If you can at all arrange for your workload not to put
-> page tables into MMIO device regions then your life will
-> be a lot simpler.
+On 31/01/24 11:08 pm, Alex Williamson wrote:
+> 
+> On Wed, 31 Jan 2024 15:22:59 +0530
+> Vinayak Kale <vkale@nvidia.com> wrote:
+> 
+>> On 31/01/24 12:28 am, Alex Williamson wrote:
+>>>
+>>> On Tue, 30 Jan 2024 23:32:26 +0530
+>>> Vinayak Kale <vkale@nvidia.com> wrote:
+>>>
+>>>> Missed adding Michael, Marcel, Alex and Avihai earlier, apologies.
+>>>>
+>>>> Regards,
+>>>> Vinayak
+>>>>
+>>>> On 30/01/24 3:26 pm, Vinayak Kale wrote:
+>>>>> In case of migration, during restore operation, qemu checks the config space of the pci device with the config space
+>>>>> in the migration stream captured during save operation. In case of config space data mismatch, restore operation is failed.
+>>>>>
+>>>>> config space check is done in function get_pci_config_device(). By default VSC (vendor-specific-capability) in config space is checked.
+>>>>>
+>>>>> Ideally qemu should not check VSC during restore/load. This patch skips the check by not setting pdev->cmask[] for VSC offsets in pci_add_capability().
+>>>>> If cmask[] is not set for an offset, then qemu skips config space check for that offset.
+>>>>>
+>>>>> Signed-off-by: Vinayak Kale <vkale@nvidia.com>
+>>>>> ---
+>>>>>     hw/pci/pci.c | 7 +++++--
+>>>>>     1 file changed, 5 insertions(+), 2 deletions(-)
+>>>>>
+>>>>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>>>>> index 76080af580..32429109df 100644
+>>>>> --- a/hw/pci/pci.c
+>>>>> +++ b/hw/pci/pci.c
+>>>>> @@ -2485,8 +2485,11 @@ int pci_add_capability(PCIDevice *pdev, uint8_t cap_id,
+>>>>>         memset(pdev->used + offset, 0xFF, QEMU_ALIGN_UP(size, 4));
+>>>>>         /* Make capability read-only by default */
+>>>>>         memset(pdev->wmask + offset, 0, size);
+>>>>> -    /* Check capability by default */
+>>>>> -    memset(pdev->cmask + offset, 0xFF, size);
+>>>>> +
+>>>>> +    if (cap_id != PCI_CAP_ID_VNDR) {
+>>>>> +        /* Check non-vendor specific capability by default */
+>>>>> +        memset(pdev->cmask + offset, 0xFF, size);
+>>>>> +    }
+>>>>>         return offset;
+>>>>>     }
+>>>>>
+>>>>
+>>>
+>>> If there is a possibility that the data within the vendor specific cap
+>>> can be consumed by the driver or diagnostic tools, then it's part of
+>>> the device ABI and should be consistent across migration.  A mismatch
+>>> can certainly cause a migration failure, but why shouldn't it?
+>>
+>> Sure, the device ABI should be consistent across migration. In case of
+>> VSC, it should represent same format on source and destination. But
+>> shouldn't VSC content check or its interpretation be left to vendor
+>> driver instead of qemu?
+> 
+> By "vendor driver" here, are you suggesting that QEMU device models (ex.
+> hw/net/{e1000*,igb*,rtl8139*}) should perform that validation?  If so,
+> where's the patch that introduces any sort of validation hooks for
+> vendors to provide?  Where is this validation going to happen in the
+> case of a migratable vfio-pci variant devices?  Nothing about this
+> patch suggests that it's deferring responsibility to some other code
+> entity, it only indicates "checking this breaks, let's not do it".
+> 
+> It's possible that the device you care about only reports volatile
+> diagnostic information through the vendor specific capability, but
+> another device might use it to report information relative to the
+> internal hardware configuration.  Without knowing what the vendor
+> specific capability contains, QEMU needs to take the most conservative
+> approach by default.  Thanks,
 
-The only way we can do that is abandon supporting emulation
-of fine grained interleave (or at least documented that
-if you are using this 'mode', don't use it as normal memory)
+PCI/PCIe spec doesn’t define ABI for VSC/VSEC contents. Any other code 
+entity except vendor driver should ignore VSC contents. QEMU’s 
+expectation of VSC contents to be equal on source and destination seems 
+incorrect given that QEMU has no control over ABI for VSC contents.
 
-Whilst I do plan to add a performance option that just
-locks out those settings so that we can avoid using MMIO
-regions we are going to keep getting people assuming this
-case will work  :(=20
-
-We need the high perf restricted option for virtualization
-usecases where it's reasonable to fake it that there is
-no interleave going on (it will be happening in hardware).
-
-I guess doing that goes up in priority :(
-
-Jonathan
-
->=20
-> thanks
-> -- PMM
-
+> 
+> Alex
+> 
 
