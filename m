@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC5AEC47DDF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 06:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4A0C47DDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 06:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVQzy-0003qA-0z; Thu, 01 Feb 2024 01:56:34 -0500
+	id 1rVR19-0004L5-1i; Thu, 01 Feb 2024 01:57:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVQzw-0003px-En
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:56:32 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVR17-0004Kv-GX
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:57:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVQzt-0003Xt-3I
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:56:32 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rVR16-0003yt-0M
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 01:57:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706770588;
+ s=mimecast20190719; t=1706770663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wZznG/+Fd0I3peLA7G8ZzOGySjHxzI/Z1ZmBLsUUQLI=;
- b=OCCfIi4UaDEsLofisMWIUWpKTbP0O3bkY12Mvv1kEbsxjzSsoOWRzl0epuiMxGOlbhd98Z
- ckF333Wh3ZzPdkNwXK1/m2azTV+sbweyFSKz9FTWmJIevdV5JwSoZwV4ql1JzZLaorPJy5
- vbrCqnPwbvObzBWVCzJ6afb3nKykq0M=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=o8m0kY8gS08qFKxst0fdIN3XKO41RNCyifYvopasP0g=;
+ b=HFTLJ4klq2YzHmYuS6YwHQlXf0MHn8VIxLQgL6VRghVSwcGweoF+ymr8GGem8q0MxBqQ7e
+ +129z5Qd8tEVN33Nsw8Lg8DKSItNTnlbW4RwctktuY1JbnFocLIBeAYmRVNDFkWKVWnHGX
+ eeWZWxTS3A+AAjbnIWVwKRpRfWf7xLo=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-zxXcCj3zPZ6HJGdkubqpJg-1; Thu, 01 Feb 2024 01:56:25 -0500
-X-MC-Unique: zxXcCj3zPZ6HJGdkubqpJg-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7853c364e60so83730785a.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 22:56:25 -0800 (PST)
+ us-mta-643-9kvk6x58MhuANrOd_yg1hQ-1; Thu, 01 Feb 2024 01:57:40 -0500
+X-MC-Unique: 9kvk6x58MhuANrOd_yg1hQ-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7833761135dso82102285a.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jan 2024 22:57:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706770585; x=1707375385;
+ d=1e100.net; s=20230601; t=1706770660; x=1707375460;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wZznG/+Fd0I3peLA7G8ZzOGySjHxzI/Z1ZmBLsUUQLI=;
- b=KxnYKi0JaErmwb/xMCI8PdcbkK5m6/viVA50sD2vTPBIGXn/+98By0qsmHYmg5d9ol
- hm51wVFjpyaGJpCNfMCGxbt7YyjcS1WLWor+/fK0apOSboix561oVzDQJzjF+pjP+HUJ
- FAIfnnOxu14rO2dFMTxq9mXeoiISNlLaz2tt4i2fbXbSLi4RInUcRLy1SOJRmnMJDFAW
- ierHJFQiMheYBHg7pqskk5oNqYoxf5wmzGFVnoJD1JNp8CVW/hAP39u0hGTbrMTj8HnF
- 6mTGaajImdDJSkFf6OV+NzVG5/xGM2tcshQiGtoejnrCZ5EIulp1pZd0aNK6FpzAzyOG
- a8ZA==
-X-Gm-Message-State: AOJu0Yw5ko2+sGASOr2TYmDi5WnNP86dLHEbMfjlsZeklKBuu+RJKc3W
- Ye46QvYOszWAH9qbtzsJ/bssaytg3Gs7BGL6X0EdeQFD7XgLv4/jRa5KTme+pJGbfYMVEGokYXN
- WmiiwZLGcHXAC9UkjgiXqnuOU5s+Ftql309cLUiBh2oSzFRWuMSu6
-X-Received: by 2002:a05:620a:13c4:b0:783:930f:e576 with SMTP id
- g4-20020a05620a13c400b00783930fe576mr1703121qkl.31.1706770585550; 
- Wed, 31 Jan 2024 22:56:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF4bIiEG6h8xGHR5ynE1o9b6RtD56hxcerVX71376DdJa+FbYWBEyTw1VGDbzC3VE47I9AImw==
-X-Received: by 2002:a05:620a:13c4:b0:783:930f:e576 with SMTP id
- g4-20020a05620a13c400b00783930fe576mr1703113qkl.31.1706770585292; 
- Wed, 31 Jan 2024 22:56:25 -0800 (PST)
+ bh=o8m0kY8gS08qFKxst0fdIN3XKO41RNCyifYvopasP0g=;
+ b=G36dWtza3yTS+ydavLZuntjdqIs74eQEacwOWRcd8NmfDgKfeR0vemxQC20uJdAx65
+ /kvd9HHaDd9rBmwhIxQxNNchFVgJ+LMkvGlm4gPauWklKZ5Z44Ull7yA5tgNQBTG7VkN
+ WbcUogGjrN80bM2JnBU2dOKEPL5W+Ds4Jz+ypq0Gwf/+dJjewqBCxl57RS5ls52CguLF
+ XFTPJEEojow1b4BvAc6yaAGue1qU+1piCP8h/Qk1xM1p80gVBcSl6KVtWuULV4c+nVku
+ Nh9Ld9bI4HDqEmuhyk63wJnY+ck1nrjGtdZHWNitxqrjoeLM4hctV1U8y+Y19dD5+UHa
+ BN8Q==
+X-Gm-Message-State: AOJu0YxL1jHxNPDbQoZSvMTSjvx9/mZEYhHdg8jzdQIgdomnemYDdDEB
+ /VnIbnCRZdUJL7p3T5bUx9aLbmZlCxQn639WfsQ7rdX0GhOJbqsJ78vsdOvDZNYHtk0cy0V88C6
+ St3EjCh99pXunDpCy/+fDIEM+LU+ZGEAa780osuBdRRgsA2gGjzMe
+X-Received: by 2002:a05:620a:2092:b0:783:902:bcad with SMTP id
+ e18-20020a05620a209200b007830902bcadmr1523863qka.56.1706770659803; 
+ Wed, 31 Jan 2024 22:57:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGif0xKup1weuwCbjLsLWC5HH0Oq5PRHqCbM8t74WYK9xQeDc+yWAAjEIiY5jvsNo5Kkuq/mQ==
+X-Received: by 2002:a05:620a:2092:b0:783:902:bcad with SMTP id
+ e18-20020a05620a209200b007830902bcadmr1523854qka.56.1706770659574; 
+ Wed, 31 Jan 2024 22:57:39 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
  [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- pj41-20020a05620a1da900b007853f736893sm567261qkn.5.2024.01.31.22.56.23
+ pj41-20020a05620a1da900b007853f736893sm567261qkn.5.2024.01.31.22.57.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jan 2024 22:56:25 -0800 (PST)
-Message-ID: <05177b91-c98e-415b-b9ee-40a8a4497c31@redhat.com>
-Date: Thu, 1 Feb 2024 07:56:20 +0100
+ Wed, 31 Jan 2024 22:57:39 -0800 (PST)
+Message-ID: <e87df477-002f-4f0b-bd52-717d980ace41@redhat.com>
+Date: Thu, 1 Feb 2024 07:57:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] target/s390x: implement CVB, CVBY and CVBG
+Subject: Re: [PATCH v3 4/4] tests/tcg/s390x: Test CONVERT TO BINARY
 Content-Language: en-US
 To: Ilya Leoshkevich <iii@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -75,7 +75,7 @@ To: Ilya Leoshkevich <iii@linux.ibm.com>,
 Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Pavel Zbitskiy <pavel.zbitskiy@gmail.com>
 References: <20240131230938.325919-1-iii@linux.ibm.com>
- <20240131230938.325919-4-iii@linux.ibm.com>
+ <20240131230938.325919-5-iii@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,7 +119,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240131230938.325919-4-iii@linux.ibm.com>
+In-Reply-To: <20240131230938.325919-5-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -148,113 +148,65 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 01/02/2024 00.07, Ilya Leoshkevich wrote:
-> From: Pavel Zbitskiy <pavel.zbitskiy@gmail.com>
+> Check the CVB's and CVBG's corner cases.
 > 
-> Convert to Binary - counterparts of the already implemented Convert
-> to Decimal (CVD*) instructions.
-> Example from the Principles of Operation: 25594C becomes 63FA.
-> 
-> [iii: Use separate functions for CVB and CVBG for simplicity].
-> 
-> Signed-off-by: Pavel Zbitskiy <pavel.zbitskiy@gmail.com>
+> Co-developed-by: Pavel Zbitskiy <pavel.zbitskiy@gmail.com>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->   target/s390x/helper.h            |  1 +
->   target/s390x/tcg/insn-data.h.inc |  4 ++++
->   target/s390x/tcg/int_helper.c    | 40 ++++++++++++++++++++++++++++++++
->   target/s390x/tcg/translate.c     | 12 ++++++++++
->   4 files changed, 57 insertions(+)
+>   tests/tcg/s390x/Makefile.target |  1 +
+>   tests/tcg/s390x/cvb.c           | 47 +++++++++++++++++++++++++++++++++
+>   2 files changed, 48 insertions(+)
+>   create mode 100644 tests/tcg/s390x/cvb.c
 > 
-> diff --git a/target/s390x/helper.h b/target/s390x/helper.h
-> index 332a9a9c632..3c607f4e437 100644
-> --- a/target/s390x/helper.h
-> +++ b/target/s390x/helper.h
-> @@ -88,6 +88,7 @@ DEF_HELPER_FLAGS_3(tcxb, TCG_CALL_NO_RWG_SE, i32, env, i128, i64)
->   DEF_HELPER_FLAGS_2(sqeb, TCG_CALL_NO_WG, i64, env, i64)
->   DEF_HELPER_FLAGS_2(sqdb, TCG_CALL_NO_WG, i64, env, i64)
->   DEF_HELPER_FLAGS_2(sqxb, TCG_CALL_NO_WG, i128, env, i128)
-> +DEF_HELPER_FLAGS_3(cvb, TCG_CALL_NO_WG, i64, env, i64, i32)
->   DEF_HELPER_FLAGS_1(cvd, TCG_CALL_NO_RWG_SE, i64, s32)
->   DEF_HELPER_FLAGS_1(cvdg, TCG_CALL_NO_RWG_SE, i128, s64)
->   DEF_HELPER_FLAGS_4(pack, TCG_CALL_NO_WG, void, env, i32, i64, i64)
-> diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
-> index 388dcb8dbbc..9eb998d4c25 100644
-> --- a/target/s390x/tcg/insn-data.h.inc
-> +++ b/target/s390x/tcg/insn-data.h.inc
-> @@ -293,6 +293,10 @@
->       D(0xec73, CLFIT,   RIE_a, GIE, r1_32u, i2_16u, 0, 0, ct, 0, 1)
->       D(0xec71, CLGIT,   RIE_a, GIE, r1_o, i2_16u, 0, 0, ct, 0, 1)
+> diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+> index 04e4bddd83d..e2aba2ec274 100644
+> --- a/tests/tcg/s390x/Makefile.target
+> +++ b/tests/tcg/s390x/Makefile.target
+> @@ -46,6 +46,7 @@ TESTS+=laalg
+>   TESTS+=add-logical-with-carry
+>   TESTS+=lae
+>   TESTS+=cvd
+> +TESTS+=cvb
 >   
-> +/* CONVERT TO BINARY */
-> +    C(0x4f00, CVB,     RX_a,  Z,   la2, 0, new, r1_32, cvb, 0)
-> +    C(0xe306, CVBY,    RXY_a, LD,  la2, 0, new, r1_32, cvb, 0)
-> +    C(0xe30e, CVBG,    RXY_a, Z,   la2, 0, r1, 0, cvbg, 0)
->   /* CONVERT TO DECIMAL */
->       C(0x4e00, CVD,     RX_a,  Z,   r1_o, a2, 0, 0, cvd, 0)
->       C(0xe326, CVDY,    RXY_a, LD,  r1_o, a2, 0, 0, cvd, 0)
-> diff --git a/target/s390x/tcg/int_helper.c b/target/s390x/tcg/int_helper.c
-> index 121e3006a65..002d4b52dda 100644
-> --- a/target/s390x/tcg/int_helper.c
-> +++ b/target/s390x/tcg/int_helper.c
-> @@ -25,6 +25,7 @@
->   #include "exec/exec-all.h"
->   #include "qemu/host-utils.h"
->   #include "exec/helper-proto.h"
-> +#include "exec/cpu_ldst.h"
->   
->   /* #define DEBUG_HELPER */
->   #ifdef DEBUG_HELPER
-> @@ -98,6 +99,45 @@ Int128 HELPER(divu64)(CPUS390XState *env, uint64_t ah, uint64_t al, uint64_t b)
->       tcg_s390_program_interrupt(env, PGM_FIXPT_DIVIDE, GETPC());
->   }
->   
-> +uint64_t HELPER(cvb)(CPUS390XState *env, uint64_t src, uint32_t n)
-> +{
-> +    int64_t dec, sign = 0, digit, val = 0, pow10 = 0;
-> +    const uintptr_t ra = GETPC();
-> +    uint64_t tmpsrc;
-> +    int i, j;
+>   cdsg: CFLAGS+=-pthread
+>   cdsg: LDFLAGS+=-pthread
+> diff --git a/tests/tcg/s390x/cvb.c b/tests/tcg/s390x/cvb.c
+> new file mode 100644
+> index 00000000000..47b7a7965f4
+> --- /dev/null
+> +++ b/tests/tcg/s390x/cvb.c
+> @@ -0,0 +1,47 @@
+> +/*
+> + * Test the CONVERT TO DECIMAL instruction.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#include <assert.h>
+> +#include <stdint.h>
+> +#include <stdlib.h>
 > +
-> +    for (i = 0; i < n; i++) {
-> +        tmpsrc = wrap_address(env, src + (n - i - 1) * 8);
-> +        dec = cpu_ldq_data_ra(env, tmpsrc, ra);
-> +        for (j = 0; j < 16; j++, dec >>= 4) {
-> +            if (i == 0 && j == 0) {
-> +                sign = dec & 0xf;
-> +                if (sign < 0xa) {
-> +                    tcg_s390_data_exception(env, 0, ra);
-> +                }
-> +                continue;
-> +            }
-> +            digit = dec & 0xf;
-> +            if (digit > 0x9) {
-> +                tcg_s390_data_exception(env, 0, ra);
-> +            }
-> +            if (i == 0 && j == 1) {
-> +                if (sign == 0xb || sign == 0xd) {
-> +                    val = -digit;
-> +                    pow10 = -10;
-> +                } else {
-> +                    val = digit;
-> +                    pow10 = 10;
-> +                }
-> +            } else {
-> +                val += digit * pow10;
-> +                pow10 *= 10;
-> +            }
-> +        }
-> +    }
-> +    return val;
+> +static int32_t cvb(uint64_t x)
+> +{
+> +    uint32_t ret;
+> +
+> +    asm("cvb %[ret],%[x]" : [ret] "=r" (ret) : [x] "R" (x));
+> +
+> +    return ret;
+> +}
+> +
+> +static int64_t cvbg(__uint128_t x)
+> +{
+> +    int64_t ret;
+> +
+> +    asm("cvbg %[ret],%[x]" : [ret] "=r" (ret) : [x] "T" (x));
+> +
+> +    return ret;
 > +}
 
-I just noticed that there was even a v5 of Pavel's patch where David noted 
-that the fixed-point-divide exception checks are still missing, see:
- 
-https://patchwork.kernel.org/project/qemu-devel/patch/20180902003322.3428-4-pavel.zbitskiy@gmail.com/ 
-
-
-Could you add those, too, please?
+Just to be on the safe side, could you please add a check for CVBY, too?
 
   Thanks,
    Thomas
+
 
 
