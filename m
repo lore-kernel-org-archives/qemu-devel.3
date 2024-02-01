@@ -4,82 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53370C4828D
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B16C4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Feb 2024 14:05:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVXd7-0000Uy-TA; Thu, 01 Feb 2024 09:01:25 -0500
+	id 1rVXdA-0000Wm-Vc; Thu, 01 Feb 2024 09:01:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1rVXcu-0000R5-Q5; Thu, 01 Feb 2024 09:01:12 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1rVXcq-0005Kl-Gv; Thu, 01 Feb 2024 09:01:12 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a2f79e79f0cso123205366b.2; 
- Thu, 01 Feb 2024 06:01:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706796066; x=1707400866; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=U7XjHbwwvWEkeLfzO8kMCvPK8+1IkX1iR4uHS3wTHDo=;
- b=h5ayomFL0eQ7fA/lcRucDMJWWtNIkm6WDQgPeeO0gBeXwQ42XJY4wwyFTb5UgCSnOq
- 52LoZw4dJkk8Hh4xOS8BSB5N6MyNAWSmf7Bf3OA/pd1tkActgiKspTSvtO31lNUZEisc
- 1ifPk74yuxyX+0cx3EKHbhHDzFTwoupHHH+hXCQuBgo47PMNOOh65qVALG1vsV3GXUD1
- W/DeWtxPniqlOdCOXpF+Kzu2jefI4VNWh0xhqUE/eIXaNERW2/g/5ttoWnJoJeJfiIga
- D9IoHxUaLWT/rpABKIIEo9n/JVGIHYsxHB+RGaXKPMULTt84pwRvPCYrnQVXOiYDAPNR
- cHRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706796066; x=1707400866;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=U7XjHbwwvWEkeLfzO8kMCvPK8+1IkX1iR4uHS3wTHDo=;
- b=u7jOMbGCekj5+KeVzLuIYW5mRPb+XhbMSOXROkH4ltx1EgWIjA/X3cRLsmADmsAQyE
- j/U6Ynm+6aBLUk1nTFvvim/LvFSowFmFQwjULnP7zQHZo+WjbSCa3N4mfD4XRzsVUapY
- dnfjsQEnFKhyfVMUeaT7Byd23SWEL76Hg2No3TcQXuNeFS7AKIO+51Dj70Y1rw0cWsV6
- Wb96kLprBRdm5ASJPS7i/Qz4rneXwALT2ECzySBH//j0iREtLC5EA/fdsCvn/Eryau/S
- eG18VDiQ7AWCcQLlzy+5WQylzTTO0USqt1z/eFtLcooZKe5Mkrsq/i+4NLExNxowO2tT
- Itsg==
-X-Gm-Message-State: AOJu0Yz+yMgKvq9HUfWYkfaTnglE+zWeJmts5CKuauaem5bubLiaQmhO
- i0x0+7wCYE9qRLTE7lnDfLpxUsVIQqq8XebPlmjk0uLLTCeqexhM
-X-Google-Smtp-Source: AGHT+IHRwBo+FTRI1v0U6rE5ApNlVnbyhdkseHsTT3BvavWLTlFTsq1Vd22suMjWf0cuvGDaAIB7IQ==
-X-Received: by 2002:a17:906:3b19:b0:a35:7192:1f with SMTP id
- g25-20020a1709063b1900b00a357192001fmr3724841ejf.49.1706796061091; 
- Thu, 01 Feb 2024 06:01:01 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXlDpHbq7DlTy9b/4dNfR+ZoQZ3h96n0KS/ztheCBsWdf0EGcvQHFxArjD4D4t1JElDnP75BtzOJ/Ma+GhgLVmcXUCrn6i5oaAg8quyDi4DlKHuwRAZUe+1bWDBg4Wb8aXRnTt5IGpmhjKlTo5I7or/tewNEMRE+LpB8XJt7fzko8goP0ncXZg5K6VuTw/GzmyAo25PkfGXHZhdqeszXGuBsAjhTV1V9Tn06aeGDNg2773rWVRvPGV8xaWN8WkzCAGA+UWVX1f/5pTrIIn6utu4EY3bKY66HafwEPRGg0WG3o/VIpmKv1Mwe/Y1iGi5PjJpZctEwWifTjJRv9pRYiTs
-Received: from freya.midgard (broadband-188-255-126-251.ip.moscow.rt.ru.
- [188.255.126.251]) by smtp.gmail.com with ESMTPSA id
- un6-20020a170907cb8600b00a36a7f0f087sm902728ejc.222.2024.02.01.06.00.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 06:01:00 -0800 (PST)
-From: Alexey Baturo <baturo.alexey@gmail.com>
-X-Google-Original-From: Alexey Baturo <me@deliversmonkey.space>
-To: 
-Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, Alistair.Francis@wdc.com,
- sagark@eecs.berkeley.edu, kbastian@mail.uni-paderborn.de,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: [PATCH v6 0/6] Pointer Masking update for Zjpm v0.8
-Date: Thu,  1 Feb 2024 14:00:41 +0000
-Message-Id: <20240201140047.3456114-1-me@deliversmonkey.space>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rVXcw-0000RH-QX
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:01:20 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rVXct-0005KH-3T
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 09:01:13 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TQgTY3Cs8z6K8tP;
+ Thu,  1 Feb 2024 21:57:53 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 9343E140CB9;
+ Thu,  1 Feb 2024 22:01:01 +0800 (CST)
+Received: from localhost (10.122.247.231) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 1 Feb
+ 2024 14:01:01 +0000
+Date: Thu, 1 Feb 2024 14:01:00 +0000
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: Sajjan Rao <sajjanr@gmail.com>, Gregory Price
+ <gregory.price@memverge.com>, Dimitrios Palyvos
+ <dimitrios.palyvos@zptcorp.com>, <linux-cxl@vger.kernel.org>,
+ <qemu-devel@nongnu.org>, <richard.henderson@linaro.org>
+Subject: Re: Crash with CXL + TCG on 8.2: Was Re: qemu cxl memory expander
+ shows numa_node -1
+Message-ID: <20240201140100.000016ce@huawei.com>
+In-Reply-To: <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
+References: <CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com>
+ <CAGEDW0fWCfuG3KrNSwDjNVGAZVL9NJgF26Jqyd840HfQdNGLbA@mail.gmail.com>
+ <CAAg4Pard=zh_5p650UcNdQEoQWZLM6G7KRqdPQHLmaR4oZMJ3w@mail.gmail.com>
+ <CAGEDW0dVEk-QXuL=DPVvSP4t5cafz6N-r_SrCxgFnBfFOsixSA@mail.gmail.com>
+ <CAAg4PaqgZcTXkWuys7FZjQdRChTkKj-ZnJQCdxpTMCxy4Hghow@mail.gmail.com>
+ <20230823175056.00001a84@Huawei.com>
+ <CAAg4ParSB4_2FU2bu96A=3tSNuwHqZwK0wCS18EJoPAq9kYEkw@mail.gmail.com>
+ <CAAg4Pap9KzkgX=fgE7vNJYxEpGbHA-NVsgBY5npXizUbMhjp9A@mail.gmail.com>
+ <20240126123926.000051bd@Huawei.com>
+ <ZbPTL00WOo7UC0e6@memverge.com>
+ <20240126171233.00002a2e@Huawei.com>
+ <CAAg4ParQKj9FUe0DRX0Wmk1KT0bnxx2F7W=ic38781j7eVz+OQ@mail.gmail.com>
+ <20240201130438.00001384@Huawei.com>
+ <CAFEAcA-rgFmaE4Ea7hZ-On4uyaqjWoo-OwwfNrUOdp=+Q5ckXA@mail.gmail.com>
+Organization: Huawei Technologies R&D (UK) Ltd.
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=baturo.alexey@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_PH_BODY_ACCOUNTS_POST=0.693, TVD_PH_BODY_META_ALL=2.546,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,75 +83,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexey Baturo <baturo.alexey@gmail.com>
+On Thu, 1 Feb 2024 13:12:23 +0000
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Hi,
+> On Thu, 1 Feb 2024 at 13:04, Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+> >  
+> 
+> 
+> 
+> 
+> > root@localhost:~/devmem2# numactl --membind=1 touch a
+> > qemu: fatal: cpu_io_recompile: could not find TB for pc=(nil)  
+> 
+> Can you run QEMU under gdb and give the backtrace when it stops
+> on the abort() ? That will probably have a helpful clue. I
+> suspect something is failing to pass a valid retaddr in
+> when it calls a load/store function.
+> 
+> thanks
+> -- PMM
 
-This patch series is rebased on https://github.com/alistair23/qemu/tree/riscv-to-apply.next 
-
-Thanks
-
-[v5]:
-This patch series targets Zjpm v0.8 extension.
-The spec itself could be found here: https://github.com/riscv/riscv-j-extension/blob/8088461d8d66a7676872b61c908cbeb7cf5c5d1d/zjpm-spec.pdf
-This patch series is updated after the suggested comments:
-- add "x-" to the extension names to indicate experimental
-
-[v4]:
-Patch series updated after the suggested comments:
-- removed J-letter extension as it's unused
-- renamed and fixed function to detect if address should be sign-extended
-- zeroed unused context variables and moved computation logic to another patch
-- bumped pointer masking version_id and minimum_version_id by 1
-
-[v3]:
-There patches are updated after Richard's comments:
-- moved new tb flags to the end
-- used tcg_gen_(s)extract to get the final address
-- properly handle CONFIG_USER_ONLY
-
-[v2]:
-As per Richard's suggestion I made pmm field part of tb_flags.
-It allowed to get rid of global variable to store pmlen.
-Also it allowed to simplify all the machinery around it.
-
-[v1]:
-It looks like Zjpm v0.8 is almost frozen and we don't expect it change drastically anymore.
-Compared to the original implementation with explicit base and mask CSRs, we now only have
-several fixed options for number of masked bits which are set using existing CSRs.
-The changes have been tested with handwritten assembly tests and LLVM HWASAN
-test suite.
-
-Alexey Baturo (6):
-  target/riscv: Remove obsolete pointer masking extension code.
-  target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
-    of Zjpm v0.8
-  target/riscv: Add helper functions to calculate current number of
-    masked bits for pointer masking
-  target/riscv: Add pointer masking tb flags
-  target/riscv: Update address modify functions to take into account
-    pointer masking
-  target/riscv: Enable updates for pointer masking variables and thus
-    enable pointer masking extension
-
- target/riscv/cpu.c           | 22 ++++----
- target/riscv/cpu.h           | 47 ++++++++---------
- target/riscv/cpu_bits.h      | 90 ++-------------------------------
- target/riscv/cpu_cfg.h       |  3 ++
- target/riscv/cpu_helper.c    | 97 ++++++++++++++++++++----------------
- target/riscv/csr.c           | 41 ++++-----------
- target/riscv/machine.c       | 22 +++-----
- target/riscv/pmp.c           | 13 +++--
- target/riscv/pmp.h           | 11 ++--
- target/riscv/tcg/tcg-cpu.c   |  5 +-
- target/riscv/translate.c     | 46 +++++++----------
- target/riscv/vector_helper.c | 15 +++++-
- 12 files changed, 160 insertions(+), 252 deletions(-)
-
--- 
-2.34.1
-
+[Switching to Thread 0x7ffff56ff6c0 (LWP 21916)]
+__pthread_kill_implementation (no_tid=0, signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:44
+44      ./nptl/pthread_kill.c: No such file or directory.
+(gdb) bt
+#0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:44
+#1  __pthread_kill_internal (signo=6, threadid=<optimized out>) at ./nptl/pthread_kill.c:78
+#2  __GI___pthread_kill (threadid=<optimized out>, signo=signo@entry=6) at ./nptl/pthread_kill.c:89
+#3  0x00007ffff77c43b6 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#4  0x00007ffff77aa87c in __GI_abort () at ./stdlib/abort.c:79
+#5  0x0000555555c0d4ce in cpu_abort
+    (cpu=cpu@entry=0x555556fd9000, fmt=fmt@entry=0x555555fe3378 "cpu_io_recompile: could not find TB for pc=%p")
+    at ../../cpu-target.c:359
+#6  0x0000555555c59435 in cpu_io_recompile (cpu=cpu@entry=0x555556fd9000, retaddr=retaddr@entry=0) at ../../accel/tcg/translate-all.c:611
+#7  0x0000555555c5c956 in io_prepare
+    (retaddr=0, addr=19595792376, attrs=..., xlat=<optimized out>, cpu=0x555556fd9000, out_offset=<synthetic pointer>)
+    at ../../accel/tcg/cputlb.c:1339
+#8  do_ld_mmio_beN
+    (cpu=0x555556fd9000, full=0x7fffee0d96e0, ret_be=ret_be@entry=0, addr=19595792376, size=size@entry=8, mmu_idx=4, type=MMU_DATA_LOAD, ra=0) at ../../accel/tcg/cputlb.c:2030
+#9  0x0000555555c5dfad in do_ld_8
+    (cpu=cpu@entry=0x555556fd9000, p=p@entry=0x7ffff56fddc0, mmu_idx=<optimized out>, type=type@entry=MMU_DATA_LOAD, memop=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/cputlb.c:2356
+#10 0x0000555555c6026f in do_ld8_mmu
+    (cpu=cpu@entry=0x555556fd9000, addr=addr@entry=19595792376, oi=oi@entry=52, ra=ra@entry=0, access_type=access_type@entry=MMU_DATA_LOAD) at ../../accel/tcg/cputlb.c:2439
+#11 0x0000555555c629f9 in cpu_ldq_mmu (ra=0, oi=52, addr=19595792376, env=0x555556fdb7c0) at ../../accel/tcg/ldst_common.c.inc:169
+#12 cpu_ldq_le_mmuidx_ra (env=0x555556fdb7c0, addr=19595792376, mmu_idx=<optimized out>, ra=ra@entry=0)
+    at ../../accel/tcg/ldst_common.c.inc:301
+#13 0x0000555555b18ede in ptw_ldq (in=0x7ffff56fdf00) at ../../target/i386/tcg/sysemu/excp_helper.c:98
+#14 ptw_ldq (in=0x7ffff56fdf00) at ../../target/i386/tcg/sysemu/excp_helper.c:93
+#15 mmu_translate (env=env@entry=0x555556fdb7c0, in=in@entry=0x7ffff56fdfa0, out=out@entry=0x7ffff56fdf70, err=err@entry=0x7ffff56fdf80)
+    at ../../target/i386/tcg/sysemu/excp_helper.c:173
+#16 0x0000555555b19c95 in get_physical_address
+    (err=0x7ffff56fdf80, out=0x7ffff56fdf70, mmu_idx=0, access_type=MMU_INST_FETCH, addr=18446744072116178925, env=0x555556fdb7c0)
+    at ../../target/i386/tcg/sysemu/excp_helper.c:578
+#17 x86_cpu_tlb_fill
+    (cs=0x555556fd9000, addr=18446744072116178925, size=<optimized out>, access_type=MMU_INST_FETCH, mmu_idx=0, probe=<optimized out>, retaddr=0) at ../../target/i386/tcg/sysemu/excp_helper.c:604
+#18 0x0000555555c5dd2b in probe_access_internal
+    (cpu=<optimized out>, addr=18446744072116178925, fault_size=fault_size@entry=1, access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=0, nonfault=nonfault@entry=false, phost=0x7ffff56fe0d0, pfull=0x7ffff56fe0c8, retaddr=0, check_mem_cbs=false)
+    at ../../accel/tcg/cputlb.c:1432
+#19 0x0000555555c61ff8 in get_page_addr_code_hostp (env=<optimized out>, addr=addr@entry=18446744072116178925, hostp=hostp@entry=0x0)
+    at ../../accel/tcg/cputlb.c:1603
+#20 0x0000555555c50a2b in get_page_addr_code (addr=18446744072116178925, env=<optimized out>)
+    at /home/jic23/src/qemu/include/exec/exec-all.h:594
+#21 tb_htable_lookup (cpu=<optimized out>, pc=pc@entry=18446744072116178925, cs_base=0, flags=415285936, cflags=4278353920)
+    at ../../accel/tcg/cpu-exec.c:231
+#22 0x0000555555c50c08 in tb_lookup
+    (cpu=cpu@entry=0x555556fd9000, pc=pc@entry=18446744072116178925, cs_base=cs_base@entry=0, flags=<optimized out>, cflags=<optimized out>) at ../../accel/tcg/cpu-exec.c:267
+#23 0x0000555555c51e23 in helper_lookup_tb_ptr (env=0x555556fdb7c0) at ../../accel/tcg/cpu-exec.c:423
+#24 0x00007fffa9076ead in code_gen_buffer ()
+#25 0x0000555555c50fab in cpu_tb_exec (cpu=cpu@entry=0x555556fd9000, itb=<optimized out>, tb_exit=tb_exit@entry=0x7ffff56fe708)
+    at ../../accel/tcg/cpu-exec.c:458
+#26 0x0000555555c51492 in cpu_loop_exec_tb
+    (tb_exit=0x7ffff56fe708, last_tb=<synthetic pointer>, pc=18446744072116179169, tb=<optimized out>, cpu=0x555556fd9000)
+    at ../../accel/tcg/cpu-exec.c:920
+#27 cpu_exec_loop (cpu=cpu@entry=0x555556fd9000, sc=sc@entry=0x7ffff56fe7a0) at ../../accel/tcg/cpu-exec.c:1041
+#28 0x0000555555c51d11 in cpu_exec_setjmp (cpu=cpu@entry=0x555556fd9000, sc=sc@entry=0x7ffff56fe7a0) at ../../accel/tcg/cpu-exec.c:1058
+#29 0x0000555555c523b4 in cpu_exec (cpu=cpu@entry=0x555556fd9000) at ../../accel/tcg/cpu-exec.c:1084
+#30 0x0000555555c74053 in tcg_cpus_exec (cpu=cpu@entry=0x555556fd9000) at ../../accel/tcg/tcg-accel-ops.c:76
+#31 0x0000555555c741a0 in mttcg_cpu_thread_fn (arg=arg@entry=0x555556fd9000) at ../../accel/tcg/tcg-accel-ops-mttcg.c:95
+#32 0x0000555555dfb580 in qemu_thread_start (args=0x55555703c3e0) at ../../util/qemu-thread-posix.c:541
+#33 0x00007ffff78176ba in start_thread (arg=<optimized out>) at ./nptl/pthread_create.c:444
+#34 0x00007ffff78a60d0 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
 
