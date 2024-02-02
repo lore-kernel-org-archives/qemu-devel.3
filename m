@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3ADC48291
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC6BC4828F
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvb0-0000Iz-7B; Fri, 02 Feb 2024 10:36:50 -0500
+	id 1rVvaw-0000CM-AQ; Fri, 02 Feb 2024 10:36:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvay-0000FF-6V
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:48 -0500
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ id 1rVvau-0000AR-LC
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:44 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvaw-0004Sz-KJ
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:47 -0500
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-511363611ceso1023933e87.2
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:46 -0800 (PST)
+ id 1rVvas-0004RT-IX
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:44 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-40fafae5532so19305315e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888205; x=1707493005; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706888201; x=1707493001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=k/KtHzrgDY0sCTDgXF5o6E+FF2YFpOZCP9knTxPgJ0Q=;
- b=OYvMROQjjs3MpNyxgBHKaxUFfA3t0wqxT5RCFiT1oC+NH+XEnfm9Z2AAiOHAvd8loQ
- 2ydkWp49xM8KXZkh+uxbIpJf1cex5fAlYV/Jr0XA7Sq/LqxaEJKF74aOJCmP498NNh5t
- gUKhTPJcXfLXXTMFkrz3iSAuVQflHgo//NUlYNkkE4mrQASK5Q9iZMaD5nqBYWpIArIw
- vLGyZIgURuLUtfLM1LvY4FHOPeaioCZolhg7ASZg/5Q6WVVDzb3XoFWdfzJ1Lj4Xh+ja
- zXsPKelzhhHcY8xEXMcSlko30NLVgIShSaHBLkPeeqAzBU9QpiUtnLPMrNL2hfy3MHuD
- wcVQ==
+ :reply-to; bh=1V7+Q0KTyYvIAHFDW7/i7eB7p3uahpOup8LdNc0Y8Zc=;
+ b=QS0BjLb7N2WSVl501ICpWCcR+xYQt0/Or6RbTBNuXEiQQg+qI53iirlCw5jrIwMit1
+ ejoq8/T+kZWotM9999k0SqoKt+UDbVZTEeR7UUkuW4Q0ElDIjutAf2XKSQigP6tVp9lE
+ i4dqHG6D1v61Y3X8uDesM5gsr1ywvQ0KJco1FyfP0T2pZETGLlhRZIMgyTwyPBDQDTKB
+ omcRFBwvDbEKKDSQFbajz2fTzKHs/2DZSiFGp0+R3Omg9PTF9cap6vjdjGClMrPJnkm+
+ gLT1GrrQ8bfr/evRpTJIAKlM2/bX2MNUAH/ooodtspB8K6PK6PBLR1Ic5CiLUHB0BIA6
+ 7Ypg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888205; x=1707493005;
+ d=1e100.net; s=20230601; t=1706888201; x=1707493001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=k/KtHzrgDY0sCTDgXF5o6E+FF2YFpOZCP9knTxPgJ0Q=;
- b=Qwv1UuHqaGHI5YveoQqh3BmmIJ3U+FPv0N69gVU2M+alZ9OnwzAJPVGYIXWQCZU1Bz
- +QFV3oxg5tJn5ekWbRkDJTnqvivztw5/oB9ShJKhxIYURrvk+x6WGF7QZTXZ/Ij6OcOU
- PqvS8ifyVsALhLk0QZd6hubWmnB7Z75mz+ipf30Qj0g1KmFEHw4K6hLIPBJVEcya5U9D
- 8Zgcn0BuiQ9s3hi1kPairzDpfjKvaWGti92TvyOycfBd+AluCn7AObAdkkdb26Adcy4g
- Sd/xmFh2HTX6q922ukmnlYVa0SKdX75h2kUFIDt8/bbQ8N2AawZPd1BK46RQu01vkECm
- flCQ==
-X-Gm-Message-State: AOJu0Yx6FMdGAeo/D0G63BkxtZZImQeKG+ZaSHhATeBHrU4qQaen1Mc5
- Yls/mNIQhmYAVIsUy2KfTZEpP/B7I9S5H3GQqdwHacrWccwKZhhnpm6+6j8kFWn9/E7+H8QZ6HB
- B
-X-Google-Smtp-Source: AGHT+IHeOh3s3Xg4ln4UilKZ4jGUifVQlH91Og2dl4Xcg6A8CrUCYTKOPcEOOvcsKYKMQWPo0tE0kQ==
-X-Received: by 2002:a05:6512:b8c:b0:511:3865:2dda with SMTP id
- b12-20020a0565120b8c00b0051138652ddamr1424311lfv.2.1706888204997; 
- Fri, 02 Feb 2024 07:36:44 -0800 (PST)
+ bh=1V7+Q0KTyYvIAHFDW7/i7eB7p3uahpOup8LdNc0Y8Zc=;
+ b=Nu67VZ9ogpDCSzn9hOKu8GaZ8B6hGVZSVoM591kV5dDxEaYNb7B7tEF5jYfSKFBJ82
+ MzdYUMXxpyZliGTapWR4/gz9TnL9jW+15UC89h5zd3v6kMEJ72wwVcDcXr78bwaHK9BT
+ 6meNw35HBl8Z4dJKUj0eNZDm5ukABHTyqfVvUlFs5DGoQBZn/o1/1F8QF74pBYw0zpHy
+ 532A75y9J0Sk0kh3g1KVgkVdU94vfVljChSXf5X5xbBZ/2xY8XvRXts1zOAtSoUVN45w
+ ysjv8jCTlZllZ5jJy0/s7uFoBOSJZXxNpuSVs7nGhAMCMqdpzDnAuGVh4fKduEJ5hoIF
+ R4AQ==
+X-Gm-Message-State: AOJu0YxcPbuTbcaJbL6mJRUO8gztMZCOuwhmgkW9mBPM5r7CD/hTIptj
+ LaJJPgxRtl5cswdQFiT0zCWm8a9U2ZYeMzzP303DbMSUyoI+K/UrW42Ott3Hw1P48B7TMZqx/fZ
+ m
+X-Google-Smtp-Source: AGHT+IFUtj4qWAJ6L354Y967i9IQdvvF8HqHsYKGG884+2RxmfXkG9vi0ZAHxHol6BJbGppXGA/eQw==
+X-Received: by 2002:a05:600c:a39e:b0:40f:b680:3e84 with SMTP id
+ hn30-20020a05600ca39e00b0040fb6803e84mr5893811wmb.2.1706888201257; 
+ Fri, 02 Feb 2024 07:36:41 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.44
+ k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:44 -0800 (PST)
+ Fri, 02 Feb 2024 07:36:40 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/36] hw/arm/exynos: Add missing QOM parent for CPU cores
-Date: Fri,  2 Feb 2024 15:36:14 +0000
-Message-Id: <20240202153637.3710444-14-peter.maydell@linaro.org>
+Subject: [PULL 05/36] hw/s390x/css-bridge: switch virtual-css bus to
+ 3-phase-reset
+Date: Fri,  2 Feb 2024 15:36:06 +0000
+Message-Id: <20240202153637.3710444-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
 References: <20240202153637.3710444-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,32 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Switch the s390x virtual-css bus from using BusClass::reset to the
+Resettable interface.
 
-QDev objects created with qdev_new() need to manually add
-their parent relationship with object_property_add_child().
+This has no behavioural change, because the BusClass code to support
+subclasses that use the legacy BusClass::reset will call that method
+in the hold phase of 3-phase reset.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Message-id: 20240129151828.59544-2-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-id: 20240119163512.3810301-5-peter.maydell@linaro.org
 ---
- hw/arm/exynos4210.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/s390x/css-bridge.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index 6c428d8eeb4..57c77b140c2 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -556,6 +556,7 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-     for (n = 0; n < EXYNOS4210_NCPUS; n++) {
-         Object *cpuobj = object_new(ARM_CPU_TYPE_NAME("cortex-a9"));
+diff --git a/hw/s390x/css-bridge.c b/hw/s390x/css-bridge.c
+index 15d26efc951..34639f21435 100644
+--- a/hw/s390x/css-bridge.c
++++ b/hw/s390x/css-bridge.c
+@@ -56,7 +56,7 @@ static void ccw_device_unplug(HotplugHandler *hotplug_dev,
+     qdev_unrealize(dev);
+ }
  
-+        object_property_add_child(OBJECT(s), "cpu[*]", cpuobj);
-         /* By default A9 CPUs have EL3 enabled.  This board does not currently
-          * support EL3 so the CPU EL3 property is disabled before realization.
-          */
+-static void virtual_css_bus_reset(BusState *qbus)
++static void virtual_css_bus_reset_hold(Object *obj)
+ {
+     /* This should actually be modelled via the generic css */
+     css_reset();
+@@ -81,8 +81,9 @@ static char *virtual_css_bus_get_dev_path(DeviceState *dev)
+ static void virtual_css_bus_class_init(ObjectClass *klass, void *data)
+ {
+     BusClass *k = BUS_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+-    k->reset = virtual_css_bus_reset;
++    rc->phases.hold = virtual_css_bus_reset_hold;
+     k->get_dev_path = virtual_css_bus_get_dev_path;
+ }
+ 
 -- 
 2.34.1
 
