@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 619C1C48292
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC526C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmSA-0001C9-OT; Fri, 02 Feb 2024 00:51:06 -0500
+	id 1rVmRr-00011z-At; Fri, 02 Feb 2024 00:50:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmS8-0001Bs-QM
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:04 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1rVmRp-00011e-Ey
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:45 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmS7-0001gP-2j
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:04 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6ddcfda697cso1373119b3a.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:02 -0800 (PST)
+ id 1rVmRm-0001ZM-Ij
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:45 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6ddc2a78829so1218936b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:50:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853062; x=1707457862; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Nvj1miDV4d0e4aC2ZaNqUMG+jiO2D2TtjbXo5NKm+xI=;
- b=udJ5MTjalup/znrV01+HT2HHuBlifRHAAwQcOvkdb9QPs3pX/W5v/zVmQfae1J18Uc
- hGUTDcanSfHFsEgXv/XwB52NAMNqHa1qIo58bn0sRx07W4G6wC3UYrfYCPQJDlahQCxE
- XNLdJ0dIn9rt+4Lx77AfVylGqbDfFsI3tjN/riXEvZOr6VdrrRl62JvD1uXtY/xZj0cM
- iKARpTvgm8r0gghHnaXWJhB9oeeh5VIl4NUQLGkFEtPBwJ9V4sKkJeEHpUJPlDaDlhVF
- msolhVhh7GWRfNzXrXmEJstq3UOZvj/VvVNtysRnaXoIuY0las7Pa+d056qfFAx90D+h
- TVfQ==
+ d=linaro.org; s=google; t=1706853041; x=1707457841; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1yIfaInumP1HXQUEhpDmU6V/uy2JVZfMeWG/bkOO6Pw=;
+ b=fTOvu/Tqin1XmoPvzdeOi/nBa1NzoEf2K8b/paqze8pmXIE0uQCzGtmlffpxJ3pk6Z
+ b44cmFlJhASQwJ94yDLhgsO9nuTjr9dl0Zn228OHazRAfKZ5oH+NHmd6nkwKTEgNudE4
+ XZMEKI2z/Q7vWlwyh9QHwfHX0HlvKPMPlCKm7ENwbQhqhznBoMGdt5S+Ew5NkSGQ3HPG
+ SV+aPsAaADL++kra4fRrRZqQLpFCctEN6lFWf4onMxVZyLfaqsqJdJYX97H9Bq6cZojD
+ FpXNH8jzZt7kkfo7ykgPgN2h2xUzjZdKnQ2J0Du8c0yFxhrLI8vp/yZN/JPSHKLNI1+B
+ jnFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853062; x=1707457862;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Nvj1miDV4d0e4aC2ZaNqUMG+jiO2D2TtjbXo5NKm+xI=;
- b=afzdqYFJzZ2XnC5yjQC8CD/FNQsXFtQWP7yPR5M2JU23kv9lm03bVds2Qc37PsKDZO
- M/GsQFK1im5MmGVYtfAqlJHJQawdoujPO2pJTZYMj6kjsSEt0pqR51xNvzNJjibGh27Y
- 6NV7oEGL5DRWMCetDnPLbaNqGekFE6m7Z54N3LUZkJ2jEVwrpqx4ke4+MyMji1nsYiUM
- sPerdS6w3FB94ByIhvxt4d7cWpvltRR/z1pClBwymgJWYcRWKD7sqYWIHT02JsXYTw+f
- Uqp54Mp8jTueE9EZ5Sj3aWDOoAB004mMhZabOp6IuF6jUFj/lIBr1dyH0mMAUxbe4F/s
- F4Gw==
-X-Gm-Message-State: AOJu0Yy1AfLBeTAlbuRO+suxhyjWwn0w3jB0Vux3ImrP2G3QZW7nJErK
- a4FqJycm7eZiaMyd/ajPzPr2cTUcubWb/q6K0GnD5VBWO2nXs8JvlxKdQuXTzf+wrcc2dMMKvMJ
- kWuY=
-X-Google-Smtp-Source: AGHT+IFtNLv1eOyVKzCDtTR7jPFM4IA9yXy+AwbWb3RSb89DKVcD3BgQK036qdgX/cKwxAb/NaTTMQ==
-X-Received: by 2002:a62:cdca:0:b0:6dd:c61e:2026 with SMTP id
- o193-20020a62cdca000000b006ddc61e2026mr7402503pfg.9.1706853061701; 
- Thu, 01 Feb 2024 21:51:01 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXRsuNE6gMFdIYwCiZ8pkv8TEZiTHBhzVURFjm7PQHRdv883hJ8FKIjnwq97yrUp2Dvgf7jlPeHnGPq5bfkGSeTEg==
+ d=1e100.net; s=20230601; t=1706853041; x=1707457841;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1yIfaInumP1HXQUEhpDmU6V/uy2JVZfMeWG/bkOO6Pw=;
+ b=BAAMo4C7K6ObpLxXSApIAZcRU+soO54K/6Gagqk+weEQm0oDd16tNy2+3fG/zTqr3d
+ FpBisro4hD+SA4q2bl7BMu2DBYOibz/f81Jy878WsH5Y4LNqaGiXDiXKVp8HH6Qt7oqu
+ 5cf/DhqrhbIYQ0Cw+RB69cD2ybh+oTNamQax1VlTl0hwLu4y9YgLsC1odT35m3HCaVG7
+ 9P81sdDBu76o1n0oKjoAic/bLk9A07NaEVhDJoilg+gKUr0BlWXnCkI+thxD50YfE5Hh
+ p5O89GehwVKwNxkjjYF39I8IC/27P2akfjBLqwbFljkBFNGfcy22lpucjuzTjgicLQTV
+ CsWg==
+X-Gm-Message-State: AOJu0YwSX9AMa6T/EBi0xxFNNqYExKky4h0m+i75dtHMFLH8I4kPzEZR
+ AFcOD+I+djjNYSmmUoUgE5aUzEdgyvBcIGF05Jv7r1LXXJU6Tju4HvE8HvtygniXSzW/lxLZDrA
+ oOdY=
+X-Google-Smtp-Source: AGHT+IHFHoAEixWFB2sehGjrDK8zzjiSQigF6/udsYvyQ2fqqfxN2f6rXmaWGIXDaMzAOY4HgPhbxA==
+X-Received: by 2002:aa7:8381:0:b0:6db:d4f8:bb1d with SMTP id
+ u1-20020aa78381000000b006dbd4f8bb1dmr1400256pfm.2.1706853040738; 
+ Thu, 01 Feb 2024 21:50:40 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.50.59
+ h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.50.39
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:51:01 -0800 (PST)
+ Thu, 01 Feb 2024 21:50:40 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/57] target/hppa: Populate CPUClass.mmu_index
-Date: Fri,  2 Feb 2024 15:49:48 +1000
-Message-Id: <20240202055036.684176-11-richard.henderson@linaro.org>
+Subject: [PULL 00/57] tcg patch queue
+Date: Fri,  2 Feb 2024 15:49:38 +1000
+Message-Id: <20240202055036.684176-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
-References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,68 +90,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hppa/cpu.h |  7 ++-----
- target/hppa/cpu.c | 12 ++++++++++++
- 2 files changed, 14 insertions(+), 5 deletions(-)
+The following changes since commit 14639717bf379480e937716fcaf1e72b47fd4c5f:
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 6a153405d2..04439f247d 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -281,16 +281,13 @@ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
-     return hppa_is_pa20(env) ? 0 : PA10_BTLB_FIXED + PA10_BTLB_VARIABLE;
- }
- 
-+int hppa_cpu_mmu_index(CPUState *cs, bool ifetch);
- static inline int cpu_mmu_index(CPUHPPAState *env, bool ifetch)
- {
- #ifdef CONFIG_USER_ONLY
-     return MMU_USER_IDX;
- #else
--    if (env->psw & (ifetch ? PSW_C : PSW_D)) {
--        return PRIV_P_TO_MMU_IDX(env->iaoq_f & 3, env->psw & PSW_P);
--    }
--    /* mmu disabled */
--    return env->psw & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX;
-+    return hppa_cpu_mmu_index(env_cpu(env), ifetch);
- #endif
- }
- 
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 3c019855b4..fbb37e541e 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -94,6 +94,17 @@ static bool hppa_cpu_has_work(CPUState *cs)
-     return cs->interrupt_request & (CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI);
- }
- 
-+int hppa_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    CPUHPPAState *env = cpu_env(cs);
-+
-+    if (env->psw & (ifetch ? PSW_C : PSW_D)) {
-+        return PRIV_P_TO_MMU_IDX(env->iaoq_f & 3, env->psw & PSW_P);
-+    }
-+    /* mmu disabled */
-+    return env->psw & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX;
-+}
-+
- static void hppa_cpu_disas_set_info(CPUState *cs, disassemble_info *info)
- {
-     info->mach = bfd_mach_hppa20;
-@@ -194,6 +205,7 @@ static void hppa_cpu_class_init(ObjectClass *oc, void *data)
- 
-     cc->class_by_name = hppa_cpu_class_by_name;
-     cc->has_work = hppa_cpu_has_work;
-+    cc->mmu_index = hppa_cpu_mmu_index;
-     cc->dump_state = hppa_cpu_dump_state;
-     cc->set_pc = hppa_cpu_set_pc;
-     cc->get_pc = hppa_cpu_get_pc;
--- 
-2.34.1
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2024-01-31 19:53:45 +0000)
 
+are available in the Git repository at:
+
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240202
+
+for you to fetch changes up to 73e095fc71dfeb8f5f767d9ac71078e562d935b0:
+
+  target/sparc: Remove FSR_FTT_NMASK, FSR_FTT_CEXC_NMASK (2024-02-02 14:40:06 +1000)
+
+----------------------------------------------------------------
+tests/tcg: Fix multiarch/gdbstub/prot-none.py
+hw/core: Convert cpu_mmu_index to a CPUClass hook
+tcg/loongarch64: Set vector registers call clobbered
+target/sparc: floating-point cleanup
+
+----------------------------------------------------------------
+Ilya Leoshkevich (1):
+      tests/tcg: Fix the /proc/self/mem probing in the PROT_NONE gdbstub test
+
+Richard Henderson (56):
+      include/hw/core: Add mmu_index to CPUClass
+      target/alpha: Split out alpha_env_mmu_index
+      target/alpha: Populate CPUClass.mmu_index
+      target/arm: Split out arm_env_mmu_index
+      target/arm: Populate CPUClass.mmu_index
+      target/avr: Populate CPUClass.mmu_index
+      target/cris: Cache mem_index in DisasContext
+      target/cris: Populate CPUClass.mmu_index
+      target/hppa: Populate CPUClass.mmu_index
+      target/i386: Populate CPUClass.mmu_index
+      target/loongarch: Populate CPUClass.mmu_index
+      target/loongarch: Rename MMU_IDX_*
+      target/m68k: Populate CPUClass.mmu_index
+      target/microblaze: Populate CPUClass.mmu_index
+      target/mips: Pass ptw_mmu_idx down from mips_cpu_tlb_fill
+      target/mips: Split out mips_env_mmu_index
+      target/mips: Populate CPUClass.mmu_index
+      target/nios2: Populate CPUClass.mmu_index
+      target/openrisc: Populate CPUClass.mmu_index
+      target/ppc: Split out ppc_env_mmu_index
+      target/ppc: Populate CPUClass.mmu_index
+      target/riscv: Rename riscv_cpu_mmu_index to riscv_env_mmu_index
+      target/riscv: Replace cpu_mmu_index with riscv_env_mmu_index
+      target/riscv: Populate CPUClass.mmu_index
+      target/rx: Populate CPUClass.mmu_index
+      target/s390x: Split out s390x_env_mmu_index
+      target/s390x: Populate CPUClass.mmu_index
+      target/sh4: Populate CPUClass.mmu_index
+      target/sparc: Populate CPUClass.mmu_index
+      target/tricore: Populate CPUClass.mmu_index
+      target/xtensa: Populate CPUClass.mmu_index
+      include/exec: Implement cpu_mmu_index generically
+      include/exec: Change cpu_mmu_index argument to CPUState
+      tcg/loongarch64: Set vector registers call clobbered
+      target/sparc: Use tcg_gen_qemu_{ld, st}_i128 for ASI_M_BCOPY
+      target/sparc: Use tcg_gen_qemu_{ld, st}_i128 for ASI_M_BFILL
+      target/sparc: Remove gen_dest_fpr_F
+      target/sparc: Introduce gen_{load,store}_fpr_Q
+      target/sparc: Inline FNEG, FABS
+      target/sparc: Use i128 for FSQRTq
+      target/sparc: Use i128 for FADDq, FSUBq, FMULq, FDIVq
+      target/sparc: Use i128 for FqTOs, FqTOi
+      target/sparc: Use i128 for FqTOd, FqTOx
+      target/sparc: Use i128 for FCMPq, FCMPEq
+      target/sparc: Use i128 for FsTOq, FiTOq
+      target/sparc: Use i128 for FdTOq, FxTOq
+      target/sparc: Use i128 for Fdmulq
+      target/sparc: Remove qt0, qt1 temporaries
+      target/sparc: Introduce cpu_get_fsr, cpu_put_fsr
+      target/sparc: Split ver from env->fsr
+      target/sparc: Clear cexc and ftt in do_check_ieee_exceptions
+      target/sparc: Merge check_ieee_exceptions with FPop helpers
+      target/sparc: Split cexc and ftt from env->fsr
+      target/sparc: Remove cpu_fsr
+      target/sparc: Split fcc out of env->fsr
+      target/sparc: Remove FSR_FTT_NMASK, FSR_FTT_CEXC_NMASK
+
+ include/exec/cpu-all.h                             |   4 +
+ include/exec/cpu-common.h                          |  21 +
+ include/hw/core/cpu.h                              |   3 +
+ target/alpha/cpu.h                                 |   2 +-
+ target/arm/cpu.h                                   |  13 -
+ target/arm/internals.h                             |   5 +
+ target/avr/cpu.h                                   |   7 -
+ target/cris/cpu.h                                  |   4 -
+ target/hexagon/cpu.h                               |   9 -
+ target/hppa/cpu.h                                  |  13 -
+ target/i386/cpu.h                                  |   7 -
+ target/loongarch/cpu.h                             |  18 +-
+ target/m68k/cpu.h                                  |   4 -
+ target/microblaze/cpu.h                            |  15 -
+ target/mips/cpu.h                                  |   6 +-
+ target/nios2/cpu.h                                 |   6 -
+ target/openrisc/cpu.h                              |  12 -
+ target/ppc/cpu.h                                   |   2 +-
+ target/riscv/cpu.h                                 |   4 +-
+ target/rx/cpu.h                                    |   5 -
+ target/s390x/cpu.h                                 |   2 +-
+ target/sh4/cpu.h                                   |  10 -
+ target/sparc/cpu.h                                 |  69 +-
+ target/sparc/helper.h                              | 116 ++-
+ target/tricore/cpu.h                               |   5 -
+ target/xtensa/cpu.h                                |   5 -
+ accel/tcg/cputlb.c                                 |  22 +-
+ linux-user/sparc/cpu_loop.c                        |   2 +-
+ linux-user/sparc/signal.c                          |  14 +-
+ semihosting/uaccess.c                              |   2 +-
+ target/alpha/cpu.c                                 |   6 +
+ target/alpha/translate.c                           |   2 +-
+ target/arm/cpu.c                                   |   6 +
+ target/arm/helper.c                                |   2 +-
+ target/arm/tcg/helper-a64.c                        |   4 +-
+ target/arm/tcg/mte_helper.c                        |  18 +-
+ target/arm/tcg/sve_helper.c                        |   8 +-
+ target/arm/tcg/tlb_helper.c                        |   2 +-
+ target/avr/cpu.c                                   |   6 +
+ target/cris/cpu.c                                  |   6 +
+ target/cris/translate.c                            |  14 +-
+ target/hppa/cpu.c                                  |  12 +
+ target/hppa/mem_helper.c                           |   2 +-
+ target/hppa/op_helper.c                            |   8 +-
+ target/i386/cpu.c                                  |  10 +
+ target/i386/tcg/translate.c                        |   2 +-
+ target/loongarch/cpu.c                             |  11 +
+ target/loongarch/tcg/tlb_helper.c                  |   8 +-
+ target/loongarch/tcg/translate.c                   |   2 +-
+ target/m68k/cpu.c                                  |   6 +
+ target/m68k/op_helper.c                            |   2 +-
+ target/microblaze/cpu.c                            |  18 +-
+ target/microblaze/helper.c                         |   3 +-
+ target/microblaze/mmu.c                            |   2 +-
+ target/microblaze/translate.c                      |   2 +-
+ target/mips/cpu.c                                  |   6 +
+ target/mips/sysemu/physaddr.c                      |   2 +-
+ target/mips/tcg/msa_helper.c                       |  10 +-
+ target/mips/tcg/sysemu/cp0_helper.c                |   2 +-
+ target/mips/tcg/sysemu/special_helper.c            |   2 +-
+ target/mips/tcg/sysemu/tlb_helper.c                |  34 +-
+ target/nios2/cpu.c                                 |   7 +
+ target/nios2/translate.c                           |   2 +-
+ target/openrisc/cpu.c                              |  13 +
+ target/openrisc/translate.c                        |   2 +-
+ target/ppc/cpu_init.c                              |   8 +-
+ target/ppc/mem_helper.c                            |  10 +-
+ target/ppc/mmu_common.c                            |   4 +-
+ target/riscv/cpu.c                                 |   6 +
+ target/riscv/cpu_helper.c                          |   6 +-
+ target/riscv/op_helper.c                           |   4 +-
+ target/riscv/vector_helper.c                       |   9 +-
+ target/rx/cpu.c                                    |   6 +
+ target/s390x/cpu.c                                 |   6 +
+ target/s390x/tcg/mem_helper.c                      |  34 +-
+ target/sh4/cpu.c                                   |  16 +
+ target/sparc/cpu.c                                 |  61 +-
+ target/sparc/fop_helper.c                          | 510 +++++++------
+ target/sparc/gdbstub.c                             |   8 +-
+ target/sparc/ldst_helper.c                         |   5 +-
+ target/sparc/machine.c                             |  36 +-
+ target/sparc/mmu_helper.c                          |   2 +-
+ target/sparc/translate.c                           | 799 +++++++--------------
+ target/tricore/cpu.c                               |   6 +
+ target/tricore/helper.c                            |   2 +-
+ target/tricore/translate.c                         |   2 +-
+ target/xtensa/cpu.c                                |   6 +
+ target/xtensa/mmu_helper.c                         |   2 +-
+ accel/tcg/ldst_common.c.inc                        |  42 +-
+ target/cris/translate_v10.c.inc                    |   6 +-
+ .../tcg/insn_trans/trans_privileged.c.inc          |   2 +-
+ tcg/loongarch64/tcg-target.c.inc                   |   2 +-
+ tests/tcg/multiarch/gdbstub/prot-none.py           |   2 +-
+ 93 files changed, 1060 insertions(+), 1191 deletions(-)
 
