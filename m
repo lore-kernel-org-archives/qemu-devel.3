@@ -4,110 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6DDC4828E
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99E5C4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rW0lz-00082n-9F; Fri, 02 Feb 2024 16:08:31 -0500
+	id 1rW1Av-0004eR-9h; Fri, 02 Feb 2024 16:34:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0lx-0007zN-Nj
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:08:29 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW1Au-0004eH-M2
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:34:16 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0lv-00070v-QR
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:08:29 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW1Ar-0007BS-Ux
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:34:16 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id F103A1FD3B;
- Fri,  2 Feb 2024 21:08:25 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AA64121F54;
+ Fri,  2 Feb 2024 21:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706908106; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706909651; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
- b=LyRpi7IcB/SRugN2l6MFwvqPnCWisA6VVlXXdnpx9FdfX8nveZmxCLEixbwDrh6BQYHwUZ
- 5YMhRcHKDa9v7YINPI+wDalrG9k3WNs0DR339wDF6JrYQeDdaRnD6iGfH8HBZWsFX3yqsS
- /MZW3E2Idu7Bcw7nZ3LTC4owpHmBr90=
+ bh=2Vn7kgceAgIGEKcD5eaZg6Q6DDhMeRfItKUIcrpRQwk=;
+ b=2Z63G2TUILkxkMn4FUAiwgBarCmlWw1rlX4of+z+fmt1Y2u+smLekSvhUkMTVvr5JGriHf
+ S0j48wSsijeq2+yaEOhv0ZLEySnVVLx5p5sz1sHYaE0KsTRWTzFGF3pyrRKJonDE+24WzX
+ iQgqBnIAAyYr+6twfOSmGMU7i0V3pe0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706908106;
+ s=susede2_ed25519; t=1706909651;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
- b=JDB8AeAeoJ/CH7YquNdWZusro0IT+JC+grVvTaFkQXlNYPAaq9kU+QukjNjwF2Ihyj2qPF
- gSURzHRzAMTCeyAw==
+ bh=2Vn7kgceAgIGEKcD5eaZg6Q6DDhMeRfItKUIcrpRQwk=;
+ b=71+Kjb3OFLAka8Xbl3o84j0AJRZff4ymy5mkP+KH5LZdZXuC4wRSyewrozGCLUh98YUdAH
+ n6TyxcMD35gvQuBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706908105; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706909651; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
- b=qz8p7PV0vYlA9VzdhMbz+0cwA+lk7CQ2oAkQNhkQ2u6BzuZTdErNkj0Q8sGJE/FwGijSRp
- iJf+bLk9cSQgn5k2958M+NHtzKrMe5hfA+fPvm6XzR6I2uaoKLXrng2a3SG0Ae+jhTcTPo
- e4IUFOxeHKfAhtgcaEXBaTVAaNJ5akA=
+ bh=2Vn7kgceAgIGEKcD5eaZg6Q6DDhMeRfItKUIcrpRQwk=;
+ b=2Z63G2TUILkxkMn4FUAiwgBarCmlWw1rlX4of+z+fmt1Y2u+smLekSvhUkMTVvr5JGriHf
+ S0j48wSsijeq2+yaEOhv0ZLEySnVVLx5p5sz1sHYaE0KsTRWTzFGF3pyrRKJonDE+24WzX
+ iQgqBnIAAyYr+6twfOSmGMU7i0V3pe0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706908105;
+ s=susede2_ed25519; t=1706909651;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
- b=3NTEGZT3cwoUa0Wow6qKjgVTb+zLc3pXlHc6OM1XkECjZWYWJh/WGX6Prat1CVm2jW4rMd
- mihMLf/FrZH8S1AA==
+ bh=2Vn7kgceAgIGEKcD5eaZg6Q6DDhMeRfItKUIcrpRQwk=;
+ b=71+Kjb3OFLAka8Xbl3o84j0AJRZff4ymy5mkP+KH5LZdZXuC4wRSyewrozGCLUh98YUdAH
+ n6TyxcMD35gvQuBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 780F0139AB;
- Fri,  2 Feb 2024 21:08:25 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3449E139AB;
+ Fri,  2 Feb 2024 21:34:10 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id FU82EMlZvWX/ewAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 21:08:25 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hXG1OtJfvWVZAgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 21:34:10 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: peterx@redhat.com, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@bytedance.com>, Bryan Zhang
  <bryan.zhang@bytedance.com>, peterx@redhat.com, Avihai Horon
  <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit
- <ppandit@redhat.com>, Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Subject: Re: [PATCH v2 22/23] migration/multifd: Fix
- MultiFDSendParams.packet_num race
-In-Reply-To: <20240202102857.110210-23-peterx@redhat.com>
+ <ppandit@redhat.com>
+Subject: Re: [PATCH v2 23/23] migration/multifd: Optimize sender side to be
+ lockless
+In-Reply-To: <20240202102857.110210-24-peterx@redhat.com>
 References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-23-peterx@redhat.com>
-Date: Fri, 02 Feb 2024 18:08:22 -0300
-Message-ID: <87zfwifubd.fsf@suse.de>
+ <20240202102857.110210-24-peterx@redhat.com>
+Date: Fri, 02 Feb 2024 18:34:08 -0300
+Message-ID: <87wmrmft4f.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qz8p7PV0;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3NTEGZT3
-X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_SEVEN(0.00)[9];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:dkim,suse.de:email];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[8];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: F103A1FD3B
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,163 +120,207 @@ peterx@redhat.com writes:
 
 > From: Peter Xu <peterx@redhat.com>
 >
-> As reported correctly by Fabiano [1], MultiFDSendParams.packet_num is buggy
-> to be assigned and stored.  Consider two consequent operations of: (1)
-> queue a job into multifd send thread X, then (2) queue another sync request
-> to the same send thread X.  Then the MultiFDSendParams.packet_num will be
-> assigned twice, and the first assignment can get lost already.
+> When reviewing my attempt to refactor send_prepare(), Fabiano suggested we
+> try out with dropping the mutex in multifd code [1].
 >
-> To avoid that, we move the packet_num assignment from p->packet_num into
-> where the thread will fill in the packet.  Use atomic operations to protect
-> the field, making sure there's no race.
+> I thought about that before but I never tried to change the code.  Now
+> maybe it's time to give it a stab.  This only optimizes the sender side.
 >
-> Note that atomic fetch_add() may not be good for scaling purposes, however
-> multifd should be fine as number of threads should normally not go beyond
-> 16 threads.  Let's leave that concern for later but fix the issue first.
+> The trick here is multifd has a clear provider/consumer model, that the
+> migration main thread publishes requests (either pending_job/pending_sync),
+> while the multifd sender threads are consumers.  Here we don't have a lot
+> of comlicated data sharing, and the jobs can logically be submitted lockless.
+
+complicated
+
 >
-> There's also a trick on how to make it always work even on 32 bit hosts for
-> uint64_t packet number.  Switching to uintptr_t as of now to simply the
-> case.  It will cause packet number to overflow easier on 32 bit, but that
-> shouldn't be a major concern for now as 32 bit systems is not the major
-> audience for any performance concerns like what multifd wants to address.
+> Arm the code with atomic weapons.  Two things worth mentioning:
 >
-> We also need to move multifd_send_state definition upper, so that
-> multifd_send_fill_packet() can reference it.
+>   - For multifd_send_pages(): we can use qatomic_load_acquire() when trying
+>   to find a free channel, but that's expensive if we attach one ACQUIRE per
+>   channel.  Instead, make it atomic_read() on the pending_job flag, but
+
+s/make it/keep it/
+
+The diff doesn't show the atomic_read already there so it's confusing.
+
+>   merge the ACQUIRE into one single smp_mb_acquire() later.
+>
+>   - For pending_sync: it doesn't have any extra data required since now
+>   p->flags are never touched, it should be safe to not use memory barrier.
+>   That's different from pending_sync.
+
+pending_job?
+
+>
+> Provide rich comments for all the lockless operations to state how they are
+> paired.  With that, we can remove the mutex.
 >
 > [1] https://lore.kernel.org/r/87o7d1jlu5.fsf@suse.de
 >
-> Reported-by: Fabiano Rosas <farosas@suse.de>
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
-
-Elena had reported this in October already.
-
-Reported-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-
 > ---
 >  migration/multifd.h |  2 --
->  migration/multifd.c | 56 +++++++++++++++++++++++++++------------------
->  2 files changed, 34 insertions(+), 24 deletions(-)
+>  migration/multifd.c | 51 +++++++++++++++++++++++----------------------
+>  2 files changed, 26 insertions(+), 27 deletions(-)
 >
 > diff --git a/migration/multifd.h b/migration/multifd.h
-> index 9b40a53cb6..98876ff94a 100644
+> index 98876ff94a..78a2317263 100644
 > --- a/migration/multifd.h
 > +++ b/migration/multifd.h
-> @@ -97,8 +97,6 @@ typedef struct {
+> @@ -91,8 +91,6 @@ typedef struct {
+>      /* syncs main thread and channels */
+>      QemuSemaphore sem_sync;
+>  
+> -    /* this mutex protects the following parameters */
+> -    QemuMutex mutex;
+>      /* is this channel thread running */
 >      bool running;
 >      /* multifd flags for each packet */
->      uint32_t flags;
-> -    /* global number of generated multifd packets */
-> -    uint64_t packet_num;
->      /*
->       * The sender thread has work to do if either of below boolean is set.
->       *
 > diff --git a/migration/multifd.c b/migration/multifd.c
-> index 130f86a1fb..b317d57d61 100644
+> index b317d57d61..ef13e2e781 100644
 > --- a/migration/multifd.c
 > +++ b/migration/multifd.c
-> @@ -45,6 +45,35 @@ typedef struct {
->      uint64_t unused2[4];    /* Reserved for future use */
->  } __attribute__((packed)) MultiFDInit_t;
+> @@ -501,19 +501,19 @@ static bool multifd_send_pages(void)
+>          }
+>      }
 >  
-> +struct {
-> +    MultiFDSendParams *params;
-> +    /* array of pages to sent */
-> +    MultiFDPages_t *pages;
-> +    /*
-> +     * Global number of generated multifd packets.
-> +     *
-> +     * Note that we used 'uintptr_t' because it'll naturally support atomic
-> +     * operations on both 32bit / 64 bits hosts.  It means on 32bit systems
-> +     * multifd will overflow the packet_num easier, but that should be
-> +     * fine.
-> +     *
-> +     * Another option is to use QEMU's Stat64 then it'll be 64 bits on all
-> +     * hosts, however so far it does not support atomic fetch_add() yet.
-> +     * Make it easy for now.
-> +     */
-> +    uintptr_t packet_num;
-> +    /* send channels ready */
-> +    QemuSemaphore channels_ready;
-> +    /*
-> +     * Have we already run terminate threads.  There is a race when it
-> +     * happens that we got one error while we are exiting.
-> +     * We will use atomic operations.  Only valid values are 0 and 1.
-> +     */
-> +    int exiting;
-> +    /* multifd ops */
-> +    MultiFDMethods *ops;
-> +} *multifd_send_state;
-> +
->  /* Multifd without compression */
->  
->  /**
-> @@ -292,13 +321,16 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
->  {
->      MultiFDPacket_t *packet = p->packet;
->      MultiFDPages_t *pages = p->pages;
-> +    uint64_t packet_num;
->      int i;
->  
->      packet->flags = cpu_to_be32(p->flags);
->      packet->pages_alloc = cpu_to_be32(p->pages->allocated);
->      packet->normal_pages = cpu_to_be32(pages->num);
->      packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-> -    packet->packet_num = cpu_to_be64(p->packet_num);
-> +
-> +    packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
-> +    packet->packet_num = cpu_to_be64(packet_num);
->  
->      if (pages->block) {
->          strncpy(packet->ramblock, pages->block->idstr, 256);
-> @@ -314,7 +346,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
->      p->packets_sent++;
->      p->total_normal_pages += pages->num;
->  
-> -    trace_multifd_send(p->id, p->packet_num, pages->num, p->flags,
-> +    trace_multifd_send(p->id, packet_num, pages->num, p->flags,
->                         p->next_packet_size);
->  }
->  
-> @@ -398,24 +430,6 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->      return 0;
->  }
->  
-> -struct {
-> -    MultiFDSendParams *params;
-> -    /* array of pages to sent */
-> -    MultiFDPages_t *pages;
-> -    /* global number of generated multifd packets */
-> -    uint64_t packet_num;
-> -    /* send channels ready */
-> -    QemuSemaphore channels_ready;
-> -    /*
-> -     * Have we already run terminate threads.  There is a race when it
-> -     * happens that we got one error while we are exiting.
-> -     * We will use atomic operations.  Only valid values are 0 and 1.
-> -     */
-> -    int exiting;
-> -    /* multifd ops */
-> -    MultiFDMethods *ops;
-> -} *multifd_send_state;
-> -
->  static bool multifd_send_should_exit(void)
->  {
->      return qatomic_read(&multifd_send_state->exiting);
-> @@ -497,7 +511,6 @@ static bool multifd_send_pages(void)
+> -    qemu_mutex_lock(&p->mutex);
+> -    assert(!p->pages->num);
+> -    assert(!p->pages->block);
+>      /*
+> -     * Double check on pending_job==false with the lock.  In the future if
+> -     * we can have >1 requester thread, we can replace this with a "goto
+> -     * retry", but that is for later.
+> +     * Make sure we read p->pending_job before all the rest.  Pairs with
+> +     * qatomic_store_release() in multifd_send_thread().
 >       */
->      assert(qatomic_read(&p->pending_job) == false);
->      qatomic_set(&p->pending_job, true);
-> -    p->packet_num = multifd_send_state->packet_num++;
+> -    assert(qatomic_read(&p->pending_job) == false);
+> -    qatomic_set(&p->pending_job, true);
+> +    smp_mb_acquire();
+> +    assert(!p->pages->num);
 >      multifd_send_state->pages = p->pages;
 >      p->pages = pages;
->      qemu_mutex_unlock(&p->mutex);
-> @@ -730,7 +743,6 @@ int multifd_send_sync_main(void)
+> -    qemu_mutex_unlock(&p->mutex);
+> +    /*
+> +     * Making sure p->pages is setup before marking pending_job=true. Pairs
+> +     * with the qatomic_load_acquire() in multifd_send_thread().
+> +     */
+> +    qatomic_store_release(&p->pending_job, true);
+>      qemu_sem_post(&p->sem);
+>  
+>      return true;
+> @@ -648,7 +648,6 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+>      }
+>      multifd_send_channel_destroy(p->c);
+>      p->c = NULL;
+> -    qemu_mutex_destroy(&p->mutex);
+>      qemu_sem_destroy(&p->sem);
+>      qemu_sem_destroy(&p->sem_sync);
+>      g_free(p->name);
+> @@ -742,14 +741,12 @@ int multifd_send_sync_main(void)
+>  
 >          trace_multifd_send_sync_main_signal(p->id);
 >  
->          qemu_mutex_lock(&p->mutex);
-> -        p->packet_num = multifd_send_state->packet_num++;
+> -        qemu_mutex_lock(&p->mutex);
 >          /*
 >           * We should be the only user so far, so not possible to be set by
 >           * others concurrently.
+>           */
+>          assert(qatomic_read(&p->pending_sync) == false);
+>          qatomic_set(&p->pending_sync, true);
+> -        qemu_mutex_unlock(&p->mutex);
+>          qemu_sem_post(&p->sem);
+>      }
+>      for (i = 0; i < migrate_multifd_channels(); i++) {
+> @@ -796,9 +793,12 @@ static void *multifd_send_thread(void *opaque)
+>          if (multifd_send_should_exit()) {
+>              break;
+>          }
+> -        qemu_mutex_lock(&p->mutex);
+>  
+> -        if (qatomic_read(&p->pending_job)) {
+> +        /*
+> +         * Read pending_job flag before p->pages.  Pairs with the
+> +         * qatomic_store_release() in multifd_send_pages().
+> +         */
+> +        if (qatomic_load_acquire(&p->pending_job)) {
+>              MultiFDPages_t *pages = p->pages;
+>  
+>              p->iovs_num = 0;
+> @@ -806,14 +806,12 @@ static void *multifd_send_thread(void *opaque)
+>  
+>              ret = multifd_send_state->ops->send_prepare(p, &local_err);
+>              if (ret != 0) {
+> -                qemu_mutex_unlock(&p->mutex);
+>                  break;
+>              }
+>  
+>              ret = qio_channel_writev_full_all(p->c, p->iov, p->iovs_num, NULL,
+>                                                0, p->write_flags, &local_err);
+>              if (ret != 0) {
+> -                qemu_mutex_unlock(&p->mutex);
+>                  break;
+>              }
+>  
+> @@ -822,24 +820,31 @@ static void *multifd_send_thread(void *opaque)
+>  
+>              multifd_pages_reset(p->pages);
+>              p->next_packet_size = 0;
+> -            qatomic_set(&p->pending_job, false);
+> -            qemu_mutex_unlock(&p->mutex);
+> +
+> +            /*
+> +             * Making sure p->pages is published before saying "we're
+> +             * free".  Pairs with the qatomic_load_acquire() in
+
+smp_mb_acquire()
+
+> +             * multifd_send_pages().
+> +             */
+> +            qatomic_store_release(&p->pending_job, false);
+>          } else {
+> -            /* If not a normal job, must be a sync request */
+> +            /*
+> +             * If not a normal job, must be a sync request.  Note that
+> +             * pending_sync is a standalone flag (unlike pending_job), so
+> +             * it doesn't require explicit memory barriers.
+> +             */
+>              assert(qatomic_read(&p->pending_sync));
+>              p->flags = MULTIFD_FLAG_SYNC;
+>              multifd_send_fill_packet(p);
+>              ret = qio_channel_write_all(p->c, (void *)p->packet,
+>                                          p->packet_len, &local_err);
+>              if (ret != 0) {
+> -                qemu_mutex_unlock(&p->mutex);
+>                  break;
+>              }
+>              /* p->next_packet_size will always be zero for a SYNC packet */
+>              stat64_add(&mig_stats.multifd_bytes, p->packet_len);
+>              p->flags = 0;
+>              qatomic_set(&p->pending_sync, false);
+> -            qemu_mutex_unlock(&p->mutex);
+>              qemu_sem_post(&p->sem_sync);
+>          }
+>      }
+> @@ -853,10 +858,7 @@ out:
+>          error_free(local_err);
+>      }
+>  
+> -    qemu_mutex_lock(&p->mutex);
+>      p->running = false;
+> -    qemu_mutex_unlock(&p->mutex);
+> -
+>      rcu_unregister_thread();
+>      migration_threads_remove(thread);
+>      trace_multifd_send_thread_end(p->id, p->packets_sent, p->total_normal_pages);
+> @@ -998,7 +1000,6 @@ int multifd_send_setup(Error **errp)
+>      for (i = 0; i < thread_count; i++) {
+>          MultiFDSendParams *p = &multifd_send_state->params[i];
+>  
+> -        qemu_mutex_init(&p->mutex);
+>          qemu_sem_init(&p->sem, 0);
+>          qemu_sem_init(&p->sem_sync, 0);
+>          p->id = i;
 
