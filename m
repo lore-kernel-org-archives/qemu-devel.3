@@ -4,88 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF6AC4828E
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 12:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C60FAC47DB3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 12:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVscZ-0005PQ-3m; Fri, 02 Feb 2024 07:26:15 -0500
+	id 1rVsj2-0006cd-NB; Fri, 02 Feb 2024 07:32:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVscX-0005P9-Ik
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:26:13 -0500
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rVscU-0006RV-JJ
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:26:13 -0500
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-51025cafb51so3176977e87.2
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 04:26:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706876767; x=1707481567; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VtYHIKsaHeZlAB4m2nyixG3ImoxTIbOIOT4XAQ8CMj4=;
- b=KjFYZNM8ii8Aeb1hMty51y1zauSRmgZgaNUNM5+mb8bHn/v4Wldg3WQuTVz3iTSJN8
- Z40tPhZa9NcJrVQdz3ggRrWCsROCcLYTUzXQe6BLDAFQKI5iO9fooOGIJpbWaPoGsFBC
- KBdEb29Mw8cK6PwM3EtGf14R3rHSBAjACt2smAzr4UJTFS5CAoOBs72msyzQT+vZRV5Z
- d7JOZ4KzRq3yGx+QfiTj14uWl4xCSKdRbCIhC11/IXJJGZwz2/jw7BxQgVbQds5heyt5
- 9EMy/9disBaE18ie5fVJp+R6eDWcmFsCFzheGohRsDtSbY1SDYYsqWMuCjm6T14ovEhR
- CGFQ==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVsiw-0006cD-Cs
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:32:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVsiu-0001q0-FW
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:32:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706877163;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2p5pd3G+z6QYJ8oqmskHcWdaaV+Dm9kCEVNr29n9FCM=;
+ b=KNoxmNQYNxgHMnL1on9Zyr1qe8RMzo2LohYmSRm6OFIwrcvhA6wzc7DzARWOmVBebbi3NM
+ JoLrAkdONhqZyyW3gCh2SsUt/KTm8MGCF6bNB8OkVsZl0NXL29o7UOvJiS1GMVIOK69wa/
+ lI7MwLk5/tQ8vEQUdCYy+WcCVpqw3OE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-551-SGaxT_GaOq2phHoMueQZqA-1; Fri, 02 Feb 2024 07:32:42 -0500
+X-MC-Unique: SGaxT_GaOq2phHoMueQZqA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33b26c3d744so99884f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 04:32:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706876767; x=1707481567;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VtYHIKsaHeZlAB4m2nyixG3ImoxTIbOIOT4XAQ8CMj4=;
- b=N01xFxvYVmn0H/EhYOS7DIkQqHTXOFTWBs3C+quOoTgQnX3c3LssSAII7RHW33Jb00
- VuU9yxv3qRm4CcUWF5MJqqdBobtwxdpu83dDt7lqwpuZ5kBOHW70IxK6P16UivVBZejX
- QzcQeu21ZWZGUecnq5+PgFiU+okMXxB/lbl/OdpUm7TkL8U1SRUGxUglVSY0nyROA4sb
- IqKh8og4ZP2syoqVuEA1YK5yBWB3fgEHuddEXFqsKkyMU+yVqoZi91hnUPedeFdxBDit
- gWbpU+fnn7NkcY47vftqr8Q+ASISgH2I41EZOUF/9MH3TYyKQE0v/o/yEdIVcGuJpOsg
- 3Sag==
-X-Gm-Message-State: AOJu0YzOFyvH1d85fZnikt3zjNVEfdgTRi9Fq9XzNREaq7aROVjb3SVh
- F0HlbaitpwgOedY4dOqTbH0hjcroOXF5VO9CfJVt4gnUscPhy5JwSQNaCq3tD9w=
-X-Google-Smtp-Source: AGHT+IFhAB4Mjbd/rPpOJ2+LjTQEZafxPiBETCFPam3R+W0+J0AzzHgNC03VOuOAo9CH/OZdHJqrjg==
-X-Received: by 2002:a05:6512:3b9e:b0:511:2ce3:1f30 with SMTP id
- g30-20020a0565123b9e00b005112ce31f30mr1540003lfv.32.1706876767471; 
- Fri, 02 Feb 2024 04:26:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706877161; x=1707481961;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2p5pd3G+z6QYJ8oqmskHcWdaaV+Dm9kCEVNr29n9FCM=;
+ b=Prj6t4SDujhGtsqDqLuATmlqGczA+8i9VpYSiErFV9Rr944/jltXRe8vF10hgoxRAO
+ UABr/zK5Gt2tHlxzEiLkh3reLRqxrkCfoDJ4N99XboHy+zpDuAXd1oLX059Rm7D4kX0C
+ 1Pf2sYq3H+lS0A3q+96dFvWebU118XLvKGiCpyNZkUuOImCZ6KvG+LY7SJEEvCz0Q2iE
+ nnJhg8ZXMxJ4SJ/bXuyPrdr6c3Cjidt/7jLcdAlntnSuAMFrXgUjuYT6nyqxARvnHvx1
+ EKq99j9JEgsq7rp0bkNKimDnzwq776b05Dk93vFn5zyM59sM0i/TGz1jbHxyGWWkOgs0
+ xPng==
+X-Gm-Message-State: AOJu0YxyIA00DHGo5xJ9kIqmT+bvagIxA0Lglrx8cHpSMuf62MEWcF5a
+ 0hdkJHkSfQjZqg1CeWZWksq109NsjmE77JvSqYLudNXSPKXfTovSYAodWmjQWCkie2UUlgaFHQN
+ y8goJuSpPvjAj37dLDnzge9sg5bxpJi9gb7v0WNsgxkh/a5HsH9Uy
+X-Received: by 2002:a5d:5609:0:b0:33b:279a:b4a5 with SMTP id
+ l9-20020a5d5609000000b0033b279ab4a5mr289788wrv.14.1706877161131; 
+ Fri, 02 Feb 2024 04:32:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHjB7AANCPhSokDYGZqyRv6g5Lxj6GqRg4UD+HUc00Gfh+DTibY+cVEnuRNJtfrxYi85CvYUA==
+X-Received: by 2002:a5d:5609:0:b0:33b:279a:b4a5 with SMTP id
+ l9-20020a5d5609000000b0033b279ab4a5mr289768wrv.14.1706877160827; 
+ Fri, 02 Feb 2024 04:32:40 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCW4dZKCc4HTDLAOjdndmbwNgsB6AXpif3Yx8W/WWn9lGLkyhcMj4yg/g4ctG5lpNq7r6SlGE/fWwN8wQi19NTRb8zKDfBUFC6m1FhaLTZr22fya/+4ou2A0DLGHmPaHcZux9dJ1OHcbR7zTwD4fJCJWHq7Hchp6xNDT3wHU2Q==
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- o7-20020a05600c510700b0040e880ac6ecsm7374000wms.35.2024.02.02.04.26.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 04:26:07 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A94975F9D3;
- Fri,  2 Feb 2024 12:26:06 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
- Christophe Lyon <christophe.lyon@linaro.org>,  qemu-stable@nongnu.org
-Subject: Re: [PATCH] linux-user/aarch64: Add padding before
- __kernel_rt_sigreturn
-In-Reply-To: <20240202034427.504686-1-richard.henderson@linaro.org> (Richard
- Henderson's message of "Fri, 2 Feb 2024 13:44:27 +1000")
-References: <20240202034427.504686-1-richard.henderson@linaro.org>
-User-Agent: mu4e 1.11.27; emacs 29.1
-Date: Fri, 02 Feb 2024 12:26:06 +0000
-Message-ID: <87a5ojjbmp.fsf@draig.linaro.org>
+ AJvYcCVHeiXD6Jxbb1b5sKpWYEdaDQwH4dEbDDMlH4SAg4WeUoTzcKpQw3Dh4n932NO7M8sNcSd7TshZP7Xqqf4V2ssjbHxtkBfkqRoD3FjkG2Laq4A0Kiu/RJhdDbBCQw==
+Received: from ?IPV6:2003:cf:d73b:4129:e7a9:2cbc:bf9c:487a?
+ (p200300cfd73b4129e7a92cbcbf9c487a.dip0.t-ipconnect.de.
+ [2003:cf:d73b:4129:e7a9:2cbc:bf9c:487a])
+ by smtp.gmail.com with ESMTPSA id
+ jn22-20020a05600c6b1600b0040ef63a162dsm7243222wmb.26.2024.02.02.04.32.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Feb 2024 04:32:40 -0800 (PST)
+Message-ID: <82f1a65f-9821-480a-b2d2-cb5d6bf55c5b@redhat.com>
+Date: Fri, 2 Feb 2024 13:32:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
+ thread
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
+References: <20231221212339.164439-1-kwolf@redhat.com>
+ <20231221212339.164439-12-kwolf@redhat.com>
+ <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
+ <Za_zAj11uwavd2va@redhat.com>
+ <08a66849-f190-4756-9b01-666f0d66afb6@redhat.com>
+ <ZbOxI9Ar-YDn51Z0@redhat.com>
+ <4c4173f2-b8fc-4c6f-88e1-8c31c4411837@redhat.com>
+ <20240131203537.GC396296@fedora>
+ <0a3e8d2a-add1-432b-b6b9-456ee0b17882@redhat.com>
+ <20240201142817.GA516672@fedora>
+ <6cb18310-c0cf-4747-a71d-540adba262cf@redhat.com>
+In-Reply-To: <6cb18310-c0cf-4747-a71d-540adba262cf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,79 +115,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+On 01.02.24 16:25, Hanna Czenczek wrote:
+> On 01.02.24 15:28, Stefan Hajnoczi wrote:
 
-> Without this padding, an unwind through the signal handler
-> will pick up the unwind info for the preceding syscall.
->
-> This fixes gcc's 30_threads/thread/native_handle/cancel.cc.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: ee95fae075c6 ("linux-user/aarch64: Add vdso")
-> Resolves: https://linaro.atlassian.net/browse/GNU-974
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/aarch64/vdso-be.so | Bin 3216 -> 3224 bytes
->  linux-user/aarch64/vdso-le.so | Bin 3216 -> 3224 bytes
->  linux-user/aarch64/vdso.S     |   4 ++++
->  3 files changed, 4 insertions(+)
->
-> diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
-> index 6084f3d1a701316004894fcdd739c4e1e0463b68..808206ade824b09d786f6cc34=
-f7cddf80b63130e 100755
-> GIT binary patch
-> delta 121
-> zcmbOrIYV-SKI4pu2Kk&{7{Gw#%fuBAMC1c?^>~k}v|avdxNjSSLfftVb3bgJ!|2S&
-> z_-6A1CJrVZc?IUH8G;R$7#SF@Om<{a*v!K!&BXX-vIe^~TWO|cva$K*Om;sOMw`hy
-> ZxXl@VO#Z-a&zLdUfXALuXmSCM0s#EKC)of1
->
-> delta 116
-> zcmbOsIYDxQKI4Rm2Kk&H7{Gw#!^9O2L>8U?-5V_M@!kH(Sx4vJn|*ujLPgija~Pc&
-> z8DDIEz{J5c`3;N8W)W6tCdL<&4cM*OEF8_<v%@zRviq?xT1-B`ZO-^%@(*r%#)Qch
-> RJocPi5ThAdCO2?N002V6C;<Qf
->
-> diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
-> index 947d534ec1899740edbd6921da6bc6e70e2ecd09..941aaf29931193300de1f6209=
-7867c282a7e0c74 100755
-> GIT binary patch
-> delta 129
-> zcmbOrIYV-S2IGv0n)#exSQx<I%fyAxMZTVBQ(04AP_*V|Vxp|@=3D@;x8zb9;-!)U|E
-> z_-6A>CVnO!c?IUH8G;R$7#SF@Om<{a*v!K!!o>JyvLd?^n`3BUW_royOm=3Dq`Mw`hS
-> dxy>1WOn%92&zLb;lgFM@hy!9z%j7~Xc>tTxDQW-!
->
-> delta 108
-> zcmbOsIYDxQ2IGW@n)#d`SQx<I!^DNpMK&+G&+g_}w9WI@dn@@euKVesZ-h6`VYFdn
-> ze6jf^6F<}BH!LcfMOa0c7+*}*WOrgKEO1Fl%G+GX?#{w!F?lDqIpc@PAGz%r6DAw-
-> M*fVlXF62=3DM06owo?*IS*
->
-> diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
-> index 34d3a9ebd2..a0ac1487b0 100644
-> --- a/linux-user/aarch64/vdso.S
-> +++ b/linux-user/aarch64/vdso.S
-> @@ -63,7 +63,11 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
->   * For now, elide the unwind info for __kernel_rt_sigreturn and rely on
->   * the libgcc fallback routine as we have always done.  This requires
->   * that the code sequence used be exact.
-> + *
-> + * Add a nop as a spacer to ensure that unwind does not pick up the
-> + * unwind info from the preceding syscall.
->   */
-> +	nop
->  __kernel_rt_sigreturn:
->  	/* No BTI C insn here -- we arrive via RET. */
->  	mov	x8, #__NR_rt_sigreturn
+[...]
 
-You could have gone the whole hog and done:
+>> Did you find a scenario where the virtio-scsi AioContext is different
+>> from the scsi-hd BB's Aiocontext?
+>
+> Technically, that’s the reason for this thread, specifically that 
+> virtio_scsi_hotunplug() switches the BB back to the main context while 
+> scsi_device_for_each_req_async_bh() is running.  Yes, we can fix that 
+> specific case via the in-flight counter, but I’m wondering whether 
+> there’s really any merit in requiring the BB to always be in 
+> virtio-scsi’s context, or whether it would make more sense to schedule 
+> everything in virtio-scsi’s context.  Now that BBs/BDSs can receive 
+> requests from any context, that is.
 
-  nop	// Mysterious NOP
+Now that I know that wouldn’t be easy, let me turn this around: As far 
+as I understand, scsi_device_for_each_req_async_bh() should still run in 
+virtio-scsi’s context, but that’s hard, so we take the BB’s context, 
+which we therefore require to be the same one. Further, (again AFAIU,) 
+virtio-scsi’s context cannot change (only set in 
+virtio_scsi_dataplane_setup(), which is run in 
+virtio_scsi_device_realize()).  Therefore, why does the 
+scsi_device_for_each_req_async() code accommodate for BB context changes?
 
-like the kernel does ;-)
+Hanna
 
-Anyway:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
