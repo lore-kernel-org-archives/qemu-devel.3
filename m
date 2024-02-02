@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6019C47DB3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 12:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF6AC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 12:27:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVsSd-0002hQ-IW; Fri, 02 Feb 2024 07:15:59 -0500
+	id 1rVscZ-0005PQ-3m; Fri, 02 Feb 2024 07:26:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVsSV-0002gg-1F
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:15:53 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVscX-0005P9-Ik
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:26:13 -0500
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVsSH-0001ph-84
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:15:50 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7790922096;
- Fri,  2 Feb 2024 12:15:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706876135; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WNykqSs8ZgjBygir2o/EjhAa+DA++vbEsKNj7hYMqFs=;
- b=KRxLfyZrVYtr6+D0Hc5jYPxAvps5yZ01vr4Aq3jdjoauBvAkeAxn/EJ9rODh4KtjTjBagl
- eWezwxGGm8XLZuJh9iYEqXkrUqXtQcjSKU1CraZ2doRBcJbLlNpsz48E2XCRzrb6J4lMNH
- 3auYKRBcVWJh+cjjjdeOU1+zW40eCCo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706876135;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WNykqSs8ZgjBygir2o/EjhAa+DA++vbEsKNj7hYMqFs=;
- b=uMXwj3EX251W2yYJFTrgbtn9D/rVfIvheqVIr2bK7/qjIF0URLdDTXQT4HmjsYVhP2wUf9
- WutkfIRQxJ02cyBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706876134; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WNykqSs8ZgjBygir2o/EjhAa+DA++vbEsKNj7hYMqFs=;
- b=TLMpPgiWsAAKpul5/96NWAQzsL7rm7YS9Ne7Qnn1RcAn6n8PrjMgK19zyjNYNPkV0apMtP
- 0JYBrjr4RMI8/ITAP5cIhuS3vywZZStEKmZn0FCpcHFuXFSxny9T4vAHRoJ14b4QCrs9+l
- 4+BkN1n8fyIly29xcUln1BviXPV9fME=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706876134;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WNykqSs8ZgjBygir2o/EjhAa+DA++vbEsKNj7hYMqFs=;
- b=mvWYVRjO39Xbmp20Eiv1s+XLfnn/CjPs7ClmabmTErlpSAKYwNski60X3h1+LAa5Mqy7vV
- m9LLxGIWK+SQ4/DQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 030B413A58;
- Fri,  2 Feb 2024 12:15:33 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SCijLuXcvGU+fAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 12:15:33 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Bryan Zhang <bryan.zhang@bytedance.com>, Prasad
- Pandit <ppandit@redhat.com>, Yuan Liu <yuan1.liu@intel.com>, Avihai Horon
- <avihaih@nvidia.com>, Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH 04/14] migration/multifd: Postpone reset of MultiFDPages_t
-In-Reply-To: <Zbw5TpO5xOgMSmB5@x1n>
-References: <20240131103111.306523-1-peterx@redhat.com>
- <20240131103111.306523-5-peterx@redhat.com> <87wmrpjzew.fsf@suse.de>
- <ZbtsCsBFuMj1fx-q@x1n> <87plxgi51k.fsf@suse.de> <Zbw3P26zfARNBsBy@x1n>
- <Zbw5TpO5xOgMSmB5@x1n>
-Date: Fri, 02 Feb 2024 09:15:31 -0300
-Message-ID: <87il37hxjw.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVscU-0006RV-JJ
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:26:13 -0500
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-51025cafb51so3176977e87.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 04:26:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706876767; x=1707481567; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VtYHIKsaHeZlAB4m2nyixG3ImoxTIbOIOT4XAQ8CMj4=;
+ b=KjFYZNM8ii8Aeb1hMty51y1zauSRmgZgaNUNM5+mb8bHn/v4Wldg3WQuTVz3iTSJN8
+ Z40tPhZa9NcJrVQdz3ggRrWCsROCcLYTUzXQe6BLDAFQKI5iO9fooOGIJpbWaPoGsFBC
+ KBdEb29Mw8cK6PwM3EtGf14R3rHSBAjACt2smAzr4UJTFS5CAoOBs72msyzQT+vZRV5Z
+ d7JOZ4KzRq3yGx+QfiTj14uWl4xCSKdRbCIhC11/IXJJGZwz2/jw7BxQgVbQds5heyt5
+ 9EMy/9disBaE18ie5fVJp+R6eDWcmFsCFzheGohRsDtSbY1SDYYsqWMuCjm6T14ovEhR
+ CGFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706876767; x=1707481567;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VtYHIKsaHeZlAB4m2nyixG3ImoxTIbOIOT4XAQ8CMj4=;
+ b=N01xFxvYVmn0H/EhYOS7DIkQqHTXOFTWBs3C+quOoTgQnX3c3LssSAII7RHW33Jb00
+ VuU9yxv3qRm4CcUWF5MJqqdBobtwxdpu83dDt7lqwpuZ5kBOHW70IxK6P16UivVBZejX
+ QzcQeu21ZWZGUecnq5+PgFiU+okMXxB/lbl/OdpUm7TkL8U1SRUGxUglVSY0nyROA4sb
+ IqKh8og4ZP2syoqVuEA1YK5yBWB3fgEHuddEXFqsKkyMU+yVqoZi91hnUPedeFdxBDit
+ gWbpU+fnn7NkcY47vftqr8Q+ASISgH2I41EZOUF/9MH3TYyKQE0v/o/yEdIVcGuJpOsg
+ 3Sag==
+X-Gm-Message-State: AOJu0YzOFyvH1d85fZnikt3zjNVEfdgTRi9Fq9XzNREaq7aROVjb3SVh
+ F0HlbaitpwgOedY4dOqTbH0hjcroOXF5VO9CfJVt4gnUscPhy5JwSQNaCq3tD9w=
+X-Google-Smtp-Source: AGHT+IFhAB4Mjbd/rPpOJ2+LjTQEZafxPiBETCFPam3R+W0+J0AzzHgNC03VOuOAo9CH/OZdHJqrjg==
+X-Received: by 2002:a05:6512:3b9e:b0:511:2ce3:1f30 with SMTP id
+ g30-20020a0565123b9e00b005112ce31f30mr1540003lfv.32.1706876767471; 
+ Fri, 02 Feb 2024 04:26:07 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCW4dZKCc4HTDLAOjdndmbwNgsB6AXpif3Yx8W/WWn9lGLkyhcMj4yg/g4ctG5lpNq7r6SlGE/fWwN8wQi19NTRb8zKDfBUFC6m1FhaLTZr22fya/+4ou2A0DLGHmPaHcZux9dJ1OHcbR7zTwD4fJCJWHq7Hchp6xNDT3wHU2Q==
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ o7-20020a05600c510700b0040e880ac6ecsm7374000wms.35.2024.02.02.04.26.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Feb 2024 04:26:07 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A94975F9D3;
+ Fri,  2 Feb 2024 12:26:06 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
+ Christophe Lyon <christophe.lyon@linaro.org>,  qemu-stable@nongnu.org
+Subject: Re: [PATCH] linux-user/aarch64: Add padding before
+ __kernel_rt_sigreturn
+In-Reply-To: <20240202034427.504686-1-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Fri, 2 Feb 2024 13:44:27 +1000")
+References: <20240202034427.504686-1-richard.henderson@linaro.org>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Fri, 02 Feb 2024 12:26:06 +0000
+Message-ID: <87a5ojjbmp.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,114 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> On Fri, Feb 02, 2024 at 08:28:47AM +0800, Peter Xu wrote:
->> > Pages allocated is nonsense. See if you agree with its removal:
->> > https://gitlab.com/farosas/qemu/-/commit/7cfff1a3e31b271e901a6c08d8b5d8c01b680e4d
->> > 
->> > ---
->> > From 7cfff1a3e31b271e901a6c08d8b5d8c01b680e4d Mon Sep 17 00:00:00 2001
->> > From: Fabiano Rosas <farosas@suse.de>
->> > Date: Tue, 24 Oct 2023 19:03:41 -0300
->> > Subject: [PATCH] multifd: Remove MultiFDPage_t:allocated
->> > 
->> > When dealing with RAM, having a field called 'allocated' is
->> > confusing. This field simply holds number of pages that fit in a
->> > multifd packet.
->> > 
->> > Since it is a constant dependent on the size of the multifd packet,
->> > remove it and instead use the page size and MULTIFD_PACKET_SIZE
->> > directly.
->> > 
->> > This is another step in the direction of having no mentions of 'page'
->> > in the multifd send thread.
->> > 
->> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> > ---
->> >  migration/multifd.c | 6 ++----
->> >  migration/multifd.h | 2 --
->> >  2 files changed, 2 insertions(+), 6 deletions(-)
->> > 
->> > diff --git a/migration/multifd.c b/migration/multifd.c
->> > index bdefce27706..83fb2caab04 100644
->> > --- a/migration/multifd.c
->> > +++ b/migration/multifd.c
->> > @@ -241,7 +241,6 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
->> >  {
->> >      MultiFDPages_t *pages = g_new0(MultiFDPages_t, 1);
->> >  
->> > -    pages->allocated = n;
->> >      pages->offset = g_new0(ram_addr_t, n);
->> >      pages->page_size = qemu_target_page_size();
->> >  
->> > @@ -251,7 +250,6 @@ static MultiFDPages_t *multifd_pages_init(uint32_t n)
->> >  static void multifd_pages_clear(MultiFDPages_t *pages)
->> >  {
->> >      pages->num = 0;
->> > -    pages->allocated = 0;
->> >      pages->block = NULL;
->> >      g_free(pages->offset);
->> >      pages->offset = NULL;
->> > @@ -264,7 +262,7 @@ static void multifd_send_fill_packet(MultiFDSendParams *p)
->> >      int i;
->> >  
->> >      packet->flags = cpu_to_be32(p->flags);
->> > -    packet->pages_alloc = cpu_to_be32(p->pages->allocated);
->> > +    packet->pages_alloc = cpu_to_be32(MULTIFD_PACKET_SIZE / p->pages->page_size);
->> >      packet->normal_pages = cpu_to_be32(p->pages->num);
->> >      packet->next_packet_size = cpu_to_be32(p->next_packet_size);
->> >      packet->packet_num = cpu_to_be64(p->packet_num);
->> > @@ -451,7 +449,7 @@ int multifd_queue_page(RAMBlock *block, ram_addr_t offset)
->> >          pages->offset[pages->num] = offset;
->> >          pages->num++;
->> >  
->> > -        if (pages->num < pages->allocated) {
->> > +        if (pages->num * pages->page_size < MULTIFD_PACKET_SIZE) {
->> >              return 1;
->> >          }
->> >      } else {
->> > diff --git a/migration/multifd.h b/migration/multifd.h
->> > index 655f8d5eeb4..d1342296d63 100644
->> > --- a/migration/multifd.h
->> > +++ b/migration/multifd.h
->> > @@ -56,8 +56,6 @@ typedef struct {
->> >  typedef struct {
->> >      /* number of used pages */
->> >      uint32_t num;
->> > -    /* number of allocated pages */
->> > -    uint32_t allocated;
->> >      /* guest page size */
->> >      uint32_t page_size;
->> >      /* offset of each page */
->> > -- 
->> 
->> I agree.
->> 
->> Even if we would like to add a parameter to setup the allcated size (I
->> remember one of the accelerator series has it), it'll still be a global
->> variable rather than per-pages thing.
->> 
->> I can cherry pick this and post together; will need a rebase but I can do
->> that.
+> Without this padding, an unwind through the signal handler
+> will pick up the unwind info for the preceding syscall.
 >
-> I see a slight step back here when rebase, since we'll calculate n_pages
-> every time to enqueue the page:
+> This fixes gcc's 30_threads/thread/native_handle/cancel.cc.
 >
-> static inline bool multifd_queue_full(MultiFDPages_t *pages)
-> {
->     return pages->num == (MULTIFD_PACKET_SIZE / pages->page_size);
-> }
+> Cc: qemu-stable@nongnu.org
+> Fixes: ee95fae075c6 ("linux-user/aarch64: Add vdso")
+> Resolves: https://linaro.atlassian.net/browse/GNU-974
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/aarch64/vdso-be.so | Bin 3216 -> 3224 bytes
+>  linux-user/aarch64/vdso-le.so | Bin 3216 -> 3224 bytes
+>  linux-user/aarch64/vdso.S     |   4 ++++
+>  3 files changed, 4 insertions(+)
 >
-> The "allocated" is still good to cache the value.  Fabiano, would it make
-> sense we still use a global var (perhaps in multifd_save_state?) to cache
-> this?
+> diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
+> index 6084f3d1a701316004894fcdd739c4e1e0463b68..808206ade824b09d786f6cc34=
+f7cddf80b63130e 100755
+> GIT binary patch
+> delta 121
+> zcmbOrIYV-SKI4pu2Kk&{7{Gw#%fuBAMC1c?^>~k}v|avdxNjSSLfftVb3bgJ!|2S&
+> z_-6A1CJrVZc?IUH8G;R$7#SF@Om<{a*v!K!&BXX-vIe^~TWO|cva$K*Om;sOMw`hy
+> ZxXl@VO#Z-a&zLdUfXALuXmSCM0s#EKC)of1
+>
+> delta 116
+> zcmbOsIYDxQKI4Rm2Kk&H7{Gw#!^9O2L>8U?-5V_M@!kH(Sx4vJn|*ujLPgija~Pc&
+> z8DDIEz{J5c`3;N8W)W6tCdL<&4cM*OEF8_<v%@zRviq?xT1-B`ZO-^%@(*r%#)Qch
+> RJocPi5ThAdCO2?N002V6C;<Qf
+>
+> diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
+> index 947d534ec1899740edbd6921da6bc6e70e2ecd09..941aaf29931193300de1f6209=
+7867c282a7e0c74 100755
+> GIT binary patch
+> delta 129
+> zcmbOrIYV-S2IGv0n)#exSQx<I%fyAxMZTVBQ(04AP_*V|Vxp|@=3D@;x8zb9;-!)U|E
+> z_-6A>CVnO!c?IUH8G;R$7#SF@Om<{a*v!K!!o>JyvLd?^n`3BUW_royOm=3Dq`Mw`hS
+> dxy>1WOn%92&zLb;lgFM@hy!9z%j7~Xc>tTxDQW-!
+>
+> delta 108
+> zcmbOsIYDxQ2IGW@n)#d`SQx<I!^DNpMK&+G&+g_}w9WI@dn@@euKVesZ-h6`VYFdn
+> ze6jf^6F<}BH!LcfMOa0c7+*}*WOrgKEO1Fl%G+GX?#{w!F?lDqIpc@PAGz%r6DAw-
+> M*fVlXF62=3DM06owo?*IS*
+>
+> diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
+> index 34d3a9ebd2..a0ac1487b0 100644
+> --- a/linux-user/aarch64/vdso.S
+> +++ b/linux-user/aarch64/vdso.S
+> @@ -63,7 +63,11 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
+>   * For now, elide the unwind info for __kernel_rt_sigreturn and rely on
+>   * the libgcc fallback routine as we have always done.  This requires
+>   * that the code sequence used be exact.
+> + *
+> + * Add a nop as a spacer to ensure that unwind does not pick up the
+> + * unwind info from the preceding syscall.
+>   */
+> +	nop
+>  __kernel_rt_sigreturn:
+>  	/* No BTI C insn here -- we arrive via RET. */
+>  	mov	x8, #__NR_rt_sigreturn
 
-Yep.
+You could have gone the whole hog and done:
 
->
-> I'll leave this alone as of now I think, but again I agree we should have
-> something similar.
+  nop	// Mysterious NOP
 
-Ok, no problem. I can change this at another time.
+like the kernel does ;-)
+
+Anyway:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
