@@ -4,61 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9132C48295
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 16:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71AE9C48291
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 16:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVwYY-0001kQ-9i; Fri, 02 Feb 2024 11:38:23 -0500
+	id 1rVwhQ-0006WW-7f; Fri, 02 Feb 2024 11:47:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+836f8942eaadfea8137c+7467+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVwYX-0001k2-0T
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 11:38:21 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+836f8942eaadfea8137c+7467+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVwYI-0001YP-SA
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 11:38:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:
- Content-ID:Content-Description:In-Reply-To:References;
- bh=yRiD8Qlk372+ZFme0AMNy/sLNCBp3tPRv6qgSu2Rq2E=; b=DnyShdKqPXjoYjRJDn9jsboprK
- n8Kvyi1a5fp95l8/iNV/J3rR7SHey64l40/59TyY2jUI5ZoFS5jFluuTjWc6B2E158b/cqYIEfACb
- Jo/iso6RAHkGTXdl1P7xnZxTUjJQAL9bqzju2T6TCg/Lft/QeGA0qTlttpYO6/8+Gsqq9Z6K0I8Cw
- BbV/Cqq2kQpSqVvW3cwdz/EP/m1wdhYHPWDaeq9ekT1CQaRwGMI5rzrOwTMmh5vnOTcQT32m+PTK0
- K5HDPJLYpHQkhjt61NgCs9POHOOGBGFhLe6pjbmjuwZKrpmtkA1m9GQATI1tpZqT8D1NxQCXj6ap2
- wiY5n4eg==;
-Received: from [2001:8b0:10b:1::ebe] (helo=i7.infradead.org)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVwYE-00000001Y1L-0jgo; Fri, 02 Feb 2024 16:38:03 +0000
-Received: from dwoodhou by i7.infradead.org with local (Exim 4.97.1 #2 (Red
- Hat Linux)) id 1rVwYD-00000003pu2-16Jg;
- Fri, 02 Feb 2024 16:38:01 +0000
-From: David Woodhouse <dwmw2@infradead.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: [PULL v2 00/47] nic-config-2 queue
-Date: Fri,  2 Feb 2024 16:38:00 +0000
-Message-ID: <20240202163801.914495-1-dwmw2@infradead.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVwhO-0006W8-Sy
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 11:47:30 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVwhN-0000By-AX
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 11:47:30 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-55f0b2c79cdso2964984a12.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 08:47:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706892447; x=1707497247; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EcUXBbTtMchfawxPaITGM7DwfiSqeenaYcEERiay7iM=;
+ b=T4YbU+if8wgkrRLQzEIs6nFgHR2PKmRI9IoptesbgHpnmYWj4mevy7mqkgi7nYavzp
+ QY4qUrPOrI9xlL4NjbO5ICT/VoH/uuFoLVL4zYeoJKa200hJ1RO1ufH/Px//Cp5bYCEp
+ /7pCi68U8vCCEBkazceEJEBoQs8HGEiKM1BoEPuavHmzZdPEm/tI0nSffeVBazd+IuEl
+ YkdqrftKm4Jn7oB4dHiJdErzbUyNj56l7STmXElEFntXMcx3Wb1KhJbblnmDgz1bfAM9
+ 8Kb04As/DIJAqyZ9Oz3SvqQ3MNdDaiSaQC+OcNoOlxSLz+TnoPlSwxM3dB/7glIpeTVz
+ Il/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706892447; x=1707497247;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EcUXBbTtMchfawxPaITGM7DwfiSqeenaYcEERiay7iM=;
+ b=cAxZA9tjSjdmZnnXZIt3LXsUF+iBfYPgwftqxa83iteReP7fr2yAIJyIAyJvMEdU9I
+ f4Q/dacKidMSLHR7y0EgbZ7dm58by4RDaTmZ3ulcvPnB5XBYrqIGP7qqQFkbcK7fY+2V
+ +VVsyT7Ls46ZepRkJSr675zc5Ibs6hm8iGnVHq3q6NyZNMeaMPaiOvjE/HIGdqX6XC0l
+ affKw9eVqN1Ecg1+OFCbc8UzVoplKUfqf0mNF8PbEmehE/aUN9IU1FDUkWehrz/PE1G4
+ JkiJ0HlCEjR1JG2v2XAqOjmA5NqWCGE5H7X87ezlMImzRe8dNQfqKuaBRfaAftEuUDHZ
+ uw1Q==
+X-Gm-Message-State: AOJu0YzPzcBrBIDkWzgXA3Hjg0mAXphoTAgBbxHSBX4E5Eb70zteXB4/
+ XThgjysi7hKn3mTn9jGgUh3MQtlwBlmi0FKTqr0RQUXDBpoNIu1+/NLhzAsRPKGv5OW6Ih2ZDSK
+ KMu/X9TsqyLqncC+XjpYufDuAnJ473ReGbJ48OA==
+X-Google-Smtp-Source: AGHT+IGds9BKFLmIIzbx7i+wit5PzRbeY+upV2xwIXboi27QGA484SSe7DdmtbZ/Q+u3yFf9W3Vgu75re9py9kQtqI0=
+X-Received: by 2002:aa7:df0e:0:b0:55f:95ac:d698 with SMTP id
+ c14-20020aa7df0e000000b0055f95acd698mr146907edy.32.1706892447100; Fri, 02 Feb
+ 2024 08:47:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+836f8942eaadfea8137c+7467+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240202055036.684176-1-richard.henderson@linaro.org>
+In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 2 Feb 2024 16:47:16 +0000
+Message-ID: <CAFEAcA_5Pa=_C2FRbeo=G=rhyzo9FUMao-RMHa2UibzNmdw5wA@mail.gmail.com>
+Subject: Re: [PULL 00/57] tcg patch queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,153 +87,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+On Fri, 2 Feb 2024 at 05:52, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> The following changes since commit 14639717bf379480e937716fcaf1e72b47fd4c5f:
+>
+>   Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2024-01-31 19:53:45 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240202
+>
+> for you to fetch changes up to 73e095fc71dfeb8f5f767d9ac71078e562d935b0:
+>
+>   target/sparc: Remove FSR_FTT_NMASK, FSR_FTT_CEXC_NMASK (2024-02-02 14:40:06 +1000)
+>
+> ----------------------------------------------------------------
+> tests/tcg: Fix multiarch/gdbstub/prot-none.py
+> hw/core: Convert cpu_mmu_index to a CPUClass hook
+> tcg/loongarch64: Set vector registers call clobbered
+> target/sparc: floating-point cleanup
+>
 
-The following changes since commit c3709fde5955d13f6d4f86ab46ef3cc2288ca65e:
+Hi; I'm afraid this seems to have collided with the loongarch
+pullreq that went in yesterday. It had a merge conflict, which
+I tried making a resolution to, but that failed to build.
+(I think the problem is some code which your pullreq wants
+to modify was moved from one file to another.)
 
-  Merge tag 'pull-aspeed-20240201' of https://github.com/legoater/qemu into staging (2024-02-01 14:42:11 +0000)
+Could you rebase and resend, please?
 
-are available in the Git repository at:
-
-  git://git.infradead.org/users/dwmw2/qemu.git tags/pull-nic-config-2-20240202
-
-for you to fetch changes up to e8c5c4525cbbd7207c085732cfd1e67d8f3d662a:
-
-  net: make nb_nics and nd_table[] static in net/net.c (2024-02-02 16:23:48 +0000)
-
-----------------------------------------------------------------
-Rework matching of network devices to -nic options (v2)
-
-----------------------------------------------------------------
-David Woodhouse (47):
-      net: add qemu_{configure,create}_nic_device(), qemu_find_nic_info()
-      net: report list of available models according to platform
-      net: add qemu_create_nic_bus_devices()
-      hw/pci: add pci_init_nic_devices(), pci_init_nic_in_slot()
-      hw/i386/pc: use qemu_get_nic_info() and pci_init_nic_devices()
-      hw/xen: use qemu_create_nic_bus_devices() to instantiate Xen NICs
-      hw/alpha/dp264: use pci_init_nic_devices()
-      hw/arm/sbsa-ref: use pci_init_nic_devices()
-      hw/arm/virt: use pci_init_nic_devices()
-      hw/hppa: use pci_init_nic_devices()
-      hw/loongarch: use pci_init_nic_devices()
-      hw/mips/fuloong2e: use pci_init_nic_devices()
-      hw/mips/malta: use pci_init_nic_devices()
-      hw/mips/loongson3_virt: use pci_init_nic_devices()
-      hw/ppc/prep: use pci_init_nic_devices()
-      hw/ppc/spapr: use qemu_get_nic_info() and pci_init_nic_devices()
-      hw/ppc: use pci_init_nic_devices()
-      hw/sh4/r2d: use pci_init_nic_devices()
-      hw/sparc64/sun4u: use pci_init_nic_devices()
-      hw/xtensa/virt: use pci_init_nic_devices()
-      hw/arm/allwinner: use qemu_configure_nic_device()
-      hw/arm/aspeed: use qemu_configure_nic_device()
-      hw/arm/exynos4: use qemu_create_nic_device()
-      hw/arm/fsl: use qemu_configure_nic_device()
-      hw/net/smc91c111: use qemu_configure_nic_device()
-      hw/net/lan9118: use qemu_configure_nic_device()
-      hw/arm/highbank: use qemu_create_nic_device()
-      hw/arm/npcm7xx: use qemu_configure_nic_device, allow emc0/emc1 as aliases
-      hw/arm/stellaris: use qemu_find_nic_info()
-      hw/arm: use qemu_configure_nic_device()
-      hw/net/etraxfs-eth: use qemu_configure_nic_device()
-      hw/m68k/mcf5208: use qemu_create_nic_device()
-      hw/m68k/q800: use qemu_find_nic_info()
-      hw/microblaze: use qemu_configure_nic_device()
-      hw/mips/mipssim: use qemu_create_nic_device()
-      hw/mips/jazz: use qemu_find_nic_info()
-      hw/net/lasi_i82596: Re-enable build
-      hw/net/lasi_i82596: use qemu_create_nic_device()
-      hw/openrisc/openrisc_sim: use qemu_create_nic_device()
-      hw/riscv: use qemu_configure_nic_device()
-      hw/s390x/s390-virtio-ccw: use qemu_create_nic_device()
-      hw/sparc/sun4m: use qemu_find_nic_info()
-      hw/xtensa/xtfpga: use qemu_create_nic_device()
-      net: remove qemu_check_nic_model()
-      hw/pci: remove pci_nic_init_nofail()
-      net: remove qemu_show_nic_models(), qemu_find_nic_model()
-      net: make nb_nics and nd_table[] static in net/net.c
-
- hw/alpha/dp264.c                         |   4 +-
- hw/arm/allwinner-a10.c                   |   6 +-
- hw/arm/allwinner-h3.c                    |   6 +-
- hw/arm/allwinner-r40.c                   |  27 +---
- hw/arm/aspeed.c                          |   9 +-
- hw/arm/exynos4_boards.c                  |   6 +-
- hw/arm/fsl-imx25.c                       |   2 +-
- hw/arm/fsl-imx6.c                        |   2 +-
- hw/arm/fsl-imx6ul.c                      |   2 +-
- hw/arm/fsl-imx7.c                        |   2 +-
- hw/arm/gumstix.c                         |   6 +-
- hw/arm/highbank.c                        |  12 +-
- hw/arm/integratorcp.c                    |   5 +-
- hw/arm/kzm.c                             |   4 +-
- hw/arm/mainstone.c                       |   3 +-
- hw/arm/mps2-tz.c                         |   8 +-
- hw/arm/mps2.c                            |   2 +-
- hw/arm/msf2-soc.c                        |   6 +-
- hw/arm/musicpal.c                        |   3 +-
- hw/arm/npcm7xx.c                         |  16 +-
- hw/arm/realview.c                        |  25 ++-
- hw/arm/sbsa-ref.c                        |   4 +-
- hw/arm/stellaris.c                       |  30 +++-
- hw/arm/versatilepb.c                     |  15 +-
- hw/arm/vexpress.c                        |   4 +-
- hw/arm/virt.c                            |   4 +-
- hw/arm/xilinx_zynq.c                     |  11 +-
- hw/arm/xlnx-versal.c                     |   7 +-
- hw/arm/xlnx-zynqmp.c                     |   8 +-
- hw/cris/axis_dev88.c                     |   9 +-
- hw/hppa/machine.c                        |  12 +-
- hw/i386/pc.c                             |  38 +++--
- hw/i386/pc_piix.c                        |   2 +-
- hw/i386/pc_q35.c                         |   2 +-
- hw/loongarch/virt.c                      |   4 +-
- hw/m68k/mcf5208.c                        |  19 +--
- hw/m68k/q800.c                           |  29 ++--
- hw/microblaze/petalogix_ml605_mmu.c      |   3 +-
- hw/microblaze/petalogix_s3adsp1800_mmu.c |   3 +-
- hw/mips/fuloong2e.c                      |  16 +-
- hw/mips/jazz.c                           |  15 +-
- hw/mips/loongson3_virt.c                 |   4 +-
- hw/mips/malta.c                          |  15 +-
- hw/mips/mipssim.c                        |  13 +-
- hw/net/etraxfs_eth.c                     |   5 +-
- hw/net/lan9118.c                         |   5 +-
- hw/net/lasi_i82596.c                     |  13 +-
- hw/net/meson.build                       |   2 +-
- hw/net/smc91c111.c                       |   5 +-
- hw/openrisc/openrisc_sim.c               |  18 +--
- hw/pci/pci.c                             |  73 +++------
- hw/ppc/e500.c                            |   4 +-
- hw/ppc/mac_newworld.c                    |   4 +-
- hw/ppc/mac_oldworld.c                    |   4 +-
- hw/ppc/ppc440_bamboo.c                   |  14 +-
- hw/ppc/prep.c                            |   8 +-
- hw/ppc/spapr.c                           |  18 +--
- hw/riscv/microchip_pfsoc.c               |  14 +-
- hw/riscv/sifive_u.c                      |   7 +-
- hw/s390x/s390-virtio-ccw.c               |  11 +-
- hw/sh4/r2d.c                             |   6 +-
- hw/sparc/sun4m.c                         |  20 ++-
- hw/sparc64/sun4u.c                       |  27 +---
- hw/xen/xen-bus.c                         |   6 +-
- hw/xen/xen_devconfig.c                   |  25 ---
- hw/xenpv/xen_machine_pv.c                |   9 --
- hw/xtensa/virt.c                         |   4 +-
- hw/xtensa/xtfpga.c                       |  13 +-
- include/hw/cris/etraxfs.h                |   2 +-
- include/hw/i386/pc.h                     |   4 +-
- include/hw/net/lan9118.h                 |   2 +-
- include/hw/net/lasi_82596.h              |   4 +-
- include/hw/net/ne2000-isa.h              |   2 -
- include/hw/net/smc91c111.h               |   2 +-
- include/hw/pci/pci.h                     |   7 +-
- include/hw/xen/xen-bus.h                 |   2 +-
- include/hw/xen/xen-legacy-backend.h      |   1 -
- include/net/net.h                        |  70 ++++++++-
- net/net.c                                | 253 +++++++++++++++++++++++++------
- system/globals.c                         |   2 -
- tests/qtest/npcm7xx_emc-test.c           |  18 +--
- 81 files changed, 547 insertions(+), 560 deletions(-)
+thanks
+-- PMM
 
