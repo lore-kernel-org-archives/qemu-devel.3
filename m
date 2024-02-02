@@ -4,103 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C68FC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 20:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3814BC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 20:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rW0RO-0000IS-1O; Fri, 02 Feb 2024 15:47:14 -0500
+	id 1rW0T0-0000vJ-PG; Fri, 02 Feb 2024 15:48:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0RM-0000I3-Aa
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:47:12 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from
+ <3MVW9ZQcKCgYqusrujomuumrk.iuswks0-jk1krtutmt0.uxm@flex--komlodi.bounces.google.com>)
+ id 1rW0Sz-0000v7-CX
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:48:53 -0500
+Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0RK-0008CZ-J2
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:47:12 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 00C332222A;
- Fri,  2 Feb 2024 20:47:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706906829; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7h/w6gY1Zo/ZkkP/nuWo/bB3IPlKoBjITOwB+wYQBjs=;
- b=nSBFg5cvX8oUFvhh13qiWoUssxq9P500d6tZfV7EzwBmQhB3QL4NmeouXpYZui+9K020b5
- Zfup5cMiFFLbB75Zz2H2f8HGydFiQXfXm5jDZd9X7BUAchMUdwOFjLhNoRYeg6Uf68ZdV1
- rVWc4PHfzMj2lx7BVfMNrdmbJtzendE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706906829;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7h/w6gY1Zo/ZkkP/nuWo/bB3IPlKoBjITOwB+wYQBjs=;
- b=iAwjoRA2wvznVfozbNWBsRpzvrL283jwesk+0Da4G4ACFEJTyF6LQ00okk9xXi9njH4Sr0
- fMJmuDFKbW0Up2CQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706906829; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7h/w6gY1Zo/ZkkP/nuWo/bB3IPlKoBjITOwB+wYQBjs=;
- b=nSBFg5cvX8oUFvhh13qiWoUssxq9P500d6tZfV7EzwBmQhB3QL4NmeouXpYZui+9K020b5
- Zfup5cMiFFLbB75Zz2H2f8HGydFiQXfXm5jDZd9X7BUAchMUdwOFjLhNoRYeg6Uf68ZdV1
- rVWc4PHfzMj2lx7BVfMNrdmbJtzendE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706906829;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7h/w6gY1Zo/ZkkP/nuWo/bB3IPlKoBjITOwB+wYQBjs=;
- b=iAwjoRA2wvznVfozbNWBsRpzvrL283jwesk+0Da4G4ACFEJTyF6LQ00okk9xXi9njH4Sr0
- fMJmuDFKbW0Up2CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7573D13A58;
- Fri,  2 Feb 2024 20:47:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id jZv1DsxUvWW1dwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 20:47:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: peterx@redhat.com, qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@bytedance.com>, Bryan Zhang
- <bryan.zhang@bytedance.com>, peterx@redhat.com, Avihai Horon
- <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit
- <ppandit@redhat.com>
-Subject: Re: [PATCH v2 18/23] migration/multifd: Rewrite multifd_queue_page()
-In-Reply-To: <20240202102857.110210-19-peterx@redhat.com>
-References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-19-peterx@redhat.com>
-Date: Fri, 02 Feb 2024 17:47:05 -0300
-Message-ID: <87cyteh9va.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3MVW9ZQcKCgYqusrujomuumrk.iuswks0-jk1krtutmt0.uxm@flex--komlodi.bounces.google.com>)
+ id 1rW0Sx-00007u-Je
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:48:53 -0500
+Received: by mail-pj1-x1049.google.com with SMTP id
+ 98e67ed59e1d1-2964520a438so602482a91.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 12:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1706906929; x=1707511729; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ErERYQ0sEpDcgbGqoWZPsVfPCOLStoMFvPtCKiYyRlU=;
+ b=gttMJcSLUBLWyAzw6O0RENLNr9v7bs84On/XFZ9kkfRdDhZYlbIe5iVdoX3oiD0cOd
+ CSo8d2HVNa7J1g0GCt1F7x0PfmHkQG44RQmdKdHoCFwrKN70XJsowSnqfUZJBEKTlvg1
+ awGs64HgeLO1AXwAa/X4aT53eRJ/D73PfMjJPv6jAXOFuSkxKCQLhE3y8VLFiKc0x48o
+ IrjY1Tt95+FWA+ljr7vLwGLZyptZsFNAk3klCK577GOVFjSmdeTuRWb/t7Bifcp7kcFZ
+ RfOVC8OM/CQoBrTboUUUQWgdOzAfOwKH5SX4koilNHJv/wf3z/bFkA5zbxTKeOPDYF/h
+ +3hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706906929; x=1707511729;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ErERYQ0sEpDcgbGqoWZPsVfPCOLStoMFvPtCKiYyRlU=;
+ b=vwY8NJINSODUPpRSFxWQHsd45oAYTJ6ZLuY+Poea9y5S2Hn2sNwp07e3pB48O2leUU
+ aEBdFGd3VWhMHxg6z9ZbbWkYWbLpjpJuacdQyCj+lKx0Nx1UOSGxS+qdf0BWGV4E83PD
+ oPFOTYAAHLsZhOgu262Mb0CJTLtoljWfYcYT5MJdC9Gsx08vlesnoJdS/tkMsHQyK+Dn
+ W8MashaftWC8k9cnfL9B0wbyUQnj22xmrvguPsUmZ21EuXfKbtt8Z1+rFdTrFsBbMS8U
+ HddFgdJpxMcM+COmf/WxZVQZhgmzqtIdAR2PGsvmup3rIv1W+J16e0PKkXX8lVvUsaeT
+ /Uig==
+X-Gm-Message-State: AOJu0YweuvLleziPsFRp4yAvdyD6BNuWoLEYi18p9Pt1uW7RIn+u9P16
+ VhFLMoA3GmfkJYk/qp4jf8QSz4ONojWK7JYn600XxFZ/IunpFmVqS6Udc+gq42o8TL38ARHhOAu
+ pykHWbRL47UDYyyUpxiBBmYQrKJ4P+HyntVDe/VQE4VGiaXOmlvD3bcFmPnJ7fzDnsMhmHA+gIW
+ 1cXjXb8HHdnVLz+KC1AjwJ+wgHyoOR8gXV65Gs
+X-Google-Smtp-Source: AGHT+IFpxN8MQ0oiGFCNKJx5H9GuxG+unSPRRzAer3h+IVO377fiXHgbC6NiJf0Ofmt9iAFf3arqMq1Fvz/g
+X-Received: from komlodi.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
+ (user=komlodi job=sendgmr) by 2002:a17:90a:840e:b0:295:c117:d9e9 with SMTP id
+ j14-20020a17090a840e00b00295c117d9e9mr41769pjn.4.1706906929159; Fri, 02 Feb
+ 2024 12:48:49 -0800 (PST)
+Date: Fri,  2 Feb 2024 20:48:44 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.43.0.594.gd9cf4e227d-goog
+Message-ID: <20240202204847.2062798-1-komlodi@google.com>
+Subject: [PATCH v3 0/3] hw/i2c: smbus: Reset fixes
+From: Joe Komlodi <komlodi@google.com>
+To: qemu-devel@nongnu.org
+Cc: venture@google.com, komlodi@google.com, minyard@acm.org, 
+ peter.maydell@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
+ envelope-from=3MVW9ZQcKCgYqusrujomuumrk.iuswks0-jk1krtutmt0.uxm@flex--komlodi.bounces.google.com;
+ helo=mail-pj1-x1049.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,117 +93,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-peterx@redhat.com writes:
+Changelog:
 
-> From: Peter Xu <peterx@redhat.com>
->
-> The current multifd_queue_page() is not easy to read and follow.  It is not
-> good with a few reasons:
->
->   - No helper at all to show what exactly does a condition mean; in short,
->   readability is low.
->
->   - Rely on pages->ramblock being cleared to detect an empty queue.  It's
->   slightly an overload of the ramblock pointer, per Fabiano [1], which I
->   also agree.
->
->   - Contains a self recursion, even if not necessary..
->
-> Rewrite this function.  We add some comments to make it even clearer on
-> what it does.
->
-> [1] https://lore.kernel.org/r/87wmrpjzew.fsf@suse.de
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+v2 -> v3
+Patch 1
+- Removed I3CBus class definition, since it was unneeded.
+- whitespace fixes
+- Changed enter_reset to hold_reset
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Patch 2
+- Moved pointer returned by object_get_canonical_path outside of printf
+  so it can be freed
 
-Patch looks good, but I have a question below.
+Patch 3
+- Changed enter_reset to hold_reset
 
-> ---
->  migration/multifd.c | 56 ++++++++++++++++++++++++++++++---------------
->  1 file changed, 37 insertions(+), 19 deletions(-)
->
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 35d4e8ad1f..4ab8e6eff2 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -506,35 +506,53 @@ static bool multifd_send_pages(void)
->      return true;
->  }
->  
-> +static inline bool multifd_queue_empty(MultiFDPages_t *pages)
-> +{
-> +    return pages->num == 0;
-> +}
-> +
-> +static inline bool multifd_queue_full(MultiFDPages_t *pages)
-> +{
-> +    return pages->num == pages->allocated;
-> +}
-> +
-> +static inline void multifd_enqueue(MultiFDPages_t *pages, ram_addr_t offset)
-> +{
-> +    pages->offset[pages->num++] = offset;
-> +}
-> +
->  /* Returns true if enqueue successful, false otherwise */
->  bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
->  {
-> -    MultiFDPages_t *pages = multifd_send_state->pages;
-> -    bool changed = false;
-> +    MultiFDPages_t *pages;
-> +
-> +retry:
-> +    pages = multifd_send_state->pages;
->  
-> -    if (!pages->block) {
-> +    /* If the queue is empty, we can already enqueue now */
-> +    if (multifd_queue_empty(pages)) {
->          pages->block = block;
-> +        multifd_enqueue(pages, offset);
-> +        return true;
->      }
->  
-> -    if (pages->block == block) {
-> -        pages->offset[pages->num] = offset;
-> -        pages->num++;
-> -
-> -        if (pages->num < pages->allocated) {
-> -            return true;
-> +    /*
-> +     * Not empty, meanwhile we need a flush.  It can because of either:
-> +     *
-> +     * (1) The page is not on the same ramblock of previous ones, or,
-> +     * (2) The queue is full.
-> +     *
-> +     * After flush, always retry.
-> +     */
-> +    if (pages->block != block || multifd_queue_full(pages)) {
-> +        if (!multifd_send_pages()) {
-> +            return false;
->          }
-> -    } else {
-> -        changed = true;
-> -    }
-> -
-> -    if (!multifd_send_pages()) {
-> -        return false;
-> -    }
-> -
-> -    if (changed) {
-> -        return multifd_queue_page(block, offset);
-> +        goto retry;
->      }
->  
-> +    /* Not empty, and we still have space, do it! */
-> +    multifd_enqueue(pages, offset);
+v1 -> v2
+- Dropped 4th patch "hw/i2c: smbus: mux: Reset SMBusDevice state
+on reset". After more testing and Corey's comment, I realized it
+wasn't needed.
 
-Hm, here you're missing the flush of the last group of pages of the last
-ramblock. Just like current code...
+Original message:
 
-...which means we're relying on the multifd_send_pages() at
-multifd_send_sync_main() to send the last few pages. So how can that
-work when multifd_flush_after_each_section==false? Because it skips the
-sync flag, but would also skip the last send. I'm confused.
+Hi all,
+
+This series adds some resets for SMBus and for the I2C core. Along with
+it, we make SMBus slave error printing a little more helpful.
+
+These reset issues were very infrequent, they would maybe occur in 1 out
+of hundreds of resets in our testing, but the way they happen is pretty
+straightforward.
+
+Basically as long as a reset happens in the middle of a transaction, the
+state of the old transaction would still partially be there after the
+reset. Once a new transaction comes in, the partial stale state can
+cause the new transaction to incorrectly fail.
+
+Thanks,
+Joe
+
+Joe Komlodi (3):
+  hw/i2c: core: Add reset
+  hw/i2c/smbus_slave: Add object path on error prints
+  hw/i2c: smbus_slave: Reset state on reset
+
+ hw/i2c/core.c        | 19 +++++++++++++++++++
+ hw/i2c/smbus_slave.c | 17 +++++++++++++++--
+ include/hw/i2c/i2c.h |  2 +-
+ 3 files changed, 35 insertions(+), 3 deletions(-)
+
+-- 
+2.43.0.594.gd9cf4e227d-goog
+
 
