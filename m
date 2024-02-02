@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9FCC48286
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 02:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53407C4828D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 02:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVj0H-0000cP-Nn; Thu, 01 Feb 2024 21:10:05 -0500
+	id 1rVj40-00026O-3I; Thu, 01 Feb 2024 21:13:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVj0G-0000bw-93; Thu, 01 Feb 2024 21:10:04 -0500
-Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVj0E-00062R-FV; Thu, 01 Feb 2024 21:10:04 -0500
-Received: by mail-vs1-xe35.google.com with SMTP id
- ada2fe7eead31-46b3359f5efso684451137.3; 
- Thu, 01 Feb 2024 18:10:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706839801; x=1707444601; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AcTynJ2u8r9wEWjB+EAHYDZ+SAJqbZtbK0UuIuWZYb4=;
- b=euqUffDsdEmDrkEoSYEZ+of4WF0rCLEm+YQOLDVygaU0dN/mhAB02Wd5jnzDPzc8io
- mGQ7yWuEUdudb5dQd+Vuy/6vNszmgW0je1YMIYcKQrqOIx6U+JX7sgcZ4+xHYSnjC2XS
- RBWQw9IVsZ1Li8WmaP+o/zu6YyysYbD3egoG2UlwI7IL4RWsgedBpOAEAmafzWRrtwlN
- Deb1nwACznVLh7xhb0NP092MlHASFeBwICYP6blEyNjx4PDkFh3AX2TIfx6D30NjUsiL
- N3E6mlxcaArB72ATZnchEDVHoDgwVOubzcZzebO/7ljvf55jkb0e7hhrZYCmir1m/PqL
- oGwg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVj3z-00026C-5l
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 21:13:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVj3j-0000fN-Sy
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 21:13:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706840018;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=z2bCjhTyolSpYPBIDQopGSNmlmYmosFAaxdagjqcbT4=;
+ b=bqAZJyuljnpnZWzX6aRHbLd+hQjE5ar3XuSH1GJoWkBqfKvBBETjd3I9DQKqfTc7jmwV1L
+ VtMQYS46uyh8DVXkqMSJdABzottgDVUUMfolULZ2jHh04CLmNz1/KkGqvsRqbQVZQaMNcy
+ QSqWBQ9Vkw2ZuaAE6PAK47Dt7M8Qgbc=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-338-5Pwz8IhvNweowZ1oI0Verg-1; Thu, 01 Feb 2024 21:13:37 -0500
+X-MC-Unique: 5Pwz8IhvNweowZ1oI0Verg-1
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-6dbd919aba8so349923b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 18:13:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706839801; x=1707444601;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AcTynJ2u8r9wEWjB+EAHYDZ+SAJqbZtbK0UuIuWZYb4=;
- b=YwIvq23Gc875jdvMhqo2JDJRIvqJ8YGeDPJhulHURUqJbjTOfSgZ9paTX0DsqStIqu
- rp8oNka91ViTT+tOF877t5nCo1EU02l2MFPmqgTpjdoTQf+RO3NIDC2p++YKD864mbeq
- VkhqmH1H6qomJcamMAsFKnxfvqSIoe6DvFQ0TO1lMWzts3924rPqLj0cUz4lvPY841kK
- XRYqUAqSagtjvkkgf8oDamhDrPgnpTQURq1zqNg6Id+Ak0L/jZnhXQ9F2+K5O3GdX6o9
- UTfSXOrNJkcRYpiOF3Uq+s8teBrqJuq1QUZ8YlP0lCFMApE8x4F9WyOQnX+x/V8ek9kM
- CSmA==
-X-Gm-Message-State: AOJu0YyOVzbSIX1D9JTzyAD5UeWmhfxZLTDdUk1MtJFrN6M6rgjqcWrI
- DDVJFXKIlvTW5WwvxDvaVdLaU0eWv9r1CmwaffkdGkr5QNt7osEmz3u5EiCuwW77l2mYOKJpXlO
- HvBtdKb6DqxDLNMfFfQ1XNoyeZcdfEU4ToIc=
-X-Google-Smtp-Source: AGHT+IGmcxMhjLL2w5t5iNa2MnSCZp2DSVpugoPxYdeIwqe6+Ipi5y6WLk5rboiFIofaDQr4i4HdBK0fut1556qLxE0=
-X-Received: by 2002:a05:6102:214e:b0:46b:2e8:4ada with SMTP id
- h14-20020a056102214e00b0046b02e84adamr796599vsg.18.1706839800720; Thu, 01 Feb
- 2024 18:10:00 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706840016; x=1707444816;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z2bCjhTyolSpYPBIDQopGSNmlmYmosFAaxdagjqcbT4=;
+ b=CFtEzAwYwQ2D5gWnkhbYIaevVR7gQekjg628yl7qSpJ7k0d4T2Hr2EWB1KBeqK8W4h
+ rVyjayPMA8L83y3Zvl6RaZ6aLIv3An1P/Xbgq2igVBkzLfq0wFmiidyxnDkSnxpo6Kp+
+ fH5QNdZVqkRrJolD+1Hy2JS5eARGEF+pyWtnobbHXT5FU5kLfWgCcY6fDi7m3fDF5zbm
+ dGlj65SYq7goY2xWKCUvkiFjKiGwHVch0F9No/ihib2vfncEvY7+DqdBDRjMkvUu3mWg
+ sUhyUUgkGYIv3mXMT2RG4zGWNYIt6CKFJoy6gZ1RfKGzWbeDTYPfImzPZnzdyBQlZzxH
+ o3NA==
+X-Forwarded-Encrypted: i=0;
+ AJvYcCVvIleSeiXX/byhhC8kTHPA66nVHOGjj7wRRk9cfWSpjXe0Zx5kbGm9iYM5yIZ8SuRP645G5fWMHSY12kEzw9w/kpsz6MI=
+X-Gm-Message-State: AOJu0YzXou3wjGa8OBWd+3VdWL1sZJ0MFXrpYKPnwxjeVIHvq+rI8Rtk
+ 6aAA3r+M95kzuvUF5xapdSUdtEFMkSFvIxdddj7txbKN4oJfx4d2R/66Ay4m2N14P0namNXt5fe
+ mZ1BkdS/bP7S8bB3oanN7pkcCHI2P8UEUtNarUB+3bdcCoipRyQbO
+X-Received: by 2002:a05:6a00:1d83:b0:6df:f706:b2d8 with SMTP id
+ z3-20020a056a001d8300b006dff706b2d8mr775523pfw.0.1706840016131; 
+ Thu, 01 Feb 2024 18:13:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGbgvhpM0qh2lfidJi14SOHhioWs2Ee5HdyEtj3Qqk7EDG9hFdLYWflwNtppXa6G6OTBuqa3A==
+X-Received: by 2002:a05:6a00:1d83:b0:6df:f706:b2d8 with SMTP id
+ z3-20020a056a001d8300b006dff706b2d8mr775502pfw.0.1706840015739; 
+ Thu, 01 Feb 2024 18:13:35 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCU7HAi9HiEZdFpbKHBrVv5M3/v2HaGBKAUnwFDwV5v6lp++PgnjsbBLDP82UNKFt2bJO0AZo2gFNegjxuLUVocsfoab5lzjBCslvbUu8xtNT8jZnFtUxYNuhwr7OAd4H1HsDVrNkMi29TnvfM2U57E0thDSRJgyijVoqzdxyrhHpe7xXqw+UWWfHzODkhMBSCWr5O0ii+56r4Nsj8bS/nZj8GQ=
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ y11-20020a62f24b000000b006ddc7de91e9sm416322pfl.197.2024.02.01.18.13.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Feb 2024 18:13:35 -0800 (PST)
+Date: Fri, 2 Feb 2024 10:12:48 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
+ Bryan Zhang <bryan.zhang@bytedance.com>,
+ Prasad Pandit <ppandit@redhat.com>, Yuan Liu <yuan1.liu@intel.com>,
+ Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH 00/14] migration/multifd: Refactor ->send_prepare() and
+ cleanups
+Message-ID: <ZbxPoEDNsqYo3D38@x1n>
+References: <20240131103111.306523-1-peterx@redhat.com>
+ <871q9xjey8.fsf@suse.de> <ZbswgRJTXP4yKiuf@x1n>
+ <5515481b-3601-46e0-ba82-cbec056966f0@nvidia.com>
+ <87le83j1s4.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240131182430.20174-1-palmer@rivosinc.com>
-In-Reply-To: <20240131182430.20174-1-palmer@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 2 Feb 2024 12:09:34 +1000
-Message-ID: <CAKmqyKP6hFn9EJ_LzW-ogqErjBgZaeXp4+5sT0932T18fobU+g@mail.gmail.com>
-Subject: Re: [PATCH] RISC-V: Report the QEMU vendor/arch IDs on virtual CPUs
-To: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87le83j1s4.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,114 +107,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 1, 2024 at 5:33=E2=80=AFAM Palmer Dabbelt <palmer@rivosinc.com>=
- wrote:
->
-> Right now we just report 0 for marchid/mvendorid in QEMU.  That's legal,
-> but it's tricky for users that want to check if they're running on QEMU
-> to do so.  This sets marchid to 42, which I've proposed as the QEMU
-> architecture ID (mvendorid remains 0, just explicitly set, as that's how
-> the ISA handles open source implementations).
->
-> Link: https://github.com/riscv/riscv-isa-manual/pull/1213
+On Thu, Feb 01, 2024 at 06:46:35PM -0300, Fabiano Rosas wrote:
+> Avihai Horon <avihaih@nvidia.com> writes:
+> 
+> > On 01/02/2024 7:47, Peter Xu wrote:
+> >> External email: Use caution opening links or attachments
+> >>
+> >>
+> >> On Wed, Jan 31, 2024 at 07:49:51PM -0300, Fabiano Rosas wrote:
+> >>> peterx@redhat.com writes:
+> >>>
+> >>>> From: Peter Xu <peterx@redhat.com>
+> >>>>
+> >>>> This patchset contains quite a few refactorings to current multifd:
+> >>>>
+> >>>>    - It picked up some patches from an old series of mine [0] (the last
+> >>>>      patches were dropped, though; I did the cleanup slightly differently):
+> >>>>
+> >>>>      I still managed to include one patch to split pending_job, but I
+> >>>>      rewrote the patch here.
+> >>>>
+> >>>>    - It tries to cleanup multiple multifd paths here and there, the ultimate
+> >>>>      goal is to redefine send_prepare() to be something like:
+> >>>>
+> >>>>        p->pages ----------->  send_prepare() -------------> IOVs
+> >>>>
+> >>>>      So that there's no obvious change yet on multifd_ops besides redefined
+> >>>>      interface for send_prepare().  We may want a separate OPs for file
+> >>>>      later.
+> >>>>
+> >>>> For 2), one benefit is already presented by Fabiano in his other series [1]
+> >>>> on cleaning up zero copy, but this patchset addressed it quite differently,
+> >>>> and hopefully also more gradually.  The other benefit is for sure if we
+> >>>> have a more concrete API for send_prepare() and if we can reach an initial
+> >>>> consensus, then we can have the recent compression accelerators rebased on
+> >>>> top of this one.
+> >>>>
+> >>>> This also prepares for the case where the input can be extended to even not
+> >>>> any p->pages, but arbitrary data (like VFIO's potential use case in the
+> >>>> future?).  But that will also for later even if reasonable.
+> >>>>
+> >>>> Please have a look.  Thanks,
+> >>>>
+> >>>> [0] https://lore.kernel.org/r/20231022201211.452861-1-peterx@redhat.com
+> >>>> [1] https://lore.kernel.org/qemu-devel/20240126221943.26628-1-farosas@suse.de
+> >>>>
+> >>>> Peter Xu (14):
+> >>>>    migration/multifd: Drop stale comment for multifd zero copy
+> >>>>    migration/multifd: multifd_send_kick_main()
+> >>>>    migration/multifd: Drop MultiFDSendParams.quit, cleanup error paths
+> >>>>    migration/multifd: Postpone reset of MultiFDPages_t
+> >>>>    migration/multifd: Drop MultiFDSendParams.normal[] array
+> >>>>    migration/multifd: Separate SYNC request with normal jobs
+> >>>>    migration/multifd: Simplify locking in sender thread
+> >>>>    migration/multifd: Drop pages->num check in sender thread
+> >>>>    migration/multifd: Rename p->num_packets and clean it up
+> >>>>    migration/multifd: Move total_normal_pages accounting
+> >>>>    migration/multifd: Move trace_multifd_send|recv()
+> >>>>    migration/multifd: multifd_send_prepare_header()
+> >>>>    migration/multifd: Move header prepare/fill into send_prepare()
+> >>>>    migration/multifd: Forbid spurious wakeups
+> >>>>
+> >>>>   migration/multifd.h      |  34 +++--
+> >>>>   migration/multifd-zlib.c |  11 +-
+> >>>>   migration/multifd-zstd.c |  11 +-
+> >>>>   migration/multifd.c      | 291 +++++++++++++++++++--------------------
+> >>>>   4 files changed, 182 insertions(+), 165 deletions(-)
+> >>> This series didn't survive my 9999 iterations test on the opensuse
+> >>> machine.
+> >>>
+> >>> # Running /x86_64/migration/multifd/tcp/tls/x509/reject-anon-client
+> >>> ...
+> >>> kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
+> >>>
+> >>>
+> >>> #0  0x00005575dda06399 in qemu_mutex_lock_impl (mutex=0x18, file=0x5575ddce9cc3 "../util/qemu-thread-posix.c", line=275) at ../util/qemu-thread-posix.c:92
+> >>> #1  0x00005575dda06a94 in qemu_sem_post (sem=0x18) at ../util/qemu-thread-posix.c:275
+> >>> #2  0x00005575dd56a512 in multifd_send_thread (opaque=0x5575df054ef8) at ../migration/multifd.c:720
+> >>> #3  0x00005575dda0709b in qemu_thread_start (args=0x7fd404001d50) at ../util/qemu-thread-posix.c:541
+> >>> #4  0x00007fd45e8a26ea in start_thread (arg=0x7fd3faffd700) at pthread_create.c:477
+> >>> #5  0x00007fd45cd2150f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+> >>>
+> >>> The multifd thread is posting channels_ready with an already freed
+> >>> multifd_send_state.
+> >>>
+> >>> This is the bug Avihai has hit. We're going into multifd_save_cleanup()
+> >>> so early that multifd_new_send_channel_async() hasn't even had the
+> >>> chance to set p->running. So it misses the join and frees everything up
+> >>> while a second multifd thread is just starting.
+> >> Thanks for doing that.
+> >>
+> >> Would this series makes that bug easier to happen?
+> >
+> > I think so.
+> > Patch #3 added an extra multifd_send_should_exit() check in 
+> > multifd_send_sync_main(), so now it can exit early if the first channel 
+> > fails.
+> > Plus, now migration state is set to FAILED early by:
+> > multifd_new_send_channel_async()->multifd_send_terminate_threads() and 
+> > multifd_tls_outgoing_handshake()->multifd_send_terminate_threads()
+> > so migration_iteration_run() is completely skipped because 
+> > migration_is_active() check before it will return false.
+> >
+> > I *think* this is what makes main migration thread finish earlier and 
+> > call multifd_save_cleanup() earlier, at least for me.
+> >
+> 
+> I'm doing some experiments with a global semaphore like channels_ready
+> instead of a per-channel structure like you suggested. I think we only
+> need to have a point past which we're assured no more channels will be
+> created. With that we'd only need one post at
+> multifd_new_send_channel_async.
 
-This has been accepted now :)
+Fabiano, Avihai,
 
-> Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-> ---
->  target/riscv/cpu.c          | 16 ++++++++++++++++
->  target/riscv/cpu_vendorid.h |  3 +++
->  2 files changed, 19 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 8cbfc7e781..1aef186f87 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -415,6 +415,9 @@ static void riscv_any_cpu_init(Object *obj)
->      cpu->cfg.ext_zicsr =3D true;
->      cpu->cfg.mmu =3D true;
->      cpu->cfg.pmp =3D true;
-> +
-> +    cpu->cfg.mvendorid =3D QEMU_MVENDORID;
-> +    cpu->cfg.marchid =3D QEMU_MARCHID;
->  }
->
->  static void riscv_max_cpu_init(Object *obj)
-> @@ -432,6 +435,8 @@ static void riscv_max_cpu_init(Object *obj)
->      set_satp_mode_max_supported(RISCV_CPU(obj), mlx =3D=3D MXL_RV32 ?
->                                  VM_1_10_SV32 : VM_1_10_SV57);
->  #endif
-> +    cpu->cfg.mvendorid =3D QEMU_MVENDORID;
-> +    cpu->cfg.marchid =3D QEMU_MARCHID;
->  }
->
->  #if defined(TARGET_RISCV64)
-> @@ -445,6 +450,8 @@ static void rv64_base_cpu_init(Object *obj)
->  #ifndef CONFIG_USER_ONLY
->      set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
->  #endif
-> +    cpu->cfg.mvendorid =3D QEMU_MVENDORID;
-> +    cpu->cfg.marchid =3D QEMU_MARCHID;
->  }
->
->  static void rv64_sifive_u_cpu_init(Object *obj)
-> @@ -569,6 +576,8 @@ static void rv128_base_cpu_init(Object *obj)
->  #ifndef CONFIG_USER_ONLY
->      set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
->  #endif
-> +    cpu->cfg.mvendorid =3D QEMU_MVENDORID;
-> +    cpu->cfg.marchid =3D QEMU_MARCHID;
->  }
->
->  static void rv64i_bare_cpu_init(Object *obj)
-> @@ -591,6 +600,8 @@ static void rv64i_bare_cpu_init(Object *obj)
->  #ifndef CONFIG_USER_ONLY
->      set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV64);
->  #endif
-> +    cpu->cfg.mvendorid =3D QEMU_MVENDORID;
-> +    cpu->cfg.marchid =3D QEMU_MARCHID;
->  }
->  #else
->  static void rv32_base_cpu_init(Object *obj)
-> @@ -603,6 +614,8 @@ static void rv32_base_cpu_init(Object *obj)
->  #ifndef CONFIG_USER_ONLY
->      set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV32);
->  #endif
-> +    cpu->cfg.mvendorid =3D QEMU_MVENDORID;
-> +    cpu->cfg.marchid =3D QEMU_MARCHID;
->  }
->
->  static void rv32_sifive_u_cpu_init(Object *obj)
-> @@ -672,6 +685,9 @@ static void rv32_imafcu_nommu_cpu_init(Object *obj)
->      cpu->cfg.ext_zifencei =3D true;
->      cpu->cfg.ext_zicsr =3D true;
->      cpu->cfg.pmp =3D true;
-> +
-> +    cpu->cfg.mvendorid =3D QEMU_MVENDORID;
-> +    cpu->cfg.marchid =3D QEMU_MARCHID;
->  }
->  #endif
->
-> diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
-> index 96b6b9c2cb..486832cd53 100644
-> --- a/target/riscv/cpu_vendorid.h
-> +++ b/target/riscv/cpu_vendorid.h
-> @@ -7,4 +7,7 @@
->  #define VEYRON_V1_MIMPID        0x111
->  #define VEYRON_V1_MVENDORID     0x61f
->
-> +#define QEMU_VIRT_MVENDORID     0
-> +#define QEMU_VIRT_MARCHID       42
+If this series is not drastically making things worse, I would leave that
+issue alone for now and move on with reposting this one, with the hope that
+we still have time to address this in 9.0 (while the issue existed much
+longer).  I do have plan to merge this one earlier if possible, assuming
+it'll be easier for the accelerator projects to rebase on top.
 
-These aren't used. I think you meant to reference this from the CPU
-init functions
+If I missed something please feel free to still reply in v2.
 
-Alistair
+Thanks,
 
-> +
->  #endif /*  TARGET_RISCV_CPU_VENDORID_H */
-> --
-> 2.43.0
->
->
+-- 
+Peter Xu
+
 
