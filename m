@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482F8C48286
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 03:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3272AC47258
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 03:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVkGc-0006OE-QA; Thu, 01 Feb 2024 22:31:02 -0500
+	id 1rVkTm-0004XX-6m; Thu, 01 Feb 2024 22:44:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVkGb-0006NK-5G; Thu, 01 Feb 2024 22:31:01 -0500
-Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rVkTl-0004XG-0e
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 22:44:37 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVkGZ-0002hJ-H0; Thu, 01 Feb 2024 22:31:00 -0500
-Received: by mail-vs1-xe30.google.com with SMTP id
- ada2fe7eead31-46b3ff62223so1809474137.0; 
- Thu, 01 Feb 2024 19:30:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rVkTj-0001D4-6d
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 22:44:36 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6da6b0eb2d4so1265643b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 19:44:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706844658; x=1707449458; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kv8aZN1E1Pf8j1v4hQe5XNaY8kWkU2ATIKXRwzJjAeE=;
- b=cx6exJ98/7Ny7TgozdmhTVMZvFgUo1/+ww0CWUSZdE2mkpgYTumUfJcSnnm4fhyP+L
- dCGTwJfxNvlZ004SWiLmJqgCClDQpLt9sZA2KI5TK+/5ag8DXZURENLRSaaS2P6sT0ni
- ssx7q+YKiaOL1RgHQqkaQxIvLq9Zim8g72XDfWf73S2b2RxPtZDCfK4aBhRUo34Ub/uV
- boaGnxVgsZfV2Vytrs+/7bnUu6zdtHmm1CxbwxcL+/Tx86LJTM65JWexOzoOSeH95bUp
- VzJrX6FOZNY3yVIw5mJEZVixq2YOy/+32ZMjxhCljNTmsDBGo/vzO8c7GInVY/wqW7i0
- kOtg==
+ d=linaro.org; s=google; t=1706845473; x=1707450273; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
+ b=rA++wZmcDGCVx60hP5NTjvUBo3qyAmXjS9dENJsb62+wlwV6uKxWqajT3P+PUu2ZhX
+ 2xNnkRQK3qk7Jxzpykn029xUcujOKGP29H6RjrE2UixYtcLu0FgmjUZ8rPonR8/O6Yjj
+ niqiAeaFnrPcaXXudhQTgAbBrbnKEMjGTWeAWpCsllrgzSG8OJjD5D/WJP0AZ0X8oW3x
+ xICC4LvaB5m0G9pGcRn9gF3QcCI3t4CsIow3ljjShcJNBnID0nSC0QJHtJ8nwjXg2C6N
+ r7h1lociETSkVuxj55ZxHSTmGGs9MLG3alZMturTM3wdp9yc08+nBO2fc/CTuQl4vdlP
+ TZjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706844658; x=1707449458;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kv8aZN1E1Pf8j1v4hQe5XNaY8kWkU2ATIKXRwzJjAeE=;
- b=eCC2ctoDiTd/CHC736/aUSb7qOSiUjU7drg60EJotKL5YGpfMKf+/FOaZR5Ic8pM5r
- 4qXKTBamTm6TxgSdAkGrOhHw0eXu24mriqBMS7JfvrHQvyTXaGzxloOQ/aSCur1cHZkI
- eNQZcmsce+wSKHqh2AGQfUJdxIeNTg/qMr9kBhUv4pffhUOHzLW4xzjkTaLo7oNjHTtI
- 5GLJdJguFSopHaxVsKu9DgzNNyeeYdMvwcH+h/My7CMuczw6gi4wf5i+IsUes/P+PHLc
- GnyyuHpQRK6u3nM47K3A8PKanh+DMxmYZkVkIm9oJMfzsejPZLZgYQzZI1nZXl+PGX2S
- vKjg==
-X-Gm-Message-State: AOJu0Yz9hIyacXtS1QMsCYPs6gvf6H6ylUYmwuNTSW5JprppZBJFkw1P
- sJpBDICAoADFgYNs3dEHUU24YK2Di7PFW2lNNN7UhpTbz0KG5Qz4j2JWJy8H4LDtsa3JOXKpm6v
- bTo5QgdkBt7T0d4Dx8iJq3sFEX8U=
-X-Google-Smtp-Source: AGHT+IGci1zNbWqgB+Xjrc8QoCfy0jMWMP7QFIx0Eghp8TL/CRbe/QALKApOyfS0jR8CKtmEGV1j9RTf7BqCU0nVUMo=
-X-Received: by 2002:a67:e2d7:0:b0:46b:68fd:fa43 with SMTP id
- i23-20020a67e2d7000000b0046b68fdfa43mr751227vsm.4.1706844658099; Thu, 01 Feb
- 2024 19:30:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706845473; x=1707450273;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
+ b=iRhF6ob8OpmV4Np/xowwKJeDGg5YUrKgOgLZjnFtov6PWQzgwY9g2A5A1Z7bLNGtGZ
+ vCJ/TdjU6kR5nMhHm3cBl2us6fz5+BhbtGL8SGEsKg0GNKfp3/z594vyG2LfR0EzdLqi
+ 5VfJ4PTFiKcEfEKRG46FfZxkO3i++0Tdrmckl3Bom0K78RnPhEV3APCbQFnaygn6gzZj
+ fJN8QgnjlYmwK5mRntaX0Gf3lCoczlp7gMwrYnJdtccFScoVl/BxrRViiU6Lixsy2gWs
+ /7Z6DrCFDc94RCfgSw/K3b7EjygAV5MUb0XK4R/7dkJOiFekVXe3LttAx4LiZlQ0nk32
+ 69iQ==
+X-Gm-Message-State: AOJu0YzluLIPDVTWLrdxsykZGSl29gLOORp2IiTVyFLHJzeuwie2s7C2
+ BBpKIo74QLQHmg7HBVVqHVAmT7EhphwTtslHgu5lzIltIw8yPIKIZTX+x5LIM5QztRWoS2qIV+Z
+ JP4k=
+X-Google-Smtp-Source: AGHT+IG4uVDUWVvNE3f+hTpEKX2IASd+vz1eP7ZxOFz2czGgn0o9/rjD5/x2gMvet/y5jGY1eQoNKQ==
+X-Received: by 2002:a62:aa0f:0:b0:6de:1da4:ca99 with SMTP id
+ e15-20020a62aa0f000000b006de1da4ca99mr6748162pff.18.1706845473413; 
+ Thu, 01 Feb 2024 19:44:33 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCU11tzfGrnWBIP9q0pwgG6TV8kJCzOOS2igQDou961oxeHLoI68plkJzhjIJSOblfhYKoxVKYPIDSVBxr0AMpb/gZnob7T3vJosgX/OTewA6EtHnj+KM+j6EIATW8MP9uwvIA==
+Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
+ o3-20020a056a001b4300b006d9be279432sm525757pfv.2.2024.02.01.19.44.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Feb 2024 19:44:32 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
+ Christophe Lyon <christophe.lyon@linaro.org>, qemu-stable@nongnu.org
+Subject: [PATCH] linux-user/aarch64: Add padding before __kernel_rt_sigreturn
+Date: Fri,  2 Feb 2024 13:44:27 +1000
+Message-Id: <20240202034427.504686-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240131123624.230982-1-vadim.shakirov@syntacore.com>
-In-Reply-To: <20240131123624.230982-1-vadim.shakirov@syntacore.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 2 Feb 2024 13:30:31 +1000
-Message-ID: <CAKmqyKPc6K50usZFBgfPqCxTEUibzTmApWWuB=9t_7nN3_Wi2g@mail.gmail.com>
-Subject: Re: [PATCH v3] target/riscv: mcountinhibit, mcounteren, scounteren,
- hcounteren is 32-bit
-To: Vadim Shakirov <vadim.shakirov@syntacore.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,102 +93,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 10:37=E2=80=AFPM Vadim Shakirov
-<vadim.shakirov@syntacore.com> wrote:
->
-> mcountinhibit, mcounteren, scounteren and hcounteren must always be 32-bi=
-t
-> by privileged spec
->
-> Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
+Without this padding, an unwind through the signal handler
+will pick up the unwind info for the preceding syscall.
 
-Do you mind rebasing this on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
+This fixes gcc's 30_threads/thread/native_handle/cancel.cc.
 
-Alistair
+Cc: qemu-stable@nongnu.org
+Fixes: ee95fae075c6 ("linux-user/aarch64: Add vdso")
+Resolves: https://linaro.atlassian.net/browse/GNU-974
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/aarch64/vdso-be.so | Bin 3216 -> 3224 bytes
+ linux-user/aarch64/vdso-le.so | Bin 3216 -> 3224 bytes
+ linux-user/aarch64/vdso.S     |   4 ++++
+ 3 files changed, 4 insertions(+)
 
-> ---
->  target/riscv/cpu.h     |  8 ++++----
->  target/riscv/machine.c | 16 ++++++++--------
->  2 files changed, 12 insertions(+), 12 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 5b0824ef8f..88efd8a6f9 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -254,7 +254,7 @@ struct CPUArchState {
->      target_ulong hstatus;
->      target_ulong hedeleg;
->      uint64_t hideleg;
-> -    target_ulong hcounteren;
-> +    uint32_t hcounteren;
->      target_ulong htval;
->      target_ulong htinst;
->      target_ulong hgatp;
-> @@ -317,10 +317,10 @@ struct CPUArchState {
->       */
->      bool two_stage_indirect_lookup;
->
-> -    target_ulong scounteren;
-> -    target_ulong mcounteren;
-> +    uint32_t scounteren;
-> +    uint32_t mcounteren;
->
-> -    target_ulong mcountinhibit;
-> +    uint32_t mcountinhibit;
->
->      /* PMU counter state */
->      PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index fdde243e04..f129032b0d 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -79,14 +79,14 @@ static bool hyper_needed(void *opaque)
->
->  static const VMStateDescription vmstate_hyper =3D {
->      .name =3D "cpu/hyper",
-> -    .version_id =3D 3,
-> -    .minimum_version_id =3D 3,
-> +    .version_id =3D 4,
-> +    .minimum_version_id =3D 4,
->      .needed =3D hyper_needed,
->      .fields =3D (VMStateField[]) {
->          VMSTATE_UINTTL(env.hstatus, RISCVCPU),
->          VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
->          VMSTATE_UINT64(env.hideleg, RISCVCPU),
-> -        VMSTATE_UINTTL(env.hcounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.hcounteren, RISCVCPU),
->          VMSTATE_UINTTL(env.htval, RISCVCPU),
->          VMSTATE_UINTTL(env.htinst, RISCVCPU),
->          VMSTATE_UINTTL(env.hgatp, RISCVCPU),
-> @@ -354,8 +354,8 @@ static const VMStateDescription vmstate_jvt =3D {
->
->  const VMStateDescription vmstate_riscv_cpu =3D {
->      .name =3D "cpu",
-> -    .version_id =3D 9,
-> -    .minimum_version_id =3D 9,
-> +    .version_id =3D 10,
-> +    .minimum_version_id =3D 10,
->      .post_load =3D riscv_cpu_post_load,
->      .fields =3D (VMStateField[]) {
->          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> @@ -398,9 +398,9 @@ const VMStateDescription vmstate_riscv_cpu =3D {
->          VMSTATE_UINTTL(env.mtval, RISCVCPU),
->          VMSTATE_UINTTL(env.miselect, RISCVCPU),
->          VMSTATE_UINTTL(env.siselect, RISCVCPU),
-> -        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
-> +        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
->          VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS=
-, 0,
->                               vmstate_pmu_ctr_state, PMUCTRState),
->          VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVE=
-NTS),
-> --
-> 2.34.1
->
->
+diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
+index 6084f3d1a701316004894fcdd739c4e1e0463b68..808206ade824b09d786f6cc34f7cddf80b63130e 100755
+GIT binary patch
+delta 121
+zcmbOrIYV-SKI4pu2Kk&{7{Gw#%fuBAMC1c?^>~k}v|avdxNjSSLfftVb3bgJ!|2S&
+z_-6A1CJrVZc?IUH8G;R$7#SF@Om<{a*v!K!&BXX-vIe^~TWO|cva$K*Om;sOMw`hy
+ZxXl@VO#Z-a&zLdUfXALuXmSCM0s#EKC)of1
+
+delta 116
+zcmbOsIYDxQKI4Rm2Kk&H7{Gw#!^9O2L>8U?-5V_M@!kH(Sx4vJn|*ujLPgija~Pc&
+z8DDIEz{J5c`3;N8W)W6tCdL<&4cM*OEF8_<v%@zRviq?xT1-B`ZO-^%@(*r%#)Qch
+RJocPi5ThAdCO2?N002V6C;<Qf
+
+diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
+index 947d534ec1899740edbd6921da6bc6e70e2ecd09..941aaf29931193300de1f62097867c282a7e0c74 100755
+GIT binary patch
+delta 129
+zcmbOrIYV-S2IGv0n)#exSQx<I%fyAxMZTVBQ(04AP_*V|Vxp|@=@;x8zb9;-!)U|E
+z_-6A>CVnO!c?IUH8G;R$7#SF@Om<{a*v!K!!o>JyvLd?^n`3BUW_royOm=q`Mw`hS
+dxy>1WOn%92&zLb;lgFM@hy!9z%j7~Xc>tTxDQW-!
+
+delta 108
+zcmbOsIYDxQ2IGW@n)#d`SQx<I!^DNpMK&+G&+g_}w9WI@dn@@euKVesZ-h6`VYFdn
+ze6jf^6F<}BH!LcfMOa0c7+*}*WOrgKEO1Fl%G+GX?#{w!F?lDqIpc@PAGz%r6DAw-
+M*fVlXF62=M06owo?*IS*
+
+diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
+index 34d3a9ebd2..a0ac1487b0 100644
+--- a/linux-user/aarch64/vdso.S
++++ b/linux-user/aarch64/vdso.S
+@@ -63,7 +63,11 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
+  * For now, elide the unwind info for __kernel_rt_sigreturn and rely on
+  * the libgcc fallback routine as we have always done.  This requires
+  * that the code sequence used be exact.
++ *
++ * Add a nop as a spacer to ensure that unwind does not pick up the
++ * unwind info from the preceding syscall.
+  */
++	nop
+ __kernel_rt_sigreturn:
+ 	/* No BTI C insn here -- we arrive via RET. */
+ 	mov	x8, #__NR_rt_sigreturn
+-- 
+2.34.1
+
 
