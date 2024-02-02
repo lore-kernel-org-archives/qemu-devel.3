@@ -4,69 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99517C47DB3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 14:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB0CC47DB3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 14:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVuqb-00079I-4m; Fri, 02 Feb 2024 09:48:53 -0500
+	id 1rVusv-00018d-3q; Fri, 02 Feb 2024 09:51:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVuqR-00074h-Q8
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 09:48:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rVuso-000184-T3
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 09:51:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVuqP-0002pA-HT
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 09:48:42 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rVusl-0004CS-Tg
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 09:51:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706885318;
+ s=mimecast20190719; t=1706885467;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rxQY+7ko3W9v0eh+vuzLr5ZuuX1slmfDJFHBVuZHIl8=;
- b=VvqOivEI2uAB9X1xQanwd8HTVZ3bilQiQMAeW0wqr1BmY+OSwNDQm43r3zfvLWWgnS7D7Z
- kMzIE74b4xv/j6UePJcke/0JeK0Pk6WXe2xpIKP2cFbg4X/AftNW2DcSh2rh471j5pBAU9
- wt+rYFXaEEfADohrd6Txr3pgPsjoRxA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DDCen4lnvbulyjIz9kBjBd9GPoi7IHvJbCGWzpCYK88=;
+ b=EDij8eySG7P19o8u9rBc3ncjKQ1qdxPgKxswkgqq8SI7zKADg3ElzhwbJGFRE3rWsHHETG
+ EXvXW0nKI4OMpYQAUOHya2VjSKsFvG7zzstpMLuv150yHiIX3LnNAXyaPvtcySnDZRxkUJ
+ Ab1CM6/et7ad005CnWpHeg3gayE3pok=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-_LHxjTqEN_OkezwQkuGIww-1; Fri, 02 Feb 2024 09:48:35 -0500
-X-MC-Unique: _LHxjTqEN_OkezwQkuGIww-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E69B318A6513;
- Fri,  2 Feb 2024 14:48:24 +0000 (UTC)
-Received: from localhost (unknown [10.39.194.28])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 786C8900;
- Fri,  2 Feb 2024 14:48:24 +0000 (UTC)
-From: Hanna Czenczek <hreitz@redhat.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
-Subject: [PATCH 1/2] block-backend: Allow concurrent context changes
-Date: Fri,  2 Feb 2024 15:47:54 +0100
-Message-ID: <20240202144755.671354-2-hreitz@redhat.com>
-In-Reply-To: <20240202144755.671354-1-hreitz@redhat.com>
-References: <20240202144755.671354-1-hreitz@redhat.com>
+ us-mta-556-ruscD0bWNjuX5IrbHboU9A-1; Fri, 02 Feb 2024 09:51:05 -0500
+X-MC-Unique: ruscD0bWNjuX5IrbHboU9A-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a2cb0d70d6cso137611166b.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 06:51:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706885464; x=1707490264;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DDCen4lnvbulyjIz9kBjBd9GPoi7IHvJbCGWzpCYK88=;
+ b=sc3finOLvIXGgtHgAazREJCOK9ZfkDG7aWXFeRlIvGa730Ojjz+cAfrbLKBJLUhV8A
+ sMInhz3IP29oKouYSUlwgx5C5K7N4/CfKzO8/8/nfkAVcscrhO8O5P2pk/YhVK/BN1u0
+ 1ov8gCR+iXZUzKz6c3yvN5+JQHVazw1+zxeXO25K28sf1m3udyy2PhUziPuMD0Yptk4b
+ HPOdnets9pDSZR0Ja3mVdeDWuOsHOf8l6vGo+joKosEReXtJZUGmewtTbFwl2NiRU4TM
+ pJcYlIfZLNSJNbONB6FssQt6/NLk5yq5Ybybsn5UtNFk8JoXfn3st7HyKqh9QF4n07lK
+ 1oiQ==
+X-Gm-Message-State: AOJu0Yys94WEqp9C+HNBsXHQHC3QC6Yi4y2NMMgGZYk2P1cbAILFxqDs
+ sK3HY1BVQorNVTbrAlcJgACOVNhSMGiRrhKlDJBi2bZpaK3mLP7zTZdNY+L7VBkg76AP9W+nw40
+ GjGYytR0k6wWn2Yra9sq24a8NvoNirIkNNmw5k1SaKhAQb8xxAbd2TByxzSAj
+X-Received: by 2002:a17:907:584:b0:a35:9dd6:ce06 with SMTP id
+ vw4-20020a170907058400b00a359dd6ce06mr1404064ejb.14.1706885464021; 
+ Fri, 02 Feb 2024 06:51:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHWiH4kFxdRlynrmY5IttXO57TSPn9IUTM68+c1cboKEhmoAMQBv7lJXmNLRoW4rLLhhkqHOw==
+X-Received: by 2002:a17:907:584:b0:a35:9dd6:ce06 with SMTP id
+ vw4-20020a170907058400b00a359dd6ce06mr1404055ejb.14.1706885463583; 
+ Fri, 02 Feb 2024 06:51:03 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCW93MQSQKhB0BDioMPSLU2LBqPgCAlAd69rqWbZUhOOQ7falR2ghz3d9ooeZWQxAffb9mf0QZhBgmJ1nlm4mLOmYf56Occ=
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ th8-20020a1709078e0800b00a3717f96e6esm497530ejc.171.2024.02.02.06.51.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Feb 2024 06:51:03 -0800 (PST)
+Message-ID: <d2d0314a-494f-4ace-ba73-e14019fb4fd3@redhat.com>
+Date: Fri, 2 Feb 2024 15:51:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] migration: Fix return-path thread exit
+Content-Language: en-US
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20240201184853.890471-1-clg@redhat.com>
+ <20240201184853.890471-3-clg@redhat.com> <8734ubhqr9.fsf@suse.de>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <8734ubhqr9.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,91 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since AioContext locks have been removed, a BlockBackend's AioContext
-may really change at any time (only exception is that it is often
-confined to a drained section, as noted in this patch).  Therefore,
-blk_get_aio_context() cannot rely on its root node's context always
-matching that of the BlockBackend.
+On 2/2/24 15:42, Fabiano Rosas wrote:
+> Cédric Le Goater <clg@redhat.com> writes:
+> 
+>> In case of error, close_return_path_on_source() can perform a shutdown
+>> to exit the return-path thread.  However, in migrate_fd_cleanup(),
+>> 'to_dst_file' is closed before calling close_return_path_on_source()
+>> and the shutdown fails, leaving the source and destination waiting for
+>> an event to occur.
+> 
+> At close_return_path_on_source, qemu_file_shutdown() and checking
+> ms->to_dst_file are done under the qemu_file_lock, so how could
+> migrate_fd_cleanup() have cleared the pointer but the ms->to_dst_file
+> check have passed?
 
-In practice, whether they match does not matter anymore anyway: Requests
-can be sent to BDSs from any context, so anyone who requests the BB's
-context should have no reason to require the root node to have the same
-context.  Therefore, we can and should remove the assertion to that
-effect.
+This is not a locking issue, it's much simpler. migrate_fd_cleanup()
+clears the ms->to_dst_file pointer and closes the QEMUFile and then
+calls close_return_path_on_source() which then tries to use resources
+which are not available anymore.
 
-In addition, because the context can be set and queried from different
-threads concurrently, it has to be accessed with atomic operations.
+Thanks,
 
-Buglink: https://issues.redhat.com/browse/RHEL-19381
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
----
- block/block-backend.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+C.
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 209eb07528..9c4de79e6b 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -44,7 +44,7 @@ struct BlockBackend {
-     char *name;
-     int refcnt;
-     BdrvChild *root;
--    AioContext *ctx;
-+    AioContext *ctx; /* access with atomic operations only */
-     DriveInfo *legacy_dinfo;    /* null unless created by drive_new() */
-     QTAILQ_ENTRY(BlockBackend) link;         /* for block_backends */
-     QTAILQ_ENTRY(BlockBackend) monitor_link; /* for monitor_block_backends */
-@@ -2414,22 +2414,22 @@ void blk_op_unblock_all(BlockBackend *blk, Error *reason)
-     }
- }
- 
-+/**
-+ * Return BB's current AioContext.  Note that this context may change
-+ * concurrently at any time, with one exception: If the BB has a root node
-+ * attached, its context will only change through bdrv_try_change_aio_context(),
-+ * which creates a drained section.  Therefore, incrementing such a BB's
-+ * in-flight counter will prevent its context from changing.
-+ */
- AioContext *blk_get_aio_context(BlockBackend *blk)
- {
--    BlockDriverState *bs;
-     IO_CODE();
- 
-     if (!blk) {
-         return qemu_get_aio_context();
-     }
- 
--    bs = blk_bs(blk);
--    if (bs) {
--        AioContext *ctx = bdrv_get_aio_context(blk_bs(blk));
--        assert(ctx == blk->ctx);
--    }
--
--    return blk->ctx;
-+    return qatomic_read(&blk->ctx);
- }
- 
- int blk_set_aio_context(BlockBackend *blk, AioContext *new_context,
-@@ -2442,7 +2442,7 @@ int blk_set_aio_context(BlockBackend *blk, AioContext *new_context,
-     GLOBAL_STATE_CODE();
- 
-     if (!bs) {
--        blk->ctx = new_context;
-+        qatomic_set(&blk->ctx, new_context);
-         return 0;
-     }
- 
-@@ -2471,7 +2471,7 @@ static void blk_root_set_aio_ctx_commit(void *opaque)
-     AioContext *new_context = s->new_ctx;
-     ThrottleGroupMember *tgm = &blk->public.throttle_group_member;
- 
--    blk->ctx = new_context;
-+    qatomic_set(&blk->ctx, new_context);
-     if (tgm->throttle_state) {
-         throttle_group_detach_aio_context(tgm);
-         throttle_group_attach_aio_context(tgm, new_context);
--- 
-2.43.0
+
+
+
+> 
+>>
+>> Close the file after calling close_return_path_on_source() so that the
+>> shutdown succeeds and the return-path thread exits.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   migration/migration.c | 12 +++++-------
+>>   1 file changed, 5 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 2c3362235c7651c11d581f3c3639571f1f9636ef..1e0b6acaedc272e8ce26ad40be2c42177f5fd14e 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -1314,6 +1314,7 @@ void migrate_set_state(int *state, int old_state, int new_state)
+>>   static void migrate_fd_cleanup(MigrationState *s)
+>>   {
+>>       int file_error = 0;
+>> +    QEMUFile *tmp = NULL;
+>>   
+>>       g_free(s->hostname);
+>>       s->hostname = NULL;
+>> @@ -1323,8 +1324,6 @@ static void migrate_fd_cleanup(MigrationState *s)
+>>       qemu_savevm_state_cleanup();
+>>   
+>>       if (s->to_dst_file) {
+>> -        QEMUFile *tmp;
+>> -
+>>           trace_migrate_fd_cleanup();
+>>           bql_unlock();
+>>           if (s->migration_thread_running) {
+>> @@ -1344,15 +1343,14 @@ static void migrate_fd_cleanup(MigrationState *s)
+>>            * critical section won't block for long.
+>>            */
+>>           migration_ioc_unregister_yank_from_file(tmp);
+>> -        qemu_fclose(tmp);
+>>       }
+>>   
+>> -    /*
+>> -     * We already cleaned up to_dst_file, so errors from the return
+>> -     * path might be due to that, ignore them.
+>> -     */
+>>       close_return_path_on_source(s, file_error);
+>>   
+>> +    if (tmp) {
+>> +        qemu_fclose(tmp);
+>> +    }
+>> +
+>>       assert(!migration_is_active(s));
+>>   
+>>       if (s->state == MIGRATION_STATUS_CANCELLING) {
+> 
 
 
