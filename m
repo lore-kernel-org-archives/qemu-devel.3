@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA46C47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D4DC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:52:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmRy-00016o-F5; Fri, 02 Feb 2024 00:50:54 -0500
+	id 1rVmTA-00034Z-TH; Fri, 02 Feb 2024 00:52:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmRx-000165-5i
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:53 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1rVmT7-00033T-QU
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:52:05 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmRu-0001cQ-Ay
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:52 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-5d8df34835aso320193a12.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:50:49 -0800 (PST)
+ id 1rVmT6-00029R-CS
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:52:05 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3bbb4806f67so1238114b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:52:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853049; x=1707457849; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853123; x=1707457923; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9zf0HbVX8gvUwqhja+dnyq/HEcNPpSpWkMmM6ss3Zow=;
- b=YnnonL4dfILdH4WWHiCC2VZVGZvGDqCOIwfg68aklOHD7NUwrWiJcuIhiaXkh05QSk
- W97giU4a8gm5jc3LbHyvLpekTqosExf45HurDMcXViVVB7Xe+8VbaT3RbkPrwzEyZ9Bj
- XyeA2ukjRRHg+6ITpAMyVJgDSwIu5aJG5Ne1r6OE7iq5isUPG5VAZ7/D3gsXQE57OYZZ
- VpWN0cPZ8g8LqrxvBBC7XAteSWP82tZLqVvOIAEorOZy7LLLOqPNEPL2z7MKQbFL/fDY
- Ceotu180+Jt/xo4rQhhylXzfP5+rzjECJ20P7cc9iauZY/aRvOC2WaPs0YRjZ2Q/0LIq
- +DvQ==
+ bh=HYTSRpCGethKLnoY2fpF4KOBgpBDTTihXu+DADLRFZw=;
+ b=SxbBIAnh+mEUJfXX2oqKYBbyLGbvAW+0NnQIVH9c3VpmCsvcov3R7SzXdDjB1B9kZI
+ 19w2NzjMGcVknhgAyWTJnfHVt6q1eiAT5ds7LySd0unjZWX8MOhsnXT6M2XLexo2mUg+
+ L0Z+XzDx6PQpXRS716I0w5y7woHfowNl94B8SRmAfEEpD+1dQD6C1KlVrfik/dEKFlG5
+ A+i7dmqYd3yrcWZVb98CuiVn+fo35iiOieT7yVzlNXIVf1ehFsSHFV6oGcpGbrc9r5oe
+ CnmpmtJt+JaWJz22RDHvrH1W11c6hPnY+MCwkEyPAKAWV8dtw++l2LM9HpL46NPBOuh2
+ 11xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853049; x=1707457849;
+ d=1e100.net; s=20230601; t=1706853123; x=1707457923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9zf0HbVX8gvUwqhja+dnyq/HEcNPpSpWkMmM6ss3Zow=;
- b=tG4oVPXRIcTZE28nzcYJ/u4J1llVb4UAcFCqh348Wcz5pcLXx3BcgYvcayUdz43Ctg
- uIhpVXhQwxt/K/R7Z90rjCqipArVJ+/jJ4N/K5CoeazeX7op03pG47v3Pl99+4EGo37Z
- U3lyV9bMj7JYwa/MQvpTXAJFNevkl72ovDaG3Oyy6r+ht/Xw8l9xuTmXxiGxbgMTc5wd
- k3gR71CxzY8ulHXPI8bjVH8xmnT2SlC5RKLX90UV09EIOzHJuo/pz99r8+MXputqxweb
- EGGA2nD7j1/cqJSrgcwrTnKtZ6MmFMWRrLa4ovGEZu5jnl3TGzwxe2JkapPlQjLHrLIq
- x6Bw==
-X-Gm-Message-State: AOJu0YwtXhkBECMXbRR9a4i4wQP/+v8oK41ea+D0kxGJhaFP0vmvzH3O
- PLvbnmnell4YYZEYl+cogpyYMvjrXSrsaeF9+RbxueDBEzO2dKnvgh4ybsDlPAgKr/TJAjmAfbX
- oAAE=
-X-Google-Smtp-Source: AGHT+IFU+C/slZTYWO8/Q8Peb+y3BiqaW28VQygYOUBInclJcnP6vaNquTc/CilY3urv68iw3pa2XA==
-X-Received: by 2002:a05:6a20:6b9c:b0:19c:9a00:1351 with SMTP id
- bu28-20020a056a206b9c00b0019c9a001351mr1778846pzb.25.1706853048999; 
- Thu, 01 Feb 2024 21:50:48 -0800 (PST)
+ bh=HYTSRpCGethKLnoY2fpF4KOBgpBDTTihXu+DADLRFZw=;
+ b=d8VNViicoa+2O+Ch5IhACgueXmBlRVBsSadQxOS0RZlAk/Ihx8AO0ou0U2VZwMFNRV
+ CCFjhvGYRfn5/k1+XDJc4/J1l4ss4TwwgUYpDRXwwVf4fxfweh3bbGiiHT6+9RVdNsEh
+ /z6Z3/8C6KgB9koVxYq8nioUjqZvusv/qoPUwWCP9JN22WgekMbaHJvzAy3XI6COO2Y2
+ 7zaSXRTuOj9DxTsu5Tn/GUvhWJdhdvBBlLqnDZm96ppVLyRyzgJnorJx2LJsDk5Kx+6J
+ rwhc/IOsDx/uLwhldAFEdCQYgnu4Tc06cCBwo/6AyK2NlmxUHns0o9YEJtzOHPG45A5W
+ dh8w==
+X-Gm-Message-State: AOJu0YwlUO/azNgNqLDT2G88Mak+KAY1Iu9SBo68Np+1y/sFW6Kk23Fj
+ 76KDA4iR52aHSlvB3ooshr/YvWmWcTLEhZR3mrB2/MF5qkvJXC+FX6L+3HU6nyny7LziHxsiP4v
+ +xi4=
+X-Google-Smtp-Source: AGHT+IHNLNOvT7g2SZcmtcnLr1nMOTxMbyrvCp1UgsHd1DFD2mecBtm35Bmq7TrYGzxKUmteoR764w==
+X-Received: by 2002:a05:6808:3089:b0:3bf:be81:923f with SMTP id
+ bl9-20020a056808308900b003bfbe81923fmr1122993oib.24.1706853123218; 
+ Thu, 01 Feb 2024 21:52:03 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCW4syu0BZIlc+TjlkGmv7yZ5hSe9DZKQ16WLTrqXy1Nk4iXOJx97MF/uN8v52uJ2sb94CZoXXyvPpeMEGShj28XxTsm9wBdCQ+WTjLCug==
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.50.47
+ h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.52.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:50:48 -0800 (PST)
+ Thu, 01 Feb 2024 21:52:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/57] target/alpha: Populate CPUClass.mmu_index
-Date: Fri,  2 Feb 2024 15:49:42 +1000
-Message-Id: <20240202055036.684176-5-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 38/57] target/sparc: Remove gen_dest_fpr_F
+Date: Fri,  2 Feb 2024 15:50:17 +1000
+Message-Id: <20240202055036.684176-40-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,36 +97,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/alpha/cpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Replace with tcg_temp_new_i32.
 
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index de705c3703..bf70173a25 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -64,6 +64,11 @@ static bool alpha_cpu_has_work(CPUState *cs)
-                                     | CPU_INTERRUPT_MCHK);
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20231103173841.33651-4-richard.henderson@linaro.org>
+---
+ target/sparc/translate.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
+
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 3a59262c9a..6824b5d835 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -246,11 +246,6 @@ static void gen_store_fpr_F(DisasContext *dc, unsigned int dst, TCGv_i32 v)
+     gen_update_fprs_dirty(dc, dst);
  }
  
-+static int alpha_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    return alpha_env_mmu_index(cpu_env(cs));
-+}
-+
- static void alpha_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
+-static TCGv_i32 gen_dest_fpr_F(DisasContext *dc)
+-{
+-    return tcg_temp_new_i32();
+-}
+-
+ static TCGv_i64 gen_load_fpr_D(DisasContext *dc, unsigned int src)
  {
-     info->mach = bfd_mach_alpha_ev6;
-@@ -230,6 +235,7 @@ static void alpha_cpu_class_init(ObjectClass *oc, void *data)
+     src = DFPREG(src);
+@@ -1873,7 +1868,7 @@ static void gen_ldf_asi(DisasContext *dc, DisasASI *da, MemOp orig_size,
+         memop |= MO_ALIGN_4;
+         switch (size) {
+         case MO_32:
+-            d32 = gen_dest_fpr_F(dc);
++            d32 = tcg_temp_new_i32();
+             tcg_gen_qemu_ld_i32(d32, addr, da->mem_idx, memop);
+             gen_store_fpr_F(dc, rd, d32);
+             break;
+@@ -1938,7 +1933,7 @@ static void gen_ldf_asi(DisasContext *dc, DisasASI *da, MemOp orig_size,
+             case MO_32:
+                 d64 = tcg_temp_new_i64();
+                 gen_helper_ld_asi(d64, tcg_env, addr, r_asi, r_mop);
+-                d32 = gen_dest_fpr_F(dc);
++                d32 = tcg_temp_new_i32();
+                 tcg_gen_extrl_i64_i32(d32, d64);
+                 gen_store_fpr_F(dc, rd, d32);
+                 break;
+@@ -2228,7 +2223,7 @@ static void gen_fmovs(DisasContext *dc, DisasCompare *cmp, int rd, int rs)
  
-     cc->class_by_name = alpha_cpu_class_by_name;
-     cc->has_work = alpha_cpu_has_work;
-+    cc->mmu_index = alpha_cpu_mmu_index;
-     cc->dump_state = alpha_cpu_dump_state;
-     cc->set_pc = alpha_cpu_set_pc;
-     cc->get_pc = alpha_cpu_get_pc;
+     s1 = gen_load_fpr_F(dc, rs);
+     s2 = gen_load_fpr_F(dc, rd);
+-    dst = gen_dest_fpr_F(dc);
++    dst = tcg_temp_new_i32();
+     zero = tcg_constant_i32(0);
+ 
+     tcg_gen_movcond_i32(TCG_COND_NE, dst, c32, zero, s1, s2);
+@@ -4497,7 +4492,7 @@ static bool do_fd(DisasContext *dc, arg_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_F(dc);
++    dst = tcg_temp_new_i32();
+     src = gen_load_fpr_D(dc, a->rs);
+     func(dst, src);
+     gen_store_fpr_F(dc, a->rd, dst);
+@@ -4539,7 +4534,7 @@ static bool do_env_fd(DisasContext *dc, arg_r_r *a,
+     }
+ 
+     gen_op_clear_ieee_excp_and_FTT();
+-    dst = gen_dest_fpr_F(dc);
++    dst = tcg_temp_new_i32();
+     src = gen_load_fpr_D(dc, a->rs);
+     func(dst, tcg_env, src);
+     gen_helper_check_ieee_exceptions(cpu_fsr, tcg_env);
+@@ -4697,7 +4692,7 @@ static bool do_env_fq(DisasContext *dc, arg_r_r *a,
+ 
+     gen_op_clear_ieee_excp_and_FTT();
+     gen_op_load_fpr_QT1(QFPREG(a->rs));
+-    dst = gen_dest_fpr_F(dc);
++    dst = tcg_temp_new_i32();
+     func(dst, tcg_env);
+     gen_helper_check_ieee_exceptions(cpu_fsr, tcg_env);
+     gen_store_fpr_F(dc, a->rd, dst);
 -- 
 2.34.1
 
