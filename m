@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19575C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78535C48291
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rW1UE-0008G4-7q; Fri, 02 Feb 2024 16:54:14 -0500
+	id 1rW1U3-0008DJ-2m; Fri, 02 Feb 2024 16:54:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1UC-0008Fe-Na
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:12 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1U1-0008Ct-1v
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1UB-0004uY-4B
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:12 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1Tz-0004sz-9k
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706910850;
+ s=mimecast20190719; t=1706910838;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=czNYp4U5+ggmqgLkvs4/GbnY/M6qHCdVm83DexN7PvQ=;
- b=KqVPBG9UpYNL2ypWYfatc4AxFkUfeNUus88w23zo4Usuzz7tCO6Jzt15waxy7ce5rdx0iW
- trVNWcZ3kiGsGrWXweAGv79awsjZ55mzzNJ0wQYbWyUC18gs1pZRqzIEo0HpNf+xnN5hoD
- VSWPBS8AKnv+9JI87BYZ4lnWmrXVTWo=
+ bh=UjO81Bw6iEHfFtOoTrtiZ4pC6BhmP65sUHBmbECDG38=;
+ b=Adoz6RpliJRzssFDKh/P62V0+5muIekqtG15RN0VhFPwOUCEqHs8eItmTgoE4Fq+h76JDJ
+ Oi+N8cD+dCVU7W53T8kmXHqQBxSqHCrTC3zmo3YKR/bZcRlxgLFVNfAXRIuNfk5RNTOtrJ
+ 56PbdCH3dbjG/irMFuYXtLFWcAEzMsg=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-300-7azcj647P_SgeriKma39zA-1; Fri, 02 Feb 2024 16:54:06 -0500
-X-MC-Unique: 7azcj647P_SgeriKma39zA-1
+ us-mta-120-fUP7D4M9NUSUuujoq_jgNQ-1; Fri, 02 Feb 2024 16:53:55 -0500
+X-MC-Unique: fUP7D4M9NUSUuujoq_jgNQ-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1922086C141;
- Fri,  2 Feb 2024 21:54:06 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 13F59800074;
+ Fri,  2 Feb 2024 21:53:55 +0000 (UTC)
 Received: from t14s.redhat.com (unknown [10.39.192.47])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E38E32166B31;
- Fri,  2 Feb 2024 21:54:03 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 727D52166B31;
+ Fri,  2 Feb 2024 21:53:53 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -51,10 +51,9 @@ Cc: David Hildenbrand <david@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  Germano Veit Michel <germano@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>
-Subject: [PATCH v1 11/15] libvhost-user: Speedup gpa_to_mem_region() and
- vu_gpa_to_va()
-Date: Fri,  2 Feb 2024 22:53:28 +0100
-Message-ID: <20240202215332.118728-12-david@redhat.com>
+Subject: [PATCH v1 06/15] libvhost-user: Factor out adding a memory region
+Date: Fri,  2 Feb 2024 22:53:23 +0100
+Message-ID: <20240202215332.118728-7-david@redhat.com>
 In-Reply-To: <20240202215332.118728-1-david@redhat.com>
 References: <20240202215332.118728-1-david@redhat.com>
 MIME-Version: 1.0
@@ -85,113 +84,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's speed up GPA to memory region / virtual address lookup. Store the
-memory regions ordered by guest physical addresses, and use binary
-search for address translation, as well as when adding/removing memory
-regions.
+Let's factor it out, reducing quite some code duplication and perparing
+for further changes.
 
-Most importantly, this will speed up GPA->VA address translation when we
-have many memslots.
+If we fail to mmap a region and panic, we now simply don't add that
+(broken) region.
+
+Note that we now increment dev->nregions as we are successfully
+adding memory regions, and don't increment dev->nregions if anything went
+wrong.
 
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 49 +++++++++++++++++++++--
- 1 file changed, 45 insertions(+), 4 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 168 ++++++++--------------
+ 1 file changed, 60 insertions(+), 108 deletions(-)
 
 diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index d036b54ed0..75e47b7bb3 100644
+index d9e2214ad2..a2baefe84b 100644
 --- a/subprojects/libvhost-user/libvhost-user.c
 +++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -199,19 +199,30 @@ vu_panic(VuDev *dev, const char *msg, ...)
- static VuDevRegion *
- vu_gpa_to_mem_region(VuDev *dev, uint64_t guest_addr)
- {
--    unsigned int i;
-+    int low = 0;
-+    int high = dev->nregions - 1;
- 
-     /*
-      * Memory regions cannot overlap in guest physical address space. Each
-      * GPA belongs to exactly one memory region, so there can only be one
-      * match.
-+     *
-+     * We store our memory regions ordered by GPA and can simply perform a
-+     * binary search.
-      */
--    for (i = 0; i < dev->nregions; i++) {
--        VuDevRegion *cur = &dev->regions[i];
-+    while (low <= high) {
-+        unsigned int mid = low + (high - low) / 2;
-+        VuDevRegion *cur = &dev->regions[mid];
- 
-         if (guest_addr >= cur->gpa && guest_addr < cur->gpa + cur->size) {
-             return cur;
-         }
-+        if (guest_addr >= cur->gpa + cur->size) {
-+            low = mid + 1;
-+        }
-+        if (guest_addr < cur->gpa) {
-+            high = mid - 1;
-+        }
-     }
-     return NULL;
+@@ -256,6 +256,61 @@ vu_remove_all_mem_regs(VuDev *dev)
+     dev->nregions = 0;
  }
-@@ -273,9 +284,14 @@ vu_remove_all_mem_regs(VuDev *dev)
- static void
- _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
- {
-+    const uint64_t start_gpa = msg_region->guest_phys_addr;
-+    const uint64_t end_gpa = start_gpa + msg_region->memory_size;
-     int prot = PROT_READ | PROT_WRITE;
-     VuDevRegion *r;
-     void *mmap_addr;
-+    int low = 0;
-+    int high = dev->nregions - 1;
-+    unsigned int idx;
  
-     DPRINT("Adding region %d\n", dev->nregions);
-     DPRINT("    guest_phys_addr: 0x%016"PRIx64"\n",
-@@ -295,6 +311,29 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
-         prot = PROT_NONE;
++static void
++_vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
++{
++    int prot = PROT_READ | PROT_WRITE;
++    VuDevRegion *r;
++    void *mmap_addr;
++
++    DPRINT("Adding region %d\n", dev->nregions);
++    DPRINT("    guest_phys_addr: 0x%016"PRIx64"\n",
++           msg_region->guest_phys_addr);
++    DPRINT("    memory_size:     0x%016"PRIx64"\n",
++           msg_region->memory_size);
++    DPRINT("    userspace_addr   0x%016"PRIx64"\n",
++           msg_region->userspace_addr);
++    DPRINT("    mmap_offset      0x%016"PRIx64"\n",
++           msg_region->mmap_offset);
++
++    if (dev->postcopy_listening) {
++        /*
++         * In postcopy we're using PROT_NONE here to catch anyone
++         * accessing it before we userfault
++         */
++        prot = PROT_NONE;
++    }
++
++    /*
++     * We don't use offset argument of mmap() since the mapped address has
++     * to be page aligned, and we use huge pages.
++     */
++    mmap_addr = mmap(0, msg_region->memory_size + msg_region->mmap_offset,
++                     prot, MAP_SHARED | MAP_NORESERVE, fd, 0);
++    if (mmap_addr == MAP_FAILED) {
++        vu_panic(dev, "region mmap error: %s", strerror(errno));
++        return;
++    }
++    DPRINT("    mmap_addr:       0x%016"PRIx64"\n",
++           (uint64_t)(uintptr_t)mmap_addr);
++
++    r = &dev->regions[dev->nregions];
++    r->gpa = msg_region->guest_phys_addr;
++    r->size = msg_region->memory_size;
++    r->qva = msg_region->userspace_addr;
++    r->mmap_addr = (uint64_t)(uintptr_t)mmap_addr;
++    r->mmap_offset = msg_region->mmap_offset;
++    dev->nregions++;
++
++    if (dev->postcopy_listening) {
++        /*
++         * Return the address to QEMU so that it can translate the ufd
++         * fault addresses back.
++         */
++        msg_region->userspace_addr = r->mmap_addr + r->mmap_offset;
++    }
++}
++
+ static void
+ vmsg_close_fds(VhostUserMsg *vmsg)
+ {
+@@ -727,10 +782,7 @@ generate_faults(VuDev *dev) {
+ static bool
+ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+     int i;
+-    bool track_ramblocks = dev->postcopy_listening;
+     VhostUserMemoryRegion m = vmsg->payload.memreg.region, *msg_region = &m;
+-    VuDevRegion *dev_region = &dev->regions[dev->nregions];
+-    void *mmap_addr;
+ 
+     if (vmsg->fd_num != 1) {
+         vmsg_close_fds(vmsg);
+@@ -760,69 +812,20 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+      * we know all the postcopy client bases have been received, and we
+      * should start generating faults.
+      */
+-    if (track_ramblocks &&
++    if (dev->postcopy_listening &&
+         vmsg->size == sizeof(vmsg->payload.u64) &&
+         vmsg->payload.u64 == 0) {
+         (void)generate_faults(dev);
+         return false;
      }
  
-+    /*
-+     * We will add memory regions into the array sorted by GPA. Perform a
-+     * binary search to locate the insertion point: it will be at the low
-+     * index.
-+     */
-+    while (low <= high) {
-+        unsigned int mid = low + (high - low)  / 2;
-+        VuDevRegion *cur = &dev->regions[mid];
-+
-+        /* Overlap of GPA addresses. */
-+        if (start_gpa < cur->gpa + cur->size && cur->gpa < end_gpa) {
-+            vu_panic(dev, "regions with overlapping guest physical addresses");
-+            return;
-+        }
-+        if (start_gpa >= cur->gpa + cur->size) {
-+            low = mid + 1;
-+        }
-+        if (start_gpa < cur->gpa) {
-+            high = mid - 1;
-+        }
-+    }
-+    idx = low;
-+
-     /*
-      * We don't use offset argument of mmap() since the mapped address has
-      * to be page aligned, and we use huge pages.
-@@ -308,7 +347,9 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
-     DPRINT("    mmap_addr:       0x%016"PRIx64"\n",
-            (uint64_t)(uintptr_t)mmap_addr);
+-    DPRINT("Adding region: %u\n", dev->nregions);
+-    DPRINT("    guest_phys_addr: 0x%016"PRIx64"\n",
+-           msg_region->guest_phys_addr);
+-    DPRINT("    memory_size:     0x%016"PRIx64"\n",
+-           msg_region->memory_size);
+-    DPRINT("    userspace_addr   0x%016"PRIx64"\n",
+-           msg_region->userspace_addr);
+-    DPRINT("    mmap_offset      0x%016"PRIx64"\n",
+-           msg_region->mmap_offset);
+-
+-    dev_region->gpa = msg_region->guest_phys_addr;
+-    dev_region->size = msg_region->memory_size;
+-    dev_region->qva = msg_region->userspace_addr;
+-    dev_region->mmap_offset = msg_region->mmap_offset;
+-
+-    /*
+-     * We don't use offset argument of mmap() since the
+-     * mapped address has to be page aligned, and we use huge
+-     * pages.
+-     */
+-    if (track_ramblocks) {
+-        /*
+-         * In postcopy we're using PROT_NONE here to catch anyone
+-         * accessing it before we userfault.
+-         */
+-        mmap_addr = mmap(0, dev_region->size + dev_region->mmap_offset,
+-                         PROT_NONE, MAP_SHARED | MAP_NORESERVE,
+-                         vmsg->fds[0], 0);
+-    } else {
+-        mmap_addr = mmap(0, dev_region->size + dev_region->mmap_offset,
+-                         PROT_READ | PROT_WRITE, MAP_SHARED | MAP_NORESERVE,
+-                         vmsg->fds[0], 0);
+-    }
+-
+-    if (mmap_addr == MAP_FAILED) {
+-        vu_panic(dev, "region mmap error: %s", strerror(errno));
+-    } else {
+-        dev_region->mmap_addr = (uint64_t)(uintptr_t)mmap_addr;
+-        DPRINT("    mmap_addr:       0x%016"PRIx64"\n",
+-               dev_region->mmap_addr);
+-    }
+-
++    _vu_add_mem_reg(dev, msg_region, vmsg->fds[0]);
+     close(vmsg->fds[0]);
  
--    r = &dev->regions[dev->nregions];
-+    /* Shift all affected entries by 1 to open a hole at idx. */
-+    r = &dev->regions[idx];
-+    memmove(r + 1, r, sizeof(VuDevRegion) * (dev->nregions - idx));
-     r->gpa = msg_region->guest_phys_addr;
-     r->size = msg_region->memory_size;
-     r->qva = msg_region->userspace_addr;
+-    if (track_ramblocks) {
+-        /*
+-         * Return the address to QEMU so that it can translate the ufd
+-         * fault addresses back.
+-         */
+-        msg_region->userspace_addr = dev_region->mmap_addr +
+-                                     dev_region->mmap_offset;
+-
++    if (dev->postcopy_listening) {
+         /* Send the message back to qemu with the addresses filled in. */
+         vmsg->fd_num = 0;
+         DPRINT("Successfully added new region in postcopy\n");
+-        dev->nregions++;
+         return true;
+     } else {
+         for (i = 0; i < dev->max_queues; i++) {
+@@ -835,7 +838,6 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+         }
+ 
+         DPRINT("Successfully added new region\n");
+-        dev->nregions++;
+         return false;
+     }
+ }
+@@ -940,63 +942,13 @@ static bool
+ vu_set_mem_table_exec(VuDev *dev, VhostUserMsg *vmsg)
+ {
+     VhostUserMemory m = vmsg->payload.memory, *memory = &m;
+-    int prot = PROT_READ | PROT_WRITE;
+     unsigned int i;
+ 
+-    if (dev->postcopy_listening) {
+-        /*
+-         * In postcopy we're using PROT_NONE here to catch anyone
+-         * accessing it before we userfault
+-         */
+-        prot = PROT_NONE;
+-    }
+-
+     vu_remove_all_mem_regs(dev);
+-    dev->nregions = memory->nregions;
+ 
+     DPRINT("Nregions: %u\n", memory->nregions);
+-    for (i = 0; i < dev->nregions; i++) {
+-        void *mmap_addr;
+-        VhostUserMemoryRegion *msg_region = &memory->regions[i];
+-        VuDevRegion *dev_region = &dev->regions[i];
+-
+-        DPRINT("Region %d\n", i);
+-        DPRINT("    guest_phys_addr: 0x%016"PRIx64"\n",
+-               msg_region->guest_phys_addr);
+-        DPRINT("    memory_size:     0x%016"PRIx64"\n",
+-               msg_region->memory_size);
+-        DPRINT("    userspace_addr   0x%016"PRIx64"\n",
+-               msg_region->userspace_addr);
+-        DPRINT("    mmap_offset      0x%016"PRIx64"\n",
+-               msg_region->mmap_offset);
+-
+-        dev_region->gpa = msg_region->guest_phys_addr;
+-        dev_region->size = msg_region->memory_size;
+-        dev_region->qva = msg_region->userspace_addr;
+-        dev_region->mmap_offset = msg_region->mmap_offset;
+-
+-        /* We don't use offset argument of mmap() since the
+-         * mapped address has to be page aligned, and we use huge
+-         * pages.  */
+-        mmap_addr = mmap(0, dev_region->size + dev_region->mmap_offset,
+-                         prot, MAP_SHARED | MAP_NORESERVE, vmsg->fds[i], 0);
+-
+-        if (mmap_addr == MAP_FAILED) {
+-            vu_panic(dev, "region mmap error: %s", strerror(errno));
+-        } else {
+-            dev_region->mmap_addr = (uint64_t)(uintptr_t)mmap_addr;
+-            DPRINT("    mmap_addr:       0x%016"PRIx64"\n",
+-                   dev_region->mmap_addr);
+-        }
+-
+-        if (dev->postcopy_listening) {
+-            /*
+-             * Return the address to QEMU so that it can translate the ufd
+-             * fault addresses back.
+-             */
+-            msg_region->userspace_addr = dev_region->mmap_addr +
+-                                         dev_region->mmap_offset;
+-        }
++    for (i = 0; i < memory->nregions; i++) {
++        _vu_add_mem_reg(dev, &memory->regions[i], vmsg->fds[i]);
+         close(vmsg->fds[i]);
+     }
+ 
 -- 
 2.43.0
 
