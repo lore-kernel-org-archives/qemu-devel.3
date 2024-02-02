@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899F2C47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 333F5C47258
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmWb-00073U-HR; Fri, 02 Feb 2024 00:55:41 -0500
+	id 1rVmRt-00012m-Md; Fri, 02 Feb 2024 00:50:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWa-00071Z-Hn
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:40 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1rVmRs-00012J-4v
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:48 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWY-00039V-UX
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:40 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1d9607f2b3aso3073395ad.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:38 -0800 (PST)
+ id 1rVmRq-0001b8-Gl
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:47 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6ddb807e23bso1212472b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:50:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853337; x=1707458137; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853045; x=1707457845; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xswm8Y4EVntAPydwJ8PJUaf0qkJ0h3e6mOU1vrp0dGE=;
- b=w5AMC/ZOg5b62eUEol6KHNgHQNHD1NyRUNVwhecLG+AtKsqkmBGjgrZcbmhiOZ534G
- +TdhdERVbNoM4Su/rOdw8CqJGraU8BEymHZmEOQRS+5z5UjZNhXDdC98CTbDBeQr9TVm
- Oh+nbRV3FMqxiEVrfQB1cTptquldnlsYKTnJ0VMlWbjOXykY9dhJsllClC8fe3Ro5laT
- R+7OaMZqngcflm6hsYEi8U4Cw5AzS5I+VB21HqB0wc7Al7OZfme8DcERQuJcp1SviqN+
- 1AaldRQ9d7/6Mk2jf6vlhgOvQGurPr9nwv7WnjqXTx+0mu8GJCg17XxOWQ6bBnTSzs7k
- PmpQ==
+ bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
+ b=pCqcBld0yov0Vh/iMZGpt/nhYT8+xPPr4tiphnbp9WhENAlS+w9PEeT8IwR+Aceaji
+ 8EspkphOPsvj+27rCm2x5BUjX1Aq6TEJVtWVd9rXQt2NKYWavwBkL5yNziCmCsa29NG8
+ dm125HF8kacEtwiaou5OKarTEIDkHZLyDfM4PRZkE5ItaaMoUZl5esICN8m9x0q1kiR6
+ AWhnePSkmuwx20+ymIPlFZOJZol0e46enXQk2qvA/eK4mKHUKzorm9Kt4+3hagQmXOxL
+ sFdUw8LVMMowctHiU+JkjsZpz1uvPGc/dF4jDdPxj9P2PRLUCxG+76S36CReRcmQ6BkD
+ ia7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853337; x=1707458137;
+ d=1e100.net; s=20230601; t=1706853045; x=1707457845;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xswm8Y4EVntAPydwJ8PJUaf0qkJ0h3e6mOU1vrp0dGE=;
- b=CBPR3oDUHjYGsUgwTV8tRqKTy+X9R3I+ADgviWsGKyn4YJ/hZhosPSCHMbZlCynQ2G
- l7/TMnhgGWrbW7F0q7g0pJjQYHefkMgITamn04wiUpGBcXLQTDqEKokKaiNwHpENrH0d
- 2ECvlj7NqkKtDiyXgoNQaqHGkfJYRAzny1dnefE5y5Ljl2hxQgWh+LWWJ6LuBp4yWD8Y
- 7cK+Ir6aiI5dIJK0AhF39MAnpNVr756DpMrdmQK3j824+hoB7RZBPMqbvJzZyMf7uvYb
- hc+UthjlQMkknzTkQpC08qQp7rHsz38OuBVj5zeLgNUxocmazThCv8r2mS/EQricnUSk
- uh+w==
-X-Gm-Message-State: AOJu0Yw5Alh6pv1WzMgGZRmWLdtVQl+Y1N1athYaaL65KlFx8OqJ9UCZ
- GjknJVXJFeJqsrv0owGgnEBS2FfbCCFgzt4wfPSl/DgghV3T+RWmb3+lm0BUdBt1737Qd2IxROp
- eCSI=
-X-Google-Smtp-Source: AGHT+IFWaA1tkgiiwjpkrvC5aXlOkD8ksLnbC5TFsGreY06/8Gg9EyEeO36++IEhFOG84C/TqFKBzA==
-X-Received: by 2002:a17:903:32c5:b0:1d7:19ec:2eaf with SMTP id
- i5-20020a17090332c500b001d719ec2eafmr1943574plr.6.1706853337693; 
- Thu, 01 Feb 2024 21:55:37 -0800 (PST)
+ bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
+ b=BJk4nvlbbxYhmnHLy+qZRaeGMLeDzasb97/I8oFuzuoszswAuJQQO2kdPOvzPxL2y5
+ beuprR4ZkJS1Lwh4A7Cijo5y7TwVVWSmvTHnaKdNGGAl4DlMq+WZqov5CuHAgOKLMSKc
+ +LPlQ2V7Y6vjLcVYnzKoKHsr2Caur3P+YvK4r/hgRoe3vOCTXPDwDlxDzD/CaLdYW6eT
+ vOfa3JslSsjvAnB4snissjZc3FcSU19f2Q0WVX0wNyaKjuRqdA2JG8puq1gbDvUN/vz+
+ h/m7CCEuTRvRynQAqy0XYMKKMk0/uF7DJ0iA0rQs3q3Ktv8aNDkzESVsVgc3lBnOq3v1
+ 3s3A==
+X-Gm-Message-State: AOJu0YwehneeP7FSIMZZ0kq0zLJJzhX+8Y6tFjc5kk89T7SY63xjF/rW
+ pQtqltpiU8eEBuew9+RmdSxP/G/m0KODMDlhOtFKSdb4GKkhdY0IA88p8iFkZrbUE29bH9kWUtz
+ kqrQ=
+X-Google-Smtp-Source: AGHT+IHvG0Blh1Fm6y2We/h3S+PXtYOhejH0DtZKI76iwiP66Xh47IwkmKqSU1/qpxKHXePR4auw0Q==
+X-Received: by 2002:a05:6a00:4c93:b0:6df:e035:5549 with SMTP id
+ eb19-20020a056a004c9300b006dfe0355549mr7634554pfb.15.1706853044886; 
+ Thu, 01 Feb 2024 21:50:44 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.36
+ h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.50.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:55:37 -0800 (PST)
+ Thu, 01 Feb 2024 21:50:44 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 52/57] target/sparc: Clear cexc and ftt in
- do_check_ieee_exceptions
-Date: Fri,  2 Feb 2024 15:50:31 +1000
-Message-Id: <20240202055036.684176-54-richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH] linux-user/aarch64: Add padding before __kernel_rt_sigreturn
+Date: Fri,  2 Feb 2024 15:49:40 +1000
+Message-Id: <20240202055036.684176-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,156 +93,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Don't do the clearing explicitly before each FPop,
-rather do it as part of the rest of exception handling.
+Without this padding, an unwind through the signal handler
+will pick up the unwind info for the preceding syscall.
 
+This fixes gcc's 30_threads/thread/native_handle/cancel.cc.
+
+Cc: qemu-stable@nongnu.org
+Fixes: ee95fae075c6 ("linux-user/aarch64: Add vdso")
+Resolves: https://linaro.atlassian.net/browse/GNU-974
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-Id: <20231103173841.33651-18-richard.henderson@linaro.org>
 ---
- target/sparc/fop_helper.c |  2 ++
- target/sparc/translate.c  | 16 ----------------
- 2 files changed, 2 insertions(+), 16 deletions(-)
+ linux-user/aarch64/vdso-be.so | Bin 3216 -> 3224 bytes
+ linux-user/aarch64/vdso-le.so | Bin 3216 -> 3224 bytes
+ linux-user/aarch64/vdso.S     |   4 ++++
+ 3 files changed, 4 insertions(+)
 
-diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-index 22b412adb5..64f20e78f1 100644
---- a/target/sparc/fop_helper.c
-+++ b/target/sparc/fop_helper.c
-@@ -50,6 +50,8 @@ static target_ulong do_check_ieee_exceptions(CPUSPARCState *env, uintptr_t ra)
-     target_ulong status = get_float_exception_flags(&env->fp_status);
-     target_ulong fsr = env->fsr;
- 
-+    fsr &= FSR_FTT_CEXC_NMASK;
-+
-     if (unlikely(status)) {
-         /* Keep exception flags clear for next time.  */
-         set_float_exception_flags(0, &env->fp_status);
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index da4f167fa6..67bac6f65f 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -4524,7 +4524,6 @@ static bool do_env_ff(DisasContext *dc, arg_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     tmp = gen_load_fpr_F(dc, a->rs);
-     func(tmp, tcg_env, tmp);
-     gen_helper_check_ieee_exceptions(cpu_fsr, tcg_env);
-@@ -4546,7 +4545,6 @@ static bool do_env_fd(DisasContext *dc, arg_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     dst = tcg_temp_new_i32();
-     src = gen_load_fpr_D(dc, a->rs);
-     func(dst, tcg_env, src);
-@@ -4590,7 +4588,6 @@ static bool do_env_dd(DisasContext *dc, arg_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     dst = gen_dest_fpr_D(dc, a->rd);
-     src = gen_load_fpr_D(dc, a->rs);
-     func(dst, tcg_env, src);
-@@ -4613,7 +4610,6 @@ static bool do_env_df(DisasContext *dc, arg_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     dst = gen_dest_fpr_D(dc, a->rd);
-     src = gen_load_fpr_F(dc, a->rs);
-     func(dst, tcg_env, src);
-@@ -4661,8 +4657,6 @@ static bool do_env_qq(DisasContext *dc, arg_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
--
-     t = gen_load_fpr_Q(dc, a->rs);
-     func(t, tcg_env, t);
-     gen_helper_check_ieee_exceptions(cpu_fsr, tcg_env);
-@@ -4685,7 +4679,6 @@ static bool do_env_fq(DisasContext *dc, arg_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src = gen_load_fpr_Q(dc, a->rs);
-     dst = tcg_temp_new_i32();
-     func(dst, tcg_env, src);
-@@ -4710,7 +4703,6 @@ static bool do_env_dq(DisasContext *dc, arg_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src = gen_load_fpr_Q(dc, a->rs);
-     dst = gen_dest_fpr_D(dc, a->rd);
-     func(dst, tcg_env, src);
-@@ -4808,7 +4800,6 @@ static bool do_env_fff(DisasContext *dc, arg_r_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src1 = gen_load_fpr_F(dc, a->rs1);
-     src2 = gen_load_fpr_F(dc, a->rs2);
-     func(src1, tcg_env, src1, src2);
-@@ -4903,7 +4894,6 @@ static bool do_env_ddd(DisasContext *dc, arg_r_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     dst = gen_dest_fpr_D(dc, a->rd);
-     src1 = gen_load_fpr_D(dc, a->rs1);
-     src2 = gen_load_fpr_D(dc, a->rs2);
-@@ -4930,7 +4920,6 @@ static bool trans_FsMULd(DisasContext *dc, arg_r_r_r *a)
-         return raise_unimpfpop(dc);
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     dst = gen_dest_fpr_D(dc, a->rd);
-     src1 = gen_load_fpr_F(dc, a->rs1);
-     src2 = gen_load_fpr_F(dc, a->rs2);
-@@ -4972,7 +4961,6 @@ static bool do_env_qqq(DisasContext *dc, arg_r_r_r *a,
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src1 = gen_load_fpr_Q(dc, a->rs1);
-     src2 = gen_load_fpr_Q(dc, a->rs2);
-     func(src1, tcg_env, src1, src2);
-@@ -4998,7 +4986,6 @@ static bool trans_FdMULq(DisasContext *dc, arg_r_r_r *a)
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src1 = gen_load_fpr_D(dc, a->rs1);
-     src2 = gen_load_fpr_D(dc, a->rs2);
-     dst = tcg_temp_new_i128();
-@@ -5087,7 +5074,6 @@ static bool do_fcmps(DisasContext *dc, arg_FCMPs *a, bool e)
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src1 = gen_load_fpr_F(dc, a->rs1);
-     src2 = gen_load_fpr_F(dc, a->rs2);
-     if (e) {
-@@ -5112,7 +5098,6 @@ static bool do_fcmpd(DisasContext *dc, arg_FCMPd *a, bool e)
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src1 = gen_load_fpr_D(dc, a->rs1);
-     src2 = gen_load_fpr_D(dc, a->rs2);
-     if (e) {
-@@ -5140,7 +5125,6 @@ static bool do_fcmpq(DisasContext *dc, arg_FCMPq *a, bool e)
-         return true;
-     }
- 
--    gen_op_clear_ieee_excp_and_FTT();
-     src1 = gen_load_fpr_Q(dc, a->rs1);
-     src2 = gen_load_fpr_Q(dc, a->rs2);
-     if (e) {
+diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
+index 6084f3d1a701316004894fcdd739c4e1e0463b68..808206ade824b09d786f6cc34f7cddf80b63130e 100755
+GIT binary patch
+delta 121
+zcmbOrIYV-SKI4pu2Kk&{7{Gw#%fuBAMC1c?^>~k}v|avdxNjSSLfftVb3bgJ!|2S&
+z_-6A1CJrVZc?IUH8G;R$7#SF@Om<{a*v!K!&BXX-vIe^~TWO|cva$K*Om;sOMw`hy
+ZxXl@VO#Z-a&zLdUfXALuXmSCM0s#EKC)of1
+
+delta 116
+zcmbOsIYDxQKI4Rm2Kk&H7{Gw#!^9O2L>8U?-5V_M@!kH(Sx4vJn|*ujLPgija~Pc&
+z8DDIEz{J5c`3;N8W)W6tCdL<&4cM*OEF8_<v%@zRviq?xT1-B`ZO-^%@(*r%#)Qch
+RJocPi5ThAdCO2?N002V6C;<Qf
+
+diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
+index 947d534ec1899740edbd6921da6bc6e70e2ecd09..941aaf29931193300de1f62097867c282a7e0c74 100755
+GIT binary patch
+delta 129
+zcmbOrIYV-S2IGv0n)#exSQx<I%fyAxMZTVBQ(04AP_*V|Vxp|@=@;x8zb9;-!)U|E
+z_-6A>CVnO!c?IUH8G;R$7#SF@Om<{a*v!K!!o>JyvLd?^n`3BUW_royOm=q`Mw`hS
+dxy>1WOn%92&zLb;lgFM@hy!9z%j7~Xc>tTxDQW-!
+
+delta 108
+zcmbOsIYDxQ2IGW@n)#d`SQx<I!^DNpMK&+G&+g_}w9WI@dn@@euKVesZ-h6`VYFdn
+ze6jf^6F<}BH!LcfMOa0c7+*}*WOrgKEO1Fl%G+GX?#{w!F?lDqIpc@PAGz%r6DAw-
+M*fVlXF62=M06owo?*IS*
+
+diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
+index 34d3a9ebd2..a0ac1487b0 100644
+--- a/linux-user/aarch64/vdso.S
++++ b/linux-user/aarch64/vdso.S
+@@ -63,7 +63,11 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
+  * For now, elide the unwind info for __kernel_rt_sigreturn and rely on
+  * the libgcc fallback routine as we have always done.  This requires
+  * that the code sequence used be exact.
++ *
++ * Add a nop as a spacer to ensure that unwind does not pick up the
++ * unwind info from the preceding syscall.
+  */
++	nop
+ __kernel_rt_sigreturn:
+ 	/* No BTI C insn here -- we arrive via RET. */
+ 	mov	x8, #__NR_rt_sigreturn
 -- 
 2.34.1
 
