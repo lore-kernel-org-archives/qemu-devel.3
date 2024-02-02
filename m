@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF011C48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB2E0C48295
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvb6-0000Nk-G0; Fri, 02 Feb 2024 10:36:56 -0500
+	id 1rVvax-0000Cb-63; Fri, 02 Feb 2024 10:36:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvb2-0000Kq-Nn
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:52 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1rVvav-0000Ba-Rn
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvb0-0004UG-5W
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:52 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-40fc52c2ae4so8265555e9.3
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:49 -0800 (PST)
+ id 1rVvau-0004S5-9F
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-40e8fec0968so20018835e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888208; x=1707493008; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706888203; x=1707493003; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7kvYGJv6Vs1OqeEsvp2TCyEKspSHCOA1Tp8iJFztpkE=;
- b=rKo9NUzqs00wPWGkjQWt7Ot2zplIsNVBU/S3u7iJop1OLAygx3f+YrzjuADIGkuxHu
- TfixQkK/3jRN2hwfPmGIovQZnWlOMw2Pk/abqan1Kqrt84Lsc7cHYchwQv9F7YNzxM1n
- JbumORK55E6p+WHxBKABvFV650KzILXqwlVpCjIF1zde+yp3Rlf3wmII2FlKdDy7D3L4
- a23Pm6DFn/40M+NG1jHqiizAr0CGm0uSBLMNak8PJw3AFdATF9VkXN+VMHq74aZdyFmv
- Ex0NYZF2dW+AGJHilvKxaGa8FW6VN0kG+euVaGWH3kQ4uarAOBOiUSKu9k/8SdFP4Mru
- 1l0Q==
+ :reply-to; bh=XXyoo0uTxQx7WIeKUGD+qu1FchhSMRmgTj+B/msMnZw=;
+ b=EmC/UTeMd9TjGy6IaNnt1SAJVwIgBxUoO+HXzXpbuuQN+uSIuQio2DKIECEJQvNGAe
+ 9i0dtuvUs2f6d2ilYN8mCkWarD0TtI+9+mytIS465LhkROdwWSSVyZPmUpQAzu0p4ZYK
+ f+XiFQqJdTw7/qhKPgqd1jOKLQe4z70VAXwYq4D1hBuGWK9S5aGgBkKgMFUL3XJdHEuq
+ mWeWnp7RSMcKE6knD9G6o4RyS0eT8u+8ZdLvVXx1KZwiCg1ld1krV+dVSx9uCMxY9BNr
+ 0kl8npRYeGw13eIS3llok32FLyr+jsXdWSrbRDpJfzFlMK2xHkfGY4rvk0YoMIolzC5s
+ X05A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888208; x=1707493008;
+ d=1e100.net; s=20230601; t=1706888203; x=1707493003;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7kvYGJv6Vs1OqeEsvp2TCyEKspSHCOA1Tp8iJFztpkE=;
- b=NTZ6nrYw4RfK6xYTq8ORyxA7RrkUROj21MR2357rwfnOfncuN6IxG7Vu1c+Cfc6Q+C
- Fj2qsdWLCpqH651rU/GQPpDrOyr/9vaedlRp0Qmd7vOTVSyZ+6+PJx7lI8dbMw61EZWe
- 5NJd4VU+kL+2sTXDx04z9fPm5L3TTGjNQVIAstqGHeiVwY4+kmAs2/JUBun6a23gM2BS
- OGWgbvMqg1tVxUxu2Vy5A7pHP9EjQDJPjBkfL8RsFWyYZbiLxyRD2XYDFzalpa2kn7Xw
- q7foKxvbWOmfCfb776EJb9F1yNgw3yzB1pqRtCh86fvhCjyVwJwICrPQayOF1k8uvPZ2
- RMqQ==
-X-Gm-Message-State: AOJu0YztWqsbK6NNGkTKDwOlmDUKo2fJ3D+Ji4hn7Gru3DjzzGxgSob0
- HAx7a8lc9aGlhzRZYEMF+vytFzJas0/TDeojmJ0cmCyO9JKWSkH3BSxw9XsU5kgYQPdnaKPiA6d
- 4
-X-Google-Smtp-Source: AGHT+IF+kuUqinnTX+VPiHPELLY45Jo1Wx0u8tyaSkKOQApr6A8cvDzthEMl9+JSzN/f2He9/jDDoA==
-X-Received: by 2002:a05:600c:3153:b0:40e:4f81:3f68 with SMTP id
- h19-20020a05600c315300b0040e4f813f68mr1791910wmo.16.1706888208769; 
- Fri, 02 Feb 2024 07:36:48 -0800 (PST)
+ bh=XXyoo0uTxQx7WIeKUGD+qu1FchhSMRmgTj+B/msMnZw=;
+ b=sT24o46trVSCtBM3vrjTVVpCtHlVI2fnedrFI7Ujo8JKz7bcEgkIHzR3qqfJDxpxkq
+ u56bisYBr8fMdC6VRIbIA9RNUm7U25pu3hc7wNE14CT+bimI1/6H/2Z/CqmxhKu21Kzp
+ MJfqImJ2rabGiIZ97W8Kvh3dU/cLsN/4hvFwTP3sAEXLOD4Tg/Zyipm5dKcpNmUxckwH
+ 1T+cBQvEoKzJOkRypQXAcoR4TkZuEvIyWcRwkeLcLQ1FW1Gm+6fd1u57qzhD8FiILN3Y
+ 2T3Ew7m8Fqgs1tYNEXCsOaabBvb7TpU41rbBVqmO4yZdJtsBVJp46B0YZN9JH3z/K4QS
+ JoXg==
+X-Gm-Message-State: AOJu0YxF4O/TBRkBFzZ513goU16vUTLhvToW6gfdmQDi6MMp27HuMffr
+ L85finve5pDixJnoBm9zVCKgSLm+vl1i+kCjGdGvdkuF8bkYsyAt0mNoiFD3Ete8JJJZQqIDQ/5
+ B
+X-Google-Smtp-Source: AGHT+IGwMhcfy7lfme8yuzsYCldGdu6eGi4FEeZk9pd4ZTXJhxIA/5d8vUZEAeFx7jpiPOFewfkDww==
+X-Received: by 2002:a05:600c:3b93:b0:40f:b64e:d28a with SMTP id
+ n19-20020a05600c3b9300b0040fb64ed28amr6246744wms.10.1706888203082; 
+ Fri, 02 Feb 2024 07:36:43 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.48
+ k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:48 -0800 (PST)
+ Fri, 02 Feb 2024 07:36:42 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/36] pci-host: designware: Limit value range of iATU viewport
- register
-Date: Fri,  2 Feb 2024 15:36:23 +0000
-Message-Id: <20240202153637.3710444-23-peter.maydell@linaro.org>
+Subject: [PULL 09/36] target/arm: Add ID_AA64ZFR0_EL1.B16B16 to the
+ exposed-to-userspace set
+Date: Fri,  2 Feb 2024 15:36:10 +0000
+Message-Id: <20240202153637.3710444-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
 References: <20240202153637.3710444-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,51 +94,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+In kernel commit 5d5b4e8c2d9ec ("arm64/sve: Report FEAT_SVE_B16B16 to
+userspace") Linux added ID_AA64ZFR0_el1.B16B16 to the set of ID
+register fields which it exposes to userspace.  Update our
+exported_bits mask to include this.
 
-The latest version of qemu (v8.2.0-869-g7a1dc45af5) crashes when booting
-the mcimx7d-sabre emulation with Linux v5.11 and later.
+(This doesn't yet change any behaviour for us, because we don't yet
+have any CPUs that implement this feature, which is part of SVE2.)
 
-qemu-system-arm: ../system/memory.c:2750: memory_region_set_alias_offset: Assertion `mr->alias' failed.
-
-Problem is that the Designware PCIe emulation accepts the full value range
-for the iATU Viewport Register. However, both hardware and emulation only
-support four inbound and four outbound viewports.
-
-The Linux kernel determines the number of supported viewports by writing
-0xff into the viewport register and reading the value back. The expected
-value when reading the register is the highest supported viewport index.
-Match that code by masking the supported viewport value range when the
-register is written. With this change, the Linux kernel reports
-
-imx6q-pcie 33800000.pcie: iATU: unroll F, 4 ob, 4 ib, align 0K, limit 4G
-
-as expected and supported.
-
-Fixes: d64e5eabc4c7 ("pci: Add support for Designware IP block")
-Cc: Andrey Smirnov <andrew.smirnov@gmail.com>
-Cc: Nikita Ostrenkov <n.ostrenkov@gmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Message-id: 20240129060055.2616989-1-linux@roeck-us.net
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240125134304.1470404-1-peter.maydell@linaro.org
 ---
- hw/pci-host/designware.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/helper.c         | 1 +
+ tests/tcg/aarch64/sysregs.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index dd9e389c07b..c25d50f1c6b 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -340,6 +340,8 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
-         break;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index a0041aa0ec7..d51093a7c44 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -8897,6 +8897,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+                                R_ID_AA64ZFR0_AES_MASK |
+                                R_ID_AA64ZFR0_BITPERM_MASK |
+                                R_ID_AA64ZFR0_BFLOAT16_MASK |
++                               R_ID_AA64ZFR0_B16B16_MASK |
+                                R_ID_AA64ZFR0_SHA3_MASK |
+                                R_ID_AA64ZFR0_SM4_MASK |
+                                R_ID_AA64ZFR0_I8MM_MASK |
+diff --git a/tests/tcg/aarch64/sysregs.c b/tests/tcg/aarch64/sysregs.c
+index f7a055f1d5f..301e61d0dd4 100644
+--- a/tests/tcg/aarch64/sysregs.c
++++ b/tests/tcg/aarch64/sysregs.c
+@@ -137,7 +137,7 @@ int main(void)
+     /* all hidden, DebugVer fixed to 0x6 (ARMv8 debug architecture) */
+     get_cpu_reg_check_mask(id_aa64dfr0_el1,  _m(0000,0000,0000,0006));
+     get_cpu_reg_check_zero(id_aa64dfr1_el1);
+-    get_cpu_reg_check_mask(SYS_ID_AA64ZFR0_EL1,  _m(0ff0,ff0f,00ff,00ff));
++    get_cpu_reg_check_mask(SYS_ID_AA64ZFR0_EL1,  _m(0ff0,ff0f,0fff,00ff));
+     get_cpu_reg_check_mask(SYS_ID_AA64SMFR0_EL1, _m(8ff1,fcff,0000,0000));
  
-     case DESIGNWARE_PCIE_ATU_VIEWPORT:
-+        val &= DESIGNWARE_PCIE_ATU_REGION_INBOUND |
-+                (DESIGNWARE_PCIE_NUM_VIEWPORTS - 1);
-         root->atu_viewport = val;
-         break;
- 
+     get_cpu_reg_check_zero(id_aa64afr0_el1);
 -- 
 2.34.1
 
