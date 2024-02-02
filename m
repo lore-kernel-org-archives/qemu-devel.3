@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFEBC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEDEC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmWS-0006OR-S0; Fri, 02 Feb 2024 00:55:32 -0500
+	id 1rVmWM-0005nr-AJ; Fri, 02 Feb 2024 00:55:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWQ-0006Cm-DO
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:30 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1rVmWK-0005kK-Ao
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:24 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWO-00032B-Ld
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:30 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1d7232dcb3eso13086465ad.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:28 -0800 (PST)
+ id 1rVmWI-00030S-F9
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:24 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1d7232dcb3eso13086145ad.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853327; x=1707458127; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853321; x=1707458121; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1eKYzACMAdv41jwhWgL5ua1c7uVrjKcVx/en63NM27s=;
- b=Un+2cmmKr7DLm119jEA9RAd0FY1OU15gB3k0E05KG2j/Sqadpv7IkNcSgsS0ZTnPg4
- SIZ63wulz09xFNC6BQ02Ppuw8v6bJr2AOU95FNJ+ly10ongHb//NpHlB0dHRV+tkRCQp
- Sadc3uT2tPtt2G2T0zywcO0Edb5jsiDv43LD2xO3MvjrNHbAOJEVIL0mCi+o3E68BJhq
- EnvrESgmdv5t7nhhojA+VLQ5q6D1snBRmt/ePmTWICbo7rDTwUWnxy5ERUzVIqG4aBsX
- PGc0uS1QADwKDamxHr7ZV2lgNYZ5PpcATi08djbvzSq5SeQYtN78ZG8uKl9NQNgp3fZU
- IEGw==
+ bh=VWVW9zIWIN6DyYuL+xfFV1ntiMTdFfptfEfa84xvE2U=;
+ b=CqBSHaR/N0YEsscOsDLFBEskBDhGF4N/eFrsCaXizwQs/QRdPV101Mqii2dVSI+YSX
+ 1ijYxazi8K8/qt+AFQM+2ty+CBN41cNB1QWP2l+okCuWh/yWKojIYsSUUReq+ju1rg9k
+ DAL6cfsXANNIqMRLGHuoDfnpSq3Ave2eRPFkYRe5UKty/4Wm3abAd5qh1vhjNyQowaI/
+ 41bPAf2feE6BG0KMyLXUtVJ6W5EV0mbef+RJ0AJlql8GrYbhOZz3GbTqQDfA8ct21nLM
+ 1ln4x9l3+rN9mBPyS1HlpduEq2bsUK80ycV/+90laDw46B/D/xAKZ85SAwHPh84pIePg
+ DYQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853327; x=1707458127;
+ d=1e100.net; s=20230601; t=1706853321; x=1707458121;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1eKYzACMAdv41jwhWgL5ua1c7uVrjKcVx/en63NM27s=;
- b=UjRga4C14WczxeyAusZ9hpDsDR0EKUym9rKwnMlv6KDGUOsTK6prPbW9UW9t9Dr1ip
- tCdDiNq6L1bPhU5DWKOl5ajUQTZPhITZxra8xFvsNjao0BOsV3h3lg5X5NoxIFVIcWZS
- CbuOL1Ddhy/pJ4v9gb+PYEuovNnov0AttdLEslgN9mrKpCu7miFo6OrNz7HMb9YwKDGA
- xG+5WEXtCMKNAM3cTHy2CAK2+picd5YAyjejlH+H2X3ltebMNDUGLdLbcQRYbMEE0z4g
- qGObSR0ugXz4r98FfoGlmQz1rsHoAUm255p0YFcfXxQCZMiRN9uA+aA/pceC/DGA0ZdO
- Ny0w==
-X-Gm-Message-State: AOJu0YxWzJYnTYpsDW5lcwGFk4W1DfezD599iGwFnPeaoaYoYmyW4MFd
- BA2u42wk8ktjIXBUvLi2lvZultMyeLojulbTIq05rNZ7EHmuvRpOnGpJg9OassXkU9eDcQ+TRRc
- C78w=
-X-Google-Smtp-Source: AGHT+IGzNatTW+QEMboGjPdHjMPcN8h17fQi260tb1Yo3HaVNnO6m4pOXP9cbhcfWm8YjbHZuJhMVw==
-X-Received: by 2002:a17:902:ef92:b0:1d9:2cda:afe5 with SMTP id
- iz18-20020a170902ef9200b001d92cdaafe5mr1164021plb.31.1706853327222; 
- Thu, 01 Feb 2024 21:55:27 -0800 (PST)
+ bh=VWVW9zIWIN6DyYuL+xfFV1ntiMTdFfptfEfa84xvE2U=;
+ b=HvSgxMyvKZq9/JEy1vKCzPgnyioV6DUe6CO8MudzIGVjfOI+aSWR7p1zJxu0Bxlmwr
+ qpAWxk5t6YkBum4GstQpSL+NU/kc7pUC6yVodv/1Q9dhKoygYn4Hyds9pOGsFwQC9/5i
+ nVAcUC/WkwelDvKzFM8cMJwUIre3Xjsqb5S8d70mstc5v1ifs5/NqdyTDLI+r/YtCZt2
+ /S0nft6gtzKW9It1IxarUAlibybQ98HZwhSdHW+b2MJgjOu6SRgSYIZDRKQW3C/yZX+C
+ 5Zsk8oNCZM8Jdqs/OxtkUaQ8zanrr2Rs+LQ6Dryu5DsI95fFHg0RIPkSXzeUspRwpp1Q
+ SzTg==
+X-Gm-Message-State: AOJu0Yx6lvJtAASg2dim7USy0qSRCZgSi5JWrq0577jRo9QjWKuIuDZL
+ B00ZDjctPbmicq6z9OV90VzTOwUaFbeTD/adN7inbcUXqAPM3EjnkfzgBFJtL+W3mbE8FzHtgwv
+ 4jnw=
+X-Google-Smtp-Source: AGHT+IHTR1BjoRnxlJpVjsIJMct3uAiyXiya8jss1huQMFbYKwuXC0unFd/+1msdFhhlqWPZjW1jPg==
+X-Received: by 2002:a17:903:246:b0:1d6:fe11:2642 with SMTP id
+ j6-20020a170903024600b001d6fe112642mr1494945plh.27.1706853321120; 
+ Thu, 01 Feb 2024 21:55:21 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.25
+ je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:55:26 -0800 (PST)
+ Thu, 01 Feb 2024 21:55:20 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 48/57] target/sparc: Use i128 for Fdmulq
-Date: Fri,  2 Feb 2024 15:50:27 +1000
-Message-Id: <20240202055036.684176-50-richard.henderson@linaro.org>
+Subject: [PULL 45/57] target/sparc: Use i128 for FCMPq, FCMPEq
+Date: Fri,  2 Feb 2024 15:50:24 +1000
+Message-Id: <20240202055036.684176-47-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,87 +96,237 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-Id: <20231103173841.33651-14-richard.henderson@linaro.org>
+Message-Id: <20231103173841.33651-11-richard.henderson@linaro.org>
 ---
- target/sparc/helper.h     |  2 +-
- target/sparc/fop_helper.c |  8 ++++----
- target/sparc/translate.c  | 15 ++++-----------
- 3 files changed, 9 insertions(+), 16 deletions(-)
+ target/sparc/helper.h     | 16 ++++++------
+ target/sparc/fop_helper.c | 23 +++++++++--------
+ target/sparc/translate.c  | 54 +++++++++++++++------------------------
+ 3 files changed, 41 insertions(+), 52 deletions(-)
 
 diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 20f67f89b0..f7aeb31169 100644
+index 4cb3451878..7caae9a441 100644
 --- a/target/sparc/helper.h
 +++ b/target/sparc/helper.h
-@@ -84,7 +84,7 @@ DEF_HELPER_FLAGS_3(fmuls, TCG_CALL_NO_RWG, f32, env, f32, f32)
- DEF_HELPER_FLAGS_3(fdivs, TCG_CALL_NO_RWG, f32, env, f32, f32)
+@@ -44,8 +44,8 @@ DEF_HELPER_FLAGS_3(fcmpd, TCG_CALL_NO_WG, tl, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fcmpes, TCG_CALL_NO_WG, tl, env, f32, f32)
+ DEF_HELPER_FLAGS_3(fcmped, TCG_CALL_NO_WG, tl, env, f64, f64)
+ DEF_HELPER_FLAGS_2(fsqrtq, TCG_CALL_NO_RWG, i128, env, i128)
+-DEF_HELPER_FLAGS_1(fcmpq, TCG_CALL_NO_WG, tl, env)
+-DEF_HELPER_FLAGS_1(fcmpeq, TCG_CALL_NO_WG, tl, env)
++DEF_HELPER_FLAGS_3(fcmpq, TCG_CALL_NO_WG, tl, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq, TCG_CALL_NO_WG, tl, env, i128, i128)
+ #ifdef TARGET_SPARC64
+ DEF_HELPER_FLAGS_3(fcmps_fcc1, TCG_CALL_NO_WG, tl, env, f32, f32)
+ DEF_HELPER_FLAGS_3(fcmps_fcc2, TCG_CALL_NO_WG, tl, env, f32, f32)
+@@ -59,12 +59,12 @@ DEF_HELPER_FLAGS_3(fcmpes_fcc3, TCG_CALL_NO_WG, tl, env, f32, f32)
+ DEF_HELPER_FLAGS_3(fcmped_fcc1, TCG_CALL_NO_WG, tl, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fcmped_fcc2, TCG_CALL_NO_WG, tl, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fcmped_fcc3, TCG_CALL_NO_WG, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_1(fcmpq_fcc1, TCG_CALL_NO_WG, tl, env)
+-DEF_HELPER_FLAGS_1(fcmpq_fcc2, TCG_CALL_NO_WG, tl, env)
+-DEF_HELPER_FLAGS_1(fcmpq_fcc3, TCG_CALL_NO_WG, tl, env)
+-DEF_HELPER_FLAGS_1(fcmpeq_fcc1, TCG_CALL_NO_WG, tl, env)
+-DEF_HELPER_FLAGS_1(fcmpeq_fcc2, TCG_CALL_NO_WG, tl, env)
+-DEF_HELPER_FLAGS_1(fcmpeq_fcc3, TCG_CALL_NO_WG, tl, env)
++DEF_HELPER_FLAGS_3(fcmpq_fcc1, TCG_CALL_NO_WG, tl, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpq_fcc2, TCG_CALL_NO_WG, tl, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpq_fcc3, TCG_CALL_NO_WG, tl, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq_fcc1, TCG_CALL_NO_WG, tl, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq_fcc2, TCG_CALL_NO_WG, tl, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq_fcc3, TCG_CALL_NO_WG, tl, env, i128, i128)
+ #endif
+ DEF_HELPER_2(raise_exception, noreturn, env, int)
  
- DEF_HELPER_FLAGS_3(fsmuld, TCG_CALL_NO_RWG, f64, env, f32, f32)
--DEF_HELPER_FLAGS_3(fdmulq, TCG_CALL_NO_RWG, void, env, f64, f64)
-+DEF_HELPER_FLAGS_3(fdmulq, TCG_CALL_NO_RWG, i128, env, f64, f64)
- 
- DEF_HELPER_FLAGS_2(fitod, TCG_CALL_NO_RWG_SE, f64, env, s32)
- DEF_HELPER_FLAGS_2(fitoq, TCG_CALL_NO_RWG, i128, env, s32)
 diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-index 9a0110e201..cd9b212597 100644
+index 9f39b933e8..faf75e651f 100644
 --- a/target/sparc/fop_helper.c
 +++ b/target/sparc/fop_helper.c
-@@ -129,11 +129,11 @@ float64 helper_fsmuld(CPUSPARCState *env, float32 src1, float32 src2)
-                        &env->fp_status);
+@@ -248,9 +248,12 @@ Int128 helper_fsqrtq(CPUSPARCState *env, Int128 src)
+     return f128_ret(float128_sqrt(f128_in(src), &env->fp_status));
  }
  
--void helper_fdmulq(CPUSPARCState *env, float64 src1, float64 src2)
-+Int128 helper_fdmulq(CPUSPARCState *env, float64 src1, float64 src2)
- {
--    QT0 = float128_mul(float64_to_float128(src1, &env->fp_status),
--                       float64_to_float128(src2, &env->fp_status),
--                       &env->fp_status);
-+    return f128_ret(float128_mul(float64_to_float128(src1, &env->fp_status),
-+                                 float64_to_float128(src2, &env->fp_status),
-+                                 &env->fp_status));
- }
+-#define GEN_FCMP(name, size, reg1, reg2, FS, E)                         \
+-    target_ulong glue(helper_, name) (CPUSPARCState *env)               \
++#define GEN_FCMP(name, size, FS, E)                                     \
++    target_ulong glue(helper_, name) (CPUSPARCState *env,               \
++                                      Int128 src1, Int128 src2)         \
+     {                                                                   \
++        float128 reg1 = f128_in(src1);                                  \
++        float128 reg2 = f128_in(src2);                                  \
+         FloatRelation ret;                                              \
+         target_ulong fsr;                                               \
+         if (E) {                                                        \
+@@ -316,33 +319,33 @@ GEN_FCMP_T(fcmpd, float64, 0, 0);
+ GEN_FCMP_T(fcmpes, float32, 0, 1);
+ GEN_FCMP_T(fcmped, float64, 0, 1);
  
- /* Integer to float conversion.  */
+-GEN_FCMP(fcmpq, float128, QT0, QT1, 0, 0);
+-GEN_FCMP(fcmpeq, float128, QT0, QT1, 0, 1);
++GEN_FCMP(fcmpq, float128, 0, 0);
++GEN_FCMP(fcmpeq, float128, 0, 1);
+ 
+ #ifdef TARGET_SPARC64
+ GEN_FCMP_T(fcmps_fcc1, float32, 22, 0);
+ GEN_FCMP_T(fcmpd_fcc1, float64, 22, 0);
+-GEN_FCMP(fcmpq_fcc1, float128, QT0, QT1, 22, 0);
++GEN_FCMP(fcmpq_fcc1, float128, 22, 0);
+ 
+ GEN_FCMP_T(fcmps_fcc2, float32, 24, 0);
+ GEN_FCMP_T(fcmpd_fcc2, float64, 24, 0);
+-GEN_FCMP(fcmpq_fcc2, float128, QT0, QT1, 24, 0);
++GEN_FCMP(fcmpq_fcc2, float128, 24, 0);
+ 
+ GEN_FCMP_T(fcmps_fcc3, float32, 26, 0);
+ GEN_FCMP_T(fcmpd_fcc3, float64, 26, 0);
+-GEN_FCMP(fcmpq_fcc3, float128, QT0, QT1, 26, 0);
++GEN_FCMP(fcmpq_fcc3, float128, 26, 0);
+ 
+ GEN_FCMP_T(fcmpes_fcc1, float32, 22, 1);
+ GEN_FCMP_T(fcmped_fcc1, float64, 22, 1);
+-GEN_FCMP(fcmpeq_fcc1, float128, QT0, QT1, 22, 1);
++GEN_FCMP(fcmpeq_fcc1, float128, 22, 1);
+ 
+ GEN_FCMP_T(fcmpes_fcc2, float32, 24, 1);
+ GEN_FCMP_T(fcmped_fcc2, float64, 24, 1);
+-GEN_FCMP(fcmpeq_fcc2, float128, QT0, QT1, 24, 1);
++GEN_FCMP(fcmpeq_fcc2, float128, 24, 1);
+ 
+ GEN_FCMP_T(fcmpes_fcc3, float32, 26, 1);
+ GEN_FCMP_T(fcmped_fcc3, float64, 26, 1);
+-GEN_FCMP(fcmpeq_fcc3, float128, QT0, QT1, 26, 1);
++GEN_FCMP(fcmpeq_fcc3, float128, 26, 1);
+ #endif
+ #undef GEN_FCMP_T
+ #undef GEN_FCMP
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index d478a2fcd0..d12de5ae5c 100644
+index 6f75f4d5d6..6c003eed7c 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -276,14 +276,6 @@ static void gen_store_fpr_Q(DisasContext *dc, unsigned int dst, TCGv_i128 v)
+@@ -276,22 +276,6 @@ static void gen_store_fpr_Q(DisasContext *dc, unsigned int dst, TCGv_i128 v)
      gen_update_fprs_dirty(dc, dst);
  }
  
--static void gen_op_store_QT0_fpr(unsigned int dst)
+-static void gen_op_load_fpr_QT0(unsigned int src)
 -{
--    tcg_gen_ld_i64(cpu_fpr[dst / 2], tcg_env, offsetof(CPUSPARCState, qt0) +
+-    tcg_gen_st_i64(cpu_fpr[src / 2], tcg_env, offsetof(CPUSPARCState, qt0) +
 -                   offsetof(CPU_QuadU, ll.upper));
--    tcg_gen_ld_i64(cpu_fpr[dst/2 + 1], tcg_env, offsetof(CPUSPARCState, qt0) +
+-    tcg_gen_st_i64(cpu_fpr[src/2 + 1], tcg_env, offsetof(CPUSPARCState, qt0) +
 -                   offsetof(CPU_QuadU, ll.lower));
 -}
 -
- /* moves */
- #ifdef CONFIG_USER_ONLY
- #define supervisor(dc) 0
-@@ -4992,6 +4984,7 @@ TRANS(FDIVq, ALL, do_env_qqq, a, gen_helper_fdivq)
- static bool trans_FdMULq(DisasContext *dc, arg_r_r_r *a)
+-static void gen_op_load_fpr_QT1(unsigned int src)
+-{
+-    tcg_gen_st_i64(cpu_fpr[src / 2], tcg_env, offsetof(CPUSPARCState, qt1) +
+-                   offsetof(CPU_QuadU, ll.upper));
+-    tcg_gen_st_i64(cpu_fpr[src/2 + 1], tcg_env, offsetof(CPUSPARCState, qt1) +
+-                   offsetof(CPU_QuadU, ll.lower));
+-}
+-
+ static void gen_op_store_QT0_fpr(unsigned int dst)
  {
-     TCGv_i64 src1, src2;
-+    TCGv_i128 dst;
- 
-     if (gen_trap_ifnofpu(dc)) {
-         return true;
-@@ -5003,10 +4996,10 @@ static bool trans_FdMULq(DisasContext *dc, arg_r_r_r *a)
-     gen_op_clear_ieee_excp_and_FTT();
-     src1 = gen_load_fpr_D(dc, a->rs1);
-     src2 = gen_load_fpr_D(dc, a->rs2);
--    gen_helper_fdmulq(tcg_env, src1, src2);
-+    dst = tcg_temp_new_i128();
-+    gen_helper_fdmulq(dst, tcg_env, src1, src2);
-     gen_helper_check_ieee_exceptions(cpu_fsr, tcg_env);
--    gen_op_store_QT0_fpr(QFPREG(a->rd));
--    gen_update_fprs_dirty(dc, QFPREG(a->rd));
-+    gen_store_fpr_Q(dc, a->rd, dst);
-     return advance_pc(dc);
+     tcg_gen_ld_i64(cpu_fpr[dst / 2], tcg_env, offsetof(CPUSPARCState, qt0) +
+@@ -1319,20 +1303,20 @@ static void gen_op_fcmpd(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+     }
  }
  
+-static void gen_op_fcmpq(int fccno)
++static void gen_op_fcmpq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmpq(cpu_fsr, tcg_env);
++        gen_helper_fcmpq(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmpq_fcc1(cpu_fsr, tcg_env);
++        gen_helper_fcmpq_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmpq_fcc2(cpu_fsr, tcg_env);
++        gen_helper_fcmpq_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmpq_fcc3(cpu_fsr, tcg_env);
++        gen_helper_fcmpq_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1373,20 +1357,20 @@ static void gen_op_fcmped(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+     }
+ }
+ 
+-static void gen_op_fcmpeq(int fccno)
++static void gen_op_fcmpeq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmpeq(cpu_fsr, tcg_env);
++        gen_helper_fcmpeq(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmpeq_fcc1(cpu_fsr, tcg_env);
++        gen_helper_fcmpeq_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmpeq_fcc2(cpu_fsr, tcg_env);
++        gen_helper_fcmpeq_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmpeq_fcc3(cpu_fsr, tcg_env);
++        gen_helper_fcmpeq_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1403,9 +1387,9 @@ static void gen_op_fcmpd(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+     gen_helper_fcmpd(cpu_fsr, tcg_env, r_rs1, r_rs2);
+ }
+ 
+-static void gen_op_fcmpq(int fccno)
++static void gen_op_fcmpq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+-    gen_helper_fcmpq(cpu_fsr, tcg_env);
++    gen_helper_fcmpq(cpu_fsr, tcg_env, r_rs1, r_rs2);
+ }
+ 
+ static void gen_op_fcmpes(int fccno, TCGv r_rs1, TCGv r_rs2)
+@@ -1418,9 +1402,9 @@ static void gen_op_fcmped(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+     gen_helper_fcmped(cpu_fsr, tcg_env, r_rs1, r_rs2);
+ }
+ 
+-static void gen_op_fcmpeq(int fccno)
++static void gen_op_fcmpeq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+-    gen_helper_fcmpeq(cpu_fsr, tcg_env);
++    gen_helper_fcmpeq(cpu_fsr, tcg_env, r_rs1, r_rs2);
+ }
+ #endif
+ 
+@@ -5144,6 +5128,8 @@ TRANS(FCMPEd, ALL, do_fcmpd, a, true)
+ 
+ static bool do_fcmpq(DisasContext *dc, arg_FCMPq *a, bool e)
+ {
++    TCGv_i128 src1, src2;
++
+     if (avail_32(dc) && a->cc != 0) {
+         return false;
+     }
+@@ -5155,12 +5141,12 @@ static bool do_fcmpq(DisasContext *dc, arg_FCMPq *a, bool e)
+     }
+ 
+     gen_op_clear_ieee_excp_and_FTT();
+-    gen_op_load_fpr_QT0(QFPREG(a->rs1));
+-    gen_op_load_fpr_QT1(QFPREG(a->rs2));
++    src1 = gen_load_fpr_Q(dc, a->rs1);
++    src2 = gen_load_fpr_Q(dc, a->rs2);
+     if (e) {
+-        gen_op_fcmpeq(a->cc);
++        gen_op_fcmpeq(a->cc, src1, src2);
+     } else {
+-        gen_op_fcmpq(a->cc);
++        gen_op_fcmpq(a->cc, src1, src2);
+     }
+     return advance_pc(dc);
+ }
 -- 
 2.34.1
 
