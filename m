@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB571C48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCB8C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvav-0000Am-0p; Fri, 02 Feb 2024 10:36:45 -0500
+	id 1rVveS-0002LJ-Si; Fri, 02 Feb 2024 10:40:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvas-00006B-8j
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:42 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1rVveQ-0002GV-4a
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:40:22 -0500
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvaq-0004R3-LV
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:42 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-40fb804e330so19839685e9.0
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:40 -0800 (PST)
+ id 1rVveN-00058V-6e
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:40:21 -0500
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2cf42ca9bb2so24497851fa.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:40:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888199; x=1707492999; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fNKMg/ZJY1ZR/wqUXxwkSX5uKgQGaWhsDdzDVMFs6JA=;
- b=eBxRUWviyRJKrmMJ5jL7eI7MQG27cqRh9/OmsryNURJIYoesqwKL7LH6rdJ8aGrwsP
- RfQpqOTblLmJZZSRBERooG2OuPiq4P4jW43B8UGl8AvFwRPQSBmkCSUZDUgqbR9QGPtm
- cSG8AgB1Thk7qKLh0BysvoMngUnhfwPSGALkbNX3sgc/8NNzzS6oeO1+pO8OiBQ1GMVX
- yvyIZBfjUS5tS9lvRwLlPoBJH4Dg/gAQqoeP/B4JY1pwXqmSpYKAg+qJePJGN1qiU5mo
- mvk4l7llveiEQtozRI3xlCgmgLXHmrcIpG+B4Q5uXDD+GTopO+x1ZJX5xFJx4u1zcP8o
- vgfQ==
+ d=linaro.org; s=google; t=1706888417; x=1707493217; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wn5GjeSfLpdancttFflyj3wiQ0WnOWkvXBBOTXvGHyw=;
+ b=YfvvMhNPq3HMb8au3MlZCpaGtP3Qhts/LqPrBZLoNTWuGVP83luMDHiGE8CHEgpF51
+ 2KxA7qH1pXLIGnLDC8qJi16rXo9X72y1TAR864uH672Uh5+w1aEhqCscruqVg1fmxAoe
+ y+hnYiuPPrMbfN5rCqxIon6uixMY1TbUTHa8QLjMCQb2hBvlotEwaL39+RVYpUcedJXB
+ mlzU/0lCPF8r5m/A7gkASbh3NxSB9sdsQohcRFhuS9G9lwas78tpoUb8JTjCIHqMNbB7
+ M2W38coobUQE9DW6JONdacDhtBORSwlP0wse0zpiFGdy6ISiKwLhN0WXEW6ED6gN/3sW
+ h0DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888199; x=1707492999;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fNKMg/ZJY1ZR/wqUXxwkSX5uKgQGaWhsDdzDVMFs6JA=;
- b=l1A20Ww7LHcLQKydv6kIxsFSFsynheWUs6AADbVyPxPcCkpGuO54UYrKI2vy+XXRtL
- SFWhwHlDn/M7rJFUfa6RtpqQ/Ist79V1E76fhn01vSCqPvuYgvVi/w23DrHTGkWzoc9v
- a56RUD7DFpWaU+xRNPygiC6B4pwlgnqZtjicEeR6/mIE3DjGpbUXNuyiKDOrVjHG8x/v
- ddwmcmu2IBoSZSsLcAsqPK7jn1yYDtQi8tlfs4sejWKejOtrRiKqqTO+l26KgIRfQlu+
- SIf4F/jDEkEdt5f7Ys4YVxAR/HTzFdtV0FJTv0/w9dyEWhgH4DwnlTEyWYy7JKNkoJdZ
- 3TcQ==
-X-Gm-Message-State: AOJu0YwEU+CADU0DwJwl4z4Ak5HwmlM9PI/R/jFixNEF7xNI/DZ+aNbX
- ZsDvU29DHq9Pm+1j5wwbbhr2HUni8Lput7/bkdBY2n7MMgkw0pbU+kaEhyj93juawym7Ln+Arj3
- g
-X-Google-Smtp-Source: AGHT+IEZtUOeWfpc403KiSe8H004+a6L1umJQdBcmxFPFyn8FXGuS1fNUn6FWMDEJDsPPHEeiVOqMQ==
-X-Received: by 2002:a05:600c:4f95:b0:40f:b01d:6194 with SMTP id
- n21-20020a05600c4f9500b0040fb01d6194mr6283911wmq.30.1706888199186; 
- Fri, 02 Feb 2024 07:36:39 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.38
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:39 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 02/36] pci: Switch bus reset to 3-phase-reset
-Date: Fri,  2 Feb 2024 15:36:03 +0000
-Message-Id: <20240202153637.3710444-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
-References: <20240202153637.3710444-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1706888417; x=1707493217;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wn5GjeSfLpdancttFflyj3wiQ0WnOWkvXBBOTXvGHyw=;
+ b=DSnZavwECu0/liw1zDeH9WAqeeXcsacB1a2WucDE3NDW7ZTmohXKrhGisGr8CWtcYT
+ xAF+ZKQprhYnAYoS60x/JJWxaE3Q/pQHM238Pe1QNgg2wOEK4vebJ5q+sw+wQAmHy8du
+ 4TJfBSl8dISqVv617h46TSxM6e9LgZ6Pf2/11KDHHIQbHQina+ipybThKx+5zc5M9O2h
+ a23j9hCISwKaNf2cqU74PLl+ilnv6WpGDXP5pERBZEPdROlTRIajmwv1hXX954hbw7Pf
+ NC9+oH/MAHXWLdJlFInuF+p04siV6p3blvz/RXXhAHVeMSrculwWqWncmVduebKvlROL
+ 2BCQ==
+X-Gm-Message-State: AOJu0Yxvovs48apLnmMZS9qI4Rj+MTh8+EqsL432hTQXpF9W7m+DFDqz
+ KodEb3wuy4SiTlCfD5agxI+wU55E+b9tliMhrfm0kMF3xcQF5A2p2zBRv3RQzBZH1/jxQN1ni/T
+ F5hsEZx/sUs8cDJIub1/qbc/xjbPUo/+It/SdJQ==
+X-Google-Smtp-Source: AGHT+IHZozv/oq7kdF2HE3OMsATt7+BqvQSGhHxNAI8rcrJ96f03sYzay0QuQUuXGN6LPmj3z3JZuAOQM7+3zcq1o5c=
+X-Received: by 2002:a2e:8509:0:b0:2d0:6fb5:46b with SMTP id
+ j9-20020a2e8509000000b002d06fb5046bmr1443868lji.23.1706888416835; Fri, 02 Feb
+ 2024 07:40:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+References: <20240201164412.785520-1-dwmw2@infradead.org>
+ <CAFEAcA9-e=hzN62vkq-P575yMvjqmm1sNwNMswUDnqj1gCRmOA@mail.gmail.com>
+ <4e86dd4daebb3c15d1585ff8d7316f61f122d827.camel@infradead.org>
+In-Reply-To: <4e86dd4daebb3c15d1585ff8d7316f61f122d827.camel@infradead.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 2 Feb 2024 15:40:06 +0000
+Message-ID: <CAFEAcA-Xbjpg8NUWnxq7Mkz5b+aUFUTsmZspBqWQ3N9Q76xhYQ@mail.gmail.com>
+Subject: Re: [PULL 00/47] nic-config.for-upstream queue
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,66 +91,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch the PCI bus from using BusClass::reset to the Resettable
-interface.
+On Fri, 2 Feb 2024 at 15:36, David Woodhouse <dwmw2@infradead.org> wrote:
+>
+> On Fri, 2024-02-02 at 15:32 +0000, Peter Maydell wrote:
+> >
+> > This fails "make check' because some of the qom-test and
+> > test-hmp checks fail when the QEMU binary segfaults.
+> >
+> > https://gitlab.com/qemu-project/qemu/-/jobs/6084552256
+> > https://gitlab.com/qemu-project/qemu/-/jobs/6084044180
+>
+> Thanks.  Any idea why that didn't show up in my own pipeline?
+> https://gitlab.com/dwmw2/qemu/-/pipelines/1160949234
 
-This has no behavioural change, because the BusClass code to support
-subclasses that use the legacy BusClass::reset will call that method
-in the hold phase of 3-phase reset.
+I think because the failing runners are the aarch64 and
+s390 host ones, which we don't let run for anything
+except real merge-pullreq test runs because they're
+limited resource. I guess that perhaps we have at some point
+said "we don't need to run all the guest architectures
+on all jobs" and not noticed that this leaves the
+coverage for the submaintainer only-uses-the-public-runners
+CI testing with gaps.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-id: 20240119163512.3810301-2-peter.maydell@linaro.org
----
- hw/pci/pci.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+CCing Alex and Thomas for possible suggestions.
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 76080af580d..05c2e46bda5 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -64,7 +64,7 @@ bool pci_available = true;
- 
- static char *pcibus_get_dev_path(DeviceState *dev);
- static char *pcibus_get_fw_dev_path(DeviceState *dev);
--static void pcibus_reset(BusState *qbus);
-+static void pcibus_reset_hold(Object *obj);
- static bool pcie_has_upstream_port(PCIDevice *dev);
- 
- static Property pci_props[] = {
-@@ -202,13 +202,15 @@ static void pci_bus_class_init(ObjectClass *klass, void *data)
- {
-     BusClass *k = BUS_CLASS(klass);
-     PCIBusClass *pbc = PCI_BUS_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     k->print_dev = pcibus_dev_print;
-     k->get_dev_path = pcibus_get_dev_path;
-     k->get_fw_dev_path = pcibus_get_fw_dev_path;
-     k->realize = pci_bus_realize;
-     k->unrealize = pci_bus_unrealize;
--    k->reset = pcibus_reset;
-+
-+    rc->phases.hold = pcibus_reset_hold;
- 
-     pbc->bus_num = pcibus_num;
-     pbc->numa_node = pcibus_numa_node;
-@@ -424,9 +426,9 @@ void pci_device_reset(PCIDevice *dev)
-  * Called via bus_cold_reset on RST# assert, after the devices
-  * have been reset device_cold_reset-ed already.
-  */
--static void pcibus_reset(BusState *qbus)
-+static void pcibus_reset_hold(Object *obj)
- {
--    PCIBus *bus = DO_UPCAST(PCIBus, qbus, qbus);
-+    PCIBus *bus = PCI_BUS(obj);
-     int i;
- 
-     for (i = 0; i < ARRAY_SIZE(bus->devices); ++i) {
--- 
-2.34.1
-
+thanks
+-- PMM
 
