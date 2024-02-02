@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25582C47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B61AEC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmSf-0001Nh-AL; Fri, 02 Feb 2024 00:51:37 -0500
+	id 1rVmSF-0001D4-Ji; Fri, 02 Feb 2024 00:51:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmSQ-0001Fq-0q
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:22 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1rVmSD-0001CX-MZ
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:09 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmSL-0001mw-Va
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:20 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6de28744a46so1327741b3a.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:17 -0800 (PST)
+ id 1rVmSC-0001hk-5r
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:09 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6dfefb490f9so730885b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853076; x=1707457876; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853065; x=1707457865; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XatY8fnmW3a/bWiIkdzT21/U2K0JQklTZ8UirY2XMgg=;
- b=TVrFwDb2s7u8//jGf0L6WxxnRjM+WkUmOvEukaKVkZvfurjOFH/qigj/AA8u099iiP
- cduCQ01b+Iv1nxp6s+sIg/Z+1Hcg76zqhTZi5rKRILgSGZLM/3OgLX62XU/dECxx0VlT
- 9ON/aXBsImOyrLTQ206yHMLTGETLo2KorkuN76OQHboUtKSlwpvzP1hKgdgcZBqkZkTZ
- efRrnh0O51FuL9O0ZhzZ0oYgNjX7+38LO9W+pxqcwq6HAtbiaWMzKE2NGdTIRn10SyVD
- lZvXNFyXHFlhduzb9/OS/MlcGQJRwUiCojig2T8yr5OdPuKoZlrLWN/soVLI6hzITWnz
- TUxQ==
+ bh=VAmZNL9zYMPpuAsM9Gmw83HdlClN4X7nwCS0CqUYsPQ=;
+ b=JZPzlnof9jffflidWcVsmyiFpmOrDvm/aKSfoKMJCeM1U40HsDngqWGTe6oqndNNhK
+ 65jVsINj6jgm7PST6Q4Mw7eCVrf0MIpm3iMZQeM2kHGNlIpENAWYMT9R4xJbKdfHuZfR
+ NWmNzYvHj209Ahxx5GFFpC6u4nCTQeG/1JYLNmvV8CshUF5b3866qdplLemKOaS+OMSD
+ zU2jj0qGBxHp8PAJxK0SU9tse4VSUKIJbmXweKs8uFluWVtn9G68kn89BTNz6uU34zei
+ xaSrcbS4mQ912RA4pA9+d0+H2E7jUidUP7fcN3P67uCR053DvMIGvhdPnbEcZQCNuF4T
+ PpKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853076; x=1707457876;
+ d=1e100.net; s=20230601; t=1706853065; x=1707457865;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XatY8fnmW3a/bWiIkdzT21/U2K0JQklTZ8UirY2XMgg=;
- b=em6sAER4XACDArv5Yy+YwFvGNnBqjwFYRAznAEHCFAkuXjsL3UKqEpyclqDFSZoRkA
- Voyo0MsnuHqdzPsk5q9QQ4wJ5enGEwuftwloMhfXd1N/wPMxu7GJVNtEF8LO+8h15JDI
- v5WyX/AdKSWZ9tkDF9FZSv9kJymEVYImCKhIAGV6P6kivZwExzeiqswNjlEQHh0PQe5M
- OkZSxjbScgiw3zwR0J08dTwnpepmvyiJTwQYunFPN7Lz8mwZPa68oD4CWUIQFY53e/DH
- 7DtOnrqwiig+1RS6CkNb9nzVd3UY5FSPD2SH7aYxl6fwkzBZ7ITugvmbCJYxV9A50Hhw
- 8c5g==
-X-Gm-Message-State: AOJu0YxUXwEnbLony1wNVvhe4LZyjiH3dE7JUPXqFCjtiH64Qa/jvMSq
- bcbCYd7nFn/dTC5oVhUQ7M/z0Xfjrg8k2S8kxxWcrjbaifvUmHehPH5kAtTD64qSufr1ZVVghVv
- AAmE=
-X-Google-Smtp-Source: AGHT+IEYxQnmsreIuS8BRMcrrRKVKyuhIx5a9jLs6neXBc1/rTYUxEw4QsFVsI1jUzCgnW+YzGU/CQ==
-X-Received: by 2002:a05:6a00:451a:b0:6df:c424:7949 with SMTP id
- cw26-20020a056a00451a00b006dfc4247949mr9822810pfb.26.1706853076079; 
- Thu, 01 Feb 2024 21:51:16 -0800 (PST)
+ bh=VAmZNL9zYMPpuAsM9Gmw83HdlClN4X7nwCS0CqUYsPQ=;
+ b=euQe/EDYjEClvkh7Hkv1EA10cuDJNhGqnP22y8O51UGFM9hzTikXMj4fpy3i1LJe+j
+ 7pxijQKADsb18Ha5O3Yfq+eVKg3opTnOg/mHgaNxGnJQKKIjAzpwowaHvPmXb2MsdyMf
+ mmqsfsBjJEaqVJF8Ky1M3cgL9OW+vZXomzVQs3OrJBO/CemHSsDd+hMP+J1G0tH+Hl2B
+ iZWvk5hm62GuAWvP3BmsTyxtemYzpnlRKV1/lI2Z1tlVe7NFeRlSz7AnZ/Ru499ekqrN
+ d+Aw/+zFyWb9EhQOWxqd0P1Stg73Oe1tEowA6XmUDSjTWh7YQy1ffGp8mqZoSzLn9tos
+ Akog==
+X-Gm-Message-State: AOJu0YyegxtTW8fe+X/JIRxE9LMWRp/qMnDB8uqhDLW4oXZ98WAWQg7J
+ SK8xuY+CFMmYXgXdm5Chmpz/iRGYvVSYeWo/j6kX2xhzl75PcvYSKjhoeKipJNtG6vg1UXmv1vT
+ LJOQ=
+X-Google-Smtp-Source: AGHT+IElAzn6TmK6qK3yl/KaKEinfRTeQeD3KdsXD0JWJaay0AGqR9lxD7D0HyGo1l8n29wI6v8l2A==
+X-Received: by 2002:aa7:810e:0:b0:6dd:a086:1e0f with SMTP id
+ b14-20020aa7810e000000b006dda0861e0fmr1208361pfi.32.1706853065709; 
+ Thu, 01 Feb 2024 21:51:05 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.14
+ h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:51:15 -0800 (PST)
+ Thu, 01 Feb 2024 21:51:05 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 16/57] target/mips: Split out mips_env_mmu_index
-Date: Fri,  2 Feb 2024 15:49:55 +1000
-Message-Id: <20240202055036.684176-18-richard.henderson@linaro.org>
+Subject: [PULL 11/57] target/loongarch: Populate CPUClass.mmu_index
+Date: Fri,  2 Feb 2024 15:49:50 +1000
+Message-Id: <20240202055036.684176-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,137 +97,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/mips/cpu.h                       |  7 ++++++-
- target/mips/sysemu/physaddr.c           |  2 +-
- target/mips/tcg/msa_helper.c            | 10 +++++-----
- target/mips/tcg/sysemu/cp0_helper.c     |  2 +-
- target/mips/tcg/sysemu/special_helper.c |  2 +-
- target/mips/tcg/sysemu/tlb_helper.c     |  2 +-
- 6 files changed, 15 insertions(+), 10 deletions(-)
+ target/loongarch/cpu.h |  6 ++----
+ target/loongarch/cpu.c | 11 +++++++++++
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 3ba8dccd2d..4c15e76781 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1255,11 +1255,16 @@ static inline int hflags_mmu_index(uint32_t hflags)
-     }
- }
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 0fa5e0ca93..5dfcfeb3a4 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -408,15 +408,13 @@ struct LoongArchCPUClass {
+ #define MMU_IDX_USER     MMU_PLV_USER
+ #define MMU_IDX_DA       4
  
--static inline int cpu_mmu_index(CPUMIPSState *env, bool ifetch)
-+static inline int mips_env_mmu_index(CPUMIPSState *env)
++int loongarch_cpu_mmu_index(CPUState *cs, bool ifetch);
+ static inline int cpu_mmu_index(CPULoongArchState *env, bool ifetch)
  {
-     return hflags_mmu_index(env->hflags);
+ #ifdef CONFIG_USER_ONLY
+     return MMU_IDX_USER;
+ #else
+-    if (FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG)) {
+-        return FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
+-    }
+-    return MMU_IDX_DA;
++    return loongarch_cpu_mmu_index(env_cpu(env), ifetch);
+ #endif
  }
  
-+static inline int cpu_mmu_index(CPUMIPSState *env, bool ifetch)
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index fb8dde7def..cbecc63213 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -375,6 +375,16 @@ static bool loongarch_cpu_has_work(CPUState *cs)
+ #endif
+ }
+ 
++int loongarch_cpu_mmu_index(CPUState *cs, bool ifetch)
 +{
-+    return mips_env_mmu_index(env);
++    CPULoongArchState *env = cpu_env(cs);
++
++    if (FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG)) {
++        return FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
++    }
++    return MMU_IDX_DA;
 +}
 +
- #include "exec/cpu-all.h"
- 
- /* Exceptions */
-diff --git a/target/mips/sysemu/physaddr.c b/target/mips/sysemu/physaddr.c
-index 05990aa5bb..13c8bc8f47 100644
---- a/target/mips/sysemu/physaddr.c
-+++ b/target/mips/sysemu/physaddr.c
-@@ -236,7 +236,7 @@ hwaddr mips_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-     int prot;
- 
-     if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
--                             cpu_mmu_index(env, false)) != 0) {
-+                             mips_env_mmu_index(env)) != 0) {
-         return -1;
-     }
-     return phys_addr;
-diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-index 7a8dbada5d..d2181763e7 100644
---- a/target/mips/tcg/msa_helper.c
-+++ b/target/mips/tcg/msa_helper.c
-@@ -8214,7 +8214,7 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, uint32_t df, uint32_t wd,
- #if !defined(CONFIG_USER_ONLY)
- #define MEMOP_IDX(DF)                                                   \
-     MemOpIdx oi = make_memop_idx(MO_TE | DF | MO_UNALN,                 \
--                                 cpu_mmu_index(env, false));
-+                                 mips_env_mmu_index(env));
- #else
- #define MEMOP_IDX(DF)
- #endif
-@@ -8323,7 +8323,7 @@ void helper_msa_st_b(CPUMIPSState *env, uint32_t wd,
-                      target_ulong addr)
+ static void loongarch_la464_initfn(Object *obj)
  {
-     wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = mips_env_mmu_index(env);
-     uintptr_t ra = GETPC();
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+@@ -779,6 +789,7 @@ static void loongarch_cpu_class_init(ObjectClass *c, void *data)
  
-     ensure_writable_pages(env, addr, mmu_idx, ra);
-@@ -8337,7 +8337,7 @@ void helper_msa_st_h(CPUMIPSState *env, uint32_t wd,
-                      target_ulong addr)
- {
-     wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = mips_env_mmu_index(env);
-     uintptr_t ra = GETPC();
-     uint64_t d0, d1;
- 
-@@ -8358,7 +8358,7 @@ void helper_msa_st_w(CPUMIPSState *env, uint32_t wd,
-                      target_ulong addr)
- {
-     wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = mips_env_mmu_index(env);
-     uintptr_t ra = GETPC();
-     uint64_t d0, d1;
- 
-@@ -8379,7 +8379,7 @@ void helper_msa_st_d(CPUMIPSState *env, uint32_t wd,
-                      target_ulong addr)
- {
-     wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = mips_env_mmu_index(env);
-     uintptr_t ra = GETPC();
- 
-     ensure_writable_pages(env, addr, mmu_idx, GETPC());
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index cc545aed9c..62f6fb4bf6 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -1202,7 +1202,7 @@ void helper_mtc0_status(CPUMIPSState *env, target_ulong arg1)
-                 old, old & env->CP0_Cause & CP0Ca_IP_mask,
-                 val, val & env->CP0_Cause & CP0Ca_IP_mask,
-                 env->CP0_Cause);
--        switch (cpu_mmu_index(env, false)) {
-+        switch (mips_env_mmu_index(env)) {
-         case 3:
-             qemu_log(", ERL\n");
-             break;
-diff --git a/target/mips/tcg/sysemu/special_helper.c b/target/mips/tcg/sysemu/special_helper.c
-index 93276f789d..518d3fbc34 100644
---- a/target/mips/tcg/sysemu/special_helper.c
-+++ b/target/mips/tcg/sysemu/special_helper.c
-@@ -68,7 +68,7 @@ static void debug_post_eret(CPUMIPSState *env)
-         if (env->hflags & MIPS_HFLAG_DM) {
-             qemu_log(" DEPC " TARGET_FMT_lx, env->CP0_DEPC);
-         }
--        switch (cpu_mmu_index(env, false)) {
-+        switch (mips_env_mmu_index(env)) {
-         case 3:
-             qemu_log(", ERL\n");
-             break;
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index b715449114..cdae42ffdd 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -973,7 +973,7 @@ hwaddr cpu_mips_translate_address(CPUMIPSState *env, target_ulong address,
- 
-     /* data access */
-     ret = get_physical_address(env, &physical, &prot, address, access_type,
--                               cpu_mmu_index(env, false));
-+                               mips_env_mmu_index(env));
-     if (ret == TLBRET_MATCH) {
-         return physical;
-     }
+     cc->class_by_name = loongarch_cpu_class_by_name;
+     cc->has_work = loongarch_cpu_has_work;
++    cc->mmu_index = loongarch_cpu_mmu_index;
+     cc->dump_state = loongarch_cpu_dump_state;
+     cc->set_pc = loongarch_cpu_set_pc;
+     cc->get_pc = loongarch_cpu_get_pc;
 -- 
 2.34.1
 
