@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3272AC47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 03:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99AFDC47258
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 03:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVkTm-0004XX-6m; Thu, 01 Feb 2024 22:44:38 -0500
+	id 1rVkgt-0006oG-Qm; Thu, 01 Feb 2024 22:58:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVkTl-0004XG-0e
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 22:44:37 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVkTj-0001D4-6d
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 22:44:36 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6da6b0eb2d4so1265643b3a.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 19:44:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706845473; x=1707450273; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
- b=rA++wZmcDGCVx60hP5NTjvUBo3qyAmXjS9dENJsb62+wlwV6uKxWqajT3P+PUu2ZhX
- 2xNnkRQK3qk7Jxzpykn029xUcujOKGP29H6RjrE2UixYtcLu0FgmjUZ8rPonR8/O6Yjj
- niqiAeaFnrPcaXXudhQTgAbBrbnKEMjGTWeAWpCsllrgzSG8OJjD5D/WJP0AZ0X8oW3x
- xICC4LvaB5m0G9pGcRn9gF3QcCI3t4CsIow3ljjShcJNBnID0nSC0QJHtJ8nwjXg2C6N
- r7h1lociETSkVuxj55ZxHSTmGGs9MLG3alZMturTM3wdp9yc08+nBO2fc/CTuQl4vdlP
- TZjw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVkgs-0006n8-FU
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 22:58:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVkgq-0001Wj-69
+ for qemu-devel@nongnu.org; Thu, 01 Feb 2024 22:58:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706846286;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J4SSsFO6axNLWYmnSBFmsWmOiH8znU0S8a0VQkBmW+o=;
+ b=VlzmbpRD4vl0ItOoEordPj2g9l6rgwVYAsmUAX2xRM/EQjYGAXpXY/FWh2zpb821JU+Cy4
+ EjEDchBno/bsTMiOyilg05IzeAVZmvNhmJ953hMUVIu2J4LasDpEHYbQvQ2igF0AtRHZi7
+ c35AtCP7AyQQT6kWxaeUzXguZ08VTrQ=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-361-X7ziBIZFPWW6ROuWW-YwEA-1; Thu, 01 Feb 2024 22:58:04 -0500
+X-MC-Unique: X7ziBIZFPWW6ROuWW-YwEA-1
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-1d95551c141so636325ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 19:58:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706845473; x=1707450273;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
- b=iRhF6ob8OpmV4Np/xowwKJeDGg5YUrKgOgLZjnFtov6PWQzgwY9g2A5A1Z7bLNGtGZ
- vCJ/TdjU6kR5nMhHm3cBl2us6fz5+BhbtGL8SGEsKg0GNKfp3/z594vyG2LfR0EzdLqi
- 5VfJ4PTFiKcEfEKRG46FfZxkO3i++0Tdrmckl3Bom0K78RnPhEV3APCbQFnaygn6gzZj
- fJN8QgnjlYmwK5mRntaX0Gf3lCoczlp7gMwrYnJdtccFScoVl/BxrRViiU6Lixsy2gWs
- /7Z6DrCFDc94RCfgSw/K3b7EjygAV5MUb0XK4R/7dkJOiFekVXe3LttAx4LiZlQ0nk32
- 69iQ==
-X-Gm-Message-State: AOJu0YzluLIPDVTWLrdxsykZGSl29gLOORp2IiTVyFLHJzeuwie2s7C2
- BBpKIo74QLQHmg7HBVVqHVAmT7EhphwTtslHgu5lzIltIw8yPIKIZTX+x5LIM5QztRWoS2qIV+Z
- JP4k=
-X-Google-Smtp-Source: AGHT+IG4uVDUWVvNE3f+hTpEKX2IASd+vz1eP7ZxOFz2czGgn0o9/rjD5/x2gMvet/y5jGY1eQoNKQ==
-X-Received: by 2002:a62:aa0f:0:b0:6de:1da4:ca99 with SMTP id
- e15-20020a62aa0f000000b006de1da4ca99mr6748162pff.18.1706845473413; 
- Thu, 01 Feb 2024 19:44:33 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706846283; x=1707451083;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J4SSsFO6axNLWYmnSBFmsWmOiH8znU0S8a0VQkBmW+o=;
+ b=rUgssZirPoJRB3AplBXDcfLXdrkju8JH83aYcWFwebrpO0fbp+4U7Z/h1qJh1jLvT+
+ i3jA+dvmmP2EV0P9Nz/TXrrfqB45G/RSXeC2UyS0jIPV5f8NoBZfRfCFGLkuSRYlMzg/
+ Pu0b5Z93pR0AMMNf0x0S4SRnfaP90FwBZINXlgSAIyx31LuWn7yf5VWt/OPTnvvp27Ah
+ rMFsx/u9KBAXUmeXvoc7xBvXXG8fZrMfODoWSV1oVmqG10B2KCXQqlvYHsM05ed6zYpP
+ inCJLuVti4bCHeMXAMAkLEqKq9jpfL/rDDURE02y6sZX81T7DlbQdjYqirP9QkU5cWNO
+ 5w/A==
+X-Gm-Message-State: AOJu0YxciEZWi3bV4j1iK0HGfeUXq7CTtYSTTadrinbvQVcY5yH5kuUh
+ TbIrALCF5qGXGfRan4J/vHE2zK83iJ/SNk0tX29fC0xTKaHWcCU2k7GCx3XMWkSTGaNMIubi+P8
+ 4oZCtP/0GeO8WQaOYfY4bwJH9MWhO2Cz7nw+eC2veZ1gwEYJPy/nM5lig6q1GwptFOWD2EFO/4c
+ KJerpoYlo1oJ9jY4syZMMIekUPQnHizbZwEclg
+X-Received: by 2002:a17:902:7289:b0:1d7:1480:6538 with SMTP id
+ d9-20020a170902728900b001d714806538mr4882003pll.1.1706846283292; 
+ Thu, 01 Feb 2024 19:58:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH4O4v/9VoaRikm754qeiGpVqrFg3YUn6b9NEiWHQ9qyWgSy/Ql1r2DmNTgKynn46mAJKisgg==
+X-Received: by 2002:a17:902:7289:b0:1d7:1480:6538 with SMTP id
+ d9-20020a170902728900b001d714806538mr4881986pll.1.1706846282838; 
+ Thu, 01 Feb 2024 19:58:02 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCU11tzfGrnWBIP9q0pwgG6TV8kJCzOOS2igQDou961oxeHLoI68plkJzhjIJSOblfhYKoxVKYPIDSVBxr0AMpb/gZnob7T3vJosgX/OTewA6EtHnj+KM+j6EIATW8MP9uwvIA==
-Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- o3-20020a056a001b4300b006d9be279432sm525757pfv.2.2024.02.01.19.44.30
+ AJvYcCV3UCK3U8ofiJlx8olfY/OyPHPXC4X+Yu5LM/gsbLl0yUUnXEchFJeEP8djUt716HBOyQ83oa2b4IdDG565/FNG9JdNC5Ym86CrsrMYSaqeL13ylT+JsRpxEVrHy8HMnhdKPPLdx7z8iIZ+3Obq5k/Y10xV4twYOAHTNBoRRHphyj5qO+ZgwnB1jm5jqlQr7NwYsGcT1w==
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ l5-20020a170902e2c500b001d974ffa1fcsm67008plc.173.2024.02.01.19.58.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 19:44:32 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Thu, 01 Feb 2024 19:58:02 -0800 (PST)
+Date: Fri, 2 Feb 2024 11:57:53 +0800
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
- Christophe Lyon <christophe.lyon@linaro.org>, qemu-stable@nongnu.org
-Subject: [PATCH] linux-user/aarch64: Add padding before __kernel_rt_sigreturn
-Date: Fri,  2 Feb 2024 13:44:27 +1000
-Message-Id: <20240202034427.504686-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Cc: Bryan Zhang <bryan.zhang@bytedance.com>,
+ Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Yuan Liu <yuan1.liu@intel.com>, Avihai Horon <avihaih@nvidia.com>,
+ Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH 13/14] migration/multifd: Move header prepare/fill into
+ send_prepare()
+Message-ID: <ZbxoQbQcCFT8QISB@x1n>
+References: <20240131103111.306523-1-peterx@redhat.com>
+ <20240131103111.306523-14-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240131103111.306523-14-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,64 +105,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Without this padding, an unwind through the signal handler
-will pick up the unwind info for the preceding syscall.
+On Wed, Jan 31, 2024 at 06:31:10PM +0800, peterx@redhat.com wrote:
+> From: Peter Xu <peterx@redhat.com>
+> 
+> This patch redefines the interfacing of ->send_prepare().  It further
+> simplifies multifd_send_thread() especially on zero copy.
+> 
+> Now with the new interface, we require the hook to do all the work for
+> preparing the IOVs to send.  After it's completed, the IOVs should be ready
+> to be dumped into the specific multifd QIOChannel later.
+> 
+> So now the API looks like:
+> 
+>   p->pages ----------->  send_prepare() -------------> IOVs
+> 
+> This also prepares for the case where the input can be extended to even not
+> any p->pages.  But that's for later.
+> 
+> This patch will achieve similar goal of what Fabiano used to propose here:
+> 
+> https://lore.kernel.org/r/20240126221943.26628-1-farosas@suse.de
+> 
+> However the send() interface may not be necessary.  I'm boldly attaching a
+> "Co-developed-by" for Fabiano.
+> 
+> Co-developed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-This fixes gcc's 30_threads/thread/native_handle/cancel.cc.
+Just a heads-up: I plan to squash something like below also into it.
+That's mostly Fabiano's:
 
-Cc: qemu-stable@nongnu.org
-Fixes: ee95fae075c6 ("linux-user/aarch64: Add vdso")
-Resolves: https://linaro.atlassian.net/browse/GNU-974
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/aarch64/vdso-be.so | Bin 3216 -> 3224 bytes
- linux-user/aarch64/vdso-le.so | Bin 3216 -> 3224 bytes
- linux-user/aarch64/vdso.S     |   4 ++++
- 3 files changed, 4 insertions(+)
+https://lore.kernel.org/r/20240126221943.26628-6-farosas@suse.de
 
-diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
-index 6084f3d1a701316004894fcdd739c4e1e0463b68..808206ade824b09d786f6cc34f7cddf80b63130e 100755
-GIT binary patch
-delta 121
-zcmbOrIYV-SKI4pu2Kk&{7{Gw#%fuBAMC1c?^>~k}v|avdxNjSSLfftVb3bgJ!|2S&
-z_-6A1CJrVZc?IUH8G;R$7#SF@Om<{a*v!K!&BXX-vIe^~TWO|cva$K*Om;sOMw`hy
-ZxXl@VO#Z-a&zLdUfXALuXmSCM0s#EKC)of1
+But instead of overwritting write_flags in the hook, I made it a
+conditional "OR" just in case we'll extend write_flags later in common
+paths and get it overlooked.
 
-delta 116
-zcmbOsIYDxQKI4Rm2Kk&H7{Gw#!^9O2L>8U?-5V_M@!kH(Sx4vJn|*ujLPgija~Pc&
-z8DDIEz{J5c`3;N8W)W6tCdL<&4cM*OEF8_<v%@zRviq?xT1-B`ZO-^%@(*r%#)Qch
-RJocPi5ThAdCO2?N002V6C;<Qf
+In short, I'll keep all zerocopy changes together in this single patch,
+hopefully clearer.
 
-diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
-index 947d534ec1899740edbd6921da6bc6e70e2ecd09..941aaf29931193300de1f62097867c282a7e0c74 100755
-GIT binary patch
-delta 129
-zcmbOrIYV-S2IGv0n)#exSQx<I%fyAxMZTVBQ(04AP_*V|Vxp|@=@;x8zb9;-!)U|E
-z_-6A>CVnO!c?IUH8G;R$7#SF@Om<{a*v!K!!o>JyvLd?^n`3BUW_royOm=q`Mw`hS
-dxy>1WOn%92&zLb;lgFM@hy!9z%j7~Xc>tTxDQW-!
-
-delta 108
-zcmbOsIYDxQ2IGW@n)#d`SQx<I!^DNpMK&+G&+g_}w9WI@dn@@euKVesZ-h6`VYFdn
-ze6jf^6F<}BH!LcfMOa0c7+*}*WOrgKEO1Fl%G+GX?#{w!F?lDqIpc@PAGz%r6DAw-
-M*fVlXF62=M06owo?*IS*
-
-diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
-index 34d3a9ebd2..a0ac1487b0 100644
---- a/linux-user/aarch64/vdso.S
-+++ b/linux-user/aarch64/vdso.S
-@@ -63,7 +63,11 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
-  * For now, elide the unwind info for __kernel_rt_sigreturn and rely on
-  * the libgcc fallback routine as we have always done.  This requires
-  * that the code sequence used be exact.
-+ *
-+ * Add a nop as a spacer to ensure that unwind does not pick up the
-+ * unwind info from the preceding syscall.
+=====
+diff --git a/migration/multifd.c b/migration/multifd.c
+index cd4467aff4..6aa44340de 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -50,15 +50,15 @@ typedef struct {
+ /**
+  * nocomp_send_setup: setup send side
+  *
+- * For no compression this function does nothing.
+- *
+- * Returns 0 for success or -1 for error
+- *
+  * @p: Params for the channel that we are using
+  * @errp: pointer to an error
   */
-+	nop
- __kernel_rt_sigreturn:
- 	/* No BTI C insn here -- we arrive via RET. */
- 	mov	x8, #__NR_rt_sigreturn
+ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+ {
++    if (migrate_zero_copy_send()) {
++        p->write_flags |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
++    }
++
+     return 0;
+ }
+
 -- 
-2.34.1
+Peter Xu
 
 
