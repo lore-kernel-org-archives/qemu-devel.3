@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0176EC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 19:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BF41C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 19:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVz6G-0007CY-JZ; Fri, 02 Feb 2024 14:21:20 -0500
+	id 1rVz8G-00081v-Iv; Fri, 02 Feb 2024 14:23:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz6F-0007Bx-7e
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:21:19 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz8E-00081X-JT
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:23:22 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz6D-0006uf-97
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:21:18 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz8D-0007AL-83
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:23:22 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7ACF21F78C;
- Fri,  2 Feb 2024 19:21:15 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 92C0C21FD4;
+ Fri,  2 Feb 2024 19:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706901675; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706901799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
- b=BS/doIEEC6uoPcX7xYa2h2LRWh19sIjM4gJktA/uUeT6r2XQ50xj+Gy9Gco4ivhFufU52Q
- DQQqLI6G2KwD+iiac/fCd1Qgz0HMfIX3QD/OTovZZt6lEtLr4O+ggciKMfXRyr4iBhbria
- 3nrl0lOIyqlFW99jBkkfEWtTha7ybRo=
+ bh=1vQRKIGHXOjonxevY6j22omoVC/7ZkVwthbDykCJXSM=;
+ b=RzAJHJo1uvcXJqFZJkAVQ+wfE6zrHP8Z+dFNOiAA9naK42hi6A1vEpzFi1/yQgGHo1z9q/
+ +jhhlW/ujuLW/qo77Hu3Z1JKGarxrtragvKbbTBMX5bUDqBKwG3wEdWXF3HZcn4JZgGFHk
+ GDqTVCo3AmFzvUd6GGoXoaNQ54cRVuE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706901675;
+ s=susede2_ed25519; t=1706901799;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
- b=yJRhz7WR//r01d15fWWsUHyXZbGYiRDyQ8KRYS/xTtjWOVkZwHb+ViOIMMXnNwxyxIJZcP
- h441nN1G+IGEZbBw==
+ bh=1vQRKIGHXOjonxevY6j22omoVC/7ZkVwthbDykCJXSM=;
+ b=kEQecEuJXfcRBYonctaYIp3p2iVM8IYJ7k1brY1Veqy6ODVeEramGauOwBmkHXuzAlJcJy
+ W4ExU5UKflUsP9BA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706901675; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706901799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
- b=BS/doIEEC6uoPcX7xYa2h2LRWh19sIjM4gJktA/uUeT6r2XQ50xj+Gy9Gco4ivhFufU52Q
- DQQqLI6G2KwD+iiac/fCd1Qgz0HMfIX3QD/OTovZZt6lEtLr4O+ggciKMfXRyr4iBhbria
- 3nrl0lOIyqlFW99jBkkfEWtTha7ybRo=
+ bh=1vQRKIGHXOjonxevY6j22omoVC/7ZkVwthbDykCJXSM=;
+ b=RzAJHJo1uvcXJqFZJkAVQ+wfE6zrHP8Z+dFNOiAA9naK42hi6A1vEpzFi1/yQgGHo1z9q/
+ +jhhlW/ujuLW/qo77Hu3Z1JKGarxrtragvKbbTBMX5bUDqBKwG3wEdWXF3HZcn4JZgGFHk
+ GDqTVCo3AmFzvUd6GGoXoaNQ54cRVuE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706901675;
+ s=susede2_ed25519; t=1706901799;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
- b=yJRhz7WR//r01d15fWWsUHyXZbGYiRDyQ8KRYS/xTtjWOVkZwHb+ViOIMMXnNwxyxIJZcP
- h441nN1G+IGEZbBw==
+ bh=1vQRKIGHXOjonxevY6j22omoVC/7ZkVwthbDykCJXSM=;
+ b=kEQecEuJXfcRBYonctaYIp3p2iVM8IYJ7k1brY1Veqy6ODVeEramGauOwBmkHXuzAlJcJy
+ W4ExU5UKflUsP9BA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 06130139AB;
- Fri,  2 Feb 2024 19:21:14 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1EBAC139AB;
+ Fri,  2 Feb 2024 19:23:18 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 9mvDL6pAvWWjZgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:21:14 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id /hC2NSZBvWUJZwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:23:18 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: peterx@redhat.com, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@bytedance.com>, Bryan Zhang
  <bryan.zhang@bytedance.com>, peterx@redhat.com, Avihai Horon
  <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit
  <ppandit@redhat.com>
-Subject: Re: [PATCH v2 06/23] migration/multifd: Separate SYNC request with
- normal jobs
-In-Reply-To: <20240202102857.110210-7-peterx@redhat.com>
+Subject: Re: [PATCH v2 07/23] migration/multifd: Simplify locking in sender
+ thread
+In-Reply-To: <20240202102857.110210-8-peterx@redhat.com>
 References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-7-peterx@redhat.com>
-Date: Fri, 02 Feb 2024 16:21:11 -0300
-Message-ID: <87ttmqhdug.fsf@suse.de>
+ <20240202102857.110210-8-peterx@redhat.com>
+Date: Fri, 02 Feb 2024 16:23:16 -0300
+Message-ID: <87r0huhdqz.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="BS/doIEE";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=yJRhz7WR
-X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spamd-Result: default: False [-0.10 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; URIBL_BLOCKED(0.00)[suse.de:email];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-0.00)[35.38%];
  MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 7ACF21F78C
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -127,59 +121,16 @@ peterx@redhat.com writes:
 
 > From: Peter Xu <peterx@redhat.com>
 >
-> Multifd provide a threaded model for processing jobs.  On sender side,
-> there can be two kinds of job: (1) a list of pages to send, or (2) a sync
-> request.
+> The sender thread will yield the p->mutex before IO starts, trying to not
+> block the requester thread.  This may be unnecessary lock optimizations,
+> because the requester can already read pending_job safely even without the
+> lock, because the requester is currently the only one who can assign a
+> task.
 >
-> The sync request is a very special kind of job.  It never contains a page
-> array, but only a multifd packet telling the dest side to synchronize with
-> sent pages.
+> Drop that lock complication on both sides:
 >
-> Before this patch, both requests use the pending_job field, no matter what
-> the request is, it will boost pending_job, while multifd sender thread will
-> decrement it after it finishes one job.
->
-> However this should be racy, because SYNC is special in that it needs to
-> set p->flags with MULTIFD_FLAG_SYNC, showing that this is a sync request.
-> Consider a sequence of operations where:
->
->   - migration thread enqueue a job to send some pages, pending_job++ (0->1)
->
->   - [...before the selected multifd sender thread wakes up...]
->
->   - migration thread enqueue another job to sync, pending_job++ (1->2),
->     setup p->flags=MULTIFD_FLAG_SYNC
->
->   - multifd sender thread wakes up, found pending_job==2
->     - send the 1st packet with MULTIFD_FLAG_SYNC and list of pages
->     - send the 2nd packet with flags==0 and no pages
->
-> This is not expected, because MULTIFD_FLAG_SYNC should hopefully be done
-> after all the pages are received.  Meanwhile, the 2nd packet will be
-> completely useless, which contains zero information.
->
-> I didn't verify above, but I think this issue is still benign in that at
-> least on the recv side we always receive pages before handling
-> MULTIFD_FLAG_SYNC.  However that's not always guaranteed and just tricky.
->
-> One other reason I want to separate it is using p->flags to communicate
-> between the two threads is also not clearly defined, it's very hard to read
-> and understand why accessing p->flags is always safe; see the current impl
-> of multifd_send_thread() where we tried to cache only p->flags.  It doesn't
-> need to be that complicated.
->
-> This patch introduces pending_sync, a separate flag just to show that the
-> requester needs a sync.  Alongside, we remove the tricky caching of
-> p->flags now because after this patch p->flags should only be used by
-> multifd sender thread now, which will be crystal clear.  So it is always
-> thread safe to access p->flags.
->
-> With that, we can also safely convert the pending_job into a boolean,
-> because we don't support >1 pending jobs anyway.
->
-> Always use atomic ops to access both flags to make sure no cache effect.
-> When at it, drop the initial setting of "pending_job = 0" because it's
-> always allocated using g_new0().
+>   (1) in the sender thread, always take the mutex until job done
+>   (2) in the requester thread, check pending_job clear lockless
 >
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
