@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40160C47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76EECC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmS7-0001Bc-4C; Fri, 02 Feb 2024 00:51:03 -0500
+	id 1rVmTT-0003Wt-11; Fri, 02 Feb 2024 00:52:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmS5-0001BE-OJ
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:01 -0500
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ id 1rVmTG-000389-Bv
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:52:14 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmS4-0001fa-Cc
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:01 -0500
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3bda4bd14e2so1399379b6e.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:00 -0800 (PST)
+ id 1rVmT4-00028v-5S
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:52:10 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6de0ba30994so344593b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853059; x=1707457859; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853121; x=1707457921; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wl6EjnJRU6kShqd/niIm85pRxEWSBZnxx+3jHXQP+xk=;
- b=f0qm9sxa0ONR3baund09AVANG9wD7i6WtYbb6FskGnYQyvFR9g3961dW6TFDCaGykm
- 6R8Z2ikjTWEMcCGd605X9VH1yAfEvEqcQ5zD00831uTR+1VqDIHHlNR45fe1567Euc/t
- +USEKYPSZKBuu8Dy3GKwXpsABZNuZTkHQGkLxKuAegPY/+kfK6HwJh7tnsWtD1J7idCW
- ulGtY8eOhmjF0kqw5eK9kYgQ3GglXDrd5OUJVJAbOcDO6pepNIceFg8s/MFMLvwFcFEH
- iFsft8yxkqI70auiz1UMOQzA4mVeuwf9GCVSG7L5Rnf7TJTtMxCoN+TJ9z9oDIKLaPuJ
- GnzA==
+ bh=wxeXPbX6hjz+X/sMPb06TGA1YfBXK5OBxElnE5+fhQk=;
+ b=aTTRVFbtUh3abWgsKDMitp0GxcizuJ3r723wzdPOlQNPXkyTsy2QN0eBK7O9XF3tou
+ H4++dgQDLZ2Yk5j8/z2+I0aSGjRBAugyPz9D3QeepnnXw6wQohQ3eGffautB65KXm0Gd
+ RG6fValmWdFYP/wgxGLNNaYk19KZctv/atXAn102lBZV4CdQ9UrPEYDV4NUhNdkH7xc5
+ 0vsRsuYsbQ9R0J8Fnw9Zb+GT/HcZ2LEGHMbTP69uNqz1ZKQg6Jmf8BYcIZkiTGn8g4Da
+ mIT4ZXmeVNDIIOtwjyHlHUSruLVKRGnv/B7bYNa/kraAWX1bIwenD/ax6GymwOiVFcGA
+ OSmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853059; x=1707457859;
+ d=1e100.net; s=20230601; t=1706853121; x=1707457921;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wl6EjnJRU6kShqd/niIm85pRxEWSBZnxx+3jHXQP+xk=;
- b=ZtOuKFMQzV1IHkBP+96fBtSMwW/HGs6KX9dWe3sNiaW+UYeKA1VukMo+93yjdDM9pl
- CVkz1IYjT1Q+17wUl7KLtHxYYeXN3oyk8S3YC9hdoRzTuEOJLlEPFMMh/1k3bK3LqTIa
- aFrXhItIcNhJTpGbVCF1RXshxxbjk3pISDCECpiGK6T+3RrJzJqAE1ca5+NzgJtPxTet
- UupSVk39eo/eqOI5ExvvJ45DU4PORkD8y0IlsQTX9Ac7lo0Tu6IUKWNfzrB5AtZMB3hN
- aw9H1ULrafqHfKP8dE64aww8lA1nLNOb/3PyeT572fpOr16ygnEDxbricscSKrIK6apL
- 4Bxg==
-X-Gm-Message-State: AOJu0YwGRl5TaGwTCcgmu3rHhlDcz+sf5l0VsczWE4e7/jPszq2DuODF
- p1OnpnxRD3xaDVXpXgasmXKnXy4unRaSS1LIpIHFjD9HNl0FGtDf8wdTtcn5gI9spFnrqgGiyWQ
- 4RNw=
-X-Google-Smtp-Source: AGHT+IGeHLjjMeesHXfp/vUe9yHC9Bct8Mm5aPNJhmDsezL2Qlmk//CIjqlL6lP1Np06X6fQ+Go2PQ==
-X-Received: by 2002:a05:6808:11ca:b0:3bd:9ab2:fc5a with SMTP id
- p10-20020a05680811ca00b003bd9ab2fc5amr7394076oiv.54.1706853059265; 
- Thu, 01 Feb 2024 21:50:59 -0800 (PST)
+ bh=wxeXPbX6hjz+X/sMPb06TGA1YfBXK5OBxElnE5+fhQk=;
+ b=iFtCvtLnK2J3ftFL9F400Goyg78CqhVnzjELs8inSbLK0x254FNpcjGgFWBxtdXha1
+ z2pf0WBiy+5IlJkol9E3Ssx+j69Acq6JPNe8VXRmRl9nv001LMb+pRaoeNAsfPwjYepY
+ jHO/UXgx2fgHTNit5gueyFqHMeM3rwrCuaZtyStDmmcYj+wnX+NXZzrob1igWCr4cfB1
+ t5EcyvhfNb9QoJM9f23ksWCdarq29UUR33FS/ICzTi15tAWmPhhufEtMwXmo+rRG1wO7
+ dBcMzGAwIJnZwipLNlRnQeLA6rjRYqDbKXt0WHeK7C1LRqzTmG6ny8+QHOQW9uLk1+HW
+ lUyg==
+X-Gm-Message-State: AOJu0YyA5WX+LrJoowOIdW2P4JBqJVI3Vl7qUYzewvpdmznniHQYpVlq
+ lgOoUOArOnbLp8xGuEbAivX3k7xxXV2xB5f1i9iXwfzYWKBNecR0gwCTUJZAKBqXx4J2WlyQGlM
+ pPTA=
+X-Google-Smtp-Source: AGHT+IEo3AxLlqY/rOQUXGn/vh1xXLquTT+qBhXvXMs839/3HUI8pICyiWIXLbF0zzVFRQvnnQFjqg==
+X-Received: by 2002:a05:6a00:3cc8:b0:6dd:c5c2:3536 with SMTP id
+ ln8-20020a056a003cc800b006ddc5c23536mr2073286pfb.2.1706853120866; 
+ Thu, 01 Feb 2024 21:52:00 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.50.57
+ h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:50:58 -0800 (PST)
+ Thu, 01 Feb 2024 21:52:00 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/57] target/cris: Populate CPUClass.mmu_index
-Date: Fri,  2 Feb 2024 15:49:47 +1000
-Message-Id: <20240202055036.684176-10-richard.henderson@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 37/57] target/sparc: Use tcg_gen_qemu_{ld,
+ st}_i128 for ASI_M_BFILL
+Date: Fri,  2 Feb 2024 15:50:16 +1000
+Message-Id: <20240202055036.684176-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,36 +94,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/cris/cpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Align the operation to the 32-byte cacheline.
+Use 2 i128 instead of 4 i64.
 
-diff --git a/target/cris/cpu.c b/target/cris/cpu.c
-index 6349148b65..163fb05d58 100644
---- a/target/cris/cpu.c
-+++ b/target/cris/cpu.c
-@@ -56,6 +56,11 @@ static bool cris_cpu_has_work(CPUState *cs)
-     return cs->interrupt_request & (CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI);
- }
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20231103173841.33651-3-richard.henderson@linaro.org>
+---
+ target/sparc/translate.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
+
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 1082aabc14..3a59262c9a 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -2172,23 +2172,22 @@ static void gen_stda_asi(DisasContext *dc, DisasASI *da, TCGv addr, int rd)
  
-+static int cris_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    return !!(cpu_env(cs)->pregs[PR_CCS] & U_FLAG);
-+}
-+
- static void cris_cpu_reset_hold(Object *obj)
- {
-     CPUState *s = CPU(obj);
-@@ -274,6 +279,7 @@ static void cris_cpu_class_init(ObjectClass *oc, void *data)
+     case GET_ASI_BFILL:
+         assert(TARGET_LONG_BITS == 32);
+-        /* Store 32 bytes of T64 to ADDR.  */
+-        /* ??? The original qemu code suggests 8-byte alignment, dropping
+-           the low bits, but the only place I can see this used is in the
+-           Linux kernel with 32 byte alignment, which would make more sense
+-           as a cacheline-style operation.  */
++        /*
++         * Store 32 bytes of [rd:rd+1] to ADDR.
++         * See comments for GET_ASI_COPY above.
++         */
+         {
+-            TCGv_i64 t64 = tcg_temp_new_i64();
+-            TCGv d_addr = tcg_temp_new();
+-            TCGv eight = tcg_constant_tl(8);
+-            int i;
++            MemOp mop = MO_TE | MO_128 | MO_ATOM_IFALIGN_PAIR;
++            TCGv_i64 t8 = tcg_temp_new_i64();
++            TCGv_i128 t16 = tcg_temp_new_i128();
++            TCGv daddr = tcg_temp_new();
  
-     cc->class_by_name = cris_cpu_class_by_name;
-     cc->has_work = cris_cpu_has_work;
-+    cc->mmu_index = cris_cpu_mmu_index;
-     cc->dump_state = cris_cpu_dump_state;
-     cc->set_pc = cris_cpu_set_pc;
-     cc->get_pc = cris_cpu_get_pc;
+-            tcg_gen_concat_tl_i64(t64, lo, hi);
+-            tcg_gen_andi_tl(d_addr, addr, -8);
+-            for (i = 0; i < 32; i += 8) {
+-                tcg_gen_qemu_st_i64(t64, d_addr, da->mem_idx, da->memop);
+-                tcg_gen_add_tl(d_addr, d_addr, eight);
+-            }
++            tcg_gen_concat_tl_i64(t8, lo, hi);
++            tcg_gen_concat_i64_i128(t16, t8, t8);
++            tcg_gen_andi_tl(daddr, addr, -32);
++            tcg_gen_qemu_st_i128(t16, daddr, da->mem_idx, mop);
++            tcg_gen_addi_tl(daddr, daddr, 16);
++            tcg_gen_qemu_st_i128(t16, daddr, da->mem_idx, mop);
+         }
+         break;
+ 
 -- 
 2.34.1
 
