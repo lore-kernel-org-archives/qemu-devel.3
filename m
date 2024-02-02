@@ -4,82 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460E7C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 20:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC93C4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 20:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rW0T3-0000xm-Tb; Fri, 02 Feb 2024 15:48:57 -0500
+	id 1rW0YR-0003hH-Tu; Fri, 02 Feb 2024 15:54:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3NFW9ZQcKCgktxvuxmrpxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--komlodi.bounces.google.com>)
- id 1rW0T2-0000xc-FA
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:48:56 -0500
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0YQ-0003h3-3G
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:54:30 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3NFW9ZQcKCgktxvuxmrpxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--komlodi.bounces.google.com>)
- id 1rW0T1-00008C-0j
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:48:56 -0500
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-5fc6463b0edso42279717b3.0
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 12:48:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1706906933; x=1707511733; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=5g3sLXPxpiK7LDiVehLWDyyJwIbWvaSWBTkeuyNpcN4=;
- b=xgXHQeD8z2iSU8b1z4BcrRLkKo33yRfZCTJI57yQPoG6ToPQWaITxGxyrRC36zPJqh
- 1Tkki8Ycn4BW7z/rT0EkeD74cpWKiULNa7+XNpgst7kUhoCdHPD2Vs5Tq4zL7VM+r22x
- owM0EBQs93q8ScLrcYtl4VtKoApfKKKlNVWbDvzeQGSRdaBGwls+IlnGHTXWGEspyu6P
- 43I+t7Q68kfiHSqbPc2GKvV7K9uO8k/1fK8BKxjMZoZ2YoVeel3FakFt0StxWtctKUAX
- +njjZBHiBQWQKQpyucL6cKlzTX8pE5ZEViHaQ6GXCBm5s+Q+tkDs/+6Sjz60l+D3X5vW
- vHlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706906933; x=1707511733;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5g3sLXPxpiK7LDiVehLWDyyJwIbWvaSWBTkeuyNpcN4=;
- b=GFQ6lufk18ZquXPEldfHZ+6mOB9VOiHeZNLHM6R8x+yER+XbZ+mcTbHPpDUzGXEe8T
- 6PoqvJRPCGhqAVGMlY7Jv+1wcTu+Xj+6D+NsjFD3Zd5HeSD2OtJhBinvuLYfrGZnuZ8h
- ek6COBvsULrZk7f8fl+NNncfjrl4m5KtTafL16pTAr3HHA9e+t3OmSO7BjRRwi1imBiD
- EPvcT55sq+XEE2hCeg/ZXWeXjzt19EK8mxbCHEsnYJu/vbmd9tsCMMY/A8Ki1p9pvWCm
- X+C9B+Tkrj2ETcalFiP/sisBMTBHiGTz5Je77OgBR9X58lgm5dcZJ1HmJqaNqP/lXnWm
- k5Hg==
-X-Gm-Message-State: AOJu0Yz6GGpamO8TbyUoe+0a2lAXF6HhBjCbQpqw/Uvwdh7Hn+cYYbS7
- tCw9Q92tQ/cZY6wHXR7CxVkndPUi2Zbp0IjpgWznIWA7cj51R4aGQtz2M2fDnunOvkqixcT462z
- AV8dGRoGJxnO1JU+2yQtbcvn3vjIMyze5Rmqrpzu40qcQePT3FtDvgQQqfBEwszSn0bJ4plKrhG
- Ra3w/hwcic2qBDOW+wb4F+Rkk1c+6cuTLuqpwY
-X-Google-Smtp-Source: AGHT+IFjh/v0izNeSezdOTH8uoVXK54jMK56bBmHJOc58pQn8MNiC258Zc0Mfw9nailMMROez6IkXttCz482
-X-Received: from komlodi.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
- (user=komlodi job=sendgmr) by 2002:a05:690c:12:b0:5fc:4ef9:9d6b with SMTP id
- bc18-20020a05690c001200b005fc4ef99d6bmr615670ywb.9.1706906932843; Fri, 02 Feb
- 2024 12:48:52 -0800 (PST)
-Date: Fri,  2 Feb 2024 20:48:46 +0000
-In-Reply-To: <20240202204847.2062798-1-komlodi@google.com>
-Mime-Version: 1.0
-References: <20240202204847.2062798-1-komlodi@google.com>
-X-Mailer: git-send-email 2.43.0.594.gd9cf4e227d-goog
-Message-ID: <20240202204847.2062798-3-komlodi@google.com>
-Subject: [PATCH v3 2/3] hw/i2c/smbus_slave: Add object path on error prints
-From: Joe Komlodi <komlodi@google.com>
-To: qemu-devel@nongnu.org
-Cc: venture@google.com, komlodi@google.com, minyard@acm.org, 
- peter.maydell@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=3NFW9ZQcKCgktxvuxmrpxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--komlodi.bounces.google.com;
- helo=mail-yw1-x1149.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0YO-00025x-9Y
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 15:54:29 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 612821FD3B;
+ Fri,  2 Feb 2024 20:54:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706907266; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VUeJCIZSYZLrskiAd/XD2m8GfXX3RRtL1oohl1gNqjg=;
+ b=WO1u2h/p+iAERPmPhEcaAGQjo5d2aLHkd04qUDRWEwb27gayyNV6y71xLIoYHJJepawOsg
+ SlvsQHxqzLLogVvmIslKx7fJqXA/tpU9UdIYme8iTYles9Hw9RTq9WukRoJXyk5Ea7mLXk
+ 1AKDvt262tJKB7+ifbo+eE5Xk/mT+5E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706907266;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VUeJCIZSYZLrskiAd/XD2m8GfXX3RRtL1oohl1gNqjg=;
+ b=JK0Zrizlid+pNz9feF5ACIuPU06S+xajMP4kMk93TOeZc9GfpMucieAcaCoFW2hzqpG5id
+ qdDKDOjO9hG8czDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706907266; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VUeJCIZSYZLrskiAd/XD2m8GfXX3RRtL1oohl1gNqjg=;
+ b=WO1u2h/p+iAERPmPhEcaAGQjo5d2aLHkd04qUDRWEwb27gayyNV6y71xLIoYHJJepawOsg
+ SlvsQHxqzLLogVvmIslKx7fJqXA/tpU9UdIYme8iTYles9Hw9RTq9WukRoJXyk5Ea7mLXk
+ 1AKDvt262tJKB7+ifbo+eE5Xk/mT+5E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706907266;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VUeJCIZSYZLrskiAd/XD2m8GfXX3RRtL1oohl1gNqjg=;
+ b=JK0Zrizlid+pNz9feF5ACIuPU06S+xajMP4kMk93TOeZc9GfpMucieAcaCoFW2hzqpG5id
+ qdDKDOjO9hG8czDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFEBB13A58;
+ Fri,  2 Feb 2024 20:54:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iyVjKYFWvWUYeQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 20:54:25 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: peterx@redhat.com, qemu-devel@nongnu.org
+Cc: Hao Xiang <hao.xiang@bytedance.com>, Bryan Zhang
+ <bryan.zhang@bytedance.com>, peterx@redhat.com, Avihai Horon
+ <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit
+ <ppandit@redhat.com>
+Subject: Re: [PATCH v2 19/23] migration/multifd: Cleanup multifd_save_cleanup()
+In-Reply-To: <20240202102857.110210-20-peterx@redhat.com>
+References: <20240202102857.110210-1-peterx@redhat.com>
+ <20240202102857.110210-20-peterx@redhat.com>
+Date: Fri, 02 Feb 2024 17:54:23 -0300
+Message-ID: <87a5oih9j4.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Bar: +++
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="WO1u2h/p";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=JK0Zrizl
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [3.59 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; BAYES_SPAM(5.10)[99.99%];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: 612821FD3B
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,37 +125,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current logging doesn't tell us which specific smbus device is an
-error state.
+peterx@redhat.com writes:
 
-Signed-off-by: Joe Komlodi <komlodi@google.com>
----
- hw/i2c/smbus_slave.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> From: Peter Xu <peterx@redhat.com>
+>
+> Shrink the function by moving relevant works into helpers: move the thread
+> join()s into multifd_send_terminate_threads(), then create two more helpers
+> to cover channel/state cleanups.
+>
+> Add a TODO entry for the thread terminate process because p->running is
+> still buggy.  We need to fix it at some point but not yet covered.
+>
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
-index 1300c9ec72..9f9afc25a4 100644
---- a/hw/i2c/smbus_slave.c
-+++ b/hw/i2c/smbus_slave.c
-@@ -25,11 +25,15 @@
- #define DPRINTF(fmt, ...) \
- do { printf("smbus(%02x): " fmt , dev->i2c.address, ## __VA_ARGS__); } while (0)
- #define BADF(fmt, ...) \
--do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__); exit(1);} while (0)
-+do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
-+    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
-+            exit(1); } while (0)
- #else
- #define DPRINTF(fmt, ...) do {} while(0)
- #define BADF(fmt, ...) \
--do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__);} while (0)
-+do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
-+    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
-+             } while (0)
- #endif
- 
- enum {
--- 
-2.43.0.594.gd9cf4e227d-goog
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
+minor comment below
+
+> ---
+>  migration/multifd.c | 91 +++++++++++++++++++++++++++++----------------
+>  1 file changed, 59 insertions(+), 32 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 4ab8e6eff2..4cb0d2cc17 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -593,6 +593,11 @@ static void multifd_send_terminate_threads(void)
+>       * always set it.
+>       */
+>      qatomic_set(&multifd_send_state->exiting, 1);
+> +
+> +    /*
+> +     * Firstly, kick all threads out; no matter whether they are just idle,
+> +     * or blocked in an IO system call.
+> +     */
+>      for (i = 0; i < migrate_multifd_channels(); i++) {
+>          MultiFDSendParams *p = &multifd_send_state->params[i];
+>  
+> @@ -601,6 +606,21 @@ static void multifd_send_terminate_threads(void)
+>              qio_channel_shutdown(p->c, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
+>          }
+>      }
+> +
+> +    /*
+> +     * Finally recycle all the threads.
+> +     *
+> +     * TODO: p->running is still buggy, e.g. we can reach here without the
+> +     * corresponding multifd_new_send_channel_async() get invoked yet,
+> +     * then a new thread can even be created after this function returns.
+> +     */
+
+Series on the list:
+
+https://lore.kernel.org/r/20240202191128.1901-1-farosas@suse.de
+
+> +    for (i = 0; i < migrate_multifd_channels(); i++) {
+> +        MultiFDSendParams *p = &multifd_send_state->params[i];
+> +
+> +        if (p->running) {
+> +            qemu_thread_join(&p->thread);
+> +        }
+> +    }
+>  }
+>  
+>  static int multifd_send_channel_destroy(QIOChannel *send)
+> @@ -608,6 +628,41 @@ static int multifd_send_channel_destroy(QIOChannel *send)
+>      return socket_send_channel_destroy(send);
+>  }
+>  
+> +static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+> +{
+> +    if (p->registered_yank) {
+> +        migration_ioc_unregister_yank(p->c);
+> +    }
+> +    multifd_send_channel_destroy(p->c);
+> +    p->c = NULL;
+> +    qemu_mutex_destroy(&p->mutex);
+> +    qemu_sem_destroy(&p->sem);
+> +    qemu_sem_destroy(&p->sem_sync);
+> +    g_free(p->name);
+> +    p->name = NULL;
+> +    multifd_pages_clear(p->pages);
+> +    p->pages = NULL;
+> +    p->packet_len = 0;
+> +    g_free(p->packet);
+> +    p->packet = NULL;
+> +    g_free(p->iov);
+> +    p->iov = NULL;
+> +    multifd_send_state->ops->send_cleanup(p, errp);
+> +
+> +    return *errp == NULL;
+
+I think technically this would require the ERRP_GUARD() macro?
+
+> +}
+> +
+> +static void multifd_send_cleanup_state(void)
+> +{
+> +    qemu_sem_destroy(&multifd_send_state->channels_ready);
+> +    g_free(multifd_send_state->params);
+> +    multifd_send_state->params = NULL;
+> +    multifd_pages_clear(multifd_send_state->pages);
+> +    multifd_send_state->pages = NULL;
+> +    g_free(multifd_send_state);
+> +    multifd_send_state = NULL;
+> +}
+> +
+>  void multifd_save_cleanup(void)
+>  {
+>      int i;
+> @@ -615,48 +670,20 @@ void multifd_save_cleanup(void)
+>      if (!migrate_multifd()) {
+>          return;
+>      }
+> +
+>      multifd_send_terminate_threads();
+> -    for (i = 0; i < migrate_multifd_channels(); i++) {
+> -        MultiFDSendParams *p = &multifd_send_state->params[i];
+>  
+> -        if (p->running) {
+> -            qemu_thread_join(&p->thread);
+> -        }
+> -    }
+>      for (i = 0; i < migrate_multifd_channels(); i++) {
+>          MultiFDSendParams *p = &multifd_send_state->params[i];
+>          Error *local_err = NULL;
+>  
+> -        if (p->registered_yank) {
+> -            migration_ioc_unregister_yank(p->c);
+> -        }
+> -        multifd_send_channel_destroy(p->c);
+> -        p->c = NULL;
+> -        qemu_mutex_destroy(&p->mutex);
+> -        qemu_sem_destroy(&p->sem);
+> -        qemu_sem_destroy(&p->sem_sync);
+> -        g_free(p->name);
+> -        p->name = NULL;
+> -        multifd_pages_clear(p->pages);
+> -        p->pages = NULL;
+> -        p->packet_len = 0;
+> -        g_free(p->packet);
+> -        p->packet = NULL;
+> -        g_free(p->iov);
+> -        p->iov = NULL;
+> -        multifd_send_state->ops->send_cleanup(p, &local_err);
+> -        if (local_err) {
+> +        if (!multifd_send_cleanup_channel(p, &local_err)) {
+>              migrate_set_error(migrate_get_current(), local_err);
+>              error_free(local_err);
+>          }
+>      }
+> -    qemu_sem_destroy(&multifd_send_state->channels_ready);
+> -    g_free(multifd_send_state->params);
+> -    multifd_send_state->params = NULL;
+> -    multifd_pages_clear(multifd_send_state->pages);
+> -    multifd_send_state->pages = NULL;
+> -    g_free(multifd_send_state);
+> -    multifd_send_state = NULL;
+> +
+> +    multifd_send_cleanup_state();
+>  }
+>  
+>  static int multifd_zero_copy_flush(QIOChannel *c)
 
