@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B74C48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 10:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B66DAC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 10:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVqoL-0008EO-BN; Fri, 02 Feb 2024 05:30:17 -0500
+	id 1rVqoa-0000Cb-4q; Fri, 02 Feb 2024 05:30:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqoJ-0008Dz-DJ
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:30:15 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqoV-0008Rc-BR
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:30:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqoG-0001pJ-J1
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:30:15 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqoT-0001vG-R9
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:30:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706869811;
+ s=mimecast20190719; t=1706869824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X4xocvaBvjPa4sx3hQRwDEJ7tST+sUp5csWbv+7+6Mg=;
- b=VEox/K5svl7yzhl4gEn4EQT6Sz83Xr/uBOZtUM/oNDzmVcgggX+A0hNbwMfeA3IdI0uD2h
- laLublHtUub0dSoFh4jj5Mdnempgwr0/RkznLUPDZv1txmDzEf5DljBWZaHpr9zymKXswz
- wIUkoSvaCpaE/F7KTe7nDe4wBMUx/gQ=
+ bh=gQpm8kWXL8qqmYDuhCIkxNF1j+AUaRZ6kwdr9T8tKKM=;
+ b=H0EyJ/1LWCfVUQJq0JF12PeI1xiU44UT2iL4J0tXHTVDlFpufjIiuzfy5A9bc1Ry/NS50B
+ xDw+lkak4WQ5PYppYl94uIHS8/CBGGDT2O6I1C8B01piXLZWN8o0+f87gbZv1rJt0uL6Lg
+ GWR+66vmG0FTOgkdp5C9Et4y9DKQQVc=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-DtkEB-LGPFe9rX6iWvSlBA-1; Fri,
- 02 Feb 2024 05:30:06 -0500
-X-MC-Unique: DtkEB-LGPFe9rX6iWvSlBA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-vvlK9RwjOOCMi0KHr1PBxQ-1; Fri,
+ 02 Feb 2024 05:30:20 -0500
+X-MC-Unique: vvlK9RwjOOCMi0KHr1PBxQ-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9BABB280BC80;
- Fri,  2 Feb 2024 10:30:05 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2B3BF3C0009A;
+ Fri,  2 Feb 2024 10:30:20 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.87])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8124C400D783;
- Fri,  2 Feb 2024 10:30:01 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4241D40C9444;
+ Fri,  2 Feb 2024 10:30:15 +0000 (UTC)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@bytedance.com>,
  Bryan Zhang <bryan.zhang@bytedance.com>, Fabiano Rosas <farosas@suse.de>,
  peterx@redhat.com, Avihai Horon <avihaih@nvidia.com>,
  Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit <ppandit@redhat.com>
-Subject: [PATCH v2 09/23] migration/multifd: Rename p->num_packets and clean
- it up
-Date: Fri,  2 Feb 2024 18:28:43 +0800
-Message-ID: <20240202102857.110210-10-peterx@redhat.com>
+Subject: [PATCH v2 12/23] migration/multifd: multifd_send_prepare_header()
+Date: Fri,  2 Feb 2024 18:28:46 +0800
+Message-ID: <20240202102857.110210-13-peterx@redhat.com>
 In-Reply-To: <20240202102857.110210-1-peterx@redhat.com>
 References: <20240202102857.110210-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -84,134 +83,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-This field, no matter whether on src or dest, is only used for debugging
-purpose.
+Introduce a helper multifd_send_prepare_header() to setup the header packet
+for multifd sender.
 
-They can even be removed already, unless it still more or less provide some
-accounting on "how many packets are sent/recved for this thread".  The
-other more important one is called packet_num, which is embeded in the
-multifd packet headers (MultiFDPacket_t).
+It's fine to setup the IOV[0] _before_ send_prepare() because the packet
+buffer is already ready, even if the content is to be filled in.
 
-So let's keep them for now, but make them much easier to understand, by
-doing below:
+With this helper, we can already slightly clean up the zero copy path.
 
-  - Rename both of them to packets_sent / packets_recved, the old
-  name (num_packets) are waaay too confusing when we already have
-  MultiFDPacket_t.packets_num.
-
-  - Avoid worrying on the "initial packet": we know we will send it, that's
-  good enough.  The accounting won't matter a great deal to start with 0 or
-  with 1.
-
-  - Move them to where we send/recv the packets.  They're:
-
-    - multifd_send_fill_packet() for senders.
-    - multifd_recv_unfill_packet() for receivers.
+Note that I explicitly put it into multifd.h, because I want it inlined
+directly into multifd*.c where necessary later.
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/multifd.h |  6 +++---
- migration/multifd.c | 13 +++++--------
- 2 files changed, 8 insertions(+), 11 deletions(-)
+ migration/multifd.h |  8 ++++++++
+ migration/multifd.c | 16 ++++++++--------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
 diff --git a/migration/multifd.h b/migration/multifd.h
-index 08f26ef3fe..2e4ad0dc56 100644
+index 2e4ad0dc56..4ec005f53f 100644
 --- a/migration/multifd.h
 +++ b/migration/multifd.h
-@@ -124,7 +124,7 @@ typedef struct {
-     /* size of the next packet that contains pages */
-     uint32_t next_packet_size;
-     /* packets sent through this channel */
--    uint64_t num_packets;
-+    uint64_t packets_sent;
-     /* non zero pages sent through this channel */
-     uint64_t total_normal_pages;
-     /* buffers to send */
-@@ -174,8 +174,8 @@ typedef struct {
-     MultiFDPacket_t *packet;
-     /* size of the next packet that contains pages */
-     uint32_t next_packet_size;
--    /* packets sent through this channel */
--    uint64_t num_packets;
-+    /* packets received through this channel */
-+    uint64_t packets_recved;
-     /* ramblock */
-     RAMBlock *block;
-     /* ramblock host address */
+@@ -209,5 +209,13 @@ typedef struct {
+ 
+ void multifd_register_ops(int method, MultiFDMethods *ops);
+ 
++static inline void multifd_send_prepare_header(MultiFDSendParams *p)
++{
++    p->iov[0].iov_len = p->packet_len;
++    p->iov[0].iov_base = p->packet;
++    p->iovs_num++;
++}
++
++
+ #endif
+ 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 518f9de723..eca76e2c18 100644
+index 44163e4e28..cd4467aff4 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -288,6 +288,8 @@ static void multifd_send_fill_packet(MultiFDSendParams *p)
+@@ -712,10 +712,14 @@ static void *multifd_send_thread(void *opaque)
+         if (qatomic_read(&p->pending_job)) {
+             MultiFDPages_t *pages = p->pages;
  
-         packet->offset[i] = cpu_to_be64(temp);
-     }
+-            if (use_zero_copy_send) {
+-                p->iovs_num = 0;
+-            } else {
+-                p->iovs_num = 1;
++            p->iovs_num = 0;
 +
-+    p->packets_sent++;
- }
- 
- static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
-@@ -335,6 +337,7 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
- 
-     p->next_packet_size = be32_to_cpu(packet->next_packet_size);
-     p->packet_num = be64_to_cpu(packet->packet_num);
-+    p->packets_recved++;
- 
-     if (p->normal_num == 0) {
-         return 0;
-@@ -688,8 +691,6 @@ static void *multifd_send_thread(void *opaque)
-         ret = -1;
-         goto out;
-     }
--    /* initial packet */
--    p->num_packets = 1;
- 
-     while (true) {
-         qemu_sem_post(&multifd_send_state->channels_ready);
-@@ -719,7 +720,6 @@ static void *multifd_send_thread(void *opaque)
++            if (!use_zero_copy_send) {
++                /*
++                 * Only !zerocopy needs the header in IOV; zerocopy will
++                 * send it separately.
++                 */
++                multifd_send_prepare_header(p);
              }
  
-             multifd_send_fill_packet(p);
--            p->num_packets++;
-             p->total_normal_pages += pages->num;
-             trace_multifd_send(p->id, packet_num, pages->num, p->flags,
-                                p->next_packet_size);
-@@ -787,7 +787,7 @@ out:
+             assert(pages->num);
+@@ -735,10 +739,6 @@ static void *multifd_send_thread(void *opaque)
+                 if (ret != 0) {
+                     break;
+                 }
+-            } else {
+-                /* Send header using the same writev call */
+-                p->iov[0].iov_len = p->packet_len;
+-                p->iov[0].iov_base = p->packet;
+             }
  
-     rcu_unregister_thread();
-     migration_threads_remove(thread);
--    trace_multifd_send_thread_end(p->id, p->num_packets, p->total_normal_pages);
-+    trace_multifd_send_thread_end(p->id, p->packets_sent, p->total_normal_pages);
- 
-     return NULL;
- }
-@@ -1124,7 +1124,6 @@ static void *multifd_recv_thread(void *opaque)
-         p->flags &= ~MULTIFD_FLAG_SYNC;
-         trace_multifd_recv(p->id, p->packet_num, p->normal_num, flags,
-                            p->next_packet_size);
--        p->num_packets++;
-         p->total_normal_pages += p->normal_num;
-         qemu_mutex_unlock(&p->mutex);
- 
-@@ -1150,7 +1149,7 @@ static void *multifd_recv_thread(void *opaque)
-     qemu_mutex_unlock(&p->mutex);
- 
-     rcu_unregister_thread();
--    trace_multifd_recv_thread_end(p->id, p->num_packets, p->total_normal_pages);
-+    trace_multifd_recv_thread_end(p->id, p->packets_recved, p->total_normal_pages);
- 
-     return NULL;
- }
-@@ -1252,8 +1251,6 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
-     }
-     p->c = ioc;
-     object_ref(OBJECT(ioc));
--    /* initial packet */
--    p->num_packets = 1;
- 
-     p->running = true;
-     qemu_thread_create(&p->thread, p->name, multifd_recv_thread, p,
+             ret = qio_channel_writev_full_all(p->c, p->iov, p->iovs_num, NULL,
 -- 
 2.43.0
 
