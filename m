@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A709C48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38528C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvbB-0000it-Cz; Fri, 02 Feb 2024 10:37:01 -0500
+	id 1rVvaz-0000Ge-EO; Fri, 02 Feb 2024 10:36:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvb3-0000L1-CI
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:53 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1rVvav-0000Bd-TE
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvb0-0004UZ-IJ
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:52 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40fc549ab9bso7537635e9.0
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:50 -0800 (PST)
+ id 1rVvau-0004Ry-Cz
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-40e8d3b29f2so18558905e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888209; x=1707493009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706888202; x=1707493002; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=I3JpUFeuz8JEq3ye2dfNhThlFiBiIs8gN5QDvvRsL0g=;
- b=yNXji4qhm1LYe/mx45v3f+8lbclOs/8GtxzTw3kGUrwI2zZdqDVbDr0V2ysr6NQWnt
- F+fQ9sSQEXrqNN6AgYICLai2lMI+ehcLsYHfLffJixza2TC64vFjm9gaFNB49uF1KNo9
- a6tXkDLxlhefk0rDpl7J2QIlbRMW/Zj9dOZd/JY6Pb7afWV1+ixHTa+Goqj9XIGloFAf
- YE2P0HlscVCfHF/rdzBwRBjHZEDpqN7T+2xW550rmn3l1NW82ES6JrtZc+Wr9TUjIxj6
- +2J967BPZ/oh+OJ5Xkpf5kbCF/f/Hc8IktqxAi0WRL3k4ehMAPwjEOcwu28es0pm054u
- g+HA==
+ :reply-to; bh=Y9n/AEkxgug8LnVgrJ59ksyGPxf9vBmtyi9ED3ze10g=;
+ b=KtFlnEfD0ebWGaD1JzH11fi3nzN0vd1hVmOnHbNaI4gCXo5KKK9Z+1MhLWW1BD15Zq
+ q4Q0xyy04horfOohhW0qEASezMBKzFZtfk7VqLwjsVhb3+gJgRNZsrWs97igWjmd2QMM
+ 5xuLxD1RrJpmguPRF5J9fE57WNTCMm44RAuTQbGLzR/HZQvRE+83DDRiPTjZBN/7mIV2
+ UIFPYGCKPO50gQY/IYRixZNIV8bAzi3JlyA1hbbyDZpSuENAWmfN1kUKYCxn560ZPfmL
+ h1TQfhAmsSqAsHTuTAom+kDob1YOSPnXHPeD8jORTDmzDPUBVEGfoONHK8GcXth1si8d
+ og/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888209; x=1707493009;
+ d=1e100.net; s=20230601; t=1706888202; x=1707493002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I3JpUFeuz8JEq3ye2dfNhThlFiBiIs8gN5QDvvRsL0g=;
- b=ECCQ+v1z6qInZne2SD/meu8U2DBAik799M+AxOKexXSCFYTyHc/ZEGpo9NqqUXwU0f
- TxHkRpFcJT8MCxiFzbVNEu5tYhGM7SSRuq8mmi0DzSNMSwG2JvARGY/DzI2zeqhbC3MD
- CIwd+B7QFDtoydU3MbTJDNWbDpV5mO2tYrRrD4K0QxOOfZjOMJu9IM0lD01jiGRmJKSp
- A0ddT5Aq8i9qTK7WsvTwLJ/hRjnJyQVTRQ0k66XqvDVFQhc67fFXXUcqJin/Fb3fAoIn
- Fx/1LQm5+9XhiQypnNpf6Z0JwBcdxlA+5PoaEQM3XPGzVroYzIWqoMY+mnxLa+9x9qpI
- e9uA==
-X-Gm-Message-State: AOJu0YztOvwu/2FxG9exCEOTW+HcPxSwDs7rNbtkYjr8coOkHhTcxAhI
- /sukfBsMFL8XFITQhyQA1I5BvxToSlair+wjmuc3/9HL1ZewQioCB/YRhkvLSLT+EwSgW3MyqvP
- +
-X-Google-Smtp-Source: AGHT+IHvijeREeWEfwB+wQk6zlSaRP9lSiacdiK9UNU9yVjX7IrcRZQDylI9zwfv1nq3G7xPTo7cLA==
-X-Received: by 2002:a05:600c:524e:b0:40e:f222:9e52 with SMTP id
- fc14-20020a05600c524e00b0040ef2229e52mr1677514wmb.40.1706888209179; 
- Fri, 02 Feb 2024 07:36:49 -0800 (PST)
+ bh=Y9n/AEkxgug8LnVgrJ59ksyGPxf9vBmtyi9ED3ze10g=;
+ b=MoZzDo8VHZKHeh87mVkKZWJFwHdV7iNERouqOMvnd6KWCnM456rTpV5pHpf0OS++A5
+ E/QOG4iLUBx29UNH45cSKfHjAHrHTsEwN37BsbyyJ4c4tjJd62nCMtPuyn5qEtsc5KjI
+ kj3AumEaB2C43Dp/NKKXu3bu+317aIGsuzw/HLoQY+z/qyGz52Dw1jeWi7ZbE7C8vZdB
+ weez693gSCFSNtHpjQc6n0KVX4epzBYJRPZMJB8biOE9AB4LGTQt+5oupcfAoIAG7QYh
+ DRHFwSrnb7x06gmELNqiw8UvwM4daJM+ph/RXJNMc4RtBU7ksgS6fX8OQq4uQnSLGI0Q
+ nuOQ==
+X-Gm-Message-State: AOJu0YyRNnBJdA9Yjs+mEjAey1gTMJ5kKIV8BZDeMN3zd3geWWfiL6Lc
+ YCcn+C4cUMO40HQLYATTlr05k+HcKipMn44TrfI10KdHhedU5a5TJnuQzryTkyJ1XawKlhUPEst
+ k
+X-Google-Smtp-Source: AGHT+IEbre5vRsT8iOCWBqioeE41PYliJhhdBjr6PNNkM+ZEkY3/+QZVnyDdRZMUFAUK/JDY96orbA==
+X-Received: by 2002:a05:600c:314a:b0:40e:7232:bdf9 with SMTP id
+ h10-20020a05600c314a00b0040e7232bdf9mr4624655wmo.16.1706888202722; 
+ Fri, 02 Feb 2024 07:36:42 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.48
+ k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:48 -0800 (PST)
+ Fri, 02 Feb 2024 07:36:42 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/36] hw/arm/strongarm.c: convert DPRINTF to trace events and
- guest errors
-Date: Fri,  2 Feb 2024 15:36:24 +0000
-Message-Id: <20240202153637.3710444-24-peter.maydell@linaro.org>
+Subject: [PULL 08/36] qemu-options.hx: Improve -serial option documentation
+Date: Fri,  2 Feb 2024 15:36:09 +0000
+Message-Id: <20240202153637.3710444-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
 References: <20240202153637.3710444-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,259 +94,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+The -serial option documentation is a bit brief about '-serial none'
+and '-serial null'. In particular it's not very clear about the
+difference between them, and it doesn't mention that it's up to
+the machine model whether '-serial none' means "don't create the
+serial port" or "don't wire the serial port up to anything".
 
-Tracing DPRINTFs to stderr might not be desired. A developer that relies
-on trace events should be able to opt-in to each trace event and rely on
-QEMU's log redirection, instead of stderr by default.
+Expand on these points.
 
-This commit converts DPRINTFs in this file that are used for tracing
-into trace events. DPRINTFs that report guest errors are logged with
-LOG_GUEST_ERROR.#
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 39db71dd87bf2007cf7812f3d91dde53887f1f2f.1706544115.git.manos.pitsidianakis@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240122163607.459769-3-peter.maydell@linaro.org
 ---
- hw/arm/strongarm.c  | 82 ++++++++++++++++++++++++++++-----------------
- hw/arm/trace-events |  3 ++
- 2 files changed, 55 insertions(+), 30 deletions(-)
+ qemu-options.hx | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/strongarm.c b/hw/arm/strongarm.c
-index 7fd99a0f144..823b4931b0a 100644
---- a/hw/arm/strongarm.c
-+++ b/hw/arm/strongarm.c
-@@ -46,8 +46,7 @@
- #include "qemu/log.h"
- #include "qom/object.h"
- #include "target/arm/cpu-qom.h"
--
--//#define DEBUG
-+#include "trace.h"
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 484cc21c1fd..40e938c4877 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4129,7 +4129,8 @@ SRST
+     This option can be used several times to simulate up to 4 serial
+     ports.
  
- /*
-  TODO
-@@ -66,12 +65,6 @@
-  - Enhance UART with modem signals
-  */
+-    Use ``-serial none`` to disable all serial ports.
++    You can use ``-serial none`` to suppress the creation of default
++    serial devices.
  
--#ifdef DEBUG
--# define DPRINTF(format, ...) printf(format , ## __VA_ARGS__)
--#else
--# define DPRINTF(format, ...) do { } while (0)
--#endif
--
- static struct {
-     hwaddr io_base;
-     int irq;
-@@ -151,8 +144,9 @@ static uint64_t strongarm_pic_mem_read(void *opaque, hwaddr offset,
-     case ICPR:
-         return s->pending;
-     default:
--        printf("%s: Bad register offset 0x" HWADDR_FMT_plx "\n",
--                        __func__, offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad register offset 0x"HWADDR_FMT_plx"\n",
-+                      __func__, offset);
-         return 0;
-     }
- }
-@@ -173,8 +167,9 @@ static void strongarm_pic_mem_write(void *opaque, hwaddr offset,
-         s->int_idle = (value & 1) ? 0 : ~0;
-         break;
-     default:
--        printf("%s: Bad register offset 0x" HWADDR_FMT_plx "\n",
--                        __func__, offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                     "%s: Bad register offset 0x"HWADDR_FMT_plx"\n",
-+                     __func__, offset);
-         break;
-     }
-     strongarm_pic_update(s);
-@@ -333,7 +328,9 @@ static uint64_t strongarm_rtc_read(void *opaque, hwaddr addr,
-                 ((qemu_clock_get_ms(rtc_clock) - s->last_hz) << 15) /
-                 (1000 * ((s->rttr & 0xffff) + 1));
-     default:
--        printf("%s: Bad register 0x" HWADDR_FMT_plx "\n", __func__, addr);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad rtc register read 0x"HWADDR_FMT_plx"\n",
-+                      __func__, addr);
-         return 0;
-     }
- }
-@@ -375,7 +372,9 @@ static void strongarm_rtc_write(void *opaque, hwaddr addr,
-         break;
+     Available character devices are:
  
-     default:
--        printf("%s: Bad register 0x" HWADDR_FMT_plx "\n", __func__, addr);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad rtc register write 0x"HWADDR_FMT_plx"\n",
-+                      __func__, addr);
-     }
- }
+@@ -4151,10 +4152,17 @@ SRST
+         [Linux only] Pseudo TTY (a new PTY is automatically allocated)
  
-@@ -556,12 +555,12 @@ static uint64_t strongarm_gpio_read(void *opaque, hwaddr offset,
+     ``none``
+-        No device is allocated.
++        No device is allocated. Note that for machine types which
++        emulate systems where a serial device is always present in
++        real hardware, this may be equivalent to the ``null`` option,
++        in that the serial device is still present but all output
++        is discarded. For boards where the number of serial ports is
++        truly variable, this suppresses the creation of the device.
  
-     case GPSR:        /* GPIO Pin-Output Set registers */
-         qemu_log_mask(LOG_GUEST_ERROR,
--                      "strongarm GPIO: read from write only register GPSR\n");
-+                      "%s: read from write only register GPSR\n", __func__);
-         return 0;
+     ``null``
+-        void device
++        A guest will see the UART or serial device as present in the
++        machine, but all output is discarded, and there is no input.
++        Conceptually equivalent to redirecting the output to ``/dev/null``.
  
-     case GPCR:        /* GPIO Pin-Output Clear registers */
-         qemu_log_mask(LOG_GUEST_ERROR,
--                      "strongarm GPIO: read from write only register GPCR\n");
-+                      "%s: read from write only register GPCR\n", __func__);
-         return 0;
- 
-     case GRER:        /* GPIO Rising-Edge Detect Enable registers */
-@@ -581,7 +580,9 @@ static uint64_t strongarm_gpio_read(void *opaque, hwaddr offset,
-         return s->status;
- 
-     default:
--        printf("%s: Bad offset 0x" HWADDR_FMT_plx "\n", __func__, offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad gpio read offset 0x"HWADDR_FMT_plx"\n",
-+                      __func__, offset);
-     }
- 
-     return 0;
-@@ -626,7 +627,9 @@ static void strongarm_gpio_write(void *opaque, hwaddr offset,
-         break;
- 
-     default:
--        printf("%s: Bad offset 0x" HWADDR_FMT_plx "\n", __func__, offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad write offset 0x"HWADDR_FMT_plx"\n",
-+                      __func__, offset);
-     }
- }
- 
-@@ -782,7 +785,9 @@ static uint64_t strongarm_ppc_read(void *opaque, hwaddr offset,
-         return s->ppfr | ~0x7f001;
- 
-     default:
--        printf("%s: Bad offset 0x" HWADDR_FMT_plx "\n", __func__, offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad ppc read offset 0x"HWADDR_FMT_plx "\n",
-+                      __func__, offset);
-     }
- 
-     return 0;
-@@ -817,7 +822,9 @@ static void strongarm_ppc_write(void *opaque, hwaddr offset,
-         break;
- 
-     default:
--        printf("%s: Bad offset 0x" HWADDR_FMT_plx "\n", __func__, offset);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad ppc write offset 0x"HWADDR_FMT_plx"\n",
-+                      __func__, offset);
-     }
- }
- 
-@@ -1029,8 +1036,13 @@ static void strongarm_uart_update_parameters(StrongARMUARTState *s)
-     s->char_transmit_time =  (NANOSECONDS_PER_SECOND / speed) * frame_size;
-     qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_PARAMS, &ssp);
- 
--    DPRINTF(stderr, "%s speed=%d parity=%c data=%d stop=%d\n", s->chr->label,
--            speed, parity, data_bits, stop_bits);
-+    trace_strongarm_uart_update_parameters((s->chr.chr ?
-+                                           s->chr.chr->label : "NULL") ?:
-+                                           "NULL",
-+                                           speed,
-+                                           parity,
-+                                           data_bits,
-+                                           stop_bits);
- }
- 
- static void strongarm_uart_rx_to(void *opaque)
-@@ -1164,7 +1176,9 @@ static uint64_t strongarm_uart_read(void *opaque, hwaddr addr,
-         return s->utsr1;
- 
-     default:
--        printf("%s: Bad register 0x" HWADDR_FMT_plx "\n", __func__, addr);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad uart register read 0x"HWADDR_FMT_plx"\n",
-+                      __func__, addr);
-         return 0;
-     }
- }
-@@ -1221,7 +1235,9 @@ static void strongarm_uart_write(void *opaque, hwaddr addr,
-         break;
- 
-     default:
--        printf("%s: Bad register 0x" HWADDR_FMT_plx "\n", __func__, addr);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad uart register write 0x"HWADDR_FMT_plx"\n",
-+                      __func__, addr);
-     }
- }
- 
-@@ -1434,7 +1450,7 @@ static uint64_t strongarm_ssp_read(void *opaque, hwaddr addr,
-             return 0xffffffff;
-         }
-         if (s->rx_level < 1) {
--            printf("%s: SSP Rx Underrun\n", __func__);
-+            trace_strongarm_ssp_read_underrun();
-             return 0xffffffff;
-         }
-         s->rx_level--;
-@@ -1443,7 +1459,9 @@ static uint64_t strongarm_ssp_read(void *opaque, hwaddr addr,
-         strongarm_ssp_fifo_update(s);
-         return retval;
-     default:
--        printf("%s: Bad register 0x" HWADDR_FMT_plx "\n", __func__, addr);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad ssp register read 0x"HWADDR_FMT_plx"\n",
-+                      __func__, addr);
-         break;
-     }
-     return 0;
-@@ -1458,8 +1476,8 @@ static void strongarm_ssp_write(void *opaque, hwaddr addr,
-     case SSCR0:
-         s->sscr[0] = value & 0xffbf;
-         if ((s->sscr[0] & SSCR0_SSE) && SSCR0_DSS(value) < 4) {
--            printf("%s: Wrong data size: %i bits\n", __func__,
--                   (int)SSCR0_DSS(value));
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: Wrong data size: %i bits\n",
-+                          __func__, (int)SSCR0_DSS(value));
-         }
-         if (!(value & SSCR0_SSE)) {
-             s->sssr = 0;
-@@ -1471,7 +1489,9 @@ static void strongarm_ssp_write(void *opaque, hwaddr addr,
-     case SSCR1:
-         s->sscr[1] = value & 0x2f;
-         if (value & SSCR1_LBM) {
--            printf("%s: Attempt to use SSP LBM mode\n", __func__);
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Attempt to use SSP LBM mode\n",
-+                          __func__);
-         }
-         strongarm_ssp_fifo_update(s);
-         break;
-@@ -1509,7 +1529,9 @@ static void strongarm_ssp_write(void *opaque, hwaddr addr,
-         break;
- 
-     default:
--        printf("%s: Bad register 0x" HWADDR_FMT_plx "\n", __func__, addr);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad ssp register write 0x"HWADDR_FMT_plx"\n",
-+                      __func__,  addr);
-         break;
-     }
- }
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index cdc1ea06a81..7c569432150 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -55,3 +55,6 @@ smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s
- smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
- smmuv3_inv_notifiers_iova(const char *name, uint16_t asid, uint16_t vmid, uint64_t iova, uint8_t tg, uint64_t num_pages) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64
- 
-+# strongarm.c
-+strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
-+strongarm_ssp_read_underrun(void) "SSP rx underrun"
+     ``chardev:id``
+         Use a named character device defined with the ``-chardev``
 -- 
 2.34.1
 
