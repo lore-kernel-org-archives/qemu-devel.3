@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A9BC48298
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE7ACC48299
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 19:12:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVywx-000216-FD; Fri, 02 Feb 2024 14:11:43 -0500
+	id 1rVyx0-00021i-LM; Fri, 02 Feb 2024 14:11:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVyww-00020b-LG
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:11:42 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVywy-00021Q-UY
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:11:44 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVywu-0001w6-Il
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:11:42 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVywx-0001wO-4n
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:11:44 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 64AF71F799;
- Fri,  2 Feb 2024 19:11:39 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 0B24622177;
+ Fri,  2 Feb 2024 19:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706901099; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706901101; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=at+EqeXQ1TVmnDh7OeIM9ZBOhhXdwvyEyD7BG2BPYhM=;
- b=ZN32PkQxoeEPF2gd2BSvhtitWxgJUyK2Q/PKyK7G2Fi2Yog/WgCXMGdahY9iij+rFUiw/I
- 1uU5pEIF/I+Le6s6eGYp7AVA82wW8IHnp+EWWBQCNSQzvwl8kAO0S9xxQ2Hq0332N2QuBg
- orBgdtQ1ERv8m4dCtcSnfs2T6fEYynE=
+ bh=fam93RtCT55Zr/k9jnh+9/piZGeCT1ahQwnSNnFryzY=;
+ b=u+xxoSi5d1dtA5NHXgolQpbiUdIudJXj8cyTUuq64cVbIMefhUHJlA2pFiLasLI0JgpGqi
+ MxHk7XWxGpqOrrbTvdFh3z4G0VgBP4IUFenIiOdCil8H85cDpK+ms8Os5iiwTKH6URoMyF
+ ahsZKALR5QiBOE6OeWcNz8L/K6te+00=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706901099;
+ s=susede2_ed25519; t=1706901101;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=at+EqeXQ1TVmnDh7OeIM9ZBOhhXdwvyEyD7BG2BPYhM=;
- b=V1ckMp7nTn8A/RUpkRF0JLRkWX6pR4sHR957vOx0Cq9o0X36jnM5/4EayYOm2STLeOaqCM
- lZKmvG2+2eepCGCg==
+ bh=fam93RtCT55Zr/k9jnh+9/piZGeCT1ahQwnSNnFryzY=;
+ b=11kmaQHZEKwlgWIL3RZeysww+fHZK2qD/BTPdVfCgufWXBK2G4A7syfI7ohkeTBKkLYAvw
+ Sj6xr7OP5K4PzODA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706901099; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706901101; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=at+EqeXQ1TVmnDh7OeIM9ZBOhhXdwvyEyD7BG2BPYhM=;
- b=ZN32PkQxoeEPF2gd2BSvhtitWxgJUyK2Q/PKyK7G2Fi2Yog/WgCXMGdahY9iij+rFUiw/I
- 1uU5pEIF/I+Le6s6eGYp7AVA82wW8IHnp+EWWBQCNSQzvwl8kAO0S9xxQ2Hq0332N2QuBg
- orBgdtQ1ERv8m4dCtcSnfs2T6fEYynE=
+ bh=fam93RtCT55Zr/k9jnh+9/piZGeCT1ahQwnSNnFryzY=;
+ b=u+xxoSi5d1dtA5NHXgolQpbiUdIudJXj8cyTUuq64cVbIMefhUHJlA2pFiLasLI0JgpGqi
+ MxHk7XWxGpqOrrbTvdFh3z4G0VgBP4IUFenIiOdCil8H85cDpK+ms8Os5iiwTKH6URoMyF
+ ahsZKALR5QiBOE6OeWcNz8L/K6te+00=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706901099;
+ s=susede2_ed25519; t=1706901101;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=at+EqeXQ1TVmnDh7OeIM9ZBOhhXdwvyEyD7BG2BPYhM=;
- b=V1ckMp7nTn8A/RUpkRF0JLRkWX6pR4sHR957vOx0Cq9o0X36jnM5/4EayYOm2STLeOaqCM
- lZKmvG2+2eepCGCg==
+ bh=fam93RtCT55Zr/k9jnh+9/piZGeCT1ahQwnSNnFryzY=;
+ b=11kmaQHZEKwlgWIL3RZeysww+fHZK2qD/BTPdVfCgufWXBK2G4A7syfI7ohkeTBKkLYAvw
+ Sj6xr7OP5K4PzODA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3FDAB139AB;
- Fri,  2 Feb 2024 19:11:38 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D760B139AB;
+ Fri,  2 Feb 2024 19:11:39 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id yH0mAmo+vWWlZAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:11:38 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id MPN+Jms+vWWlZAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:11:39 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
 	Avihai Horon <avihaih@nvidia.com>
-Subject: [PATCH 4/5] migration/multifd: Move multifd_save_setup into migration
- thread
-Date: Fri,  2 Feb 2024 16:11:27 -0300
-Message-Id: <20240202191128.1901-5-farosas@suse.de>
+Subject: [PATCH 5/5] migration/multifd: Add a synchronization point for
+ channel creation
+Date: Fri,  2 Feb 2024 16:11:28 -0300
+Message-Id: <20240202191128.1901-6-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240202191128.1901-1-farosas@suse.de>
 References: <20240202191128.1901-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out2.suse.de;
+Authentication-Results: smtp-out1.suse.de;
 	none
-X-Spamd-Result: default: False [3.65 / 50.00]; ARC_NA(0.00)[];
+X-Spamd-Result: default: False [0.70 / 50.00]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_THREE(0.00)[3]; R_MISSING_CHARSET(2.50)[];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
@@ -95,9 +95,9 @@ X-Spamd-Result: default: False [3.65 / 50.00]; ARC_NA(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- BAYES_HAM(-0.05)[59.69%]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ BAYES_HAM(-3.00)[100.00%]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,76 +120,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We currently have an unfavorable situation around multifd channels
-creation and the migration thread execution.
+It is possible that one of the multifd channels fails to be created at
+multifd_new_send_channel_async() while the rest of the channel
+creation tasks are still in flight.
 
-We create the multifd channels with qio_channel_socket_connect_async
--> qio_task_run_in_thread, but only connect them at the
-multifd_new_send_channel_async callback, called from
-qio_task_complete, which is registered as a glib event.
+This could lead to multifd_save_cleanup() executing the
+qemu_thread_join() loop too early and not waiting for the threads
+which haven't been created yet, leading to the freeing of resources
+that the newly created threads will try to access and crash.
 
-So at multifd_save_setup() we create the channels, but they will only
-be actually usable after the whole multifd_save_setup() calling stack
-returns back to the main loop. Which means that the migration thread
-is already up and running without any possibility for the multifd
-channels to be ready on time.
+Add a synchronization point after which there will be no attempts at
+thread creation and therefore calling multifd_save_cleanup() past that
+point will ensure it properly waits for the threads.
 
-We currently rely on the channels-ready semaphore blocking
-multifd_send_sync_main() until channels start to come up and release
-it. However there have been bugs recently found when a channel's
-creation fails and multifd_save_cleanup() is allowed to run while
-other channels are still being created.
-
-Let's start to organize this situation by moving the
-multifd_save_setup() call into the migration thread. That way we
-unblock the main-loop to dispatch the completion callbacks and
-actually have a chance of getting the multifd channels ready for when
-the migration thread needs them.
-
-The next patches will deal with the synchronization aspects.
-
-Note that this takes multifd_save_setup() out of the BQL.
+A note about performance: Prior to this patch, if a channel took too
+long to be established, other channels could finish connecting first
+and already start taking load. Now we're bounded by the
+slowest-connecting channel.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ migration/multifd.c | 67 +++++++++++++++++++++++++--------------------
+ 1 file changed, 37 insertions(+), 30 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 55abb175cc..c14d12497f 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3315,6 +3315,10 @@ static void *migration_thread(void *opaque)
-     object_ref(OBJECT(s));
-     update_iteration_initial_status(s);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 1851206352..888ac8b05d 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -360,6 +360,11 @@ struct {
+     MultiFDPages_t *pages;
+     /* global number of generated multifd packets */
+     uint64_t packet_num;
++    /*
++     * Synchronization point past which no more channels will be
++     * created.
++     */
++    QemuSemaphore channels_created;
+     /* send channels ready */
+     QemuSemaphore channels_ready;
+     /*
+@@ -561,6 +566,7 @@ void multifd_save_cleanup(void)
+             error_free(local_err);
+         }
+     }
++    qemu_sem_destroy(&multifd_send_state->channels_created);
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
+     g_free(multifd_send_state->params);
+     multifd_send_state->params = NULL;
+@@ -787,13 +793,6 @@ static void multifd_tls_outgoing_handshake(QIOTask *task,
+     trace_multifd_tls_outgoing_handshake_error(ioc, error_get_pretty(err));
  
-+    if (!multifd_save_setup()) {
+     migrate_set_error(migrate_get_current(), err);
+-    /*
+-     * Error happen, mark multifd_send_thread status as 'quit' although it
+-     * is not created, and then tell who pay attention to me.
+-     */
+-    p->quit = true;
+-    qemu_sem_post(&multifd_send_state->channels_ready);
+-    qemu_sem_post(&p->sem_sync);
+     error_free(err);
+ }
+ 
+@@ -862,39 +861,37 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
+     return true;
+ }
+ 
+-static void multifd_new_send_channel_cleanup(MultiFDSendParams *p,
+-                                             QIOChannel *ioc, Error *err)
+-{
+-     migrate_set_error(migrate_get_current(), err);
+-     /* Error happen, we need to tell who pay attention to me */
+-     qemu_sem_post(&multifd_send_state->channels_ready);
+-     qemu_sem_post(&p->sem_sync);
+-     /*
+-      * Although multifd_send_thread is not created, but main migration
+-      * thread need to judge whether it is running, so we need to mark
+-      * its status.
+-      */
+-     p->quit = true;
+-     object_unref(OBJECT(ioc));
+-     error_free(err);
+-}
+-
+ static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
+ {
+     MultiFDSendParams *p = opaque;
+     QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
+     Error *local_err = NULL;
++    bool ret;
+ 
+     trace_multifd_new_send_channel_async(p->id);
+-    if (!qio_task_propagate_error(task, &local_err)) {
+-        qio_channel_set_delay(ioc, false);
+-        if (multifd_channel_connect(p, ioc, &local_err)) {
+-            return;
+-        }
++
++    if (qio_task_propagate_error(task, &local_err)) {
++        ret = false;
 +        goto out;
 +    }
 +
-     bql_lock();
-     qemu_savevm_state_header(s->to_dst_file);
-     bql_unlock();
-@@ -3386,6 +3390,7 @@ static void *migration_thread(void *opaque)
-         urgent = migration_rate_limit();
-     }
- 
++    qio_channel_set_delay(ioc, false);
++    ret = multifd_channel_connect(p, ioc, &local_err);
++
 +out:
-     trace_migration_thread_after_loop();
-     migration_iteration_finish(s);
-     object_unref(OBJECT(s));
-@@ -3623,11 +3628,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
-         return;
++    /*
++     * Here we're not interested whether creation succeeded, only that
++     * it happened at all.
++     */
++    qemu_sem_post(&multifd_send_state->channels_created);
++    if (ret) {
++        return;
      }
  
--    if (!multifd_save_setup()) {
--        migrate_fd_cleanup(s);
--        return;
--    }
--
-     if (migrate_background_snapshot()) {
-         qemu_thread_create(&s->thread, "bg_snapshot",
-                 bg_migration_thread, s, QEMU_THREAD_JOINABLE);
+     trace_multifd_new_send_channel_async_error(p->id, local_err);
+-    multifd_new_send_channel_cleanup(p, ioc, local_err);
++    migrate_set_error(migrate_get_current(), local_err);
++    object_unref(OBJECT(ioc));
++    error_free(local_err);
+ }
+ 
+ static void multifd_new_send_channel_create(gpointer opaque)
+@@ -918,6 +915,7 @@ bool multifd_save_setup(void)
+     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
+     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
+     multifd_send_state->pages = multifd_pages_init(page_count);
++    qemu_sem_init(&multifd_send_state->channels_created, 0);
+     qemu_sem_init(&multifd_send_state->channels_ready, 0);
+     qatomic_set(&multifd_send_state->exiting, 0);
+     multifd_send_state->ops = multifd_ops[migrate_multifd_compression()];
+@@ -953,6 +951,15 @@ bool multifd_save_setup(void)
+         multifd_new_send_channel_create(p);
+     }
+ 
++    /*
++     * Wait until channel creation has started for all channels. The
++     * creation can still fail, but no more channels will be created
++     * past this point.
++     */
++    for (i = 0; i < thread_count; i++) {
++        qemu_sem_wait(&multifd_send_state->channels_created);
++    }
++
+     for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+ 
 -- 
 2.35.3
 
