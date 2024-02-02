@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C60FAC47DB3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 12:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F23C47DB3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 13:05:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVsj2-0006cd-NB; Fri, 02 Feb 2024 07:32:56 -0500
+	id 1rVtE2-0004z4-50; Fri, 02 Feb 2024 08:04:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVsiw-0006cD-Cs
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:32:50 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rVtE0-0004yi-CR
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:04:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVsiu-0001q0-FW
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 07:32:50 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rVtDy-0002IR-Kr
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:04:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706877163;
+ s=mimecast20190719; t=1706879092;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2p5pd3G+z6QYJ8oqmskHcWdaaV+Dm9kCEVNr29n9FCM=;
- b=KNoxmNQYNxgHMnL1on9Zyr1qe8RMzo2LohYmSRm6OFIwrcvhA6wzc7DzARWOmVBebbi3NM
- JoLrAkdONhqZyyW3gCh2SsUt/KTm8MGCF6bNB8OkVsZl0NXL29o7UOvJiS1GMVIOK69wa/
- lI7MwLk5/tQ8vEQUdCYy+WcCVpqw3OE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5RRk46LgmDBRr6S3BZIgtfCxNbsmyFCL3QGHQwinbvg=;
+ b=gS04+YP3/UKWmLBS8FJAEQrz9Onk74IslWNaKsZYJUTfRuu0/Lxo3f1GNQec0B8nTIT5q4
+ CS1dSRhZ94plI/682V+lgiiz51d3vZOh7JwaawMG7TjsAnlq9wltRetTVQeDzinxOAS4Vi
+ wA3Q+rm+PiCvNct5HKBWvU0wd+3jSxk=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-SGaxT_GaOq2phHoMueQZqA-1; Fri, 02 Feb 2024 07:32:42 -0500
-X-MC-Unique: SGaxT_GaOq2phHoMueQZqA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-33b26c3d744so99884f8f.1
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 04:32:42 -0800 (PST)
+ us-mta-683-_bga17reOZmZn3VUo4hSGw-1; Fri, 02 Feb 2024 08:04:50 -0500
+X-MC-Unique: _bga17reOZmZn3VUo4hSGw-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-510222349b0so1781419e87.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 05:04:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706877161; x=1707481961;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1706879089; x=1707483889;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2p5pd3G+z6QYJ8oqmskHcWdaaV+Dm9kCEVNr29n9FCM=;
- b=Prj6t4SDujhGtsqDqLuATmlqGczA+8i9VpYSiErFV9Rr944/jltXRe8vF10hgoxRAO
- UABr/zK5Gt2tHlxzEiLkh3reLRqxrkCfoDJ4N99XboHy+zpDuAXd1oLX059Rm7D4kX0C
- 1Pf2sYq3H+lS0A3q+96dFvWebU118XLvKGiCpyNZkUuOImCZ6KvG+LY7SJEEvCz0Q2iE
- nnJhg8ZXMxJ4SJ/bXuyPrdr6c3Cjidt/7jLcdAlntnSuAMFrXgUjuYT6nyqxARvnHvx1
- EKq99j9JEgsq7rp0bkNKimDnzwq776b05Dk93vFn5zyM59sM0i/TGz1jbHxyGWWkOgs0
- xPng==
-X-Gm-Message-State: AOJu0YxyIA00DHGo5xJ9kIqmT+bvagIxA0Lglrx8cHpSMuf62MEWcF5a
- 0hdkJHkSfQjZqg1CeWZWksq109NsjmE77JvSqYLudNXSPKXfTovSYAodWmjQWCkie2UUlgaFHQN
- y8goJuSpPvjAj37dLDnzge9sg5bxpJi9gb7v0WNsgxkh/a5HsH9Uy
-X-Received: by 2002:a5d:5609:0:b0:33b:279a:b4a5 with SMTP id
- l9-20020a5d5609000000b0033b279ab4a5mr289788wrv.14.1706877161131; 
- Fri, 02 Feb 2024 04:32:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHjB7AANCPhSokDYGZqyRv6g5Lxj6GqRg4UD+HUc00Gfh+DTibY+cVEnuRNJtfrxYi85CvYUA==
-X-Received: by 2002:a5d:5609:0:b0:33b:279a:b4a5 with SMTP id
- l9-20020a5d5609000000b0033b279ab4a5mr289768wrv.14.1706877160827; 
- Fri, 02 Feb 2024 04:32:40 -0800 (PST)
+ bh=5RRk46LgmDBRr6S3BZIgtfCxNbsmyFCL3QGHQwinbvg=;
+ b=EqlC3TwuLjloclwkyfD38MbUri7nHp/utKAYou/9jSsL5svMVc+t+Pt6SBlTVHlRIo
+ r7SrteOdvP3esfCaibDDFUV542Ztmq0UGm1lsExbo/xEi1LrJvVKGKyVzoSNPqCnkbp7
+ bmTsIqCfRsvaFcDIqds+yZtQA4FWXwUKLuJjzuFBLpGVS1TcK6WpWtb1jb7tzXW6Vkla
+ z9nBGjDhpgOZvUEM9Jt0z2Aakp1z68wAZGJkcV5UR4FWwQZIPLPQ/Mf/Hu6XLDyWP6FL
+ KFrYaRpyggLkmtxN7RU50hd1Ca5dwYAD8HUZen1D8aBA4wZA5oGe/+PloulHo8LxTy1v
+ mQZA==
+X-Gm-Message-State: AOJu0YzIYM4v2qOCTECm6XPqrcFyK88t94LxJaWvIqfTFqIVhXebx7XF
+ I/oNOZYXXK6xLtyOqIpdv0cGKoLZZobm4UUkzSeMfgX8DdXPx0gSybeeNke5mAXDTVRgKxjLgWU
+ MDlROgQ66E5n+xYRzQ2BH9KKzEBAZdZBt3eLhrv6/tpHICii/8OPh
+X-Received: by 2002:a05:6512:a8b:b0:511:2da1:d095 with SMTP id
+ m11-20020a0565120a8b00b005112da1d095mr4347192lfu.51.1706879088962; 
+ Fri, 02 Feb 2024 05:04:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHp/3RTOVeEaGIP6ibLEf9/Rhoq9mtUT6kBBOHPyKcY36Tk5IDpcTSI4jZKWktztmIemjIVyA==
+X-Received: by 2002:a05:6512:a8b:b0:511:2da1:d095 with SMTP id
+ m11-20020a0565120a8b00b005112da1d095mr4347181lfu.51.1706879088506; 
+ Fri, 02 Feb 2024 05:04:48 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCVHeiXD6Jxbb1b5sKpWYEdaDQwH4dEbDDMlH4SAg4WeUoTzcKpQw3Dh4n932NO7M8sNcSd7TshZP7Xqqf4V2ssjbHxtkBfkqRoD3FjkG2Laq4A0Kiu/RJhdDbBCQw==
-Received: from ?IPV6:2003:cf:d73b:4129:e7a9:2cbc:bf9c:487a?
- (p200300cfd73b4129e7a92cbcbf9c487a.dip0.t-ipconnect.de.
- [2003:cf:d73b:4129:e7a9:2cbc:bf9c:487a])
+ AJvYcCWn1hz0AoeBhAtWDSaJ05SWI9AiZ5LB5AKxxS/Jn7Ppo7W5ozThrUujG8c5U/hPmRm8qi6jCJpk6gNMMzoQA/JTm6j2TmzLhkyTAKZJbYFHxA3uCSs=
+Received: from ?IPV6:2a01:e0a:280:24f0:eb4a:c9d8:c8bb:c0b0?
+ ([2a01:e0a:280:24f0:eb4a:c9d8:c8bb:c0b0])
  by smtp.gmail.com with ESMTPSA id
- jn22-20020a05600c6b1600b0040ef63a162dsm7243222wmb.26.2024.02.02.04.32.39
+ e17-20020a05600c4b9100b0040e3bdff98asm7236481wmp.23.2024.02.02.05.04.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Feb 2024 04:32:40 -0800 (PST)
-Message-ID: <82f1a65f-9821-480a-b2d2-cb5d6bf55c5b@redhat.com>
-Date: Fri, 2 Feb 2024 13:32:39 +0100
+ Fri, 02 Feb 2024 05:04:48 -0800 (PST)
+Message-ID: <3e1f0f93-eb6b-4569-9344-846eae20b141@redhat.com>
+Date: Fri, 2 Feb 2024 14:04:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
- thread
+Subject: Re: [PATCH 0/2] migration: Fix return-path thread exit
 Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
-References: <20231221212339.164439-1-kwolf@redhat.com>
- <20231221212339.164439-12-kwolf@redhat.com>
- <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
- <Za_zAj11uwavd2va@redhat.com>
- <08a66849-f190-4756-9b01-666f0d66afb6@redhat.com>
- <ZbOxI9Ar-YDn51Z0@redhat.com>
- <4c4173f2-b8fc-4c6f-88e1-8c31c4411837@redhat.com>
- <20240131203537.GC396296@fedora>
- <0a3e8d2a-add1-432b-b6b9-456ee0b17882@redhat.com>
- <20240201142817.GA516672@fedora>
- <6cb18310-c0cf-4747-a71d-540adba262cf@redhat.com>
-In-Reply-To: <6cb18310-c0cf-4747-a71d-540adba262cf@redhat.com>
+To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+References: <20240201184853.890471-1-clg@redhat.com> <Zby7o1O5Ox2NNbbP@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <Zby7o1O5Ox2NNbbP@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -115,32 +104,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.02.24 16:25, Hanna Czenczek wrote:
-> On 01.02.24 15:28, Stefan Hajnoczi wrote:
+Hello Peter,
 
-[...]
+>> Today, close_return_path_on_source() can perform a shutdown to exit
+>> the return-path thread if an error occured. However, migrate_fd_cleanup()
+>> does cleanups too early and the shutdown in close_return_path_on_source()
+>> fails, leaving the source and destination waiting for an event to occur.
+>>
+>> This little series tries to fix that. Comments welcome !
+> 
+> One thing I do agree is that relying on qemu_file_get_error(to_dst_file) in
+> close_return_path_on_source() is weird: IMHO we have better way to detect
+> "whether the migration has error" now, which is migrate_has_error().
 
->> Did you find a scenario where the virtio-scsi AioContext is different
->> from the scsi-hd BB's Aiocontext?
+ok. migrate_has_error() looks safe to use in that case. It works fine
+with all the prereq VFIO cleanups (that I didn't send yet) and errors
+in the setup of dirty tracking are reported correctly to the migration
+core subsystem.
+
+> For this specific issue, I think one long standing issue that might be
+> relevant is we have two QEMUFile (from_dst_file, to_dst_file) that share
+> the same QIOChannel now.  Logically the two QEMUFile should be able to be
+> managed separately, say, close() of to_dst_file shouldn't affect the other.
+> 
+> However I don't think it's the case now, as qemu_fclose(to_dst_file) will
+> do qio_channel_close() already, which means there will be a side effect to
+> the other QEMUFile that its backing IOC is already closed.
 >
-> Technically, that’s the reason for this thread, specifically that 
-> virtio_scsi_hotunplug() switches the BB back to the main context while 
-> scsi_device_for_each_req_async_bh() is running.  Yes, we can fix that 
-> specific case via the in-flight counter, but I’m wondering whether 
-> there’s really any merit in requiring the BB to always be in 
-> virtio-scsi’s context, or whether it would make more sense to schedule 
-> everything in virtio-scsi’s context.  Now that BBs/BDSs can receive 
-> requests from any context, that is.
+> Is this the issue we're facing?  
 
-Now that I know that wouldn’t be easy, let me turn this around: As far 
-as I understand, scsi_device_for_each_req_async_bh() should still run in 
-virtio-scsi’s context, but that’s hard, so we take the BB’s context, 
-which we therefore require to be the same one. Further, (again AFAIU,) 
-virtio-scsi’s context cannot change (only set in 
-virtio_scsi_dataplane_setup(), which is run in 
-virtio_scsi_device_realize()).  Therefore, why does the 
-scsi_device_for_each_req_async() code accommodate for BB context changes?
+Yes. The socket is closed before calling close_return_path_on_source()
+and ms->rp_state.from_dst_file becomes invalid, the shutdown silently
+fails (we should maybe report error in qemu_file_shutdown()) and the
+return-path thread does not exits.
 
-Hanna
+> IOW, the close() of to_dst_file will not
+> properly kick the other thread who is blocked at reading from_dst_file,
+> while the shutdown() will kick it out?
+
+Yes, that's how I understand the comment :
+
+     /*
+      * If this is a normal exit then the destination will send a SHUT
+      * and the rp_thread will exit, however if there's an error we
+      * need to cause it to exit. shutdown(2), if we have it, will
+      * cause it to unblock if it's stuck waiting for the destination.
+      */
+
+> If so, not sure whether we can somehow relay the real qio_channel_close()
+> to until the last user releases it? IOW, conditionally close() the channel> in qio_channel_finalize(), if the channel is still open?  Would that make
+> sense?
+It's the first time that I look at this code :/ I can't tell. Here is
+the closing section :
+
+         qemu_mutex_unlock(&s->qemu_file_lock);
+         /*
+          * Close the file handle without the lock to make sure the
+          * critical section won't block for long.
+          */
+         migration_ioc_unregister_yank_from_file(tmp);
+         qemu_fclose(tmp);
+     }
+
+
+Thanks,
+
+C.
 
 
