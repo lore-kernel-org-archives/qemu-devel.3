@@ -4,68 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF169C48286
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 01:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E56E9C4828D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 02:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rViEy-0008BL-OW; Thu, 01 Feb 2024 20:21:12 -0500
+	id 1rViuo-0007t4-Lo; Thu, 01 Feb 2024 21:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rViEv-0008AC-MQ; Thu, 01 Feb 2024 20:21:09 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1rViEt-00085S-OT; Thu, 01 Feb 2024 20:21:09 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxifB_Q7xlWfUJAA--.28872S3;
- Fri, 02 Feb 2024 09:21:03 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx8OR8Q7xl_LosAA--.39926S3; 
- Fri, 02 Feb 2024 09:21:02 +0800 (CST)
-Subject: Re: [PATCH] tcg/loongarch64: Set vector registers call clobbered
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240201233414.500588-1-richard.henderson@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <70361718-8e75-bd18-c75e-9c82617b0a47@loongson.cn>
-Date: Fri, 2 Feb 2024 09:20:59 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rViun-0007se-17; Thu, 01 Feb 2024 21:04:25 -0500
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rViul-0001IJ-9m; Thu, 01 Feb 2024 21:04:24 -0500
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-4bd84b96feeso596992e0c.1; 
+ Thu, 01 Feb 2024 18:04:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706839461; x=1707444261; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h7fGz49kNcQmxgefr/WMhW89QheBldr5o9h5T/lFdJM=;
+ b=J1jnPALagUds1blTHvSIs3emJ0PEBE9D3zKcyOUD/oYs90EbbjR+9Mgtf/02wWMzls
+ e8thuo3I2l1sBrkPBzwUHmkrtFTFnfu/PHIP5gZ9WEU+dAw74Pmy7Dpyr67Zj9dPYBaN
+ +kECvSOc44+qq62LqS1kVTPKTKRjaL5TreOtGJ/AyCAbX9vB+pteFhQnxKuorVWdq67d
+ lBrup6DpZP6UlV8MBZphH0NobW6RyjmCG0j5gm8WTtsYPT/vRzOZmZqpXz4z5yfeKv3L
+ 3cMbxO+X3dBMCXGG+blBAedUnRUCdtzCt+b9MJPumdCMg+aNtSTzFGKQFRXJWB1JIpcm
+ 4ScQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706839461; x=1707444261;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h7fGz49kNcQmxgefr/WMhW89QheBldr5o9h5T/lFdJM=;
+ b=GQbFbaZx9fQNMZN+UXrNhuDo6mJ6eJpPm1pfpMwTkt5u/BScI5A2ANDaL6Z+ZtZvrL
+ KNicoGPxELMGhR2sRfsCtQkZGnLYWmFohszvfLI77Z/pZ1Mx77mU0nS1Y6EFADXBo86e
+ l2cLpWFjUTAs+dkbdxjF1Ps6sh5GCbut9NLtxLu/cTrVVaeBkOeSvCZE7Eg53Ocze2xi
+ v5cLwUXH3OfE2ZJa+fWB6fsFnbaESgXtYruIxQKh+Z3AWMkqIF2U2Rbq1+jHo7dg6Src
+ Hw5/fqkyzNUZfZ5WAEIZtp3t9tjDlWc0iM5/mpNh969B2eTRTEop6itHMpDglERNSW/f
+ Ti5w==
+X-Gm-Message-State: AOJu0Yy4DKB3Pt9coSHgfmEyyKf8lpwm6z42jXvPSG0SzHjO/7HXwpR4
+ qibwGdmFDAyvueWyhNz0u1I7Md8WlaBvSt/TgVb37qil/TIx7WZPg+wpX8xiJr73AZVUkyUBZVE
+ gR48ZAlIeh/37lstlUbmHDxN3APg=
+X-Google-Smtp-Source: AGHT+IGEbvbgjzm0+Ngdm+dlg8KIVHf+3Z7wEkJJhtvEUa9GJepDZrhthuYOKej5qEXAYCpzObxWGvvwNxYF8avR1bA=
+X-Received: by 2002:a05:6122:30e:b0:4bd:8029:6700 with SMTP id
+ c14-20020a056122030e00b004bd80296700mr563716vko.16.1706839461525; Thu, 01 Feb
+ 2024 18:04:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20240201233414.500588-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8Bx8OR8Q7xl_LosAA--.39926S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZFWfXr4fGr1Dtr1DXry8Xrc_yoW8XF45p3
- yfAwn5JF45ZFWkAFZrCF1Uur1UJrsxuw17Z3WxKr4xZwsxAryUXw1fGa17ZFyIy3W8uFWY
- vasxKw1FqFWqkabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.112, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240201140047.3456114-1-me@deliversmonkey.space>
+In-Reply-To: <20240201140047.3456114-1-me@deliversmonkey.space>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 2 Feb 2024 12:03:55 +1000
+Message-ID: <CAKmqyKM+Buy4fH2=OuJTZsgJ9xi+VGOeTNkrE=6bss-jvaOqbg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] Pointer Masking update for Zjpm v0.8
+To: Alexey Baturo <baturo.alexey@gmail.com>
+Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+X-Spam_score_int: 14
+X-Spam_score: 1.4
+X-Spam_bar: +
+X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, TVD_PH_BODY_ACCOUNTS_POST=0.693, TVD_PH_BODY_META_ALL=2.546,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,38 +90,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/2/2 ÉÏÎç7:34, Richard Henderson Ð´µÀ:
-> Because there are more call clobbered registers than
-> call saved registers, we begin with all registers as
-> call clobbered and then reset those that are saved.
+On Fri, Feb 2, 2024 at 1:11=E2=80=AFAM Alexey Baturo <baturo.alexey@gmail.c=
+om> wrote:
 >
-> This was missed when we introduced the LSX support.
+> From: Alexey Baturo <baturo.alexey@gmail.com>
 >
-> Cc: qemu-stable@nongnu.org
-> Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2136
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/loongarch64/tcg-target.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-Thank you !
+> Hi,
+>
+> This patch series is rebased on https://github.com/alistair23/qemu/tree/r=
+iscv-to-apply.next
 
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Thanks!
 
-Thanks.
-Song Gao
-> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-> index bab0a173a3..dcf0205458 100644
-> --- a/tcg/loongarch64/tcg-target.c.inc
-> +++ b/tcg/loongarch64/tcg-target.c.inc
-> @@ -2327,7 +2327,7 @@ static void tcg_target_init(TCGContext *s)
->       tcg_target_available_regs[TCG_TYPE_I32] = ALL_GENERAL_REGS;
->       tcg_target_available_regs[TCG_TYPE_I64] = ALL_GENERAL_REGS;
->   
-> -    tcg_target_call_clobber_regs = ALL_GENERAL_REGS;
-> +    tcg_target_call_clobber_regs = ALL_GENERAL_REGS | ALL_VECTOR_REGS;
->       tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S0);
->       tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S1);
->       tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S2);
+Applied to riscv-to-apply.next
 
+Alistair
+
+>
+> Thanks
+>
+> [v5]:
+> This patch series targets Zjpm v0.8 extension.
+> The spec itself could be found here: https://github.com/riscv/riscv-j-ext=
+ension/blob/8088461d8d66a7676872b61c908cbeb7cf5c5d1d/zjpm-spec.pdf
+> This patch series is updated after the suggested comments:
+> - add "x-" to the extension names to indicate experimental
+>
+> [v4]:
+> Patch series updated after the suggested comments:
+> - removed J-letter extension as it's unused
+> - renamed and fixed function to detect if address should be sign-extended
+> - zeroed unused context variables and moved computation logic to another =
+patch
+> - bumped pointer masking version_id and minimum_version_id by 1
+>
+> [v3]:
+> There patches are updated after Richard's comments:
+> - moved new tb flags to the end
+> - used tcg_gen_(s)extract to get the final address
+> - properly handle CONFIG_USER_ONLY
+>
+> [v2]:
+> As per Richard's suggestion I made pmm field part of tb_flags.
+> It allowed to get rid of global variable to store pmlen.
+> Also it allowed to simplify all the machinery around it.
+>
+> [v1]:
+> It looks like Zjpm v0.8 is almost frozen and we don't expect it change dr=
+astically anymore.
+> Compared to the original implementation with explicit base and mask CSRs,=
+ we now only have
+> several fixed options for number of masked bits which are set using exist=
+ing CSRs.
+> The changes have been tested with handwritten assembly tests and LLVM HWA=
+SAN
+> test suite.
+>
+> Alexey Baturo (6):
+>   target/riscv: Remove obsolete pointer masking extension code.
+>   target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
+>     of Zjpm v0.8
+>   target/riscv: Add helper functions to calculate current number of
+>     masked bits for pointer masking
+>   target/riscv: Add pointer masking tb flags
+>   target/riscv: Update address modify functions to take into account
+>     pointer masking
+>   target/riscv: Enable updates for pointer masking variables and thus
+>     enable pointer masking extension
+>
+>  target/riscv/cpu.c           | 22 ++++----
+>  target/riscv/cpu.h           | 47 ++++++++---------
+>  target/riscv/cpu_bits.h      | 90 ++-------------------------------
+>  target/riscv/cpu_cfg.h       |  3 ++
+>  target/riscv/cpu_helper.c    | 97 ++++++++++++++++++++----------------
+>  target/riscv/csr.c           | 41 ++++-----------
+>  target/riscv/machine.c       | 22 +++-----
+>  target/riscv/pmp.c           | 13 +++--
+>  target/riscv/pmp.h           | 11 ++--
+>  target/riscv/tcg/tcg-cpu.c   |  5 +-
+>  target/riscv/translate.c     | 46 +++++++----------
+>  target/riscv/vector_helper.c | 15 +++++-
+>  12 files changed, 160 insertions(+), 252 deletions(-)
+>
+> --
+> 2.34.1
+>
+>
 
