@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CF8C47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42BB5C4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmT5-0002o4-HQ; Fri, 02 Feb 2024 00:52:03 -0500
+	id 1rVmSf-0001Ni-9k; Fri, 02 Feb 2024 00:51:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmT1-0002UZ-UX
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:59 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1rVmSa-0001IH-D3
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:32 -0500
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmT0-00027i-2a
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:59 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6ddfb0dac4dso1335739b3a.1
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:57 -0800 (PST)
+ id 1rVmSY-0001rX-7x
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:32 -0500
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-6e118b528aeso875705a34.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853117; x=1707457917; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853089; x=1707457889; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=enqyHM/qlHAKrvGyjKOBiar72kS5zHVgEoJYNNdlxDQ=;
- b=JXxiM572DonvC6pArZSCdO9ss2EdgaYX4Oby+VV0dfvqEkVm74IoH7KEh9wVPoS9j/
- 7Ekb5ehy+NIntaYl09LA8WnbT+uQQjKoT2sjz8Q9yvqkykYqEhmV/N9h0oHgO87k3gyz
- NDvWwtsxYJN7a95y6cZYbQiXjVpOxwguSFm1/qNv0JvNXZRJSZIrtc13YwQc38QZvQax
- UEW46OzHK0117lMBDVlcZaa/UDvDX4qfl8bS8RxiWchOp4SYsBwfrZieBW5Kj3PghsOR
- AWckP7Yv6Td27j2FHeb/Rfh3HwxJFlR51gFRse025uqcB3T/4aOosIwuHbVza5CuVTsd
- drMg==
+ bh=sWFZsOSqQ4Z7s/RrBOUjbekx6H9vQkuMkzZGGFe3Im0=;
+ b=W7YdEQnVTZm1E+XRNk242GMHeNWOH1qFod6Kmi88nZ/KBAE9M2q7eLcFqNdgMT3gR2
+ opKvTg5ZO51oVx+/rugUpNpvWpmNae5kVC21Ypto5+qvjQLHmnGUszEHyQlSPjcPTijh
+ yFM4heYRMVWhED/DQf7rDrBR6CzRx4eYslbzanEPOZzyWzBDg1Znk1/RY1a+G7Qc7/rq
+ uiIIi5i/ARuiO41z+e3C6Pnm2AqSGm31Xv0COECmCSX/cUNquAK4YDuBduz737vS+WeH
+ cCObHpZzjxfR8BB0rPx8Ct3vxfCDUo3hUydbHafzfr/4eCvA6Yz0sFm8GCkqkIUrh0Hc
+ tYdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853117; x=1707457917;
+ d=1e100.net; s=20230601; t=1706853089; x=1707457889;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=enqyHM/qlHAKrvGyjKOBiar72kS5zHVgEoJYNNdlxDQ=;
- b=oYVWoxCVT3Vgx9bFJCWG8ztqbAil6U4w/xIa/CmZ+ll7EM/TjwQII8bgDIeaOkFBDT
- 8HxPf/npsUlryTf9jG8sTCDXVHnyuQasv8ZUQSECs72TPyeFCviIms4s1EV9xtMPdXWG
- 5fqzQVme/rKhVCMMR2EbrYrN34XGl8d/EyZQNBT5CDfkwgQr5yJWwZr6gJgjda5LRsr2
- WV8R7tXyPn/ONgQaPO3Z+lEMcS91OqhU5Wsj2/ZzfzkDXPKQnDHfOSEv1Wd5DbRg9P5+
- ku94uDf94Opo0/O5gnxTthc6cI2d4clLDlP7/xBtMxkkG54GAtscWN0aC4fiUFdn6OCA
- dbjQ==
-X-Gm-Message-State: AOJu0Yz61p1Zg8ZECz5gTo9AUBLAE08oRAOaTdOozH776ujZWpwuPraC
- pFG4B8aFHb9MLCTrkmfZZqYqqBgfFAQPOB4p4ufya2wbX9PL6LINJxvYPS/i0Eq5zRK5zZ9TnlR
- nAV4=
-X-Google-Smtp-Source: AGHT+IGWY2ek1R607E9nacg77ESi2+0UNpHrIvzu5L90MyGCd9oJ+mgsclxBBOx/BbeEkuRARZ3ZEg==
-X-Received: by 2002:a05:6a00:23cb:b0:6db:d978:9047 with SMTP id
- g11-20020a056a0023cb00b006dbd9789047mr8634401pfc.1.1706853116815; 
- Thu, 01 Feb 2024 21:51:56 -0800 (PST)
+ bh=sWFZsOSqQ4Z7s/RrBOUjbekx6H9vQkuMkzZGGFe3Im0=;
+ b=Rr3ZPWzv9ckVgivMwNbBdAW6LFyM2RPigieXNBcEHkdjD3ir5u+cnw+x539vkgOVek
+ xtKpxrnAqGGUX8yCysI4tbsS5pgc2K6Yqq7iuQWq/3BvwVsEhVkJIMv2KmhxusRzSjDv
+ CfrB+e7dwW3r6A1FCsP4tB8X4X+yxM8+TE/dBKb8swO/A+2e1/zKM1XEXKBturzbSFGl
+ ii8900aql8OGeZSQnLi7GUbLYNf3KkVj3sa7Qy711uSe5DQeXw5t34QK45AQ/Q3ZZEqp
+ DlMbBKxkrZQaiEXYRzCxRJUitYg6yi4i6pKPDhAps3bT4Kk1S1SbEAfXconUYsNXoMf0
+ LcoA==
+X-Gm-Message-State: AOJu0YxLm85ln99k9Qk9LVkZUgRm6cEfDKVkD8YCUFNOh+w32k/3dw74
+ XGpq9T3/qlF4QTsXtQHnKEAutSD445mMJW3X8IiCQVRQH+XBkGHqJCTFXemiWYLTkl1OPtG/fl2
+ MbZ0=
+X-Google-Smtp-Source: AGHT+IFJwoe2kooifa0wLSBMTpsA4TVctULJ+1tUkgok+1PYGkj+jLrCrulGK+uimCKSZYvRCrVGkA==
+X-Received: by 2002:a05:6808:1509:b0:3be:1e78:22ed with SMTP id
+ u9-20020a056808150900b003be1e7822edmr5632468oiw.21.1706853089099; 
+ Thu, 01 Feb 2024 21:51:29 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCVK//GlkMYx7LaQShTPiCXe/LPvnqxRn4jv2adJfhkGn5Na3Hy/8W+8VmaHIFaGC/PfEs492ETnUQkJMi9N5Pt/HVo2
+ AJvYcCUu6JinBY+v8G7V6njozTEJik9Y4q+ycaEF6l+46X2yJyexpTENwS1AIDncXHxt2jm4c2NENh2wZSVKNu9ssYklSA==
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.54
+ h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:51:56 -0800 (PST)
+ Thu, 01 Feb 2024 21:51:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 35/57] tcg/loongarch64: Set vector registers call clobbered
-Date: Fri,  2 Feb 2024 15:50:14 +1000
-Message-Id: <20240202055036.684176-37-richard.henderson@linaro.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 22/57] target/riscv: Rename riscv_cpu_mmu_index to
+ riscv_env_mmu_index
+Date: Fri,  2 Feb 2024 15:50:01 +1000
+Message-Id: <20240202055036.684176-24-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,35 +98,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because there are more call clobbered registers than
-call saved registers, we begin with all registers as
-call clobbered and then reset those that are saved.
+Free up the riscv_cpu_mmu_index name for other usage;
+emphasize that the argument is 'env'.
 
-This was missed when we introduced the LSX support.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2136
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240201233414.500588-1-richard.henderson@linaro.org>
 ---
- tcg/loongarch64/tcg-target.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/cpu.h        | 4 ++--
+ target/riscv/cpu_helper.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index bab0a173a3..dcf0205458 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -2327,7 +2327,7 @@ static void tcg_target_init(TCGContext *s)
-     tcg_target_available_regs[TCG_TYPE_I32] = ALL_GENERAL_REGS;
-     tcg_target_available_regs[TCG_TYPE_I64] = ALL_GENERAL_REGS;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 5f3955c38d..9c825c7b51 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -498,7 +498,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
+ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
+ bool riscv_cpu_vector_enabled(CPURISCVState *env);
+ void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+-int riscv_cpu_mmu_index(CPURISCVState *env, bool ifetch);
++int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+ G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+                                                MMUAccessType access_type,
+                                                int mmu_idx, uintptr_t retaddr);
+@@ -507,7 +507,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                         bool probe, uintptr_t retaddr);
+ char *riscv_isa_string(RISCVCPU *cpu);
  
--    tcg_target_call_clobber_regs = ALL_GENERAL_REGS;
-+    tcg_target_call_clobber_regs = ALL_GENERAL_REGS | ALL_VECTOR_REGS;
-     tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S0);
-     tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S1);
-     tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S2);
+-#define cpu_mmu_index riscv_cpu_mmu_index
++#define cpu_mmu_index riscv_env_mmu_index
+ 
+ #ifndef CONFIG_USER_ONLY
+ void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index c7cc7eb423..15f87ecdb0 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -33,7 +33,7 @@
+ #include "debug.h"
+ #include "tcg/oversized-guest.h"
+ 
+-int riscv_cpu_mmu_index(CPURISCVState *env, bool ifetch)
++int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+ {
+ #ifdef CONFIG_USER_ONLY
+     return 0;
 -- 
 2.34.1
 
