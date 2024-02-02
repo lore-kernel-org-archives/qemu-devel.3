@@ -4,65 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D825C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 13:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B02EC47DB3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 13:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVtYR-0002ar-V9; Fri, 02 Feb 2024 08:26:03 -0500
+	id 1rVtsx-0000H8-A2; Fri, 02 Feb 2024 08:47:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rVtYP-0002a6-Qu
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:26:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rVtYO-0003x1-Ci
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:26:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706880359;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Z3zvc/4nhUPeFTpJVr8XLn0eNa/QyBk1RnLntcYPOFI=;
- b=DXgOnKNoaOc6/XdngXzrxst3P9tBWGwFo5Osd1RvTUtaEsrqE69NKY8CXeKzlDL84Fr9xM
- YV9I26RcFK5r6pxIAqAfOMLeSpqi9iD1Dh2PPB4ci+oMv9ypGB1KTmOkPeDFJNeQTWri8F
- kqYGwsxFmtK+MNolX3z2VrSmptHrQt8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-ZV0VOIhyMg6i5Z9jwZ5C2A-1; Fri,
- 02 Feb 2024 08:25:56 -0500
-X-MC-Unique: ZV0VOIhyMg6i5Z9jwZ5C2A-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVtsv-0000Gl-5A
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:47:13 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVtst-0003ax-6Z
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:47:12 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0EFA8285F996;
- Fri,  2 Feb 2024 13:25:56 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.39.194.158])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 002FF1BDB1;
- Fri,  2 Feb 2024 13:25:54 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com, mst@redhat.com, sgarzare@redhat.com, eperezma@redhat.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: [PATCH] vdpa-dev: Fix initialisation order to restore VDUSE
- compatibility
-Date: Fri,  2 Feb 2024 14:25:21 +0100
-Message-ID: <20240202132521.32714-1-kwolf@redhat.com>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7B8202212F;
+ Fri,  2 Feb 2024 13:47:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706881628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
+ b=1yaKgBN9C2W/WCLIumokHycqZNOMQG6x/aydPv+yBXHB+e9B5HRpaK5e5DWEmsJo/uuEWC
+ MxzgxJsuwe+EufrRPcRljqHhrtl1VzHIbbobZQbUVQ1iChyWB5TzYm1TgH3h/34Ha6VsOF
+ 8idV2sMfh4GEGbjYXamU1BaBigc02Gs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706881628;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
+ b=3Hi/Ra0m7WY3cu40DAqNJ0sa9mV1WRY+2tX0tINtT4l4oO51Lxkqwlno1rZGmj8laFZsSC
+ MKc4BVgTq2UoPoCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1706881628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
+ b=1yaKgBN9C2W/WCLIumokHycqZNOMQG6x/aydPv+yBXHB+e9B5HRpaK5e5DWEmsJo/uuEWC
+ MxzgxJsuwe+EufrRPcRljqHhrtl1VzHIbbobZQbUVQ1iChyWB5TzYm1TgH3h/34Ha6VsOF
+ 8idV2sMfh4GEGbjYXamU1BaBigc02Gs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1706881628;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
+ b=3Hi/Ra0m7WY3cu40DAqNJ0sa9mV1WRY+2tX0tINtT4l4oO51Lxkqwlno1rZGmj8laFZsSC
+ MKc4BVgTq2UoPoCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 06E62139AB;
+ Fri,  2 Feb 2024 13:47:07 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qITLL1vyvGXQFQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 13:47:07 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>, peterx@redhat.com
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL 06/14] ci: Add a migration compatibility test job
+In-Reply-To: <CAFEAcA9=7NzEFLQxAxEWUzTRAZm87caC1ZhxeZkKyiP9Kb4k2w@mail.gmail.com>
+References: <20240129030405.177100-1-peterx@redhat.com>
+ <20240129030405.177100-7-peterx@redhat.com>
+ <CAFEAcA9=7NzEFLQxAxEWUzTRAZm87caC1ZhxeZkKyiP9Kb4k2w@mail.gmail.com>
+Date: Fri, 02 Feb 2024 10:47:05 -0300
+Message-ID: <87eddvhtba.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,gitlab.com:url];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,84 +115,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VDUSE requires that virtqueues are first enabled before the DRIVER_OK
-status flag is set; with the current API of the kernel module, it is
-impossible to enable the opposite order in our block export code because
-userspace is not notified when a virtqueue is enabled.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-This requirement also mathces the normal initialisation order as done by
-the generic vhost code in QEMU. However, commit 6c482547 accidentally
-changed the order for vdpa-dev and broke access to VDUSE devices with
-this.
+> On Mon, 29 Jan 2024 at 03:04, <peterx@redhat.com> wrote:
+>>
+>> From: Fabiano Rosas <farosas@suse.de>
+>>
+>> The migration tests have support for being passed two QEMU binaries to
+>> test migration compatibility.
+>>
+>> Add a CI job that builds the lastest release of QEMU and another job
+>> that uses that version plus an already present build of the current
+>> version and run the migration tests with the two, both as source and
+>> destination. I.e.:
+>>
+>>  old QEMU (n-1) -> current QEMU (development tree)
+>>  current QEMU (development tree) -> old QEMU (n-1)
+>>
+>> The purpose of this CI job is to ensure the code we're about to merge
+>> will not cause a migration compatibility problem when migrating the
+>> next release (which will contain that code) to/from the previous
+>> release.
+>>
+>> The version of migration-test used will be the one matching the older
+>> QEMU. That way we can avoid special-casing new tests that wouldn't be
+>> compatible with the older QEMU.
+>>
+>> Note: for user forks, the version tags need to be pushed to gitlab
+>> otherwise it won't be able to checkout a different version.
+>>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> Link: https://lore.kernel.org/r/20240118164951.30350-3-farosas@suse.de
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> ---
+>>  .gitlab-ci.d/buildtest.yml | 60 ++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 60 insertions(+)
+>>
+>> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+>> index e1c7801598..f0b0edc634 100644
+>> --- a/.gitlab-ci.d/buildtest.yml
+>> +++ b/.gitlab-ci.d/buildtest.yml
+>> @@ -167,6 +167,66 @@ build-system-centos:
+>>        x86_64-softmmu rx-softmmu sh4-softmmu nios2-softmmu
+>>      MAKE_CHECK_ARGS: check-build
+>>
+>> +# Previous QEMU release. Used for cross-version migration tests.
+>> +build-previous-qemu:
+>> +  extends: .native_build_job_template
+>> +  artifacts:
+>> +    when: on_success
+>> +    expire_in: 2 days
+>> +    paths:
+>> +      - build-previous
+>> +    exclude:
+>> +      - build-previous/**/*.p
+>> +      - build-previous/**/*.a.p
+>> +      - build-previous/**/*.fa.p
+>> +      - build-previous/**/*.c.o
+>> +      - build-previous/**/*.c.o.d
+>> +      - build-previous/**/*.fa
+>> +  needs:
+>> +    job: amd64-opensuse-leap-container
+>> +  variables:
+>> +    IMAGE: opensuse-leap
+>> +    TARGETS: x86_64-softmmu aarch64-softmmu
+>> +  before_script:
+>> +    - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
+>> +    - git checkout $QEMU_PREV_VERSION
+>> +  after_script:
+>> +    - mv build build-previous
+>
+> There seems to be a problem with this new CI job. Running a CI
+> run in my local repository it fails:
+>
+> https://gitlab.com/pm215/qemu/-/jobs/6075873685
+>
+> $ export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v .0/' VERSION)"
+> $ git checkout $QEMU_PREV_VERSION
+> error: pathspec 'v8.2.0' did not match any file(s) known to git
+> Running after_script
+> Running after script...
+> $ mv build build-previous
+> mv: cannot stat 'build': No such file or directory
+> WARNING: after_script failed, but job will continue unaffected: exit code 1
+> Saving cache for failed job
+>
+>
+> I don't think you can assume that private forks doing submaintainer CI
+> runs necessarily have the full set of tags that the main repo does.
 
-This changes vdpa-dev to use the normal order again and use the standard
-vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
-used with vdpa-dev again after this fix.
+Yes, I thought this would be rare enough not to be an issue, but it
+seems it's not. I don't know what could be done here, if there's no tag,
+then there's no way to resolve the actual commit hash I think.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/virtio/vdpa-dev.c   |  5 +----
- hw/virtio/vhost-vdpa.c | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 4 deletions(-)
+> I suspect the sed run will also do the wrong thing when run on the
+> commit that updates the version, because then it will replace
+> "9.0.0" with "9.0.0".
 
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index eb9ecea83b..13e87f06f6 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -253,14 +253,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
- 
-     s->dev.acked_features = vdev->guest_features;
- 
--    ret = vhost_dev_start(&s->dev, vdev, false);
-+    ret = vhost_dev_start(&s->dev, vdev, true);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Error starting vhost");
-         goto err_guest_notifiers;
-     }
--    for (i = 0; i < s->dev.nvqs; ++i) {
--        vhost_vdpa_set_vring_ready(&s->vdpa, i);
--    }
-     s->started = true;
- 
-     /*
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 3a43beb312..c4574d56c5 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -904,6 +904,22 @@ int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v, unsigned idx)
-     return r;
- }
- 
-+static int vhost_vdpa_set_vring_enable(struct vhost_dev *dev, int enable)
-+{
-+    struct vhost_vdpa *v = dev->opaque;
-+    unsigned int i;
-+    int ret;
-+
-+    for (i = 0; i < dev->nvqs; ++i) {
-+        ret = vhost_vdpa_set_vring_ready(v, i);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- static int vhost_vdpa_set_config_call(struct vhost_dev *dev,
-                                        int fd)
- {
-@@ -1524,6 +1540,7 @@ const VhostOps vdpa_ops = {
-         .vhost_set_features = vhost_vdpa_set_features,
-         .vhost_reset_device = vhost_vdpa_reset_device,
-         .vhost_get_vq_index = vhost_vdpa_get_vq_index,
-+        .vhost_set_vring_enable = vhost_vdpa_set_vring_enable,
-         .vhost_get_config  = vhost_vdpa_get_config,
-         .vhost_set_config = vhost_vdpa_set_config,
-         .vhost_requires_shm_log = NULL,
--- 
-2.43.0
+I just ignored this completly because my initial idea was to leave this
+job disabled and only run it for migration patchsets and pull requests,
+so it wouldn't make sense to run at that commit.
 
+This job is also not entirely fail proof by design because we could
+always be hitting bugs in the older QEMU version that were already fixed
+in the new version.
+
+I think the simplest fix here is to leave the test disabled, possibly
+with an env variable to enable it.
 
