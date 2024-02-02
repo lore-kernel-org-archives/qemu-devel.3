@@ -4,75 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A9A8C47DB3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 13:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D825C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 13:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVtVS-0001kl-41; Fri, 02 Feb 2024 08:22:58 -0500
+	id 1rVtYR-0002ar-V9; Fri, 02 Feb 2024 08:26:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVtVQ-0001kS-9k
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:22:56 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVtVO-0003H0-BR
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:22:56 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-55ff5f6a610so630410a12.3
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 05:22:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706880172; x=1707484972; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qM3jajMyn5VF4lY9Ljtcsu1y92ARdlUKFqOT8XTHUtE=;
- b=lBDm8KwddqCMz89LPA7ngbLMtyRICz9hi2euTE8F7dGnqNTzPG2oBfeUeSmJ7Y7EqH
- HA/hdFU/E5RD8u1tfK0jWIhdCfSHuVtu7+JlVnIeyGc0vdO5uq/Ycl1aAbDu3AKdZIzi
- RjGtM8xSC9SQUnj2FEsbokwHJiFZcaZ3I4c5/R6OPnd9MWOaXuIeY/iyUxhOQKb8vEOO
- ACM3sH2/I/nN/j6nTxpi6GjhJlL6WQXDju1KAMs4DusuUfoqA0AKlViGVmuUngcS2G15
- t/Z1A+fjsHbTT05M9eqtJZzNjSn3djnw83Xia7X/Q8yMdlhLHqpq/R4EjDPXujQXGHmq
- 6kYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706880172; x=1707484972;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qM3jajMyn5VF4lY9Ljtcsu1y92ARdlUKFqOT8XTHUtE=;
- b=AR8IIgL42CUbaYQlNzQLfKUfR5RRZA54B0wyhhppYzU8Eq1irnoJjSiCoJZRx+VxM4
- pySflf7g0ujyklUrQo9vS/Za6C4RDGGSSXeGx4frVK8CWfPbl23aruPItBWRMqlpoecO
- BIrnLDD+Sakvjj1DMm7MeeV+yHbbGTCKMH0RqhISv/mIVJVyMhuj5nBqZZtTSNEfr+mL
- Pw9Bcvh+OKyYOAhE/7/qhbFs8gPWq0ay5AaMVO4SrwWuz+JoSyyb6aV90dHn22G5DL8x
- N/fjgNzNCMkRFRqSWHTy5L9PJFFU+sV+URxhbLwL4RFzEo36MBJJKbHbofQCz+p1U/Pe
- zZqg==
-X-Gm-Message-State: AOJu0YxLD3LWmGXXm1ysjpQB6EoLXKu5wh5LwV+aALrrrMtpcuisb7cL
- 946nH5GWjumEHI6G5x8RUoCC5yDdhw/0j6V3nFjuXf5oGWjx6r2AlZj0BPVBqGuJ4dgIYexW3ke
- /mw0zlVarJXH2Rvg25zgBIyV7C6s/vCiLprKWqw==
-X-Google-Smtp-Source: AGHT+IHDc1r420SBRHcr9IeCyaGbg84u21H/tI10IRt75IePgyZPF434pN2h1synNMJ389hIHzzYH3tja1YR90/P9cE=
-X-Received: by 2002:a05:6402:1d29:b0:55f:8031:501c with SMTP id
- dh9-20020a0564021d2900b0055f8031501cmr5719183edb.30.1706880171913; Fri, 02
- Feb 2024 05:22:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rVtYP-0002a6-Qu
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:26:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rVtYO-0003x1-Ci
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:26:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1706880359;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Z3zvc/4nhUPeFTpJVr8XLn0eNa/QyBk1RnLntcYPOFI=;
+ b=DXgOnKNoaOc6/XdngXzrxst3P9tBWGwFo5Osd1RvTUtaEsrqE69NKY8CXeKzlDL84Fr9xM
+ YV9I26RcFK5r6pxIAqAfOMLeSpqi9iD1Dh2PPB4ci+oMv9ypGB1KTmOkPeDFJNeQTWri8F
+ kqYGwsxFmtK+MNolX3z2VrSmptHrQt8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-ZV0VOIhyMg6i5Z9jwZ5C2A-1; Fri,
+ 02 Feb 2024 08:25:56 -0500
+X-MC-Unique: ZV0VOIhyMg6i5Z9jwZ5C2A-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0EFA8285F996;
+ Fri,  2 Feb 2024 13:25:56 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.39.194.158])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 002FF1BDB1;
+ Fri,  2 Feb 2024 13:25:54 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, mst@redhat.com, sgarzare@redhat.com, eperezma@redhat.com,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: [PATCH] vdpa-dev: Fix initialisation order to restore VDUSE
+ compatibility
+Date: Fri,  2 Feb 2024 14:25:21 +0100
+Message-ID: <20240202132521.32714-1-kwolf@redhat.com>
 MIME-Version: 1.0
-References: <20240129030405.177100-1-peterx@redhat.com>
- <20240129030405.177100-7-peterx@redhat.com>
-In-Reply-To: <20240129030405.177100-7-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 Feb 2024 13:22:41 +0000
-Message-ID: <CAFEAcA9=7NzEFLQxAxEWUzTRAZm87caC1ZhxeZkKyiP9Kb4k2w@mail.gmail.com>
-Subject: Re: [PULL 06/14] ci: Add a migration compatibility test job
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,97 +78,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jan 2024 at 03:04, <peterx@redhat.com> wrote:
->
-> From: Fabiano Rosas <farosas@suse.de>
->
-> The migration tests have support for being passed two QEMU binaries to
-> test migration compatibility.
->
-> Add a CI job that builds the lastest release of QEMU and another job
-> that uses that version plus an already present build of the current
-> version and run the migration tests with the two, both as source and
-> destination. I.e.:
->
->  old QEMU (n-1) -> current QEMU (development tree)
->  current QEMU (development tree) -> old QEMU (n-1)
->
-> The purpose of this CI job is to ensure the code we're about to merge
-> will not cause a migration compatibility problem when migrating the
-> next release (which will contain that code) to/from the previous
-> release.
->
-> The version of migration-test used will be the one matching the older
-> QEMU. That way we can avoid special-casing new tests that wouldn't be
-> compatible with the older QEMU.
->
-> Note: for user forks, the version tags need to be pushed to gitlab
-> otherwise it won't be able to checkout a different version.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> Link: https://lore.kernel.org/r/20240118164951.30350-3-farosas@suse.de
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  .gitlab-ci.d/buildtest.yml | 60 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 60 insertions(+)
->
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index e1c7801598..f0b0edc634 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -167,6 +167,66 @@ build-system-centos:
->        x86_64-softmmu rx-softmmu sh4-softmmu nios2-softmmu
->      MAKE_CHECK_ARGS: check-build
->
-> +# Previous QEMU release. Used for cross-version migration tests.
-> +build-previous-qemu:
-> +  extends: .native_build_job_template
-> +  artifacts:
-> +    when: on_success
-> +    expire_in: 2 days
-> +    paths:
-> +      - build-previous
-> +    exclude:
-> +      - build-previous/**/*.p
-> +      - build-previous/**/*.a.p
-> +      - build-previous/**/*.fa.p
-> +      - build-previous/**/*.c.o
-> +      - build-previous/**/*.c.o.d
-> +      - build-previous/**/*.fa
-> +  needs:
-> +    job: amd64-opensuse-leap-container
-> +  variables:
-> +    IMAGE: opensuse-leap
-> +    TARGETS: x86_64-softmmu aarch64-softmmu
-> +  before_script:
-> +    - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
-> +    - git checkout $QEMU_PREV_VERSION
-> +  after_script:
-> +    - mv build build-previous
+VDUSE requires that virtqueues are first enabled before the DRIVER_OK
+status flag is set; with the current API of the kernel module, it is
+impossible to enable the opposite order in our block export code because
+userspace is not notified when a virtqueue is enabled.
 
-There seems to be a problem with this new CI job. Running a CI
-run in my local repository it fails:
+This requirement also mathces the normal initialisation order as done by
+the generic vhost code in QEMU. However, commit 6c482547 accidentally
+changed the order for vdpa-dev and broke access to VDUSE devices with
+this.
 
-https://gitlab.com/pm215/qemu/-/jobs/6075873685
+This changes vdpa-dev to use the normal order again and use the standard
+vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
+used with vdpa-dev again after this fix.
 
-$ export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v .0/' VERSION)"
-$ git checkout $QEMU_PREV_VERSION
-error: pathspec 'v8.2.0' did not match any file(s) known to git
-Running after_script
-Running after script...
-$ mv build build-previous
-mv: cannot stat 'build': No such file or directory
-WARNING: after_script failed, but job will continue unaffected: exit code 1
-Saving cache for failed job
+Cc: qemu-stable@nongnu.org
+Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ hw/virtio/vdpa-dev.c   |  5 +----
+ hw/virtio/vhost-vdpa.c | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index eb9ecea83b..13e87f06f6 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -253,14 +253,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
+ 
+     s->dev.acked_features = vdev->guest_features;
+ 
+-    ret = vhost_dev_start(&s->dev, vdev, false);
++    ret = vhost_dev_start(&s->dev, vdev, true);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret, "Error starting vhost");
+         goto err_guest_notifiers;
+     }
+-    for (i = 0; i < s->dev.nvqs; ++i) {
+-        vhost_vdpa_set_vring_ready(&s->vdpa, i);
+-    }
+     s->started = true;
+ 
+     /*
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 3a43beb312..c4574d56c5 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -904,6 +904,22 @@ int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v, unsigned idx)
+     return r;
+ }
+ 
++static int vhost_vdpa_set_vring_enable(struct vhost_dev *dev, int enable)
++{
++    struct vhost_vdpa *v = dev->opaque;
++    unsigned int i;
++    int ret;
++
++    for (i = 0; i < dev->nvqs; ++i) {
++        ret = vhost_vdpa_set_vring_ready(v, i);
++        if (ret < 0) {
++            return ret;
++        }
++    }
++
++    return 0;
++}
++
+ static int vhost_vdpa_set_config_call(struct vhost_dev *dev,
+                                        int fd)
+ {
+@@ -1524,6 +1540,7 @@ const VhostOps vdpa_ops = {
+         .vhost_set_features = vhost_vdpa_set_features,
+         .vhost_reset_device = vhost_vdpa_reset_device,
+         .vhost_get_vq_index = vhost_vdpa_get_vq_index,
++        .vhost_set_vring_enable = vhost_vdpa_set_vring_enable,
+         .vhost_get_config  = vhost_vdpa_get_config,
+         .vhost_set_config = vhost_vdpa_set_config,
+         .vhost_requires_shm_log = NULL,
+-- 
+2.43.0
 
-I don't think you can assume that private forks doing submaintainer CI
-runs necessarily have the full set of tags that the main repo does.
-
-I suspect the sed run will also do the wrong thing when run on the
-commit that updates the version, because then it will replace
-"9.0.0" with "9.0.0".
-
-thanks
--- PMM
 
