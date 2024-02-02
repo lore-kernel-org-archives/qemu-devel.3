@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 333F5C47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F5EC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:56:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmRt-00012m-Md; Fri, 02 Feb 2024 00:50:49 -0500
+	id 1rVmWk-0007Ca-BX; Fri, 02 Feb 2024 00:55:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmRs-00012J-4v
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:48 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rVmWi-0007Bg-2L
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:48 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmRq-0001b8-Gl
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:50:47 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6ddb807e23bso1212472b3a.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:50:46 -0800 (PST)
+ id 1rVmWf-0003Qd-Gm
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:47 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1d8aadc624dso13486445ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853045; x=1707457845; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853344; x=1707458144; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
- b=pCqcBld0yov0Vh/iMZGpt/nhYT8+xPPr4tiphnbp9WhENAlS+w9PEeT8IwR+Aceaji
- 8EspkphOPsvj+27rCm2x5BUjX1Aq6TEJVtWVd9rXQt2NKYWavwBkL5yNziCmCsa29NG8
- dm125HF8kacEtwiaou5OKarTEIDkHZLyDfM4PRZkE5ItaaMoUZl5esICN8m9x0q1kiR6
- AWhnePSkmuwx20+ymIPlFZOJZol0e46enXQk2qvA/eK4mKHUKzorm9Kt4+3hagQmXOxL
- sFdUw8LVMMowctHiU+JkjsZpz1uvPGc/dF4jDdPxj9P2PRLUCxG+76S36CReRcmQ6BkD
- ia7w==
+ bh=xbdAL5DvJKQPWcY3wsaw848CgsUHDg3QTYtvSkzuHmY=;
+ b=u+zx+IQXgSO1Wu0qMfytQRcrax1KJL98VJ/QE74AbX1QQbyG8dwkYB/J0YA7NxdQr4
+ x+391POU4O5AHy/GKTwUpruOpEVE15/UaHLioriqZ1VvD8SgdwUyOaDpA3xgIzZn4fgR
+ oBCZeaXSU33yCmgrz0sx0fgMnW9WdGacGRksFgBlJX/gpwAN5i3ZX96RiRh4IJClfi2t
+ ms5zF3qPudqb2rKi1Zp3fYzNPMAubPQyoPgxbrhQS1iLOFCekyRYKfGsGAGnk9M2fjhw
+ 5mZu+F/lISwTSZnEkoVZCliieqDGPKg7usm8vkDw7PGgcRcsapKLlpaYAEswXOCHkUMP
+ VmzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853045; x=1707457845;
+ d=1e100.net; s=20230601; t=1706853344; x=1707458144;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Kq0J8Afnqo7enZSunt87RCQsJ4GxKCY2HEoeL1qsLBQ=;
- b=BJk4nvlbbxYhmnHLy+qZRaeGMLeDzasb97/I8oFuzuoszswAuJQQO2kdPOvzPxL2y5
- beuprR4ZkJS1Lwh4A7Cijo5y7TwVVWSmvTHnaKdNGGAl4DlMq+WZqov5CuHAgOKLMSKc
- +LPlQ2V7Y6vjLcVYnzKoKHsr2Caur3P+YvK4r/hgRoe3vOCTXPDwDlxDzD/CaLdYW6eT
- vOfa3JslSsjvAnB4snissjZc3FcSU19f2Q0WVX0wNyaKjuRqdA2JG8puq1gbDvUN/vz+
- h/m7CCEuTRvRynQAqy0XYMKKMk0/uF7DJ0iA0rQs3q3Ktv8aNDkzESVsVgc3lBnOq3v1
- 3s3A==
-X-Gm-Message-State: AOJu0YwehneeP7FSIMZZ0kq0zLJJzhX+8Y6tFjc5kk89T7SY63xjF/rW
- pQtqltpiU8eEBuew9+RmdSxP/G/m0KODMDlhOtFKSdb4GKkhdY0IA88p8iFkZrbUE29bH9kWUtz
- kqrQ=
-X-Google-Smtp-Source: AGHT+IHvG0Blh1Fm6y2We/h3S+PXtYOhejH0DtZKI76iwiP66Xh47IwkmKqSU1/qpxKHXePR4auw0Q==
-X-Received: by 2002:a05:6a00:4c93:b0:6df:e035:5549 with SMTP id
- eb19-20020a056a004c9300b006dfe0355549mr7634554pfb.15.1706853044886; 
- Thu, 01 Feb 2024 21:50:44 -0800 (PST)
+ bh=xbdAL5DvJKQPWcY3wsaw848CgsUHDg3QTYtvSkzuHmY=;
+ b=fmSMnTQ6XFjwcEDWGa7QTB2t+Q0hOb6+hGVLtRMxVeRJ/E0VMjiszpFBtjTTpdUbg9
+ 5VisY+kORdv8TbTDRprYDcXSL95u0SedwcwQZ9iVCR9LjgOJCWOZE4/J00Tq8QfQIwa/
+ F5el3ss7G8rdlKV+J0ecrElVB9wcialcO8JAsNbJnGWvUih3ZpuM3eXkO+1kTr67+8z0
+ jzjpSGh/u9u2mN8pYo1haUh9fBubQ0TZRxf0NONI29YlA7QXPGefp4wrOxMsLpOtUwDZ
+ zCHlFz10IyFsRN+2KVzD1CJiFSj6QkmtJYRYvf2enqLJMq0GrK0HEYvufsYUDfA1+7fg
+ /zJQ==
+X-Gm-Message-State: AOJu0YxYjEFwbYnX6s8Nex95ntXzwYTitQfDzQhiyJhW5mE13YYXnsW8
+ vyM3kUVecwcFY4Me9mIOiEyjkNwr1OwxE61yGzSO8yf+om78xhG4EqyE4U1wuOtBZ/IRGVn0Tzk
+ ZZ+g=
+X-Google-Smtp-Source: AGHT+IF1wcFumyJ9BNypAtuMrDf1sCL28TCMSeFpDp76X1tFvneKBdzpT02SXs65B6T9J1zyP44AhA==
+X-Received: by 2002:a17:902:d509:b0:1d8:ef9e:b436 with SMTP id
+ b9-20020a170902d50900b001d8ef9eb436mr1633932plg.22.1706853343889; 
+ Thu, 01 Feb 2024 21:55:43 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.50.43
+ je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:50:44 -0800 (PST)
+ Thu, 01 Feb 2024 21:55:43 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] linux-user/aarch64: Add padding before __kernel_rt_sigreturn
-Date: Fri,  2 Feb 2024 15:49:40 +1000
-Message-Id: <20240202055036.684176-3-richard.henderson@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 55/57] target/sparc: Remove cpu_fsr
+Date: Fri,  2 Feb 2024 15:50:34 +1000
+Message-Id: <20240202055036.684176-57-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,63 +93,477 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Without this padding, an unwind through the signal handler
-will pick up the unwind info for the preceding syscall.
+Drop this field as a tcg global, loading it explicitly in the
+few places required.  This means that all FPop helpers may
+once again be TCG_CALL_NO_WG.
 
-This fixes gcc's 30_threads/thread/native_handle/cancel.cc.
-
-Cc: qemu-stable@nongnu.org
-Fixes: ee95fae075c6 ("linux-user/aarch64: Add vdso")
-Resolves: https://linaro.atlassian.net/browse/GNU-974
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20231103173841.33651-21-richard.henderson@linaro.org>
 ---
- linux-user/aarch64/vdso-be.so | Bin 3216 -> 3224 bytes
- linux-user/aarch64/vdso-le.so | Bin 3216 -> 3224 bytes
- linux-user/aarch64/vdso.S     |   4 ++++
- 3 files changed, 4 insertions(+)
+ target/sparc/helper.h     | 120 +++++++++++++++++++-------------------
+ target/sparc/fop_helper.c |   9 ++-
+ target/sparc/translate.c  |  98 ++++++++++++++++---------------
+ 3 files changed, 114 insertions(+), 113 deletions(-)
 
-diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
-index 6084f3d1a701316004894fcdd739c4e1e0463b68..808206ade824b09d786f6cc34f7cddf80b63130e 100755
-GIT binary patch
-delta 121
-zcmbOrIYV-SKI4pu2Kk&{7{Gw#%fuBAMC1c?^>~k}v|avdxNjSSLfftVb3bgJ!|2S&
-z_-6A1CJrVZc?IUH8G;R$7#SF@Om<{a*v!K!&BXX-vIe^~TWO|cva$K*Om;sOMw`hy
-ZxXl@VO#Z-a&zLdUfXALuXmSCM0s#EKC)of1
-
-delta 116
-zcmbOsIYDxQKI4Rm2Kk&H7{Gw#!^9O2L>8U?-5V_M@!kH(Sx4vJn|*ujLPgija~Pc&
-z8DDIEz{J5c`3;N8W)W6tCdL<&4cM*OEF8_<v%@zRviq?xT1-B`ZO-^%@(*r%#)Qch
-RJocPi5ThAdCO2?N002V6C;<Qf
-
-diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
-index 947d534ec1899740edbd6921da6bc6e70e2ecd09..941aaf29931193300de1f62097867c282a7e0c74 100755
-GIT binary patch
-delta 129
-zcmbOrIYV-S2IGv0n)#exSQx<I%fyAxMZTVBQ(04AP_*V|Vxp|@=@;x8zb9;-!)U|E
-z_-6A>CVnO!c?IUH8G;R$7#SF@Om<{a*v!K!!o>JyvLd?^n`3BUW_royOm=q`Mw`hS
-dxy>1WOn%92&zLb;lgFM@hy!9z%j7~Xc>tTxDQW-!
-
-delta 108
-zcmbOsIYDxQ2IGW@n)#d`SQx<I!^DNpMK&+G&+g_}w9WI@dn@@euKVesZ-h6`VYFdn
-ze6jf^6F<}BH!LcfMOa0c7+*}*WOrgKEO1Fl%G+GX?#{w!F?lDqIpc@PAGz%r6DAw-
-M*fVlXF62=M06owo?*IS*
-
-diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
-index 34d3a9ebd2..a0ac1487b0 100644
---- a/linux-user/aarch64/vdso.S
-+++ b/linux-user/aarch64/vdso.S
-@@ -63,7 +63,11 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
-  * For now, elide the unwind info for __kernel_rt_sigreturn and rely on
-  * the libgcc fallback routine as we have always done.  This requires
-  * that the code sequence used be exact.
-+ *
-+ * Add a nop as a spacer to ensure that unwind does not pick up the
-+ * unwind info from the preceding syscall.
-  */
-+	nop
- __kernel_rt_sigreturn:
- 	/* No BTI C insn here -- we arrive via RET. */
- 	mov	x8, #__NR_rt_sigreturn
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 7466164468..c8e14fe371 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -36,79 +36,79 @@ DEF_HELPER_FLAGS_4(ld_asi, TCG_CALL_NO_WG, i64, env, tl, int, i32)
+ DEF_HELPER_FLAGS_5(st_asi, TCG_CALL_NO_WG, void, env, tl, i64, int, i32)
+ #endif
+ DEF_HELPER_FLAGS_1(get_fsr, TCG_CALL_NO_WG_SE, tl, env)
+-DEF_HELPER_FLAGS_2(set_fsr_noftt, 0, void, env, tl)
+-DEF_HELPER_FLAGS_2(fsqrts, 0, f32, env, f32)
+-DEF_HELPER_FLAGS_2(fsqrtd, 0, f64, env, f64)
+-DEF_HELPER_FLAGS_2(fsqrtq, 0, i128, env, i128)
+-DEF_HELPER_FLAGS_3(fcmps, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmpd, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmpes, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmped, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmpq, 0, tl, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fcmpeq, 0, tl, env, i128, i128)
++DEF_HELPER_FLAGS_2(set_fsr_noftt, TCG_CALL_NO_RWG, void, env, tl)
++DEF_HELPER_FLAGS_2(fsqrts, TCG_CALL_NO_WG, f32, env, f32)
++DEF_HELPER_FLAGS_2(fsqrtd, TCG_CALL_NO_WG, f64, env, f64)
++DEF_HELPER_FLAGS_2(fsqrtq, TCG_CALL_NO_WG, i128, env, i128)
++DEF_HELPER_FLAGS_3(fcmps, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmpd, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmpes, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmped, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmpq, TCG_CALL_NO_WG, void, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq, TCG_CALL_NO_WG, void, env, i128, i128)
+ #ifdef TARGET_SPARC64
+-DEF_HELPER_FLAGS_3(fcmps_fcc1, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmps_fcc2, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmps_fcc3, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmpd_fcc1, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmpd_fcc2, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmpd_fcc3, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmpes_fcc1, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmpes_fcc2, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmpes_fcc3, 0, tl, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fcmped_fcc1, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmped_fcc2, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmped_fcc3, 0, tl, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fcmpq_fcc1, 0, tl, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fcmpq_fcc2, 0, tl, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fcmpq_fcc3, 0, tl, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fcmpeq_fcc1, 0, tl, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fcmpeq_fcc2, 0, tl, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fcmpeq_fcc3, 0, tl, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmps_fcc1, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmps_fcc2, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmps_fcc3, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmpd_fcc1, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmpd_fcc2, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmpd_fcc3, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmpes_fcc1, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmpes_fcc2, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmpes_fcc3, TCG_CALL_NO_WG, void, env, f32, f32)
++DEF_HELPER_FLAGS_3(fcmped_fcc1, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmped_fcc2, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmped_fcc3, TCG_CALL_NO_WG, void, env, f64, f64)
++DEF_HELPER_FLAGS_3(fcmpq_fcc1, TCG_CALL_NO_WG, void, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpq_fcc2, TCG_CALL_NO_WG, void, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpq_fcc3, TCG_CALL_NO_WG, void, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq_fcc1, TCG_CALL_NO_WG, void, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq_fcc2, TCG_CALL_NO_WG, void, env, i128, i128)
++DEF_HELPER_FLAGS_3(fcmpeq_fcc3, TCG_CALL_NO_WG, void, env, i128, i128)
+ #endif
+ DEF_HELPER_2(raise_exception, noreturn, env, int)
+ 
+-DEF_HELPER_FLAGS_3(faddd, 0, f64, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fsubd, 0, f64, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fmuld, 0, f64, env, f64, f64)
+-DEF_HELPER_FLAGS_3(fdivd, 0, f64, env, f64, f64)
++DEF_HELPER_FLAGS_3(faddd, TCG_CALL_NO_WG, f64, env, f64, f64)
++DEF_HELPER_FLAGS_3(fsubd, TCG_CALL_NO_WG, f64, env, f64, f64)
++DEF_HELPER_FLAGS_3(fmuld, TCG_CALL_NO_WG, f64, env, f64, f64)
++DEF_HELPER_FLAGS_3(fdivd, TCG_CALL_NO_WG, f64, env, f64, f64)
+ 
+-DEF_HELPER_FLAGS_3(faddq, 0, i128, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fsubq, 0, i128, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fmulq, 0, i128, env, i128, i128)
+-DEF_HELPER_FLAGS_3(fdivq, 0, i128, env, i128, i128)
++DEF_HELPER_FLAGS_3(faddq, TCG_CALL_NO_WG, i128, env, i128, i128)
++DEF_HELPER_FLAGS_3(fsubq, TCG_CALL_NO_WG, i128, env, i128, i128)
++DEF_HELPER_FLAGS_3(fmulq, TCG_CALL_NO_WG, i128, env, i128, i128)
++DEF_HELPER_FLAGS_3(fdivq, TCG_CALL_NO_WG, i128, env, i128, i128)
+ 
+-DEF_HELPER_FLAGS_3(fadds, 0, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fsubs, 0, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fmuls, 0, f32, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fdivs, 0, f32, env, f32, f32)
++DEF_HELPER_FLAGS_3(fadds, TCG_CALL_NO_WG, f32, env, f32, f32)
++DEF_HELPER_FLAGS_3(fsubs, TCG_CALL_NO_WG, f32, env, f32, f32)
++DEF_HELPER_FLAGS_3(fmuls, TCG_CALL_NO_WG, f32, env, f32, f32)
++DEF_HELPER_FLAGS_3(fdivs, TCG_CALL_NO_WG, f32, env, f32, f32)
+ 
+-DEF_HELPER_FLAGS_3(fsmuld, 0, f64, env, f32, f32)
+-DEF_HELPER_FLAGS_3(fdmulq, 0, i128, env, f64, f64)
++DEF_HELPER_FLAGS_3(fsmuld, TCG_CALL_NO_WG, f64, env, f32, f32)
++DEF_HELPER_FLAGS_3(fdmulq, TCG_CALL_NO_WG, i128, env, f64, f64)
+ 
+-DEF_HELPER_FLAGS_2(fitod, 0, f64, env, s32)
+-DEF_HELPER_FLAGS_2(fitoq, 0, i128, env, s32)
++DEF_HELPER_FLAGS_2(fitod, TCG_CALL_NO_WG, f64, env, s32)
++DEF_HELPER_FLAGS_2(fitoq, TCG_CALL_NO_WG, i128, env, s32)
+ 
+-DEF_HELPER_FLAGS_2(fitos, 0, f32, env, s32)
++DEF_HELPER_FLAGS_2(fitos, TCG_CALL_NO_WG, f32, env, s32)
+ 
+ #ifdef TARGET_SPARC64
+-DEF_HELPER_FLAGS_2(fxtos, 0, f32, env, s64)
+-DEF_HELPER_FLAGS_2(fxtod, 0, f64, env, s64)
+-DEF_HELPER_FLAGS_2(fxtoq, 0, i128, env, s64)
++DEF_HELPER_FLAGS_2(fxtos, TCG_CALL_NO_WG, f32, env, s64)
++DEF_HELPER_FLAGS_2(fxtod, TCG_CALL_NO_WG, f64, env, s64)
++DEF_HELPER_FLAGS_2(fxtoq, TCG_CALL_NO_WG, i128, env, s64)
+ #endif
+-DEF_HELPER_FLAGS_2(fdtos, 0, f32, env, f64)
+-DEF_HELPER_FLAGS_2(fstod, 0, f64, env, f32)
+-DEF_HELPER_FLAGS_2(fqtos, 0, f32, env, i128)
+-DEF_HELPER_FLAGS_2(fstoq, 0, i128, env, f32)
+-DEF_HELPER_FLAGS_2(fqtod, 0, f64, env, i128)
+-DEF_HELPER_FLAGS_2(fdtoq, 0, i128, env, f64)
+-DEF_HELPER_FLAGS_2(fstoi, 0, s32, env, f32)
+-DEF_HELPER_FLAGS_2(fdtoi, 0, s32, env, f64)
+-DEF_HELPER_FLAGS_2(fqtoi, 0, s32, env, i128)
++DEF_HELPER_FLAGS_2(fdtos, TCG_CALL_NO_WG, f32, env, f64)
++DEF_HELPER_FLAGS_2(fstod, TCG_CALL_NO_WG, f64, env, f32)
++DEF_HELPER_FLAGS_2(fqtos, TCG_CALL_NO_WG, f32, env, i128)
++DEF_HELPER_FLAGS_2(fstoq, TCG_CALL_NO_WG, i128, env, f32)
++DEF_HELPER_FLAGS_2(fqtod, TCG_CALL_NO_WG, f64, env, i128)
++DEF_HELPER_FLAGS_2(fdtoq, TCG_CALL_NO_WG, i128, env, f64)
++DEF_HELPER_FLAGS_2(fstoi, TCG_CALL_NO_WG, s32, env, f32)
++DEF_HELPER_FLAGS_2(fdtoi, TCG_CALL_NO_WG, s32, env, f64)
++DEF_HELPER_FLAGS_2(fqtoi, TCG_CALL_NO_WG, s32, env, i128)
+ #ifdef TARGET_SPARC64
+-DEF_HELPER_FLAGS_2(fstox, 0, s64, env, f32)
+-DEF_HELPER_FLAGS_2(fdtox, 0, s64, env, f64)
+-DEF_HELPER_FLAGS_2(fqtox, 0, s64, env, i128)
++DEF_HELPER_FLAGS_2(fstox, TCG_CALL_NO_WG, s64, env, f32)
++DEF_HELPER_FLAGS_2(fdtox, TCG_CALL_NO_WG, s64, env, f64)
++DEF_HELPER_FLAGS_2(fqtox, TCG_CALL_NO_WG, s64, env, i128)
+ 
+ DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index ac30f88810..796f448bfd 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -344,8 +344,7 @@ Int128 helper_fsqrtq(CPUSPARCState *env, Int128 src)
+ }
+ 
+ #define GEN_FCMP(name, size, FS, E)                                     \
+-    target_ulong glue(helper_, name) (CPUSPARCState *env,               \
+-                                      Int128 src1, Int128 src2)         \
++    void glue(helper_, name)(CPUSPARCState *env, Int128 src1, Int128 src2) \
+     {                                                                   \
+         float128 reg1 = f128_in(src1);                                  \
+         float128 reg2 = f128_in(src2);                                  \
+@@ -376,10 +375,10 @@ Int128 helper_fsqrtq(CPUSPARCState *env, Int128 src)
+             fsr &= ~((FSR_FCC1 | FSR_FCC0) << FS);                      \
+             break;                                                      \
+         }                                                               \
+-        return fsr;                                                     \
++        env->fsr = fsr;                                                 \
+     }
+ #define GEN_FCMP_T(name, size, FS, E)                                   \
+-    target_ulong glue(helper_, name)(CPUSPARCState *env, size src1, size src2)\
++    void glue(helper_, name)(CPUSPARCState *env, size src1, size src2)  \
+     {                                                                   \
+         FloatRelation ret;                                              \
+         target_ulong fsr;                                               \
+@@ -407,7 +406,7 @@ Int128 helper_fsqrtq(CPUSPARCState *env, Int128 src)
+             fsr &= ~((FSR_FCC1 | FSR_FCC0) << FS);                      \
+             break;                                                      \
+         }                                                               \
+-        return fsr;                                                     \
++        env->fsr = fsr;                                                 \
+     }
+ 
+ GEN_FCMP_T(fcmps, float32, 0, 0);
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 5b9bbeb8ff..cf8cfe5cc4 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -99,7 +99,7 @@
+ 
+ /* global register indexes */
+ static TCGv_ptr cpu_regwptr;
+-static TCGv cpu_fsr, cpu_pc, cpu_npc;
++static TCGv cpu_pc, cpu_npc;
+ static TCGv cpu_regs[32];
+ static TCGv cpu_y;
+ static TCGv cpu_tbr;
+@@ -1097,7 +1097,7 @@ static void gen_compare(DisasCompare *cmp, bool xcc, unsigned int cond,
+ static void gen_fcompare(DisasCompare *cmp, unsigned int cc, unsigned int cond)
+ {
+     unsigned int offset;
+-    TCGv r_dst;
++    TCGv r_dst, fsr;
+ 
+     /* For now we still generate a straight boolean result.  */
+     cmp->cond = TCG_COND_NE;
+@@ -1120,54 +1120,56 @@ static void gen_fcompare(DisasCompare *cmp, unsigned int cc, unsigned int cond)
+         break;
+     }
+ 
++    fsr = tcg_temp_new();
++    tcg_gen_ld_tl(fsr, tcg_env, offsetof(CPUSPARCState, fsr));
+     switch (cond) {
+     case 0x0:
+         gen_op_eval_bn(r_dst);
+         break;
+     case 0x1:
+-        gen_op_eval_fbne(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbne(r_dst, fsr, offset);
+         break;
+     case 0x2:
+-        gen_op_eval_fblg(r_dst, cpu_fsr, offset);
++        gen_op_eval_fblg(r_dst, fsr, offset);
+         break;
+     case 0x3:
+-        gen_op_eval_fbul(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbul(r_dst, fsr, offset);
+         break;
+     case 0x4:
+-        gen_op_eval_fbl(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbl(r_dst, fsr, offset);
+         break;
+     case 0x5:
+-        gen_op_eval_fbug(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbug(r_dst, fsr, offset);
+         break;
+     case 0x6:
+-        gen_op_eval_fbg(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbg(r_dst, fsr, offset);
+         break;
+     case 0x7:
+-        gen_op_eval_fbu(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbu(r_dst, fsr, offset);
+         break;
+     case 0x8:
+         gen_op_eval_ba(r_dst);
+         break;
+     case 0x9:
+-        gen_op_eval_fbe(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbe(r_dst, fsr, offset);
+         break;
+     case 0xa:
+-        gen_op_eval_fbue(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbue(r_dst, fsr, offset);
+         break;
+     case 0xb:
+-        gen_op_eval_fbge(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbge(r_dst, fsr, offset);
+         break;
+     case 0xc:
+-        gen_op_eval_fbuge(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbuge(r_dst, fsr, offset);
+         break;
+     case 0xd:
+-        gen_op_eval_fble(r_dst, cpu_fsr, offset);
++        gen_op_eval_fble(r_dst, fsr, offset);
+         break;
+     case 0xe:
+-        gen_op_eval_fbule(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbule(r_dst, fsr, offset);
+         break;
+     case 0xf:
+-        gen_op_eval_fbo(r_dst, cpu_fsr, offset);
++        gen_op_eval_fbo(r_dst, fsr, offset);
+         break;
+     }
+ }
+@@ -1264,16 +1266,16 @@ static void gen_op_fcmps(int fccno, TCGv_i32 r_rs1, TCGv_i32 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmps(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmps(tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmps_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmps_fcc1(tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmps_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmps_fcc2(tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmps_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmps_fcc3(tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1282,16 +1284,16 @@ static void gen_op_fcmpd(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmpd(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpd(tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmpd_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpd_fcc1(tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmpd_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpd_fcc2(tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmpd_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpd_fcc3(tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1300,16 +1302,16 @@ static void gen_op_fcmpq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmpq(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpq(tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmpq_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpq_fcc1(tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmpq_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpq_fcc2(tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmpq_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpq_fcc3(tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1318,16 +1320,16 @@ static void gen_op_fcmpes(int fccno, TCGv_i32 r_rs1, TCGv_i32 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmpes(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpes(tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmpes_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpes_fcc1(tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmpes_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpes_fcc2(tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmpes_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpes_fcc3(tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1336,16 +1338,16 @@ static void gen_op_fcmped(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmped(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmped(tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmped_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmped_fcc1(tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmped_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmped_fcc2(tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmped_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmped_fcc3(tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1354,16 +1356,16 @@ static void gen_op_fcmpeq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+     switch (fccno) {
+     case 0:
+-        gen_helper_fcmpeq(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpeq(tcg_env, r_rs1, r_rs2);
+         break;
+     case 1:
+-        gen_helper_fcmpeq_fcc1(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpeq_fcc1(tcg_env, r_rs1, r_rs2);
+         break;
+     case 2:
+-        gen_helper_fcmpeq_fcc2(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpeq_fcc2(tcg_env, r_rs1, r_rs2);
+         break;
+     case 3:
+-        gen_helper_fcmpeq_fcc3(cpu_fsr, tcg_env, r_rs1, r_rs2);
++        gen_helper_fcmpeq_fcc3(tcg_env, r_rs1, r_rs2);
+         break;
+     }
+ }
+@@ -1372,32 +1374,32 @@ static void gen_op_fcmpeq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ 
+ static void gen_op_fcmps(int fccno, TCGv r_rs1, TCGv r_rs2)
+ {
+-    gen_helper_fcmps(cpu_fsr, tcg_env, r_rs1, r_rs2);
++    gen_helper_fcmps(tcg_env, r_rs1, r_rs2);
+ }
+ 
+ static void gen_op_fcmpd(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+ {
+-    gen_helper_fcmpd(cpu_fsr, tcg_env, r_rs1, r_rs2);
++    gen_helper_fcmpd(tcg_env, r_rs1, r_rs2);
+ }
+ 
+ static void gen_op_fcmpq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+-    gen_helper_fcmpq(cpu_fsr, tcg_env, r_rs1, r_rs2);
++    gen_helper_fcmpq(tcg_env, r_rs1, r_rs2);
+ }
+ 
+ static void gen_op_fcmpes(int fccno, TCGv r_rs1, TCGv r_rs2)
+ {
+-    gen_helper_fcmpes(cpu_fsr, tcg_env, r_rs1, r_rs2);
++    gen_helper_fcmpes(tcg_env, r_rs1, r_rs2);
+ }
+ 
+ static void gen_op_fcmped(int fccno, TCGv_i64 r_rs1, TCGv_i64 r_rs2)
+ {
+-    gen_helper_fcmped(cpu_fsr, tcg_env, r_rs1, r_rs2);
++    gen_helper_fcmped(tcg_env, r_rs1, r_rs2);
+ }
+ 
+ static void gen_op_fcmpeq(int fccno, TCGv_i128 r_rs1, TCGv_i128 r_rs2)
+ {
+-    gen_helper_fcmpeq(cpu_fsr, tcg_env, r_rs1, r_rs2);
++    gen_helper_fcmpeq(tcg_env, r_rs1, r_rs2);
+ }
+ #endif
+ 
+@@ -4413,8 +4415,9 @@ static bool do_ldfsr(DisasContext *dc, arg_r_r_ri *a, MemOp mop,
+     tnew = tcg_temp_new();
+     told = tcg_temp_new();
+     tcg_gen_qemu_ld_tl(tnew, addr, dc->mem_idx, mop | MO_ALIGN);
++    tcg_gen_ld_tl(told, tcg_env, offsetof(CPUSPARCState, fsr));
+     tcg_gen_andi_tl(tnew, tnew, new_mask);
+-    tcg_gen_andi_tl(told, cpu_fsr, old_mask);
++    tcg_gen_andi_tl(told, told, old_mask);
+     tcg_gen_or_tl(tnew, tnew, told);
+     gen_helper_set_fsr_noftt(tcg_env, tnew);
+     return advance_pc(dc);
+@@ -5342,7 +5345,6 @@ void sparc_tcg_init(void)
+         { &cpu_icc_Z, offsetof(CPUSPARCState, icc_Z), "icc_Z" },
+         { &cpu_icc_C, offsetof(CPUSPARCState, icc_C), "icc_C" },
+         { &cpu_cond, offsetof(CPUSPARCState, cond), "cond" },
+-        { &cpu_fsr, offsetof(CPUSPARCState, fsr), "fsr" },
+         { &cpu_pc, offsetof(CPUSPARCState, pc), "pc" },
+         { &cpu_npc, offsetof(CPUSPARCState, npc), "npc" },
+         { &cpu_y, offsetof(CPUSPARCState, y), "y" },
 -- 
 2.34.1
 
