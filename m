@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DA1C47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:56:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968CEC47258
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmSD-0001CW-O3; Fri, 02 Feb 2024 00:51:09 -0500
+	id 1rVmSe-0001Mg-3k; Fri, 02 Feb 2024 00:51:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmSC-0001CO-DN
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:08 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rVmSV-0001H8-JY
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:27 -0500
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmS9-0001gy-2V
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:06 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6ddc5faeb7fso1441422b3a.3
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:04 -0800 (PST)
+ id 1rVmST-0001py-Ti
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:27 -0500
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-5ca29c131ebso1526164a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853063; x=1707457863; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853084; x=1707457884; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qhgRzqqv/s/Iq4v6+M5jYHJ7Q0ZBinPRbaKXKXc9JsM=;
- b=Vpv9DpClyoAwEQVHT9X6/F1Pfd7RzfLgWqsnrGs2bIRbbXIcOtVqPwYA19T5h1TxS9
- yaGMU6LJNKbzipykA5+rofisntFUsuILVpvPYUtKAPCdnTxsmMIgIqQnew8z0VnZUI+H
- xpRFoSCAaDm1MMSdzCuBhrrw0cnuerIV3pqFjESoCqIOyd9iiP17/DD4JfmcLzWU6t+F
- M9vywLtrxnbko6sPf1lW+bxwQiw24mvEDY+4WjLoq3X7zYQJjI1CLxJ0jOIbR0zIcQVn
- OEJJM6QpU6jsT+eTUiqLsAi71j25S59y6riYOh6BRAosI6XZ7ese5gxUDk5qwNx5q2up
- ImHQ==
+ bh=HgdbWgNLg8LLScF7lhaba0ocAypckeHfyh0foJfM/Y8=;
+ b=bJ3sqXgCTlhIb7qBQWo0yOacagKLRXFfEA/lOOnqOyJEpu1cItSgza003KVw4HPc4m
+ vV/XaPTLirRGjf5yzzkUZ/kgt8xsbmlcYy/gnx4reiSooyy4FnjmNDSGx5vKTICtXqTD
+ TqRROrCHTD3Krd+9YzQAc7gd2hlnJ3AIId1aec7A08Cowl14aDaOWy4xU2tCZjsAJ9Yu
+ 3bSfr0OMGGz1PiU1pBs4fRX97mATIkbuU44ndNp1UfaNh3g9K56RS0w7cwd6RWl35MVI
+ X7PkiXX53pDygh72ZC7SLPwM4LuIhuQ0bSkv7ZeY49+bJNhkaW2YFVw3CBQR2Ib846HB
+ bwKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853063; x=1707457863;
+ d=1e100.net; s=20230601; t=1706853084; x=1707457884;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qhgRzqqv/s/Iq4v6+M5jYHJ7Q0ZBinPRbaKXKXc9JsM=;
- b=ZDeL1fPvD1uxElFTclek7N0VLt8G2HE/ikacfTE/3tExKWTQB4l8igoN0YEtkKNXnz
- ZThMX6P4Ic7DPkKzdI5mnZgqFOtadkj2nUt1RIsDyVWtZTWdzqPRcRn5knPOpya9P8Ye
- FXPW9vwf/ZMzCHrXagC18Dg+y9HtOcT93oSY+xmzcTBt2WlUesg9aXwE7tZNmdPxORwz
- pPF1AYiYn6cBYu+JvW9ViCRnTF8RwxGQlWZMpb5qk0XOvwO2nKemQfyV5lk2v/cGNaTP
- nN9yDFIBtoZ7GVZa521kAGKBp0fn2NEpC/a5BpJg79ZUB5EZkzVRMPuDlad1Qbjop/Mb
- pefg==
-X-Gm-Message-State: AOJu0YwdTcVWnawxm4B1Pg+0DkjZ3ENJXSpgKdERyqT0VOPd3+G0PY1r
- 1p05RX6/t5+tx3gwGIfco/RWe1inMcPDm6FLiuEpcz9o7IzwkqVnwuFvTVxpv0KHN7eyFeIKh3e
- RaoU=
-X-Google-Smtp-Source: AGHT+IHlLedb+90ytSvxU8vznETy98ZnPOnnihBo9YDTnH9W7A1xbKOCM9ePUcSvbutZDcLcopUKFg==
-X-Received: by 2002:aa7:86d2:0:b0:6de:3319:ac22 with SMTP id
- h18-20020aa786d2000000b006de3319ac22mr7553191pfo.2.1706853063710; 
- Thu, 01 Feb 2024 21:51:03 -0800 (PST)
+ bh=HgdbWgNLg8LLScF7lhaba0ocAypckeHfyh0foJfM/Y8=;
+ b=RJmrEFiMVN1tbNxeZXiMe+c4E8xQH+WnYM71P22GSe2kTAwBH8mr2sX08ndT/0wO/p
+ j74OKdMfQzE08lC3nBh7XwhpitwGRGnOZoA3Qgid99wrYmfV6n/tJBwK/HSuCBk1Mfc9
+ rfFkCy9JsDvNiHmZnWe1V2swwLC25Zon56oORhycQkC6cjcp5ME7U5aq3d45Nm6t1rP0
+ alJfpe4a4/qJ6CeufTKfbQAiw3B7xQhxbLreY/SlLoBXAea6191Zovqeas3IbtWYbnAd
+ A7KpBEzX6UrqmrdymO/wgJk4DRDObQ1gtz0sgF/dy3Kzede123rF3oUx0rNhuVaJFGSS
+ GxBQ==
+X-Gm-Message-State: AOJu0YzCVoNG6P2+4F4p/3nPY37wm2lVrYfZy+TnCWgQD4sd3UROLtHW
+ Z0fCkq4t9w4Kv5dWRxp2AUJt+yACa+sDirw6bvO5mfIzsTtK0sjs2tXz0wtZKXxejfyAKnewfBI
+ EHhU=
+X-Google-Smtp-Source: AGHT+IG0nfkvEQ3FA5/SqZbT+5m7J3JkA60OB7OifnwMi+aSnE8ZyxbyeHU6ahveu0B9s+nNyEwifw==
+X-Received: by 2002:a05:6a20:ce48:b0:19e:4e80:27f0 with SMTP id
+ id8-20020a056a20ce4800b0019e4e8027f0mr685001pzb.37.1706853084256; 
+ Thu, 01 Feb 2024 21:51:24 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.02
+ h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:51:03 -0800 (PST)
+ Thu, 01 Feb 2024 21:51:23 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/57] target/i386: Populate CPUClass.mmu_index
-Date: Fri,  2 Feb 2024 15:49:49 +1000
-Message-Id: <20240202055036.684176-12-richard.henderson@linaro.org>
+Subject: [PULL 20/57] target/ppc: Split out ppc_env_mmu_index
+Date: Fri,  2 Feb 2024 15:49:59 +1000
+Message-Id: <20240202055036.684176-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,69 +97,115 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/cpu.h | 13 ++++++-------
- target/i386/cpu.c | 10 ++++++++++
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ target/ppc/cpu.h        |  7 ++++++-
+ target/ppc/cpu_init.c   |  2 +-
+ target/ppc/mem_helper.c | 10 +++++-----
+ target/ppc/mmu_common.c |  4 ++--
+ 4 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 7f0786e8b9..62bdb02378 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2296,13 +2296,6 @@ uint64_t cpu_get_tsc(CPUX86State *env);
- #define MMU_NESTED_IDX  3
- #define MMU_PHYS_IDX    4
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index f8101ffa29..5f4f52aec5 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1624,7 +1624,7 @@ int ppc_dcr_write(ppc_dcr_t *dcr_env, int dcrn, uint32_t val);
  
--static inline int cpu_mmu_index(CPUX86State *env, bool ifetch)
--{
--    return (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER_IDX :
--        (!(env->hflags & HF_SMAP_MASK) || (env->eflags & AC_MASK))
--        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
--}
--
- static inline int cpu_mmu_index_kernel(CPUX86State *env)
+ /* MMU modes definitions */
+ #define MMU_USER_IDX 0
+-static inline int cpu_mmu_index(CPUPPCState *env, bool ifetch)
++static inline int ppc_env_mmu_index(CPUPPCState *env, bool ifetch)
  {
-     return !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP_IDX :
-@@ -2322,6 +2315,12 @@ static inline int cpu_mmu_index_kernel(CPUX86State *env)
- #include "hw/i386/apic.h"
+ #ifdef CONFIG_USER_ONLY
+     return MMU_USER_IDX;
+@@ -1633,6 +1633,11 @@ static inline int cpu_mmu_index(CPUPPCState *env, bool ifetch)
  #endif
- 
-+int x86_cpu_mmu_index(CPUState *cs, bool ifetch);
-+static inline int cpu_mmu_index(CPUX86State *env, bool ifetch)
-+{
-+    return x86_cpu_mmu_index(env_cpu(env), ifetch);
-+}
-+
- static inline void cpu_get_tb_cpu_state(CPUX86State *env, vaddr *pc,
-                                         uint64_t *cs_base, uint32_t *flags)
- {
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 03822d9ba8..280bcb7d00 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7720,6 +7720,15 @@ static bool x86_cpu_has_work(CPUState *cs)
-     return x86_cpu_pending_interrupt(cs, cs->interrupt_request) != 0;
  }
  
-+int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
++static inline int cpu_mmu_index(CPUPPCState *env, bool ifetch)
 +{
-+    CPUX86State *env = cpu_env(cs);
-+
-+    return (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER_IDX :
-+        (!(env->hflags & HF_SMAP_MASK) || (env->eflags & AC_MASK))
-+        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
++    return ppc_env_mmu_index(env, ifetch);
 +}
 +
- static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
+ /* Compatibility modes */
+ #if defined(TARGET_PPC64)
+ bool ppc_check_compat(PowerPCCPU *cpu, uint32_t compat_pvr,
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 23eb5522b6..86c8031765 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7457,7 +7457,7 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     qemu_fprintf(f, "MSR " TARGET_FMT_lx " HID0 " TARGET_FMT_lx "  HF "
+                  "%08x iidx %d didx %d\n",
+                  env->msr, env->spr[SPR_HID0], env->hflags,
+-                 cpu_mmu_index(env, true), cpu_mmu_index(env, false));
++                 ppc_env_mmu_index(env, true), ppc_env_mmu_index(env, false));
+ #if !defined(CONFIG_USER_ONLY)
+     if (env->tb_env) {
+         qemu_fprintf(f, "TB %08" PRIu32 " %08" PRIu64
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index c7535481d6..ea7e8443a8 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -83,7 +83,7 @@ static void *probe_contiguous(CPUPPCState *env, target_ulong addr, uint32_t nb,
+ void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
  {
-     X86CPU *cpu = X86_CPU(cs);
-@@ -7954,6 +7963,7 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
-     cc->class_by_name = x86_cpu_class_by_name;
-     cc->parse_features = x86_cpu_parse_featurestr;
-     cc->has_work = x86_cpu_has_work;
-+    cc->mmu_index = x86_cpu_mmu_index;
-     cc->dump_state = x86_cpu_dump_state;
-     cc->set_pc = x86_cpu_set_pc;
-     cc->get_pc = x86_cpu_get_pc;
+     uintptr_t raddr = GETPC();
+-    int mmu_idx = cpu_mmu_index(env, false);
++    int mmu_idx = ppc_env_mmu_index(env, false);
+     void *host = probe_contiguous(env, addr, (32 - reg) * 4,
+                                   MMU_DATA_LOAD, mmu_idx, raddr);
+ 
+@@ -105,7 +105,7 @@ void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
+ void helper_stmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
+ {
+     uintptr_t raddr = GETPC();
+-    int mmu_idx = cpu_mmu_index(env, false);
++    int mmu_idx = ppc_env_mmu_index(env, false);
+     void *host = probe_contiguous(env, addr, (32 - reg) * 4,
+                                   MMU_DATA_STORE, mmu_idx, raddr);
+ 
+@@ -135,7 +135,7 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
+         return;
+     }
+ 
+-    mmu_idx = cpu_mmu_index(env, false);
++    mmu_idx = ppc_env_mmu_index(env, false);
+     host = probe_contiguous(env, addr, nb, MMU_DATA_LOAD, mmu_idx, raddr);
+ 
+     if (likely(host)) {
+@@ -224,7 +224,7 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
+         return;
+     }
+ 
+-    mmu_idx = cpu_mmu_index(env, false);
++    mmu_idx = ppc_env_mmu_index(env, false);
+     host = probe_contiguous(env, addr, nb, MMU_DATA_STORE, mmu_idx, raddr);
+ 
+     if (likely(host)) {
+@@ -276,7 +276,7 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
+     target_ulong mask, dcbz_size = env->dcache_line_size;
+     uint32_t i;
+     void *haddr;
+-    int mmu_idx = epid ? PPC_TLB_EPID_STORE : cpu_mmu_index(env, false);
++    int mmu_idx = epid ? PPC_TLB_EPID_STORE : ppc_env_mmu_index(env, false);
+ 
+ #if defined(TARGET_PPC64)
+     /* Check for dcbz vs dcbzl on 970 */
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 6ca5d12207..751403f1c8 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -1561,9 +1561,9 @@ hwaddr ppc_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+      * mapped by code TLBs, so we also try a MMU_INST_FETCH.
+      */
+     if (ppc_xlate(cpu, addr, MMU_DATA_LOAD, &raddr, &s, &p,
+-                  cpu_mmu_index(&cpu->env, false), false) ||
++                  ppc_env_mmu_index(&cpu->env, false), false) ||
+         ppc_xlate(cpu, addr, MMU_INST_FETCH, &raddr, &s, &p,
+-                  cpu_mmu_index(&cpu->env, true), false)) {
++                  ppc_env_mmu_index(&cpu->env, true), false)) {
+         return raddr & TARGET_PAGE_MASK;
+     }
+     return -1;
 -- 
 2.34.1
 
