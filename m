@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B3DC4828E
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 19:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0176EC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 19:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVz0T-0005xH-Nr; Fri, 02 Feb 2024 14:15:21 -0500
+	id 1rVz6G-0007CY-JZ; Fri, 02 Feb 2024 14:21:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz0R-0005wf-6L
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:15:19 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz6F-0007Bx-7e
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:21:19 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz0H-0002RE-Bo
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:15:18 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVz6D-0006uf-97
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:21:18 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F0B40221D0;
- Fri,  2 Feb 2024 19:15:07 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 7ACF21F78C;
+ Fri,  2 Feb 2024 19:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706901308; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706901675; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=N75eoEnTRmF//dJPydXmE18zktSZO/AXzr+jWG3TFP8=;
- b=hYepnJGYMZmig2XX0OvCAqmKG+uObvt0L3Qzt1//XaThPlpZq+Ko0CYsg+JmyhL3QdD2zE
- B2YlU+KKq24krd8kHFitV2mS0R9ZOtkR0PiB7Y+575JkvFrevTvzdqVvsQn9QrRagfPQhz
- ALrBd34kxwm2nW+WvF9RTO/E/IXtiK0=
+ bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
+ b=BS/doIEEC6uoPcX7xYa2h2LRWh19sIjM4gJktA/uUeT6r2XQ50xj+Gy9Gco4ivhFufU52Q
+ DQQqLI6G2KwD+iiac/fCd1Qgz0HMfIX3QD/OTovZZt6lEtLr4O+ggciKMfXRyr4iBhbria
+ 3nrl0lOIyqlFW99jBkkfEWtTha7ybRo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706901308;
+ s=susede2_ed25519; t=1706901675;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=N75eoEnTRmF//dJPydXmE18zktSZO/AXzr+jWG3TFP8=;
- b=1yGJiSOcle6daMDW3GdvM1ZtkTJTsvmPsHbVqONoub3T7VHIGJY0KHlsoV5Y9lDZWsh49R
- QxEcNdLOoAW8ydCg==
+ bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
+ b=yJRhz7WR//r01d15fWWsUHyXZbGYiRDyQ8KRYS/xTtjWOVkZwHb+ViOIMMXnNwxyxIJZcP
+ h441nN1G+IGEZbBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706901307; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706901675; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=N75eoEnTRmF//dJPydXmE18zktSZO/AXzr+jWG3TFP8=;
- b=XGGttzv3nGWU9S0VETHOvv5aTBaAidQVJsjcpBnCZ4764TioyDYNVUGyFP7+NmGtD223Uw
- zD616Vo2afRCKCu001o+HfzwIngv+Xa9jJutyakTEMxnyE61+NXmAxI6RuiroivOo6xsO9
- 4WNUPlYmL26M+rfnSnVAs0JDnk3EkKQ=
+ bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
+ b=BS/doIEEC6uoPcX7xYa2h2LRWh19sIjM4gJktA/uUeT6r2XQ50xj+Gy9Gco4ivhFufU52Q
+ DQQqLI6G2KwD+iiac/fCd1Qgz0HMfIX3QD/OTovZZt6lEtLr4O+ggciKMfXRyr4iBhbria
+ 3nrl0lOIyqlFW99jBkkfEWtTha7ybRo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706901307;
+ s=susede2_ed25519; t=1706901675;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=N75eoEnTRmF//dJPydXmE18zktSZO/AXzr+jWG3TFP8=;
- b=3vOWbxc2l6QQ1XmX3bSWTZgpa8t3Ty6wLoauQrBY5kPmJx+4aWRZBntW/FwR9bDoXLe1Lt
- LbSU/6SxqMsogOAg==
+ bh=ID9BqHT7EguY50EL68PYvz9N3Yh63osxYiMsZe2FJ80=;
+ b=yJRhz7WR//r01d15fWWsUHyXZbGYiRDyQ8KRYS/xTtjWOVkZwHb+ViOIMMXnNwxyxIJZcP
+ h441nN1G+IGEZbBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 79502139AB;
- Fri,  2 Feb 2024 19:15:07 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 06130139AB;
+ Fri,  2 Feb 2024 19:21:14 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +kMgEDs/vWVuZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:15:07 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9mvDL6pAvWWjZgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:21:14 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: peterx@redhat.com, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@bytedance.com>, Bryan Zhang
  <bryan.zhang@bytedance.com>, peterx@redhat.com, Avihai Horon
  <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit
  <ppandit@redhat.com>
-Subject: Re: [PATCH v2 03/23] migration/multifd: Drop
- MultiFDSendParams.quit, cleanup error paths
-In-Reply-To: <20240202102857.110210-4-peterx@redhat.com>
+Subject: Re: [PATCH v2 06/23] migration/multifd: Separate SYNC request with
+ normal jobs
+In-Reply-To: <20240202102857.110210-7-peterx@redhat.com>
 References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-4-peterx@redhat.com>
-Date: Fri, 02 Feb 2024 16:15:04 -0300
-Message-ID: <87wmrmhe4n.fsf@suse.de>
+ <20240202102857.110210-7-peterx@redhat.com>
+Date: Fri, 02 Feb 2024 16:21:11 -0300
+Message-ID: <87ttmqhdug.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XGGttzv3;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3vOWbxc2
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-2.14 / 50.00]; ARC_NA(0.00)[];
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="BS/doIEE";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=yJRhz7WR
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-0.63)[82.32%]; FROM_HAS_DN(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
  TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_THREE(0.00)[3];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  RCPT_COUNT_SEVEN(0.00)[8];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Queue-Id: F0B40221D0
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 7ACF21F78C
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -128,38 +127,59 @@ peterx@redhat.com writes:
 
 > From: Peter Xu <peterx@redhat.com>
 >
-> Multifd send side has two fields to indicate error quits:
+> Multifd provide a threaded model for processing jobs.  On sender side,
+> there can be two kinds of job: (1) a list of pages to send, or (2) a sync
+> request.
 >
->   - MultiFDSendParams.quit
->   - &multifd_send_state->exiting
+> The sync request is a very special kind of job.  It never contains a page
+> array, but only a multifd packet telling the dest side to synchronize with
+> sent pages.
 >
-> Merge them into the global one.  The replacement is done by changing all
-> p->quit checks into the global var check.  The global check doesn't need
-> any lock.
+> Before this patch, both requests use the pending_job field, no matter what
+> the request is, it will boost pending_job, while multifd sender thread will
+> decrement it after it finishes one job.
 >
-> A few more things done on top of this altogether:
+> However this should be racy, because SYNC is special in that it needs to
+> set p->flags with MULTIFD_FLAG_SYNC, showing that this is a sync request.
+> Consider a sequence of operations where:
 >
->   - multifd_send_terminate_threads()
+>   - migration thread enqueue a job to send some pages, pending_job++ (0->1)
 >
->     Moving the xchg() of &multifd_send_state->exiting upper, so as to cover
->     the tracepoint, migrate_set_error() and migrate_set_state().
+>   - [...before the selected multifd sender thread wakes up...]
 >
->   - multifd_send_sync_main()
+>   - migration thread enqueue another job to sync, pending_job++ (1->2),
+>     setup p->flags=MULTIFD_FLAG_SYNC
 >
->     In the 2nd loop, add one more check over the global var to make sure we
->     don't keep the looping if QEMU already decided to quit.
+>   - multifd sender thread wakes up, found pending_job==2
+>     - send the 1st packet with MULTIFD_FLAG_SYNC and list of pages
+>     - send the 2nd packet with flags==0 and no pages
 >
->   - multifd_tls_outgoing_handshake()
+> This is not expected, because MULTIFD_FLAG_SYNC should hopefully be done
+> after all the pages are received.  Meanwhile, the 2nd packet will be
+> completely useless, which contains zero information.
 >
->     Use multifd_send_terminate_threads() to set the error state.  That has
->     a benefit of updating MigrationState.error to that error too, so we can
->     persist that 1st error we hit in that specific channel.
+> I didn't verify above, but I think this issue is still benign in that at
+> least on the recv side we always receive pages before handling
+> MULTIFD_FLAG_SYNC.  However that's not always guaranteed and just tricky.
 >
->   - multifd_new_send_channel_async()
+> One other reason I want to separate it is using p->flags to communicate
+> between the two threads is also not clearly defined, it's very hard to read
+> and understand why accessing p->flags is always safe; see the current impl
+> of multifd_send_thread() where we tried to cache only p->flags.  It doesn't
+> need to be that complicated.
 >
->     Take similar approach like above, drop the migrate_set_error() because
->     multifd_send_terminate_threads() already covers that.  Unwrap the helper
->     multifd_new_send_channel_cleanup() along the way; not really needed.
+> This patch introduces pending_sync, a separate flag just to show that the
+> requester needs a sync.  Alongside, we remove the tricky caching of
+> p->flags now because after this patch p->flags should only be used by
+> multifd sender thread now, which will be crystal clear.  So it is always
+> thread safe to access p->flags.
+>
+> With that, we can also safely convert the pending_job into a boolean,
+> because we don't support >1 pending jobs anyway.
+>
+> Always use atomic ops to access both flags to make sure no cache effect.
+> When at it, drop the initial setting of "pending_job = 0" because it's
+> always allocated using g_new0().
 >
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
