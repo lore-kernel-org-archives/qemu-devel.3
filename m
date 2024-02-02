@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38528C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C8DC48291
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvaz-0000Ge-EO; Fri, 02 Feb 2024 10:36:49 -0500
+	id 1rVvav-0000B4-LV; Fri, 02 Feb 2024 10:36:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvav-0000Bd-TE
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1rVvat-00008T-QJ
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:43 -0500
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvau-0004Ry-Cz
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-40e8d3b29f2so18558905e9.1
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:43 -0800 (PST)
+ id 1rVvaq-0004Qq-DP
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:43 -0500
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-5113abf9b05so385068e87.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888202; x=1707493002; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Y9n/AEkxgug8LnVgrJ59ksyGPxf9vBmtyi9ED3ze10g=;
- b=KtFlnEfD0ebWGaD1JzH11fi3nzN0vd1hVmOnHbNaI4gCXo5KKK9Z+1MhLWW1BD15Zq
- q4Q0xyy04horfOohhW0qEASezMBKzFZtfk7VqLwjsVhb3+gJgRNZsrWs97igWjmd2QMM
- 5xuLxD1RrJpmguPRF5J9fE57WNTCMm44RAuTQbGLzR/HZQvRE+83DDRiPTjZBN/7mIV2
- UIFPYGCKPO50gQY/IYRixZNIV8bAzi3JlyA1hbbyDZpSuENAWmfN1kUKYCxn560ZPfmL
- h1TQfhAmsSqAsHTuTAom+kDob1YOSPnXHPeD8jORTDmzDPUBVEGfoONHK8GcXth1si8d
- og/Q==
+ d=linaro.org; s=google; t=1706888198; x=1707492998; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nyszzEhuahgyNW96/tt7/fAnBeDr9kv+QhzqcFGnfCE=;
+ b=x33JFiqn2sz7bU7i9dtzJXGj3LsyK8aAL5Fna3kpWW4hoIda+zdFEhwfprbJdKQHbP
+ 6KNS4SsxQxPAzeBdd7p99m81S+M+WgVNES/NBNLxk0G+0OmQwGmBbYCqZ6j29uq0JE1a
+ fBYGv/Tq280KieQyn025Xzbd3wvk9j7EtjM25fr3l7qn9OJb8w/guDwjdPAGr9050uaK
+ z0+E8FjyaEdqLIxFLoaqWy5HHf/PHzjDKUx+VmcZT30lVFVGNc4QBkPH4bCc/jspAll7
+ E4JMG5jsCRIXtWxvYpMtvINbD6ZxofF1YJ/XGUcV9Sr2qeiC23LyuEKlvW2S8U6hAclw
+ Thrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888202; x=1707493002;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y9n/AEkxgug8LnVgrJ59ksyGPxf9vBmtyi9ED3ze10g=;
- b=MoZzDo8VHZKHeh87mVkKZWJFwHdV7iNERouqOMvnd6KWCnM456rTpV5pHpf0OS++A5
- E/QOG4iLUBx29UNH45cSKfHjAHrHTsEwN37BsbyyJ4c4tjJd62nCMtPuyn5qEtsc5KjI
- kj3AumEaB2C43Dp/NKKXu3bu+317aIGsuzw/HLoQY+z/qyGz52Dw1jeWi7ZbE7C8vZdB
- weez693gSCFSNtHpjQc6n0KVX4epzBYJRPZMJB8biOE9AB4LGTQt+5oupcfAoIAG7QYh
- DRHFwSrnb7x06gmELNqiw8UvwM4daJM+ph/RXJNMc4RtBU7ksgS6fX8OQq4uQnSLGI0Q
- nuOQ==
-X-Gm-Message-State: AOJu0YyRNnBJdA9Yjs+mEjAey1gTMJ5kKIV8BZDeMN3zd3geWWfiL6Lc
- YCcn+C4cUMO40HQLYATTlr05k+HcKipMn44TrfI10KdHhedU5a5TJnuQzryTkyJ1XawKlhUPEst
- k
-X-Google-Smtp-Source: AGHT+IEbre5vRsT8iOCWBqioeE41PYliJhhdBjr6PNNkM+ZEkY3/+QZVnyDdRZMUFAUK/JDY96orbA==
-X-Received: by 2002:a05:600c:314a:b0:40e:7232:bdf9 with SMTP id
- h10-20020a05600c314a00b0040e7232bdf9mr4624655wmo.16.1706888202722; 
- Fri, 02 Feb 2024 07:36:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706888198; x=1707492998;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nyszzEhuahgyNW96/tt7/fAnBeDr9kv+QhzqcFGnfCE=;
+ b=le3UrYEKhx7Q4vj8Gb5pymLb1JjT3LTo/tALf81UOk5At7veITLfdp9toJJVokXl/v
+ FGlEdc7DGuugAqFL5OahphOWkj568nC7akPd4ShUCupHYQKwTmQJiq//ce2HtUGXM2b5
+ YR6/xJsK1otpuLrtKSevZO73w5zGG2f0o9eZZGtWokLE+tYOZVJM4rRAyuDp1DbeI/JR
+ fHNAqfTrOvj5gJfxlQ4ZSnW+l79N1imr/Vc2xrpLhON7+V6cWY/wrVo1Fyk6KPNC3mpb
+ gr3OZ4lu4yZeFIggss04DqbNP7aVG2+6da/yutNYP+mK24FpkfrbBOLQBS3mgascqmLt
+ T2kQ==
+X-Gm-Message-State: AOJu0Yxi28ipwr4vjyuovQAqA1cuk/dRwJ6EokxCh2OQy/EOSxwsdh1l
+ x+Q9Dn1Fx8PZbA+tFwN9Roz1SXUg3mc1MrpWhdJnKiVcAMcHc0kVdxdCgZMHLC45fFHDnIe6kzY
+ n
+X-Google-Smtp-Source: AGHT+IGRJw7EdO6ON+Sc0ZEiuWdaxCCRRff4ZtEEh5ZsHEAEk+a2izlbSMizZMbVXstg/2mNa8aSZA==
+X-Received: by 2002:a19:5504:0:b0:511:3e8d:f57e with SMTP id
+ n4-20020a195504000000b005113e8df57emr90567lfe.11.1706888198342; 
+ Fri, 02 Feb 2024 07:36:38 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.42
+ k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:42 -0800 (PST)
+ Fri, 02 Feb 2024 07:36:38 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/36] qemu-options.hx: Improve -serial option documentation
-Date: Fri,  2 Feb 2024 15:36:09 +0000
-Message-Id: <20240202153637.3710444-9-peter.maydell@linaro.org>
+Subject: [PULL 00/36] target-arm queue
+Date: Fri,  2 Feb 2024 15:36:01 +0000
+Message-Id: <20240202153637.3710444-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
-References: <20240202153637.3710444-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,57 +91,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The -serial option documentation is a bit brief about '-serial none'
-and '-serial null'. In particular it's not very clear about the
-difference between them, and it doesn't mention that it's up to
-the machine model whether '-serial none' means "don't create the
-serial port" or "don't wire the serial port up to anything".
+The following changes since commit c3709fde5955d13f6d4f86ab46ef3cc2288ca65e:
 
-Expand on these points.
+  Merge tag 'pull-aspeed-20240201' of https://github.com/legoater/qemu into staging (2024-02-01 14:42:11 +0000)
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240122163607.459769-3-peter.maydell@linaro.org
----
- qemu-options.hx | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+are available in the Git repository at:
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 484cc21c1fd..40e938c4877 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4129,7 +4129,8 @@ SRST
-     This option can be used several times to simulate up to 4 serial
-     ports.
- 
--    Use ``-serial none`` to disable all serial ports.
-+    You can use ``-serial none`` to suppress the creation of default
-+    serial devices.
- 
-     Available character devices are:
- 
-@@ -4151,10 +4152,17 @@ SRST
-         [Linux only] Pseudo TTY (a new PTY is automatically allocated)
- 
-     ``none``
--        No device is allocated.
-+        No device is allocated. Note that for machine types which
-+        emulate systems where a serial device is always present in
-+        real hardware, this may be equivalent to the ``null`` option,
-+        in that the serial device is still present but all output
-+        is discarded. For boards where the number of serial ports is
-+        truly variable, this suppresses the creation of the device.
- 
-     ``null``
--        void device
-+        A guest will see the UART or serial device as present in the
-+        machine, but all output is discarded, and there is no input.
-+        Conceptually equivalent to redirecting the output to ``/dev/null``.
- 
-     ``chardev:id``
-         Use a named character device defined with the ``-chardev``
--- 
-2.34.1
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240202
 
+for you to fetch changes up to f09c2b7ba9908714a3e2f1decd989462536cf731:
+
+  hw/arm: Connect SPI Controller to BCM2835 (2024-02-02 13:51:59 +0000)
+
+----------------------------------------------------------------
+target/arm: fix exception syndrome for AArch32 bkpt insn
+pci, vmbus, adb, s390x/css-bridge: Switch buses to 3-phase reset
+system/vl.c: Fix handling of '-serial none -serial something'
+target/arm: Add ID_AA64ZFR0_EL1.B16B16 to the exposed-to-userspace set
+tests/qtest/xlnx-versal-trng-test.c: Drop use of variable length array
+target/arm: Reinstate "vfp" property on AArch32 CPUs
+doc/sphinx/hxtool.py: add optional label argument to SRST directive
+hw/arm: Check for CPU types in machine_run_board_init() for various boards
+pci-host: designware: Limit value range of iATU viewport register
+hw/arm: Convert some DPRINTF macros to trace events and guest errors
+hw/arm: NPCM7XX SoC: Add GMAC ethernet controller devices
+hw/arm: Implement BCM2835 SPI Controller
+
+----------------------------------------------------------------
+David Woodhouse (1):
+      doc/sphinx/hxtool.py: add optional label argument to SRST directive
+
+Guenter Roeck (1):
+      pci-host: designware: Limit value range of iATU viewport register
+
+Hao Wu (2):
+      hw/net: Add NPCMXXX GMAC device
+      hw/arm: Add GMAC devices to NPCM7XX SoC
+
+Jan Klötzke (1):
+      target/arm: fix exception syndrome for AArch32 bkpt insn
+
+Manos Pitsidianakis (6):
+      hw/arm/strongarm.c: convert DPRINTF to trace events and guest errors
+      hw/arm/z2: convert DPRINTF to trace events and guest errors
+      hw/arm/xen_arm.c: convert DPRINTF to trace events and error/warn reports
+      hw/xen/xen-mapcache.c: convert DPRINTF to tracepoints
+      hw/xen/xen-hvm-common.c: convert DPRINTF to tracepoints
+      hw/xen: convert stderr prints to error/warn reports
+
+Nabih Estefan Diaz (4):
+      tests/qtest: Creating qtest for GMAC Module
+      hw/net: GMAC Rx Implementation
+      hw/net: GMAC Tx Implementation
+      tests/qtest: Adding PCS Module test to GMAC Qtest
+
+Peter Maydell (10):
+      pci: Switch bus reset to 3-phase-reset
+      vmbus: Switch bus reset to 3-phase-reset
+      adb: Switch bus reset to 3-phase-reset
+      hw/s390x/css-bridge: switch virtual-css bus to 3-phase-reset
+      hw/core: Remove transitional infrastructure from BusClass
+      system/vl.c: Fix handling of '-serial none -serial something'
+      qemu-options.hx: Improve -serial option documentation
+      target/arm: Add ID_AA64ZFR0_EL1.B16B16 to the exposed-to-userspace set
+      tests/qtest/xlnx-versal-trng-test.c: Drop use of variable length array
+      target/arm: Reinstate "vfp" property on AArch32 CPUs
+
+Philippe Mathieu-Daudé (9):
+      hw/arm/exynos: Add missing QOM parent for CPU cores
+      hw/arm/exynos: Check for CPU types in machine_run_board_init()
+      hw/arm/highbank: Add missing QOM parent for CPU cores
+      hw/arm/highbank: Check for CPU types in machine_run_board_init()
+      hw/arm/msf2: Simplify setting MachineClass::valid_cpu_types[]
+      hw/arm/musca: Simplify setting MachineClass::valid_cpu_types[]
+      hw/arm/npcm7xx_boards: Simplify setting MachineClass::valid_cpu_types[]
+      hw/arm/vexpress: Check for CPU types in machine_run_board_init()
+      hw/arm/zynq: Check for CPU types in machine_run_board_init()
+
+Rayhan Faizel (2):
+      hw/ssi: Implement BCM2835 SPI Controller
+      hw/arm: Connect SPI Controller to BCM2835
+
+ docs/devel/docs.rst                  |  12 +-
+ docs/sphinx/hxtool.py                |  16 +
+ docs/system/arm/raspi.rst            |   2 +-
+ docs/system/i386/xen.rst             |   3 +-
+ include/hw/arm/bcm2835_peripherals.h |   3 +-
+ include/hw/arm/msf2-soc.h            |   3 -
+ include/hw/arm/npcm7xx.h             |   2 +
+ include/hw/net/npcm_gmac.h           | 343 +++++++++++++
+ include/hw/qdev-core.h               |   2 -
+ include/hw/ssi/bcm2835_spi.h         |  81 +++
+ target/arm/syndrome.h                |   8 +
+ hw/arm/bcm2835_peripherals.c         |  17 +-
+ hw/arm/exynos4210.c                  |   1 +
+ hw/arm/exynos4_boards.c              |   8 +
+ hw/arm/highbank.c                    |  11 +
+ hw/arm/msf2-soc.c                    |   3 +-
+ hw/arm/msf2-som.c                    |   4 -
+ hw/arm/musca.c                       |   1 -
+ hw/arm/npcm7xx.c                     |  37 +-
+ hw/arm/npcm7xx_boards.c              |   1 -
+ hw/arm/strongarm.c                   |  82 +--
+ hw/arm/vexpress.c                    |  12 +-
+ hw/arm/xen_arm.c                     |  23 +-
+ hw/arm/xilinx_zynq.c                 |   6 +-
+ hw/arm/z2.c                          |  27 +-
+ hw/core/bus.c                        |  67 ---
+ hw/hyperv/vmbus.c                    |   7 +-
+ hw/input/adb.c                       |   7 +-
+ hw/net/npcm_gmac.c                   | 942 +++++++++++++++++++++++++++++++++++
+ hw/pci-host/designware.c             |   2 +
+ hw/pci/pci.c                         |  10 +-
+ hw/s390x/css-bridge.c                |   5 +-
+ hw/ssi/bcm2835_spi.c                 | 288 +++++++++++
+ hw/xen/xen-hvm-common.c              |  47 +-
+ hw/xen/xen-mapcache.c                |  59 +--
+ system/vl.c                          |  22 +-
+ target/arm/cpu.c                     |   4 +
+ target/arm/helper.c                  |  19 +
+ tests/qtest/npcm_gmac-test.c         | 344 +++++++++++++
+ tests/qtest/xlnx-versal-trng-test.c  |  19 +-
+ tests/tcg/aarch64/sysregs.c          |   2 +-
+ hw/arm/Kconfig                       |   1 +
+ hw/arm/trace-events                  |  15 +
+ hw/net/meson.build                   |   2 +-
+ hw/net/trace-events                  |  19 +
+ hw/ssi/Kconfig                       |   4 +
+ hw/ssi/meson.build                   |   1 +
+ hw/xen/trace-events                  |  21 +-
+ qemu-options.hx                      |  16 +-
+ tests/qtest/meson.build              |   1 +
+ 50 files changed, 2388 insertions(+), 244 deletions(-)
+ create mode 100644 include/hw/net/npcm_gmac.h
+ create mode 100644 include/hw/ssi/bcm2835_spi.h
+ create mode 100644 hw/net/npcm_gmac.c
+ create mode 100644 hw/ssi/bcm2835_spi.c
+ create mode 100644 tests/qtest/npcm_gmac-test.c
 
