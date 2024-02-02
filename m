@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 581EBC47258
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614FDC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmT1-0002Od-3s; Fri, 02 Feb 2024 00:51:59 -0500
+	id 1rVmWK-0005k2-1C; Fri, 02 Feb 2024 00:55:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmSy-000283-HN
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:56 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rVmWH-0005jD-Rv
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:21 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmSv-00025r-OH
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:51:56 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6ddc268ce2bso1069207b3a.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:51:53 -0800 (PST)
+ id 1rVmWG-0002zs-B2
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:21 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-5cedfc32250so1543955a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853112; x=1707457912; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853319; x=1707458119; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V5DcaABDb9a5Acv7c8zuGNE7yRin2rz8nKGTze/VBOM=;
- b=GpAqMMnhu+KcvAXSxaWKidDbbBZxgUDG/fylGQrFn7WG70BGX8Jcr/7H/6fNNV0Qlw
- bECGF0WKmABrIkTyyhqqNVL7RHcKEO/wndpGuDaoUdfYqrREBHOgZ7V2XQDkU/kHZSmB
- JkdDJQQ9QSQtN50M+F1+52qq2Q9jQ2IJx/t5VZPowTYZyf5sutNuF3BdeP80z6oAprIO
- I6GO5i5bHZlFzNvHQcU9KxU4J89tCWl3NiIv0C8OPLT9WOHx9CXp7QnTi0bTjHtF6WFI
- hHmQymZxGH+lbPQ20mKdH/whGAePuY+AxUdDVwVxggsbMAO7BTYuTotjguORMeIhWIbw
- xDnQ==
+ bh=/NSayOrlpf4hRSJQ67NyQWTUVVrKjEVHeBTZ50SQ0J0=;
+ b=j3Jy1yHBM1Kjcp+loyW7pa0oT8WSwr9kaJ1rOeTP3SQ/Af/D4gc9guYMSvvqSiB9MB
+ XeL+Lz60TBvVkgzK4MXCWGyYnnJwYttSvvTVOHDW+dosip1Nl5tN3vBD1JY9NnPA4jJJ
+ /NZgFopWVVYTvohk80192ZJjGHRYjMfuq7WsAZ4WjDTy/Z5lJ5zMAp7ERT3BdCDCvAuw
+ JoSnugQAj0r9u0/eBS9CL4D164ozPsobq3Bkq1P+kfUv6sqR7o+Py4EPiz3qWfJ1r3Wr
+ LtGGwm1Sp8wSsfHk8KARRIYGZTIp7/Acp2U+FkhTnm9PiWzNqUv0dbYFR0NJSgzVa8NG
+ gQ5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853112; x=1707457912;
+ d=1e100.net; s=20230601; t=1706853319; x=1707458119;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V5DcaABDb9a5Acv7c8zuGNE7yRin2rz8nKGTze/VBOM=;
- b=VYtOwSRstzJfCzyHiG+BrC+2oBXOAzJLfLrAnTh7475aFafNqF8BhLO0lWOKl6n4Iz
- MwpThR1xA4W7Hn4qCnE8aVEQjRARS60w+akg08o6rsGCCyvdVFNrCxA9cycHEsn6CPaY
- AcqX7HRKojThKPHDKXwCSFY1ZSJjzvWu+K4yYYNUg5xaP0iWftBHOnGdzrx3V3QQ0UD7
- KZhHYN2B7BzMGJIF6doIdNF1xGJkHF4BNedPzeUPklEsVU8eEIL1Ez2zz4VlyivhC4JC
- rLf0HkvXSxScfgNuJ8SNWx13ZG7dMPAoLEd/QNQiGOLXiFyhvPws6ZcNZo/KIZi0fof+
- 0lbQ==
-X-Gm-Message-State: AOJu0Yyi5QBl8GdSYgzIQMl6YSFuqamBUMQFeDppo8CraU0/u7F7ZWLq
- 81IcBCWeNUsEMQesiLBZRiTn23y472ouTTPJU72jDzd+LgSs76jT60CKFSU8jNKgZGXwoH0VO5P
- h9Co=
-X-Google-Smtp-Source: AGHT+IH3MsXPx2ALYNKl3w4ejpy1eMZRB0Yg+hMF+QIrnXWrPuLP+Cf8mVAqHfcqI6vHjpP+JO068Q==
-X-Received: by 2002:a05:6a00:1a8d:b0:6df:edcd:f45b with SMTP id
- e13-20020a056a001a8d00b006dfedcdf45bmr3966925pfv.13.1706853112386; 
- Thu, 01 Feb 2024 21:51:52 -0800 (PST)
+ bh=/NSayOrlpf4hRSJQ67NyQWTUVVrKjEVHeBTZ50SQ0J0=;
+ b=HvN24lD8qmybnuL9C4MPFYcGQW2j3M89bdSY2fc5ItDhL5eaUc6PlZulHx6m6YLf07
+ 4kJZoSNIwYOgeVJj8SgQr4tzbtzDMw4RH0ShU++snoFDE9l/CFt1Jy92SPKJMjWljcZC
+ +cr/byHNOA1G8gL0LI2h5ZdWS3Yh+KuBnaslW6R80XhhCOqn9mAsie+MFP1Q97r8AqCH
+ 3nknldsAJtNRUanEi74GRgvXGZ1hvbn3TmoTh/ysuqXauMlaDlRYboeb0r3nmChbszbO
+ 2xkduAx7ATMetrq8IAhUACLk964tPgydDGpLLcfK4iBV+u9k16q/SIrMA2u8nA1Yws45
+ PCPg==
+X-Gm-Message-State: AOJu0YzzCwVK4pn6qYauGyNx5aQY5Pt6P3s5NJWDY8hquLUTmZ8H6gqL
+ FpCqK+lTfFY+IlJPvZznNPxH2po08YQtJwV5Yg157xOFc9d3kz8nE6wt072+XbmqBcgdmtAjKLJ
+ YHwk=
+X-Google-Smtp-Source: AGHT+IEqcYNbkgAkiUBsgVdueKsDGIM23Yp+owAqFM620OXumnDbnlzYJ7LWPvSDBy0G/4ZdeeMbeg==
+X-Received: by 2002:a05:6a20:d044:b0:19e:3356:a6cc with SMTP id
+ hv4-20020a056a20d04400b0019e3356a6ccmr937038pzb.51.1706853319113; 
+ Thu, 01 Feb 2024 21:55:19 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- h2-20020aa79f42000000b006dab0d72cd0sm715111pfr.214.2024.02.01.21.51.50
+ je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:51:52 -0800 (PST)
+ Thu, 01 Feb 2024 21:55:18 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 33/57] include/exec: Change cpu_mmu_index argument to CPUState
-Date: Fri,  2 Feb 2024 15:50:12 +1000
-Message-Id: <20240202055036.684176-35-richard.henderson@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 44/57] target/sparc: Use i128 for FqTOd, FqTOx
+Date: Fri,  2 Feb 2024 15:50:23 +1000
+Message-Id: <20240202055036.684176-46-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,507 +93,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-Id: <20231103173841.33651-10-richard.henderson@linaro.org>
 ---
- include/exec/cpu-all.h            |  2 +-
- include/exec/cpu-common.h         |  3 +--
- target/sparc/cpu.h                |  2 +-
- accel/tcg/cputlb.c                | 22 +++++++++-------
- semihosting/uaccess.c             |  2 +-
- target/cris/translate.c           |  2 +-
- target/hppa/mem_helper.c          |  2 +-
- target/hppa/op_helper.c           |  8 +++---
- target/i386/tcg/translate.c       |  2 +-
- target/loongarch/tcg/tlb_helper.c |  4 +--
- target/m68k/op_helper.c           |  2 +-
- target/microblaze/helper.c        |  3 +--
- target/microblaze/mmu.c           |  2 +-
- target/microblaze/translate.c     |  2 +-
- target/nios2/translate.c          |  2 +-
- target/openrisc/translate.c       |  2 +-
- target/sparc/ldst_helper.c        |  2 +-
- target/sparc/mmu_helper.c         |  2 +-
- target/tricore/helper.c           |  2 +-
- target/tricore/translate.c        |  2 +-
- target/xtensa/mmu_helper.c        |  2 +-
- accel/tcg/ldst_common.c.inc       | 42 ++++++++++++++++++++-----------
- 22 files changed, 65 insertions(+), 49 deletions(-)
+ target/sparc/helper.h     | 4 ++--
+ target/sparc/fop_helper.c | 8 ++++----
+ target/sparc/translate.c  | 7 ++++---
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 80c0d0699b..bc05dce7ab 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -311,7 +311,7 @@ CPUArchState *cpu_copy(CPUArchState *env);
- #define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 2))
- #define TLB_WATCHPOINT      0
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index e770107eb0..4cb3451878 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -100,7 +100,7 @@ DEF_HELPER_FLAGS_2(fdtos, TCG_CALL_NO_RWG, f32, env, f64)
+ DEF_HELPER_FLAGS_2(fstod, TCG_CALL_NO_RWG, f64, env, f32)
+ DEF_HELPER_FLAGS_2(fqtos, TCG_CALL_NO_RWG, f32, env, i128)
+ DEF_HELPER_FLAGS_2(fstoq, TCG_CALL_NO_RWG, void, env, f32)
+-DEF_HELPER_FLAGS_1(fqtod, TCG_CALL_NO_RWG, f64, env)
++DEF_HELPER_FLAGS_2(fqtod, TCG_CALL_NO_RWG, f64, env, i128)
+ DEF_HELPER_FLAGS_2(fdtoq, TCG_CALL_NO_RWG, void, env, f64)
+ DEF_HELPER_FLAGS_2(fstoi, TCG_CALL_NO_RWG, s32, env, f32)
+ DEF_HELPER_FLAGS_2(fdtoi, TCG_CALL_NO_RWG, s32, env, f64)
+@@ -108,7 +108,7 @@ DEF_HELPER_FLAGS_2(fqtoi, TCG_CALL_NO_RWG, s32, env, i128)
+ #ifdef TARGET_SPARC64
+ DEF_HELPER_FLAGS_2(fstox, TCG_CALL_NO_RWG, s64, env, f32)
+ DEF_HELPER_FLAGS_2(fdtox, TCG_CALL_NO_RWG, s64, env, f64)
+-DEF_HELPER_FLAGS_1(fqtox, TCG_CALL_NO_RWG, s64, env)
++DEF_HELPER_FLAGS_2(fqtox, TCG_CALL_NO_RWG, s64, env, i128)
  
--static inline int cpu_mmu_index(CPUArchState *env, bool ifetch)
-+static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
- {
-     return MMU_USER_IDX;
- }
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index cdfbe994fd..9ead1be100 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -275,9 +275,8 @@ static inline CPUState *env_cpu(CPUArchState *env)
-  * The user-only version of this function is inline in cpu-all.h,
-  * where it always returns MMU_USER_IDX.
-  */
--static inline int cpu_mmu_index(CPUArchState *env, bool ifetch)
-+static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
- {
--    CPUState *cs = env_cpu(env);
-     int ret = cs->cc->mmu_index(cs, ifetch);
-     tcg_debug_assert(ret >= 0 && ret < NB_MMU_MODES);
-     return ret;
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index 51856152fa..1e076f6355 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -755,7 +755,7 @@ static inline void cpu_get_tb_cpu_state(CPUSPARCState *env, vaddr *pc,
-     uint32_t flags;
-     *pc = env->pc;
-     *cs_base = env->npc;
--    flags = cpu_mmu_index(env, false);
-+    flags = cpu_mmu_index(env_cpu(env), false);
- #ifndef CONFIG_USER_ONLY
-     if (cpu_supervisor_mode(env)) {
-         flags |= TB_FLAG_SUPER;
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 3facfcbb24..047cd2cc0a 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1601,7 +1601,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
-     void *p;
- 
-     (void)probe_access_internal(env_cpu(env), addr, 1, MMU_INST_FETCH,
--                                cpu_mmu_index(env, true), false,
-+                                cpu_mmu_index(env_cpu(env), true), false,
-                                 &p, &full, 0, false);
-     if (p == NULL) {
-         return -1;
-@@ -2959,26 +2959,30 @@ static void do_st16_mmu(CPUState *cpu, vaddr addr, Int128 val,
- 
- uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr)
- {
--    MemOpIdx oi = make_memop_idx(MO_UB, cpu_mmu_index(env, true));
--    return do_ld1_mmu(env_cpu(env), addr, oi, 0, MMU_INST_FETCH);
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_UB, cpu_mmu_index(cs, true));
-+    return do_ld1_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+ DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+ DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index 657a14575d..9f39b933e8 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -190,9 +190,9 @@ void helper_fstoq(CPUSPARCState *env, float32 src)
+     QT0 = float32_to_float128(src, &env->fp_status);
  }
  
- uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr)
+-float64 helper_fqtod(CPUSPARCState *env)
++float64 helper_fqtod(CPUSPARCState *env, Int128 src)
  {
--    MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(env, true));
--    return do_ld2_mmu(env_cpu(env), addr, oi, 0, MMU_INST_FETCH);
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(cs, true));
-+    return do_ld2_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+-    return float128_to_float64(QT1, &env->fp_status);
++    return float128_to_float64(f128_in(src), &env->fp_status);
  }
  
- uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr)
- {
--    MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(env, true));
--    return do_ld4_mmu(env_cpu(env), addr, oi, 0, MMU_INST_FETCH);
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(cs, true));
-+    return do_ld4_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+ void helper_fdtoq(CPUSPARCState *env, float64 src)
+@@ -227,9 +227,9 @@ int64_t helper_fdtox(CPUSPARCState *env, float64 src)
+     return float64_to_int64_round_to_zero(src, &env->fp_status);
  }
  
- uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
+-int64_t helper_fqtox(CPUSPARCState *env)
++int64_t helper_fqtox(CPUSPARCState *env, Int128 src)
  {
--    MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(env, true));
--    return do_ld8_mmu(env_cpu(env), addr, oi, 0, MMU_INST_FETCH);
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
-+    return do_ld8_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
+-    return float128_to_int64_round_to_zero(QT1, &env->fp_status);
++    return float128_to_int64_round_to_zero(f128_in(src), &env->fp_status);
  }
- 
- uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
-diff --git a/semihosting/uaccess.c b/semihosting/uaccess.c
-index 5d889f9263..dc587d73bc 100644
---- a/semihosting/uaccess.c
-+++ b/semihosting/uaccess.c
-@@ -26,7 +26,7 @@ void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
- 
- ssize_t uaccess_strlen_user(CPUArchState *env, target_ulong addr)
- {
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = cpu_mmu_index(env_cpu(env), false);
-     size_t len = 0;
- 
-     while (1) {
-diff --git a/target/cris/translate.c b/target/cris/translate.c
-index 7acea29a01..8f74b6c53f 100644
---- a/target/cris/translate.c
-+++ b/target/cris/translate.c
-@@ -2966,7 +2966,7 @@ static void cris_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     dc->cpu = env_archcpu(env);
-     dc->ppc = pc_start;
-     dc->pc = pc_start;
--    dc->mem_index = cpu_mmu_index(env, false);
-+    dc->mem_index = cpu_mmu_index(cs, false);
-     dc->flags_uptodate = 1;
-     dc->flags_x = tb_flags & X_FLAG;
-     dc->cc_x_uptodate = 0;
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 4fcc612754..629a9d90ef 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -646,7 +646,7 @@ int hppa_artype_for_page(CPUHPPAState *env, target_ulong vaddr)
- void HELPER(diag_btlb)(CPUHPPAState *env)
- {
-     unsigned int phys_page, len, slot;
--    int mmu_idx = cpu_mmu_index(env, 0);
-+    int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
-     uintptr_t ra = GETPC();
-     HPPATLBEntry *btlb;
-     uint64_t virt_page;
-diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
-index ce15469465..b1f24a5aad 100644
---- a/target/hppa/op_helper.c
-+++ b/target/hppa/op_helper.c
-@@ -59,7 +59,7 @@ void HELPER(tcond)(CPUHPPAState *env, target_ulong cond)
- static void atomic_store_mask32(CPUHPPAState *env, target_ulong addr,
-                                 uint32_t val, uint32_t mask, uintptr_t ra)
- {
--    int mmu_idx = cpu_mmu_index(env, 0);
-+    int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
-     uint32_t old, new, cmp, *haddr;
-     void *vaddr;
- 
-@@ -86,7 +86,7 @@ static void atomic_store_mask64(CPUHPPAState *env, target_ulong addr,
-                                 int size, uintptr_t ra)
- {
- #ifdef CONFIG_ATOMIC64
--    int mmu_idx = cpu_mmu_index(env, 0);
-+    int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
-     uint64_t old, new, cmp, *haddr;
-     void *vaddr;
- 
-@@ -235,7 +235,7 @@ static void do_stby_e(CPUHPPAState *env, target_ulong addr, target_ulong val,
-     default:
-         /* Nothing is stored, but protection is checked and the
-            cacheline is marked dirty.  */
--        probe_write(env, addr, 0, cpu_mmu_index(env, 0), ra);
-+        probe_write(env, addr, 0, cpu_mmu_index(env_cpu(env), 0), ra);
-         break;
-     }
- }
-@@ -296,7 +296,7 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
-     default:
-         /* Nothing is stored, but protection is checked and the
-            cacheline is marked dirty.  */
--        probe_write(env, addr, 0, cpu_mmu_index(env, 0), ra);
-+        probe_write(env, addr, 0, cpu_mmu_index(env_cpu(env), 0), ra);
-         break;
-     }
- }
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 2808903661..10cba16256 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -6955,7 +6955,7 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-     dc->cc_op_dirty = false;
-     dc->popl_esp_hack = 0;
-     /* select memory access functions */
--    dc->mem_index = cpu_mmu_index(env, false);
-+    dc->mem_index = cpu_mmu_index(cpu, false);
-     dc->cpuid_features = env->features[FEAT_1_EDX];
-     dc->cpuid_ext_features = env->features[FEAT_1_ECX];
-     dc->cpuid_ext2_features = env->features[FEAT_8000_0001_EDX];
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 65ffbef08e..9e2a44c119 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -241,7 +241,7 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-     int prot;
- 
-     if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
--                             cpu_mmu_index(env, false)) != 0) {
-+                             cpu_mmu_index(cs, false)) != 0) {
-         return -1;
-     }
-     return phys_addr;
-@@ -320,7 +320,7 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
-     uint8_t tlb_ps;
-     LoongArchTLB *tlb = &env->tlb[index];
- 
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = cpu_mmu_index(env_cpu(env), false);
-     uint8_t tlb_v0 = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, V);
-     uint8_t tlb_v1 = FIELD_EX64(tlb->tlb_entry1, TLBENTRY, V);
-     uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index 1ce850bbc5..47b4173bb9 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -811,7 +811,7 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
-     uint32_t l1, l2;
-     uintptr_t ra = GETPC();
- #if defined(CONFIG_ATOMIC64)
--    int mmu_idx = cpu_mmu_index(env, 0);
-+    int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
-     MemOpIdx oi = make_memop_idx(MO_BEUQ, mmu_idx);
  #endif
  
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index 98bdb82de8..460eee0cf5 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -228,10 +228,9 @@ hwaddr mb_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-                                         MemTxAttrs *attrs)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index f70efb29a1..6f75f4d5d6 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -4717,8 +4717,9 @@ TRANS(FqTOs, ALL, do_env_fq, a, gen_helper_fqtos)
+ TRANS(FqTOi, ALL, do_env_fq, a, gen_helper_fqtoi)
+ 
+ static bool do_env_dq(DisasContext *dc, arg_r_r *a,
+-                      void (*func)(TCGv_i64, TCGv_env))
++                      void (*func)(TCGv_i64, TCGv_env, TCGv_i128))
  {
-     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
--    CPUMBState *env = &cpu->env;
-     target_ulong vaddr, paddr = 0;
-     MicroBlazeMMULookup lu;
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = cpu_mmu_index(cs, false);
-     unsigned int hit;
++    TCGv_i128 src;
+     TCGv_i64 dst;
  
-     /* Caller doesn't initialize */
-diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c
-index 75651979a9..234006634e 100644
---- a/target/microblaze/mmu.c
-+++ b/target/microblaze/mmu.c
-@@ -305,7 +305,7 @@ void mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)
-             }
+     if (gen_trap_ifnofpu(dc)) {
+@@ -4729,9 +4730,9 @@ static bool do_env_dq(DisasContext *dc, arg_r_r *a,
+     }
  
-             hit = mmu_translate(cpu, &lu, v & TLB_EPN_MASK,
--                                0, cpu_mmu_index(env, false));
-+                                0, cpu_mmu_index(env_cpu(env), false));
-             if (hit) {
-                 env->mmu.regs[MMU_R_TLBX] = lu.idx;
-             } else {
-diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
-index 2e628647d1..a465c2d245 100644
---- a/target/microblaze/translate.c
-+++ b/target/microblaze/translate.c
-@@ -1607,7 +1607,7 @@ static void mb_tr_init_disas_context(DisasContextBase *dcb, CPUState *cs)
-     dc->ext_imm = dc->base.tb->cs_base;
-     dc->r0 = NULL;
-     dc->r0_set = false;
--    dc->mem_index = cpu_mmu_index(&cpu->env, false);
-+    dc->mem_index = cpu_mmu_index(cs, false);
-     dc->jmp_cond = dc->tb_flags & D_FLAG ? TCG_COND_ALWAYS : TCG_COND_NEVER;
-     dc->jmp_dest = -1;
- 
-diff --git a/target/nios2/translate.c b/target/nios2/translate.c
-index 3078372b36..612556b297 100644
---- a/target/nios2/translate.c
-+++ b/target/nios2/translate.c
-@@ -948,7 +948,7 @@ static void nios2_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     Nios2CPU *cpu = env_archcpu(env);
-     int page_insns;
- 
--    dc->mem_idx = cpu_mmu_index(env, false);
-+    dc->mem_idx = cpu_mmu_index(cs, false);
-     dc->cr_state = cpu->cr_state;
-     dc->tb_flags = dc->base.tb->flags;
-     dc->eic_present = cpu->eic_present;
-diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-index d4cbc5eaea..785bcb6552 100644
---- a/target/openrisc/translate.c
-+++ b/target/openrisc/translate.c
-@@ -1528,7 +1528,7 @@ static void openrisc_tr_init_disas_context(DisasContextBase *dcb, CPUState *cs)
-     CPUOpenRISCState *env = cpu_env(cs);
-     int bound;
- 
--    dc->mem_idx = cpu_mmu_index(env, false);
-+    dc->mem_idx = cpu_mmu_index(cs, false);
-     dc->tb_flags = dc->base.tb->flags;
-     dc->delayed_branch = (dc->tb_flags & TB_FLAGS_DFLAG) != 0;
-     dc->cpucfgr = env->cpucfgr;
-diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index 09066d5487..52aa6c631b 100644
---- a/target/sparc/ldst_helper.c
-+++ b/target/sparc/ldst_helper.c
-@@ -690,7 +690,7 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
-     case ASI_M_IODIAG:  /* Turbosparc IOTLB Diagnostic */
-         break;
-     case ASI_KERNELTXT: /* Supervisor code access */
--        oi = make_memop_idx(memop, cpu_mmu_index(env, true));
-+        oi = make_memop_idx(memop, cpu_mmu_index(env_cpu(env), true));
-         switch (size) {
-         case 1:
-             ret = cpu_ldb_code_mmu(env, addr, oi, GETPC());
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 453498c670..5170a668bb 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -901,7 +901,7 @@ hwaddr sparc_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-     SPARCCPU *cpu = SPARC_CPU(cs);
-     CPUSPARCState *env = &cpu->env;
-     hwaddr phys_addr;
--    int mmu_idx = cpu_mmu_index(env, false);
-+    int mmu_idx = cpu_mmu_index(cs, false);
- 
-     if (cpu_sparc_get_phys_page(env, &phys_addr, addr, 2, mmu_idx) != 0) {
-         if (cpu_sparc_get_phys_page(env, &phys_addr, addr, 0, mmu_idx) != 0) {
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index 174f666e1e..649373a9cb 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -48,7 +48,7 @@ hwaddr tricore_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-     TriCoreCPU *cpu = TRICORE_CPU(cs);
-     hwaddr phys_addr;
-     int prot;
--    int mmu_idx = cpu_mmu_index(&cpu->env, false);
-+    int mmu_idx = cpu_mmu_index(cs, false);
- 
-     if (get_physical_address(&cpu->env, &phys_addr, &prot, addr,
-                              MMU_DATA_LOAD, mmu_idx)) {
-diff --git a/target/tricore/translate.c b/target/tricore/translate.c
-index f1156c39e7..278c514ab0 100644
---- a/target/tricore/translate.c
-+++ b/target/tricore/translate.c
-@@ -8355,7 +8355,7 @@ static void tricore_tr_init_disas_context(DisasContextBase *dcbase,
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
-     CPUTriCoreState *env = cpu_env(cs);
--    ctx->mem_idx = cpu_mmu_index(env, false);
-+    ctx->mem_idx = cpu_mmu_index(cs, false);
- 
-     uint32_t tb_flags = (uint32_t)ctx->base.tb->flags;
-     ctx->priv = FIELD_EX32(tb_flags, TB_FLAGS, PRIV);
-diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
-index 2fda4e887c..47063b0a57 100644
---- a/target/xtensa/mmu_helper.c
-+++ b/target/xtensa/mmu_helper.c
-@@ -66,7 +66,7 @@ void HELPER(itlb_hit_test)(CPUXtensaState *env, uint32_t vaddr)
-      * only the side-effects (ie any MMU or other exception)
-      */
-     probe_access(env, vaddr, 1, MMU_INST_FETCH,
--                 cpu_mmu_index(env, true), GETPC());
-+                 cpu_mmu_index(env_cpu(env), true), GETPC());
- }
- 
- void HELPER(wsr_rasid)(CPUXtensaState *env, uint32_t v)
-diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
-index 44833513fb..c82048e377 100644
---- a/accel/tcg/ldst_common.c.inc
-+++ b/accel/tcg/ldst_common.c.inc
-@@ -354,7 +354,8 @@ void cpu_stq_le_mmuidx_ra(CPUArchState *env, abi_ptr addr, uint64_t val,
- 
- uint32_t cpu_ldub_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- {
--    return cpu_ldub_mmuidx_ra(env, addr, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldub_mmuidx_ra(env, addr, mmu_index, ra);
- }
- 
- int cpu_ldsb_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-@@ -364,7 +365,8 @@ int cpu_ldsb_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- 
- uint32_t cpu_lduw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- {
--    return cpu_lduw_be_mmuidx_ra(env, addr, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_lduw_be_mmuidx_ra(env, addr, mmu_index, ra);
- }
- 
- int cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-@@ -374,17 +376,20 @@ int cpu_ldsw_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- 
- uint32_t cpu_ldl_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- {
--    return cpu_ldl_be_mmuidx_ra(env, addr, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldl_be_mmuidx_ra(env, addr, mmu_index, ra);
- }
- 
- uint64_t cpu_ldq_be_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- {
--    return cpu_ldq_be_mmuidx_ra(env, addr, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldq_be_mmuidx_ra(env, addr, mmu_index, ra);
- }
- 
- uint32_t cpu_lduw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- {
--    return cpu_lduw_le_mmuidx_ra(env, addr, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_lduw_le_mmuidx_ra(env, addr, mmu_index, ra);
- }
- 
- int cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
-@@ -394,54 +399,63 @@ int cpu_ldsw_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- 
- uint32_t cpu_ldl_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- {
--    return cpu_ldl_le_mmuidx_ra(env, addr, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldl_le_mmuidx_ra(env, addr, mmu_index, ra);
- }
- 
- uint64_t cpu_ldq_le_data_ra(CPUArchState *env, abi_ptr addr, uintptr_t ra)
- {
--    return cpu_ldq_le_mmuidx_ra(env, addr, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    return cpu_ldq_le_mmuidx_ra(env, addr, mmu_index, ra);
- }
- 
- void cpu_stb_data_ra(CPUArchState *env, abi_ptr addr,
-                      uint32_t val, uintptr_t ra)
- {
--    cpu_stb_mmuidx_ra(env, addr, val, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stb_mmuidx_ra(env, addr, val, mmu_index, ra);
- }
- 
- void cpu_stw_be_data_ra(CPUArchState *env, abi_ptr addr,
-                         uint32_t val, uintptr_t ra)
- {
--    cpu_stw_be_mmuidx_ra(env, addr, val, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stw_be_mmuidx_ra(env, addr, val, mmu_index, ra);
- }
- 
- void cpu_stl_be_data_ra(CPUArchState *env, abi_ptr addr,
-                         uint32_t val, uintptr_t ra)
- {
--    cpu_stl_be_mmuidx_ra(env, addr, val, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stl_be_mmuidx_ra(env, addr, val, mmu_index, ra);
- }
- 
- void cpu_stq_be_data_ra(CPUArchState *env, abi_ptr addr,
-                         uint64_t val, uintptr_t ra)
- {
--    cpu_stq_be_mmuidx_ra(env, addr, val, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stq_be_mmuidx_ra(env, addr, val, mmu_index, ra);
- }
- 
- void cpu_stw_le_data_ra(CPUArchState *env, abi_ptr addr,
-                         uint32_t val, uintptr_t ra)
- {
--    cpu_stw_le_mmuidx_ra(env, addr, val, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stw_le_mmuidx_ra(env, addr, val, mmu_index, ra);
- }
- 
- void cpu_stl_le_data_ra(CPUArchState *env, abi_ptr addr,
-                         uint32_t val, uintptr_t ra)
- {
--    cpu_stl_le_mmuidx_ra(env, addr, val, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stl_le_mmuidx_ra(env, addr, val, mmu_index, ra);
- }
- 
- void cpu_stq_le_data_ra(CPUArchState *env, abi_ptr addr,
-                         uint64_t val, uintptr_t ra)
- {
--    cpu_stq_le_mmuidx_ra(env, addr, val, cpu_mmu_index(env, false), ra);
-+    int mmu_index = cpu_mmu_index(env_cpu(env), false);
-+    cpu_stq_le_mmuidx_ra(env, addr, val, mmu_index, ra);
- }
- 
- /*--------------------------*/
+     gen_op_clear_ieee_excp_and_FTT();
+-    gen_op_load_fpr_QT1(QFPREG(a->rs));
++    src = gen_load_fpr_Q(dc, a->rs);
+     dst = gen_dest_fpr_D(dc, a->rd);
+-    func(dst, tcg_env);
++    func(dst, tcg_env, src);
+     gen_helper_check_ieee_exceptions(cpu_fsr, tcg_env);
+     gen_store_fpr_D(dc, a->rd, dst);
+     return advance_pc(dc);
 -- 
 2.34.1
 
