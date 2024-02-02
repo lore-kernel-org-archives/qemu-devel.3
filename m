@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614FDC4828E
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B5FCC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmWK-0005k2-1C; Fri, 02 Feb 2024 00:55:24 -0500
+	id 1rVmWa-00071X-ID; Fri, 02 Feb 2024 00:55:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWH-0005jD-Rv
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:21 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1rVmWZ-0006wR-5x
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:39 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWG-0002zs-B2
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:21 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5cedfc32250so1543955a12.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:19 -0800 (PST)
+ id 1rVmWX-00035s-8R
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:38 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1d74045c463so14548795ad.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853319; x=1707458119; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853335; x=1707458135; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/NSayOrlpf4hRSJQ67NyQWTUVVrKjEVHeBTZ50SQ0J0=;
- b=j3Jy1yHBM1Kjcp+loyW7pa0oT8WSwr9kaJ1rOeTP3SQ/Af/D4gc9guYMSvvqSiB9MB
- XeL+Lz60TBvVkgzK4MXCWGyYnnJwYttSvvTVOHDW+dosip1Nl5tN3vBD1JY9NnPA4jJJ
- /NZgFopWVVYTvohk80192ZJjGHRYjMfuq7WsAZ4WjDTy/Z5lJ5zMAp7ERT3BdCDCvAuw
- JoSnugQAj0r9u0/eBS9CL4D164ozPsobq3Bkq1P+kfUv6sqR7o+Py4EPiz3qWfJ1r3Wr
- LtGGwm1Sp8wSsfHk8KARRIYGZTIp7/Acp2U+FkhTnm9PiWzNqUv0dbYFR0NJSgzVa8NG
- gQ5g==
+ bh=2MmXvL/mBUtjPLJgH7bWQwu4aOx0MlIr+YBmEmLuSVs=;
+ b=c2yTC3GnDXdJA5yBMl/d3AUjJlTzJYCv3r8hUcaZa3AEmUm1iISEnrR3pRz42bDmhX
+ DgxfV5xAHZTVt1RYBfBw0dZYPfm6cu0AHqVjNohGiePZrLJFhBrfaxrUbtRQB3GA3yyJ
+ 5iYbDO8gpiUcqgadTETJiR9SXLVecmHKKzeD8dDRjfhJ73/YtBeZ+moMyyTWokmlO+gz
+ d9rPFOOFYcV1Q8CdcUJk48fAU+LX/CKYesrDOMrXp63xTqhDjO8f06NdSYgIG5foBQE1
+ TeK2GhTdJtqf2QrZlbCmmPWiDBRQErJq5/84zrOSmS63+8h0wNdw3ujSCdvCNIwvawk5
+ gwVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853319; x=1707458119;
+ d=1e100.net; s=20230601; t=1706853335; x=1707458135;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/NSayOrlpf4hRSJQ67NyQWTUVVrKjEVHeBTZ50SQ0J0=;
- b=HvN24lD8qmybnuL9C4MPFYcGQW2j3M89bdSY2fc5ItDhL5eaUc6PlZulHx6m6YLf07
- 4kJZoSNIwYOgeVJj8SgQr4tzbtzDMw4RH0ShU++snoFDE9l/CFt1Jy92SPKJMjWljcZC
- +cr/byHNOA1G8gL0LI2h5ZdWS3Yh+KuBnaslW6R80XhhCOqn9mAsie+MFP1Q97r8AqCH
- 3nknldsAJtNRUanEi74GRgvXGZ1hvbn3TmoTh/ysuqXauMlaDlRYboeb0r3nmChbszbO
- 2xkduAx7ATMetrq8IAhUACLk964tPgydDGpLLcfK4iBV+u9k16q/SIrMA2u8nA1Yws45
- PCPg==
-X-Gm-Message-State: AOJu0YzzCwVK4pn6qYauGyNx5aQY5Pt6P3s5NJWDY8hquLUTmZ8H6gqL
- FpCqK+lTfFY+IlJPvZznNPxH2po08YQtJwV5Yg157xOFc9d3kz8nE6wt072+XbmqBcgdmtAjKLJ
- YHwk=
-X-Google-Smtp-Source: AGHT+IEqcYNbkgAkiUBsgVdueKsDGIM23Yp+owAqFM620OXumnDbnlzYJ7LWPvSDBy0G/4ZdeeMbeg==
-X-Received: by 2002:a05:6a20:d044:b0:19e:3356:a6cc with SMTP id
- hv4-20020a056a20d04400b0019e3356a6ccmr937038pzb.51.1706853319113; 
- Thu, 01 Feb 2024 21:55:19 -0800 (PST)
+ bh=2MmXvL/mBUtjPLJgH7bWQwu4aOx0MlIr+YBmEmLuSVs=;
+ b=gFUQV7dRZ1AoajCb7WG2wevD6G2rn7qqOPLHlpxGSUUON1dQlbyU91SGhVCdk3Upxs
+ LTpGrJySCzxC0cbGiqrXdWA+7EE/pZFlH0PPfWdvhJP+oPFGJLQI5VPGvZfBfgCS6up6
+ dm5CSodxjVwGIfQclQcKBbXdD6sBy+Xss1lrIIdd2xzrIq6cRvydjjngR0/wMBWSLtu2
+ Pzr/gTY5tQr6I9DlCSSAkxIBb6rK9WdgIw00phlkvfMKQN1c5fAj65/sF1q/ewE0O4lH
+ KOuoHFcVe2gocQHBOwqyz4MAxTX9nKK2OjkPCRd/ivP2qpoLGwOWD4lQ7kV4wZLGkBKX
+ G/8Q==
+X-Gm-Message-State: AOJu0YwRW78RcwD2CMxYNPrKH99d6NqIPkYEihkeapKm2l+OQWzAjuki
+ x3CUeXuUopThOB0LGPfDeH4orSRTDXFSbg9aY6CqT3Mo7CeWuq5+bOIPaoiqp09huWFm6oD4i6u
+ WAaE=
+X-Google-Smtp-Source: AGHT+IGhMYTbjbuittSUoQFX5q/mWgzWbJ4tqyn/nOmteb9njrv5ATAO3S5/zzyFCIV2fQ6yqJDPqg==
+X-Received: by 2002:a17:902:fc4b:b0:1d8:8f4d:4d15 with SMTP id
+ me11-20020a170902fc4b00b001d88f4d4d15mr1389605plb.17.1706853335661; 
+ Thu, 01 Feb 2024 21:55:35 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCUT0uxolzHzecaY5zWYHyx7J7ZYB+pNmLORzM0T5Dwla+MYeY2iBmPzT9GnNZe7J+3MbLEMUb9f9K7MFtFF/WIbihBywFanhTwd4/m+kA==
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.17
+ je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:55:18 -0800 (PST)
+ Thu, 01 Feb 2024 21:55:35 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 44/57] target/sparc: Use i128 for FqTOd, FqTOx
-Date: Fri,  2 Feb 2024 15:50:23 +1000
-Message-Id: <20240202055036.684176-46-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 51/57] target/sparc: Split ver from env->fsr
+Date: Fri,  2 Feb 2024 15:50:30 +1000
+Message-Id: <20240202055036.684176-53-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,93 +97,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This field is read-only.  It is easier to store it separately
+and merge it only upon read.
+
+While we're at it, use FSR_VER_SHIFT to initialize fpu_version.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-Id: <20231103173841.33651-10-richard.henderson@linaro.org>
+Message-Id: <20231103173841.33651-17-richard.henderson@linaro.org>
 ---
- target/sparc/helper.h     | 4 ++--
- target/sparc/fop_helper.c | 8 ++++----
- target/sparc/translate.c  | 7 ++++---
- 3 files changed, 10 insertions(+), 9 deletions(-)
+ target/sparc/cpu.h        |  3 +++
+ target/sparc/cpu.c        | 27 +++++++++++++--------------
+ target/sparc/fop_helper.c |  9 +++++++--
+ 3 files changed, 23 insertions(+), 16 deletions(-)
 
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index e770107eb0..4cb3451878 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -100,7 +100,7 @@ DEF_HELPER_FLAGS_2(fdtos, TCG_CALL_NO_RWG, f32, env, f64)
- DEF_HELPER_FLAGS_2(fstod, TCG_CALL_NO_RWG, f64, env, f32)
- DEF_HELPER_FLAGS_2(fqtos, TCG_CALL_NO_RWG, f32, env, i128)
- DEF_HELPER_FLAGS_2(fstoq, TCG_CALL_NO_RWG, void, env, f32)
--DEF_HELPER_FLAGS_1(fqtod, TCG_CALL_NO_RWG, f64, env)
-+DEF_HELPER_FLAGS_2(fqtod, TCG_CALL_NO_RWG, f64, env, i128)
- DEF_HELPER_FLAGS_2(fdtoq, TCG_CALL_NO_RWG, void, env, f64)
- DEF_HELPER_FLAGS_2(fstoi, TCG_CALL_NO_RWG, s32, env, f32)
- DEF_HELPER_FLAGS_2(fdtoi, TCG_CALL_NO_RWG, s32, env, f64)
-@@ -108,7 +108,7 @@ DEF_HELPER_FLAGS_2(fqtoi, TCG_CALL_NO_RWG, s32, env, i128)
- #ifdef TARGET_SPARC64
- DEF_HELPER_FLAGS_2(fstox, TCG_CALL_NO_RWG, s64, env, f32)
- DEF_HELPER_FLAGS_2(fdtox, TCG_CALL_NO_RWG, s64, env, f64)
--DEF_HELPER_FLAGS_1(fqtox, TCG_CALL_NO_RWG, s64, env)
-+DEF_HELPER_FLAGS_2(fqtox, TCG_CALL_NO_RWG, s64, env, i128)
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 3cf8cc2d0b..216155d231 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -191,6 +191,9 @@ enum {
+ #define FSR_NXC   (1ULL << 0)
+ #define FSR_CEXC_MASK (FSR_NVC | FSR_OFC | FSR_UFC | FSR_DZC | FSR_NXC)
  
- DEF_HELPER_FLAGS_2(fpmerge, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fmul8x16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-index 657a14575d..9f39b933e8 100644
---- a/target/sparc/fop_helper.c
-+++ b/target/sparc/fop_helper.c
-@@ -190,9 +190,9 @@ void helper_fstoq(CPUSPARCState *env, float32 src)
-     QT0 = float32_to_float128(src, &env->fp_status);
- }
- 
--float64 helper_fqtod(CPUSPARCState *env)
-+float64 helper_fqtod(CPUSPARCState *env, Int128 src)
- {
--    return float128_to_float64(QT1, &env->fp_status);
-+    return float128_to_float64(f128_in(src), &env->fp_status);
- }
- 
- void helper_fdtoq(CPUSPARCState *env, float64 src)
-@@ -227,9 +227,9 @@ int64_t helper_fdtox(CPUSPARCState *env, float64 src)
-     return float64_to_int64_round_to_zero(src, &env->fp_status);
- }
- 
--int64_t helper_fqtox(CPUSPARCState *env)
-+int64_t helper_fqtox(CPUSPARCState *env, Int128 src)
- {
--    return float128_to_int64_round_to_zero(QT1, &env->fp_status);
-+    return float128_to_int64_round_to_zero(f128_in(src), &env->fp_status);
- }
++#define FSR_VER_SHIFT  17
++#define FSR_VER_MASK   (7 << FSR_VER_SHIFT)
++
+ #define FSR_FTT2   (1ULL << 16)
+ #define FSR_FTT1   (1ULL << 15)
+ #define FSR_FTT0   (1ULL << 14)
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 1897ab230d..313ebc4c11 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -368,7 +368,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "Fujitsu MB86904",
+         .iu_version = 0x04 << 24, /* Impl 0, ver 4 */
+-        .fpu_version = 4 << 17, /* FPU version 4 (Meiko) */
++        .fpu_version = 4 << FSR_VER_SHIFT, /* FPU version 4 (Meiko) */
+         .mmu_version = 0x04 << 24, /* Impl 0, ver 4 */
+         .mmu_bm = 0x00004000,
+         .mmu_ctpr_mask = 0x00ffffc0,
+@@ -381,7 +381,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "Fujitsu MB86907",
+         .iu_version = 0x05 << 24, /* Impl 0, ver 5 */
+-        .fpu_version = 4 << 17, /* FPU version 4 (Meiko) */
++        .fpu_version = 4 << FSR_VER_SHIFT, /* FPU version 4 (Meiko) */
+         .mmu_version = 0x05 << 24, /* Impl 0, ver 5 */
+         .mmu_bm = 0x00004000,
+         .mmu_ctpr_mask = 0xffffffc0,
+@@ -394,7 +394,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI MicroSparc I",
+         .iu_version = 0x41000000,
+-        .fpu_version = 4 << 17,
++        .fpu_version = 4 << FSR_VER_SHIFT,
+         .mmu_version = 0x41000000,
+         .mmu_bm = 0x00004000,
+         .mmu_ctpr_mask = 0x007ffff0,
+@@ -407,7 +407,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI MicroSparc II",
+         .iu_version = 0x42000000,
+-        .fpu_version = 4 << 17,
++        .fpu_version = 4 << FSR_VER_SHIFT,
+         .mmu_version = 0x02000000,
+         .mmu_bm = 0x00004000,
+         .mmu_ctpr_mask = 0x00ffffc0,
+@@ -420,7 +420,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI MicroSparc IIep",
+         .iu_version = 0x42000000,
+-        .fpu_version = 4 << 17,
++        .fpu_version = 4 << FSR_VER_SHIFT,
+         .mmu_version = 0x04000000,
+         .mmu_bm = 0x00004000,
+         .mmu_ctpr_mask = 0x00ffffc0,
+@@ -433,7 +433,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI SuperSparc 40", /* STP1020NPGA */
+         .iu_version = 0x41000000, /* SuperSPARC 2.x */
+-        .fpu_version = 0 << 17,
++        .fpu_version = 0 << FSR_VER_SHIFT,
+         .mmu_version = 0x00000800, /* SuperSPARC 2.x, no MXCC */
+         .mmu_bm = 0x00002000,
+         .mmu_ctpr_mask = 0xffffffc0,
+@@ -446,7 +446,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI SuperSparc 50", /* STP1020PGA */
+         .iu_version = 0x40000000, /* SuperSPARC 3.x */
+-        .fpu_version = 0 << 17,
++        .fpu_version = 0 << FSR_VER_SHIFT,
+         .mmu_version = 0x01000800, /* SuperSPARC 3.x, no MXCC */
+         .mmu_bm = 0x00002000,
+         .mmu_ctpr_mask = 0xffffffc0,
+@@ -459,7 +459,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI SuperSparc 51",
+         .iu_version = 0x40000000, /* SuperSPARC 3.x */
+-        .fpu_version = 0 << 17,
++        .fpu_version = 0 << FSR_VER_SHIFT,
+         .mmu_version = 0x01000000, /* SuperSPARC 3.x, MXCC */
+         .mmu_bm = 0x00002000,
+         .mmu_ctpr_mask = 0xffffffc0,
+@@ -473,7 +473,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI SuperSparc 60", /* STP1020APGA */
+         .iu_version = 0x40000000, /* SuperSPARC 3.x */
+-        .fpu_version = 0 << 17,
++        .fpu_version = 0 << FSR_VER_SHIFT,
+         .mmu_version = 0x01000800, /* SuperSPARC 3.x, no MXCC */
+         .mmu_bm = 0x00002000,
+         .mmu_ctpr_mask = 0xffffffc0,
+@@ -486,7 +486,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI SuperSparc 61",
+         .iu_version = 0x44000000, /* SuperSPARC 3.x */
+-        .fpu_version = 0 << 17,
++        .fpu_version = 0 << FSR_VER_SHIFT,
+         .mmu_version = 0x01000000, /* SuperSPARC 3.x, MXCC */
+         .mmu_bm = 0x00002000,
+         .mmu_ctpr_mask = 0xffffffc0,
+@@ -500,7 +500,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "TI SuperSparc II",
+         .iu_version = 0x40000000, /* SuperSPARC II 1.x */
+-        .fpu_version = 0 << 17,
++        .fpu_version = 0 << FSR_VER_SHIFT,
+         .mmu_version = 0x08000000, /* SuperSPARC II 1.x, MXCC */
+         .mmu_bm = 0x00002000,
+         .mmu_ctpr_mask = 0xffffffc0,
+@@ -514,7 +514,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "LEON2",
+         .iu_version = 0xf2000000,
+-        .fpu_version = 4 << 17, /* FPU version 4 (Meiko) */
++        .fpu_version = 4 << FSR_VER_SHIFT, /* FPU version 4 (Meiko) */
+         .mmu_version = 0xf2000000,
+         .mmu_bm = 0x00004000,
+         .mmu_ctpr_mask = 0x007ffff0,
+@@ -527,7 +527,7 @@ static const sparc_def_t sparc_defs[] = {
+     {
+         .name = "LEON3",
+         .iu_version = 0xf3000000,
+-        .fpu_version = 4 << 17, /* FPU version 4 (Meiko) */
++        .fpu_version = 4 << FSR_VER_SHIFT, /* FPU version 4 (Meiko) */
+         .mmu_version = 0xf3000000,
+         .mmu_bm = 0x00000000,
+         .mmu_ctpr_mask = 0xfffffffc,
+@@ -786,7 +786,6 @@ static void sparc_cpu_realizefn(DeviceState *dev, Error **errp)
  #endif
  
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index f70efb29a1..6f75f4d5d6 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -4717,8 +4717,9 @@ TRANS(FqTOs, ALL, do_env_fq, a, gen_helper_fqtos)
- TRANS(FqTOi, ALL, do_env_fq, a, gen_helper_fqtoi)
+     env->version = env->def.iu_version;
+-    env->fsr = env->def.fpu_version;
+     env->nwindows = env->def.nwindows;
+ #if !defined(TARGET_SPARC64)
+     env->mmuregs[0] |= env->def.mmu_version;
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index 70b38011d2..22b412adb5 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -349,7 +349,12 @@ GEN_FCMP(fcmpeq_fcc3, float128, 26, 1);
  
- static bool do_env_dq(DisasContext *dc, arg_r_r *a,
--                      void (*func)(TCGv_i64, TCGv_env))
-+                      void (*func)(TCGv_i64, TCGv_env, TCGv_i128))
+ target_ulong cpu_get_fsr(CPUSPARCState *env)
  {
-+    TCGv_i128 src;
-     TCGv_i64 dst;
+-    return env->fsr;
++    target_ulong fsr = env->fsr;
++
++    /* VER is kept completely separate until re-assembly. */
++    fsr |= env->def.fpu_version;
++
++    return fsr;
+ }
  
-     if (gen_trap_ifnofpu(dc)) {
-@@ -4729,9 +4730,9 @@ static bool do_env_dq(DisasContext *dc, arg_r_r *a,
-     }
+ target_ulong helper_get_fsr(CPUSPARCState *env)
+@@ -361,7 +366,7 @@ static void set_fsr_nonsplit(CPUSPARCState *env, target_ulong fsr)
+ {
+     int rnd_mode;
  
-     gen_op_clear_ieee_excp_and_FTT();
--    gen_op_load_fpr_QT1(QFPREG(a->rs));
-+    src = gen_load_fpr_Q(dc, a->rs);
-     dst = gen_dest_fpr_D(dc, a->rd);
--    func(dst, tcg_env);
-+    func(dst, tcg_env, src);
-     gen_helper_check_ieee_exceptions(cpu_fsr, tcg_env);
-     gen_store_fpr_D(dc, a->rd, dst);
-     return advance_pc(dc);
+-    env->fsr = fsr;
++    env->fsr = fsr & ~FSR_VER_MASK;
+ 
+     switch (fsr & FSR_RD_MASK) {
+     case FSR_RD_NEAREST:
 -- 
 2.34.1
 
