@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34BCBC48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6DDC4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rW0hF-0005kg-EM; Fri, 02 Feb 2024 16:03:37 -0500
+	id 1rW0lz-00082n-9F; Fri, 02 Feb 2024 16:08:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0hE-0005jr-4S
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:03:36 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0lx-0007zN-Nj
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:08:29 -0500
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0hC-0005s6-E9
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:03:35 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rW0lv-00070v-QR
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:08:29 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 916391FD3B;
- Fri,  2 Feb 2024 21:03:32 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F103A1FD3B;
+ Fri,  2 Feb 2024 21:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706907812; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706908106; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r1PZlOjXMRZOp8LP/EeUkmQKUWeo+ZlSv8VSpViX8ac=;
- b=KhI6C7Vet8ft66k24YHTmYQ2rGE8O25mxMDX8kthghASNhMOGDDT2rMhyX8ZSH/ziGBRuG
- bwh6TzFAmHeRA2vArHPVEQge3GASIpDNv4CY/53KbVBP0ZKBzFAFYfEifmfy5Ldwo8AEAp
- +9vxUO/yBnneAWXX6m9fZnsB2+d2PxU=
+ bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
+ b=LyRpi7IcB/SRugN2l6MFwvqPnCWisA6VVlXXdnpx9FdfX8nveZmxCLEixbwDrh6BQYHwUZ
+ 5YMhRcHKDa9v7YINPI+wDalrG9k3WNs0DR339wDF6JrYQeDdaRnD6iGfH8HBZWsFX3yqsS
+ /MZW3E2Idu7Bcw7nZ3LTC4owpHmBr90=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706907812;
+ s=susede2_ed25519; t=1706908106;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r1PZlOjXMRZOp8LP/EeUkmQKUWeo+ZlSv8VSpViX8ac=;
- b=cQnZEQZXZEj93OqVVcoNxmN0Dp5VC2+hc/jD77zgwmug6/Y1nEjDSfBw6hIzKJwh2KdkrN
- Ig8h+BvlENcUi7Aw==
+ bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
+ b=JDB8AeAeoJ/CH7YquNdWZusro0IT+JC+grVvTaFkQXlNYPAaq9kU+QukjNjwF2Ihyj2qPF
+ gSURzHRzAMTCeyAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706907812; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706908105; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r1PZlOjXMRZOp8LP/EeUkmQKUWeo+ZlSv8VSpViX8ac=;
- b=KhI6C7Vet8ft66k24YHTmYQ2rGE8O25mxMDX8kthghASNhMOGDDT2rMhyX8ZSH/ziGBRuG
- bwh6TzFAmHeRA2vArHPVEQge3GASIpDNv4CY/53KbVBP0ZKBzFAFYfEifmfy5Ldwo8AEAp
- +9vxUO/yBnneAWXX6m9fZnsB2+d2PxU=
+ bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
+ b=qz8p7PV0vYlA9VzdhMbz+0cwA+lk7CQ2oAkQNhkQ2u6BzuZTdErNkj0Q8sGJE/FwGijSRp
+ iJf+bLk9cSQgn5k2958M+NHtzKrMe5hfA+fPvm6XzR6I2uaoKLXrng2a3SG0Ae+jhTcTPo
+ e4IUFOxeHKfAhtgcaEXBaTVAaNJ5akA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706907812;
+ s=susede2_ed25519; t=1706908105;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r1PZlOjXMRZOp8LP/EeUkmQKUWeo+ZlSv8VSpViX8ac=;
- b=cQnZEQZXZEj93OqVVcoNxmN0Dp5VC2+hc/jD77zgwmug6/Y1nEjDSfBw6hIzKJwh2KdkrN
- Ig8h+BvlENcUi7Aw==
+ bh=lJRfrx0+b0vouk3VFPcOIhibkaW9dllDIODoL3Keh/o=;
+ b=3NTEGZT3cwoUa0Wow6qKjgVTb+zLc3pXlHc6OM1XkECjZWYWJh/WGX6Prat1CVm2jW4rMd
+ mihMLf/FrZH8S1AA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1A81A139AB;
- Fri,  2 Feb 2024 21:03:31 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 780F0139AB;
+ Fri,  2 Feb 2024 21:08:25 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id fyzENKNYvWUSewAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 21:03:31 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id FU82EMlZvWX/ewAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 21:08:25 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: peterx@redhat.com, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@bytedance.com>, Bryan Zhang
  <bryan.zhang@bytedance.com>, peterx@redhat.com, Avihai Horon
  <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit
- <ppandit@redhat.com>
-Subject: Re: [PATCH v2 21/23] migration/multifd: Stick with send/recv on
- function names
-In-Reply-To: <20240202102857.110210-22-peterx@redhat.com>
+ <ppandit@redhat.com>, Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Subject: Re: [PATCH v2 22/23] migration/multifd: Fix
+ MultiFDSendParams.packet_num race
+In-Reply-To: <20240202102857.110210-23-peterx@redhat.com>
 References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-22-peterx@redhat.com>
-Date: Fri, 02 Feb 2024 18:03:29 -0300
-Message-ID: <8734uah93y.fsf@suse.de>
+ <20240202102857.110210-23-peterx@redhat.com>
+Date: Fri, 02 Feb 2024 18:08:22 -0300
+Message-ID: <87zfwifubd.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qz8p7PV0;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3NTEGZT3
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[9];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: F103A1FD3B
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -121,150 +127,163 @@ peterx@redhat.com writes:
 
 > From: Peter Xu <peterx@redhat.com>
 >
-> Most of the multifd code uses send/recv to represent the two sides, but
-> some rare cases use save/load.
+> As reported correctly by Fabiano [1], MultiFDSendParams.packet_num is buggy
+> to be assigned and stored.  Consider two consequent operations of: (1)
+> queue a job into multifd send thread X, then (2) queue another sync request
+> to the same send thread X.  Then the MultiFDSendParams.packet_num will be
+> assigned twice, and the first assignment can get lost already.
 >
-> Since send/recv is the majority, replacing the save/load use cases to use
-> send/recv globally.  Now we reach a consensus on the naming.
+> To avoid that, we move the packet_num assignment from p->packet_num into
+> where the thread will fill in the packet.  Use atomic operations to protect
+> the field, making sure there's no race.
 >
+> Note that atomic fetch_add() may not be good for scaling purposes, however
+> multifd should be fine as number of threads should normally not go beyond
+> 16 threads.  Let's leave that concern for later but fix the issue first.
+>
+> There's also a trick on how to make it always work even on 32 bit hosts for
+> uint64_t packet number.  Switching to uintptr_t as of now to simply the
+> case.  It will cause packet number to overflow easier on 32 bit, but that
+> shouldn't be a major concern for now as 32 bit systems is not the major
+> audience for any performance concerns like what multifd wants to address.
+>
+> We also need to move multifd_send_state definition upper, so that
+> multifd_send_fill_packet() can reference it.
+>
+> [1] https://lore.kernel.org/r/87o7d1jlu5.fsf@suse.de
+>
+> Reported-by: Fabiano Rosas <farosas@suse.de>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
-Good!
+Elena had reported this in October already.
 
+Reported-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
 > ---
->  migration/multifd.h   | 10 +++++-----
->  migration/migration.c | 12 ++++++------
->  migration/multifd.c   | 10 +++++-----
->  3 files changed, 16 insertions(+), 16 deletions(-)
+>  migration/multifd.h |  2 --
+>  migration/multifd.c | 56 +++++++++++++++++++++++++++------------------
+>  2 files changed, 34 insertions(+), 24 deletions(-)
 >
 > diff --git a/migration/multifd.h b/migration/multifd.h
-> index a320c53a6f..9b40a53cb6 100644
+> index 9b40a53cb6..98876ff94a 100644
 > --- a/migration/multifd.h
 > +++ b/migration/multifd.h
-> @@ -13,11 +13,11 @@
->  #ifndef QEMU_MIGRATION_MULTIFD_H
->  #define QEMU_MIGRATION_MULTIFD_H
->  
-> -int multifd_save_setup(Error **errp);
-> -void multifd_save_cleanup(void);
-> -int multifd_load_setup(Error **errp);
-> -void multifd_load_cleanup(void);
-> -void multifd_load_shutdown(void);
-> +int multifd_send_setup(Error **errp);
-> +void multifd_send_shutdown(void);
-> +int multifd_recv_setup(Error **errp);
-> +void multifd_recv_cleanup(void);
-> +void multifd_recv_shutdown(void);
->  bool multifd_recv_all_channels_created(void);
->  void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
->  void multifd_recv_sync_main(void);
-> diff --git a/migration/migration.c b/migration/migration.c
-> index d5f705ceef..ba99772e76 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -311,7 +311,7 @@ void migration_incoming_state_destroy(void)
->  {
->      struct MigrationIncomingState *mis = migration_incoming_get_current();
->  
-> -    multifd_load_cleanup();
-> +    multifd_recv_cleanup();
->      compress_threads_load_cleanup();
->  
->      if (mis->to_src_file) {
-> @@ -662,7 +662,7 @@ static void process_incoming_migration_bh(void *opaque)
->  
->      trace_vmstate_downtime_checkpoint("dst-precopy-bh-announced");
->  
-> -    multifd_load_shutdown();
-> +    multifd_recv_shutdown();
->  
->      dirty_bitmap_mig_before_vm_start();
->  
-> @@ -759,7 +759,7 @@ fail:
->                        MIGRATION_STATUS_FAILED);
->      qemu_fclose(mis->from_src_file);
->  
-> -    multifd_load_cleanup();
-> +    multifd_recv_cleanup();
->      compress_threads_load_cleanup();
->  
->      exit(EXIT_FAILURE);
-> @@ -885,7 +885,7 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->          default_channel = !mis->from_src_file;
->      }
->  
-> -    if (multifd_load_setup(errp) != 0) {
-> +    if (multifd_recv_setup(errp) != 0) {
->          return;
->      }
->  
-> @@ -1331,7 +1331,7 @@ static void migrate_fd_cleanup(MigrationState *s)
->          }
->          bql_lock();
->  
-> -        multifd_save_cleanup();
-> +        multifd_send_shutdown();
->          qemu_mutex_lock(&s->qemu_file_lock);
->          tmp = s->to_dst_file;
->          s->to_dst_file = NULL;
-> @@ -3623,7 +3623,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
->          return;
->      }
->  
-> -    if (multifd_save_setup(&local_err) != 0) {
-> +    if (multifd_send_setup(&local_err) != 0) {
->          migrate_set_error(s, local_err);
->          error_report_err(local_err);
->          migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+> @@ -97,8 +97,6 @@ typedef struct {
+>      bool running;
+>      /* multifd flags for each packet */
+>      uint32_t flags;
+> -    /* global number of generated multifd packets */
+> -    uint64_t packet_num;
+>      /*
+>       * The sender thread has work to do if either of below boolean is set.
+>       *
 > diff --git a/migration/multifd.c b/migration/multifd.c
-> index e2dd2f6e04..130f86a1fb 100644
+> index 130f86a1fb..b317d57d61 100644
 > --- a/migration/multifd.c
 > +++ b/migration/multifd.c
-> @@ -663,7 +663,7 @@ static void multifd_send_cleanup_state(void)
->      multifd_send_state = NULL;
->  }
+> @@ -45,6 +45,35 @@ typedef struct {
+>      uint64_t unused2[4];    /* Reserved for future use */
+>  } __attribute__((packed)) MultiFDInit_t;
 >  
-> -void multifd_save_cleanup(void)
-> +void multifd_send_shutdown(void)
+> +struct {
+> +    MultiFDSendParams *params;
+> +    /* array of pages to sent */
+> +    MultiFDPages_t *pages;
+> +    /*
+> +     * Global number of generated multifd packets.
+> +     *
+> +     * Note that we used 'uintptr_t' because it'll naturally support atomic
+> +     * operations on both 32bit / 64 bits hosts.  It means on 32bit systems
+> +     * multifd will overflow the packet_num easier, but that should be
+> +     * fine.
+> +     *
+> +     * Another option is to use QEMU's Stat64 then it'll be 64 bits on all
+> +     * hosts, however so far it does not support atomic fetch_add() yet.
+> +     * Make it easy for now.
+> +     */
+> +    uintptr_t packet_num;
+> +    /* send channels ready */
+> +    QemuSemaphore channels_ready;
+> +    /*
+> +     * Have we already run terminate threads.  There is a race when it
+> +     * happens that we got one error while we are exiting.
+> +     * We will use atomic operations.  Only valid values are 0 and 1.
+> +     */
+> +    int exiting;
+> +    /* multifd ops */
+> +    MultiFDMethods *ops;
+> +} *multifd_send_state;
+> +
+>  /* Multifd without compression */
+>  
+>  /**
+> @@ -292,13 +321,16 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
 >  {
+>      MultiFDPacket_t *packet = p->packet;
+>      MultiFDPages_t *pages = p->pages;
+> +    uint64_t packet_num;
 >      int i;
 >  
-> @@ -965,7 +965,7 @@ static void multifd_new_send_channel_create(gpointer opaque)
->      socket_send_channel_create(multifd_new_send_channel_async, opaque);
+>      packet->flags = cpu_to_be32(p->flags);
+>      packet->pages_alloc = cpu_to_be32(p->pages->allocated);
+>      packet->normal_pages = cpu_to_be32(pages->num);
+>      packet->next_packet_size = cpu_to_be32(p->next_packet_size);
+> -    packet->packet_num = cpu_to_be64(p->packet_num);
+> +
+> +    packet_num = qatomic_fetch_inc(&multifd_send_state->packet_num);
+> +    packet->packet_num = cpu_to_be64(packet_num);
+>  
+>      if (pages->block) {
+>          strncpy(packet->ramblock, pages->block->idstr, 256);
+> @@ -314,7 +346,7 @@ void multifd_send_fill_packet(MultiFDSendParams *p)
+>      p->packets_sent++;
+>      p->total_normal_pages += pages->num;
+>  
+> -    trace_multifd_send(p->id, p->packet_num, pages->num, p->flags,
+> +    trace_multifd_send(p->id, packet_num, pages->num, p->flags,
+>                         p->next_packet_size);
 >  }
 >  
-> -int multifd_save_setup(Error **errp)
-> +int multifd_send_setup(Error **errp)
->  {
->      int thread_count;
->      uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
-> @@ -1063,7 +1063,7 @@ static void multifd_recv_terminate_threads(Error *err)
->      }
+> @@ -398,24 +430,6 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>      return 0;
 >  }
 >  
-> -void multifd_load_shutdown(void)
-> +void multifd_recv_shutdown(void)
+> -struct {
+> -    MultiFDSendParams *params;
+> -    /* array of pages to sent */
+> -    MultiFDPages_t *pages;
+> -    /* global number of generated multifd packets */
+> -    uint64_t packet_num;
+> -    /* send channels ready */
+> -    QemuSemaphore channels_ready;
+> -    /*
+> -     * Have we already run terminate threads.  There is a race when it
+> -     * happens that we got one error while we are exiting.
+> -     * We will use atomic operations.  Only valid values are 0 and 1.
+> -     */
+> -    int exiting;
+> -    /* multifd ops */
+> -    MultiFDMethods *ops;
+> -} *multifd_send_state;
+> -
+>  static bool multifd_send_should_exit(void)
 >  {
->      if (migrate_multifd()) {
->          multifd_recv_terminate_threads(NULL);
-> @@ -1098,7 +1098,7 @@ static void multifd_recv_cleanup_state(void)
->      multifd_recv_state = NULL;
->  }
+>      return qatomic_read(&multifd_send_state->exiting);
+> @@ -497,7 +511,6 @@ static bool multifd_send_pages(void)
+>       */
+>      assert(qatomic_read(&p->pending_job) == false);
+>      qatomic_set(&p->pending_job, true);
+> -    p->packet_num = multifd_send_state->packet_num++;
+>      multifd_send_state->pages = p->pages;
+>      p->pages = pages;
+>      qemu_mutex_unlock(&p->mutex);
+> @@ -730,7 +743,6 @@ int multifd_send_sync_main(void)
+>          trace_multifd_send_sync_main_signal(p->id);
 >  
-> -void multifd_load_cleanup(void)
-> +void multifd_recv_cleanup(void)
->  {
->      int i;
->  
-> @@ -1213,7 +1213,7 @@ static void *multifd_recv_thread(void *opaque)
->      return NULL;
->  }
->  
-> -int multifd_load_setup(Error **errp)
-> +int multifd_recv_setup(Error **errp)
->  {
->      int thread_count;
->      uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
+>          qemu_mutex_lock(&p->mutex);
+> -        p->packet_num = multifd_send_state->packet_num++;
+>          /*
+>           * We should be the only user so far, so not possible to be set by
+>           * others concurrently.
 
