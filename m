@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B74C47258
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C03D3C4828E
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 05:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVmWt-0007UX-3R; Fri, 02 Feb 2024 00:55:59 -0500
+	id 1rVmWV-0006fB-8h; Fri, 02 Feb 2024 00:55:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWr-0007Kv-32
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:57 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1rVmWT-0006Ul-FK
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:33 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rVmWk-0003YB-9h
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:56 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1d751bc0c15so15093005ad.2
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:49 -0800 (PST)
+ id 1rVmWR-00033O-WE
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 00:55:33 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1d928a8dee8so19872575ad.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 21:55:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706853348; x=1707458148; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706853330; x=1707458130; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oSDPCFSlupjS1LwiiY/IHM0gph76gQ4U11W6UuPY57o=;
- b=EiSvrjChgEw66HKwtucflOnIFKnZvaqkI7BGxUqbbKkRBwez3KMCgDAgi8bvpdPwbX
- iLtZ/x/YxRT6dk44mASsFc1R3B8vBgUmOxABV+hZ/yoSG5vKEOeW9krZk/NNm6By+7II
- 4iqY21z1KEtd9nuVm7M7oZ0PUKijo+ylLiIYkY3HviwftDr1O2grUg6RmKW9HqZ/v07I
- 4PgVj7l09zPLQHzlidWAQfDxWnv6KOD3kGClvXAuJEiAUpVQp8ENwOxbPa7Ci1lWNQID
- RtLUn2+snAwmBbVRlJZb3bD+tDhXwoI98iBEcAWwjC7WF7ufxMmmQjg814VfOui030qc
- Yr7A==
+ bh=OishrheNzxUH4jK3pSUw3hY8ZUKqc85FNfgHLzLsYl4=;
+ b=P4ozukAlmYLdMOPes77Ewylm0avBOR9eWTNgU1nFPt23BWiaWboXvJy1jFCYPdqWXR
+ RRj6y1GUqbKaxggW63cbL4M+ikEMxjD/+KYEHiJn+dl01cIzcMSiYGaKy2je5jCvAolk
+ Wo+1y2StXreW1U/gZ8jorFmvgtrx5dL9ImfqWKLjeojp6kxq6kx4bfxUOtObRvJzV179
+ NagP89RDnILbQDm1bvHnSO90WXlFbvSfHIGoCetx1UQQUi536ACkXzKqJQWtJvFB/H1Y
+ Qr7Je70HY/w6m3Z73nND1zzh0QcKqVxJoJ7aXz4hxG1m3YqgmhYt+4JF+VQb5tqNnc3z
+ /3vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706853348; x=1707458148;
+ d=1e100.net; s=20230601; t=1706853330; x=1707458130;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oSDPCFSlupjS1LwiiY/IHM0gph76gQ4U11W6UuPY57o=;
- b=by83GW3LOnISXLLSD3ODO936amOATn6CbWCEBhGiYqHKM4QHKlsdsjixE1s/b9gzjV
- wjDAQv7lDS/wUiRu/HWT6Rc1ahsBtl9klsGZaXEYE0/vpcmxhtlEDDiWzsI6fl6V3oHL
- 1by3SHqaMdWtP2hoHLkoMd9QGMcm94v5hUETLLrD68pSliYY5aLTrGqMn/zGrIUX63YU
- VdPNBmt1AeB44AYfMRKkWsBOjsjEJxbdU3AzMe3cTaMQQPAXMBN9o4m1fpVfMHiYifuL
- mbcFZ0jjnbybZYimBt570ndBTfSIGWcHMApdrcP8DuRoXl1OC935eYmEtpG0s3VBxoS9
- 683Q==
-X-Gm-Message-State: AOJu0Yw8GvRrdAe6GHNi2i5rpCPBpWaE5/9AaCh39zHBpWf1fayP0Y7v
- m88oDeJY5ptcw2k4/17vT+8p41MyPuq82fhUXBV4x+7eqXuBa3TRGbqAmY6PZmJ8K9xfzffNe5T
- 1lac=
-X-Google-Smtp-Source: AGHT+IG6soDpuiO/GvCVxZ7Kz2Ff+edkprRRBUfnm/6VuhO1MPmP7zeJGhyrZMgdxQ/YjMoLh4c8pQ==
-X-Received: by 2002:a17:903:120d:b0:1d7:587f:3748 with SMTP id
- l13-20020a170903120d00b001d7587f3748mr8137875plh.63.1706853348069; 
- Thu, 01 Feb 2024 21:55:48 -0800 (PST)
+ bh=OishrheNzxUH4jK3pSUw3hY8ZUKqc85FNfgHLzLsYl4=;
+ b=Me9+OJL0bq1Sy4Nb6WmHX9J+cHG20ukSCFWGob9ITF5SfF2gjEdO2iYRiqmtsbh1gC
+ hhHTU7JWuhP70oCfpBissGo9jmKte3gsrz9+ow0imBJWT0+1nzyMib1uzjzLcvQZyyh8
+ Ow8gxZ75pMxIsxl8nsSNNPihbLrglBkSDelN8Uu77gwxNFSrvvF0ShS7C3TmQLQh663x
+ yZRCNHG72H5fucrE5roYkbR73qhb8D+zP4iMA+8aKhiPzMTF4Dxqz4NmaYf0OheKcZpW
+ hI1VCWCUkxTPiU97qPDD3cXsTK2Nn85/dUGkhZvPOr74HOuCJKmrEVB1L7MDzqepVh5r
+ 4UZA==
+X-Gm-Message-State: AOJu0YxDxFj96EFgJ6g7cT7ZYCwFZzRBqE7ZjwHVLRilamv0H2RreWnO
+ U2VQVtaCg+nC83eUzfkI3/IFSJloB5ljTQxUZSA4O0h/K6+dpQE5/iXq+dOwYUiS4bpEiImmPsM
+ DVl0=
+X-Google-Smtp-Source: AGHT+IE/nMmbl8LDWlJATjAVfRXSt5MM2ZeKcTPUNLXYukXCC8R6o7EKrCjZbijj1mhrrhNqbvaaWw==
+X-Received: by 2002:a17:902:e5d1:b0:1d9:2e9d:8cb6 with SMTP id
+ u17-20020a170902e5d100b001d92e9d8cb6mr2004344plf.15.1706853330679; 
+ Thu, 01 Feb 2024 21:55:30 -0800 (PST)
 Received: from stoup.. ([103.210.27.218]) by smtp.gmail.com with ESMTPSA id
- je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.46
+ je5-20020a170903264500b001d8a80cbb15sm752059plb.238.2024.02.01.21.55.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 21:55:47 -0800 (PST)
+ Thu, 01 Feb 2024 21:55:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 57/57] target/sparc: Remove FSR_FTT_NMASK, FSR_FTT_CEXC_NMASK
-Date: Fri,  2 Feb 2024 15:50:36 +1000
-Message-Id: <20240202055036.684176-59-richard.henderson@linaro.org>
+Subject: [PULL 49/57] target/sparc: Remove qt0, qt1 temporaries
+Date: Fri,  2 Feb 2024 15:50:28 +1000
+Message-Id: <20240202055036.684176-51-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202055036.684176-1-richard.henderson@linaro.org>
 References: <20240202055036.684176-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,34 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These macros are no longer used.
+These are no longer used for passing data to/from helpers.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-Id: <20231103173841.33651-23-richard.henderson@linaro.org>
+Message-Id: <20231103173841.33651-15-richard.henderson@linaro.org>
 ---
- target/sparc/cpu.h | 7 -------
- 1 file changed, 7 deletions(-)
+ target/sparc/cpu.h         | 2 --
+ target/sparc/fop_helper.c  | 3 ---
+ target/sparc/ldst_helper.c | 3 ---
+ 3 files changed, 8 deletions(-)
 
 diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index 986c7217ed..edf46b387e 100644
+index 1e076f6355..75c46e2736 100644
 --- a/target/sparc/cpu.h
 +++ b/target/sparc/cpu.h
-@@ -202,13 +202,6 @@ enum {
- #define FSR_FTT1   (1ULL << 15)
- #define FSR_FTT0   (1ULL << 14)
- #define FSR_FTT_MASK (FSR_FTT2 | FSR_FTT1 | FSR_FTT0)
--#ifdef TARGET_SPARC64
--#define FSR_FTT_NMASK      0xfffffffffffe3fffULL
--#define FSR_FTT_CEXC_NMASK 0xfffffffffffe3fe0ULL
--#else
--#define FSR_FTT_NMASK      0xfffe3fffULL
--#define FSR_FTT_CEXC_NMASK 0xfffe3fe0ULL
--#endif
- #define FSR_FTT_IEEE_EXCP (1ULL << 14)
- #define FSR_FTT_UNIMPFPOP (3ULL << 14)
- #define FSR_FTT_SEQ_ERROR (4ULL << 14)
+@@ -509,8 +509,6 @@ struct CPUArchState {
+     uint64_t mmubpregs[4];
+     uint64_t prom_addr;
+ #endif
+-    /* temporary float registers */
+-    float128 qt0, qt1;
+     float_status fp_status;
+ #if defined(TARGET_SPARC64)
+ #define MAXTL_MAX 8
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index cd9b212597..7353a61237 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -23,9 +23,6 @@
+ #include "exec/helper-proto.h"
+ #include "fpu/softfloat.h"
+ 
+-#define QT0 (env->qt0)
+-#define QT1 (env->qt1)
+-
+ static inline float128 f128_in(Int128 i)
+ {
+     union {
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 52aa6c631b..1ecd58e8ff 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -66,9 +66,6 @@
+ #endif
+ #endif
+ 
+-#define QT0 (env->qt0)
+-#define QT1 (env->qt1)
+-
+ #if defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
+ /* Calculates TSB pointer value for fault page size
+  * UltraSPARC IIi has fixed sizes (8k or 64k) for the page pointers
 -- 
 2.34.1
 
