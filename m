@@ -4,86 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA013C47DB3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 11:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40556C4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 11:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVryP-00056F-7b; Fri, 02 Feb 2024 06:44:45 -0500
+	id 1rVs5r-0006Wt-VI; Fri, 02 Feb 2024 06:52:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rVryN-00055r-De
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 06:44:43 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rVryL-0005hL-7E
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 06:44:43 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-296424aaa95so345436a91.3
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 03:44:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1706874279; x=1707479079; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/56ML8DEVkLXwwkLgYh2U8m4CxJpd39lbiGTG9EnOBM=;
- b=DRoAiOqlK+5ctuGqbhW/tBM/HsbJoBhnpJ6A4st/pTLc/W7tqRThVTmeAhy1/kXkpg
- 21rlrw/Z20tdFYeABtjuxc8OFvcAQP+U/h+pD62/sDU/eCEM6M/Ex1cO8UfNtMep0qaI
- VPThhFaajK2+Q9I5+V+Io8Ol85iJ26SDy9jlgFMojOtnqQH6cszM0ZV8wfnd9dY1dK4U
- i9/DuXXpjWaACRTq+OiuVnGaPFEKiz553kIfd1i2xu4tTNo2ArD9ZuQYa1/QoytyjTtO
- CcXEuiflNgQ7ZQREFNbiIoRWUlw3cLqBTMsQN7DPE4Qjdc+Z32oDhzq72HsNRAzONiF/
- XXbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706874279; x=1707479079;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/56ML8DEVkLXwwkLgYh2U8m4CxJpd39lbiGTG9EnOBM=;
- b=Hf+RVmassuT3kiTXQQ/KAKdMlLBN+wAiLqeDDMFt2H/M4qmZCFNz/S4Kbj4mg1IC0p
- nQFYLqAjgUPnNj0tnmPGjdTMbzmt8tTY7UtcIFO0L4GrMeW2zekKhfX74mA8zzPSUHxh
- mZPNwbdLDplRYPZdAjpfR/+ewtUn3D7BF6grvsq6KvqenhuDnF8mVmUb0FL+mNRk/IYn
- ACRxJVLyjoLNCSHbOzsqWD/F8vNI5Ge7r0hzAzBNAahruOepwVSbbJZWYEqit1r3sl0R
- 3og8QeNDDcJux9PRyDvLfe3VJ5co6hpegxnfxBCV/MP74D1IoTWTM2uMm1haT2PkLTzq
- nQbA==
-X-Gm-Message-State: AOJu0YwFYox4+xOTrJHOudSyjk9SJNgDrdpWdht+FAvVRByRSgYpXItE
- qLKxgpOt1RfS319NRoU31jYBcrEVL8VBYID0DNqiztl9VXdZDvIUY4e9Uo0a5SqwNRwaRGu/1NR
- b
-X-Google-Smtp-Source: AGHT+IHlMIovokMGlK2rH8OoxQWy3YZ0uCbYe7EUYUp4tpoovFtdaK/OgHeZmRksMP6jN1yT1ZYvSw==
-X-Received: by 2002:a17:90a:cc2:b0:295:c61c:1c07 with SMTP id
- 2-20020a17090a0cc200b00295c61c1c07mr7700171pjt.21.1706874278971; 
- Fri, 02 Feb 2024 03:44:38 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCWfrfga9oL+ffAB5xxjyppoxKDhFmIBoWm6XqWkh5eiQHJTWXO5scNgWeKwM4qedIFSRmrS2yzQ5AsErIXDnW7+kL0QIloJMzDwCM3YI5VuhjRiagD54jski9be3pB6RaTdn6Ruwdo0zpzyuv4njuBvWyc+HYVRNbvbUVCp6a3Di89lbMx67PjLLfHivfSTTVfo1ZWYxWrRiQl0Mc1hXXJvYncn
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- iz5-20020a170902ef8500b001d8f111804asm1425260plb.113.2024.02.02.03.44.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Feb 2024 03:44:38 -0800 (PST)
-Message-ID: <bf7d4474-8307-4d4a-ac7d-c2b4cfebae8f@ventanamicro.com>
-Date: Fri, 2 Feb 2024 08:44:35 -0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rVs5p-0006WN-Fy
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 06:52:25 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rVs5m-00015z-Oa
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 06:52:25 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TRDZd0p55z6F95v;
+ Fri,  2 Feb 2024 19:49:13 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6FF5E140A9C;
+ Fri,  2 Feb 2024 19:52:15 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Fri, 2 Feb
+ 2024 11:52:14 +0000
+Date: Fri, 2 Feb 2024 11:52:13 +0000
+To: fan <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <nifan@outlook.com>, <jim.harris@samsung.com>, "Fan Ni" <fan.ni@samsung.com>
+Subject: Re: [PATCH v3 2/9] hw/cxl/cxl-mailbox-utils: Add dynamic capacity
+ region representative and mailbox command support
+Message-ID: <20240202115213.00004512@Huawei.com>
+In-Reply-To: <Zbv3806dVKTqjF0u@debian>
+References: <20231107180907.553451-1-nifan.cxl@gmail.com>
+ <20231107180907.553451-3-nifan.cxl@gmail.com>
+ <20240124145118.00002f7d@Huawei.com> <Zbv3806dVKTqjF0u@debian>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] riscv: add rv32i,rv32e and rv64e CPUs
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-References: <20240122123348.973288-1-dbarboza@ventanamicro.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240122123348.973288-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,36 +71,174 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alistair,
+On Thu, 1 Feb 2024 11:58:43 -0800
+fan <nifan.cxl@gmail.com> wrote:
 
+> On Wed, Jan 24, 2024 at 02:51:18PM +0000, Jonathan Cameron wrote:
+> > On Tue,  7 Nov 2023 10:07:06 -0800
+> > nifan.cxl@gmail.com wrote:
+> >   
+> > > From: Fan Ni <fan.ni@samsung.com>
+> > > 
+> > > Per cxl spec 3.0, add dynamic capacity region representative based on
+> > > Table 8-126 and extend the cxl type3 device definition to include dc region
+> > > information. Also, based on info in 8.2.9.8.9.1, add 'Get Dynamic Capacity
+> > > Configuration' mailbox support.
+> > > 
+> > > Note: decode_len of a dc region is aligned to 256*MiB, need to be divided by
+> > > 256 * MiB before returned to the host for "Get Dynamic Capacity Configuration"
+> > > mailbox command.
+> > > 
+> > > Signed-off-by: Fan Ni <fan.ni@samsung.com>  
+> > 
+> > Hi Fan,
+> > 
+> > I'm looking at how to move these much earlier in my tree on basis that
+> > they should be our main focus for merging in this QEMU cycle.
+> > 
+> > Whilst I do that rebase, I'm taking a closer look at the code.
+> > I'm targetting rebasing on upstream qemu + the two patch sets I just
+> > sent out:
+> > [PATCH 00/12 qemu] CXL emulation fixes and minor cleanup. 
+> > [PATCH 0/5 qemu] hw/cxl: Update CXL emulation to reflect and reference r3.1
+> > 
+> > It would be good to document why these commands should be optional (which I think
+> > comes down to the annoying fact that Get Dynamic Capacity Configuration isn't
+> > allowed to return 0 regions, but instead should not be available as a command
+> > if DCD isn't supported.
+> > 
+> > Note this requires us to carry Gregory's patches to make the CCI command list
+> > constructed at runtime rather than baked in ahead of this set.
+> > 
+> > So another question is should we jump directly to the r3.1 version of DCD?
+> > I think we probably should as it includes some additions that are necessary
+> > for a bunch of the potential use cases.
+> >   
+> 
+> Based on cxl spec r3.1, the get dynamic capacity configuration output
+> payload (Table 8-164) have 4 extra items after the variable region configuration
+> structure. That is not allowed by the compiler, should we move the
+> new-added 4 items before the variable region configuration structures?
 
-I think we should just queue this up since it's all acked. It's still
-applicable in riscv-to-apply.next.
+You will just need to manage that size explicitly rather than using a variable
+element at the end.  Add some helpers to find the offset in the structure
+and it shouldn't be too ugly.
 
+Can't reorganize it just because they made the spec hideous :(
 
-Thanks,
+> 
+> Fan
+> 
+> >   
+> > > ---
+> > >  hw/cxl/cxl-mailbox-utils.c  | 80 +++++++++++++++++++++++++++++++++++++
+> > >  hw/mem/cxl_type3.c          |  6 +++
+> > >  include/hw/cxl/cxl_device.h | 17 ++++++++
+> > >  3 files changed, 103 insertions(+)
+> > > 
+> > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > > index 8eceedfa87..f80dd6474f 100644
+> > > --- a/hw/cxl/cxl-mailbox-utils.c
+> > > +++ b/hw/cxl/cxl-mailbox-utils.c
+> > > @@ -80,6 +80,8 @@ enum {
+> > >          #define GET_POISON_LIST        0x0
+> > >          #define INJECT_POISON          0x1
+> > >          #define CLEAR_POISON           0x2
+> > > +    DCD_CONFIG  = 0x48,
+> > > +        #define GET_DC_CONFIG          0x0
+> > >      PHYSICAL_SWITCH = 0x51,
+> > >          #define IDENTIFY_SWITCH_DEVICE      0x0
+> > >          #define GET_PHYSICAL_PORT_STATE     0x1
+> > > @@ -1210,6 +1212,74 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
+> > >      return CXL_MBOX_SUCCESS;
+> > >  }
+> > >  
+> > > +/*
+> > > + * CXL r3.0 section 8.2.9.8.9.1: Get Dynamic Capacity Configuration  
+> > 
+> > As per the patch set I just sent out, I want to standardize on references
+> > to r3.1 because it's all that is easy to get.  However if we decide to r3.0
+> > DCD first the upgrade it later, then clearly these need to stick to r3.0 for
+> > now.
+> >   
+> > > + * (Opcode: 4800h)
+> > > + */
+> > > +static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
+> > > +                                             uint8_t *payload_in,
+> > > +                                             size_t len_in,
+> > > +                                             uint8_t *payload_out,
+> > > +                                             size_t *len_out,
+> > > +                                             CXLCCI *cci)
+> > > +{
+> > > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> > > +    struct get_dyn_cap_config_in_pl {
+> > > +        uint8_t region_cnt;
+> > > +        uint8_t start_region_id;
+> > > +    } QEMU_PACKED;
+> > > +
+> > > +    struct get_dyn_cap_config_out_pl {
+> > > +        uint8_t num_regions;
+> > > +        uint8_t rsvd1[7];  
+> > 
+> > This changed in r3.1 (errata? - I haven't checked)
+> > Should be 'regions returned' in first byte.
+> >   
+> > > +        struct {
+> > > +            uint64_t base;
+> > > +            uint64_t decode_len;
+> > > +            uint64_t region_len;
+> > > +            uint64_t block_size;
+> > > +            uint32_t dsmadhandle;  
+> >   
+> > > +            uint8_t flags;
+> > > +            uint8_t rsvd2[3];
+> > > +        } QEMU_PACKED records[];  
+> > 
+> > There are two fields after this as well.
+> > Total number of supported extents and number of available extents.
+> > 
+> > That annoyingly means we can't use the structure to tell us where
+> > to find all the fields...
+> > 
+> >   
+> > > +    } QEMU_PACKED;
+> > > +
+> > > +    struct get_dyn_cap_config_in_pl *in = (void *)payload_in;
+> > > +    struct get_dyn_cap_config_out_pl *out = (void *)payload_out;
+> > > +    uint16_t record_count = 0, i;  
+> > 
+> > Better to split that on to 2 lines. Never hide setting a value
+> > in the middle of a set of declarations.
+> >   
+> > > +    uint16_t out_pl_len;
+> > > +    uint8_t start_region_id = in->start_region_id;
+> > > +
+> > > +    if (start_region_id >= ct3d->dc.num_regions) {
+> > > +        return CXL_MBOX_INVALID_INPUT;
+> > > +    }
+> > > +
+> > > +    record_count = MIN(ct3d->dc.num_regions - in->start_region_id,
+> > > +            in->region_cnt);
+> > > +
+> > > +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);  
+> > 
+> > For r3.1 + 8 for the two trailing fields.
+> >   
+> > > +    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
+> > > +
+> > > +    memset(out, 0, out_pl_len);  
+> > 
+> > As part of the cci rework we started zeroing the whole mailbox payload space
+> > after copying out the input payload.
+> > https://elixir.bootlin.com/qemu/latest/source/hw/cxl/cxl-device-utils.c#L204
+> > 
+> > So shouldn't need this (unless we have a bug)
+> > 
+> > Jonathan  
 
-Daniel
-
-On 1/22/24 09:33, Daniel Henrique Barboza wrote:
-> Hi,
-> 
-> This v3 has the same patches from v2 rebased with a newer
-> riscv-to-apply.next branch (@ 096b6b07298).
-> 
-> No other changes made. All patches acked.
-> 
-> v2 link: https://lore.kernel.org/qemu-riscv/20240108161903.353648-1-dbarboza@ventanamicro.com/
-> 
-> Daniel Henrique Barboza (2):
->    target/riscv/cpu.c: add riscv_bare_cpu_init()
->    target/riscv: add rv32i, rv32e and rv64e CPUs
-> 
->   target/riscv/cpu-qom.h |  3 ++
->   target/riscv/cpu.c     | 64 ++++++++++++++++++++++++++++++++----------
->   2 files changed, 52 insertions(+), 15 deletions(-)
-> 
 
