@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD996C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1F7C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvau-00008j-D5; Fri, 02 Feb 2024 10:36:44 -0500
+	id 1rVvay-0000FT-QA; Fri, 02 Feb 2024 10:36:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvas-000067-2r
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:42 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1rVvav-0000Az-Ha
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvaq-0004Qu-Gy
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:41 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-5113e895660so77666e87.0
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:40 -0800 (PST)
+ id 1rVvat-0004Rt-PJ
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-40ef64d8955so19934225e9.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888199; x=1707492999; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706888202; x=1707493002; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QRkC6R0A/Ijw4AEfBzkD0qNh2L8zWNNbkytmxmpXoIc=;
- b=gU2miu2P7k7oQubb/N2xRy5//kpVWeCfItUx0o3bso+9Kp+W/fTpYnxYpYzrKPciW1
- g+EyYIurLAeP9UBM53YltsFACJnimnqehCXy1vtkBcJ/OD5UWF423wXBLie1S/g8f8Zz
- 52M0CnP4I58jaSMkP9BYcQnlL9jv0sOQFT9ZXDpThsSeBivKVd/N0vfTJixukNXpjqP5
- HamczlptatubjCKAfXMWlGL4mZTCf5NGyHQddxc/+VKn6xCuowfncsn+Z159hKl7yK+j
- iztd7eN7AAztW13R4DdHa7iai8JYTV1alNHsv57Kl0G6toxK53jxVWIv1A60EnPdw4oW
- T7Tw==
+ :reply-to; bh=zT33TDQSpbP682JXm0Djn4kZLyqr6gakrEoe9mM4ahM=;
+ b=mm6mWc1L1bgPHg0tfzdhYBnDCCOQ6pKKcrpkOOryFWamXhrG2ji3uRFYEBgVKyZRfO
+ 5IJEZZHtGn0fnLNJDzOReLyh1z5WM3MB5eWVbgg+h73pTrU/rPhq0f29+bWPI4LhsFmX
+ cVwGFIy0hsb3o/tOPREyP8RgiyapJAY8KiySCdoUnOLq8w4Ai6Ec4eAismbDOFkTH3PT
+ wQg1Y9X5HcdXBHVZU0/bAZ/dD7VGcvH+qynGRP2NHX35tKROzMkJnglanWsOFT3kqllR
+ 3N+FZ6wP8hdLsTXgzHvgqZvR0HqbqJ+NxEA9zH09vemP26jOHUAhOPvlvqg7Im7bUj0j
+ e3OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888199; x=1707492999;
+ d=1e100.net; s=20230601; t=1706888202; x=1707493002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QRkC6R0A/Ijw4AEfBzkD0qNh2L8zWNNbkytmxmpXoIc=;
- b=Mssz7xn6eKMChls9Do9TVnT8OrtRvCbn8fFapkjuxJVzkTz8ifPwFwJkup+jKKCz4A
- KyE5Mj2EwB6795oWxZ77z6JoN/rO6J2nHwLm3HUH120VJHgi5ROqKl/xMfSbCvuzLVK4
- mCRG7iPTb5e6NaTYjinTM6XtLVm1Z/bngS5X8NLij4NLx+cf7gDon70KUIS+iMHHBmwz
- 7QosW3Ujs97mkYhGyAzH6g3c8DibH+87bXG4yALXvmak6Ymmwxf/SDfFoGR/XZY6Z/a0
- RF6yVP9EpxmhlsfuwLnGwbZ5pHRCaxwl/Ff9IWjpu00K62aqnbOmnPPIOUVZlW36mrcZ
- gsWQ==
-X-Gm-Message-State: AOJu0YzEZh9OhSxqApQtgroglVp2p6B6mLI7TERRKr/qPpVly96OFi2x
- cFAQX7iCNOAsdVrSyEiiuJ78uCR3dIUsqA1wlruwLgxCq2FouTd8DTjaqB183WuWNSV/nQ1wuE+
- 6
-X-Google-Smtp-Source: AGHT+IHFR30meajtkVe46CiVUIqFDI83OgR7aQCJY2+NIyZbuIy9vXr5yrN321+7fWIzlPFpI5r4Xg==
-X-Received: by 2002:ac2:5ed9:0:b0:511:325a:948b with SMTP id
- d25-20020ac25ed9000000b00511325a948bmr1652424lfq.30.1706888198784; 
- Fri, 02 Feb 2024 07:36:38 -0800 (PST)
+ bh=zT33TDQSpbP682JXm0Djn4kZLyqr6gakrEoe9mM4ahM=;
+ b=l/8QvXLArPScobkvYXJ8IsaMZ7ev14sh7TEIuS/eRjNvKA4UG87OeCeMY9t/XK7gbE
+ VOEQ0/BPL9MjXZOqa6S26OtF20nzkp3wZFaLC+Wsy6oqI9Ae1A9vfScc2pskkUBlSW9N
+ rReRZibegjGZXTk1UbJfsB213T5pULpBNAKTGAk4IvdAQzRSyTytQKwby70FaZ+SFcBr
+ sEVx14XR1hCmLuyoKQuv8atW2d5FWqiU651OgOLQ+kWbBa5bNQjlF0OGy/35PtYDrwyc
+ f9Q85UalAntmytuSqb9IWP3fwIjhw7jvynYEqLIqG59IOT6winYP1y4zsn4JwVfVfBh9
+ iH9w==
+X-Gm-Message-State: AOJu0Yym8PnOFlqPS6XfS3NbnURZIeXYH9xqQH3+DAe1iJ3+NC7FacZd
+ SUW6Q+YSoRyAGbG4qc92sZhgWsicMriOERDwaWzFwzfiYIeLuEepv0oBt30pzmshi5GG+4PM1C0
+ o
+X-Google-Smtp-Source: AGHT+IHjKEMfHHK6OQMK4cAorQm+MYbaCF9hw2XQyr9vYsc19vjLZWeqS0deCXcTTZs6h2GL5h+75w==
+X-Received: by 2002:a05:600c:45d1:b0:40f:b0ca:2b2d with SMTP id
+ s17-20020a05600c45d100b0040fb0ca2b2dmr6271565wmo.1.1706888202323; 
+ Fri, 02 Feb 2024 07:36:42 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.38
+ k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:38 -0800 (PST)
+ Fri, 02 Feb 2024 07:36:41 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/36] target/arm: fix exception syndrome for AArch32 bkpt insn
-Date: Fri,  2 Feb 2024 15:36:02 +0000
-Message-Id: <20240202153637.3710444-2-peter.maydell@linaro.org>
+Subject: [PULL 07/36] system/vl.c: Fix handling of '-serial none -serial
+ something'
+Date: Fri,  2 Feb 2024 15:36:08 +0000
+Message-Id: <20240202153637.3710444-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
 References: <20240202153637.3710444-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,85 +95,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+Currently if the user passes multiple -serial options on the command
+line, we mostly treat those as applying to the different serial
+devices in order, so that for example
+ -serial stdio -serial file:filename
+will connect the first serial port to stdio and the second to the
+named file.
 
-Debug exceptions that target AArch32 Hyp mode are reported differently
-than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
-such exceptions need to be either converted to a prefetch abort
-(breakpoints, vector catch) or a data abort (watchpoints).
+The exception to this is the '-serial none' serial device type.  This
+means "don't allocate this serial device", but a bug means that
+following -serial options are not correctly handled, so that
+ -serial none -serial stdio
+has the unexpected effect that stdio is connected to the first serial
+port, not the second.
+
+This is a very long-standing bug that dates back at least as far as
+commit 998bbd74b9d81 from 2009.
+
+Make the 'none' serial type move forward in the indexing of serial
+devices like all the other serial types, so that any subsequent
+-serial options are correctly handled.
+
+Note that if your commandline mistakenly had a '-serial none' that
+was being overridden by a following '-serial something' option, you
+should delete the unnecessary '-serial none'.  This will give you the
+same behaviour as before, on QEMU versions both with and without this
+bug fix.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+Reported-by: Bohdan Kostiv <bohdan.kostiv@tii.ae>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240127202758.3326381-1-jan.kloetzke@kernkonzept.com
+Message-id: 20240122163607.459769-2-peter.maydell@linaro.org
+Fixes: 998bbd74b9d81 ("default devices: core code & serial lines")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/syndrome.h |  8 ++++++++
- target/arm/helper.c   | 18 ++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ system/vl.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 1a49767479f..3244e0740dd 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -25,6 +25,8 @@
- #ifndef TARGET_ARM_SYNDROME_H
- #define TARGET_ARM_SYNDROME_H
+diff --git a/system/vl.c b/system/vl.c
+index 60fd1e56b6b..bb959cbc440 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1439,18 +1439,22 @@ static void qemu_create_default_devices(void)
+ static int serial_parse(const char *devname)
+ {
+     int index = num_serial_hds;
+-    char label[32];
  
-+#include "qemu/bitops.h"
+-    if (strcmp(devname, "none") == 0)
+-        return 0;
+-    snprintf(label, sizeof(label), "serial%d", index);
+     serial_hds = g_renew(Chardev *, serial_hds, index + 1);
+ 
+-    serial_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
+-    if (!serial_hds[index]) {
+-        error_report("could not connect serial device"
+-                     " to character backend '%s'", devname);
+-        return -1;
++    if (strcmp(devname, "none") == 0) {
++        /* Don't allocate a serial device for this index */
++        serial_hds[index] = NULL;
++    } else {
++        char label[32];
++        snprintf(label, sizeof(label), "serial%d", index);
 +
- /* Valid Syndrome Register EC field values */
- enum arm_exception_class {
-     EC_UNCATEGORIZED          = 0x00,
-@@ -80,6 +82,7 @@ typedef enum {
-     SME_ET_InactiveZA,
- } SMEExceptionType;
- 
-+#define ARM_EL_EC_LENGTH 6
- #define ARM_EL_EC_SHIFT 26
- #define ARM_EL_IL_SHIFT 25
- #define ARM_EL_ISV_SHIFT 24
-@@ -94,6 +97,11 @@ static inline uint32_t syn_get_ec(uint32_t syn)
-     return syn >> ARM_EL_EC_SHIFT;
- }
- 
-+static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
-+{
-+    return deposit32(syn, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH, ec);
-+}
-+
- /*
-  * Utility functions for constructing various kinds of syndrome value.
-  * Note that in general we follow the AArch64 syndrome values; in a
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 945d8571a61..a0041aa0ec7 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -11015,6 +11015,24 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
-     }
- 
-     if (env->exception.target_el == 2) {
-+        /* Debug exceptions are reported differently on AArch32 */
-+        switch (syn_get_ec(env->exception.syndrome)) {
-+        case EC_BREAKPOINT:
-+        case EC_BREAKPOINT_SAME_EL:
-+        case EC_AA32_BKPT:
-+        case EC_VECTORCATCH:
-+            env->exception.syndrome = syn_insn_abort(arm_current_el(env) == 2,
-+                                                     0, 0, 0x22);
-+            break;
-+        case EC_WATCHPOINT:
-+            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
-+                                                 EC_DATAABORT);
-+            break;
-+        case EC_WATCHPOINT_SAME_EL:
-+            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
-+                                                 EC_DATAABORT_SAME_EL);
-+            break;
++        serial_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
++        if (!serial_hds[index]) {
++            error_report("could not connect serial device"
++                         " to character backend '%s'", devname);
++            return -1;
 +        }
-         arm_cpu_do_interrupt_aarch32_hyp(cs);
-         return;
      }
+     num_serial_hds++;
+     return 0;
 -- 
 2.34.1
 
