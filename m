@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B23AC4828E
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 19:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B547C4828E
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 19:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVzEd-0004Wp-IV; Fri, 02 Feb 2024 14:29:59 -0500
+	id 1rVzFf-0005IJ-69; Fri, 02 Feb 2024 14:31:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVzEc-0004Vw-FD
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:29:58 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVzFV-0005FK-Nx
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:30:54 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVzEa-0008Bl-SL
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:29:58 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVzFU-00005z-BY
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 14:30:53 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 55AAB21F79;
- Fri,  2 Feb 2024 19:29:55 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9E2931FD34;
+ Fri,  2 Feb 2024 19:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706902195; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706902250; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=NVjal9HUeYv3QAw8rqL1ZfxVMYSxDxTl1XZOFyf7S8E=;
- b=BIwHO3/BtafX4RtmspyIFaIhwhRUcnHxGSqs4Q3HRs7OSd7WxFNk+ScTy1UD027Hg8qYqj
- PBEcJYd9Fu+GSFzK7tSwgj+O4vfoRq7pZcAdpcBJsURA43e1p4GtkHvvTCgMVCR7UqBjhA
- A4oYJHNFS8gpFXw26Jz+X6DcFU1d1jc=
+ b=KvebijciUXE15sAo0HmvqbdQZmLIhs89EXxglwAgjkymnrk/kE95kOkQ7ln5iZfGEAVp2h
+ OqI86adKKt3GnY/meXYICcTDnyq4eBqwJ8/YXpPS1K96qYWx909a5wZbvEctd+ac+0SHBJ
+ z6Bo5uo+qDP3qWGe6lejahTvebGWeis=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706902195;
+ s=susede2_ed25519; t=1706902250;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=NVjal9HUeYv3QAw8rqL1ZfxVMYSxDxTl1XZOFyf7S8E=;
- b=9T0TfG+62QDxwYCeG9sRF4yvySJIn+bQfxIfij3/D7jevEX9SjTScnDJGiKtCzOtomawbA
- 0az2iLgREO9DNoBQ==
+ b=SGGOIHLFrNtp9d1XDzZKii8kxCXik43MuZnXyPoy8t9bgLQtsMtPKDrkxf14zK2b7pJPWy
+ N3+k8R96cB32adDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706902195; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1706902250; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=NVjal9HUeYv3QAw8rqL1ZfxVMYSxDxTl1XZOFyf7S8E=;
- b=BIwHO3/BtafX4RtmspyIFaIhwhRUcnHxGSqs4Q3HRs7OSd7WxFNk+ScTy1UD027Hg8qYqj
- PBEcJYd9Fu+GSFzK7tSwgj+O4vfoRq7pZcAdpcBJsURA43e1p4GtkHvvTCgMVCR7UqBjhA
- A4oYJHNFS8gpFXw26Jz+X6DcFU1d1jc=
+ b=KvebijciUXE15sAo0HmvqbdQZmLIhs89EXxglwAgjkymnrk/kE95kOkQ7ln5iZfGEAVp2h
+ OqI86adKKt3GnY/meXYICcTDnyq4eBqwJ8/YXpPS1K96qYWx909a5wZbvEctd+ac+0SHBJ
+ z6Bo5uo+qDP3qWGe6lejahTvebGWeis=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706902195;
+ s=susede2_ed25519; t=1706902250;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=NVjal9HUeYv3QAw8rqL1ZfxVMYSxDxTl1XZOFyf7S8E=;
- b=9T0TfG+62QDxwYCeG9sRF4yvySJIn+bQfxIfij3/D7jevEX9SjTScnDJGiKtCzOtomawbA
- 0az2iLgREO9DNoBQ==
+ b=SGGOIHLFrNtp9d1XDzZKii8kxCXik43MuZnXyPoy8t9bgLQtsMtPKDrkxf14zK2b7pJPWy
+ N3+k8R96cB32adDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D2575139AB;
- Fri,  2 Feb 2024 19:29:54 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 27BBB139AB;
+ Fri,  2 Feb 2024 19:30:49 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id EwETJrJCvWVhaAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:29:54 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ku2xN+lCvWWmaAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 19:30:49 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: peterx@redhat.com, qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@bytedance.com>, Bryan Zhang
  <bryan.zhang@bytedance.com>, peterx@redhat.com, Avihai Horon
  <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit
  <ppandit@redhat.com>
-Subject: Re: [PATCH v2 16/23] migration/multifd: Change retval of
- multifd_queue_page()
-In-Reply-To: <20240202102857.110210-17-peterx@redhat.com>
+Subject: Re: [PATCH v2 17/23] migration/multifd: Change retval of
+ multifd_send_pages()
+In-Reply-To: <20240202102857.110210-18-peterx@redhat.com>
 References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-17-peterx@redhat.com>
-Date: Fri, 02 Feb 2024 16:29:52 -0300
-Message-ID: <87il36hdfz.fsf@suse.de>
+ <20240202102857.110210-18-peterx@redhat.com>
+Date: Fri, 02 Feb 2024 16:30:47 -0300
+Message-ID: <87fryahdeg.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="BIwHO3/B";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9T0TfG+6
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.17 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-2.66)[98.49%]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-0.23 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-0.13)[67.78%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
  RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Queue-Id: 55AAB21F79
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
