@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB6CC48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 10:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D8FC48291
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 10:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVqp9-000290-C8; Fri, 02 Feb 2024 05:31:07 -0500
+	id 1rVqp1-00018H-4W; Fri, 02 Feb 2024 05:30:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqp7-000225-VC
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:31:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqon-0000jS-Sx
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:30:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqp5-00021n-SN
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:31:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVqok-0001zO-SL
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 05:30:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706869862;
+ s=mimecast20190719; t=1706869842;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w/PVv7xIjUW8mdAijekNJw3s/h7WnKlv6rg47X2gdcY=;
- b=FYQXFJ+A/GZHmQ5Z65lj6IjepQYeV0EuAKFYETsphg9COWkS2aJ24c2TsTpjxSVueUf6WY
- TydCIsBIzh9FRETpni3dtFSOXOwYBc69BBwbLkCN2Nl6UfPCyovwO3igzEQCk9/o67kLyE
- axJszQhLIWNZOOoIh9HlvA0+L+AuPgI=
+ bh=UrynophngknbN8sfzbL7BkEEPncDlcsjMk31G2ITrG4=;
+ b=XIA9YSO3QX+qeClul8m3wCnG3K4L8Ub+z/4vfq15TKVyCP3jlTKUK3gw7TxcZhm0XqUm7o
+ rAOdREyo9lvTewBdSE/2K4L11tJvyFCLRt69lAFlT0hHmy3YCxMwjxWSehfbBQH1itCxQt
+ EiO0DvqocbVwaNb+x8Wn64afyp6TTHg=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-295-67lN0alUO9mMoM2mVyE7CQ-1; Fri,
- 02 Feb 2024 05:30:59 -0500
-X-MC-Unique: 67lN0alUO9mMoM2mVyE7CQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-YQgdbIH8PSGTlmAolE7BAg-1; Fri,
+ 02 Feb 2024 05:30:40 -0500
+X-MC-Unique: YQgdbIH8PSGTlmAolE7BAg-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 167271C05AAD;
- Fri,  2 Feb 2024 10:30:59 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 85421280BC8B;
+ Fri,  2 Feb 2024 10:30:39 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.87])
- by smtp.corp.redhat.com (Postfix) with ESMTP id EF5CA40C95AD;
- Fri,  2 Feb 2024 10:30:54 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 6719240C9444;
+ Fri,  2 Feb 2024 10:30:35 +0000 (UTC)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Hao Xiang <hao.xiang@bytedance.com>,
  Bryan Zhang <bryan.zhang@bytedance.com>, Fabiano Rosas <farosas@suse.de>,
  peterx@redhat.com, Avihai Horon <avihaih@nvidia.com>,
  Yuan Liu <yuan1.liu@intel.com>, Prasad Pandit <ppandit@redhat.com>
-Subject: [PATCH v2 20/23] migration/multifd: Cleanup multifd_load_cleanup()
-Date: Fri,  2 Feb 2024 18:28:54 +0800
-Message-ID: <20240202102857.110210-21-peterx@redhat.com>
+Subject: [PATCH v2 16/23] migration/multifd: Change retval of
+ multifd_queue_page()
+Date: Fri,  2 Feb 2024 18:28:50 +0800
+Message-ID: <20240202102857.110210-17-peterx@redhat.com>
 In-Reply-To: <20240202102857.110210-1-peterx@redhat.com>
 References: <20240202102857.110210-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -83,87 +84,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Use similar logic to cleanup the recv side.
-
-Note that multifd_recv_terminate_threads() may need some similar rework
-like the sender side, but let's leave that for later.
+Using int is an overkill when there're only two options.  Change it to a
+boolean.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/multifd.c | 52 ++++++++++++++++++++++++++-------------------
- 1 file changed, 30 insertions(+), 22 deletions(-)
+ migration/multifd.h | 2 +-
+ migration/multifd.c | 9 +++++----
+ migration/ram.c     | 2 +-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 34a2ecb9f4..a320c53a6f 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -22,7 +22,7 @@ bool multifd_recv_all_channels_created(void);
+ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
+ void multifd_recv_sync_main(void);
+ int multifd_send_sync_main(void);
+-int multifd_queue_page(RAMBlock *block, ram_addr_t offset);
++bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
+ 
+ /* Multifd Compression flags */
+ #define MULTIFD_FLAG_SYNC (1 << 0)
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 4cb0d2cc17..e2dd2f6e04 100644
+index ba86f9dda5..12e587fda8 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -1070,6 +1070,34 @@ void multifd_load_shutdown(void)
-     }
+@@ -505,7 +505,8 @@ static int multifd_send_pages(void)
+     return 1;
  }
  
-+static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-+{
-+    migration_ioc_unregister_yank(p->c);
-+    object_unref(OBJECT(p->c));
-+    p->c = NULL;
-+    qemu_mutex_destroy(&p->mutex);
-+    qemu_sem_destroy(&p->sem_sync);
-+    g_free(p->name);
-+    p->name = NULL;
-+    p->packet_len = 0;
-+    g_free(p->packet);
-+    p->packet = NULL;
-+    g_free(p->iov);
-+    p->iov = NULL;
-+    g_free(p->normal);
-+    p->normal = NULL;
-+    multifd_recv_state->ops->recv_cleanup(p);
-+}
-+
-+static void multifd_recv_cleanup_state(void)
-+{
-+    qemu_sem_destroy(&multifd_recv_state->sem_sync);
-+    g_free(multifd_recv_state->params);
-+    multifd_recv_state->params = NULL;
-+    g_free(multifd_recv_state);
-+    multifd_recv_state = NULL;
-+}
-+
- void multifd_load_cleanup(void)
+-int multifd_queue_page(RAMBlock *block, ram_addr_t offset)
++/* Returns true if enqueue successful, false otherwise */
++bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
  {
-     int i;
-@@ -1092,29 +1120,9 @@ void multifd_load_cleanup(void)
-         qemu_thread_join(&p->thread);
+     MultiFDPages_t *pages = multifd_send_state->pages;
+     bool changed = false;
+@@ -519,21 +520,21 @@ int multifd_queue_page(RAMBlock *block, ram_addr_t offset)
+         pages->num++;
+ 
+         if (pages->num < pages->allocated) {
+-            return 1;
++            return true;
+         }
+     } else {
+         changed = true;
      }
-     for (i = 0; i < migrate_multifd_channels(); i++) {
--        MultiFDRecvParams *p = &multifd_recv_state->params[i];
--
--        migration_ioc_unregister_yank(p->c);
--        object_unref(OBJECT(p->c));
--        p->c = NULL;
--        qemu_mutex_destroy(&p->mutex);
--        qemu_sem_destroy(&p->sem_sync);
--        g_free(p->name);
--        p->name = NULL;
--        p->packet_len = 0;
--        g_free(p->packet);
--        p->packet = NULL;
--        g_free(p->iov);
--        p->iov = NULL;
--        g_free(p->normal);
--        p->normal = NULL;
--        multifd_recv_state->ops->recv_cleanup(p);
-+        multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
+ 
+     if (multifd_send_pages() < 0) {
+-        return -1;
++        return false;
      }
--    qemu_sem_destroy(&multifd_recv_state->sem_sync);
--    g_free(multifd_recv_state->params);
--    multifd_recv_state->params = NULL;
--    g_free(multifd_recv_state);
--    multifd_recv_state = NULL;
-+    multifd_recv_cleanup_state();
+ 
+     if (changed) {
+         return multifd_queue_page(block, offset);
+     }
+ 
+-    return 1;
++    return true;
  }
  
- void multifd_recv_sync_main(void)
+ /* Multifd send side hit an error; remember it and prepare to quit */
+diff --git a/migration/ram.c b/migration/ram.c
+index d5b7cd5ac2..4649a81204 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -1252,7 +1252,7 @@ static int ram_save_page(RAMState *rs, PageSearchStatus *pss)
+ 
+ static int ram_save_multifd_page(RAMBlock *block, ram_addr_t offset)
+ {
+-    if (multifd_queue_page(block, offset) < 0) {
++    if (!multifd_queue_page(block, offset)) {
+         return -1;
+     }
+     stat64_add(&mig_stats.normal_pages, 1);
 -- 
 2.43.0
 
