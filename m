@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211A5C48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CEFC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvb7-0000Ob-5M; Fri, 02 Feb 2024 10:36:57 -0500
+	id 1rVvsw-0002jO-4r; Fri, 02 Feb 2024 10:55:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvb5-0000NJ-1t
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:55 -0500
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVvsv-0002jE-Ip
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:55:21 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvb3-0004XR-Ba
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:54 -0500
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-511234430a4so3722073e87.3
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rVvst-0000Ha-Ta
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:55:21 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-40fc65783e5so6420005e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:55:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888211; x=1707493011; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6766GInC0KCZwdcNkPeeQ9H7YYISDkqkH81Ih8qmKD4=;
- b=Qi4o2/Be5kcx5BI0OpcpQ/+vdaV/2rm9WWyD4CCf7FI55zOI77BgIGQZTkkI2yTWm3
- Wuap1eIdEB7JaawS18wDOU/o/qwuTL+j0MRh4kCAADhilj44ra2xoFsHD5U3CsRCUfR5
- uNA+rBaWDeRb1VpfxB2wTXcDipL5SR8y0WCuZqFl/getChVygVleoCowpQEF0pHjBHCp
- Yach0ppR+IGitaM4RhHVPQ6Z4fyYsQvbTHMLAIQRwP6GXBxEDPl/uLMKghIi0kBb7Plm
- aWZLcPLMC680o8ZNQYQslz6iHw/L4o6uBvCKHoFBE/A7csOkX9C8TpDDYARVm8KCVgub
- v/LA==
+ d=linaro.org; s=google; t=1706889318; x=1707494118; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9YCGNLX6VVZ4ROjQfemGqIeAfklglJZiiRwXx6Ag3EY=;
+ b=aGrR/nxvbMsJ9rmgRQcm4ImBOrC8Uxwzn7Oz/Hb+u2lvSZNcS3NgpWam+iLa/0gxvn
+ V0HmRvNrgzopcIz/3eiouCSmytG2l8NFf5GTFUGB7xzzt1KO0BVEHLBwbhzZjw1qK8fE
+ us3i+4KlP22xD3XBsN+fOVXKp524jueouFr1fuXTPDODLy7JlbhbCDAZjHemEXl4bu/J
+ 5iykhdz7kAZPb7cWwEQMLy/5qpMTn3zLD8JMrijoK385NgHyBplB6VR/NkdFMGL8tnHY
+ XZyjvwBPRvyPZ+X/HKLZ7zT7F1vebKWBXl0QsRDs8uXQuAdEsCB1nxMB/PLextpW9nIs
+ Oqog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888211; x=1707493011;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6766GInC0KCZwdcNkPeeQ9H7YYISDkqkH81Ih8qmKD4=;
- b=Bopl5aFem0sPGlmx4LdPrnyciUlBGDfEht6TZ6NpqHxdp6dLFbuxeykX2C42d6rpqu
- BKDLm+T3AOA35KP7+HaEsF1wlT4tLzAt+a65iWVbsypZ+Z2Gf11gG16zLLgV7z2HwQ0a
- yyZzJj14dDIC5KxTTeFyB30uBsnBCRCJMU6sTT0u5TN3zAWDH9/T8qOuJFx031hgmYTy
- 7C1+5WZ66Ae7pTJw14CnDGiIu1z5mnGzC/9jk9f7W1N7dLE3uEzWJhebCD4x7iAFBiof
- aheO5+IRWJ9Fd6hjHc4FvEBTCsodDDb7wxmpI0wNV2tgO9OEElucWU9epfNnz2OcrsTT
- ihlw==
-X-Gm-Message-State: AOJu0YyleP/7EpA3WYzDlALJLok1bcNMNWcJglwQwXWv+mXVNvGebqMq
- i4c9kMOs+8Pw5NdM3ZaXYfeTzLHUl9dBPggHPIB3QN6Pk+GtgQ5wU/fzAdKqITZB4HcMVxGZEej
- V
-X-Google-Smtp-Source: AGHT+IHps3qmyOKFbxMqfyVvxJwnYfS8Z7zYNtB1W/G9B+8/paMGphTVf0/mOOfAoSG15FpzZQfrdQ==
-X-Received: by 2002:a19:7605:0:b0:50e:6168:c99d with SMTP id
- c5-20020a197605000000b0050e6168c99dmr3934626lff.27.1706888211636; 
- Fri, 02 Feb 2024 07:36:51 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.51
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1706889318; x=1707494118;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9YCGNLX6VVZ4ROjQfemGqIeAfklglJZiiRwXx6Ag3EY=;
+ b=AmtlG4RiaOs7lF4bsOJEQixJFuXo43DXczlUuj8+yIJp2QZM7kNpGaNJ7zTsHunpfm
+ CBVxVk0fdUKuqQivxgIvmBTAHcy2yKnbDtO1dCXEEYQSPt0vHOlC2XINkSgkUim+vtp9
+ 0DQx9Y53oKNNg+toS1SqiJyEDglfp39+UnYS5vFQf+gu/P1WKblsDQE6rpoB8Rcd2e9h
+ JpJsdzXV4tuzwE412JQGL3j2GcyYLGIOGFw51js881e6SufNtPexZe8Fd21KDHwnzlk4
+ Q9pAW6RXOTQSBHs3kKzR0ZqF0Fvv0tfG2sKwa9/F6f6jsg/yeXDPx+kuNbICl6Nkge8o
+ ZBuw==
+X-Gm-Message-State: AOJu0YzkOsBLU0HP/hv+wlu9hfRnrc1v9rZ3+9C4U9h3j5NogPkYomoR
+ DnrQAK0eB1IOxRo31KlJWS2ld6WiR/W4oi17kSIYEPzOMYUdTKIDWX17HotSHEk=
+X-Google-Smtp-Source: AGHT+IE5b7hBINj4H0Cr1O7HwDMv2orpahi3twhEyqapVo/h/aZm55v2D9WrusilBk2Hxydr4Z4Tnw==
+X-Received: by 2002:a05:600c:4589:b0:40e:8fe8:a173 with SMTP id
+ r9-20020a05600c458900b0040e8fe8a173mr4260233wmo.4.1706889317819; 
+ Fri, 02 Feb 2024 07:55:17 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCUJN8H7K7IXl5JtyI4JUrny6Lr3fP/6+YqsHnen6fXJSioe2RhbTbcLjXTrEfE9U9+STvID2xN8U7P8+0t4UEQ+K23GkPIkzmPCAyP80/Zg1ARrMLdyMzbYipzG
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ t15-20020a05600c450f00b0040fb01d61a3sm267722wmo.18.2024.02.02.07.55.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:51 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 28/36] hw/xen: convert stderr prints to error/warn reports
-Date: Fri,  2 Feb 2024 15:36:29 +0000
-Message-Id: <20240202153637.3710444-29-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
-References: <20240202153637.3710444-1-peter.maydell@linaro.org>
+ Fri, 02 Feb 2024 07:55:17 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1BF3A5F9D3;
+ Fri,  2 Feb 2024 15:55:17 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Markus Armbruster <armbru@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>, Mark Burton <mburton@qti.qualcomm.com>
+Subject: KVM/QEMU Community Call 6th Feb Agenda Items
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Fri, 02 Feb 2024 15:55:17 +0000
+Message-ID: <87mssij1y2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x135.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,85 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Hi,
 
-According to the QEMU Coding Style document:
+The KVM/QEMU community call is at:
 
-> Do not use printf(), fprintf() or monitor_printf(). Instead, use
-> error_report() or error_vreport() from error-report.h. This ensures the
-> error is reported in the right place (current monitor or stderr), and in
-> a uniform format.
-> Use error_printf() & friends to print additional information.
+  https://meet.jit.si/kvmcallmeeting
+  @
+  6/2/2024 14:00 UTC
 
-This commit changes fprintfs that report warnings and errors to the
-appropriate report functions.
+As I'll be away Philippe has volunteered to run the meeting.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 42a8953553cf68e8bacada966f93af4fbce45919.1706544115.git.manos.pitsidianakis@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/xen/xen-hvm-common.c | 12 ++++++------
- hw/xen/xen-mapcache.c   |  5 ++---
- 2 files changed, 8 insertions(+), 9 deletions(-)
+So far we have one agenda item which is to discuss next steps from
+Markus' post about dynamic modelling:
 
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index 05a29c6f11a..baa1adb9f23 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -20,8 +20,8 @@ void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
- 
-     if (runstate_check(RUN_STATE_INMIGRATE)) {
-         /* RAM already populated in Xen */
--        fprintf(stderr, "%s: do not alloc "RAM_ADDR_FMT
--                " bytes of ram at "RAM_ADDR_FMT" when runstate is INMIGRATE\n",
-+        warn_report("%s: do not alloc "RAM_ADDR_FMT
-+                " bytes of ram at "RAM_ADDR_FMT" when runstate is INMIGRATE",
-                 __func__, size, ram_addr);
-         return;
-     }
-@@ -552,9 +552,9 @@ static void cpu_handle_ioreq(void *opaque)
-         req->data = copy.data;
- 
-         if (req->state != STATE_IOREQ_INPROCESS) {
--            fprintf(stderr, "Badness in I/O request ... not in service?!: "
-+            warn_report("Badness in I/O request ... not in service?!: "
-                     "%x, ptr: %x, port: %"PRIx64", "
--                    "data: %"PRIx64", count: %u, size: %u, type: %u\n",
-+                    "data: %"PRIx64", count: %u, size: %u, type: %u",
-                     req->state, req->data_is_ptr, req->addr,
-                     req->data, req->count, req->size, req->type);
-             destroy_hvm_domain(false);
-@@ -758,9 +758,9 @@ void xen_shutdown_fatal_error(const char *fmt, ...)
-     va_list ap;
- 
-     va_start(ap, fmt);
--    vfprintf(stderr, fmt, ap);
-+    error_vreport(fmt, ap);
-     va_end(ap);
--    fprintf(stderr, "Will destroy the domain.\n");
-+    error_report("Will destroy the domain.");
-     /* destroy the domain */
-     qemu_system_shutdown_request(SHUTDOWN_CAUSE_HOST_ERROR);
- }
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 336c2123767..4f956d048ee 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -347,9 +347,8 @@ tryagain:
-         MapCacheRev *reventry = g_new0(MapCacheRev, 1);
-         entry->lock++;
-         if (entry->lock == 0) {
--            fprintf(stderr,
--                    "mapcache entry lock overflow: "HWADDR_FMT_plx" -> %p\n",
--                    entry->paddr_index, entry->vaddr_base);
-+            error_report("mapcache entry lock overflow: "HWADDR_FMT_plx" -> %p",
-+                         entry->paddr_index, entry->vaddr_base);
-             abort();
-         }
-         reventry->dma = dma;
--- 
-2.34.1
+  Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
+  Date: Wed, 31 Jan 2024 21:14:21 +0100
+  Subject: Dynamic & heterogeneous machines, initial configuration: problems
 
+If there are any other agenda items you would like to discuss then
+please respond to this email.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
