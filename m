@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA06C4828D
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 02:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482F8C48286
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 03:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVjFP-0004bp-7I; Thu, 01 Feb 2024 21:25:43 -0500
+	id 1rVkGc-0006OE-QA; Thu, 01 Feb 2024 22:31:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVjFN-0004ao-Bl; Thu, 01 Feb 2024 21:25:41 -0500
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ id 1rVkGb-0006NK-5G; Thu, 01 Feb 2024 22:31:01 -0500
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rVjFL-0006XC-5T; Thu, 01 Feb 2024 21:25:41 -0500
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4bdce906e11so539060e0c.1; 
- Thu, 01 Feb 2024 18:25:38 -0800 (PST)
+ id 1rVkGZ-0002hJ-H0; Thu, 01 Feb 2024 22:31:00 -0500
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-46b3ff62223so1809474137.0; 
+ Thu, 01 Feb 2024 19:30:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1706840738; x=1707445538; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1706844658; x=1707449458; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RG1mBCndshn2WvKcOT7b+YS4q9wN7biAN8QUFpRyw8o=;
- b=BDTgJBBrDTjzt6l1O7n+C+k2s8x44asMlaYeRsjGSilN+3VYdakk7mUjOUC1t5Lzw/
- QUwL95nhZWFJ8s5xoBLxh3pTDFKMTRrhYt0q19LsOslEJkSNP0HkmXECRGdkPciF8OII
- T1vJEQdoEHNhlktl1c1+yCCamGmipsj5Vc4aT0yqZQ/9RzF228HU5rAdxickTeo/S7ch
- azklrTJ3Tzhq68t8izom4CpalcPJda7IaQdqBjfrxkXOsqmB9DVCwMf4BWUMyMxPylOZ
- fjD1TtidM+nieIK7sHYuFv4mI1EeGmmQQDi2XwyPRmrj+QNv352xBlRj6tIEfgwZraKF
- pdNw==
+ bh=kv8aZN1E1Pf8j1v4hQe5XNaY8kWkU2ATIKXRwzJjAeE=;
+ b=cx6exJ98/7Ny7TgozdmhTVMZvFgUo1/+ww0CWUSZdE2mkpgYTumUfJcSnnm4fhyP+L
+ dCGTwJfxNvlZ004SWiLmJqgCClDQpLt9sZA2KI5TK+/5ag8DXZURENLRSaaS2P6sT0ni
+ ssx7q+YKiaOL1RgHQqkaQxIvLq9Zim8g72XDfWf73S2b2RxPtZDCfK4aBhRUo34Ub/uV
+ boaGnxVgsZfV2Vytrs+/7bnUu6zdtHmm1CxbwxcL+/Tx86LJTM65JWexOzoOSeH95bUp
+ VzJrX6FOZNY3yVIw5mJEZVixq2YOy/+32ZMjxhCljNTmsDBGo/vzO8c7GInVY/wqW7i0
+ kOtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706840738; x=1707445538;
+ d=1e100.net; s=20230601; t=1706844658; x=1707449458;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RG1mBCndshn2WvKcOT7b+YS4q9wN7biAN8QUFpRyw8o=;
- b=K3HYwuReFMEWqyLwaBQVRKK2gbwOriGTq+Sd6jBcVHsVOLf9lUjNXxk0XMJbBS7NGt
- PxIpCNaFzmpC8fz5frUBZHm8K6NUL3pEgudvsJX4Aqr48QjMrqf2XBBxl2FIxCPshMgl
- jUHutvi/fb58NPRv0bfd1JWV+FX39X9pFQRRcIGMMLi37I+7jsosRudKI9//2ijAya6y
- 19uqU9GvrvUnRWYO2ejDm2DRFESzLFrSIZdNP/6O0tke6AdbSs1aalU8gpreVu/dKFMR
- Beeb+C9mMSqUaxd9uE0IVQRQ6nrF+N40xw32KfXaWGSwFqLSNGqanY8fZvXHbQ6t69w+
- zRvA==
-X-Gm-Message-State: AOJu0Yy6+pJ8uFIk1n4oRbEMZVbSEx1NMP9JYvPYunef6mHxU+PuAw4+
- LDi/wveaUPrsoR9ssO7Tf5gmIoWDFWVWN90v1+arY4n80vKgbaTka0TARf3B8Kphk2uWccHYQGI
- FmOXaSrMT+QDtdi+san/uUmvSf6k=
-X-Google-Smtp-Source: AGHT+IFGYInF9Q5C+kGw2W8o9OOeAuGIdbYeIDtN253Cfr873aLA8yaIdThL3xKUOllP58NhSJMY7NUq07ODyMj3/y4=
-X-Received: by 2002:a05:6122:98b:b0:4b7:41f2:9e9f with SMTP id
- g11-20020a056122098b00b004b741f29e9fmr857783vkd.9.1706840737731; Thu, 01 Feb
- 2024 18:25:37 -0800 (PST)
+ bh=kv8aZN1E1Pf8j1v4hQe5XNaY8kWkU2ATIKXRwzJjAeE=;
+ b=eCC2ctoDiTd/CHC736/aUSb7qOSiUjU7drg60EJotKL5YGpfMKf+/FOaZR5Ic8pM5r
+ 4qXKTBamTm6TxgSdAkGrOhHw0eXu24mriqBMS7JfvrHQvyTXaGzxloOQ/aSCur1cHZkI
+ eNQZcmsce+wSKHqh2AGQfUJdxIeNTg/qMr9kBhUv4pffhUOHzLW4xzjkTaLo7oNjHTtI
+ 5GLJdJguFSopHaxVsKu9DgzNNyeeYdMvwcH+h/My7CMuczw6gi4wf5i+IsUes/P+PHLc
+ GnyyuHpQRK6u3nM47K3A8PKanh+DMxmYZkVkIm9oJMfzsejPZLZgYQzZI1nZXl+PGX2S
+ vKjg==
+X-Gm-Message-State: AOJu0Yz9hIyacXtS1QMsCYPs6gvf6H6ylUYmwuNTSW5JprppZBJFkw1P
+ sJpBDICAoADFgYNs3dEHUU24YK2Di7PFW2lNNN7UhpTbz0KG5Qz4j2JWJy8H4LDtsa3JOXKpm6v
+ bTo5QgdkBt7T0d4Dx8iJq3sFEX8U=
+X-Google-Smtp-Source: AGHT+IGci1zNbWqgB+Xjrc8QoCfy0jMWMP7QFIx0Eghp8TL/CRbe/QALKApOyfS0jR8CKtmEGV1j9RTf7BqCU0nVUMo=
+X-Received: by 2002:a67:e2d7:0:b0:46b:68fd:fa43 with SMTP id
+ i23-20020a67e2d7000000b0046b68fdfa43mr751227vsm.4.1706844658099; Thu, 01 Feb
+ 2024 19:30:58 -0800 (PST)
 MIME-Version: 1.0
 References: <20240131123624.230982-1-vadim.shakirov@syntacore.com>
 In-Reply-To: <20240131123624.230982-1-vadim.shakirov@syntacore.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 2 Feb 2024 12:25:11 +1000
-Message-ID: <CAKmqyKN203EyYvrNpfu-tL5UOrJNETJNCS9E3OqOwa2oKom_BA@mail.gmail.com>
+Date: Fri, 2 Feb 2024 13:30:31 +1000
+Message-ID: <CAKmqyKPc6K50usZFBgfPqCxTEUibzTmApWWuB=9t_7nN3_Wi2g@mail.gmail.com>
 Subject: Re: [PATCH v3] target/riscv: mcountinhibit, mcounteren, scounteren,
  hcounteren is 32-bit
 To: Vadim Shakirov <vadim.shakirov@syntacore.com>
@@ -68,8 +68,8 @@ Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,7 +102,8 @@ t
 >
 > Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Do you mind rebasing this on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next ?
 
 Alistair
 
