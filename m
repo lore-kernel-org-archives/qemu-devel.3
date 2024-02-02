@@ -4,67 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7322FC47DB3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 11:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA013C47DB3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 11:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVrvq-0003nw-GK; Fri, 02 Feb 2024 06:42:06 -0500
+	id 1rVryP-00056F-7b; Fri, 02 Feb 2024 06:44:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vadim.shakirov@syntacore.com>)
- id 1rVrvp-0003nV-HX; Fri, 02 Feb 2024 06:42:05 -0500
-Received: from mta-04.yadro.com ([89.207.88.248])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vadim.shakirov@syntacore.com>)
- id 1rVrvn-0005KA-NQ; Fri, 02 Feb 2024 06:42:05 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 8E1FEC0003
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1706874117;
- bh=EbXOcRSAjLk94LsLZVw3GLjYqZ5HOqf43M1+CKsq08Y=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=cDIp2WaS44oinZTra3c7T89oRvRcjwmp2GxgI7nAS9p2xJJvimiE8AM9BxMI+RFob
- M3Bv9M0buyAKrS2o0s8ZbsCNyZuWYbrrV+LDDKhupy76Knt9Ak+K0cHGfA2L4s2eyb
- 34uHQQMYHEDL1ftCdLjvQ0Grzi0O3I1XjieI2faZb2tOfAmkvERQl22Tnd3oBI+dpT
- l8nKtoDBhDhRpmkRfB1NxKQzKAEudOsoHheJItciqANslLVvOtfqG/TMMByU0QgyYZ
- DAyurHfJQ7Ce/PXBexDmM1Mo93FU/XiXs9p45nnqS8KdQ6jgadxioBDJr1zWc6L697
- 9IQnZSs50155A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1706874117;
- bh=EbXOcRSAjLk94LsLZVw3GLjYqZ5HOqf43M1+CKsq08Y=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=ptTpVfGDV/MNDtvYF7bBpl9r3WqdiXXDwZbrakHvpj8EiQnAkCAzkR/AJAf/M30UE
- 69Lk/yRKeidyDTHdKs8dveAFiusLEEs+cMk49daGMLltapRu5/OvRnTeVD1+ZCZBqr
- H75VvbEkffGsUNU2A02qulFuXDCKpvSj0tjc5N/4kMsDsRG89lDUKvBY8m6IYJVt2D
- i9yCte8fxfeTXEEGRbGQGTPhBkpqfwuYha4X/WhtP2SdVFNKXzSOmcNxFHoPkXa+re
- Nm53/kp5DQ/w294nH91PDkEvYlHTi+ows1Wv/cxhVsaJ3VTeKuihqSz6EffXhtf0BX
- iuFyKBNrHUFmg==
-From: Vadim Shakirov <vadim.shakirov@syntacore.com>
-To: <qemu-devel@nongnu.org>
-CC: Vadim Shakirov <vadim.shakirov@syntacore.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin Meng
- <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, "Daniel Henrique
- Barboza" <dbarboza@ventanamicro.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>
-Subject: [PATCH v4] target/riscv: mcountinhibit, mcounteren, scounteren,
- hcounteren is 32-bit
-Date: Fri, 2 Feb 2024 14:39:19 +0300
-Message-ID: <20240202113919.18236-1-vadim.shakirov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rVryN-00055r-De
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 06:44:43 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rVryL-0005hL-7E
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 06:44:43 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-296424aaa95so345436a91.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 03:44:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1706874279; x=1707479079; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/56ML8DEVkLXwwkLgYh2U8m4CxJpd39lbiGTG9EnOBM=;
+ b=DRoAiOqlK+5ctuGqbhW/tBM/HsbJoBhnpJ6A4st/pTLc/W7tqRThVTmeAhy1/kXkpg
+ 21rlrw/Z20tdFYeABtjuxc8OFvcAQP+U/h+pD62/sDU/eCEM6M/Ex1cO8UfNtMep0qaI
+ VPThhFaajK2+Q9I5+V+Io8Ol85iJ26SDy9jlgFMojOtnqQH6cszM0ZV8wfnd9dY1dK4U
+ i9/DuXXpjWaACRTq+OiuVnGaPFEKiz553kIfd1i2xu4tTNo2ArD9ZuQYa1/QoytyjTtO
+ CcXEuiflNgQ7ZQREFNbiIoRWUlw3cLqBTMsQN7DPE4Qjdc+Z32oDhzq72HsNRAzONiF/
+ XXbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706874279; x=1707479079;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/56ML8DEVkLXwwkLgYh2U8m4CxJpd39lbiGTG9EnOBM=;
+ b=Hf+RVmassuT3kiTXQQ/KAKdMlLBN+wAiLqeDDMFt2H/M4qmZCFNz/S4Kbj4mg1IC0p
+ nQFYLqAjgUPnNj0tnmPGjdTMbzmt8tTY7UtcIFO0L4GrMeW2zekKhfX74mA8zzPSUHxh
+ mZPNwbdLDplRYPZdAjpfR/+ewtUn3D7BF6grvsq6KvqenhuDnF8mVmUb0FL+mNRk/IYn
+ ACRxJVLyjoLNCSHbOzsqWD/F8vNI5Ge7r0hzAzBNAahruOepwVSbbJZWYEqit1r3sl0R
+ 3og8QeNDDcJux9PRyDvLfe3VJ5co6hpegxnfxBCV/MP74D1IoTWTM2uMm1haT2PkLTzq
+ nQbA==
+X-Gm-Message-State: AOJu0YwFYox4+xOTrJHOudSyjk9SJNgDrdpWdht+FAvVRByRSgYpXItE
+ qLKxgpOt1RfS319NRoU31jYBcrEVL8VBYID0DNqiztl9VXdZDvIUY4e9Uo0a5SqwNRwaRGu/1NR
+ b
+X-Google-Smtp-Source: AGHT+IHlMIovokMGlK2rH8OoxQWy3YZ0uCbYe7EUYUp4tpoovFtdaK/OgHeZmRksMP6jN1yT1ZYvSw==
+X-Received: by 2002:a17:90a:cc2:b0:295:c61c:1c07 with SMTP id
+ 2-20020a17090a0cc200b00295c61c1c07mr7700171pjt.21.1706874278971; 
+ Fri, 02 Feb 2024 03:44:38 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCWfrfga9oL+ffAB5xxjyppoxKDhFmIBoWm6XqWkh5eiQHJTWXO5scNgWeKwM4qedIFSRmrS2yzQ5AsErIXDnW7+kL0QIloJMzDwCM3YI5VuhjRiagD54jski9be3pB6RaTdn6Ruwdo0zpzyuv4njuBvWyc+HYVRNbvbUVCp6a3Di89lbMx67PjLLfHivfSTTVfo1ZWYxWrRiQl0Mc1hXXJvYncn
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ iz5-20020a170902ef8500b001d8f111804asm1425260plb.113.2024.02.02.03.44.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Feb 2024 03:44:38 -0800 (PST)
+Message-ID: <bf7d4474-8307-4d4a-ac7d-c2b4cfebae8f@ventanamicro.com>
+Date: Fri, 2 Feb 2024 08:44:35 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
- S-Exch-01.corp.yadro.com (10.78.5.241)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=vadim.shakirov@syntacore.com; helo=mta-04.yadro.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/2] riscv: add rv32i,rv32e and rv64e CPUs
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+References: <20240122123348.973288-1-dbarboza@ventanamicro.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240122123348.973288-1-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,89 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mcountinhibit, mcounteren, scounteren and hcounteren must always be 32-bit
-by privileged spec
+Alistair,
 
-Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
----
- target/riscv/cpu.h     |  8 ++++----
- target/riscv/machine.c | 16 ++++++++--------
- 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5138187727..cf1867a6e2 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -271,7 +271,7 @@ struct CPUArchState {
-     target_ulong hstatus;
-     target_ulong hedeleg;
-     uint64_t hideleg;
--    target_ulong hcounteren;
-+    uint32_t hcounteren;
-     target_ulong htval;
-     target_ulong htinst;
-     target_ulong hgatp;
-@@ -334,10 +334,10 @@ struct CPUArchState {
-      */
-     bool two_stage_indirect_lookup;
- 
--    target_ulong scounteren;
--    target_ulong mcounteren;
-+    uint32_t scounteren;
-+    uint32_t mcounteren;
- 
--    target_ulong mcountinhibit;
-+    uint32_t mcountinhibit;
- 
-     /* PMU counter state */
-     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 72fe2374dc..a4d47ec17e 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -79,14 +79,14 @@ static bool hyper_needed(void *opaque)
- 
- static const VMStateDescription vmstate_hyper = {
-     .name = "cpu/hyper",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .needed = hyper_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL(env.hstatus, RISCVCPU),
-         VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
-         VMSTATE_UINT64(env.hideleg, RISCVCPU),
--        VMSTATE_UINTTL(env.hcounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.hcounteren, RISCVCPU),
-         VMSTATE_UINTTL(env.htval, RISCVCPU),
-         VMSTATE_UINTTL(env.htinst, RISCVCPU),
-         VMSTATE_UINTTL(env.hgatp, RISCVCPU),
-@@ -354,8 +354,8 @@ static const VMStateDescription vmstate_jvt = {
- 
- const VMStateDescription vmstate_riscv_cpu = {
-     .name = "cpu",
--    .version_id = 9,
--    .minimum_version_id = 9,
-+    .version_id = 10,
-+    .minimum_version_id = 10,
-     .post_load = riscv_cpu_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-@@ -398,9 +398,9 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINTTL(env.mtval, RISCVCPU),
-         VMSTATE_UINTTL(env.miselect, RISCVCPU),
-         VMSTATE_UINTTL(env.siselect, RISCVCPU),
--        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
--        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
--        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
-+        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
-         VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
-                              vmstate_pmu_ctr_state, PMUCTRState),
-         VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
--- 
-2.34.1
+I think we should just queue this up since it's all acked. It's still
+applicable in riscv-to-apply.next.
 
+
+Thanks,
+
+Daniel
+
+On 1/22/24 09:33, Daniel Henrique Barboza wrote:
+> Hi,
+> 
+> This v3 has the same patches from v2 rebased with a newer
+> riscv-to-apply.next branch (@ 096b6b07298).
+> 
+> No other changes made. All patches acked.
+> 
+> v2 link: https://lore.kernel.org/qemu-riscv/20240108161903.353648-1-dbarboza@ventanamicro.com/
+> 
+> Daniel Henrique Barboza (2):
+>    target/riscv/cpu.c: add riscv_bare_cpu_init()
+>    target/riscv: add rv32i, rv32e and rv64e CPUs
+> 
+>   target/riscv/cpu-qom.h |  3 ++
+>   target/riscv/cpu.c     | 64 ++++++++++++++++++++++++++++++++----------
+>   2 files changed, 52 insertions(+), 15 deletions(-)
+> 
 
