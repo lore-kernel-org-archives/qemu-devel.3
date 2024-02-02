@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA39C48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49B2CC48291
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:37:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvaw-0000CP-Io; Fri, 02 Feb 2024 10:36:46 -0500
+	id 1rVvb2-0000Kr-R5; Fri, 02 Feb 2024 10:36:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvav-0000Ap-72
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ id 1rVvb1-0000Jy-0O
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:51 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rVvat-0004Rl-8Z
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:44 -0500
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-51137c8088dso969502e87.1
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:42 -0800 (PST)
+ id 1rVvav-0004Sh-Rl
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:50 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-40fafae5532so19305655e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706888201; x=1707493001; darn=nongnu.org;
+ d=linaro.org; s=google; t=1706888204; x=1707493004; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wyZDr1Zjb+maiQcAIaO52bka0IE0OhCst2zFuC2UbQo=;
- b=b0z5QJf5n801ia+vPvZL7ACABnaDb5foj0OyL+Ex8sLrV2C4NonUypHEeD3XoeDgoa
- ZmsrR8jIz8s0OzXK6qI9Pg87p226j9C+WdadVSOYZis6pB50Jsa5uJB1OTKtl4g8pDL8
- p0SPr+Nm262+s6dOF9xIQsQIQdEE/I9lc8Qa2rHEBGCg7fw4rBXlN3p7zp+skJmt9RzJ
- q4VzS2NSmK/OKxkAXStk1y65Ze/5DEONVU4fWv4CAKET9z6Wx+WbA8zyc1KoOrCXqOof
- PwhWKoweG97FStyI1YXDnXfxMsvGImdmYK0sncBboYjBCNLm7nBnCDSxs2l23g7LXVrQ
- pD9w==
+ :reply-to; bh=nCqjBY1O075hml0hoLAI8QgIMrH8pjs6AsQwwZz+6WI=;
+ b=nCLyTWnIsyjV0cheIj1FvsDJsf+3TB27/J8OmfO40uLPSpmzTc6/1cWlqkagG1auA1
+ xdMaDotmy+6lF2w5YVw//DRD7oYpN0Y9xz3fm829aYf0SYOpspKcPEjjoY8bXoekXOoD
+ xHL8l8ghBLOytZdCW4Yag+FQy4aLVO22yrRpQ5Tn9coRTtNVc2Dza8VrGIK/UR8cSxgj
+ AL4T0e0aJhZhQ7xtAhD+TS/Lv9BIADssWdYlChN08ruYRZFPKxevXgWOTmgJGoWcCznh
+ BYF6AvJWJ0Xp6LUpjlNcfB0FMrmsxK+9DnIS9ICmA1IFcew6+j8llzYQREbDxxh7/mfh
+ 5wsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706888201; x=1707493001;
+ d=1e100.net; s=20230601; t=1706888204; x=1707493004;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wyZDr1Zjb+maiQcAIaO52bka0IE0OhCst2zFuC2UbQo=;
- b=fNisH3LFbtEKjebGX0HH4KxT4stJqPYRu81gLi+ZM7UCRh7onpszNaHCizTHqHaIZr
- D4Fszif5x1+QFrf4UKmGuOEDxS8un8T5nDEfgjqUTG/aBgmEfEpxt1HyaXtJ7DaB+G2N
- 3C056nl++MkvgMCPQsEvOUcBVIORQfMRl4dfUKz67FOl4VGAdgQGzhhPSsdaSBQUjQoe
- Jh401zIU/0iUMkpAZwMGJBU5aDpAhMzS2y8YJQqakYOHY/KBwoRTzZDioNjDMi0H0c/z
- F13YQCF54k+sZLR2k77vKmYKtF9eNoI/B0Ua/OlSsaerMTmnAYU/EIrtLWTDFPjvcNum
- 7myQ==
-X-Gm-Message-State: AOJu0YxLrmNTAi9uSOFkmlbSl4v84OlL5ULiJ9EHoerE4zg0jbdok0SV
- bvX77zyY40zJPrkukT/J5fOX4Pyh6XxLo1dIwwz5nfieNR4sFCamHvLoVBNsP4XD8GeisryTTP9
- W
-X-Google-Smtp-Source: AGHT+IFITSKcmbr2aPKEAwhYEqRNg30i3qZZuxTmDP6+9SBvsrM4tCnLiXFcJNiect9eL6AmcpUcEQ==
-X-Received: by 2002:ac2:5101:0:b0:510:1b65:dd97 with SMTP id
- q1-20020ac25101000000b005101b65dd97mr3929634lfb.17.1706888201673; 
- Fri, 02 Feb 2024 07:36:41 -0800 (PST)
+ bh=nCqjBY1O075hml0hoLAI8QgIMrH8pjs6AsQwwZz+6WI=;
+ b=EOdOZiVh8/yXNfsbYsvuXU3TbxnqUNdUpnBNHVzCq4749wooZ2Tcp1hxSo+w2hnMGb
+ tX+e5oRPneuEotG96IYgsVgfdpxyerCnwCjz6p6TGiJq0yY+sXvR+zJAQgKwICEqKsFY
+ ftnK2AmjIZZptEreRTFCzQ4u65kjKRgd0c5DKX8UU1UPWTY7n47Esp+xjhbVY/JMeu2x
+ +B6+cXOIZT1RewTz1O+/I7yLqml4XBisWtM3j0jPGOKyx5vJbSjpZeR4MplumVKmo9OO
+ h/GmBzbS4ClAPl0Z6KiMSg67i+Qf5kI/tyewpSLDcybH/+SeGTZp5qPbqyDjt/HMNir/
+ Mgpg==
+X-Gm-Message-State: AOJu0YxtRtpprdTJxjyYdrsCAqvbjkfheH3IlFNnGorgelbW2Ku63e4L
+ GXps5DiO+liookl/D2tKAouyKpkA6oPauAATC0vXgYPpXCwja76XasZINauAajHXNIpLH6EVgKi
+ 6
+X-Google-Smtp-Source: AGHT+IGKdtrxEmf6dWADf9kCAsAGz08n7WkZf5jDMSDiv3MvJ5x41uJUcUR+IONTuV/2f10hMdLIbQ==
+X-Received: by 2002:a5d:4c90:0:b0:33b:1bed:a315 with SMTP id
+ z16-20020a5d4c90000000b0033b1beda315mr2414170wrs.25.1706888204443; 
+ Fri, 02 Feb 2024 07:36:44 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.41
+ k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Feb 2024 07:36:41 -0800 (PST)
+ Fri, 02 Feb 2024 07:36:44 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/36] hw/core: Remove transitional infrastructure from BusClass
-Date: Fri,  2 Feb 2024 15:36:07 +0000
-Message-Id: <20240202153637.3710444-7-peter.maydell@linaro.org>
+Subject: [PULL 12/36] doc/sphinx/hxtool.py: add optional label argument to
+ SRST directive
+Date: Fri,  2 Feb 2024 15:36:13 +0000
+Message-Id: <20240202153637.3710444-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
 References: <20240202153637.3710444-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,122 +94,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BusClass currently has transitional infrastructure to support
-subclasses which implement the legacy BusClass::reset method rather
-than the Resettable interface.  We have now removed all the users of
-BusClass::reset in the tree, so we can remove the transitional
-infrastructure.
+From: David Woodhouse <dwmw@amazon.co.uk>
 
+We can't just embed labels directly into files like qemu-options.hx which
+are included from multiple top-level rST files, because Sphinx sees the
+labels as duplicate: https://github.com/sphinx-doc/sphinx/issues/9707
+
+So add an optional argument to the SRST directive which causes a label
+of the form '.. _DOCNAME-HXFILE-LABEL:' to be emitted, where 'DOCNAME'
+is the name of the top level rST file, 'HXFILE' is the filename of the
+.hx file, and 'LABEL' is the text provided within the 'SRST()' directive.
+Using the DOCNAME of the top-level rST document means that it is unique
+even when the .hx file is included from two different documents, as is
+the case for qemu-options.hx
+
+Now where the Xen PV documentation refers to the documentation for the
+-initrd command line option, it can emit a link directly to it as
+'<system/invocation-qemu-options-initrd>'.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240130190348.682912-1-dwmw2@infradead.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Cédric Le Goater <clg@redhat.com>
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-id: 20240119163512.3810301-6-peter.maydell@linaro.org
 ---
- include/hw/qdev-core.h |  2 --
- hw/core/bus.c          | 67 ------------------------------------------
- 2 files changed, 69 deletions(-)
+ docs/devel/docs.rst      | 12 ++++++++++--
+ docs/sphinx/hxtool.py    | 16 ++++++++++++++++
+ docs/system/i386/xen.rst |  3 ++-
+ qemu-options.hx          |  2 +-
+ 4 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 66338f479fe..d47536eadb1 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -329,8 +329,6 @@ struct BusClass {
-      */
-     char *(*get_fw_dev_path)(DeviceState *dev);
+diff --git a/docs/devel/docs.rst b/docs/devel/docs.rst
+index 7da067905b8..50ff0d67f84 100644
+--- a/docs/devel/docs.rst
++++ b/docs/devel/docs.rst
+@@ -30,6 +30,13 @@ nor the documentation output.
  
--    void (*reset)(BusState *bus);
--
-     /*
-      * Return whether the device can be added to @bus,
-      * based on the address that was set (via device properties)
-diff --git a/hw/core/bus.c b/hw/core/bus.c
-index c7831b5293b..b9d89495cdf 100644
---- a/hw/core/bus.c
-+++ b/hw/core/bus.c
-@@ -232,57 +232,6 @@ static char *default_bus_get_fw_dev_path(DeviceState *dev)
-     return g_strdup(object_get_typename(OBJECT(dev)));
- }
+ ``SRST`` starts a reStructuredText section. Following lines
+ are put into the documentation verbatim, and discarded from the C output.
++The alternative form ``SRST()`` is used to define a label which can be
++referenced from elsewhere in the rST documentation. The label will take
++the form ``<DOCNAME-HXFILE-LABEL>``, where ``DOCNAME`` is the name of the
++top level rST file, ``HXFILE`` is the filename of the .hx file without
++the ``.hx`` extension, and ``LABEL`` is the text provided within the
++``SRST()`` directive. For example,
++``<system/invocation-qemu-options-initrd>``.
  
--/**
-- * bus_phases_reset:
-- * Transition reset method for buses to allow moving
-- * smoothly from legacy reset method to multi-phases
-- */
--static void bus_phases_reset(BusState *bus)
--{
--    ResettableClass *rc = RESETTABLE_GET_CLASS(bus);
--
--    if (rc->phases.enter) {
--        rc->phases.enter(OBJECT(bus), RESET_TYPE_COLD);
--    }
--    if (rc->phases.hold) {
--        rc->phases.hold(OBJECT(bus));
--    }
--    if (rc->phases.exit) {
--        rc->phases.exit(OBJECT(bus));
--    }
--}
--
--static void bus_transitional_reset(Object *obj)
--{
--    BusClass *bc = BUS_GET_CLASS(obj);
--
--    /*
--     * This will call either @bus_phases_reset (for multi-phases transitioned
--     * buses) or a bus's specific method for not-yet transitioned buses.
--     * In both case, it does not reset children.
--     */
--    if (bc->reset) {
--        bc->reset(BUS(obj));
--    }
--}
--
--/**
-- * bus_get_transitional_reset:
-- * check if the bus's class is ready for multi-phase
-- */
--static ResettableTrFunction bus_get_transitional_reset(Object *obj)
--{
--    BusClass *dc = BUS_GET_CLASS(obj);
--    if (dc->reset != bus_phases_reset) {
--        /*
--         * dc->reset has been overridden by a subclass,
--         * the bus is not ready for multi phase yet.
--         */
--        return bus_transitional_reset;
--    }
--    return NULL;
--}
--
- static void bus_class_init(ObjectClass *class, void *data)
- {
-     BusClass *bc = BUS_CLASS(class);
-@@ -293,22 +242,6 @@ static void bus_class_init(ObjectClass *class, void *data)
+ ``ERST`` ends the documentation section started with ``SRST``,
+ and switches back to a C code section.
+@@ -53,8 +60,9 @@ text, but in ``hmp-commands.hx`` the C code sections are elements
+ of an array of structs of type ``HMPCommand`` which define the
+ name, behaviour and help text for each monitor command.
  
-     rc->get_state = bus_get_reset_state;
-     rc->child_foreach = bus_reset_child_foreach;
--
--    /*
--     * @bus_phases_reset is put as the default reset method below, allowing
--     * to do the multi-phase transition from base classes to leaf classes. It
--     * allows a legacy-reset Bus class to extend a multi-phases-reset
--     * Bus class for the following reason:
--     * + If a base class B has been moved to multi-phase, then it does not
--     *   override this default reset method and may have defined phase methods.
--     * + A child class C (extending class B) which uses
--     *   bus_class_set_parent_reset() (or similar means) to override the
--     *   reset method will still work as expected. @bus_phases_reset function
--     *   will be registered as the parent reset method and effectively call
--     *   parent reset phases.
--     */
--    bc->reset = bus_phases_reset;
--    rc->get_transitional_function = bus_get_transitional_reset;
- }
+-In the file ``qemu-options.hx``, do not try to define a
++In the file ``qemu-options.hx``, do not try to explicitly define a
+ reStructuredText label within a documentation section. This file
+ is included into two separate Sphinx documents, and some
+ versions of Sphinx will complain about the duplicate label
+-that results.
++that results. Use the ``SRST()`` directive documented above, to
++emit an unambiguous label.
+diff --git a/docs/sphinx/hxtool.py b/docs/sphinx/hxtool.py
+index 9f6b9d87dcc..3729084a36c 100644
+--- a/docs/sphinx/hxtool.py
++++ b/docs/sphinx/hxtool.py
+@@ -78,6 +78,14 @@ def parse_archheading(file, lnum, line):
+         serror(file, lnum, "Invalid ARCHHEADING line")
+     return match.group(1)
  
- static void qbus_finalize(Object *obj)
++def parse_srst(file, lnum, line):
++    """Handle an SRST directive"""
++    # The input should be either "SRST", or "SRST(label)".
++    match = re.match(r'SRST(\((.*?)\))?', line)
++    if match is None:
++        serror(file, lnum, "Invalid SRST line")
++    return match.group(2)
++
+ class HxtoolDocDirective(Directive):
+     """Extract rST fragments from the specified .hx file"""
+     required_argument = 1
+@@ -113,6 +121,14 @@ def run(self):
+                         serror(hxfile, lnum, 'expected ERST, found SRST')
+                     else:
+                         state = HxState.RST
++                        label = parse_srst(hxfile, lnum, line)
++                        if label:
++                            rstlist.append("", hxfile, lnum - 1)
++                            # Build label as _DOCNAME-HXNAME-LABEL
++                            hx = os.path.splitext(os.path.basename(hxfile))[0]
++                            refline = ".. _" + env.docname + "-" + hx + \
++                                "-" + label + ":"
++                            rstlist.append(refline, hxfile, lnum - 1)
+                 elif directive == 'ERST':
+                     if state == HxState.CTEXT:
+                         serror(hxfile, lnum, 'expected SRST, found ERST')
+diff --git a/docs/system/i386/xen.rst b/docs/system/i386/xen.rst
+index 81898768baa..46db5f34c1d 100644
+--- a/docs/system/i386/xen.rst
++++ b/docs/system/i386/xen.rst
+@@ -132,7 +132,8 @@ The example above provides the guest kernel command line after a separator
+ (" ``--`` ") on the Xen command line, and does not provide the guest kernel
+ with an actual initramfs, which would need to listed as a second multiboot
+ module. For more complicated alternatives, see the command line
+-documentation for the ``-initrd`` option.
++:ref:`documentation <system/invocation-qemu-options-initrd>` for the
++``-initrd`` option.
+ 
+ Host OS requirements
+ --------------------
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 40e938c4877..5adbed11013 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3994,7 +3994,7 @@ ERST
+ 
+ DEF("initrd", HAS_ARG, QEMU_OPTION_initrd, \
+            "-initrd file    use 'file' as initial ram disk\n", QEMU_ARCH_ALL)
+-SRST
++SRST(initrd)
+ 
+ ``-initrd file``
+     Use file as initial ram disk.
 -- 
 2.34.1
 
