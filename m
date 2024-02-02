@@ -4,62 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD2FC48291
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA39C48291
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvaW-0008Of-RE; Fri, 02 Feb 2024 10:36:23 -0500
+	id 1rVvaw-0000CP-Io; Fri, 02 Feb 2024 10:36:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+836f8942eaadfea8137c+7467+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVvaP-0008O7-OO
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:14 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+836f8942eaadfea8137c+7467+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rVvaN-0003n2-83
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=1PB6tGior9mBWDs6TbZrje90Od5Fd+hDVtejQJcH45c=; b=K6PumKFOCEs40m6P+/+M0tT+Vc
- bGY3XKbsy6XzAqnABtoX7uT38mGMsuq74hwkDkJqd5OWI9m3oblEsYC9tLoAchivawPTIlxxESzPU
- 6Pp/gkwDDMpqrWejiWFRZrTYAOTzVblrHB8F1ff8O0MOiog2LIYetffONjhxHbonA9JQjncIB9EIm
- xRkYithxYdN9r218Fe966yPkPWiNdfwfQudNiT2mSPxuiWFgkL6E9fBOd8FnkSJVwgMSkfKId0QGl
- Uxx2YQimhokehEahWZV6Md+7SfNs4yZo+bnpfltOQzNKVwO2K8x7AGVtHJ7UIKhsWKZh5u1raypBD
- Y+XutOyA==;
-Received: from [205.251.233.110] (helo=freeip.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rVvaE-00000001PMW-33wY; Fri, 02 Feb 2024 15:36:04 +0000
-Message-ID: <4e86dd4daebb3c15d1585ff8d7316f61f122d827.camel@infradead.org>
-Subject: Re: [PULL 00/47] nic-config.for-upstream queue
-From: David Woodhouse <dwmw2@infradead.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Date: Fri, 02 Feb 2024 07:36:00 -0800
-In-Reply-To: <CAFEAcA9-e=hzN62vkq-P575yMvjqmm1sNwNMswUDnqj1gCRmOA@mail.gmail.com>
-References: <20240201164412.785520-1-dwmw2@infradead.org>
- <CAFEAcA9-e=hzN62vkq-P575yMvjqmm1sNwNMswUDnqj1gCRmOA@mail.gmail.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-vW3z7geear7NQ1A+SYcM"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVvav-0000Ap-72
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:45 -0500
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVvat-0004Rl-8Z
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:36:44 -0500
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-51137c8088dso969502e87.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 07:36:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706888201; x=1707493001; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=wyZDr1Zjb+maiQcAIaO52bka0IE0OhCst2zFuC2UbQo=;
+ b=b0z5QJf5n801ia+vPvZL7ACABnaDb5foj0OyL+Ex8sLrV2C4NonUypHEeD3XoeDgoa
+ ZmsrR8jIz8s0OzXK6qI9Pg87p226j9C+WdadVSOYZis6pB50Jsa5uJB1OTKtl4g8pDL8
+ p0SPr+Nm262+s6dOF9xIQsQIQdEE/I9lc8Qa2rHEBGCg7fw4rBXlN3p7zp+skJmt9RzJ
+ q4VzS2NSmK/OKxkAXStk1y65Ze/5DEONVU4fWv4CAKET9z6Wx+WbA8zyc1KoOrCXqOof
+ PwhWKoweG97FStyI1YXDnXfxMsvGImdmYK0sncBboYjBCNLm7nBnCDSxs2l23g7LXVrQ
+ pD9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706888201; x=1707493001;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wyZDr1Zjb+maiQcAIaO52bka0IE0OhCst2zFuC2UbQo=;
+ b=fNisH3LFbtEKjebGX0HH4KxT4stJqPYRu81gLi+ZM7UCRh7onpszNaHCizTHqHaIZr
+ D4Fszif5x1+QFrf4UKmGuOEDxS8un8T5nDEfgjqUTG/aBgmEfEpxt1HyaXtJ7DaB+G2N
+ 3C056nl++MkvgMCPQsEvOUcBVIORQfMRl4dfUKz67FOl4VGAdgQGzhhPSsdaSBQUjQoe
+ Jh401zIU/0iUMkpAZwMGJBU5aDpAhMzS2y8YJQqakYOHY/KBwoRTzZDioNjDMi0H0c/z
+ F13YQCF54k+sZLR2k77vKmYKtF9eNoI/B0Ua/OlSsaerMTmnAYU/EIrtLWTDFPjvcNum
+ 7myQ==
+X-Gm-Message-State: AOJu0YxLrmNTAi9uSOFkmlbSl4v84OlL5ULiJ9EHoerE4zg0jbdok0SV
+ bvX77zyY40zJPrkukT/J5fOX4Pyh6XxLo1dIwwz5nfieNR4sFCamHvLoVBNsP4XD8GeisryTTP9
+ W
+X-Google-Smtp-Source: AGHT+IFITSKcmbr2aPKEAwhYEqRNg30i3qZZuxTmDP6+9SBvsrM4tCnLiXFcJNiect9eL6AmcpUcEQ==
+X-Received: by 2002:ac2:5101:0:b0:510:1b65:dd97 with SMTP id
+ q1-20020ac25101000000b005101b65dd97mr3929634lfb.17.1706888201673; 
+ Fri, 02 Feb 2024 07:36:41 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ k2-20020a05600c1c8200b0040fafd84095sm214735wms.41.2024.02.02.07.36.41
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Feb 2024 07:36:41 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 06/36] hw/core: Remove transitional infrastructure from BusClass
+Date: Fri,  2 Feb 2024 15:36:07 +0000
+Message-Id: <20240202153637.3710444-7-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
+References: <20240202153637.3710444-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+836f8942eaadfea8137c+7467+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,149 +94,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+BusClass currently has transitional infrastructure to support
+subclasses which implement the legacy BusClass::reset method rather
+than the Resettable interface.  We have now removed all the users of
+BusClass::reset in the tree, so we can remove the transitional
+infrastructure.
 
---=-vW3z7geear7NQ1A+SYcM
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Cédric Le Goater <clg@redhat.com>
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-id: 20240119163512.3810301-6-peter.maydell@linaro.org
+---
+ include/hw/qdev-core.h |  2 --
+ hw/core/bus.c          | 67 ------------------------------------------
+ 2 files changed, 69 deletions(-)
 
-On Fri, 2024-02-02 at 15:32 +0000, Peter Maydell wrote:
->=20
-> This fails "make check' because some of the qom-test and
-> test-hmp checks fail when the QEMU binary segfaults.
->=20
-> https://gitlab.com/qemu-project/qemu/-/jobs/6084552256
-> https://gitlab.com/qemu-project/qemu/-/jobs/6084044180
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 66338f479fe..d47536eadb1 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -329,8 +329,6 @@ struct BusClass {
+      */
+     char *(*get_fw_dev_path)(DeviceState *dev);
+ 
+-    void (*reset)(BusState *bus);
+-
+     /*
+      * Return whether the device can be added to @bus,
+      * based on the address that was set (via device properties)
+diff --git a/hw/core/bus.c b/hw/core/bus.c
+index c7831b5293b..b9d89495cdf 100644
+--- a/hw/core/bus.c
++++ b/hw/core/bus.c
+@@ -232,57 +232,6 @@ static char *default_bus_get_fw_dev_path(DeviceState *dev)
+     return g_strdup(object_get_typename(OBJECT(dev)));
+ }
+ 
+-/**
+- * bus_phases_reset:
+- * Transition reset method for buses to allow moving
+- * smoothly from legacy reset method to multi-phases
+- */
+-static void bus_phases_reset(BusState *bus)
+-{
+-    ResettableClass *rc = RESETTABLE_GET_CLASS(bus);
+-
+-    if (rc->phases.enter) {
+-        rc->phases.enter(OBJECT(bus), RESET_TYPE_COLD);
+-    }
+-    if (rc->phases.hold) {
+-        rc->phases.hold(OBJECT(bus));
+-    }
+-    if (rc->phases.exit) {
+-        rc->phases.exit(OBJECT(bus));
+-    }
+-}
+-
+-static void bus_transitional_reset(Object *obj)
+-{
+-    BusClass *bc = BUS_GET_CLASS(obj);
+-
+-    /*
+-     * This will call either @bus_phases_reset (for multi-phases transitioned
+-     * buses) or a bus's specific method for not-yet transitioned buses.
+-     * In both case, it does not reset children.
+-     */
+-    if (bc->reset) {
+-        bc->reset(BUS(obj));
+-    }
+-}
+-
+-/**
+- * bus_get_transitional_reset:
+- * check if the bus's class is ready for multi-phase
+- */
+-static ResettableTrFunction bus_get_transitional_reset(Object *obj)
+-{
+-    BusClass *dc = BUS_GET_CLASS(obj);
+-    if (dc->reset != bus_phases_reset) {
+-        /*
+-         * dc->reset has been overridden by a subclass,
+-         * the bus is not ready for multi phase yet.
+-         */
+-        return bus_transitional_reset;
+-    }
+-    return NULL;
+-}
+-
+ static void bus_class_init(ObjectClass *class, void *data)
+ {
+     BusClass *bc = BUS_CLASS(class);
+@@ -293,22 +242,6 @@ static void bus_class_init(ObjectClass *class, void *data)
+ 
+     rc->get_state = bus_get_reset_state;
+     rc->child_foreach = bus_reset_child_foreach;
+-
+-    /*
+-     * @bus_phases_reset is put as the default reset method below, allowing
+-     * to do the multi-phase transition from base classes to leaf classes. It
+-     * allows a legacy-reset Bus class to extend a multi-phases-reset
+-     * Bus class for the following reason:
+-     * + If a base class B has been moved to multi-phase, then it does not
+-     *   override this default reset method and may have defined phase methods.
+-     * + A child class C (extending class B) which uses
+-     *   bus_class_set_parent_reset() (or similar means) to override the
+-     *   reset method will still work as expected. @bus_phases_reset function
+-     *   will be registered as the parent reset method and effectively call
+-     *   parent reset phases.
+-     */
+-    bc->reset = bus_phases_reset;
+-    rc->get_transitional_function = bus_get_transitional_reset;
+ }
+ 
+ static void qbus_finalize(Object *obj)
+-- 
+2.34.1
 
-Thanks.  Any idea why that didn't show up in my own pipeline?
-https://gitlab.com/dwmw2/qemu/-/pipelines/1160949234
-
-(The only difference in that tree is a last minute Reviewed-by:)
-=20
-> Reproduces on an x86-64 host if you do a build and 'make check'
-> for all target archs.
->=20
-> Generally this kind of segfault is because some machine type
-> segfaults on startup. For instance:
->=20
-> $ ./build/all/qemu-system-hppa -M C3700
-> Segmentation fault (core dumped)
->=20
-> (It's possible that's the only machine type that has a
-> problem; I haven't tried to exhaustively check.)
-
-Sorry about that. I'll go improve my test coverage...
-
---=-vW3z7geear7NQ1A+SYcM
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwMjAyMTUzNjAwWjAvBgkqhkiG9w0BCQQxIgQgm206qGlz
-5kawyt8sE2mMu2ny+9ORgxmqB20ZjRqVGsswgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgA6GrYUa5NV1GBYngQl0urnNHu7jitMCp8l
-W1mRG6YFYVK4jrQSPnSxAQu2v36d4Lro14XXFqvMjD1iG/dgZwuXhblSnl9hjPEmVwdvZEOd9hzN
-e56Xpi6zdBKisGsEYWrkeLLJ6JMf99+EgmW9qgdazi93HmLghbsMdTvbmcnKL52o5VI7SNSHJi/Z
-Ll3ugPfJ2/BJPF6ENohuDQFgsQPQvKVwVmkBLR3xtxs9n7Ew3ImxqoLS5PmW9lAtQlcPvJcC/Fgs
-l8pkI7rlGfhK8a6MFSjcVGbef1Q7obg07gEfMGpt9SAsS9pE8tXdDFki79uVXOEVUsg24Qq/W7rK
-c/Dm60xIjdMJNNjYpZTJoJd2cLRlCGydX2LcHzHMcEEt7oHpo74luWrJObhNf6Pb834oiW73u0sK
-t91vFhEZUGT354q6yyTcxt+u/q84pQxyJwaKqOVUSCfr2xH8FuKXhp2pJdKOE33Efe+3Qtig42Ee
-mxxfpwLmybtehuW1F6SNnGs4rYdJG79sZIfzrSEp/TBvBjxEl4s2dtZD2tIBTlyLJGELoHD/oYl8
-mrTILEMduiRbzRD+hMq40M6kGuyloiWrhbtWIt5C6WAVlfHdTHnF7zV/HAx8H1LZ9hikwpFuuZ3C
-LvMiZiWf+ZG42cppZiJ/dOZ0sdUz3ol0bGeHc6EDeAAAAAAAAA==
-
-
---=-vW3z7geear7NQ1A+SYcM--
 
