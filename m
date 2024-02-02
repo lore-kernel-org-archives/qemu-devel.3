@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B73C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB9AC48291
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 15:33:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVvX1-0003yi-69; Fri, 02 Feb 2024 10:32:44 -0500
+	id 1rVvXD-00042Y-DG; Fri, 02 Feb 2024 10:32:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVvWz-0003yK-0f
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:32:41 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVvXC-000421-6w
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:32:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVvWw-0000F1-0S
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:32:40 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rVvXA-0000J2-QM
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 10:32:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706887957;
+ s=mimecast20190719; t=1706887972;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7J/XT2q0+tN1KTieI5xFfr6GKiPUigJi8ApxjJJNq4E=;
- b=P9tNhMjCXYkJdQkadrdS81PYvK7oEa6ojTDNDY54RQ8WJtizdGtWkmx2PXNzAMc/7cX6LB
- Z6satAXngtHbGgmazV8luGKoIsadusiobRmSv/BUdQCu9eUPTIK1LEr4A+d0/IpadrzQjA
- I7QaM1QnNDJjVi9Q9BkXgJcnfUyaClE=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-lG8C56gdN4m2ObcyZQgOaQ-1; Fri,
- 02 Feb 2024 10:32:31 -0500
-X-MC-Unique: lG8C56gdN4m2ObcyZQgOaQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ bh=1+yEfgAn/4T2TbGdJTrV2cdbu8XKqQ9ProoQLlyE1HA=;
+ b=af6bgshVp3iGNrzYHLJgJH5caDMVYpbGe51WwgwVsVNclAfdtg09RO1AhNYaDXkfy/RfE4
+ SHjvXk1hgYNKjdmZNaf+TvQ527OBP7uevoTiaZ2fsQkgbpWBcz8DudZBIMftGKDSh4ZYTa
+ cC8nQc0y8yPEN24+CWXC2X/1dSh3RKY=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-78-DA1TbELCPOKi2tEd2mkYeg-1; Fri, 02 Feb 2024 10:32:48 -0500
+X-MC-Unique: DA1TbELCPOKi2tEd2mkYeg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B45B4383D747;
- Fri,  2 Feb 2024 15:32:30 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4B39F85CBA3;
+ Fri,  2 Feb 2024 15:32:48 +0000 (UTC)
 Received: from localhost (unknown [10.39.194.28])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5EFE62166B33;
- Fri,  2 Feb 2024 15:32:30 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id E566740C95AD;
+ Fri,  2 Feb 2024 15:32:47 +0000 (UTC)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
@@ -50,15 +50,15 @@ Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Fiona Ebner <f.ebner@proxmox.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Fam Zheng <fam@euphon.net>
-Subject: [PATCH v2 2/3] virtio: Re-enable notifications after drain
-Date: Fri,  2 Feb 2024 16:31:57 +0100
-Message-ID: <20240202153158.788922-3-hreitz@redhat.com>
+Subject: [PATCH v2 3/3] virtio-blk: Use ioeventfd_attach in start_ioeventfd
+Date: Fri,  2 Feb 2024 16:31:58 +0100
+Message-ID: <20240202153158.788922-4-hreitz@redhat.com>
 In-Reply-To: <20240202153158.788922-1-hreitz@redhat.com>
 References: <20240202153158.788922-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -43
@@ -84,125 +84,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During drain, we do not care about virtqueue notifications, which is why
-we remove the handlers on it.  When removing those handlers, whether vq
-notifications are enabled or not depends on whether we were in polling
-mode or not; if not, they are enabled (by default); if so, they have
-been disabled by the io_poll_start callback.
+Commit d3f6f294aeadd5f88caf0155e4360808c95b3146 ("virtio-blk: always set
+ioeventfd during startup") has made virtio_blk_start_ioeventfd() always
+kick the virtqueue (set the ioeventfd), regardless of whether the BB is
+drained.  That is no longer necessary, because attaching the host
+notifier will now set the ioeventfd, too; this happens either
+immediately right here in virtio_blk_start_ioeventfd(), or later when
+the drain ends, in virtio_blk_ioeventfd_attach().
 
-Because we do not care about those notifications after removing the
-handlers, this is fine.  However, we have to explicitly ensure they are
-enabled when re-attaching the handlers, so we will resume receiving
-notifications.  We do this in virtio_queue_aio_attach_host_notifier*().
-If such a function is called while we are in a polling section,
-attaching the notifiers will then invoke the io_poll_start callback,
-re-disabling notifications.
+With event_notifier_set() removed, the code becomes the same as the one
+in virtio_blk_ioeventfd_attach(), so we can reuse that function.
 
-Because we will always miss virtqueue updates in the drained section, we
-also need to poll the virtqueue once after attaching the notifiers.
-
-Buglink: https://issues.redhat.com/browse/RHEL-3934
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- include/block/aio.h |  7 ++++++-
- hw/virtio/virtio.c  | 42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 1 deletion(-)
+ hw/block/virtio-blk.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index 5d0a114988..8378553eb9 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -480,9 +480,14 @@ void aio_set_event_notifier(AioContext *ctx,
-                             AioPollFn *io_poll,
-                             EventNotifierHandler *io_poll_ready);
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 227d83569f..22b8eef69b 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -37,6 +37,8 @@
+ #include "hw/virtio/virtio-blk-common.h"
+ #include "qemu/coroutine.h"
  
--/* Set polling begin/end callbacks for an event notifier that has already been
-+/*
-+ * Set polling begin/end callbacks for an event notifier that has already been
-  * registered with aio_set_event_notifier.  Do nothing if the event notifier is
-  * not registered.
-+ *
-+ * Note that if the io_poll_end() callback (or the entire notifier) is removed
-+ * during polling, it will not be called, so an io_poll_begin() is not
-+ * necessarily always followed by an io_poll_end().
-  */
- void aio_set_event_notifier_poll(AioContext *ctx,
-                                  EventNotifier *notifier,
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 7549094154..d229755eae 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3556,6 +3556,17 @@ static void virtio_queue_host_notifier_aio_poll_end(EventNotifier *n)
- 
- void virtio_queue_aio_attach_host_notifier(VirtQueue *vq, AioContext *ctx)
++static void virtio_blk_ioeventfd_attach(VirtIOBlock *s);
++
+ static void virtio_blk_init_request(VirtIOBlock *s, VirtQueue *vq,
+                                     VirtIOBlockReq *req)
  {
-+    /*
-+     * virtio_queue_aio_detach_host_notifier() can leave notifications disabled.
-+     * Re-enable them.  (And if detach has not been used before, notifications
-+     * being enabled is still the default state while a notifier is attached;
-+     * see virtio_queue_host_notifier_aio_poll_end(), which will always leave
-+     * notifications enabled once the polling section is left.)
-+     */
-+    if (!virtio_queue_get_notification(vq)) {
-+        virtio_queue_set_notification(vq, 1);
-+    }
-+
-     aio_set_event_notifier(ctx, &vq->host_notifier,
-                            virtio_queue_host_notifier_read,
-                            virtio_queue_host_notifier_aio_poll,
-@@ -3563,6 +3574,13 @@ void virtio_queue_aio_attach_host_notifier(VirtQueue *vq, AioContext *ctx)
-     aio_set_event_notifier_poll(ctx, &vq->host_notifier,
-                                 virtio_queue_host_notifier_aio_poll_begin,
-                                 virtio_queue_host_notifier_aio_poll_end);
-+
-+    /*
-+     * We will have ignored notifications about new requests from the guest
-+     * while no notifiers were attached, so "kick" the virt queue to process
-+     * those requests now.
-+     */
-+    event_notifier_set(&vq->host_notifier);
- }
+@@ -1808,17 +1810,14 @@ static int virtio_blk_start_ioeventfd(VirtIODevice *vdev)
+     s->ioeventfd_started = true;
+     smp_wmb(); /* paired with aio_notify_accept() on the read side */
  
- /*
-@@ -3573,14 +3591,38 @@ void virtio_queue_aio_attach_host_notifier(VirtQueue *vq, AioContext *ctx)
-  */
- void virtio_queue_aio_attach_host_notifier_no_poll(VirtQueue *vq, AioContext *ctx)
- {
-+    /* See virtio_queue_aio_attach_host_notifier() */
-+    if (!virtio_queue_get_notification(vq)) {
-+        virtio_queue_set_notification(vq, 1);
-+    }
-+
-     aio_set_event_notifier(ctx, &vq->host_notifier,
-                            virtio_queue_host_notifier_read,
-                            NULL, NULL);
-+
+-    /* Get this show started by hooking up our callbacks */
+-    for (i = 0; i < nvqs; i++) {
+-        VirtQueue *vq = virtio_get_queue(vdev, i);
+-        AioContext *ctx = s->vq_aio_context[i];
+-
+-        /* Kick right away to begin processing requests already in vring */
+-        event_notifier_set(virtio_queue_get_host_notifier(vq));
+-
+-        if (!blk_in_drain(s->conf.conf.blk)) {
+-            virtio_queue_aio_attach_host_notifier(vq, ctx);
+-        }
 +    /*
-+     * See virtio_queue_aio_attach_host_notifier().
-+     * Note that this may be unnecessary for the type of virtqueues this
-+     * function is used for.  Still, it will not hurt to have a quick look into
-+     * whether we can/should process any of the virtqueue elements.
++     * Get this show started by hooking up our callbacks.  If drained now,
++     * virtio_blk_drained_end() will do this later.
++     * Attaching the notifier also kicks the virtqueues, processing any requests
++     * they may already have.
 +     */
-+    event_notifier_set(&vq->host_notifier);
- }
++    if (!blk_in_drain(s->conf.conf.blk)) {
++        virtio_blk_ioeventfd_attach(s);
+     }
+     return 0;
  
- void virtio_queue_aio_detach_host_notifier(VirtQueue *vq, AioContext *ctx)
- {
-     aio_set_event_notifier(ctx, &vq->host_notifier, NULL, NULL, NULL);
-+
-+    /*
-+     * aio_set_event_notifier_poll() does not guarantee whether io_poll_end()
-+     * will run after io_poll_begin(), so by removing the notifier, we do not
-+     * know whether virtio_queue_host_notifier_aio_poll_end() has run after a
-+     * previous virtio_queue_host_notifier_aio_poll_begin(), i.e. whether
-+     * notifications are enabled or disabled.  It does not really matter anyway;
-+     * we just removed the notifier, so we do not care about notifications until
-+     * we potentially re-attach it.  The attach_host_notifier functions will
-+     * ensure that notifications are enabled again when they are needed.
-+     */
- }
- 
- void virtio_queue_host_notifier_read(EventNotifier *n)
 -- 
 2.43.0
 
