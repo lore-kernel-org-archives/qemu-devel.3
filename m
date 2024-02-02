@@ -4,101 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B02EC47DB3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 13:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A45C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 13:51:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVtsx-0000H8-A2; Fri, 02 Feb 2024 08:47:15 -0500
+	id 1rVtw2-0001jH-6d; Fri, 02 Feb 2024 08:50:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVtsv-0000Gl-5A
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:47:13 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVtvy-0001if-6V
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:50:22 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rVtst-0003ax-6Z
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:47:12 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7B8202212F;
- Fri,  2 Feb 2024 13:47:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706881628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
- b=1yaKgBN9C2W/WCLIumokHycqZNOMQG6x/aydPv+yBXHB+e9B5HRpaK5e5DWEmsJo/uuEWC
- MxzgxJsuwe+EufrRPcRljqHhrtl1VzHIbbobZQbUVQ1iChyWB5TzYm1TgH3h/34Ha6VsOF
- 8idV2sMfh4GEGbjYXamU1BaBigc02Gs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706881628;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
- b=3Hi/Ra0m7WY3cu40DAqNJ0sa9mV1WRY+2tX0tINtT4l4oO51Lxkqwlno1rZGmj8laFZsSC
- MKc4BVgTq2UoPoCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1706881628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
- b=1yaKgBN9C2W/WCLIumokHycqZNOMQG6x/aydPv+yBXHB+e9B5HRpaK5e5DWEmsJo/uuEWC
- MxzgxJsuwe+EufrRPcRljqHhrtl1VzHIbbobZQbUVQ1iChyWB5TzYm1TgH3h/34Ha6VsOF
- 8idV2sMfh4GEGbjYXamU1BaBigc02Gs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1706881628;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LDed/7SsdxFg8YHhxeS01pA85VtMJgolReJT9o73DX8=;
- b=3Hi/Ra0m7WY3cu40DAqNJ0sa9mV1WRY+2tX0tINtT4l4oO51Lxkqwlno1rZGmj8laFZsSC
- MKc4BVgTq2UoPoCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 06E62139AB;
- Fri,  2 Feb 2024 13:47:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qITLL1vyvGXQFQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Feb 2024 13:47:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>, peterx@redhat.com
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 06/14] ci: Add a migration compatibility test job
-In-Reply-To: <CAFEAcA9=7NzEFLQxAxEWUzTRAZm87caC1ZhxeZkKyiP9Kb4k2w@mail.gmail.com>
-References: <20240129030405.177100-1-peterx@redhat.com>
- <20240129030405.177100-7-peterx@redhat.com>
- <CAFEAcA9=7NzEFLQxAxEWUzTRAZm87caC1ZhxeZkKyiP9Kb4k2w@mail.gmail.com>
-Date: Fri, 02 Feb 2024 10:47:05 -0300
-Message-ID: <87eddvhtba.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rVtvw-0004fa-Gk
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 08:50:21 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55783b7b47aso2974905a12.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 05:50:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706881818; x=1707486618; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=q5hkTKPkQIwC4z38NfjbjEHZbUCMaV3XEmr5sch30PU=;
+ b=o2+SGGTEhfEi6dqjpgUo0SRqsCm+KNKZj9duCjEevRWNgyrc6j0/mBMq8axSzkvavz
+ KDDddahg8nH87HnGSCcO6YBkMHt83wpUwNk3mHqqe0+QfR9sFjb38GE5qOwphes6yFQq
+ rgpww8DVA2w35jU3ocG6pJpIfrRLu+SMk1XaC7KoyOItUtNuZf7kg858Ionav6mOl1Xv
+ RaXXjFauCbtjISDuE4VoYGCfWfGG6H3QfJmb51Ce6vUNWZzef5AVJFNfLEKtz99Xd2Ak
+ p0RrQVxh8zJ2ZB8Ywl1clfFm21jG4WMLYyLsYWCr1rsNhu2tXWIHiqEvvB/p/FcXPQc9
+ c5Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706881818; x=1707486618;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q5hkTKPkQIwC4z38NfjbjEHZbUCMaV3XEmr5sch30PU=;
+ b=nNH89CKEJcs/C2hZ843uGzYm0vc1VufLy+iJDYH8LGyMAsvpqzXrH74n/8yFcFRWpO
+ Y9AA+Zysil8WAVbv0rD8hIzZMiGqxK3Yps6NvWDkauI2mTY6gcmYy36SIds9ieWysi39
+ 1rCHTIOJjNbudBo+abIBMzTe1uc3JKVW2/tbqA3cneucVmnFPO72POS+CVF/rueVxHR2
+ clBZO/nc4zemr+XrRPp2WtdiusSgYCvwzH08FfBTpG8CbtGAs99l7r5D4cxHvBvxM4SE
+ T5CWUr1BaOrczC22VcMzsYcad0lcmgaHsoVGRz5h6m87fJcny3J45K/NBIfaHKkFtZUl
+ 6mRw==
+X-Gm-Message-State: AOJu0Yxe2v9du0atSpg4A1xwvts3zW3G2h6mu2uh51/Xqep/V0Ld6yTu
+ e1oXmiT5yGUwdtBrzLocIfeBhLJiYTMC59K61daKdAj4V2viPC2n98Gutb6YoipBmuLKQTz7WgF
+ UrzGCoAMbdqsjeANOfWf/pRPrMfSPK5wlZ4BwDtYmme0kszBw
+X-Google-Smtp-Source: AGHT+IFCewI0N4zaEWhuU7eZfXGzb2BPDdiLYldgwJ0D4+E0vLFkFTFwdJWzpumJc4qPi30KMcdHBIAhArAea1Kmfdg=
+X-Received: by 2002:a05:6402:26d1:b0:55f:a309:172f with SMTP id
+ x17-20020a05640226d100b0055fa309172fmr5996387edd.15.1706881818475; Fri, 02
+ Feb 2024 05:50:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,gitlab.com:url];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240201073319.2849107-1-gaosong@loongson.cn>
+In-Reply-To: <20240201073319.2849107-1-gaosong@loongson.cn>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 2 Feb 2024 13:50:07 +0000
+Message-ID: <CAFEAcA_aVK=64CjhRr9azc1NWbHxHhee3w0Jd9_H7g5GkVDWug@mail.gmail.com>
+Subject: Re: [PULL 0/1] loongarch-to-apply queue
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,111 +87,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Mon, 29 Jan 2024 at 03:04, <peterx@redhat.com> wrote:
->>
->> From: Fabiano Rosas <farosas@suse.de>
->>
->> The migration tests have support for being passed two QEMU binaries to
->> test migration compatibility.
->>
->> Add a CI job that builds the lastest release of QEMU and another job
->> that uses that version plus an already present build of the current
->> version and run the migration tests with the two, both as source and
->> destination. I.e.:
->>
->>  old QEMU (n-1) -> current QEMU (development tree)
->>  current QEMU (development tree) -> old QEMU (n-1)
->>
->> The purpose of this CI job is to ensure the code we're about to merge
->> will not cause a migration compatibility problem when migrating the
->> next release (which will contain that code) to/from the previous
->> release.
->>
->> The version of migration-test used will be the one matching the older
->> QEMU. That way we can avoid special-casing new tests that wouldn't be
->> compatible with the older QEMU.
->>
->> Note: for user forks, the version tags need to be pushed to gitlab
->> otherwise it won't be able to checkout a different version.
->>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> Link: https://lore.kernel.org/r/20240118164951.30350-3-farosas@suse.de
->> Signed-off-by: Peter Xu <peterx@redhat.com>
->> ---
->>  .gitlab-ci.d/buildtest.yml | 60 ++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 60 insertions(+)
->>
->> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
->> index e1c7801598..f0b0edc634 100644
->> --- a/.gitlab-ci.d/buildtest.yml
->> +++ b/.gitlab-ci.d/buildtest.yml
->> @@ -167,6 +167,66 @@ build-system-centos:
->>        x86_64-softmmu rx-softmmu sh4-softmmu nios2-softmmu
->>      MAKE_CHECK_ARGS: check-build
->>
->> +# Previous QEMU release. Used for cross-version migration tests.
->> +build-previous-qemu:
->> +  extends: .native_build_job_template
->> +  artifacts:
->> +    when: on_success
->> +    expire_in: 2 days
->> +    paths:
->> +      - build-previous
->> +    exclude:
->> +      - build-previous/**/*.p
->> +      - build-previous/**/*.a.p
->> +      - build-previous/**/*.fa.p
->> +      - build-previous/**/*.c.o
->> +      - build-previous/**/*.c.o.d
->> +      - build-previous/**/*.fa
->> +  needs:
->> +    job: amd64-opensuse-leap-container
->> +  variables:
->> +    IMAGE: opensuse-leap
->> +    TARGETS: x86_64-softmmu aarch64-softmmu
->> +  before_script:
->> +    - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
->> +    - git checkout $QEMU_PREV_VERSION
->> +  after_script:
->> +    - mv build build-previous
+On Thu, 1 Feb 2024 at 07:33, Song Gao <gaosong@loongson.cn> wrote:
 >
-> There seems to be a problem with this new CI job. Running a CI
-> run in my local repository it fails:
+> The following changes since commit bd2e12310b18b51aefbf834e6d54989fd175976f:
 >
-> https://gitlab.com/pm215/qemu/-/jobs/6075873685
+>   Merge tag 'qga-pull-2024-01-30' of https://github.com/kostyanf14/qemu into staging (2024-01-30 15:53:46 +0000)
 >
-> $ export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v .0/' VERSION)"
-> $ git checkout $QEMU_PREV_VERSION
-> error: pathspec 'v8.2.0' did not match any file(s) known to git
-> Running after_script
-> Running after script...
-> $ mv build build-previous
-> mv: cannot stat 'build': No such file or directory
-> WARNING: after_script failed, but job will continue unaffected: exit code 1
-> Saving cache for failed job
+> are available in the Git repository at:
 >
+>   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240201
 >
-> I don't think you can assume that private forks doing submaintainer CI
-> runs necessarily have the full set of tags that the main repo does.
+> for you to fetch changes up to 27edd5040cae63bfa92c68f69883ba81aa3b6cda:
+>
+>   target/loongarch: Fix qtest test-hmp error when KVM-only build (2024-02-01 15:29:40 +0800)
+>
+> ----------------------------------------------------------------
+> pull-loongarch-20240201
+>
+> ----------------------------------------------------------------
+> Song Gao (1):
+>       target/loongarch: Fix qtest test-hmp error when KVM-only build
+>
 
-Yes, I thought this would be rare enough not to be an issue, but it
-seems it's not. I don't know what could be done here, if there's no tag,
-then there's no way to resolve the actual commit hash I think.
 
-> I suspect the sed run will also do the wrong thing when run on the
-> commit that updates the version, because then it will replace
-> "9.0.0" with "9.0.0".
+Applied, thanks.
 
-I just ignored this completly because my initial idea was to leave this
-job disabled and only run it for migration patchsets and pull requests,
-so it wouldn't make sense to run at that commit.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
-This job is also not entirely fail proof by design because we could
-always be hitting bugs in the older QEMU version that were already fixed
-in the new version.
-
-I think the simplest fix here is to leave the test disabled, possibly
-with an env variable to enable it.
+-- PMM
 
