@@ -4,94 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53407C4828D
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 02:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09975C4828D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 02:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rVj40-00026O-3I; Thu, 01 Feb 2024 21:13:56 -0500
+	id 1rVj5W-0002dp-6p; Thu, 01 Feb 2024 21:15:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVj3z-00026C-5l
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 21:13:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rVj3j-0000fN-Sy
- for qemu-devel@nongnu.org; Thu, 01 Feb 2024 21:13:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706840018;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=z2bCjhTyolSpYPBIDQopGSNmlmYmosFAaxdagjqcbT4=;
- b=bqAZJyuljnpnZWzX6aRHbLd+hQjE5ar3XuSH1GJoWkBqfKvBBETjd3I9DQKqfTc7jmwV1L
- VtMQYS46uyh8DVXkqMSJdABzottgDVUUMfolULZ2jHh04CLmNz1/KkGqvsRqbQVZQaMNcy
- QSqWBQ9Vkw2ZuaAE6PAK47Dt7M8Qgbc=
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-5Pwz8IhvNweowZ1oI0Verg-1; Thu, 01 Feb 2024 21:13:37 -0500
-X-MC-Unique: 5Pwz8IhvNweowZ1oI0Verg-1
-Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-6dbd919aba8so349923b3a.0
- for <qemu-devel@nongnu.org>; Thu, 01 Feb 2024 18:13:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706840016; x=1707444816;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rVj5L-0002bz-Rg; Thu, 01 Feb 2024 21:15:20 -0500
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rVj5J-00016u-Bx; Thu, 01 Feb 2024 21:15:19 -0500
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-7d5bbbe5844so811596241.0; 
+ Thu, 01 Feb 2024 18:15:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1706840116; x=1707444916; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z2bCjhTyolSpYPBIDQopGSNmlmYmosFAaxdagjqcbT4=;
- b=CFtEzAwYwQ2D5gWnkhbYIaevVR7gQekjg628yl7qSpJ7k0d4T2Hr2EWB1KBeqK8W4h
- rVyjayPMA8L83y3Zvl6RaZ6aLIv3An1P/Xbgq2igVBkzLfq0wFmiidyxnDkSnxpo6Kp+
- fH5QNdZVqkRrJolD+1Hy2JS5eARGEF+pyWtnobbHXT5FU5kLfWgCcY6fDi7m3fDF5zbm
- dGlj65SYq7goY2xWKCUvkiFjKiGwHVch0F9No/ihib2vfncEvY7+DqdBDRjMkvUu3mWg
- sUhyUUgkGYIv3mXMT2RG4zGWNYIt6CKFJoy6gZ1RfKGzWbeDTYPfImzPZnzdyBQlZzxH
- o3NA==
-X-Forwarded-Encrypted: i=0;
- AJvYcCVvIleSeiXX/byhhC8kTHPA66nVHOGjj7wRRk9cfWSpjXe0Zx5kbGm9iYM5yIZ8SuRP645G5fWMHSY12kEzw9w/kpsz6MI=
-X-Gm-Message-State: AOJu0YzXou3wjGa8OBWd+3VdWL1sZJ0MFXrpYKPnwxjeVIHvq+rI8Rtk
- 6aAA3r+M95kzuvUF5xapdSUdtEFMkSFvIxdddj7txbKN4oJfx4d2R/66Ay4m2N14P0namNXt5fe
- mZ1BkdS/bP7S8bB3oanN7pkcCHI2P8UEUtNarUB+3bdcCoipRyQbO
-X-Received: by 2002:a05:6a00:1d83:b0:6df:f706:b2d8 with SMTP id
- z3-20020a056a001d8300b006dff706b2d8mr775523pfw.0.1706840016131; 
- Thu, 01 Feb 2024 18:13:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGbgvhpM0qh2lfidJi14SOHhioWs2Ee5HdyEtj3Qqk7EDG9hFdLYWflwNtppXa6G6OTBuqa3A==
-X-Received: by 2002:a05:6a00:1d83:b0:6df:f706:b2d8 with SMTP id
- z3-20020a056a001d8300b006dff706b2d8mr775502pfw.0.1706840015739; 
- Thu, 01 Feb 2024 18:13:35 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCU7HAi9HiEZdFpbKHBrVv5M3/v2HaGBKAUnwFDwV5v6lp++PgnjsbBLDP82UNKFt2bJO0AZo2gFNegjxuLUVocsfoab5lzjBCslvbUu8xtNT8jZnFtUxYNuhwr7OAd4H1HsDVrNkMi29TnvfM2U57E0thDSRJgyijVoqzdxyrhHpe7xXqw+UWWfHzODkhMBSCWr5O0ii+56r4Nsj8bS/nZj8GQ=
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- y11-20020a62f24b000000b006ddc7de91e9sm416322pfl.197.2024.02.01.18.13.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Feb 2024 18:13:35 -0800 (PST)
-Date: Fri, 2 Feb 2024 10:12:48 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Bryan Zhang <bryan.zhang@bytedance.com>,
- Prasad Pandit <ppandit@redhat.com>, Yuan Liu <yuan1.liu@intel.com>,
- Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH 00/14] migration/multifd: Refactor ->send_prepare() and
- cleanups
-Message-ID: <ZbxPoEDNsqYo3D38@x1n>
-References: <20240131103111.306523-1-peterx@redhat.com>
- <871q9xjey8.fsf@suse.de> <ZbswgRJTXP4yKiuf@x1n>
- <5515481b-3601-46e0-ba82-cbec056966f0@nvidia.com>
- <87le83j1s4.fsf@suse.de>
+ bh=RdLUADTOKCQiZHLCLrIWsFkyZ95cEQxAx1ky8CAdOdk=;
+ b=lNKk49Iglgv1gVuMV70GrF+uxLauoA1bJdMTwbqavfRwpBgd7L3lOmRPTNVBwAs05Y
+ 3biC4fUboBRlx2qAV0vkMIRWEjScPxJh7uUQWah5lWmWZtkZ0uj+1QJysqgXAesQ8OP3
+ xKDSacCxoS7j61tVVjNeVdbJQqGZZFh5DNsGxfOQIlnrXKHcg0Qo1m4frb26ivb7UCpI
+ kj713zOGkDc3VJEzm1kROGSry6tN17snm+gEt4rqIKOrbofxnqbOB2UfUmLwJ00WCEnN
+ 9Wmgmx2wRdykCLmDQAGOpH+uKVT+DuyvCYeVWP+GG5XDYcMAIUr9/eOhDd0i07ycFPNi
+ tnwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706840116; x=1707444916;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RdLUADTOKCQiZHLCLrIWsFkyZ95cEQxAx1ky8CAdOdk=;
+ b=kRS+wOmaot9KnzycvXIkTxuVSjCVFV40mH4xLvnNVqjRIw2XHzKkYnetCOWBpcS0VK
+ umRVDRiBzHyGuKQJvO1hs8gpFfITk2g8TZtLifoKiyEJ8xYx5muVlLBqTcQOLiOCWxlB
+ zG3cbxoI23SD4itfv/0CaiElK91vvDfupazN5SqFFsFifkgPuPMmCV3T9XxpwDTp49fe
+ pEZ9faGcctUSaEReCOi3RIzWXfsqVYWF3JAbp7pSN6G5mfG1mg33bDUz+OE7OOYkmetB
+ WYKmcCSSNkKsVbqpw7Ly+SJvLKB+kVcxuL7p6cW3X0wDpmr3kFxaj4Yt8JeD4ZL2MtQ+
+ d9oQ==
+X-Gm-Message-State: AOJu0YzWDvl0cC6qo+YioWgAik7eBIOZmW/T2HdJKwgK7c4Lspx/jDej
+ n8dtzr43UdTm0BBbKgpBFEjppe6KnwZl66t+drumWipk0uMREBJLCi+QPb5cOP3QpBITpv+y4ya
+ 1kyfPSDcU3/4Jl8vjdydqe6dPxVU=
+X-Google-Smtp-Source: AGHT+IF8MS7SkEzbBIAP71XFSLu/2Pq06tvJazbn30hxsUgErWnLbKkhooH8tbvGMARlw/yLZ6Bx8yGSy/gEmOaITyw=
+X-Received: by 2002:a1f:fe8d:0:b0:4bd:76f3:9dff with SMTP id
+ l135-20020a1ffe8d000000b004bd76f39dffmr819152vki.8.1706840115640; Thu, 01 Feb
+ 2024 18:15:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87le83j1s4.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20240125195319.329181-1-dbarboza@ventanamicro.com>
+ <20240125195319.329181-4-dbarboza@ventanamicro.com>
+ <CAKmqyKNZ73Ep1sBKGBoX=wNvOPq_R+UU_K9qSRABBQUzK-LFLA@mail.gmail.com>
+ <92c19649-4799-44c1-b7df-c958e1d5b2cc@ventanamicro.com>
+In-Reply-To: <92c19649-4799-44c1-b7df-c958e1d5b2cc@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 2 Feb 2024 12:14:49 +1000
+Message-ID: <CAKmqyKNPGRmWsrbm+Q4ArVNX66CM4JCNUrVid4x=mHYkdeZaYQ@mail.gmail.com>
+Subject: Re: [PATCH 3/6] target/riscv: add remaining named features
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,131 +93,279 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 01, 2024 at 06:46:35PM -0300, Fabiano Rosas wrote:
-> Avihai Horon <avihaih@nvidia.com> writes:
-> 
-> > On 01/02/2024 7:47, Peter Xu wrote:
-> >> External email: Use caution opening links or attachments
+On Thu, Feb 1, 2024 at 5:15=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+>
+>
+> On 1/29/24 22:10, Alistair Francis wrote:
+> > On Fri, Jan 26, 2024 at 5:54=E2=80=AFAM Daniel Henrique Barboza
+> > <dbarboza@ventanamicro.com> wrote:
+> >>
+> >> The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
+> >> until now, we were implying that they were available.
+> >>
+> >> We can't do this anymore since named features also has a riscv,isa
+> >> entry.  Let's add them to riscv_cpu_named_features[].
+> >>
+> >> They will also need to be explicitly enabled in both profile
+> >> descriptions. TCG will enable the named features it already implements=
+,
+> >> other accelerators are free to handle it as they like.
+> >>
+> >> After this patch, here's the riscv,isa from a buildroot using the
+> >> 'rva22s64' CPU:
+> >>
+> >>   # cat /proc/device-tree/cpus/cpu@0/riscv,isa
+> >> rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse=
+_
+> >> zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
+> >> zbs_zkt_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
+> >>
+> >> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> >> ---
+> >>   target/riscv/cpu.c         | 41 +++++++++++++++++++++++++++++-------=
+--
+> >>   target/riscv/cpu_cfg.h     |  9 +++++++++
+> >>   target/riscv/tcg/tcg-cpu.c | 19 +++++++++++++++++-
+> >>   3 files changed, 59 insertions(+), 10 deletions(-)
+> >>
+> >> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> >> index 28d3cfa8ce..1ecd8a57ed 100644
+> >> --- a/target/riscv/cpu.c
+> >> +++ b/target/riscv/cpu.c
+> >> @@ -101,6 +101,10 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+> >>       ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
+> >>       ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
+> >>       ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
+> >> +    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_ziccamoa),
+> >> +    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_ziccif),
+> >> +    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_zicclsm),
+> >> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
+> >>       ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
+> >>       ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
+> >>       ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
+> >> @@ -109,6 +113,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+> >>       ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintp=
+ause),
+> >>       ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+> >>       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+> >> +    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_za64rs),
+> >>       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+> >>       ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+> >>       ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+> >> @@ -170,8 +175,12 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+> >>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+> >>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen=
+),
+> >>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+> >> +    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_ssccptr),
+> >>       ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+> >> +    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_sscount=
+erenw),
+> >>       ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+> >> +    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_sstvala),
+> >> +    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_sstvecd),
+> >>       ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
+> >>       ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
+> >>       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+> >> @@ -1523,6 +1532,22 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_fe=
+atures[] =3D {
+> >>       MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
+> >>       MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+> >>
+> >> +    /*
+> >> +     * cache-related extensions that are always enabled
+> >> +     * since QEMU RISC-V does not have a cache model.
+> >> +     */
+> >> +    MULTI_EXT_CFG_BOOL("za64rs", ext_za64rs, true),
+> >> +    MULTI_EXT_CFG_BOOL("ziccif", ext_ziccif, true),
+> >> +    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
+> >> +    MULTI_EXT_CFG_BOOL("ziccamoa", ext_ziccamoa, true),
+> >> +    MULTI_EXT_CFG_BOOL("zicclsm", ext_zicclsm, true),
+> >> +    MULTI_EXT_CFG_BOOL("ssccptr", ext_ssccptr, true),
+> >> +
+> >> +    /* Other named features that QEMU TCG always implements */
+> >> +    MULTI_EXT_CFG_BOOL("sstvecd", ext_sstvecd, true),
+> >> +    MULTI_EXT_CFG_BOOL("sstvala", ext_sstvala, true),
+> >> +    MULTI_EXT_CFG_BOOL("sscounterenw", ext_sscounterenw, true),
+> >> +
+> >>       DEFINE_PROP_END_OF_LIST(),
+> >>   };
+> >>
+> >> @@ -2116,13 +2141,8 @@ static const PropertyInfo prop_marchid =3D {
+> >>   };
+> >>
+> >>   /*
+> >> - * RVA22U64 defines some 'named features' or 'synthetic extensions'
+> >> - * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
+> >> - * and Zicclsm. We do not implement caching in QEMU so we'll consider
+> >> - * all these named features as always enabled.
+> >> - *
+> >> - * There's no riscv,isa update for them (nor for zic64b, despite it
+> >> - * having a cfg offset) at this moment.
+> >> + * RVA22U64 defines some cache related extensions: Za64rs,
+> >> + * Ziccif, Ziccrse, Ziccamoa and Zicclsm.
+> >>    */
+> >>   static RISCVCPUProfile RVA22U64 =3D {
+> >>       .parent =3D NULL,
+> >> @@ -2139,7 +2159,9 @@ static RISCVCPUProfile RVA22U64 =3D {
+> >>           CPU_CFG_OFFSET(ext_zicbop), CPU_CFG_OFFSET(ext_zicboz),
+> >>
+> >>           /* mandatory named features for this profile */
+> >> -        CPU_CFG_OFFSET(ext_zic64b),
+> >> +        CPU_CFG_OFFSET(ext_za64rs), CPU_CFG_OFFSET(ext_zic64b),
+> >> +        CPU_CFG_OFFSET(ext_ziccif), CPU_CFG_OFFSET(ext_ziccrse),
+> >> +        CPU_CFG_OFFSET(ext_ziccamoa), CPU_CFG_OFFSET(ext_zicclsm),
+> >>
+> >>           RISCV_PROFILE_EXT_LIST_END
+> >>       }
+> >> @@ -2170,7 +2192,8 @@ static RISCVCPUProfile RVA22S64 =3D {
+> >>           CPU_CFG_OFFSET(ext_svinval),
+> >>
+> >>           /* rva22s64 named features */
+> >> -        CPU_CFG_OFFSET(ext_svade),
+> >> +        CPU_CFG_OFFSET(ext_sstvecd), CPU_CFG_OFFSET(ext_sstvala),
+> >> +        CPU_CFG_OFFSET(ext_sscounterenw), CPU_CFG_OFFSET(ext_svade),
+> >>
+> >>           RISCV_PROFILE_EXT_LIST_END
+> >>       }
+> >> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> >> index 698f926ab1..f79fc3dfd1 100644
+> >> --- a/target/riscv/cpu_cfg.h
+> >> +++ b/target/riscv/cpu_cfg.h
+> >> @@ -125,6 +125,15 @@ struct RISCVCPUConfig {
+> >>       /* Named features  */
+> >>       bool ext_svade;
+> >>       bool ext_zic64b;
+> >> +    bool ext_za64rs;
+> >> +    bool ext_ziccif;
+> >> +    bool ext_ziccrse;
+> >> +    bool ext_ziccamoa;
+> >> +    bool ext_zicclsm;
+> >> +    bool ext_ssccptr;
+> >> +    bool ext_sstvecd;
+> >> +    bool ext_sstvala;
+> >> +    bool ext_sscounterenw;
+> >
+> > Overall this and the previous patch look fine.
+> >
+> > One thing though, why store this information? I feel it could be
+> > confusing having these variables. If a developer sets them to false
+> > nothing actually happens, which is a little misleading
+>
+> These extensions aren't being exposed to users. riscv_cpu_named_features[=
+] isn't
+
+Yep, we should not expose them to users.
+
+I meant developers, as in people reading the C code and compiling QEMU.
+
+> being used to create any CPU user properties. I should've mentioned that =
+in
+> patch 2 ...
+>
+> As for the extra booleans that we'll be setting to 'true', as it is now
+> isa_edata_arr[] stores a string name, priv_ver and a cpu->cfg offset, so
+> everyone that adds a riscv,isa str must also have a valid bool offset in
+> RISCVCPUConfig. Having a bool also allow us to treat them as regular exte=
+nsions
+> because we can re-use existing code to blindly enable them in profiles li=
+ke
+> any other profile extension.
+
+Yep, and I think that makes sense. The odd part is that we don't
+actually use these bools. Which I feel is confusing when looking at
+the QEMU code base. Why have a variable that we don't use?
+
+>
+> And, in case we need to promote them as regular user extensions, having t=
+he
+> booleans in place make it easier to do so. Patch 6 is doing that with 'sv=
+ade'.
+
+If we plan to do that, I think that also makes sense. But I suspect no
+one has any plant to convert some of these to real configuration
+options.
+
+>
+>
+> Thanks,
+>
+> Daniel
+>
+>
+> We could create a single boolean that is always true in cpu->cfg and use =
+it
+> for these entries. Another idea would be to change the riscv,isa function=
+s to
+> handle these extensions separately, then we can add them in the array wit=
+hout
+> a valid cpu->cfg offfset.
+
+I think these are better ideas.
+
+Alistair
+
+>
+> >
+> > Alistair
+> >
+> >>
+> >>       /* Vendor-specific custom extensions */
+> >>       bool ext_xtheadba;
+> >> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> >> index 90861cc065..6d5028cf84 100644
+> >> --- a/target/riscv/tcg/tcg-cpu.c
+> >> +++ b/target/riscv/tcg/tcg-cpu.c
+> >> @@ -206,7 +206,8 @@ static void riscv_cpu_enable_named_feat(RISCVCPU *=
+cpu, uint32_t feat_offset)
+> >>           cpu->cfg.ext_svadu =3D false;
+> >>           break;
+> >>       default:
+> >> -        g_assert_not_reached();
+> >> +        /* Named feature already enabled in riscv_tcg_cpu_instance_in=
+it */
+> >> +        return;
+> >>       }
+> >>   }
+> >>
+> >> @@ -1342,6 +1343,20 @@ static bool riscv_cpu_has_max_extensions(Object=
+ *cpu_obj)
+> >>       return object_dynamic_cast(cpu_obj, TYPE_RISCV_CPU_MAX) !=3D NUL=
+L;
+> >>   }
+> >>
+> >> +/* Named features that TCG always implements */
+> >> +static void riscv_tcg_cpu_enable_named_feats(RISCVCPU *cpu)
+> >> +{
+> >> +    cpu->cfg.ext_za64rs =3D true;
+> >> +    cpu->cfg.ext_ziccif =3D true;
+> >> +    cpu->cfg.ext_ziccrse =3D true;
+> >> +    cpu->cfg.ext_ziccamoa =3D true;
+> >> +    cpu->cfg.ext_zicclsm =3D true;
+> >> +    cpu->cfg.ext_ssccptr =3D true;
+> >> +    cpu->cfg.ext_sstvecd =3D true;
+> >> +    cpu->cfg.ext_sstvala =3D true;
+> >> +    cpu->cfg.ext_sscounterenw =3D true;
+> >> +}
+> >> +
+> >>   static void riscv_tcg_cpu_instance_init(CPUState *cs)
+> >>   {
+> >>       RISCVCPU *cpu =3D RISCV_CPU(cs);
+> >> @@ -1354,6 +1369,8 @@ static void riscv_tcg_cpu_instance_init(CPUState=
+ *cs)
+> >>       if (riscv_cpu_has_max_extensions(obj)) {
+> >>           riscv_init_max_cpu_extensions(obj);
+> >>       }
+> >> +
+> >> +    riscv_tcg_cpu_enable_named_feats(cpu);
+> >>   }
+> >>
+> >>   static void riscv_tcg_cpu_init_ops(AccelCPUClass *accel_cpu, CPUClas=
+s *cc)
+> >> --
+> >> 2.43.0
 > >>
 > >>
-> >> On Wed, Jan 31, 2024 at 07:49:51PM -0300, Fabiano Rosas wrote:
-> >>> peterx@redhat.com writes:
-> >>>
-> >>>> From: Peter Xu <peterx@redhat.com>
-> >>>>
-> >>>> This patchset contains quite a few refactorings to current multifd:
-> >>>>
-> >>>>    - It picked up some patches from an old series of mine [0] (the last
-> >>>>      patches were dropped, though; I did the cleanup slightly differently):
-> >>>>
-> >>>>      I still managed to include one patch to split pending_job, but I
-> >>>>      rewrote the patch here.
-> >>>>
-> >>>>    - It tries to cleanup multiple multifd paths here and there, the ultimate
-> >>>>      goal is to redefine send_prepare() to be something like:
-> >>>>
-> >>>>        p->pages ----------->  send_prepare() -------------> IOVs
-> >>>>
-> >>>>      So that there's no obvious change yet on multifd_ops besides redefined
-> >>>>      interface for send_prepare().  We may want a separate OPs for file
-> >>>>      later.
-> >>>>
-> >>>> For 2), one benefit is already presented by Fabiano in his other series [1]
-> >>>> on cleaning up zero copy, but this patchset addressed it quite differently,
-> >>>> and hopefully also more gradually.  The other benefit is for sure if we
-> >>>> have a more concrete API for send_prepare() and if we can reach an initial
-> >>>> consensus, then we can have the recent compression accelerators rebased on
-> >>>> top of this one.
-> >>>>
-> >>>> This also prepares for the case where the input can be extended to even not
-> >>>> any p->pages, but arbitrary data (like VFIO's potential use case in the
-> >>>> future?).  But that will also for later even if reasonable.
-> >>>>
-> >>>> Please have a look.  Thanks,
-> >>>>
-> >>>> [0] https://lore.kernel.org/r/20231022201211.452861-1-peterx@redhat.com
-> >>>> [1] https://lore.kernel.org/qemu-devel/20240126221943.26628-1-farosas@suse.de
-> >>>>
-> >>>> Peter Xu (14):
-> >>>>    migration/multifd: Drop stale comment for multifd zero copy
-> >>>>    migration/multifd: multifd_send_kick_main()
-> >>>>    migration/multifd: Drop MultiFDSendParams.quit, cleanup error paths
-> >>>>    migration/multifd: Postpone reset of MultiFDPages_t
-> >>>>    migration/multifd: Drop MultiFDSendParams.normal[] array
-> >>>>    migration/multifd: Separate SYNC request with normal jobs
-> >>>>    migration/multifd: Simplify locking in sender thread
-> >>>>    migration/multifd: Drop pages->num check in sender thread
-> >>>>    migration/multifd: Rename p->num_packets and clean it up
-> >>>>    migration/multifd: Move total_normal_pages accounting
-> >>>>    migration/multifd: Move trace_multifd_send|recv()
-> >>>>    migration/multifd: multifd_send_prepare_header()
-> >>>>    migration/multifd: Move header prepare/fill into send_prepare()
-> >>>>    migration/multifd: Forbid spurious wakeups
-> >>>>
-> >>>>   migration/multifd.h      |  34 +++--
-> >>>>   migration/multifd-zlib.c |  11 +-
-> >>>>   migration/multifd-zstd.c |  11 +-
-> >>>>   migration/multifd.c      | 291 +++++++++++++++++++--------------------
-> >>>>   4 files changed, 182 insertions(+), 165 deletions(-)
-> >>> This series didn't survive my 9999 iterations test on the opensuse
-> >>> machine.
-> >>>
-> >>> # Running /x86_64/migration/multifd/tcp/tls/x509/reject-anon-client
-> >>> ...
-> >>> kill_qemu() detected QEMU death from signal 11 (Segmentation fault) (core dumped)
-> >>>
-> >>>
-> >>> #0  0x00005575dda06399 in qemu_mutex_lock_impl (mutex=0x18, file=0x5575ddce9cc3 "../util/qemu-thread-posix.c", line=275) at ../util/qemu-thread-posix.c:92
-> >>> #1  0x00005575dda06a94 in qemu_sem_post (sem=0x18) at ../util/qemu-thread-posix.c:275
-> >>> #2  0x00005575dd56a512 in multifd_send_thread (opaque=0x5575df054ef8) at ../migration/multifd.c:720
-> >>> #3  0x00005575dda0709b in qemu_thread_start (args=0x7fd404001d50) at ../util/qemu-thread-posix.c:541
-> >>> #4  0x00007fd45e8a26ea in start_thread (arg=0x7fd3faffd700) at pthread_create.c:477
-> >>> #5  0x00007fd45cd2150f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
-> >>>
-> >>> The multifd thread is posting channels_ready with an already freed
-> >>> multifd_send_state.
-> >>>
-> >>> This is the bug Avihai has hit. We're going into multifd_save_cleanup()
-> >>> so early that multifd_new_send_channel_async() hasn't even had the
-> >>> chance to set p->running. So it misses the join and frees everything up
-> >>> while a second multifd thread is just starting.
-> >> Thanks for doing that.
-> >>
-> >> Would this series makes that bug easier to happen?
-> >
-> > I think so.
-> > Patch #3 added an extra multifd_send_should_exit() check in 
-> > multifd_send_sync_main(), so now it can exit early if the first channel 
-> > fails.
-> > Plus, now migration state is set to FAILED early by:
-> > multifd_new_send_channel_async()->multifd_send_terminate_threads() and 
-> > multifd_tls_outgoing_handshake()->multifd_send_terminate_threads()
-> > so migration_iteration_run() is completely skipped because 
-> > migration_is_active() check before it will return false.
-> >
-> > I *think* this is what makes main migration thread finish earlier and 
-> > call multifd_save_cleanup() earlier, at least for me.
-> >
-> 
-> I'm doing some experiments with a global semaphore like channels_ready
-> instead of a per-channel structure like you suggested. I think we only
-> need to have a point past which we're assured no more channels will be
-> created. With that we'd only need one post at
-> multifd_new_send_channel_async.
-
-Fabiano, Avihai,
-
-If this series is not drastically making things worse, I would leave that
-issue alone for now and move on with reposting this one, with the hope that
-we still have time to address this in 9.0 (while the issue existed much
-longer).  I do have plan to merge this one earlier if possible, assuming
-it'll be easier for the accelerator projects to rebase on top.
-
-If I missed something please feel free to still reply in v2.
-
-Thanks,
-
--- 
-Peter Xu
-
 
