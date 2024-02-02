@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A9AAC4828E
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463EDC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Feb 2024 21:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rW1UK-0008Tp-Sj; Fri, 02 Feb 2024 16:54:20 -0500
+	id 1rW1U7-0008Ev-JI; Fri, 02 Feb 2024 16:54:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1UI-0008N4-TF
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:18 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1U5-0008EG-Hl
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1UH-0004v8-6E
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:18 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rW1U4-0004tp-4g
+ for qemu-devel@nongnu.org; Fri, 02 Feb 2024 16:54:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706910856;
+ s=mimecast20190719; t=1706910843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ri6FoSJmzypYKy1MV4ZPdfCalka49kBuEYsBMKwQ3zg=;
- b=G1sKoER768bRUpoB/QwDr8LMxQ66dlkTz1R+fouAKoONVZnUdAxyl10Sn923dl0EMSaCzV
- mGdHZ/qRsR3W96R7ZQ367+YrPH5gwpHmKZo/AhOHDnt3mm7Wk6ErBRYLndXc0738Ddejsh
- WemiEbKfF56Q2VekfxBnxnW1KepYQsk=
+ bh=XQuXq7QcBaKkDuX1oNtcfRrVvti48Kk6OJQDMaKZxmg=;
+ b=fZIW9Ejq8CCmDEtzTk1K3iTctYU9rYAiJKN1rJfbzWHlPu0UooSpYLHKdw4A/yfXHX7Uc3
+ kgwEvOYvvf7qa+OwkSp7oVv6v9rIAQxYNFQg5UfXP6SPKAzZQ/tj+Xnb2UrknfDcr8Yeoh
+ +ita6h33iMtmAxU8ajdWQMmYH1CGMY4=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-U9Rpi69mNs-DQ7wLGBitlw-1; Fri, 02 Feb 2024 16:54:13 -0500
-X-MC-Unique: U9Rpi69mNs-DQ7wLGBitlw-1
+ us-mta-683-MGaoz8YBNJWYX4FpNcsKBQ-1; Fri, 02 Feb 2024 16:54:01 -0500
+X-MC-Unique: MGaoz8YBNJWYX4FpNcsKBQ-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D09DC10665A2;
- Fri,  2 Feb 2024 21:54:12 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 465B885A589;
+ Fri,  2 Feb 2024 21:54:01 +0000 (UTC)
 Received: from t14s.redhat.com (unknown [10.39.192.47])
- by smtp.corp.redhat.com (Postfix) with ESMTP id C182A2166B33;
- Fri,  2 Feb 2024 21:54:10 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 50E4E2166B31;
+ Fri,  2 Feb 2024 21:53:59 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -51,10 +51,10 @@ Cc: David Hildenbrand <david@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  Germano Veit Michel <germano@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>
-Subject: [PATCH v1 14/15] libvhost-user: Dynamically remap rings after
- (temporarily?) removing memory regions
-Date: Fri,  2 Feb 2024 22:53:31 +0100
-Message-ID: <20240202215332.118728-15-david@redhat.com>
+Subject: [PATCH v1 09/15] libvhost-user: Don't search for duplicates when
+ removing memory regions
+Date: Fri,  2 Feb 2024 22:53:26 +0100
+Message-ID: <20240202215332.118728-10-david@redhat.com>
 In-Reply-To: <20240202215332.118728-1-david@redhat.com>
 References: <20240202215332.118728-1-david@redhat.com>
 MIME-Version: 1.0
@@ -84,180 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, we try to remap all rings whenever we add a single new memory
-region. That doesn't quite make sense, because we already map rings when
-setting the ring address, and panic if that goes wrong. Likely, that
-handling was simply copied from set_mem_table code, where we actually
-have to remap all rings.
+We cannot have duplicate memory regions, something would be deeply
+flawed elsewhere. Let's just stop the search once we found an entry.
 
-Remapping all rings might require us to walk quite a lot of memory
-regions to perform the address translations. Ideally, we'd simply remove
-that remapping.
-
-However, let's be a bit careful. There might be some weird corner cases
-where we might temporarily remove a single memory region (e.g., resize
-it), that would have worked for now. Further, a ring might be located on
-hotplugged memory, and as the VM reboots, we might unplug that memory, to
-hotplug memory before resetting the ring addresses.
-
-So let's unmap affected rings as we remove a memory region, and try
-dynamically mapping the ring again when required.
+We'll add more sanity checks when adding memory regions later.
 
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 107 ++++++++++++++++------
- 1 file changed, 78 insertions(+), 29 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index febeb2eb89..738e84ab63 100644
+index e1a1b9df88..22154b217f 100644
 --- a/subprojects/libvhost-user/libvhost-user.c
 +++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -283,10 +283,75 @@ vu_remove_all_mem_regs(VuDev *dev)
-     dev->nregions = 0;
- }
+@@ -896,8 +896,7 @@ vu_rem_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+             i--;
  
-+static bool
-+map_ring(VuDev *dev, VuVirtq *vq)
-+{
-+    vq->vring.desc = qva_to_va(dev, vq->vra.desc_user_addr);
-+    vq->vring.used = qva_to_va(dev, vq->vra.used_user_addr);
-+    vq->vring.avail = qva_to_va(dev, vq->vra.avail_user_addr);
-+
-+    DPRINT("Setting virtq addresses:\n");
-+    DPRINT("    vring_desc  at %p\n", vq->vring.desc);
-+    DPRINT("    vring_used  at %p\n", vq->vring.used);
-+    DPRINT("    vring_avail at %p\n", vq->vring.avail);
-+
-+    return !(vq->vring.desc && vq->vring.used && vq->vring.avail);
-+}
-+
- static bool
- vu_is_vq_usable(VuDev *dev, VuVirtq *vq)
- {
--    return likely(!dev->broken) && likely(vq->vring.avail);
-+    if (unlikely(dev->broken)) {
-+        return false;
-+    }
-+
-+    if (likely(vq->vring.avail)) {
-+        return true;
-+    }
-+
-+    /*
-+     * In corner cases, we might temporarily remove a memory region that
-+     * mapped a ring. When removing a memory region we make sure to
-+     * unmap any rings that would be impacted. Let's try to remap if we
-+     * already succeeded mapping this ring once.
-+     */
-+    if (!vq->vra.desc_user_addr || !vq->vra.used_user_addr ||
-+        !vq->vra.avail_user_addr) {
-+        return false;
-+    }
-+    if (map_ring(dev, vq)) {
-+        vu_panic(dev, "remapping queue on access");
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static void
-+unmap_rings(VuDev *dev, VuDevRegion *r)
-+{
-+    int i;
-+
-+    for (i = 0; i < dev->max_queues; i++) {
-+        VuVirtq *vq = &dev->vq[i];
-+        const uintptr_t desc = (uintptr_t)vq->vring.desc;
-+        const uintptr_t used = (uintptr_t)vq->vring.used;
-+        const uintptr_t avail = (uintptr_t)vq->vring.avail;
-+
-+        if (desc < r->mmap_addr || desc >= r->mmap_addr + r->size) {
-+            continue;
-+        }
-+        if (used < r->mmap_addr || used >= r->mmap_addr + r->size) {
-+            continue;
-+        }
-+        if (avail < r->mmap_addr || avail >= r->mmap_addr + r->size) {
-+            continue;
-+        }
-+
-+        DPRINT("Unmapping rings of queue %d\n", i);
-+        vq->vring.desc = NULL;
-+        vq->vring.used = NULL;
-+        vq->vring.avail = NULL;
-+    }
- }
- 
- static size_t
-@@ -784,21 +849,6 @@ vu_reset_device_exec(VuDev *dev, VhostUserMsg *vmsg)
-     return false;
- }
- 
--static bool
--map_ring(VuDev *dev, VuVirtq *vq)
--{
--    vq->vring.desc = qva_to_va(dev, vq->vra.desc_user_addr);
--    vq->vring.used = qva_to_va(dev, vq->vra.used_user_addr);
--    vq->vring.avail = qva_to_va(dev, vq->vra.avail_user_addr);
+             found = true;
 -
--    DPRINT("Setting virtq addresses:\n");
--    DPRINT("    vring_desc  at %p\n", vq->vring.desc);
--    DPRINT("    vring_used  at %p\n", vq->vring.used);
--    DPRINT("    vring_avail at %p\n", vq->vring.avail);
--
--    return !(vq->vring.desc && vq->vring.used && vq->vring.avail);
--}
--
- static bool
- generate_faults(VuDev *dev) {
-     unsigned int i;
-@@ -882,7 +932,6 @@ generate_faults(VuDev *dev) {
- 
- static bool
- vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
--    int i;
-     VhostUserMemoryRegion m = vmsg->payload.memreg.region, *msg_region = &m;
- 
-     if (vmsg->fd_num != 1) {
-@@ -928,19 +977,9 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
-         vmsg->fd_num = 0;
-         DPRINT("Successfully added new region in postcopy\n");
-         return true;
--    } else {
--        for (i = 0; i < dev->max_queues; i++) {
--            if (dev->vq[i].vring.desc) {
--                if (map_ring(dev, &dev->vq[i])) {
--                    vu_panic(dev, "remapping queue %d for new memory region",
--                             i);
--                }
--            }
--        }
--
--        DPRINT("Successfully added new region\n");
--        return false;
-     }
-+    DPRINT("Successfully added new region\n");
-+    return false;
- }
- 
- static inline bool reg_equal(VuDevRegion *vudev_reg,
-@@ -993,6 +1032,16 @@ vu_rem_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
-         return false;
+-            /* Continue the search for eventual duplicates. */
++            break;
+         }
      }
  
-+    /*
-+     * There might be valid cases where we temporarily remove memory regions
-+     * to readd them again, or remove memory regions and don't use the rings
-+     * anymore before we set the ring addresses and restart the device.
-+     *
-+     * Unmap all affected rings, remapping them on demand later. This should
-+     * be a corner case.
-+     */
-+    unmap_rings(dev, r);
-+
-     munmap((void *)(uintptr_t)r->mmap_addr, r->size + r->mmap_offset);
- 
-     idx = r - dev->regions;
 -- 
 2.43.0
 
