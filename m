@@ -4,76 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F67FC4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6325C4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWBtv-00033l-Gy; Sat, 03 Feb 2024 04:01:27 -0500
+	id 1rWC9Z-0006EK-LN; Sat, 03 Feb 2024 04:17:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rWBtt-00032y-59; Sat, 03 Feb 2024 04:01:25 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rWC9X-0006DU-3L
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:35 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rWBtp-0006Ld-T3; Sat, 03 Feb 2024 04:01:24 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B384249EBB;
- Sat,  3 Feb 2024 12:02:12 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 34C43729B3;
- Sat,  3 Feb 2024 12:01:09 +0300 (MSK)
-Message-ID: <dd0dd672-78d7-4e9b-b501-020cea439fea@tls.msk.ru>
-Date: Sat, 3 Feb 2024 12:01:09 +0300
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rWC9V-0001VV-7C
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1706951853; x=1738487853;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=z/gHOWUxcMMP/K6p2By1JSy8BtlD3n84UcB8hXvdztQ=;
+ b=Ps6whB0IhfkTsJR3HN4wjejCKeF/OXiktBuDrC7Xj8p8wEIfBndQmo9O
+ TMEbT7aRE7/7IvTvrpY/3Kclcy0Nzu0w4FM5vAT0KXSHg9oFKOjy2XjZF
+ sYGLeyUcslmUIOCMb+A5uScjsKlXTSSVNbsAFJLnZnSt9psFKBdKjVRuO
+ zrk85KBHZfbsw4dxK6g0qxT46yKNXYzSQqN9Pgx9dg6ALbaSq6LNovtEF
+ FjITxpKkvoXhmNa/d8B+7w8H+dRjFjKNuXBX3IJ3r+tncAPw9KK8sSy9L
+ xBsOVOHE5QUM3o13suGbKNyeN2VZBlHkl97nkjF0ozQJGHXgX62Fq8l3N w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="216359"
+X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
+   d="scan'208";a="216359"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Feb 2024 01:17:31 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; d="scan'208";a="31378988"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 03 Feb 2024 01:17:29 -0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Cc: Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yanting Jiang <yanting.jiang@intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [RFC 2/6] target/i386: Add support for Package Thermal Management
+ feature
+Date: Sat,  3 Feb 2024 17:30:50 +0800
+Message-Id: <20240203093054.412135-3-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
+References: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] monitor: only run coroutine commands in
- qemu_aio_context
-Content-Language: en-US
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20240116190042.1363717-1-stefanha@redhat.com>
- <20240116190042.1363717-4-stefanha@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240116190042.1363717-4-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=198.175.65.20;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,47 +81,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-16.01.2024 22:00, Stefan Hajnoczi пишет:
-> monitor_qmp_dispatcher_co() runs in the iohandler AioContext that is not
-> polled during nested event loops. The coroutine currently reschedules
-> itself in the main loop's qemu_aio_context AioContext, which is polled
-> during nested event loops. One known problem is that QMP device-add
-> calls drain_call_rcu(), which temporarily drops the BQL, leading to all
-> sorts of havoc like other vCPU threads re-entering device emulation code
-> while another vCPU thread is waiting in device emulation code with
-> aio_poll().
-> 
-> Paolo Bonzini suggested running non-coroutine QMP handlers in the
-> iohandler AioContext. This avoids trouble with nested event loops. His
-> original idea was to move coroutine rescheduling to
-> monitor_qmp_dispatch(), but I resorted to moving it to qmp_dispatch()
-> because we don't know if the QMP handler needs to run in coroutine
-> context in monitor_qmp_dispatch(). monitor_qmp_dispatch() would have
-> been nicer since it's associated with the monitor implementation and not
-> as general as qmp_dispatch(), which is also used by qemu-ga.
-> 
-> A number of qemu-iotests need updated .out files because the order of
-> QMP events vs QMP responses has changed.
-> 
-> Solves Issue #1933.
-> 
-> Fixes: 7bed89958bfbf40df9ca681cefbdca63abdde39d ("device_core: use drain_call_rcu in in qmp_device_add")
-> Buglink: https://bugzilla.redhat.com/show_bug.cgi?id=2215192
-> Buglink: https://bugzilla.redhat.com/show_bug.cgi?id=2214985
-> Buglink: https://issues.redhat.com/browse/RHEL-17369
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+From: Zhuocheng Ding <zhuocheng.ding@intel.com>
 
-This change broke something in 7.2. I'm still debugging it, will
-come with a follow-up once some more details are found, I'll also
-check current master with and without this commit.
+PTS feature (Package Thermal Management) is a dependency of ITD.
 
-The prob happens with multiple suspend-resume cycles, - with this
-change applied, guest does not work as expected after *second*
-suspend-resume.
+PTS provides 2 package level MSRs: MSR_IA32_PACKAGE_THERM_STATUS and
+MSR_IA32_PACKAGE_THERM_INTERRUPT.
 
-JFYI for now.
+They're emulated in KVM, but currently KVM hasn't supported msr
+topology.
 
-Thanks,
+Thus the emulation of these 2 package-level MSRs are only supported at
+the whole VM-level, and all vCPUs share these two MSRs, so that the
+emulation of these two MSRs does not distinguish between the different
+virtual-packages.
 
-/mjt
+In order to avoid potential contention problems caused by multiple
+virtual-packages, add the following restrictions to the PTS feature bit:
+
+1. Mark PTS as no_autoenable_flags and it won't be enabled by default.
+2. PTS can't be enabled for the case with multiple packages.
+3. PTS can't be enabled if ITD is not set for Guest, since currently PTS
+   is only used to help enable ITD in virtualization scenario.
+
+Additionally, add save/load support for 2 PTS related MSRs.
+
+Tested-by: Yanting Jiang <yanting.jiang@intel.com>
+Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c     | 22 +++++++++++++++++++++-
+ target/i386/cpu.h     | 13 +++++++++++++
+ target/i386/kvm/kvm.c | 24 ++++++++++++++++++++++++
+ 3 files changed, 58 insertions(+), 1 deletion(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 03822d9ba8ee..e772d35d9403 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1114,7 +1114,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+             NULL, NULL, "arat", NULL,
+-            NULL, NULL, NULL, NULL,
++            NULL, NULL, "pts", NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+@@ -1124,6 +1124,11 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         },
+         .cpuid = { .eax = 6, .reg = R_EAX, },
+         .tcg_features = TCG_6_EAX_FEATURES,
++        /*
++         * PTS shouldn't be enabled by default since it has
++         * requirement for cpu topology.
++         */
++        .no_autoenable_flags = CPUID_6_EAX_PTS,
+     },
+     [FEAT_XSAVE_XCR0_LO] = {
+         .type = CPUID_FEATURE_WORD,
+@@ -7424,6 +7429,21 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+             goto out;
+         }
+     }
++
++    if (env->features[FEAT_6_EAX] & CPUID_6_EAX_PTS && ms->smp.sockets > 1) {
++        error_setg(errp,
++                   "PTS currently only supports 1 package, "
++                   "please set by \"-smp ...,sockets=1\"");
++        return;
++    }
++
++    if (env->features[FEAT_6_EAX] & CPUID_6_EAX_PTS &&
++        !(env->features[FEAT_6_EAX] & CPUID_6_EAX_ITD)) {
++        error_setg(errp,
++                   "In the absence of ITD, Guest does "
++                   "not need PTS");
++        return;
++    }
+ #endif
+ 
+     mce_init(cpu);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e453b3f010e2..a8c247b2ef89 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -530,6 +530,9 @@ typedef enum X86Seg {
+ #define MSR_IA32_THERM_INTERRUPT        0x0000019b
+ #define MSR_IA32_THERM_STATUS           0x0000019c
+ 
++#define MSR_IA32_PACKAGE_THERM_STATUS    0x000001b1
++#define MSR_IA32_PACKAGE_THERM_INTERRUPT 0x000001b2
++
+ #define MSR_IA32_VMX_BASIC              0x00000480
+ #define MSR_IA32_VMX_PINBASED_CTLS      0x00000481
+ #define MSR_IA32_VMX_PROCBASED_CTLS     0x00000482
+@@ -982,6 +985,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+ #define CPUID_XSAVE_XSAVES     (1U << 3)
+ 
+ #define CPUID_6_EAX_ARAT       (1U << 2)
++#define CPUID_6_EAX_PTS        (1U << 6)
++#define CPUID_6_EAX_ITD        (1U << 23)
+ 
+ /* CPUID[0x80000007].EDX flags: */
+ #define CPUID_APM_INVTSC       (1U << 8)
+@@ -1767,6 +1772,14 @@ typedef struct CPUArchState {
+     uint64_t therm_interrupt;
+     uint64_t therm_status;
+ 
++    /*
++     * Although these are package level MSRs, for the PTS feature, we
++     * temporarily limit it to be enabled for only 1 package, so the value
++     * of each vCPU is same and it's enough to support the save/load.
++     */
++    uint64_t pkg_therm_interrupt;
++    uint64_t pkg_therm_status;
++
+     /* exception/interrupt handling */
+     int error_code;
+     int exception_is_int;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 3bf57b35bfcd..258591535fd5 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -139,6 +139,7 @@ static bool has_msr_vmx_procbased_ctls2;
+ static bool has_msr_perf_capabs;
+ static bool has_msr_pkrs;
+ static bool has_msr_therm;
++static bool has_msr_pkg_therm;
+ 
+ static uint32_t has_architectural_pmu_version;
+ static uint32_t num_architectural_pmu_gp_counters;
+@@ -2461,6 +2462,10 @@ static int kvm_get_supported_msrs(KVMState *s)
+             case MSR_IA32_THERM_STATUS:
+                 has_msr_therm = true;
+                 break;
++            case MSR_IA32_PACKAGE_THERM_STATUS:
++            case MSR_IA32_PACKAGE_THERM_INTERRUPT:
++                has_msr_pkg_therm = true;
++                break;
+             }
+         }
+     }
+@@ -3313,6 +3318,15 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+         kvm_msr_entry_add(cpu, MSR_IA32_THERM_INTERRUPT, env->therm_interrupt);
+         kvm_msr_entry_add(cpu, MSR_IA32_THERM_STATUS, env->therm_status);
+     }
++    /* Only sync package level MSRs to KVM on the first cpu */
++    if (current_cpu == first_cpu) {
++        if (has_msr_pkg_therm) {
++            kvm_msr_entry_add(cpu, MSR_IA32_PACKAGE_THERM_STATUS,
++                              env->therm_control);
++            kvm_msr_entry_add(cpu, MSR_IA32_PACKAGE_THERM_INTERRUPT,
++                              env->therm_interrupt);
++        }
++    }
+ 
+ #ifdef TARGET_X86_64
+     if (lm_capable_kernel) {
+@@ -3790,6 +3804,10 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_IA32_THERM_INTERRUPT, 0);
+         kvm_msr_entry_add(cpu, MSR_IA32_THERM_STATUS, 0);
+     }
++    if (has_msr_pkg_therm) {
++        kvm_msr_entry_add(cpu, MSR_IA32_PACKAGE_THERM_STATUS, 0);
++        kvm_msr_entry_add(cpu, MSR_IA32_PACKAGE_THERM_INTERRUPT, 0);
++    }
+ 
+ #ifdef TARGET_X86_64
+     if (lm_capable_kernel) {
+@@ -4280,6 +4298,12 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_IA32_THERM_STATUS:
+             env->therm_status = msrs[i].data;
+             break;
++        case MSR_IA32_PACKAGE_THERM_STATUS:
++            env->pkg_therm_status = msrs[i].data;
++            break;
++        case MSR_IA32_PACKAGE_THERM_INTERRUPT:
++            env->pkg_therm_interrupt = msrs[i].data;
++            break;
+         }
+     }
+ 
+-- 
+2.34.1
+
 
