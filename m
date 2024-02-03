@@ -4,71 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C9AC4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 13:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 972FAC4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 13:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWG3O-0003Es-Oi; Sat, 03 Feb 2024 08:27:30 -0500
+	id 1rWGH5-0000Aw-Ds; Sat, 03 Feb 2024 08:41:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rWG3M-0003Ek-Vd
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 08:27:28 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rWG3K-0000Sd-3l
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 08:27:28 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-55fc7f63639so3423423a12.1
- for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 05:27:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706966844; x=1707571644; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BVH+S6PM3kvhs9uvwWKBe2oCg/7dsBePFdVK1RP/STU=;
- b=fFKomll374eh9CzDXceoVU+It29ALLuiVgSsmS2gkFI2wmqY8sozOO7LAnqPm/J8yK
- J1HfTf2229Byy0WxnS2ieD+ovxr0l/gBP9leP1kXQOzJE5OjRwQ9wApS7Pf8aukczPPw
- n81qivRRWcCu4iMBVY59ipNQLjJRY6ms9Q9qIvCaMl3NbzavDO1kGvkQGlbb0uN+ZXb4
- Qrd5lqePQ+If28LkcpMl+n6y8H7r8HIOPcRogMd6PJFjeDnIPYePd9TZB21SNM84e34T
- +yHHxBoFAdYqIajS/6g0Xu6Cv7gbVJ7V0c7dAusRhJZ7B650KRy1EhJ9B92w0qaObkwe
- 6bHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706966844; x=1707571644;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BVH+S6PM3kvhs9uvwWKBe2oCg/7dsBePFdVK1RP/STU=;
- b=ceFXWiqTlf4+hnakEzVbsql/4oelCXjnzcxAj6h3X4dYVTbuK6rOG18pzwmszSClqZ
- WeSqbEMxdU4f90bnb9OP2q2OmZhNev1RFqfGHL+8bAKhCL9dnQdoxXixlXwgm26GeEW5
- Zejy0QXDoLFOIsVd4WOQ/1DBj2bG+X9Pc6fcGtACVtkWrSepoCKEqLEr4U1JeLlRIknd
- Sdh1INLDsrGlwGZZAFfWmG2iajI6w5HizwoyRAry/vYvCTIS3Fwbw296QVnqM2KaLwcs
- qrRxBOZAhTMpc3lnbIu9BgPDxlDbGonWlzCnAJQY6AsKPY/u6/BiqC8+H8pL9UFv3F63
- xN5A==
-X-Gm-Message-State: AOJu0Yyzzpsfr+jB5/QrjZ0PKIsWhejQ7xb4JLMp0uB++e+wMojyVovw
- P1nXl0iOLxM2iR4hhPSGcKcBY/6zxCyiLYlNIG/XJAE/7VhYNM8nJ59IgODPN69Go8C1+kSvr+t
- e0iOxobSCeits+NcsThzOW7t1KvGeFjzYu+5t97VJwWVgr+PL
-X-Google-Smtp-Source: AGHT+IFbhpfk5dSlNbFLByRjdVlh12BBUpGvvGN3CWz5uVLwlj1QkpL/XPrK1q+Hh07iTjhUSPRtdCcXkDnOO1x5df4=
-X-Received: by 2002:aa7:d6cc:0:b0:55f:fb25:47d9 with SMTP id
- x12-20020aa7d6cc000000b0055ffb2547d9mr1705415edr.8.1706966844127; Sat, 03 Feb
- 2024 05:27:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rWGH4-0000An-FC
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 08:41:38 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rWGH2-0003yx-Ob
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 08:41:38 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id DF2774A04F;
+ Sat,  3 Feb 2024 16:42:34 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A908172AD3;
+ Sat,  3 Feb 2024 16:41:31 +0300 (MSK)
+Message-ID: <688c6446-1085-47f8-b1f1-c27e2d71c4dc@tls.msk.ru>
+Date: Sat, 3 Feb 2024 16:41:31 +0300
 MIME-Version: 1.0
-References: <20240202153637.3710444-1-peter.maydell@linaro.org>
-In-Reply-To: <20240202153637.3710444-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 3 Feb 2024 13:27:13 +0000
-Message-ID: <CAFEAcA8n8wbesEFRP9KUBKBqOhe1hj51sxD3dGf3h62JDVFHkA@mail.gmail.com>
-Subject: Re: [PULL 00/36] target-arm queue
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: ui/dbus-display1.[ch] are not properly listed in dependencies
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,40 +82,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Feb 2024 at 15:36, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The following changes since commit c3709fde5955d13f6d4f86ab46ef3cc2288ca65e:
->
->   Merge tag 'pull-aspeed-20240201' of https://github.com/legoater/qemu into staging (2024-02-01 14:42:11 +0000)
->
-> are available in the Git repository at:
->
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240202
->
-> for you to fetch changes up to f09c2b7ba9908714a3e2f1decd989462536cf731:
->
->   hw/arm: Connect SPI Controller to BCM2835 (2024-02-02 13:51:59 +0000)
->
-> ----------------------------------------------------------------
-> target/arm: fix exception syndrome for AArch32 bkpt insn
-> pci, vmbus, adb, s390x/css-bridge: Switch buses to 3-phase reset
-> system/vl.c: Fix handling of '-serial none -serial something'
-> target/arm: Add ID_AA64ZFR0_EL1.B16B16 to the exposed-to-userspace set
-> tests/qtest/xlnx-versal-trng-test.c: Drop use of variable length array
-> target/arm: Reinstate "vfp" property on AArch32 CPUs
-> doc/sphinx/hxtool.py: add optional label argument to SRST directive
-> hw/arm: Check for CPU types in machine_run_board_init() for various boards
-> pci-host: designware: Limit value range of iATU viewport register
-> hw/arm: Convert some DPRINTF macros to trace events and guest errors
-> hw/arm: NPCM7XX SoC: Add GMAC ethernet controller devices
-> hw/arm: Implement BCM2835 SPI Controller
->
+Doing a build of just a single target with --enable modules results in build
+error:
 
 
-Applied, thanks.
+  rm -rf b; cd b
+  ../configure --enable-modules --target-list=x86_64-softmmu
+  ninja qemu-system-x86_64
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+   In file included from ../ui/dbus-chardev.c:34:
+  ../ui/dbus.h:34:10: fatal error: ui/dbus-display1.h: No such file or directory
+     34 | #include "ui/dbus-display1.h"
+        |          ^~~~~~~~~~~~~~~~~~~~
+  compilation terminated.
 
--- PMM
+
+When building without modules, or when not specifying a single target,
+the build succeeded.  So I'm concluding not all deps for ui/dbus-display1.h
+are specified, - dbus_ss should depend on this file I guess..
+
+/mjt
 
