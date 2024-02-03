@@ -4,70 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D1AC48297
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 08:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F67FC4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWBTn-0002ou-Hn; Sat, 03 Feb 2024 03:34:27 -0500
+	id 1rWBtv-00033l-Gy; Sat, 03 Feb 2024 04:01:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWBTl-0002oe-KX
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 03:34:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rWBtt-00032y-59; Sat, 03 Feb 2024 04:01:25 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWBTg-0007IB-UI
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 03:34:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706949259;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rvjV7huPimUbN8Uv56iRsb0WHVjJEp7Ao2MLjjHu5dg=;
- b=Zal1JwXZojLvgMsXKS2ZJv9EOrmWhbD1m/GGbAT+mgC+Hpl2/XgNLjvhXHLv7D2+SkXW3q
- fNGahcXjHVHcQrDB57HfPC60FHaYxcIO/NMHfudRix3bBA+2TxZWujQg/00HYB6YnU+onk
- FQ7wUHJExRvA18OjFzZkBri3hvGaw0Y=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-NlsbvrnJO5iatgI4YgVEMw-1; Sat,
- 03 Feb 2024 03:34:17 -0500
-X-MC-Unique: NlsbvrnJO5iatgI4YgVEMw-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 436B1383E127;
- Sat,  3 Feb 2024 08:34:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1A7E11C060B1;
- Sat,  3 Feb 2024 08:34:17 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EEF1D21E66E6; Sat,  3 Feb 2024 09:34:15 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
-	Eric Blake <eblake@redhat.com>
-Subject: [PULL 1/5] qapi: Drop redundant documentation of inherited members
-Date: Sat,  3 Feb 2024 09:34:11 +0100
-Message-ID: <20240203083415.2937003-2-armbru@redhat.com>
-In-Reply-To: <20240203083415.2937003-1-armbru@redhat.com>
-References: <20240203083415.2937003-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rWBtp-0006Ld-T3; Sat, 03 Feb 2024 04:01:24 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B384249EBB;
+ Sat,  3 Feb 2024 12:02:12 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 34C43729B3;
+ Sat,  3 Feb 2024 12:01:09 +0300 (MSK)
+Message-ID: <dd0dd672-78d7-4e9b-b501-020cea439fea@tls.msk.ru>
+Date: Sat, 3 Feb 2024 12:01:09 +0300
 MIME-Version: 1.0
-Content-type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] monitor: only run coroutine commands in
+ qemu_aio_context
+Content-Language: en-US
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Hanna Reitz <hreitz@redhat.com>
+References: <20240116190042.1363717-1-stefanha@redhat.com>
+ <20240116190042.1363717-4-stefanha@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240116190042.1363717-4-stefanha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,60 +89,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Documentation generated for SchemaInfo looks like
+16.01.2024 22:00, Stefan Hajnoczi пишет:
+> monitor_qmp_dispatcher_co() runs in the iohandler AioContext that is not
+> polled during nested event loops. The coroutine currently reschedules
+> itself in the main loop's qemu_aio_context AioContext, which is polled
+> during nested event loops. One known problem is that QMP device-add
+> calls drain_call_rcu(), which temporarily drops the BQL, leading to all
+> sorts of havoc like other vCPU threads re-entering device emulation code
+> while another vCPU thread is waiting in device emulation code with
+> aio_poll().
+> 
+> Paolo Bonzini suggested running non-coroutine QMP handlers in the
+> iohandler AioContext. This avoids trouble with nested event loops. His
+> original idea was to move coroutine rescheduling to
+> monitor_qmp_dispatch(), but I resorted to moving it to qmp_dispatch()
+> because we don't know if the QMP handler needs to run in coroutine
+> context in monitor_qmp_dispatch(). monitor_qmp_dispatch() would have
+> been nicer since it's associated with the monitor implementation and not
+> as general as qmp_dispatch(), which is also used by qemu-ga.
+> 
+> A number of qemu-iotests need updated .out files because the order of
+> QMP events vs QMP responses has changed.
+> 
+> Solves Issue #1933.
+> 
+> Fixes: 7bed89958bfbf40df9ca681cefbdca63abdde39d ("device_core: use drain_call_rcu in in qmp_device_add")
+> Buglink: https://bugzilla.redhat.com/show_bug.cgi?id=2215192
+> Buglink: https://bugzilla.redhat.com/show_bug.cgi?id=2214985
+> Buglink: https://issues.redhat.com/browse/RHEL-17369
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-    The members of "SchemaInfoBuiltin" when "meta-type" is ""builtin""
-    The members of "SchemaInfoEnum" when "meta-type" is ""enum""
-    The members of "SchemaInfoArray" when "meta-type" is ""array""
-    The members of "SchemaInfoObject" when "meta-type" is ""object""
-    The members of "SchemaInfoAlternate" when "meta-type" is ""alternate""
-    The members of "SchemaInfoCommand" when "meta-type" is ""command""
-    The members of "SchemaInfoEvent" when "meta-type" is ""event""
-    Additional members depend on the value of "meta-type".
+This change broke something in 7.2. I'm still debugging it, will
+come with a follow-up once some more details are found, I'll also
+check current master with and without this commit.
 
-The last line became redundant when commit 88f63467c57 (qapi2texi:
-Generate reference to base type members) added the lines preceding it.
-Drop it.
+The prob happens with multiple suspend-resume cycles, - with this
+change applied, guest does not work as expected after *second*
+suspend-resume.
 
-BlockdevOptions has the same issue.  Drop
+JFYI for now.
 
-    Remaining options are determined by the block driver.
+Thanks,
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240129115008.674248-2-armbru@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
----
- qapi/block-core.json | 2 --
- qapi/introspect.json | 2 --
- 2 files changed, 4 deletions(-)
-
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 48c181e55d..530c4af50f 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4665,8 +4665,6 @@
- # @force-share: force share all permission on added nodes.  Requires
- #     read-only=true.  (Since 2.10)
- #
--# Remaining options are determined by the block driver.
--#
- # Since: 2.9
- ##
- { 'union': 'BlockdevOptions',
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index 8df1ce85ed..b041b02ba8 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -93,8 +93,6 @@
- #     particular order.  (since 4.1 for object types, 4.2 for
- #     commands, 5.0 for the rest)
- #
--# Additional members depend on the value of @meta-type.
--#
- # Since: 2.5
- ##
- { 'union': 'SchemaInfo',
--- 
-2.43.0
-
+/mjt
 
