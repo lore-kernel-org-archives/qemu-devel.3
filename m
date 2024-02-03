@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E8CC4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 08:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35CBEC4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 08:03:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWAz4-0003ap-N8; Sat, 03 Feb 2024 03:02:42 -0500
+	id 1rWAzI-0003cF-Bf; Sat, 03 Feb 2024 03:02:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWAz2-0003a5-VY
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 03:02:40 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWAzG-0003bl-Gv
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 03:02:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWAz0-00081Q-Qq
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 03:02:40 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWAzF-00084Z-8B
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 03:02:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706947358;
+ s=mimecast20190719; t=1706947372;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/E/JvkeI/fr7kgmUzJT2i57ToPizfNyWV9QJp2tTUAs=;
- b=X5bsopZD3aXhN3tS/JEUWKbLXi0C1mNCT92K69dVXCwMaOsMzbF9XiuAYTzXAKAOvgMcna
- CTEgCuFTQ1KbtIKBe8fqn6e5EDdfigrmpL3oOBu95wQrVRJ11f54czRWivWtpA7yjXUcRe
- bT7qhIc5P1DxM/iUc6a6K2myFfdStpA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-FkinZXmvNuSpVN2-z5vRgA-1; Sat,
- 03 Feb 2024 03:02:34 -0500
-X-MC-Unique: FkinZXmvNuSpVN2-z5vRgA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZBOb0D7zq7+E9U+Yww2KP5OnAshRhSvaMmrVkD0fCi0=;
+ b=N8Kw1OHR0ubvP2mInOKCNegDQMmInVnWt5M+stEsp6jTgSzpCC6e2TvWBRnGKXqsy0FWhZ
+ 5srdUf8sfweZH5KbEtr7HCMEXbwsWtwkZCWKkmR089rOjCRLa6jhj8RauMZV/CmLyRWr3U
+ GiITneraxW6cDjESO/P5W08gK1onqfc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-675-nY2eo4zdOQKGNjYAOkWPJQ-1; Sat, 03 Feb 2024 03:02:50 -0500
+X-MC-Unique: nY2eo4zdOQKGNjYAOkWPJQ-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ECF733C0F193;
- Sat,  3 Feb 2024 08:02:33 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D1DC0800074;
+ Sat,  3 Feb 2024 08:02:49 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C0AF42028CD2;
- Sat,  3 Feb 2024 08:02:33 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B14A0400D783;
+ Sat,  3 Feb 2024 08:02:49 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CA83B21E6690; Sat,  3 Feb 2024 09:02:28 +0100 (CET)
+ id C000921E6806; Sat,  3 Feb 2024 09:02:28 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, devel@lists.libvirt.org,
  eblake@redhat.com
-Subject: [PATCH 4/4] qapi/char: Deprecate backend type "memory"
-Date: Sat,  3 Feb 2024 09:02:28 +0100
-Message-ID: <20240203080228.2766159-5-armbru@redhat.com>
-In-Reply-To: <20240203080228.2766159-1-armbru@redhat.com>
-References: <20240203080228.2766159-1-armbru@redhat.com>
+Subject: [PATCH 0/4] char: Minor fixes, and a tighter QAPI schema
+Date: Sat,  3 Feb 2024 09:02:24 +0100
+Message-ID: <20240203080228.2766159-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -43
@@ -82,68 +79,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's an alias for "ringbuf" we kept for backward compatibility; see
-commit 3a1da42eb35 (qapi: Rename ChardevBackend member "memory" to
-"ringbuf").  Deprecation is long overdue.
+Markus Armbruster (4):
+  chardev/parallel: Don't close stdin on inappropriate device
+  tests/unit/test-char: Fix qemu_socket(), make_udp_socket() check
+  qapi/char: Make backend types properly conditional
+  qapi/char: Deprecate backend type "memory"
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/about/deprecated.rst | 8 ++++++++
- qapi/char.json            | 8 +++++---
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ docs/about/deprecated.rst |  8 ++++++++
+ qapi/char.json            | 28 +++++++++++++++++-----------
+ include/qemu/osdep.h      |  9 ++++++++-
+ chardev/char-parallel.c   |  7 +++++--
+ tests/unit/test-char.c    | 25 +++++++++++++++++++++++--
+ chardev/meson.build       |  4 +---
+ 6 files changed, 62 insertions(+), 19 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index d4492b9460..ae1a520c26 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -371,6 +371,14 @@ Specifying the iSCSI password in plain text on the command line using the
- used instead, to refer to a ``--object secret...`` instance that provides
- a password via a file, or encrypted.
- 
-+Character device options
-+''''''''''''''''''''''''
-+
-+Backend ``memory`` (since 9.0)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+``memory`` is a deprecated synonym for ``ringbuf``.
-+
- CPU device properties
- '''''''''''''''''''''
- 
-diff --git a/qapi/char.json b/qapi/char.json
-index 2d74e66746..75a7e057f0 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -468,6 +468,10 @@
- #
- # @memory: Since 1.5
- #
-+# Features:
-+#
-+# @deprecated: Member @memory is deprecated.  Use @ringbuf instead.
-+#
- # Since: 1.4
- ##
- { 'enum': 'ChardevBackendKind',
-@@ -492,8 +496,7 @@
-             { 'name': 'dbus', 'if': 'CONFIG_DBUS_DISPLAY' },
-             'vc',
-             'ringbuf',
--            # next one is just for compatibility
--            'memory' ] }
-+            { 'name': 'memory', 'features': [ 'deprecated' ] } ] }
- 
- ##
- # @ChardevFileWrapper:
-@@ -642,7 +645,6 @@
-                       'if': 'CONFIG_DBUS_DISPLAY' },
-             'vc': 'ChardevVCWrapper',
-             'ringbuf': 'ChardevRingbufWrapper',
--            # next one is just for compatibility
-             'memory': 'ChardevRingbufWrapper' } }
- 
- ##
 -- 
 2.43.0
 
