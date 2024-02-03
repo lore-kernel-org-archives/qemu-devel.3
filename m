@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8913C48297
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A38C4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWC9c-0006F0-8S; Sat, 03 Feb 2024 04:17:40 -0500
+	id 1rWC9l-0006Fn-Bk; Sat, 03 Feb 2024 04:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rWC9Y-0006E7-W6
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:37 -0500
+ id 1rWC9k-0006Fa-DO
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:48 -0500
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rWC9X-0001Vy-07
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:36 -0500
+ id 1rWC9i-0001Wo-JW
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706951855; x=1738487855;
+ t=1706951867; x=1738487867;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=UyIppaYlMKCeYNOfMLCrY6Qljm+AMerAyC7gI0Br97s=;
- b=ULhSAS7tCHKqWcVvRmPYzb3yIZOTJVgBctU9gcbRS/a/X0QzKlFHOEh2
- c2UjBLXm8yZQL7m2q1bVzYDN0ESjJDJ03Li5OoYMDhYr/Jl8C8pH4zqAd
- hV1We9/R9ads6HnmhzI09HRvt2g2KNqeWcMwBwhnRC4E6S+jC4pqUQb2c
- ZubSBmBcmzKri8rItldAIJmt9PS2nOlJHssVayCDnlAHqQf25HQ1lyO3R
- NdHK/vaaoWW9kYe+fR1fhFLmKkrMwpgYg8bgypFSjxjdk9zcopgxwb8AG
- F4kOC1hSIrA+Pu+WmdQD4rgT/K8zQwSaoSY1hAvAiBrceihnUtoe3FhTP g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="216363"
+ bh=LHXTdjtZ2r3RyYP7b3t0ffj/yUzzPpSDCGrT79qcd+k=;
+ b=MpJJN5o8PR+lZUi5IeSOOqtsfIsX084nIF81QOTBa9zcHN6FXC623Y3R
+ qH/Pbh5ITEiSoBwgriOxBsiAi/yiK2+sXMYDvykc0E57bRhuKL/IGBv3K
+ 15ZW+VEpA8hQ2j6JvkSdTh8QjDo3a6TjjP26q27SJSw6aOgcn3WA1B8Bv
+ 8X8yYZEromnqtG+DkE76z0570fsMwJuJCYKntwcRZ+PsfiyqG8kFzAQ8d
+ bHXOhWYaBMYrK3rwBPeCDBQOTUBTS3rmRbH1C2FYGyzn6f6FTstLmZJTf
+ eylATb/XqYOtikA8BULtysp6pTK87n6ush9DKxkR6NDp/rsZJXRpOhEyw A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="216383"
 X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
-   d="scan'208";a="216363"
+   d="scan'208";a="216383"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Feb 2024 01:17:34 -0800
+ 03 Feb 2024 01:17:38 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; d="scan'208";a="31378997"
+X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; d="scan'208";a="31379019"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 03 Feb 2024 01:17:31 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 03 Feb 2024 01:17:36 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
@@ -49,10 +49,9 @@ Cc: Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>,
  Dapeng Mi <dapeng1.mi@intel.com>, Yanting Jiang <yanting.jiang@intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 3/6] target/i386: Add support for Hardware Feedback Interface
- feature
-Date: Sat,  3 Feb 2024 17:30:51 +0800
-Message-Id: <20240203093054.412135-4-zhao1.liu@linux.intel.com>
+Subject: [RFC 5/6] target/i386: Add support for HRESET feature
+Date: Sat,  3 Feb 2024 17:30:53 +0800
+Message-Id: <20240203093054.412135-6-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
 References: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
@@ -83,252 +82,173 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhuocheng Ding <zhuocheng.ding@intel.com>
 
-Hardware Feedback Interface (HFI) is a basic dependency of ITD.
+HRESET provides an HRESET instruction to reset the ITD related history
+accumulated on the current logical processor it is executing on [1].
 
-HFI is the feature to allow hardware to provide guidance to the
-Operating System (OS) scheduler to perform optimal workload scheduling
-through a hardware feedback interface structure in memory [1]. Currently
-in virtualization scenario it is used to help enable ITD.
+HRESET feature not only needs to have the feature bit of 0x07.0x01.eax
+[bit 22] in the CPUID, but also the associated 0x20 leaf, thus, we also
+fill HRESET related info provided by KVM into Guest's 0x20 leaf.
 
-HFI feature provides the basic HFI information in CPUID.0x06:
-* 0x06.eax[bit 19]: HFI feature bit
-* 0x06.ecx[bits 08-15]: Number of HFI/ITD supported classes
-* 0x06.edx[bits 00-07]: Bitmap of supported HFI capabilities
-* 0x06.edx[bits 08-11]: Enumerates the size of the HFI table in number
-                        of 4 KB pages
-* 0x06.edx[bits 16-31]: HFI table index of processor
+Because currently HRESET is only used to reset ITD's history and ITD has
+been marked as no_autoenable_flags, mark the HRESET feature bit as
+no_autoenable_flags, too.
 
-Here the basic information is generated by KVM based on the virtual HFI
-table that can be emulated, and QEMU needs to specify the HFI table
-index for each vCPU.
+Additionally, add MSR_IA32_HW_HRESET_ENABLE save/load support since it's
+emulated in KVM. This MSR is used to control the enabling of ITD's
+history reset.
 
-HFI feature also provides 2 package level MSRs:
-MSR_IA32_HW_FEEDBACK_CONFIG and MSR_IA32_HW_FEEDBACK_PTR.
-
-They're emulated in KVM, but currently KVM hasn't supported msr
-topology.
-
-Thus, like PTS MSRs, the emulation of these 2 package-level HFI MSRs are
-only supported at the whole VM-level, and all vCPUs share these two
-MSRs, so that the emulation of these two MSRs does not distinguish
-between the different virtual-packages.
-
-And HFI driver maintains per die HFI instances, so this can also cause
-problems with access to HFI MSRs when multiple virtual-dies exist.
-
-In order to avoid potential contention problems caused by multiple
-virtual-packages/dies, add the following restrictions to the HFI feature
-bit:
-
-1. Mark HFI as no_autoenable_flags and it won't be enabled by default.
-2. HFI can't be enabled for the case with multiple packages/dies.
-3. HFI can't be enabled if ITD is not set for Guest, since currently HFI
-   is only used to help enable ITD in virtualization scenario.
-
-HFI feature depends on ACPI, TM and PTS, also add their dependencies.
-
-Additionally, add save/load support for 2 HFI related MSRs.
-
-[1]: SDM, vol. 3B, section 15.6 HARDWARE FEEDBACK INTERFACE AND INTEL
-     THREAD DIRECTOR
+[1]: SDM, vol. 3B, section 15.6.11 Logical Processor Scope History
 
 Tested-by: Yanting Jiang <yanting.jiang@intel.com>
 Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c     | 49 ++++++++++++++++++++++++++++++++++++++-----
- target/i386/cpu.h     |  8 ++++++-
- target/i386/kvm/kvm.c | 21 +++++++++++++++++++
- 3 files changed, 72 insertions(+), 6 deletions(-)
+ target/i386/cpu.c     | 28 +++++++++++++++++++++++++++-
+ target/i386/cpu.h     |  6 ++++++
+ target/i386/kvm/kvm.c | 14 ++++++++++++++
+ 3 files changed, 47 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index e772d35d9403..e3eb361436c9 100644
+index 55287d0a3e73..3b26b471b861 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -1117,7 +1117,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             NULL, NULL, "pts", NULL,
+@@ -966,7 +966,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             NULL, NULL, "fzrm", "fsrs",
+             "fsrc", NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+-            NULL, "amx-fp16", NULL, "avx-ifma",
++            NULL, "amx-fp16", "hreset", "avx-ifma",
              NULL, NULL, NULL, NULL,
              NULL, NULL, NULL, NULL,
--            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, "hfi",
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-@@ -1125,10 +1125,10 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .cpuid = { .eax = 6, .reg = R_EAX, },
-         .tcg_features = TCG_6_EAX_FEATURES,
-         /*
--         * PTS shouldn't be enabled by default since it has
-+         * PTS and HFI shouldn't be enabled by default since they have
-          * requirement for cpu topology.
-          */
--        .no_autoenable_flags = CPUID_6_EAX_PTS,
-+        .no_autoenable_flags = CPUID_6_EAX_PTS | CPUID_6_EAX_HFI,
-     },
-     [FEAT_XSAVE_XCR0_LO] = {
-         .type = CPUID_FEATURE_WORD,
-@@ -1557,6 +1557,18 @@ static FeatureDep feature_dependencies[] = {
-         .from = { FEAT_VMX_SECONDARY_CTLS,  VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
-         .to = { FEAT_7_0_ECX,               CPUID_7_0_ECX_WAITPKG },
-     },
-+    {
-+        .from = { FEAT_1_EDX,               CPUID_ACPI },
-+        .to = { FEAT_6_EAX,                 CPUID_6_EAX_HFI },
-+    },
-+    {
-+        .from = { FEAT_1_EDX,               CPUID_TM },
-+        .to = { FEAT_6_EAX,                 CPUID_6_EAX_HFI },
-+    },
-+    {
-+        .from = { FEAT_6_EAX,               CPUID_6_EAX_PTS },
-+        .to = { FEAT_6_EAX,                 CPUID_6_EAX_HFI },
-+    },
- };
- 
- typedef struct X86RegisterInfo32 {
-@@ -6158,6 +6170,25 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         *ebx = 0;
-         *ecx = 0;
-         *edx = 0;
+         },
+@@ -976,6 +976,11 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             .reg = R_EAX,
+         },
+         .tcg_features = TCG_7_1_EAX_FEATURES,
 +        /*
-+         * KVM only supports HFI virtualization with ITD, so
-+         * set the HFI information only if the ITD is enabled.
++         * Currently HRESET is only used for ITD history reset. ITD is not
++         * autoenable, so also don't enable HRESET by default.
 +         */
-+        if (*eax & CPUID_6_EAX_ITD) {
-+            if (kvm_enabled()) {
-+                *ecx = kvm_arch_get_supported_cpuid(cs->kvm_state, 0x6,
-+                                                    count, R_ECX);
-+                /*
-+                 * No need to adjust the number of pages since the default
-+                 * 1 4KB page is enough to hold the HFI entries of max_cpus
-+                 * (1024) supported by i386 machine (q35).
-+                 */
-+                *edx = kvm_arch_get_supported_cpuid(cs->kvm_state, 0x6,
-+                                                    count, R_EDX);
-+                /* Set HFI table index as CPU index. */
-+                *edx |= cs->cpu_index << 16;
-+            }
-+        }
++        .no_autoenable_flags = CPUID_7_1_EAX_HRESET,
+     },
+     [FEAT_7_1_EDX] = {
+         .type = CPUID_FEATURE_WORD,
+@@ -6502,6 +6507,22 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
          break;
-     case 7:
-         /* Structured Extended Feature Flags Enumeration Leaf */
-@@ -7437,11 +7468,19 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         return;
+     }
++    case 0x20: {
++        /* Processor History Reset */
++        if (kvm_enabled() &&
++            env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_HRESET) {
++            *eax = kvm_arch_get_supported_cpuid(cs->kvm_state, 0x20,
++                                                count, R_EAX);
++            *ebx = kvm_arch_get_supported_cpuid(cs->kvm_state, 0x20,
++                                                count, R_EBX);
++        } else {
++            *eax = 0;
++            *ebx = 0;
++        }
++        *ecx = 0;
++        *edx = 0;
++        break;
++    }
+     case 0x40000000:
+         /*
+          * CPUID code in kvm_arch_init_vcpu() ignores stuff
+@@ -7147,6 +7168,11 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         if (env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_SGX) {
+             x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x12);
+         }
++
++        /* HRESET requires CPUID[0x20] */
++        if (env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_HRESET) {
++            x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x20);
++        }
      }
  
--    if (env->features[FEAT_6_EAX] & CPUID_6_EAX_PTS &&
-+    if (env->features[FEAT_6_EAX] & CPUID_6_EAX_HFI &&
-+        (ms->smp.dies > 1 || ms->smp.sockets > 1)) {
-+        error_setg(errp,
-+                   "HFI currently only supports die/package, "
-+                   "please set by \"-smp ...,sockets=1,dies=1\"");
-+        return;
-+    }
-+
-+    if (env->features[FEAT_6_EAX] & (CPUID_6_EAX_PTS | CPUID_6_EAX_HFI) &&
-         !(env->features[FEAT_6_EAX] & CPUID_6_EAX_ITD)) {
-         error_setg(errp,
-                    "In the absence of ITD, Guest does "
--                   "not need PTS");
-+                   "not need PTS/HFI");
-         return;
-     }
- #endif
+     /* Set cpuid_*level* based on cpuid_min_*level, if not explicitly set */
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index a8c247b2ef89..b54a2ccd6a6e 100644
+index b54a2ccd6a6e..a68c9d8a8660 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -533,6 +533,9 @@ typedef enum X86Seg {
- #define MSR_IA32_PACKAGE_THERM_STATUS    0x000001b1
- #define MSR_IA32_PACKAGE_THERM_INTERRUPT 0x000001b2
+@@ -535,6 +535,7 @@ typedef enum X86Seg {
  
-+#define MSR_IA32_HW_FEEDBACK_CONFIG     0x000017d0
-+#define MSR_IA32_HW_FEEDBACK_PTR        0x000017d1
-+
+ #define MSR_IA32_HW_FEEDBACK_CONFIG     0x000017d0
+ #define MSR_IA32_HW_FEEDBACK_PTR        0x000017d1
++#define MSR_IA32_HW_HRESET_ENABLE       0x000017da
+ 
  #define MSR_IA32_VMX_BASIC              0x00000480
  #define MSR_IA32_VMX_PINBASED_CTLS      0x00000481
- #define MSR_IA32_VMX_PROCBASED_CTLS     0x00000482
-@@ -986,6 +989,7 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+@@ -933,6 +934,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+ #define CPUID_7_1_EAX_FSRC              (1U << 12)
+ /* Support Tile Computational Operations on FP16 Numbers */
+ #define CPUID_7_1_EAX_AMX_FP16          (1U << 21)
++/* HISTORY RESET */
++#define CPUID_7_1_EAX_HRESET            (1U << 22)
+ /* Support for VPMADD52[H,L]UQ */
+ #define CPUID_7_1_EAX_AVX_IFMA          (1U << 23)
  
- #define CPUID_6_EAX_ARAT       (1U << 2)
- #define CPUID_6_EAX_PTS        (1U << 6)
-+#define CPUID_6_EAX_HFI        (1U << 19)
- #define CPUID_6_EAX_ITD        (1U << 23)
+@@ -1786,6 +1789,9 @@ typedef struct CPUArchState {
+     uint64_t hfi_config;
+     uint64_t hfi_ptr;
  
- /* CPUID[0x80000007].EDX flags: */
-@@ -1773,12 +1777,14 @@ typedef struct CPUArchState {
-     uint64_t therm_status;
- 
-     /*
--     * Although these are package level MSRs, for the PTS feature, we
-+     * Although these are package level MSRs, for the PTS/HFI feature, we
-      * temporarily limit it to be enabled for only 1 package, so the value
-      * of each vCPU is same and it's enough to support the save/load.
-      */
-     uint64_t pkg_therm_interrupt;
-     uint64_t pkg_therm_status;
-+    uint64_t hfi_config;
-+    uint64_t hfi_ptr;
- 
++    /* Per-VCPU HRESET MSR */
++    uint64_t hreset_enable;
++
      /* exception/interrupt handling */
      int error_code;
+     int exception_is_int;
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 258591535fd5..694aa20afc67 100644
+index 694aa20afc67..e490126f23ca 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -140,6 +140,7 @@ static bool has_msr_perf_capabs;
- static bool has_msr_pkrs;
+@@ -141,6 +141,7 @@ static bool has_msr_pkrs;
  static bool has_msr_therm;
  static bool has_msr_pkg_therm;
-+static bool has_msr_hfi;
+ static bool has_msr_hfi;
++static bool has_msr_hreset;
  
  static uint32_t has_architectural_pmu_version;
  static uint32_t num_architectural_pmu_gp_counters;
-@@ -2466,6 +2467,10 @@ static int kvm_get_supported_msrs(KVMState *s)
-             case MSR_IA32_PACKAGE_THERM_INTERRUPT:
-                 has_msr_pkg_therm = true;
+@@ -2471,6 +2472,9 @@ static int kvm_get_supported_msrs(KVMState *s)
+             case MSR_IA32_HW_FEEDBACK_PTR:
+                 has_msr_hfi = true;
                  break;
-+            case MSR_IA32_HW_FEEDBACK_CONFIG:
-+            case MSR_IA32_HW_FEEDBACK_PTR:
-+                has_msr_hfi = true;
++            case MSR_IA32_HW_HRESET_ENABLE:
++                has_msr_hreset = true;
 +                break;
              }
          }
      }
-@@ -3326,6 +3331,12 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
-             kvm_msr_entry_add(cpu, MSR_IA32_PACKAGE_THERM_INTERRUPT,
-                               env->therm_interrupt);
+@@ -3337,6 +3341,10 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+             kvm_msr_entry_add(cpu, MSR_IA32_HW_FEEDBACK_PTR,
+                               env->hfi_ptr);
          }
-+        if (has_msr_hfi) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_HW_FEEDBACK_CONFIG,
-+                              env->hfi_config);
-+            kvm_msr_entry_add(cpu, MSR_IA32_HW_FEEDBACK_PTR,
-+                              env->hfi_ptr);
++        if (has_msr_hreset) {
++            kvm_msr_entry_add(cpu, MSR_IA32_HW_HRESET_ENABLE,
++                              env->hreset_enable);
 +        }
      }
  
  #ifdef TARGET_X86_64
-@@ -3808,6 +3819,10 @@ static int kvm_get_msrs(X86CPU *cpu)
-         kvm_msr_entry_add(cpu, MSR_IA32_PACKAGE_THERM_STATUS, 0);
-         kvm_msr_entry_add(cpu, MSR_IA32_PACKAGE_THERM_INTERRUPT, 0);
+@@ -3823,6 +3831,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_IA32_HW_FEEDBACK_CONFIG, 0);
+         kvm_msr_entry_add(cpu, MSR_IA32_HW_FEEDBACK_PTR, 0);
      }
-+    if (has_msr_hfi) {
-+        kvm_msr_entry_add(cpu, MSR_IA32_HW_FEEDBACK_CONFIG, 0);
-+        kvm_msr_entry_add(cpu, MSR_IA32_HW_FEEDBACK_PTR, 0);
++    if (has_msr_hreset) {
++        kvm_msr_entry_add(cpu, MSR_IA32_HW_HRESET_ENABLE, 0);
 +    }
  
  #ifdef TARGET_X86_64
      if (lm_capable_kernel) {
-@@ -4304,6 +4319,12 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_IA32_PACKAGE_THERM_INTERRUPT:
-             env->pkg_therm_interrupt = msrs[i].data;
+@@ -4325,6 +4336,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_IA32_HW_FEEDBACK_PTR:
+             env->hfi_ptr = msrs[i].data;
              break;
-+        case MSR_IA32_HW_FEEDBACK_CONFIG:
-+            env->hfi_config = msrs[i].data;
-+            break;
-+        case MSR_IA32_HW_FEEDBACK_PTR:
-+            env->hfi_ptr = msrs[i].data;
++        case MSR_IA32_HW_HRESET_ENABLE:
++            env->hreset_enable = msrs[i].data;
 +            break;
          }
      }
