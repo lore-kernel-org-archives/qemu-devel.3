@@ -4,94 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB4E9C4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 11:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A26C4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 11:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWDtD-00041d-FD; Sat, 03 Feb 2024 06:08:52 -0500
+	id 1rWE7t-0003cd-JA; Sat, 03 Feb 2024 06:24:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rWDt8-0003zK-AP
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:08:48 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rWE7r-0003bP-MA
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:23:59 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rWDt6-0004Sl-Ld
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:08:46 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3394bec856fso2492303f8f.0
- for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 03:08:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rWE7p-0000vS-Ls
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:23:59 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-28bec6ae0ffso2168114a91.3
+ for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 03:23:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1706958515; x=1707563315; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+n9/L3a+iva7ZWBXFTYcwmPL7Ovxu0paRzwqx1wXoMY=;
- b=kSQbtC9LMTvLjTMNSX6Z+H5HRk74c1Wgj3VNqUfKeB03Z2i61/oD0gSZW5683lt1+B
- +dVS+O23hTPB7eQ/MW0lCB4VscvudQBWXqK7yrFj01XGWlu+rXbfegXRVrxPSMFF07Qd
- /OYDLo7ok+DZ5OHbEygs9cIuS/CB2sl28NECBrw3kd5c1Oq1ROt9UEYy63ga1cVNQmMX
- tV+x1dhcnoniVqUWPTQHIxBMQIMhdyAty64f3IIYE2qXX7vSmozgVQ+NKHuJhKjX4+mE
- wkmp1OOAQQQQdNMwJRWn1Bv5fRv3GD8qT8MKvE/O0XZnsdwMjO2RgyS44kkHvjJZrfJw
- ZCTA==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1706959436; x=1707564236;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bSAtRqrGA4Qilfsh+L9FviEDBUsiw2624Ro/wIEyZrY=;
+ b=WmsP7+bUcSzIY+GPULk9wluQ3xoeC6tKXrHjCHQ0XcEXh+GikwXGGsOKDXR5OIBjHu
+ VoEytbMHXBjxRRORotMlsgO+kZxMSjIdODUBn6GlwHg13raOy8Xj/vimeg8fvZUdfLXQ
+ JZ6jmYrxUOHhsvAc1LmZsyNz8ek9ZSBqZ7FTBQUGYkW/5v57uMEXf3LNs/Q4/6mwNbyP
+ y6FWEzu+oOPZIjYu4fay43SZ3u+5Ju6Bqsx8Wysurn+XikelMn25+W4AknLNznZUMdxi
+ mncP+r3W7/RCcU/6eqnfuv7LC1o92tcbY/kUrbq8ipS8P13DPQuENOG2IqKe/DuppGo/
+ zasw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706958515; x=1707563315;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+n9/L3a+iva7ZWBXFTYcwmPL7Ovxu0paRzwqx1wXoMY=;
- b=M3c0/5CMZ9XAURNmocqgOW5okAwUtiHqh3hwPI/Oer+cBtl6L0xZ8pngMna9zBpAci
- 37Upv64s50X1EKgCynpSsyz7RVF7NKtGEUI0kQVY3lJ0kx/EFOzyBpbXJQvnqrqJteKj
- iywwukRvvGvEJ8qY/V3nJfVcqfplz/NGe3xU+Df0sVro67E4sofAOtOXu95LwnLzzjGe
- uaT2J21wfdjAZUKE9y5NMQd2m3IdC5Oe4pIEd6X5N+b6Y5qykznIfSsqnxDDjLFQp3QD
- bmRqhMUIg0320K9yKzaSL0PHCzT0e4wcGDWJkSYiDwj0StDX2U6VGVBsTnXp4/bw9j72
- 926A==
-X-Gm-Message-State: AOJu0Yw+ZEFQkSUH7aRGC+B0dn90MhdwZx882uKArJUWLT5EemGjKb2n
- aSrwWCmbkYz+QLm3Htl1fn/cEQZB2ub+xV1IUnKQPBWx8dVvkeACfzEkpOWwbaQ=
-X-Google-Smtp-Source: AGHT+IF4RePuSuwNf2ovazPLTQfoY9PdPn7EG3jqRRwU12AeOmE92ftOmJLOBC9X8lyZwyD0ZSoSYA==
-X-Received: by 2002:adf:e7ce:0:b0:33b:146e:241f with SMTP id
- e14-20020adfe7ce000000b0033b146e241fmr1035837wrn.4.1706958515009; 
- Sat, 03 Feb 2024 03:08:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1706959436; x=1707564236;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bSAtRqrGA4Qilfsh+L9FviEDBUsiw2624Ro/wIEyZrY=;
+ b=rtJ3fdsy+x+81d0BO+srjpa1UE4CRUM2jlevfFVYGaRLeyIyJ4Syng9VrNJeSB8HSX
+ jjPX6h5THY4S8kVzrLZpIkKPVCmRTTPZFL/FX3JyvBfuwVi1wjkAHfUv0NrPnLlgWxsX
+ ovvEpQvf/w0o/J9jZPtxrXxfCCUwKukRMGmdCoDAc5kNdLe/4YPf22wnGnAefv4t3urF
+ 0H1uIHOhwqYM7e7JBVi5LAVJfZ4Iih1LvInPin/7CYUjJfKVxH7aODHL/1X7QPjFMFXU
+ efN6XLuALC6ShkJjzZk2RsnhIs+dj9HDhngnfwZ3nNM1EiuryZxvnqGcO5dlWay5UhhF
+ YR5g==
+X-Gm-Message-State: AOJu0YwbjIBZOlEEjwQgSuq/NXi5EHWVr9UxykK2RKUgdQlGtwyLqOpo
+ aovysSB93xkP3JE8fsKBeGKdsR5DJ7AeID1MMkxlrZI3e8mmduwqThZDpRx1oHk=
+X-Google-Smtp-Source: AGHT+IHPaqap/JjgDEzVtaBWCtzuONuSGi44VB6rioaLH3Z6bjrWFq6xvyRFUPfLWxury4+JZw7MgQ==
+X-Received: by 2002:a17:902:780b:b0:1d8:f394:da39 with SMTP id
+ p11-20020a170902780b00b001d8f394da39mr4375822pll.65.1706959436157; 
+ Sat, 03 Feb 2024 03:23:56 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCUS5eksnhgu4lRXfF1LpbFgK3yR7mfnhrDPeg/i30k7vRzCeqlcKCf8rR5yRnS3ufT4AcBtAcYpoTKw/RERBU//g+YafszD8VzdxuH7kUdMZ4bJoJGlGiE8MS4nZP4z0KbPVGBOy4s29VFgHP6IfmaYzRhKhODKw4JV3avTDR1mMF/evnGTUvToTWCw4EVGqN85wGQNfvnyAusmtJWSRqw1muZR2knFZdEw46mT3NDLioSqL5dZzIFNiXs+NZ+XRgFm9bIBRMhCX83+JQGzUvtbyTfKEgrOn6+AhZgV9tCmd63fj0MQu8Yb8YOqb2uc9FGVyXyoltFsZI4VarnEHtxlV8MdbP3oMUWVtk5eGLxs4FCSyPglz39GSYLb4Yk8trdeUGxKmJpdM+gAwVtimedPfzAfkZSRTWBz3QMyLK6aB2jZ
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- iv15-20020a05600c548f00b0040efd192a95sm2633080wmb.1.2024.02.03.03.08.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 03 Feb 2024 03:08:34 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3A0425F7A9;
- Sat,  3 Feb 2024 11:08:34 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,  Alistair Francis
- <alistair.francis@wdc.com>,  Bin Meng <bin.meng@windriver.com>,  Weiwei Li
- <liwei1518@gmail.com>,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Mikhail Tyutin <m.tyutin@yadro.com>,  Aleksandr Anenkov
- <a.anenkov@yadro.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,  Andrew Jones <ajones@ventanamicro.com>,
- qemu-riscv@nongnu.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v11 0/3] gdbstub and TCG plugin improvements
-In-Reply-To: <20240203-riscv-v11-0-a23f4848a628@daynix.com> (Akihiko Odaki's
- message of "Sat, 03 Feb 2024 19:11:07 +0900")
-References: <20240203-riscv-v11-0-a23f4848a628@daynix.com>
-User-Agent: mu4e 1.11.27; emacs 29.1
-Date: Sat, 03 Feb 2024 11:08:34 +0000
-Message-ID: <87bk8xpzyl.fsf@draig.linaro.org>
+ AJvYcCWIhe73GuX77EdQC21jhOMH1cCMjup0xs9XUgvz1QDsTzxwNqNeC/XIRhOf9K5GlOal62DOk+GXrrsjLBUo3QzsWA5hx6PvHCmMOGtGVfaibSCr+dkYmjD/2iZYJnbmyWr9A2ZuWdUYte5beZq9faKwqpkWoI5qyA7OgmxThmp/FZA0n0+Dqyp8Ex4LSeEHvzKqZQSzqt65SS6eN3qGWruwuJf24r2v/Ut+VXwMmQted5ZWQOc6+4TULF8gGR9Qamo1/FtpwCTs9p7sRovVRajDWSFo13Y1pWVteuLkhnccEFtrYeCzrMqp1n+AWdnhobXzDvXAqZJIj6DipcL8RLrx2DZeuOQjcFW9Z3cBx2PpLtlElkG1/hJw7JcGjj4F9fJCFXkVDg5byreRU++FMXXYsFATP1SsN7oDjcae3q4vx/5fw5AYSq7xSMMbZ6YX0TJRN5ROwlWxtvwtppkCGUWw4qlHJRaUxbCeZY9Jl6lLd2ahPSRoKxtQNAu889P9pXLVngVE+d7A9LpA3v4Nrs5zZcNFeFBUrK+cY4aVq3bevKcobon8M3GXDrM+NRUJokn/GoYnyUtvAEb7l+oOHlfuu0tVuvEIfPmyTVPZ2i9xmz6MUzR1cB4pvTZF4M1GOKigg1Tl2ueeacSKbFcwNll3d7a/xkEY3MUC9tM5QNL1Jt9sdG7rUa1BOpHJO0HUUavRQ1d51RtI7j8RAg/PlEmEYkeVUqiw+rWm6A1iypL1RzM+8ek/ZfzUpXkPV9lBHN3ttgTxkVGcNYjXW/Jb91DDYF55YaDZ7HUd4UCbwfMXNLxjGTtT5S0Xv/fD9VCsWhon7d1F489j00eV7fA2m8ACC6wCJfixmMEMndGogPhzxI/nBs1exxVLTAik9QqDSKVqlfyY4fR+3HsLMGZtqpvH3WwUhRYPJvrf+r6CRy45yB6A9zxhvHJ4hjhPfr+oj+0SJz
+ QCPZi+ctqp1tXcFw4iL9vK2pBKIx7b9JCAgW0k4U0xnm7hKt1oXV2osBAVWRohKhI84gaCMy1S+A/jgfK3+AOSljo4jkKK6qbhO5khAntnenwGukz046w54fE29MTQFeyxJnvE4Q0OttlXReGZ8+t+GN249dt42XQtML7wEQ/pfvf6Djbxbsb0xniUgAJoMJh4SACHRM/bMrcthBIVR+rL+kSNC8PJY9/WztPYUkbyEa+2e8RUsUxuoZmf1ww8bWQYOhPtgsUur6T4l1T7eqS/WiMxTb8Q8et9XJ4I9x8kUo85ZYRtcpcTp2qTPCpWRQ==
+Received: from [157.82.200.138] ([157.82.200.138])
+ by smtp.gmail.com with ESMTPSA id
+ g24-20020a1709029f9800b001d7207fa2a7sm3054236plq.152.2024.02.03.03.23.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 03 Feb 2024 03:23:55 -0800 (PST)
+Message-ID: <1c9a2e94-0c54-446b-99a2-69e25e9725df@daynix.com>
+Date: Sat, 3 Feb 2024 20:23:46 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 16/21] gdbstub: expose api to find registers
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, kvm@vger.kernel.org,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Laurent Vivier
+ <laurent@vivier.eu>, Yanan Wang <wangyanan55@huawei.com>,
+ qemu-ppc@nongnu.org, Weiwei Li <liwei1518@gmail.com>, qemu-s390x@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexandre Iooss
+ <erdnaxe@crans.org>, John Snow <jsnow@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ David Woodhouse <dwmw2@infradead.org>, Cleber Rosa <crosa@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Bin Meng <bin.meng@windriver.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Eduardo Habkost <eduardo@habkost.net>, Brian Cain <bcain@quicinc.com>,
+ Paul Durrant <paul@xen.org>
+References: <20240122145610.413836-1-alex.bennee@linaro.org>
+ <20240122145610.413836-17-alex.bennee@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240122145610.413836-17-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,36 +130,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On 2024/01/22 23:56, Alex Bennée wrote:
+> Expose an internal API to QEMU to return all the registers for a vCPU.
+> The list containing the details required to called gdb_read_register().
+> 
+> Based-on: <20231025093128.33116-15-akihiko.odaki@daynix.com>
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Message-Id: <20240103173349.398526-38-alex.bennee@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> ---
+> v3
+>    - rm unused api functions left over
+> ---
+>   include/exec/gdbstub.h | 28 ++++++++++++++++++++++++++++
+>   gdbstub/gdbstub.c      | 27 ++++++++++++++++++++++++++-
+>   2 files changed, 54 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+> index da9ddfe54c5..eb14b91139b 100644
+> --- a/include/exec/gdbstub.h
+> +++ b/include/exec/gdbstub.h
+> @@ -111,6 +111,34 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder);
+>    */
+>   const GDBFeature *gdb_find_static_feature(const char *xmlname);
+>   
+> +/**
+> + * gdb_read_register() - Read a register associated with a CPU.
+> + * @cpu: The CPU associated with the register.
+> + * @buf: The buffer that the read register will be appended to.
+> + * @reg: The register's number returned by gdb_find_feature_register().
+> + *
+> + * Return: The number of read bytes.
+> + */
+> +int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+> +
+> +/**
+> + * typedef GDBRegDesc - a register description from gdbstub
+> + */
+> +typedef struct {
 
-> This series extracts fixes and refactorings that can be applied
-> independently from "[PATCH v9 00/23] plugins: Allow to read registers".
->
-> The patch "target/riscv: Move MISA limits to class" was replaced with
-> patch "target/riscv: Move misa_mxl_max to class" since I found instances
-> may have different misa_ext_mask.
-
-As this is re-based on Alistair's riscv-to-apply.next tree I'll wait for
-this to go through the RiscV trees and then re-base the plugin patches
-and dropping the merged riscv patches from my tree.
-
-In the meantime feel free to review:
-
-  Message-Id: <20240122145610.413836-1-alex.bennee@linaro.org>
-  Date: Mon, 22 Jan 2024 14:55:49 +0000
-  Subject: [PATCH v3 00/21] plugin updates (register access) for 9.0 (pre-P=
-R?)
-  From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
-
-For:
-
-  contrib/plugins: extend execlog to track register changes
-  gdbstub: expose api to find registers
-
-So I can add this to my maintainer omnibus series for the next PR I
-send.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+nit: Add struct name; docs/devel/style.rst says struct has a CamelCase 
+name *and* corresponding typedef, though this rule is apparently not 
+strictly enforced.
 
