@@ -4,89 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF82C4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 02:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11457C4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 06:31:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rW5dr-0000ro-4M; Fri, 02 Feb 2024 21:20:27 -0500
+	id 1rW9Xa-0007s6-3A; Sat, 03 Feb 2024 01:30:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1rW5dp-0000rC-Ol
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 21:20:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1rW9XV-0007rh-CH
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 01:30:09 -0500
+Received: from shirlock.uni-paderborn.de ([2001:638:502:c003::15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1rW5do-00021Q-56
- for qemu-devel@nongnu.org; Fri, 02 Feb 2024 21:20:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1706926821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZiQgmYZ/mBc8N2CDgVTJqTovQfcuFwioJuvxcoCj8AM=;
- b=BXj7HgSLGDB60uDVRKx5F2Q2UF0ddlgVQUiwH6GB6nBWT4CkX2KTLGXBKPpe3jOiTZ1EaO
- nsSydb4ZYEfJ6QUSSKAaRyzr+Y7E0H1FULM1X1u0eEG/AusDG2Adelly4a/vUM1sZ5e5Gx
- HJkJOjSmQFuzANG3M+HLeEL2U7UoE54=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-DBUPTltrOUS7QW1ekGkbYg-1; Fri, 02 Feb 2024 21:19:13 -0500
-X-MC-Unique: DBUPTltrOUS7QW1ekGkbYg-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-6040a34c24bso46736227b3.0
- for <qemu-devel@nongnu.org>; Fri, 02 Feb 2024 18:19:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706926752; x=1707531552;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZiQgmYZ/mBc8N2CDgVTJqTovQfcuFwioJuvxcoCj8AM=;
- b=XKywvn06kQBUHlbvulQwRzAMrupOWA89iycIA+YQy7IEG8gT7OgUE/jt3D4iuj/Idu
- MStsq97zG1aU/1AdObYkZd843YBiKiZE5CLsCS4udv7XTJ324nRUuFMGXLyFJLQPfdF2
- Gkp3weQfICtnYYH+rAeDx3ZePE/0QWVwo+zqQG3e4g7BBqLVcKOTHHi1AFloHvYx9Gal
- zaOeLqFyYWbCGjbPwLpWhL4L3ptpNSrIVH38w/V9etdlU02Lq7+CVtTYvw6eqx+cs+3B
- SP/gPacMfWKYVYPYaVrdHrKLh1HzJhy0HWapZuZZCjpNIyNFTt7sCpRMq3Ssga/BdM3r
- RV9w==
-X-Gm-Message-State: AOJu0YwlLgnj9qgCZmoc3wiJusMqnG5G8UhN8hLPKKPjmd2R5niVQ7m3
- TIDR1lcInKDUAYad7yeGvkfr5z8+n7AmtCTBY4PNl5QrmYIGpZZOHCzzhcs476AOrQ4LkKYzLV2
- ir97pTsxQVDFQMQAv+XZPIIziRakzFprcaJb+JO/ln2CwEwLVDB08NKb7d3NXcrmjqc1nya7dzz
- xGfqRbuV3bo+7Z2bNOZgol7Z4lbI0=
-X-Received: by 2002:a81:a511:0:b0:5fc:f6d6:26fc with SMTP id
- u17-20020a81a511000000b005fcf6d626fcmr9375446ywg.52.1706926752152; 
- Fri, 02 Feb 2024 18:19:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF6O61BmfF9xLVNSQQbY00nqihGy0ERrztqW/z9aB4R81mMw7st+PDi37INMXGdhOFNCP1AYLcWR/b28HDW5vM=
-X-Received: by 2002:a81:a511:0:b0:5fc:f6d6:26fc with SMTP id
- u17-20020a81a511000000b005fcf6d626fcmr9375436ywg.52.1706926751867; Fri, 02
- Feb 2024 18:19:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1rW9XS-0001Rw-TS
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 01:30:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=mail.uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=Ejf9RBZk6v0F3dPI1YDZY/rJRSDYiauDh+oYuMliFpo=; b=F84Jh2ttRWkP+SwFrsCgGO5PFZ
+ mUpeOElJgxh29YTzI4gW9qaoXKPw25CoFUOo0qdOemc6xYObvQViKAPhn3TZl4z4HwSFtMeID/yPh
+ HGviQsXME8hpxFucqHbCiPp9cI+E1HEs8M5NDdSE1dda3SLGxuhRFsc/OlaByaQwPNTU=;
+Date: Sat, 3 Feb 2024 07:29:38 +0100
+From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, anjo@rev.ng
+Subject: Re: [PATCH 30/33] target/tricore: Populate CPUClass.mmu_index
+Message-ID: <xyl3g2egksiizwmksxsj2hofkxryemb7v6h7ixzillb5jdq7io@nxcndjnbjvgh>
+References: <20240129233043.34558-1-richard.henderson@linaro.org>
+ <20240129233043.34558-31-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20240116190042.1363717-1-stefanha@redhat.com>
- <CAFEAcA-A-7H7nb++fkCr1O-aCt_U3JzrF_9=Sxp2Mg+kCWD_-w@mail.gmail.com>
-In-Reply-To: <CAFEAcA-A-7H7nb++fkCr1O-aCt_U3JzrF_9=Sxp2Mg+kCWD_-w@mail.gmail.com>
-From: YangHang Liu <yanghliu@redhat.com>
-Date: Sat, 3 Feb 2024 10:19:00 +0800
-Message-ID: <CAGYh1E8g_J5jwKpSxBPS+060diGt-rt4PeFvLRPet_0V9+bH-w@mail.gmail.com>
-Subject: Re: [PATCH 0/3] monitor: only run coroutine commands in
- qemu_aio_context
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- qemu-block@nongnu.org, 
- Fiona Ebner <f.ebner@proxmox.com>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=yanghliu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240129233043.34558-31-richard.henderson@linaro.org>
+X-IMT-Source: Extern
+X-IMT-rspamd-score: -25
+X-IMT-Spam-Score: 0.0 ()
+X-Sophos-SenderHistory: ip=84.184.59.80, fs=2220167, da=194550863, mc=3, sc=0,
+ hc=3, sp=0, fso=2220167, re=0, sd=0, hd=0
+X-PMX-Version: 6.4.9.2830568, Antispam-Engine: 2.7.2.2107409,
+ Antispam-Data: 2024.1.27.235115, AntiVirus-Engine: 6.0.2,
+ AntiVirus-Data: 2024.1.26.602001
+X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
+Received-SPF: pass client-ip=2001:638:502:c003::15;
+ envelope-from=kbastian@mail.uni-paderborn.de; helo=shirlock.uni-paderborn.de
+X-Spam_score_int: -42
+X-Spam_score: -4.3
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,69 +74,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's easily for me to encounter " ../block/qcow2.c:5263:
-ImageInfoSpecific *qcow2_get_specific_info(BlockDriverState *, Error
-**): Assertion `false' failed" issue during 1Q vhost-user interface +
-RT VM + post-copy migration
+On Tue, Jan 30, 2024 at 09:30:40AM +1000, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/tricore/cpu.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-After applying this patch, the issue is still not reproduced even if I
-repeat the same migration test for 60 times.
+Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 
-Tested-by: Yanghang Liu <yanghliu@redhat.com>
-
-
-Best Regards,
-YangHang Liu
-
-On Mon, Jan 29, 2024 at 7:39=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Tue, 16 Jan 2024 at 19:01, Stefan Hajnoczi <stefanha@redhat.com> wrote=
-:
-> >
-> > Several bugs have been reported related to how QMP commands are resched=
-uled in
-> > qemu_aio_context:
-> > - https://gitlab.com/qemu-project/qemu/-/issues/1933
-> > - https://issues.redhat.com/browse/RHEL-17369
-> > - https://bugzilla.redhat.com/show_bug.cgi?id=3D2215192
-> > - https://bugzilla.redhat.com/show_bug.cgi?id=3D2214985
-> >
-> > The first instance of the bug interacted with drain_call_rcu() temporar=
-ily
-> > dropping the BQL and resulted in vCPU threads entering device emulation=
- code
-> > simultaneously (something that should never happen). I set out to make
-> > drain_call_rcu() safe to use in this environment, but Paolo and Kevin d=
-iscussed
-> > the possibility of avoiding rescheduling the monitor_qmp_dispatcher_co(=
-)
-> > coroutine for non-coroutine commands. This would prevent monitor comman=
-ds from
-> > running during vCPU thread aio_poll() entirely and addresses the root c=
-ause.
-> >
-> > This patch series implements this idea. qemu-iotests is sensitive to th=
-e exact
-> > order in which QMP events and responses are emitted. Running QMP handle=
-rs in
-> > the iohandler AioContext causes some QMP events to be ordered different=
-ly than
-> > before. It is therefore necessary to adjust the reference output in man=
-y test
-> > cases. The actual QMP code change is small and everything else is just =
-to make
-> > qemu-iotests happy.
->
-> Hi; we have a suspicion that this change has resulted in a flaky-CI
-> test: iotest-144 sometimes fails, apparently because a "return"
-> result from QMP isn't always returned at the same place in relation
-> to other QMP events. Could you have a look at it?
->
-> https://gitlab.com/qemu-project/qemu/-/issues/2126
->
-> thanks
-> -- PMM
->
-
+Cheers,
+Bastian
 
