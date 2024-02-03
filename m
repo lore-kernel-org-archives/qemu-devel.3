@@ -4,77 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C729C4828D
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 11:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C65C4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 11:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWEE0-0006T6-8Z; Sat, 03 Feb 2024 06:30:20 -0500
+	id 1rWERn-0001g3-Eq; Sat, 03 Feb 2024 06:44:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rWEDx-0006SQ-Mn; Sat, 03 Feb 2024 06:30:18 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rWEDv-0002IP-W4; Sat, 03 Feb 2024 06:30:17 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8ADCA49EE1;
- Sat,  3 Feb 2024 14:31:15 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B5BB672A52;
- Sat,  3 Feb 2024 14:30:11 +0300 (MSK)
-Message-ID: <3185d4fa-86bf-490e-8d79-5278da1ad9a4@tls.msk.ru>
-Date: Sat, 3 Feb 2024 14:30:11 +0300
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rWERm-0001ff-Q1
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:44:34 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rWERk-00066o-9p
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:44:34 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-40fccd09082so6510725e9.2
+ for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 03:44:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1706960670; x=1707565470; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J7i2eVmx3bgBKTW0/dA1vFA1Ra0CFTZkkFTgcLaocM4=;
+ b=HIM2mzELh+qSovOMIoxlRWD6nG25fBZytQ4+dsPiDZwK/oIyIcWLgC7jXQYQBlX9YK
+ FYUoFSDVlT8yAZ1ItD/u463abQO0YQzriLW/EcuhkeRMWm/ahegm9J3fs3TiELqECfY1
+ cXsIhIQ9t6hNkmkI1/hfyqUicbLUqVWRtBGS9rUx21FLdKu33L5eNRdl4pQmY1AMFB3S
+ G0ERqxtZGOEXYwJ6hyJa3oQhpH2tVpMvsWFuXYNv3wBoCy6XS7b6+1m8snhm9fP5I6/X
+ z4wYUJdXtNPGD99RRcuv7bMmY2J1BwCyQGtw1wIDtxh2IEnHiVBwpPo+O3m5XjY07A2X
+ 33ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706960670; x=1707565470;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=J7i2eVmx3bgBKTW0/dA1vFA1Ra0CFTZkkFTgcLaocM4=;
+ b=LQtpgGqJPvqc0q/u1dtsSR81McIGoIRp+g81WqKOL5YJijNw3O0XqYrxi+6n4haR/G
+ RHoGGxce0GD1fgmeVxYFeIf3InfkdZDKIOyuvOcBmkTGbyt31RsxCaZzY7EDGHUE9o7N
+ e72+LvSSJwxB0lvxySfxC5QpWN+bfBoGIbFUd6Jdh7Nmo7SazOy6Ol1oQfO/g9ZaizhJ
+ Dx9XYcs1ERH6C16o2p5tGglPVeKf+wUIWYl/NmaZ2wbm9H3Ja7rPDeJeLvbmaX4IUp1z
+ 6h3Xj2Kgk94dzFv3JRJxno82viiGTB+Cwe/RBoTsZkfL1GdTvUi7MscqPQ0z/qaF2LYZ
+ fgXQ==
+X-Gm-Message-State: AOJu0YyFHIjO1tZEPLZlisMP1IAU1uZvk7gwIoOciF9pjkdhG+DEvNWz
+ KhhnqIsQ+DwOdsuyFIbraDC0NViNF06g0KM+nvhAopeR5k8NCiiwl0rZHVTHEog=
+X-Google-Smtp-Source: AGHT+IEBLqHjQHdStMPIfTOV2hRjujiZ+Ur/yvN7cwiIHGwYCKyLU7DUja4U7oQrbkNg0VCJhfGtrA==
+X-Received: by 2002:adf:ec02:0:b0:33b:2326:5142 with SMTP id
+ x2-20020adfec02000000b0033b23265142mr2583318wrn.13.1706960669907; 
+ Sat, 03 Feb 2024 03:44:29 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCWOjB+MbAchR7jaNpDzLGcatmt9xJy2EZzefqQOW3rcLVp0VxdDGRvt1FNSL++FSbr6/nolkbnFzMUc9PInbcm9VA+o88XM88OoPFbqG7EniWRg9NQ1iv/16badwiKZza4bKTzAnqyazLlkQM7/HvYHKju/lzuMvVHggk7A6vffBI9VY2bWdbZtsB53UcqrbttBKaLb6kNfaythwn4ennkRFX5nFReVbe8cwnrNdXSBEtXb4oePw7glrtdhjbljEIKaL6fvuU2KnFYiLefUa/2bVrlS9r3/Bw+VtfjGVYiFo2T72OHMxqnyzsY5b8x2ccG/VufB0nLekrPJKHGma+Sou1ZcFkndSLrLFr3hlK8inwFpiRA9gTbbWumRd7K7AYhsdztMZCYmYEYq/csdWADJDSZx/+QtSSuSjjox4redsEXMVme59wYgDQvRbSlKv9+lxb69ArxYz1ktvYPR9064vQ0KE4/dvFFmLNVZpYqAaKQahtEHT6HP9iWK2khnjo0+Ef2a9usXJq6etSf1QgfybnWs+6Q6Bah2MFhAd3O6RbOgYPHm2Co8FDaucDhAWa4olZ+5oZ3BQ5G2q5lkqu7+2JhM8KcrffaIEM4/QaYsjIntLFtz3gHMRHTUdcKO+yjD9xz1ufSN2dObcT1k7P+HVKeWW1pYWj4AFtiPQgMRx6CTEVIygg83RogTRoiol4ySrxdmsvg46DQ2XBxfENjENutLbU/C27HE6vX1VDF4s11IdNFwyIuqpT7thZmHC3afZGUaxa311N3K6xsRdJKV5Lpi7s6PRxBZjuBVKAkrGzP3sACBobcc7D9vRLZF8pLK9U8z8k5p6ZGLj0ublVTuuebv3fhkVGfxfUmhspkjMTr/cV3x+IN55Ue81xiwZmt/peO/puTUcMbeVcqZo8kC28UUan4Uz6lwcRLnJGWYnk0M7EJqelxJKlSIjGafx7aLf8
+ UdBasNsIoPsBDxz4u0Iitm3boftlZRaV5eIOibH3LBgQ2XwIEMtIgfHdSeLaj+PaG7Qp4y0XibYmseXzulbTJkVQVEayr+evC5IUyiYu7vmhM3XuxTHdDT52XHG7JCA4u10WJFNWlpjOU20SQyScTUMBXS3gft7qOJImc7BzTONBnGVv44tf5PJVknK+rO0aaj806/uM1//oVmG+2XAbcF/ChA2MKFRgqGX9QaDqKbZLBuFisZKIzezv/URo6HmlqumzLQSRI3XVY6eCpEL0l8ZJb5h+a48UYKgLyYr2xW8+aHL5LX3alIVi/gU9/9R999T826
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ y4-20020a056000108400b0033ae593e830sm3894552wrw.23.2024.02.03.03.44.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 03 Feb 2024 03:44:29 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 177825F7A9;
+ Sat,  3 Feb 2024 11:44:29 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  Philippe =?utf-8?Q?Math?=
+ =?utf-8?Q?ieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Michael Rolnik <mrolnik@gmail.com>,  =?utf-8?Q?Marc?=
+ =?utf-8?Q?-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Laurent Vivier
+ <lvivier@redhat.com>,  kvm@vger.kernel.org,  Yoshinori Sato
+ <ysato@users.sourceforge.jp>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Palmer Dabbelt <palmer@dabbelt.com>,  Liu
+ Zhiwei <zhiwei_liu@linux.alibaba.com>,  Laurent Vivier
+ <laurent@vivier.eu>,  Yanan Wang <wangyanan55@huawei.com>,
+ qemu-ppc@nongnu.org,  Weiwei Li <liwei1518@gmail.com>,
+ qemu-s390x@nongnu.org,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Peter Maydell
+ <peter.maydell@linaro.org>,  Alexandre Iooss <erdnaxe@crans.org>,  John
+ Snow <jsnow@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Wainer
+ dos Santos Moschetta <wainersm@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,  David Woodhouse
+ <dwmw2@infradead.org>,  Cleber Rosa <crosa@redhat.com>,  Beraldo Leal
+ <bleal@redhat.com>,  Bin Meng <bin.meng@windriver.com>,  Nicholas Piggin
+ <npiggin@gmail.com>,  Aurelien Jarno <aurelien@aurel32.net>,  Daniel
+ Henrique Barboza <danielhb413@gmail.com>,  Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>,  Thomas Huth <thuth@redhat.com>,  David
+ Hildenbrand <david@redhat.com>,  qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Song Gao
+ <gaosong@loongson.cn>,  Eduardo Habkost <eduardo@habkost.net>,  Brian Cain
+ <bcain@quicinc.com>,  Paul Durrant <paul@xen.org>
+Subject: Re: [PATCH v3 16/21] gdbstub: expose api to find registers
+In-Reply-To: <1c9a2e94-0c54-446b-99a2-69e25e9725df@daynix.com> (Akihiko
+ Odaki's message of "Sat, 3 Feb 2024 20:23:46 +0900")
+References: <20240122145610.413836-1-alex.bennee@linaro.org>
+ <20240122145610.413836-17-alex.bennee@linaro.org>
+ <1c9a2e94-0c54-446b-99a2-69e25e9725df@daynix.com>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Sat, 03 Feb 2024 11:44:29 +0000
+Message-ID: <875xz5pyaq.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] monitor: only run coroutine commands in
- qemu_aio_context
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20240116190042.1363717-1-stefanha@redhat.com>
- <20240116190042.1363717-4-stefanha@redhat.com>
- <dd0dd672-78d7-4e9b-b501-020cea439fea@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <dd0dd672-78d7-4e9b-b501-020cea439fea@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,60 +129,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-03.02.2024 12:01, Michael Tokarev wrote:
-...
-> This change broke something in 7.2. I'm still debugging it, will
-> come with a follow-up once some more details are found, I'll also
-> check current master with and without this commit.
-> 
-> The prob happens with multiple suspend-resume cycles, - with this
-> change applied, guest does not work as expected after *second*
-> suspend-resume.
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-So, it turned out the prob here exists on master too, and manifests
-itself the same way on 7.2.9 or on 8.2.1, - in all cases where we
-have this change applied it works (or breaks) equally.
+> On 2024/01/22 23:56, Alex Benn=C3=A9e wrote:
+>> Expose an internal API to QEMU to return all the registers for a vCPU.
+>> The list containing the details required to called gdb_read_register().
+>> Based-on: <20231025093128.33116-15-akihiko.odaki@daynix.com>
+>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Message-Id: <20240103173349.398526-38-alex.bennee@linaro.org>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>> v3
+>>    - rm unused api functions left over
+>> ---
+>>   include/exec/gdbstub.h | 28 ++++++++++++++++++++++++++++
+>>   gdbstub/gdbstub.c      | 27 ++++++++++++++++++++++++++-
+>>   2 files changed, 54 insertions(+), 1 deletion(-)
+>> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+>> index da9ddfe54c5..eb14b91139b 100644
+>> --- a/include/exec/gdbstub.h
+>> +++ b/include/exec/gdbstub.h
+>> @@ -111,6 +111,34 @@ void gdb_feature_builder_end(const GDBFeatureBuilde=
+r *builder);
+>>    */
+>>   const GDBFeature *gdb_find_static_feature(const char *xmlname);
+>>   +/**
+>> + * gdb_read_register() - Read a register associated with a CPU.
+>> + * @cpu: The CPU associated with the register.
+>> + * @buf: The buffer that the read register will be appended to.
+>> + * @reg: The register's number returned by gdb_find_feature_register().
+>> + *
+>> + * Return: The number of read bytes.
+>> + */
+>> +int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+>> +
+>> +/**
+>> + * typedef GDBRegDesc - a register description from gdbstub
+>> + */
+>> +typedef struct {
+>
+> nit: Add struct name; docs/devel/style.rst says struct has a CamelCase
+> name *and* corresponding typedef, though this rule is apparently not
+> strictly enforced.
 
-A (simple) reproducer so far is a hibernate test, - it fails *only*
-after suspend-to-ram, but works fine after just hibernate.
+I think the wording is a little ambiguous here, especially with the
+reference to typedefs.h where the anonymous structure typedefs are held.
+In this case we don't need the structname because there is no internal
+reference to itself.
 
-I used just an initrd (with a drive image used for swap -
-for hibernation space).
-
-  qemu-img create s.img 256M
-  mkswap s.img
-  qemu-system-x86_64 \
-   -serial stdio -vga none -display none -parallel none -net none \
-   -machine q35 \
-   -drive file=s.img,if=ide,format=raw \
-   -m 256 \
-   -monitor unix:ttyS0,server,nowait \
-   -kernel /boot/vmlinuz-6.1.0-15-amd64 \
-   -initrd /boot/initrd.img-6.1.0-15-amd64 \
-   -append "shell=/bin/sh console=ttyS0 root=none"
-
-  There, in the guest (it has busybox only here):
-  # swapon /dev/sda
-  # echo mem > /sys/power/state
-  (system_wakeup on the monitor)
-  # echo disk > /sys/power/state
-
-The system will hibernate but *not* turn off power, qemu
-will continue running, while all console messages are the
-same as when it works fine.  qemu process is spinning up
-with 100% cpu usage at this stage.
-
-Without the intermediate suspend-to-ram or without the
-commit in question, qemu process will exit normally at
-this stage.
-
-This is a somewhat patalogical test case, but I see it as an
-indicator of something else being wrong, like we aren't saving
-or restoring some state now which we should do.
-
-The tight loop also suggests we're not having success in there.
-
-Thanks,
-
-/mjt
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
