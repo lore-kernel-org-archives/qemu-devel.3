@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6897C4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F69C48297
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWC9c-0006FF-Qa; Sat, 03 Feb 2024 04:17:40 -0500
+	id 1rWC9X-0006DT-AS; Sat, 03 Feb 2024 04:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rWC9a-0006Ea-Rw
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:38 -0500
+ id 1rWC9V-0006D6-J9
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:33 -0500
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rWC9Z-0001VV-2p
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:38 -0500
+ id 1rWC9T-0001VN-4i
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:17:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706951857; x=1738487857;
+ t=1706951851; x=1738487851;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Qw/YbJpx31Y4rkwPhKpfzP6ZtmWqCYJuII8bNQ2v5T0=;
- b=LWkqzO0xrA6ivYL/QuknokXIQo/NSwdVDKBdHlC+326QrvkI22MTx0rt
- wR/adBB9qsv45JpoaPn98nu0WD0zzsHclv4isSTj/KnQP80W/1Y5jyUng
- v+NRiRzKQ7Gqdzxrq/0M9tx7Ibz2zl6kIJyDFYZXo04frqDWq9XUwDIYU
- rE/180WzRCrlGSwdIr6wNES3gNN6XQmJPa9Mko3W9QEX/v22Hs8LsuPEc
- 9hPzIYIDadc4SDqRRaLKezOUZftpGZvXoGkBxldHOhnx4BhL+1hU0LmbV
- MU+p66Y3wGbzXb/l3Z7eUdimJWiHVgVZRCPzcICQuUkWBWt+HPM2kt7ev w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="216371"
+ bh=An89nTsf2RBLksmwt0+NzzeKNYWSam6kADPQj32WHLQ=;
+ b=LmUrUZYhtyoLCsOtp8BYfUXtC9pxfMLnRwKi69QP0H7dEGCsxjz+b1Bv
+ 9LTdJJfAcbX5t4DY+u6cb/CQlPLUWP1ti/HXqgkpOtgn0UW1Cc3MZW6qv
+ fhpKe6b/ttC8aTeeqMY6+smuLZYpkecNc91+aOYciQcpUGazICYreqixK
+ k3Bs48WPGP+8PX41pSNpT/ZzHaa9fTf07O6SLG9YXMIQpgTv4h7WbPiDJ
+ EpZXu5hhWzGIvIzMQN+6/1/ZV7ctC4ynXV2J///Sv3imvhl+VLxhGod+I
+ 8Hf3ljrM9LEBF6eNkhWPCJB7UJXqEfQ0qJWFLMqYglQpKiLniCzUKM4za A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="216352"
 X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
-   d="scan'208";a="216371"
+   d="scan'208";a="216352"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Feb 2024 01:17:36 -0800
+ 03 Feb 2024 01:17:29 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; d="scan'208";a="31379008"
+X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; d="scan'208";a="31378978"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 03 Feb 2024 01:17:34 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 03 Feb 2024 01:17:26 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
@@ -49,9 +49,9 @@ Cc: Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>,
  Dapeng Mi <dapeng1.mi@intel.com>, Yanting Jiang <yanting.jiang@intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 4/6] target/i386: Add support for Intel Thread Director feature
-Date: Sat,  3 Feb 2024 17:30:52 +0800
-Message-Id: <20240203093054.412135-5-zhao1.liu@linux.intel.com>
+Subject: [RFC 1/6] target/i386: Add support for save/load of ACPI thermal MSRs
+Date: Sat,  3 Feb 2024 17:30:49 +0800
+Message-Id: <20240203093054.412135-2-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
 References: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
@@ -80,89 +80,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Zhuocheng Ding <zhuocheng.ding@intel.com>
 
-Intel Thread Director (ITD) is the extension of HFI, and it extends
-the HFI to provide performance and energy efficiency data for advanced
-classes of instructions [1].
+The CPUID_ACPI (CPUID.0x01.edx[bit 22]) feature bit has been
+introduced as the TCG feature. Currently, based on KVM's ACPI emulation,
+add related ACPI support in QEMU.
 
-From Alder Lake, Intel's client products support ITD, and this feature
-can be used in VM to optimize scheduling on hybrid architectures.
+From SDM [1], ACPI feature means:
 
-Like HFI, ITD virtualization also has the same topology limitations
-(only 1 die and 1 socket) because ITD's virtualization support is based
-on HFI.
+"The ACPI flag (bit 22) of the CPUID feature flags indicates the
+presence of the IA32_THERM_STATUS, IA32_THERM_INTERRUPT,
+IA32_CLOCK_MODULATION MSRs, and the xAPIC thermal LVT entry."
 
-In order to avoid potential contention problems caused by multiple
-virtual-packages/dies, add the following restrictions to the ITD feature
-bit:
+With the emulation of ACPI in KVM, add the support for save/load of ACPI
+thermal MSRs: MSR_IA32_THERM_CONTROL, MSR_IA32_THERM_INTERRUPT and
+MSR_IA32_THERM_STATUS.
 
-1. Mark ITD as no_autoenable_flags and it won't be enabled by default.
-2. ITD can't be enabled for the case with multiple packages/dies.
-
-ITD feature depends on HFI, so also add its dependency.
-
-[1]: SDM, vol. 3B, section 15.6 HARDWARE FEEDBACK INTERFACE AND INTEL
-     THREAD DIRECTOR
+[1]: SDM, vol. 3B, section 15.8.4.1, Detection of Software Controlled
+     Clock Modulation Extension.
 
 Tested-by: Yanting Jiang <yanting.jiang@intel.com>
-Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ target/i386/cpu.h     |  9 +++++++++
+ target/i386/kvm/kvm.c | 25 +++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index e3eb361436c9..55287d0a3e73 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1118,17 +1118,18 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, "hfi",
--            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, "itd",
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-         },
-         .cpuid = { .eax = 6, .reg = R_EAX, },
-         .tcg_features = TCG_6_EAX_FEATURES,
-         /*
--         * PTS and HFI shouldn't be enabled by default since they have
-+         * PTS, HFI and ITD shouldn't be enabled by default since they have
-          * requirement for cpu topology.
-          */
--        .no_autoenable_flags = CPUID_6_EAX_PTS | CPUID_6_EAX_HFI,
-+        .no_autoenable_flags = CPUID_6_EAX_PTS | CPUID_6_EAX_HFI |
-+                               CPUID_6_EAX_ITD,
-     },
-     [FEAT_XSAVE_XCR0_LO] = {
-         .type = CPUID_FEATURE_WORD,
-@@ -1569,6 +1570,10 @@ static FeatureDep feature_dependencies[] = {
-         .from = { FEAT_6_EAX,               CPUID_6_EAX_PTS },
-         .to = { FEAT_6_EAX,                 CPUID_6_EAX_HFI },
-     },
-+    {
-+        .from = { FEAT_6_EAX,               CPUID_6_EAX_HFI },
-+        .to = { FEAT_6_EAX,                 CPUID_6_EAX_ITD },
-+    },
- };
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 7f0786e8b98f..e453b3f010e2 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -526,6 +526,10 @@ typedef enum X86Seg {
+ #define MSR_IA32_XSS                    0x00000da0
+ #define MSR_IA32_UMWAIT_CONTROL         0xe1
  
- typedef struct X86RegisterInfo32 {
-@@ -7468,10 +7473,10 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         return;
++#define MSR_IA32_THERM_CONTROL          0x0000019a
++#define MSR_IA32_THERM_INTERRUPT        0x0000019b
++#define MSR_IA32_THERM_STATUS           0x0000019c
++
+ #define MSR_IA32_VMX_BASIC              0x00000480
+ #define MSR_IA32_VMX_PINBASED_CTLS      0x00000481
+ #define MSR_IA32_VMX_PROCBASED_CTLS     0x00000482
+@@ -1758,6 +1762,11 @@ typedef struct CPUArchState {
+     uint64_t msr_lbr_depth;
+     LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
+ 
++    /* Per-VCPU thermal MSRs */
++    uint64_t therm_control;
++    uint64_t therm_interrupt;
++    uint64_t therm_status;
++
+     /* exception/interrupt handling */
+     int error_code;
+     int exception_is_int;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 76a66246eb72..3bf57b35bfcd 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -138,6 +138,7 @@ static bool has_msr_ucode_rev;
+ static bool has_msr_vmx_procbased_ctls2;
+ static bool has_msr_perf_capabs;
+ static bool has_msr_pkrs;
++static bool has_msr_therm;
+ 
+ static uint32_t has_architectural_pmu_version;
+ static uint32_t num_architectural_pmu_gp_counters;
+@@ -2455,6 +2456,11 @@ static int kvm_get_supported_msrs(KVMState *s)
+             case MSR_IA32_PKRS:
+                 has_msr_pkrs = true;
+                 break;
++            case MSR_IA32_THERM_CONTROL:
++            case MSR_IA32_THERM_INTERRUPT:
++            case MSR_IA32_THERM_STATUS:
++                has_msr_therm = true;
++                break;
+             }
+         }
+     }
+@@ -3302,6 +3308,11 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+     if (has_msr_virt_ssbd) {
+         kvm_msr_entry_add(cpu, MSR_VIRT_SSBD, env->virt_ssbd);
+     }
++    if (has_msr_therm) {
++        kvm_msr_entry_add(cpu, MSR_IA32_THERM_CONTROL, env->therm_control);
++        kvm_msr_entry_add(cpu, MSR_IA32_THERM_INTERRUPT, env->therm_interrupt);
++        kvm_msr_entry_add(cpu, MSR_IA32_THERM_STATUS, env->therm_status);
++    }
+ 
+ #ifdef TARGET_X86_64
+     if (lm_capable_kernel) {
+@@ -3774,6 +3785,11 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_IA32_TSC, 0);
+         env->tsc_valid = !runstate_is_running();
+     }
++    if (has_msr_therm) {
++        kvm_msr_entry_add(cpu, MSR_IA32_THERM_CONTROL, 0);
++        kvm_msr_entry_add(cpu, MSR_IA32_THERM_INTERRUPT, 0);
++        kvm_msr_entry_add(cpu, MSR_IA32_THERM_STATUS, 0);
++    }
+ 
+ #ifdef TARGET_X86_64
+     if (lm_capable_kernel) {
+@@ -4255,6 +4271,15 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_ARCH_LBR_INFO_0 ... MSR_ARCH_LBR_INFO_0 + 31:
+             env->lbr_records[index - MSR_ARCH_LBR_INFO_0].info = msrs[i].data;
+             break;
++        case MSR_IA32_THERM_CONTROL:
++            env->therm_control = msrs[i].data;
++            break;
++        case MSR_IA32_THERM_INTERRUPT:
++            env->therm_interrupt = msrs[i].data;
++            break;
++        case MSR_IA32_THERM_STATUS:
++            env->therm_status = msrs[i].data;
++            break;
+         }
      }
  
--    if (env->features[FEAT_6_EAX] & CPUID_6_EAX_HFI &&
-+    if (env->features[FEAT_6_EAX] & (CPUID_6_EAX_HFI | CPUID_6_EAX_ITD) &&
-         (ms->smp.dies > 1 || ms->smp.sockets > 1)) {
-         error_setg(errp,
--                   "HFI currently only supports die/package, "
-+                   "HFI/ITD currently only supports die/package, "
-                    "please set by \"-smp ...,sockets=1,dies=1\"");
-         return;
-     }
 -- 
 2.34.1
 
