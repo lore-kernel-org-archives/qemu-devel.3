@@ -4,94 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3BC8C4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 11:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C729C4828D
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 11:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWEAY-0005dJ-K0; Sat, 03 Feb 2024 06:26:46 -0500
+	id 1rWEE0-0006T6-8Z; Sat, 03 Feb 2024 06:30:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rWEAW-0005cs-Pq
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:26:44 -0500
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rWEAV-0001jh-Ao
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 06:26:44 -0500
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-29026523507so2432962a91.0
- for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 03:26:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1706959602; x=1707564402;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JP7fjve27cRWZSwtQL1qGz21c5P7C8MIPbzmVOFgw6M=;
- b=lBakW8nXma5mTr/yiZJ6q08gOLab7gOXioNSuLGpHEEE9tHh60pIxclVk4PQSYPDXt
- aMb7vlUfdut623LTlylI37Zwlqvy2xOZ7GcKSwnmI5DVQ6T3a2NsOlO5Cn9ygVmurCCq
- VZbAXOz0QWNgEqE07lB92Qe+HQY/k30rUpLcuvDdiejHo/hdf3Zyo+j4VNYV5oA1WYd4
- +ckaq5X9eMXXec2vRVBZjOiADhxJQXpBOeg1ExUEGfbncy7/3oIy15C3KHyu17bg5Nwy
- TW2ssydfGpi9nLZXlCN9XnK50FiRgtatEAdn0a4n4cv+/6Wp8iWi6+HAUfllDQ3Reim2
- sUyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1706959602; x=1707564402;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JP7fjve27cRWZSwtQL1qGz21c5P7C8MIPbzmVOFgw6M=;
- b=M6ptCutrFXlMapm/bXum61TAfETiU9K25gFBqXFjWZKqiOuMjVw+bsFWl7AuyspoML
- nKEGW+auVDO09Z3rt9WTtR/9NawKwn1iro5tO3XaZ29enq7ysN7TfN9LmG+EZ4ygP/lO
- zNspJLB5N71FfEnh0dxl2nAhkcjVxw/8EyNh5OHLHBL0Ex7ljTHxicreC4ErfZkPZRK0
- bygi+og9l4xPPgbQ3LKb8bbuGOvvBFsjbTXgeI8ok7PeWLQkOCzCWcu64A7RH10wJ2/W
- o4Hbqg69P+zBHbN970RFSP2tGtsaIMfD7b6Pbg/mZbqk+LLWIUdAat5nh5nuHyAZQYtZ
- OjkQ==
-X-Gm-Message-State: AOJu0YxNG95oJLZMlLnR36y1e9nuHcnTsEsjYHCPuVPCoMtE3NS1nnbx
- E1OHYLzOBR59KddxxerayvKHrlg4ZmIacS0x3DOlmnSwt66WrnS9fKuCZbgISHk=
-X-Google-Smtp-Source: AGHT+IHB0WShbtdUAlVGkZswHt5OQoPU9Z4WM8IgqgcSGcH0G6AUtNwxMpu3S6irZSib9eczQ5zSiQ==
-X-Received: by 2002:a17:90b:1915:b0:296:6a74:bfcb with SMTP id
- mp21-20020a17090b191500b002966a74bfcbmr692836pjb.47.1706959602033; 
- Sat, 03 Feb 2024 03:26:42 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXLRJuZ/35WGejiqPCI1E2Mf9dhN/OFi5ISUd2hS9PKQRMOmRwU+LLwEqu60j4mEd+aWetUgH9pl3QLWcH/YLBMgBunUaboiQqpChp6So9JdN3uCfupbOyX7Eu2nIuvIc04gWyNKuUjbFAdygdZRnssO1rT6I4czf9AW3E//b/tkYbATHoEg/OOlBBlXildR+HPtEwXnRG8ACOoAcaC0SUTchVccVOB/JcWS1cfvGofat/bRlMEKuf8sQadNzOSbJaevS5ixFLSkDwZo53MPK1B/nKAZEUjVL5260c7aEguU60Pk8YJiYuwrwVYbAGvYlctVdANpcIPnRXLrMQTQYgQ/h4BWYZGnTE2BH5Dac+wxHFmXcZeCO7woCo5xegaIt1s0cM+/1y23X62Km6F3LoM0vQMFDibFCzV/OMWUMl6I5KH
-Received: from [157.82.200.138] ([157.82.200.138])
- by smtp.gmail.com with ESMTPSA id
- oe12-20020a17090b394c00b00296743c9035sm197080pjb.21.2024.02.03.03.26.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 03 Feb 2024 03:26:41 -0800 (PST)
-Message-ID: <b34c4013-1aca-466e-b94e-55d9802928b3@daynix.com>
-Date: Sat, 3 Feb 2024 20:26:37 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rWEDx-0006SQ-Mn; Sat, 03 Feb 2024 06:30:18 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rWEDv-0002IP-W4; Sat, 03 Feb 2024 06:30:17 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8ADCA49EE1;
+ Sat,  3 Feb 2024 14:31:15 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B5BB672A52;
+ Sat,  3 Feb 2024 14:30:11 +0300 (MSK)
+Message-ID: <3185d4fa-86bf-490e-8d79-5278da1ad9a4@tls.msk.ru>
+Date: Sat, 3 Feb 2024 14:30:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 0/3] gdbstub and TCG plugin improvements
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Mikhail Tyutin <m.tyutin@yadro.com>, Aleksandr Anenkov
- <a.anenkov@yadro.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Andrew Jones <ajones@ventanamicro.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240203-riscv-v11-0-a23f4848a628@daynix.com>
- <87bk8xpzyl.fsf@draig.linaro.org>
+Subject: Re: [PATCH 3/3] monitor: only run coroutine commands in
+ qemu_aio_context
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <87bk8xpzyl.fsf@draig.linaro.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Hanna Reitz <hreitz@redhat.com>
+References: <20240116190042.1363717-1-stefanha@redhat.com>
+ <20240116190042.1363717-4-stefanha@redhat.com>
+ <dd0dd672-78d7-4e9b-b501-020cea439fea@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <dd0dd672-78d7-4e9b-b501-020cea439fea@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::102a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,41 +90,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/03 20:08, Alex Bennée wrote:
-> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+03.02.2024 12:01, Michael Tokarev wrote:
+...
+> This change broke something in 7.2. I'm still debugging it, will
+> come with a follow-up once some more details are found, I'll also
+> check current master with and without this commit.
 > 
->> This series extracts fixes and refactorings that can be applied
->> independently from "[PATCH v9 00/23] plugins: Allow to read registers".
->>
->> The patch "target/riscv: Move MISA limits to class" was replaced with
->> patch "target/riscv: Move misa_mxl_max to class" since I found instances
->> may have different misa_ext_mask.
-> 
-> As this is re-based on Alistair's riscv-to-apply.next tree I'll wait for
-> this to go through the RiscV trees and then re-base the plugin patches
-> and dropping the merged riscv patches from my tree.
-> 
-> In the meantime feel free to review:
-> 
->    Message-Id: <20240122145610.413836-1-alex.bennee@linaro.org>
->    Date: Mon, 22 Jan 2024 14:55:49 +0000
->    Subject: [PATCH v3 00/21] plugin updates (register access) for 9.0 (pre-PR?)
->    From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-> 
-> For:
-> 
->    contrib/plugins: extend execlog to track register changes
->    gdbstub: expose api to find registers
-> 
-> So I can add this to my maintainer omnibus series for the next PR I
-> send.
+> The prob happens with multiple suspend-resume cycles, - with this
+> change applied, guest does not work as expected after *second*
+> suspend-resume.
 
-I added one trivial comment to: "gdbstub: expose api to find registers"
+So, it turned out the prob here exists on master too, and manifests
+itself the same way on 7.2.9 or on 8.2.1, - in all cases where we
+have this change applied it works (or breaks) equally.
 
-"contrib/plugins: extend execlog to track register changes" depends on 
-"plugins: add an API to read registers". The comments for the patch in 
-the following email are not addressed yet:
-https://lore.kernel.org/all/4b2156ed-688d-4617-b52d-200413f01156@daynix.com/
+A (simple) reproducer so far is a hibernate test, - it fails *only*
+after suspend-to-ram, but works fine after just hibernate.
 
-Please check them out.
+I used just an initrd (with a drive image used for swap -
+for hibernation space).
+
+  qemu-img create s.img 256M
+  mkswap s.img
+  qemu-system-x86_64 \
+   -serial stdio -vga none -display none -parallel none -net none \
+   -machine q35 \
+   -drive file=s.img,if=ide,format=raw \
+   -m 256 \
+   -monitor unix:ttyS0,server,nowait \
+   -kernel /boot/vmlinuz-6.1.0-15-amd64 \
+   -initrd /boot/initrd.img-6.1.0-15-amd64 \
+   -append "shell=/bin/sh console=ttyS0 root=none"
+
+  There, in the guest (it has busybox only here):
+  # swapon /dev/sda
+  # echo mem > /sys/power/state
+  (system_wakeup on the monitor)
+  # echo disk > /sys/power/state
+
+The system will hibernate but *not* turn off power, qemu
+will continue running, while all console messages are the
+same as when it works fine.  qemu process is spinning up
+with 100% cpu usage at this stage.
+
+Without the intermediate suspend-to-ram or without the
+commit in question, qemu process will exit normally at
+this stage.
+
+This is a somewhat patalogical test case, but I see it as an
+indicator of something else being wrong, like we aren't saving
+or restoring some state now which we should do.
+
+The tight loop also suggests we're not having success in there.
+
+Thanks,
+
+/mjt
 
