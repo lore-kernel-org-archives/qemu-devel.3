@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F22C4828F
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 20:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A14C4828F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 20:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWMmW-00023X-HI; Sat, 03 Feb 2024 15:38:32 -0500
+	id 1rWMwX-0004R1-2u; Sat, 03 Feb 2024 15:48:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu-devel@gudrian.org>)
- id 1rWMmS-00022q-L9
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 15:38:28 -0500
-Received: from mout.kundenserver.de ([212.227.17.24])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rWMwV-0004Ql-1F
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 15:48:51 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu-devel@gudrian.org>)
- id 1rWMmK-0007gt-Vy
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 15:38:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gudrian.org;
- s=s1-ionos; t=1706992698; x=1707597498; i=qemu-devel@gudrian.org;
- bh=8LSXYvnqySj4jmZlLLG0R9Nqpz+3Wtc3ZnMRakM9pSM=;
- h=X-UI-Sender-Class:Date:From:Subject:To:References:In-Reply-To;
- b=ScPAqL/NG67mFUm0zAVodhMG1G9s52mpDdeYZ7cc13iprGC9Xt3Kslt9g8uoLI3H
- eRUIijiPjGf4Ao/E5myAullukgBVqm1e+RAQdE12kQUsHsBOhfxK1ScBpDQm5kBlf
- Sd+01x0Gqa5kQ6JuXu4cqUIoAescEc5rbL3ij/qbFrL1bTsqaj6+cNGi2Zch2zF8+
- 3QpJvP2GliaWXK2qaQLnBgikapsP3shA9H9Vok+uWtEZg9ooBwu9gyU2LmDZQXAgq
- 4T25RYmpPFXawS0Bj5uB3fS8c7Mxi0BW8lxiPZwun3UOb/OA3v4Jy191UoJPSRVmM
- z6lWNrkBKX8fGy+hsA==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.178.208] ([92.200.167.19]) by mrelayeu.kundenserver.de
- (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1N5G1T-1r52Nz0sOz-0119Ud for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024
- 21:38:18 +0100
-Message-ID: <9021fa4c-1663-eae4-73b2-9e1c95522d2d@gudrian.org>
-Date: Sat, 3 Feb 2024 21:38:17 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rWMwS-000195-Fw
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 15:48:50 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 352B04A146;
+ Sat,  3 Feb 2024 23:49:48 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7D9DE72D1B;
+ Sat,  3 Feb 2024 23:48:44 +0300 (MSK)
+Message-ID: <ca3d3143-67e7-4c4c-b12d-3768c8191b3b@tls.msk.ru>
+Date: Sat, 3 Feb 2024 23:48:44 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-From: Christian Gudrian <qemu-devel@gudrian.org>
-Subject: Re: ehci: more than 16 ITDs
-To: qemu-devel@nongnu.org
-References: <441d024e-9d3f-b410-2e3c-3323af841b8e@gudrian.org>
- <2cc91c6e-7c1a-f7cd-2b7d-69136c98d832@eik.bme.hu>
-In-Reply-To: <2cc91c6e-7c1a-f7cd-2b7d-69136c98d832@eik.bme.hu>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/tcg: Fix the /proc/self/mem probing in the
+ PROT_NONE gdbstub test
+Content-Language: en-US
+To: Ilya Leoshkevich <iii@linux.ibm.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240131220245.235993-1-iii@linux.ibm.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240131220245.235993-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:chnzYk3XaK7z8pVSEqQL+CuZZGulhlv5Ul5nMjhy0HnoPqJUQUU
- SNzU02MYTrPGfltG8NxI993jPiBAPD6/7QXhZE9Gnx1vD6FUNjzFgrdZXy7PBFyG58HkOvK
- GaVuK7LP6lnToxCsfItjOX4WcHURXTtkTCsyFwzykNjao0Cr2QE4hZNb6BOBk0DuazyFSbV
- xpWwPfet6Fx+zZK0J7q0w==
-UI-OutboundReport: notjunk:1;M01:P0:nC2IAMRmODw=;KFbooTggbAiTVNlyik8fYRUp+/b
- 6IXSRdODiBt6sy1zc1IbQKVuZ+6heyY7VuaWwfiom+2tGQWNqyYfwUfsGoJ+ErP3r9jmdU03W
- pGrtLVjrwiVk55zob/9u+CZGqH2f46eu/feF+Rcqw1lXdnMwaxhy4NqI36vqAfDQK2iXzo+2/
- o3DPRwKZquzVnUleHhl3sJ8W5WygsKKVUA6wg0xE48o57eMSxCrraSqeQW0n4UIZVYFaUu+NJ
- aY76kBdpfA1IlkykL+PUqn0k0agd0sYDoHN7bDMIP2GX6NR35UyQ0j7UJ0u6Oc1cS4/kNFDNJ
- qQTE+HSNgu7YyQchbUvLv0G2eiuUv8yCY0AAyUn4IpiqZc60srv9r7fjh4t0J9Qs+6IBYzlBw
- Vz+SgqAugfS/PC8y9DXVQrF4UCUrK6QGk+SMUP0G0rYqe6jit7grPSCoU9Ls+CRUb9vwrNCrO
- Dh3H6B75Ew/DXIzLuVRe1RjStLjMJH2JodDn420DdrLs59M+KS+cifZq9SWlfnXs/Gm+D1AMv
- ZLFF81GmCf+Qjip3J1EcP7Avw3Sx3Ho8Cw3CM4DX8JzOVYHps3vnjBkyQHoOSEj0TNEPyhZCf
- 1LqEzamV8vrt4nW9e6/leOMXIktgH2/gofQuHdt2lv23TM/37/VcmzEMn4kjzVcIxaOJu2TSz
- qkLmH+1+lca9fWvWoxBRI7YPf7fqIzMgmNUrAk7EOZfBqQ2DMUF1+xbfcD8ctlGNNdegCpQZ2
- Jlw8/lrkwedcpGhpeV9m64lObf9FEymQUv+/A0FBEHBX+qUjVXJuhc=
-Received-SPF: pass client-ip=212.227.17.24;
- envelope-from=qemu-devel@gudrian.org; helo=mout.kundenserver.de
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-0.509,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,37 +87,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+01.02.2024 01:02, Ilya Leoshkevich wrote:
+> The `if not probe_proc_self_mem` check never passes, because
+> probe_proc_self_mem is a function object, which is a truthy value.
+> Add parentheses in order to perform a function call.
+> 
+> Fixes: dc84d50a7f9b ("tests/tcg: Add the PROT_NONE gdbstub test")
 
-On 03.02.2024 21:06, BALATON Zoltan wrote:
+FWIW (it's too late already and this commit has landed in master),
+commit "tests/tcg: Add the PROT_NONE gdbstub test" is 82607a73f8
+not dc84d50a7f9b.
 
-> It's hard to tell, I don't know EHCI but there's a TODO comment near
-> that error so maybe there's some EHCI feature not emulated that you
-> may need to implement in QEMU there. I guess you'd need to check the
-> EHCI specification or the docs of the actual chip that is emulated
-> for info on how this should work.
-
-I'll have a look at it. Meanwhile I've added dedicated debug output and
-found out, that the 17th ITD only occurs occasionally. Could it be the
-16 ITD limit has been arbitrarily chosen? The host machine is not
-particularly powerful so that buffers might fill up to a higher level
-than usually expected.
-
-> Also to get more debugging info to see what's happening you can add
-> --trace enable=3D"usb*" (or see qemu/hw/usb/trace-events for the list
-> of trace points available that could be enabled individually) in case
-> you were not aware of that.
-
-Thanks for the hint. I indeed didn't know that. The audio hardware,
-however, is particularly time sensitive during initialization and
-requires a power cycle if anything appears strange to it. But I'll have
-a try!
-
-The refcount warning is triggered by inconsistent data structures in the
-EHCI driver of the Linux kernel: while the 'periodic' array encodes a
-structure type of 'ehci_qh' the pointer in the 'pshadow' array actually
-points to a structure of type 'ehci_itd'. My hunch is I'm running into a
-kernel race condition due to massively skewed timing conditions compared
-with the original bare metal hardware (where the kernel runs just fine).
-
-Christian
+/mjt
 
