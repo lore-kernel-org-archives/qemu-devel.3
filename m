@@ -4,70 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8F6C4828D
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DEE2C48297
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Feb 2024 09:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWCG6-0002gX-K7; Sat, 03 Feb 2024 04:24:23 -0500
+	id 1rWCO7-000434-HY; Sat, 03 Feb 2024 04:32:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rWCG4-0002gP-NO
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:24:20 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rWCG2-0003aV-A1
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:24:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1706952258; x=1738488258;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=kw3OOTRz9AfhneBs+qlsMv0+ql7UK40PdaE6fG3rIDE=;
- b=HwnIZjYEoEeiGk25x5GMGI3gMAI0JVpdHPQAPKojL4XBBSTKLksnDav6
- 5s3AgwqrAiD6JeJ0J4ECYqFtcH8OAH+4R/I/zfUDoGd7o6z86C8bNljyd
- 7ba7N3f/lA7fKZdyP4PsDIDbg9PZ4CZ6dVxPnr1pGQncScblbQifkVIV9
- aDrVdRWU8HxpY5T6kan2AIQ0QcnZ8idod/vqzLsMN8qp6J505+kc0Qdak
- VE3VdFRKnC3W6drRZe1XWEf4De87RdY9sOKsm1Oe1RgzbGbtVScIhSTem
- WFSMR5sR5O1/iXPxBYWxV1RwojaV3vgKcwX5agrf3+H7EnBhzKtwFAybn Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="209289"
-X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
-   d="scan'208";a="209289"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Feb 2024 01:24:16 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,240,1701158400"; 
-   d="scan'208";a="4913836"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 03 Feb 2024 01:24:13 -0800
-Date: Sat, 3 Feb 2024 17:37:45 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Cc: Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>,
- Dapeng Mi <dapeng1.mi@intel.com>, Yanting Jiang <yanting.jiang@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC 0/6] Intel Thread Director Virtualization Support in QEMU
-Message-ID: <Zb4JaZ+aNzsSsTp2@intel.com>
-References: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rWCO4-00042C-SW
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:32:36 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rWCO2-0005jS-Sr
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 04:32:36 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1d7881b1843so25181315ad.3
+ for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 01:32:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1706952753; x=1707557553;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=sVsDDgcIpEBlmcq1EWawWovzpkmUUsK5fa5lmtMzwhw=;
+ b=VD+uFFDYNXi9z2nmw/tuvv6npDUM+6WIXlSQEfikUB1evrhrI2RvYaR99IagIaEtBC
+ xMROuo/IXBROZNl6mMp9nb/xq2lfBsQ3qxerOt9aX6/DD4KlGoNWQhWkSiyyykuXNQao
+ f2BhA2zQeoBgd5D9ESsPU3hgfMqLSBpET0uoH8O1vpLqEoD0quza6LxLzcSZeNG8Xpvc
+ Wwe5Sm8/9VVQDuTs+ppxMyi5Yf7RflCBZ8s74DWQHjvWP9aieYuJd99u1Rj8ul419kmn
+ vlPStUig84FjdsFYjdEkggD04e9xrWtclmMmlKL/MO49kW14hyY63RSEnC/UlaI/JVAT
+ TpPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1706952753; x=1707557553;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sVsDDgcIpEBlmcq1EWawWovzpkmUUsK5fa5lmtMzwhw=;
+ b=oqY9KxEvuSZI4fk/qy83mreMgag2XHtqXZkuXymlAECxg6P81B2YVc4BI24T0BbaR5
+ GLv/JIrOynLkC4YHp5GUV8mFnbREUwYs6FyGry+BqSeSuICz7ShjEbUHUQDdBeLfw1XT
+ BgmzO6ziuoI7DITPMiAT+SX1hyGjXQVeTMVoX9IqcqB45Hmnlv2NbYqg4WiN+9QPehCH
+ N5V/OoWhk/IExSDNO5Yvw4cXVLY/729bCPyXGVyCd8mDUjF8fy1Ahn3Xs/WTN1obZnnv
+ UNmqjbNsvtHNcuwUteulUdFGYa59GEqBEyGBFFs0qQwwWdIRETsZ3jXw9m3C3Jor/Ee0
+ Y/Jw==
+X-Gm-Message-State: AOJu0YypVyh6n71re0++CIVgEFD+AdjEMXqFTtO+H3gxZ8G87cR2YbKf
+ HAZ0kab35mzZVG5LZgnnPhY5q93IhX6weifYJNkJ9yJY53MUKnYZ25qQgPiv92o=
+X-Google-Smtp-Source: AGHT+IGPl9Z0OOt/hQqn596JPYaEEXEA7VV5j9GioSiECfI7AwWnM7L6AwPIJ8/q2flNtdojmSzxdg==
+X-Received: by 2002:a17:903:987:b0:1d9:4282:4be8 with SMTP id
+ mb7-20020a170903098700b001d942824be8mr5724116plb.25.1706952753543; 
+ Sat, 03 Feb 2024 01:32:33 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCXSpNiJntVrtkq+zRDdsb2A3POy0ilLtfSN8t4jSKTt07fsbCNkiyDB6RQcYxy7K5Z20eZyPR+W/usV0MaYRK+FaW1nGZb5xL/PrnCl3+ZKE4uEmjUF+s4PXT8bgB/vM3gBu8YZlSKcBCjev8SJHy9VvGiDa/lPkloEAaKNSdPX1/9zgetBCsqS0cYUSM+HRydNB73XUuuzkJK4lhAcaOVIAw/rRt0kCoP1LXjCeW0tsWbDylgNJeZqaCXLeXgGLfVrHDDW+15fPd1jIyn9lCLp0fgUfLxpEO18aaV1t1XCx8iGrErDVTvhzfsYDUluKdDChEOdgjM2mztIeKZ50e8MBgVt5kA1I9p3OSUEUk2TErrRA9zX9oScZR/PI77Mjlsa9o/rXhf690eBL77eD9hxUIvR/ZpHOgp/eQg/uQ==
+Received: from localhost ([157.82.200.138])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ju3-20020a170903428300b001d91b6175afsm2942612plb.18.2024.02.03.01.32.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 03 Feb 2024 01:32:33 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Sat, 03 Feb 2024 18:31:58 +0900
+Subject: [PATCH 4/6] pcie_sriov: Validate NumVFs
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240203093054.412135-1-zhao1.liu@linux.intel.com>
-Received-SPF: none client-ip=192.198.163.17;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.276,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240203-reuse-v1-4-5be8c5ce6338@daynix.com>
+References: <20240203-reuse-v1-0-5be8c5ce6338@daynix.com>
+In-Reply-To: <20240203-reuse-v1-0-5be8c5ce6338@daynix.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.12.3
+Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,169 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 03, 2024 at 05:30:48PM +0800, Zhao Liu wrote:
-> Date: Sat, 3 Feb 2024 17:30:48 +0800
-> From: Zhao Liu <zhao1.liu@linux.intel.com>
-> Subject: [RFC 0/6] Intel Thread Director Virtualization Support in QEMU
-> X-Mailer: git-send-email 2.34.1
-> 
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Hi list,
-> 
-> This is our refreshed RFC to support our ITD virtualization patch
-> series [1] in KVM, and bases on bd2e12310b18 ("Merge tag
-> 'qga-pull-2024-01-30' of https://github.com/kostyanf14/qemu into
-> staging").
-> 
-> ITD is Intel's client specific feature to optimize scheduling on Intel
-> hybrid platforms. Though this feature depends on hybrid topology
+The guest may write NumVFs greater than TotalVFs and that can lead
+to buffer overflow in VF implementations.
 
-s/depends/doesn't depend/
+Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ hw/pci/pcie_sriov.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Regards,
-Zhao
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index a1fe65f5d801..da209b7f47fd 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
+ 
+     assert(sriov_cap > 0);
+     num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
++    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
++        return;
++    }
+ 
+     dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+ 
 
-> details, in our parctice on Win11 Guest, ITD works with hyrbid topolohy
-> and CPU affinity can achieve the most performance improvement in Win11
-> Guest (for example, on i9-13900K, up to 14%+ improvement on
-> 3DMARK). More data or details, can be found in [1]. Thus, the ITD for
-> Win11 is also a typical use case of hybrid topology.
-> 
-> 
-> Welcome your feedback!
-> 
-> 
-> 1. Background and Motivation
-> ============================
-> 
-> ITD allows the hardware to provide scheduling hints to the OS to help
-> optimize scheduling performance, and under the Intel hybrid
-> architecture, since Core and Atom have different capabilities
-> (performance, energy effency, etc.),  scheduling based on hardware
-> hints can take full advantage of this hybrid architecture. This is also
-> the most ideal scheduling model for intel hybrid architecture.
-> 
-> Therefore, we want to virtualize the ITD feature so that ITD can benefit
-> performance of the virtual machines on the hybrid machines as well.
-> 
-> Currently, our ITD virtualization is a software virtualization solution.
-> 
-> 
-> 2. Introduction to HFI and ITD
-> ==============================
-> 
-> Intel provides Hardware Feedback Interface (HFI) feature to allow
-> hardware to provide guidance to the OS scheduler to perform optimal
-> workload scheduling through a hardware feedback interface structure in
-> memory [2]. This hfi structure is called HFI table.
-> 
-> As for now, the guidance includes performance and energy enficency hints,
-> and it could update via thermal interrupt as the actual operating
-> conditions of the processor change during run time.
-> 
-> And Intel Thread Director (ITD) feature extends the HFI to provide
-> performance and energy efficiency data for advanced classes of
-> instructions.
-> 
-> The virtual HFI table is maintained in KVM, and for QEMU, we just need
-> to handle HFI/ITD/HRESET (and their dependent features: ACPI, TM and
-> PTS) related CPUIDs and MSRs.
-> 
-> 
-> 3. Package level MSRs handling
-> ==============================
-> 
-> PTS, HFI and ITD are all have package level features, such as package
-> level MSRs and package level HFI tables. But since KVM hasn't
-> support msr-topology and it just handle these package-level MSRs and
-> HFI table at VM level, in order to avoid potential contention problems
-> caused by multiple virtual-packages, we restrict VMs to be able to
-> enable PTC/HFI/ITD iff there's only 1 package (and only 1 die for
-> ITD/HFI).
-> 
-> 
-> 4. HFI/ITD related info in CPUID
-> ================================
-> 
-> KVM provides some basic HFI info in CPUID.0x06 leaf, which is associated
-> with the virtual HFI table in KVM.
-> 
-> QEMU should configure HFI table index for each vCPU. Here we set the HFI
-> table index to vCPU index so that different vCPUs have different HFI
-> entries to avoid unnecessary competition problems.
-> 
-> 
-> 5. Compatibility issues
-> =======================
-> 
-> HFI is supported in both server (SPR) and client (ADL/RPL/MTL) platform
-> products while ITD is the client specific feature.
-> 
-> For client platform, ITD (with HFI) could be enabled in Guest to improve
-> scheduling, but for server platform, HFI (without ITD) is only useful
-> on Host and Guest doesn't need it.
-> 
-> To simplify the enabling logic and avoid impacting the common topology
-> of the Guest, we set PTS, HFI, and ITD as feature bits that are not
-> automatically enabled.
-> 
-> Only when the user actively specifies these features, QEMU will check
-> and decide whether to enable them based on the topology constraints and
-> the ITD constraints.
-> 
-> 
-> 6. New option "enable-itd"
-> ============================
-> 
-> ITD-related features include PTS, HFI, ITD, and HRESET.
-> 
-> To make it easier for users to enable ITD for Guest without specifying
-> the above feature bits one by one, we provide a new option "enable-itd"
-> to set the above feature bits for Guest all at once.
-> 
-> "enable-itd" does not guarantee that ITD will be enabled for Guest.
-> The success of enabling ITD for guest depends on topology constraints,
-> platform support, etc., which are checked in QEMU.
-> 
-> 
-> 7. Patch Summary
-> ================
-> 
-> Patch 1: Add support save/load for ACPI feature related thermal MSRs
->          since ACPI feature CPUID has been added in QEMU.
-> Patch 2: Add support for PTS (package) thermal MSRs and its CPUID
-> Patch 3: Add support for HFI MSRs and its CPUID
-> Patch 4: Add support ITD CPUID and MSR_IA32_HW_FEEDBACK_THREAD_CONFIG.
-> Patch 5: Add support HRESET CPUID and MSR_IA32_HW_HRESET_ENABLE.
-> Patch 6: Add "enable-itd" to help user set ITD related feature bits.
-> 
-> # 8. References
-> 
-> [1]: KVM RFC: [RFC 00/26] Intel Thread Director Virtualization
->      https://lore.kernel.org/kvm/20240203091214.411862-1-zhao1.liu@linux.intel.com/T/#t
-> [2]: SDM, vol. 3B, section 15.6 HARDWARE FEEDBACK INTERFACE AND INTEL
->      THREAD DIRECTOR
-> 
-> Thanks and Best Regards,
-> Zhao
-> ---
-> Zhao Liu (2):
->   target/i386: Add support for Intel Thread Director feature
->   i386: Add a new property to set ITD related feature bits for Guest
-> 
-> Zhuocheng Ding (4):
->   target/i386: Add support for save/load of ACPI thermal MSRs
->   target/i386: Add support for Package Thermal Management feature
->   target/i386: Add support for Hardware Feedback Interface feature
->   target/i386: Add support for HRESET feature
-> 
->  target/i386/cpu.c     | 108 ++++++++++++++++++++++++++++++++++++++++--
->  target/i386/cpu.h     |  37 +++++++++++++++
->  target/i386/kvm/kvm.c |  84 ++++++++++++++++++++++++++++++++
->  3 files changed, 225 insertions(+), 4 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
+-- 
+2.43.0
+
 
