@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC6DC48286
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 04:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6728CC48286
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 05:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWUZp-0004il-KX; Sat, 03 Feb 2024 23:57:57 -0500
+	id 1rWUcC-0005af-QH; Sun, 04 Feb 2024 00:00:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rWUZn-0004iM-B9; Sat, 03 Feb 2024 23:57:55 -0500
+ id 1rWUcA-0005Zx-Rd; Sun, 04 Feb 2024 00:00:23 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rWUZl-0004CR-Nr; Sat, 03 Feb 2024 23:57:55 -0500
+ id 1rWUc9-0004uU-2P; Sun, 04 Feb 2024 00:00:22 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7CF944A262;
- Sun,  4 Feb 2024 07:58:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7FC484A266;
+ Sun,  4 Feb 2024 08:01:23 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1BDF573691;
- Sun,  4 Feb 2024 07:57:48 +0300 (MSK)
-Message-ID: <7ee3278a-3224-41de-81fa-a3667aa491fb@tls.msk.ru>
-Date: Sun, 4 Feb 2024 07:57:48 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 24E717369D;
+ Sun,  4 Feb 2024 08:00:19 +0300 (MSK)
+Message-ID: <27bfb55e-89c9-4b98-b10f-9647de0627db@tls.msk.ru>
+Date: Sun, 4 Feb 2024 08:00:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] hw/smbios: Fix option validation
+Subject: Re: [PATCH 0/4] Consolidate the use of
+ device_class_set_parent_realize()
 Content-Language: en-US
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240129-smbios-v2-0-9ee6fede0d10@daynix.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: qemu-devel@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20240201084027.345459-1-zhao1.liu@linux.intel.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -61,7 +59,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240129-smbios-v2-0-9ee6fede0d10@daynix.com>
+In-Reply-To: <20240201084027.345459-1-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -87,22 +85,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-29.01.2024 11:03, Akihiko Odaki:
-> This fixes qemu_smbios_type8_opts and qemu_smbios_type11_opts to have
-> list terminators and elements for the type option.
+[Trimming list of addresses]
 
-> Akihiko Odaki (2):
->        hw/smbios: Fix OEM strings table option validation
->        hw/smbios: Fix port connector option validation
+01.02.2024 11:40, Zhao Liu :
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
->   hw/smbios/smbios.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+> Hi list,
+> 
+> Now we already have the device_class_set_parent_realize() to set
+> parent realize(), thus clean up the places where that helper was
+> forgotten.
 
-Should I pick this up via the trivial-patches tree perhaps?
-The changes are trivial enough.  Picking up there, unless there's
-a pull request pending for smbios area.
-
-Thanks,
+Applied to trivial-patches tree, thanks!
 
 /mjt
 
