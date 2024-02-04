@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C183DC4828F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 09:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AA0DC4828F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 10:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWZ0V-0006Kv-VQ; Sun, 04 Feb 2024 04:41:47 -0500
+	id 1rWa8G-0006Ic-WA; Sun, 04 Feb 2024 05:53:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <masscry@gmail.com>) id 1rWZ0T-0006Kd-Fo
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 04:41:46 -0500
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rWa8D-0006H8-0H
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 05:53:49 -0500
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <masscry@gmail.com>) id 1rWZ0R-0005vN-NL
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 04:41:45 -0500
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-6e117e0fee8so1877578a34.2
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 01:41:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707039702; x=1707644502; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BPQp6mp3W7B9614FksRqkI9DVfyOMDCa7deDHD6efHk=;
- b=Fgb1DXJfEyXt+9uLVekRZt7IvPuw4aw1U0r9awyFxnXPDW5MN2S1srhzllWLDDre7k
- xP5aunDtowq3s1c99KqORPZUNwUEisFkrpg9LijlAsW21MXfsL2niG3PvUxm6J7TWkmy
- Y4nBt7+5AYtR65aBathSPmHw6YUSwilRCbSZm6jOWD8+gROWZoSpsJkHhWAZC/yWNFdx
- ztb5c03amjkIjnzLc+YXpeairwqjfVaUIT32fRYfMJvemfrlEJsODhlKqumuVNcpu/oj
- 2thYscfcX/zh96Cd2CiShGAJnM6FcH0oW2hzX/lxcJcknpueKzLwfAyR8TcCoWCzOMwW
- uyQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707039702; x=1707644502;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BPQp6mp3W7B9614FksRqkI9DVfyOMDCa7deDHD6efHk=;
- b=j+qWuLJOr8p1Ink4Ah6DSCEKz2UzWHp6ed1p+yYM9RODmRU6SiWKivTqJqvuoDFQHa
- S1rLK7GMS4gOO9Z7/3DABsidoF3zrMXfEfGwSgpNZk9sW75QkTB+y+tL+OiOsS1DOlSe
- 6CDuubH4wA5UAfsfN92G/cI78r6EXQmfzSR1g6+089xMrtMCEsdbPEhrWYQKi3YZuU0y
- +1AG4O2RQh33D9IHVyBuMzaH12hSw6cntDY78jfHAmckrx30zN5jGG5LOtMN92oyBFCq
- ivYddLYOm82AQnOtH5OL1/MTO/Hevzp9ZAB6+guA7TH4kZxpL3i+COVoYZ9QHXxLhDPo
- GXCQ==
-X-Gm-Message-State: AOJu0YyVgC3MFkCX6St49O+g3XSsH5hzAWKWiP2B1hSdTOaa4Yltlovs
- ZDFX+OarnXOjWXQlm4Kkz7gLAQdzFW5Fu5PYgQNKCgQsOQK+4itPUvxxRq30+puScwaJUEGfVID
- tl7N8lzg7puKVYK7UfMbRqxIJ2YZ7fDYNAcI=
-X-Google-Smtp-Source: AGHT+IGBh90xF5fAJZp1y3l7EF6SZ7yXzzdHytHtWppolajQlJJOlaR0vazm0vuWTbkUR3737v6wFK/H2sNvAYOGlvQ=
-X-Received: by 2002:a9d:7444:0:b0:6dd:f075:e45b with SMTP id
- p4-20020a9d7444000000b006ddf075e45bmr13983727otk.16.1707039701906; Sun, 04
- Feb 2024 01:41:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rWa8B-0005B0-7W
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 05:53:48 -0500
+Received: from [192.168.178.59] (p5b1519e5.dip0.t-ipconnect.de [91.21.25.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 5286BDA0D0C
+ for <qemu-devel@nongnu.org>; Sun,  4 Feb 2024 11:53:43 +0100 (CET)
+Message-ID: <5bf900f2-7fae-4ce8-a4f5-8bc67983e905@weilnetz.de>
+Date: Sun, 4 Feb 2024 11:53:42 +0100
 MIME-Version: 1.0
-References: <20240113012741.54664-1-masscry@gmail.com>
-In-Reply-To: <20240113012741.54664-1-masscry@gmail.com>
-From: =?UTF-8?B?0KLQuNC80YPRgA==?= <masscry@gmail.com>
-Date: Sun, 4 Feb 2024 12:41:31 +0300
-Message-ID: <CABH+J_76pW0-XQVUsJ+7faK-gCVaoa7DScDcdHmcZxdc25GC5g@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fix pointer arithmetic in indirect read for
- libvhost-user and libvduse
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000000cbb5306108b27c1"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=masscry@gmail.com; helo=mail-ot1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+To: qemu-devel <qemu-devel@nongnu.org>
+Subject: GPL 3.0 in TCG test code
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,113 +94,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000cbb5306108b27c1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Dear all,
 
-Hello, I am very sorry for bothering community on a such minor problem
-again, but I got no response for a few weeks, so maybe I have started
-thread on a wrong mailing list, so I made an issue in gitlab issue tracker:
-https://gitlab.com/qemu-project/qemu/-/issues/2149 referencing this thread.
+some QEMU code under tests/tcg uses GPL 3.0 or later:
 
-Maybe, it would help attract proper eyes to such a simple problem, so no
-one bothers in trying to fix it, albeit it lives in the codebase for some
-time already and is being copied around.
+tests/tcg/aarch64/semicall.h: * SPDX-License-Identifier: GPL-3.0-or-later
+tests/tcg/arm/semicall.h: * SPDX-License-Identifier: GPL-3.0-or-later
+tests/tcg/i386/system/boot.S: * SPDX-License-Identifier: GPL-3.0-or-later
+tests/tcg/multiarch/arm-compat-semi/semiconsole.c: * 
+SPDX-License-Identifier: GPL-3.0-or-later
+tests/tcg/multiarch/arm-compat-semi/semihosting.c: * 
+SPDX-License-Identifier: GPL-3.0-or-later
+tests/tcg/multiarch/float_convd.c: * SPDX-License-Identifier: 
+GPL-3.0-or-later
+tests/tcg/multiarch/float_convs.c: * SPDX-License-Identifier: 
+GPL-3.0-or-later
+tests/tcg/multiarch/float_helpers.h: * SPDX-License-Identifier: 
+GPL-3.0-or-later
+tests/tcg/multiarch/float_madds.c: * SPDX-License-Identifier: 
+GPL-3.0-or-later
+tests/tcg/multiarch/libs/float_helpers.c: * SPDX-License-Identifier: 
+GPL-3.0-or-later
+tests/tcg/riscv64/semicall.h: * SPDX-License-Identifier: GPL-3.0-or-later
+tests/tcg/x86_64/system/boot.S: * SPDX-License-Identifier: GPL-3.0-or-later
 
-Sincerely,
-Temir.
+I don't think that there is a conflict with the QEMU license (GPL 2.0 or 
+later) because that code is only used in tests.
 
-=D1=81=D0=B1, 13 =D1=8F=D0=BD=D0=B2. 2024=E2=80=AF=D0=B3. =D0=B2 04:28, Tem=
-ir Zharaspayev <masscry@gmail.com>:
+But maybe it should be mentioned in LICENSE?
 
-> Hello! I have found a problem with virtqueue_read_indirect_desc function,
-> which
-> was advancing pointer to struct as it was a byte pointer, so every elemen=
-t
-> comming after first chunk would be copied somewhere out of buffer.
->
-> As I understand this is cold path, but nevertheless worth fixing.
->
-> Also, exacly same problem in vduse_queue_read_indirect_desc function,
-> because
-> as I understand it is a copy of virtqueue_read_indirect_desc with vduse
-> backend.
->
-> I was not sure if element of scattered buffer may end in the middle of
-> vring_desc struct data, so instead of writing
-> desc +=3D read_len/sizeof(struct vring_desc)
-> have implemented fix with proper byte pointer arithmetic.
->
-> Sincerely,
-> Temir.
->
-> Temir Zharaspayev (2):
->   libvhost-user: Fix pointer arithmetic in indirect read
->   libvduse: Fix pointer arithmetic in indirect read
->
->  subprojects/libvduse/libvduse.c           | 11 ++++++-----
->  subprojects/libvhost-user/libvhost-user.c | 11 ++++++-----
->  2 files changed, 12 insertions(+), 10 deletions(-)
->
-> --
-> 2.34.1
->
->
-
---0000000000000cbb5306108b27c1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hello, I am very sorry for bothering community on a s=
-uch minor problem again, but I got no response for a few weeks, so maybe I =
-have started thread on a wrong mailing list, so I made an issue in gitlab i=
-ssue tracker: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2149=
-">https://gitlab.com/qemu-project/qemu/-/issues/2149</a> referencing this t=
-hread.<br></div><div><br></div><div>Maybe, it would help attract proper eye=
-s to such a simple problem, so no one bothers in trying to fix it, albeit i=
-t lives in the codebase for some time already and is being copied around.</=
-div><div><br></div><div>Sincerely,</div><div>Temir.<br></div></div><br><div=
- class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=D1=81=D0=B1, =
-13 =D1=8F=D0=BD=D0=B2. 2024=E2=80=AF=D0=B3. =D0=B2 04:28, Temir Zharaspayev=
- &lt;<a href=3D"mailto:masscry@gmail.com">masscry@gmail.com</a>&gt;:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">Hello! I have found a =
-problem with virtqueue_read_indirect_desc function, which<br>
-was advancing pointer to struct as it was a byte pointer, so every element<=
-br>
-comming after first chunk would be copied somewhere out of buffer.<br>
-<br>
-As I understand this is cold path, but nevertheless worth fixing.<br>
-<br>
-Also, exacly same problem in vduse_queue_read_indirect_desc function, becau=
-se<br>
-as I understand it is a copy of virtqueue_read_indirect_desc with vduse<br>
-backend.<br>
-<br>
-I was not sure if element of scattered buffer may end in the middle of<br>
-vring_desc struct data, so instead of writing<br>
-desc +=3D read_len/sizeof(struct vring_desc)<br>
-have implemented fix with proper byte pointer arithmetic.<br>
-<br>
-Sincerely,<br>
-Temir.<br>
-<br>
-Temir Zharaspayev (2):<br>
-=C2=A0 libvhost-user: Fix pointer arithmetic in indirect read<br>
-=C2=A0 libvduse: Fix pointer arithmetic in indirect read<br>
-<br>
-=C2=A0subprojects/libvduse/libvduse.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0| 11 ++++++-----<br>
-=C2=A0subprojects/libvhost-user/libvhost-user.c | 11 ++++++-----<br>
-=C2=A02 files changed, 12 insertions(+), 10 deletions(-)<br>
-<br>
--- <br>
-2.34.1<br>
-<br>
-</blockquote></div>
-
---0000000000000cbb5306108b27c1--
+Regards,
+Stefan
 
