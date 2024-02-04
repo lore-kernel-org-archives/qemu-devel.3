@@ -4,82 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8E3C4828F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:48:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC3DC4828D
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWRc6-0007lA-Tz; Sat, 03 Feb 2024 20:48:06 -0500
+	id 1rWRiZ-0000bI-Sc; Sat, 03 Feb 2024 20:54:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRc4-0007l2-Of
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:48:04 -0500
-Received: from mail-io1-xd2f.google.com ([2607:f8b0:4864:20::d2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRc2-0007vG-VZ
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:48:04 -0500
-Received: by mail-io1-xd2f.google.com with SMTP id
- ca18e2360f4ac-7bed9fb159fso143331539f.1
- for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 17:48:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707011280; x=1707616080; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M9Af0JKhIyYtTtnZCpBqVwVTAUcYQy3gvkAHi8QOUoM=;
- b=IneB11doX3N7LsuU08ffYKcgrhSlrQmxLYnoctF00nZsi4cRsniTrmJL7x1+c0co5K
- 2m5OHeZjCxftPFIUBYKgWpW4WvJwfYWv/jD9LEBXuwy4VqSzwuHlWQdLpHki5QnwiFIm
- snH1jO5IM5pTp64PJCq5LPYXWHDEM+BrONaLhAEcWgut89LuFgwh6wfyGRbJGQCIIGkd
- KkrlpA8ayYUKnSjcjxafRb9vHyiqMiKhozgC5k/7f/THTy6SgOIadpMlxN3+yVnH0Ii7
- MWyfKFi5va/IZX/FpY0nAda6BDU2ySPu+3e/eUujYUVeNkw4OLAvQwe1iHnHoLuX8+nW
- Xm4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707011280; x=1707616080;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M9Af0JKhIyYtTtnZCpBqVwVTAUcYQy3gvkAHi8QOUoM=;
- b=WH4u0tYrai33UEHZTUrrmk1nK3lBawJUP9CNa/wWEbKF4uMv5TjT3HMgWz8uUlGk3Q
- j/bdLwwOIeacnR/9h3Gs0tREzerDEWSd0u19GEEt41XneUaOkAE2Gn4nYb33WZVXbefy
- SR9R7ScObyXEbHe6Wb4OoarqQ7UF1cAktCLExCuf6iLPGlBRFH6ReNyG3OsrCgJde3qP
- pVosOOv1hxHHmBWPgCr6CwpybzHC9Sg6qi9F5SOMtVAjAtHOSoGthV0yzghICQeK7y8e
- r+mxkX7/G0/egFYEIU0ttJgg0l9tfNv0sE9QM+HIpqpkdI6bt+fI13Tz2uyn6ENXGl+Q
- O/xA==
-X-Gm-Message-State: AOJu0YxTC8cQpg1D2w1COLMuSVhnObIDlaa6HZDaFyE+alAIBbS+HOSI
- ONIAO/gLDPnlNZ3bAumD1/cetzZbaLwJ5+O1jDxziPoJK1DBRGTnEBNXJIPZVWndKArFz/JTM6c
- jOrcSrGDHrmz4pAxBfHO2JHrEO6A=
-X-Google-Smtp-Source: AGHT+IHhLZ7gp+WUiNr/KUUpNSXh0IS9zADQMDsfWjHkNGW21dOg3hgWYVdB4gGfLn7ituOT0V2XJ9zpnU3ira5e/54=
-X-Received: by 2002:a5d:8acf:0:b0:7bf:fd6a:dba4 with SMTP id
- e15-20020a5d8acf000000b007bffd6adba4mr14312858iot.5.1707011279753; Sat, 03
- Feb 2024 17:47:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1rWRiX-0000bA-NP
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:54:45 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1rWRiU-00008D-LJ
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:54:45 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8DxK+la7r5lEX4KAA--.11309S3;
+ Sun, 04 Feb 2024 09:54:34 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8DxdMxY7r5lsxgvAA--.64499S2; 
+ Sun, 04 Feb 2024 09:54:32 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Andrea Bolognani <abologna@redhat.com>, maobibo@loongson.cn,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, zhaotianrui@loongson.cn
+Subject: [PATCH] loongarch: Change the UEFI loading mode to loongarch
+Date: Sun,  4 Feb 2024 09:54:30 +0800
+Message-Id: <20240204015430.162509-1-lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-11-david@redhat.com>
-In-Reply-To: <20240202215332.118728-11-david@redhat.com>
-From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Sat, 3 Feb 2024 20:47:49 -0500
-Message-ID: <CAFubqFvfe5nZusDaSTVbLJ5rmpE2OGx_PyT=D1PSSdSS4HZsTg@mail.gmail.com>
-Subject: Re: [PATCH v1 10/15] libvhost-user: Factor out search for memory
- region by GPA and simplify
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Germano Veit Michel <germano@redhat.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2f;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8DxdMxY7r5lsxgvAA--.64499S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,164 +65,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 2, 2024 at 4:54=E2=80=AFPM David Hildenbrand <david@redhat.com>=
- wrote:
->
-> Memory regions cannot overlap, and if we ever hit that case something
-> would be really flawed.
->
-> For example, when vhost code in QEMU decides to increase the size of memo=
-ry
-> regions to cover full huge pages, it makes sure to never create overlaps,
-> and if there would be overlaps, it would bail out.
->
-> QEMU commits 48d7c9757749 ("vhost: Merge sections added to temporary
-> list"), c1ece84e7c93 ("vhost: Huge page align and merge") and
-> e7b94a84b6cb ("vhost: Allow adjoining regions") added and clarified that
-> handling and how overlaps are impossible.
->
-> Consequently, each GPA can belong to at most one memory region, and
-> everything else doesn't make sense. Let's factor out our search to prepar=
-e
-> for further changes.
->
-> Signed-off-by: David Hildenbrand <david@redhat.com>
+The UEFI loading mode in loongarch is very different
+from that in other architectures:loongarch's UEFI code
+is in rom, while other architectures' UEFI code is in flash.
 
-Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
+loongarch UEFI can be loaded as follows:
+-machine virt,pflash=pflash0-format
+-bios ./QEMU_EFI.fd
 
-> ---
->  subprojects/libvhost-user/libvhost-user.c | 79 +++++++++++++----------
->  1 file changed, 45 insertions(+), 34 deletions(-)
->
-> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libv=
-host-user/libvhost-user.c
-> index 22154b217f..d036b54ed0 100644
-> --- a/subprojects/libvhost-user/libvhost-user.c
-> +++ b/subprojects/libvhost-user/libvhost-user.c
-> @@ -195,30 +195,47 @@ vu_panic(VuDev *dev, const char *msg, ...)
->       */
->  }
->
-> +/* Search for a memory region that covers this guest physical address. *=
-/
-> +static VuDevRegion *
-> +vu_gpa_to_mem_region(VuDev *dev, uint64_t guest_addr)
-> +{
-> +    unsigned int i;
-> +
-> +    /*
-> +     * Memory regions cannot overlap in guest physical address space. Ea=
-ch
-> +     * GPA belongs to exactly one memory region, so there can only be on=
-e
-> +     * match.
-> +     */
-> +    for (i =3D 0; i < dev->nregions; i++) {
-> +        VuDevRegion *cur =3D &dev->regions[i];
-> +
-> +        if (guest_addr >=3D cur->gpa && guest_addr < cur->gpa + cur->siz=
-e) {
-> +            return cur;
-> +        }
-> +    }
-> +    return NULL;
-> +}
-> +
->  /* Translate guest physical address to our virtual address.  */
->  void *
->  vu_gpa_to_va(VuDev *dev, uint64_t *plen, uint64_t guest_addr)
->  {
-> -    unsigned int i;
-> +    VuDevRegion *r;
->
->      if (*plen =3D=3D 0) {
->          return NULL;
->      }
->
-> -    /* Find matching memory region.  */
-> -    for (i =3D 0; i < dev->nregions; i++) {
-> -        VuDevRegion *r =3D &dev->regions[i];
-> -
-> -        if ((guest_addr >=3D r->gpa) && (guest_addr < (r->gpa + r->size)=
-)) {
-> -            if ((guest_addr + *plen) > (r->gpa + r->size)) {
-> -                *plen =3D r->gpa + r->size - guest_addr;
-> -            }
-> -            return (void *)(uintptr_t)
-> -                guest_addr - r->gpa + r->mmap_addr + r->mmap_offset;
-> -        }
-> +    r =3D vu_gpa_to_mem_region(dev, guest_addr);
-> +    if (!r) {
-> +        return NULL;
->      }
->
-> -    return NULL;
-> +    if ((guest_addr + *plen) > (r->gpa + r->size)) {
-> +        *plen =3D r->gpa + r->size - guest_addr;
-> +    }
-> +    return (void *)(uintptr_t)guest_addr - r->gpa + r->mmap_addr +
-> +           r->mmap_offset;
->  }
->
->  /* Translate qemu virtual address to our virtual address.  */
-> @@ -854,8 +871,8 @@ static inline bool reg_equal(VuDevRegion *vudev_reg,
->  static bool
->  vu_rem_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
->      VhostUserMemoryRegion m =3D vmsg->payload.memreg.region, *msg_region=
- =3D &m;
-> -    unsigned int i;
-> -    bool found =3D false;
-> +    unsigned int idx;
-> +    VuDevRegion *r;
->
->      if (vmsg->fd_num > 1) {
->          vmsg_close_fds(vmsg);
-> @@ -882,28 +899,22 @@ vu_rem_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
->      DPRINT("    mmap_offset      0x%016"PRIx64"\n",
->             msg_region->mmap_offset);
->
-> -    for (i =3D 0; i < dev->nregions; i++) {
-> -        if (reg_equal(&dev->regions[i], msg_region)) {
-> -            VuDevRegion *r =3D &dev->regions[i];
-> -
-> -            munmap((void *)(uintptr_t)r->mmap_addr, r->size + r->mmap_of=
-fset);
-> -
-> -            /* Shift all affected entries by 1 to close the hole at inde=
-x. */
-> -            memmove(dev->regions + i, dev->regions + i + 1,
-> -                    sizeof(VuDevRegion) * (dev->nregions - i - 1));
-> -            DPRINT("Successfully removed a region\n");
-> -            dev->nregions--;
-> -            i--;
-> -
-> -            found =3D true;
-> -            break;
-> -        }
-> -    }
-> -
-> -    if (!found) {
-> +    r =3D vu_gpa_to_mem_region(dev, msg_region->guest_phys_addr);
-> +    if (!r || !reg_equal(r, msg_region)) {
-> +        vmsg_close_fds(vmsg);
->          vu_panic(dev, "Specified region not found\n");
-> +        return false;
->      }
->
-> +    munmap((void *)(uintptr_t)r->mmap_addr, r->size + r->mmap_offset);
-> +
-> +    idx =3D r - dev->regions;
-> +    assert(idx < dev->nregions);
-> +    /* Shift all affected entries by 1 to close the hole. */
-> +    memmove(r, r + 1, sizeof(VuDevRegion) * (dev->nregions - idx - 1));
-> +    DPRINT("Successfully removed a region\n");
-> +    dev->nregions--;
-> +
->      vmsg_close_fds(vmsg);
->
->      return false;
-> --
-> 2.43.0
->
->
+Other architectures load UEFI using the following methods:
+-machine virt,pflash0=pflash0-format,pflash1=pflash1-format
+
+loongarch's UEFI loading method makes qemu and libvirt incompatible
+when using NVRAM, and the cost of loongarch's current loading method
+far outweighs the benefits, so we decided to use the same UEFI loading
+scheme as other architectures.
+
+Cc: Andrea Bolognani <abologna@redhat.com>
+Cc: maobibo@loongson.cn
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Song Gao <gaosong@loongson.cn>
+Cc: zhaotianrui@loongson.cn
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+---
+ hw/loongarch/acpi-build.c   |  29 +++++++++--
+ hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
+ include/hw/loongarch/virt.h |   8 +--
+ 3 files changed, 106 insertions(+), 32 deletions(-)
+
+diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+index 730bc4a748..308a233e47 100644
+--- a/hw/loongarch/acpi-build.c
++++ b/hw/loongarch/acpi-build.c
+@@ -314,16 +314,39 @@ static void build_pci_device_aml(Aml *scope, LoongArchMachineState *lams)
+ static void build_flash_aml(Aml *scope, LoongArchMachineState *lams)
+ {
+     Aml *dev, *crs;
++    MemoryRegion *flash_mem;
+ 
+-    hwaddr flash_base = VIRT_FLASH_BASE;
+-    hwaddr flash_size = VIRT_FLASH_SIZE;
++    hwaddr flash0_base;
++    hwaddr flash0_size;
++
++    hwaddr flash1_base;
++    hwaddr flash1_size;
++
++    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
++    flash0_base = flash_mem->addr;
++    flash0_size = flash_mem->size;
++
++    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
++    flash1_base = flash_mem->addr;
++    flash1_size = flash_mem->size;
+ 
+     dev = aml_device("FLS0");
+     aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
+     aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+ 
+     crs = aml_resource_template();
+-    aml_append(crs, aml_memory32_fixed(flash_base, flash_size, AML_READ_WRITE));
++    aml_append(crs, aml_memory32_fixed(flash0_base, flash0_size,
++                                       AML_READ_WRITE));
++    aml_append(dev, aml_name_decl("_CRS", crs));
++    aml_append(scope, dev);
++
++    dev = aml_device("FLS1");
++    aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
++    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
++
++    crs = aml_resource_template();
++    aml_append(crs, aml_memory32_fixed(flash1_base, flash1_size,
++                                       AML_READ_WRITE));
+     aml_append(dev, aml_name_decl("_CRS", crs));
+     aml_append(scope, dev);
+ }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index c9a680e61a..79dff497da 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -54,7 +54,9 @@ struct loaderparams {
+     const char *initrd_filename;
+ };
+ 
+-static void virt_flash_create(LoongArchMachineState *lams)
++static PFlashCFI01 *virt_flash_create1(LoongArchMachineState *lams,
++                                       const char *name,
++                                       const char *alias_prop_name)
+ {
+     DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
+ 
+@@ -66,45 +68,78 @@ static void virt_flash_create(LoongArchMachineState *lams)
+     qdev_prop_set_uint16(dev, "id1", 0x18);
+     qdev_prop_set_uint16(dev, "id2", 0x00);
+     qdev_prop_set_uint16(dev, "id3", 0x00);
+-    qdev_prop_set_string(dev, "name", "virt.flash");
+-    object_property_add_child(OBJECT(lams), "virt.flash", OBJECT(dev));
+-    object_property_add_alias(OBJECT(lams), "pflash",
++    qdev_prop_set_string(dev, "name", name);
++    object_property_add_child(OBJECT(lams), name, OBJECT(dev));
++    object_property_add_alias(OBJECT(lams), alias_prop_name,
+                               OBJECT(dev), "drive");
++    return PFLASH_CFI01(dev);
++}
+ 
+-    lams->flash = PFLASH_CFI01(dev);
++static void virt_flash_create(LoongArchMachineState *lams)
++{
++    lams->flash[0] = virt_flash_create1(lams, "virt.flash0", "pflash0");
++    lams->flash[1] = virt_flash_create1(lams, "virt.flash1", "pflash1");
+ }
+ 
+-static void virt_flash_map(LoongArchMachineState *lams,
+-                           MemoryRegion *sysmem)
++static void virt_flash_map1(PFlashCFI01 *flash,
++                            hwaddr base, hwaddr size,
++                            MemoryRegion *sysmem)
+ {
+-    PFlashCFI01 *flash = lams->flash;
+     DeviceState *dev = DEVICE(flash);
+-    hwaddr base = VIRT_FLASH_BASE;
+-    hwaddr size = VIRT_FLASH_SIZE;
++    BlockBackend *blk;
++    hwaddr real_size = size;
++
++    blk = pflash_cfi01_get_blk(flash);
++    if (blk) {
++        real_size = blk_getlength(blk);
++        assert(real_size && real_size <= size);
++    }
+ 
+-    assert(QEMU_IS_ALIGNED(size, VIRT_FLASH_SECTOR_SIZE));
+-    assert(size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
++    assert(QEMU_IS_ALIGNED(real_size, VIRT_FLASH_SECTOR_SIZE));
++    assert(real_size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
+ 
+-    qdev_prop_set_uint32(dev, "num-blocks", size / VIRT_FLASH_SECTOR_SIZE);
++    qdev_prop_set_uint32(dev, "num-blocks", real_size / VIRT_FLASH_SECTOR_SIZE);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     memory_region_add_subregion(sysmem, base,
+                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
++}
+ 
++static void virt_flash_map(LoongArchMachineState *lams,
++                           MemoryRegion *sysmem)
++{
++    PFlashCFI01 *flash0 = lams->flash[0];
++    PFlashCFI01 *flash1 = lams->flash[1];
++
++    virt_flash_map1(flash0, VIRT_FLASH0_BASE, VIRT_FLASH0_SIZE, sysmem);
++    virt_flash_map1(flash1, VIRT_FLASH1_BASE, VIRT_FLASH1_SIZE, sysmem);
+ }
+ 
+ static void fdt_add_flash_node(LoongArchMachineState *lams)
+ {
+     MachineState *ms = MACHINE(lams);
+     char *nodename;
++    MemoryRegion *flash_mem;
++
++    hwaddr flash0_base;
++    hwaddr flash0_size;
+ 
+-    hwaddr flash_base = VIRT_FLASH_BASE;
+-    hwaddr flash_size = VIRT_FLASH_SIZE;
++    hwaddr flash1_base;
++    hwaddr flash1_size;
+ 
+-    nodename = g_strdup_printf("/flash@%" PRIx64, flash_base);
++    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
++    flash0_base = flash_mem->addr;
++    flash0_size = flash_mem->size;
++
++    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
++    flash1_base = flash_mem->addr;
++    flash1_size = flash_mem->size;
++
++    nodename = g_strdup_printf("/flash@%" PRIx64, flash0_base);
+     qemu_fdt_add_subnode(ms->fdt, nodename);
+     qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "cfi-flash");
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+-                                 2, flash_base, 2, flash_size);
++                                 2, flash0_base, 2, flash0_size,
++                                 2, flash1_base, 2, flash1_size);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "bank-width", 4);
+     g_free(nodename);
+ }
+@@ -639,12 +674,32 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
+ {
+     char *filename = MACHINE(lams)->firmware;
+     char *bios_name = NULL;
+-    int bios_size;
++    int bios_size, i;
++    BlockBackend *pflash_blk0;
++    MemoryRegion *mr;
+ 
+     lams->bios_loaded = false;
+ 
++    /* Map legacy -drive if=pflash to machine properties */
++    for (i = 0; i < ARRAY_SIZE(lams->flash); i++) {
++        pflash_cfi01_legacy_drive(lams->flash[i],
++                                  drive_get(IF_PFLASH, 0, i));
++    }
++
+     virt_flash_map(lams, get_system_memory());
+ 
++    pflash_blk0 = pflash_cfi01_get_blk(lams->flash[0]);
++
++    if (pflash_blk0) {
++        if (filename) {
++            error_report("cannot use both '-bios' and '-drive if=pflash'"
++                         "options at once");
++            exit(1);
++        }
++        lams->bios_loaded = true;
++        return;
++    }
++
+     if (filename) {
+         bios_name = qemu_find_file(QEMU_FILE_TYPE_BIOS, filename);
+         if (!bios_name) {
+@@ -652,21 +707,15 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
+             exit(1);
+         }
+ 
+-        bios_size = load_image_targphys(bios_name, VIRT_BIOS_BASE, VIRT_BIOS_SIZE);
++        mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(lams->flash[0]), 0);
++        bios_size = load_image_mr(bios_name, mr);
+         if (bios_size < 0) {
+             error_report("Could not load ROM image '%s'", bios_name);
+             exit(1);
+         }
+-
+         g_free(bios_name);
+-
+-        memory_region_init_ram(&lams->bios, NULL, "loongarch.bios",
+-                               VIRT_BIOS_SIZE, &error_fatal);
+-        memory_region_set_readonly(&lams->bios, true);
+-        memory_region_add_subregion(get_system_memory(), VIRT_BIOS_BASE, &lams->bios);
+         lams->bios_loaded = true;
+     }
+-
+ }
+ 
+ static void reset_load_elf(void *opaque)
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index 6ef9a92394..d1fba1204e 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -20,8 +20,10 @@
+ #define VIRT_BIOS_BASE          0x1c000000UL
+ #define VIRT_BIOS_SIZE          (4 * MiB)
+ #define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
+-#define VIRT_FLASH_BASE         0x1d000000UL
+-#define VIRT_FLASH_SIZE         (16 * MiB)
++#define VIRT_FLASH0_BASE        VIRT_BIOS_BASE
++#define VIRT_FLASH0_SIZE        VIRT_BIOS_SIZE
++#define VIRT_FLASH1_BASE        0x1d000000UL
++#define VIRT_FLASH1_SIZE        (16 * MiB)
+ 
+ #define VIRT_LOWMEM_BASE        0
+ #define VIRT_LOWMEM_SIZE        0x10000000
+@@ -49,7 +51,7 @@ struct LoongArchMachineState {
+     int          fdt_size;
+     DeviceState *platform_bus_dev;
+     PCIBus       *pci_bus;
+-    PFlashCFI01  *flash;
++    PFlashCFI01  *flash[2];
+     MemoryRegion system_iocsr;
+     MemoryRegion iocsr_mem;
+     AddressSpace as_iocsr;
+-- 
+2.39.1
+
 
