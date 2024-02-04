@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43D0C4828D
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F87C4828F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWRQf-0001wE-07; Sat, 03 Feb 2024 20:36:17 -0500
+	id 1rWRWs-0003Tg-1i; Sat, 03 Feb 2024 20:42:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRQd-0001vF-CW
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:36:15 -0500
-Received: from mail-io1-xd31.google.com ([2607:f8b0:4864:20::d31])
+ id 1rWRWn-0003TS-Rr
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:42:39 -0500
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRQb-0005x6-QA
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:36:15 -0500
-Received: by mail-io1-xd31.google.com with SMTP id
- ca18e2360f4ac-7c2ca431146so33158539f.1
- for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 17:36:13 -0800 (PST)
+ id 1rWRWm-0006lv-6Z
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:42:37 -0500
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-7beda2e6794so71230839f.1
+ for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 17:42:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707010572; x=1707615372; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707010954; x=1707615754; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PiXzMRwDEX8pUcRwUs91ZJ52FULClsguhpNQ9UK7Kao=;
- b=VMk6xNv0OeeBlbypJf43uEIqb6+26RfgIsW2Q+1iiI7MYRDEbpYtmuZ7NTAvEAGtAV
- w7o8/pwhhIKOOn3xOfunW886Evq7dDQC+ofpkkM64i/3W+u/nPQaVuiQyvXYmk9qMF9i
- +EnJQsq0IPxJG49lp7j4j7nPkmSmBdt1ZblUXux7PqLD5tY/j7r4rBE0nVDL7FYBSIsV
- t9qeswN6EfE3C0Kh9sdHG86VkWG2mGfk+p+hbL8vb3Lm3uJDL6X/kMOlX1Plmjel/7mS
- uYWCYiEXzmTsQFzeE0SDd8MCiiH+xjHIeAHEgWQAIeZhbwRN5RMaCN8T0/y3Td8kqXGH
- UWag==
+ bh=aWQrWH1CZ+JM6T3J0wi7jje2Z2XeHYcn9hJhtCfKwm8=;
+ b=PObFZWgh2RJvXZKzUIT14qJ8ckl3ZcRDlBJ/kp6WNy2nR7ONh6HCjZ8k4TYBO1Nzer
+ MpaTlQGzHKnbMlpaccjHlRMsc/rkPAT0J08I5Exyszx6paMwaaD++GR16h6GNEFQxl0T
+ 12nwQsgbsbo/nMfemjjA4tB2VPaQxuD3dhad8020cjObubiUOtrwTAe62ogMHuq4UqDN
+ GCewmcrPYJPleiZMq4BPoAwKhf48eVXpikMa93nxCysFML1v7e+yFIV7dxeXj5ell6Gx
+ gJdSurB3zQv1VdBPrvbe0R7Fx8qdHWvDL9vUcI1XadZgR5VUVmOB4oMf0J4NQC+7lv6L
+ 2cZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707010572; x=1707615372;
+ d=1e100.net; s=20230601; t=1707010954; x=1707615754;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PiXzMRwDEX8pUcRwUs91ZJ52FULClsguhpNQ9UK7Kao=;
- b=LnIMtbLEUnpwLi7OK9FN7d4jBOS9xrAWiYlOd8Abz33T3dFXb1/KMs/lD+8RdQMT9K
- dXt+EP3IBUXUyPPQadg2o2sq5DRC999XBlIgsH7gmSS7kA0K4R8+p1OWBk0w5As2AiYq
- ENq3TxDJC4HXy702JuoaPcsCNXPuBzgkcc2KlGdfFBJJI6lMlwcB1wX2hu3NIrKTPfQg
- SzExI8d9Ak3+holyRR5m5050YkixqUrF7Xd746oNbGeWnKJ+hx9WXThKdmnandU5VaiJ
- 9NBZBxpDAQ1t27xoJm0VK2iM57OzPNWwQCs7SJAlYoTSaHLRxNlpD4ikv0vy5tvHfMvY
- WDvw==
-X-Gm-Message-State: AOJu0Yz+g6hXKjKlzN86OSm3Veb7YmzJfU6iHkrc77Y+MX+c8LEG2WHZ
- 9u1k9yFxhyye6QR3eU6QflVb+JP762j6S5ZuAe5iHuq3M9QCuUtZR+PLlCP0xAcmtiJyPSnDxP/
- Cab8V54Piamjkx+KXrk09Rrpwt9E=
-X-Google-Smtp-Source: AGHT+IFtZY0CK72n32sOLv3bDifJdXCe0dGFqIjC12EZ1OwYMEeEEerLP+XNGFY2q7G/DkMGPrlM0e7mpSw2k+CYA9o=
-X-Received: by 2002:a5e:8343:0:b0:7bf:d9a4:6d0d with SMTP id
- y3-20020a5e8343000000b007bfd9a46d0dmr13797070iom.10.1707010572491; Sat, 03
- Feb 2024 17:36:12 -0800 (PST)
+ bh=aWQrWH1CZ+JM6T3J0wi7jje2Z2XeHYcn9hJhtCfKwm8=;
+ b=XiprqXLXMPHWAbsN+uzhHQAPJxGuPjYNu4pRFTkFaYAUYNE29EbF4ilIkm4Xy79eWE
+ iw1zW5IKF2fwiU4TD67OiHYmhDaunoyVfuUazK1SD9Rk4bPy0hkqfFPegqXZq9KoQO40
+ lEG37mBLBqa98Eew1ywzB1kk/72vVac/edV/GSAyxam2rstKkWIe8Ji0cFntwVrSs3as
+ OkTBdvMCcxAcXB7dAF+rQDamLWTgwJ9O7+jn2I2VcXvKVV9ai0iOEMSlo+97/8+aKRus
+ PrZWkhWZBlWNWZMWASCIeSQqXDVlJkmgkIvGRF6NmEmJe04fVmK6TI7DLgRr6wu3xlDe
+ pL0g==
+X-Gm-Message-State: AOJu0YyEhaaLSAAESicdg/+/oYz4LxdD17zYsS8ylTZEz0muRVVmpDQB
+ aD76dLUob5Skl4j9q2M/2w8Qm330RzHEF0ucTLRejvO0pG3s19Hn7+GlV+rw8NT/EdHlGp72Vi+
+ L/LyKOtXeaJmT2exNyMLvSDhMjQigfePzczxf5w==
+X-Google-Smtp-Source: AGHT+IHmGLVeEAeh+9CX6Bq68yHbjU9BrVyUgy4j7hW1mLv0jZq8VW2/KY8fVZwZzO/AKjZHbPmO4Uf//lyGxuV8ZhU=
+X-Received: by 2002:a05:6602:2d84:b0:7bf:e164:e4f1 with SMTP id
+ k4-20020a0566022d8400b007bfe164e4f1mr2035990iow.2.1707010954570; Sat, 03 Feb
+ 2024 17:42:34 -0800 (PST)
 MIME-Version: 1.0
 References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-3-david@redhat.com>
-In-Reply-To: <20240202215332.118728-3-david@redhat.com>
+ <20240202215332.118728-4-david@redhat.com>
+In-Reply-To: <20240202215332.118728-4-david@redhat.com>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Sat, 3 Feb 2024 20:36:01 -0500
-Message-ID: <CAFubqFtKZ-rm79Gp9UXfA9yXALk4047iYDsyz8iR=xgC9zkXUw@mail.gmail.com>
-Subject: Re: [PATCH v1 02/15] libvhost-user: Dynamically allocate memory for
- memory slots
+Date: Sat, 3 Feb 2024 20:42:23 -0500
+Message-ID: <CAFubqFvqSQSELnmkzj1np==L0LcSP0RR=pF_0FmcHbEY1==UwQ@mail.gmail.com>
+Subject: Re: [PATCH v1 03/15] libvhost-user: Bump up VHOST_USER_MAX_RAM_SLOTS
+ to 509
 To: David Hildenbrand <david@redhat.com>
 Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Jason Wang <jasowang@redhat.com>, 
@@ -71,8 +71,8 @@ Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d31;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,70 +98,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Feb 2, 2024 at 4:54=E2=80=AFPM David Hildenbrand <david@redhat.com>=
  wrote:
 >
-> Let's prepare for increasing VHOST_USER_MAX_RAM_SLOTS by dynamically
-> allocating dev->regions. We don't have any ABI guarantees (not
-> dynamically linked), so we can simply change the layout of VuDev.
+> Let's support up to 509 mem slots, just like vhost in the kernel usually
+> does and the rust vhost-user implementation recently [1] started doing.
+> This is required to properly support memory hotplug, either using
+> multiple DIMMs (ACPI supports up to 256) or using virtio-mem.
 >
-> Let's zero out the memory, just as we used to do.
+> The 509 used to be the KVM limit, it supported 512, but 3 were
+> used for internal purposes. Currently, KVM supports more than 512, but
+> it usually doesn't make use of more than ~260 (i.e., 256 DIMMs + boot
+> memory), except when other memory devices like PCI devices with BARs are
+> used. So, 509 seems to work well for vhost in the kernel.
+>
+> Details can be found in the QEMU change that made virtio-mem consume
+> up to 256 mem slots across all virtio-mem devices. [2]
+>
+> 509 mem slots implies 509 VMAs/mappings in the worst case (even though,
+> in practice with virtio-mem we won't be seeing more than ~260 in most
+> setups).
+>
+> With max_map_count under Linux defaulting to 64k, 509 mem slots
+> still correspond to less than 1% of the maximum number of mappings.
+> There are plenty left for the application to consume.
+>
+> [1] https://github.com/rust-vmm/vhost/pull/224
+> [2] https://lore.kernel.org/all/20230926185738.277351-1-david@redhat.com/
 >
 > Signed-off-by: David Hildenbrand <david@redhat.com>
 
 Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 
 > ---
->  subprojects/libvhost-user/libvhost-user.c | 11 +++++++++++
->  subprojects/libvhost-user/libvhost-user.h |  2 +-
->  2 files changed, 12 insertions(+), 1 deletion(-)
->
-> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libv=
-host-user/libvhost-user.c
-> index 7e515ed15d..8a5a7a2295 100644
-> --- a/subprojects/libvhost-user/libvhost-user.c
-> +++ b/subprojects/libvhost-user/libvhost-user.c
-> @@ -2171,6 +2171,8 @@ vu_deinit(VuDev *dev)
->
->      free(dev->vq);
->      dev->vq =3D NULL;
-> +    free(dev->regions);
-> +    dev->regions =3D NULL;
->  }
->
->  bool
-> @@ -2205,9 +2207,18 @@ vu_init(VuDev *dev,
->      dev->backend_fd =3D -1;
->      dev->max_queues =3D max_queues;
->
-> +    dev->regions =3D malloc(VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regio=
-ns[0]));
-> +    if (!dev->regions) {
-> +        DPRINT("%s: failed to malloc mem regions\n", __func__);
-> +        return false;
-> +    }
-> +    memset(dev->regions, 0, VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regio=
-ns[0]));
-> +
->      dev->vq =3D malloc(max_queues * sizeof(dev->vq[0]));
->      if (!dev->vq) {
->          DPRINT("%s: failed to malloc virtqueues\n", __func__);
-> +        free(dev->regions);
-> +        dev->regions =3D NULL;
->          return false;
->      }
+>  subprojects/libvhost-user/libvhost-user.h | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
 >
 > diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libv=
 host-user/libvhost-user.h
-> index c2352904f0..c882b4e3a2 100644
+> index c882b4e3a2..deb40e77b3 100644
 > --- a/subprojects/libvhost-user/libvhost-user.h
 > +++ b/subprojects/libvhost-user/libvhost-user.h
-> @@ -398,7 +398,7 @@ typedef struct VuDevInflightInfo {
->  struct VuDev {
->      int sock;
->      uint32_t nregions;
-> -    VuDevRegion regions[VHOST_USER_MAX_RAM_SLOTS];
-> +    VuDevRegion *regions;
->      VuVirtq *vq;
->      VuDevInflightInfo inflight_info;
->      int log_call_fd;
+> @@ -31,10 +31,12 @@
+>  #define VHOST_MEMORY_BASELINE_NREGIONS 8
+>
+>  /*
+> - * Set a reasonable maximum number of ram slots, which will be supported=
+ by
+> - * any architecture.
+> + * vhost in the kernel usually supports 509 mem slots. 509 used to be th=
+e
+> + * KVM limit, it supported 512, but 3 were used for internal purposes. T=
+his
+> + * limit is sufficient to support many DIMMs and virtio-mem in
+> + * "dynamic-memslots" mode.
+>   */
+> -#define VHOST_USER_MAX_RAM_SLOTS 32
+> +#define VHOST_USER_MAX_RAM_SLOTS 509
+>
+>  #define VHOST_USER_HDR_SIZE offsetof(VhostUserMsg, payload.u64)
+>
 > --
 > 2.43.0
 >
