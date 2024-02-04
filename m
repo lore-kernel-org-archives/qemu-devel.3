@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C61C4828D
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E786FC4828F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWRai-0006cZ-TO; Sat, 03 Feb 2024 20:46:41 -0500
+	id 1rWRbQ-0007Cm-A1; Sat, 03 Feb 2024 20:47:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRah-0006cR-Dg
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:46:39 -0500
-Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
+ id 1rWRbO-0007CP-VB
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:47:22 -0500
+Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRaf-0007cs-5g
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:46:38 -0500
-Received: by mail-io1-xd30.google.com with SMTP id
- ca18e2360f4ac-7c01af010bcso125614639f.0
- for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 17:46:36 -0800 (PST)
+ id 1rWRbM-0007o3-7d
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:47:22 -0500
+Received: by mail-io1-xd2a.google.com with SMTP id
+ ca18e2360f4ac-7c00ce1e005so121372139f.0
+ for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 17:47:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707011196; x=1707615996; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707011233; x=1707616033; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6u1x7NcZDw2wjQiIjTfHekk0nD9MsCiKZAHFMpjfJzc=;
- b=LRm2I0nG/Nhwwzu4vCAwgB/0bAsuZxC6c60Cyn16Gkm8CVVaAqBv9vT+tdtNpw62l1
- ltNSX0TqCnHsLp6qfL5qRGznOahnmnVoQ46WcUF4R460sX/qoyq6MwMJbab8AJQh68mV
- i6te+BEaCRlkDEIaPcP9BvCZnta9cC8AzjTl61WmnWd4M50y5WAyWsSEEE6SWjahsqFq
- FJVInNZ7UGqYRaflrCE8m/r/kZt/Cm5uCh7WNSZoJIXB4e9QgZf10y7wmLuUHSZHi+c1
- /D+rg5hzmw8QtjeTGRtFaP+E/wxNhjtGDk9Nr/iuLeB5ecOryKug7UHVZuLfeEq4rfUM
- 0Weg==
+ bh=HILLJBidYRCstlJ7/XUG1N3Wo6mj6lwKWyvib6/1IRc=;
+ b=KRaAv2wjXPignciX/E1cgHLILkWr+9X1LLAEVSqHQ4FAJFUpEhULZ6YhXIHjrLsF0g
+ 4zzA3uFdRH+WAXOcChUQQ+hifLiZ2bkXMNw4uf2D55U+0C6ojIagc4dm/yzaY2WrImL0
+ IxHgfmdYed23gTbKpu2/V3hyZ50ZZTf6KepxBn/2RqS6iod/ZxNXk1mnPVUls1+MSOpo
+ SNtxUr4ZAfBIxvThUEVcz4EgBR/yD899LaOQvZwa7dZxCYRkeYb1eKcsbHWHEQ+Q4YkJ
+ MigRymt7J5vHaUrl1CmaQQTmRoA+87y8uqeW8kTI2OrHT0qN4B/A1Hb1s9dDsqm5sibE
+ lzSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707011196; x=1707615996;
+ d=1e100.net; s=20230601; t=1707011233; x=1707616033;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6u1x7NcZDw2wjQiIjTfHekk0nD9MsCiKZAHFMpjfJzc=;
- b=EOxS2WCz3AEFtS986wlwk2coVBIzy/rbE8ITAF2bODMI53jDGWf0hH/SxJbdn3QGHT
- KmN2syuFenTRiwrdM1sCejemV0pby945O18tusuHffaHm/5cYH/QeVR441iY8SNU4Dn2
- d5S3ogjQKErqkr8TN+2jqKFCd17dmF0ISTSY0WYhXPRZwA+XQJZxy/eWE9Wpby52yn37
- DJiLEiGpaSMgO0Rr6N5T6VgvDwgwxIGBOv5pypKgh/o33i25QUwLJHXiMeJbixz502/u
- oFiJYFS1nnngvEr3zEF6QipUMTjoNdb1VLzWoB0+9M9vLMaWX1yem5tLfx9CU7wLPGdd
- xTWQ==
-X-Gm-Message-State: AOJu0Yxr7nNxsHH8QuxCZRsqvHv0QFnRjF8XeukbqBZIyRLMzaROHT7k
- xHfriByoqD501OummCkTu5zfR5c9utL3thnOE1NND/dJeNchpAr0l30QRU3QlfcniWDV7Y7DGty
- d4IOYKuUPwhLT7lX/eOCxmAqNEsRExaYvb6bDRQ==
-X-Google-Smtp-Source: AGHT+IFbU6m3Ci3M5HgLcUzAOM1D5ydN1pbua+INbD1jMLpoMmP8NT3jTjiJxJI3K2qm85Y4/VoRdIzWfyVIaCBhYWk=
-X-Received: by 2002:a6b:7b0a:0:b0:7c3:4950:e2d with SMTP id
- l10-20020a6b7b0a000000b007c349500e2dmr1731650iop.17.1707011196170; Sat, 03
- Feb 2024 17:46:36 -0800 (PST)
+ bh=HILLJBidYRCstlJ7/XUG1N3Wo6mj6lwKWyvib6/1IRc=;
+ b=YQtESVabAXeeCOOElnMS3gEPYwgCJKKZCO4M/7Gkl6Oj9qA9JSs5eny8CoYRwL7A+x
+ eS8nmyi/O4G1fCJehfKJVSjNGOjubkac6sUMnpQHL601yltbi0H44N7j3oUs72/uldvx
+ 75pDjV/namcEANL7Ii1qXapbCR2BnYWAaHDY39uKreF/vvL0HGDvQuOc+FcKmNz6tlP+
+ 13Ye5IQ0x3aRoJmRDAzBeAJ80t0fTIxv+yAyd8UpzeEXp4x8uW/OzzhaI3qxYk7VEgIg
+ bAy4LET7dVNSn7HuXx0ImWbxoDBP3m0oXVWrHET8t5gB96/ZX8K560jfTuDhCfkXKb7g
+ Z8+Q==
+X-Gm-Message-State: AOJu0YxN7TlTKKMJfZY8Cqv+t2xfOW33nj7BoFobwodmweeEYMWCYeaO
+ y6M5SUmsizqb5vpjp+8B3mmdPRnrxaCdASiwpyrVltqpux/kY6Yg8GP6ld8kqfs1a6dgcQA09E6
+ EHOrTWOXGHljJsvR9OaE8W2ZsQ4QuGXi1DyoGBA==
+X-Google-Smtp-Source: AGHT+IEqfCeXe/oX9q3cBwD+d4Kdzk4JIWNgShwY5lKz3KN+z0hIIfe2BFtpUdlp8OEJY/Va602tTA6/lzMuY2V1frU=
+X-Received: by 2002:a5e:a617:0:b0:7bf:5458:51a3 with SMTP id
+ q23-20020a5ea617000000b007bf545851a3mr9797093ioi.6.1707011233453; Sat, 03 Feb
+ 2024 17:47:13 -0800 (PST)
 MIME-Version: 1.0
 References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-9-david@redhat.com>
-In-Reply-To: <20240202215332.118728-9-david@redhat.com>
+ <20240202215332.118728-10-david@redhat.com>
+In-Reply-To: <20240202215332.118728-10-david@redhat.com>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Sat, 3 Feb 2024 20:46:25 -0500
-Message-ID: <CAFubqFsjG6qKkB4u6bKwFa8QGv18hW9ycUztfMSs2-u8oOL25A@mail.gmail.com>
-Subject: Re: [PATCH v1 08/15] libvhost-user: Don't zero out memory for memory
- regions
+Date: Sat, 3 Feb 2024 20:47:02 -0500
+Message-ID: <CAFubqFtLwvp4oRb1PKFqUzvr0nO5R5+9MCAc-o4Cqe4uv30GXQ@mail.gmail.com>
+Subject: Re: [PATCH v1 09/15] libvhost-user: Don't search for duplicates when
+ removing memory regions
 To: David Hildenbrand <david@redhat.com>
 Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Jason Wang <jasowang@redhat.com>, 
@@ -71,8 +71,8 @@ Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d30;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,50 +98,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Feb 2, 2024 at 4:56=E2=80=AFPM David Hildenbrand <david@redhat.com>=
  wrote:
 >
-> dev->nregions always covers only valid entries. Stop zeroing out other
-> array elements that are unused.
+> We cannot have duplicate memory regions, something would be deeply
+> flawed elsewhere. Let's just stop the search once we found an entry.
+>
+> We'll add more sanity checks when adding memory regions later.
 >
 > Signed-off-by: David Hildenbrand <david@redhat.com>
 
 Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 
 > ---
->  subprojects/libvhost-user/libvhost-user.c | 7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
+>  subprojects/libvhost-user/libvhost-user.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
 > diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libv=
 host-user/libvhost-user.c
-> index f99c888b48..e1a1b9df88 100644
+> index e1a1b9df88..22154b217f 100644
 > --- a/subprojects/libvhost-user/libvhost-user.c
 > +++ b/subprojects/libvhost-user/libvhost-user.c
-> @@ -888,13 +888,9 @@ vu_rem_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
->
->              munmap((void *)(uintptr_t)r->mmap_addr, r->size + r->mmap_of=
-fset);
->
-> -            /*
-> -             * Shift all affected entries by 1 to close the hole at inde=
-x i and
-> -             * zero out the last entry.
-> -             */
-> +            /* Shift all affected entries by 1 to close the hole at inde=
-x. */
->              memmove(dev->regions + i, dev->regions + i + 1,
->                      sizeof(VuDevRegion) * (dev->nregions - i - 1));
-> -            memset(dev->regions + dev->nregions - 1, 0, sizeof(VuDevRegi=
-on));
->              DPRINT("Successfully removed a region\n");
->              dev->nregions--;
+> @@ -896,8 +896,7 @@ vu_rem_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
 >              i--;
-> @@ -2119,7 +2115,6 @@ vu_init(VuDev *dev,
->          DPRINT("%s: failed to malloc mem regions\n", __func__);
->          return false;
->      }
-> -    memset(dev->regions, 0, VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regio=
-ns[0]));
 >
->      dev->vq =3D malloc(max_queues * sizeof(dev->vq[0]));
->      if (!dev->vq) {
+>              found =3D true;
+> -
+> -            /* Continue the search for eventual duplicates. */
+> +            break;
+>          }
+>      }
+>
 > --
 > 2.43.0
 >
