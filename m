@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E3DC48286
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 14:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56331C48286
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 16:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWdx3-0001aX-6l; Sun, 04 Feb 2024 09:58:33 -0500
+	id 1rWflY-0003h8-Vq; Sun, 04 Feb 2024 11:54:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWdx1-0001aO-UD
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 09:58:31 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWflX-0003gz-MO
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 11:54:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWdx0-0007fQ-Eb
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 09:58:31 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWflV-0006uZ-4T
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 11:54:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707058709;
+ s=mimecast20190719; t=1707065684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZXrY/cNbSwlyrBCnWZWTcSfUI8+V+orh8gZFtksz1XY=;
- b=eS1reT10r9QXSeG7U+ag5FlYNx3GNPZMYRRvLFrqLNUMeZf73/MDPrjBQDkLGeX8s+6tj+
- EzPTyW4X0E1iJ5WKFSf59ej3KBBcwkSPI3AuwskpVvapJ/+C0U3DpQh0k2/Msxd2bfo+SF
- DnU2WabfqgkyDFdow+VST5I/WAIEvHk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=flcDQt5O889XwnovuUDKpDvlNSZu91Tsur6tCcOw/zs=;
+ b=AvYGmgNIQnFn9AF+j7ck2+DxmQj6q6tI/7B5rSCu5yHBPNdhtx/8ddm823/rrvb8kWMAFf
+ CO0lSqapxYROH/wnKAokLlpKlA+SSyEq4YtaDo3M3rQc+pKWWXgm+aO7ew53vstGS71hPg
+ mp9ihrlwmmg+0jrQwIbzwICSrGQi1CQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-j1qVuEvGOnaaquK8QNV9SQ-1; Sun, 04 Feb 2024 09:58:27 -0500
-X-MC-Unique: j1qVuEvGOnaaquK8QNV9SQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-40fcb6ea753so10635835e9.1
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 06:58:26 -0800 (PST)
+ us-mta-422-WRlBlxe7O2OnxUGmyPFpTg-1; Sun, 04 Feb 2024 11:54:42 -0500
+X-MC-Unique: WRlBlxe7O2OnxUGmyPFpTg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33b28f50eadso798510f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 08:54:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707058706; x=1707663506;
+ d=1e100.net; s=20230601; t=1707065681; x=1707670481;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
+ :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZXrY/cNbSwlyrBCnWZWTcSfUI8+V+orh8gZFtksz1XY=;
- b=NvUk0TK5fPqlKCND42aoYK5ij/hDGKPVxLh/hxqn3ZtnKPlIBWubm9nTSqRh10bbV+
- k96zRDVesZsFYy8PiU3baGa3nbOyOnAG7Ff8LNyDC9WjDCbj9mcyrl4YxAv9WfnDnAHH
- 8CRp1MrbdrY1zTE3MoLeDiZSZ03yHlnLPn4/WMcq2fJzbB7c7/LKD9G5tOPGlTyk37KM
- FWHZEAV+whfQ10bus1BaYmH1KxJVoqQiFj3ecYG2C2qG2V/shWW35GC/DFVL8HKBM3pA
- H4OjDKpRW8Np9FHeWAGHq0VkpWgxVjpbafIB3XuXIUK86TAwJDz5l7IVprcUywAMnCZq
- qgAw==
-X-Gm-Message-State: AOJu0YwEb7HC8tqm0tFwrGMmczVS277kJWT6++r+FWuf3LNzjmbbJgx5
- vUA1oczV70r026x8aVpyOj4FtR29cxThZM60cLO01X9XHhNWtbXYtuBvQNoHbCyKPlkmWrveHoJ
- spBBkTj9EQN6AcUkM8xjPPP3NCVejQB7BJ0xLwlmSc+BN7CJ2yrPz
-X-Received: by 2002:a05:600c:1e17:b0:40f:bad2:6f04 with SMTP id
- ay23-20020a05600c1e1700b0040fbad26f04mr2728213wmb.1.1707058706005; 
- Sun, 04 Feb 2024 06:58:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErO+CkCWasIJz9tfSCJYQfvxCgxijA3MdMYNye79BEDzaIpxFCF4FvZYE8J1F2PXB9FlO48g==
-X-Received: by 2002:a05:600c:1e17:b0:40f:bad2:6f04 with SMTP id
- ay23-20020a05600c1e1700b0040fbad26f04mr2728204wmb.1.1707058705613; 
- Sun, 04 Feb 2024 06:58:25 -0800 (PST)
+ bh=flcDQt5O889XwnovuUDKpDvlNSZu91Tsur6tCcOw/zs=;
+ b=DZA7DpnKWoUn0a7Lv1D2sRsuXv/eU1rW5R1K+DrtFhbFnTMYIi0P+JdD0+fGY5scL8
+ kQoI3I0wX+oJl9+Jf+jH3pIusKC5Md3nM5mOBq6QJoGJYTDaJHrzB3kuGaXfTkFJnDJt
+ oSh6a/xvGm3plXJol8g8Y0sqPo0+bF+KXFuR0UydXfDOG89BwMYaLkGWfbt7SBOi+T6s
+ XU/RDGCSERLPzNPwsLRCipsDQICOooq2zfilWzLlq8oMotIVzO7O+GGgKaa4QuXPP0Si
+ othj6d+JisuGaipbSuEb8H+EBvwmjvWrrxRXsXKW4OiXjw9+Q5XgQW1Z6XONhzSK2QSR
+ 1r4w==
+X-Gm-Message-State: AOJu0YyloRjrl7I1RL0Fd4kBbs3ccrFVmDPOiqY35kj94qa7qrxBBEXY
+ KYrryaT9uBq08cbWnMJHFILcqndustWhausWBhIGvia03g23lUGF8EuvsGUCNOeOugo6E6Ibau9
+ Tzn3n+gDrPMP+57oAmKbpucxZwfur610B0RrMXKenGllZRFdXqX3Q
+X-Received: by 2002:a5d:64e6:0:b0:33b:3ced:a5e1 with SMTP id
+ g6-20020a5d64e6000000b0033b3ceda5e1mr589248wri.20.1707065681125; 
+ Sun, 04 Feb 2024 08:54:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHtTGUWdyrhhA5WFXZoV+cG6NE2KfXKaQTEGC/eyi1himkCSz1DjWKGHb+D0HOLDsooVRf/Iw==
+X-Received: by 2002:a5d:64e6:0:b0:33b:3ced:a5e1 with SMTP id
+ g6-20020a5d64e6000000b0033b3ceda5e1mr589225wri.20.1707065680618; 
+ Sun, 04 Feb 2024 08:54:40 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCWT5sf8RYr29pB8rP9VGk8VJqEBUMePH8a1KuI53ZB9WOg1YBN5yDGEk/zGmizOniQuPx/yuys1TP4wPpW5j6cvcIVdY83mWtn2ftF+6FVVhrlE++LsrsqlBqx19dYoN9aJc0I6PI4BoW4N/1wdMJZNNGVrXJoAESNAwrl1S/rFoxVGLaAteGX3cz4BaIKJfmi8idA8c64aWyrn+VA6P5+P+fsJPwR7jcKozWRSdM4=
+ AJvYcCXRkw9olOvTWHtjcTahiGLcZ1KLNiVLSG1TzvA7eL1fSdxF6y+JHDgtMwoEiWFgLCdb1eZyh0H98j0/oyn076WaC7bC8OpqNwdb3xuoFc6nZQO21GEFAcqGsqJOKlnJ2/ja4x4Tn0KDzxLCIKfu8MOp3Q==
 Received: from ?IPV6:2003:cb:c725:700:519c:c741:25de:232f?
  (p200300cbc7250700519cc74125de232f.dip0.t-ipconnect.de.
  [2003:cb:c725:700:519c:c741:25de:232f])
  by smtp.gmail.com with ESMTPSA id
- je12-20020a05600c1f8c00b0040fcaec04b8sm5954238wmb.22.2024.02.04.06.58.24
+ h3-20020a5d6883000000b0033ae5b637d4sm6245279wru.35.2024.02.04.08.54.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Feb 2024 06:58:25 -0800 (PST)
-Message-ID: <d1d8b933-c1df-416a-8e0a-fdf97262e72d@redhat.com>
-Date: Sun, 4 Feb 2024 15:58:24 +0100
+ Sun, 04 Feb 2024 08:54:40 -0800 (PST)
+Message-ID: <a4466b34-c0e0-4a80-86ea-b9af6d8c86e0@redhat.com>
+Date: Sun, 4 Feb 2024 17:54:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 14/15] libvhost-user: Dynamically remap rings after
- (temporarily?) removing memory regions
+Subject: Re: [PATCH v4 1/1] oslib-posix: initialize backend memory objects in
+ parallel
+To: Dongli Zhang <dongli.zhang@oracle.com>, Mark Kanda
+ <mark.kanda@oracle.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, berrange@redhat.com
+References: <20240131165327.3154970-1-mark.kanda@oracle.com>
+ <20240131165327.3154970-2-mark.kanda@oracle.com>
+ <8bec3d5c-03a2-02bc-ffff-4b46beeb206d@oracle.com>
 Content-Language: en-US
-To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Germano Veit Michel <germano@redhat.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>
-References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-15-david@redhat.com>
- <CAFubqFt2GV17Vdrm3_sH1j9dkgj084QDdHv57wrJg395J-JrBA@mail.gmail.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -130,7 +127,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <CAFubqFt2GV17Vdrm3_sH1j9dkgj084QDdHv57wrJg395J-JrBA@mail.gmail.com>
+In-Reply-To: <8bec3d5c-03a2-02bc-ffff-4b46beeb206d@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -158,91 +155,365 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.02.24 03:15, Raphael Norwitz wrote:
-> Someone else with more knowledge of the VQ mapping code should also review.
+On 03.02.24 23:43, Dongli Zhang wrote:
 > 
-> On Fri, Feb 2, 2024 at 4:55 PM David Hildenbrand <david@redhat.com> wrote:
+> 
+> On 1/31/24 08:53, Mark Kanda wrote:
+>> QEMU initializes preallocated backend memory as the objects are parsed from
+>> the command line. This is not optimal in some cases (e.g. memory spanning
+>> multiple NUMA nodes) because the memory objects are initialized in series.
 >>
->> Currently, we try to remap all rings whenever we add a single new memory
->> region. That doesn't quite make sense, because we already map rings when
->> setting the ring address, and panic if that goes wrong. Likely, that
->> handling was simply copied from set_mem_table code, where we actually
->> have to remap all rings.
+>> Allow the initialization to occur in parallel (asynchronously). In order to
+>> ensure optimal thread placement, asynchronous initialization requires prealloc
+>> context threads to be in use.
 >>
->> Remapping all rings might require us to walk quite a lot of memory
->> regions to perform the address translations. Ideally, we'd simply remove
->> that remapping.
->>
->> However, let's be a bit careful. There might be some weird corner cases
->> where we might temporarily remove a single memory region (e.g., resize
->> it), that would have worked for now. Further, a ring might be located on
->> hotplugged memory, and as the VM reboots, we might unplug that memory, to
->> hotplug memory before resetting the ring addresses.
->>
->> So let's unmap affected rings as we remove a memory region, and try
->> dynamically mapping the ring again when required.
->>
+>> Signed-off-by: Mark Kanda <mark.kanda@oracle.com>
 >> Signed-off-by: David Hildenbrand <david@redhat.com>
-> 
-> Acked-by: Raphael Norwitz <raphael@enfabrica.net>
-
-Thanks!
-
-> 
 >> ---
->>   subprojects/libvhost-user/libvhost-user.c | 107 ++++++++++++++++------
->>   1 file changed, 78 insertions(+), 29 deletions(-)
+>>   backends/hostmem.c     |   7 ++-
+>>   hw/virtio/virtio-mem.c |   4 +-
+>>   include/hw/qdev-core.h |   5 ++
+>>   include/qemu/osdep.h   |  18 +++++-
+>>   system/vl.c            |   9 +++
+>>   util/oslib-posix.c     | 131 +++++++++++++++++++++++++++++++----------
+>>   util/oslib-win32.c     |   8 ++-
+>>   7 files changed, 145 insertions(+), 37 deletions(-)
 >>
->> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
->> index febeb2eb89..738e84ab63 100644
->> --- a/subprojects/libvhost-user/libvhost-user.c
->> +++ b/subprojects/libvhost-user/libvhost-user.c
->> @@ -283,10 +283,75 @@ vu_remove_all_mem_regs(VuDev *dev)
->>       dev->nregions = 0;
+>> diff --git a/backends/hostmem.c b/backends/hostmem.c
+>> index 30f69b2cb5..17221e422a 100644
+>> --- a/backends/hostmem.c
+>> +++ b/backends/hostmem.c
+>> @@ -20,6 +20,7 @@
+>>   #include "qom/object_interfaces.h"
+>>   #include "qemu/mmap-alloc.h"
+>>   #include "qemu/madvise.h"
+>> +#include "hw/qdev-core.h"
+>>   
+>>   #ifdef CONFIG_NUMA
+>>   #include <numaif.h>
+>> @@ -237,7 +238,7 @@ static void host_memory_backend_set_prealloc(Object *obj, bool value,
+>>           uint64_t sz = memory_region_size(&backend->mr);
+>>   
+>>           if (!qemu_prealloc_mem(fd, ptr, sz, backend->prealloc_threads,
+>> -                               backend->prealloc_context, errp)) {
+>> +                               backend->prealloc_context, false, errp)) {
+>>               return;
+>>           }
+>>           backend->prealloc = true;
+>> @@ -323,6 +324,7 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
+>>       HostMemoryBackendClass *bc = MEMORY_BACKEND_GET_CLASS(uc);
+>>       void *ptr;
+>>       uint64_t sz;
+>> +    bool async = !phase_check(PHASE_LATE_BACKENDS_CREATED);
+>>   
+>>       if (!bc->alloc) {
+>>           return;
+>> @@ -398,7 +400,8 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
+>>       if (backend->prealloc && !qemu_prealloc_mem(memory_region_get_fd(&backend->mr),
+>>                                                   ptr, sz,
+>>                                                   backend->prealloc_threads,
+>> -                                                backend->prealloc_context, errp)) {
+>> +                                                backend->prealloc_context,
+>> +                                                async, errp)) {
+>>           return;
+>>       }
 >>   }
->>
->> +static bool
->> +map_ring(VuDev *dev, VuVirtq *vq)
+>> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+>> index 99ab989852..ffd119ebac 100644
+>> --- a/hw/virtio/virtio-mem.c
+>> +++ b/hw/virtio/virtio-mem.c
+>> @@ -605,7 +605,7 @@ static int virtio_mem_set_block_state(VirtIOMEM *vmem, uint64_t start_gpa,
+>>           int fd = memory_region_get_fd(&vmem->memdev->mr);
+>>           Error *local_err = NULL;
+>>   
+>> -        if (!qemu_prealloc_mem(fd, area, size, 1, NULL, &local_err)) {
+>> +        if (!qemu_prealloc_mem(fd, area, size, 1, NULL, false, &local_err)) {
+>>               static bool warned;
+>>   
+>>               /*
+>> @@ -1248,7 +1248,7 @@ static int virtio_mem_prealloc_range_cb(VirtIOMEM *vmem, void *arg,
+>>       int fd = memory_region_get_fd(&vmem->memdev->mr);
+>>       Error *local_err = NULL;
+>>   
+>> -    if (!qemu_prealloc_mem(fd, area, size, 1, NULL, &local_err)) {
+>> +    if (!qemu_prealloc_mem(fd, area, size, 1, NULL, false, &local_err)) {
+>>           error_report_err(local_err);
+>>           return -ENOMEM;
+>>       }
+>> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+>> index 151d968238..83dd9e2485 100644
+>> --- a/include/hw/qdev-core.h
+>> +++ b/include/hw/qdev-core.h
+>> @@ -1071,6 +1071,11 @@ typedef enum MachineInitPhase {
+>>        */
+>>       PHASE_ACCEL_CREATED,
+>>   
+>> +    /*
+>> +     * Late backend objects have been created and initialized.
+>> +     */
+>> +    PHASE_LATE_BACKENDS_CREATED,
+>> +
+>>       /*
+>>        * machine_class->init has been called, thus creating any embedded
+>>        * devices and validating machine properties.  Devices created at
+>> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>> index c9692cc314..7d359dabc4 100644
+>> --- a/include/qemu/osdep.h
+>> +++ b/include/qemu/osdep.h
+>> @@ -680,6 +680,8 @@ typedef struct ThreadContext ThreadContext;
+>>    * @area: start address of the are to preallocate
+>>    * @sz: the size of the area to preallocate
+>>    * @max_threads: maximum number of threads to use
+>> + * @tc: prealloc context threads pointer, NULL if not in use
+>> + * @async: request asynchronous preallocation, requires @tc
+>>    * @errp: returns an error if this function fails
+>>    *
+>>    * Preallocate memory (populate/prefault page tables writable) for the virtual
+>> @@ -687,10 +689,24 @@ typedef struct ThreadContext ThreadContext;
+>>    * each page in the area was faulted in writable at least once, for example,
+>>    * after allocating file blocks for mapped files.
+>>    *
+>> + * When setting @async, allocation might be performed asynchronously.
+>> + * qemu_finish_async_prealloc_mem() must be called to finish any asynchronous
+>> + * preallocation.
+>> + *
+>>    * Return: true on success, else false setting @errp with error.
+>>    */
+>>   bool qemu_prealloc_mem(int fd, char *area, size_t sz, int max_threads,
+>> -                       ThreadContext *tc, Error **errp);
+>> +                       ThreadContext *tc, bool async, Error **errp);
+>> +
+>> +/**
+>> + * qemu_finish_async_prealloc_mem:
+>> + * @errp: returns an error if this function fails
+>> + *
+>> + * Finish all outstanding asynchronous memory preallocation.
+>> + *
+>> + * Return: true on success, else false setting @errp with error.
+>> + */
+>> +bool qemu_finish_async_prealloc_mem(Error **errp);
+>>   
+>>   /**
+>>    * qemu_get_pid_name:
+>> diff --git a/system/vl.c b/system/vl.c
+>> index 788d88ea03..e6bc5d9dd9 100644
+>> --- a/system/vl.c
+>> +++ b/system/vl.c
+>> @@ -2009,6 +2009,14 @@ static void qemu_create_late_backends(void)
+>>   
+>>       object_option_foreach_add(object_create_late);
+>>   
+>> +    /*
+>> +     * Wait for any outstanding memory prealloc from created memory
+>> +     * backends to complete.
+>> +     */
+>> +    if (!qemu_finish_async_prealloc_mem(&error_fatal)) {
+>> +        exit(1);
+>> +    }
+>> +
+>>       if (tpm_init() < 0) {
+>>           exit(1);
+>>       }
+>> @@ -3695,6 +3703,7 @@ void qemu_init(int argc, char **argv)
+>>        * over memory-backend-file objects).
+>>        */
+>>       qemu_create_late_backends();
+>> +    phase_advance(PHASE_LATE_BACKENDS_CREATED);
+>>   
+>>       /*
+>>        * Note: creates a QOM object, must run only after global and
+>> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+>> index 7c297003b9..dada4722f6 100644
+>> --- a/util/oslib-posix.c
+>> +++ b/util/oslib-posix.c
+>> @@ -42,6 +42,7 @@
+>>   #include "qemu/cutils.h"
+>>   #include "qemu/units.h"
+>>   #include "qemu/thread-context.h"
+>> +#include "qemu/main-loop.h"
+>>   
+>>   #ifdef CONFIG_LINUX
+>>   #include <sys/syscall.h>
+>> @@ -63,11 +64,15 @@
+>>   
+>>   struct MemsetThread;
+>>   
+>> +static QLIST_HEAD(, MemsetContext) memset_contexts =
+>> +    QLIST_HEAD_INITIALIZER(memset_contexts);
+>> +
+>>   typedef struct MemsetContext {
+>>       bool all_threads_created;
+>>       bool any_thread_failed;
+>>       struct MemsetThread *threads;
+>>       int num_threads;
+>> +    QLIST_ENTRY(MemsetContext) next;
+>>   } MemsetContext;
+>>   
+>>   struct MemsetThread {
+>> @@ -412,19 +417,44 @@ static inline int get_memset_num_threads(size_t hpagesize, size_t numpages,
+>>       return ret;
+>>   }
+>>   
+>> +static int wait_and_free_mem_prealloc_context(MemsetContext *context)
 >> +{
->> +    vq->vring.desc = qva_to_va(dev, vq->vra.desc_user_addr);
->> +    vq->vring.used = qva_to_va(dev, vq->vra.used_user_addr);
->> +    vq->vring.avail = qva_to_va(dev, vq->vra.avail_user_addr);
+>> +    int i, ret = 0, tmp;
 >> +
->> +    DPRINT("Setting virtq addresses:\n");
->> +    DPRINT("    vring_desc  at %p\n", vq->vring.desc);
->> +    DPRINT("    vring_used  at %p\n", vq->vring.used);
->> +    DPRINT("    vring_avail at %p\n", vq->vring.avail);
+>> +    for (i = 0; i < context->num_threads; i++) {
+>> +        tmp = (uintptr_t)qemu_thread_join(&context->threads[i].pgthread);
 >> +
->> +    return !(vq->vring.desc && vq->vring.used && vq->vring.avail);
+>> +        if (tmp) {
+>> +            ret = tmp;
+>> +        }
+>> +    }
+>> +    g_free(context->threads);
+>> +    g_free(context);
+>> +    return ret;
 >> +}
 >> +
->>   static bool
+>>   static int touch_all_pages(char *area, size_t hpagesize, size_t numpages,
+>> -                           int max_threads, ThreadContext *tc,
+>> +                           int max_threads, ThreadContext *tc, bool async,
+>>                              bool use_madv_populate_write)
+>>   {
+>>       static gsize initialized = 0;
+>> -    MemsetContext context = {
+>> -        .num_threads = get_memset_num_threads(hpagesize, numpages, max_threads),
+>> -    };
+>> +    MemsetContext *context = g_malloc0(sizeof(MemsetContext));
+>>       size_t numpages_per_thread, leftover;
+>>       void *(*touch_fn)(void *);
+>> -    int ret = 0, i = 0;
+>> +    int ret, i = 0;
+>>       char *addr = area;
+>>   
+>> +    /*
+>> +     * Asynchronous preallocation is only allowed when using MADV_POPULATE_WRITE
+>> +     * and prealloc context for thread placement.
+>> +     */
+>> +    if (!use_madv_populate_write || !tc) {
+>> +        async = false;
+>> +    }
+>> +
+>> +    context->num_threads =
+>> +        get_memset_num_threads(hpagesize, numpages, max_threads);
+>> +
+>>       if (g_once_init_enter(&initialized)) {
+>>           qemu_mutex_init(&page_mutex);
+>>           qemu_cond_init(&page_cond);
+>> @@ -432,8 +462,11 @@ static int touch_all_pages(char *area, size_t hpagesize, size_t numpages,
+>>       }
+>>   
+>>       if (use_madv_populate_write) {
+>> -        /* Avoid creating a single thread for MADV_POPULATE_WRITE */
+>> -        if (context.num_threads == 1) {
+>> +        /*
+>> +         * Avoid creating a single thread for MADV_POPULATE_WRITE when
+>> +         * preallocating synchronously.
+>> +         */
+>> +        if (context->num_threads == 1 && !async) {
+>>               if (qemu_madvise(area, hpagesize * numpages,
+>>                                QEMU_MADV_POPULATE_WRITE)) {
+>>                   return -errno;
+>> @@ -445,50 +478,86 @@ static int touch_all_pages(char *area, size_t hpagesize, size_t numpages,
+>>           touch_fn = do_touch_pages;
+>>       }
+>>   
+>> -    context.threads = g_new0(MemsetThread, context.num_threads);
+>> -    numpages_per_thread = numpages / context.num_threads;
+>> -    leftover = numpages % context.num_threads;
+>> -    for (i = 0; i < context.num_threads; i++) {
+>> -        context.threads[i].addr = addr;
+>> -        context.threads[i].numpages = numpages_per_thread + (i < leftover);
+>> -        context.threads[i].hpagesize = hpagesize;
+>> -        context.threads[i].context = &context;
+>> +    context->threads = g_new0(MemsetThread, context->num_threads);
+>> +    numpages_per_thread = numpages / context->num_threads;
+>> +    leftover = numpages % context->num_threads;
+>> +    for (i = 0; i < context->num_threads; i++) {
+>> +        context->threads[i].addr = addr;
+>> +        context->threads[i].numpages = numpages_per_thread + (i < leftover);
+>> +        context->threads[i].hpagesize = hpagesize;
+>> +        context->threads[i].context = context;
+>>           if (tc) {
+>> -            thread_context_create_thread(tc, &context.threads[i].pgthread,
+>> +            thread_context_create_thread(tc, &context->threads[i].pgthread,
+>>                                            "touch_pages",
+>> -                                         touch_fn, &context.threads[i],
+>> +                                         touch_fn, &context->threads[i],
+>>                                            QEMU_THREAD_JOINABLE);
+>>           } else {
+>> -            qemu_thread_create(&context.threads[i].pgthread, "touch_pages",
+>> -                               touch_fn, &context.threads[i],
+>> +            qemu_thread_create(&context->threads[i].pgthread, "touch_pages",
+>> +                               touch_fn, &context->threads[i],
+>>                                  QEMU_THREAD_JOINABLE);
+>>           }
+>> -        addr += context.threads[i].numpages * hpagesize;
+>> +        addr += context->threads[i].numpages * hpagesize;
+>> +    }
+>> +
+>> +    if (async) {
+>> +        /*
+>> +         * async requests currently require the BQL. Add it to the list and kick
+>> +         * preallocation off during qemu_finish_async_prealloc_mem().
+>> +         */
+>> +        assert(bql_locked());
+>> +        QLIST_INSERT_HEAD(&memset_contexts, context, next);
+>> +        return 0;
+>>       }
+>>   
+>>       if (!use_madv_populate_write) {
+>> -        sigbus_memset_context = &context;
+>> +        sigbus_memset_context = context;
+>>       }
+>>   
+>>       qemu_mutex_lock(&page_mutex);
+>> -    context.all_threads_created = true;
+>> +    context->all_threads_created = true;
+>>       qemu_cond_broadcast(&page_cond);
+>>       qemu_mutex_unlock(&page_mutex);
+>>   
+>> -    for (i = 0; i < context.num_threads; i++) {
+>> -        int tmp = (uintptr_t)qemu_thread_join(&context.threads[i].pgthread);
+>> +    ret = wait_and_free_mem_prealloc_context(context);
+>>   
+>> +    if (!use_madv_populate_write) {
+>> +        sigbus_memset_context = NULL;
+>> +    }
+>> +    return ret;
+>> +}
+>> +
+>> +bool qemu_finish_async_prealloc_mem(Error **errp)
+>> +{
+>> +    int ret, tmp;
 > 
-> Consider changing the function name to indicate that it may actually map a vq?
+> The above should be initialized?
 > 
-> Maybe vu_maybe_map_vq()?
+> I did a build test and encounter:
+> 
+> In file included from ../util/oslib-posix.c:36:
+> ../util/oslib-posix.c: In function ‘qemu_finish_async_prealloc_mem’:
+> /home/libvirt/vm/software/qemu/include/qapi/error.h:334:5: error: ‘ret’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+>    334 |     error_setg_errno_internal((errp), __FILE__, __LINE__, __func__,     \
+>        |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+> ../util/oslib-posix.c:531:9: note: ‘ret’ was declared here
+>    531 |     int ret, tmp;
+>        |         ^~~
+> cc1: all warnings being treated as errors
+> ninja: build stopped: subcommand failed.
+> make: *** [Makefile:162: run-ninja] Error 1
 
-I don't think that would be really better. It's an implementation detial 
-that we try to recover in these corner cases by remapping the rings.
+Thanks! It's a false-positive, ret could only be initialized if there 
+are no contexts, but we check that right at the beginning of the function.
 
-In the majority of all cases this function will simply check whether the 
-device is broken and the vring was set up properly (which usually 
-implies mapping the rings).
+My compiler seems to realize that and does not complain.
 
-So I think in the caller:
+I fixed that up and queued the patch to
 
-if (!vu_is_vq_usable()) {
-	return;
-}
+https://github.com/davidhildenbrand/qemu.git mem-next
 
-is easier to get than:
-
-if (!vu_maybe_map_vq()) {
-	return;
-}
-
-
-Thanks!
+If there are no more comments, I'm planning on sending a patch later 
+this week.
 
 -- 
 Cheers,
