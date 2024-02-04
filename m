@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F2DC48286
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 08:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C183DC4828F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 09:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWXpw-0005Wy-9H; Sun, 04 Feb 2024 03:26:48 -0500
+	id 1rWZ0V-0006Kv-VQ; Sun, 04 Feb 2024 04:41:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1rWXpu-0005WW-An
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 03:26:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1rWXpf-0001KC-46
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 03:26:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707035189;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AiCW7noQ4mWsxLf3VXie+aglCYUebh7ZqwivJ/jyoUw=;
- b=WKPck/lL1az5LTKRaU/n/wHymnifnG2H/Qf2XmRwMFgoAek2SDMVV0aOWYhZo9cmEoWwoG
- RBG3FyfpeqGN0D7++IFR6aXSyMucOllZqDAjaaoyiToTbrEHYP3wx2JG4LIcJ66oa0lfxe
- yIFXnB7iQlG3Ml17VkbF3BA/mqc/IEA=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-TJA2c0QKO5SodMti9wb6Dw-1; Sun, 04 Feb 2024 03:26:27 -0500
-X-MC-Unique: TJA2c0QKO5SodMti9wb6Dw-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-5f6c12872fbso58927557b3.1
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 00:26:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <masscry@gmail.com>) id 1rWZ0T-0006Kd-Fo
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 04:41:46 -0500
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <masscry@gmail.com>) id 1rWZ0R-0005vN-NL
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 04:41:45 -0500
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-6e117e0fee8so1877578a34.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 01:41:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1707039702; x=1707644502; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BPQp6mp3W7B9614FksRqkI9DVfyOMDCa7deDHD6efHk=;
+ b=Fgb1DXJfEyXt+9uLVekRZt7IvPuw4aw1U0r9awyFxnXPDW5MN2S1srhzllWLDDre7k
+ xP5aunDtowq3s1c99KqORPZUNwUEisFkrpg9LijlAsW21MXfsL2niG3PvUxm6J7TWkmy
+ Y4nBt7+5AYtR65aBathSPmHw6YUSwilRCbSZm6jOWD8+gROWZoSpsJkHhWAZC/yWNFdx
+ ztb5c03amjkIjnzLc+YXpeairwqjfVaUIT32fRYfMJvemfrlEJsODhlKqumuVNcpu/oj
+ 2thYscfcX/zh96Cd2CiShGAJnM6FcH0oW2hzX/lxcJcknpueKzLwfAyR8TcCoWCzOMwW
+ uyQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707035187; x=1707639987;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AiCW7noQ4mWsxLf3VXie+aglCYUebh7ZqwivJ/jyoUw=;
- b=UOVPhzncHIap8Q3QWrTvVthd+MGTK+e9Kwo8eXDNk7zDUvzrr3gMbab/LW8kbbs+Xc
- N3rqXJlpok9OFnmXTzMqkIzUMhxDK7Z0Jzi94WuCENPAC3e7FUX1nkFnSC109X7CKyo7
- 0XnPfaHMwK+Zmc01EKKFWl5DxqJ/y7lMt+Q9haCE/T/Bvcqjk8rW3SZFp3QT+5fQgt4O
- dmo7ajVGhDaZmZSDnqPr8Dq8ah9Pl9YofqHh9VYcJZlg+cjb986Pt7LHJFALEpYqw1Dc
- 1LT2iaDqT4P43k8HT2bRncQXUjB+HB7QTadYpBvcDXW1BAcltH8UTklOn89R+K7lIfkm
- JAAw==
-X-Gm-Message-State: AOJu0YzBC39XeTjJr6I/rGurb9q71Lh/Ckjz4E7FhiwWlXevhfpwB44J
- uUJpXEsBiskpeNRdGIZ5z/D00NxJQR7tAwoCjA0azOjvy6qW5PX5D0EReDL7mduak7JADS+XSGA
- iKkNJ3vmE92l+RC5xfEz5H7mFkqU7DWFNzEltsCxrS+xVjh0xBMQy16hrM+xroTh9PL4I1KtVbH
- sJ41LRjm/H4T+0pCiL1ZdlVTcKIjI=
-X-Received: by 2002:a81:4f45:0:b0:5ff:488c:9a6a with SMTP id
- d66-20020a814f45000000b005ff488c9a6amr7505901ywb.17.1707035186910; 
- Sun, 04 Feb 2024 00:26:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEhbSzuCHM7cAMrT+xDy+DvC50Sldbj0luqURbzqdPSZve4690oQxLfCDSnHK5cG3QXffxhjpQnVc2GioXG00s=
-X-Received: by 2002:a81:4f45:0:b0:5ff:488c:9a6a with SMTP id
- d66-20020a814f45000000b005ff488c9a6amr7505894ywb.17.1707035186609; Sun, 04
- Feb 2024 00:26:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707039702; x=1707644502;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BPQp6mp3W7B9614FksRqkI9DVfyOMDCa7deDHD6efHk=;
+ b=j+qWuLJOr8p1Ink4Ah6DSCEKz2UzWHp6ed1p+yYM9RODmRU6SiWKivTqJqvuoDFQHa
+ S1rLK7GMS4gOO9Z7/3DABsidoF3zrMXfEfGwSgpNZk9sW75QkTB+y+tL+OiOsS1DOlSe
+ 6CDuubH4wA5UAfsfN92G/cI78r6EXQmfzSR1g6+089xMrtMCEsdbPEhrWYQKi3YZuU0y
+ +1AG4O2RQh33D9IHVyBuMzaH12hSw6cntDY78jfHAmckrx30zN5jGG5LOtMN92oyBFCq
+ ivYddLYOm82AQnOtH5OL1/MTO/Hevzp9ZAB6+guA7TH4kZxpL3i+COVoYZ9QHXxLhDPo
+ GXCQ==
+X-Gm-Message-State: AOJu0YyVgC3MFkCX6St49O+g3XSsH5hzAWKWiP2B1hSdTOaa4Yltlovs
+ ZDFX+OarnXOjWXQlm4Kkz7gLAQdzFW5Fu5PYgQNKCgQsOQK+4itPUvxxRq30+puScwaJUEGfVID
+ tl7N8lzg7puKVYK7UfMbRqxIJ2YZ7fDYNAcI=
+X-Google-Smtp-Source: AGHT+IGBh90xF5fAJZp1y3l7EF6SZ7yXzzdHytHtWppolajQlJJOlaR0vazm0vuWTbkUR3737v6wFK/H2sNvAYOGlvQ=
+X-Received: by 2002:a9d:7444:0:b0:6dd:f075:e45b with SMTP id
+ p4-20020a9d7444000000b006ddf075e45bmr13983727otk.16.1707039701906; Sun, 04
+ Feb 2024 01:41:41 -0800 (PST)
 MIME-Version: 1.0
-References: <20240201163324.564525-1-eric.auger@redhat.com>
-In-Reply-To: <20240201163324.564525-1-eric.auger@redhat.com>
-From: YangHang Liu <yanghliu@redhat.com>
-Date: Sun, 4 Feb 2024 16:26:15 +0800
-Message-ID: <CAGYh1E8gHXcN3OxT84-xKXvweSAEnJf+OrMLnOUOgHvJJCm-rg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] VIRTIO-IOMMU: Introduce an aw-bits option
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- jean-philippe@linaro.org, alex.williamson@redhat.com, 
- peter.maydell@linaro.org, zhenzhong.duan@intel.com, mst@redhat.com, 
- clg@redhat.com, jasowang@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=yanghliu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.137,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+References: <20240113012741.54664-1-masscry@gmail.com>
+In-Reply-To: <20240113012741.54664-1-masscry@gmail.com>
+From: =?UTF-8?B?0KLQuNC80YPRgA==?= <masscry@gmail.com>
+Date: Sun, 4 Feb 2024 12:41:31 +0300
+Message-ID: <CABH+J_76pW0-XQVUsJ+7faK-gCVaoa7DScDcdHmcZxdc25GC5g@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Fix pointer arithmetic in indirect read for
+ libvhost-user and libvduse
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000000cbb5306108b27c1"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=masscry@gmail.com; helo=mail-ot1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,87 +84,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no VFIO_MAP_DMA error when hotplug 2 E810 PFs into a VM which
-has a virtio-iommu device.
+--0000000000000cbb5306108b27c1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In addition, 21 regression tests of Tier1 level were run and all got PASS.
+Hello, I am very sorry for bothering community on a such minor problem
+again, but I got no response for a few weeks, so maybe I have started
+thread on a wrong mailing list, so I made an issue in gitlab issue tracker:
+https://gitlab.com/qemu-project/qemu/-/issues/2149 referencing this thread.
 
-Tested-by: Yanghang Liu<yanghliu@redhat.com>
+Maybe, it would help attract proper eyes to such a simple problem, so no
+one bothers in trying to fix it, albeit it lives in the codebase for some
+time already and is being copied around.
 
+Sincerely,
+Temir.
 
-On Fri, Feb 2, 2024 at 12:33=E2=80=AFAM Eric Auger <eric.auger@redhat.com> =
-wrote:
+=D1=81=D0=B1, 13 =D1=8F=D0=BD=D0=B2. 2024=E2=80=AF=D0=B3. =D0=B2 04:28, Tem=
+ir Zharaspayev <masscry@gmail.com>:
+
+> Hello! I have found a problem with virtqueue_read_indirect_desc function,
+> which
+> was advancing pointer to struct as it was a byte pointer, so every elemen=
+t
+> comming after first chunk would be copied somewhere out of buffer.
 >
-> In [1] and [2] we attempted to fix a case where a VFIO-PCI device
-> protected with a virtio-iommu is assigned to an x86 guest. On x86
-> the physical IOMMU may have an address width (gaw) of 39 or 48 bits
-> whereas the virtio-iommu exposes a 64b input address space by default.
-> Hence the guest may try to use the full 64b space and DMA MAP
-> failures may be encountered. To work around this issue we endeavoured
-> to pass usable host IOVA regions (excluding the out of range space) from
-> VFIO to the virtio-iommu device so that the virtio-iommu driver can
-> query those latter during the probe request and let the guest iommu
-> kernel subsystem carve them out.
+> As I understand this is cold path, but nevertheless worth fixing.
 >
-> However if there are several devices in the same iommu group,
-> only the reserved regions of the first one are taken into
-> account by the iommu subsystem of the guest. This generally
-> works on baremetal because devices are not going to
-> expose different reserved regions. However in our case, this
-> may prevent from taking into account the host iommu geometry.
+> Also, exacly same problem in vduse_queue_read_indirect_desc function,
+> because
+> as I understand it is a copy of virtqueue_read_indirect_desc with vduse
+> backend.
 >
-> So the simplest solution to this problem looks to introduce an
-> input address width option, aw-bits, which matches what is
-> done on the intel-iommu. By default, from now on it is set
-> to 39 bits with pc_q35 and 48 with arm virt. This replaces the
-> previous default value of 64b. So we need to introduce a compat
-> for machines older than 9.0 to behave similarly. We use
-> hw_compat_8_2 to acheive that goal.
+> I was not sure if element of scattered buffer may end in the middle of
+> vring_desc struct data, so instead of writing
+> desc +=3D read_len/sizeof(struct vring_desc)
+> have implemented fix with proper byte pointer arithmetic.
 >
-> Outstanding series [2] remains useful to let resv regions beeing
-> communicated on time before the probe request.
+> Sincerely,
+> Temir.
 >
-> [1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
->     https://lore.kernel.org/all/20231019134651.842175-1-eric.auger@redhat=
-.com/
->     - This is merged -
+> Temir Zharaspayev (2):
+>   libvhost-user: Fix pointer arithmetic in indirect read
+>   libvduse: Fix pointer arithmetic in indirect read
 >
-> [2] [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling for hot=
-plugged devices
->     https://lore.kernel.org/all/20240117080414.316890-1-eric.auger@redhat=
-.com/
->     - This is pending for review on the ML -
->
-> This series can be found at:
-> https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v2
->
-> Applied on top of [3]
-> [PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default page_siz=
-e_mask
-> https://lore.kernel.org/all/20240117132039.332273-1-eric.auger@redhat.com=
-/
->
-> History:
-> v1 -> v2
-> - Limit aw to 48b on ARM
-> - Check aw is within [32,64]
-> - Use hw_compat_8_2
->
-> Eric Auger (3):
->   virtio-iommu: Add an option to define the input range width
->   virtio-iommu: Trace domain range limits as unsigned int
->   hw: Set virtio-iommu aw-bits default value on pc_q35_9.0 and arm virt
->
->  include/hw/virtio/virtio-iommu.h | 1 +
->  hw/arm/virt.c                    | 6 ++++++
->  hw/core/machine.c                | 5 ++++-
->  hw/i386/pc.c                     | 6 ++++++
->  hw/virtio/virtio-iommu.c         | 7 ++++++-
->  hw/virtio/trace-events           | 2 +-
->  6 files changed, 24 insertions(+), 3 deletions(-)
+>  subprojects/libvduse/libvduse.c           | 11 ++++++-----
+>  subprojects/libvhost-user/libvhost-user.c | 11 ++++++-----
+>  2 files changed, 12 insertions(+), 10 deletions(-)
 >
 > --
-> 2.41.0
+> 2.34.1
+>
 >
 
+--0000000000000cbb5306108b27c1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hello, I am very sorry for bothering community on a s=
+uch minor problem again, but I got no response for a few weeks, so maybe I =
+have started thread on a wrong mailing list, so I made an issue in gitlab i=
+ssue tracker: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/2149=
+">https://gitlab.com/qemu-project/qemu/-/issues/2149</a> referencing this t=
+hread.<br></div><div><br></div><div>Maybe, it would help attract proper eye=
+s to such a simple problem, so no one bothers in trying to fix it, albeit i=
+t lives in the codebase for some time already and is being copied around.</=
+div><div><br></div><div>Sincerely,</div><div>Temir.<br></div></div><br><div=
+ class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=D1=81=D0=B1, =
+13 =D1=8F=D0=BD=D0=B2. 2024=E2=80=AF=D0=B3. =D0=B2 04:28, Temir Zharaspayev=
+ &lt;<a href=3D"mailto:masscry@gmail.com">masscry@gmail.com</a>&gt;:<br></d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">Hello! I have found a =
+problem with virtqueue_read_indirect_desc function, which<br>
+was advancing pointer to struct as it was a byte pointer, so every element<=
+br>
+comming after first chunk would be copied somewhere out of buffer.<br>
+<br>
+As I understand this is cold path, but nevertheless worth fixing.<br>
+<br>
+Also, exacly same problem in vduse_queue_read_indirect_desc function, becau=
+se<br>
+as I understand it is a copy of virtqueue_read_indirect_desc with vduse<br>
+backend.<br>
+<br>
+I was not sure if element of scattered buffer may end in the middle of<br>
+vring_desc struct data, so instead of writing<br>
+desc +=3D read_len/sizeof(struct vring_desc)<br>
+have implemented fix with proper byte pointer arithmetic.<br>
+<br>
+Sincerely,<br>
+Temir.<br>
+<br>
+Temir Zharaspayev (2):<br>
+=C2=A0 libvhost-user: Fix pointer arithmetic in indirect read<br>
+=C2=A0 libvduse: Fix pointer arithmetic in indirect read<br>
+<br>
+=C2=A0subprojects/libvduse/libvduse.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0| 11 ++++++-----<br>
+=C2=A0subprojects/libvhost-user/libvhost-user.c | 11 ++++++-----<br>
+=C2=A02 files changed, 12 insertions(+), 10 deletions(-)<br>
+<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div>
+
+--0000000000000cbb5306108b27c1--
 
