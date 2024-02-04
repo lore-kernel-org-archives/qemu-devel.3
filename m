@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A92AC48286
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 21:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EEBDC4828F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 21:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWkEs-00024G-IC; Sun, 04 Feb 2024 16:41:22 -0500
+	id 1rWkFb-0003D5-H7; Sun, 04 Feb 2024 16:42:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rWkEo-000238-9R
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 16:41:18 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1rWkFR-0002jD-3k
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 16:41:58 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rWkEm-0003W2-Od
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 16:41:17 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1d934c8f8f7so30947585ad.2
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 13:41:16 -0800 (PST)
+ id 1rWkFO-0003ar-Dg
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 16:41:56 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1d9b2400910so1721715ad.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 13:41:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707082875; x=1707687675; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707082913; x=1707687713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ql63af8QTrJWvJEiTJspYZ98jeTo0xtPlbE2bH3uphk=;
- b=gw/nLbpQ+FEkCeqFGK+JPc/TSOtb7pX07V43Wg8pUKDfXXB82il/E0MOiQ0ryc2TBZ
- O1CIlz/KZ607DS2QB4GMBGE/4u/sYAHe2LwQF62zxKcmC8zhqBlImd3ahdoRbJOyggFc
- cS9+koBkMrrHlzzn2m927nfELa4zsKgQ9214czhSKSWcU+ombl04qTe3shwJiXl7bIf9
- 2u25N5nmRlBGvqoEsun7Th4D2r+CVbwFpbjLuG+/QPsIqGFdNxnPd75J8DJlljORkwp9
- Bz+EibhHMLDN4Od/0gCmSF6qDpLwdaDMG3NvkMt5k8a/3/zhAv0zIwgF1iYdScX6o9bk
- UUCg==
+ bh=edCRhkheTbWQuXgwAiS/gonGTZ3kw+g3zID7Qd9CYvo=;
+ b=P2pMkmVleiDXoiuFTahCg5mvh2hAR+xZ09QwFEeFbTls1C+G1pf8jFYT5Uz3u5lv4S
+ S3vkFh2bNkDPAgzkCfw8yjzjVqQuhWg77uP1CU5YgeGgDWdxVLjOC9bzmZNTqvS0wf51
+ NNyZZSboJiMOy+IH2WnShGlbMh5OvtK1OQ6BAPY5dYGdL+VF96rP9QfIBkWRz6qm6018
+ 00n0JXJhsFv5U3VLIFvQGNNJooluQ4KZXNAF66sjLCsXxNaHxuqoh89o4OajZl5fb2DD
+ lwCYCCp/ENROXI+TLbKmaR2szu4IK0X9ry3q5bMQQo7ErdmosR/SOEch8dEzrqjOsys3
+ lwnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707082875; x=1707687675;
+ d=1e100.net; s=20230601; t=1707082913; x=1707687713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ql63af8QTrJWvJEiTJspYZ98jeTo0xtPlbE2bH3uphk=;
- b=BY37e/M0Ki33yHdhzRPljg1yYCnuE7esd0h8T3+5UfQdpcmYLKosCG86yuGe6GgHkB
- oyNquHht/osI2WEoV6D8vSCx79KrdlWfgwXOH4oUveTIg/K8v6IHuk6TeuOh9ycpfnJ6
- sD6+vc4/nN5IpnNyL48k7jqCeqGm0Zfmrk+IwLiIAstgGbs9ha8NkjmnoWBQzT5Ly2Iy
- XQWiVAV/EDIjFNWl1o8jnEGThHMYhvIYwMAFZPoqSkX7m9ifdaQP1JCz9E9YRv9tFvpX
- DdkDaZnoPSy2DfolisD/z/F2nxpcnAyIuCDE5VBv6pqWzX19sl7ds5XV/w/RLGaiS4is
- Ngwg==
-X-Gm-Message-State: AOJu0YwxPlP8+64uvzV9vNk+YYR7pzy4PUOmJXTc8V/ZHl//Y7ALzrUd
- jCaG0b1+ESHMdUzakNv4A4Ma+MT82bG4TsX9HlOVrVfQWL5OBYZp1o76T97nvXSDR8oUXg94Qsa
- 5IHU=
-X-Google-Smtp-Source: AGHT+IEEf5u/9NcD0Fp8CCqU4OKxh9eCmcAKSrLVCrxMdIWU0KGArbw/Pzx4p1xtcOAooEq+WcR47A==
-X-Received: by 2002:a17:902:8602:b0:1d3:45c8:bc0f with SMTP id
- f2-20020a170902860200b001d345c8bc0fmr10970356plo.46.1707082875496; 
- Sun, 04 Feb 2024 13:41:15 -0800 (PST)
+ bh=edCRhkheTbWQuXgwAiS/gonGTZ3kw+g3zID7Qd9CYvo=;
+ b=GQkCkWzlDUjaazyfTA65DS31L0xwmGmER46QFl/E/syt5abf5eucwdxGXgZlJAIrY0
+ ug9KHlhUYXXrgUFSVKKXPS/U6Yf0MqUZxej8TIh9bjk3ZXVE4ojf2+AJFDzDUTe9YCpw
+ VvR39QoxyUipuMWsMH2K+/PDynkfzuTDzO3tF+82Ddp4Edz6zRSoohNl9F4uzdPGf/Dw
+ USCCztDhERur8tbd6ey9jSHn3rU4kIRN/ZFaiDmJUbuuY4cTBvzsUUyEmZM5Ksvfpay6
+ Gv6jWd1PHZ0xt0jOFJ9fdMBpixZL3b1AacDTLEqX61coO3HNB1FuSHANXdoOghpRNNvH
+ RVVw==
+X-Gm-Message-State: AOJu0YyZ/Sxf+cLa0TJrwGNE9J3m4aGEYGMCcBaQzTIFrkVpvuW5wuCi
+ AMhjn3LGq3yGtY6NSjyDN94kIIU1KTZafnpLsVMwfQAjCiwPlozNZOh1KoDQ58XDmU+crVQnh+v
+ ehUM=
+X-Google-Smtp-Source: AGHT+IGr8HlsKi6KYTko4/mA65HOA1/HbzBY8gh89/9e1ucZCPZPpR8OhOaFE/0hZ4llU7VI6SovZQ==
+X-Received: by 2002:a17:903:41c6:b0:1d8:f6af:77db with SMTP id
+ u6-20020a17090341c600b001d8f6af77dbmr5557498ple.12.1707082913232; 
+ Sun, 04 Feb 2024 13:41:53 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCVidpJ+iI7gT50DufGL5Yz0fogQzJnYYlDnMat1HNEPWOygrhd1OQdNFQPT0psZRb2sWlmZ5G+wKa/mImin3RZb+A==
 Received: from stoup.. ([43.252.112.156]) by smtp.gmail.com with ESMTPSA id
- mf11-20020a170902fc8b00b001d8f5560503sm4953670plb.222.2024.02.04.13.41.13
+ mf11-20020a170902fc8b00b001d8f5560503sm4953670plb.222.2024.02.04.13.41.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Feb 2024 13:41:15 -0800 (PST)
+ Sun, 04 Feb 2024 13:41:52 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/39] target/alpha: Use TCG_COND_TST{EQ,NE} for BLB{C,S}
-Date: Mon,  5 Feb 2024 07:40:22 +1000
-Message-Id: <20240204214052.5639-10-richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 27/39] tcg/i386: Use TEST r,r to test 8/16/32 bits
+Date: Mon,  5 Feb 2024 07:40:40 +1000
+Message-Id: <20240204214052.5639-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240204214052.5639-1-richard.henderson@linaro.org>
 References: <20240204214052.5639-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,77 +97,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20231028194522.245170-33-richard.henderson@linaro.org>
-[PMD: Split from bigger patch, part 2/2]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20231108205247.83234-2-philmd@linaro.org>
----
- target/alpha/translate.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index e9cb623277..566adc4cd6 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -482,10 +482,10 @@ static DisasJumpType gen_bcond_internal(DisasContext *ctx, TCGCond cond,
- }
+Just like when testing against the sign bits, TEST r,r can be used when the
+immediate is 0xff, 0xff00, 0xffff, 0xffffffff.
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/i386/tcg-target.c.inc | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index 0b8c60d021..c6ba498623 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -1501,6 +1501,10 @@ static int tcg_out_cmp(TCGContext *s, TCGCond cond, TCGArg arg1,
+             tcg_out_modrm(s, OPC_TESTB | P_REXB_R, arg1, arg1);
+             return js;
+         }
++        if (arg2 == 0xff) {
++            tcg_out_modrm(s, OPC_TESTB | P_REXB_R, arg1, arg1);
++            return jz;
++        }
+         tcg_out_modrm(s, OPC_GRP3_Eb | P_REXB_RM, EXT3_TESTi, arg1);
+         tcg_out8(s, arg2);
+         return jz;
+@@ -1511,11 +1515,24 @@ static int tcg_out_cmp(TCGContext *s, TCGCond cond, TCGArg arg1,
+             tcg_out_modrm(s, OPC_TESTB, arg1 + 4, arg1 + 4);
+             return js;
+         }
++        if (arg2 == 0xff00) {
++            tcg_out_modrm(s, OPC_TESTB, arg1 + 4, arg1 + 4);
++            return jz;
++        }
+         tcg_out_modrm(s, OPC_GRP3_Eb, EXT3_TESTi, arg1 + 4);
+         tcg_out8(s, arg2 >> 8);
+         return jz;
+     }
  
- static DisasJumpType gen_bcond(DisasContext *ctx, TCGCond cond, int ra,
--                               int32_t disp, int mask)
-+                               int32_t disp)
- {
-     return gen_bcond_internal(ctx, cond, load_gpr(ctx, ra),
--                              mask, disp);
-+                              is_tst_cond(cond), disp);
- }
- 
- /* Fold -0.0 for comparison with COND.  */
-@@ -2820,35 +2820,35 @@ static DisasJumpType translate_one(DisasContext *ctx, uint32_t insn)
-         break;
-     case 0x38:
-         /* BLBC */
--        ret = gen_bcond(ctx, TCG_COND_EQ, ra, disp21, 1);
-+        ret = gen_bcond(ctx, TCG_COND_TSTEQ, ra, disp21);
-         break;
-     case 0x39:
-         /* BEQ */
--        ret = gen_bcond(ctx, TCG_COND_EQ, ra, disp21, 0);
-+        ret = gen_bcond(ctx, TCG_COND_EQ, ra, disp21);
-         break;
-     case 0x3A:
-         /* BLT */
--        ret = gen_bcond(ctx, TCG_COND_LT, ra, disp21, 0);
-+        ret = gen_bcond(ctx, TCG_COND_LT, ra, disp21);
-         break;
-     case 0x3B:
-         /* BLE */
--        ret = gen_bcond(ctx, TCG_COND_LE, ra, disp21, 0);
-+        ret = gen_bcond(ctx, TCG_COND_LE, ra, disp21);
-         break;
-     case 0x3C:
-         /* BLBS */
--        ret = gen_bcond(ctx, TCG_COND_NE, ra, disp21, 1);
-+        ret = gen_bcond(ctx, TCG_COND_TSTNE, ra, disp21);
-         break;
-     case 0x3D:
-         /* BNE */
--        ret = gen_bcond(ctx, TCG_COND_NE, ra, disp21, 0);
-+        ret = gen_bcond(ctx, TCG_COND_NE, ra, disp21);
-         break;
-     case 0x3E:
-         /* BGE */
--        ret = gen_bcond(ctx, TCG_COND_GE, ra, disp21, 0);
-+        ret = gen_bcond(ctx, TCG_COND_GE, ra, disp21);
-         break;
-     case 0x3F:
-         /* BGT */
--        ret = gen_bcond(ctx, TCG_COND_GT, ra, disp21, 0);
-+        ret = gen_bcond(ctx, TCG_COND_GT, ra, disp21);
-         break;
-     invalid_opc:
-         ret = gen_invalid(ctx);
++    if (arg2 == 0xffff) {
++        tcg_out_modrm(s, OPC_TESTL | P_DATA16, arg1, arg1);
++        return jz;
++    }
++    if (arg2 == 0xffffffffu) {
++        tcg_out_modrm(s, OPC_TESTL, arg1, arg1);
++        return jz;
++    }
++
+     if (is_power_of_2(rexw ? arg2 : (uint32_t)arg2)) {
+         int jc = (cond == TCG_COND_TSTNE ? JCC_JB : JCC_JAE);
+         int sh = ctz64(arg2);
 -- 
 2.34.1
 
