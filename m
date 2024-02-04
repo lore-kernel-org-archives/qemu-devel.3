@@ -4,90 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E74C4828F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 12:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8279C48286
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 14:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWbIx-0000ZM-9N; Sun, 04 Feb 2024 07:08:59 -0500
+	id 1rWdbs-0004oW-GI; Sun, 04 Feb 2024 09:36:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rWbIv-0000YT-Hj
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 07:08:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWdbo-0004nm-H5
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 09:36:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rWbIu-0000iF-1D
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 07:08:57 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWdbm-0003sz-1Q
+ for qemu-devel@nongnu.org; Sun, 04 Feb 2024 09:36:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707048533;
+ s=mimecast20190719; t=1707057390;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gZgd+FvMhHlMzWX6cc7WX9EVkdTvVxtVmI0BKMthI2o=;
- b=cuDmA2tKC9w8SijdgKzHuVrF65A5doPjp9rA4NTKSqDkiBkgrenKmPQAb//FReE+q+y4Kh
- I+GQnVFXA74HcNlimXV4cqkq5Jr3chuzFll8wLkvnXtZk9zvZJP01ZcgbWXTtVo3OSymYV
- YIiTHNIgh0MKjbpM+9FfwHJoLmrohyM=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=SDkM9qdjqdwgAJRX7NDpwd6+Mkk5ECioN5WdvzaIcQ8=;
+ b=EOJZQsPuKIn71EegvQoZiQEPrPfmIOFuAkvF74RvTMMjekNz9/k1AeWtmKfDoZiT11gvtX
+ 8B4Ts9JscgzbG94EJoPI9dhAZ8nJQ+h5QDmdIb2zjkYiTHCGGm00Pv5P1ItCXEmwhF1c+/
+ UtqmVOn4MTeSfaG3hm1Th4PZm5bDxGg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-480-jkFpyE6CNdKUbSArUWJ58Q-1; Sun, 04 Feb 2024 07:08:52 -0500
-X-MC-Unique: jkFpyE6CNdKUbSArUWJ58Q-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a357c92f241so207877466b.0
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 04:08:51 -0800 (PST)
+ us-mta-97-Svk-bFfSN2Wiqx8593LDLw-1; Sun, 04 Feb 2024 09:36:28 -0500
+X-MC-Unique: Svk-bFfSN2Wiqx8593LDLw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33b2badbb4eso562784f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 06:36:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707048531; x=1707653331;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1707057387; x=1707662187;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gZgd+FvMhHlMzWX6cc7WX9EVkdTvVxtVmI0BKMthI2o=;
- b=sIz8tU/ish+mIC3r8JGArXEXdE/8JeCzaoQuiTAdQFTvcCTzp/Tk8iJFr4WC4UPKyK
- +nptbjrxsg8ja+pqJIxwtTKX1wtPgMM9K9+rHZi8xkDhXTQZkg9Sgw9eK8PXxB8ujsjP
- Cc1kD+GPFHb88i3PKGocNfMIn6PmYGTlEIHCAzPXenfp6eRo7zjhhbtQbNBf+OmO4O6a
- 0uHrQZFjIYc6I9+CiyArJAhDUEmXvKwJzNjspLdBGka2Gf5FO+PoWXqLckT7CmZmYR/Z
- 7xKYhuhO3toQEWwnvC668EIMVvYfnI50Xexq7p4Gv5SNI0BxbaMxwbqgnwN1l5PUTVIS
- gnWQ==
-X-Gm-Message-State: AOJu0YyeYPwRafoq3bJ/4ub6MSq3M60DltBS4Gn3nh/rGEJsD7FxnKeV
- n6Pvv0zC2xOqnQOidpLcGnei1vGa2JdJCqmOcfpswmr8n3K/EUcNDO399Dr2NBhlGHxJI1YTeA6
- ydptzICXGHSWV/Ltq3YhzGEEHxeBcVfLa5MVePAtNl1xyI+Jq1F4N
-X-Received: by 2002:a17:907:78c9:b0:a37:97f1:d70f with SMTP id
- kv9-20020a17090778c900b00a3797f1d70fmr681716ejc.19.1707048531041; 
- Sun, 04 Feb 2024 04:08:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+ZIpGoloay66k3Snh53LdJxjtvKo79iqZGwNESAsAM9s5WQylCK01MUtTx/JO3NEFqAN9NQ==
-X-Received: by 2002:a17:907:78c9:b0:a37:97f1:d70f with SMTP id
- kv9-20020a17090778c900b00a3797f1d70fmr681697ejc.19.1707048530747; 
- Sun, 04 Feb 2024 04:08:50 -0800 (PST)
+ bh=SDkM9qdjqdwgAJRX7NDpwd6+Mkk5ECioN5WdvzaIcQ8=;
+ b=LTKO10mfBAbMae85UjGcQLSzn1Rxa61Df1WTVnvCrftEL+t3QZUFkAtdrwCYQRRHG2
+ fgwVIROq/eLIbVjvbKc59hGMDpc73QDRtK44wTKNxlTknhrADL2auDPcD6xX3F8GY/Uj
+ /ztkNuzJ+1/eCokxLG3WzBEiqIANYNWftwogh/0Szcj4LItVmlQivKJe0Vip+SZOrKd5
+ fAPjw9qRRVyh+4+60LCO6lh4zrhhv1ZmvoV4ldM77jMk0IPgVMs5d/Pdl/nXAzMl7rqw
+ KGwTeeH7OuBgXb7J95imDdQxyLQ6jHq9dXsfVeWCWBF1/SAEAzxvPNB3XLVXEmOog2jz
+ dzFg==
+X-Gm-Message-State: AOJu0YwrDsD/u00J6hXhRGG3etxO0DNX/gYRC103SbOcRlpmNO+o3VNp
+ uWMQ+Y4xPoxn65jUJCWkFLsKKMM9dCUt66jwUCIqdp1Y0KAgoHhgFcZ07Lk8jiNvwS1690k7Yzu
+ nPlfsS+i/sBWBHTtOHxLhl5bc+8XYATG8ms8U0sSNN4Q2BnRblmLv
+X-Received: by 2002:a05:6000:104f:b0:33b:1293:55c0 with SMTP id
+ c15-20020a056000104f00b0033b129355c0mr7433190wrx.49.1707057387347; 
+ Sun, 04 Feb 2024 06:36:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFxVJYiT2s0dR6bz50PcDmpAo4//7Zf4sIPjTkZMNwRLFWGbE4cIgJWtHWmNgJQMXPqfeZ6bQ==
+X-Received: by 2002:a05:6000:104f:b0:33b:1293:55c0 with SMTP id
+ c15-20020a056000104f00b0033b129355c0mr7433178wrx.49.1707057386975; 
+ Sun, 04 Feb 2024 06:36:26 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCUH7szXyxWSIXr6x9ESaFxk89w/sGnj6mGDTTpJ3E6qfd/x2whtQaeOdn8ItvnsxXyg0oRx4z8HgLbIlv6Jtqn4EXLyGZcGcmOZUn2Zrt8jMqHKYMh96Ifby24OX1d/klIGCTVke3vPGe+NmYA/xYd1tliPWpmCBIFQ8N+ZjnmnQsfz2TyMbkgzMMwTdyRI1UYawYMEA455qvkTXxTjlWfu
-Received: from redhat.com ([2.52.129.159]) by smtp.gmail.com with ESMTPSA id
- z9-20020a170906714900b00a36edfb508asm3083139ejj.79.2024.02.04.04.08.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Feb 2024 04:08:49 -0800 (PST)
-Date: Sun, 4 Feb 2024 07:08:46 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, QEMU Trivial <qemu-trivial@nongnu.org>
-Subject: Re: [PATCH v2 0/2] hw/smbios: Fix option validation
-Message-ID: <20240204070829-mutt-send-email-mst@kernel.org>
-References: <20240129-smbios-v2-0-9ee6fede0d10@daynix.com>
- <7ee3278a-3224-41de-81fa-a3667aa491fb@tls.msk.ru>
+ AJvYcCW8g6QsZ1bkZa4IR/REwbIzYOdgPy/zrtA4jQ/Pe/Uc1c5dzzW/tQl1YIoTze2c10CpD4gzTtmXjk19uc2uW67cFdF1ugjJZo2ytsv0PQvxcyRVvcJLLOxfHpAHA8wT/bVG04YLcZQ7BobNucTw+HekLKdxm4pD1AvkAr32DGe+yC2ZVr1pmXCeSeZLwcgZ4eXzQvdPECnQ1i31/2BouF4a4HCdoHU/lqq9AeQtJOI=
+Received: from ?IPV6:2003:cb:c725:700:519c:c741:25de:232f?
+ (p200300cbc7250700519cc74125de232f.dip0.t-ipconnect.de.
+ [2003:cb:c725:700:519c:c741:25de:232f])
+ by smtp.gmail.com with ESMTPSA id
+ w14-20020a5d608e000000b0033b3cd4ad89sm344391wrt.59.2024.02.04.06.36.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 04 Feb 2024 06:36:26 -0800 (PST)
+Message-ID: <8c3ffb6e-0b77-41ef-8f8a-ea67b62ff410@redhat.com>
+Date: Sun, 4 Feb 2024 15:36:25 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7ee3278a-3224-41de-81fa-a3667aa491fb@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/15] libvhost-user: Fix msg_region->userspace_addr
+ computation
+To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Germano Veit Michel <germano@redhat.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>
+References: <20240202215332.118728-1-david@redhat.com>
+ <20240202215332.118728-2-david@redhat.com>
+ <CAFubqFuiQ5vEzELv0_y2+9KwhLDs3mNJQXMfeR4_YFMumo-x_g@mail.gmail.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CAFubqFuiQ5vEzELv0_y2+9KwhLDs3mNJQXMfeR4_YFMumo-x_g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.137,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,29 +157,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 04, 2024 at 07:57:48AM +0300, Michael Tokarev wrote:
-> 29.01.2024 11:03, Akihiko Odaki:
-> > This fixes qemu_smbios_type8_opts and qemu_smbios_type11_opts to have
-> > list terminators and elements for the type option.
+On 04.02.24 02:35, Raphael Norwitz wrote:
+> As a heads up, I've left Nutanix and updated it in MAINTAINERS. Will
+> be updating it again shortly so tagging these with my new work email.
 > 
-> > Akihiko Odaki (2):
-> >        hw/smbios: Fix OEM strings table option validation
-> >        hw/smbios: Fix port connector option validation
-> > 
-> >   hw/smbios/smbios.c | 12 ++++++++++++
-> >   1 file changed, 12 insertions(+)
+
+Thanks for the fast review! The mail server already complained to me :)
+
+Maybe consider adding yourself as reviewer for vhost as well? (which 
+covers libvhost-user), I took your mail address from git history, not 
+get_maintainers.pl.
+
+> On Fri, Feb 2, 2024 at 4:54 PM David Hildenbrand <david@redhat.com> wrote:
+>>
+>> We barely had mmap_offset set in the past. With virtio-mem and
+>> dynamic-memslots that will change.
+>>
+>> In vu_add_mem_reg() and vu_set_mem_table_exec_postcopy(), we are
+>> performing pointer arithmetics, which is wrong. Let's simply
+>> use dev_region->mmap_addr instead of "void *mmap_addr".
+>>
+>> Fixes: ec94c8e621de ("Support adding individual regions in libvhost-user")
+>> Fixes: 9bb38019942c ("vhost+postcopy: Send address back to qemu")
+>> Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
+>> Signed-off-by: David Hildenbrand <david@redhat.com>
 > 
-> Should I pick this up via the trivial-patches tree perhaps?
-> The changes are trivial enough.  Picking up there, unless there's
-> a pull request pending for smbios area.
-> 
-> Thanks,
-
-Fine, sure
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 
 
-> /mjt
+-- 
+Cheers,
+
+David / dhildenb
 
 
