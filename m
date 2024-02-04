@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC866C4828F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43D0C4828D
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 01:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWRPz-0001oi-SN; Sat, 03 Feb 2024 20:35:35 -0500
+	id 1rWRQf-0001wE-07; Sat, 03 Feb 2024 20:36:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRPx-0001oZ-Ra
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:35:33 -0500
-Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
+ id 1rWRQd-0001vF-CW
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:36:15 -0500
+Received: from mail-io1-xd31.google.com ([2607:f8b0:4864:20::d31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWRPv-0005pZ-27
- for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:35:32 -0500
-Received: by mail-io1-xd2d.google.com with SMTP id
- ca18e2360f4ac-7bfd527d443so138164039f.3
- for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 17:35:30 -0800 (PST)
+ id 1rWRQb-0005x6-QA
+ for qemu-devel@nongnu.org; Sat, 03 Feb 2024 20:36:15 -0500
+Received: by mail-io1-xd31.google.com with SMTP id
+ ca18e2360f4ac-7c2ca431146so33158539f.1
+ for <qemu-devel@nongnu.org>; Sat, 03 Feb 2024 17:36:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707010529; x=1707615329; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707010572; x=1707615372; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5XWJWkzhsYGpY8WiBg8vO0Z53XrmPgRJdp/m+zBnXpk=;
- b=VKLjtKdSvvkXqmj8mfXJOw/rcUsiK2zGQm+SXH7Dunxar4wFVGdAy8HG8HP3sJF+ZO
- 2X6Hzkkyow4ZrV1o/9gK96YhbEOcRwnJqHlK6JLG5RcyQEBoOkMgMngbKOqCdOI94cSD
- hCdM7SMQmJKw7NbetLS/ZViH1qp+vTL5bZIGPgh7XKUolV2JJ8NVC95BlpUD9+MHNUsv
- BrWrZAOYDoTY2NR+td4Cujv1++5A8ifPlUTyYJac6kQkwtg65m5LmoMAUTvBFdr5rTUW
- Veisgw2fovPNPU0/loh/7XinkfgoHhSbBX/aozSVtWjGq32iSdjIQe6qCTFoplp1UlA+
- sMHA==
+ bh=PiXzMRwDEX8pUcRwUs91ZJ52FULClsguhpNQ9UK7Kao=;
+ b=VMk6xNv0OeeBlbypJf43uEIqb6+26RfgIsW2Q+1iiI7MYRDEbpYtmuZ7NTAvEAGtAV
+ w7o8/pwhhIKOOn3xOfunW886Evq7dDQC+ofpkkM64i/3W+u/nPQaVuiQyvXYmk9qMF9i
+ +EnJQsq0IPxJG49lp7j4j7nPkmSmBdt1ZblUXux7PqLD5tY/j7r4rBE0nVDL7FYBSIsV
+ t9qeswN6EfE3C0Kh9sdHG86VkWG2mGfk+p+hbL8vb3Lm3uJDL6X/kMOlX1Plmjel/7mS
+ uYWCYiEXzmTsQFzeE0SDd8MCiiH+xjHIeAHEgWQAIeZhbwRN5RMaCN8T0/y3Td8kqXGH
+ UWag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707010529; x=1707615329;
+ d=1e100.net; s=20230601; t=1707010572; x=1707615372;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5XWJWkzhsYGpY8WiBg8vO0Z53XrmPgRJdp/m+zBnXpk=;
- b=shSaGfjrhwVjC0BiNR2XjNkGweGGfiQRtzsQPmJTrJg1a38653AAE/HjtpqOvwUIPM
- +AF2uiqlJgA/suybHsE/CiGfdbvJkDB/endYoiruSzhAHBky37CXS0S1obNWhnReRFKy
- fMkdRtGcGphQddRYMblFxrlSD85sb/ONo0FrHDtsXzHQv47jeO+QNfufNvdtDG23jm0U
- 0aR76X4tzhDPrptEZQ5FTtfwIU6pUxJlkDXZaVdmfz6t05pZcfAv7/ViCKq4kCCcxFad
- 5CoBnDhvxR+lkJ/menIn5z4jpaPMreY5E7YBRCGRHh9b8YOmR5LVaRkB1f2y4BqDWVZ4
- Joxg==
-X-Gm-Message-State: AOJu0Yyawa7GzsKOhgLXoNEUC6tMFsKxbNrherWFDU+4OCajNrgVlbKq
- Rw/CaE+ycEOH5DbLXtWuy4cK+5B3ccVTej8F+gicqi9DeL6p5o709JuOMqkeEo2A+mDhb6S9Ptx
- YYussI6ECsdW+0jdTqIC4xLp09+E=
-X-Google-Smtp-Source: AGHT+IEmuxcDQkoMbu3DTmd7mwfy+L+0SiAVmpONx7sn4oyl6UxnZ7J1ua48x/YB1A60dw7/WMFoy8axyxjXtlGuZ3E=
-X-Received: by 2002:a05:6602:184b:b0:7c0:3353:3112 with SMTP id
- d11-20020a056602184b00b007c033533112mr10224637ioi.5.1707010529303; Sat, 03
- Feb 2024 17:35:29 -0800 (PST)
+ bh=PiXzMRwDEX8pUcRwUs91ZJ52FULClsguhpNQ9UK7Kao=;
+ b=LnIMtbLEUnpwLi7OK9FN7d4jBOS9xrAWiYlOd8Abz33T3dFXb1/KMs/lD+8RdQMT9K
+ dXt+EP3IBUXUyPPQadg2o2sq5DRC999XBlIgsH7gmSS7kA0K4R8+p1OWBk0w5As2AiYq
+ ENq3TxDJC4HXy702JuoaPcsCNXPuBzgkcc2KlGdfFBJJI6lMlwcB1wX2hu3NIrKTPfQg
+ SzExI8d9Ak3+holyRR5m5050YkixqUrF7Xd746oNbGeWnKJ+hx9WXThKdmnandU5VaiJ
+ 9NBZBxpDAQ1t27xoJm0VK2iM57OzPNWwQCs7SJAlYoTSaHLRxNlpD4ikv0vy5tvHfMvY
+ WDvw==
+X-Gm-Message-State: AOJu0Yz+g6hXKjKlzN86OSm3Veb7YmzJfU6iHkrc77Y+MX+c8LEG2WHZ
+ 9u1k9yFxhyye6QR3eU6QflVb+JP762j6S5ZuAe5iHuq3M9QCuUtZR+PLlCP0xAcmtiJyPSnDxP/
+ Cab8V54Piamjkx+KXrk09Rrpwt9E=
+X-Google-Smtp-Source: AGHT+IFtZY0CK72n32sOLv3bDifJdXCe0dGFqIjC12EZ1OwYMEeEEerLP+XNGFY2q7G/DkMGPrlM0e7mpSw2k+CYA9o=
+X-Received: by 2002:a5e:8343:0:b0:7bf:d9a4:6d0d with SMTP id
+ y3-20020a5e8343000000b007bfd9a46d0dmr13797070iom.10.1707010572491; Sat, 03
+ Feb 2024 17:36:12 -0800 (PST)
 MIME-Version: 1.0
 References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-2-david@redhat.com>
-In-Reply-To: <20240202215332.118728-2-david@redhat.com>
+ <20240202215332.118728-3-david@redhat.com>
+In-Reply-To: <20240202215332.118728-3-david@redhat.com>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Sat, 3 Feb 2024 20:35:18 -0500
-Message-ID: <CAFubqFuiQ5vEzELv0_y2+9KwhLDs3mNJQXMfeR4_YFMumo-x_g@mail.gmail.com>
-Subject: Re: [PATCH v1 01/15] libvhost-user: Fix msg_region->userspace_addr
- computation
+Date: Sat, 3 Feb 2024 20:36:01 -0500
+Message-ID: <CAFubqFtKZ-rm79Gp9UXfA9yXALk4047iYDsyz8iR=xgC9zkXUw@mail.gmail.com>
+Subject: Re: [PATCH v1 02/15] libvhost-user: Dynamically allocate memory for
+ memory slots
 To: David Hildenbrand <david@redhat.com>
 Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Jason Wang <jasowang@redhat.com>, 
@@ -71,8 +71,8 @@ Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d31;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,62 +95,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As a heads up, I've left Nutanix and updated it in MAINTAINERS. Will
-be updating it again shortly so tagging these with my new work email.
-
 On Fri, Feb 2, 2024 at 4:54=E2=80=AFPM David Hildenbrand <david@redhat.com>=
  wrote:
 >
-> We barely had mmap_offset set in the past. With virtio-mem and
-> dynamic-memslots that will change.
+> Let's prepare for increasing VHOST_USER_MAX_RAM_SLOTS by dynamically
+> allocating dev->regions. We don't have any ABI guarantees (not
+> dynamically linked), so we can simply change the layout of VuDev.
 >
-> In vu_add_mem_reg() and vu_set_mem_table_exec_postcopy(), we are
-> performing pointer arithmetics, which is wrong. Let's simply
-> use dev_region->mmap_addr instead of "void *mmap_addr".
+> Let's zero out the memory, just as we used to do.
 >
-> Fixes: ec94c8e621de ("Support adding individual regions in libvhost-user"=
-)
-> Fixes: 9bb38019942c ("vhost+postcopy: Send address back to qemu")
-> Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
 > Signed-off-by: David Hildenbrand <david@redhat.com>
 
 Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 
 > ---
->  subprojects/libvhost-user/libvhost-user.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  subprojects/libvhost-user/libvhost-user.c | 11 +++++++++++
+>  subprojects/libvhost-user/libvhost-user.h |  2 +-
+>  2 files changed, 12 insertions(+), 1 deletion(-)
 >
 > diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libv=
 host-user/libvhost-user.c
-> index a3b158c671..7e515ed15d 100644
+> index 7e515ed15d..8a5a7a2295 100644
 > --- a/subprojects/libvhost-user/libvhost-user.c
 > +++ b/subprojects/libvhost-user/libvhost-user.c
-> @@ -800,8 +800,8 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
->           * Return the address to QEMU so that it can translate the ufd
->           * fault addresses back.
->           */
-> -        msg_region->userspace_addr =3D (uintptr_t)(mmap_addr +
-> -                                                 dev_region->mmap_offset=
-);
-> +        msg_region->userspace_addr =3D dev_region->mmap_addr +
-> +                                     dev_region->mmap_offset;
+> @@ -2171,6 +2171,8 @@ vu_deinit(VuDev *dev)
 >
->          /* Send the message back to qemu with the addresses filled in. *=
-/
->          vmsg->fd_num =3D 0;
-> @@ -969,8 +969,8 @@ vu_set_mem_table_exec_postcopy(VuDev *dev, VhostUserM=
-sg *vmsg)
->          /* Return the address to QEMU so that it can translate the ufd
->           * fault addresses back.
->           */
-> -        msg_region->userspace_addr =3D (uintptr_t)(mmap_addr +
-> -                                                 dev_region->mmap_offset=
-);
-> +        msg_region->userspace_addr =3D dev_region->mmap_addr +
-> +                                     dev_region->mmap_offset;
->          close(vmsg->fds[i]);
+>      free(dev->vq);
+>      dev->vq =3D NULL;
+> +    free(dev->regions);
+> +    dev->regions =3D NULL;
+>  }
+>
+>  bool
+> @@ -2205,9 +2207,18 @@ vu_init(VuDev *dev,
+>      dev->backend_fd =3D -1;
+>      dev->max_queues =3D max_queues;
+>
+> +    dev->regions =3D malloc(VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regio=
+ns[0]));
+> +    if (!dev->regions) {
+> +        DPRINT("%s: failed to malloc mem regions\n", __func__);
+> +        return false;
+> +    }
+> +    memset(dev->regions, 0, VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regio=
+ns[0]));
+> +
+>      dev->vq =3D malloc(max_queues * sizeof(dev->vq[0]));
+>      if (!dev->vq) {
+>          DPRINT("%s: failed to malloc virtqueues\n", __func__);
+> +        free(dev->regions);
+> +        dev->regions =3D NULL;
+>          return false;
 >      }
 >
+> diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libv=
+host-user/libvhost-user.h
+> index c2352904f0..c882b4e3a2 100644
+> --- a/subprojects/libvhost-user/libvhost-user.h
+> +++ b/subprojects/libvhost-user/libvhost-user.h
+> @@ -398,7 +398,7 @@ typedef struct VuDevInflightInfo {
+>  struct VuDev {
+>      int sock;
+>      uint32_t nregions;
+> -    VuDevRegion regions[VHOST_USER_MAX_RAM_SLOTS];
+> +    VuDevRegion *regions;
+>      VuVirtq *vq;
+>      VuDevInflightInfo inflight_info;
+>      int log_call_fd;
 > --
 > 2.43.0
 >
