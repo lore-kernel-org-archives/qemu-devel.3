@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DA0C48286
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 22:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F77C48286
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Feb 2024 23:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWke0-00037A-FD; Sun, 04 Feb 2024 17:07:20 -0500
+	id 1rWm8q-000093-EI; Sun, 04 Feb 2024 18:43:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWkdy-00036z-IR
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 17:07:18 -0500
-Received: from mail-io1-xd2f.google.com ([2607:f8b0:4864:20::d2f])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWm8n-00008Y-29; Sun, 04 Feb 2024 18:43:13 -0500
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1rWkdv-0007H8-KG
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 17:07:17 -0500
-Received: by mail-io1-xd2f.google.com with SMTP id
- ca18e2360f4ac-7bf0f3bf331so172848039f.3
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 14:07:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWm8k-0004wC-On; Sun, 04 Feb 2024 18:43:12 -0500
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-7d5bbbe5844so1619803241.0; 
+ Sun, 04 Feb 2024 15:43:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707084434; x=1707689234; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707090187; x=1707694987; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aYB74W6ZjlZ8PNMpzJX0KJC3tdI0KE/sYDFK+5K0X4Y=;
- b=HXgSuY0e+kfgK7EboQb6nkTWIxBcRlFuGg0F/b+gZuY0kN2ycGmd3XAA84hF67yATZ
- HpvR3I6b7pzUkcaNVJX5gOnd1cH1+7lB11y6nEXWJrrQ2IjnV84H8DmvzRCYgPae3wDy
- L2/ZcK/hFHy18dyTaXGFkn3DwYeFFBFCdVZtzAnPUDd9hTExFUOOnydXqEdVMhsCBAUG
- Fe7cOztB3QUrxKESemaCXXsY44aRK1I8TRkrqysdOxLvDY4JznBIxVr+nTlYMT8orS5s
- QolZAQQH8W5S8raoV5W+F35/PQwiCfKfzw31QPiewkB6fc/FwECLJE+o4C6fk9TGb49r
- ruhg==
+ bh=0QCIMKSpSZbJRdMFqQA6BD69SxK1FJPtGRGuU6qLMHA=;
+ b=iOdRsMuA97VHtu1tTvOrT6aOOOw5mvV60MH7sVx6MQ3zGmywAP0IA5TlZFFtADOdgj
+ yt6LpaKa/7FlHCsPy8u5jkhRTI8gNmiB3+k0A5EfrctGKHAxSqobj5j8XvHXkgyB5sz3
+ +zOw2N+15W2NnUrmPcz5Y2YFDsY3ad0cgVDq9Ok2E2LMhwnEwu0DPcK3l35YNFUzhfBc
+ 8PoV0eCYh+VWC3OYqKWsdkUuVL+XZ/YyU4fwmTSzJx/T0mi470ZDpgyyJWbxxuW+9gKf
+ Jg1NMt3Cp87L3zJrqCKH2+dIEnTuV9+nw8U4pCOFeJ3mNXU4YedLYSUgxbfFERKh5KCY
+ XfWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707084434; x=1707689234;
+ d=1e100.net; s=20230601; t=1707090187; x=1707694987;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aYB74W6ZjlZ8PNMpzJX0KJC3tdI0KE/sYDFK+5K0X4Y=;
- b=aUbaWxhzU5PYOcMK2Lb6fD1bkNZ81yN2jThVNFsQ+bngmPFGAH95AQqpWm7tvhclvY
- teQxkuLi7NTtT154kuIUXAdi5JB+4UM2DEqQxdF1ceWpp7v0WgJLJzMAYyHGji2y1HMe
- aNHJEuzpiOViGpykQRaUzbVRmADpA1EAAoN4ObLNSU+mTgsjcbzvB0In4Zp1scPt7Vt2
- 7SAoXfitfktE+PlBU04qIM9jun5eRx8ujQroHsniFYMVpT9eJTmVR3uP9ROW59K97ecP
- yfPuvAZzIGWksDNsXG3uSsWTrdNWTlDdb2VfVV2UnvXtk7XLEyGLehTx2dLO7mufd9mh
- VZjg==
-X-Gm-Message-State: AOJu0YzNKNG7lkivFPfzKksAaeVWiw97dNCx4/jdD0xMu2y/8l7Hc+KW
- NpPzqB3u3CbvpJumWW4LT7shskPJl1daB306EeT7mnrSyEHT+IlExkEQpO8sIjOntqEImNXW9Zb
- NvD0MKZwIEGFMX5mYD5K3cm5inog=
-X-Google-Smtp-Source: AGHT+IFephycKJijRd/+q9Hoza+nslMC3zhLUHZtb8DMDKx/sjxB/ODF3oQj4rLqhDB7J+g+tN44a/YQCNJfwhiR8Cc=
-X-Received: by 2002:a6b:a03:0:b0:7bf:fa07:b7ff with SMTP id
- z3-20020a6b0a03000000b007bffa07b7ffmr16934575ioi.2.1707084434325; Sun, 04 Feb
- 2024 14:07:14 -0800 (PST)
+ bh=0QCIMKSpSZbJRdMFqQA6BD69SxK1FJPtGRGuU6qLMHA=;
+ b=DdTiTmKl4ZakPAOZchno/oEr0A5P/dLzOs8MRIsp28+Kb6TZzVjD1CLbvI0bqFTLFr
+ 1Vf607pqwaEMv5bSB+yHEdZ9oPg8boZuZaQ4NWZdokiHYXaOvSF/QJ6Zsjf15iHIiN62
+ Pd/h7Wm4TkSvrvjp5cWcwLUWyPzbRHfOtG2RJShVzy1zEKNamHxab/8glbFVebvRBmHN
+ LpNmVBGcrW5sDYa0yeBuZTMLONIjUDKOuFKnr5M7kxb8dS6ogB5HSpD7FoZXByiMaBHn
+ xAxcDpmFAxm0qcw/Mdq/1vhiD7XWDBILLp4Cs2C82nlaPOdfWqjE5mQbUPbZ7f87/lK7
+ r4Og==
+X-Gm-Message-State: AOJu0YydpJN/wFraWYHJNR6lyj37dp3acorUjTQgiALTq8MqXKMTPz7I
+ U8gfD+PG31g2WW1cSNO0AO5OR6OkIbPTce3ulAy3cibIiSyOGplnOryQH/DzCzJj+eCpFKg6T/V
+ ZY/uaQJR7rIDiERnhS1/ptUbUvZw=
+X-Google-Smtp-Source: AGHT+IH8Vntj7QoeBjjWd08aqAxkydYea8JxkF/DJ1iqCUG/KmrRpKS0hMCOzmZisrZUC91VzoBHdIF5EKmcN0FJ17s=
+X-Received: by 2002:a05:6102:3975:b0:46d:2d23:f500 with SMTP id
+ ho21-20020a056102397500b0046d2d23f500mr759395vsb.18.1707090187633; Sun, 04
+ Feb 2024 15:43:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-12-david@redhat.com>
- <CAFubqFvC24ng0kHJectz3zN3UDHR6T+Cs7J+RUfm+zT92HR+Zg@mail.gmail.com>
- <21d326c9-f07f-435f-9cbb-6a4e7ac46c65@redhat.com>
-In-Reply-To: <21d326c9-f07f-435f-9cbb-6a4e7ac46c65@redhat.com>
-From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Sun, 4 Feb 2024 17:07:03 -0500
-Message-ID: <CAFubqFv6ryzXHC-wPaFv5hkFET+CO7H=M3LGMU5yXGYWeJuUpA@mail.gmail.com>
-Subject: Re: [PATCH v1 11/15] libvhost-user: Speedup gpa_to_mem_region() and
- vu_gpa_to_va()
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Germano Veit Michel <germano@redhat.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>
+References: <20240203-riscv-v11-0-a23f4848a628@daynix.com>
+In-Reply-To: <20240203-riscv-v11-0-a23f4848a628@daynix.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 5 Feb 2024 09:42:41 +1000
+Message-ID: <CAKmqyKNTcAyZVmCOVLryZg6Q5fZEpFwQBjiMypJVmn5RSVC6kQ@mail.gmail.com>
+Subject: Re: [PATCH v11 0/3] gdbstub and TCG plugin improvements
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mikhail Tyutin <m.tyutin@yadro.com>, Aleksandr Anenkov <a.anenkov@yadro.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Andrew Jones <ajones@ventanamicro.com>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2f;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,150 +97,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 4, 2024 at 9:51=E2=80=AFAM David Hildenbrand <david@redhat.com>=
- wrote:
->
-> On 04.02.24 03:10, Raphael Norwitz wrote:
-> > One comment on this one.
-> >
-> > On Fri, Feb 2, 2024 at 4:56=E2=80=AFPM David Hildenbrand <david@redhat.=
+On Sat, Feb 3, 2024 at 8:12=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
 com> wrote:
-> >>
-> >> Let's speed up GPA to memory region / virtual address lookup. Store th=
-e
-> >> memory regions ordered by guest physical addresses, and use binary
-> >> search for address translation, as well as when adding/removing memory
-> >> regions.
-> >>
-> >> Most importantly, this will speed up GPA->VA address translation when =
-we
-> >> have many memslots.
-> >>
-> >> Signed-off-by: David Hildenbrand <david@redhat.com>
-> >> ---
-> >>   subprojects/libvhost-user/libvhost-user.c | 49 +++++++++++++++++++++=
---
-> >>   1 file changed, 45 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/l=
-ibvhost-user/libvhost-user.c
-> >> index d036b54ed0..75e47b7bb3 100644
-> >> --- a/subprojects/libvhost-user/libvhost-user.c
-> >> +++ b/subprojects/libvhost-user/libvhost-user.c
-> >> @@ -199,19 +199,30 @@ vu_panic(VuDev *dev, const char *msg, ...)
-> >>   static VuDevRegion *
-> >>   vu_gpa_to_mem_region(VuDev *dev, uint64_t guest_addr)
-> >>   {
-> >> -    unsigned int i;
-> >> +    int low =3D 0;
-> >> +    int high =3D dev->nregions - 1;
-> >>
-> >>       /*
-> >>        * Memory regions cannot overlap in guest physical address space=
-. Each
-> >>        * GPA belongs to exactly one memory region, so there can only b=
-e one
-> >>        * match.
-> >> +     *
-> >> +     * We store our memory regions ordered by GPA and can simply perf=
-orm a
-> >> +     * binary search.
-> >>        */
-> >> -    for (i =3D 0; i < dev->nregions; i++) {
-> >> -        VuDevRegion *cur =3D &dev->regions[i];
-> >> +    while (low <=3D high) {
-> >> +        unsigned int mid =3D low + (high - low) / 2;
-> >> +        VuDevRegion *cur =3D &dev->regions[mid];
-> >>
-> >>           if (guest_addr >=3D cur->gpa && guest_addr < cur->gpa + cur-=
->size) {
-> >>               return cur;
-> >>           }
-> >> +        if (guest_addr >=3D cur->gpa + cur->size) {
-> >> +            low =3D mid + 1;
-> >> +        }
-> >> +        if (guest_addr < cur->gpa) {
-> >> +            high =3D mid - 1;
-> >> +        }
-> >>       }
-> >>       return NULL;
-> >>   }
-> >> @@ -273,9 +284,14 @@ vu_remove_all_mem_regs(VuDev *dev)
-> >>   static void
-> >>   _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int f=
-d)
-> >>   {
-> >> +    const uint64_t start_gpa =3D msg_region->guest_phys_addr;
-> >> +    const uint64_t end_gpa =3D start_gpa + msg_region->memory_size;
-> >>       int prot =3D PROT_READ | PROT_WRITE;
-> >>       VuDevRegion *r;
-> >>       void *mmap_addr;
-> >> +    int low =3D 0;
-> >> +    int high =3D dev->nregions - 1;
-> >> +    unsigned int idx;
-> >>
-> >>       DPRINT("Adding region %d\n", dev->nregions);
-> >>       DPRINT("    guest_phys_addr: 0x%016"PRIx64"\n",
-> >> @@ -295,6 +311,29 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion=
- *msg_region, int fd)
-> >>           prot =3D PROT_NONE;
-> >>       }
-> >>
-> >> +    /*
-> >> +     * We will add memory regions into the array sorted by GPA. Perfo=
-rm a
-> >> +     * binary search to locate the insertion point: it will be at the=
- low
-> >> +     * index.
-> >> +     */
-> >> +    while (low <=3D high) {
-> >> +        unsigned int mid =3D low + (high - low)  / 2;
-> >> +        VuDevRegion *cur =3D &dev->regions[mid];
-> >> +
-> >> +        /* Overlap of GPA addresses. */
-> >
-> > Looks like this check will only catch if the new region is fully
-> > contained within an existing region. I think we need to check whether
-> > either start or end region are in the range, i.e.:
 >
-> That check should cover all cases of overlaps, not just fully contained.
+> This series extracts fixes and refactorings that can be applied
+> independently from "[PATCH v9 00/23] plugins: Allow to read registers".
 >
-> See the QEMU implementation of range_overlaps_rang() that contains a
-> similar logic:
+> The patch "target/riscv: Move MISA limits to class" was replaced with
+> patch "target/riscv: Move misa_mxl_max to class" since I found instances
+> may have different misa_ext_mask.
 >
-> return !(range2->upb < range1->lob || range1->upb < range2->lob);
+> V6 -> V7:
+>   Rebased.
 >
->     !(range2->upb < range1->lob || range1->upb < range2->lob);
-> =3D  !(range2->upb < range1->lob) && !(range1->upb < range2->lob)
-> =3D   range2->upb >=3D range1->lob && range1->upb >=3D range2->lob
-> =3D   range1->lob <=3D range2->upb && range2->lob <=3D range1->upb
+> V5 -> V6:
+>   Added patch "default-configs: Add TARGET_XML_FILES definition".
+>   Rebased.
 >
-> In QEMU, upb is inclusive, if it were exclusive (like we have here):
+> V4 -> V5:
+>   Added patch "hw/riscv: Use misa_mxl instead of misa_mxl_max".
 >
-> =3D   range1->lob < range2->upb && range2->lob < range1->upb
+> V3 -> V4:
+>   Added patch "gdbstub: Check if gdb_regs is NULL".
 >
-> Which is what we have here with:
+> V2 -> V3:
+>   Restored patch sets from the previous version.
+>   Rebased to commit 800485762e6564e04e2ab315132d477069562d91.
 >
-> range1->lob =3D start_gpa
-> range1->upb =3D end_gpa
-> range2->lob =3D cur->gpa
-> range2->upb =3D cur->gpa + cur->size
+> V1 -> V2:
+>   Added patch "target/riscv: Do not allow MXL_RV32 for TARGET_RISCV64".
+>   Added patch "target/riscv: Initialize gdb_core_xml_file only once".
+>   Dropped patch "target/riscv: Remove misa_mxl validation".
+>   Dropped patch "target/riscv: Move misa_mxl_max to class".
+>   Dropped patch "target/riscv: Validate misa_mxl_max only once".
 >
-> Also if you are interested, see
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Changes in v11:
+> - Rebased on: https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+> - Link to v10: https://lore.kernel.org/r/20240128-riscv-v10-0-fdbe593976e=
+9@daynix.com
 >
-> https://stackoverflow.com/questions/3269434/whats-the-most-efficient-way-=
-to-test-if-two-ranges-overlap
+> Changes in v10:
+> - Dropped patch "hw/riscv: Use misa_mxl instead of misa_mxl_max" due to
+>   invalid assumption that the relevant code is only used for kernel
+>   loading.
+> - Link to v9: https://lore.kernel.org/r/20240115-riscv-v9-0-ff171e1aedc8@=
+daynix.com
 >
-> Thanks!
+> Changes in v9:
+> - Rebased to commit 977542ded7e6b28d2bc077bcda24568c716e393c.
+> - Link to v8: https://lore.kernel.org/r/20231218-riscv-v8-0-c9bf2b1582d7@=
+daynix.com
+>
+> Changes in v8:
+> - Added a more detailed explanation for patch "hw/riscv: Use misa_mxl
+>   instead of misa_mxl_max". (Alistair Francis)
+> - Link to v7: https://lore.kernel.org/r/20231213-riscv-v7-0-a760156a337f@=
+daynix.com
+>
+> ---
+> Akihiko Odaki (3):
+>       target/riscv: Remove misa_mxl validation
+>       target/riscv: Move misa_mxl_max to class
+>       target/riscv: Validate misa_mxl_max only once
 
-Got it, thanks for the full explanation. With that:
+Thanks!
 
-Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
+Applied to riscv-to-apply.next
+
+Alistair
 
 >
+>  target/riscv/cpu.h         |   4 +-
+>  hw/riscv/boot.c            |   3 +-
+>  target/riscv/cpu.c         | 181 ++++++++++++++++++++++++++-------------=
+------
+>  target/riscv/gdbstub.c     |  12 ++-
+>  target/riscv/kvm/kvm-cpu.c |  10 +--
+>  target/riscv/machine.c     |   7 +-
+>  target/riscv/tcg/tcg-cpu.c |  44 ++---------
+>  target/riscv/translate.c   |   3 +-
+>  8 files changed, 133 insertions(+), 131 deletions(-)
+> ---
+> base-commit: 0c9d286cf791cdda76fd57e4562e2cb18d4a79e2
+> change-id: 20231213-riscv-fcc9640986cf
+>
+> Best regards,
 > --
-> Cheers,
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 >
-> David / dhildenb
 >
 
