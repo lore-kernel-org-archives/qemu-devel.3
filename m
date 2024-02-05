@@ -4,134 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBB7C48292
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 07:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 729FDC4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 07:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWtjD-00059i-Lz; Mon, 05 Feb 2024 02:49:20 -0500
+	id 1rWtiC-0003MJ-En; Mon, 05 Feb 2024 02:48:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rWthk-00038V-SJ
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:47:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWthP-00035k-29
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:47:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rWthi-0006HG-B1
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:47:48 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rWthG-000651-TT
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:47:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707119265;
+ s=mimecast20190719; t=1707119237;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yH/HTwT/7idPrL8rJ6rVxSdm9aHrnfAw72vdabpyV1w=;
- b=bOGW9Of+SHb+KZs9w3OYiBXt+C+ZuKC1v4CUvqF2LLedfK3YARhR6CQ5kVmEby7ciXVVK3
- bPSzgm5f2FWtEttci03u/+swPlL1Ec4NONEWi3Qvw5AzRQNtXne49s0GVq0vpCUH76Jdup
- WqJgD5HN+mW0I6x/0WEoEwMx3sJFMxs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=qm8MY2V0NKeEMNWnhw/Y+eNccTF1/OEK/29fHiS7K18=;
+ b=gW4633sL0NhCXD8Js7TQTJ0aEgo0ePL4Qf0g8m8zjWD+Jzllv1bHkbxtwbI7rGdEkISEXu
+ N/VuTqYmnByqDCbsijOT3dVpxJcATqf1sTctQheEqNhXcrAoJsnuYaQZvdSEd35xRoBENj
+ +vQuCBvzFGiwBmhjw0ZbI4T/6RbuOw0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-w2lpcLIkOKWjW8K6HEBSAA-1; Mon, 05 Feb 2024 02:47:43 -0500
-X-MC-Unique: w2lpcLIkOKWjW8K6HEBSAA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33b1b431b3cso1351131f8f.1
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 23:47:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707119262; x=1707724062;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yH/HTwT/7idPrL8rJ6rVxSdm9aHrnfAw72vdabpyV1w=;
- b=LGlnuD+xSKz9/RcDcICIVMwE+Fg/kIE1dbxFHb7qoNs8FRJAUc4r+3GclCqJF21xU4
- vRm9AfkQfJNHx63uBqrv3JOTYdNOq/zwNTmM6TqU3ZoMnd324eauhnQgcGjUAUpCf1ml
- mX2+F9i+V551N1dNqTh7IvSF8J6mybPJwJU3FylVoq69GhbrVDKCpQxdC6yLQhRw8XAE
- 5cgSDrjzcxxRgsbM5iWzGIZFSzkj7qhpGMbX5Fozswb40PSsKaGhQeXl3VS6aXxAhTFY
- zGwX2EVw0nASIbBYzOA2FDh0WI6IzjPEsHJRkVY9NGW1H/XIAaAbMZVCPXmdMLNuaiTb
- uTIw==
-X-Gm-Message-State: AOJu0YwmuOl6nXUnZxgL592lw45ExzuTnMAVk09rGyln17I8weRDlIMW
- eJyB0eDg/1YFXwXndjpsbuHiLSWIWCOHZ7sh0rsBP3/Ph5E3bHoTe3xGv+wXiZ1jjJaDeovb2i3
- P/ZsZVehKHPlBs2/Tn77LopPZCf1gwGo+2yk6FdkhDrn20rHefiB1
-X-Received: by 2002:a5d:4682:0:b0:33b:180d:edc7 with SMTP id
- u2-20020a5d4682000000b0033b180dedc7mr5543158wrq.17.1707119262610; 
- Sun, 04 Feb 2024 23:47:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEwtnAxmf5MjSAQcEoYtXcLhXL9qA8v6IrULDwCPS0r/jofWBtqaBV6Z8k7ngvNIq3DiHF7iw==
-X-Received: by 2002:a5d:4682:0:b0:33b:180d:edc7 with SMTP id
- u2-20020a5d4682000000b0033b180dedc7mr5543146wrq.17.1707119262082; 
- Sun, 04 Feb 2024 23:47:42 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCU3HmU5jc38Z5Fp3XMDi00GaThIhGv6Q569yu8xTZpVOlMiydHt33LuWKHJbHovBYUvYPM9CwpjkJkjvTlMLjhyDyVSHe5f+i9Jb59RTAPix3oBEz5nKZ85kS7ad26QOxXHNWIFDz29Ox0KFF5Kp+3t
-Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
- [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- o4-20020adfe804000000b0033929310ae4sm7415845wrm.73.2024.02.04.23.47.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Feb 2024 23:47:41 -0800 (PST)
-Message-ID: <613f883e-cf64-43e5-85b6-64381c46ffa2@redhat.com>
-Date: Mon, 5 Feb 2024 08:47:40 +0100
+ us-mta-401-U_pVPo9eMymlUHAYvhlYyg-1; Mon, 05 Feb 2024 02:47:13 -0500
+X-MC-Unique: U_pVPo9eMymlUHAYvhlYyg-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 54FD683B833;
+ Mon,  5 Feb 2024 07:47:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 117782166B31;
+ Mon,  5 Feb 2024 07:47:12 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 66FF321E6806; Mon,  5 Feb 2024 08:47:09 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: arei.gonglei@huawei.com, armbru@redhat.com, berrange@redhat.com,
+ eblake@redhat.com, eduardo@habkost.net, fan.ni@samsung.com,
+ farosas@suse.de, hreitz@redhat.com, jasowang@redhat.com, jiri@resnulli.us,
+ jonathan.cameron@huawei.com, kkostiuk@redhat.com, kraxel@redhat.com,
+ kwolf@redhat.com, lukasstraub2@web.de, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
+ philmd@linaro.org, pizhenwei@bytedance.com, qemu-block@nongnu.org,
+ stefanb@linux.ibm.com, wangyanan55@huawei.com
+Subject: [PATCH 12/15] qapi: Plug trivial documentation holes around former
+ simple unions
+Date: Mon,  5 Feb 2024 08:47:06 +0100
+Message-ID: <20240205074709.3613229-13-armbru@redhat.com>
+In-Reply-To: <20240205074709.3613229-1-armbru@redhat.com>
+References: <20240205074709.3613229-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/cdrom-test: Add cdrom test for LoongArch virt
- machine
-Content-Language: en-US
-To: Bibo Mao <maobibo@loongson.cn>, Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240205021318.3759925-1-maobibo@loongson.cn>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240205021318.3759925-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,40 +90,440 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/02/2024 03.13, Bibo Mao wrote:
-> The cdrom test skips to execute on LoongArch system with command
-> "make check"
+The conversion of simple to flat unions left the @data members
+undocumented.  Add documentation where it's trivial.  Copy verbatim
+from the wrapped type's description where possible.
 
-Are you sure the test is marked with "skip"? ... it should at least test 
-with the "none" machine...?
+Leftovers: String (to be taken care of in the next commit), and
+TransActionAction (left for another day).
 
-> this patch enables cdrom test for LoongArch virt
-> machine platform.
-> 
-> With this patch, cdrom test passes to run on LoongArch virt
-> machine type.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   tests/qtest/cdrom-test.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-> index 0945383789..c8b97d8d9a 100644
-> --- a/tests/qtest/cdrom-test.c
-> +++ b/tests/qtest/cdrom-test.c
-> @@ -271,6 +271,9 @@ int main(int argc, char **argv)
->               const char *virtmachine[] = { "virt", NULL };
->               add_cdrom_param_tests(virtmachine);
->           }
-> +    } else if (g_str_equal(arch, "loongarch64")) {
-> +        const char *virtmachine[] = { "virt", NULL };
-> +        add_cdrom_param_tests(virtmachine);
->       } else {
->           const char *nonemachine[] = { "none", NULL };
->           add_cdrom_param_tests(nonemachine);
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ qapi/block-core.json | 10 ++++++++++
+ qapi/char.json       | 26 ++++++++++++++++++++++++++
+ qapi/machine.json    | 10 ++++++++++
+ qapi/pragma.json     | 34 ----------------------------------
+ qapi/sockets.json    |  6 ++++++
+ qapi/tpm.json        |  4 ++++
+ qapi/ui.json         | 12 ++++++++++++
+ 7 files changed, 68 insertions(+), 34 deletions(-)
 
-Anyway, using the virt machine is certainly better than the "none" machine, so:
-Acked-by: Thomas Huth <thuth@redhat.com>
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 80ed4122f2..55b583f079 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -196,6 +196,8 @@
+ ##
+ # @ImageInfoSpecificQCow2Wrapper:
+ #
++# @data: image information specific to QCOW2
++#
+ # Since: 1.7
+ ##
+ { 'struct': 'ImageInfoSpecificQCow2Wrapper',
+@@ -204,6 +206,8 @@
+ ##
+ # @ImageInfoSpecificVmdkWrapper:
+ #
++# @data: image information specific to VMDK
++#
+ # Since: 6.1
+ ##
+ { 'struct': 'ImageInfoSpecificVmdkWrapper',
+@@ -212,6 +216,8 @@
+ ##
+ # @ImageInfoSpecificLUKSWrapper:
+ #
++# @data: image information specific to LUKS
++#
+ # Since: 2.7
+ ##
+ { 'struct': 'ImageInfoSpecificLUKSWrapper',
+@@ -223,6 +229,8 @@
+ ##
+ # @ImageInfoSpecificRbdWrapper:
+ #
++# @data: image information specific to RBD
++#
+ # Since: 6.1
+ ##
+ { 'struct': 'ImageInfoSpecificRbdWrapper',
+@@ -231,6 +239,8 @@
+ ##
+ # @ImageInfoSpecificFileWrapper:
+ #
++# @data: image information specific to files
++#
+ # Since: 8.0
+ ##
+ { 'struct': 'ImageInfoSpecificFileWrapper',
+diff --git a/qapi/char.json b/qapi/char.json
+index 6c6ad3b10c..e3e1b2c9f5 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -498,6 +498,8 @@
+ ##
+ # @ChardevFileWrapper:
+ #
++# @data: Configuration info for file chardevs
++#
+ # Since: 1.4
+ ##
+ { 'struct': 'ChardevFileWrapper',
+@@ -506,6 +508,8 @@
+ ##
+ # @ChardevHostdevWrapper:
+ #
++# @data: Configuration info for device and pipe chardevs
++#
+ # Since: 1.4
+ ##
+ { 'struct': 'ChardevHostdevWrapper',
+@@ -514,6 +518,8 @@
+ ##
+ # @ChardevSocketWrapper:
+ #
++# @data: Configuration info for (stream) socket chardevs
++#
+ # Since: 1.4
+ ##
+ { 'struct': 'ChardevSocketWrapper',
+@@ -522,6 +528,8 @@
+ ##
+ # @ChardevUdpWrapper:
+ #
++# @data: Configuration info for datagram socket chardevs
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'ChardevUdpWrapper',
+@@ -530,6 +538,8 @@
+ ##
+ # @ChardevCommonWrapper:
+ #
++# @data: Configuration shared across all chardev backends
++#
+ # Since: 2.6
+ ##
+ { 'struct': 'ChardevCommonWrapper',
+@@ -538,6 +548,8 @@
+ ##
+ # @ChardevMuxWrapper:
+ #
++# @data: Configuration info for mux chardevs
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'ChardevMuxWrapper',
+@@ -546,6 +558,8 @@
+ ##
+ # @ChardevStdioWrapper:
+ #
++# @data: Configuration info for stdio chardevs
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'ChardevStdioWrapper',
+@@ -554,6 +568,8 @@
+ ##
+ # @ChardevSpiceChannelWrapper:
+ #
++# @data: Configuration info for spice vm channel chardevs
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'ChardevSpiceChannelWrapper',
+@@ -563,6 +579,8 @@
+ ##
+ # @ChardevSpicePortWrapper:
+ #
++# @data: Configuration info for spice port chardevs
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'ChardevSpicePortWrapper',
+@@ -572,6 +590,8 @@
+ ##
+ # @ChardevQemuVDAgentWrapper:
+ #
++# @data: Configuration info for qemu vdagent implementation
++#
+ # Since: 6.1
+ ##
+ { 'struct': 'ChardevQemuVDAgentWrapper',
+@@ -581,6 +601,8 @@
+ ##
+ # @ChardevDBusWrapper:
+ #
++# @data: Configuration info for DBus chardevs
++#
+ # Since: 7.0
+ ##
+ { 'struct': 'ChardevDBusWrapper',
+@@ -590,6 +612,8 @@
+ ##
+ # @ChardevVCWrapper:
+ #
++# @data: Configuration info for virtual console chardevs
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'ChardevVCWrapper',
+@@ -598,6 +622,8 @@
+ ##
+ # @ChardevRingbufWrapper:
+ #
++# @data: Configuration info for ring buffer chardevs
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'ChardevRingbufWrapper',
+diff --git a/qapi/machine.json b/qapi/machine.json
+index aa99fa333f..6a25e39f44 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1396,6 +1396,8 @@
+ ##
+ # @PCDIMMDeviceInfoWrapper:
+ #
++# @data: PCDIMMDevice state information
++#
+ # Since: 2.1
+ ##
+ { 'struct': 'PCDIMMDeviceInfoWrapper',
+@@ -1404,6 +1406,8 @@
+ ##
+ # @VirtioPMEMDeviceInfoWrapper:
+ #
++# @data: VirtioPMEM state information
++#
+ # Since: 2.1
+ ##
+ { 'struct': 'VirtioPMEMDeviceInfoWrapper',
+@@ -1412,6 +1416,8 @@
+ ##
+ # @VirtioMEMDeviceInfoWrapper:
+ #
++# @data: VirtioMEMDevice state information
++#
+ # Since: 2.1
+ ##
+ { 'struct': 'VirtioMEMDeviceInfoWrapper',
+@@ -1420,6 +1426,8 @@
+ ##
+ # @SgxEPCDeviceInfoWrapper:
+ #
++# @data: Sgx EPC state information
++#
+ # Since: 6.2
+ ##
+ { 'struct': 'SgxEPCDeviceInfoWrapper',
+@@ -1428,6 +1436,8 @@
+ ##
+ # @HvBalloonDeviceInfoWrapper:
+ #
++# @data: hv-balloon provided memory state information
++#
+ # Since: 8.2
+ ##
+ { 'struct': 'HvBalloonDeviceInfoWrapper',
+diff --git a/qapi/pragma.json b/qapi/pragma.json
+index aea6384255..d5e3f6f142 100644
+--- a/qapi/pragma.json
++++ b/qapi/pragma.json
+@@ -52,19 +52,6 @@
+         'BlockdevVmdkAdapterType',
+         'ChardevBackend',
+         'ChardevBackendKind',
+-        'ChardevCommonWrapper',
+-        'ChardevDBusWrapper',
+-        'ChardevFileWrapper',
+-        'ChardevHostdevWrapper',
+-        'ChardevMuxWrapper',
+-        'ChardevQemuVDAgentWrapper',
+-        'ChardevRingbufWrapper',
+-        'ChardevSocketWrapper',
+-        'ChardevSpiceChannelWrapper',
+-        'ChardevSpicePortWrapper',
+-        'ChardevStdioWrapper',
+-        'ChardevUdpWrapper',
+-        'ChardevVCWrapper',
+         'CpuS390Entitlement',
+         'CpuS390Polarization',
+         'CpuS390State',
+@@ -77,24 +64,12 @@
+         'GrabToggleKeys',
+         'GuestPanicInformationHyperV',
+         'HotKeyMod',
+-        'HvBalloonDeviceInfoWrapper',
+         'ImageInfoSpecific',
+-        'ImageInfoSpecificFileWrapper',
+         'ImageInfoSpecificKind',
+-        'ImageInfoSpecificLUKSWrapper',
+-        'ImageInfoSpecificQCow2Wrapper',
+-        'ImageInfoSpecificRbdWrapper',
+-        'ImageInfoSpecificVmdkWrapper',
+-        'InetSocketAddressWrapper',
+         'InputAxis',
+-        'InputBtnEventWrapper',
+         'InputButton',
+-        'InputKeyEventWrapper',
+-        'InputMoveEventWrapper',
+         'InputMultiTouchEvent',
+-        'InputMultiTouchEventWrapper',
+         'InputMultiTouchType',
+-        'IntWrapper',
+         'IscsiHeaderDigest',
+         'IscsiTransport',
+         'JSONType',
+@@ -107,18 +82,15 @@
+         'NetClientDriver',
+         'NumaOptions',
+         'ObjectType',
+-        'PCDIMMDeviceInfoWrapper',
+         'PciMemoryRegion',
+         'QCryptoAkCipherKeyType',
+         'QCryptoAkCipherOptions',
+         'QCryptodevBackendServiceType',
+         'QKeyCode',
+-        'QKeyCodeWrapper',
+         'Qcow2OverlapCheckFlags',
+         'RbdAuthMode',
+         'RbdEncryptionCreateOptions',
+         'RbdImageEncryptionFormat',
+-        'SgxEPCDeviceInfoWrapper',
+         'SocketAddressLegacy',
+         'SshHostKeyCheck',
+         'StatsFilter',
+@@ -126,16 +98,10 @@
+         'String',
+         'StringWrapper',
+         'SysEmuTarget',
+-        'TPMEmulatorOptionsWrapper',
+-        'TPMPassthroughOptionsWrapper',
+         'ThrottleGroupProperties',
+         'TransactionAction',
+-        'UnixSocketAddressWrapper',
+-        'VirtioMEMDeviceInfoWrapper',
+-        'VirtioPMEMDeviceInfoWrapper',
+         'VncPrimaryAuth',
+         'VncVencryptSubAuth',
+-        'VsockSocketAddressWrapper',
+         'X86CPURegister32',
+         'XDbgBlockGraph',
+         'YankInstance',
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index 6213154525..c3b616731d 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -119,6 +119,8 @@
+ ##
+ # @InetSocketAddressWrapper:
+ #
++# @data: internet domain socket address
++#
+ # Since: 1.3
+ ##
+ { 'struct': 'InetSocketAddressWrapper',
+@@ -127,6 +129,8 @@
+ ##
+ # @UnixSocketAddressWrapper:
+ #
++# @data: UNIX domain socket address
++#
+ # Since: 1.3
+ ##
+ { 'struct': 'UnixSocketAddressWrapper',
+@@ -135,6 +139,8 @@
+ ##
+ # @VsockSocketAddressWrapper:
+ #
++# @data: VSOCK domain socket address
++#
+ # Since: 2.8
+ ##
+ { 'struct': 'VsockSocketAddressWrapper',
+diff --git a/qapi/tpm.json b/qapi/tpm.json
+index a754455ca5..f9c1e866e7 100644
+--- a/qapi/tpm.json
++++ b/qapi/tpm.json
+@@ -102,6 +102,8 @@
+ ##
+ # @TPMPassthroughOptionsWrapper:
+ #
++# @data: Information about the TPM passthrough type
++#
+ # Since: 1.5
+ ##
+ { 'struct': 'TPMPassthroughOptionsWrapper',
+@@ -111,6 +113,8 @@
+ ##
+ # @TPMEmulatorOptionsWrapper:
+ #
++# @data: Information about the TPM emulator type
++#
+ # Since: 2.11
+ ##
+ { 'struct': 'TPMEmulatorOptionsWrapper',
+diff --git a/qapi/ui.json b/qapi/ui.json
+index a0158baf23..1eccad0a83 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -990,6 +990,8 @@
+ ##
+ # @IntWrapper:
+ #
++# @data: a numeric key code
++#
+ # Since: 1.3
+ ##
+ { 'struct': 'IntWrapper',
+@@ -998,6 +1000,8 @@
+ ##
+ # @QKeyCodeWrapper:
+ #
++# @data: An enumeration of key name
++#
+ # Since: 1.3
+ ##
+ { 'struct': 'QKeyCodeWrapper',
+@@ -1175,6 +1179,8 @@
+ ##
+ # @InputKeyEventWrapper:
+ #
++# @data: Keyboard input event
++#
+ # Since: 2.0
+ ##
+ { 'struct': 'InputKeyEventWrapper',
+@@ -1183,6 +1189,8 @@
+ ##
+ # @InputBtnEventWrapper:
+ #
++# @data: Pointer button input event
++#
+ # Since: 2.0
+ ##
+ { 'struct': 'InputBtnEventWrapper',
+@@ -1191,6 +1199,8 @@
+ ##
+ # @InputMoveEventWrapper:
+ #
++# @data: Pointer motion input event
++#
+ # Since: 2.0
+ ##
+ { 'struct': 'InputMoveEventWrapper',
+@@ -1199,6 +1209,8 @@
+ ##
+ # @InputMultiTouchEventWrapper:
+ #
++# @data: MultiTouch input event
++#
+ # Since: 8.1
+ ##
+ { 'struct': 'InputMultiTouchEventWrapper',
+-- 
+2.43.0
 
 
