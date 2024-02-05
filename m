@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D4C3C48286
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 00:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D120C48286
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 00:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWmYp-0003zN-LH; Sun, 04 Feb 2024 19:10:07 -0500
+	id 1rWmdF-00054M-N9; Sun, 04 Feb 2024 19:14:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWmYo-0003zA-2A; Sun, 04 Feb 2024 19:10:06 -0500
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ id 1rWmdE-00054A-KR; Sun, 04 Feb 2024 19:14:40 -0500
+Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWmYc-0000hN-40; Sun, 04 Feb 2024 19:10:04 -0500
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-467ed334c40so1209580137.0; 
- Sun, 04 Feb 2024 16:09:52 -0800 (PST)
+ id 1rWmdC-0001PT-5E; Sun, 04 Feb 2024 19:14:40 -0500
+Received: by mail-vk1-xa2c.google.com with SMTP id
+ 71dfb90a1353d-4c021a73febso157892e0c.2; 
+ Sun, 04 Feb 2024 16:14:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707091792; x=1707696592; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707092076; x=1707696876; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gUzFHCOJpN3HKFVR4AuVJuPiKGpMrz0euio/avhtkGo=;
- b=hI8ndN3OSAug0fKC8oeY/K3QkPtd7B8l8BiqQOwJ5Hun3G/m49pJS2rpgsci3wHuLm
- cfZuVEd8t3I6mxEU2Qh4fTjLp1li8mbD0ezTNMCMihchmzGsdQtAC4YHJryGNs+l6ybn
- Y4Okz2znSDxsuwuj9tpYOpRlVY5ttyNQwfNsq2Qjvkxjrt1HyMD+iX5RUAAodFEVcNaq
- vhD1TyQfiESlRGthXnRq2mFw+J4jSOY2uQ7P+MAWgIJ4xRuP6YeQVpWAr3eZbhrmD+83
- y5rpJqj6HGF6qyo74fdOkkey/cq10ijZRptw3SznnMXyjIFg5YQc+LXhXjCDxbYaGdD7
- zYfA==
+ bh=GRHx+Mp3v+VUCiZNSCjbToKpKbQ9BuOw3oX8+ZDYXpY=;
+ b=Z4a1A07H0qPWrqUx7KB9aqdQ+meFgk2omzaHlTdUmTJ7xZ5ui7J799O9L1iCOK/KcB
+ Lu/nJagTe3y5mBRekhU+HiyDG3yuYuCAon7xbneUZa+61A2VammQJVFYmGIRLoXy41PX
+ v+X1Kt4LenxoSjb9RhwRgly0jF91WqClKMFC4BUvsYcOnLCR0OM6FUdbp0NcQw0AgoZ5
+ T2g08ql/p/M58fNVPdlHKy/qwE7WQuRrXOGUwZU1tfirdB+LrxdaA3CeytsNnUrl1kRZ
+ 6nqNl0Iq9GO8yOAgtk8qJYrWJNyloEE/DN/W2WR8zALjjblt0opTTTBVmQ+RsZsfA38t
+ no6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707091792; x=1707696592;
+ d=1e100.net; s=20230601; t=1707092076; x=1707696876;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gUzFHCOJpN3HKFVR4AuVJuPiKGpMrz0euio/avhtkGo=;
- b=DrmFiHAetHV1H8aMYVmdtIT82G0dD+oH0EGhDhFqhpLpyvh2H4iJz6MTTfwLod9dbx
- Gk2vb0opnLlbFSlC6K4Gu3eG5UrVyu45IMcGn51YioZo/L7tAMSEohk6YGaoN5iOgmSf
- +Sp3GVhlqaKzCnRe8Bi2eNHtuWmBxIxbs9gM3vFSxFngi6WF/YM56Gt+E3pMKHLDyQHV
- pqYNTB0bkJKpg4QzPpJz1OoddIhWG6uSxJ/G57AWBuvcF+FpstVApHOdwJHKovfva1TG
- g5i6QSe/t9roY04oyakdh1bNHH66J/WPRDd/sDWIFa9bHnJiXdXo8ImGIoFpZjEjvTU6
- iBOQ==
-X-Gm-Message-State: AOJu0YxH7hlx4j8D6kPa4o4bt4M8BBlcngddpuaQyx2OYM38efmCR3EB
- 9T+6fpHwLcPxxubQeIkT8DqZV9PyX1z8ELx31f/HV92Q+6st1BXkb7SQXYyjPr2ry2eH9rsY1Nl
- eHikaUQ44dEXkjwAm+13p4IBEGxEJsfK/EOs=
-X-Google-Smtp-Source: AGHT+IGKeVshKtmHLHM+26mnTW0O+rdrRuTq5eWHdmjvUK4XTtD3RanAyXWZKOHZGxzzHuW9JqwUA8XO/GaqJb0UUxs=
-X-Received: by 2002:a05:6102:dc7:b0:46d:3043:92de with SMTP id
- e7-20020a0561020dc700b0046d304392demr751276vst.4.1707091791836; Sun, 04 Feb
- 2024 16:09:51 -0800 (PST)
+ bh=GRHx+Mp3v+VUCiZNSCjbToKpKbQ9BuOw3oX8+ZDYXpY=;
+ b=cLcCD24H60kmPIeen2qH/wdoLNKJc+VZQ4AKO9l8UfyNgfqdVJSnmEZ438cCSBYG5s
+ W0AO12+v58/U95Ua9jyny91QIQ9AvFaoQgC47s+QxJTQlOoQdniGI2gfHP9YPaUutryb
+ wQGoDF/eZYMchzVTgI/5kVV2496PDTWLK2USMDUEWIY+8vQ2BkguT6z5oIcHqkefkNFu
+ Pfr2cp4jCZHwVs5KWXTiO9CNXOT1gkgGXUZ9apaIa50Mlype/zZy82rpUgSZtDBRvZpA
+ AeudonGZymiBx/Tijk6unALjEQPYnijq8M9ZbzWggYdYixhJ4piLJWCpYFh58Tgbg9VI
+ Ad1w==
+X-Gm-Message-State: AOJu0YxXgEkfEXjw3mD2cuwRr4vH/em6oF8Fa77Og/m7DwEq9grorY9T
+ 4K82D0IMtj6M3poHPaDA7Bg5yETNVWGLjk2JVY9d1hIq6X+XyYinZJ73esfvsY5pGrP/nQVpctN
+ Zd3qOlmt+W90JC0lScCh6qnIaBG8=
+X-Google-Smtp-Source: AGHT+IHBBeIvqejYV7VWq2F8Lbm3wcptdB41TJGjdZxpm4qX1Y8lpV5v6u1rvRLGrzCYyOoeOyQ/buVfxFYcxd3UcNQ=
+X-Received: by 2002:a67:e308:0:b0:46d:15f0:67a8 with SMTP id
+ j8-20020a67e308000000b0046d15f067a8mr2132304vsf.25.1707092076044; Sun, 04 Feb
+ 2024 16:14:36 -0800 (PST)
 MIME-Version: 1.0
 References: <20240126193657.792005-1-ines.varhol@telecom-paris.fr>
- <20240126193657.792005-2-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240126193657.792005-2-ines.varhol@telecom-paris.fr>
+ <20240126193657.792005-3-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20240126193657.792005-3-ines.varhol@telecom-paris.fr>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 5 Feb 2024 10:09:25 +1000
-Message-ID: <CAKmqyKMt=GbObvc-oasr_s8a09OT-zxr99Y5ayRdz7hPF_4K8g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] hw/display : Add device DM163
+Date: Mon, 5 Feb 2024 10:14:10 +1000
+Message-ID: <CAKmqyKO-tmb6466EGqsWeqX=+6GJGJ3dzM1JVCNMerm2Bkfv9A@mail.gmail.com>
+Subject: Re: [PATCH 2/3] hw/arm : Connect DM163 to STM32L4x5
 To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
 Cc: qemu-devel@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
@@ -70,15 +70,16 @@ Cc: qemu-devel@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,13 +95,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 27, 2024 at 5:38=E2=80=AFAM In=C3=A8s Varhol
+On Sat, Jan 27, 2024 at 7:09=E2=80=AFAM In=C3=A8s Varhol
 <ines.varhol@telecom-paris.fr> wrote:
->
-> This device implements the IM120417002 colors shield v1.1 for Arduino
-> (which relies on the DM163 8x3-channel led driving logic) and features
-> a simple display of an 8x8 RGB matrix. The columns of the matrix are
-> driven by the DM163 and the rows are driven externally.
 >
 > Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 > Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
@@ -110,457 +106,154 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/display/Kconfig         |   3 +
->  hw/display/dm163.c         | 307 +++++++++++++++++++++++++++++++++++++
->  hw/display/meson.build     |   1 +
->  hw/display/trace-events    |  13 ++
->  include/hw/display/dm163.h |  57 +++++++
->  5 files changed, 381 insertions(+)
->  create mode 100644 hw/display/dm163.c
->  create mode 100644 include/hw/display/dm163.h
+>  hw/arm/Kconfig                 |  1 +
+>  hw/arm/stm32l4x5_soc.c         | 55 +++++++++++++++++++++++++++++++++-
+>  include/hw/arm/stm32l4x5_soc.h |  3 ++
+>  3 files changed, 58 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-> index 1aafe1923d..4dbfc6e7af 100644
-> --- a/hw/display/Kconfig
-> +++ b/hw/display/Kconfig
-> @@ -139,3 +139,6 @@ config XLNX_DISPLAYPORT
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index 3e49b913f8..818aa2f1a2 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -463,6 +463,7 @@ config STM32L4X5_SOC
+>      select STM32L4X5_SYSCFG
+>      select STM32L4X5_RCC
+>      select STM32L4X5_GPIO
+> +    select DM163
+>
+>  config XLNX_ZYNQMP_ARM
 >      bool
->      # defaults to "N", enabled by specific boards
->      depends on PIXMAN
-> +
-> +config DM163
-> +    bool
-> diff --git a/hw/display/dm163.c b/hw/display/dm163.c
-> new file mode 100644
-> index 0000000000..565fc84ddf
-> --- /dev/null
-> +++ b/hw/display/dm163.c
-> @@ -0,0 +1,307 @@
-> +/*
-> + * QEMU DM163 8x3-channel constant current led driver
-> + * driving columns of associated 8x8 RGB matrix.
-> + *
-> + * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
-> + * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (C) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +/*
-> + * The reference used for the DM163 is the following :
-> + * http://www.siti.com.tw/product/spec/LED/DM163.pdf
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "migration/vmstate.h"
-> +#include "hw/irq.h"
-> +#include "hw/qdev-properties.h"
+> diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+> index 478c6ba056..8663546901 100644
+> --- a/hw/arm/stm32l4x5_soc.c
+> +++ b/hw/arm/stm32l4x5_soc.c
+> @@ -26,7 +26,9 @@
+>  #include "qapi/error.h"
+>  #include "exec/address-spaces.h"
+>  #include "sysemu/sysemu.h"
+> +#include "hw/core/split-irq.h"
+>  #include "hw/arm/stm32l4x5_soc.h"
 > +#include "hw/display/dm163.h"
-> +#include "ui/console.h"
-> +#include "trace.h"
-> +
-> +#define LED_SQUARE_SIZE 100
-> +/* Number of frames a row stays visible after being turned off. */
-> +#define ROW_PERSISTANCE 2
-> +
-> +static const VMStateDescription vmstate_dm163 =3D {
-> +    .name =3D TYPE_DM163,
-> +    .version_id =3D 1,
-> +    .minimum_version_id =3D 1,
-> +    .fields =3D (const VMStateField[]) {
-> +        VMSTATE_UINT8(activated_rows, DM163State),
-> +        VMSTATE_UINT64_ARRAY(bank0_shift_register, DM163State, 3),
-> +        VMSTATE_UINT64_ARRAY(bank1_shift_register, DM163State, 3),
-> +        VMSTATE_UINT16_ARRAY(latched_outputs, DM163State, DM163_NUM_LEDS=
-),
-> +        VMSTATE_UINT16_ARRAY(outputs, DM163State, DM163_NUM_LEDS),
-> +        VMSTATE_UINT8(dck, DM163State),
-> +        VMSTATE_UINT8(en_b, DM163State),
-> +        VMSTATE_UINT8(lat_b, DM163State),
-> +        VMSTATE_UINT8(rst_b, DM163State),
-> +        VMSTATE_UINT8(selbk, DM163State),
-> +        VMSTATE_UINT8(sin, DM163State),
-> +        VMSTATE_UINT32_2DARRAY(buffer, DM163State,
-> +            COLOR_BUFFER_SIZE + 1, RGB_MATRIX_NUM_COLS),
-> +        VMSTATE_UINT8(last_buffer_idx, DM163State),
-> +        VMSTATE_UINT8_ARRAY(buffer_idx_of_row, DM163State, RGB_MATRIX_NU=
-M_ROWS),
-> +        VMSTATE_UINT8_ARRAY(age_of_row, DM163State, RGB_MATRIX_NUM_ROWS)=
-,
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +static void dm163_reset_hold(Object *obj)
-> +{
-> +    DM163State *s =3D DM163(obj);
-> +
-> +    /* Reset only stops the PWM. */
-> +    memset(s->outputs, 0, sizeof(s->outputs));
-> +
-> +    /* The last row of the buffer stores a turned off row */
-> +    memset(s->buffer[COLOR_BUFFER_SIZE], 0, sizeof(s->buffer[0]));
-> +}
-> +
-> +static void dm163_dck_gpio_handler(void *opaque, int line, int new_state=
-)
-> +{
-> +    DM163State *s =3D DM163(opaque);
-> +
-> +    if (new_state && !s->dck) {
-> +        /*
-> +         * On raising dck, sample selbk to get the bank to use, and
-> +         * sample sin for the bit to enter into the bank shift buffer.
-> +         */
-> +        uint64_t *sb =3D
-> +            s->selbk ? s->bank1_shift_register : s->bank0_shift_register=
-;
-> +        /* Output the outgoing bit on sout */
-> +        const bool sout =3D (s->selbk ? sb[2] & MAKE_64BIT_MASK(63, 1) :
-> +                           sb[2] & MAKE_64BIT_MASK(15, 1)) !=3D 0;
-> +        qemu_set_irq(s->sout, sout);
-> +        /* Enter sin into the shift buffer */
-> +        sb[2] =3D (sb[2] << 1) | ((sb[1] >> 63) & 1);
-> +        sb[1] =3D (sb[1] << 1) | ((sb[0] >> 63) & 1);
-> +        sb[0] =3D (sb[0] << 1) | s->sin;
-> +    }
-> +
-> +    s->dck =3D new_state;
-> +    trace_dm163_dck(new_state);
-> +}
-> +
-> +static void dm163_propagate_outputs(DM163State *s)
-> +{
-> +    s->last_buffer_idx =3D (s->last_buffer_idx + 1) % COLOR_BUFFER_SIZE;
-> +    /* Values are output when reset and enable are both high. */
-> +    if (s->rst_b && !s->en_b) {
-> +        memcpy(s->outputs, s->latched_outputs, sizeof(s->outputs));
-> +    } else {
-> +        memset(s->outputs, 0, sizeof(s->outputs));
-> +    }
-> +    for (unsigned x =3D 0; x < RGB_MATRIX_NUM_COLS; x++) {
-> +        trace_dm163_channels(3 * x, (uint8_t)(s->outputs[3 * x] >> 6));
-> +        trace_dm163_channels(3 * x + 1, (uint8_t)(s->outputs[3 * x + 1] =
->> 6));
-> +        trace_dm163_channels(3 * x + 2, (uint8_t)(s->outputs[3 * x + 2] =
->> 6));
-> +        s->buffer[s->last_buffer_idx][x] =3D
-> +            (s->outputs[3 * x + 2] >> 6) |
-> +            ((s->outputs[3 * x + 1] << 2) & 0xFF00) |
-> +            (((uint32_t)s->outputs[3 * x] << 10) & 0xFF0000);
-> +    }
-> +    for (unsigned row =3D 0; row < RGB_MATRIX_NUM_ROWS; row++) {
-> +        if (s->activated_rows & (1 << row)) {
-> +            s->buffer_idx_of_row[row] =3D s->last_buffer_idx;
-> +        }
-> +    }
-> +}
-> +
-> +static void dm163_en_b_gpio_handler(void *opaque, int line, int new_stat=
-e)
-> +{
-> +    DM163State *s =3D DM163(opaque);
-> +
-> +    s->en_b =3D new_state;
-> +    dm163_propagate_outputs(s);
-> +    trace_dm163_en_b(new_state);
-> +}
-> +
-> +static inline uint8_t dm163_bank0(const DM163State *s, uint8_t led)
-> +{
-> +    /*
-> +     * Bank 1 uses 6 bits per led, so a value may be stored accross
-> +     * two uint64_t entries.
-> +     */
-> +    const uint8_t low_bit =3D 6 * led;
-> +    const uint8_t low_word =3D low_bit / 64;
-> +    const uint8_t high_word =3D (low_bit + 5) / 64;
-> +    const uint8_t low_shift =3D low_bit % 64;
-> +
-> +    if (low_word =3D=3D high_word) {
-> +        /* Simple case: the value belongs to one entry. */
-> +        return (s->bank0_shift_register[low_word] &
-> +                MAKE_64BIT_MASK(low_shift, 6)) >> low_shift;
-> +    }
-> +
-> +    const uint8_t bits_in_low_word =3D 64 - low_shift;
-> +    const uint8_t bits_in_high_word =3D 6 - bits_in_low_word;
-> +    return ((s->bank0_shift_register[low_word] &
-> +             MAKE_64BIT_MASK(low_shift, bits_in_low_word)) >>
-> +            low_shift) |
-> +           ((s->bank0_shift_register[high_word] &
-> +             MAKE_64BIT_MASK(0, bits_in_high_word))
-> +         << bits_in_low_word);
-> +}
-> +
-> +static inline uint8_t dm163_bank1(const DM163State *s, uint8_t led)
-> +{
-> +    const uint64_t entry =3D s->bank1_shift_register[led / 8];
-> +    const unsigned shift =3D 8 * (led % 8);
-> +    return (entry & MAKE_64BIT_MASK(shift, 8)) >> shift;
-> +}
-> +
-> +static void dm163_lat_b_gpio_handler(void *opaque, int line, int new_sta=
-te)
-> +{
-> +    DM163State *s =3D DM163(opaque);
-> +
-> +    if (s->lat_b && !new_state) {
-> +        for (int led =3D 0; led < DM163_NUM_LEDS; led++) {
-> +            s->latched_outputs[led] =3D dm163_bank0(s, led) * dm163_bank=
-1(s, led);
-> +        }
-> +        dm163_propagate_outputs(s);
-> +    }
-> +
-> +    s->lat_b =3D new_state;
-> +    trace_dm163_lat_b(new_state);
-> +}
-> +
-> +static void dm163_rst_b_gpio_handler(void *opaque, int line, int new_sta=
-te)
-> +{
-> +    DM163State *s =3D DM163(opaque);
-> +
-> +    s->rst_b =3D new_state;
-> +    dm163_propagate_outputs(s);
-> +    trace_dm163_rst_b(new_state);
-> +}
-> +
-> +static void dm163_selbk_gpio_handler(void *opaque, int line, int new_sta=
-te)
-> +{
-> +    DM163State *s =3D DM163(opaque);
-> +
-> +    s->selbk =3D new_state;
-> +    trace_dm163_selbk(new_state);
-> +}
-> +
-> +static void dm163_sin_gpio_handler(void *opaque, int line, int new_state=
-)
-> +{
-> +    DM163State *s =3D DM163(opaque);
-> +
-> +    s->sin =3D new_state;
-> +    trace_dm163_sin(new_state);
-> +}
-> +
-> +static void dm163_rows_gpio_handler(void *opaque, int line, int new_stat=
-e)
-> +{
-> +    DM163State *s =3D DM163(opaque);
-> +
-> +    if (new_state) {
-> +        s->activated_rows |=3D (1 << line);
-> +        s->buffer_idx_of_row[line] =3D s->last_buffer_idx;
-> +        s->age_of_row[line] =3D 0;
-> +    } else {
-> +        s->activated_rows &=3D ~(1 << line);
-> +        s->age_of_row[line] =3D ROW_PERSISTANCE;
-> +    }
-> +    trace_dm163_activated_rows(s->activated_rows);
-> +}
-> +
-> +static void dm163_invalidate_display(void *opaque)
-> +{
-> +}
-> +
-> +static void dm163_update_display(void *opaque)
-> +{
-> +    DM163State *s =3D (DM163State *)opaque;
-> +    DisplaySurface *surface =3D qemu_console_surface(s->console);
-> +    uint32_t *dest;
-> +    unsigned bits_ppi =3D surface_bits_per_pixel(surface);
-> +
-> +    trace_dm163_bits_ppi(bits_ppi);
-> +    g_assert((bits_ppi =3D=3D 32));
-> +    dest =3D surface_data(surface);
-> +    for (unsigned y =3D 0; y < RGB_MATRIX_NUM_ROWS; y++) {
-> +        for (unsigned _ =3D 0; _ < LED_SQUARE_SIZE; _++) {
-> +            for (int x =3D RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZE - 1; x =
->=3D 0; x--) {
-> +                *dest++ =3D s->buffer[s->buffer_idx_of_row[y]][x / LED_S=
-QUARE_SIZE];
-> +            }
-> +        }
-> +        if (s->age_of_row[y]) {
-> +            s->age_of_row[y]--;
-> +            if (!s->age_of_row[y]) {
-> +                /*
-> +                 * If the ROW_PERSISTANCE delay is up,
-> +                 * the row is turned off.
-> +                 * (s->buffer[COLOR_BUFFER] is filled with 0)
-> +                 */
-> +                s->buffer_idx_of_row[y] =3D COLOR_BUFFER_SIZE;
-> +            }
-> +        }
-> +    }
-> +    /*
-> +     * Ideally set the refresh rate so that the row persistance
-> +     * doesn't need to be changed.
-> +     *
-> +     * Currently `dpy_ui_info_supported(s->console)` returns false
-> +     * which makes it impossible to get or set UIInfo.
-> +     *
-> +     * if (dpy_ui_info_supported(s->console)) {
-> +     *     trace_dm163_refresh_rate(dpy_get_ui_info(s->console)->refresh=
-_rate);
-> +     * } else {
-> +     *     trace_dm163_refresh_rate(0);
-> +     * }
-> +     */
-> +    dpy_gfx_update(s->console, 0, 0, RGB_MATRIX_NUM_COLS * LED_SQUARE_SI=
-ZE,
-> +                   RGB_MATRIX_NUM_ROWS * LED_SQUARE_SIZE);
-> +}
-> +
-> +static const GraphicHwOps dm163_ops =3D {
-> +    .invalidate  =3D dm163_invalidate_display,
-> +    .gfx_update  =3D dm163_update_display,
-> +};
-> +
-> +static void dm163_realize(DeviceState *dev, Error **errp)
-> +{
-> +    DM163State *s =3D DM163(dev);
-> +
-> +    qdev_init_gpio_in(dev, dm163_rows_gpio_handler, 8);
-> +    qdev_init_gpio_in(dev, dm163_sin_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_dck_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_rst_b_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_lat_b_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_selbk_gpio_handler, 1);
-> +    qdev_init_gpio_in(dev, dm163_en_b_gpio_handler, 1);
-> +    qdev_init_gpio_out_named(dev, &s->sout, "sout", 1);
-> +
-> +    s->console =3D graphic_console_init(dev, 0, &dm163_ops, s);
-> +    qemu_console_resize(s->console, RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZ=
-E,
-> +                        RGB_MATRIX_NUM_ROWS * LED_SQUARE_SIZE);
-> +}
-> +
-> +static void dm163_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
-> +
-> +    dc->desc =3D "DM163";
-> +    dc->vmsd =3D &vmstate_dm163;
-> +    dc->realize =3D dm163_realize;
-> +    rc->phases.hold =3D dm163_reset_hold;
-> +    set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-> +}
-> +
-> +static const TypeInfo dm163_types[] =3D {
-> +    {
-> +        .name =3D TYPE_DM163,
-> +        .parent =3D TYPE_DEVICE,
-> +        .instance_size =3D sizeof(DM163State),
-> +        .class_init =3D dm163_class_init
-> +    }
-> +};
-> +
-> +DEFINE_TYPES(dm163_types)
-> diff --git a/hw/display/meson.build b/hw/display/meson.build
-> index f93a69f70f..71e489308e 100644
-> --- a/hw/display/meson.build
-> +++ b/hw/display/meson.build
-> @@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_NEXTCUBE', if_true: files('=
-next-fb.c'))
+>  #include "hw/qdev-clock.h"
+>  #include "hw/misc/unimp.h"
 >
->  system_ss.add(when: 'CONFIG_VGA', if_true: files('vga.c'))
->  system_ss.add(when: 'CONFIG_VIRTIO', if_true: files('virtio-dmabuf.c'))
-> +system_ss.add(when: 'CONFIG_DM163', if_true: files('dm163.c'))
+> @@ -78,6 +80,31 @@ static const int exti_irq[NUM_EXTI_IRQ] =3D {
+>  #define RCC_BASE_ADDRESS 0x40021000
+>  #define RCC_IRQ 5
 >
->  if (config_all_devices.has_key('CONFIG_VGA_CIRRUS') or
->      config_all_devices.has_key('CONFIG_VGA_PCI') or
-> diff --git a/hw/display/trace-events b/hw/display/trace-events
-> index 2336a0ca15..444b014d6e 100644
-> --- a/hw/display/trace-events
-> +++ b/hw/display/trace-events
-> @@ -177,3 +177,16 @@ macfb_ctrl_write(uint64_t addr, uint64_t value, unsi=
-gned int size) "addr 0x%"PRI
->  macfb_sense_read(uint32_t value) "video sense: 0x%"PRIx32
->  macfb_sense_write(uint32_t value) "video sense: 0x%"PRIx32
->  macfb_update_mode(uint32_t width, uint32_t height, uint8_t depth) "setti=
-ng mode to width %"PRId32 " height %"PRId32 " size %d"
-> +
-> +# dm163.c
-> +dm163_dck(int new_state) "dck : %d"
-> +dm163_en_b(int new_state) "en_b : %d"
-> +dm163_rst_b(int new_state) "rst_b : %d"
-> +dm163_lat_b(int new_state) "lat_b : %d"
-> +dm163_sin(int new_state) "sin : %d"
-> +dm163_selbk(int new_state) "selbk : %d"
-> +dm163_activated_rows(int new_state) "Activated rows : 0x%" PRIx32 ""
-> +dm163_bits_ppi(unsigned dest_width) "dest_width : %u"
-> +dm163_leds(int led, uint32_t value) "led %d: 0x%x"
-> +dm163_channels(int channel, uint8_t value) "channel %d: 0x%x"
-> +dm163_refresh_rate(uint32_t rr) "refresh rate %d"
-> diff --git a/include/hw/display/dm163.h b/include/hw/display/dm163.h
-> new file mode 100644
-> index 0000000000..aa775e51e1
-> --- /dev/null
-> +++ b/include/hw/display/dm163.h
-> @@ -0,0 +1,57 @@
 > +/*
-> + * QEMU DM163 8x3-channel constant current led driver
-> + * driving columns of associated 8x8 RGB matrix.
-> + *
-> + * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
-> + * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (C) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * There are actually 14 input pins in the DM163 device.
+> + * Here the DM163 input pin EN isn't connected to the STM32L4x5
+> + * GPIOs as the IM120417002 colors shield doesn't actually use
+> + * this pin to drive the RGB matrix.
 > + */
+> +#define NUM_DM163_INPUTS 13
 > +
-> +#ifndef HW_DISPLAY_DM163_H
-> +#define HW_DISPLAY_DM163_H
+> +static const int dm163_input[NUM_DM163_INPUTS] =3D {
+> +    1 * 16 + 2,  /* ROW0  PB2       */
+> +    0 * 16 + 15, /* ROW1  PA15      */
+> +    0 * 16 + 2,  /* ROW2  PA2       */
+> +    0 * 16 + 7,  /* ROW3  PA7       */
+> +    0 * 16 + 6,  /* ROW4  PA6       */
+> +    0 * 16 + 5,  /* ROW5  PA5       */
+> +    1 * 16 + 0,  /* ROW6  PB0       */
+> +    0 * 16 + 3,  /* ROW7  PA3       */
+> +    0 * 16 + 4,  /* SIN (SDA) PA4   */
+> +    1 * 16 + 1,  /* DCK (SCK) PB1   */
+> +    2 * 16 + 3,  /* RST_B (RST) PC3 */
+> +    2 * 16 + 4,  /* LAT_B (LAT) PC4 */
+> +    2 * 16 + 5,  /* SELBK (SB)  PC5 */
+> +};
 > +
-> +#include "qom/object.h"
-> +#include "hw/qdev-core.h"
 > +
-> +#define TYPE_DM163 "dm163"
-> +OBJECT_DECLARE_SIMPLE_TYPE(DM163State, DM163);
+>  static const uint32_t gpio_addr[] =3D {
+>      0x48000000,
+>      0x48000400,
+> @@ -116,6 +143,8 @@ static void stm32l4x5_soc_initfn(Object *obj)
+>          g_autofree char *name =3D g_strdup_printf("gpio%c", 'a' + i);
+>          object_initialize_child(obj, name, &s->gpio[i], TYPE_STM32L4X5_G=
+PIO);
+>      }
 > +
-> +#define DM163_NUM_LEDS 24
-> +#define RGB_MATRIX_NUM_ROWS 8
-> +#define RGB_MATRIX_NUM_COLS (DM163_NUM_LEDS / 3)
-> +#define COLOR_BUFFER_SIZE RGB_MATRIX_NUM_ROWS
+> +    object_initialize_child(obj, "dm163", &s->dm163, TYPE_DM163);
+>  }
+>
+>  static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+> @@ -124,9 +153,10 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
+oc, Error **errp)
+>      Stm32l4x5SocState *s =3D STM32L4X5_SOC(dev_soc);
+>      const Stm32l4x5SocClass *sc =3D STM32L4X5_SOC_GET_CLASS(dev_soc);
+>      MemoryRegion *system_memory =3D get_system_memory();
+> -    DeviceState *armv7m, *dev;
+> +    DeviceState *armv7m, *dev, *gpio_output_fork;
+>      SysBusDevice *busdev;
+>      uint32_t pin_index;
+> +    int gpio, pin;
+>
+>      if (!memory_region_init_rom(&s->flash, OBJECT(dev_soc), "flash",
+>                                  sc->flash_size, errp)) {
+> @@ -166,6 +196,12 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
+oc, Error **errp)
+>          return;
+>      }
+>
+> +    /* DM163 */
+> +    dev =3D DEVICE(&s->dm163);
+> +    if (!qdev_realize(dev, NULL, errp)) {
+> +        return;
+> +    }
 > +
-> +typedef struct DM163State {
-> +    DeviceState parent_obj;
+>      /* GPIOs */
+>      for (unsigned i =3D 0; i < NUM_GPIOS; i++) {
+>          g_autofree char *name =3D g_strdup_printf("%c", 'A' + i);
+> @@ -204,6 +240,23 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
+oc, Error **errp)
+>          }
+>      }
+>
+> +    for (unsigned i =3D 0; i < NUM_DM163_INPUTS; i++) {
+> +        gpio_output_fork =3D qdev_new(TYPE_SPLIT_IRQ);
+> +        qdev_prop_set_uint32(gpio_output_fork, "num-lines", 2);
+> +        qdev_realize_and_unref(gpio_output_fork, NULL, &error_fatal);
 > +
-> +    /* DM163 driver */
-> +    uint64_t bank0_shift_register[3];
-> +    uint64_t bank1_shift_register[3];
-> +    uint16_t latched_outputs[DM163_NUM_LEDS];
-> +    uint16_t outputs[DM163_NUM_LEDS];
-> +    qemu_irq sout;
+> +        qdev_connect_gpio_out(gpio_output_fork, 0,
+> +                              qdev_get_gpio_in(DEVICE(&s->syscfg),
+> +                                               dm163_input[i]));
+> +        qdev_connect_gpio_out(gpio_output_fork, 1,
+> +                              qdev_get_gpio_in(DEVICE(&s->dm163),
+> +                                               i));
+> +        gpio =3D dm163_input[i] / 16;
+> +        pin =3D dm163_input[i] % 16;
+> +        qdev_connect_gpio_out(DEVICE(&s->gpio[gpio]), pin,
+> +                              qdev_get_gpio_in(DEVICE(gpio_output_fork),=
+ 0));
+> +    }
 > +
-> +    uint8_t dck;
-> +    uint8_t en_b;
-> +    uint8_t lat_b;
-> +    uint8_t rst_b;
-> +    uint8_t selbk;
-> +    uint8_t sin;
+>      /* EXTI device */
+>      busdev =3D SYS_BUS_DEVICE(&s->exti);
+>      if (!sysbus_realize(busdev, errp)) {
+> diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_so=
+c.h
+> index cb4da08629..60b31d430e 100644
+> --- a/include/hw/arm/stm32l4x5_soc.h
+> +++ b/include/hw/arm/stm32l4x5_soc.h
+> @@ -30,6 +30,7 @@
+>  #include "hw/misc/stm32l4x5_exti.h"
+>  #include "hw/misc/stm32l4x5_rcc.h"
+>  #include "hw/gpio/stm32l4x5_gpio.h"
+> +#include "hw/display/dm163.h"
+>  #include "qom/object.h"
+>
+>  #define TYPE_STM32L4X5_SOC "stm32l4x5-soc"
+> @@ -48,6 +49,8 @@ struct Stm32l4x5SocState {
+>      Stm32l4x5RccState rcc;
+>      Stm32l4x5GpioState gpio[NUM_GPIOS];
+>
+> +    DM163State dm163;
 > +
-> +    /* IM120417002 colors shield */
-> +    uint8_t activated_rows;
-> +
-> +    /* 8x8 RGB matrix */
-> +    QemuConsole *console;
-> +    /* Rows currently being displayed on the matrix. */
-> +    /* The last row is filled with 0 (turned off row) */
-> +    uint32_t buffer[COLOR_BUFFER_SIZE + 1][RGB_MATRIX_NUM_COLS];
-> +    uint8_t last_buffer_idx;
-> +    uint8_t buffer_idx_of_row[RGB_MATRIX_NUM_ROWS];
-> +    /* Used to simulate retinal persistance of rows */
-> +    uint8_t age_of_row[RGB_MATRIX_NUM_ROWS];
-> +} DM163State;
-> +
-> +#endif /* HW_DISPLAY_DM163_H */
+>      MemoryRegion sram1;
+>      MemoryRegion sram2;
+>      MemoryRegion flash;
 > --
 > 2.43.0
 >
