@@ -4,96 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515D8C48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 11:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47445C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 12:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWx48-0001lk-8W; Mon, 05 Feb 2024 06:23:08 -0500
+	id 1rWxuZ-0004Fl-2D; Mon, 05 Feb 2024 07:17:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rWx46-0001kd-9B
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:23:06 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rWx44-0006kp-GM
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:23:05 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 415AtLoF030208; Mon, 5 Feb 2024 11:23:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=uT7A/sqalgVYQqMzo1c6DQ3YIZWlQuYQ+v4AEThmUeo=;
- b=peoF6FKXhRJeppVw6bYa3pro+yxShvf2hH8i1C6CP6gWsp/15JOdwZJBS44lI7/arMDH
- f5aGxxVerLVSZxmUXY7gawZMNiZal1hkmcHH46kdatB4/KhvmJ810NYJ6AyF1I9dFMB8
- fFUIQT8yj9O+fClb4hNY+DDbl94sWW/nWQZ+Zn/6bxKWUSI8vxLoCbQKVwtoBR4GnnYe
- 3y2Elhm3hGlZwuzJEYIsbXLYOcc4IOnj2izolFGpUFMzEeD8PZqlYM+X1u1VniiTofxG
- ymzMdyLq8O2wr2joBLBqW07u0f9wldnmFo++fmXyslYt84E7IqRerrpq8WAttt+rpztT ww== 
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w2ur8vk53-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Feb 2024 11:23:01 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 415ApcpB014837; Mon, 5 Feb 2024 11:23:01 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w20tng28m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Feb 2024 11:23:01 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 415BMxUo20120156
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Feb 2024 11:22:59 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 24AD02004D;
- Mon,  5 Feb 2024 11:22:59 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF1FB2004B;
- Mon,  5 Feb 2024 11:22:58 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.32.247])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Feb 2024 11:22:58 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 04/11] {linux,bsd}-user: Pass pid to fork_end()
-Date: Mon,  5 Feb 2024 12:22:18 +0100
-Message-ID: <20240205112251.121569-5-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240205112251.121569-1-iii@linux.ibm.com>
-References: <20240205112251.121569-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rWxuX-0004FZ-H3
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 07:17:17 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rWxuV-0002KM-Lo
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 07:17:17 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6e02d355f36so595763b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 04:17:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1707135434; x=1707740234; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VwssBm2shd9cdtHdK/g3snDbXeummB+FvaBW8tNM+Ko=;
+ b=TrJOAYilo8eg0pYtlw8q1nRS+GzfOwXQnd/b2N8wF/Oe6LLFBw7aQy6Q0QddKIHu9d
+ OAuj1C4p0YMNhM3Rv++VZVHZpt/GMFqHf8C/PC+qUDy3WcWEbABBOYYDKbQwHpTsEoVs
+ SWuWYMM6n+y7VerhQMEg5IL0q/NJKtHhBfTCr5NZEqLPvdUqdsKbTRCBLdNtBxm6OUC5
+ dH0QRDclwx0YqlL0mSPP1BU7o9eP2lSl8O2YhmiAZZt/MoK5qGQeO5WPJAFaVimsXyCt
+ BtIyR8IPm2i8VTVfPmaksE7PCEu/l4hAeDISvG1cvNLr5tTqCl2nVKPoSzMo0SZ9d7RM
+ jUbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707135434; x=1707740234;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VwssBm2shd9cdtHdK/g3snDbXeummB+FvaBW8tNM+Ko=;
+ b=GTCCai5VOzzJDxfRQZKBtXLkE3f3LsDEiAISUtDMQuHcgG5Gl4EiQbVeBPaH1caNQ3
+ H8C5jnl+fI7sPo8HFHHlR4J1xgR36etJX4v6ip7Yq6jTGg5rYtDiLE7xu+9gBCNcmijl
+ 7WP/TDBuwV0RG4NFPxLlyGTMuoyBrr5iS020dTiu1yKm3MS2H/YCsnpjlTMzWbBDIiUV
+ n8gs1/Xy6MRyUkIeD+JeXx6Yw5a8FyeafdwPDM7Qt8jQMDwr/UkvkWZDv47hWhgdvP2N
+ eUeoqqiq4MlQtAq51wdDBtbhE1KEfXLVg+qWDQTOaJWgvAgESgT4PTAPFGEAPiRLK3ZO
+ Q7Wg==
+X-Gm-Message-State: AOJu0YytKFfrkz/MsNR6imPWlgK7QmwtGpY99o2PYxq59kmDvm3wmrRs
+ XPBnvzQhsp7TaJU6yJuyy7OO8LT0BYIudThw4+bSBmjvwn5W8Gm7f8BIlir1QM4=
+X-Google-Smtp-Source: AGHT+IHaZ+Kt6V1c6fsfRR1Hz5IL3jac8YgpOr51+nyg9gTjNkzpl80Iuhu3Cv0iczZIRBsgXCfLIw==
+X-Received: by 2002:a05:6a20:d39a:b0:19e:2688:f483 with SMTP id
+ iq26-20020a056a20d39a00b0019e2688f483mr9382623pzb.43.1707135433645; 
+ Mon, 05 Feb 2024 04:17:13 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCXV3PsOgk8rdwKB6KkbgwVbIY6dZr/ewrNohW3t1FMbB5n1rF5kongMBPHzCXKULN228QRvaI68+xnXcvQ8EtRJYt99oR26jAmDs9jURSGV/bb8F1nPs9+xilwSZ3ESj73rxWpnMav4Kfj8SpXp1Fm9BBGSnpbgtx8XNBSSySmZrge1D/ZPBp9MlogkY5pHdYb7hV+TVTvikZcvH7uXDBOeqlxoY2wYxklSvEBIVygPgi6Aez6oE+oetEVLdwCPtpskoShinlACniGk8F1+Wq6HxUsLY8Q=
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ s16-20020a056a00179000b006dd8a07696csm6499154pfg.106.2024.02.05.04.17.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Feb 2024 04:17:13 -0800 (PST)
+Message-ID: <624964b1-d0e7-42b2-b4c2-690107882d01@ventanamicro.com>
+Date: Mon, 5 Feb 2024 09:17:09 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: hex0ZWQ51K4ZFgMB1mr1dxu4E6vWk-Ox
-X-Proofpoint-ORIG-GUID: hex0ZWQ51K4ZFgMB1mr1dxu4E6vWk-Ox
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-05_06,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- mlxlogscore=639 adultscore=0 impostorscore=0 priorityscore=1501 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2402050086
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw: riscv: Allow large kernels to boot by moving the
+ initrd further way in RAM
+To: Alexandre Ghiti <alexghiti@rivosinc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240205070040.367541-1-alexghiti@rivosinc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240205070040.367541-1-alexghiti@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,133 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The upcoming follow-fork-mode child support requires knowing the child
-pid. Pass it down.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- bsd-user/freebsd/os-proc.h  | 6 +++---
- bsd-user/main.c             | 4 +++-
- bsd-user/qemu.h             | 2 +-
- linux-user/main.c           | 4 +++-
- linux-user/syscall.c        | 6 +++---
- linux-user/user-internals.h | 2 +-
- 6 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-proc.h b/bsd-user/freebsd/os-proc.h
-index d6418780344..3003c8cb637 100644
---- a/bsd-user/freebsd/os-proc.h
-+++ b/bsd-user/freebsd/os-proc.h
-@@ -208,7 +208,7 @@ static inline abi_long do_freebsd_fork(void *cpu_env)
-      */
-     set_second_rval(cpu_env, child_flag);
- 
--    fork_end(child_flag);
-+    fork_end(ret);
- 
-     return ret;
- }
-@@ -252,7 +252,7 @@ static inline abi_long do_freebsd_rfork(void *cpu_env, abi_long flags)
-      * value: 0 for parent process, 1 for child process.
-      */
-     set_second_rval(cpu_env, child_flag);
--    fork_end(child_flag);
-+    fork_end(ret);
- 
-     return ret;
- 
-@@ -285,7 +285,7 @@ static inline abi_long do_freebsd_pdfork(void *cpu_env, abi_ulong target_fdp,
-      * value: 0 for parent process, 1 for child process.
-      */
-     set_second_rval(cpu_env, child_flag);
--    fork_end(child_flag);
-+    fork_end(ret);
- 
-     return ret;
- }
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index bfe6888ea89..bc233a85cef 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -109,8 +109,10 @@ void fork_start(void)
-     gdbserver_fork_start();
- }
- 
--void fork_end(int child)
-+void fork_end(abi_long pid)
- {
-+    int child = pid == 0;
-+
-     if (child) {
-         CPUState *cpu, *next_cpu;
-         /*
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index dc842fffa7d..2414a87559b 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -180,7 +180,7 @@ void cpu_loop(CPUArchState *env);
- char *target_strerror(int err);
- int get_osversion(void);
- void fork_start(void);
--void fork_end(int child);
-+void fork_end(abi_long pid);
- 
- #include "qemu/log.h"
- 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 8c7bea1c631..f1a0267816b 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -147,8 +147,10 @@ void fork_start(void)
-     gdbserver_fork_start();
- }
- 
--void fork_end(int child)
-+void fork_end(abi_long pid)
- {
-+    int child = pid == 0;
-+
-     qemu_plugin_user_postfork(child);
-     mmap_fork_end(child);
-     if (child) {
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index aeb95644873..9e628a0f975 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6669,7 +6669,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
-         if (ret == 0) {
-             /* Child Process.  */
-             cpu_clone_regs_child(env, newsp, flags);
--            fork_end(1);
-+            fork_end(ret);
-             /* There is a race condition here.  The parent process could
-                theoretically read the TID in the child process before the child
-                tid is set.  This would require using either ptrace
-@@ -6700,8 +6700,8 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
-                 }
- #endif
-                 put_user_u32(pid_fd, parent_tidptr);
--                }
--            fork_end(0);
-+            }
-+            fork_end(ret);
-         }
-         g_assert(!cpu_in_exclusive_context(cpu));
-     }
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index c63ef45fc78..9014014d920 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -71,7 +71,7 @@ const char *target_strerror(int err);
- int get_osversion(void);
- void init_qemu_uname_release(void);
- void fork_start(void);
--void fork_end(int child);
-+void fork_end(abi_long pid);
- 
- /**
-  * probe_guest_base:
--- 
-2.43.0
+On 2/5/24 04:00, Alexandre Ghiti wrote:
+> Currently, the initrd is placed at 128MB, which overlaps with the kernel
+> when it is large (for example syzbot kernels are). From the kernel side,
+> there is no reason we could not push the initrd further away in memory
+> to accomodate large kernels, so move the initrd at 512MB when possible.
 
+typo: accommodate
+
+> 
+> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> ---
+
+Patch looks good - just tested with an Ubuntu guest and nothing bad happened.
+
+But I wonder ... what if there's an even bigger kernel we have to deal with?
+Move initrd even further away to fit it in?
+
+Instead of making assumptions about where initrd starts, we could grab the kernel
+size loaded in the board and use it as a reference. This would be done by storing
+the return of load_elf_ram_sym/load_uimage_as/load_image_targphys_as from
+riscv_load_kernel() an passing as argument to riscv_load_initrd().
+
+initrd start would then be:
+
+     start = kernel_entry + MIN(mem_size / 2, kernel_size);
+
+However, I believe we would like to keep the existing 128Mb minimum initrd start,
+even if the kernel is smaller than 128Mb, to avoid breaking existing configs that
+might be making this assumption. initrd start would then become:
+
+
+     start = kernel_entry + MIN(mem_size / 2, MAX(kernel_size, 128 * MiB));
+
+
+
+Thanks,
+
+
+
+Daniel
+
+
+>   hw/riscv/boot.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 0ffca05189..9a367af2fa 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -188,13 +188,13 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
+>        * kernel is uncompressed it will not clobber the initrd. However
+>        * on boards without much RAM we must ensure that we still leave
+>        * enough room for a decent sized initrd, and on boards with large
+> -     * amounts of RAM we must avoid the initrd being so far up in RAM
+> -     * that it is outside lowmem and inaccessible to the kernel.
+> -     * So for boards with less  than 256MB of RAM we put the initrd
+> -     * halfway into RAM, and for boards with 256MB of RAM or more we put
+> -     * the initrd at 128MB.
+> +     * amounts of RAM, we put the initrd at 512MB to allow large kernels
+> +     * to boot.
+> +     * So for boards with less than 1GB of RAM we put the initrd
+> +     * halfway into RAM, and for boards with 1GB of RAM or more we put
+> +     * the initrd at 512MB.
+>        */
+> -    start = kernel_entry + MIN(mem_size / 2, 128 * MiB);
+> +    start = kernel_entry + MIN(mem_size / 2, 512 * MiB);
+>   
+>       size = load_ramdisk(filename, start, mem_size - start);
+>       if (size == -1) {
 
