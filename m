@@ -4,145 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09689C48292
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 17:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19BA3C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 17:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX3Bn-0000Xi-Of; Mon, 05 Feb 2024 12:55:27 -0500
+	id 1rX3CQ-0000rA-BP; Mon, 05 Feb 2024 12:56:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rX3Bj-0000XI-Km
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:55:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rX3Bh-0002tr-V1
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:55:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707155719;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EfebkaIVJ9PHV/DX76m3b03sbl6VY32kbWp4mj6EkW0=;
- b=QiH5RkHypeP98Agv6f47CJhJVJBpiR2GMmcPmxKKbHX4NNCm6FjmZuQyi9eMV6H1syu6S9
- F6bQfYI1Kn0b7eOzApA8tbKGqIZIPZ3aidt8FzRgu4mc58cVAr1WdjcB8CUA5mBnzPIwQ2
- KHeqd8KfO/AEnhV6ABDHGwy6OoQRy1A=
-Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
- [209.85.221.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-gbBKqrmpOFuU8i7Gm7Uvow-1; Mon, 05 Feb 2024 12:55:17 -0500
-X-MC-Unique: gbBKqrmpOFuU8i7Gm7Uvow-1
-Received: by mail-vk1-f200.google.com with SMTP id
- 71dfb90a1353d-4bfe162877aso3683828e0c.0
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 09:55:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707155717; x=1707760517;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rX3CN-0000o8-NA
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:56:04 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rX3CM-00034s-0I
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:56:03 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-55ff5f6a610so19753a12.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 09:56:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707155759; x=1707760559; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EfebkaIVJ9PHV/DX76m3b03sbl6VY32kbWp4mj6EkW0=;
- b=uuTkY2yIWvKe1FvZNpqsi8+PXGBU2mG9KxVtVJ/o9PJLkBDk+9OHzBNKgLvIdo+b2M
- 6n9Li+z1TWqvCqVkf+CDC/jqlgIYJF4dcogyDsT+NgA+bnGbmAh4L7dD/OPZhjIjsR1p
- HtnQiyGTi9kEi2Eox9lVL730cSTxSWUgal6KmOvDgyBkV0jwTeAzLr/SaLCvT3qT4poJ
- sz2fD501RRrKJc2AF5Cjl2lch0niUgv5u7AeZBs6NzU0gypvYHcuJ88vQhSD5FaCcnK8
- rNxiUAoDDjcbPgftv9qmjFKCRZnPAF1bnI5nwhwYPq3xehbCYRn6OQZlgUDtT4FYiboq
- hQeA==
-X-Gm-Message-State: AOJu0YxABHfNSyqxTAQFeNbyr8iNMp6muCHDNeUQSCtTgyXm5k6Aq03E
- 12VAfAjUpkF6znxgKiuGRi6slsMTqnPc5d3G1ckr/f+GWH8rNu9IFGb5+GV2660F6RZ0hCasNsl
- 1rK5KLBAgYo3FtciV66GCRRrdaa/n9Uk6lN47xxYGiXV6y8q9KKtB
-X-Received: by 2002:ac5:c996:0:b0:4b7:6f11:339a with SMTP id
- e22-20020ac5c996000000b004b76f11339amr337944vkm.6.1707155717204; 
- Mon, 05 Feb 2024 09:55:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHbZqsy44IWw5ZizlKenbQmaMnzq1L6OLQxT9lHFHrlDtQXFi8yGngq8rUrPTm6kDrFg2ktrQ==
-X-Received: by 2002:ac5:c996:0:b0:4b7:6f11:339a with SMTP id
- e22-20020ac5c996000000b004b76f11339amr337907vkm.6.1707155715609; 
- Mon, 05 Feb 2024 09:55:15 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCWn/TYqRBIgYpv9BRzNLNw1Bt2dXnv98DYRVn/j1VWLrQPU+x80NN8yv7emNtT0kFujBlfMB53k8DoxfFjGewwR4hPM6GZHeHTeamS9ATaoLjl9Py02DDd6A9K0Bm3n5LwDhNBnRrj7/Y1mzbCgx4AUtsLz8C0ze3EahBMDEU4qu60Il1pDkdFp3dvYZLHi9fkjHZSiC+IW1nkx8pIyst7SF/xMYNlXcJZ4Qw2E2EDfWlkGgiFSmeAamqeo5m4AVe08KJW5jlensuM6
-Received: from [192.168.20.184] (ftip006315900.acc1.colindale.21cn-nte.bt.net.
- [81.134.214.249]) by smtp.gmail.com with ESMTPSA id
- ci16-20020a056122321000b004c03913053esm58383vkb.54.2024.02.05.09.55.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Feb 2024 09:55:15 -0800 (PST)
-Message-ID: <f2ab935b-4b60-4daa-a9dd-18a6113d22f5@redhat.com>
-Date: Mon, 5 Feb 2024 18:55:12 +0100
+ bh=v6cX1jta8LYnNqITdik8IW67rhGxFWo19bWstzfCB0M=;
+ b=uAR10LDTPA7YCuE3q+zCePumrE4MuiCv5+x8N6jhGUmEfL78yPlUDHH+YtCI50l9wl
+ SXRxLo5tMFPLP0EqHxvJWYnt5M+n3awkW248F4qu/8C50TkryMjmndCWSTQaOFdBNnwk
+ 7e9bZi8rN+d9ZsLgk4vxql4grABB9pesIUddj85McZ39KL/e0OuP9OGTSMGNjs7lcKZT
+ 5IFUFzBlxAZ4TzQyUGr4rt8dxH2VU38OciCcXlYEwpQb+IxDBgfjUxQK1I0WDufuzpPf
+ heO3EVGPjdVWYsEuo027B3hsChJ8Dr0KDSEOxLxESaVOu2Of1dkCyTjUQ4/YB/kFFaug
+ OURw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707155759; x=1707760559;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=v6cX1jta8LYnNqITdik8IW67rhGxFWo19bWstzfCB0M=;
+ b=U+skmQnj7oclWyv0N93oCSvfMxOsQ8ZcyiQYqkxdLhN6O24NhRL+jsvy9u5tXC9hhC
+ DWt+ghFeK61mgI2FSi89cD+LnElE2/rLtunGZbl3cLak9fPWVMJB+VhQL2xOaFx9H2EE
+ B0Wweik9OQ92OGvIV1SjkWbdpLHrCb4ydH+l5SGrFftzWNrFxS7QH5dFL+yvSpt2C3/B
+ uMRT/+phCxgmVGKmSWglSpxhxmKFeVac/V0qr9CoMxRziR02yyTb6cBVHdA/yBvfDoVm
+ aL4Y86sbUUnr/KqN6f9xCP+Z1ttzXr5N0ddAvZAMWnOyQBfrbVVL2rPzlIPQfLIYJvKV
+ ImZA==
+X-Gm-Message-State: AOJu0YxgjvQklvuqZKnJ1Ss0qsKD0nVxpFLexQ3AP2TZUwg2BdXLQeB1
+ Dlr0xRvdgqqd+DSBfolGuCbq3wV5Lhn4QBnlIyDeC63ebkqSCgoHV11pihRTEpWiFcDxTZ21ePV
+ RMWt1oi0OH2OUjMED+pVQrlryAuMNL92VmSvpdg==
+X-Google-Smtp-Source: AGHT+IEQrHcuJHdsGgtzVnEDzhGh+4X0iTCElHDwwdDlWEU4vXHxgznr/U04ZLa3/QdU4o4vlGRHXA4mcjKqB6VpTqg=
+X-Received: by 2002:aa7:d308:0:b0:55f:6b8:b304 with SMTP id
+ p8-20020aa7d308000000b0055f06b8b304mr45268edq.8.1707155759167; Mon, 05 Feb
+ 2024 09:55:59 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL 5/8] util: Add write-only "node-affinity" property for
- ThreadContext
-Content-Language: en-US
-To: Claudio Fontana <cfontana@suse.de>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+References: <20240205171819.474283-1-stefanha@redhat.com>
+ <ZcEdrp-y5YFsfir4@redhat.com>
+In-Reply-To: <ZcEdrp-y5YFsfir4@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 5 Feb 2024 17:55:47 +0000
+Message-ID: <CAFEAcA9-DUEeVPU9_G61OELNw=6DGax7RiahjC9YeKA=SgDvnQ@mail.gmail.com>
+Subject: Re: [PATCH] docs/style: allow C99 mixed declarations
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
+ Hanna Czenczek <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Richard Henderson <richard.henderson@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, Michal Privoznik <mprivozn@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
-References: <20221028095225.86118-1-david@redhat.com>
- <20221028095225.86118-6-david@redhat.com>
- <beb8fd5c-3fc4-9bf5-1f9b-3947a25f52d9@suse.de>
- <f7f8f5ac-dfed-456d-91b1-9e4c4e2073b5@redhat.com>
- <a482543e-581f-a13e-21f5-a6392e7c4524@suse.de>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <a482543e-581f-a13e-21f5-a6392e7c4524@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+ Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,23 +95,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.02.24 17:13, Claudio Fontana wrote:
-> Hello David,
-> 
+On Mon, 5 Feb 2024 at 17:41, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
+> Rather than accept the status quo and remove the coding guideline,
+> I think we should strengthen the guidelines, such that it is
+> explicitly forbidden in any method that uses 'goto'. Personally
+> I'd go all the way to -Werror=3Ddeclaration-after-statement, as
+> while C99 mixed decl is appealing, it isn't exactly a game
+> changer in improving code maintainability.
 
-Hi,
+I definitely think we should either (a) say we're OK with
+mixed declarations or (b) enforce it via the warning option.
+(gcc -Wdeclaration-after-statement does not appear to warn
+for the "declaration inside for()" syntax, so we could
+enable it if we wanted to fix the existing style lapses.)
 
-> It would seem to me that a lot of the calling code like qemu_prealloc_mem for example
-> should be sysemu-only, not used for tools, or user mode either right?
-> 
-> And the thread_context.c itself should also be sysemu-only, correct?
+Personally I prefer declaration-at-top-of-block, but
+more as an aesthetic choice than anything else.
 
-Yes, both should currently only get used for sysemu only. Memory 
-backends and virtio-mem are sysemu-only.
-
--- 
-Cheers,
-
-David / dhildenb
-
+thanks
+-- PMM
 
