@@ -4,89 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624A4C48286
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 03:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BAEC4828F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 03:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWpIS-00045p-7b; Sun, 04 Feb 2024 22:05:24 -0500
+	id 1rWpU8-0005lf-UT; Sun, 04 Feb 2024 22:17:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rWpIQ-00044y-3E
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 22:05:22 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWpU7-0005lA-1a; Sun, 04 Feb 2024 22:17:27 -0500
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rWpIO-0007aI-7F
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 22:05:21 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5ce6b5e3c4eso3157112a12.2
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 19:05:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWpU4-00013i-4N; Sun, 04 Feb 2024 22:17:26 -0500
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-7d6024b181bso1633639241.2; 
+ Sun, 04 Feb 2024 19:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707102318; x=1707707118; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9S04RiO99WlFLBzi3eeLV02rLgr71eTbBvQMiYWRscE=;
- b=dTaqGUtEN15sQr/jgFPLCU3X6cniZXKXKw1sFlEIlGVDmXVlA7sKMzWMpujQR40nzV
- yMWDUtQh39dl8K8nlOFFT0Ial6Gb9IDsSY9wl+8PC9R7gjR87b80tBWWyW2AFhiSIA1s
- JCgL3G46tinWccqXV2XrOfnPcqE7A1uVR+QA7SJd0d9LI8sDud0v0TEmLu8JlQufy0q/
- PDoaY/f8slgOYJTBSekDj7j2olf+e3ytjIxzOC4w5V2M2SvflsArbVDkREGnYfhp4gFF
- kRTEducnZwtu7W8FXya+DumOPPEhu4kKfuWoBawTTKQVnBK/dO3Buhciqv+W03bJBADP
- ToPw==
+ d=gmail.com; s=20230601; t=1707103042; x=1707707842; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lg+O/1jVtaCJ+RF5VCezLc+6UWjGS+drNB7RquN1z10=;
+ b=M93Ke0RfdrxKTBoaCoqh4C1IwFWo4Ipulg9/izGvzx1pXUj6EGjW+fNkgLcjKGSTJ/
+ 2j1Y9BIDBYZS87TkwaQ0ViCEC4eNdZp7l/PotrJPwgZJvL4Gh7yS2KPEyi4Tc2AO8G/p
+ hAWIwweBh5g7kbFy3qwANcT/SXdGqcgiKXgW/aGu+rrzEotElfIZSocTxRnmd6e2hIqy
+ 6qyaXYQMUFn3rgSDIAA2+YQC8ydngQukLUTxLvPVa1E6V/WweefMDKwfQr+TOzNXif0A
+ IiPvmKAHOIJFa5wXkxFZD0hMbYu97GIAY4qj8SLh1aVQgl314oQ4RDX8//FGEspH1y8V
+ NurA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707102318; x=1707707118;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9S04RiO99WlFLBzi3eeLV02rLgr71eTbBvQMiYWRscE=;
- b=RKQZXQO3+e3cx6MFV0ljJH+seTwINPt85vL1a0F8xgXsSsvuQe/y/ZkOxoL6qWJvs9
- htmJRA/dYlWTxa3Zl65RHwKzefjoAtRvAT068zCbzml7/ef9NY7tVA5WYnXOujh5LEZn
- L5OC8ORqBGubesf4lQ9ZEow2V6JrpDLGCb/7ErBCKhkNS6TOSXKUwULDIZUwUvMmQfmE
- uI5HU7mrFPsm/djLTwo5IRP22zW+Zr8TCHnLp4kdhPhLKvZArYTKiNLkRA5YqwVYo2+0
- wLIN2S8tdndESM64vPiHydzWoNlYrvkRyQm+Zay7zg3wVRLDHGoLgTCFJtU5+s5iYrCd
- IpMA==
-X-Gm-Message-State: AOJu0Yy57cUXCi3IoBo13ARzGOFDSQnlHM8Bc5yVVtVXCmHFDXoupfHm
- 76yd/LCXhoRYCCltw6fhk1SnDtp0kIk2uUdNsGX8TGS71DJXwmTKJLK638whwX0sr2hHF4I7R02
- oe7s=
-X-Google-Smtp-Source: AGHT+IGksJ2/VohtBkeNTZFdvJfgj6ufZp25eUMg5yqeC7cEdjwXV6hPKGke/IjM0E2fzBz71usLMA==
-X-Received: by 2002:a17:902:e84f:b0:1d9:c187:3f8c with SMTP id
- t15-20020a170902e84f00b001d9c1873f8cmr264529plg.58.1707102318616; 
- Sun, 04 Feb 2024 19:05:18 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXEJ5azJx3RYci+ApatfzCqUJYQgLm6SiupzB4Q8d5cPc1zH3IuMsD4b/BijNnVACAywv09slMavA3KzTfH/w==
-Received: from [192.168.0.100] ([43.252.112.156])
- by smtp.gmail.com with ESMTPSA id
- la6-20020a170902fa0600b001d9aa671b31sm1289813plb.40.2024.02.04.19.05.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Feb 2024 19:05:18 -0800 (PST)
-Message-ID: <ca83fc98-219c-47b1-a16b-f281d914e4a0@linaro.org>
-Date: Mon, 5 Feb 2024 13:05:13 +1000
+ d=1e100.net; s=20230601; t=1707103042; x=1707707842;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lg+O/1jVtaCJ+RF5VCezLc+6UWjGS+drNB7RquN1z10=;
+ b=UuTJI+JHZ2sOTS9eV3FSi4u0MbolVMIEYvwZM/OwwjHjBZVht+bxNcfJGCQm3qAFuF
+ 3jpvwL32BlqewA4/Z/fVVWovS5GV9DaRLsDASQBdFjqgP/FrN1DK1HUNPV4iVUiiRKiF
+ 1LhRQPfqf4xUWh2j2HSQu96N4f0yUGdD0zIQP89QAaNOxRNBCmn3cf3oQJaFBGw2nT9q
+ GSnAyYNDjty9wQBSXyaAlteVaow9hfr6cQl2lsbGHTosY2Mi8nJPVpstuCcNk1lmmxMk
+ 1afcQDtrSqJpTcJuS9hUe5gHgkmy8uhqKrDA4aGA2dfd0gbzbL5P7IntzjeNVNlmFb73
+ EvGw==
+X-Gm-Message-State: AOJu0Yz1v9P7tPILyywk+uDWAq5i+/oOdzIWAIKfIHhi5WZtK2acpPbk
+ R4v/CCZH9wCQlgyz3girL2x4Q10Hdn+wLWrRcWm9JttbejUeMHEApDElY1+b2L3otiBOdhqbfQP
+ 2nuCwr9xGf8/SqzDxIuj1yIgsIDk=
+X-Google-Smtp-Source: AGHT+IEymLrqDuF3BVCUrJV5vgO+A2ur91Y0f7OUYRYgsfp3YLSzR1ijjZmwI8r+iL5Y5vO0Km/l2XtXSWI7V9koa8o=
+X-Received: by 2002:a05:6102:1886:b0:46d:1d8a:5ebf with SMTP id
+ ji6-20020a056102188600b0046d1d8a5ebfmr3143601vsb.27.1707103042335; Sun, 04
+ Feb 2024 19:17:22 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 05/13] linux-user: Use walk_memory_regions for
- open_self_maps
-Content-Language: en-US
-To: Richard Purdie <richard.purdie@linuxfoundation.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-References: <20230901204251.137307-1-richard.henderson@linaro.org>
- <20230901204251.137307-6-richard.henderson@linaro.org>
- <9860cd401db66e6bf10e9e41df148b25ee6c73fd.camel@linuxfoundation.org>
- <c845093f-1fe0-477e-bf5e-db22c985241a@tls.msk.ru>
- <3cc4df1a6fe27b211b29d2c17846812936255d7a.camel@linuxfoundation.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <3cc4df1a6fe27b211b29d2c17846812936255d7a.camel@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240122221529.86562-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20240122221529.86562-1-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 5 Feb 2024 13:16:56 +1000
+Message-ID: <CAKmqyKMYvxOVZ_jPtvgmsZLxr-9ht0si7wR3SdvgiAP6B2ePgg@mail.gmail.com>
+Subject: Re: [PATCH 0/7] hw/riscv: fix leak, add more g_autofree
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,36 +90,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/24 23:52, Richard Purdie wrote:
-> Hi Michael,
-> 
-> On Fri, 2024-01-26 at 16:33 +0300, Michael Tokarev wrote:
->> 26.01.2024 16:03, Richard Purdie wrote:
->>> I've run into a problem with this change.
->>>
->>> We (Yocto Project) upgraded to qemu 8.2.0 recently and after that we
->>> started seeing errors cross compiling webkitgtk on x86_64 for x86_64
->>> during the introspection code which runs under user mode qemu.
->>
->> Besides your observations, please be aware there's quite a few issues in 8.2.0.
->> Please take a look at https://gitlab.com/mjt0k/qemu/-/commits/staging-8.2/
->> (and https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2/ which is updated
->> less often) for fixes already queued up, if you haven't looked there already.
->> 8.2.1 stable/bugfix release is scheduled for the beginning of the next week.
-> 
-> Thanks.
-> 
-> I should note that I did test the staging-8.2 branch and nothing there
-> helped. The issue was also present with master as of yesterday.
-> 
-> https://bugzilla.yoctoproject.org/show_bug.cgi?id=15367 is Yocto
-> Projects tracking of the issue which has the commits for master and
-> staging-8.2 that I tested.
+On Tue, Jan 23, 2024 at 9:39=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Hi,
+>
+> First patch fixes a leak found when using Valgrind. The root cause is a
+> missing g_free() in a string.
+>
+> In fact, I found while doing reviews that we keep repeating the same
+> pattern:
+>
+> =3D=3D=3D=3D
+> char *name;
+> name =3D g_strdup_printf(...);
+> (...)
+> g_free(name);
+> =3D=3D=3D=3D
+>
+> With this in mind, I ended up making this rather trivial series to
+> introduce more string/array autocleaning in the 'virt' machine code. The
+> advantage of doing 'g_autofree' is that we'll guarantee that we'll clean
+> ourselves up when the variable goes out of scope, avoiding leaks like
+> the one patch 1 fixes. We want to enforce this autoclean style in
+> reviews, and for that we need to get rid of at least some of the uses we
+> do it right now.
+>
+> I didn't bother changing the 'spike' and the 'sifive' boards for now
+> because the bulk of new patches is done on top of the 'virt' machine,
+> so it's more important to tidy this board first.
+>
+>
+> Daniel Henrique Barboza (7):
+>   hw/riscv/virt-acpi-build.c: fix leak in build_rhct()
+>   hw/riscv/numa.c: use g_autofree in socket_fdt_write_distance_matrix()
+>   hw/riscv/virt.c: use g_autofree in create_fdt_socket_cpus()
+>   hw/riscv/virt.c: use g_autofree in create_fdt_sockets()
+>   hw/riscv/virt.c: use g_autofree in create_fdt_virtio()
+>   hw/riscv/virt.c: use g_autofree in virt_machine_init()
+>   hw/riscv/virt.c: use g_autofree in create_fdt_*
 
-The yocto logs referenced here are not helpful for reproducing the problem.
-Please extract a binary to run, inputs, and command-line.
+Thanks!
 
+Applied to riscv-to-apply.next
 
-r~
+Alistair
 
+>
+>  hw/riscv/numa.c            |   4 +-
+>  hw/riscv/virt-acpi-build.c |   2 +-
+>  hw/riscv/virt.c            | 109 ++++++++++++-------------------------
+>  3 files changed, 37 insertions(+), 78 deletions(-)
+>
+> --
+> 2.43.0
+>
+>
 
