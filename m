@@ -4,98 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DE1C48292
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 20:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4DEC48292
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 21:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX638-0007QO-6x; Mon, 05 Feb 2024 15:58:42 -0500
+	id 1rX6tF-0001Jm-LL; Mon, 05 Feb 2024 16:52:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1rX636-0007Po-Nx; Mon, 05 Feb 2024 15:58:40 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1rX634-00037n-1J; Mon, 05 Feb 2024 15:58:40 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 415KgC3h022319; Mon, 5 Feb 2024 20:58:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : content-transfer-encoding : mime-version; s=pp1;
- bh=K1N2J01iDo0TTtTYwFYAgKh7B3Zv8ONaQ4h5jfWTu6Q=;
- b=kX83G5L/bMWqHFRaj33tY0VMeiV2Nt6rIYVK7QbYm9A1/8yQiLXrs7re8SpX65B9qIOl
- MCZnMRhfBECxlgIHkhQ0s/2GnI9uZlE3XovmYQTFuIohBWu7eqGjl3pdjNXZwgLvKFN/
- 0HA5Rwior53cQILcfmGtAdycyzbLEpYLjJ/ATcRm/d4ukBqVJThYy04+O11eweaBtisq
- lj4khE0P3XJ+gI5daRbSHh7k8BTB1uHgYPOnzJZGWqDz2td7uQNjkH7T7xecc7tmpZ3V
- s/APIDLn9Cax7wM04kA3B6YaM1ILsw/GqUjkJFstapYFiywqTtiJg0QFZnXaWnzb5u4t Gg== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w36xj8aff-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Feb 2024 20:58:34 +0000
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 415KswU7020725;
- Mon, 5 Feb 2024 20:58:34 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w36xj8aex-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Feb 2024 20:58:34 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 415J4YOp020383; Mon, 5 Feb 2024 20:58:33 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w1ytsu4sq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Feb 2024 20:58:33 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 415KwVtt27066804
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Feb 2024 20:58:31 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADF2920040;
- Mon,  5 Feb 2024 20:58:31 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4742620043;
- Mon,  5 Feb 2024 20:58:31 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.57.170])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Feb 2024 20:58:31 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v5 0/4] target/s390x: Emulate CVDG and CVB*
-Date: Mon,  5 Feb 2024 21:54:52 +0100
-Message-ID: <20240205205830.6425-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <jens.nyberg@gmail.com>)
+ id 1rX6tD-0001Je-NB
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 16:52:31 -0500
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jens.nyberg@gmail.com>)
+ id 1rX6tC-0003ZE-9i
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 16:52:31 -0500
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-51025cafb51so7352118e87.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 13:52:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1707169943; x=1707774743; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FDRyVjqhVF5KwGL5oTOoWOtYgrRSRVlkwpfgpimYC8s=;
+ b=KhObKzXzs09zkoNBa1/Sqd3UTqCi6PFLRMcpdgUkFftQrUuCBb/DLo/SFhxIrcs7EP
+ BiNcjMyJLWPZ+cxXXfTIysKsgU7t5n27pbjg4amKYPlDKmo4f6+JUxZHsjN8+Bsl5Zby
+ ICwwMg+6cjFU8vVp/fIoGwIQ/j+f3l3Jwi5y2mzhK+TTOIX+5gKVw8j6uQk3pVj5/2s3
+ R0x7UORyRR8tX+j99MCPBE+TXnwL86q+qtdEC4D9kVPp1HsurVQ0bsVSe1mOxtrmWTY5
+ wt6PCEP1f2MWMZu3DxznWdM/E/xqWVCKrf9JmSzd11W9/d9awzLo8dG4m/qRoxXJVVx9
+ pjVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707169943; x=1707774743;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FDRyVjqhVF5KwGL5oTOoWOtYgrRSRVlkwpfgpimYC8s=;
+ b=Z/l9Jk9fmhcVPpkCooKgiC99SSI6wDlHLQVNxnCDLR5AjKaYjB7MJ+r46EK7XwJGm1
+ S6xtVUTM86w/QgrYjPjN2wY+phyGNNoaIR+HNdT0dUcJ4w20bXooReNbkWuUprr4H6VD
+ HH/FJBiQd3pCD6VjEFo1wFZIrKIL69bNsr7kYNvyS+GIXUkoOyedlMVE75EY6sZhFKgd
+ FlPacv5w9CZhkxOk0DDayDy161XGUeD53HeqOP7rL0Ygkr0GMxVW9DbYjiMyjVGpBJjG
+ yxNp1Zf56t7E6C2C9LiPB/c/J9Z/MOkOfgFkBmPd+7o9opGlaOaoknIJxlJPtxSuNo+6
+ YItg==
+X-Gm-Message-State: AOJu0YwFkyYbJ2MaSqwo55xi2SJk4MXn5V0TvT12CHEMYD/c7VGjbMWB
+ x1Ulw4SNS6Bl6giJg7eSVsLwIvCEp2G/asRMnDUp98l3730PTyUmYp00WIsGW+A=
+X-Google-Smtp-Source: AGHT+IGclgXRacRvYTQhLL+KNodJZOg16emhmi5D3tFUOMom4muX/8X/mgWSYjcxYDJT7dCt2ZtCuA==
+X-Received: by 2002:ac2:43a9:0:b0:511:551a:c34d with SMTP id
+ t9-20020ac243a9000000b00511551ac34dmr541413lfl.25.1707169942965; 
+ Mon, 05 Feb 2024 13:52:22 -0800 (PST)
+Received: from localhost.localdomain
+ (c-9684225c.01-1057-7570702.bbcust.telenor.se. [92.34.132.150])
+ by smtp.gmail.com with ESMTPSA id
+ m8-20020a056512358800b00511495618f9sm60941lfr.304.2024.02.05.13.52.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Feb 2024 13:52:22 -0800 (PST)
+From: Jens Nyberg <jens.nyberg@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jens Nyberg <jens.nyberg@gmail.com>
+Subject: [PATCH] hw/i386/multiboot: Make bootloader_name static
+Date: Mon,  5 Feb 2024 22:51:48 +0100
+Message-ID: <20240205215148.2356410-1-jens.nyberg@gmail.com>
 X-Mailer: git-send-email 2.43.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 7mne-fiFW2MdbvXiZbI8Z_z0-e3yotH4
-X-Proofpoint-GUID: vS41bha-1rMXVF4ceIpaTYtfSWBBuO6c
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-05_14,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- malwarescore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- mlxlogscore=508 spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402050157
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=jens.nyberg@gmail.com; helo=mail-lf1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,48 +91,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v4: https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg00434.html
-v4 -> v5: Remove a redundant CVBG overflow check;
-          Write the comment explaining the remaining CVBG overflow
-          check;
-          Add R-bs to the tests (Thomas).
+Global variable is only used in a single file and should therefor be set to
+static in order to avoid name collisions.
 
-v3: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg06664.html
-v3 -> v4: Implement CVB error handling (David/Thomas).
+Signed-off-by: Jens Nyberg <jens.nyberg@gmail.com>
+---
+ hw/i386/multiboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v2: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05048.html
-v2 -> v3: Resurrect an old CVB* patch (Thomas).
-          Add Richard's R-b.
-
-v1: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02865.html
-v1 -> v2: Fix !CONFIG_INT128 builds (Richard).
-
-Hi,
-
-Ido reported that we are missing the CVDG emulation (which is very
-similar to the existing CVD emulation). This series adds it along with
-a test.
-
-Best regards,
-Ilya
-
-Ilya Leoshkevich (4):
-  target/s390x: Emulate CVDG
-  target/s390x: Emulate CVB, CVBY and CVBG
-  tests/tcg/s390x: Test CONVERT TO DECIMAL
-  tests/tcg/s390x: Test CONVERT TO BINARY
-
- target/s390x/helper.h            |   3 +
- target/s390x/tcg/insn-data.h.inc |   5 ++
- target/s390x/tcg/int_helper.c    |  97 +++++++++++++++++++++++++++++
- target/s390x/tcg/translate.c     |  24 ++++++++
- tests/tcg/s390x/Makefile.target  |   2 +
- tests/tcg/s390x/cvb.c            | 102 +++++++++++++++++++++++++++++++
- tests/tcg/s390x/cvd.c            |  63 +++++++++++++++++++
- 7 files changed, 296 insertions(+)
- create mode 100644 tests/tcg/s390x/cvb.c
- create mode 100644 tests/tcg/s390x/cvd.c
-
+diff --git a/hw/i386/multiboot.c b/hw/i386/multiboot.c
+index 3332712ab3..6bf6398d01 100644
+--- a/hw/i386/multiboot.c
++++ b/hw/i386/multiboot.c
+@@ -102,7 +102,7 @@ typedef struct {
+     int mb_mods_count;
+ } MultibootState;
+ 
+-const char *bootloader_name = "qemu";
++static const char *bootloader_name = "qemu";
+ 
+ static uint32_t mb_add_cmdline(MultibootState *s, const char *cmdline)
+ {
 -- 
 2.43.0
 
