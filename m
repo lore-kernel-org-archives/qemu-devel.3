@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8750C4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 03:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE25C48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 03:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWpny-0004Ec-Ri; Sun, 04 Feb 2024 22:37:58 -0500
+	id 1rWpus-0005hX-PI; Sun, 04 Feb 2024 22:45:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWpnv-0004Ck-Ud
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 22:37:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWpnu-0004ic-6j
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 22:37:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707104272;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FmNSOS3emoLQlbXCT+dymukG14BSblVa9L/Ry73vSJM=;
- b=WNUhXkfSveuDdByyGY+Ie9DJy4GbRj4wRqEVhIo0RcPPocMV44/MkcuKgIHWa6ILexmTWT
- +NgMGSiqtLOlvkcGJEkcEoKlIcjTj5IT81HlVwfzEMsgP4PkYm10PR+wASa3P464ZtvB7r
- OeeU7snGmW1evrp0VVZFhjgPbyEWs7g=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-67qoftxMNKydXoUZCwvdkg-1; Sun, 04 Feb 2024 22:37:51 -0500
-X-MC-Unique: 67qoftxMNKydXoUZCwvdkg-1
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-6e029a8a77fso97204b3a.1
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 19:37:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWpuq-0005gf-D3; Sun, 04 Feb 2024 22:45:04 -0500
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWpuo-0005wT-Hw; Sun, 04 Feb 2024 22:45:04 -0500
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-7d5c514944fso2742404241.1; 
+ Sun, 04 Feb 2024 19:45:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1707104701; x=1707709501; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dwZJ8g3H8jf92vVV68XSO/qe/RJMIgagMBO/0VPXpAA=;
+ b=XMGz3ZvW57f20TETTJHM1LK3G02LnUiL50ZvdIlT/t+3y3Y3brH2CjZgckF6uesM6w
+ KbSou2VMGMG+TXZ2N1zRroaV4TcabdiKic8SKn7gPGNW+swKiWyPj1Roh0GW1+xkWEj9
+ FBVcpZDLDpDGIEXppWS/v6fqJa7iDCikUlrhDIFi8m+EmNh9A3M5Tfwqo2EC26Jz9soD
+ GLOVDrtp87Blj1127DGyGfSBiasNIgiUEgEfdUkhm+bRmYg3zlXfrGr0XXtgkml2CDn8
+ RwX0GL5etOt6Brm3kgIxs/AezdJYMlGne/1fnk4OeUakWmdsaUy8VZqNyuvJfG3PELDJ
+ aaow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707104270; x=1707709070;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FmNSOS3emoLQlbXCT+dymukG14BSblVa9L/Ry73vSJM=;
- b=tHTecbHt3R7RAtEfT+ApOACGXJNLUY31QxBVWukVObQWqPZbG8PMYoVbZ7+HH7jaEn
- yGfw4zHTztRgH6UwX5SO0k4enPqBgWudvqYV95dNLx2/GD0WsWf7TCKo8u4lXIAzMc77
- qcCjgtTR5kq4yzpDAiNTidJPPtbd9ZfHhmYr+FP3VPWJDhFf1fklH01Wli7I4mTfpZi2
- +dFb5w39eUQxl8t7kqZ+E2HteSK53Neazx8bpYY8qbMFsRQiHnO4weTUBC7PIfcld+mD
- SqETPSPi4uJjJUbdtzvPw5/wcEPORSAjMliIGrIPtUJSjXInWU/yWpkA3YS9Pu8bE5Aa
- e9Gg==
-X-Gm-Message-State: AOJu0Yyuf1+gw3tYapGnpLQ0UEriiOuRUbrkws/6rsUhJaQN5x4JRACt
- V6fqf/tVFErxbMU6JOF6pn+AGWlGzBMh29FCeS7ccBDoIqIujp3iQdUQy1kPg1ijj1C/6Lt3Dqs
- nHJYuA79KxG46zOtyhWA0L2LX68dr6AGwmbiTaO5AVGTxNWqZCRr1
-X-Received: by 2002:a17:902:d345:b0:1d5:efd6:20f with SMTP id
- l5-20020a170902d34500b001d5efd6020fmr14031603plk.1.1707104270095; 
- Sun, 04 Feb 2024 19:37:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHxfnpXUBR2w55ZGp0SaEQU4ik6JU+z/SHk/yDDFYqevyHTlbfRqSmSUILcNOWusJQteJ9iUQ==
-X-Received: by 2002:a17:902:d345:b0:1d5:efd6:20f with SMTP id
- l5-20020a170902d34500b001d5efd6020fmr14031594plk.1.1707104269735; 
- Sun, 04 Feb 2024 19:37:49 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUzi60vgkS/bKgRKHBi8Xvgb6OdGpYdSnilyTwQ0Wa0/KpRGLk99jIWYdQpCb6b5NbuBjuzO8RwX8og4I5VM/Uus24zQWc=
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- j3-20020a170902f24300b001d714a1530bsm5248680plc.176.2024.02.04.19.37.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Feb 2024 19:37:49 -0800 (PST)
-Date: Mon, 5 Feb 2024 11:37:41 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] migration: Fix return-path thread exit
-Message-ID: <ZcBYBexsJ7X2yeZm@x1n>
-References: <20240201184853.890471-1-clg@redhat.com>
- <20240201184853.890471-3-clg@redhat.com> <8734ubhqr9.fsf@suse.de>
- <d2d0314a-494f-4ace-ba73-e14019fb4fd3@redhat.com>
- <87zfwihpf6.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1707104701; x=1707709501;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dwZJ8g3H8jf92vVV68XSO/qe/RJMIgagMBO/0VPXpAA=;
+ b=W/8zo9UQ2HVbHBCD2rwBVVTyL12R7Mhn7uiX1/BbqvTdp/E5zAj+Lwy6s0cUCufjL8
+ hLs/3xwgV1ZhTRyNgZp3WbA6ZJcZBKk2sFG78L6gqq78RFUB4TooYBAGLOxIPTFBUyCQ
+ QdzpIvYUM3mmHGP9KamWkMvkTu64lxMXyP2f9si66x0CSbCNa4tb2xHWweGDf7KKvYP2
+ GHdcfRJ+5+YWM6cewU6PpGl/PjC0oemfZkTt/IIrhAIEjK0SAj9s+GzOezs6AoI4akrV
+ 6Vhs5bKpjYZ49wldAR1JUTJSgm0cBwJEg+BWIRLwY52aoPN1D9zBYR12+iqs9PrDHvdK
+ sxbg==
+X-Gm-Message-State: AOJu0Yw59Ug7ZiCFWzIpYT8LYgDLhX4hBxplehGmS9z+Qt021t/ofbjG
+ fFEfwLkNXCGSPq5NveomUoTHBjh4ivXxA6+l5YmIlcdbwmamUYUk/UHFmSPmq18kyIXIakh1ZuY
+ U+eB3s61cRVrslMmTQcch3la/dbY=
+X-Google-Smtp-Source: AGHT+IFx/wUFRUZtXFPZPFHmUecj9d+sT+drqf9st2l3wLCXhizx4KD6Kycj3t2whOeHkkUqCUNCPrOTjhGw3gch/jM=
+X-Received: by 2002:a05:6102:515:b0:46d:210a:78a0 with SMTP id
+ l21-20020a056102051500b0046d210a78a0mr1976295vsa.0.1707104699942; Sun, 04 Feb
+ 2024 19:44:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87zfwihpf6.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240124-squatting-getup-a16a8499ad73@spud>
+ <20240124-swear-monthly-56c281f809a6@spud>
+In-Reply-To: <20240124-swear-monthly-56c281f809a6@spud>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 5 Feb 2024 13:44:33 +1000
+Message-ID: <CAKmqyKNuT-46MpHN4LmoYD1H4PJPRzFTqOp27Jv18=BB+2abFg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] target/riscv: use misa_mxl_max to populate isa
+ string rather than TARGET_LONG_BITS
+To: Conor Dooley <conor@kernel.org>
+Cc: qemu-riscv@nongnu.org, Conor Dooley <conor.dooley@microchip.com>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,59 +95,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 02, 2024 at 12:11:09PM -0300, Fabiano Rosas wrote:
-> Cédric Le Goater <clg@redhat.com> writes:
-> 
-> > On 2/2/24 15:42, Fabiano Rosas wrote:
-> >> Cédric Le Goater <clg@redhat.com> writes:
-> >> 
-> >>> In case of error, close_return_path_on_source() can perform a shutdown
-> >>> to exit the return-path thread.  However, in migrate_fd_cleanup(),
-> >>> 'to_dst_file' is closed before calling close_return_path_on_source()
-> >>> and the shutdown fails, leaving the source and destination waiting for
-> >>> an event to occur.
-> >> 
-> >> At close_return_path_on_source, qemu_file_shutdown() and checking
-> >> ms->to_dst_file are done under the qemu_file_lock, so how could
-> >> migrate_fd_cleanup() have cleared the pointer but the ms->to_dst_file
-> >> check have passed?
-> >
-> > This is not a locking issue, it's much simpler. migrate_fd_cleanup()
-> > clears the ms->to_dst_file pointer and closes the QEMUFile and then
-> > calls close_return_path_on_source() which then tries to use resources
-> > which are not available anymore.
-> 
-> I'm missing something here. Which resources? I assume you're talking
-> about this:
-> 
->     WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
->         if (ms->to_dst_file && ms->rp_state.from_dst_file &&
->             qemu_file_get_error(ms->to_dst_file)) {
->             qemu_file_shutdown(ms->rp_state.from_dst_file);
->         }
->     }
-> 
-> How do we get past the 'if (ms->to_dst_file)'?
+On Thu, Jan 25, 2024 at 12:04=E2=80=AFAM Conor Dooley <conor@kernel.org> wr=
+ote:
+>
+> From: Conor Dooley <conor.dooley@microchip.com>
+>
+> A cpu may not have the same xlen as the compile time target, and
+> misa_mxl_max is the source of truth for what the hart supports.
+>
+> The conversion from misa_mxl_max to xlen already has one user, so
+> introduce a helper and use that to populate the isa string.
+>
+> Link: https://lore.kernel.org/qemu-riscv/20240108-efa3f83dcd3997dc0af458d=
+7@orel/
+> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 
-We don't; migrate_fd_cleanup() will release ms->to_dst_file, then call
-close_return_path_on_source(), found that to_dst_file==NULL and then skip
-the shutdown().
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-One other option might be that we do close_return_path_on_source() before
-the chunk of releasing to_dst_file.
+Alistair
 
-This "two qemufiles share the same ioc" issue had bitten us before IIRC,
-and the only concern of that workaround is we keep postponing resolution of
-the real issue, then we keep getting bitten by it..
-
-Maybe we can wait a few days to see if Dan can join the conversation and if
-we can reach a consensus on a complete solution.  Otherwise I think we can
-still work this around, but maybe that'll require a comment block
-explaining the bits after such movement.
-
-Thanks,
-
--- 
-Peter Xu
-
+> ---
+> I dropped the tags since I added the helper
+> ---
+>  target/riscv/cpu.c     | 9 ++++++++-
+>  target/riscv/cpu.h     | 1 +
+>  target/riscv/gdbstub.c | 2 +-
+>  3 files changed, 10 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index ad1df2318b..4aa4b2e988 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -307,6 +307,11 @@ void riscv_cpu_set_misa(CPURISCVState *env, RISCVMXL=
+ mxl, uint32_t ext)
+>      env->misa_ext_mask =3D env->misa_ext =3D ext;
+>  }
+>
+> +int riscv_cpu_max_xlen(CPURISCVState env)
+> +{
+> +    return 16 << env.misa_mxl_max;
+> +}
+> +
+>  #ifndef CONFIG_USER_ONLY
+>  static uint8_t satp_mode_from_str(const char *satp_mode_str)
+>  {
+> @@ -2332,7 +2337,9 @@ char *riscv_isa_string(RISCVCPU *cpu)
+>      int i;
+>      const size_t maxlen =3D sizeof("rv128") + sizeof(riscv_single_letter=
+_exts);
+>      char *isa_str =3D g_new(char, maxlen);
+> -    char *p =3D isa_str + snprintf(isa_str, maxlen, "rv%d", TARGET_LONG_=
+BITS);
+> +    int xlen =3D riscv_cpu_max_xlen(cpu->env);
+> +    char *p =3D isa_str + snprintf(isa_str, maxlen, "rv%d", xlen);
+> +
+>      for (i =3D 0; i < sizeof(riscv_single_letter_exts) - 1; i++) {
+>          if (cpu->env.misa_ext & RV(riscv_single_letter_exts[i])) {
+>              *p++ =3D qemu_tolower(riscv_single_letter_exts[i]);
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 05e83c4ac9..aacc031397 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -511,6 +511,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, =
+int size,
+>                          MMUAccessType access_type, int mmu_idx,
+>                          bool probe, uintptr_t retaddr);
+>  char *riscv_isa_string(RISCVCPU *cpu);
+> +int riscv_cpu_max_xlen(CPURISCVState env);
+>  bool riscv_cpu_option_set(const char *optname);
+>
+>  #define cpu_mmu_index riscv_cpu_mmu_index
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index 58b3ace0fe..f15980fdcf 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -218,7 +218,7 @@ static int riscv_gen_dynamic_csr_xml(CPUState *cs, in=
+t base_reg)
+>      CPURISCVState *env =3D &cpu->env;
+>      GString *s =3D g_string_new(NULL);
+>      riscv_csr_predicate_fn predicate;
+> -    int bitsize =3D 16 << env->misa_mxl_max;
+> +    int bitsize =3D riscv_cpu_max_xlen(*env);
+>      int i;
+>
+>  #if !defined(CONFIG_USER_ONLY)
+> --
+> 2.43.0
+>
+>
 
