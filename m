@@ -4,141 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC546C48292
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 18:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E19C48292
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 18:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX475-0001Sh-VC; Mon, 05 Feb 2024 13:54:40 -0500
+	id 1rX4BQ-0002TI-03; Mon, 05 Feb 2024 13:59:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rX474-0001SZ-24
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 13:54:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX4BO-0002So-At
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 13:59:06 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rX472-0005Mv-Kz
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 13:54:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707159275;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TgGeoBFIAc6WJxNmqfwU0iJRo9aUjC9KnOjHA1MrByA=;
- b=BbsMkYRaPIluXR01tvURV17PajO1d1nCclVxnq5UAOrYqHBuE4mTf8n+DaQx9REaqdNszc
- ocIgl8fZEnpWcLygqNeGAEAFnkmO5XkeKqXkdjN2jkgcvPf/A6FBRf7UCx6axdiNGm5Z1W
- aVVUQlbEqVj/oJ1dRvQOis4OmcT1mI8=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-6-_hKCu4fONMaaw-RsdsvHpA-1; Mon, 05 Feb 2024 13:54:31 -0500
-X-MC-Unique: _hKCu4fONMaaw-RsdsvHpA-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7840f8118d5so707455885a.1
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 10:54:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707159271; x=1707764071;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TgGeoBFIAc6WJxNmqfwU0iJRo9aUjC9KnOjHA1MrByA=;
- b=oLkccyLeTGnEvXgz36tDp4OUO0GjLh90o6G5k4qhYy8V2QBLBoQb1mEeXbCrrnuat7
- 8rmC5ZkNVsRAs0QglXYls2Ml2FSoGyK53c6qVt4eVG/x1uZE4z4mfAxgiY/y4BB9k4zF
- Gu+YcpIEVYhl6T4fGX30cret6ruRTnMo8y2gv5UrRvw4htYputKwEDUvGRq5FDOboofT
- ule8ojo17cEMF/jO4dnUD5OJHF53WwT79sdPZo9FH6BfCTahvVYzWdyVhU4eDyN4SKho
- +uafAvPTXelw1/A1gIFW/fG5sX46ixQ13OvlT8p1Kp4DMHWBNf4XSJOdZVTX8C1sji24
- nZtQ==
-X-Gm-Message-State: AOJu0YypQ1s8qC0QlEZI28QpuGUHc6HX7R3Udnh7W7ly+R8rIy45EJv1
- 1DKltGWa4n6A7pmekXFBLQ6n44Mdzr74qpMnor1oaspA89e9j/LSrnLcHwCN4Eu5RAHNKltDgkD
- zbFYEKQDYmSDXaDZfTs7CRpKfBrTA4IoYrRD6ITuBEHDwGb2ssEzp
-X-Received: by 2002:a05:620a:cf2:b0:783:63bc:3eb9 with SMTP id
- c18-20020a05620a0cf200b0078363bc3eb9mr272243qkj.20.1707159271069; 
- Mon, 05 Feb 2024 10:54:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHtqqCHnWx/GLXIRdJzdWzMZlHWYoaKrGO++CQPJ7KxQMMH/zsd7H5pZAOXARLbUs7z47zzaA==
-X-Received: by 2002:a05:620a:cf2:b0:783:63bc:3eb9 with SMTP id
- c18-20020a05620a0cf200b0078363bc3eb9mr272224qkj.20.1707159270748; 
- Mon, 05 Feb 2024 10:54:30 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCVplUG5ESUqyya5hsibYTmsaMFUdbVUBmCi6QUJ5E4ZOSpbUx8jx44XKIIslCyj9SmYtAOTc/4pG9UNGnLi02eOCogHY/dogcns9+mqMOCnkAnjQsrS7Z+/yM9OxapSPUA11F7ylpqag+c9+bnnq4LfHYlYT/ptC2o0cCFW3eCnGV01LBo6b2nB3N76XxiPPqjosv5e3MQE/sI607BMpuYP/KY/AcaLErl9754SbO8NvepgrysXcsMZ70YKYwnPAllrCarDDMwXtO43dTNWcZ/SGlMSgrkpjWyc2Sn5ePXH2hKHD9y284CGpQrRI2GOA17NffI6sLlrIA3lxUN8Dpoo9qeLMEgTeY44oPVS
-Received: from [192.168.0.9] (ip-109-43-177-196.web.vodafone.de.
- [109.43.177.196]) by smtp.gmail.com with ESMTPSA id
- pe18-20020a05620a851200b00783e3b030e7sm196626qkn.33.2024.02.05.10.54.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Feb 2024 10:54:30 -0800 (PST)
-Message-ID: <12201f37-16f1-4c66-9281-157f7157396c@redhat.com>
-Date: Mon, 5 Feb 2024 19:54:26 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] tests/vm/freebsd: Reload the sshd configuration
-Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Ed Maste <emaste@freebsd.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Warner Losh <imp@bsdimp.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX4BM-0006LK-8Q
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 13:59:06 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 415IIS8u006960; Mon, 5 Feb 2024 18:59:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ content-transfer-encoding : in-reply-to; s=pp1;
+ bh=fJ+M5CmeEXdwuoubkhe0KZ3Y7dZTw0LtLbmXUJ4uraM=;
+ b=Givm7L55VZMiUxGO8A+8MqbAprwpeXjNLaYC/TLyrHcuD1w5VDkBkiGAs8gmcyRzh6jj
+ mHS57FjwSHbkqXrUzaDiA/xWdxmhZeMxID8eI8RIM+IVU+kCfr4Xz6MRStWNOsBgU4uB
+ rVeh9gmc6Ye0ByKnSWUyP4NcErPjSX03tgbYUClT9Pc7p3rRQtTzx8+Ms+zj9OJE0pGD
+ gkY7g9gMCgJIMhoUPDTT32llJPmv5BKuDvhpglVHz3vHx0vXZ3pP1Kwji2X6lOVEEzqQ
+ QMOTS2hSRc7LwmnFE7q6C/4N3l5pk6uqZYBOYyTpazo0QZvi9yttWA43tWp2pKp0WKg8 7A== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w34u50smd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Feb 2024 18:59:00 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 415Ik8d7005458;
+ Mon, 5 Feb 2024 18:59:00 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w34u50rw5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Feb 2024 18:58:59 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 415ImK6d019996; Mon, 5 Feb 2024 18:55:15 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w1ytstjvy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Feb 2024 18:55:14 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 415ItDtO46400116
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Feb 2024 18:55:13 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3BF8520040;
+ Mon,  5 Feb 2024 18:55:13 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8410A20043;
+ Mon,  5 Feb 2024 18:55:12 +0000 (GMT)
+Received: from heavy (unknown [9.171.57.170])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  5 Feb 2024 18:55:12 +0000 (GMT)
+Date: Mon, 5 Feb 2024 19:55:11 +0100
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Warner Losh <imp@bsdimp.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
  qemu-devel@nongnu.org
+Subject: Re: Re: [PATCH v2 4/4] meson: Link with libinotify on FreeBSD
+Message-ID: <sljvmkdju4qgy6mabuzikyaiujn4w2ctnnxutkdk7kp7czj4hy@muwe2dwe4qyp>
 References: <20240205181352.1567-1-iii@linux.ibm.com>
- <20240205181352.1567-3-iii@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240205181352.1567-3-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ <20240205181352.1567-5-iii@linux.ibm.com>
+ <b6ab054b-47b4-49e5-ada7-6a407d54207b@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b6ab054b-47b4-49e5-ada7-6a407d54207b@linaro.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: TvhRkO-iRtsQd8MgShsfGwy7yWgzLNhp
+X-Proofpoint-ORIG-GUID: 15tbgT7JxilwQLJx4eDtBcmeusZ6O1rH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-05_13,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 mlxlogscore=999 priorityscore=1501
+ spamscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2402050141
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,17 +124,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/02/2024 19.11, Ilya Leoshkevich wrote:
-> After console_sshd_config(), the SSH server needs to be nudged to pick
-> up the new configs. The scripts for the other BSD flavors already do
-> this with a reboot, but a simple reload is sufficient.
+On Mon, Feb 05, 2024 at 07:36:32PM +0100, Philippe Mathieu-Daudé wrote:
+> Hi Ilya,
 > 
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   tests/vm/freebsd | 1 +
->   1 file changed, 1 insertion(+)
+> On 5/2/24 19:11, Ilya Leoshkevich wrote:
+> > make vm-build-freebsd fails with:
+> > 
+> >      ld: error: undefined symbol: inotify_init1
+> >      >>> referenced by filemonitor-inotify.c:183 (../src/util/filemonitor-inotify.c:183)
+> >      >>>               util_filemonitor-inotify.c.o:(qemu_file_monitor_new) in archive libqemuutil.a
+> > 
+> > On FreeBSD inotify functions are defined in libinotify.so. Add it to
+> > the dependencies.
+> > 
+> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> > ---
+> >   meson.build      | 12 +++++++++++-
+> >   util/meson.build |  6 +++++-
+> >   2 files changed, 16 insertions(+), 2 deletions(-)
+> 
+> (for some reason your git-diff context is very verbose,
+>  making review somehow annoying).
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This is because of patch 3. It's essentially the snippet that Daniel
+posted, except that patch -p1 applied it at a wrong location! So I
+figured I'll send this series with a larger context, but I couldn't
+find how to apply this setting to just 1 patch in git send-email.
 
+> > +# libinotify-kqueue
+> > +inotify = not_found
+> > +if host_os == 'freebsd'
+> > +  inotify = cc.find_library('inotify')
+> > +endif
+> > +
+> >   #################
+> >   # config-host.h #
+> >   #################
+> 
+> 
+> > @@ -2376,61 +2382,62 @@ have_asan_fiber = false
+> >   if get_option('sanitizers') and \
+> >      not cc.has_function('__sanitizer_start_switch_fiber',
+> >                            args: '-fsanitize=address',
+> >                            prefix: '#include <sanitizer/asan_interface.h>')
+> >     warning('Missing ASAN due to missing fiber annotation interface')
+> >     warning('Without code annotation, the report may be inferior.')
+> >   else
+> >     have_asan_fiber = true
+> >   endif
+> >   config_host_data.set('CONFIG_ASAN_IFACE_FIBER', have_asan_fiber)
+> >   # has_header_symbol
+> 
+> 
+> >   config_host_data.set('CONFIG_INOTIFY',
+> >                        cc.has_header_symbol('sys/inotify.h', 'inotify_init'))
+> >   config_host_data.set('CONFIG_INOTIFY1',
+> > -                     cc.has_header_symbol('sys/inotify.h', 'inotify_init1'))
+> > +                     cc.has_header_symbol('sys/inotify.h', 'inotify_init1') and
+> > +                     (host_os != 'freebsd' or inotify.found()))
+> 
+> Maybe we could use the same pattern as 'have_asan_fiber':
+> 
+>  have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
+>  if have_inotify_init1 and host_os == 'freebsd'
+>    have_inotify_init1 = cc.find_library('inotify')
+>  endif
+>  config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
 
+I agree, this looks nicer. I will send a v3.
+
+> I wonder why we don't need the similar library check for the
+> inotify_init symbol.
+
+Sounds reasonable, it's just that currently the respective config value
+is used only in linux-user, but for completeness it won't hurt.
+
+> 
+> Regards,
+> 
+> Phil.
 
