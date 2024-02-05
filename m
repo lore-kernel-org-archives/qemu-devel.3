@@ -4,85 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1279EC48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FC1C48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWvyo-0001Iz-I6; Mon, 05 Feb 2024 05:13:34 -0500
+	id 1rWw01-00021k-CM; Mon, 05 Feb 2024 05:14:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rWvym-0001Ih-10
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:13:32 -0500
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1rWw00-00021a-Aj
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:14:48 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rWvyj-0002Wp-Pn
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:13:31 -0500
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-511538be947so438504e87.3
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 02:13:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707128008; x=1707732808; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=lJgt+rIcf8cWWUzO6QfRYxI8XlavmPnLi44SsOqg38k=;
- b=IMNg5l/KI2VAr9tcM/MTFcb6ekGnExk7kKBSxzpiSvW/wWV6m28KTpJ18qNthzZb3F
- GABePjswG7EoESIyKoQXy/VFA3YXs7jBmADkCQSN48/Aa8soOI38CoTChlR8+pj84cnu
- SCcL/UqmSzsDbP9TKNVZEG2htYHc1mEwO3ptVLFQD/QyRCO5dFTZ8iVgkBGaqHnGeHpk
- j1VHsTOuevJpBGQKB8QXMYGMxGTb9ALj5Pqbz449OeUovS3i+8wm32d6meL4bALdYNvH
- /upsqd8sNLWtyiPa/bSoJjJvllOhp2Jbvgaxhm/gVPQHNfovZC3Z2eF/LVy1wXzIaaco
- kAKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707128008; x=1707732808;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lJgt+rIcf8cWWUzO6QfRYxI8XlavmPnLi44SsOqg38k=;
- b=nAN+fA5T5p94ihObSNJT2+wJNCkTYBCOfimbHuPJ3talvXHCnr8mljjZ1gVbc9C18R
- U7CbfvmvZyGLuFnjUdQ+IyMQQIxVsG6Pjclqzb+AmliSD8o2ew6jbPudZ8/cRedGNBq3
- yNmydpwvrwubuIuFAjoiAipK0I5yLoHkcq54aGWCK+Qhhxi+HiOK1CL5t3Y2VJYR6FCn
- DBBgt2ank39bFn09XTKKljACoH1afU7+q38cXndUWhtoYvfdZqZGKD3lH/RZHgd6RVV1
- pRUkyu+glxmbXGDuDgrcXcCl6TS27hmoIZt1efS+zSIw0vG0jeAf8RjPf5SjIraZKbe/
- F67A==
-X-Gm-Message-State: AOJu0Yz/OVycc1XjrlFtJvYkOz1bchFuSlYJVWlMmZTNS+TMAgdkWOPg
- czxlh7m54qk0j/7YCvcNbP4HrgVzP750LYmkg5Ixtq2TB1bS1N9g5gdyopCTGI0=
-X-Google-Smtp-Source: AGHT+IE1hf8bl/hcXBe5riN3fpOTSpj1HFZfJr+9BMC6CSNMEcUYckN7BqsN2jrBQ9H5AbKaa/rH8Q==
-X-Received: by 2002:a05:6512:292:b0:511:4a3c:bc67 with SMTP id
- j18-20020a056512029200b005114a3cbc67mr2830078lfp.9.1707128007718; 
- Mon, 05 Feb 2024 02:13:27 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXJLQoDNi2Q2qdYX/U6PiMl9OFuceQBj+ZoVnehK6ZdPRkztc9BWnHpIaAJo2xn5XxbatbtAvXF+1qnuNLsiQ5oE0J/xt4h6/E1YvJjhbSzgzDoPQKykT5m4zC/OtwCh+MXGtC80JDctgE/Oegsj8OY8yzYnISMBHNqUB6y/nPyDFbX01oTnG/9O5+Pi72tcYIIn7A0iDopB7UlN+Vd2srdv/AfIoQwvWe1qbjpDHQC30YEreb+3qXu8HhHWfcaPrJu+4smUHnqcNp+YOCj1u0Lp82TE29mISyw0uBNXEv5R1S0UuJ3DKY0/ph8XsgcQeOkg+7X
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- dw14-20020a0560000dce00b0033b26de0073sm6303131wrb.97.2024.02.05.02.13.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 02:13:27 -0800 (PST)
-Date: Mon, 5 Feb 2024 10:13:22 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- alex.williamson@redhat.com, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, yanghliu@redhat.com, mst@redhat.com,
- clg@redhat.com, jasowang@redhat.com
-Subject: Re: [PATCH v2 1/3] virtio-iommu: Add an option to define the input
- range width
-Message-ID: <20240205101322.GA2086490@myrica>
-References: <20240201163324.564525-1-eric.auger@redhat.com>
- <20240201163324.564525-2-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1rWvzy-0002by-8l
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:14:48 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 93E3822277;
+ Mon,  5 Feb 2024 10:14:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707128081; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1ikVav4LZuAZCNaLnG8XwGj0DD7btpuiN3OTD4hJXzo=;
+ b=VetF+eUHerO4aqbD83JL5HEc190mVfu3NhH6T5LaiXcrO5YsgF/ZLGFDZWkgqWXGRwabaO
+ S6Q5u3/cxO+IPlh0hGshSxD6GGL6QzLFEQDfZETTplpTEnYX03okdYyHGB+QyMKaTOEMLj
+ 1RCVIg4tC+RVmaFnLpVLVijoiCpCjdA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707128081;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1ikVav4LZuAZCNaLnG8XwGj0DD7btpuiN3OTD4hJXzo=;
+ b=f/NMUe+Wj2CByGWbWPOqgVkqyRUTbkKAXno+DFDQrhvxNhS5Iby2V7Ra0iP4hHHdc1egAh
+ rGoJmNXBl7goVICQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707128081; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1ikVav4LZuAZCNaLnG8XwGj0DD7btpuiN3OTD4hJXzo=;
+ b=VetF+eUHerO4aqbD83JL5HEc190mVfu3NhH6T5LaiXcrO5YsgF/ZLGFDZWkgqWXGRwabaO
+ S6Q5u3/cxO+IPlh0hGshSxD6GGL6QzLFEQDfZETTplpTEnYX03okdYyHGB+QyMKaTOEMLj
+ 1RCVIg4tC+RVmaFnLpVLVijoiCpCjdA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707128081;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1ikVav4LZuAZCNaLnG8XwGj0DD7btpuiN3OTD4hJXzo=;
+ b=f/NMUe+Wj2CByGWbWPOqgVkqyRUTbkKAXno+DFDQrhvxNhS5Iby2V7Ra0iP4hHHdc1egAh
+ rGoJmNXBl7goVICQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3D571136F5;
+ Mon,  5 Feb 2024 10:14:41 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id LbxyDBG1wGX6KgAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Mon, 05 Feb 2024 10:14:41 +0000
+Message-ID: <beb8fd5c-3fc4-9bf5-1f9b-3947a25f52d9@suse.de>
+Date: Mon, 5 Feb 2024 11:14:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240201163324.564525-2-eric.auger@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=jean-philippe@linaro.org; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [GIT PULL 5/8] util: Add write-only "node-affinity" property for
+ ThreadContext
+Content-Language: en-US
+To: David Hildenbrand <david@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, Michal Privoznik <mprivozn@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20221028095225.86118-1-david@redhat.com>
+ <20221028095225.86118-6-david@redhat.com>
+From: Claudio Fontana <cfontana@suse.de>
+In-Reply-To: <20221028095225.86118-6-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=VetF+eUH;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="f/NMUe+W"
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[8]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ ARC_NA(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com,linaro.org,weilnetz.de,nongnu.org];
+ RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
+X-Rspamd-Queue-Id: 93E3822277
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=cfontana@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -75
+X-Spam_score: -7.6
+X-Spam_bar: -------
+X-Spam_report: (-7.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.214,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,71 +136,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+Hi,
 
-On Thu, Feb 01, 2024 at 05:32:22PM +0100, Eric Auger wrote:
-> aw-bits is a new option that allows to set the bit width of
-> the input address range. This value will be used as a default for
-> the device config input_range.end. By default it is set to 64 bits
-> which is the current value.
+turning pages back in time,
+
+noticed that in recent qemu-img binaries we include an ELF dependency on libnuma.so that seems unused.
+
+I think it stems from this commit:
+
+commit 10218ae6d006f76410804cc4dc690085b3d008b5
+Author: David Hildenbrand <david@redhat.com>
+Date:   Fri Oct 14 15:47:17 2022 +0200
+
+    util: Add write-only "node-affinity" property for ThreadContext
+
+
+possibly this hunk?
+
+diff --git a/util/meson.build b/util/meson.build
+index e97cd2d779..c0a7bc54d4 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -1,5 +1,5 @@
+ util_ss.add(files('osdep.c', 'cutils.c', 'unicode.c', 'qemu-timer-common.c'))
+-util_ss.add(files('thread-context.c'))
++util_ss.add(files('thread-context.c'), numa)
+ if not config_host_data.get('CONFIG_ATOMIC64')
+   util_ss.add(files('atomic64.c'))
+ endif
+
+
+I wonder if there is some conditional we could use to avoid the apparently useless dependency to libnuma in the qemu-img binary?
+
+Ciao,
+
+Claudio 
+
+
+On 10/28/22 11:52, David Hildenbrand wrote:
+> Let's make it easier to pin threads created via a ThreadContext to
+> all host CPUs currently belonging to a given set of host NUMA nodes --
+> which is the common case.
 > 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> "node-affinity" is simply a shortcut for setting "cpu-affinity" manually
+> to the list of host CPUs belonging to the set of host nodes. This property
+> can only be written.
 > 
+> A simple QEMU example to set the CPU affinity to host node 1 on a system
+> with two nodes, 24 CPUs each, whereby odd-numbered host CPUs belong to
+> host node 1:
+>     qemu-system-x86_64 -S \
+>       -object thread-context,id=tc1,node-affinity=1
+> 
+> And we can query the cpu-affinity via HMP/QMP:
+>     (qemu) qom-get tc1 cpu-affinity
+>     [
+>         1,
+>         3,
+>         5,
+>         7,
+>         9,
+>         11,
+>         13,
+>         15,
+>         17,
+>         19,
+>         21,
+>         23,
+>         25,
+>         27,
+>         29,
+>         31,
+>         33,
+>         35,
+>         37,
+>         39,
+>         41,
+>         43,
+>         45,
+>         47
+>     ]
+> 
+> We cannot query the node-affinity:
+>     (qemu) qom-get tc1 node-affinity
+>     Error: Insufficient permission to perform this operation
+> 
+> But note that due to dynamic library loading this example will not work
+> before we actually make use of thread_context_create_thread() in QEMU
+> code, because the type will otherwise not get registered. We'll wire
+> this up next to make it work.
+> 
+> Note that if the host CPUs for a host node change due do CPU hot(un)plug
+> CPU onlining/offlining (i.e., lscpu output changes) after the ThreadContext
+> was started, the CPU affinity will not get updated.
+> 
+> Reviewed-by: Michal Privoznik <mprivozn@redhat.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Message-Id: <20221014134720.168738-5-david@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
 > ---
+>  qapi/qom.json         |  9 ++++-
+>  util/meson.build      |  2 +-
+>  util/thread-context.c | 84 +++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 93 insertions(+), 2 deletions(-)
 > 
-> v1 -> v2:
-> - Check the aw-bits value is within [32,64]
-> ---
->  include/hw/virtio/virtio-iommu.h | 1 +
->  hw/virtio/virtio-iommu.c         | 7 ++++++-
->  2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-> index 781ebaea8f..5fbe4677c2 100644
-> --- a/include/hw/virtio/virtio-iommu.h
-> +++ b/include/hw/virtio/virtio-iommu.h
-> @@ -66,6 +66,7 @@ struct VirtIOIOMMU {
->      bool boot_bypass;
->      Notifier machine_done;
->      bool granule_frozen;
-> +    uint8_t aw_bits;
->  };
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 8013ba4b82..20b5735d78 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -839,10 +839,17 @@
+>  #                threads created in the thread context (default: QEMU main
+>  #                thread CPU affinity)
+>  #
+> +# @node-affinity: the list of host node numbers that will be resolved to a
+> +#                 list of host CPU numbers used as CPU affinity. This is a
+> +#                 shortcut for specifying the list of host CPU numbers
+> +#                 belonging to the host nodes manually by setting
+> +#                 @cpu-affinity. (default: QEMU main thread affinity)
+> +#
+>  # Since: 7.2
+>  ##
+>  { 'struct': 'ThreadContextProperties',
+> -  'data': { '*cpu-affinity': ['uint16'] } }
+> +  'data': { '*cpu-affinity': ['uint16'],
+> +            '*node-affinity': ['uint16'] } }
 >  
->  #endif
-> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> index ec2ba11d1d..7870bdbeee 100644
-> --- a/hw/virtio/virtio-iommu.c
-> +++ b/hw/virtio/virtio-iommu.c
-> @@ -1314,7 +1314,11 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
->       */
->      s->config.bypass = s->boot_bypass;
->      s->config.page_size_mask = qemu_real_host_page_mask();
-> -    s->config.input_range.end = UINT64_MAX;
-> +    if (s->aw_bits < 32 || s->aw_bits > 64) {
-
-I'm wondering if we should lower this to 16 bits, just to support all
-possible host SMMU configurations (the smallest address space configurable
-with T0SZ is 25-bit, or 16-bit with the STT extension).
-
-Thanks,
-Jean
-
-> +        error_setg(errp, "aw-bits must be within [32,64]");
+>  
+>  ##
+> diff --git a/util/meson.build b/util/meson.build
+> index e97cd2d779..c0a7bc54d4 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -1,5 +1,5 @@
+>  util_ss.add(files('osdep.c', 'cutils.c', 'unicode.c', 'qemu-timer-common.c'))
+> -util_ss.add(files('thread-context.c'))
+> +util_ss.add(files('thread-context.c'), numa)
+>  if not config_host_data.get('CONFIG_ATOMIC64')
+>    util_ss.add(files('atomic64.c'))
+>  endif
+> diff --git a/util/thread-context.c b/util/thread-context.c
+> index c921905396..4138245332 100644
+> --- a/util/thread-context.c
+> +++ b/util/thread-context.c
+> @@ -21,6 +21,10 @@
+>  #include "qemu/module.h"
+>  #include "qemu/bitmap.h"
+>  
+> +#ifdef CONFIG_NUMA
+> +#include <numa.h>
+> +#endif
+> +
+>  enum {
+>      TC_CMD_NONE = 0,
+>      TC_CMD_STOP,
+> @@ -88,6 +92,11 @@ static void thread_context_set_cpu_affinity(Object *obj, Visitor *v,
+>      int nbits = 0, ret;
+>      Error *err = NULL;
+>  
+> +    if (tc->init_cpu_bitmap) {
+> +        error_setg(errp, "Mixing CPU and node affinity not supported");
+> +        return;
 > +    }
-> +    s->config.input_range.end =
-> +        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;
->      s->config.domain_range.end = UINT32_MAX;
->      s->config.probe_size = VIOMMU_PROBE_SIZE;
+> +
+>      visit_type_uint16List(v, name, &host_cpus, &err);
+>      if (err) {
+>          error_propagate(errp, err);
+> @@ -159,6 +168,79 @@ static void thread_context_get_cpu_affinity(Object *obj, Visitor *v,
+>      qapi_free_uint16List(host_cpus);
+>  }
 >  
-> @@ -1525,6 +1529,7 @@ static Property virtio_iommu_properties[] = {
->      DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
->                       TYPE_PCI_BUS, PCIBus *),
->      DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
->      DEFINE_PROP_END_OF_LIST(),
->  };
+> +static void thread_context_set_node_affinity(Object *obj, Visitor *v,
+> +                                             const char *name, void *opaque,
+> +                                             Error **errp)
+> +{
+> +#ifdef CONFIG_NUMA
+> +    const int nbits = numa_num_possible_cpus();
+> +    ThreadContext *tc = THREAD_CONTEXT(obj);
+> +    uint16List *l, *host_nodes = NULL;
+> +    unsigned long *bitmap = NULL;
+> +    struct bitmask *tmp_cpus;
+> +    Error *err = NULL;
+> +    int ret, i;
+> +
+> +    if (tc->init_cpu_bitmap) {
+> +        error_setg(errp, "Mixing CPU and node affinity not supported");
+> +        return;
+> +    }
+> +
+> +    visit_type_uint16List(v, name, &host_nodes, &err);
+> +    if (err) {
+> +        error_propagate(errp, err);
+> +        return;
+> +    }
+> +
+> +    if (!host_nodes) {
+> +        error_setg(errp, "Node list is empty");
+> +        goto out;
+> +    }
+> +
+> +    bitmap = bitmap_new(nbits);
+> +    tmp_cpus = numa_allocate_cpumask();
+> +    for (l = host_nodes; l; l = l->next) {
+> +        numa_bitmask_clearall(tmp_cpus);
+> +        ret = numa_node_to_cpus(l->value, tmp_cpus);
+> +        if (ret) {
+> +            /* We ignore any errors, such as impossible nodes. */
+> +            continue;
+> +        }
+> +        for (i = 0; i < nbits; i++) {
+> +            if (numa_bitmask_isbitset(tmp_cpus, i)) {
+> +                set_bit(i, bitmap);
+> +            }
+> +        }
+> +    }
+> +    numa_free_cpumask(tmp_cpus);
+> +
+> +    if (bitmap_empty(bitmap, nbits)) {
+> +        error_setg(errp, "The nodes select no CPUs");
+> +        goto out;
+> +    }
+> +
+> +    if (tc->thread_id != -1) {
+> +        /*
+> +         * Note: we won't be adjusting the affinity of any thread that is still
+> +         * around for now, but only the affinity of the context thread.
+> +         */
+> +        ret = qemu_thread_set_affinity(&tc->thread, bitmap, nbits);
+> +        if (ret) {
+> +            error_setg(errp, "Setting CPU affinity failed: %s", strerror(ret));
+> +        }
+> +    } else {
+> +        tc->init_cpu_bitmap = bitmap;
+> +        bitmap = NULL;
+> +        tc->init_cpu_nbits = nbits;
+> +    }
+> +out:
+> +    g_free(bitmap);
+> +    qapi_free_uint16List(host_nodes);
+> +#else
+> +    error_setg(errp, "NUMA node affinity is not supported by this QEMU");
+> +#endif
+> +}
+> +
+>  static void thread_context_get_thread_id(Object *obj, Visitor *v,
+>                                           const char *name, void *opaque,
+>                                           Error **errp)
+> @@ -208,6 +290,8 @@ static void thread_context_class_init(ObjectClass *oc, void *data)
+>      object_class_property_add(oc, "cpu-affinity", "int",
+>                                thread_context_get_cpu_affinity,
+>                                thread_context_set_cpu_affinity, NULL, NULL);
+> +    object_class_property_add(oc, "node-affinity", "int", NULL,
+> +                              thread_context_set_node_affinity, NULL, NULL);
+>  }
 >  
-> -- 
-> 2.41.0
-> 
+>  static void thread_context_instance_init(Object *obj)
+
 
