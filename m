@@ -4,74 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D194C48295
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 13:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287CAC48295
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 13:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWyZx-0000qb-GS; Mon, 05 Feb 2024 08:00:08 -0500
+	id 1rWynF-0004Nx-PZ; Mon, 05 Feb 2024 08:13:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rWyZs-0000pW-EZ
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 08:00:00 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rWyZp-0002J8-3m
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 07:59:59 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-56025fcaebaso1918883a12.0
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 04:59:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707137995; x=1707742795; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iex+BBAk3kVURGAKu7t3HWTcn09rhb0ZZ/rH1MAl3ao=;
- b=D2sigX2a0ovqujilA9JeyBeVfS9p1KHztxSoslnGCGy1esax1LCiDfpkgZuZV26iUE
- eZMtaj/ffjFXUmLpV0G68vfeQHkaBqRW3QqTga/hcuEtNig4+n3TuFz9WCMJWp0e9dK1
- a0Wm6fj+ua46bo3r56/XKsK19ob14qNjHVe3FVJpznfZht7rYaNWqbUfIEf2pHkgvuri
- OfbBCm24iz51Bcjy+FH5n2l5CjUXFDxx6eD6+GtDddP9iTgx30MZMLBREeChYzR4NP7z
- ZDJlSYa5WMbS+Fa+Rw+mwOR/9eNYDyF0yzavf1eSFL8r7q4iBhwalqmEibPmXCTn+q8g
- 2j8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707137995; x=1707742795;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iex+BBAk3kVURGAKu7t3HWTcn09rhb0ZZ/rH1MAl3ao=;
- b=pqQHZfia0gNIRFBwIATBQ1IP87RM21+gVlqnetUA806cit+r2Qc65Q3O2DyjhPI3gU
- 4CfyLvHefRxSUTXdoQ9ZiRwqq0AytrdMJeLNkXwxVUdVIkM825tmAF6On/4yxn1NXmpt
- xZVhPx01FuT3gY+BF2h9U53glE+GmvTyYrmJWF+5/CozjoopgzDwQAO+SIpVxTrNhLPz
- PDPfyJwf8YsA1oFn3E3pADZpaEH8ihXMOd1YfezD5W2IVJlla9e4oXrBSrXMisHiLNoX
- MsZUkPoHoKFh1adLMrpaL6ChsQ8YbPNU4h5fsp/lwBRZC/feYnlnn7s/BXqcOaTwLVES
- rY1Q==
-X-Gm-Message-State: AOJu0Ywu3F1ZOy50wFCN5H7y6nEvDLl46DUh5WQ9VpDvAqkcszmZW/RW
- 95esMpMZpdnI7uznG8zHmLCTkrcMAA/F0PjFJfvfjFm+Yy7zzgBt3hRmRo5DihgaIX/ggDuUGmQ
- 77cmsDS/dVZ79VePymZwQbP628ePC3793lrJL2w==
-X-Google-Smtp-Source: AGHT+IFXUiDz8+eSXH63/uYVDA2DRv39Zamg/BVxXIrvNXrhJhJ2KFepBSukZaM27Mvo1A0LUrN2bTVRZhe5HfbwDVw=
-X-Received: by 2002:aa7:d6cc:0:b0:55f:f7bb:4100 with SMTP id
- x12-20020aa7d6cc000000b0055ff7bb4100mr4947716edr.8.1707137995598; Mon, 05 Feb
- 2024 04:59:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rWynE-0004Nm-ED
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 08:13:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rWynC-0000RH-Jn
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 08:13:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707138824;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NHjWwU5pNmP6LJPGA9QxCbiXhdl1LpJTNFkGocRuDKU=;
+ b=JLGM63Ro0w43i/bDs532T8Zi7xfudm54dtROCj12E8lkbAwG6Pn7K3sQkbaxN99jNYxx2J
+ RE01HG3yi7zZwIEYmQjurddqsQXWT0cwNsSeP8wUd0Qi0hwaW0NZPy1rV/kCPF3mwAbb3l
+ sayvMwpt3S1U1dZoh2ImM94kbLnj76o=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-3qCfcofaNyeooygq4V9oKA-1; Mon, 05 Feb 2024 08:13:43 -0500
+X-MC-Unique: 3qCfcofaNyeooygq4V9oKA-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C19C7848A67;
+ Mon,  5 Feb 2024 13:13:42 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.34])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id CF41C492BC6;
+ Mon,  5 Feb 2024 13:13:41 +0000 (UTC)
+Date: Mon, 5 Feb 2024 14:13:40 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: mst@redhat.com, sgarzare@redhat.com, eperezma@redhat.com,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH] vdpa-dev: Fix initialisation order to restore VDUSE
+ compatibility
+Message-ID: <ZcDfBJLwxwN1agao@redhat.com>
+References: <20240202132521.32714-1-kwolf@redhat.com>
 MIME-Version: 1.0
-References: <20240204214052.5639-1-richard.henderson@linaro.org>
-In-Reply-To: <20240204214052.5639-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 5 Feb 2024 12:59:44 +0000
-Message-ID: <CAFEAcA_QbizqPtjsbo57nVoJM6zh=iy2dOoJtZ1im97i0iB88A@mail.gmail.com>
-Subject: Re: [PULL 00/39] tcg patch queue
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240202132521.32714-1-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,42 +80,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 4 Feb 2024 at 21:41, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
->
->   Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240205
->
-> for you to fetch changes up to 867db6870a6f5d4e0915822d6a84e665bec1f22e:
->
->   tcg/tci: Support TCG_COND_TST{EQ,NE} (2024-02-03 23:53:49 +0000)
->
-> ----------------------------------------------------------------
-> tcg: Introduce TCG_COND_TST{EQ,NE}
-> target/alpha: Use TCG_COND_TST{EQ,NE}
-> target/m68k: Use TCG_COND_TST{EQ,NE} in gen_fcc_cond
-> target/sparc: Use TCG_COND_TSTEQ in gen_op_mulscc
-> target/s390x: Use TCG_COND_TSTNE for CC_OP_{TM,ICM}
-> target/s390x: Improve general case of disas_jcc
->
-> ----------------------------------------------------------------
+Am 02.02.2024 um 14:25 hat Kevin Wolf geschrieben:
+> VDUSE requires that virtqueues are first enabled before the DRIVER_OK
+> status flag is set; with the current API of the kernel module, it is
+> impossible to enable the opposite order in our block export code because
+> userspace is not notified when a virtqueue is enabled.
+> 
+> This requirement also mathces the normal initialisation order as done by
+> the generic vhost code in QEMU. However, commit 6c482547 accidentally
+> changed the order for vdpa-dev and broke access to VDUSE devices with
+> this.
+> 
+> This changes vdpa-dev to use the normal order again and use the standard
+> vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
+> used with vdpa-dev again after this fix.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  hw/virtio/vdpa-dev.c   |  5 +----
+>  hw/virtio/vhost-vdpa.c | 17 +++++++++++++++++
+>  2 files changed, 18 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> index eb9ecea83b..13e87f06f6 100644
+> --- a/hw/virtio/vdpa-dev.c
+> +++ b/hw/virtio/vdpa-dev.c
+> @@ -253,14 +253,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
+>  
+>      s->dev.acked_features = vdev->guest_features;
+>  
+> -    ret = vhost_dev_start(&s->dev, vdev, false);
+> +    ret = vhost_dev_start(&s->dev, vdev, true);
+>      if (ret < 0) {
+>          error_setg_errno(errp, -ret, "Error starting vhost");
+>          goto err_guest_notifiers;
+>      }
+> -    for (i = 0; i < s->dev.nvqs; ++i) {
+> -        vhost_vdpa_set_vring_ready(&s->vdpa, i);
+> -    }
+>      s->started = true;
+>  
+>      /*
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index 3a43beb312..c4574d56c5 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -904,6 +904,22 @@ int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v, unsigned idx)
+>      return r;
+>  }
+>  
+> +static int vhost_vdpa_set_vring_enable(struct vhost_dev *dev, int enable)
+> +{
+> +    struct vhost_vdpa *v = dev->opaque;
+> +    unsigned int i;
+> +    int ret;
+> +
+> +    for (i = 0; i < dev->nvqs; ++i) {
+> +        ret = vhost_vdpa_set_vring_ready(v, i);
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +}
 
-The s390 linux-user guest on s390 host dumped core on the
-sha1 test binary:
+Oops, this forgets to actually use the @enable parameter, and always
+enables the queue even if the caller wanted to disable it.
 
-TEST sha1 on s390x
-qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-timeout: the monitored command dumped core
-Segmentation fault
-make[1]: *** [Makefile:178: run-sha1] Error 139
+I'll fix this in a v2, but I'd first like to see if something has to
+change to address Stefano's concern, too.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/6095771567
+Kevin
 
-thanks
--- PMM
 
