@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D778EC48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 09:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B830C48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 09:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWvK6-0007eX-BC; Mon, 05 Feb 2024 04:31:31 -0500
+	id 1rWvM4-0000nJ-Hh; Mon, 05 Feb 2024 04:33:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rWvJy-0007de-47
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 04:31:23 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rWvJv-0002TN-Pj
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 04:31:21 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-40fd72f721dso9508505e9.0
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 01:31:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707125478; x=1707730278; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EQyMMTvijXur08UgF+EuEbKAVDtp0h404jaHh4fZ3GY=;
- b=r/bEiQiaaQkOKbmW9pWgBAWHQB4PqS8CYAiqXE45mfiOfpU0/dRxeFdpzwOVNw4I0f
- bm7N6E76VKPtsA6WvAX9vab8hqkL68NofjU7ikPJOXdnJoZr/Es//Rwqtpj3yaNrP5cA
- x8UNj/tZxChd1YchSE76d+aC31/XmVP5JEhhAe61na/qxH7e7Ms5wDrnBgNQG6RdKdDP
- i43tGO2sWjOC9B7xSMoDCJPthb3DyjEcEedudT3TkqZt1PXp8hRMmnYntlxNtDLvkgjn
- 3yow213CbxlbvgJOPgwxng/MXKaw73B8XOU3ya5PgK5/q7DncfyjzJ0t+PGdDl4fpnRz
- lrTw==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rWvM3-0000mN-5t
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 04:33:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rWvM1-0003AL-91
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 04:33:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707125608;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0Kej3aUtVc5CRwaWUishz6Is/8cmnAUBsCJhmP6/MZI=;
+ b=JxYXlT+MCxYIgPTulEavm6hDy19mAVwI1nWDzSTfsFPJO9jC5c7KAH4JE8clFjmw6hNkgy
+ FvtPftrkVSMMPfMwQ1J5sZq9u4J3sSDMiLk+mVW7kqMrzDZ3UQZ9GZBfVH4qUAreRuc98u
+ PgrFOTmbvdNUVW8RJuZMxFLqRN31opk=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-nY-_fDCIOAma56w9Ab2I9g-1; Mon, 05 Feb 2024 04:33:25 -0500
+X-MC-Unique: nY-_fDCIOAma56w9Ab2I9g-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-dc6ba69e803so7130453276.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 01:33:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707125478; x=1707730278;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=EQyMMTvijXur08UgF+EuEbKAVDtp0h404jaHh4fZ3GY=;
- b=u3+ercM8k4NKxGC549f35x5q6YmTYqA42MyYtvCoJwYkIWF1kvryzwh7Ci5N3gRl8j
- VMTsWdy4EzhyK61xQesHTyxHQ3RMY7sRjFwzHgDiP+ycSEAqMII3hq91g+VsO8pyhvoD
- qd3IQ9ZmiFMIkB9gJsBCjmTPPpeaANu7HhZgqp5lSFnOl9CrgBnNSRi1dO2+bjkXIvbK
- pyHRAiHygWgnO54gkP0Ibt6OcRbm4wLhOAOLN79D9lkuuKDyQ6nUCtO7SKKpmsfJ9yXY
- FRtQmPyhqEJd1D6+9KHbApb7osLnGU/7QNNw8rbuRLxWQro7AKIjFksR2nJ3u4uRJ3QG
- If6g==
-X-Gm-Message-State: AOJu0Yz9mWsPDXNpgXrixIcUbkdNFLWf/l+bujQnWQvHXyShzKLrkAXk
- 4RPqZBvwseBn7P8Q7NpdeZGFkhr+ngxXSjFU6VOA9MA9Jwyy5JEjE+gPz/TW/G8=
-X-Google-Smtp-Source: AGHT+IFCLrcy7Ax0GvlZzxf1x3664Y7piAHpIRn6aRKmBgXa6IVaqoSK0SNpJ0mAZ4YtrIPWl8Y6fw==
-X-Received: by 2002:a05:600c:5795:b0:40e:f693:94dc with SMTP id
- jx21-20020a05600c579500b0040ef69394dcmr4052583wmb.11.1707125477803; 
- Mon, 05 Feb 2024 01:31:17 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707125605; x=1707730405;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0Kej3aUtVc5CRwaWUishz6Is/8cmnAUBsCJhmP6/MZI=;
+ b=n2ZN677YDVF0C5zPkxiFhqcl83kYuubGQTQSOV5GW3w87f45sYpDmAG9I2nkW1n+XF
+ /RKSdpFG0YAGdDVpNQTXeXNQo1dLoeFVCiymM3yuuKFpm70b1DCvrC6PBUQ0VLi/tqwC
+ EYsLvp6mKH0YrmFxfSCZo0IXmluDSHhOXovYySG3q3SdNlbHVDiXy18XHKdiXh/D7Inn
+ w6/MikLGdCYyjzA1FfFJq1NoTCcUxlp39RtpuvSjhGex9M/oUqEFSmEKzrPZyEU/Y8CF
+ KDtYXWpMNOsgIpzIpg26fRMODmIZ3l63uT/TLSNWb7MnuIMKmiJGtBmoi3v+Abt90Ss8
+ aYVA==
+X-Gm-Message-State: AOJu0Yz69VThrzRmDbRJysz1Kud8AFu9Ijra1OygRBY+SwRY/5djg/NG
+ vgyCYA3Q89GzHZCzX2TewfJ8neHCTjFjZMLle/Bu+kDGfyvIZ2D+3pmR14X2U59SH3oDWF2x8zg
+ z8CEw+tbEFEiPj0+iH78JNr4B1Z5wyQ0Nv1taVA/QXl1dvD+kvBMm
+X-Received: by 2002:a25:ae46:0:b0:dc6:528c:b3f8 with SMTP id
+ g6-20020a25ae46000000b00dc6528cb3f8mr7693583ybe.3.1707125605166; 
+ Mon, 05 Feb 2024 01:33:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH3BpdomOWCY7IHS0I2Siw1yW9BRAgQ6A85PqgR0b7A/DMNcoM8GUUHyPJzYezTu1iFGcK3Ow==
+X-Received: by 2002:a25:ae46:0:b0:dc6:528c:b3f8 with SMTP id
+ g6-20020a25ae46000000b00dc6528cb3f8mr7693570ybe.3.1707125604884; 
+ Mon, 05 Feb 2024 01:33:24 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCWLBdGkPgBu2CAvixv0GSFy5EzDb6MqA2dLh6h3Ra8fwa4kd1GEvpOOvsoBf7NgcmiJ8bhVuTxn7xoTfHeeIbye+rkmGs1N8c8jEuwMaEpmHaLD5F/HKzkivC+i/qHPq38gsUdrlhgpleaCWYASW52u1jTbLVVYagU+opzRCuVI4JrR3pT7v/xsPCU4TlqNJKHY+7lsaqq1PZH+jLPBLjGNNo8Oc66rdxz7qNiL3Db21ldQr7sOPn0T9XsazASh4eD/pM0Yn4UCwAQ/x1Q5H1dMYRJJ/xbbnz7lFD+Y2fx4JxgUAzwbfLCWmgpUvVicGTdVw0zJN0B3NcgzViBvDZDIiM/iWTRuOrLStYIniUBrJBOK14jphZhoQPBtZm6VvP3AUh4z0QDnxdws3KlRBVQhNbZWYGSL/i5BeycZwgOVK5SQuJ/eH+uPa+9tfjRV/tUHG8krklspdWjHqs4ioQo=
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- t10-20020a05600c198a00b0040e4733aecbsm7979386wmq.15.2024.02.05.01.31.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 01:31:15 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 353965F760;
- Mon,  5 Feb 2024 09:31:15 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,  Alistair Francis
- <alistair.francis@wdc.com>,  Bin Meng <bin.meng@windriver.com>,  Weiwei Li
- <liwei1518@gmail.com>,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Mikhail Tyutin <m.tyutin@yadro.com>,  Aleksandr Anenkov
- <a.anenkov@yadro.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,  Andrew Jones <ajones@ventanamicro.com>,
- qemu-riscv@nongnu.org,  qemu-devel@nongnu.org, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v11 0/3] gdbstub and TCG plugin improvements
-In-Reply-To: <7fae3d1a-5af2-4557-a2b3-13b911e73382@daynix.com> (Akihiko
- Odaki's message of "Sun, 4 Feb 2024 15:54:47 +0900")
-References: <20240203-riscv-v11-0-a23f4848a628@daynix.com>
- <87bk8xpzyl.fsf@draig.linaro.org>
- <b34c4013-1aca-466e-b94e-55d9802928b3@daynix.com>
- <87zfwhodit.fsf@draig.linaro.org>
- <7fae3d1a-5af2-4557-a2b3-13b911e73382@daynix.com>
-User-Agent: mu4e 1.11.27; emacs 29.1
-Date: Mon, 05 Feb 2024 09:31:15 +0000
-Message-ID: <8734u7gsv0.fsf@draig.linaro.org>
+ AJvYcCUYRS1RVBDq8KFcDw/Qd5MQh52i3KfQZayfg2UNxDehDl1VHJfZarc/jIGF5nFy7P4x9P09NsVb7P8mM055Lu8uPdAKoKg8g6vla/EoAzCqaisSjXRz+QV07ZV4Zy8t6Ne49UEaD0kUCSqPSphe1dWyVEKbTHpAop9977fRvDWGSDdM2wDHYSkzX/Sqa91Qbc5s1pLLv5kcQVdusfYSctHW8Dj4zPWlnKgQMj70aeAU/rPG7CGXkYFV1PfqFXERCD9ilX/RfXGJLo4HsZuA4tkUzYwnjAg1v/i7RKYPpHQt+daE4N0KofSfH6RGcy+fvtZNbN29tYM2sasEvpaA5Fo2MwMFMap0Ejk=
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ay14-20020a05620a178e00b00783df78821dsm2810809qkb.25.2024.02.05.01.33.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Feb 2024 01:33:24 -0800 (PST)
+Message-ID: <d4571370-0fcc-4065-8571-60ccc18f4982@redhat.com>
+Date: Mon, 5 Feb 2024 10:33:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] hw: Set virtio-iommu aw-bits default value on
+ pc_q35_9.0 and arm virt
+Content-Language: en-US
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jean-philippe@linaro.org,
+ alex.williamson@redhat.com, peter.maydell@linaro.org,
+ zhenzhong.duan@intel.com, yanghliu@redhat.com
+Cc: mst@redhat.com, jasowang@redhat.com
+References: <20240201163324.564525-1-eric.auger@redhat.com>
+ <20240201163324.564525-4-eric.auger@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240201163324.564525-4-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,72 +109,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On 2/1/24 17:32, Eric Auger wrote:
+> Currently the default input range can extend to 64 bits. On x86,
+> when the virtio-iommu protects vfio devices, the physical iommu
+> may support only 39 bits. Let's set the default to 39, as done
+> for the intel-iommu. On ARM we set 48b as a default (matching
+> SMMUv3 SMMU_IDR5.VAX == 0).
+> 
+> We use hw_compat_8_2 to handle the compatibility for machines
+> before 9.0 which used to have a virtio-iommu default input range
+> of 64 bits.
+> 
+> Of course if aw-bits is set from the command line, the default
+> is overriden.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> 
+> ---
+> 
+> v1 -> v2:
+> - set aw-bits to 48b on ARM
+> - use hw_compat_8_2 to handle the compat for older machines
+>    which used 64b as a default
+> ---
+>   hw/arm/virt.c            | 6 ++++++
+>   hw/core/machine.c        | 5 ++++-
+>   hw/i386/pc.c             | 6 ++++++
+>   hw/virtio/virtio-iommu.c | 2 +-
+>   4 files changed, 17 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index e6ead2c5c8..56539f2fc5 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2718,10 +2718,16 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
+> +                                                   "aw-bits", NULL);
 
-> On 2024/02/03 22:58, Alex Benn=C3=A9e wrote:
->> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>=20
->>> On 2024/02/03 20:08, Alex Benn=C3=A9e wrote:
->>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>
->>>>> This series extracts fixes and refactorings that can be applied
->>>>> independently from "[PATCH v9 00/23] plugins: Allow to read registers=
-".
->>>>>
->>>>> The patch "target/riscv: Move MISA limits to class" was replaced with
->>>>> patch "target/riscv: Move misa_mxl_max to class" since I found instan=
-ces
->>>>> may have different misa_ext_mask.
->>>> As this is re-based on Alistair's riscv-to-apply.next tree I'll wait
->>>> for
->>>> this to go through the RiscV trees and then re-base the plugin patches
->>>> and dropping the merged riscv patches from my tree.
->>>> In the meantime feel free to review:
->>>>     Message-Id: <20240122145610.413836-1-alex.bennee@linaro.org>
->>>>     Date: Mon, 22 Jan 2024 14:55:49 +0000
->>>>     Subject: [PATCH v3 00/21] plugin updates (register access) for 9.0=
- (pre-PR?)
->>>>     From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro=
-.org>
->>>> For:
->>>>     contrib/plugins: extend execlog to track register changes
->>>>     gdbstub: expose api to find registers
->>>> So I can add this to my maintainer omnibus series for the next PR I
->>>> send.
->>>
->>> I added one trivial comment to: "gdbstub: expose api to find registers"
->>>
->>> "contrib/plugins: extend execlog to track register changes" depends on
->>> "plugins: add an API to read registers". The comments for the patch in
->>> the following email are not addressed yet:
->>> https://lore.kernel.org/all/4b2156ed-688d-4617-b52d-200413f01156@daynix=
-.com/
->> I don't think we need to serialise with the BQL as the structures
->> are
->> per-CPU (and created on vCPU creation).
->
-> qemu_plugin_get_registers() has vcpu parameter, which can refer to a
-> different vcpu the caller is on (or the caller may not be in a vcpu
-> context at all).
+object_property_get_uint() should not fail. Please use &error_abort.
 
-It should only be called from the current cpu context. We can either
-assert that or make it implicit like qemu_plugin_insn_disas does.
-However we will need to ensure current_cpu is set before the vcpu_init
-callback.
+>           hwaddr db_start = 0, db_end = 0;
+>           QList *reserved_regions;
+>           char *resv_prop_str;
+>   
+> +        if (!aw_bits) {
+> +            qdev_prop_set_uint8(dev, "aw-bits", 48);
+> +        }
+> +
+>           if (vms->iommu != VIRT_IOMMU_NONE) {
+>               error_setg(errp, "virt machine does not support multiple IOMMUs");
+>               return;
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index fb5afdcae4..70ac96954c 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -30,9 +30,12 @@
+>   #include "exec/confidential-guest-support.h"
+>   #include "hw/virtio/virtio-pci.h"
+>   #include "hw/virtio/virtio-net.h"
+> +#include "hw/virtio/virtio-iommu.h"
+>   #include "audio/audio.h"
+>   
+> -GlobalProperty hw_compat_8_2[] = {};
+> +GlobalProperty hw_compat_8_2[] = {
+> +    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
+> +};
+>   const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
+>   
+>   GlobalProperty hw_compat_8_1[] = {
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 803244e5cc..0e2bcb4840 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1458,6 +1458,8 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
+> +                                                   "aw-bits", NULL);
+>           /* Declare the APIC range as the reserved MSI region */
+>           char *resv_prop_str = g_strdup_printf("0xfee00000:0xfeefffff:%d",
+>                                                 VIRTIO_IOMMU_RESV_MEM_T_MSI);
+> @@ -1466,6 +1468,10 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>           qlist_append_str(reserved_regions, resv_prop_str);
+>           qdev_prop_set_array(dev, "reserved-regions", reserved_regions);
+>   
+> +        if (!aw_bits) {
+> +            qdev_prop_set_uint8(dev, "aw-bits", 39);
 
-Pierrick has had to move these initialisations around for the scoreboard
-work so they are now run with safe work once the thread starts.
+May be use VTD_HOST_AW_39BIT instead of 39 ? This would make it
+easier to find uses of certain defaults values and would clarify
+that the default AW of virtio-iommu is set as intel-iommu.
 
->
->> As far as the restructuring we can move it into gdbstub later if
->> there
->> is a need to. At the moment the structure is just housekeeping for
->> plugins.
->
-> Certainly we can move it later, but adding the code in the plugin
-> infrastructure now won't help in that case.
+Thanks,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+C.
+
+
+
+> +        }
+> +
+>           g_free(resv_prop_str);
+>       }
+>   
+> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> index 7870bdbeee..c468e9b13b 100644
+> --- a/hw/virtio/virtio-iommu.c
+> +++ b/hw/virtio/virtio-iommu.c
+> @@ -1529,7 +1529,7 @@ static Property virtio_iommu_properties[] = {
+>       DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
+>                        TYPE_PCI_BUS, PCIBus *),
+>       DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
+> -    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
+> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+>   
+
 
