@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F10BC4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 06:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89004C48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 06:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWsTi-0004Az-Ft; Mon, 05 Feb 2024 01:29:15 -0500
+	id 1rWsWf-0005EJ-UX; Mon, 05 Feb 2024 01:32:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWsTg-0004Ah-7P; Mon, 05 Feb 2024 01:29:12 -0500
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWsTd-0007s3-B5; Mon, 05 Feb 2024 01:29:10 -0500
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-7d2e19120b5so2129811241.2; 
- Sun, 04 Feb 2024 22:29:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707114548; x=1707719348; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E9cURzhditccpij/QfM5l6c4qJ6F08oB5hQg0XnwkOQ=;
- b=PoirbDEE0A8Pa8ihGFkhrdBDwwZJ9b004RC3zy/iIo0fpb5pvHmZvN8b3fYZ9ITtog
- 4a21mjXzjca9t9L2kmvqyYWJOBxYOoWq/n5xl2lfmLu4JKreqnIMbaSrZxvLYP+B+6e0
- YcCiBrOap8e85zBNgxDbbNSWiTxmI+DpeaJaJ5DYi//x9dFpDvQzzbgrWaheBUrtK8EQ
- f2vs5uCRAUwpvwqu2TN1cQb2oO6LkglOzs2hVoVL/l/54Iu0BwrG9I25c+UmHRZaDYQo
- 4EUD4Li1Y7pmD1lNvqavhIO1LzkGSqQMW/D/cngCvUbsp1EQrQVltZ+JN3DrDCbxj8x9
- UdmA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWsWe-0005EA-EF
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 01:32:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWsWc-0000A5-2C
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 01:32:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707114732;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r7/hOTX4Q5H3KERf/DBeTkPVp+IFXB54ziNh9niLiWE=;
+ b=RL+pJwARmsyINKvsd/EX8qRyHRH1LquFSo5zfbh7wHn8+0b9IGySbVTwgAybKcpK9vEVcS
+ cZKBXwuHeH0vUM688MoywTSh0BNOr+4O7SvcmKkXc7VoyA+zunKbeM82cpmt8U3sQIn6Wr
+ yzSWHdd26fU2pNvWpQuiQZf/XQrpFb4=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-424-QglxT5VFPmqjJIxsrPEvEA-1; Mon, 05 Feb 2024 01:32:10 -0500
+X-MC-Unique: QglxT5VFPmqjJIxsrPEvEA-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5cf8663f2d6so1295321a12.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 22:32:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707114548; x=1707719348;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E9cURzhditccpij/QfM5l6c4qJ6F08oB5hQg0XnwkOQ=;
- b=foAiWFZeRteUNMmjq1XyQC0tsQ209TsHOKAybd4LBD0KmQ6fXzg4KanpBuZtH3XMMv
- 85FE34MnYSv3XDBDbRtFNO2DuvkYVoTFSnxvAp1ZzE+DtJ5cijJNbe5j4rVyf6wEDjJk
- UjKvvChxIIl9oJHEJkBR5Xl+kOSHJTRZYUBvuTpL7KHE3Hu0YLp4kHAiEjcNYktpFLBi
- llvsEjm48M2v/W9W4KjCYIMI4cNidgesSr5/7IzkgcpNMB6ti9/1Vf1AQPyR5gS2scsi
- a3+W0B+DCJY046hOcI1m8RKz67VMZT7VmcxcIJ1dI2U9IBrLdcNZXUKakUNLi8mY5Kk3
- Gwww==
-X-Gm-Message-State: AOJu0YygvButkDzv29FXJGZOloz17bGHuHPYQrEi/vxSK4bPxkBUSF1B
- zfnFaRAmE8UUjRsYfRZ4fjhuruqveCzmjjIO+foFW2dXYJjXIIZgjo6Go7OuKQGA3pIx3ZmOtHR
- zDkCFhcS1yPndhmKyVOgO8/zR8cY=
-X-Google-Smtp-Source: AGHT+IGWchKcMpBoQ/gw+HEvWfe2jDHy273JDgoPmrQ3nrLIkf2DrXTguiMpeS/ovYa6asvNdO06jWH3s1cy6VXIMEs=
-X-Received: by 2002:a05:6102:212d:b0:46d:36a8:af30 with SMTP id
- f13-20020a056102212d00b0046d36a8af30mr110763vsg.4.1707114547830; Sun, 04 Feb
- 2024 22:29:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707114730; x=1707719530;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=r7/hOTX4Q5H3KERf/DBeTkPVp+IFXB54ziNh9niLiWE=;
+ b=OtSU9u3sWdfZKQBpislS5t8Z7b4QL6ZXv+EW55ZtlIloJtN+6dWt+Jxj0/FwOxPRCS
+ 79McM8ffHvLV3RyfS4VgbAiR4ZIx4O2DG4vVoM8gTUuEVucQ+lDOU8+hxfJLrMLZltDc
+ OxUYtLLzJrfMMjooifclc9V5EP3GRy637MK4mdFsvOsMUm+W6CuMeHjozpb0SJfk2SBl
+ 3E42mmsnhAznrS5PCz13tu3Nl5+yiBfs3Cgzf3KX5pvv/uPYA8I5dACRETSosZZ4rx7/
+ WgmbklTBdDz6/ls4QEikgIfKI7TA7nnuc63lqGfnupxNgvHyzGI2BC+mSdZzLB73+F/L
+ S3GQ==
+X-Gm-Message-State: AOJu0YwP3886E3g5sYTeykWgGTG6mFm2Vz6AsHyUClo3afby2f1AnPSA
+ ZCRvNNHzfg+I4LzKhoIhvPkxWLjgxIeeYWZPcXGjbtjbTC8ba4E1ogMd83rdj30IZ3DMpX/XbAL
+ FDnVQlqmtL1yVBT1ubU2TPjTixBWH2/c7X1UWnBfPM+lthVnI3zb+
+X-Received: by 2002:a17:90b:1bcf:b0:296:18d4:4af with SMTP id
+ oa15-20020a17090b1bcf00b0029618d404afmr12225383pjb.3.1707114729773; 
+ Sun, 04 Feb 2024 22:32:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFujMCLxi0M1BjWOYHArA0xVh0bjF9psQRxSQIGSXr9CkmQO65k8NWRKNfbPgbytv0SKCcHQA==
+X-Received: by 2002:a17:90b:1bcf:b0:296:18d4:4af with SMTP id
+ oa15-20020a17090b1bcf00b0029618d404afmr12225372pjb.3.1707114729422; 
+ Sun, 04 Feb 2024 22:32:09 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCX2sSHGRGWLwss4qQv2r58vRaZtZuAsttt2h7AbJMFrhmt81QWp1gnAGVdUb8UWOwsqxDwMsFxxvDsH1HXBRmff3GxQNX+33jNvZZOKLP4eGWpJrFAe0zw=
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ p4-20020a17090ad30400b00296a6ace54bsm578960pju.38.2024.02.04.22.32.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 04 Feb 2024 22:32:09 -0800 (PST)
+Date: Mon, 5 Feb 2024 14:32:00 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH 0/5] migration/multifd: Fix channel creation vs. cleanup
+ races
+Message-ID: <ZcCA4OIVZuPrQiSM@x1n>
+References: <20240202191128.1901-1-farosas@suse.de>
 MIME-Version: 1.0
-References: <20240204055228.900-1-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240204055228.900-1-zhiwei_liu@linux.alibaba.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 5 Feb 2024 16:28:41 +1000
-Message-ID: <CAKmqyKNA5jpddM7Htbm8aeskreh5WWN15orC7RGwEwZLd2m+tA@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Enable xtheadsync under user mode
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, Alistair.Francis@wdc.com, palmer@dabbelt.com, 
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- qemu-riscv@nongnu.org, christoph.muellner@vrull.eu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240202191128.1901-1-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,92 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 4, 2024 at 3:53=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibaba=
-.com> wrote:
->
-> According to xtheadsync[1][2] documentation, it can be used in user mode =
-and
-> the behavior is same with other priviledges.
->
-> [1]:https://github.com/T-head-Semi/thead-extension-spec/blob/master/xthea=
-dsync/sync.adoc
-> [2]:https://github.com/T-head-Semi/thead-extension-spec/blob/master/xthea=
-dsync/sync_i.adoc
->
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+On Fri, Feb 02, 2024 at 04:11:23PM -0300, Fabiano Rosas wrote:
+> Hi,
+> 
+> This contains 2 patches from my previous series addressing the
+> p->running misuse and the TLS thread leak and 3 new patches to fix the
+> cleanup-while-creating-threads race.
+> 
+> For the p->running I'm keeping the idea from the other series to
+> remove p->running and use a more narrow p->thread_created flag. This
+> flag is used only inform whether the thread has been created so we can
+> join it.
+> 
+> For the cleanup race I have moved some code around and added a
+> semaphore to make multifd_save_setup() only return once all channel
+> creation tasks have started.
+> 
+> The idea is that after multifd_save_setup() returns, no new creations
+> are in flight and the p->thread_created flags will never change again,
+> so they're enough to cause the cleanup code to wait for the threads to
+> join.
+> 
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1162798843
+> 
+> @Peter: I can rebase this on top of your series once we decide about
+> it.
 
-Thanks!
+I have one thing to double check with you in patch 5, besides that the
+whole set looks all good to me.  Copy Dan here in case he has any input.
 
-Applied to riscv-to-apply.next
+If you confirm both sides (my replies to last patch of both this set and
+the other lockless change of mine), feel free to repost directly based on
+that series for v2.
 
-Alistair
+Thanks,
 
-> ---
->  target/riscv/insn_trans/trans_xthead.c.inc | 10 ----------
->  1 file changed, 10 deletions(-)
->
-> diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/in=
-sn_trans/trans_xthead.c.inc
-> index dbb6411239..22488412d4 100644
-> --- a/target/riscv/insn_trans/trans_xthead.c.inc
-> +++ b/target/riscv/insn_trans/trans_xthead.c.inc
-> @@ -992,7 +992,6 @@ static bool trans_th_sfence_vmas(DisasContext *ctx, a=
-rg_th_sfence_vmas *a)
->  #endif
->  }
->
-> -#ifndef CONFIG_USER_ONLY
->  static void gen_th_sync_local(DisasContext *ctx)
->  {
->      /*
-> @@ -1003,14 +1002,12 @@ static void gen_th_sync_local(DisasContext *ctx)
->      tcg_gen_exit_tb(NULL, 0);
->      ctx->base.is_jmp =3D DISAS_NORETURN;
->  }
-> -#endif
->
->  static bool trans_th_sync(DisasContext *ctx, arg_th_sync *a)
->  {
->      (void) a;
->      REQUIRE_XTHEADSYNC(ctx);
->
-> -#ifndef CONFIG_USER_ONLY
->      REQUIRE_PRIV_MSU(ctx);
->
->      /*
-> @@ -1019,9 +1016,6 @@ static bool trans_th_sync(DisasContext *ctx, arg_th=
-_sync *a)
->      gen_th_sync_local(ctx);
->
->      return true;
-> -#else
-> -    return false;
-> -#endif
->  }
->
->  static bool trans_th_sync_i(DisasContext *ctx, arg_th_sync_i *a)
-> @@ -1029,7 +1023,6 @@ static bool trans_th_sync_i(DisasContext *ctx, arg_=
-th_sync_i *a)
->      (void) a;
->      REQUIRE_XTHEADSYNC(ctx);
->
-> -#ifndef CONFIG_USER_ONLY
->      REQUIRE_PRIV_MSU(ctx);
->
->      /*
-> @@ -1038,9 +1031,6 @@ static bool trans_th_sync_i(DisasContext *ctx, arg_=
-th_sync_i *a)
->      gen_th_sync_local(ctx);
->
->      return true;
-> -#else
-> -    return false;
-> -#endif
->  }
->
->  static bool trans_th_sync_is(DisasContext *ctx, arg_th_sync_is *a)
-> --
-> 2.25.1
->
->
+-- 
+Peter Xu
+
 
