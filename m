@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43756C4828F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 03:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04991C48286
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 03:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWpDI-0000ie-6P; Sun, 04 Feb 2024 22:00:04 -0500
+	id 1rWpDn-00010u-QA; Sun, 04 Feb 2024 22:00:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWpDC-0000hc-Nq; Sun, 04 Feb 2024 21:59:58 -0500
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ id 1rWpDl-0000yI-DV; Sun, 04 Feb 2024 22:00:33 -0500
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWpDB-0006rm-9y; Sun, 04 Feb 2024 21:59:58 -0500
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-7d2e1a0337bso1987454241.3; 
- Sun, 04 Feb 2024 18:59:56 -0800 (PST)
+ id 1rWpDj-00078Z-OJ; Sun, 04 Feb 2024 22:00:33 -0500
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-4c01c53efe5so435838e0c.2; 
+ Sun, 04 Feb 2024 19:00:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707101995; x=1707706795; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707102030; x=1707706830; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KKHZ2rIkbB1ivSidWAS7YL5DYq1ZoyelphM4FK6W03s=;
- b=AHWbQtXde7d9JaO8GFvltizUQQzPJRg/xiXnvpenPWzUEN3tjP+PrLYJWhofj+Mdy5
- fh6CFmxwV67Uw0fbr38oenO/pD+EbxXGJx4W0tVLTiGQUX9jFaleSzetxnt2ZBBocGm8
- G1zh2ecsJppaSkxDaxes2B7kpUfVpYGn/LlTEVyum5Dd7a1e0ANMqRdW6HokW6D0Sd1V
- F9eOujkkal1izJ54SQLmmcqMz0M8hdAwSpE6iEfViFLFiVDnRB84CtiMS67izkVgxuds
- ow9M3POq+Ryadv/LHNqv6px738FJSASxQopzUEiIqnfbrRJEDqEPwFcZRLpyfWrWFVOb
- R0MQ==
+ bh=BMAEtdSR744ai5RLEUVVCNdEPtj/m9Eolqt67R1BYy8=;
+ b=nTi48Z4L7nZk6DAwRKB3U10F3/MoFx09kh0eoquRUqYiQ/JcX9LRAmbws99v3rXTGJ
+ OATAa/qyit828vPuCt4/JpqfasU1cNqFDbfwTP5trjo6lt3LKZ9t6xwOZ7b0foz2K7Fz
+ pCck38EbGvqSif/9ML/9avtHzae8lF1bY161R2RltJ1BB34cZEJVDsimJjm68omyTezK
+ NVkWOYANPlE65KXlNG0MLOjlbiqJ72dIa1fVT2xZo/u7xDJge42uV113PCZ9Tu8zmHJj
+ 8kJirP7Cb2R31J/geeL0APUQAYhAAK9faGX4KKICs//cxivr14bNJCmBLZBY8hE05klA
+ lUlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707101995; x=1707706795;
+ d=1e100.net; s=20230601; t=1707102030; x=1707706830;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KKHZ2rIkbB1ivSidWAS7YL5DYq1ZoyelphM4FK6W03s=;
- b=qzd9kzqL4aLxKVOt7YiqR7h7Vm56zjqimrQJ//BoX4FQ/D1D5ZJhNfZG8bPVDr2Wqm
- UZbTNLU2WgAD1fM0HFler+lbxHDNRQMOqkH9zWnD45+tVhcUdZoxv6dopUFOc4ZDfKux
- 7hyUJfxAKMUNpaWFMRobZpQjVNdHMW6Si/cOEOY3LU6Aori4kR0oD1b0Y2N2tgl0UJnS
- 4+1pqCCKEiFE2GHfaZ65jw4p2UsHg6v8jGEX3r5pMjGgoSOMo7913apcHPPPAYeRjfta
- JMbnNXpKVMscPQO3StlETWlSXO9NdC9dI0UgDMwiSiFb5Ec1lvJ0bHN64Jmf81bU6rXz
- wxGQ==
-X-Gm-Message-State: AOJu0Yy9jLQ3g3d9U7sY+v8j/N+XQTonVVPUM+7hMnJ0IcKGLquLRg2/
- 5qj9IlJ9A0y8HVRRd3igEzF41aQKNjV+x1jZFi5o2lfOtuE9+09dPLRLEjZIwyIg/QDwa1jEFc2
- xjMVuNJumQHwB48FlmXENyXg+uZY60dfAlbw=
-X-Google-Smtp-Source: AGHT+IEJr5H/EuQV9yunH7TKj/YUSTChtL//qJfLGkUiCbxK/jHXlfpq50xOUcmSav1kivrty00YV4kEo7hxNiRKKSg=
-X-Received: by 2002:a67:f543:0:b0:46d:1b1a:a375 with SMTP id
- z3-20020a67f543000000b0046d1b1aa375mr2399987vsn.32.1707101995747; Sun, 04 Feb
- 2024 18:59:55 -0800 (PST)
+ bh=BMAEtdSR744ai5RLEUVVCNdEPtj/m9Eolqt67R1BYy8=;
+ b=UVxe8I50Ukr8p+IbVoMuRqug8IAYwJtPzu4neTuxz9wCMNYb9gV+v0Ykt1xcfDEPE5
+ rMQrfKy/qaNXhs0TBL+dn5KxLKgcpoNEcZie3Q/IQUNRPKzr2VjzRpo6HGUVfCXvyN04
+ 0/kMDQEh/b26apK3dJHyKbXg1z+sCi9WFbVCHW06ljT1x7zTfzTCDmhZ5z4Xzc+DP5YM
+ 57lEdypwrVWGVOV5i0oqe3MfBYDPHJcEb49HemG2u1fiYNfMbqXQF6rpxsx4wgiCjL7C
+ y98NKh3jb4kW0xEM4bIsnD7yOU2UzwLUIkGosB4/14SHFgDMjTTAqKN/ujejc6b2I+gx
+ VSYg==
+X-Gm-Message-State: AOJu0YyrD9HqZZkNjFxWReCUsARWoHP4q7iQEKQJdMozgEbgo0HkyVjB
+ bZ9gOzBEMLv8N/DKnS8KYEKe73HfkJQjT1Xo4AP3ol7/QdakqZPzChkuVSV+usbwCPpt0+iNuL9
+ nJZOdGbrqN60sTB76F5HDexiJE9g=
+X-Google-Smtp-Source: AGHT+IGoh7HAx+qtMXnTINp7vKcApRAcHacTl8lMz7MGy9RU2CBQMNgoiX85fgKvDvQ3bFK8SBfMoIqM2wVt6fqaAmM=
+X-Received: by 2002:a05:6122:4a0f:b0:4c0:ab8:d7d0 with SMTP id
+ ez15-20020a0561224a0f00b004c00ab8d7d0mr6541386vkb.12.1707102029435; Sun, 04
+ Feb 2024 19:00:29 -0800 (PST)
 MIME-Version: 1.0
 References: <20240122221529.86562-1-dbarboza@ventanamicro.com>
- <20240122221529.86562-5-dbarboza@ventanamicro.com>
-In-Reply-To: <20240122221529.86562-5-dbarboza@ventanamicro.com>
+ <20240122221529.86562-6-dbarboza@ventanamicro.com>
+In-Reply-To: <20240122221529.86562-6-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 5 Feb 2024 12:59:29 +1000
-Message-ID: <CAKmqyKNvEwUuUgjoGV0_D5mFhCrXOhMpDDjXUe3_ji1ezNusUg@mail.gmail.com>
-Subject: Re: [PATCH 4/7] hw/riscv/virt.c: use g_autofree in
- create_fdt_sockets()
+Date: Mon, 5 Feb 2024 13:00:02 +1000
+Message-ID: <CAKmqyKPMxDpJ3eA-GN+k2TdTzaCFFSTX_PErJsfMSoqB7sUM9g@mail.gmail.com>
+Subject: Re: [PATCH 5/7] hw/riscv/virt.c: use g_autofree in create_fdt_virtio()
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,13 +91,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 23, 2024 at 8:16=E2=80=AFAM Daniel Henrique Barboza
+On Tue, Jan 23, 2024 at 9:38=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Move 'clust_name' inside the loop, and g_autofree, to avoid having to
-> g_free() manually in each loop iteration.
->
-> 'intc_phandles' is also g_autofreed to avoid another manual g_free().
+> Put 'name' declaration inside the loop, with g_autofree, to avoid
+> manually doing g_free() in each iteration.
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -107,58 +104,41 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/virt.c | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
+>  hw/riscv/virt.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >
 > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 373b1dd96b..d0f402e0d5 100644
+> index d0f402e0d5..f8278df83f 100644
 > --- a/hw/riscv/virt.c
 > +++ b/hw/riscv/virt.c
-> @@ -721,11 +721,11 @@ static void create_fdt_sockets(RISCVVirtState *s, c=
-onst MemMapEntry *memmap,
->                                 uint32_t *irq_virtio_phandle,
->                                 uint32_t *msi_pcie_phandle)
+> @@ -820,12 +820,12 @@ static void create_fdt_virtio(RISCVVirtState *s, co=
+nst MemMapEntry *memmap,
+>                                uint32_t irq_virtio_phandle)
 >  {
-> -    char *clust_name;
->      int socket, phandle_pos;
+>      int i;
+> -    char *name;
 >      MachineState *ms =3D MACHINE(s);
->      uint32_t msi_m_phandle =3D 0, msi_s_phandle =3D 0;
-> -    uint32_t *intc_phandles, xplic_phandles[MAX_NODES];
-> +    uint32_t xplic_phandles[MAX_NODES];
-> +    g_autofree uint32_t *intc_phandles =3D NULL;
->      int socket_count =3D riscv_socket_count(ms);
 >
->      qemu_fdt_add_subnode(ms->fdt, "/cpus");
-> @@ -739,6 +739,7 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
-st MemMapEntry *memmap,
->
->      phandle_pos =3D ms->smp.cpus;
->      for (socket =3D (socket_count - 1); socket >=3D 0; socket--) {
-> +        g_autofree char *clust_name =3D NULL;
->          phandle_pos -=3D s->soc[socket].num_harts;
->
->          clust_name =3D g_strdup_printf("/cpus/cpu-map/cluster%d", socket=
-);
-> @@ -749,8 +750,6 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
-st MemMapEntry *memmap,
->
->          create_fdt_socket_memory(s, memmap, socket);
->
-> -        g_free(clust_name);
-> -
->          if (tcg_enabled()) {
->              if (s->have_aclint) {
->                  create_fdt_socket_aclint(s, memmap, socket,
-> @@ -793,8 +792,6 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
-st MemMapEntry *memmap,
+>      for (i =3D 0; i < VIRTIO_COUNT; i++) {
+> -        name =3D g_strdup_printf("/soc/virtio_mmio@%lx",
+> +        g_autofree char *name =3D  g_strdup_printf("/soc/virtio_mmio@%lx=
+",
+>              (long)(memmap[VIRT_VIRTIO].base + i * memmap[VIRT_VIRTIO].si=
+ze));
+> +
+>          qemu_fdt_add_subnode(ms->fdt, name);
+>          qemu_fdt_setprop_string(ms->fdt, name, "compatible", "virtio,mmi=
+o");
+>          qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+> @@ -840,7 +840,6 @@ static void create_fdt_virtio(RISCVVirtState *s, cons=
+t MemMapEntry *memmap,
+>              qemu_fdt_setprop_cells(ms->fdt, name, "interrupts",
+>                                     VIRTIO_IRQ + i, 0x4);
 >          }
+> -        g_free(name);
 >      }
+>  }
 >
-> -    g_free(intc_phandles);
-> -
->      if (kvm_enabled() && virt_use_kvm_aia(s)) {
->          *irq_mmio_phandle =3D xplic_phandles[0];
->          *irq_virtio_phandle =3D xplic_phandles[0];
 > --
 > 2.43.0
 >
