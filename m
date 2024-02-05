@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE669C4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 12:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55807C48298
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 12:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWy0i-0005XC-9I; Mon, 05 Feb 2024 07:23:42 -0500
+	id 1rWyLA-0002ZP-Ve; Mon, 05 Feb 2024 07:44:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rWy0T-0005WL-UG
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 07:23:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rWy0P-0003ch-5D
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 07:23:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707135799;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ebgF7RLwEE8ViALxgBwXsFlJlilyjqG75HqoUyoY8ik=;
- b=Dm7Z8TLF0CFfUux9igLESVEx+lZUCBGQ271YgKVOE/enADnwCoA0sOZHGHBAxYyYLg6uCk
- QX+8BS9vCCabwZI3dK11gBsIRNAk1ggaq4QIsD0g11o6v+FCDZSRvuCcVMSyJuN/56Izfn
- pjlzFj9fZSr482jEts6CIUKe+Kwvo/Q=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-198-6pyTJsiEPO2J_S4SXiWgbA-1; Mon, 05 Feb 2024 07:23:17 -0500
-X-MC-Unique: 6pyTJsiEPO2J_S4SXiWgbA-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-60403a678f2so75199967b3.3
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 04:23:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rWyL7-0002Z7-NA
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 07:44:45 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rWyL4-0007qe-DW
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 07:44:45 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-40ef3f351d2so30505325e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 04:44:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707137080; x=1707741880; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FJoFIuhgZegAh08IWT8vkYB6iEY1Gc3ZsYBcFzkueY4=;
+ b=KTxiKVaiR0qIjiUA3YQNItcgyx22VffPrxFhZ7cOCfJQYpk/pCnhStvb/kc87MCg4W
+ YIR2V+tx92qxQG5SM/C3nIkP1grQDt9d2Hz1z8VKQd42+Np+mWHcmibMRvMzQVqPMnSA
+ 3AbhL5L3xhAHii3C9ub5dEVCQAkeojSb07bW3OLovgg3+XjoQpjwzpqqw4KbtFaW0FkR
+ pBynYlxcG5z/2xLjaUFwNXJekNpKQc4aNcuHqBDGMeZmMDi+mTZ7G3OAHcZDT2lhzm+L
+ KdsIgGYGAXwpLv3cOurIg1zIINSCsPC0/2c3hz+ZG2D7dHqBDHK5oqmNJZs/s9ifIC6b
+ E2GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707135797; x=1707740597;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ebgF7RLwEE8ViALxgBwXsFlJlilyjqG75HqoUyoY8ik=;
- b=Fyrg0bDmYW5y70Mu7DHahOcGmdUogl29oGVY+GC862KjCk69veKvuz9p7Ai5E2pUgu
- rjkvr/wWfFsArl92R9FAelf+y2p+kHOrv9v0Lnk0R0x9uZ6UKPySwv8aNyW07U2vm3Et
- fWvfOttvMV/D0cwuVuYhmZDX8bnYH3tIw7sOzFTnjD7zMqjL56OdHTmFqHQkvWD+gFuq
- LG2xZD7F0rrnHlzA/8OvEkvxPl6h5TMZp4bwb+DZ2dwPxgnigbCXIj2I/wcT7Gp7V6HS
- zjRkEJyX4Rg9WKlBlSVhcGhxHwggGy+9VzDDbfREYr4dCFzk0u5lrszecIM8EKYroXTa
- f4qQ==
-X-Gm-Message-State: AOJu0YxLrR2aXZmgSfHRO+izGa9DDUfGo+6Fw93fTDT3dNYYzDexKoml
- R4SBW5Em4mEn4GZteH5lOzBMsWInWRElkhDl8t9fw5+kYEDf+Nb2Y4jzLG71OOn0+spkILSqTec
- awelCZ3mwnl3WjXPGos5KxdG48dTf8fv1aUEWwSRbUmWNqCjuMHVy4jxn2L77t9nrL1hlN3zf1p
- jRxQQ1B5fYvou77iUi1L9w2KN3LBU=
-X-Received: by 2002:a25:ac4:0:b0:dc6:be1f:6d98 with SMTP id
- 187-20020a250ac4000000b00dc6be1f6d98mr12652604ybk.16.1707135797160; 
- Mon, 05 Feb 2024 04:23:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGIS1sW4M4qC0YkXLXEck0dagpTBUqgMt0J9afTgbnTx1e/kD1/SVgUmEjrS6KsXnsm8vb9PjiCbiTI0Vz0EG4=
-X-Received: by 2002:a25:ac4:0:b0:dc6:be1f:6d98 with SMTP id
- 187-20020a250ac4000000b00dc6be1f6d98mr12652589ybk.16.1707135796858; Mon, 05
- Feb 2024 04:23:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707137080; x=1707741880;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FJoFIuhgZegAh08IWT8vkYB6iEY1Gc3ZsYBcFzkueY4=;
+ b=T4xpr4SkpfobdSorhrE1dfujUge5HpewesJf1O/ITvMIx+24c0DjW4Cy6P1bJscnWz
+ tuoKrg5qxGumRqdzIS1zgRf0VzrD4tzFzUW14sYAqCdGBsY1XBNtC2QfKaJOnFiEvZd2
+ jjxCSjFS/JzCVFU7ZmNyrL+BkHZVXeDU7gRPDB1E0Z16ONv5TZ8oFPtzBo+UXfnuaPY/
+ A91H7g2m22C+emAUYrMUOWndvLBjnJJSK1mF5jvJOV6KAfOmo3VFabJikax5iwCziptQ
+ CI79XncrTZCf8m2x2EykQON7Cq8jjE2vYZ2VeZED/HPHmWL4byznQ0WUxHIzOmA/zOZA
+ cfuQ==
+X-Gm-Message-State: AOJu0YyJv/miSWJIOZNBVzXtSjBVvtAwY+h0TNgF7jeTp+Pw2yV3QVTj
+ r8f0n1DDHb6gZqb8GefqlwQb9rPytpkWqjytSP0WLrTz0Dfrhuio6SgFcbwBk7I=
+X-Google-Smtp-Source: AGHT+IEFey0CUaz09N1HwvWBMUD0pmQiGwyocJEXOOxXcLZSvSfoghUegdq9fEa7bCy+xox4ydpCGA==
+X-Received: by 2002:a05:600c:4f8a:b0:40f:db0f:9022 with SMTP id
+ n10-20020a05600c4f8a00b0040fdb0f9022mr1744410wmq.9.1707137079732; 
+ Mon, 05 Feb 2024 04:44:39 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCUI2EI383G73GCjF4UN3K63SrY2jV0bCY/zeHI3y4hFsDUJaVpYJageLWaIwO1tTBHPCpLQE8vhVTm92jnq+1hZBccDoatwdSzuBRD8OrxnJQlM0/Qi
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ iv15-20020a05600c548f00b0040e9d507424sm8526798wmb.5.2024.02.05.04.44.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Feb 2024 04:44:39 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E9B9A5F888;
+ Mon,  5 Feb 2024 12:44:38 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Cc: qemu-devel@nongnu.org,  mst@redhat.com,  raphael@enfabrica.net
+Subject: Re: [PATCH] MAINTAINERS: Switch to my Enfabrica email
+In-Reply-To: <20240204023758.83191-1-raphael.s.norwitz@gmail.com> (Raphael
+ Norwitz's message of "Sat, 3 Feb 2024 21:37:58 -0500")
+References: <20240204023758.83191-1-raphael.s.norwitz@gmail.com>
+User-Agent: mu4e 1.11.27; emacs 29.1
+Date: Mon, 05 Feb 2024 12:44:38 +0000
+Message-ID: <87fry7f5c9.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240202132521.32714-1-kwolf@redhat.com>
-In-Reply-To: <20240202132521.32714-1-kwolf@redhat.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 5 Feb 2024 13:22:40 +0100
-Message-ID: <CAJaqyWfMETO=C6oBj2VVo+CZ=kNe-aJSYja0WpLDLbFQV5sTnA@mail.gmail.com>
-Subject: Re: [PATCH] vdpa-dev: Fix initialisation order to restore VDUSE
- compatibility
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, mst@redhat.com, sgarzare@redhat.com, 
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,101 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 2, 2024 at 2:25=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote:
+Raphael Norwitz <raphael.s.norwitz@gmail.com> writes:
+
+> I'd prefer to use my new work email so this change updates MAINTAINERS
+> with it.
 >
-> VDUSE requires that virtqueues are first enabled before the DRIVER_OK
-> status flag is set; with the current API of the kernel module, it is
-> impossible to enable the opposite order in our block export code because
-> userspace is not notified when a virtqueue is enabled.
->
-> This requirement also mathces the normal initialisation order as done by
-> the generic vhost code in QEMU. However, commit 6c482547 accidentally
-> changed the order for vdpa-dev and broke access to VDUSE devices with
-> this.
->
-> This changes vdpa-dev to use the normal order again and use the standard
-> vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
-> used with vdpa-dev again after this fix.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> Signed-off-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
 > ---
->  hw/virtio/vdpa-dev.c   |  5 +----
->  hw/virtio/vhost-vdpa.c | 17 +++++++++++++++++
->  2 files changed, 18 insertions(+), 4 deletions(-)
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-> index eb9ecea83b..13e87f06f6 100644
-> --- a/hw/virtio/vdpa-dev.c
-> +++ b/hw/virtio/vdpa-dev.c
-> @@ -253,14 +253,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vd=
-ev, Error **errp)
->
->      s->dev.acked_features =3D vdev->guest_features;
->
-> -    ret =3D vhost_dev_start(&s->dev, vdev, false);
-> +    ret =3D vhost_dev_start(&s->dev, vdev, true);
->      if (ret < 0) {
->          error_setg_errno(errp, -ret, "Error starting vhost");
->          goto err_guest_notifiers;
->      }
-> -    for (i =3D 0; i < s->dev.nvqs; ++i) {
-> -        vhost_vdpa_set_vring_ready(&s->vdpa, i);
-> -    }
->      s->started =3D true;
->
->      /*
-> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-> index 3a43beb312..c4574d56c5 100644
-> --- a/hw/virtio/vhost-vdpa.c
-> +++ b/hw/virtio/vhost-vdpa.c
-> @@ -904,6 +904,22 @@ int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v,=
- unsigned idx)
->      return r;
->  }
->
-> +static int vhost_vdpa_set_vring_enable(struct vhost_dev *dev, int enable=
-)
-> +{
-> +    struct vhost_vdpa *v =3D dev->opaque;
-> +    unsigned int i;
-> +    int ret;
-> +
-> +    for (i =3D 0; i < dev->nvqs; ++i) {
-> +        ret =3D vhost_vdpa_set_vring_ready(v, i);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->  static int vhost_vdpa_set_config_call(struct vhost_dev *dev,
->                                         int fd)
->  {
-> @@ -1524,6 +1540,7 @@ const VhostOps vdpa_ops =3D {
->          .vhost_set_features =3D vhost_vdpa_set_features,
->          .vhost_reset_device =3D vhost_vdpa_reset_device,
->          .vhost_get_vq_index =3D vhost_vdpa_get_vq_index,
-> +        .vhost_set_vring_enable =3D vhost_vdpa_set_vring_enable,
->          .vhost_get_config  =3D vhost_vdpa_get_config,
->          .vhost_set_config =3D vhost_vdpa_set_config,
->          .vhost_requires_shm_log =3D NULL,
-> --
-> 2.43.0
->
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 2f9741b898..a12b58abe2 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2556,7 +2556,7 @@ F: include/hw/virtio/virtio-gpu.h
+>  F: docs/system/devices/virtio-gpu.rst
+>=20=20
+>  vhost-user-blk
+> -M: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+> +M: Raphael Norwitz <raphael@enfabrica.net>
+>  S: Maintained
+>  F: contrib/vhost-user-blk/
+>  F: contrib/vhost-user-scsi/
 
-vhost-vdpa net enables CVQ before dataplane ones to configure all the
-device in the destination of a live migration. To go back again to
-this callback would cause the device to enable the dataplane before
-virtqueues are configured again.
-
-How does VDUSE userspace knows how many queues should enable? Can't
-the kernel perform the necessary actions after DRIVER_OK, like
-configuring the kick etc?
-
-Thanks!
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
