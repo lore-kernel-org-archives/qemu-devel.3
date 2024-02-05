@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54616C4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:27:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C2B8C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWwC3-0005bE-Oy; Mon, 05 Feb 2024 05:27:15 -0500
+	id 1rWwHM-0006cC-6K; Mon, 05 Feb 2024 05:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rWwC2-0005b6-Oc
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:27:14 -0500
+ id 1rWwHK-0006bx-DU
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:32:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rWwC1-00057m-3e
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:27:14 -0500
+ id 1rWwHI-0005w6-Q4
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:32:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707128832;
+ s=mimecast20190719; t=1707129160;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=e7P8t8sjIYRWa9hoqjvEOhN5cYQsy2c7tiYjNh9O814=;
- b=f9zLwNXYsAlnQVYIEEkPpkyUDugsheUbEuNzAtajFGInntYXzMExofzC1Sm06um2HIvH+Y
- hzSVCj4bX6ewQ7YwBLzu3tbTtzUkC3kVPb0P/iREJK6SpBxK+6FR2KHhodH/8j1mF1BAyS
- grQqKc2v5+SLN+TQ896yRvQ9GHb3W+o=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-581-e2ttwJnBNvu2cjS21SDCSw-1; Mon,
- 05 Feb 2024 05:27:08 -0500
-X-MC-Unique: e2ttwJnBNvu2cjS21SDCSw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FRcN3IQhhXp+o6SmZxXbDJdiHWjY3cCmRN08jogxgVQ=;
+ b=Bagyzz7kPZP6MPhWM7avo9iPCBhDJF5X/6invE9Z3YZnNR44PuUD8pMEmRHfIbd0I2Bfdf
+ ieOdUQjC+Bv8S8IWuB4LxwuCM9NwafWlhazX7BJQuMBnfUXu6uK/Rh7dxjLJpqJkYNqyN+
+ rxpotFgolPDbUZMhmchXt+BppVjEddU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-189-GhLSQENyPqiXyumwBG_itQ-1; Mon, 05 Feb 2024 05:32:36 -0500
+X-MC-Unique: GhLSQENyPqiXyumwBG_itQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B9B8B38562C3;
- Mon,  5 Feb 2024 10:27:07 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5C004101A526;
+ Mon,  5 Feb 2024 10:32:36 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.69])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D89D91121313;
- Mon,  5 Feb 2024 10:27:06 +0000 (UTC)
-Date: Mon, 5 Feb 2024 10:27:04 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 863222166B31;
+ Mon,  5 Feb 2024 10:32:35 +0000 (UTC)
+Date: Mon, 5 Feb 2024 10:32:33 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, sw@weilnetz.de,
- t.lamprecht@proxmox.com
-Subject: Re: [PATCH v2] qemu_init: increase NOFILE soft limit on POSIX
-Message-ID: <ZcC3-G_COqbk8SxX@redhat.com>
-References: <20231218101340.35053-1-f.ebner@proxmox.com>
- <a912519d-e83c-460b-ab89-931e83e2ee44@proxmox.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 0/2] migration: Fix return-path thread exit
+Message-ID: <ZcC5QTO3tmt9gaCf@redhat.com>
+References: <20240201184853.890471-1-clg@redhat.com>
+ <Zby7o1O5Ox2NNbbP@x1n>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a912519d-e83c-460b-ab89-931e83e2ee44@proxmox.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zby7o1O5Ox2NNbbP@x1n>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -84,36 +87,56 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 02, 2024 at 09:35:19AM +0100, Fiona Ebner wrote:
-> Am 18.12.23 um 11:13 schrieb Fiona Ebner:
-> > In many configurations, e.g. multiple vNICs with multiple queues or
-> > with many Ceph OSDs, the default soft limit of 1024 is not enough.
-> > QEMU is supposed to work fine with file descriptors >= 1024 and does
-> > not use select() on POSIX. Bump the soft limit to the allowed hard
-> > limit to avoid issues with the aforementioned configurations.
-> > 
-> > Of course the limit could be raised from the outside, but the man page
-> > of systemd.exec states about 'LimitNOFILE=':
-> > 
-> >> Don't use.
-> >> [...]
-> >> Typically applications should increase their soft limit to the hard
-> >> limit on their own, if they are OK with working with file
-> >> descriptors above 1023,
-> > 
-> > If the soft limit is already the same as the hard limit, avoid the
-> > superfluous setrlimit call. This can avoid a warning with a strict
-> > seccomp filter blocking setrlimit if NOFILE was already raised before
-> > executing QEMU.
-> > 
-> > Buglink: https://bugzilla.proxmox.com/show_bug.cgi?id=4507
-> > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> > ---
-> > 
+On Fri, Feb 02, 2024 at 05:53:39PM +0800, Peter Xu wrote:
+> On Thu, Feb 01, 2024 at 07:48:51PM +0100, Cédric Le Goater wrote:
+> > Hello,
 > 
-> Ping
+> Hi, Cédric,
+> 
+> Thanks for the patches.
+> 
+> > 
+> > Today, close_return_path_on_source() can perform a shutdown to exit
+> > the return-path thread if an error occured. However, migrate_fd_cleanup()
+> > does cleanups too early and the shutdown in close_return_path_on_source()
+> > fails, leaving the source and destination waiting for an event to occur.
+> > 
+> > This little series tries to fix that. Comments welcome !  
+> 
+> One thing I do agree is that relying on qemu_file_get_error(to_dst_file) in
+> close_return_path_on_source() is weird: IMHO we have better way to detect
+> "whether the migration has error" now, which is migrate_has_error().
+> 
+> For this specific issue, I think one long standing issue that might be
+> relevant is we have two QEMUFile (from_dst_file, to_dst_file) that share
+> the same QIOChannel now.  Logically the two QEMUFile should be able to be
+> managed separately, say, close() of to_dst_file shouldn't affect the other.
+> 
+> However I don't think it's the case now, as qemu_fclose(to_dst_file) will
+> do qio_channel_close() already, which means there will be a side effect to
+> the other QEMUFile that its backing IOC is already closed.
+> 
+> Is this the issue we're facing?  IOW, the close() of to_dst_file will not
+> properly kick the other thread who is blocked at reading from_dst_file,
+> while the shutdown() will kick it out?
+> 
+> If so, not sure whether we can somehow relay the real qio_channel_close()
+> to until the last user releases it? IOW, conditionally close() the channel
+> in qio_channel_finalize(), if the channel is still open?  Would that make
+> sense?
 
-I have this queued already for my next pull request
+IMHO the problem described above is a result of the design mistake of
+having 2 separate QEMUFile instances for what is ultimately the same
+channel. This was a convenient approach to take originally, but it has
+likely outlived its purpose.
+
+In the ideal world IMHO, QEMUFile would not exist at all, and we would
+have a QIOChannelCached that adds the read/write buffering above the
+base QIOChannel.
+
+That's doable, but bigger than a quick fix. A natural stepping stone
+to get there though is to move from 2 QEMUFile objs down to 1 QEMUFile,
+which might be more practical as a quick fix.
 
 With regards,
 Daniel
