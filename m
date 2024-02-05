@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80BB2C48295
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 14:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7400C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 14:24:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWzsw-0008PB-QX; Mon, 05 Feb 2024 09:23:46 -0500
+	id 1rWztU-0000fC-LO; Mon, 05 Feb 2024 09:24:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rWzsu-0008JB-Jc
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:23:44 -0500
+ id 1rWztP-0000dn-2F
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:24:15 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rWzss-00086f-PR
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:23:44 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TT7nL5t8bz6JB1b;
- Mon,  5 Feb 2024 22:20:06 +0800 (CST)
+ id 1rWztN-00013N-9F
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:24:14 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TT7nx2FVLz6JB89;
+ Mon,  5 Feb 2024 22:20:37 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 084581404F5;
- Mon,  5 Feb 2024 22:23:41 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 80801140A87;
+ Mon,  5 Feb 2024 22:24:11 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 5 Feb 2024 14:23:40 +0000
+ 15.1.2507.35; Mon, 5 Feb 2024 14:24:10 +0000
 To: <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
 CC: Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>, Dongjiu Geng
@@ -37,9 +37,10 @@ CC: Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  <mst@redhat.com>, Ira Weiny <ira.weiny@intel.com>, Peter Maydell
  <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>, Marcel Apfelbaum
  <marcel.apfelbaum@gmail.com>
-Subject: [RFC PATCH 08/11] hw/pci/aer: Default to error handling on.
-Date: Mon, 5 Feb 2024 14:19:37 +0000
-Message-ID: <20240205141940.31111-9-Jonathan.Cameron@huawei.com>
+Subject: [RFC PATCH 09/11] cxl/ras: Set registers to sensible state for FW
+ first ras
+Date: Mon, 5 Feb 2024 14:19:38 +0000
+Message-ID: <20240205141940.31111-10-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240205141940.31111-1-Jonathan.Cameron@huawei.com>
 References: <20240205141940.31111-1-Jonathan.Cameron@huawei.com>
@@ -74,30 +75,36 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This should be dependent on the platform supporting FW first.
+Even if we are doing native RAS, until the point where the OS
+requests it via an _OSC the firmware may well be handling any
+errors from CXL devices.  As such configure them as if a firmware
+has been doing so.
 
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/pci/pcie.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/cxl/cxl-component-utils.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 9f1ca718b5..4f04a1702a 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -304,6 +304,12 @@ void pcie_cap_deverr_init(PCIDevice *dev)
-     uint32_t pos = dev->exp.exp_cap;
-     pci_long_test_and_set_mask(dev->config + pos + PCI_EXP_DEVCAP,
-                                PCI_EXP_DEVCAP_RBER);
-+
-+    /* HACK - FW first settings - how to do this cleanly? */
-+    pci_long_test_and_set_mask(dev->config + pos + PCI_EXP_DEVCTL,
-+                               PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE |
-+                               PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE);
-+
-     pci_long_test_and_set_mask(dev->wmask + pos + PCI_EXP_DEVCTL,
-                                PCI_EXP_DEVCTL_CERE | PCI_EXP_DEVCTL_NFERE |
-                                PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE);
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index a0ff7d4396..e869c482a7 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -217,13 +217,13 @@ static void ras_init_common(uint32_t *reg_state, uint32_t *write_msk)
+     stl_le_p(reg_state + R_CXL_RAS_UNC_ERR_STATUS, 0);
+     stl_le_p(write_msk + R_CXL_RAS_UNC_ERR_STATUS, 0x1cfff);
+     /* Bits 12-13 and 17-31 reserved in CXL 2.0 */
+-    stl_le_p(reg_state + R_CXL_RAS_UNC_ERR_MASK, 0x1cfff);
++    stl_le_p(reg_state + R_CXL_RAS_UNC_ERR_MASK, 0/*0x1cfff*/);
+     stl_le_p(write_msk + R_CXL_RAS_UNC_ERR_MASK, 0x1cfff);
+     stl_le_p(reg_state + R_CXL_RAS_UNC_ERR_SEVERITY, 0x1cfff);
+     stl_le_p(write_msk + R_CXL_RAS_UNC_ERR_SEVERITY, 0x1cfff);
+     stl_le_p(reg_state + R_CXL_RAS_COR_ERR_STATUS, 0);
+     stl_le_p(write_msk + R_CXL_RAS_COR_ERR_STATUS, 0x7f);
+-    stl_le_p(reg_state + R_CXL_RAS_COR_ERR_MASK, 0x7f);
++    stl_le_p(reg_state + R_CXL_RAS_COR_ERR_MASK, 0/*0x7f*/);
+     stl_le_p(write_msk + R_CXL_RAS_COR_ERR_MASK, 0x7f);
+     /* CXL switches and devices must set */
+     stl_le_p(reg_state + R_CXL_RAS_ERR_CAP_CTRL, 0x200);
 -- 
 2.39.2
 
