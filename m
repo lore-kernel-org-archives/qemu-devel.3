@@ -4,141 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C041C48295
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 14:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6157CC4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 14:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWzkr-0002SN-6t; Mon, 05 Feb 2024 09:15:25 -0500
+	id 1rWzpG-0003iB-3J; Mon, 05 Feb 2024 09:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWzko-0002Qi-Dc
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:15:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rWzpE-0003i3-Qh
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:19:56 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWzkm-0007PJ-BG
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:15:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707142518;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4rd5XAcZe+MU5H3P28pbvYUW2Klk5vFbexhSOO+TX5g=;
- b=B8MBOysySP0sGLxMK/q5OENITKVSqYylo//wWBHjBCixH2WqOklqYCSXwCGaFzFElApjpC
- dMtBKbq5Fpa+q6k1iuZsCuTI2XRftC8y5uZ/CAEAA35OH8T6zb7DLpBHdnVVnGe/ihAmq4
- JOV3dlmmim78gZ5ahJ589vB5Cd6gqCg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-2kb5FNCbPrC_b0ZOCFMvxg-1; Mon, 05 Feb 2024 09:15:17 -0500
-X-MC-Unique: 2kb5FNCbPrC_b0ZOCFMvxg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33b14a51893so1899550f8f.2
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 06:15:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707142516; x=1707747316;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4rd5XAcZe+MU5H3P28pbvYUW2Klk5vFbexhSOO+TX5g=;
- b=HQseZrqugS0ujTZEf7RJ0H9S7n2VJnOH4PcBhUoBFY/9rPlTQwAEDePN7hTDwhAa/p
- MGcDNz+c+kC/Z+23iNTlN/yZ6VhrBBm52oKWKd7GzSZpqKwIwiHzhXBXKmk7l4ZNmt0F
- 3jXm2LrgSVnL+x3DvOC07OjbMAFrdBIWy+OmzxBj3d0+YI5ec7LCun8kVvXR+ggVn5E+
- XoFW+UAxVIPeji2RAYGvspU9aWpJFxEndaxsYUXRfVKlmarXZi6+w9yMFhni18VxXX8j
- 2Gc5cHVpfT3nZKsukT2YaFBHUMUPMQj0DcGanAmD50Oww8vz63vhy1m1ippo8ki6rRet
- mHUQ==
-X-Gm-Message-State: AOJu0Yyj27rP8CQs3PCyA9/orF/7jdGEKTDhnvi+MRZiLkkZhA6KhEp0
- +zs5Tr8w+jjuUHoLrfQcmPTMK95FOVPImaRYCNJcUMOm7WaXGD1C++44quKVWEv9JkQNrcdocKz
- oJ2pMAbVS/2zSphhx7b0CYIqHMf3tbpTpcVqxfaNlolgJTPEfx9nm
-X-Received: by 2002:adf:f288:0:b0:33b:2c2a:9355 with SMTP id
- k8-20020adff288000000b0033b2c2a9355mr4269106wro.56.1707142516109; 
- Mon, 05 Feb 2024 06:15:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEwr9aEunhZBkri5NGo63D39P6x3RRyNEhihwblsGUELMTqnT5cCOvD9r3OoGcDH3q71UQxpA==
-X-Received: by 2002:adf:f288:0:b0:33b:2c2a:9355 with SMTP id
- k8-20020adff288000000b0033b2c2a9355mr4269087wro.56.1707142515650; 
- Mon, 05 Feb 2024 06:15:15 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCWBwvdXif3tP3A0Y/OwZTlFZLPBoJL2daS1LxFyULg8PzRRHmeGMI1T1SUlZEjeCbHYVsx7dsRAtZUmHK24YzlUDH6dp3tAa7etMsfV171eskjDveLpiu0yKSWxL0XoDvf0YZr6ShDJVkpSkcpV5J0qRSmoLdzuIhW599DHSpOySgtPRT8uAZaXRH+s4taY6KFpsEFANnAnF5LpoxEfDbU0zhFZivKByYKtevXZkI+kgt1YBJxmLR8TGg==
-Received: from [192.168.20.184] (ftip006315900.acc1.colindale.21cn-nte.bt.net.
- [81.134.214.249]) by smtp.gmail.com with ESMTPSA id
- l18-20020adfe9d2000000b0033b377e8a0bsm3603917wrn.71.2024.02.05.06.15.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Feb 2024 06:15:15 -0800 (PST)
-Message-ID: <f7f8f5ac-dfed-456d-91b1-9e4c4e2073b5@redhat.com>
-Date: Mon, 5 Feb 2024 15:15:14 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rWzp5-0003vj-JC
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:19:56 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TT7hf3s0Hz6JB8S;
+ Mon,  5 Feb 2024 22:16:02 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id B6DEB1409F9;
+ Mon,  5 Feb 2024 22:19:36 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Mon, 5 Feb 2024 14:19:36 +0000
+To: <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
+CC: Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, <linuxarm@huawei.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Ira Weiny <ira.weiny@intel.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>
+Subject: [RFC PATCH 00/11 qemu] arm/acpi/pci/cxl: ACPI based FW First error
+ injection.
+Date: Mon, 5 Feb 2024 14:19:29 +0000
+Message-ID: <20240205141940.31111-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL 5/8] util: Add write-only "node-affinity" property for
- ThreadContext
-To: Claudio Fontana <cfontana@suse.de>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, Michal Privoznik <mprivozn@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-References: <20221028095225.86118-1-david@redhat.com>
- <20221028095225.86118-6-david@redhat.com>
- <beb8fd5c-3fc4-9bf5-1f9b-3947a25f52d9@suse.de>
-Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <beb8fd5c-3fc4-9bf5-1f9b-3947a25f52d9@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -153,51 +68,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.02.24 11:14, Claudio Fontana wrote:
-> Hi,
+I've had a version of this code for many years (and occasionally mention it
+as test platform for kernel patches) and it keeps coming in handy, so time
+to share the CXL version.
 
-Hi Claudio,
+What is this?
+- ACPI + UEFI specs define a means of notifying the OS of errors that
+  firmware has handled (gathered up data etc, reset the relevant error tracking
+  units etc) in a set of standard formats (UEFI spec appendix N).
+- ARM virt already supports standard HEST ACPI table description of Synchronous
+  External Abort (SEA) for memory errors. This series builds on this to
+  add a GHESv2 / Generic Error Device / GPIO interrupt path for asynchronous
+  error reporting.
+- CXL and PCI AER both already have injection commands (via HMP / QMP)
+  These are repurposed to perform FW first injection if the guest OS has not
+  negotiated OS first handling (so before the CXL / PCIE _OSC is called or
+  when it doesn't negotiate control of AER / CXL Memory Errors).
+- The OS normally negotiates for control of error registers via _OSC.
+  Previously QEMU unconditionally granted control of these registers.
+  This series includes a machine parameter to allow the 'FW' to not let the
+  OS take control and tracks whether the OS has asked for control or not.
+  Note this code relies on the standard handshake - it's not remotely
+  correct if the OS does follow that flow - this can be hardened with some
+  more AML magic.
 
-> 
-> turning pages back in time,
-> 
-> noticed that in recent qemu-img binaries we include an ELF dependency on libnuma.so that seems unused.
-> 
-> I think it stems from this commit:
-> 
-> commit 10218ae6d006f76410804cc4dc690085b3d008b5
-> Author: David Hildenbrand <david@redhat.com>
-> Date:   Fri Oct 14 15:47:17 2022 +0200
-> 
->      util: Add write-only "node-affinity" property for ThreadContext
-> 
-> 
-> possibly this hunk?
-> 
-> diff --git a/util/meson.build b/util/meson.build
-> index e97cd2d779..c0a7bc54d4 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -1,5 +1,5 @@
->   util_ss.add(files('osdep.c', 'cutils.c', 'unicode.c', 'qemu-timer-common.c'))
-> -util_ss.add(files('thread-context.c'))
-> +util_ss.add(files('thread-context.c'), numa)
->   if not config_host_data.get('CONFIG_ATOMIC64')
->     util_ss.add(files('atomic64.c'))
->   endif
-> 
-> 
-> I wonder if there is some conditional we could use to avoid the apparently useless dependency to libnuma in the qemu-img binary?
+Alternatives:
+- In theory we could emulate a management controller running appropriate firmware
+  and have that actually handle the errors. It's much easier to instead intercept
+  them before the error reporting messages are sent and result logged in the root
+  ports error registers. As far as the guest is concerned it doesn't matter if
+  these registers are handled via the firmware or never got written in the first
+  place (the guest isn't allowed to touch these registers anyway!)
+  This is sort of same argument for why we build ACPI tables in general in QEMU
+  rather than making that an EDK2 problem.
 
-the simplest change is probably moving the thread-context stuff out of 
-util (as you say, it's currently only used by QEMU itself).
+Why?
+- The kernel CXL code supports both firmware first and native RAS.
+  As only some vendors have adopted a FW first model and hardware
+  availability is limited this code has proven challenging to test.
+
+Why an RFC?
+- Small matter that the ARM CXL support isn't upstream.
+- I'm assuming adding this support to QEMU will be controversial.
+- There are some loose ends, TODOs and Fixme's in the code.
+- Only one type of CXL event currently handled - should provide them all
+  CXL Protocol and AER error reporting is more complete.
+- I should probably figure out how to do this for x86 as apparently people
+  also want to use that architecture ;)
+
+Thanks to Shiju Jose for help testing this.
+
+Based on: Random stack of patches on my gitlab.com/jic23/qemu cxl-2024-02-05-draft
+branch. Specifically:
+https://gitlab.com/jic23/qemu/-/commit/0fa064b9c8eeef468d8a19e87f39f230b4fa4da9
+
+All comments welcome - particularly anyone who can advise on what the HEST
+table should look like an x86 machine - too many options!
+
+Jonathan Cameron (11):
+  hw/pci: Add pcie_find_dvsec() utility.
+  hw/acpi: Allow GPEX _OSC to keep fw first control of AER and CXL
+    errors.
+  arm/virt: Add fw-first-ras property.
+  acpi/ghes: Support GPIO error source.
+  arm/virt: Wire up GPIO error source for ACPI / GHES
+  acpi: pci/cxl: Stash the OSC control parameters.
+  pci/aer: Support firmware first error injection via GHESv2
+  hw/pci/aer: Default to error handling on.
+  cxl/ras: Set registers to sensible state for FW first ras
+  cxl/type3: FW first protocol error injection.
+  cxl/type3: Add firmware first error reporting for general media
+    events.
+
+ include/hw/acpi/cxl.h         |   2 +-
+ include/hw/acpi/ghes.h        |  14 +
+ include/hw/arm/virt.h         |   1 +
+ include/hw/boards.h           |   1 +
+ include/hw/cxl/cxl.h          |   2 +
+ include/hw/pci-host/gpex.h    |   1 +
+ include/hw/pci/pcie.h         |   1 +
+ hw/acpi/cxl-stub.c            |   2 +-
+ hw/acpi/cxl.c                 |  50 ++-
+ hw/acpi/ghes-stub.c           |  25 ++
+ hw/acpi/ghes.c                | 634 +++++++++++++++++++++++++++++++++-
+ hw/arm/virt-acpi-build.c      |  71 +++-
+ hw/arm/virt.c                 |  32 +-
+ hw/cxl/cxl-component-utils.c  |   4 +-
+ hw/i386/acpi-build.c          |   2 +-
+ hw/mem/cxl_type3.c            |  42 ++-
+ hw/pci-bridge/cxl_root_port.c |   1 -
+ hw/pci-host/gpex-acpi.c       |  17 +-
+ hw/pci-host/gpex.c            |   1 +
+ hw/pci/pcie.c                 |  30 ++
+ hw/pci/pcie_aer.c             |  35 +-
+ 21 files changed, 914 insertions(+), 54 deletions(-)
 
 -- 
-Cheers,
-
-David / dhildenb
+2.39.2
 
 
