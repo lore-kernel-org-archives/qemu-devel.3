@@ -4,63 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB4DC48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54616C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:27:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWw7g-0004e8-G8; Mon, 05 Feb 2024 05:22:44 -0500
+	id 1rWwC3-0005bE-Oy; Mon, 05 Feb 2024 05:27:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rWw7f-0004dz-A1
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:22:43 -0500
+ id 1rWwC2-0005b6-Oc
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:27:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rWw7d-0004KT-DS
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:22:43 -0500
+ id 1rWwC1-00057m-3e
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:27:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707128560;
+ s=mimecast20190719; t=1707128832;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=agu7+IbqMIerwynBolDNEGu6t9BON2VwAXpiLZ9f0y4=;
- b=YPIJr0rEVbVGGfrLuIb4WW1hD6Q3h4pJ173NYlTDMRrCK/xehPlqwGdC/nPkuq3Pd7F3ZJ
- NOeESSFuSsliE+mIeQhry2KKv89wcMnYbrB2pNLpAhPsjdtSJZlFhyIGk1Q/TnhzHlpV5B
- lCejzevvzaCMV0W60Fr/i3K4EDF6zCg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-PuU9UvyHNF-jzhxzW3YCWw-1; Mon, 05 Feb 2024 05:22:38 -0500
-X-MC-Unique: PuU9UvyHNF-jzhxzW3YCWw-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ bh=e7P8t8sjIYRWa9hoqjvEOhN5cYQsy2c7tiYjNh9O814=;
+ b=f9zLwNXYsAlnQVYIEEkPpkyUDugsheUbEuNzAtajFGInntYXzMExofzC1Sm06um2HIvH+Y
+ hzSVCj4bX6ewQ7YwBLzu3tbTtzUkC3kVPb0P/iREJK6SpBxK+6FR2KHhodH/8j1mF1BAyS
+ grQqKc2v5+SLN+TQ896yRvQ9GHb3W+o=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-581-e2ttwJnBNvu2cjS21SDCSw-1; Mon,
+ 05 Feb 2024 05:27:08 -0500
+X-MC-Unique: e2ttwJnBNvu2cjS21SDCSw-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 641C587DC00;
- Mon,  5 Feb 2024 10:22:38 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B9B8B38562C3;
+ Mon,  5 Feb 2024 10:27:07 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.69])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B24C3492BF0;
- Mon,  5 Feb 2024 10:22:37 +0000 (UTC)
-Date: Mon, 5 Feb 2024 10:22:35 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id D89D91121313;
+ Mon,  5 Feb 2024 10:27:06 +0000 (UTC)
+Date: Mon, 5 Feb 2024 10:27:04 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PULL 06/14] ci: Add a migration compatibility test job
-Message-ID: <ZcC262Tl4j3ryx-8@redhat.com>
-References: <20240129030405.177100-1-peterx@redhat.com>
- <20240129030405.177100-7-peterx@redhat.com>
- <CAFEAcA9=7NzEFLQxAxEWUzTRAZm87caC1ZhxeZkKyiP9Kb4k2w@mail.gmail.com>
- <87eddvhtba.fsf@suse.de> <ZcBVGbRXlXPRom14@x1n>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, sw@weilnetz.de,
+ t.lamprecht@proxmox.com
+Subject: Re: [PATCH v2] qemu_init: increase NOFILE soft limit on POSIX
+Message-ID: <ZcC3-G_COqbk8SxX@redhat.com>
+References: <20231218101340.35053-1-f.ebner@proxmox.com>
+ <a912519d-e83c-460b-ab89-931e83e2ee44@proxmox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZcBVGbRXlXPRom14@x1n>
+In-Reply-To: <a912519d-e83c-460b-ab89-931e83e2ee44@proxmox.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -86,147 +84,36 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 11:25:13AM +0800, Peter Xu wrote:
-> On Fri, Feb 02, 2024 at 10:47:05AM -0300, Fabiano Rosas wrote:
-> > Peter Maydell <peter.maydell@linaro.org> writes:
+On Fri, Feb 02, 2024 at 09:35:19AM +0100, Fiona Ebner wrote:
+> Am 18.12.23 um 11:13 schrieb Fiona Ebner:
+> > In many configurations, e.g. multiple vNICs with multiple queues or
+> > with many Ceph OSDs, the default soft limit of 1024 is not enough.
+> > QEMU is supposed to work fine with file descriptors >= 1024 and does
+> > not use select() on POSIX. Bump the soft limit to the allowed hard
+> > limit to avoid issues with the aforementioned configurations.
 > > 
-> > > On Mon, 29 Jan 2024 at 03:04, <peterx@redhat.com> wrote:
-> > >>
-> > >> From: Fabiano Rosas <farosas@suse.de>
-> > >>
-> > >> The migration tests have support for being passed two QEMU binaries to
-> > >> test migration compatibility.
-> > >>
-> > >> Add a CI job that builds the lastest release of QEMU and another job
-> > >> that uses that version plus an already present build of the current
-> > >> version and run the migration tests with the two, both as source and
-> > >> destination. I.e.:
-> > >>
-> > >>  old QEMU (n-1) -> current QEMU (development tree)
-> > >>  current QEMU (development tree) -> old QEMU (n-1)
-> > >>
-> > >> The purpose of this CI job is to ensure the code we're about to merge
-> > >> will not cause a migration compatibility problem when migrating the
-> > >> next release (which will contain that code) to/from the previous
-> > >> release.
-> > >>
-> > >> The version of migration-test used will be the one matching the older
-> > >> QEMU. That way we can avoid special-casing new tests that wouldn't be
-> > >> compatible with the older QEMU.
-> > >>
-> > >> Note: for user forks, the version tags need to be pushed to gitlab
-> > >> otherwise it won't be able to checkout a different version.
-> > >>
-> > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > >> Link: https://lore.kernel.org/r/20240118164951.30350-3-farosas@suse.de
-> > >> Signed-off-by: Peter Xu <peterx@redhat.com>
-> > >> ---
-> > >>  .gitlab-ci.d/buildtest.yml | 60 ++++++++++++++++++++++++++++++++++++++
-> > >>  1 file changed, 60 insertions(+)
-> > >>
-> > >> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> > >> index e1c7801598..f0b0edc634 100644
-> > >> --- a/.gitlab-ci.d/buildtest.yml
-> > >> +++ b/.gitlab-ci.d/buildtest.yml
-> > >> @@ -167,6 +167,66 @@ build-system-centos:
-> > >>        x86_64-softmmu rx-softmmu sh4-softmmu nios2-softmmu
-> > >>      MAKE_CHECK_ARGS: check-build
-> > >>
-> > >> +# Previous QEMU release. Used for cross-version migration tests.
-> > >> +build-previous-qemu:
-> > >> +  extends: .native_build_job_template
-> > >> +  artifacts:
-> > >> +    when: on_success
-> > >> +    expire_in: 2 days
-> > >> +    paths:
-> > >> +      - build-previous
-> > >> +    exclude:
-> > >> +      - build-previous/**/*.p
-> > >> +      - build-previous/**/*.a.p
-> > >> +      - build-previous/**/*.fa.p
-> > >> +      - build-previous/**/*.c.o
-> > >> +      - build-previous/**/*.c.o.d
-> > >> +      - build-previous/**/*.fa
-> > >> +  needs:
-> > >> +    job: amd64-opensuse-leap-container
-> > >> +  variables:
-> > >> +    IMAGE: opensuse-leap
-> > >> +    TARGETS: x86_64-softmmu aarch64-softmmu
-> > >> +  before_script:
-> > >> +    - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
-> > >> +    - git checkout $QEMU_PREV_VERSION
-> > >> +  after_script:
-> > >> +    - mv build build-previous
-> > >
-> > > There seems to be a problem with this new CI job. Running a CI
-> > > run in my local repository it fails:
-> > >
-> > > https://gitlab.com/pm215/qemu/-/jobs/6075873685
-> > >
-> > > $ export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v .0/' VERSION)"
-> > > $ git checkout $QEMU_PREV_VERSION
-> > > error: pathspec 'v8.2.0' did not match any file(s) known to git
-> > > Running after_script
-> > > Running after script...
-> > > $ mv build build-previous
-> > > mv: cannot stat 'build': No such file or directory
-> > > WARNING: after_script failed, but job will continue unaffected: exit code 1
-> > > Saving cache for failed job
-> > >
-> > >
-> > > I don't think you can assume that private forks doing submaintainer CI
-> > > runs necessarily have the full set of tags that the main repo does.
+> > Of course the limit could be raised from the outside, but the man page
+> > of systemd.exec states about 'LimitNOFILE=':
 > > 
-> > Yes, I thought this would be rare enough not to be an issue, but it
-> > seems it's not. I don't know what could be done here, if there's no tag,
-> > then there's no way to resolve the actual commit hash I think.
+> >> Don't use.
+> >> [...]
+> >> Typically applications should increase their soft limit to the hard
+> >> limit on their own, if they are OK with working with file
+> >> descriptors above 1023,
 > > 
-> > > I suspect the sed run will also do the wrong thing when run on the
-> > > commit that updates the version, because then it will replace
-> > > "9.0.0" with "9.0.0".
+> > If the soft limit is already the same as the hard limit, avoid the
+> > superfluous setrlimit call. This can avoid a warning with a strict
+> > seccomp filter blocking setrlimit if NOFILE was already raised before
+> > executing QEMU.
 > > 
-> > I just ignored this completly because my initial idea was to leave this
-> > job disabled and only run it for migration patchsets and pull requests,
-> > so it wouldn't make sense to run at that commit.
+> > Buglink: https://bugzilla.proxmox.com/show_bug.cgi?id=4507
+> > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> > ---
 > > 
-> > This job is also not entirely fail proof by design because we could
-> > always be hitting bugs in the older QEMU version that were already fixed
-> > in the new version.
-> > 
-> > I think the simplest fix here is to leave the test disabled, possibly
-> > with an env variable to enable it.
 > 
-> However if so that'll be unfortunate.. because the goal of the "n-1" test
-> is to fail the exact commit that will break compatibility and make it
-> enforced, IMHO.
-> 
-> Failing for some migration guy pushing CI can be better than nothing
-> indeed, but it is just less ideal..  we want the developer / module
-> maintainer notice this issue, fix it instead of merging something wrong
-> already, then we try to find what is broken and ask for a fix (where there
-> will still be a window it's broken; and if unlucky across major releases).
-> 
-> Currently the coverage of n-1 test is indeed still more focused on
-> migration framework, but it'll also cover quite some default configs of the
-> system layout (even if only x86 is covered), and some default devices IIRC.
-> We can already attach a few more standard devices in the cmdline so more
-> things can get covered.
-> 
-> A pretty dumb (but might be working?) solution is we keep commit ID rather
-> than tags to avoid all kinds of tag hassles:
-> 
->   PREVIOUS_VERSION_COMMIT_ID=1600b9f46b1bd08b00fe86c46ef6dbb48cbe10d6
-> 
-> Then we boost it after a release.  I think it'll also work for the release
-> commit then.
+> Ping
 
-Please don't go for hardcoding stuff. AFAICS, the solution is very easy
-and only requires adding two git commands to the test job:
-
-  export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
-  git remote add upstream https://gitlab.com/qemu-project/qemu
-  git fetch upstream $QEMU_PRRV_VERSION
-  git checkout $QEMU_PREV_VERSION
+I have this queued already for my next pull request
 
 With regards,
 Daniel
