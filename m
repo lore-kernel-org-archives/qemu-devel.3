@@ -4,100 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D06E2C4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 19:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F36C48292
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 19:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX4yc-0008QC-Cq; Mon, 05 Feb 2024 14:49:59 -0500
+	id 1rX4yP-0008NU-CP; Mon, 05 Feb 2024 14:49:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rX4yT-0008P0-J2
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 14:49:49 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1rX4yO-0008Mh-20; Mon, 05 Feb 2024 14:49:44 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rX4yQ-0004TY-Qb
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 14:49:49 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1rX4yJ-0004Jc-Il; Mon, 05 Feb 2024 14:49:43 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 62E3F220B0;
- Mon,  5 Feb 2024 19:49:45 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AC82A220B0;
+ Mon,  5 Feb 2024 19:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707162585; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1707162575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2lg7cB8YIcXh7f3PfQZ6/xyxWHPayFlMCHdRy8M13C0=;
- b=JwL17qYzCiV5tEpL/GBelU/XXi/WoNCoQY2EW5buhmo4q5BLNiDBb23M10W7KiOjecz6kH
- BCoWVeP2L6tTmwTHPbHBbFyY5gYv1EjOrQ9ijJsa1bAPEG+FKEJzJIfoxQ447NRnbnI8ny
- Hc2xQLRhCFrjblcSSDRXHHEXXN4sdlY=
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=WRqrrnsTpN9KhTpi4uAzVtkQZSAAwbQngN8ft2H1yDUB5WcLppuz0pBufQGT2whRtrm8jb
+ JlV1N1vfwk2zxomHgl0bS9ZxvThbdp0ZYbQbOXCcEQ3obfKmsUkAQRpZtkjBxUVFJslHZK
+ 9epmybsg6QraYj5dr3LWIgs4lP1qhII=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707162585;
+ s=susede2_ed25519; t=1707162575;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2lg7cB8YIcXh7f3PfQZ6/xyxWHPayFlMCHdRy8M13C0=;
- b=I+0BNzHBUmyH3chrpjxvSGeXe1/W8N85hkGf+mnUpeTDMS9S0Hfad5m80NE+Z5lJ9JeJCO
- 7on+XUMiQVXuBCBg==
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=7IFw7xVunRiiSnQN5jvLeZCzJGyQqADQIJXYCwblWNd+uQ1emNwp5znWglV7VFiV7M5Nqb
+ vc2bskvtxC1HgbBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707162585; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1707162575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2lg7cB8YIcXh7f3PfQZ6/xyxWHPayFlMCHdRy8M13C0=;
- b=JwL17qYzCiV5tEpL/GBelU/XXi/WoNCoQY2EW5buhmo4q5BLNiDBb23M10W7KiOjecz6kH
- BCoWVeP2L6tTmwTHPbHBbFyY5gYv1EjOrQ9ijJsa1bAPEG+FKEJzJIfoxQ447NRnbnI8ny
- Hc2xQLRhCFrjblcSSDRXHHEXXN4sdlY=
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=WRqrrnsTpN9KhTpi4uAzVtkQZSAAwbQngN8ft2H1yDUB5WcLppuz0pBufQGT2whRtrm8jb
+ JlV1N1vfwk2zxomHgl0bS9ZxvThbdp0ZYbQbOXCcEQ3obfKmsUkAQRpZtkjBxUVFJslHZK
+ 9epmybsg6QraYj5dr3LWIgs4lP1qhII=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707162585;
+ s=susede2_ed25519; t=1707162575;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2lg7cB8YIcXh7f3PfQZ6/xyxWHPayFlMCHdRy8M13C0=;
- b=I+0BNzHBUmyH3chrpjxvSGeXe1/W8N85hkGf+mnUpeTDMS9S0Hfad5m80NE+Z5lJ9JeJCO
- 7on+XUMiQVXuBCBg==
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=7IFw7xVunRiiSnQN5jvLeZCzJGyQqADQIJXYCwblWNd+uQ1emNwp5znWglV7VFiV7M5Nqb
+ vc2bskvtxC1HgbBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 03919136F5;
- Mon,  5 Feb 2024 19:49:43 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0D202136F5;
+ Mon,  5 Feb 2024 19:49:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iND/Ltc7wWWYQAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 05 Feb 2024 19:49:43 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ONJkMc07wWWYQAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 05 Feb 2024 19:49:33 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 6/6] migration/multifd: Add a synchronization point for
- channel creation
-Date: Mon,  5 Feb 2024 16:49:29 -0300
-Message-Id: <20240205194929.28963-7-farosas@suse.de>
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PATCH v2 1/6] migration/multifd: Join the TLS thread
+Date: Mon,  5 Feb 2024 16:49:24 -0300
+Message-Id: <20240205194929.28963-2-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240205194929.28963-1-farosas@suse.de>
 References: <20240205194929.28963-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [0.77 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; R_MISSING_CHARSET(2.50)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- BROKEN_CONTENT_TYPE(1.50)[]; TO_DN_SOME(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WRqrrnsT;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7IFw7xVu
+X-Spamd-Result: default: False [0.69 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_FIVE(0.00)[5]; DWL_DNSWL_LOW(-1.00)[suse.de:dkim];
+ RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.13)[-0.642]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  BAYES_HAM(-3.00)[100.00%]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: AC82A220B0
+X-Spamd-Bar: /
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,126 +130,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is possible that one of the multifd channels fails to be created at
-multifd_new_send_channel_async() while the rest of the channel
-creation tasks are still in flight.
+We're currently leaking the resources of the TLS thread by not joining
+it and also overwriting the p->thread pointer altogether.
 
-This could lead to multifd_save_cleanup() executing the
-qemu_thread_join() loop too early and not waiting for the threads
-which haven't been created yet, leading to the freeing of resources
-that the newly created threads will try to access and crash.
-
-Add a synchronization point after which there will be no attempts at
-thread creation and therefore calling multifd_save_cleanup() past that
-point will ensure it properly waits for the threads.
-
-A note about performance: Prior to this patch, if a channel took too
-long to be established, other channels could finish connecting first
-and already start taking load. Now we're bounded by the
-slowest-connecting channel.
-
-Reported-by: Avihai Horon <avihaih@nvidia.com>
+Fixes: a1af605bd5 ("migration/multifd: fix hangup with TLS-Multifd due to blocking handshake")
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ migration/multifd.c | 8 +++++++-
+ migration/multifd.h | 2 ++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 89d39fa67c..a2b73c9946 100644
+index ef13e2e781..8195c1daf3 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -62,6 +62,11 @@ struct {
-      * Make it easy for now.
-      */
-     uintptr_t packet_num;
-+    /*
-+     * Synchronization point past which no more channels will be
-+     * created.
-+     */
-+    QemuSemaphore channels_created;
-     /* send channels ready */
-     QemuSemaphore channels_ready;
-     /*
-@@ -622,10 +627,6 @@ static void multifd_send_terminate_threads(void)
- 
-     /*
-      * Finally recycle all the threads.
--     *
--     * TODO: p->running is still buggy, e.g. we can reach here without the
--     * corresponding multifd_new_send_channel_async() get invoked yet,
--     * then a new thread can even be created after this function returns.
-      */
+@@ -630,6 +630,10 @@ static void multifd_send_terminate_threads(void)
      for (i = 0; i < migrate_multifd_channels(); i++) {
          MultiFDSendParams *p = &multifd_send_state->params[i];
-@@ -670,6 +671,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
  
- static void multifd_send_cleanup_state(void)
- {
-+    qemu_sem_destroy(&multifd_send_state->channels_created);
-     qemu_sem_destroy(&multifd_send_state->channels_ready);
-     g_free(multifd_send_state->params);
-     multifd_send_state->params = NULL;
-@@ -934,7 +936,6 @@ static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
-     MultiFDSendParams *p = opaque;
-     QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
-     Error *local_err = NULL;
--
-     bool ret;
- 
-     trace_multifd_new_send_channel_async(p->id);
-@@ -951,18 +952,26 @@ static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
- 
-     if (migrate_channel_requires_tls_upgrade(ioc)) {
-         ret = multifd_tls_channel_connect(p, ioc, &local_err);
-+        if (ret) {
-+            return;
++        if (p->tls_thread_created) {
++            qemu_thread_join(&p->tls_thread);
 +        }
-     } else {
-         ret = multifd_channel_connect(p, ioc, &local_err);
-     }
- 
-+out:
-+    /*
-+     * Here we're not interested whether creation succeeded, only that
-+     * it happened at all.
-+     */
-+    qemu_sem_post(&multifd_send_state->channels_created);
 +
-     if (ret) {
-         return;
-     }
- 
--out:
-     trace_multifd_new_send_channel_async_error(p->id, local_err);
-     multifd_send_set_error(local_err);
--    multifd_send_kick_main(p);
-     object_unref(OBJECT(ioc));
-     error_free(local_err);
- }
-@@ -988,6 +997,7 @@ bool multifd_send_setup(void)
-     multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
-     multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
-     multifd_send_state->pages = multifd_pages_init(page_count);
-+    qemu_sem_init(&multifd_send_state->channels_created, 0);
-     qemu_sem_init(&multifd_send_state->channels_ready, 0);
-     qatomic_set(&multifd_send_state->exiting, 0);
-     multifd_send_state->ops = multifd_ops[migrate_multifd_compression()];
-@@ -1013,6 +1023,15 @@ bool multifd_send_setup(void)
-         multifd_new_send_channel_create(p);
-     }
- 
-+    /*
-+     * Wait until channel creation has started for all channels. The
-+     * creation can still fail, but no more channels will be created
-+     * past this point.
-+     */
-+    for (i = 0; i < thread_count; i++) {
-+        qemu_sem_wait(&multifd_send_state->channels_created);
-+    }
+         if (p->running) {
+             qemu_thread_join(&p->thread);
+         }
+@@ -921,7 +925,9 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+     trace_multifd_tls_outgoing_handshake_start(ioc, tioc, hostname);
+     qio_channel_set_name(QIO_CHANNEL(tioc), "multifd-tls-outgoing");
+     p->c = QIO_CHANNEL(tioc);
+-    qemu_thread_create(&p->thread, "multifd-tls-handshake-worker",
 +
-     for (i = 0; i < thread_count; i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
- 
++    p->tls_thread_created = true;
++    qemu_thread_create(&p->tls_thread, "multifd-tls-handshake-worker",
+                        multifd_tls_handshake_thread, p,
+                        QEMU_THREAD_JOINABLE);
+     return true;
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 78a2317263..720c9d50db 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -73,6 +73,8 @@ typedef struct {
+     char *name;
+     /* channel thread id */
+     QemuThread thread;
++    QemuThread tls_thread;
++    bool tls_thread_created;
+     /* communication channel */
+     QIOChannel *c;
+     /* is the yank function registered */
 -- 
 2.35.3
 
