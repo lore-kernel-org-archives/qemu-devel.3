@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690B3C4828F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 02:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43756C4828F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 03:00:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWpCQ-0008SG-C0; Sun, 04 Feb 2024 21:59:10 -0500
+	id 1rWpDI-0000ie-6P; Sun, 04 Feb 2024 22:00:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWpCP-0008S3-4N; Sun, 04 Feb 2024 21:59:09 -0500
-Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ id 1rWpDC-0000hc-Nq; Sun, 04 Feb 2024 21:59:58 -0500
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWpCN-0006p5-Lf; Sun, 04 Feb 2024 21:59:08 -0500
-Received: by mail-ua1-x933.google.com with SMTP id
- a1e0cc1a2514c-7d2e21181c1so1979602241.3; 
- Sun, 04 Feb 2024 18:59:06 -0800 (PST)
+ id 1rWpDB-0006rm-9y; Sun, 04 Feb 2024 21:59:58 -0500
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-7d2e1a0337bso1987454241.3; 
+ Sun, 04 Feb 2024 18:59:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707101946; x=1707706746; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707101995; x=1707706795; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uUWSDY/q/U0JePTCElKjn0OAaT5Ppg2W3L7jH8akprQ=;
- b=cFoQ9AJ7uiH81RYniKRsGxDvXNqQ+JH3q1BNvBgeo0tYEQzdqaNofIhBax/yr7B1xn
- 3YlMHy7Vdu9hHtq+lkc3QYzyWMqHJJgB7f3NR3YeFZnFEs0TZ5zhMS4Br4KZghzFsunR
- 1v1+7wXnxlRGZ15zF76tSOieUiu63Ue3/bu0xye//IiCBfG7miG8yKz/GX46FNKsBB/T
- q8ZDfNMg4G/+PgtQ6+UJWSk9V1dZSH9Ptw3g0II8DUeohRmthWaExFYQlb1EubB3zWtK
- dvVX1X0jvbZzUMq7PrghFkTCq0tmSZBXfBk09S6DfJrD8kjcGfMn39ybI5LyJBdw4JRB
- ECEg==
+ bh=KKHZ2rIkbB1ivSidWAS7YL5DYq1ZoyelphM4FK6W03s=;
+ b=AHWbQtXde7d9JaO8GFvltizUQQzPJRg/xiXnvpenPWzUEN3tjP+PrLYJWhofj+Mdy5
+ fh6CFmxwV67Uw0fbr38oenO/pD+EbxXGJx4W0tVLTiGQUX9jFaleSzetxnt2ZBBocGm8
+ G1zh2ecsJppaSkxDaxes2B7kpUfVpYGn/LlTEVyum5Dd7a1e0ANMqRdW6HokW6D0Sd1V
+ F9eOujkkal1izJ54SQLmmcqMz0M8hdAwSpE6iEfViFLFiVDnRB84CtiMS67izkVgxuds
+ ow9M3POq+Ryadv/LHNqv6px738FJSASxQopzUEiIqnfbrRJEDqEPwFcZRLpyfWrWFVOb
+ R0MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707101946; x=1707706746;
+ d=1e100.net; s=20230601; t=1707101995; x=1707706795;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uUWSDY/q/U0JePTCElKjn0OAaT5Ppg2W3L7jH8akprQ=;
- b=h8Z6rz47D59a4MU/+KNUeQ+oIuQzQ6H3rg8oqJVZ7rZk9lOTKV6yf2y/CbgGP5aJdO
- ptuBOzC/vHn00ITK8aIX+hFez2nEDcD8Bg9k5gjrol/1FtCdYoWIjtl6G2oiOtp81d1N
- wowIMCV+PBnhT2ZFOwK2rQpEVmxwSMWUsNl6JmIGpaVZRsc7FvMM5wIFZuaqgMMhjpzG
- K4Xn5eWDNepYweNtTOrWLQmg+bodfjWdkCXTRJ/jqa+p9O/0rOzVDZMI+h/TlZeOKNGy
- IYQy36ULhUajQPSf1qzXfYT78Q4z1JD9Ft3vFS4DQtWYAJ9ot8QGIYcD1lDcfCFR8hF+
- Ya7Q==
-X-Gm-Message-State: AOJu0Yx5ld+mAAtx/e3DfaIsVMn6JYkUfOsz9Fer1x9WAMcWtboeXhs0
- NefaTleOYpF439J56h9Uy2+dter58KdgdMyQvMr0/9zmag0QHmwthW657Gv5KkaOBJ1YwtCHMLW
- ddirKDEvGPOFA+fjbrhad1VmpIyQ=
-X-Google-Smtp-Source: AGHT+IEZZ1fT1JeDi1NhS4cEICFh1caFwsQyyKbr+2JSVHqZyrs8e9/Mt7kTn9JXYUWXESrnK28h3YJ/fJxR/Xc0d1s=
-X-Received: by 2002:a05:6102:9a8:b0:46b:34ea:8fcd with SMTP id
- f8-20020a05610209a800b0046b34ea8fcdmr7595411vsb.8.1707101946189; Sun, 04 Feb
- 2024 18:59:06 -0800 (PST)
+ bh=KKHZ2rIkbB1ivSidWAS7YL5DYq1ZoyelphM4FK6W03s=;
+ b=qzd9kzqL4aLxKVOt7YiqR7h7Vm56zjqimrQJ//BoX4FQ/D1D5ZJhNfZG8bPVDr2Wqm
+ UZbTNLU2WgAD1fM0HFler+lbxHDNRQMOqkH9zWnD45+tVhcUdZoxv6dopUFOc4ZDfKux
+ 7hyUJfxAKMUNpaWFMRobZpQjVNdHMW6Si/cOEOY3LU6Aori4kR0oD1b0Y2N2tgl0UJnS
+ 4+1pqCCKEiFE2GHfaZ65jw4p2UsHg6v8jGEX3r5pMjGgoSOMo7913apcHPPPAYeRjfta
+ JMbnNXpKVMscPQO3StlETWlSXO9NdC9dI0UgDMwiSiFb5Ec1lvJ0bHN64Jmf81bU6rXz
+ wxGQ==
+X-Gm-Message-State: AOJu0Yy9jLQ3g3d9U7sY+v8j/N+XQTonVVPUM+7hMnJ0IcKGLquLRg2/
+ 5qj9IlJ9A0y8HVRRd3igEzF41aQKNjV+x1jZFi5o2lfOtuE9+09dPLRLEjZIwyIg/QDwa1jEFc2
+ xjMVuNJumQHwB48FlmXENyXg+uZY60dfAlbw=
+X-Google-Smtp-Source: AGHT+IEJr5H/EuQV9yunH7TKj/YUSTChtL//qJfLGkUiCbxK/jHXlfpq50xOUcmSav1kivrty00YV4kEo7hxNiRKKSg=
+X-Received: by 2002:a67:f543:0:b0:46d:1b1a:a375 with SMTP id
+ z3-20020a67f543000000b0046d1b1aa375mr2399987vsn.32.1707101995747; Sun, 04 Feb
+ 2024 18:59:55 -0800 (PST)
 MIME-Version: 1.0
 References: <20240122221529.86562-1-dbarboza@ventanamicro.com>
- <20240122221529.86562-4-dbarboza@ventanamicro.com>
-In-Reply-To: <20240122221529.86562-4-dbarboza@ventanamicro.com>
+ <20240122221529.86562-5-dbarboza@ventanamicro.com>
+In-Reply-To: <20240122221529.86562-5-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 5 Feb 2024 12:58:40 +1000
-Message-ID: <CAKmqyKOsseXBLeYineLAWfq8B2roqapRSN3EoqEqCri4zz7Vbw@mail.gmail.com>
-Subject: Re: [PATCH 3/7] hw/riscv/virt.c: use g_autofree in
- create_fdt_socket_cpus()
+Date: Mon, 5 Feb 2024 12:59:29 +1000
+Message-ID: <CAKmqyKNvEwUuUgjoGV0_D5mFhCrXOhMpDDjXUe3_ji1ezNusUg@mail.gmail.com>
+Subject: Re: [PATCH 4/7] hw/riscv/virt.c: use g_autofree in
+ create_fdt_sockets()
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,8 +95,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Jan 23, 2024 at 8:16=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Move all char pointers to the loop. Use g_autofree in all of them to
-> avoid the g_free() calls.
+> Move 'clust_name' inside the loop, and g_autofree, to avoid having to
+> g_free() manually in each loop iteration.
+>
+> 'intc_phandles' is also g_autofreed to avoid another manual g_free().
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -105,61 +107,58 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/virt.c | 12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
+>  hw/riscv/virt.c | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
 >
 > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index f9fd1341fc..373b1dd96b 100644
+> index 373b1dd96b..d0f402e0d5 100644
 > --- a/hw/riscv/virt.c
 > +++ b/hw/riscv/virt.c
-> @@ -215,12 +215,16 @@ static void create_fdt_socket_cpus(RISCVVirtState *=
-s, int socket,
->      int cpu;
->      uint32_t cpu_phandle;
+> @@ -721,11 +721,11 @@ static void create_fdt_sockets(RISCVVirtState *s, c=
+onst MemMapEntry *memmap,
+>                                 uint32_t *irq_virtio_phandle,
+>                                 uint32_t *msi_pcie_phandle)
+>  {
+> -    char *clust_name;
+>      int socket, phandle_pos;
 >      MachineState *ms =3D MACHINE(s);
-> -    char *name, *cpu_name, *core_name, *intc_name, *sv_name;
->      bool is_32_bit =3D riscv_is_32bit(&s->soc[0]);
->      uint8_t satp_mode_max;
+>      uint32_t msi_m_phandle =3D 0, msi_s_phandle =3D 0;
+> -    uint32_t *intc_phandles, xplic_phandles[MAX_NODES];
+> +    uint32_t xplic_phandles[MAX_NODES];
+> +    g_autofree uint32_t *intc_phandles =3D NULL;
+>      int socket_count =3D riscv_socket_count(ms);
 >
->      for (cpu =3D s->soc[socket].num_harts - 1; cpu >=3D 0; cpu--) {
->          RISCVCPU *cpu_ptr =3D &s->soc[socket].harts[cpu];
-> +        g_autofree char *name =3D NULL;
-> +        g_autofree char *cpu_name =3D NULL;
-> +        g_autofree char *core_name =3D NULL;
-> +        g_autofree char *intc_name =3D NULL;
-> +        g_autofree char *sv_name =3D NULL;
+>      qemu_fdt_add_subnode(ms->fdt, "/cpus");
+> @@ -739,6 +739,7 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
+st MemMapEntry *memmap,
 >
->          cpu_phandle =3D (*phandle)++;
+>      phandle_pos =3D ms->smp.cpus;
+>      for (socket =3D (socket_count - 1); socket >=3D 0; socket--) {
+> +        g_autofree char *clust_name =3D NULL;
+>          phandle_pos -=3D s->soc[socket].num_harts;
 >
-> @@ -233,12 +237,10 @@ static void create_fdt_socket_cpus(RISCVVirtState *=
-s, int socket,
->              sv_name =3D g_strdup_printf("riscv,%s",
->                                        satp_mode_str(satp_mode_max, is_32=
-_bit));
->              qemu_fdt_setprop_string(ms->fdt, cpu_name, "mmu-type", sv_na=
-me);
-> -            g_free(sv_name);
->          }
+>          clust_name =3D g_strdup_printf("/cpus/cpu-map/cluster%d", socket=
+);
+> @@ -749,8 +750,6 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
+st MemMapEntry *memmap,
 >
->          name =3D riscv_isa_string(cpu_ptr);
->          qemu_fdt_setprop_string(ms->fdt, cpu_name, "riscv,isa", name);
-> -        g_free(name);
+>          create_fdt_socket_memory(s, memmap, socket);
 >
->          if (cpu_ptr->cfg.ext_zicbom) {
->              qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cbom-block-s=
-ize",
-> @@ -277,10 +279,6 @@ static void create_fdt_socket_cpus(RISCVVirtState *s=
-, int socket,
->          core_name =3D g_strdup_printf("%s/core%d", clust_name, cpu);
->          qemu_fdt_add_subnode(ms->fdt, core_name);
->          qemu_fdt_setprop_cell(ms->fdt, core_name, "cpu", cpu_phandle);
+> -        g_free(clust_name);
 > -
-> -        g_free(core_name);
-> -        g_free(intc_name);
-> -        g_free(cpu_name);
+>          if (tcg_enabled()) {
+>              if (s->have_aclint) {
+>                  create_fdt_socket_aclint(s, memmap, socket,
+> @@ -793,8 +792,6 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
+st MemMapEntry *memmap,
+>          }
 >      }
->  }
 >
+> -    g_free(intc_phandles);
+> -
+>      if (kvm_enabled() && virt_use_kvm_aia(s)) {
+>          *irq_mmio_phandle =3D xplic_phandles[0];
+>          *irq_virtio_phandle =3D xplic_phandles[0];
 > --
 > 2.43.0
 >
