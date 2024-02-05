@@ -4,89 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A43C48292
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 19:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD7CC4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 19:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX4yN-0008Ma-3U; Mon, 05 Feb 2024 14:49:43 -0500
+	id 1rX4yU-0008Pe-97; Mon, 05 Feb 2024 14:49:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rX4yL-0008MS-CT
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 14:49:41 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rX4yP-0008Nd-Hm
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 14:49:45 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rX4yH-0004I5-7f
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 14:49:40 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rX4yN-0004Pg-G8
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 14:49:45 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 916BE1FB42;
- Mon,  5 Feb 2024 19:49:33 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AE992220E3;
+ Mon,  5 Feb 2024 19:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707162573; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=IAnFU8VjGc03j9aKoWWuWvvtsl/SPRiagmta2AJaUq8=;
- b=BFqIvflNOONMVkOTblBBPcWVWdWt6I9fItle1mgoq0K76rDhJsDy+cYeQcIFhP8LKOUPTf
- u57lu/a45y98RsV2NGRCCer4pxxkdAdfn4WXksuQoY2M+viqY1A0qdtVVDfasKF39PuHvm
- 0ctlEL0QfXnmXh66vBfq7YDkuKMM/3I=
+ t=1707162581; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8XXSXzkv0fuv18lvFrJtBY12rIGfCJeOpjEeoQl7stU=;
+ b=L4d2TmPqcAGtnjKx4r+IM+DSmafrI07lmPbrhbdsPJSxZlaW5qUN6huqm1MlpxE3Tz+Km1
+ zyCvS5fhqjZSyHrf19GFqo9EndhzuhAih+w2EkGua3ZUAwnHCi0vOhLdqXPVioFfa88ew3
+ cZQ/eTj3dFY4j6Wz1aQxbhKHmIlQWAc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707162573;
+ s=susede2_ed25519; t=1707162581;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=IAnFU8VjGc03j9aKoWWuWvvtsl/SPRiagmta2AJaUq8=;
- b=a0euSwP22VoB3rgG5oW5EBgPD4/q8+chNmLdPkLFPBTzFqNpsYI6GOLR6oclV2iSsx5eyY
- dGFHHRT24IYbqsAA==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8XXSXzkv0fuv18lvFrJtBY12rIGfCJeOpjEeoQl7stU=;
+ b=lIbLPeCsymwwqk22mwXO0SZaAiBn6Pumgvlg2A89XZ/zQiXLj7PIaVyV93NA/qHhUjoMQ8
+ iIDr749NKLiYBnCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707162573; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=IAnFU8VjGc03j9aKoWWuWvvtsl/SPRiagmta2AJaUq8=;
- b=BFqIvflNOONMVkOTblBBPcWVWdWt6I9fItle1mgoq0K76rDhJsDy+cYeQcIFhP8LKOUPTf
- u57lu/a45y98RsV2NGRCCer4pxxkdAdfn4WXksuQoY2M+viqY1A0qdtVVDfasKF39PuHvm
- 0ctlEL0QfXnmXh66vBfq7YDkuKMM/3I=
+ t=1707162581; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8XXSXzkv0fuv18lvFrJtBY12rIGfCJeOpjEeoQl7stU=;
+ b=L4d2TmPqcAGtnjKx4r+IM+DSmafrI07lmPbrhbdsPJSxZlaW5qUN6huqm1MlpxE3Tz+Km1
+ zyCvS5fhqjZSyHrf19GFqo9EndhzuhAih+w2EkGua3ZUAwnHCi0vOhLdqXPVioFfa88ew3
+ cZQ/eTj3dFY4j6Wz1aQxbhKHmIlQWAc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707162573;
+ s=susede2_ed25519; t=1707162581;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=IAnFU8VjGc03j9aKoWWuWvvtsl/SPRiagmta2AJaUq8=;
- b=a0euSwP22VoB3rgG5oW5EBgPD4/q8+chNmLdPkLFPBTzFqNpsYI6GOLR6oclV2iSsx5eyY
- dGFHHRT24IYbqsAA==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8XXSXzkv0fuv18lvFrJtBY12rIGfCJeOpjEeoQl7stU=;
+ b=lIbLPeCsymwwqk22mwXO0SZaAiBn6Pumgvlg2A89XZ/zQiXLj7PIaVyV93NA/qHhUjoMQ8
+ iIDr749NKLiYBnCQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2F152136F5;
- Mon,  5 Feb 2024 19:49:31 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 493EB136F5;
+ Mon,  5 Feb 2024 19:49:40 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id F57BOMs7wWWYQAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 05 Feb 2024 19:49:31 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qLprBNQ7wWWYQAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 05 Feb 2024 19:49:40 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 0/6] migration/multifd: Fix channel creation vs. cleanup
- races
-Date: Mon,  5 Feb 2024 16:49:23 -0300
-Message-Id: <20240205194929.28963-1-farosas@suse.de>
+Subject: [PATCH v2 4/6] migration/multifd: Move multifd_send_setup into
+ migration thread
+Date: Mon,  5 Feb 2024 16:49:27 -0300
+Message-Id: <20240205194929.28963-5-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240205194929.28963-1-farosas@suse.de>
+References: <20240205194929.28963-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [0.80 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; R_MISSING_CHARSET(2.50)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- BROKEN_CONTENT_TYPE(1.50)[]; TO_DN_SOME(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=L4d2TmPq;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lIbLPeCs
+X-Spamd-Result: default: False [1.99 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
+ TO_DN_SOME(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DWL_DNSWL_LOW(-1.00)[suse.de:dkim]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.10)[-0.475]; MID_CONTAINS_FROM(1.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- BAYES_HAM(-3.00)[100.00%]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ BAYES_HAM(-1.70)[93.16%]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: AE992220E3
+X-Spamd-Bar: +
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -109,62 +130,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 20240202102857.110210-1-peterx@redhat.com
-[PATCH v2 00/23] migration/multifd: Refactor ->send_prepare() and cleanups
-https://lore.kernel.org/r/20240202102857.110210-1-peterx@redhat.com
+We currently have an unfavorable situation around multifd channels
+creation and the migration thread execution.
 
-Hi,
+We create the multifd channels with qio_channel_socket_connect_async
+-> qio_task_run_in_thread, but only connect them at the
+multifd_new_send_channel_async callback, called from
+qio_task_complete, which is registered as a glib event.
 
-In this v2 I made sure NO channel is created after the semaphores are
-posted. Feel free to call me out if that's not the case.
+So at multifd_send_setup() we create the channels, but they will only
+be actually usable after the whole multifd_send_setup() calling stack
+returns back to the main loop. Which means that the migration thread
+is already up and running without any possibility for the multifd
+channels to be ready on time.
 
-Not much changes, except that now both TLS and non-TLS go through the
-same code, so there's a centralized place to do error handling and
-releasing the semaphore.
+We currently rely on the channels-ready semaphore blocking
+multifd_send_sync_main() until channels start to come up and release
+it. However there have been bugs recently found when a channel's
+creation fails and multifd_send_cleanup() is allowed to run while
+other channels are still being created.
 
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1165206107
-based on Peter's code: https://gitlab.com/farosas/qemu/-/pipelines/1165303276
+Let's start to organize this situation by moving the
+multifd_send_setup() call into the migration thread. That way we
+unblock the main-loop to dispatch the completion callbacks and
+actually have a chance of getting the multifd channels ready for when
+the migration thread needs them.
 
-v1:
-https://lore.kernel.org/r/20240202191128.1901-1-farosas@suse.de
+The next patches will deal with the synchronization aspects.
 
-This contains 2 patches from my previous series addressing the
-p->running misuse and the TLS thread leak and 3 new patches to fix the
-cleanup-while-creating-threads race.
+Note that this takes multifd_send_setup() out of the BQL.
 
-For the p->running I'm keeping the idea from the other series to
-remove p->running and use a more narrow p->thread_created flag. This
-flag is used only inform whether the thread has been created so we can
-join it.
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/migration.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-For the cleanup race I have moved some code around and added a
-semaphore to make multifd_save_setup() only return once all channel
-creation tasks have started.
-
-The idea is that after multifd_save_setup() returns, no new creations
-are in flight and the p->thread_created flags will never change again,
-so they're enough to cause the cleanup code to wait for the threads to
-join.
-
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1162798843
-
-@Peter: I can rebase this on top of your series once we decide about
-it.
-
-Fabiano Rosas (6):
-  migration/multifd: Join the TLS thread
-  migration/multifd: Remove p->running
-  migration/multifd: Move multifd_send_setup error handling in to the
-    function
-  migration/multifd: Move multifd_send_setup into migration thread
-  migration/multifd: Unify multifd and TLS connection paths
-  migration/multifd: Add a synchronization point for channel creation
-
- migration/migration.c |  14 ++--
- migration/multifd.c   | 157 +++++++++++++++++++++++-------------------
- migration/multifd.h   |  11 ++-
- 3 files changed, 98 insertions(+), 84 deletions(-)
-
+diff --git a/migration/migration.c b/migration/migration.c
+index 2942f8cf42..0675e12c64 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3315,6 +3315,10 @@ static void *migration_thread(void *opaque)
+     object_ref(OBJECT(s));
+     update_iteration_initial_status(s);
+ 
++    if (!multifd_send_setup()) {
++        goto out;
++    }
++
+     bql_lock();
+     qemu_savevm_state_header(s->to_dst_file);
+     bql_unlock();
+@@ -3386,6 +3390,7 @@ static void *migration_thread(void *opaque)
+         urgent = migration_rate_limit();
+     }
+ 
++out:
+     trace_migration_thread_after_loop();
+     migration_iteration_finish(s);
+     object_unref(OBJECT(s));
+@@ -3623,11 +3628,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+         return;
+     }
+ 
+-    if (!multifd_send_setup()) {
+-        migrate_fd_cleanup(s);
+-        return;
+-    }
+-
+     if (migrate_background_snapshot()) {
+         qemu_thread_create(&s->thread, "bg_snapshot",
+                 bg_migration_thread, s, QEMU_THREAD_JOINABLE);
 -- 
 2.35.3
 
