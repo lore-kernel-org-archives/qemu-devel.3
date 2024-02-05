@@ -4,102 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77777C48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 11:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54403C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 11:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWwsd-00073W-WE; Mon, 05 Feb 2024 06:11:16 -0500
+	id 1rWwwl-0008Cs-Bv; Mon, 05 Feb 2024 06:15:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.purdie@linuxfoundation.org>)
- id 1rWwsb-000734-Gm
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:11:13 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.purdie@linuxfoundation.org>)
- id 1rWwsY-0004mb-Fu
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:11:12 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5114b2b3b73so1208919e87.0
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 03:11:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linuxfoundation.org; s=google; t=1707131467; x=1707736267; darn=nongnu.org; 
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=rfH40CvdcOIjGkNTcr78+p/pNdWCVi1Oq91z13CEwxc=;
- b=b/5P5E+oIpfiwUdU5cxvwcUipyFmVT2OMJT+Gj82g1uoY2TQqATUh6l6trnyfE9wYv
- +2ISL1Qk7iorn2PvnL13EnYOrae5CumClTHbmxev9ic5EnfxwPp9hS97lxuiz6QhvQBh
- yzxG3Dm7FMQMuIOviiPGsqrmguVshzkoZtd4o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707131467; x=1707736267;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rfH40CvdcOIjGkNTcr78+p/pNdWCVi1Oq91z13CEwxc=;
- b=EFUVU/vQqFu8+BWxVqstCwNNeivT0Z1+/xxnxNPs9UKeOH+FNFcfnxAm7s62/Ss/p/
- 50GEOzTZS/INLQXVtMCg6T30YZnrZyIT68Gvh3yL6N2rrt1oQ7iW4fa1Jq9omxFHcn0+
- I3LUXip9L08yNef8lWhi28SnjPG3LT/bzzaXfr7TxP2enJ2f2KjvI5kX01f9JFVmKxk2
- 2fK9GVr6Wfp0q0B3+FCo1E3o1BGD+K+cnQqR5kXgRJgSLsTRPviP7d1psUdFGEOYp31o
- 8E2ILNA3F14R+mlFZACbj4+SnolYxtIihffFJ8PgPpbJj2GLeIHkYB6y5VIWhhctcFyB
- SOoA==
-X-Gm-Message-State: AOJu0Yx7Vjjrze3iW/vdHH7mue5AWYLNDQH4daarru674uQsqW2hhEeo
- WRrYSqZ2CXkVEavU6xgXWO6vfBSiIrCppy+XALAN/T1It8AfKohfd1vNVHduiv0=
-X-Google-Smtp-Source: AGHT+IEG/ikhol9TN8VC7Wek+ppO5SHpjVLI2Csz8DNT+V8m13VO7GrbTXfdvb1IqnVQiVe91ap15Q==
-X-Received: by 2002:a05:6512:36cc:b0:511:5006:9166 with SMTP id
- e12-20020a05651236cc00b0051150069166mr1464608lfs.10.1707131467270; 
- Mon, 05 Feb 2024 03:11:07 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUCQyD3ka5MOrS3p1zqoJG0I+SV4btqDzpD3zD80Oz1Mtui3zAq1tP7u9rHggm0BSE0ZZ6XMgh4atiKQxrNEw==
-Received: from ?IPv6:2001:8b0:aba:5f3c:1dd9:a716:2b89:e181?
- ([2001:8b0:aba:5f3c:1dd9:a716:2b89:e181])
- by smtp.gmail.com with ESMTPSA id
- b6-20020adfee86000000b0033b3ca3a255sm2250232wro.19.2024.02.05.03.11.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 03:11:06 -0800 (PST)
-Message-ID: <360135aa106e1925979bc0efd5a5d6fdeed4202d.camel@linuxfoundation.org>
-Subject: Re: [PULL 05/13] linux-user: Use walk_memory_regions for
- open_self_maps
-From: Richard Purdie <richard.purdie@linuxfoundation.org>
-To: Richard Henderson <richard.henderson@linaro.org>, Michael Tokarev
- <mjt@tls.msk.ru>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Date: Mon, 05 Feb 2024 11:11:06 +0000
-In-Reply-To: <ca83fc98-219c-47b1-a16b-f281d914e4a0@linaro.org>
-References: <20230901204251.137307-1-richard.henderson@linaro.org>
- <20230901204251.137307-6-richard.henderson@linaro.org>
- <9860cd401db66e6bf10e9e41df148b25ee6c73fd.camel@linuxfoundation.org>
- <c845093f-1fe0-477e-bf5e-db22c985241a@tls.msk.ru>
- <3cc4df1a6fe27b211b29d2c17846812936255d7a.camel@linuxfoundation.org>
- <ca83fc98-219c-47b1-a16b-f281d914e4a0@linaro.org>
-Autocrypt: addr=richard.purdie@linuxfoundation.org; prefer-encrypt=mutual;
- keydata=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
- YNvg==
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.0-1 
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rWwwg-0008Ch-U6
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:15:26 -0500
+Received: from mail-bn8nam12on2053.outbound.protection.outlook.com
+ ([40.107.237.53] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rWwwe-0005NQ-CX
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:15:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AL5Ivimtzlx1jbMQl0YVVwRS6ccHlSz4s3yji17J4uxdO8rMybKFBvLutoX57FGQmRzQLmH66QQe73FP8/LVkRk/9MmiV4v8h8JBjE28uivp7+4Tqxyv+XdW/nFmiDRAz42CJUfaT3LaohYh1HnIY6UMoCJrZTPQv4hRFNkPw3nEX0A8IOpNN/lr6FszVru0e6eNEVowfk7CNYZZCNydcfZSAeGQmJTvMjxOWcORikAWmX0d/1y5y3wACvMyrPaRc1M9PPPrnlJCOw4NMqmauMzHtL9aro5KJRNgkMV/pdo0qxOjhtGxRBF8GY4yIMtZkW3hYwLMV7YrJdZZptMF8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7KZYrw2WOd5f4kkd7w+bhraZ0yrFmbszD4XtE4vK1PE=;
+ b=PMm6A+w0DAlRjfvVHoC1ADHm7ayijGiC4xkUNWAKxs01l/uZ2uSWOsh+J+UcLN9L/J0K1BXcN61otD2b7BeUxTbNEonBE7RDp+4X3/7NDhpLFuuqokpRvlqPItBorShFsXCjAVtA7ZvONXiBvCBvoGcylsn7QbXZXZwo22XUnEAQHngbkSV7/VF3WM9fbcbGwnzEUYgzeGtcAWq3T0O5vN0pKIT3IdSPrrvlzr1+RWLQB0mcr4DxRuDgZQK1Bc++gD8pV0mCv5tKdxCAx8SDVYp30s0VWSZ/wlVKHc3+SH5fVCkofVmgjsdX9HqVlS0ZFkeFcQbxGF7YZ/mFM9K5NQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7KZYrw2WOd5f4kkd7w+bhraZ0yrFmbszD4XtE4vK1PE=;
+ b=m0nNBE2Ge3rPjeH/Pxdm9fQjU/sO6gT3enVGezgnvnyBVyZRRFnl1xJ5cunw0ecuRTzm36t1ItS3bdx/1oFXuh+auTTNhwJcUP3v2w2jjq+rwLyDoqwBz+B0OpDA4+dENqzNE2tsh1C2cNlNk2hYBjS3cfe7NSwmRuIuixw/fLNExcrLKmg4pecb7TD6SHM8byq7zysuPJAq1LOmc9nw6CVcT6vzcU5GfY8OP1wCEgUfI6G+dhXOeEcPovYGdCRahxQKJooH7FsRDDNMneUp/Xi1d8btChAZ0/lyYmRll4nrcYOTo5axmBRDXGBnVWXBiSt/urUK5cSqFrImP8h6Cw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by DS0PR12MB6414.namprd12.prod.outlook.com (2603:10b6:8:cd::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.12; Mon, 5 Feb
+ 2024 11:10:19 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::c444:5cde:d19a:c73e]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::c444:5cde:d19a:c73e%7]) with mapi id 15.20.7270.016; Mon, 5 Feb 2024
+ 11:10:19 +0000
+Message-ID: <6bd7f665-23d9-48d5-9f79-0b012e3a6205@nvidia.com>
+Date: Mon, 5 Feb 2024 13:10:14 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] migration/multifd: Add a synchronization point for
+ channel creation
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+References: <20240202191128.1901-1-farosas@suse.de>
+ <20240202191128.1901-6-farosas@suse.de> <ZcB-O5WiZtvGiyNR@x1n>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <ZcB-O5WiZtvGiyNR@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0560.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:33b::18) To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=richard.purdie@linuxfoundation.org;
- helo=mail-lf1-x131.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|DS0PR12MB6414:EE_
+X-MS-Office365-Filtering-Correlation-Id: de324c6d-18e1-409a-5bcd-08dc263b09c5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: HOfcRPo53X/Q3natV1KjrVjgfXJcLdFCMeDAXTdPr91O9WrZKTzeEqSvV4qP9wqpH622OTBxaFWpgjWBSRig0BrTp5BT1kF1KJ2ddRnKWqEnQE8chFD67sikKQNRzvsWfbYYVSMw9NMCUvsKyTSMT3YL/SWL0bOdp1z2eZgQBSVnPPZrIvWbk+NhXyXnVqoytQ1E9qggru32ByDxOA7DuFu0VN83341Vhf/U/Z4HOJcHdk69MIDQsNbbnNBNsQCWkKq1cEhUmNKpPtn0xY1R6XoyAp3dbEhyW6xFvNT0xsDrBMaa/MuxuK0mtyinHzPgf/tWOtqDQLV10A1igq26REWOtnobWgeUwpYZ6KEeyI/KLI3y1mxSCAKJDeuQCw2oJbBeOITYqziHkgo3k1A4BqqoRWQpbwpbmfjkyZVDhK9hAkaV2L7O+XHD8uqCRw99ADvE+T0NCMnLsveJxogVY7+e/Kpey/YL0qc9OsDVF3qdPLo3eMEcm2+u88zL0WKaZSPmgEqAmH7rOq6rinc+UE994rqlSoRiIbQ4x6leVq39RIH4k10gtvzorXUsugpxarlEni+lnD0eNcFR+eeO9OopMRAGvUu0mX9ejcwLi9j6S2IgQxxVy8S1FspkezDaMHbX9MV776PoFAJXT81Y9w==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(396003)(39860400002)(346002)(376002)(136003)(366004)(230273577357003)(230922051799003)(451199024)(64100799003)(1800799012)(186009)(31686004)(41300700001)(86362001)(53546011)(6512007)(83380400001)(6486002)(2906002)(31696002)(36756003)(316002)(38100700002)(26005)(2616005)(478600001)(5660300002)(66556008)(4326008)(66476007)(6666004)(6506007)(110136005)(8936002)(8676002)(66946007)(43740500002)(45980500001);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Yks2Nm5iZ08yT2lQZWVwVmE1MFhpVkN4d05CcmFqR3Rtakh6Q3hVU0J6Tjdk?=
+ =?utf-8?B?NGIxb1ordHdmdXlKTlk4SUxVcEVFdEFJWk9LZDk3dFg2YVBRM0RZWVBPQS93?=
+ =?utf-8?B?U0NnckptRTd1cTRQa2xNbGtFYmdiUnlJWXhlMko4MVYxNnBaVDFVbnpCYTVU?=
+ =?utf-8?B?Zi9IYlNyWTNGSjFaZjRGckZvUG1RNklFTWFlVUM5bzN1ZElOb1ZFSDdhOHMz?=
+ =?utf-8?B?TFROb1ZFWkhHSk1qVlYxcWpMU1BOSDJ6U0dHbVkxR1Vpdm9ieWt1MUR5UFFJ?=
+ =?utf-8?B?M0Y2TVJzaVhIWXdaRmh4WXdpaXVQSUlWMDdTSG51anVFSGZjbUtUZXllMlcw?=
+ =?utf-8?B?alJMaWh5M1FIaW13SWcxTVA2RGdHSUJsM1dTU2dQTzN5ejROSHFoL0ltb2hT?=
+ =?utf-8?B?dWdVbVhCelA1T1dtSUZmamV4bG1tdnhQYjFCNVhFVUk3SXQ2SUJ1aWVmVnov?=
+ =?utf-8?B?cEtLR0ZIQkp2UjRSV1dKWi9IcFlBQi9rRnFvVXhEUmRsVU9QTUt3M2NjTHc3?=
+ =?utf-8?B?V3h2VkFybldIOWNGNTJ0b3RkaWh1VjQ1U0d6UXE0dTByalNyN0hFYzVFTEZH?=
+ =?utf-8?B?azBYbEIrME5DeGVkUzdDbW0xNjdSZnBNTkQ5THR6VjkzZE1rc09BZ3FVd0VB?=
+ =?utf-8?B?UmxWRHpnaC9ONS9ldTlpTGpaV1JrVXE2WVRSVnFLR05uczVacU12S3JXejBW?=
+ =?utf-8?B?NW9iakZFNnR2Y2RMd21kVkcxeStIalgxQW5UOW5LZmJHaVVXMU5FVjc2Zm1Q?=
+ =?utf-8?B?bFphdzI4eHI3ajdmNUM3RmVnWVpMSmFhQmxoWjRiRCtjUnR4eGhRNzFISytk?=
+ =?utf-8?B?UlRzRlVTQVZaSEdHai95L0xoaXVLMmxLSkVMdVdkVXVwMzBJZmFRd0ZWa3A3?=
+ =?utf-8?B?L3l1cEdGZStIVTljbFJEd2c0cHpzUmJvMklPWTN1MjV1K3pBKzlXc3AzSlFs?=
+ =?utf-8?B?eGN2RFI2VjJVUGcyUVRnblMwTFFIa3RBdVpNWnJlQ0hmM2hqSUhweFZOc25V?=
+ =?utf-8?B?RVFCczA0L0pUWTNDOU1uN25NalVBY1daTkc0MTdXM2JUeXZwNHNvNFd1VDNH?=
+ =?utf-8?B?UEJyWVRpY0dOYlJ0RUNkUTVpb2lBZWhzZHFLd1M0QTE1elpLNk9aV1U4MTE0?=
+ =?utf-8?B?dDZiSGNNbWdYK3VwdG1JY1VSL3lCUzk4TjZBcDNrTzVmaVViVXg2MWU3QkNP?=
+ =?utf-8?B?ZXFQajMrUEJjTXc3cjNyclErVk1Xd1RabjRWdTlYaVV0OEgyU29DTGc0TkE2?=
+ =?utf-8?B?YkVhYlA1RHFZem9lVmJ0UTd2Z3c3cEpmZE9yVG5oQjVlVjZLUGlNeXlOTjQ0?=
+ =?utf-8?B?dFF1bElNMDYwTHJjeG5MeUUveTFVYWo0OWJacFU0TVBHWVVPZTJqV2RLaUJh?=
+ =?utf-8?B?SGpnTE13ZS9LdHluaWZGOGRvVTAzbkxTeXZkbUpxUEtIS2pRUDZvL1ZNTWlQ?=
+ =?utf-8?B?L3ZZb2x2RnkxRGpiOWQxbWdBbWYxSHZuTjNPNTBxVTZMQ2VXaHRIa1RvZjg3?=
+ =?utf-8?B?Ym5pbSszNjZvd1BLcHlncTIrZTZZMkJHOE8vamJXR3JweHI1UWtVbjhLczd6?=
+ =?utf-8?B?ZnVSaGs1VlNwQmtkdFBrUjhBZndPZGs4SkRjTW5HVXd3REVuSFNhVk5Vc1RT?=
+ =?utf-8?B?Q1R4MXJVUzJyR20vNVRvc1Nqa25QQmdDMnNKTXBvc1NzdlJkcUFINzI1MzBU?=
+ =?utf-8?B?VjB5L1A0MW5XanNuZ3dscG5kNXlvbUQvak9XVEt1b2cvSVlGZFhzYjhTSlRt?=
+ =?utf-8?B?dmlLb3BzL1p5dW40SDZjNS9YaE1GWmZYUWN2bWNnN2F5bDlaM0ZaOGRTL3dK?=
+ =?utf-8?B?WHZwVkRMNnBQalE0TGF0OW5yaEF3eUU4d2RxaFlQYzlQYWVvbUdQSHkvRHR5?=
+ =?utf-8?B?UEFYSjQ4NTJnc1dxcGcySGMwbzFpaXZ5S2NsbVNrZkd5OCtESUxicFg1UjEw?=
+ =?utf-8?B?aS93czdRSFhzSitIdCs2d3ZaRmsxZEdnYzl0UXl6VmlXaWkvbGNqY3FiL1Bl?=
+ =?utf-8?B?cGtORXJUbzZtd0NramEwQ1RYYitQMGNzK3NOcDJZeUdTS3U0Tzl5RlNlMmxJ?=
+ =?utf-8?B?dGE0MjZQOG9BRzl4RW8rVCtUellod1d2aTd6OTc0ZVR5N3d6RzhsZ3lRNWFl?=
+ =?utf-8?Q?vm7N33XceGMLrUfWpJVx0NWUk?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de324c6d-18e1-409a-5bcd-08dc263b09c5
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Feb 2024 11:10:19.0573 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xwzt1q4fE4SiakhQDorGsh99RjlO2c2ewZKxgb2X/wN7FMTKiwKXtqq+muSn6fHKmLoqzIgmPC9934mQagd/lA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6414
+Received-SPF: softfail client-ip=40.107.237.53;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,60 +148,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2024-02-05 at 13:05 +1000, Richard Henderson wrote:
-> On 1/26/24 23:52, Richard Purdie wrote:
-> > On Fri, 2024-01-26 at 16:33 +0300, Michael Tokarev wrote:
-> > > 26.01.2024 16:03, Richard Purdie wrote:
-> > > > I've run into a problem with this change.
-> > > >=20
-> > > > We (Yocto Project) upgraded to qemu 8.2.0 recently and after that w=
-e
-> > > > started seeing errors cross compiling webkitgtk on x86_64 for x86_6=
-4
-> > > > during the introspection code which runs under user mode qemu.
-> > >=20
-> > > Besides your observations, please be aware there's quite a few issues=
- in 8.2.0.
-> > > Please take a look at https://gitlab.com/mjt0k/qemu/-/commits/staging=
--8.2/
-> > > (and https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2/ whic=
-h is updated
-> > > less often) for fixes already queued up, if you haven't looked there =
-already.
-> > > 8.2.1 stable/bugfix release is scheduled for the beginning of the nex=
-t week.
-> >=20
-> > Thanks.
-> >=20
-> > I should note that I did test the staging-8.2 branch and nothing there
-> > helped. The issue was also present with master as of yesterday.
-> >=20
-> > https://bugzilla.yoctoproject.org/show_bug.cgi?id=3D15367 is Yocto
-> > Projects tracking of the issue which has the commits for master and
-> > staging-8.2 that I tested.
->=20
-> The yocto logs referenced here are not helpful for reproducing the proble=
-m.
 
-It took me a couple of days I didn't have to workout which commit
-caused it, which versions showed the issue and how to work around it.
+On 05/02/2024 8:20, Peter Xu wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> On Fri, Feb 02, 2024 at 04:11:28PM -0300, Fabiano Rosas wrote:
+>> It is possible that one of the multifd channels fails to be created at
+>> multifd_new_send_channel_async() while the rest of the channel
+>> creation tasks are still in flight.
+>>
+>> This could lead to multifd_save_cleanup() executing the
+>> qemu_thread_join() loop too early and not waiting for the threads
+>> which haven't been created yet, leading to the freeing of resources
+>> that the newly created threads will try to access and crash.
+>>
+>> Add a synchronization point after which there will be no attempts at
+>> thread creation and therefore calling multifd_save_cleanup() past that
+>> point will ensure it properly waits for the threads.
+>>
+>> A note about performance: Prior to this patch, if a channel took too
+>> long to be established, other channels could finish connecting first
+>> and already start taking load. Now we're bounded by the
+>> slowest-connecting channel.
+> Yes, I think this should (hopefully!) be fine.
+>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>   migration/multifd.c | 67 +++++++++++++++++++++++++--------------------
+>>   1 file changed, 37 insertions(+), 30 deletions(-)
+>>
+>> diff --git a/migration/multifd.c b/migration/multifd.c
+>> index 1851206352..888ac8b05d 100644
+>> --- a/migration/multifd.c
+>> +++ b/migration/multifd.c
+>> @@ -360,6 +360,11 @@ struct {
+>>       MultiFDPages_t *pages;
+>>       /* global number of generated multifd packets */
+>>       uint64_t packet_num;
+>> +    /*
+>> +     * Synchronization point past which no more channels will be
+>> +     * created.
+>> +     */
+>> +    QemuSemaphore channels_created;
+>>       /* send channels ready */
+>>       QemuSemaphore channels_ready;
+>>       /*
+>> @@ -561,6 +566,7 @@ void multifd_save_cleanup(void)
+>>               error_free(local_err);
+>>           }
+>>       }
+>> +    qemu_sem_destroy(&multifd_send_state->channels_created);
+>>       qemu_sem_destroy(&multifd_send_state->channels_ready);
+>>       g_free(multifd_send_state->params);
+>>       multifd_send_state->params = NULL;
+>> @@ -787,13 +793,6 @@ static void multifd_tls_outgoing_handshake(QIOTask *task,
+>>       trace_multifd_tls_outgoing_handshake_error(ioc, error_get_pretty(err));
+>>
+>>       migrate_set_error(migrate_get_current(), err);
+>> -    /*
+>> -     * Error happen, mark multifd_send_thread status as 'quit' although it
+>> -     * is not created, and then tell who pay attention to me.
+>> -     */
+>> -    p->quit = true;
+>> -    qemu_sem_post(&multifd_send_state->channels_ready);
+>> -    qemu_sem_post(&p->sem_sync);
+>>       error_free(err);
+>>   }
+>>
+>> @@ -862,39 +861,37 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
+>>       return true;
+>>   }
+>>
+>> -static void multifd_new_send_channel_cleanup(MultiFDSendParams *p,
+>> -                                             QIOChannel *ioc, Error *err)
+>> -{
+>> -     migrate_set_error(migrate_get_current(), err);
+>> -     /* Error happen, we need to tell who pay attention to me */
+>> -     qemu_sem_post(&multifd_send_state->channels_ready);
+>> -     qemu_sem_post(&p->sem_sync);
+>> -     /*
+>> -      * Although multifd_send_thread is not created, but main migration
+>> -      * thread need to judge whether it is running, so we need to mark
+>> -      * its status.
+>> -      */
+>> -     p->quit = true;
+>> -     object_unref(OBJECT(ioc));
+>> -     error_free(err);
+>> -}
+>> -
+>>   static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
+>>   {
+>>       MultiFDSendParams *p = opaque;
+>>       QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
+>>       Error *local_err = NULL;
+>> +    bool ret;
+>>
+>>       trace_multifd_new_send_channel_async(p->id);
+>> -    if (!qio_task_propagate_error(task, &local_err)) {
+>> -        qio_channel_set_delay(ioc, false);
+>> -        if (multifd_channel_connect(p, ioc, &local_err)) {
+>> -            return;
+>> -        }
+>> +
+>> +    if (qio_task_propagate_error(task, &local_err)) {
+>> +        ret = false;
+>> +        goto out;
+>> +    }
+>> +
+>> +    qio_channel_set_delay(ioc, false);
+>> +    ret = multifd_channel_connect(p, ioc, &local_err);
+>> +
+>> +out:
+>> +    /*
+>> +     * Here we're not interested whether creation succeeded, only that
+>> +     * it happened at all.
+>> +     */
+>> +    qemu_sem_post(&multifd_send_state->channels_created);
+>> +    if (ret) {
+>> +        return;
+>>       }
+>>
+>>       trace_multifd_new_send_channel_async_error(p->id, local_err);
+>> -    multifd_new_send_channel_cleanup(p, ioc, local_err);
+>> +    migrate_set_error(migrate_get_current(), local_err);
+>> +    object_unref(OBJECT(ioc));
+>> +    error_free(local_err);
+>>   }
+>>
+>>   static void multifd_new_send_channel_create(gpointer opaque)
+>> @@ -918,6 +915,7 @@ bool multifd_save_setup(void)
+>>       multifd_send_state = g_malloc0(sizeof(*multifd_send_state));
+>>       multifd_send_state->params = g_new0(MultiFDSendParams, thread_count);
+>>       multifd_send_state->pages = multifd_pages_init(page_count);
+>> +    qemu_sem_init(&multifd_send_state->channels_created, 0);
+>>       qemu_sem_init(&multifd_send_state->channels_ready, 0);
+>>       qatomic_set(&multifd_send_state->exiting, 0);
+>>       multifd_send_state->ops = multifd_ops[migrate_multifd_compression()];
+>> @@ -953,6 +951,15 @@ bool multifd_save_setup(void)
+>>           multifd_new_send_channel_create(p);
+>>       }
+>>
+>> +    /*
+>> +     * Wait until channel creation has started for all channels. The
+>> +     * creation can still fail, but no more channels will be created
+>> +     * past this point.
+>> +     */
+> Let me double check with you here on the TLS use case.
+>
+> IIUC we still can have more channels to be created if TLS is enabled: we
+> notify the sem as long as the handshake thread is created, then the
+> handshake thread can further create the tls-armed iochannel?  However I
+> think I get your point, and that is fine, because if that is the case, even
+> though this loop can complete before tls further creates the final channel,
+> we'll still see tls_thread_created==true and join() that tls thread first,
+> then further we'll join() the next multifd thread even if a new one will
+> pop up, or if it failed then nothing to join besides the tls thread.
+>
+> I'm not sure whether Avihai has any input, I think this can be a good idea
+> indeed.
 
-It looks host kernel specific since it doesn't happen on some systems
-so even with the binaries/command/environment vars, it may not be
-enough.
+Nothing special, my understanding of this is the same as yours.
+This fix looks solid.
 
-I was hoping the indication of the cause might help point to the fix as
-there is quite a bit of work in trying to extract this into a
-reproducer. The failure is 20 mins into a webkitgtk compile on a remote
-CI system which no longer has the context on it.
+>    there's a dependency chain on the ordering if my above
+> undertanding is correct; we may want to document this somewhere, perhaps
+> right here on the chaining of threads and how we handle that?
 
-> Please extract a binary to run, inputs, and command-line.
+I agree, this is subtle and may deserve a small note or hint.
 
-I wish I could say that to the bug reports I get! :)
-
-I'll do my best but finding the time is going to be a challenge.
-
-Cheers,
-
-Richard
+>
+> This may not allow a concurrent migrate_cancel to respond, but I assume
+> this is good enough; the migrate_cancel request is indeed at least so far
+> something I made up, but not a request from anyone.  We can leave that for
+> later and fix the race / crash first.  This seems to be a complete fix from
+> that regard.
+>
+>> +    for (i = 0; i < thread_count; i++) {
+>> +        qemu_sem_wait(&multifd_send_state->channels_created);
+>> +    }
+>> +
+>>       for (i = 0; i < thread_count; i++) {
+>>           MultiFDSendParams *p = &multifd_send_state->params[i];
+>>
+>> --
+>> 2.35.3
+>>
+> One other note is I think this will also deserve a cc: stable? But then
+> it'll mean all patch 3/4 will also need to copy stable to make Michael's
+> life easier.
+>
+> Let's also copy Dan when repost; after all he more or less owns the TLS
+> part.
+>
+> Thanks!
+>
+> --
+> Peter Xu
+>
 
