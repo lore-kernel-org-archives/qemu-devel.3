@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F46C4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 07:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ABEBC48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 07:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWtSj-0001A1-RK; Mon, 05 Feb 2024 02:32:17 -0500
+	id 1rWtTI-0001Bz-VO; Mon, 05 Feb 2024 02:32:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWtSh-00019h-HJ
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:32:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWtTE-0001BZ-G9
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:32:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWtSd-0002NN-2v
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:32:15 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rWtTC-0002Sb-I7
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 02:32:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707118330;
+ s=mimecast20190719; t=1707118365;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SZttAUjkhFi20XBsfAB/nqN0sbWfdapjCST6nQkd0kw=;
- b=Kg0jvf8iYzHvk3MjLXT8Fk0MCwkTqVwLT8qLqhZCZy2prMAuRnTtLN6kxAMxYe1qPfhguK
- BEtmajGOtMUb0Jww6uHFwEq77xCjNdwCnLEc3ye67GPO6w+LpM0kXtDHupJDHY5MuL7b+g
- vOe2OX9bUaTEV0ZY0Ol4Q02dcSrMze4=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WmO+rrCeMO3ESdcPF+696JtVaktlX0N/vkbfimWgFKc=;
+ b=BK6WSc9tXlxuHysbHnXFS6hZFghyALza8nMnmr3aIRx34OEZjDZ/YUKCUavzw47HwsaZVz
+ GbkEuM8FPaUar2/75AO7m95YjFelg6CQvZb6SS5x/FYaY0WQiCkvWy99TISLDo6ZYH5qZa
+ Wsi8JccPJrtANJxGU7ujtXKC8awK9DE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-XaDh4GKIP4C6rH8idxiitw-1; Mon, 05 Feb 2024 02:32:06 -0500
-X-MC-Unique: XaDh4GKIP4C6rH8idxiitw-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-51144722c56so1571196e87.2
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 23:32:06 -0800 (PST)
+ us-mta-679-RT91j8ydNymgTpEvg1pjgw-1; Mon, 05 Feb 2024 02:32:41 -0500
+X-MC-Unique: RT91j8ydNymgTpEvg1pjgw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-40f02515093so23205495e9.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 23:32:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707118325; x=1707723125;
+ d=1e100.net; s=20230601; t=1707118360; x=1707723160;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :references:cc:to:content-language:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SZttAUjkhFi20XBsfAB/nqN0sbWfdapjCST6nQkd0kw=;
- b=ORdE/xeLFpDGYrlMxEhKAt5VlSYongVnBSpd/iV/wZSxF47V4KwIo6UD7/dKD/a5rd
- oXc/VVIV8DD2Nce/7cCGpKpH8My5JBrkZm5AGUw0WzFTaZe0imyi9zOoAK9ZmvqhIU44
- ITJL4ElWat4PPARdCfvPetvZGXcXPFA/mCexyQN/yqT3iEhRQigIhRT4HjR57je2utJD
- 6STqBEw0cC/p/9VhSiISFCiH4iHtcrrQ1+/Nw5OT4FkrSmbGk/Ut+by5O+Uv2EiXI5a+
- vmPsYVv2iBIpiKXEn2DN2FmGYIVctrtb8ZwYfoRcRUUQtKCw2HAoNKtB25RA0/AMbGwW
- iqrA==
-X-Gm-Message-State: AOJu0YzpmELrrMDk2/RE6r7/gvcKYHkm2ZG6kSy56gpEzpnTPHSn0+Yk
- +FaKndqJaYFsm+cF3ddoABlTLluBMwm9TA+AxfzVqjqE6AhctxAgzKZkqjYEs4cRkec9VZIqJq9
- 8EVUyIrziBxfHAtd5cn4l7Q+/iXAhFhW7dFx9dD7zkKoJZ/fdeJnY
-X-Received: by 2002:a05:6512:3585:b0:511:519f:ce76 with SMTP id
- m5-20020a056512358500b00511519fce76mr694397lfr.57.1707118325395; 
- Sun, 04 Feb 2024 23:32:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjiWlLrvEuk2YYbur6XUePaLrF3LWq5X0KFc+xFK8mmQhg42igEEiw+8V+mfJZ57EhglKP3Q==
-X-Received: by 2002:a05:6512:3585:b0:511:519f:ce76 with SMTP id
- m5-20020a056512358500b00511519fce76mr694388lfr.57.1707118324998; 
- Sun, 04 Feb 2024 23:32:04 -0800 (PST)
+ bh=WmO+rrCeMO3ESdcPF+696JtVaktlX0N/vkbfimWgFKc=;
+ b=Qo6P7F87KBEYvNpSghWtIfiYtBKr3vCUErZx7JsKBi377K9osxuLlzyJSJpaqIZP3s
+ 6NEMN0buKa0zagdNM8WxXB+5srHwIQK8EmF0HVwtI51qzcf86sPI/5RIYWHq0gsZrN1s
+ 2cDr/Pu3EqUWWqO8YqYSlAxRk/G8+pnehS+Y2PffVG+ORK7sIBf7dnGiE88ZH5G/xCe6
+ FeWVaMq30QfkJYcy2vyrHBS93xZ8Tavqj7Nr3jHt2OodbXjutVcuve3SS5XI03N6Bwvx
+ tMOpkqxB8pgfbg5WMfP0QuK/FebitUzD9pK1CoKYjoqGevr54ZiHXvQ1W7p0meaJq5EE
+ fDfQ==
+X-Gm-Message-State: AOJu0Yx2qSc0EWkSS8CGl84gJk+m1x+5+ocgMR+wiPjcwEMqOizxHEWX
+ E3C7FeQBJ22ZDHDJ0h7Gg8s5eJbWj2mg63CXqC/K8vpO5I64Dnmjhbxjs9dldRmNMbpy0u94d86
+ AdULTyKrzOb4x8VQ1sEswGNwxcc/3HLLN8M/uUiKGEaiyrD1Cm0Rg
+X-Received: by 2002:a05:600c:1d08:b0:40f:d598:bdbb with SMTP id
+ l8-20020a05600c1d0800b0040fd598bdbbmr2748216wms.11.1707118360500; 
+ Sun, 04 Feb 2024 23:32:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEINVhj7d2GB4WZ0+iOE8U3/1c1zGmiCkiLBhndyLvXi7eGl3iYkmggplUvWdG513P8SNA0fg==
+X-Received: by 2002:a05:600c:1d08:b0:40f:d598:bdbb with SMTP id
+ l8-20020a05600c1d0800b0040fd598bdbbmr2748203wms.11.1707118360161; 
+ Sun, 04 Feb 2024 23:32:40 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCVKB6RScxCr3hFFWgJl+g+aHadfjzXrR+RkdsE+xJ77rdEmZuUQ+irL/8cssS9iAHroaXP7D002trkw2RZ7S6RRyCrAT5W356UAEoSm5P7n/dFvy0KMWuhJ5AGvmWoBNciL+b7dE+VGmE6WOEPcNDvTOujmDdbQ+Pt1eakLwx87uAN62VRstcXHTRNU8fShKipGV4zPz00EoBU2ZCGNRq+iuq/Eh8eWR3PeulibcRw=
+ AJvYcCUMk+BhAONtFTGFcpa2179oIsqQtFbN2Mzzc68m+UhauDmy+PhNJm87ZpDKT2dfNnT+B9vmczpUlBmlN/DhIqxw1JPiG/i+X5cfSm/o1jgMFT1Mlj/rMYQrt8gshyTjN/peQM4lffVT7K32g8Lq+nt2cR8g/S0B21LOtGxi53M3yDwDZ1kzMTG4vPSirPgFyUcnQODQO+fABRzFDmmAz1d5GPj1JeUnNpasrrzrKqM=
 Received: from [10.218.83.77] ([88.128.88.102])
  by smtp.gmail.com with ESMTPSA id
- u8-20020a05600c19c800b0040fb0c90da6sm7641977wmq.14.2024.02.04.23.32.02
+ u8-20020a05600c19c800b0040fb0c90da6sm7641977wmq.14.2024.02.04.23.32.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Feb 2024 23:32:04 -0800 (PST)
-Message-ID: <70a3d6e3-1d62-4224-b36f-f29819f33bb2@redhat.com>
-Date: Mon, 5 Feb 2024 08:32:02 +0100
+ Sun, 04 Feb 2024 23:32:39 -0800 (PST)
+Message-ID: <5f8701ff-7fd7-4ec1-94b4-7138f652774f@redhat.com>
+Date: Mon, 5 Feb 2024 08:32:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/15] libvhost-user: Fix msg_region->userspace_addr
- computation
+Subject: Re: [PATCH v1 11/15] libvhost-user: Speedup gpa_to_mem_region() and
+ vu_gpa_to_va()
 Content-Language: en-US
 To: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
@@ -80,10 +80,10 @@ Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Germano Veit Michel <germano@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>
 References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-2-david@redhat.com>
- <CAFubqFuiQ5vEzELv0_y2+9KwhLDs3mNJQXMfeR4_YFMumo-x_g@mail.gmail.com>
- <8c3ffb6e-0b77-41ef-8f8a-ea67b62ff410@redhat.com>
- <CAFubqFtqk6zDPGriu-sOwnhGo4QdZpJaaS7imRRL8ZCbWaSN4w@mail.gmail.com>
+ <20240202215332.118728-12-david@redhat.com>
+ <CAFubqFvC24ng0kHJectz3zN3UDHR6T+Cs7J+RUfm+zT92HR+Zg@mail.gmail.com>
+ <21d326c9-f07f-435f-9cbb-6a4e7ac46c65@redhat.com>
+ <CAFubqFv6ryzXHC-wPaFv5hkFET+CO7H=M3LGMU5yXGYWeJuUpA@mail.gmail.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -130,19 +130,18 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <CAFubqFtqk6zDPGriu-sOwnhGo4QdZpJaaS7imRRL8ZCbWaSN4w@mail.gmail.com>
+In-Reply-To: <CAFubqFv6ryzXHC-wPaFv5hkFET+CO7H=M3LGMU5yXGYWeJuUpA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,26 +157,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.02.24 23:01, Raphael Norwitz wrote:
-> On Sun, Feb 4, 2024 at 9:36 AM David Hildenbrand <david@redhat.com> wrote:
+On 04.02.24 23:07, Raphael Norwitz wrote:
+> On Sun, Feb 4, 2024 at 9:51 AM David Hildenbrand <david@redhat.com> wrote:
 >>
->> On 04.02.24 02:35, Raphael Norwitz wrote:
->>> As a heads up, I've left Nutanix and updated it in MAINTAINERS. Will
->>> be updating it again shortly so tagging these with my new work email.
+>> On 04.02.24 03:10, Raphael Norwitz wrote:
+>>> One comment on this one.
 >>>
+>>> On Fri, Feb 2, 2024 at 4:56 PM David Hildenbrand <david@redhat.com> wrote:
+>>>>
+>>>> Let's speed up GPA to memory region / virtual address lookup. Store the
+>>>> memory regions ordered by guest physical addresses, and use binary
+>>>> search for address translation, as well as when adding/removing memory
+>>>> regions.
+>>>>
+>>>> Most importantly, this will speed up GPA->VA address translation when we
+>>>> have many memslots.
+>>>>
+>>>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>>>> ---
+>>>>    subprojects/libvhost-user/libvhost-user.c | 49 +++++++++++++++++++++--
+>>>>    1 file changed, 45 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+>>>> index d036b54ed0..75e47b7bb3 100644
+>>>> --- a/subprojects/libvhost-user/libvhost-user.c
+>>>> +++ b/subprojects/libvhost-user/libvhost-user.c
+>>>> @@ -199,19 +199,30 @@ vu_panic(VuDev *dev, const char *msg, ...)
+>>>>    static VuDevRegion *
+>>>>    vu_gpa_to_mem_region(VuDev *dev, uint64_t guest_addr)
+>>>>    {
+>>>> -    unsigned int i;
+>>>> +    int low = 0;
+>>>> +    int high = dev->nregions - 1;
+>>>>
+>>>>        /*
+>>>>         * Memory regions cannot overlap in guest physical address space. Each
+>>>>         * GPA belongs to exactly one memory region, so there can only be one
+>>>>         * match.
+>>>> +     *
+>>>> +     * We store our memory regions ordered by GPA and can simply perform a
+>>>> +     * binary search.
+>>>>         */
+>>>> -    for (i = 0; i < dev->nregions; i++) {
+>>>> -        VuDevRegion *cur = &dev->regions[i];
+>>>> +    while (low <= high) {
+>>>> +        unsigned int mid = low + (high - low) / 2;
+>>>> +        VuDevRegion *cur = &dev->regions[mid];
+>>>>
+>>>>            if (guest_addr >= cur->gpa && guest_addr < cur->gpa + cur->size) {
+>>>>                return cur;
+>>>>            }
+>>>> +        if (guest_addr >= cur->gpa + cur->size) {
+>>>> +            low = mid + 1;
+>>>> +        }
+>>>> +        if (guest_addr < cur->gpa) {
+>>>> +            high = mid - 1;
+>>>> +        }
+>>>>        }
+>>>>        return NULL;
+>>>>    }
+>>>> @@ -273,9 +284,14 @@ vu_remove_all_mem_regs(VuDev *dev)
+>>>>    static void
+>>>>    _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
+>>>>    {
+>>>> +    const uint64_t start_gpa = msg_region->guest_phys_addr;
+>>>> +    const uint64_t end_gpa = start_gpa + msg_region->memory_size;
+>>>>        int prot = PROT_READ | PROT_WRITE;
+>>>>        VuDevRegion *r;
+>>>>        void *mmap_addr;
+>>>> +    int low = 0;
+>>>> +    int high = dev->nregions - 1;
+>>>> +    unsigned int idx;
+>>>>
+>>>>        DPRINT("Adding region %d\n", dev->nregions);
+>>>>        DPRINT("    guest_phys_addr: 0x%016"PRIx64"\n",
+>>>> @@ -295,6 +311,29 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
+>>>>            prot = PROT_NONE;
+>>>>        }
+>>>>
+>>>> +    /*
+>>>> +     * We will add memory regions into the array sorted by GPA. Perform a
+>>>> +     * binary search to locate the insertion point: it will be at the low
+>>>> +     * index.
+>>>> +     */
+>>>> +    while (low <= high) {
+>>>> +        unsigned int mid = low + (high - low)  / 2;
+>>>> +        VuDevRegion *cur = &dev->regions[mid];
+>>>> +
+>>>> +        /* Overlap of GPA addresses. */
+>>>
+>>> Looks like this check will only catch if the new region is fully
+>>> contained within an existing region. I think we need to check whether
+>>> either start or end region are in the range, i.e.:
 >>
->> Thanks for the fast review! The mail server already complained to me :)
+>> That check should cover all cases of overlaps, not just fully contained.
 >>
->> Maybe consider adding yourself as reviewer for vhost as well? (which
->> covers libvhost-user), I took your mail address from git history, not
->> get_maintainers.pl.
+>> See the QEMU implementation of range_overlaps_rang() that contains a
+>> similar logic:
+>>
+>> return !(range2->upb < range1->lob || range1->upb < range2->lob);
+>>
+>>      !(range2->upb < range1->lob || range1->upb < range2->lob);
+>> =  !(range2->upb < range1->lob) && !(range1->upb < range2->lob)
+>> =   range2->upb >= range1->lob && range1->upb >= range2->lob
+>> =   range1->lob <= range2->upb && range2->lob <= range1->upb
+>>
+>> In QEMU, upb is inclusive, if it were exclusive (like we have here):
+>>
+>> =   range1->lob < range2->upb && range2->lob < range1->upb
+>>
+>> Which is what we have here with:
+>>
+>> range1->lob = start_gpa
+>> range1->upb = end_gpa
+>> range2->lob = cur->gpa
+>> range2->upb = cur->gpa + cur->size
+>>
+>> Also if you are interested, see
+>>
+>> https://stackoverflow.com/questions/3269434/whats-the-most-efficient-way-to-test-if-two-ranges-overlap
+>>
+>> Thanks!
 > 
-> I don't expect I'll have much time to review code outside of
-> vhost-user-blk/vhost-user-scsi, but happy to add an entry if it helps
-> folks tag me on relevant patches.
+> Got it, thanks for the full explanation. With that:
+> 
+> Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 
-If it helps, it might make sense to split out libvhost-user into a 
-separate MAINTAINERS section.
+Thanks!
 
 -- 
 Cheers,
