@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D04ACC48286
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 02:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690B3C4828F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 02:59:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWpBe-0007SF-BL; Sun, 04 Feb 2024 21:58:22 -0500
+	id 1rWpCQ-0008SG-C0; Sun, 04 Feb 2024 21:59:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWpBc-0007PX-Sk; Sun, 04 Feb 2024 21:58:20 -0500
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ id 1rWpCP-0008S3-4N; Sun, 04 Feb 2024 21:59:09 -0500
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWpBa-0006kZ-F1; Sun, 04 Feb 2024 21:58:19 -0500
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-7d6275d7d4dso1610531241.2; 
- Sun, 04 Feb 2024 18:58:17 -0800 (PST)
+ id 1rWpCN-0006p5-Lf; Sun, 04 Feb 2024 21:59:08 -0500
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-7d2e21181c1so1979602241.3; 
+ Sun, 04 Feb 2024 18:59:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707101897; x=1707706697; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707101946; x=1707706746; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HNKhOPqd0X7Ap2stK/qaMss0bTy4pcMPNUwi6m6bIso=;
- b=k6VSs8BOeCnmIlMCNn9kbMcqV57tPebvWpqG/mYymvxkqZimOhWSe/iAcKvycCKzqv
- 1XucR+9icuSadpazppZ9easYvvyvjJNI6wVnkoM5g5B8LVMlGD1iWzYt0tK0K7Qb+vvb
- iTOSdTrtzNcTKPrFJbSAewyJD+9IEC6HotbQSGh7DV1N+QM7X7C78s5BZFziylTUgyEn
- xA8dVHaXkfSNTJUG8JCsUFWmFv7uNWpjWXFeYLusK6KPZPXRZ+oguayg4C2RlWbTy1td
- fxVmfYZ3f5YMxb9rSQCr3rnMLD5Y5k+Lxjh5Ejhi5g4brLxmI7feTuBVzrlZsF2Y3M28
- 62PQ==
+ bh=uUWSDY/q/U0JePTCElKjn0OAaT5Ppg2W3L7jH8akprQ=;
+ b=cFoQ9AJ7uiH81RYniKRsGxDvXNqQ+JH3q1BNvBgeo0tYEQzdqaNofIhBax/yr7B1xn
+ 3YlMHy7Vdu9hHtq+lkc3QYzyWMqHJJgB7f3NR3YeFZnFEs0TZ5zhMS4Br4KZghzFsunR
+ 1v1+7wXnxlRGZ15zF76tSOieUiu63Ue3/bu0xye//IiCBfG7miG8yKz/GX46FNKsBB/T
+ q8ZDfNMg4G/+PgtQ6+UJWSk9V1dZSH9Ptw3g0II8DUeohRmthWaExFYQlb1EubB3zWtK
+ dvVX1X0jvbZzUMq7PrghFkTCq0tmSZBXfBk09S6DfJrD8kjcGfMn39ybI5LyJBdw4JRB
+ ECEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707101897; x=1707706697;
+ d=1e100.net; s=20230601; t=1707101946; x=1707706746;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HNKhOPqd0X7Ap2stK/qaMss0bTy4pcMPNUwi6m6bIso=;
- b=CLb7h3GsLOVZAsljyU0MwTzvAJkt5XepqBvkOHcvXFnG0YqVh370y9bdudk2WLHKI0
- wvLuA12kJKNBSFNBauPbAmBX3uxBcdyphyqCcsfwreIrng7xsYi3bPdgQjBK4dfVuGfN
- nBxa7OfkL3ajNb71BDhaeD+Avyd42AEQx+LmL5Somh7fcsSSh0dO6Y6zW/FbsHX4djvY
- 3RcA9lMtTX5foWqkGCw1fcL+wZ/W0fxPiPF4OTgQ7/toLMotdLI/FWbfW0yLWMacb5Vy
- kVFS+Ox+OH2J/+0Y6bYZKdVS4/yM8FeiuJ2kvF66VEcAYX/6mkacHt9IYOLcZSTvLB85
- tujw==
-X-Gm-Message-State: AOJu0YytZNcYCXhw8fr9/O3CR6zCF12y7qsfGXve6VUoFTUAa9EFjGz+
- GV/5+fg/CRWszkxl2ghaXlbaXncJZqAJf+PlKza6ub7HONRqVpF6mNCzi3DEqSgZF/WSyazDwau
- zq176I+NqrvJI03maLzyidlUftL8=
-X-Google-Smtp-Source: AGHT+IGPC8NpLHtitXgNl6TIHHMuIOZ6+xvcP++sHc5BuxfnhhDcBMKyA7F/6sUu+Gxc7hZmTSnzwkTgz7PY6Codd0Q=
-X-Received: by 2002:a67:e283:0:b0:46d:20cd:fa2e with SMTP id
- g3-20020a67e283000000b0046d20cdfa2emr1632063vsf.13.1707101896986; Sun, 04 Feb
- 2024 18:58:16 -0800 (PST)
+ bh=uUWSDY/q/U0JePTCElKjn0OAaT5Ppg2W3L7jH8akprQ=;
+ b=h8Z6rz47D59a4MU/+KNUeQ+oIuQzQ6H3rg8oqJVZ7rZk9lOTKV6yf2y/CbgGP5aJdO
+ ptuBOzC/vHn00ITK8aIX+hFez2nEDcD8Bg9k5gjrol/1FtCdYoWIjtl6G2oiOtp81d1N
+ wowIMCV+PBnhT2ZFOwK2rQpEVmxwSMWUsNl6JmIGpaVZRsc7FvMM5wIFZuaqgMMhjpzG
+ K4Xn5eWDNepYweNtTOrWLQmg+bodfjWdkCXTRJ/jqa+p9O/0rOzVDZMI+h/TlZeOKNGy
+ IYQy36ULhUajQPSf1qzXfYT78Q4z1JD9Ft3vFS4DQtWYAJ9ot8QGIYcD1lDcfCFR8hF+
+ Ya7Q==
+X-Gm-Message-State: AOJu0Yx5ld+mAAtx/e3DfaIsVMn6JYkUfOsz9Fer1x9WAMcWtboeXhs0
+ NefaTleOYpF439J56h9Uy2+dter58KdgdMyQvMr0/9zmag0QHmwthW657Gv5KkaOBJ1YwtCHMLW
+ ddirKDEvGPOFA+fjbrhad1VmpIyQ=
+X-Google-Smtp-Source: AGHT+IEZZ1fT1JeDi1NhS4cEICFh1caFwsQyyKbr+2JSVHqZyrs8e9/Mt7kTn9JXYUWXESrnK28h3YJ/fJxR/Xc0d1s=
+X-Received: by 2002:a05:6102:9a8:b0:46b:34ea:8fcd with SMTP id
+ f8-20020a05610209a800b0046b34ea8fcdmr7595411vsb.8.1707101946189; Sun, 04 Feb
+ 2024 18:59:06 -0800 (PST)
 MIME-Version: 1.0
 References: <20240122221529.86562-1-dbarboza@ventanamicro.com>
- <20240122221529.86562-3-dbarboza@ventanamicro.com>
-In-Reply-To: <20240122221529.86562-3-dbarboza@ventanamicro.com>
+ <20240122221529.86562-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20240122221529.86562-4-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 5 Feb 2024 12:57:51 +1000
-Message-ID: <CAKmqyKM7efPb7An4W4Z+pW4p7aNUsfGCU804A9O8gmbdxLLHAA@mail.gmail.com>
-Subject: Re: [PATCH 2/7] hw/riscv/numa.c: use g_autofree in
- socket_fdt_write_distance_matrix()
+Date: Mon, 5 Feb 2024 12:58:40 +1000
+Message-ID: <CAKmqyKOsseXBLeYineLAWfq8B2roqapRSN3EoqEqCri4zz7Vbw@mail.gmail.com>
+Subject: Re: [PATCH 3/7] hw/riscv/virt.c: use g_autofree in
+ create_fdt_socket_cpus()
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,10 +92,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 23, 2024 at 8:17=E2=80=AFAM Daniel Henrique Barboza
+On Tue, Jan 23, 2024 at 8:16=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Use g_autofree in 'dist_matrix' to avoid the manual g_free().
+> Move all char pointers to the loop. Use g_autofree in all of them to
+> avoid the g_free() calls.
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -104,31 +105,58 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/numa.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  hw/riscv/virt.c | 12 +++++-------
+>  1 file changed, 5 insertions(+), 7 deletions(-)
 >
-> diff --git a/hw/riscv/numa.c b/hw/riscv/numa.c
-> index d319aefb45..cf686f4ff1 100644
-> --- a/hw/riscv/numa.c
-> +++ b/hw/riscv/numa.c
-> @@ -167,7 +167,8 @@ void riscv_socket_fdt_write_id(const MachineState *ms=
-, const char *node_name,
->  void riscv_socket_fdt_write_distance_matrix(const MachineState *ms)
->  {
->      int i, j, idx;
-> -    uint32_t *dist_matrix, dist_matrix_size;
-> +    g_autofree uint32_t *dist_matrix =3D NULL;
-> +    uint32_t dist_matrix_size;
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index f9fd1341fc..373b1dd96b 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -215,12 +215,16 @@ static void create_fdt_socket_cpus(RISCVVirtState *=
+s, int socket,
+>      int cpu;
+>      uint32_t cpu_phandle;
+>      MachineState *ms =3D MACHINE(s);
+> -    char *name, *cpu_name, *core_name, *intc_name, *sv_name;
+>      bool is_32_bit =3D riscv_is_32bit(&s->soc[0]);
+>      uint8_t satp_mode_max;
 >
->      if (numa_enabled(ms) && ms->numa_state->have_numa_distance) {
->          dist_matrix_size =3D riscv_socket_count(ms) * riscv_socket_count=
-(ms);
-> @@ -189,7 +190,6 @@ void riscv_socket_fdt_write_distance_matrix(const Mac=
-hineState *ms)
->                                  "numa-distance-map-v1");
->          qemu_fdt_setprop(ms->fdt, "/distance-map", "distance-matrix",
->                           dist_matrix, dist_matrix_size);
-> -        g_free(dist_matrix);
+>      for (cpu =3D s->soc[socket].num_harts - 1; cpu >=3D 0; cpu--) {
+>          RISCVCPU *cpu_ptr =3D &s->soc[socket].harts[cpu];
+> +        g_autofree char *name =3D NULL;
+> +        g_autofree char *cpu_name =3D NULL;
+> +        g_autofree char *core_name =3D NULL;
+> +        g_autofree char *intc_name =3D NULL;
+> +        g_autofree char *sv_name =3D NULL;
+>
+>          cpu_phandle =3D (*phandle)++;
+>
+> @@ -233,12 +237,10 @@ static void create_fdt_socket_cpus(RISCVVirtState *=
+s, int socket,
+>              sv_name =3D g_strdup_printf("riscv,%s",
+>                                        satp_mode_str(satp_mode_max, is_32=
+_bit));
+>              qemu_fdt_setprop_string(ms->fdt, cpu_name, "mmu-type", sv_na=
+me);
+> -            g_free(sv_name);
+>          }
+>
+>          name =3D riscv_isa_string(cpu_ptr);
+>          qemu_fdt_setprop_string(ms->fdt, cpu_name, "riscv,isa", name);
+> -        g_free(name);
+>
+>          if (cpu_ptr->cfg.ext_zicbom) {
+>              qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cbom-block-s=
+ize",
+> @@ -277,10 +279,6 @@ static void create_fdt_socket_cpus(RISCVVirtState *s=
+, int socket,
+>          core_name =3D g_strdup_printf("%s/core%d", clust_name, cpu);
+>          qemu_fdt_add_subnode(ms->fdt, core_name);
+>          qemu_fdt_setprop_cell(ms->fdt, core_name, "cpu", cpu_phandle);
+> -
+> -        g_free(core_name);
+> -        g_free(intc_name);
+> -        g_free(cpu_name);
 >      }
 >  }
 >
