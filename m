@@ -4,69 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A61C48292
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 17:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09689C48292
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 17:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX2y1-0006zD-27; Mon, 05 Feb 2024 12:41:13 -0500
+	id 1rX3Bn-0000Xi-Of; Mon, 05 Feb 2024 12:55:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rX2xz-0006yv-8T
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:41:11 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rX3Bj-0000XI-Km
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:55:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rX2xx-0000Ut-7q
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:41:11 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rX3Bh-0002tr-V1
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 12:55:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707154867;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1707155719;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fdVhtIG6LceAs3TEVflqIDsV0QFMoYZpZ/zHEMf5vtk=;
- b=ZrYJ5Av8ARgxnxknddhrAjrSOxgtq9990ZRaXnPLCLwomUgCyZqIyZTRyHfW0Ew0ZV5Ouy
- CO6WSOQ6/tcXjLxDEn1HN/Oncu73ZTcarvpy3bvpEQEWpgHoXtvJEDeQF1JkHvw8k2l5LF
- aaosBSGoKQNY7p3sno77cnYN03fYDoA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EfebkaIVJ9PHV/DX76m3b03sbl6VY32kbWp4mj6EkW0=;
+ b=QiH5RkHypeP98Agv6f47CJhJVJBpiR2GMmcPmxKKbHX4NNCm6FjmZuQyi9eMV6H1syu6S9
+ F6bQfYI1Kn0b7eOzApA8tbKGqIZIPZ3aidt8FzRgu4mc58cVAr1WdjcB8CUA5mBnzPIwQ2
+ KHeqd8KfO/AEnhV6ABDHGwy6OoQRy1A=
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
+ [209.85.221.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-sIr1I87AOXyOQd99gwRA1w-1; Mon, 05 Feb 2024 12:41:05 -0500
-X-MC-Unique: sIr1I87AOXyOQd99gwRA1w-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 69415185A782;
- Mon,  5 Feb 2024 17:41:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.69])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 2934C2026D66;
- Mon,  5 Feb 2024 17:41:04 +0000 (UTC)
-Date: Mon, 5 Feb 2024 17:41:02 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] docs/style: allow C99 mixed declarations
-Message-ID: <ZcEdrp-y5YFsfir4@redhat.com>
-References: <20240205171819.474283-1-stefanha@redhat.com>
+ us-mta-459-gbBKqrmpOFuU8i7Gm7Uvow-1; Mon, 05 Feb 2024 12:55:17 -0500
+X-MC-Unique: gbBKqrmpOFuU8i7Gm7Uvow-1
+Received: by mail-vk1-f200.google.com with SMTP id
+ 71dfb90a1353d-4bfe162877aso3683828e0c.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 09:55:17 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707155717; x=1707760517;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :references:cc:to:content-language:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EfebkaIVJ9PHV/DX76m3b03sbl6VY32kbWp4mj6EkW0=;
+ b=uuTkY2yIWvKe1FvZNpqsi8+PXGBU2mG9KxVtVJ/o9PJLkBDk+9OHzBNKgLvIdo+b2M
+ 6n9Li+z1TWqvCqVkf+CDC/jqlgIYJF4dcogyDsT+NgA+bnGbmAh4L7dD/OPZhjIjsR1p
+ HtnQiyGTi9kEi2Eox9lVL730cSTxSWUgal6KmOvDgyBkV0jwTeAzLr/SaLCvT3qT4poJ
+ sz2fD501RRrKJc2AF5Cjl2lch0niUgv5u7AeZBs6NzU0gypvYHcuJ88vQhSD5FaCcnK8
+ rNxiUAoDDjcbPgftv9qmjFKCRZnPAF1bnI5nwhwYPq3xehbCYRn6OQZlgUDtT4FYiboq
+ hQeA==
+X-Gm-Message-State: AOJu0YxABHfNSyqxTAQFeNbyr8iNMp6muCHDNeUQSCtTgyXm5k6Aq03E
+ 12VAfAjUpkF6znxgKiuGRi6slsMTqnPc5d3G1ckr/f+GWH8rNu9IFGb5+GV2660F6RZ0hCasNsl
+ 1rK5KLBAgYo3FtciV66GCRRrdaa/n9Uk6lN47xxYGiXV6y8q9KKtB
+X-Received: by 2002:ac5:c996:0:b0:4b7:6f11:339a with SMTP id
+ e22-20020ac5c996000000b004b76f11339amr337944vkm.6.1707155717204; 
+ Mon, 05 Feb 2024 09:55:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbZqsy44IWw5ZizlKenbQmaMnzq1L6OLQxT9lHFHrlDtQXFi8yGngq8rUrPTm6kDrFg2ktrQ==
+X-Received: by 2002:ac5:c996:0:b0:4b7:6f11:339a with SMTP id
+ e22-20020ac5c996000000b004b76f11339amr337907vkm.6.1707155715609; 
+ Mon, 05 Feb 2024 09:55:15 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCWn/TYqRBIgYpv9BRzNLNw1Bt2dXnv98DYRVn/j1VWLrQPU+x80NN8yv7emNtT0kFujBlfMB53k8DoxfFjGewwR4hPM6GZHeHTeamS9ATaoLjl9Py02DDd6A9K0Bm3n5LwDhNBnRrj7/Y1mzbCgx4AUtsLz8C0ze3EahBMDEU4qu60Il1pDkdFp3dvYZLHi9fkjHZSiC+IW1nkx8pIyst7SF/xMYNlXcJZ4Qw2E2EDfWlkGgiFSmeAamqeo5m4AVe08KJW5jlensuM6
+Received: from [192.168.20.184] (ftip006315900.acc1.colindale.21cn-nte.bt.net.
+ [81.134.214.249]) by smtp.gmail.com with ESMTPSA id
+ ci16-20020a056122321000b004c03913053esm58383vkb.54.2024.02.05.09.55.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Feb 2024 09:55:15 -0800 (PST)
+Message-ID: <f2ab935b-4b60-4daa-a9dd-18a6113d22f5@redhat.com>
+Date: Mon, 5 Feb 2024 18:55:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240205171819.474283-1-stefanha@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL 5/8] util: Add write-only "node-affinity" property for
+ ThreadContext
+Content-Language: en-US
+To: Claudio Fontana <cfontana@suse.de>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, Michal Privoznik <mprivozn@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
+References: <20221028095225.86118-1-david@redhat.com>
+ <20221028095225.86118-6-david@redhat.com>
+ <beb8fd5c-3fc4-9bf5-1f9b-3947a25f52d9@suse.de>
+ <f7f8f5ac-dfed-456d-91b1-9e4c4e2073b5@redhat.com>
+ <a482543e-581f-a13e-21f5-a6392e7c4524@suse.de>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <a482543e-581f-a13e-21f5-a6392e7c4524@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -87,153 +155,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 12:18:19PM -0500, Stefan Hajnoczi wrote:
-> C99 mixed declarations support interleaving of local variable
-> declarations and code.
-> 
-> The coding style "generally" forbids C99 mixed declarations with some
-> exceptions to the rule. This rule is not checked by checkpatch.pl and
-> naturally there are violations in the source tree.
-> 
-> While contemplating adding another exception, I came to the conclusion
-> that the best location for declarations depends on context. Let the
-> programmer declare variables where it is best for legibility. Don't try
-> to define all possible scenarios/exceptions.
-
-IIRC, we had a discussion on this topic sometime last year, but can't
-remember what the $SUBJECT was, so I'll just repeat what I said then.
-
-Combining C99 mixed declarations with 'goto' is dangerous.
-
-Consider this program:
-
-$ cat jump.c
-#include <stdlib.h>
-
-int main(int argc, char**argv) {
-
-  if (getenv("SKIP"))
-    goto target;
-
-  char *foo = malloc(30);
-
- target:
-  free(foo);
-}
-
-$ gcc -Wall -Wuninitialized -o jump jump.c
-
-$ SKIP=1 ./jump 
-free(): invalid pointer
-Aborted (core dumped)
-
-
- -> The programmer thinks they have initialized 'foo'
- -> GCC thinks the programmer has initialized 'foo'
- -> Yet 'foo' is not guaranteed to be initialized at 'target:'
-
-Given that QEMU makes heavy use of 'goto', allowing C99 mixed
-declarations exposes us to significant danger.
-
-Full disclosure, GCC fails to diagnmose this mistake, even
-with a decl at start of 'main', but at least the mistake is
-now more visible to the programmer.
-
-Fortunately with -fanalyzer GCC can diagnose this:
-
-$ gcc -fanalyzer -Wall -o jump jump.c
-jump.c: In function ‘main’:
-jump.c:12:3: warning: use of uninitialized value ‘foo’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value]
-   12 |   free(foo);
-      |   ^~~~~~~~~
-  ‘main’: events 1-5
-    |
-    |    6 |   if (getenv("SKIP"))
-    |      |      ~  
-    |      |      |
-    |      |      (3) following ‘true’ branch...
-    |    7 |     goto target;
-    |      |     ~~~~
-    |      |     |
-    |      |     (4) ...to here
-    |    8 | 
-    |    9 |  char *foo = malloc(30);
-    |      |        ^~~
-    |      |        |
-    |      |        (1) region created on stack here
-    |      |        (2) capacity: 8 bytes
-    |......
-    |   12 |   free(foo);
-    |      |   ~~~~~~~~~
-    |      |   |
-    |      |   (5) use of uninitialized value ‘foo’ here
-
-
-...but -fanalyzer isn't something we have enabled by default, it
-is opt-in. I'm also not sure how comprehensive the flow control
-analysis of -fanalyzer is ?  Can we be sure it'll catch these
-mistakes in large complex functions with many code paths ?
-
-Even if the compiler does reliably warn, I think the code pattern
-remains misleading to contributors, as the flow control flaw is
-very non-obvious.
-
-Rather than accept the status quo and remove the coding guideline,
-I think we should strengthen the guidelines, such that it is
-explicitly forbidden in any method that uses 'goto'. Personally
-I'd go all the way to -Werror=declaration-after-statement, as
-while C99 mixed decl is appealing, it isn't exactly a game
-changer in improving code maintainability.
-
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  docs/devel/style.rst | 20 --------------------
->  1 file changed, 20 deletions(-)
-> 
-> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-> index 2f68b50079..80c4e4df52 100644
-> --- a/docs/devel/style.rst
-> +++ b/docs/devel/style.rst
-> @@ -199,26 +199,6 @@ Rationale: a consistent (except for functions...) bracing style reduces
->  ambiguity and avoids needless churn when lines are added or removed.
->  Furthermore, it is the QEMU coding style.
->  
-> -Declarations
-> -============
-> -
-> -Mixed declarations (interleaving statements and declarations within
-> -blocks) are generally not allowed; declarations should be at the beginning
-> -of blocks. To avoid accidental re-use it is permissible to declare
-> -loop variables inside for loops:
-> -
-> -.. code-block:: c
-> -
-> -    for (int i = 0; i < ARRAY_SIZE(thing); i++) {
-> -        /* do something loopy */
-> -    }
-> -
-> -Every now and then, an exception is made for declarations inside a
-> -#ifdef or #ifndef block: if the code looks nicer, such declarations can
-> -be placed at the top of the block even if there are statements above.
-> -On the other hand, however, it's often best to move that #ifdef/#ifndef
-> -block to a separate function altogether.
-> -
->  Conditional statements
->  ======================
->  
-> -- 
-> 2.43.0
+On 05.02.24 17:13, Claudio Fontana wrote:
+> Hello David,
 > 
 
-With regards,
-Daniel
+Hi,
+
+> It would seem to me that a lot of the calling code like qemu_prealloc_mem for example
+> should be sysemu-only, not used for tools, or user mode either right?
+> 
+> And the thread_context.c itself should also be sysemu-only, correct?
+
+Yes, both should currently only get used for sysemu only. Memory 
+backends and virtio-mem are sysemu-only.
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Cheers,
+
+David / dhildenb
 
 
