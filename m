@@ -4,74 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D120C48286
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 00:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAE1BC48286
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 00:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWmdF-00054M-N9; Sun, 04 Feb 2024 19:14:41 -0500
+	id 1rWmkP-0006ai-S4; Sun, 04 Feb 2024 19:22:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWmdE-00054A-KR; Sun, 04 Feb 2024 19:14:40 -0500
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ id 1rWmkO-0006aI-Hg; Sun, 04 Feb 2024 19:22:04 -0500
+Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rWmdC-0001PT-5E; Sun, 04 Feb 2024 19:14:40 -0500
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-4c021a73febso157892e0c.2; 
- Sun, 04 Feb 2024 16:14:37 -0800 (PST)
+ id 1rWmkM-0002pW-DC; Sun, 04 Feb 2024 19:22:04 -0500
+Received: by mail-ua1-x931.google.com with SMTP id
+ a1e0cc1a2514c-7d2e15193bbso1998646241.0; 
+ Sun, 04 Feb 2024 16:22:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707092076; x=1707696876; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707092520; x=1707697320; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GRHx+Mp3v+VUCiZNSCjbToKpKbQ9BuOw3oX8+ZDYXpY=;
- b=Z4a1A07H0qPWrqUx7KB9aqdQ+meFgk2omzaHlTdUmTJ7xZ5ui7J799O9L1iCOK/KcB
- Lu/nJagTe3y5mBRekhU+HiyDG3yuYuCAon7xbneUZa+61A2VammQJVFYmGIRLoXy41PX
- v+X1Kt4LenxoSjb9RhwRgly0jF91WqClKMFC4BUvsYcOnLCR0OM6FUdbp0NcQw0AgoZ5
- T2g08ql/p/M58fNVPdlHKy/qwE7WQuRrXOGUwZU1tfirdB+LrxdaA3CeytsNnUrl1kRZ
- 6nqNl0Iq9GO8yOAgtk8qJYrWJNyloEE/DN/W2WR8zALjjblt0opTTTBVmQ+RsZsfA38t
- no6w==
+ bh=hw9KILQWzk0umDd3OPOGWXUnnnWHtkraqxiMosTIYfo=;
+ b=HhudK6ElM98/olDmxWu8AocgOwjkMxNFsipVAcSNt9pm0a7W4bFGZX7xOsQ52vOX1o
+ aCP0JALDfqch1wzLukwYPMRwX2LhMtdS/tcbeuYBfrPZJ2bu0ETe9X33ctC5Mp1K+tiO
+ L1pWvZXROeK1yGnAzVThqrNlE3XI9tBLLs7A01s30HHH4iU3d++F3e1OTLAZZ09GasgP
+ t212LWnVmIWm38ObqAWSn4xSuJNIk490dYsO7okq+qvK34jVZAK7NpS2jYWt/SGWJyvP
+ KrjBArwXv/QkqPY0vVqivpdReDo1AArefehPI13v1LgOuvVxiJAJhV0rktDHLh/oiJLR
+ KM/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707092076; x=1707696876;
+ d=1e100.net; s=20230601; t=1707092520; x=1707697320;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GRHx+Mp3v+VUCiZNSCjbToKpKbQ9BuOw3oX8+ZDYXpY=;
- b=cLcCD24H60kmPIeen2qH/wdoLNKJc+VZQ4AKO9l8UfyNgfqdVJSnmEZ438cCSBYG5s
- W0AO12+v58/U95Ua9jyny91QIQ9AvFaoQgC47s+QxJTQlOoQdniGI2gfHP9YPaUutryb
- wQGoDF/eZYMchzVTgI/5kVV2496PDTWLK2USMDUEWIY+8vQ2BkguT6z5oIcHqkefkNFu
- Pfr2cp4jCZHwVs5KWXTiO9CNXOT1gkgGXUZ9apaIa50Mlype/zZy82rpUgSZtDBRvZpA
- AeudonGZymiBx/Tijk6unALjEQPYnijq8M9ZbzWggYdYixhJ4piLJWCpYFh58Tgbg9VI
- Ad1w==
-X-Gm-Message-State: AOJu0YxXgEkfEXjw3mD2cuwRr4vH/em6oF8Fa77Og/m7DwEq9grorY9T
- 4K82D0IMtj6M3poHPaDA7Bg5yETNVWGLjk2JVY9d1hIq6X+XyYinZJ73esfvsY5pGrP/nQVpctN
- Zd3qOlmt+W90JC0lScCh6qnIaBG8=
-X-Google-Smtp-Source: AGHT+IHBBeIvqejYV7VWq2F8Lbm3wcptdB41TJGjdZxpm4qX1Y8lpV5v6u1rvRLGrzCYyOoeOyQ/buVfxFYcxd3UcNQ=
-X-Received: by 2002:a67:e308:0:b0:46d:15f0:67a8 with SMTP id
- j8-20020a67e308000000b0046d15f067a8mr2132304vsf.25.1707092076044; Sun, 04 Feb
- 2024 16:14:36 -0800 (PST)
+ bh=hw9KILQWzk0umDd3OPOGWXUnnnWHtkraqxiMosTIYfo=;
+ b=UcKDDbp38xO/E2T9PmKE/9mbq5rqMTdW5UbCM1FpzI1RTNRbN7uhVrbu/GP1s0OABu
+ mn+l1qHmbjk1vaVdpDGfqWPa0vLdFPBZwHqmi4Vq8MgEcf3/7aMQC07/3CI8w4FcYEox
+ LBgRC0M66GAygAlZKgp0Xk052Irg/CZVBzpp6MQbYlc3DoE0sF6fRuOHYJp9UKEXDNnx
+ NTTpFyu4OeerKjqcfAVW1XGv0RV17Wy9UGVOELGM9U3y17pPMrDh4B/5kDtGmq8/eYSC
+ cLCNO4a9H019GbQcsUC8zjYVNdwDoYUPNOn3RixtuU2a2MfNhWczzpJ4dPrE2Ct4Tx7v
+ goeQ==
+X-Gm-Message-State: AOJu0YwX1Zu/quIEXXf4JCAjwnLzJxjUBvy7E23ZbxsvWhvXsCg13WrI
+ FgVDNdnAeB1cwIDXZpNoHWlQwKR+I9cgfhI92JVpPtilIzzazTS7ISK5MTcTdMB1EH03JMu0bq+
+ Uuk4Pobkd2Tvg1bBhCijg3OB1URXOQIA/zwg=
+X-Google-Smtp-Source: AGHT+IH/Gf4mkkopBnzmJlvhlHVMhJ6NXP4YiruCxgUVVZQCXBtjVnSDy5b+/S5gvQYbjPgiLuCI5gsBpTGKEYF/cbk=
+X-Received: by 2002:a05:6102:3b91:b0:46d:310a:7c99 with SMTP id
+ z17-20020a0561023b9100b0046d310a7c99mr623587vsu.28.1707092520502; Sun, 04 Feb
+ 2024 16:22:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20240126193657.792005-1-ines.varhol@telecom-paris.fr>
- <20240126193657.792005-3-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240126193657.792005-3-ines.varhol@telecom-paris.fr>
+References: <20240130110945.486-1-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240130110945.486-1-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 5 Feb 2024 10:14:10 +1000
-Message-ID: <CAKmqyKO-tmb6466EGqsWeqX=+6GJGJ3dzM1JVCNMerm2Bkfv9A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] hw/arm : Connect DM163 to STM32L4x5
-To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Samuel Tardieu <sam@rfc1149.net>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Date: Mon, 5 Feb 2024 10:21:34 +1000
+Message-ID: <CAKmqyKM2SaaKRO9VU4n43uz1jisBuyYEG9UbXyhMVi-Tx9zwcw@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: FCSR doesn't contain vxrm and vxsat
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, Alistair.Francis@wdc.com, palmer@dabbelt.com, 
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,167 +90,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jan 27, 2024 at 7:09=E2=80=AFAM In=C3=A8s Varhol
-<ines.varhol@telecom-paris.fr> wrote:
+On Tue, Jan 30, 2024 at 9:10=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
+a.com> wrote:
 >
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> vxrm and vxsat have been moved into a special register vcsr since
+> RVV v1.0. So remove them from FCSR for vector 1.0.
+>
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
->  hw/arm/Kconfig                 |  1 +
->  hw/arm/stm32l4x5_soc.c         | 55 +++++++++++++++++++++++++++++++++-
->  include/hw/arm/stm32l4x5_soc.h |  3 ++
->  3 files changed, 58 insertions(+), 1 deletion(-)
+>  target/riscv/cpu_bits.h | 8 --------
+>  1 file changed, 8 deletions(-)
 >
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 3e49b913f8..818aa2f1a2 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -463,6 +463,7 @@ config STM32L4X5_SOC
->      select STM32L4X5_SYSCFG
->      select STM32L4X5_RCC
->      select STM32L4X5_GPIO
-> +    select DM163
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index ebd7917d49..e116f6c252 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -32,14 +32,6 @@
+>  #define FSR_NXA             (FPEXC_NX << FSR_AEXC_SHIFT)
+>  #define FSR_AEXC            (FSR_NVA | FSR_OFA | FSR_UFA | FSR_DZA | FSR=
+_NXA)
 >
->  config XLNX_ZYNQMP_ARM
->      bool
-> diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
-> index 478c6ba056..8663546901 100644
-> --- a/hw/arm/stm32l4x5_soc.c
-> +++ b/hw/arm/stm32l4x5_soc.c
-> @@ -26,7 +26,9 @@
->  #include "qapi/error.h"
->  #include "exec/address-spaces.h"
->  #include "sysemu/sysemu.h"
-> +#include "hw/core/split-irq.h"
->  #include "hw/arm/stm32l4x5_soc.h"
-> +#include "hw/display/dm163.h"
->  #include "hw/qdev-clock.h"
->  #include "hw/misc/unimp.h"
+> -/* Vector Fixed-Point round model */
+> -#define FSR_VXRM_SHIFT      9
+> -#define FSR_VXRM            (0x3 << FSR_VXRM_SHIFT)
+> -
+> -/* Vector Fixed-Point saturation flag */
+> -#define FSR_VXSAT_SHIFT     8
+> -#define FSR_VXSAT           (0x1 << FSR_VXSAT_SHIFT)
+> -
+>  /* Control and Status Registers */
 >
-> @@ -78,6 +80,31 @@ static const int exti_irq[NUM_EXTI_IRQ] =3D {
->  #define RCC_BASE_ADDRESS 0x40021000
->  #define RCC_IRQ 5
->
-> +/*
-> + * There are actually 14 input pins in the DM163 device.
-> + * Here the DM163 input pin EN isn't connected to the STM32L4x5
-> + * GPIOs as the IM120417002 colors shield doesn't actually use
-> + * this pin to drive the RGB matrix.
-> + */
-> +#define NUM_DM163_INPUTS 13
-> +
-> +static const int dm163_input[NUM_DM163_INPUTS] =3D {
-> +    1 * 16 + 2,  /* ROW0  PB2       */
-> +    0 * 16 + 15, /* ROW1  PA15      */
-> +    0 * 16 + 2,  /* ROW2  PA2       */
-> +    0 * 16 + 7,  /* ROW3  PA7       */
-> +    0 * 16 + 6,  /* ROW4  PA6       */
-> +    0 * 16 + 5,  /* ROW5  PA5       */
-> +    1 * 16 + 0,  /* ROW6  PB0       */
-> +    0 * 16 + 3,  /* ROW7  PA3       */
-> +    0 * 16 + 4,  /* SIN (SDA) PA4   */
-> +    1 * 16 + 1,  /* DCK (SCK) PB1   */
-> +    2 * 16 + 3,  /* RST_B (RST) PC3 */
-> +    2 * 16 + 4,  /* LAT_B (LAT) PC4 */
-> +    2 * 16 + 5,  /* SELBK (SB)  PC5 */
-> +};
-> +
-> +
->  static const uint32_t gpio_addr[] =3D {
->      0x48000000,
->      0x48000400,
-> @@ -116,6 +143,8 @@ static void stm32l4x5_soc_initfn(Object *obj)
->          g_autofree char *name =3D g_strdup_printf("gpio%c", 'a' + i);
->          object_initialize_child(obj, name, &s->gpio[i], TYPE_STM32L4X5_G=
-PIO);
->      }
-> +
-> +    object_initialize_child(obj, "dm163", &s->dm163, TYPE_DM163);
->  }
->
->  static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
-> @@ -124,9 +153,10 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
-oc, Error **errp)
->      Stm32l4x5SocState *s =3D STM32L4X5_SOC(dev_soc);
->      const Stm32l4x5SocClass *sc =3D STM32L4X5_SOC_GET_CLASS(dev_soc);
->      MemoryRegion *system_memory =3D get_system_memory();
-> -    DeviceState *armv7m, *dev;
-> +    DeviceState *armv7m, *dev, *gpio_output_fork;
->      SysBusDevice *busdev;
->      uint32_t pin_index;
-> +    int gpio, pin;
->
->      if (!memory_region_init_rom(&s->flash, OBJECT(dev_soc), "flash",
->                                  sc->flash_size, errp)) {
-> @@ -166,6 +196,12 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
-oc, Error **errp)
->          return;
->      }
->
-> +    /* DM163 */
-> +    dev =3D DEVICE(&s->dm163);
-> +    if (!qdev_realize(dev, NULL, errp)) {
-> +        return;
-> +    }
-> +
->      /* GPIOs */
->      for (unsigned i =3D 0; i < NUM_GPIOS; i++) {
->          g_autofree char *name =3D g_strdup_printf("%c", 'A' + i);
-> @@ -204,6 +240,23 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
-oc, Error **errp)
->          }
->      }
->
-> +    for (unsigned i =3D 0; i < NUM_DM163_INPUTS; i++) {
-> +        gpio_output_fork =3D qdev_new(TYPE_SPLIT_IRQ);
-> +        qdev_prop_set_uint32(gpio_output_fork, "num-lines", 2);
-> +        qdev_realize_and_unref(gpio_output_fork, NULL, &error_fatal);
-> +
-> +        qdev_connect_gpio_out(gpio_output_fork, 0,
-> +                              qdev_get_gpio_in(DEVICE(&s->syscfg),
-> +                                               dm163_input[i]));
-> +        qdev_connect_gpio_out(gpio_output_fork, 1,
-> +                              qdev_get_gpio_in(DEVICE(&s->dm163),
-> +                                               i));
-> +        gpio =3D dm163_input[i] / 16;
-> +        pin =3D dm163_input[i] % 16;
-> +        qdev_connect_gpio_out(DEVICE(&s->gpio[gpio]), pin,
-> +                              qdev_get_gpio_in(DEVICE(gpio_output_fork),=
- 0));
-> +    }
-> +
->      /* EXTI device */
->      busdev =3D SYS_BUS_DEVICE(&s->exti);
->      if (!sysbus_realize(busdev, errp)) {
-> diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_so=
-c.h
-> index cb4da08629..60b31d430e 100644
-> --- a/include/hw/arm/stm32l4x5_soc.h
-> +++ b/include/hw/arm/stm32l4x5_soc.h
-> @@ -30,6 +30,7 @@
->  #include "hw/misc/stm32l4x5_exti.h"
->  #include "hw/misc/stm32l4x5_rcc.h"
->  #include "hw/gpio/stm32l4x5_gpio.h"
-> +#include "hw/display/dm163.h"
->  #include "qom/object.h"
->
->  #define TYPE_STM32L4X5_SOC "stm32l4x5-soc"
-> @@ -48,6 +49,8 @@ struct Stm32l4x5SocState {
->      Stm32l4x5RccState rcc;
->      Stm32l4x5GpioState gpio[NUM_GPIOS];
->
-> +    DM163State dm163;
-> +
->      MemoryRegion sram1;
->      MemoryRegion sram2;
->      MemoryRegion flash;
+>  /* User Trap Setup */
 > --
-> 2.43.0
+> 2.25.1
 >
 >
 
