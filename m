@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84AC7C48298
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 11:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 515D8C48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 11:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWx4E-0001ow-V7; Mon, 05 Feb 2024 06:23:14 -0500
+	id 1rWx48-0001lk-8W; Mon, 05 Feb 2024 06:23:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rWx4C-0001nY-Fv
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:23:12 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rWx46-0001kd-9B
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:23:06 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rWx49-0006m1-LJ
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:23:12 -0500
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rWx44-0006kp-GM
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 06:23:05 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 415AxrFx018457; Mon, 5 Feb 2024 11:23:07 GMT
+ 415AtLoF030208; Mon, 5 Feb 2024 11:23:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=L3Z9+nhyBICaehShvjw4ME9IXqKkq3Uok4wamwkerx4=;
- b=SUuJUpo5NbM3KNCurXeZkLnYKOmj4DrHFNGmtWSDa/8yBnbqppr/PlGEnF3YzwyXM0wP
- Q0tyj4I9+Ukwl0YT41AYK+yxurKE5w/b1Tw2XzHIOULmtnsiqlbGu1+v4IhLJyG6Vr5A
- t7AhrAGGGd185M7GnAlbFQmw9bc7O5NBMcCsFI7ISuKbQivVT37TlxJW9Gdaua0I/M6H
- heBrCNIObipfjs/H2C8LLFbeNrc0V+25ZhcMPBUYYbV2aPI/qbwFNyFjFEbrtcAmSw92
- ayKF0rTqcKO6II6eqHJY1A3BhdJ/wW3a/pVATa+o7YpmEbjSOTN8KVW6rrbwHji8Y4Bv 8Q== 
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w2xaa8qfs-1
+ bh=uT7A/sqalgVYQqMzo1c6DQ3YIZWlQuYQ+v4AEThmUeo=;
+ b=peoF6FKXhRJeppVw6bYa3pro+yxShvf2hH8i1C6CP6gWsp/15JOdwZJBS44lI7/arMDH
+ f5aGxxVerLVSZxmUXY7gawZMNiZal1hkmcHH46kdatB4/KhvmJ810NYJ6AyF1I9dFMB8
+ fFUIQT8yj9O+fClb4hNY+DDbl94sWW/nWQZ+Zn/6bxKWUSI8vxLoCbQKVwtoBR4GnnYe
+ 3y2Elhm3hGlZwuzJEYIsbXLYOcc4IOnj2izolFGpUFMzEeD8PZqlYM+X1u1VniiTofxG
+ ymzMdyLq8O2wr2joBLBqW07u0f9wldnmFo++fmXyslYt84E7IqRerrpq8WAttt+rpztT ww== 
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w2ur8vk53-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Feb 2024 11:23:07 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4159hMKJ020371; Mon, 5 Feb 2024 11:23:06 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w1ytsrb48-1
+ Mon, 05 Feb 2024 11:23:01 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 415ApcpB014837; Mon, 5 Feb 2024 11:23:01 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w20tng28m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Feb 2024 11:23:06 +0000
+ Mon, 05 Feb 2024 11:23:01 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 415BN4Gu41222738
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 415BMxUo20120156
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Feb 2024 11:23:04 GMT
+ Mon, 5 Feb 2024 11:22:59 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C516C20049;
- Mon,  5 Feb 2024 11:23:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 24AD02004D;
+ Mon,  5 Feb 2024 11:22:59 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5AF6220040;
- Mon,  5 Feb 2024 11:23:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AF1FB2004B;
+ Mon,  5 Feb 2024 11:22:58 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.32.247])
  by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 Feb 2024 11:23:04 +0000 (GMT)
+ Mon,  5 Feb 2024 11:22:58 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -65,24 +65,24 @@ To: Warner Losh <imp@bsdimp.com>,
 Cc: Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 11/11] tests/tcg: Add two follow-fork-mode tests
-Date: Mon,  5 Feb 2024 12:22:25 +0100
-Message-ID: <20240205112251.121569-12-iii@linux.ibm.com>
+Subject: [PATCH v2 04/11] {linux,bsd}-user: Pass pid to fork_end()
+Date: Mon,  5 Feb 2024 12:22:18 +0100
+Message-ID: <20240205112251.121569-5-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240205112251.121569-1-iii@linux.ibm.com>
 References: <20240205112251.121569-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: _r3bx6rlWOyDrsSYfNm4FbeggTAPiHQY
-X-Proofpoint-ORIG-GUID: _r3bx6rlWOyDrsSYfNm4FbeggTAPiHQY
+X-Proofpoint-GUID: hex0ZWQ51K4ZFgMB1mr1dxu4E6vWk-Ox
+X-Proofpoint-ORIG-GUID: hex0ZWQ51K4ZFgMB1mr1dxu4E6vWk-Ox
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-05_06,2024-01-31_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0 impostorscore=0
- clxscore=1015 suspectscore=0 spamscore=0 mlxlogscore=967 phishscore=0
+ clxscore=1015 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ mlxlogscore=639 adultscore=0 impostorscore=0 priorityscore=1501 mlxscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
  definitions=main-2402050086
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
@@ -109,186 +109,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add follow-fork-mode child and and follow-fork-mode parent tests.
-Check for the obvious pitfalls, such as lingering breakpoints,
-catchpoints, and single-step mode.
+The upcoming follow-fork-mode child support requires knowing the child
+pid. Pass it down.
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- tests/tcg/multiarch/Makefile.target           | 17 +++++-
- tests/tcg/multiarch/follow-fork-mode.c        | 56 +++++++++++++++++++
- .../gdbstub/follow-fork-mode-child.py         | 40 +++++++++++++
- .../gdbstub/follow-fork-mode-parent.py        | 16 ++++++
- 4 files changed, 128 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/multiarch/follow-fork-mode.c
- create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
- create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
+ bsd-user/freebsd/os-proc.h  | 6 +++---
+ bsd-user/main.c             | 4 +++-
+ bsd-user/qemu.h             | 2 +-
+ linux-user/main.c           | 4 +++-
+ linux-user/syscall.c        | 6 +++---
+ linux-user/user-internals.h | 2 +-
+ 6 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index e10951a8016..b8b70c81860 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -115,6 +115,20 @@ run-gdbstub-catch-syscalls: catch-syscalls
- 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/catch-syscalls.py, \
- 	hitting a syscall catchpoint)
+diff --git a/bsd-user/freebsd/os-proc.h b/bsd-user/freebsd/os-proc.h
+index d6418780344..3003c8cb637 100644
+--- a/bsd-user/freebsd/os-proc.h
++++ b/bsd-user/freebsd/os-proc.h
+@@ -208,7 +208,7 @@ static inline abi_long do_freebsd_fork(void *cpu_env)
+      */
+     set_second_rval(cpu_env, child_flag);
  
-+run-gdbstub-follow-fork-mode-child: follow-fork-mode
-+	$(call run-test, $@, $(GDB_SCRIPT) \
-+		--gdb $(GDB) \
-+		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-+		--bin $< --test $(MULTIARCH_SRC)/gdbstub/follow-fork-mode-child.py, \
-+	following children on fork)
-+
-+run-gdbstub-follow-fork-mode-parent: follow-fork-mode
-+	$(call run-test, $@, $(GDB_SCRIPT) \
-+		--gdb $(GDB) \
-+		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-+		--bin $< --test $(MULTIARCH_SRC)/gdbstub/follow-fork-mode-parent.py, \
-+	following parents on fork)
-+
- else
- run-gdbstub-%:
- 	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst -%,,$(TARGET_NAME)) support")
-@@ -122,7 +136,8 @@ endif
- EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
- 	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
- 	      run-gdbstub-registers run-gdbstub-prot-none \
--	      run-gdbstub-catch-syscalls
-+	      run-gdbstub-catch-syscalls run-gdbstub-follow-fork-mode-child \
-+	      run-gdbstub-follow-fork-mode-parent
+-    fork_end(child_flag);
++    fork_end(ret);
  
- # ARM Compatible Semi Hosting Tests
- #
-diff --git a/tests/tcg/multiarch/follow-fork-mode.c b/tests/tcg/multiarch/follow-fork-mode.c
-new file mode 100644
-index 00000000000..cb6b032b388
---- /dev/null
-+++ b/tests/tcg/multiarch/follow-fork-mode.c
-@@ -0,0 +1,56 @@
-+/*
-+ * Test GDB's follow-fork-mode.
-+ *
-+ * fork() a chain of processes.
-+ * Parents sends one byte to their children, and children return their
-+ * position in the chain, in order to prove that they survived GDB's fork()
-+ * handling.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <stdlib.h>
-+#include <sys/wait.h>
-+#include <unistd.h>
+     return ret;
+ }
+@@ -252,7 +252,7 @@ static inline abi_long do_freebsd_rfork(void *cpu_env, abi_long flags)
+      * value: 0 for parent process, 1 for child process.
+      */
+     set_second_rval(cpu_env, child_flag);
+-    fork_end(child_flag);
++    fork_end(ret);
+ 
+     return ret;
+ 
+@@ -285,7 +285,7 @@ static inline abi_long do_freebsd_pdfork(void *cpu_env, abi_ulong target_fdp,
+      * value: 0 for parent process, 1 for child process.
+      */
+     set_second_rval(cpu_env, child_flag);
+-    fork_end(child_flag);
++    fork_end(ret);
+ 
+     return ret;
+ }
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index bfe6888ea89..bc233a85cef 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -109,8 +109,10 @@ void fork_start(void)
+     gdbserver_fork_start();
+ }
+ 
+-void fork_end(int child)
++void fork_end(abi_long pid)
+ {
++    int child = pid == 0;
 +
-+void break_after_fork(void)
-+{
-+}
+     if (child) {
+         CPUState *cpu, *next_cpu;
+         /*
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index dc842fffa7d..2414a87559b 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -180,7 +180,7 @@ void cpu_loop(CPUArchState *env);
+ char *target_strerror(int err);
+ int get_osversion(void);
+ void fork_start(void);
+-void fork_end(int child);
++void fork_end(abi_long pid);
+ 
+ #include "qemu/log.h"
+ 
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 8c7bea1c631..f1a0267816b 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -147,8 +147,10 @@ void fork_start(void)
+     gdbserver_fork_start();
+ }
+ 
+-void fork_end(int child)
++void fork_end(abi_long pid)
+ {
++    int child = pid == 0;
 +
-+int main(void)
-+{
-+    int depth = 42, err, i, fd[2], status;
-+    pid_t child, pid;
-+    ssize_t n;
-+    char b;
-+
-+    for (i = 0; i < depth; i++) {
-+        err = pipe(fd);
-+        assert(err == 0);
-+        child = fork();
-+        break_after_fork();
-+        assert(child != -1);
-+        if (child == 0) {
-+            close(fd[1]);
-+
-+            n = read(fd[0], &b, 1);
-+            close(fd[0]);
-+            assert(n == 1);
-+            assert(b == (char)i);
-+        } else {
-+            close(fd[0]);
-+
-+            b = (char)i;
-+            n = write(fd[1], &b, 1);
-+            close(fd[1]);
-+            assert(n == 1);
-+
-+            pid = waitpid(child, &status, 0);
-+            assert(pid == child);
-+            assert(WIFEXITED(status));
-+            return WEXITSTATUS(status) - 1;
-+        }
-+    }
-+
-+    return depth;
-+}
-diff --git a/tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py b/tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
-new file mode 100644
-index 00000000000..72a6e440c08
---- /dev/null
-+++ b/tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
-@@ -0,0 +1,40 @@
-+"""Test GDB's follow-fork-mode child.
-+
-+SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+from test_gdbstub import main, report
-+
-+
-+def run_test():
-+    """Run through the tests one by one"""
-+    gdb.execute("set follow-fork-mode child")
-+    # Check that the parent breakpoints are unset.
-+    gdb.execute("break break_after_fork")
-+    # Check that the parent syscall catchpoints are unset.
-+    # Skip this check on the architectures that don't have them.
-+    have_fork_syscall = False
-+    for fork_syscall in ("fork", "clone", "clone2", "clone3"):
-+        try:
-+            gdb.execute("catch syscall {}".format(fork_syscall))
-+        except gdb.error:
-+            pass
-+        else:
-+            have_fork_syscall = True
-+    gdb.execute("continue")
-+    for i in range(42):
-+        if have_fork_syscall:
-+            # syscall entry.
-+            if i % 2 == 0:
-+                # Check that the parent single-stepping is turned off.
-+                gdb.execute("si")
-+            else:
-+                gdb.execute("continue")
-+            # syscall exit.
-+            gdb.execute("continue")
-+        # break_after_fork()
-+        gdb.execute("continue")
-+    exitcode = int(gdb.parse_and_eval("$_exitcode"))
-+    report(exitcode == 42, "{} == 42".format(exitcode))
-+
-+
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py b/tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
-new file mode 100644
-index 00000000000..5c2fe722088
---- /dev/null
-+++ b/tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
-@@ -0,0 +1,16 @@
-+"""Test GDB's follow-fork-mode parent.
-+
-+SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+from test_gdbstub import main, report
-+
-+
-+def run_test():
-+    """Run through the tests one by one"""
-+    gdb.execute("set follow-fork-mode parent")
-+    gdb.execute("continue")
-+    exitcode = int(gdb.parse_and_eval("$_exitcode"))
-+    report(exitcode == 0, "{} == 0".format(exitcode))
-+
-+
-+main(run_test)
+     qemu_plugin_user_postfork(child);
+     mmap_fork_end(child);
+     if (child) {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index aeb95644873..9e628a0f975 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6669,7 +6669,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+         if (ret == 0) {
+             /* Child Process.  */
+             cpu_clone_regs_child(env, newsp, flags);
+-            fork_end(1);
++            fork_end(ret);
+             /* There is a race condition here.  The parent process could
+                theoretically read the TID in the child process before the child
+                tid is set.  This would require using either ptrace
+@@ -6700,8 +6700,8 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+                 }
+ #endif
+                 put_user_u32(pid_fd, parent_tidptr);
+-                }
+-            fork_end(0);
++            }
++            fork_end(ret);
+         }
+         g_assert(!cpu_in_exclusive_context(cpu));
+     }
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index c63ef45fc78..9014014d920 100644
+--- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -71,7 +71,7 @@ const char *target_strerror(int err);
+ int get_osversion(void);
+ void init_qemu_uname_release(void);
+ void fork_start(void);
+-void fork_end(int child);
++void fork_end(abi_long pid);
+ 
+ /**
+  * probe_guest_base:
 -- 
 2.43.0
 
