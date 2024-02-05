@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C45C48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 04:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E8DC48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 04:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWqEx-0001Am-PR; Sun, 04 Feb 2024 23:05:51 -0500
+	id 1rWqFS-0001cP-Of; Sun, 04 Feb 2024 23:06:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWqEw-0001Ae-QK
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 23:05:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWqEs-0000cE-Kv
- for qemu-devel@nongnu.org; Sun, 04 Feb 2024 23:05:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707105945;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sPvn6CNRYCtOxiMLgTAjSnV1FOhcb8WigZ8P3cqqSGQ=;
- b=extl22JzgAaZx9J1uzlzep2CGFnkT86YrBpBFbOPkl4Sn6lcHcy0fJMI0Vknp+QaYkqQNu
- P+ExJRuWwrJWxdjiwvhS6YCEW3yANCkpSftSrYlILiqj8stPSmYMu/QaFZrhYEp7/scqo4
- 91lEmodxZP4kKMWyQMKdfUr7XLNyeIY=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-MaVLvID-Owypv8-j1SbyRA-1; Sun, 04 Feb 2024 23:05:42 -0500
-X-MC-Unique: MaVLvID-Owypv8-j1SbyRA-1
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-7bbde31d9b7so128092439f.1
- for <qemu-devel@nongnu.org>; Sun, 04 Feb 2024 20:05:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707105942; x=1707710742;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWqFK-0001Wj-Hv; Sun, 04 Feb 2024 23:06:15 -0500
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rWqFF-0000er-8y; Sun, 04 Feb 2024 23:06:14 -0500
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-4c021a73febso210308e0c.2; 
+ Sun, 04 Feb 2024 20:06:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1707105967; x=1707710767; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sPvn6CNRYCtOxiMLgTAjSnV1FOhcb8WigZ8P3cqqSGQ=;
- b=Tqpj+dweeaGV8zwHQBW/3wr9O1UM73Li0JuXXcB02TmilnnJ8999e5i9rhdo84sCiu
- cMuwfruxJjBTXc0nQCoFefKgaclMkyh6qKx6XVLCyb8uQDZUMCeGtWX3eQX/tjbltyiA
- nDG//Im5Rq4FOmml+7uHOSHxmgLb9wsT0FJCQBK36aOgyfAs4FJijzRzvwI8a+M5hnm5
- l4NA2aKpXQQy6/3VuS/TEHLRaV7QIp/V3EP9pPZxdX/NXeeQrqMqJp99Wjawc+/8ZIAA
- v+7wjorihfLhRogfmoPQoF1HRse8c9+onVe6lfZLPGqhmrXOZkjFUsPfGxCW1cDtoO77
- I8UQ==
-X-Gm-Message-State: AOJu0YwtcbLBfhq98OLm7HWYmMXVk8LUuydevcz7sCRousYduc5mRpxv
- OMy/NOXvwQ7Kf3x+aXFphNph08IloJQAbAQ/yfDBU3MftWLpYiLifbwSEDXI5fIZ7TjPliTX+Xq
- nwMYJ/rX+j5FuNJGy8FIOhxxqc4mpxg8YqfuVgm9XHoLMyNa1mR8Z
-X-Received: by 2002:a05:6e02:2186:b0:363:c82e:57d9 with SMTP id
- j6-20020a056e02218600b00363c82e57d9mr1878820ila.3.1707105942159; 
- Sun, 04 Feb 2024 20:05:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE8UPI31uxSJ0VD0dA46UQU/bBP1Eo18wcSMrZtWu5UHdzcbQI2Pdek5/HFWsJpK9Omp9DH3g==
-X-Received: by 2002:a05:6e02:2186:b0:363:c82e:57d9 with SMTP id
- j6-20020a056e02218600b00363c82e57d9mr1878809ila.3.1707105941831; 
- Sun, 04 Feb 2024 20:05:41 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCU2CKstV87QC05Bsw8tKGee/FN3jYSs8Xn1YWxW3Oxd+xtw9vD8Vd01On/p85OlqFG5CARXpZfgasx7iP5NcxgLGrz3AJdyTMPLGX2MYn89aLERoHazYzon/O2xGUVTQP8gJAtOANXINwho7/cryt86+wQDPHukxwmTdZNXPMqoeTsUS9JfjhYxj2AODB6d9h99k95eBl0gSDQMEc/sjgZikoRgNzB6vSziaXejTElUfxhNpfbB0KUCScAc
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- h13-20020a63c00d000000b005ceac534e47sm5943946pgg.51.2024.02.04.20.05.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Feb 2024 20:05:41 -0800 (PST)
-Date: Mon, 5 Feb 2024 12:05:32 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Hao Xiang <hao.xiang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>,
- Avihai Horon <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>,
- Prasad Pandit <ppandit@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Subject: Re: [PATCH v2 22/23] migration/multifd: Fix
- MultiFDSendParams.packet_num race
-Message-ID: <ZcBejKDHWd4c948M@x1n>
-References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-23-peterx@redhat.com>
- <87zfwifubd.fsf@suse.de>
+ bh=LJIl3R1YvulEQPprrGTaMHTYgQBIuMEMWnv83UZpR1c=;
+ b=IlTrW8SBShSYuL5zspYftjtKmYmhvZU7YFdYVo5ZIaUcOuskj62iFzCT0bX4B9v+Pc
+ usPMToApbKbr9znWqdDWyTdUMzsfYtKE2/Z35DKS+jW7yyt/9PaZ1/BG7BiwTajKzANA
+ nmMGoOstIjWLV1J5o5mdHTokXtwr0MNT0TpAMnZvm9AnK8CbjK7qKWkzzi4l5MleDeP3
+ MFXVCye9ymO9tPBd+2ByorPa4MUtPNz92gBC3HePt2cklrBhrrNKCkO3wuC00ewFXeab
+ nWaDHHSiWu1wgtaSeZFc7+ZYwjBw87zw43OmzRgFroI37pNHZGvRSGma9k3CBTCrFyRE
+ 4rQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707105967; x=1707710767;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LJIl3R1YvulEQPprrGTaMHTYgQBIuMEMWnv83UZpR1c=;
+ b=CdUPVruawdRbXVyFBkAEqalI2e3txwi6UuOH34PepZQ2RxZxk+fSS9KH24TnhQD1w8
+ voPsw/JiNhWCG+8SFvob755zRtRJf/YENGnCKc3S5zjnEs8F0mduvdKhMFrXDxQfr8Wo
+ siYlVQImgGVy4RHb28ZCu29P+sxamQOj38DwI7vRFRrmFyNuxUh0C0Gnrl3D/JmocatC
+ dq2DSnI+aXhYgCY90ptiGhGvku/wYo1YgI+NFVNiKACg8WlHl/bzBn50uP6H7eucLCku
+ I4/e1NmpRBcPEK7QsiqQ9DMhcxeJl9Qe5BWowQ2UdYQ097VuFYMmvaOwS/qgFqx/Pe4G
+ K4tQ==
+X-Gm-Message-State: AOJu0Yx0/4tjJNWtFRFzCE/XemR0nF2e0aT64HZLRqek3jUlhjDqpnzR
+ q3VIg8kYs+MarSDZcRDqBA51NJPAsuM1A3TCbtBgQ0D+23z48zczWH+7kmGvpNidxLSXeR5cC+h
+ qbHPhlBa6pNA9SeH48gISXzIa7IU=
+X-Google-Smtp-Source: AGHT+IFFv8IUGKNbaQcu3PlX8GiADzlZIHB/XBu7BttG+2n2mjM/hl7jYwUjt0HmFDZSoOQL/ThGtN9CqJpdpsy5+2A=
+X-Received: by 2002:a05:6122:2a0d:b0:4b6:be94:acc6 with SMTP id
+ fw13-20020a0561222a0d00b004b6be94acc6mr12990001vkb.10.1707105966650; Sun, 04
+ Feb 2024 20:06:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87zfwifubd.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240110040203.1920924-1-hchauhan@ventanamicro.com>
+ <e2763db2-fade-482d-b433-1bfce6acf7d3@ventanamicro.com>
+ <CAKmqyKOA6OtixYoMJ_qtXj_u0t6rMdHawg0VEvq3-=mK4q6_XQ@mail.gmail.com>
+ <3c091744cd4bafeb7c1d177455fa9789822e7209.camel@rivosinc.com>
+ <CAKmqyKPkjBBo-2EAL25-3qACSv4c4naGT8V-F5e5as4D=WVa9g@mail.gmail.com>
+ <20240122-29d7d206e9ea3ecd46fad930@orel>
+In-Reply-To: <20240122-29d7d206e9ea3ecd46fad930@orel>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 5 Feb 2024 14:05:40 +1000
+Message-ID: <CAKmqyKPibo3wp8mPu2+W5aGaxsPx3Ko2pcotv1H2Ddj6uhZDiw@mail.gmail.com>
+Subject: Re: Re: [PATCH 0/2] Export debug triggers as an extension
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: Rob Bradford <rbradford@rivosinc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Himanshu Chauhan <hchauhan@ventanamicro.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Alvin Chang <alvinga@andestech.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,50 +98,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 02, 2024 at 06:08:22PM -0300, Fabiano Rosas wrote:
-> peterx@redhat.com writes:
-> 
-> > From: Peter Xu <peterx@redhat.com>
+On Mon, Jan 22, 2024 at 7:16=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
+om> wrote:
+>
+> On Mon, Jan 22, 2024 at 03:42:10PM +1000, Alistair Francis wrote:
+> > > > From memory the "debug" property is for the original debug spec:
+> > > > https://github.com/riscv/riscv-debug-spec/releases/tag/task_group_v=
+ote
+> > > >
+> > > > That was ratified and is an official extension. AFAIK this is what =
+is
+> > > > in physical hardware as well.
+> > > >
+> > > > The actual PDF says draft though, I'm not sure what's going on ther=
+e.
+> > > >
+> > > > The debug spec doesn't have a Z* name, so it's just "debug", at lea=
+st
+> > > > AFAIK.
+> > > >
+> > > > "sdtrig" seems to be a new backwards-incompatible extension doing
+> > > > basically the same thing. What a mess
+> ...
+> > >
+> > > I've done a bit of digging and I agree things are quite messy. Here a=
+re
+> > > my discoveries:
+> > >
+> > > The debug option and the code for triggers was added in these commits=
+:
+> > >
+> > > c9711bd778 target/riscv: cpu: Enable native debug feature
+> > > 38b4e781a4 target/riscv: machine: Add debug state description
+> > > b6092544fc target/riscv: csr: Hook debug CSR read/write
+> > > 1acdb3b013 target/riscv: cpu: Add a config option for native debug
+> > > 95799e36c1 target/riscv: Add initial support for the Sdtrig extension
+> > >
+> > > In March 2022 - since the commit refers to the Sdtrig extension name
+> > > and from the date this was an implementation not of the ratified 0.13
+> > > debug spec (which did not have Sdtrig as a separate extension) but
+> > > rather a version of the in development 1.0 debug spec.
 > >
-> > As reported correctly by Fabiano [1], MultiFDSendParams.packet_num is buggy
-> > to be assigned and stored.  Consider two consequent operations of: (1)
-> > queue a job into multifd send thread X, then (2) queue another sync request
-> > to the same send thread X.  Then the MultiFDSendParams.packet_num will be
-> > assigned twice, and the first assignment can get lost already.
+> > Yeah... We used the "stable" from master. That is our mistake there.
 > >
-> > To avoid that, we move the packet_num assignment from p->packet_num into
-> > where the thread will fill in the packet.  Use atomic operations to protect
-> > the field, making sure there's no race.
+> > I'm pretty sure we targeted the 0.13. The "Sdtrig" was only added in
+> > the v4 as the changelog says: "mention Sdtrig extension in the commit"
 > >
-> > Note that atomic fetch_add() may not be good for scaling purposes, however
-> > multifd should be fine as number of threads should normally not go beyond
-> > 16 threads.  Let's leave that concern for later but fix the issue first.
+> > >
+> > > It's not trivial to tell if it's closer to the ratified 0.13 version =
+or
+> > > the (hopefully soon to be frozen) 1.0 version.
+> > >
+> > > As the only part of the debug specification to be implemented is the
+> > > triggers then effectively the debug option is x-sdtrig.
+> > >
+> > > I don't think there is any way for code running on the machine to
+> > > identify what version of the debug is implemented - the appropriate
+> > > register is only available for external debug. Once 1.0 is frozen the=
+n
+> > > the presence of Sdtrig isa string would indicate 1.0 trigger support =
+is
+> > > available.
+> > >
+> > > According to JIRA - https://jira.riscv.org/browse/RVS-981 the debug
+> > > specification should freeze this month.
+> > >
+> > > How about considering this as a solution:
+> > >
+> > > - Add a new x-sdtrig option that defaults to false
+> > > - Deprecate debug option - but retain it with default on
 > >
-> > There's also a trick on how to make it always work even on 32 bit hosts for
-> > uint64_t packet number.  Switching to uintptr_t as of now to simply the
-> > case.  It will cause packet number to overflow easier on 32 bit, but that
-> > shouldn't be a major concern for now as 32 bit systems is not the major
-> > audience for any performance concerns like what multifd wants to address.
+> > We can't deprecate a ratified spec. The 0.13 just seems to call it
+> > "debug" so that's what we are stuck with
 > >
-> > We also need to move multifd_send_state definition upper, so that
-> > multifd_send_fill_packet() can reference it.
+> > > - Add warning if triggers are used and x-sdtrig is not enabled
+> > > - Update the trigger implementation to match frozen spec
 > >
-> > [1] https://lore.kernel.org/r/87o7d1jlu5.fsf@suse.de
+> > We will need to support two versions, as there are two ratified specs.
 > >
-> > Reported-by: Fabiano Rosas <farosas@suse.de>
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> 
-> Elena had reported this in October already.
-> 
-> Reported-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+>
+> We'll likely want to be allowed to deprecate ratified extensions as riscv
+> evolves. Despite best intentions, extensions may be designed and ratified
+> which ultimately fail to be of much utility, and new extensions will
+> supersede old extensions. If QEMU keeps every extension it adds, then
+> we'll slow progress on new extensions by maintaining old extension code.
+> The old extensions will also bitrot or waste CI resources getting tested
+> for no reason.
 
-Ah, I'll do the replacement.
+I agree that we might need to deprecate extensions.
 
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+I'm not sure the debug extension is there though. The debug extension
+is used in current shipping hardware and has been ratified. The Sdtrig
+isn't even ratified yet
+(https://lists.riscv.org/g/tech-announce/message/320)
 
-Thanks,
+Right now I feel that we should at least wait for hardware that
+supports Sdtrig to start to come out. Then we can look at deprecating
+debug. Deprecating it now seems a bit premature.
 
--- 
-Peter Xu
+Alistair
 
+>
+> I don't know the history of 'debug' and 'sdtrig', other than what I've
+> read above, but, to me, it looks like 'debug' might be one of the first
+> extensions which should be deprecated. Assuming we have a long enough
+> deprecation period, then I think it's always safe to attempt a
+> deprecation. If somebody shouts, then it can always be taken back off the
+> chopping block.
+>
+> Thanks,
+> drew
+>
 
