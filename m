@@ -4,81 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4514BC4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 08:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD44C48291
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 08:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWtzN-00071I-Av; Mon, 05 Feb 2024 03:06:01 -0500
+	id 1rWu6W-0008Np-PE; Mon, 05 Feb 2024 03:13:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rWtyy-00070A-E7; Mon, 05 Feb 2024 03:05:38 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rWtyv-0001Gz-4W; Mon, 05 Feb 2024 03:05:35 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1d95d67ff45so25665215ad.2; 
- Mon, 05 Feb 2024 00:05:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707120329; x=1707725129; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gbNXvlJCZvgEuCX97AJZzoXCygWa3lIONoGZkCzBtMQ=;
- b=nXJYO67l4K64jvth04hFVYpTthctvXCbOvsJSd+G/V689u5UEWYAN4ijzX52h1bo71
- nGatmkcHiCExZuVPPMscZ8K01hap3jaxGecIaHInAqobOU5RYs7OxnuXWTjrxKBEDIFk
- vJSCnWI/Fzt2Hjqq3AY+oDiop/U5DK7BDPUiq0rq2KVxBP5zVPAfBGtn0HLbNHT8/j2Q
- eFy6iP/g5t/3CJO3hT5gtmYi+OMUb3j48FJom7lp7Rzg/IFwVr6RdAD+86AdoElyTD+3
- sAktMLsCw4k+Ry8ftZZYCe++877YJLMjghGVszp/TljTvbCWItWc2WuACw63UryMRopV
- cBgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707120329; x=1707725129;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=gbNXvlJCZvgEuCX97AJZzoXCygWa3lIONoGZkCzBtMQ=;
- b=Mav0W3U02MXKO3Vkr+1rox3HS3bt38MqpgaSJ8zlSdcFyFf9tFa1lt0xnslUNATYri
- ZngB7AHytpoLSi//XEO+Y1D0ce9opqj06nPa6U6hSMCYiiED5q9QWcOId+d+WrpHG3Oy
- RbTP5tGemWM0azX3dR9UC8UEmgzFRgZcgahALn1PZf7AjZtLppANTu2uShaeOZtNNIni
- n3s6vpmi0X5svkb0+3vFDiswn75v4hlH0/vvVHbF/7eh3PkFlQyWBlOoiz/v2I7StDS+
- 5al5cxkRx3bAKxfxsP2N9FjhAYGiQ9y1qQTIPmQJVh8dqxb4tloW14A11Bp7ccZ3I4km
- 9d/A==
-X-Gm-Message-State: AOJu0YzQhgRScm1qKIkg95BEoivnAjl216Y5COugZRTdO4vfxwC3Vdkk
- wttnKEpQJg7MCToTUcCRrZRIgnojsubUYMTLIrJkF9T7RPgOKhtW
-X-Google-Smtp-Source: AGHT+IEAu4ngfAZtoVxdtK90cGmbYLf8SXpRB2a2M3KJzVKi0GZCABi6ElEeZwoc67dQD8N/u8Am5g==
-X-Received: by 2002:a17:902:e882:b0:1d9:7095:7e1f with SMTP id
- w2-20020a170902e88200b001d970957e1fmr11705328plg.67.1707120329286; 
- Mon, 05 Feb 2024 00:05:29 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXv4qYBn+klaTpW7jSk9SM9E9xfXTWnFfIVow8MDNsWfGUVjeTsDTtqUT4GHKXMOUsapxJd8trpezBYTfoJ9ithXTzXA/qoGV6PwMKjmswofValvNVmDmoxBriIcnbz+4+A76Pv2H3bfyLpRhJ6dHRH7EuZ1LxS0JYRk2VfaSGp/b2Htfac
-Received: from localhost ([1.146.86.248]) by smtp.gmail.com with ESMTPSA id
- ml12-20020a17090334cc00b001d8f6ae51aasm5713276plb.64.2024.02.05.00.05.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Feb 2024 00:05:28 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 05 Feb 2024 18:05:22 +1000
-Message-Id: <CYWZNDQFGVHZ.24ZEW4NNLI1BK@wheely>
-Cc: <qemu-devel@nongnu.org>, "Daniel Henrique Barboza"
- <danielhb413@gmail.com>, =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- "David Gibson" <david@gibson.dropbear.id.au>
-Subject: Re: [PATCH v3 0/4] Add BHRB Facility Support
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Glenn Miles" <milesg@linux.vnet.ibm.com>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20230925174351.617891-1-milesg@linux.vnet.ibm.com>
-In-Reply-To: <20230925174351.617891-1-milesg@linux.vnet.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1rWu6S-0008NJ-5T; Mon, 05 Feb 2024 03:13:20 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>)
+ id 1rWu6O-0002tu-Fj; Mon, 05 Feb 2024 03:13:19 -0500
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8CxbeuTmMBl09AKAA--.30622S3;
+ Mon, 05 Feb 2024 16:13:07 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Ax3c6QmMBlPQAwAA--.49656S3; 
+ Mon, 05 Feb 2024 16:13:06 +0800 (CST)
+Subject: Re: [PATCH] tests/cdrom-test: Add cdrom test for LoongArch virt
+ machine
+To: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240205021318.3759925-1-maobibo@loongson.cn>
+ <613f883e-cf64-43e5-85b6-64381c46ffa2@redhat.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <e3e3ee04-c50e-9f0d-6fa8-e650a6c96a15@loongson.cn>
+Date: Mon, 5 Feb 2024 16:13:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <613f883e-cf64-43e5-85b6-64381c46ffa2@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8Ax3c6QmMBlPQAwAA--.49656S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7AryxZFW7Gw1Duw1xGryfAFc_yoW8WF4kpr
+ 1kAF10k3y8Wr95Jry7Gw1DWFy8Jr4Dta4DCr18ZF48AFZ8Jr1jgr48Wr1j9w1DJayfXr17
+ Zw1kJr13ZF17XrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j8
+ yCJUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.214,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,52 +84,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Sep 26, 2023 at 3:43 AM AEST, Glenn Miles wrote:
-> This is a series of patches for adding support for the Branch History
-> Rolling Buffer (BHRB) facility.  This was added to the Power ISA
-> starting with version 2.07.  Changes were subsequently made in version
-> 3.1 to limit BHRB recording to instructions run in problem state only
-> and to add a control bit to disable recording (MMCRA[BHRBRD]).
->
-> Version 3 of this series disables branch recording on P8 and P9 due
-> to a drop in performance caused by recording branches outside of
-> problem state.
 
-For this series,
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+On 2024/2/5 下午3:47, Thomas Huth wrote:
+> On 05/02/2024 03.13, Bibo Mao wrote:
+>> The cdrom test skips to execute on LoongArch system with command
+>> "make check"
+> 
+> Are you sure the test is marked with "skip"? ... it should at least test 
+> with the "none" machine...?
+With the latest code, cdrom testcase passes to run. It is strange that 
+about two weeks ago, the result displays SKIP, so I post this patch -:)
 
-I finally got around to adding powerpc MMU support to kvm unit tests,
-so userspace and basic BHRB tests weren't much more work. Easier than
-testing it with perf in Linux!
+Regards
+Bibo Mao
 
-https://gitlab.com/npiggin/kvm-unit-tests.git powerpc
-
-Thanks,
-Nick
-
->
-> Glenn Miles (4):
->   target/ppc: Add new hflags to support BHRB
->   target/ppc: Add recording of taken branches to BHRB
->   target/ppc: Add clrbhrb and mfbhrbe instructions
->   target/ppc: Add migration support for BHRB
->
->  target/ppc/cpu.h                       |  24 ++++++
->  target/ppc/cpu_init.c                  |  39 +++++++++-
->  target/ppc/helper.h                    |   5 ++
->  target/ppc/helper_regs.c               |  35 +++++++++
->  target/ppc/insn32.decode               |   8 ++
->  target/ppc/machine.c                   |  23 +++++-
->  target/ppc/misc_helper.c               |  46 +++++++++++
->  target/ppc/power8-pmu-regs.c.inc       |   5 ++
->  target/ppc/power8-pmu.c                |  48 +++++++++++-
->  target/ppc/power8-pmu.h                |  11 ++-
->  target/ppc/spr_common.h                |   1 +
->  target/ppc/translate.c                 | 101 +++++++++++++++++++++++--
->  target/ppc/translate/bhrb-impl.c.inc   |  43 +++++++++++
->  target/ppc/translate/branch-impl.c.inc |   2 +-
->  14 files changed, 374 insertions(+), 17 deletions(-)
->  create mode 100644 target/ppc/translate/bhrb-impl.c.inc
+> 
+>> this patch enables cdrom test for LoongArch virt
+>> machine platform.
+>>
+>> With this patch, cdrom test passes to run on LoongArch virt
+>> machine type.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   tests/qtest/cdrom-test.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+>> index 0945383789..c8b97d8d9a 100644
+>> --- a/tests/qtest/cdrom-test.c
+>> +++ b/tests/qtest/cdrom-test.c
+>> @@ -271,6 +271,9 @@ int main(int argc, char **argv)
+>>               const char *virtmachine[] = { "virt", NULL };
+>>               add_cdrom_param_tests(virtmachine);
+>>           }
+>> +    } else if (g_str_equal(arch, "loongarch64")) {
+>> +        const char *virtmachine[] = { "virt", NULL };
+>> +        add_cdrom_param_tests(virtmachine);
+>>       } else {
+>>           const char *nonemachine[] = { "none", NULL };
+>>           add_cdrom_param_tests(nonemachine);
+> 
+> Anyway, using the virt machine is certainly better than the "none" 
+> machine, so:
+> Acked-by: Thomas Huth <thuth@redhat.com>
 
 
