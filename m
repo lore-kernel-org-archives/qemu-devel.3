@@ -4,92 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0ED8C4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 14:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63126C48295
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 14:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWzuM-0001eE-3q; Mon, 05 Feb 2024 09:25:14 -0500
+	id 1rWzuU-0001vm-DF; Mon, 05 Feb 2024 09:25:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWzuJ-0001Xu-Hi
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:25:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rWzuS-0001ss-JP
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:25:20 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWzuG-0003v2-DV
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:25:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707143106;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZWTIK5KAygvgdY13aOV1C3dNPuYdd9HjyH67iwQWfqY=;
- b=CnI238L6KHo2TPY81Eet0XU6laGmWmV7F5j62p5noKy6LLJfgOGlMllg1jHryLGk9rJ31z
- J6gJE1mihg47mji7VGyy4/iH8a/74R2oAf3YNKGB3F6D8PUlzD03FJxiNG6EBNh72s70ps
- 0NZI7kilVJ+W4plGC0k0I4Tte8x3u4o=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-157-YewDnY4dOdKesMN6BsHByQ-1; Mon, 05 Feb 2024 09:25:05 -0500
-X-MC-Unique: YewDnY4dOdKesMN6BsHByQ-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-59a95f8618dso672597eaf.1
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 06:25:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707143104; x=1707747904;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZWTIK5KAygvgdY13aOV1C3dNPuYdd9HjyH67iwQWfqY=;
- b=Y1HTbzK2qwEIJYkevt/fp3QzxYGterz7jBes7rx4Yq8oIBUC+ytTmOe/5Mg6aKZWJ6
- 7MX+YOCCi+yuoEJtZF6HohMIC3EkLoPZ05YND7b0cUK50HRqjh66CJmKBs5CfZIG7G11
- +hqu4BXzeF2wPZQ2wDv070wyVvOqKh10OjzXt6JvWF5JRkQXZJqdLi/migE3YeWkKBkk
- PHbyrQ8PdLpF5zML+aWROwR+02uA5Q+aK2UEJL+vOKOR+ciLvhBZtnBSzKChlD0nQX6l
- wY5MAgo6ZF0U3jrDXLLU7cTfe+1+QZrawNlgCOsDV5erU6fdnoI8dRPxm2iw/wBLWOt4
- iG3g==
-X-Gm-Message-State: AOJu0YyuRML/j2teFwjM+5k/mClSvzkmZ+8tSX/SNlDxG7icojkCO3x9
- osLxxstbT4Fdf6t+xyUKdahP+xwOnICYz2rLtixAlE9yyNpGD5gOsabBYyAjxEH7eA7TXf9OKZK
- 0H2f9fCMHBg+LCbSfaaINgvE8bhKrAg2d1TJxgnr/i2H6a37TvR+A
-X-Received: by 2002:a05:6359:4125:b0:178:9f1d:65ea with SMTP id
- kh37-20020a056359412500b001789f1d65eamr15444468rwc.1.1707143104508; 
- Mon, 05 Feb 2024 06:25:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHRvFNa0k9vn/HwFrYAU6hPN5WzduLnI6P8pjStUP3L7slmxf9ZuaKQPnetgPpbNMrEBHAVgQ==
-X-Received: by 2002:a05:6359:4125:b0:178:9f1d:65ea with SMTP id
- kh37-20020a056359412500b001789f1d65eamr15444455rwc.1.1707143104147; 
- Mon, 05 Feb 2024 06:25:04 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCVGkJbcJFvMHx0XtQAb91Kc1+fIct5PBXHUkSFQO6cAJupSn/M150qBBld3bcbAl2XNX+UIMiN6L9GIHsrl844bbwBFJlVkyXM/C0Vj6ZK6zbXROwIMdOcS2S4+D+XQftC+2lQEocFw9bg49xGWxAskQfjv87k+NtYWFEqWU9Xs+EhbPkpXyDYaa+l+wc6i0wRuxNskSQ7uE593Tavl6dA=
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- o23-20020a639217000000b005dc1281f21fsm3432050pgd.2.2024.02.05.06.25.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 06:25:03 -0800 (PST)
-Date: Mon, 5 Feb 2024 22:24:55 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Hao Xiang <hao.xiang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>,
- Avihai Horon <avihaih@nvidia.com>, Yuan Liu <yuan1.liu@intel.com>,
- Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH v2 23/23] migration/multifd: Optimize sender side to be
- lockless
-Message-ID: <ZcDvt7ASULc-Xb_A@x1n>
-References: <20240202102857.110210-1-peterx@redhat.com>
- <20240202102857.110210-24-peterx@redhat.com>
- <87wmrmft4f.fsf@suse.de> <ZcBloXUWBORVraiu@x1n>
- <87cytb57dx.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rWzuM-0004Ep-Dy
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 09:25:20 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TT7qV6gndz6D8gC;
+ Mon,  5 Feb 2024 22:21:58 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 9ED2C140A36;
+ Mon,  5 Feb 2024 22:25:12 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Mon, 5 Feb 2024 14:25:12 +0000
+To: <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
+CC: Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, <linuxarm@huawei.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Ira Weiny <ira.weiny@intel.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>
+Subject: [RFC PATCH 11/11] cxl/type3: Add firmware first error reporting for
+ general media events.
+Date: Mon, 5 Feb 2024 14:19:40 +0000
+Message-ID: <20240205141940.31111-12-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240205141940.31111-1-Jonathan.Cameron@huawei.com>
+References: <20240205141940.31111-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87cytb57dx.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,220 +70,234 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 11:10:34AM -0300, Fabiano Rosas wrote:
-> > (maybe I can repost this single patch in-place to avoid another round of
-> >  mail bombs..)
-> 
-> Sure.
+Initial code for Firmware First injection of general media events.
+PoC level only - issue to be solved include:
+* Mapping to CPER error types (recoverable etc).
+* Some record details are tricky to establish so for now are not
+  provided.
 
-I've got the final version attached here.  Feel free to have a look, thanks.
-
-====
-From 6ba337320430feae4ce9d3d906ea19f68430642d Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Fri, 2 Feb 2024 18:28:57 +0800
-Subject: [PATCH] migration/multifd: Optimize sender side to be lockless
-
-When reviewing my attempt to refactor send_prepare(), Fabiano suggested we
-try out with dropping the mutex in multifd code [1].
-
-I thought about that before but I never tried to change the code.  Now
-maybe it's time to give it a stab.  This only optimizes the sender side.
-
-The trick here is multifd has a clear provider/consumer model, that the
-migration main thread publishes requests (either pending_job/pending_sync),
-while the multifd sender threads are consumers.  Here we don't have a lot
-of complicated data sharing, and the jobs can logically be submitted
-lockless.
-
-Arm the code with atomic weapons.  Two things worth mentioning:
-
-  - For multifd_send_pages(): we can use qatomic_load_acquire() when trying
-  to find a free channel, but that's expensive if we attach one ACQUIRE per
-  channel.  Instead, keep the qatomic_read() on reading the pending_job
-  flag as we do already, meanwhile use one smp_mb_acquire() after the loop
-  to guarantee the memory ordering.
-
-  - For pending_sync: it doesn't have any extra data required since now
-  p->flags are never touched, it should be safe to not use memory barrier.
-  That's different from pending_job.
-
-Provide rich comments for all the lockless operations to state how they are
-paired.  With that, we can remove the mutex.
-
-[1] https://lore.kernel.org/r/87o7d1jlu5.fsf@suse.de
-
-Suggested-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240202102857.110210-24-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- migration/multifd.h |  2 --
- migration/multifd.c | 51 +++++++++++++++++++++++----------------------
- 2 files changed, 26 insertions(+), 27 deletions(-)
+ include/hw/acpi/ghes.h |   3 ++
+ hw/acpi/ghes-stub.c    |   6 +++
+ hw/acpi/ghes.c         | 120 +++++++++++++++++++++++++++++++++++++++++
+ hw/mem/cxl_type3.c     |  14 +++--
+ 4 files changed, 140 insertions(+), 3 deletions(-)
 
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 98876ff94a..78a2317263 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -91,8 +91,6 @@ typedef struct {
-     /* syncs main thread and channels */
-     QemuSemaphore sem_sync;
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 3426697ecd..171c3e9dad 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -83,6 +83,9 @@ typedef struct CXLError CXLError;
+ bool ghes_record_cxl_errors(PCIDevice *dev, PCIEAERErr *err,
+                             CXLError *cxl_err, uint32_t notify);
  
--    /* this mutex protects the following parameters */
--    QemuMutex mutex;
-     /* is this channel thread running */
-     bool running;
-     /* multifd flags for each packet */
-diff --git a/migration/multifd.c b/migration/multifd.c
-index b317d57d61..fbdb129088 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -501,19 +501,19 @@ static bool multifd_send_pages(void)
-         }
-     }
++typedef struct CXLEventGenMedia CXLEventGenMedia;
++bool ghes_record_cxl_event_gm(PCIDevice *dev,
++                           CXLEventGenMedia *gem, uint32_t notify);
+ /**
+  * acpi_ghes_present: Report whether ACPI GHES table is present
+  *
+diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
+index cbc7d57465..34940c6441 100644
+--- a/hw/acpi/ghes-stub.c
++++ b/hw/acpi/ghes-stub.c
+@@ -25,6 +25,12 @@ bool ghes_record_cxl_errors(PCIDevice *dev, PCIEAERErr *err,
+     return false;
+ }
  
--    qemu_mutex_lock(&p->mutex);
--    assert(!p->pages->num);
--    assert(!p->pages->block);
-     /*
--     * Double check on pending_job==false with the lock.  In the future if
--     * we can have >1 requester thread, we can replace this with a "goto
--     * retry", but that is for later.
-+     * Make sure we read p->pending_job before all the rest.  Pairs with
-+     * qatomic_store_release() in multifd_send_thread().
-      */
--    assert(qatomic_read(&p->pending_job) == false);
--    qatomic_set(&p->pending_job, true);
-+    smp_mb_acquire();
-+    assert(!p->pages->num);
-     multifd_send_state->pages = p->pages;
-     p->pages = pages;
--    qemu_mutex_unlock(&p->mutex);
-+    /*
-+     * Making sure p->pages is setup before marking pending_job=true. Pairs
-+     * with the qatomic_load_acquire() in multifd_send_thread().
-+     */
-+    qatomic_store_release(&p->pending_job, true);
-     qemu_sem_post(&p->sem);
- 
-     return true;
-@@ -648,7 +648,6 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-     }
-     multifd_send_channel_destroy(p->c);
-     p->c = NULL;
--    qemu_mutex_destroy(&p->mutex);
-     qemu_sem_destroy(&p->sem);
-     qemu_sem_destroy(&p->sem_sync);
-     g_free(p->name);
-@@ -742,14 +741,12 @@ int multifd_send_sync_main(void)
- 
-         trace_multifd_send_sync_main_signal(p->id);
- 
--        qemu_mutex_lock(&p->mutex);
-         /*
-          * We should be the only user so far, so not possible to be set by
-          * others concurrently.
-          */
-         assert(qatomic_read(&p->pending_sync) == false);
-         qatomic_set(&p->pending_sync, true);
--        qemu_mutex_unlock(&p->mutex);
-         qemu_sem_post(&p->sem);
-     }
-     for (i = 0; i < migrate_multifd_channels(); i++) {
-@@ -796,9 +793,12 @@ static void *multifd_send_thread(void *opaque)
-         if (multifd_send_should_exit()) {
-             break;
-         }
--        qemu_mutex_lock(&p->mutex);
- 
--        if (qatomic_read(&p->pending_job)) {
-+        /*
-+         * Read pending_job flag before p->pages.  Pairs with the
-+         * qatomic_store_release() in multifd_send_pages().
-+         */
-+        if (qatomic_load_acquire(&p->pending_job)) {
-             MultiFDPages_t *pages = p->pages;
- 
-             p->iovs_num = 0;
-@@ -806,14 +806,12 @@ static void *multifd_send_thread(void *opaque)
- 
-             ret = multifd_send_state->ops->send_prepare(p, &local_err);
-             if (ret != 0) {
--                qemu_mutex_unlock(&p->mutex);
-                 break;
-             }
- 
-             ret = qio_channel_writev_full_all(p->c, p->iov, p->iovs_num, NULL,
-                                               0, p->write_flags, &local_err);
-             if (ret != 0) {
--                qemu_mutex_unlock(&p->mutex);
-                 break;
-             }
- 
-@@ -822,24 +820,31 @@ static void *multifd_send_thread(void *opaque)
- 
-             multifd_pages_reset(p->pages);
-             p->next_packet_size = 0;
--            qatomic_set(&p->pending_job, false);
--            qemu_mutex_unlock(&p->mutex);
++bool ghes_record_cxl_event_gm(PCIDevice *dev, CXLEventGenMedia *gen,
++                              uint32_t notify)
++{
++    return false;
++}
 +
-+            /*
-+             * Making sure p->pages is published before saying "we're
-+             * free".  Pairs with the smp_mb_acquire() in
-+             * multifd_send_pages().
-+             */
-+            qatomic_store_release(&p->pending_job, false);
-         } else {
--            /* If not a normal job, must be a sync request */
-+            /*
-+             * If not a normal job, must be a sync request.  Note that
-+             * pending_sync is a standalone flag (unlike pending_job), so
-+             * it doesn't require explicit memory barriers.
-+             */
-             assert(qatomic_read(&p->pending_sync));
-             p->flags = MULTIFD_FLAG_SYNC;
-             multifd_send_fill_packet(p);
-             ret = qio_channel_write_all(p->c, (void *)p->packet,
-                                         p->packet_len, &local_err);
-             if (ret != 0) {
--                qemu_mutex_unlock(&p->mutex);
-                 break;
-             }
-             /* p->next_packet_size will always be zero for a SYNC packet */
-             stat64_add(&mig_stats.multifd_bytes, p->packet_len);
-             p->flags = 0;
-             qatomic_set(&p->pending_sync, false);
--            qemu_mutex_unlock(&p->mutex);
-             qemu_sem_post(&p->sem_sync);
-         }
+ bool acpi_ghes_present(void)
+ {
+     return false;
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index c6e863d375..34d8b8a518 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -281,6 +281,49 @@ static void build_append_aer_cper(PCIDevice *dev, GArray *table)
      }
-@@ -853,10 +858,7 @@ out:
-         error_free(local_err);
+ }
+ 
++static void build_append_cxl_event_cper(PCIDevice *dev, CXLEventGenMedia *gen,
++                                  GArray *table)
++{
++    PCIDeviceClass *pci_class = PCI_DEVICE_GET_CLASS(dev);
++    uint16_t sn_cap_offset = pcie_find_capability(dev, 0x3);
++    int i;
++
++    build_append_int_noprefix(table, 0x90, 4); /* Length */
++    build_append_int_noprefix(table,
++                              (1UL << 0) | /* Device ID */
++                              ((sn_cap_offset ? 1UL : 0UL) << 1) |
++                              (1UL << 2), /* Event Log entry */
++                              8);
++    /* Device id - differnet syntax from protocol error - sigh */
++    build_append_int_noprefix(table, pci_class->vendor_id, 2);
++    build_append_int_noprefix(table, pci_class->device_id, 2);
++    build_append_int_noprefix(table, PCI_FUNC(dev->devfn), 1);
++    build_append_int_noprefix(table, PCI_SLOT(dev->devfn), 1);
++    build_append_int_noprefix(table, pci_dev_bus_num(dev), 1);
++    build_append_int_noprefix(table, 0 /* Seg */, 2);
++    /*
++     * TODO: figure out how to get the slot number as the slot number
++     * capabiltiy is deprecated so it only really exists via _DSM
++     */
++    build_append_int_noprefix(table, 0, 2);
++
++    /* Reserved */
++    build_append_int_noprefix(table, 0, 1);
++
++    if (sn_cap_offset) {
++        uint32_t dw = pci_get_long(dev->config + sn_cap_offset + 4);
++
++        build_append_int_noprefix(table, dw, 4);
++        dw = pci_get_long(dev->config + sn_cap_offset + 8);
++        build_append_int_noprefix(table, dw, 4);
++    } else {
++        build_append_int_noprefix(table, 0, 8);
++    }
++    for (i = offsetof(typeof(*gen), hdr.length); i < sizeof(*gen); i++) {
++        build_append_int_noprefix(table, ((uint8_t *)gen)[i], 1);
++    }
++}
++
+ static void build_append_cxl_cper(PCIDevice *dev, CXLError *cxl_err,
+                                   GArray *table)
+ {
+@@ -501,6 +544,52 @@ static int ghes_record_aer_error(PCIDevice *dev, uint64_t error_block_address)
+     return true;
+ }
+ 
++static int ghes_record_cxl_gen_media(PCIDevice *dev, CXLEventGenMedia *gem,
++                                     uint64_t error_block_address)
++{
++    QemuUUID fru_id = {0};
++    GArray *block;
++    uint32_t data_length;
++    uint32_t event_length = 0x90;
++    const uint8_t section_id_le[] = { 0x77, 0x0a, 0xcd, 0xfb,
++                                      0x60, 0xc2,
++                                      0x7f, 0x41,
++                                      0x85, 0xa9,
++                                      0x08, 0x8b, 0x16, 0x21, 0xeb, 0xa6 };
++    block = g_array_new(false, true, 1);
++        /* Read the current length in bytes of the generic error data */
++    cpu_physical_memory_read(error_block_address + 8, &data_length, 4);
++
++    /* Add a new generic error data entry*/
++    data_length += ACPI_GHES_DATA_LENGTH;
++    data_length += event_length;
++
++    /*
++     * Check whether it will run out of the preallocated memory if adding a new
++     * generic error data entry
++     */
++    if ((data_length + ACPI_GHES_GESB_SIZE) > ACPI_GHES_MAX_RAW_DATA_LENGTH) {
++        error_report("Record CPER out of boundary!!!");
++        return false;
++    }
++    /* Build the new generic error status block header */
++    acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE, 0, 0,
++                                   data_length, ACPI_CPER_SEV_RECOVERABLE);
++
++    /* Build the new generic error data entry header */
++    acpi_ghes_generic_error_data(block, section_id_le,
++                                 ACPI_CPER_SEV_RECOVERABLE, 0, 0,
++                                 0x90, fru_id, 0);
++
++    /* Build the CXL CPER */
++    build_append_cxl_event_cper(dev, gem, block); /* 0x90 long */
++    /* Write back above whole new generic error data entry to guest memory */
++    cpu_physical_memory_write(error_block_address, block->data, block->len);
++    g_array_free(block, true);
++
++    return 0;
++}
++
+ static int ghes_record_cxl_error(PCIDevice *dev, CXLError *cxl_err,
+                                  uint64_t error_block_address)
+ {
+@@ -858,6 +947,37 @@ bool ghes_record_aer_errors(PCIDevice *dev, uint32_t notify)
+     return ghes_record_aer_error(dev, error_block_addr);
+ }
+ 
++bool ghes_record_cxl_event_gm(PCIDevice *dev, CXLEventGenMedia *gem,
++                              uint32_t notify)
++{
++    int read_ack_register = 0;
++    uint64_t read_ack_register_addr = 0;
++    uint64_t error_block_addr = 0;
++
++    if (!ghes_get_addr(notify, &error_block_addr, &read_ack_register_addr)) {
++        return false;
++    }
++
++    cpu_physical_memory_read(read_ack_register_addr,
++                             &read_ack_register, sizeof(uint64_t));
++    /* zero means OSPM does not acknowledge the error */
++    if (!read_ack_register) {
++        error_report("Last time OSPM does not acknowledge the error,"
++                     " record CPER failed this time, set the ack value to"
++                     " avoid blocking next time CPER record! exit");
++        read_ack_register = 1;
++        cpu_physical_memory_write(read_ack_register_addr,
++                                  &read_ack_register, sizeof(uint64_t));
++        return false;
++    }
++
++    read_ack_register = cpu_to_le64(0);
++    cpu_physical_memory_write(read_ack_register_addr,
++                              &read_ack_register, sizeof(uint64_t));
++
++    return ghes_record_cxl_gen_media(dev, gem, error_block_addr);
++}
++
+ bool ghes_record_cxl_errors(PCIDevice *dev, PCIEAERErr *aer_err,
+                             CXLError *cxl_err, uint32_t notify)
+ {
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 3a7881118a..1cc58293a2 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1734,6 +1734,8 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+                                         const char *component_id,
+                                         Error **errp)
+ {
++    MachineState *machine = MACHINE(qdev_get_machine());
++    MachineClass *mc = MACHINE_GET_CLASS(machine);
+     Object *obj = object_resolve_path(path, NULL);
+     CXLEventGenMedia gem;
+     CXLEventRecordHdr *hdr = &gem.hdr;
+@@ -1792,9 +1794,15 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
      }
  
--    qemu_mutex_lock(&p->mutex);
-     p->running = false;
--    qemu_mutex_unlock(&p->mutex);
+     stw_le_p(&gem.validity_flags, valid_flags);
 -
-     rcu_unregister_thread();
-     migration_threads_remove(thread);
-     trace_multifd_send_thread_end(p->id, p->packets_sent, p->total_normal_pages);
-@@ -998,7 +1000,6 @@ int multifd_send_setup(Error **errp)
-     for (i = 0; i < thread_count; i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
+-    if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
+-        cxl_event_irq_assert(ct3d);
++    if (!acpi_fw_first_pci()) {
++        if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
++            cxl_event_irq_assert(ct3d);
++        }
++    } else {
++        ghes_record_cxl_event_gm(PCI_DEVICE(ct3d), &gem, ACPI_GHES_NOTIFY_GPIO);
++        if (mc->set_error) {
++            mc->set_error();
++        }
+     }
+ }
  
--        qemu_mutex_init(&p->mutex);
-         qemu_sem_init(&p->sem, 0);
-         qemu_sem_init(&p->sem_sync, 0);
-         p->id = i;
 -- 
-2.43.0
-
-
--- 
-Peter Xu
+2.39.2
 
 
