@@ -4,96 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B830C48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 09:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC454C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 09:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWvM4-0000nJ-Hh; Mon, 05 Feb 2024 04:33:32 -0500
+	id 1rWvRq-00021a-6V; Mon, 05 Feb 2024 04:39:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rWvM3-0000mN-5t
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 04:33:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1rWvRo-00021H-2y; Mon, 05 Feb 2024 04:39:28 -0500
+Received: from mail-southeastasiaazon11020002.outbound.protection.outlook.com
+ ([52.101.133.2] helo=SG2PR03CU006.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rWvM1-0003AL-91
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 04:33:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707125608;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0Kej3aUtVc5CRwaWUishz6Is/8cmnAUBsCJhmP6/MZI=;
- b=JxYXlT+MCxYIgPTulEavm6hDy19mAVwI1nWDzSTfsFPJO9jC5c7KAH4JE8clFjmw6hNkgy
- FvtPftrkVSMMPfMwQ1J5sZq9u4J3sSDMiLk+mVW7kqMrzDZ3UQZ9GZBfVH4qUAreRuc98u
- PgrFOTmbvdNUVW8RJuZMxFLqRN31opk=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-nY-_fDCIOAma56w9Ab2I9g-1; Mon, 05 Feb 2024 04:33:25 -0500
-X-MC-Unique: nY-_fDCIOAma56w9Ab2I9g-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-dc6ba69e803so7130453276.2
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 01:33:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707125605; x=1707730405;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0Kej3aUtVc5CRwaWUishz6Is/8cmnAUBsCJhmP6/MZI=;
- b=n2ZN677YDVF0C5zPkxiFhqcl83kYuubGQTQSOV5GW3w87f45sYpDmAG9I2nkW1n+XF
- /RKSdpFG0YAGdDVpNQTXeXNQo1dLoeFVCiymM3yuuKFpm70b1DCvrC6PBUQ0VLi/tqwC
- EYsLvp6mKH0YrmFxfSCZo0IXmluDSHhOXovYySG3q3SdNlbHVDiXy18XHKdiXh/D7Inn
- w6/MikLGdCYyjzA1FfFJq1NoTCcUxlp39RtpuvSjhGex9M/oUqEFSmEKzrPZyEU/Y8CF
- KDtYXWpMNOsgIpzIpg26fRMODmIZ3l63uT/TLSNWb7MnuIMKmiJGtBmoi3v+Abt90Ss8
- aYVA==
-X-Gm-Message-State: AOJu0Yz69VThrzRmDbRJysz1Kud8AFu9Ijra1OygRBY+SwRY/5djg/NG
- vgyCYA3Q89GzHZCzX2TewfJ8neHCTjFjZMLle/Bu+kDGfyvIZ2D+3pmR14X2U59SH3oDWF2x8zg
- z8CEw+tbEFEiPj0+iH78JNr4B1Z5wyQ0Nv1taVA/QXl1dvD+kvBMm
-X-Received: by 2002:a25:ae46:0:b0:dc6:528c:b3f8 with SMTP id
- g6-20020a25ae46000000b00dc6528cb3f8mr7693583ybe.3.1707125605166; 
- Mon, 05 Feb 2024 01:33:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH3BpdomOWCY7IHS0I2Siw1yW9BRAgQ6A85PqgR0b7A/DMNcoM8GUUHyPJzYezTu1iFGcK3Ow==
-X-Received: by 2002:a25:ae46:0:b0:dc6:528c:b3f8 with SMTP id
- g6-20020a25ae46000000b00dc6528cb3f8mr7693570ybe.3.1707125604884; 
- Mon, 05 Feb 2024 01:33:24 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUYRS1RVBDq8KFcDw/Qd5MQh52i3KfQZayfg2UNxDehDl1VHJfZarc/jIGF5nFy7P4x9P09NsVb7P8mM055Lu8uPdAKoKg8g6vla/EoAzCqaisSjXRz+QV07ZV4Zy8t6Ne49UEaD0kUCSqPSphe1dWyVEKbTHpAop9977fRvDWGSDdM2wDHYSkzX/Sqa91Qbc5s1pLLv5kcQVdusfYSctHW8Dj4zPWlnKgQMj70aeAU/rPG7CGXkYFV1PfqFXERCD9ilX/RfXGJLo4HsZuA4tkUzYwnjAg1v/i7RKYPpHQt+daE4N0KofSfH6RGcy+fvtZNbN29tYM2sasEvpaA5Fo2MwMFMap0Ejk=
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ay14-20020a05620a178e00b00783df78821dsm2810809qkb.25.2024.02.05.01.33.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Feb 2024 01:33:24 -0800 (PST)
-Message-ID: <d4571370-0fcc-4065-8571-60ccc18f4982@redhat.com>
-Date: Mon, 5 Feb 2024 10:33:21 +0100
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1rWvRe-0004De-FW; Mon, 05 Feb 2024 04:39:27 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AdwNckVN7Qo9Sss2IOa6DG9qq98C/aVh0UCd47G3CNIxzc7WdseENaa822aKU+wyJsTTgk4h1ItX8v3eMR1CpRoht6bzza/jBJf5sGbyMhAuvtk8Dqb0UC1NS4Qg7he9VNtL4X9b4VDnWbdXOD5YPymg8/5j3YXSd9OwcJId6GoW2uL5+zCzEppY/AKPoo765j8k36H8PUbiucAB7ZYJ74iFT7nG7grnatu1fnisvi3qH6x0SpWU2DU3drZGO82jT8LtM0Et6vnYlwWYXPqsquwVSLHY0gnGEXIaP9ZfZbwrIzgsxI5jkm0lUgrQMnYJEyPHqcPLqrK7ZDOocUhMBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5G0573CRaxDF5PzwAeLQOyFRyp6Z0Jdi5UhIemW9qvk=;
+ b=IVjjl+bEtV9lXk/3ZA3USoIzYQ+HMXFbdu3Y585he0wI1UuhtVOKNecfEPDrTD+oAo9hh6FTIjrpITZ6rWmWnLgABwYCHS/47UYpD3jN8c03T0SfuLdqkXoPCmNu0DKlIaUb+Os9cgUmyjgVnl4xZI6HBVdhUWJ+RzPfOCh3XCggBXF1z1SaQJ1AqifI5XZZjgh9zULdx7d9f2O/AFgqyxZJXrv0cxI1xWMipMOJZfWSRow7L/9ABADq/Us6iZWqh5LgtOaPgArsIKnhlIAQmJh4mhiEFcpdoytdrbta09iUoxoEB2WANrl8jIusxW2DvSPt1LxzCei+nFaTrqq0jA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5G0573CRaxDF5PzwAeLQOyFRyp6Z0Jdi5UhIemW9qvk=;
+ b=VSBgshAVEzKRC6OAeMGGhmxhdPO2TV1RwGPdwDFId6Ctad/FHm1Cuf1xEtfHBDxRwMEV+S195wPGmiCo67rWmoKkd3jX6KsCOA41U+7bhza+tM8D6ZmcuVGQ4uW1wOTAQOhlTWvQd3E75KQ8ThbG0G515ZmC8ZpIDyA6q+qfxVF3vTKUWAp/CwHN6NgZLIP+4/5D62dBE9y3Cp2jdHp69BblSV5V+kIkL24VDLhd6Xj4v+dEgO6UKZ+XqxWDZRsiIZt9aDTUxMk8T5YooPvK/Q2Vnkv1Fot20Rmdl5phTUhf3I9efaPh4Pp5z0IwnnJ+Ls/bQRHzzkng15gZVnXAMQ==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ TYZPR06MB4127.apcprd06.prod.outlook.com (2603:1096:400:6::6) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7249.34; Mon, 5 Feb 2024 09:38:06 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::79a8:927d:1e03:51d0]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::79a8:927d:1e03:51d0%7]) with mapi id 15.20.7249.032; Mon, 5 Feb 2024
+ 09:38:06 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+Subject: RE: [PATCH v0] aspeed: support uart controller both 0 and 1 base
+Thread-Topic: [PATCH v0] aspeed: support uart controller both 0 and 1 base
+Thread-Index: AQHaWAvXQO1274e1K0yFSK+fur9+t7D7fbSg
+Date: Mon, 5 Feb 2024 09:38:06 +0000
+Message-ID: <SI2PR06MB50413C107EBCB5E9F257C8BDFC472@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20240205081757.304433-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20240205081757.304433-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|TYZPR06MB4127:EE_
+x-ms-office365-filtering-correlation-id: 91566207-85e5-4e5c-6bbc-08dc262e2828
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ClawxROUxKo7/Z+PLAMbEj4fYZiu3QrMQ1wWUFFameCwGJRkjuuHyGt4ybPqBYiF3xwWfneJy1022f+wtEgNGhAe19omACSAt5sDtYM2ELlob7wBRzQtI+PHmZ4mImUmoPkgCbRvXqM7YNotLEyoLuludMczpBxzQ9l6wy3TW5drqBO3aD+sG9Pn7iUbPbnEbGI4JRGDB2E1ZieY5FAbzyZAEyanolTeCkiofv7hp2zcqVph5x8mhGiMxmIRb9ZPfx/LUUdohqai9IY5WCrWSXC7CZIY/hstNwDKvNpEJgKye8MUl2I1eaJDSA9LNu1WBJ5peFe5Qd5TIzoHpAqkql0iUuEnkUkutqSab7+D/nlXZeoUxfCS8eljD6GvtwFcThZZ2zRdktoaJg+Xj2nJ7IK7iE+rmEkmWrlN51jLoikb75J9X0MSLmiaB6AHB/cGrQykkNz+SeaBcVX8apUXmTHiZd7Ve3yqTOXIh+gpw9va2WEEeJfdT8OgmL2z+W9bNCgQchKf7tUTMr/S5U+uLcD169S6Dlm0Z+0/N/WbEd55mVJdJywEa+Jkwv/cg8O8/d4JCxoyO8FoIZxSIgMvig/ZAZ4YQprMlQgxw8pXlFw=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(396003)(366004)(376002)(39840400004)(136003)(346002)(230922051799003)(451199024)(186009)(1800799012)(64100799003)(41300700001)(76116006)(38070700009)(2906002)(110136005)(107886003)(66556008)(71200400001)(66946007)(9686003)(7696005)(6506007)(478600001)(966005)(53546011)(66476007)(64756008)(66446008)(86362001)(52536014)(5660300002)(83380400001)(316002)(8676002)(4326008)(26005)(33656002)(8936002)(38100700002)(122000001)(55016003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?3ALIk42skx44Bq8GnNlYoh/R2Z/ujG4fRe4mVrq+ov40WyzEBcGTl6Gb+Y?=
+ =?iso-8859-1?Q?hwkpXDKcHoJfxm8rnOdAWMVu0YHgPhYRVSDIypaG8U/mn0VY2ofbp3Wt0I?=
+ =?iso-8859-1?Q?6WdVAWAULHUahRzs8gFsS1+jz8YKO+lMq9flsi2CLgYO5pgKUbDsjVw5g8?=
+ =?iso-8859-1?Q?OX1ojzHY6F9i3VFct9UebRB3rsfmlChYvK6eNZa0Bw/GHUSqU27+ZJ4iVK?=
+ =?iso-8859-1?Q?K4yq8eiE4Z2ybDy+w+ELUMah8voJdpZBSYfVum+XHJu9SoX0dj90AjWjBV?=
+ =?iso-8859-1?Q?86nlySdwszeaIAkFvklD16m7pHJTReHArvmeXcYom+VwEWd5uSDArYOpih?=
+ =?iso-8859-1?Q?D9rH1chOuIDbBihxYV11zJ79o9SrTGxU0dYisKtiokx7RvY3FQl+amNdmn?=
+ =?iso-8859-1?Q?2JzRm+s2TUU9sCSooOnvhnczhf7gcAnpqyeGLX5NkXJpB3Hq8gAkAg0ucJ?=
+ =?iso-8859-1?Q?FoUruqapZkjvfWHGYVq52E/w5bUZ13sgqHIzYks8pidODxK3cV/HJyO7oN?=
+ =?iso-8859-1?Q?YadNRsUPE+Hd+rDjyyIsz+ygIv0588QtXn1jle0IQv9w/GufmN/HlF3PNc?=
+ =?iso-8859-1?Q?QhMcFAVm4TZXvIbA7fWGm4HiIooSuPNd4w18vCiGr/wBoGz/8FUaYOYDNQ?=
+ =?iso-8859-1?Q?SKFPKCG9e9aCYupFdMNZfmeL6SPbMfYan0IJq0aNT1d9qpwC1u47sWoRZP?=
+ =?iso-8859-1?Q?o+dUGJASQvf08zAmiBoAOSbpFBWnYNWyhXygrtam9TRMzyO8iM3iXVOXNF?=
+ =?iso-8859-1?Q?Ly9CKDtIABq+wlRx1U+x0HKByYRl0CM0pdkcPxOBAR27EO+FBU9DHCOMjs?=
+ =?iso-8859-1?Q?+byrlgB5l69HMGqhFMvNRAcngbNbMcobUhQkjpEaHXpVQjIFD4WH64nmM8?=
+ =?iso-8859-1?Q?3nHc0NfyDMIY54DR7xhkH8Aycvxk2YVOkbdmRe00AODpXXAMRt/EWLlSuy?=
+ =?iso-8859-1?Q?Y97Nu0G9WrUpRtWuX5Y72ZcMK4Sr9di73SuOopqiMTlHxsxOk8pGGpLbv4?=
+ =?iso-8859-1?Q?7bCQBtYWS4PlXGtcAJG7NRAicmkW1Svb9XLUpCd35u+UW8TgvFQ8VN7JKx?=
+ =?iso-8859-1?Q?3mzXO3w4wFsLaR7rv/x4XE3AkLB9TkR5C9XT2vUqk6idMm+Vn8ZQAL3GCl?=
+ =?iso-8859-1?Q?HMPqKiX6G5qaWe4VK5M4fbeAHMRnXNKxctzLd2ve6ev4maCj01wPywNrHp?=
+ =?iso-8859-1?Q?Q5hjWV+ACJiU7MFJwGNzWOSqjUUzl/HeGw/p2YWPZWBla/IFCkEQImEp36?=
+ =?iso-8859-1?Q?2VQLuYKwWacL71fU4DiLC2Nl/3oh9VGb0tFCxwernRqlPmiEaJNnVErmNE?=
+ =?iso-8859-1?Q?1EljEgTgEu/SymBjuAGE1ZLA+8+AS9NbLMb0uumrLok5hui1u36w+XnZ/r?=
+ =?iso-8859-1?Q?/aFWa0dn3IzHl6OOy5zF7F1wXcrtdLrWJVZVW6pX8XCje8d9TOGGs+Pdnh?=
+ =?iso-8859-1?Q?q3A3fhiVnLnaYjDO6YIGTkx7tY9CSKneSpemtlrwQSObi8IcvVcysmHo9k?=
+ =?iso-8859-1?Q?2zhy3S2gM/2euNGoWdjO6TTO7eeCGu72R4ZyNcNouE6P3v662jLK+Os5Fq?=
+ =?iso-8859-1?Q?6+wvZH1rAYfbO1lzrrEkqcm/SHqAV+DikwZoB8/zJSd8zxsm4ex+z5j/P7?=
+ =?iso-8859-1?Q?q9A1JAiJ+diETzzUSl1Zj9V0R6JKZKeTeV?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] hw: Set virtio-iommu aw-bits default value on
- pc_q35_9.0 and arm virt
-Content-Language: en-US
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jean-philippe@linaro.org,
- alex.williamson@redhat.com, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, yanghliu@redhat.com
-Cc: mst@redhat.com, jasowang@redhat.com
-References: <20240201163324.564525-1-eric.auger@redhat.com>
- <20240201163324.564525-4-eric.auger@redhat.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240201163324.564525-4-eric.auger@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 91566207-85e5-4e5c-6bbc-08dc262e2828
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Feb 2024 09:38:06.3767 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VcjT6Vh4UWV73SUr8mlzd5clK670fzCiXniY0YyrCzE8VpQWQrMkcRlLKr+BMKa20ZNdhYRTUTgmrpGOZHzoKLzmh+oRMQ9A1MOFiTaoK2M=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB4127
+Received-SPF: pass client-ip=52.101.133.2;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SG2PR03CU006.outbound.protection.outlook.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=2.881,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,124 +142,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/24 17:32, Eric Auger wrote:
-> Currently the default input range can extend to 64 bits. On x86,
-> when the virtio-iommu protects vfio devices, the physical iommu
-> may support only 39 bits. Let's set the default to 39, as done
-> for the intel-iommu. On ARM we set 48b as a default (matching
-> SMMUv3 SMMU_IDR5.VAX == 0).
-> 
-> We use hw_compat_8_2 to handle the compatibility for machines
-> before 9.0 which used to have a virtio-iommu default input range
-> of 64 bits.
-> 
-> Of course if aw-bits is set from the command line, the default
-> is overriden.
-> 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> 
+> -----Original Message-----
+> From: Jamin Lin <jamin_lin@aspeedtech.com>
+> Sent: Monday, February 5, 2024 4:18 PM
+> To: C=E9dric Le Goater <clg@kaod.org>; Peter Maydell
+> <peter.maydell@linaro.org>; Andrew Jeffery <andrew@codeconstruct.com.au>;
+> Joel Stanley <joel@jms.id.au>; open list:ASPEED BMCs
+> <qemu-arm@nongnu.org>; open list:All patches CC here
+> <qemu-devel@nongnu.org>
+> Cc: Troy Lee <troy_lee@aspeedtech.com>; Jamin Lin
+> <jamin_lin@aspeedtech.com>
+> Subject: [PATCH v0] aspeed: support uart controller both 0 and 1 base
+>=20
+> According to the design of ASPEED SOCS, the uart controller is 1 base for
+> ast10x0, ast2600, ast2500 and ast2400.
+>=20
+> However, the uart controller is 0 base for ast2700.
+> To support uart controller both 0 and 1 base, adds uasrt_bases parameter =
+in
+> AspeedSoCClass and set the default uart controller 1 base for ast10x0,
+> astt2600, ast2500 and ast2400.
+>=20
+> From datasheet description
+> ast2700:
+> Base Address of UART0 =3D 0x14c33000
+> ast1030:
+> Base Address of UART1 =3D 0x7e783000
+> ast2600:
+> Base Address of UART1 =3D 0x1E78 3000
+> ast2500:
+> Base Address of UART1 =3D 0x1E78 3000
+>=20
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
-> 
-> v1 -> v2:
-> - set aw-bits to 48b on ARM
-> - use hw_compat_8_2 to handle the compat for older machines
->    which used 64b as a default
-> ---
->   hw/arm/virt.c            | 6 ++++++
->   hw/core/machine.c        | 5 ++++-
->   hw/i386/pc.c             | 6 ++++++
->   hw/virtio/virtio-iommu.c | 2 +-
->   4 files changed, 17 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index e6ead2c5c8..56539f2fc5 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -2718,10 +2718,16 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
-> +                                                   "aw-bits", NULL);
-
-object_property_get_uint() should not fail. Please use &error_abort.
-
->           hwaddr db_start = 0, db_end = 0;
->           QList *reserved_regions;
->           char *resv_prop_str;
->   
-> +        if (!aw_bits) {
-> +            qdev_prop_set_uint8(dev, "aw-bits", 48);
-> +        }
+>  hw/arm/aspeed.c             | 8 +++++---
+>  hw/arm/aspeed_ast10x0.c     | 1 +
+>  hw/arm/aspeed_ast2400.c     | 2 ++
+>  hw/arm/aspeed_ast2600.c     | 1 +
+>  hw/arm/aspeed_soc_common.c  | 4 ++--
+>  include/hw/arm/aspeed_soc.h | 1 +
+>  6 files changed, 12 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c index
+> 09b1e823ba..218b81298e 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -342,7 +342,7 @@ static void
+> connect_serial_hds_to_uarts(AspeedMachineState *bmc)
+>      int uart_chosen =3D bmc->uart_chosen ? bmc->uart_chosen :
+> amc->uart_default;
+>=20
+>      aspeed_soc_uart_set_chr(s, uart_chosen, serial_hd(0));
+> -    for (int i =3D 1, uart =3D ASPEED_DEV_UART1; i < sc->uarts_num; i++,=
+ uart++)
+> {
+> +    for (int i =3D 1, uart =3D sc->uarts_base; i < sc->uarts_num; i++,
+> + uart++) {
+>          if (uart =3D=3D uart_chosen) {
+>              continue;
+>          }
+> @@ -1092,9 +1092,11 @@ static char *aspeed_get_bmc_console(Object *obj,
+> Error **errp)  {
+>      AspeedMachineState *bmc =3D ASPEED_MACHINE(obj);
+>      AspeedMachineClass *amc =3D ASPEED_MACHINE_GET_CLASS(bmc);
+> +    AspeedSoCClass *sc =3D ASPEED_SOC_CLASS(obj);
 > +
->           if (vms->iommu != VIRT_IOMMU_NONE) {
->               error_setg(errp, "virt machine does not support multiple IOMMUs");
->               return;
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index fb5afdcae4..70ac96954c 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -30,9 +30,12 @@
->   #include "exec/confidential-guest-support.h"
->   #include "hw/virtio/virtio-pci.h"
->   #include "hw/virtio/virtio-net.h"
-> +#include "hw/virtio/virtio-iommu.h"
->   #include "audio/audio.h"
->   
-> -GlobalProperty hw_compat_8_2[] = {};
-> +GlobalProperty hw_compat_8_2[] = {
-> +    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
-> +};
->   const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
->   
->   GlobalProperty hw_compat_8_1[] = {
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 803244e5cc..0e2bcb4840 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1458,6 +1458,8 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
-> +                                                   "aw-bits", NULL);
->           /* Declare the APIC range as the reserved MSI region */
->           char *resv_prop_str = g_strdup_printf("0xfee00000:0xfeefffff:%d",
->                                                 VIRTIO_IOMMU_RESV_MEM_T_MSI);
-> @@ -1466,6 +1468,10 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->           qlist_append_str(reserved_regions, resv_prop_str);
->           qdev_prop_set_array(dev, "reserved-regions", reserved_regions);
->   
-> +        if (!aw_bits) {
-> +            qdev_prop_set_uint8(dev, "aw-bits", 39);
+>      int uart_chosen =3D bmc->uart_chosen ? bmc->uart_chosen :
+> amc->uart_default;
+>=20
+> -    return g_strdup_printf("uart%d", uart_chosen - ASPEED_DEV_UART1 +
+> 1);
+> +    return g_strdup_printf("uart%d", uart_chosen - sc->uarts_base + 1);
+>  }
+>=20
+>  static void aspeed_set_bmc_console(Object *obj, const char *value, Error
+> **errp) @@ -1114,7 +1116,7 @@ static void aspeed_set_bmc_console(Object
+> *obj, const char *value, Error **errp)
+>          error_setg(errp, "\"uart\" should be in range [1 - %d]",
+> sc->uarts_num);
+>          return;
+>      }
+> -    bmc->uart_chosen =3D ASPEED_DEV_UART1 + val - 1;
+> +    bmc->uart_chosen =3D sc->uarts_base + val - 1;
+>  }
+>=20
+>  static void aspeed_machine_class_props_init(ObjectClass *oc) diff --git
+> a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c index
+> c3b5116a6a..2634e0f654 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -436,6 +436,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass
+> *klass, void *data)
+>      sc->wdts_num =3D 4;
+>      sc->macs_num =3D 1;
+>      sc->uarts_num =3D 13;
+> +    sc->uarts_base =3D ASPEED_DEV_UART1;
+>      sc->irqmap =3D aspeed_soc_ast1030_irqmap;
+>      sc->memmap =3D aspeed_soc_ast1030_memmap;
+>      sc->num_cpus =3D 1;
+> diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c index
+> 8829561bb6..95da85fee0 100644
+> --- a/hw/arm/aspeed_ast2400.c
+> +++ b/hw/arm/aspeed_ast2400.c
+> @@ -523,6 +523,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass
+> *oc, void *data)
+>      sc->wdts_num     =3D 2;
+>      sc->macs_num     =3D 2;
+>      sc->uarts_num    =3D 5;
+> +    sc->uarts_base   =3D ASPEED_DEV_UART1;
+>      sc->irqmap       =3D aspeed_soc_ast2400_irqmap;
+>      sc->memmap       =3D aspeed_soc_ast2400_memmap;
+>      sc->num_cpus     =3D 1;
+> @@ -551,6 +552,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass
+> *oc, void *data)
+>      sc->wdts_num     =3D 3;
+>      sc->macs_num     =3D 2;
+>      sc->uarts_num    =3D 5;
+> +    sc->uarts_base   =3D ASPEED_DEV_UART1;
+>      sc->irqmap       =3D aspeed_soc_ast2500_irqmap;
+>      sc->memmap       =3D aspeed_soc_ast2500_memmap;
+>      sc->num_cpus     =3D 1;
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c index
+> 4ee32ea99d..f74561ecdc 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -666,6 +666,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass
+> *oc, void *data)
+>      sc->wdts_num     =3D 4;
+>      sc->macs_num     =3D 4;
+>      sc->uarts_num    =3D 13;
+> +    sc->uarts_base   =3D ASPEED_DEV_UART1;
+>      sc->irqmap       =3D aspeed_soc_ast2600_irqmap;
+>      sc->memmap       =3D aspeed_soc_ast2600_memmap;
+>      sc->num_cpus     =3D 2;
+> diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+> index 123a0c432c..3963436c3a 100644
+> --- a/hw/arm/aspeed_soc_common.c
+> +++ b/hw/arm/aspeed_soc_common.c
+> @@ -36,7 +36,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error
+> **errp)
+>      AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);
+>      SerialMM *smm;
+>=20
+> -    for (int i =3D 0, uart =3D ASPEED_DEV_UART1; i < sc->uarts_num; i++,=
+ uart++)
+> {
+> +    for (int i =3D 0, uart =3D sc->uarts_base; i < sc->uarts_num; i++,
+> + uart++) {
+>          smm =3D &s->uart[i];
+>=20
+>          /* Chardev property is set by the machine. */ @@ -58,7 +58,7 @@
+> bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)  void
+> aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr)  {
+>      AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);
+> -    int i =3D dev - ASPEED_DEV_UART1;
+> +    int i =3D dev - sc->uarts_base;
+>=20
+>      g_assert(0 <=3D i && i < ARRAY_SIZE(s->uart) && i < sc->uarts_num);
+>      qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", chr); diff --git
+> a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h index
+> 9d0af84a8c..ce2bb51682 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -140,6 +140,7 @@ struct AspeedSoCClass {
+>      int wdts_num;
+>      int macs_num;
+>      int uarts_num;
+> +    int uarts_base;
+>      const int *irqmap;
+>      const hwaddr *memmap;
+>      uint32_t num_cpus;
+> --
+> 2.34.1
 
-May be use VTD_HOST_AW_39BIT instead of 39 ? This would make it
-easier to find uses of certain defaults values and would clarify
-that the default AW of virtio-iommu is set as intel-iommu.
-
-Thanks,
-
-C.
-
-
-
-> +        }
-> +
->           g_free(resv_prop_str);
->       }
->   
-> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> index 7870bdbeee..c468e9b13b 100644
-> --- a/hw/virtio/virtio-iommu.c
-> +++ b/hw/virtio/virtio-iommu.c
-> @@ -1529,7 +1529,7 @@ static Property virtio_iommu_properties[] = {
->       DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
->                        TYPE_PCI_BUS, PCIBus *),
->       DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-> -    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
-> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
+Please drop this patch, I created a new patch series here, https://patchwor=
+k.kernel.org/project/qemu-devel/list/?series=3D823082=20
+Thanks-Jamin
 
 
