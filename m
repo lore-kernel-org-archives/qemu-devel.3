@@ -4,94 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC769C48291
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB99C4828D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 10:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rWwU4-0000Dw-8M; Mon, 05 Feb 2024 05:45:52 -0500
+	id 1rWwUj-0000QL-HM; Mon, 05 Feb 2024 05:46:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWwTr-0000D3-Mc
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:45:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=XBpg=JO=kaod.org=clg@ozlabs.org>)
+ id 1rWwUi-0000NR-Fv; Mon, 05 Feb 2024 05:46:32 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rWwTp-0008Fa-1V
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 05:45:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707129936;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Pn3BS2AYbJZfQIhbGBDXJAZpss/OXkRfwtr7btZHrPY=;
- b=ABp0KpHzDvvEk+Qq0b5M2Rh9D9ETWPyJD7ZZhj7FXoHAJjg2HCvQqNY/7NoTWXkwbQwLFC
- WdiDWoIXEpNm35FsIiLxZm9JiysfM1EYvM2wVINlTH+dovln9TouLzi/2fVv6C+x6IM4Bw
- TD/hA3jOB2PEBC0lHjvpuaYEeBGF+vA=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-nhcA6WPoNMG3gtgpoQlpvg-1; Mon, 05 Feb 2024 05:45:34 -0500
-X-MC-Unique: nhcA6WPoNMG3gtgpoQlpvg-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2961d20fe78so1133892a91.1
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 02:45:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707129933; x=1707734733;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Pn3BS2AYbJZfQIhbGBDXJAZpss/OXkRfwtr7btZHrPY=;
- b=Y4wpjUhZwtF5wQdrUaubym+kXS9gVy+blZ5h2Z10WkcJQ/d+Zlkkz0L7ilx50CllSf
- Yfxvd8h/ruAaLP0PpkB5oUoYLDNg6FWfgJiyF0uxfFnb7pHVQW65Z/JH+xa+Cm1tYSUD
- mfr9g5kQSTlqZpjnzlFesVAaSt8lh88fcRR4p+0eAybkkJkWpFV4aZFZr8eYU6At5sAz
- V8anzjhYPFSLOOcstGMQcAy9XEV7VNuE7Ccbls8a/f3EmFpkhBTNp1IetSrRNptQ+a4g
- vLwvnAAnOTwYpsswsAYvp6088ZexLFqc0HVV3zDOqJ6hUg2heaYT1CWaMr3AlHfQ7PaK
- eA6Q==
-X-Forwarded-Encrypted: i=0;
- AJvYcCVW9qmZZqbScpLlzgc6hAD6R+hV/NrMfB3cLiaBq836w5oEbC8OfX44Fpl55k8CAdWmorP5cKhwkAab+TGRvriDxx2CHtU=
-X-Gm-Message-State: AOJu0YyDDztcHEM/p/ucDwDV8nFva+h/9MwWfJVPK27loMDljds7XPd+
- nL/RziUs6FrHeUdUADM7R/s5TL7+lTGlZtK4szF6zKU0G/QAph9+iYiUuh/k7r0tt2pLZxKdlfu
- WvbQ7uWH/D5yJoyv4AIxymFHn20jKQtnRRKzuhiddMUpm5V3jbp9koFrSXsKUtpM=
-X-Received: by 2002:a17:90b:4a01:b0:296:a64c:b665 with SMTP id
- kk1-20020a17090b4a0100b00296a64cb665mr1176969pjb.1.1707129932971; 
- Mon, 05 Feb 2024 02:45:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH/Uvdp4nwFfnE1syShzN2p9K9vN+SN/b/e7wj6khnoH6CjRMyDlLXdrZ+Dyfpf8Ud6UmYpaQ==
-X-Received: by 2002:a17:90b:4a01:b0:296:a64c:b665 with SMTP id
- kk1-20020a17090b4a0100b00296a64cb665mr1176960pjb.1.1707129932566; 
- Mon, 05 Feb 2024 02:45:32 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCWL+9SP5FMhkoLkvnP8/dYyH8axDVY+kn+YyIuEwI7Lj3dKhYH5MAYUuGY18t6nzNhYPzrTOho4vVzZCblcERSByV0+vjA8EKkIxfp46xynpa+rl6O8RxpFN0FsTA7mLQ==
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- in4-20020a17090b438400b002964dca34fasm4888202pjb.4.2024.02.05.02.45.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 02:45:32 -0800 (PST)
-Date: Mon, 5 Feb 2024 18:45:23 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PULL 06/14] ci: Add a migration compatibility test job
-Message-ID: <ZcC8Q_Dt0S2axc7t@x1n>
-References: <20240129030405.177100-1-peterx@redhat.com>
- <20240129030405.177100-7-peterx@redhat.com>
- <CAFEAcA9=7NzEFLQxAxEWUzTRAZm87caC1ZhxeZkKyiP9Kb4k2w@mail.gmail.com>
- <87eddvhtba.fsf@suse.de> <ZcBVGbRXlXPRom14@x1n>
- <ZcC262Tl4j3ryx-8@redhat.com>
+ (Exim 4.90_1) (envelope-from <SRS0=XBpg=JO=kaod.org=clg@ozlabs.org>)
+ id 1rWwUX-0008Mb-7I; Mon, 05 Feb 2024 05:46:32 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TT32W2KQsz4wqM;
+ Mon,  5 Feb 2024 21:46:11 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TT32T1TLmz4wcb;
+ Mon,  5 Feb 2024 21:46:07 +1100 (AEDT)
+Message-ID: <aab5b2fb-e7f0-434b-935c-ff5ad5d39f21@kaod.org>
+Date: Mon, 5 Feb 2024 11:46:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZcC262Tl4j3ryx-8@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.361,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v0 1/2] aspeed: support uart controller both 0 and 1 base
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20240205091415.935686-1-jamin_lin@aspeedtech.com>
+ <20240205091415.935686-2-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240205091415.935686-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=XBpg=JO=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,156 +71,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 10:22:35AM +0000, Daniel P. Berrangé wrote:
-> On Mon, Feb 05, 2024 at 11:25:13AM +0800, Peter Xu wrote:
-> > On Fri, Feb 02, 2024 at 10:47:05AM -0300, Fabiano Rosas wrote:
-> > > Peter Maydell <peter.maydell@linaro.org> writes:
-> > > 
-> > > > On Mon, 29 Jan 2024 at 03:04, <peterx@redhat.com> wrote:
-> > > >>
-> > > >> From: Fabiano Rosas <farosas@suse.de>
-> > > >>
-> > > >> The migration tests have support for being passed two QEMU binaries to
-> > > >> test migration compatibility.
-> > > >>
-> > > >> Add a CI job that builds the lastest release of QEMU and another job
-> > > >> that uses that version plus an already present build of the current
-> > > >> version and run the migration tests with the two, both as source and
-> > > >> destination. I.e.:
-> > > >>
-> > > >>  old QEMU (n-1) -> current QEMU (development tree)
-> > > >>  current QEMU (development tree) -> old QEMU (n-1)
-> > > >>
-> > > >> The purpose of this CI job is to ensure the code we're about to merge
-> > > >> will not cause a migration compatibility problem when migrating the
-> > > >> next release (which will contain that code) to/from the previous
-> > > >> release.
-> > > >>
-> > > >> The version of migration-test used will be the one matching the older
-> > > >> QEMU. That way we can avoid special-casing new tests that wouldn't be
-> > > >> compatible with the older QEMU.
-> > > >>
-> > > >> Note: for user forks, the version tags need to be pushed to gitlab
-> > > >> otherwise it won't be able to checkout a different version.
-> > > >>
-> > > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > > >> Link: https://lore.kernel.org/r/20240118164951.30350-3-farosas@suse.de
-> > > >> Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > >> ---
-> > > >>  .gitlab-ci.d/buildtest.yml | 60 ++++++++++++++++++++++++++++++++++++++
-> > > >>  1 file changed, 60 insertions(+)
-> > > >>
-> > > >> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> > > >> index e1c7801598..f0b0edc634 100644
-> > > >> --- a/.gitlab-ci.d/buildtest.yml
-> > > >> +++ b/.gitlab-ci.d/buildtest.yml
-> > > >> @@ -167,6 +167,66 @@ build-system-centos:
-> > > >>        x86_64-softmmu rx-softmmu sh4-softmmu nios2-softmmu
-> > > >>      MAKE_CHECK_ARGS: check-build
-> > > >>
-> > > >> +# Previous QEMU release. Used for cross-version migration tests.
-> > > >> +build-previous-qemu:
-> > > >> +  extends: .native_build_job_template
-> > > >> +  artifacts:
-> > > >> +    when: on_success
-> > > >> +    expire_in: 2 days
-> > > >> +    paths:
-> > > >> +      - build-previous
-> > > >> +    exclude:
-> > > >> +      - build-previous/**/*.p
-> > > >> +      - build-previous/**/*.a.p
-> > > >> +      - build-previous/**/*.fa.p
-> > > >> +      - build-previous/**/*.c.o
-> > > >> +      - build-previous/**/*.c.o.d
-> > > >> +      - build-previous/**/*.fa
-> > > >> +  needs:
-> > > >> +    job: amd64-opensuse-leap-container
-> > > >> +  variables:
-> > > >> +    IMAGE: opensuse-leap
-> > > >> +    TARGETS: x86_64-softmmu aarch64-softmmu
-> > > >> +  before_script:
-> > > >> +    - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
-> > > >> +    - git checkout $QEMU_PREV_VERSION
-> > > >> +  after_script:
-> > > >> +    - mv build build-previous
-> > > >
-> > > > There seems to be a problem with this new CI job. Running a CI
-> > > > run in my local repository it fails:
-> > > >
-> > > > https://gitlab.com/pm215/qemu/-/jobs/6075873685
-> > > >
-> > > > $ export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v .0/' VERSION)"
-> > > > $ git checkout $QEMU_PREV_VERSION
-> > > > error: pathspec 'v8.2.0' did not match any file(s) known to git
-> > > > Running after_script
-> > > > Running after script...
-> > > > $ mv build build-previous
-> > > > mv: cannot stat 'build': No such file or directory
-> > > > WARNING: after_script failed, but job will continue unaffected: exit code 1
-> > > > Saving cache for failed job
-> > > >
-> > > >
-> > > > I don't think you can assume that private forks doing submaintainer CI
-> > > > runs necessarily have the full set of tags that the main repo does.
-> > > 
-> > > Yes, I thought this would be rare enough not to be an issue, but it
-> > > seems it's not. I don't know what could be done here, if there's no tag,
-> > > then there's no way to resolve the actual commit hash I think.
-> > > 
-> > > > I suspect the sed run will also do the wrong thing when run on the
-> > > > commit that updates the version, because then it will replace
-> > > > "9.0.0" with "9.0.0".
-> > > 
-> > > I just ignored this completly because my initial idea was to leave this
-> > > job disabled and only run it for migration patchsets and pull requests,
-> > > so it wouldn't make sense to run at that commit.
-> > > 
-> > > This job is also not entirely fail proof by design because we could
-> > > always be hitting bugs in the older QEMU version that were already fixed
-> > > in the new version.
-> > > 
-> > > I think the simplest fix here is to leave the test disabled, possibly
-> > > with an env variable to enable it.
-> > 
-> > However if so that'll be unfortunate.. because the goal of the "n-1" test
-> > is to fail the exact commit that will break compatibility and make it
-> > enforced, IMHO.
-> > 
-> > Failing for some migration guy pushing CI can be better than nothing
-> > indeed, but it is just less ideal..  we want the developer / module
-> > maintainer notice this issue, fix it instead of merging something wrong
-> > already, then we try to find what is broken and ask for a fix (where there
-> > will still be a window it's broken; and if unlucky across major releases).
-> > 
-> > Currently the coverage of n-1 test is indeed still more focused on
-> > migration framework, but it'll also cover quite some default configs of the
-> > system layout (even if only x86 is covered), and some default devices IIRC.
-> > We can already attach a few more standard devices in the cmdline so more
-> > things can get covered.
-> > 
-> > A pretty dumb (but might be working?) solution is we keep commit ID rather
-> > than tags to avoid all kinds of tag hassles:
-> > 
-> >   PREVIOUS_VERSION_COMMIT_ID=1600b9f46b1bd08b00fe86c46ef6dbb48cbe10d6
-> > 
-> > Then we boost it after a release.  I think it'll also work for the release
-> > commit then.
+Hello Jamin,
+
+On 2/5/24 10:14, Jamin Lin wrote:
+> According to the design of ASPEED SOCS, the uart controller
+> is 1 base for ast10x0, ast2600, ast2500 and ast2400.
+>
+> However, the uart controller is 0 base for ast2700.
+> To support uart controller both 0 and 1 base,
+> adds uasrt_bases parameter in AspeedSoCClass
+> and set the default uart controller 1 base
+> for ast10x0, astt2600, ast2500 and ast2400.
+
+The board definition can set 'amc->uart_default' to choose a different
+default serial port for the console, or use the "bmc-console" machine
+option . Isn't it enough ? May be I am misunderstanding the need.
+
+To clarify,
+
+ASPEED_DEV_UART1 is in the first serial port on the boards.
+
+I think we chose to start the indexing at 1 because the Aspeed QEMU
+modeling began first with the UART model (console) and for simplicity,
+we copied the definitions of the device tree from Linux :
+
+     serial0 = &uart1;
+     serial1 = &uart2;
+     serial2 = &uart3;
+     serial3 = &uart4;
+     serial4 = &uart5;
+     serial5 = &vuart;
+
+We replicated this indexing starting at 1 to nearly all device models :
+  
+     ASPEED_DEV_UART1 - 13
+     ASPEED_DEV_SPI1 -2
+     ASPEED_DEV_EHCI1 -2
+     ASPEED_DEV_TIMER1 - 8
+     ASPEED_DEV_ETH1 -4
+     ASPEED_DEV_MII1 - 4
+     ASPEED_DEV_JTAG0 - 1      <--- !!
+     ASPEED_DEV_FSI1 - 2
+
+I don't know what would be ASPEED_DEV_UART0 in this context.
+
+May be you could send a simplified AST2700 SoC model with definitions
+of a minimum address space and IRQ space ?
+
+Or you could change the indexing to start at 0 if you prefer. Just be
+careful with the aspeed_set/get_bmc_console routines it you choose to.
+
+Thanks,
+
+C.
+
+
+>  From datasheet description
+> ast2700:
+> Base Address of UART0 = 0x14c33000
+> ast1030:
+> Base Address of UART1 = 0x7e783000
+> ast2600:
+> Base Address of UART1 = 0x1E78 3000
+> ast2500:
+> Base Address of UART1 = 0x1E78 3000
 > 
-> Please don't go for hardcoding stuff. AFAICS, the solution is very easy
-> and only requires adding two git commands to the test job:
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed.c             | 8 +++++---
+>   hw/arm/aspeed_ast10x0.c     | 1 +
+>   hw/arm/aspeed_ast2400.c     | 2 ++
+>   hw/arm/aspeed_ast2600.c     | 1 +
+>   hw/arm/aspeed_soc_common.c  | 4 ++--
+>   include/hw/arm/aspeed_soc.h | 1 +
+>   6 files changed, 12 insertions(+), 5 deletions(-)
 > 
->   export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
->   git remote add upstream https://gitlab.com/qemu-project/qemu
->   git fetch upstream $QEMU_PRRV_VERSION
->   git checkout $QEMU_PREV_VERSION
-
-True...  I'm as stupid as I could have. :)  Thanks.
-
-For the CI test when at exactly the commit to release QEMU: I assume it's
-fine to simply run it with 9.0 <-> 9.0 for example, which is one more time
-of current migration qtest. IIUC that shouldn't be a big deal.
-
--- 
-Peter Xu
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 09b1e823ba..218b81298e 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -342,7 +342,7 @@ static void connect_serial_hds_to_uarts(AspeedMachineState *bmc)
+>       int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+>   
+>       aspeed_soc_uart_set_chr(s, uart_chosen, serial_hd(0));
+> -    for (int i = 1, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
+> +    for (int i = 1, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
+>           if (uart == uart_chosen) {
+>               continue;
+>           }
+> @@ -1092,9 +1092,11 @@ static char *aspeed_get_bmc_console(Object *obj, Error **errp)
+>   {
+>       AspeedMachineState *bmc = ASPEED_MACHINE(obj);
+>       AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(bmc);
+> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(obj);
+> +
+>       int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+>   
+> -    return g_strdup_printf("uart%d", uart_chosen - ASPEED_DEV_UART1 + 1);
+> +    return g_strdup_printf("uart%d", uart_chosen - sc->uarts_base + 1);
+>   }
+>   
+>   static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+> @@ -1114,7 +1116,7 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+>           error_setg(errp, "\"uart\" should be in range [1 - %d]", sc->uarts_num);
+>           return;
+>       }
+> -    bmc->uart_chosen = ASPEED_DEV_UART1 + val - 1;
+> +    bmc->uart_chosen = sc->uarts_base + val - 1;
+>   }
+>   
+>   static void aspeed_machine_class_props_init(ObjectClass *oc)
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index c3b5116a6a..2634e0f654 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -436,6 +436,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
+>       sc->wdts_num = 4;
+>       sc->macs_num = 1;
+>       sc->uarts_num = 13;
+> +    sc->uarts_base = ASPEED_DEV_UART1;
+>       sc->irqmap = aspeed_soc_ast1030_irqmap;
+>       sc->memmap = aspeed_soc_ast1030_memmap;
+>       sc->num_cpus = 1;
+> diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+> index 8829561bb6..95da85fee0 100644
+> --- a/hw/arm/aspeed_ast2400.c
+> +++ b/hw/arm/aspeed_ast2400.c
+> @@ -523,6 +523,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 2;
+>       sc->macs_num     = 2;
+>       sc->uarts_num    = 5;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2400_irqmap;
+>       sc->memmap       = aspeed_soc_ast2400_memmap;
+>       sc->num_cpus     = 1;
+> @@ -551,6 +552,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 3;
+>       sc->macs_num     = 2;
+>       sc->uarts_num    = 5;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2500_irqmap;
+>       sc->memmap       = aspeed_soc_ast2500_memmap;
+>       sc->num_cpus     = 1;
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> index 4ee32ea99d..f74561ecdc 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -666,6 +666,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 4;
+>       sc->macs_num     = 4;
+>       sc->uarts_num    = 13;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2600_irqmap;
+>       sc->memmap       = aspeed_soc_ast2600_memmap;
+>       sc->num_cpus     = 2;
+> diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+> index 123a0c432c..3963436c3a 100644
+> --- a/hw/arm/aspeed_soc_common.c
+> +++ b/hw/arm/aspeed_soc_common.c
+> @@ -36,7 +36,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
+>       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+>       SerialMM *smm;
+>   
+> -    for (int i = 0, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
+> +    for (int i = 0, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
+>           smm = &s->uart[i];
+>   
+>           /* Chardev property is set by the machine. */
+> @@ -58,7 +58,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
+>   void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr)
+>   {
+>       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> -    int i = dev - ASPEED_DEV_UART1;
+> +    int i = dev - sc->uarts_base;
+>   
+>       g_assert(0 <= i && i < ARRAY_SIZE(s->uart) && i < sc->uarts_num);
+>       qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", chr);
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 9d0af84a8c..ce2bb51682 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -140,6 +140,7 @@ struct AspeedSoCClass {
+>       int wdts_num;
+>       int macs_num;
+>       int uarts_num;
+> +    int uarts_base;
+>       const int *irqmap;
+>       const hwaddr *memmap;
+>       uint32_t num_cpus;
 
 
