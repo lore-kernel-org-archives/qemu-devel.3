@@ -4,77 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD7DC4828D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 15:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE517C48295
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Feb 2024 15:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX1AQ-00043U-5G; Mon, 05 Feb 2024 10:45:54 -0500
+	id 1rX1Gj-0005St-0O; Mon, 05 Feb 2024 10:52:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rX1AK-000428-AT
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 10:45:48 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rX1AE-00009h-Nk
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 10:45:47 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-55c2cf644f3so5461266a12.1
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 07:45:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707147940; x=1707752740; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nPTw1VhQOHyQ4P4aEwCn3POjKndjB3/tXTl7/3BUFUg=;
- b=EyyW5itq+9SckUIfpixMItLvXuXIp5L8u9RPVhjyj5OGFc2oaE2Zv19Pb7AwVcKtFp
- DRutnsllLQzqHhi+k2FtI1pBlRsZCRDMcZZ1rVsMUoBSPgcaRQg2iURMQrnfRf5rQAYj
- wgEeY++qgglL95ZKsyleb9wPW2QPeybB6OiBMpMWXz0viBenGr5p5RxrE9nWQmdaKivd
- Ng/ylvg6qZGY7E1298CGDcvy6VHWo9trHfnVI2CNLxJyZC3J3+xssAx5JUBA9eJy9w9x
- EcwM6kFDRuqK8MxEcp9g4ng4bd5UBjbWpr1WU71fQ7MFpZJ74tkuq3BM8bwtLY1GXNzB
- XnuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707147940; x=1707752740;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nPTw1VhQOHyQ4P4aEwCn3POjKndjB3/tXTl7/3BUFUg=;
- b=rY3KuVWZjD3YBeg8VUySODSUZw28b6Gnsth6rmiY4HrcC5UY9Gxp6fe+DSsOM2a32f
- 77QEKt9Meww0iyulelJP5VlvKmVEl5Fe3ftNWSQXCgWFnLL9QuiKVsy1/gWenBOJgU69
- sBDnxuj7I2joiI3/1GHfZNj08exmJuCPH3XJdqrG204BXe+iQxc1K75AbUSAgUZQSp7s
- Ic6dl9HzlCTkKdC3iMj/RFUqYKMcBdza8E8nRmyn3CQAJM/2YDi+icJdYtJky7fJmBNB
- y+Ftk6HBsf2vx/6H4Q8dFrV2pJrJje7sUviyvX00qoGKpiOHisWsJgO1U75AssLnXoFk
- 2v7A==
-X-Gm-Message-State: AOJu0Yxrpxpd4pgV+YJTkUuw7rQ0NZ4pggQfclGHLsYcDYwBj2+BioS8
- I8w7vowKsu3gCx1/DsF/2vJ62bZsM134gIVCQeyXavM9+UbZl6Ue/qAedl7s4r9t7ZtRq3M1VUJ
- D6QqFqh3FO2wUlmYKaSXzG9sg/iAY2BIbdMK6zDc5BeQ+sDyj
-X-Google-Smtp-Source: AGHT+IEUXrHcQ+gAxpiru2rR+q4cW7stLoWlTmQmclInQjrGB+f+uzvornZVntBmeQtUYcMe3WMyN/lN3fx5MxsIgUs=
-X-Received: by 2002:a05:6402:12ca:b0:55f:31f7:4279 with SMTP id
- k10-20020a05640212ca00b0055f31f74279mr5288363edx.12.1707147940030; Mon, 05
- Feb 2024 07:45:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rX1Gb-0005Si-L0
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 10:52:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rX1GP-0003QW-FC
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 10:52:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707148323;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=RopOBfDxAy/bA0E30RNX4+IaLvE+4I978QCN5mwZdMU=;
+ b=UXVSNxF6KkMhiY2PEZUqoMroFR9EzfduLmxIAWgdv4C08GiOrPxEBPoEuponHaV/RP4W3p
+ CiiLHiWlHXzjShFknhOSGl5iiXiEJ+eWwfYnAes5iwMKOuYmLU8rTmg6Qnk71V1V07DRpg
+ dl/pcrd8wsDJGMalQh3jXMNStfPqpQ4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-GSmLFEmyPj-p97zvIOchAA-1; Mon,
+ 05 Feb 2024 10:52:00 -0500
+X-MC-Unique: GSmLFEmyPj-p97zvIOchAA-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B96B13C000AD;
+ Mon,  5 Feb 2024 15:51:59 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.69])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E29782166B31;
+ Mon,  5 Feb 2024 15:51:58 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] iotests: give tempdir an identifying name
+Date: Mon,  5 Feb 2024 15:51:58 +0000
+Message-ID: <20240205155158.1843304-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20240205154019.1841037-1-berrange@redhat.com>
-In-Reply-To: <20240205154019.1841037-1-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 5 Feb 2024 15:45:28 +0000
-Message-ID: <CAFEAcA94RfwQKLec7gWZMwz8fyDn=W+Uwn+owi6MY-rOF7Rk4A@mail.gmail.com>
-Subject: Re: [PATCH] iotests: fix leak of tmpdir in dry-run mode
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,25 +81,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 5 Feb 2024 at 15:41, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> Creating an instance of the 'TestEnv' class will create a temporary
-> directory. This dir is only deleted, however, in the __exit__ handler
-> invoked by a context manager.
->
-> In dry-run mode, we don't use the TestEnv via a context manager, so
-> were leaking the temporary directory. Since meson invokes 'check'
-> 5 times on each configure run, developers /tmp was filling up with
-> empty temporary directories.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+If something goes wrong causing the iotests not to cleanup their
+temporary directory, it is useful if the dir had an identifying
+name to show what is to blame.
 
-Could we also arrange for the temp directory to be created
-with a name that makes it easy to identify what has created it?
-Very generic names like "/tmp/tmpNNNNNNNN" are very hard to
-pin down to the code that created them.
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/qemu-iotests/testenv.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-thanks
--- PMM
+diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
+index 3ff38f2661..588f30a4f1 100644
+--- a/tests/qemu-iotests/testenv.py
++++ b/tests/qemu-iotests/testenv.py
+@@ -126,7 +126,7 @@ def init_directories(self) -> None:
+             self.tmp_sock_dir = False
+             Path(self.sock_dir).mkdir(parents=True, exist_ok=True)
+         except KeyError:
+-            self.sock_dir = tempfile.mkdtemp()
++            self.sock_dir = tempfile.mkdtemp(prefix="qemu-iotests-")
+             self.tmp_sock_dir = True
+ 
+         self.sample_img_dir = os.getenv('SAMPLE_IMG_DIR',
+-- 
+2.43.0
+
 
