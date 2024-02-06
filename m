@@ -4,55 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEDB0C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 10:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29235C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 10:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXIw3-0006y1-CQ; Tue, 06 Feb 2024 05:44:15 -0500
+	id 1rXIvx-0006uk-Mz; Tue, 06 Feb 2024 05:44:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIw2-0006wz-8J
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:14 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIvp-0006tN-JQ
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIvz-0003FX-Gj
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:14 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIvo-0003CQ-6R
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707216251;
+ s=mimecast20190719; t=1707216239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RfQYURFrI4iuL99hnnFo/uP7RDaDGmB5jkJpCrKd84s=;
- b=XKcbErifvPUIF09tr1ZS5mQL1IoY/Nx6OvQ11+btri9uNhX09I4+Zj9VlmF+h4ZGz9L9Ds
- W5eX9Nmevzj2+vlI3+OWnIvvTeYMqy8RwqQq+q7i2LG4GR7DWFSTKddbgVp406tqee9Nte
- cJLWzL8LvWJ8FCSjthxKywTUesanQBA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-bWdsy1ukN5-qQeaP1WHqVg-1; Tue, 06 Feb 2024 05:44:07 -0500
-X-MC-Unique: bWdsy1ukN5-qQeaP1WHqVg-1
+ bh=EyhjOZmgZgyEhhaz4Na/AULA2Wqwu5sfka0GqXMlb4I=;
+ b=T9hf1kuJg4FoNqos3y8B+5zgMFvt078sOGIubH1Nq/AkkfyRkQYJryF9Mw3CEh2MYM/30O
+ DV47P+Kq0mWjl0WyMlV7vGEjQUiecIQ0VoznxkdTM+t1ZS/YwnGhAzFrIG1g7u4FrpWVfM
+ Lba3LCpC0uWKTO7i5qxQvh/zb2y3IEU=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-3MdTHuYLPZqg-J7046bz7g-1; Tue,
+ 06 Feb 2024 05:43:55 -0500
+X-MC-Unique: 3MdTHuYLPZqg-J7046bz7g-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 71B9B862DC1;
- Tue,  6 Feb 2024 10:44:07 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 60CBA2820B7B;
+ Tue,  6 Feb 2024 10:43:55 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.195.21])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 43077492BF0;
- Tue,  6 Feb 2024 10:44:06 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8E7B9492BF0;
+ Tue,  6 Feb 2024 10:43:53 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 10/12] tests/vm/freebsd: Reload the sshd configuration
-Date: Tue,  6 Feb 2024 11:43:45 +0100
-Message-ID: <20240206104347.238825-11-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 03/12] docs/about: Deprecate the old "power5+" and "power7+"
+ CPU names
+Date: Tue,  6 Feb 2024 11:43:38 +0100
+Message-ID: <20240206104347.238825-4-thuth@redhat.com>
 In-Reply-To: <20240206104347.238825-1-thuth@redhat.com>
 References: <20240206104347.238825-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -80,32 +84,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+For consistency we should drop the names with a "+" in it in the
+long run.
 
-After console_sshd_config(), the SSH server needs to be nudged to pick
-up the new configs. The scripts for the other BSD flavors already do
-this with a reboot, but a simple reload is sufficient.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20240206002344.12372-3-iii@linux.ibm.com>
+Message-ID: <20240117141054.73841-3-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/vm/freebsd | 1 +
- 1 file changed, 1 insertion(+)
+ docs/about/deprecated.rst | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tests/vm/freebsd b/tests/vm/freebsd
-index b581bd17fb..1247f40a38 100755
---- a/tests/vm/freebsd
-+++ b/tests/vm/freebsd
-@@ -108,6 +108,7 @@ class FreeBSDVM(basevm.BaseVM):
-         prompt = "root@freebsd:~ #"
-         self.console_ssh_init(prompt, "root", self._config["root_pass"])
-         self.console_sshd_config(prompt)
-+        self.console_wait_send(prompt, "service sshd reload\n")
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index d4492b9460..c7b95e6068 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -183,6 +183,15 @@ Nios II CPU (since 8.2)
+ The Nios II architecture is orphan. The ``nios2`` guest CPU support is
+ deprecated and will be removed in a future version of QEMU.
  
-         # setup virtio-blk #1 (tarfile)
-         self.console_wait(prompt)
++``power5+`` and ``power7+`` CPU names (since 9.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''
++
++The character "+" in device (and thus also CPU) names is not allowed
++in the QEMU object model anymore. ``power5+``, ``power5+_v2.1``,
++``power7+`` and ``power7+_v2.1`` are currently still supported via
++an alias, but for consistency these will get removed in a future
++release, too. Use ``power5p_v2.1`` and ``power7p_v2.1`` instead.
++
+ 
+ System emulator machines
+ ------------------------
 -- 
 2.43.0
 
