@@ -4,63 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ED80C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF311C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXPMv-0005R3-VM; Tue, 06 Feb 2024 12:36:26 -0500
+	id 1rXPNX-00062N-H0; Tue, 06 Feb 2024 12:37:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+952dfae3dd70343bec29+7471+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rXPMu-0005Qk-0s; Tue, 06 Feb 2024 12:36:24 -0500
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <SRS0=f3tV=JP=kaod.org=clg@ozlabs.org>)
+ id 1rXPNV-00060V-AR; Tue, 06 Feb 2024 12:37:01 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+952dfae3dd70343bec29+7471+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1rXPMr-00008G-DK; Tue, 06 Feb 2024 12:36:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=SZPt5XEvll13IeCnbJRQ+6sQ7r02rGEWDnsy3n7Ng+I=; b=FOG9gOkwf1d3GUtsMdQH7N+MRV
- fqiTpVFLYL6m45IMYWM90/zSsOBu6yC4m332DvEl+18aUq9Rs4Hy3Cd3LAUnUBwdvGRJFIqUoWfvL
- MzvvIzT6CI4H+DhslAQV4j9SaanixQTK0hD2imqZWx+PaVqH9Llzfiw32V8crx+o+SRHkEFe/Ag2N
- sZel9Zl8itWTcRaTmNqrUyZfLbQ6MAJL8xJ7nUE04AqBXXxnDUWlos+LjilPELbZav/PEjYwqcI/i
- lVeJY3H6syiYrprpDS87IX8uA5I4I5Pkh8DWGMQ6TmM+B40PdIxqsBZ6C9eo6DzpJ8AJqUJQ7grtl
- VA8H+bJA==;
-Received: from 72-21-196-67.amazon.com ([72.21.196.67]
- helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1rXPMm-0000000Cq5a-46dE; Tue, 06 Feb 2024 17:36:18 +0000
-Message-ID: <bfbeda026f49803025e2a90e41c5e043c93d1a59.camel@infradead.org>
-Subject: Re: [PATCH 2/2] tests/qtest/npcm7xx_emc-test: Connect all NICs to a
- backend
-From: David Woodhouse <dwmw2@infradead.org>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org
-Cc: Nabih Estefan <nabihestefan@google.com>, Hao Wu <wuhaotsh@google.com>
-Date: Tue, 06 Feb 2024 09:36:14 -0800
-In-Reply-To: <20240206171231.396392-3-peter.maydell@linaro.org>
-References: <20240206171231.396392-1-peter.maydell@linaro.org>
- <20240206171231.396392-3-peter.maydell@linaro.org>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-LKC9ZO6YRnFDjQqJX639"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <SRS0=f3tV=JP=kaod.org=clg@ozlabs.org>)
+ id 1rXPNT-0000FO-1a; Tue, 06 Feb 2024 12:37:01 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TTr5w1vCxz4wyq;
+ Wed,  7 Feb 2024 04:36:52 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TTr5t1Xq7z4wcb;
+ Wed,  7 Feb 2024 04:36:49 +1100 (AEDT)
+Message-ID: <bb519c8e-b380-48ce-aa0a-b1623690b6a2@kaod.org>
+Date: Tue, 6 Feb 2024 18:36:48 +0100
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+952dfae3dd70343bec29+7471+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v0 1/2] aspeed: support uart controller both 0 and 1 base
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20240205091415.935686-1-jamin_lin@aspeedtech.com>
+ <20240205091415.935686-2-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240205091415.935686-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=f3tV=JP=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,143 +70,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Jmain,
 
---=-LKC9ZO6YRnFDjQqJX639
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/5/24 10:14, Jamin Lin wrote:
+> According to the design of ASPEED SOCS, the uart controller
+> is 1 base for ast10x0, ast2600, ast2500 and ast2400.
 
-On Tue, 2024-02-06 at 17:12 +0000, Peter Maydell wrote:
-> Currently QEMU will warn if there is a NIC on the board that
-> is not connected to a backend. By default the '-nic user' will
-> get used for all NICs, but if you manually connect a specific
-> NIC to a specific backend, then the other NICs on the board
-> have no backend and will be warned about:
->=20
-> qemu-system-arm: warning: nic npcm7xx-emc.1 has no peer
-> qemu-system-arm: warning: nic npcm-gmac.0 has no peer
-> qemu-system-arm: warning: nic npcm-gmac.1 has no peer
->=20
-> So suppress those warnings by manually connecting every NIC
-> on the board to some backend.
->=20
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Please rephrase saying somehting :
 
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+the Aspeed datasheet refers to the UART controllers as UART1 - UART13
+for the ast10x0, ast2600, ast2500 and ast2400 SoCs and the Aspeed
+ast2700 introduces an UART0. To keep the naming in the QEMU models
+in sync with the datasheet, let's introduce a new  UART0 device name
+and do the required adjustements, etc ...
 
+> However, the uart controller is 0 base for ast2700.
+> To support uart controller both 0 and 1 base,
+> adds uasrt_bases parameter in AspeedSoCClass
+> and set the default uart controller 1 base
+> for ast10x0, astt2600, ast2500 and ast2400.
+> 
+>  From datasheet description
+> ast2700:
+> Base Address of UART0 = 0x14c33000
+> ast1030:
+> Base Address of UART1 = 0x7e783000
+> ast2600:
+> Base Address of UART1 = 0x1E78 3000
+> ast2500:
+> Base Address of UART1 = 0x1E78 3000
 
-... although do we want to expand this test to cover the GMACs?=20
+We should also introduce ASPEED_DEV_UART0 enum. See below.
 
---=-LKC9ZO6YRnFDjQqJX639
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed.c             | 8 +++++---
+>   hw/arm/aspeed_ast10x0.c     | 1 +
+>   hw/arm/aspeed_ast2400.c     | 2 ++
+>   hw/arm/aspeed_ast2600.c     | 1 +
+>   hw/arm/aspeed_soc_common.c  | 4 ++--
+>   include/hw/arm/aspeed_soc.h | 1 +
+>   6 files changed, 12 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 09b1e823ba..218b81298e 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -342,7 +342,7 @@ static void connect_serial_hds_to_uarts(AspeedMachineState *bmc)
+>       int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+>   
+>       aspeed_soc_uart_set_chr(s, uart_chosen, serial_hd(0));
+> -    for (int i = 1, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
+> +    for (int i = 1, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
+>           if (uart == uart_chosen) {
+>               continue;
+>           }
+> @@ -1092,9 +1092,11 @@ static char *aspeed_get_bmc_console(Object *obj, Error **errp)
+>   {
+>       AspeedMachineState *bmc = ASPEED_MACHINE(obj);
+>       AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(bmc);
+> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(obj);
+> +
+>       int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+>   
+> -    return g_strdup_printf("uart%d", uart_chosen - ASPEED_DEV_UART1 + 1);
+> +    return g_strdup_printf("uart%d", uart_chosen - sc->uarts_base + 1);
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwMjA2MTczNjE0WjAvBgkqhkiG9w0BCQQxIgQgo4DSYP3P
-2rb5UxsM4DamdwrXPZ8NC6bjsSkiANdd66wwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgCc5qzM9vHZorJ/FMn2umm56DGvIYrSYv0A
-OMzWFnADuWSepvMis6yyvUOrIpLmXercWTnidPzVgdImVmxhMQBosExpRxW2lp2dzN4+BXw7Hbf8
-uNuPa54G2zxGUS7PDk07fwLrGIk93RuTlHIiZVppthrUkTW4MRMWoFzeClXbtKEk1DKScA/xy6V9
-QPdTszMco3kDPhrBegBqyPB9Xp1WOQAArjSwAGbx+YJoi69aAQWqGwqclGD8H1b/AzborGU5qpUs
-8ute86cK+djKSg3K2MOdply7GpzUB9pMbAgT0FR9xIraNeVdVIub05673pLAdGvx8gplsWXMekbj
-wzL680hFQNjvuYByiR3QcS/7sPM4SChBP57buCyCMa04CS2Di2yw2+P4prJSq5ipF82RGyTh5ddE
-KytO5vvX+TmwUZy7wxF0UhaO3EDKe4mzLoiA9d867gtEBNuk+uGgoV0Zr4a4+aJd/w4a/QrxVzRo
-GQlRFJmRmlKlGujlfu85wlp62ZUyQ0SBMHei1I2DfTRPSK80OCt2WGHwcPKNldKCToxNdNiGYbrN
-K86VBQkszR3on8Fcq9LAwqc1MbbXHghziise9Ayx5B48LCHc1S6cBpPvKkhKP6fO0u/Pmnqs29+/
-Z2dOHhnCEkQZfzZyhWtP/2F+y1She9GmacFr5mJJQwAAAAAAAA==
+Wwe didn't have a ASPEED_DEV_UART0 at the time. The calculation above should
+be replaced with : "uart_chosen - ASPEED_DEV_UART0"
+
+>   }
+>   
+>   static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+> @@ -1114,7 +1116,7 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+>           error_setg(errp, "\"uart\" should be in range [1 - %d]", sc->uarts_num);
+
+The range in the reported error above needs a fix. It's not "1" anymore
+but "sc->uarts_base - ASPEED_DEV_UART0". Same for the test :
+
+       if (val < 1 || val > sc->uarts_num) {
 
 
---=-LKC9ZO6YRnFDjQqJX639--
+>           return;
+>       }
+> -    bmc->uart_chosen = ASPEED_DEV_UART1 + val - 1;
+> +    bmc->uart_chosen = sc->uarts_base + val - 1;
+
+Should be ASPEED_DEV_UART0 + val.
+
+
+Thanks,
+
+C.
+
+
+
+>   }
+>   
+>   static void aspeed_machine_class_props_init(ObjectClass *oc)
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index c3b5116a6a..2634e0f654 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -436,6 +436,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
+>       sc->wdts_num = 4;
+>       sc->macs_num = 1;
+>       sc->uarts_num = 13;
+> +    sc->uarts_base = ASPEED_DEV_UART1;
+>       sc->irqmap = aspeed_soc_ast1030_irqmap;
+>       sc->memmap = aspeed_soc_ast1030_memmap;
+>       sc->num_cpus = 1;
+> diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+> index 8829561bb6..95da85fee0 100644
+> --- a/hw/arm/aspeed_ast2400.c
+> +++ b/hw/arm/aspeed_ast2400.c
+> @@ -523,6 +523,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 2;
+>       sc->macs_num     = 2;
+>       sc->uarts_num    = 5;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2400_irqmap;
+>       sc->memmap       = aspeed_soc_ast2400_memmap;
+>       sc->num_cpus     = 1;
+> @@ -551,6 +552,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 3;
+>       sc->macs_num     = 2;
+>       sc->uarts_num    = 5;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2500_irqmap;
+>       sc->memmap       = aspeed_soc_ast2500_memmap;
+>       sc->num_cpus     = 1;
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> index 4ee32ea99d..f74561ecdc 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -666,6 +666,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 4;
+>       sc->macs_num     = 4;
+>       sc->uarts_num    = 13;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2600_irqmap;
+>       sc->memmap       = aspeed_soc_ast2600_memmap;
+>       sc->num_cpus     = 2;
+> diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+> index 123a0c432c..3963436c3a 100644
+> --- a/hw/arm/aspeed_soc_common.c
+> +++ b/hw/arm/aspeed_soc_common.c
+> @@ -36,7 +36,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
+>       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+>       SerialMM *smm;
+>   
+> -    for (int i = 0, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
+> +    for (int i = 0, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
+>           smm = &s->uart[i];
+>   
+>           /* Chardev property is set by the machine. */
+> @@ -58,7 +58,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
+>   void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr)
+>   {
+>       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> -    int i = dev - ASPEED_DEV_UART1;
+> +    int i = dev - sc->uarts_base;
+>   
+>       g_assert(0 <= i && i < ARRAY_SIZE(s->uart) && i < sc->uarts_num);
+>       qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", chr);
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 9d0af84a8c..ce2bb51682 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -140,6 +140,7 @@ struct AspeedSoCClass {
+>       int wdts_num;
+>       int macs_num;
+>       int uarts_num;
+> +    int uarts_base;
+>       const int *irqmap;
+>       const hwaddr *memmap;
+>       uint32_t num_cpus;
+
 
