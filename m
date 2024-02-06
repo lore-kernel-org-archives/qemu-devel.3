@@ -4,107 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9920BC48260
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 00:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E41FC4829A
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 00:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX9Fp-0001kc-OL; Mon, 05 Feb 2024 19:24:01 -0500
+	id 1rX9fd-0008AV-HH; Mon, 05 Feb 2024 19:50:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX9Fn-0001jT-OT
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:23:59 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX9Fl-0003sZ-Ml
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:23:59 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4160LRS8022765; Tue, 6 Feb 2024 00:23:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=qf2VHRvW8jBQv8qcGKm0F0B8Bjym/TADYN78FGy0l1s=;
- b=Z6aO009G0hwCrnLPBOgyarB/1CnzbTK7DdcSrDgUlZRZyhLCZTcKaKIpDTXr/19xteAW
- 7FlScpLgyn0eM63FIy7fc0ERFxR5jIIMrk6KSpyv0/mD6G02xk7fe52VJJ9eNjje1IG6
- mbRuP2You7caquJbMo0yFws48ejyoNSfja9sgYJlYdeEbX0tFIp+py6ZSo7MxnNzdUgM
- jzfir/ubAHgw+0n/cog1ErXQ9qML7oubr+On571Kn1YMM529vKrNOPQ2xqZhrBbvHRBA
- uEwV0VgSX9PpdoOHKw+QGA5oKNxOJUNMpRZlWggoacsR9rUxoPzYqMriewNIrKGsH++J 9A== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w3a1b04vu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Feb 2024 00:23:54 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4160MREb027649;
- Tue, 6 Feb 2024 00:23:54 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w3a1b04vj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Feb 2024 00:23:53 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 415N0STn008823; Tue, 6 Feb 2024 00:23:53 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w206ybxf1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Feb 2024 00:23:53 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4160NpKp2228898
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 6 Feb 2024 00:23:51 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2E88920040;
- Tue,  6 Feb 2024 00:23:51 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2CA9D20043;
- Tue,  6 Feb 2024 00:23:50 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.57.170])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  6 Feb 2024 00:23:50 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ed Maste <emaste@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Warner Losh <imp@bsdimp.com>
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v3 2/4] tests/vm/freebsd: Reload the sshd configuration
-Date: Tue,  6 Feb 2024 01:22:01 +0100
-Message-ID: <20240206002344.12372-3-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240206002344.12372-1-iii@linux.ibm.com>
-References: <20240206002344.12372-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1rX9fc-0008AB-NI
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:50:40 -0500
+Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1rX9fb-0000LW-1k
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:50:40 -0500
+Received: by mail-io1-xd2a.google.com with SMTP id
+ ca18e2360f4ac-7c00128de31so195901639f.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 16:50:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1707180637; x=1707785437; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sBEX41VGUb5Bl+vdYZ+dSfQN3Op8JOfGKtT3SM0p5T0=;
+ b=HvmF3TQ0HUZlHrnwexByr5TwKevJnGNj6Qyhf770pebzC0OSrY+q6jJ5Mm0Ia75NID
+ 60N+bnHUawPOqInNSWTUNpq+v9FxZXqjkGB3K28qIDqX+3iUZYuBqq+3gfv8WetL+blw
+ I4K2/UJ2KszP5W5+7Ft7W8rQI0DeJ2ZpELcnu7Y0NuFsnMgi1xXSaOKGTElI3ONXeLzU
+ jme/2AOULYjvGxuBXy6ldeBu8Q8T9IOLuVCMHDvNiMMnj7APGfhdMmC1WVZhGjZ1PbT8
+ jEe1wdxIeXNHW4MkO8NQR53zI9IBmGfLHZ+KNxA5pD0Z/1ctWApRTPUnABUTNKwoINor
+ NeeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707180637; x=1707785437;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sBEX41VGUb5Bl+vdYZ+dSfQN3Op8JOfGKtT3SM0p5T0=;
+ b=v54m+gzCSJbwvbBKtakKumLZ7/y0eSqeiaoagHmeI0HNprAU22Ozby4OQPkjA7yMEM
+ Bn32qFOByeVMNFmicfswMPUiqWCitIOwNSV2ar18mhBMWzKUZ4G0Euc6gNRM5YqoYzNb
+ DCF/dVd375eL3y1mftMMyYHqaIX6CWzvB98rJW5PM//1ec1+f014qSZAeIi9OB3ReIXX
+ XArOSpJK6W9LE8XALMuP3mOo+O1L4aiyNGDPEK99rp7YglTkbXILGuGEILHq/vs4UdpR
+ albZ5p75eI1nRtaYPleiRhos6mXoPs9ABrcjYd/pz9Xfgkn6kK/MANp+xSiWeogJ5Yuk
+ 3uYw==
+X-Gm-Message-State: AOJu0Yz9bY71D7B/0ePjisWfpCm9ng/Y96tRCZYjojHZhYOq/adRYPlj
+ U7ZI7VTP7EeShD7HxVwCgEpFcTtLFAfF4ifEq7RQ93KSd5sU1GLkSk8mWHx+bxc=
+X-Google-Smtp-Source: AGHT+IE/mi8WEvMDjWYBWXxqBc5o4RkDgcMVjrX99HdziWVJhKQv4V/AebASiI2BfBSbHl7pNj1eRQ==
+X-Received: by 2002:a5d:8ad5:0:b0:7c0:1fe2:da9d with SMTP id
+ e21-20020a5d8ad5000000b007c01fe2da9dmr1267498iot.19.1707180636793; 
+ Mon, 05 Feb 2024 16:50:36 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCUVm+b74xEZ3nRtgNIj5I63Y7j6rjQq+nVh1Pjhptex3V4IEIi6S51CRSZ9kY7QVG2LAG0a2S/EdfbuzUjS+QoCNDQSfRnRbkrCqrWLrFCCr/5pS7xalTXoS1EGrzmvJJ6fEq1oJeRZiH4SJqv1Q93DTJorRiWGfj2/8QDCCqKV7gPkr+AQ0S3rK2bXdooNhqRwyNz8RyxR3hEveienZL1VnPkdTHtCkg736qT0IrjMjJkXNXQZwiNAkQkJOD6WgBdU5+AkqxGf69VdrS3yw2Krzr5kcec0bUznjg3J
+Received: from taylor-ubuntu.hsd1.co.comcast.net
+ (c-73-169-12-54.hsd1.co.comcast.net. [73.169.12.54])
+ by smtp.gmail.com with ESMTPSA id
+ c8-20020a02a408000000b0046e2ce45dafsm245840jal.165.2024.02.05.16.50.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Feb 2024 16:50:36 -0800 (PST)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
+ quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
+ ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
+Subject: [PATCH v2 0/3] Hexagon (target/hexagon) Only pass env to generated
+ helper when needed
+Date: Mon,  5 Feb 2024 17:50:31 -0700
+Message-Id: <20240206005034.267283-1-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: hsl6QFJSAAeM5uCaaYyiX1ERZw7lS6D9
-X-Proofpoint-ORIG-GUID: mlcBbNRCkQ3X5WMQbgPHZvG4dMXINnTV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-05_18,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- lowpriorityscore=0 suspectscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- spamscore=0 malwarescore=0 adultscore=0 impostorscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402060000
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,63 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After console_sshd_config(), the SSH server needs to be nudged to pick
-up the new configs. The scripts for the other BSD flavors already do
-this with a reboot, but a simple reload is sufficient.
+Currently, we pass env to every generated helper.  When the semantics of
+the instruction only depend on the arguments, this is unnecessary and
+adds extra overhead to the helper call.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/vm/freebsd | 1 +
- 1 file changed, 1 insertion(+)
+**** Changes in v2 ****
+- Separate patches to pass P0 and SP explicitly to helpers that need it
+- Add the TCG_CALL_NO_RWG_SE flag to any non-HVX helpers that
+  don't get ptr to env
 
-diff --git a/tests/vm/freebsd b/tests/vm/freebsd
-index b581bd17fb7..1247f40a385 100755
---- a/tests/vm/freebsd
-+++ b/tests/vm/freebsd
-@@ -91,40 +91,41 @@ class FreeBSDVM(basevm.BaseVM):
-         self.console_wait_send("Use an empty password", "\n")
-         self.console_wait_send("Use a random password", "\n")
-         self.console_wait("Enter password:")
-         self.console_send("%s\n" % self._config["guest_pass"])
-         self.console_wait("Enter password again:")
-         self.console_send("%s\n" % self._config["guest_pass"])
-         self.console_wait_send("Lock out",              "\n")
-         self.console_wait_send("OK",                    "yes\n")
-         self.console_wait_send("Add another user",      "no\n")
-         self.console_wait_send("~ #", "exit\n")
- 
-         # setup qemu user
-         prompt = "$"
-         self.console_ssh_init(prompt, self._config["guest_user"], self._config["guest_pass"])
-         self.console_wait_send(prompt, "exit\n")
- 
-         # setup root user
-         prompt = "root@freebsd:~ #"
-         self.console_ssh_init(prompt, "root", self._config["root_pass"])
-         self.console_sshd_config(prompt)
-+        self.console_wait_send(prompt, "service sshd reload\n")
- 
-         # setup virtio-blk #1 (tarfile)
-         self.console_wait(prompt)
-         self.console_send("echo 'chmod 666 /dev/vtbd1' >> /etc/rc.local\n")
- 
-         pkgs = self.get_qemu_packages_from_lcitool_json()
-         self.print_step("Installing packages")
-         self.ssh_root_check("pkg install -y %s\n" % " ".join(pkgs))
- 
-         # shutdown
-         self.ssh_root(self.poweroff)
-         self.wait()
- 
-         if os.path.exists(img):
-             os.remove(img)
-         os.rename(img_tmp, img)
-         self.print_step("All done")
- 
- if __name__ == "__main__":
-     sys.exit(basevm.main(FreeBSDVM, config=FREEBSD_CONFIG))
+Taylor Simpson (3):
+  Hexagon (target/hexagon) Pass P0 explicitly to helpers that need it
+  Hexagon (target/hexagon) Pass SP explicitly to helpers that need it
+  Hexagon (target/hexagon) Only pass env to generated helper when needed
+
+ target/hexagon/gen_tcg.h            |  3 ++
+ target/hexagon/macros.h             |  4 +--
+ target/hexagon/attribs_def.h.inc    |  1 +
+ target/hexagon/gen_helper_protos.py | 10 ++++++-
+ target/hexagon/hex_common.py        | 44 +++++++++++++++++++++++++----
+ 5 files changed, 54 insertions(+), 8 deletions(-)
+
 -- 
-2.43.0
+2.34.1
 
 
