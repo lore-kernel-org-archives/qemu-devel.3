@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95588C48260
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 03:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F293DC4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 03:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXBmT-0006tJ-8t; Mon, 05 Feb 2024 22:05:53 -0500
+	id 1rXBmO-0006qd-4T; Mon, 05 Feb 2024 22:05:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXBmR-0006sW-Kt
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:05:51 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1rXBmC-0006p9-R1
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:05:36 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXBmC-0003Ci-Tf
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:05:51 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e04fd5e05aso106874b3a.0
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 19:05:36 -0800 (PST)
+ id 1rXBmB-0003CB-D6
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:05:36 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6e04ea51984so656060b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 19:05:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707188735; x=1707793535; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E6bw+vo5JatBKfHw3dI0irsDkK5JENn8mMxMtSK3thY=;
- b=ztsMqqUa5uQOI/phLa1S4y1yJ8B/sxXDQ0fwHY+8IfAtNMyeLVMjGpEW7leDPCCM7i
- iFRz5K7V49sNzyI4DY8tw5ED1zdsB/6pNefdEN1SGu7WwkgTl2cYK9ZRCiVC1kf7wrZx
- vIk2p0x6BkoXaZN0mXGX1I+1cA5qfolptwl5jZ8PnsKPw9KmJcOw5+xy1bzdx0gDmMHx
- l0Kbx+bqcLkuNhX0veSJod7Dk4g2tKA+Y7/Y+xRVMcdncrYohZ2+bD+IFu0X0+9Z9aiC
- 22PgSyXipKjCdpkKkscSa9bkKRouAHqC2ENeMGAw9GkDA6Wc1Ykp19oWrDLj38I3xoIi
- duKA==
+ d=linaro.org; s=google; t=1707188733; x=1707793533; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OrOSiOgFqO4ZuxdnM1JjpVN0rJqPqJZg3/Y91qAkhPI=;
+ b=r6GZI5DeQKOWk+6fxcakXZu1yL0RzyDd5RohH5prw131kZTrXydKsjIvkKlrBB1AYB
+ jBLytOE44+m5bzNiDhlC89AT3c/zO213OgxXg7BpHs9/0b62O+mTAkjYotyM8EgJQtXF
+ 6zyMY0gQqGSkql6kTytr0KhZwAZbTzgDuqz7DfoKoX7wzxrkbk+HH5/5qtSgyqXeWJg+
+ RWEZ1o3FZReSkwQxFtQxyBg1SuyQfb0RQZbJZxAQq70qDcKDUptKR59KL9dkhwlE4seb
+ s3coweg4OT6ghhG2GnCVPPU5LLdU9vTWwcpw9xANStW8EvofWGcAaZRxJNc6Ac0Dsv69
+ ljYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707188735; x=1707793535;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E6bw+vo5JatBKfHw3dI0irsDkK5JENn8mMxMtSK3thY=;
- b=vPpPYY0gfpQG1xQncAWmGU+IlQnf6oTR1WY535OWms/z8OczvlPWqARPZs4p7X0wa9
- irhDHLJmrzHUJiIvXT3eWJ77N7Tsz9+qvXD81OXvbQMf1IGpb6D8pmXD93R7/rDcybhO
- YSjsLl/0bfPdeWv3DIXPp+yKTLBOcxNR6gqPzoKHt9Oxo2KEIgGOkbHq+b/Jh3Gt1IVT
- W/Kx23I4ZcDfXcUaBo/WqP7x/SqTJXZQGyrc8CtLcoqWz+NhNGIIDqyXLkJIRmTojF0O
- iahDBJPp2uaAtVjetjJOg7JS+OGhkltpDRr4E0nFsBCmb3LY3lT9CTBL4Gp8j1PjhECW
- YaLg==
-X-Gm-Message-State: AOJu0Yyv8PyUaVhowoH1g23q3bImnUqYhEgHrhTqinKOdI3o2l+mGttx
- CnD/m9ngaYqVF8iuUDWPwThEckgu/k9DkgOoiWvUz81ic4hdOB4dHHWWIXbYMBeGVu7WwKfjwk5
- AQJ4=
-X-Google-Smtp-Source: AGHT+IEgwbuGzWpy/YdZa8EljsI/4VDjTE9Yc8g3HOugDVw6I6xUAeU8bhJglrLA/0a0OI8Ope2j3g==
-X-Received: by 2002:a62:e405:0:b0:6da:bcea:4cd4 with SMTP id
- r5-20020a62e405000000b006dabcea4cd4mr2011390pfh.16.1707188735655; 
- Mon, 05 Feb 2024 19:05:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707188733; x=1707793533;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OrOSiOgFqO4ZuxdnM1JjpVN0rJqPqJZg3/Y91qAkhPI=;
+ b=neXCNykt5p/k/qHp8DlJSIyIUDYOG8KpgLJUYHECy7Dz3cM/97BF2wRVRV3pv6bzpG
+ xs1yAba1/h68AhYSU7LD1kpsIX8yAwdiX831qAcmKqe41KZufd8Tr1fWLR8EK+mCiszg
+ 9xkSQ3RpHmzuQNX5iMzsF7C64KqvZa6FLFfAs9CIYps+fY76W+QEPCisLLFUvkO1RAMI
+ +HG71KVbG44NKCFxikkOcnxhHrYzFnCH2dgnIpLNlPZQvUrj7HjzN+V00SUHLJAJkmaJ
+ qP/jYhrJbK/zyAB6wfqvpi5TA88XD6Q8P7IVRtYFr4o9S4Irulgm0B05kmHD/FnchneB
+ ID1g==
+X-Gm-Message-State: AOJu0YwJyV+OkDAfjJ9aA1MT4uv9r08OcGA3hCpehrLALP6uqMHe6O2V
+ ctP0whnq5OnQr/3DWjR8z+Kar7VIqHnQhkBDS5XvyJwn47GxfBjh7qTWBcfdRobYpqgzwiudF+U
+ avZM=
+X-Google-Smtp-Source: AGHT+IHN8h0sOcNlDdYBLPOUYuTPCnzdpMgsHwqhGNKSwiJTrK/AtU6lWPt17Dy6M1pnE+VuRIs10w==
+X-Received: by 2002:a05:6a00:26d5:b0:6dd:dbb2:8ee9 with SMTP id
+ p21-20020a056a0026d500b006dddbb28ee9mr1045932pfw.6.1707188732908; 
+ Mon, 05 Feb 2024 19:05:32 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCV0nu4hV+42c5XWycC7UIfEGNXkD17R62Y7zKc7Qm/ASx7oHtrMviJt830t6SVB19nHbpf6SJiZvUcpqxMiH2SnX0a54qyuQ4rd
+ AJvYcCXxclPMm73wKJoKvqFoj9p7c6743PW066mGFwMrWRnMhKblJN8xNxwRaguVodvnXIUTNxNeg3SeuDf1dMPCgEet5EHm/u4YPlst
 Received: from stoup.. ([43.252.112.200]) by smtp.gmail.com with ESMTPSA id
- r14-20020a62e40e000000b006e025030700sm627478pfh.190.2024.02.05.19.05.33
+ r14-20020a62e40e000000b006e025030700sm627478pfh.190.2024.02.05.19.05.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 19:05:35 -0800 (PST)
+ Mon, 05 Feb 2024 19:05:32 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v2 1/6] linux-user/aarch64: Extend PR_SET_TAGGED_ADDR_CTRL for
- FEAT_MTE3
-Date: Tue,  6 Feb 2024 13:05:22 +1000
-Message-Id: <20240206030527.169147-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 0/6] target/arm: assorted mte fixes
+Date: Tue,  6 Feb 2024 13:05:21 +1000
+Message-Id: <20240206030527.169147-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240206030527.169147-1-richard.henderson@linaro.org>
-References: <20240206030527.169147-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,60 +93,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When MTE3 is supported, the kernel maps
-  PR_MTE_TCF_ASYNC | PR_MTE_TCF_SYNC
-to
-  MTE_CTRL_TCF_ASYMM
-and from there to
-  SCTLR_EL1.TCF0 = 3
+The first patch is unchanged from
 
-There is no error reported for setting ASYNC | SYNC when MTE3 is not
-supported; the kernel simply selects the ASYNC behavior of TCF0=2.
+Supercedes: <20240131003557.176486-1-richard.henderson@linaro.org>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/aarch64/target_prctl.h | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+while the remaining patches replace
 
-diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
-index 5067e7d731..49bd16aa95 100644
---- a/linux-user/aarch64/target_prctl.h
-+++ b/linux-user/aarch64/target_prctl.h
-@@ -173,21 +173,22 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
- 
-     if (cpu_isar_feature(aa64_mte, cpu)) {
--        switch (arg2 & PR_MTE_TCF_MASK) {
--        case PR_MTE_TCF_NONE:
--        case PR_MTE_TCF_SYNC:
--        case PR_MTE_TCF_ASYNC:
--            break;
--        default:
--            return -EINVAL;
--        }
--
-         /*
-          * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
--         * Note that the syscall values are consistent with hw.
-+         * Note that SYNC | ASYNC -> ASYMM with FEAT_MTE3,
-+         * otherwise mte_update_sctlr_user chooses ASYNC.
-          */
--        env->cp15.sctlr_el[1] =
--            deposit64(env->cp15.sctlr_el[1], 38, 2, arg2 >> PR_MTE_TCF_SHIFT);
-+        unsigned tcf = 0;
-+        if (arg2 & PR_MTE_TCF_ASYNC) {
-+            if ((arg2 & PR_MTE_TCF_SYNC) && cpu_isar_feature(aa64_mte3, cpu)) {
-+                tcf = 3;
-+            } else {
-+                tcf = 2;
-+            }
-+        } else if (arg2 & PR_MTE_TCF_SYNC) {
-+            tcf = 1;
-+        }
-+        env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
- 
-         /*
-          * Write PR_MTE_TAG to GCR_EL1[Exclude].
+Supercedes: <20240205023948.25476-1-richard.henderson@linaro.org>
+
+While digging through Gustavo's test case, wondering why it
+should be failing at all, I finally noticed that we weren't
+overflowing MTEDESC.SIZEM1, but underflowing (-1).  Oops.
+
+But I did find a few other points by inspection where we
+weren't properly handling or supplying MTEDESC.
+
+
+r~
+
+
+Richard Henderson (6):
+  linux-user/aarch64: Extend PR_SET_TAGGED_ADDR_CTRL for FEAT_MTE3
+  target/arm: Fix nregs computation in do_ld_zpa
+  target/arm: Adjust and validate mtedesc sizem1
+  target/arm: Split out make_svemte_desc
+  target/arm: Handle mte in do_ldrq, do_ldro
+  target/arm: Fix SVE/SME gross MTE suppression checks
+
+ linux-user/aarch64/target_prctl.h | 25 +++++-----
+ target/arm/internals.h            |  2 +-
+ target/arm/tcg/translate-a64.h    |  2 +
+ target/arm/tcg/sme_helper.c       |  8 ++--
+ target/arm/tcg/sve_helper.c       | 12 ++---
+ target/arm/tcg/translate-sme.c    | 15 ++----
+ target/arm/tcg/translate-sve.c    | 80 ++++++++++++++++++-------------
+ 7 files changed, 78 insertions(+), 66 deletions(-)
+
 -- 
 2.34.1
 
