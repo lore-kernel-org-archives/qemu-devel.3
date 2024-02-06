@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE49C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCD0C48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXP02-0003qi-TV; Tue, 06 Feb 2024 12:12:46 -0500
+	id 1rXOzu-0003pB-IQ; Tue, 06 Feb 2024 12:12:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXP00-0003qY-Su
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:12:45 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1rXOzt-0003on-LT
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:12:37 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXOzq-0003XT-GA
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:12:44 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40fe2ed8746so7682835e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 09:12:33 -0800 (PST)
+ id 1rXOzr-0003Xk-4G
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:12:37 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-40ffd94a707so893045e9.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 09:12:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707239552; x=1707844352; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=i1dFzNuelN4CWZqr8uaEvSpqTVCt5LiE59TikMBDyIk=;
- b=HVHQw1lljTt6F5XRIOwezXXBOWQhId6Qa2Py057iB+02/umEzxPgzuSIXAjnTG3Ea1
- QKiM16pX1YkCb5JnlYgHYrworVDhuTHl+QGHIGYWqMWgJZQGqvruDi0T4ktkQY+c/Zpv
- mWvT+4MYQ4A2nxPj2TnJgeRswSlOxjQ5dKOwtJVI2nHdPzg98E/oAB+Ywn84vzys0XQZ
- kfC9WdufeYgxn6+SRKJp+t2o5VJ2ECj6Gotc4jAxxO+E7Mb4CyYNnPeNAMNLYv/TDt78
- NbFO9VeMQczOHeU66jT8+H6VQ98mY1NW22yzxTVGj3mYkynLmHU5km+/5IizuQEM+Tyz
- 0Qpw==
+ d=linaro.org; s=google; t=1707239554; x=1707844354; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MH56YTCLqm7CWs23iAH4TIELKHifi0GITJ752eBfDjw=;
+ b=n6CxjObGleqwMRriOnpzRu81mjCflQa5feqBYbaH2GRaU713fP/4Ud6eOUojWwB8lR
+ 9KJd5ScFa8IjDXCEtZGPJOl4//483tGckgtIeHvdZ6ITUWlIX9gKGNF5CRD79Zoyp4pC
+ cXWJIwFxU6DeCkk0TIsnDiKQfwhyEt1G4k6TOw9PUO6M19iJEZWNj73SpiHF9vkC3Ii8
+ L8f7lIZUi1vxq2sa0RBugAaXPICi8JUAT/8JrRH3wxNGsIfRKRNdzqFnXJ/tHPBLkCzx
+ +pC3hykk6vkr1FMn/G2+6/+3VX2kByj4Fq3sDNLd2EYi2SpetQ1u/xsglgFglO67zO+1
+ FRvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707239552; x=1707844352;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=i1dFzNuelN4CWZqr8uaEvSpqTVCt5LiE59TikMBDyIk=;
- b=mxmF/MuepHWkP/Ot03PASfvD7XgTlBTo7QrNeiKpWCk41ay4VfkNOVg4wbfshVasq2
- gbsT8zBVligdMTfXgW5WXwoChEV+aetbBmoqvXTrV7heBp0VPAtVgl/09mi/IO2NnnjL
- ti85yokBtVtmbrHXbMfAFh10q/9apmNkVbxBMZcl3/UVI8pnwrfjsk4hOwfdnysVr9+n
- fmFve2yVvbs7XSmROES3xKFq6rKYBySqlEOaIhUBU+2oVwUy1n/3a3JLjWZYkMoL9lkO
- l8PAgMyOZpvpxOvU6DuHVlz+R8d/MuSF9XV8uzMhf3aWbETfJyY7IYu60HYzXQBHvieo
- 2tJw==
-X-Gm-Message-State: AOJu0Yzc6noyqweawSvoaQq8ftuhN7VBEb9x7nG849aBEyBQ26ngwcfr
- +3788L0AytrEA6tNMuGVk26Pg6NhMtTwiHy/uyqiuk+a6mT2mi+0kmfbzeifWgM=
-X-Google-Smtp-Source: AGHT+IHy3N2KCJjS9leQJhbeV8g0MxysoGxmlRlmXEptJuOPQS0vkmBeJIAmzWnEai5baRvE+htnqg==
-X-Received: by 2002:a5d:47a2:0:b0:33b:4965:cccc with SMTP id
- 2-20020a5d47a2000000b0033b4965ccccmr1571429wrb.46.1707239552588; 
- Tue, 06 Feb 2024 09:12:32 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707239554; x=1707844354;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MH56YTCLqm7CWs23iAH4TIELKHifi0GITJ752eBfDjw=;
+ b=Cq5TIwxLjgOq3BIx65NU1+weX0Y/ufRP9HU3ML4KZv83UMKUt35WLbUs17FSSBl7Y0
+ 0/zBXYpauB6jHnF3HPlHbXVpdqqBDqGwOGDAOvBhBOs9kBWYD+CW60uyy/SUDIFZA9n3
+ drLs2EjElz0A/9+Efe/X0CoxqyeOelj44kbZrwvnQSn86RvOWaO+ZOOK5/BvTAaJ/JaU
+ UzNl/xgAGioF4LOAZFuX/KLXw/QhqT/3qrpZeqH5GHFtTJ8NYxAd6+uuozdDKaxMOiob
+ jZ5xEIf8k4VzkUwuimC6NHAttfAHuugTtBhucVGSFxh9QuTYwPm4iMUAz1NzoDNcre6k
+ VPpg==
+X-Gm-Message-State: AOJu0YyE0JffuWfsdlI5dBvs5Axk9cS8iy3sOyGhxB874r/N8JX/Y5yf
+ m8OHyaT/HoKXcxp4yVDZYKcRcvQqQqb0X+VLyjDgnH/GZW8/YhY+agkyL+wP+Ug89w8KQk5yYPg
+ 7
+X-Google-Smtp-Source: AGHT+IF0Z9SpK21UjqfxdazZp3bOFIjCaDR8J4mQAugA2p3SLfy7yCSH2rI3XPnRini5PccIIuVVrg==
+X-Received: by 2002:adf:ce0f:0:b0:33b:21e4:68d5 with SMTP id
+ p15-20020adfce0f000000b0033b21e468d5mr1757035wrn.34.1707239553719; 
+ Tue, 06 Feb 2024 09:12:33 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCUKznLtooHjIW2Bm+BaK38iaM0PGz7R34U1So5C0PMAab14I/eAsmQYs4UlPdGilstXIOXUqnndWqtqODn9mZFQuy1AwrkqP96UBIvorPhK3YTcqIch0WOvzI03mwBGp+d8GHX9mPK3wAZgJyuUXC6UpZ4B
+ AJvYcCWjoe4nxjJudTv3JMKkultf+xyz2bo4vKQlN5voMvzq4tv+9Rtb5n27S1VJTVTvhEmjZhvFYy1ynmx/kFtB5o+wBIy0IVxD6jUlAFutQZ8bTDz29+cIXfkolx9u74zSscViTCxKBiYVdVCLJIddSyffbKpE
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- l12-20020a5d4bcc000000b0033905a60689sm2561284wrt.45.2024.02.06.09.12.32
+ l12-20020a5d4bcc000000b0033905a60689sm2561284wrt.45.2024.02.06.09.12.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 09:12:32 -0800 (PST)
+ Tue, 06 Feb 2024 09:12:33 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: David Woodhouse <dwmw@amazon.co.uk>,
  Nabih Estefan <nabihestefan@google.com>, Hao Wu <wuhaotsh@google.com>
-Subject: [PATCH 0/2] Fix issues with npcm7xx and recent NIC cleanup
-Date: Tue,  6 Feb 2024 17:12:29 +0000
-Message-Id: <20240206171231.396392-1-peter.maydell@linaro.org>
+Subject: [PATCH 2/2] tests/qtest/npcm7xx_emc-test: Connect all NICs to a
+ backend
+Date: Tue,  6 Feb 2024 17:12:31 +0000
+Message-Id: <20240206171231.396392-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240206171231.396392-1-peter.maydell@linaro.org>
+References: <20240206171231.396392-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,28 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The changes to the NPCM7xx to add the GMAC devices crossed in the mail
-with the NIC cleanup patchset, which had a couple of unfortunate results:
- * no qemu_configure_nic_device() call for the GMAC modules
- * the npcm7xx_emc-test produces some spurious warnings
+Currently QEMU will warn if there is a NIC on the board that
+is not connected to a backend. By default the '-nic user' will
+get used for all NICs, but if you manually connect a specific
+NIC to a specific backend, then the other NICs on the board
+have no backend and will be warned about:
 
-This patchset fixes both of those. Arguably patch 2 shouldn't
-be necessary, as the "nic foo has no peer" warning is a bit
-overzealous for NICs that always exist on the board, but I preferred
-the simple approach of silencing it rather than spending ages trying
-to figure out what the "right" condition for the warning should be.
+qemu-system-arm: warning: nic npcm7xx-emc.1 has no peer
+qemu-system-arm: warning: nic npcm-gmac.0 has no peer
+qemu-system-arm: warning: nic npcm-gmac.1 has no peer
 
-thanks
--- PMM
+So suppress those warnings by manually connecting every NIC
+on the board to some backend.
 
-Peter Maydell (2):
-  hw/arm/npcm7xx: Call qemu_configure_nic_device() for GMAC modules
-  tests/qtest/npcm7xx_emc-test: Connect all NICs to a backend
-
- hw/arm/npcm7xx.c               | 1 +
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
  tests/qtest/npcm7xx_emc-test.c | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
+diff --git a/tests/qtest/npcm7xx_emc-test.c b/tests/qtest/npcm7xx_emc-test.c
+index f7646fae2c9..63f6cadb5cc 100644
+--- a/tests/qtest/npcm7xx_emc-test.c
++++ b/tests/qtest/npcm7xx_emc-test.c
+@@ -228,7 +228,10 @@ static int *packet_test_init(int module_num, GString *cmd_line)
+      * KISS and use -nic. The driver accepts 'emc0' and 'emc1' as aliases
+      * in the 'model' field to specify the device to match.
+      */
+-    g_string_append_printf(cmd_line, " -nic socket,fd=%d,model=emc%d ",
++    g_string_append_printf(cmd_line, " -nic socket,fd=%d,model=emc%d "
++                           "-nic user,model=npcm7xx-emc "
++                           "-nic user,model=npcm-gmac "
++                           "-nic user,model=npcm-gmac",
+                            test_sockets[1], module_num);
+ 
+     g_test_queue_destroy(packet_test_clear, test_sockets);
 -- 
 2.34.1
 
