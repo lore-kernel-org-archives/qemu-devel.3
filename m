@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CCCC48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 19:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6F2EC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 19:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXR0w-0007Zn-6z; Tue, 06 Feb 2024 14:21:50 -0500
+	id 1rXRBr-0002ai-IX; Tue, 06 Feb 2024 14:33:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXR0r-0007ZQ-Iq
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:21:46 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXR0g-0003Hm-P0
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:21:44 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a3832ef7726so108414266b.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 11:21:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707247292; x=1707852092; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zeN2GYndT3rYVw9aH89oXBvwvMJv6cZWW3iXWW8pX5k=;
- b=I9Gksr6WNeViBH6DLfaHtdo9cTHkwNxSZVW/YrBvxFNGuw4tjGNN2GhC3uj/L//kki
- IOg07JIR8ic8n9vBkuVTYv5LZ9ZACbILfFPHQd++YQZZ9lgwCcKiEYctUnoZQi6QtBtY
- nsZZRWbTygqpvY3RxCnnqDfxX9XGYFueWh+aCoT/3gr6I3sewAaYS0Cg3yH2syyGaB1c
- pkuB8Ag+CBnzWGSyM0nFRFKmhpVWRBJKGP8j88gBtmzVX6PGU35N1f6mE4e2r+j4NOvP
- OOxxmuwnTabKmwY7muXkWPZd2RLbsMaNdGFaSKgS2LBf5bmlQZZJnNgS2aDffen7zDZ1
- I4xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707247292; x=1707852092;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zeN2GYndT3rYVw9aH89oXBvwvMJv6cZWW3iXWW8pX5k=;
- b=ftj+YWMHmCfPfJPHR2is1MF3pG9nXfiPrUcYR077KChmPt4jRt1ESe06DKzgGi2fYc
- wy1qI43a4GYqxb3G0uxcPr6gatkK/JV5HGWdJmCrzPufw/GX9D5gdu6h3+H6ikyfPFo7
- 3Z9tGRgrFCLOChcRphhYrz/N4eSU2/1yDyvLeDifoyQWiE1T8SBKfOmUnWW6m8YYZ0ZQ
- yNEo8nLG5apUfiFYCiYH7BbnLytnrnvD/f2iCzU8/fZT0BB9XCDlRgcFzUL+5i4qJ1DT
- 4nwelPqkOCPM1repCeACZvre0p4BZu+RY7wkiLJ+PNy2Rk/oquZkxnYvDonv8pOr8AEF
- 5VFA==
-X-Gm-Message-State: AOJu0Ywq8J8mhlnqcKYVw8CZmEDfRD//nD+t9xovFslN2rHIGMga19Z3
- qsCLtO3JEtx59NIjrGgngp0NTYf0atshF4xul44glvTk8sHiOgv2yhVSZLWibo0=
-X-Google-Smtp-Source: AGHT+IG98qDgq7+Amex4wWejS8pPOgRolNQjxxTzpJQe5P33LtQlXOu8C59jZ+9jkMfUoA9BWBNUvQ==
-X-Received: by 2002:a17:907:7da0:b0:a37:f6aa:99fb with SMTP id
- oz32-20020a1709077da000b00a37f6aa99fbmr3043794ejc.54.1707247291855; 
- Tue, 06 Feb 2024 11:21:31 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXRoeYGsxyvTzDoG96sZz7AOmTBkrYQxRIiIQcavE58ZpZq+LpjrS39UK4PtOydX8KD3mpHMXs5ROCauu4loig0ZVAiYgbnK6A5yhaQeHbAbbnJ535oMBUlD2Y=
-Received: from [192.168.69.100] ([176.176.170.22])
- by smtp.gmail.com with ESMTPSA id
- q11-20020a1709060e4b00b00a36cc8c1bcbsm1468476eji.173.2024.02.06.11.21.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 11:21:31 -0800 (PST)
-Message-ID: <30da5b3b-6b4c-4639-b630-c02e1664821c@linaro.org>
-Date: Tue, 6 Feb 2024 20:21:29 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rXRBp-0002aC-MW
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:33:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rXRBn-0005Kl-Ln
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:33:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707247983;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=iD9g5mZXa+9PM6IqNV85tbFxsotsxvnCidk2AFYDFjk=;
+ b=ErJb8K4H7xbnhXCwCPwdD6z5yMneaBM4y5W1DNiQEPj5CXytNoHMF+hlFFm61kVfLYx4yU
+ +t3Jxg7LlrdQDRvHDMIPIlVx09PGsTHIltxgzsc4nziXR5AG2Bc/LqQG5SQPyKHjnJUTut
+ xTUfxMg91ZsLoX2NxkAJ7hj2pzeLT9s=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-SvtoviIPPvOth69uJarsCg-1; Tue, 06 Feb 2024 14:32:59 -0500
+X-MC-Unique: SvtoviIPPvOth69uJarsCg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3686D10201EE;
+ Tue,  6 Feb 2024 19:32:59 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.41])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8E71B40C9444;
+ Tue,  6 Feb 2024 19:32:58 +0000 (UTC)
+Date: Tue, 6 Feb 2024 14:32:56 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PULL 11/33] scsi: only access SCSIDevice->requests from one
+ thread
+Message-ID: <20240206193256.GG66397@fedora>
+References: <73e752b2-a037-4b10-a903-56fa6ad75c6e@redhat.com>
+ <Za_zAj11uwavd2va@redhat.com>
+ <08a66849-f190-4756-9b01-666f0d66afb6@redhat.com>
+ <ZbOxI9Ar-YDn51Z0@redhat.com>
+ <4c4173f2-b8fc-4c6f-88e1-8c31c4411837@redhat.com>
+ <20240131203537.GC396296@fedora>
+ <0a3e8d2a-add1-432b-b6b9-456ee0b17882@redhat.com>
+ <20240201142817.GA516672@fedora>
+ <6cb18310-c0cf-4747-a71d-540adba262cf@redhat.com>
+ <82f1a65f-9821-480a-b2d2-cb5d6bf55c5b@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] hw/arm/mps3r: Initial skeleton for mps3-an536 board
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240206132931.38376-1-peter.maydell@linaro.org>
- <20240206132931.38376-9-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240206132931.38376-9-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="JY8/ky4fcQYW3qPd"
+Content-Disposition: inline
+In-Reply-To: <82f1a65f-9821-480a-b2d2-cb5d6bf55c5b@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,60 +92,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
 
-On 6/2/24 14:29, Peter Maydell wrote:
-> The AN536 is another FPGA image for the MPS3 development board. Unlike
-> the existing FPGA images we already model, this board uses a Cortex-R
-> family CPU, and it does not use any equivalent to the M-profile
-> "Subsystem for Embedded" SoC-equivalent that we model in hw/arm/armsse.c.
-> It's therefore more convenient for us to model it as a completely
-> separate C file.
-> 
-> This commit adds the basic skeleton of the board model, and the
-> code to create all the RAM and ROM. We assume that we're probably
-> going to want to add more images in future, so use the same
-> base class/subclass setup that mps2-tz.c uses, even though at
-> the moment there's only a single subclass.
-> 
-> Following commits will add the CPUs and the peripherals.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   MAINTAINERS                             |   3 +-
->   configs/devices/arm-softmmu/default.mak |   1 +
->   hw/arm/mps3r.c                          | 239 ++++++++++++++++++++++++
->   hw/arm/Kconfig                          |   5 +
->   hw/arm/meson.build                      |   1 +
->   5 files changed, 248 insertions(+), 1 deletion(-)
->   create mode 100644 hw/arm/mps3r.c
+--JY8/ky4fcQYW3qPd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Feb 02, 2024 at 01:32:39PM +0100, Hanna Czenczek wrote:
+> On 01.02.24 16:25, Hanna Czenczek wrote:
+> > On 01.02.24 15:28, Stefan Hajnoczi wrote:
+>=20
+> [...]
+>=20
+> > > Did you find a scenario where the virtio-scsi AioContext is different
+> > > from the scsi-hd BB's Aiocontext?
+> >=20
+> > Technically, that=E2=80=99s the reason for this thread, specifically th=
+at
+> > virtio_scsi_hotunplug() switches the BB back to the main context while
+> > scsi_device_for_each_req_async_bh() is running.=C2=A0 Yes, we can fix t=
+hat
+> > specific case via the in-flight counter, but I=E2=80=99m wondering whet=
+her
+> > there=E2=80=99s really any merit in requiring the BB to always be in
+> > virtio-scsi=E2=80=99s context, or whether it would make more sense to s=
+chedule
+> > everything in virtio-scsi=E2=80=99s context.=C2=A0 Now that BBs/BDSs ca=
+n receive
+> > requests from any context, that is.
+>=20
+> Now that I know that wouldn=E2=80=99t be easy, let me turn this around: A=
+s far as I
+> understand, scsi_device_for_each_req_async_bh() should still run in
+> virtio-scsi=E2=80=99s context, but that=E2=80=99s hard, so we take the BB=
+=E2=80=99s context, which
+> we therefore require to be the same one. Further, (again AFAIU,)
+> virtio-scsi=E2=80=99s context cannot change (only set in
+> virtio_scsi_dataplane_setup(), which is run in
+> virtio_scsi_device_realize()).=C2=A0 Therefore, why does the
+> scsi_device_for_each_req_async() code accommodate for BB context changes?
 
-> +static MemoryRegion *mr_for_raminfo(MPS3RMachineState *mms,
-> +                                    const RAMInfo *raminfo)
-> +{
-> +    /* Return an initialized MemoryRegion for the RAMInfo. */
-> +    MemoryRegion *ram;
-> +
-> +    if (raminfo->mrindex < 0) {
-> +        /* Means this RAMInfo is for QEMU's "system memory" */
-> +        MachineState *machine = MACHINE(mms);
-> +        assert(!(raminfo->flags & IS_ROM));
-> +        return machine->ram;
-> +    }
-> +
-> +    assert(raminfo->mrindex < MPS3R_RAM_MAX);
-> +    ram = &mms->ram[raminfo->mrindex];
-> +
-> +    memory_region_init_ram(ram, NULL, raminfo->name,
+1. scsi_disk_reset() -> scsi_device_purge_requests() is called without
+   in-flight requests.
+2. The BH is scheduled by scsi_device_purge_requests() ->
+   scsi_device_for_each_req_async().
+3. blk_drain() is a nop when there no in-flight requests and does not
+   flush BHs.
+3. The AioContext changes when the virtio-scsi device resets.
+4. The BH executes.
 
-You are not using the parent=mms, is that deliberate?
-(as in: easier to migrate eventually?)
+Kevin and I touched on the idea of flushing BHs in bdrv_drain() even
+when there are no requests in flight. This hasn't been implemented as of
+today, but would also reduce the chance of scenarios like the one I
+mentioned.
 
-> +                           raminfo->size, &error_fatal);
-> +    if (raminfo->flags & IS_ROM) {
-> +        memory_region_set_readonly(ram, true);
-> +    }
-> +    return ram;
-> +}
+I think it's safer to handle the case where the BH runs after an
+AioContext change until either everything is thread-safe or the
+AioContext never changes.
+
+Stefan
+
+--JY8/ky4fcQYW3qPd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXCiWgACgkQnKSrs4Gr
+c8jvIggArpYn6gQU0Tgul6LtOOiyCUowpaq9s7JXL8v/I9tx+pBeihl7UhviTZuN
+jhU5J9yxqxeMEi4QD6QOsky+OXhCDZNVQvFICXQnD9AJwEaBgyCa65Pr4XP+NY3B
+KCCyWkpeRPYhi/mtkbFrsL88yN6l0w65LKKiaopM4StIp/zAMKfsURAcZHUpS9mC
+PKvjxzDPJ2jzfLKe+SVnngjHqgajr0RKTDBr2qa31yWwTbWdpxITn6saAYTfAIYM
+amOaQXV9TXE2eDm+xPxQJRpu1bw2VjQ563wxMtky47s4Te7CGuebhn3hUglVzW4K
+jCJD3vQTwrsR/SgDRO6A+Hdg3KWh6Q==
+=0tGa
+-----END PGP SIGNATURE-----
+
+--JY8/ky4fcQYW3qPd--
+
 
