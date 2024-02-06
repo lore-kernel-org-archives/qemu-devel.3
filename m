@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D6CC48286
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 07:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D20AC48286
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 07:39:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXFto-00083v-TW; Tue, 06 Feb 2024 02:29:45 -0500
+	id 1rXG1y-0001Uh-Pl; Tue, 06 Feb 2024 02:38:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rXFtZ-00082w-8K
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:29:30 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1rXG1x-0001UY-N0
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:38:09 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rXFtW-0007od-G1
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:29:27 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2d0a0873404so31341411fa.2
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 23:29:25 -0800 (PST)
+ id 1rXG1v-00017O-Fo
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:38:09 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a2f22bfb4e6so697598266b.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 23:38:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707204564; x=1707809364; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707205085; x=1707809885; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=wLmeKxRwsugMUnvezte8WVXIxrVjqcnKlIAyTj3jfB4=;
- b=D/1mHzRMf0Rokqsq/wNsmIZiSHv4FP9EIROBchKGE/Wl93r0mp+uc8HfRVOHSHObb/
- PPQioabF4cTNmajbYVaRkDyrZbMiGfaGNwTz9Ip4qIDyQe3HjI805F4y39NtL6aYPKkf
- woKW9jyuCXyXq06QX0pKnljEYJ/zimJxgeu0Y8DRXnZ5VCMlJN0Fa6p+NwE8FRKua7SD
- RvaOfslZamftFEA58f2fKC+tjSfe3XcbfnjJECtGjW/LSu11rILd/YQkXaOY+pFjy4Jb
- 8HEoD7n7PXM/vUkJ2jNNqBDvclKUJuoIPlfL4omA3ybzyU044nAMSxQxwKknYwY+jwwN
- 8Ujg==
+ bh=A6EOD6o7XFO1cgbHBrobNr6sKoEax6z2rbRoUXsoTsM=;
+ b=CCYTw2DNmaf+ni4HXLjlWssM4PGWjocVOZKL8RKTjHnorIpagSRKepDRMIj0r7FwTA
+ i/uPicRmpOM9TYwyDP7u/hrcQ9twJ+iSIEzqfY6DKC3eRTuBZYSQNGq+Lq1M3eD5VqzK
+ BAMJYtHYfTt4kEmAUq+dfL1u9GvDVMpEZvgV01G+7f+hsX0dX0qOZXi0CZAey9XPFsdt
+ sQCqn9l2eSQhdnXK52Kph8U4CJBoWtktHPKsszBeTl/g1ZL/XOxDiq5EZPOdVVcoJxaM
+ ZSDvgK+tI3hYLVePd21vcjuEhJHZ3BHgtx/r66wltHRw+G+GiLnzLtsWZoaZ3GNiCAgM
+ msvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707204564; x=1707809364;
+ d=1e100.net; s=20230601; t=1707205085; x=1707809885;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wLmeKxRwsugMUnvezte8WVXIxrVjqcnKlIAyTj3jfB4=;
- b=swGKOuurXKSejBQsT3GVgtExfz6qoQgd7FuSsur1D+kjwEqUXW5ni7nWROKUM83gLz
- +Ut7BLeZqRCC5WwaDIbEVnWfwY53xsOYh22VMCD/iuInH4/w/avt0XqsEX+NmaWR9YWG
- NMaSYhmx6VdusHjx4Kecp5A+89jW883WEcsCnrHEktzXeqZVxS3SRxjDz1pd2coYLE2L
- pwUflXvL6mNDHwVvNQsIG6i2eQov/5S6hM+SdBqTrHXdZ7/ND0NUp7/rNMftjoh6THcj
- m8OFQsMLrG698VuYhqA+lS/PZyk5oQpTZMfojU+sedRP/tHSxbciy/SqAh2dtpOV6uDL
- kaDg==
-X-Gm-Message-State: AOJu0YxIUx9tXytpMkL27I+U7RML2KTjCTHE1mYbFz07joqf9ZyHQfPB
- BZkqu/PoPLYDAB0mfTGdNOQlcFMexnLuXTdiXoUtLd3r65sQA08Jhmz19QG6e8uqknUCvtoFPzK
- a
-X-Google-Smtp-Source: AGHT+IE5OL0Z+GNqNEklrZ7WE2LauzrSQ+EQ8SUUj7X3NuD5NooAYuHQWit4CWf/Fdt0lw3yQ9m2wQ==
-X-Received: by 2002:a05:651c:1035:b0:2d0:c058:11c3 with SMTP id
- w21-20020a05651c103500b002d0c05811c3mr284421ljm.20.1707204563553; 
- Mon, 05 Feb 2024 23:29:23 -0800 (PST)
+ bh=A6EOD6o7XFO1cgbHBrobNr6sKoEax6z2rbRoUXsoTsM=;
+ b=vWn9iw7O2+aGnCVetJzkE1/5oIWZlW45O28EW4Xk78JFwoadC+kzxT/1tIOwVaeLQ4
+ qAX1uyi7VYKj96EuiyU9nrBmse4pYSNsvMAn+1gQfZGBn6TIagMWpJJlIxYRnsOk/Upw
+ iIoqzG9hQdFWzzbRMKML+MQOuweroYUR54qnbdyuiwVTVc1UfAtJlAZKy8rNVzyi4OE9
+ //386zgtEccHUJZLQMLSXXexfIjfQrm95GBRKBPyyfJRau85PQC6OZ+4A3pe4Y8dxiPy
+ wn9omkYJ6yGPrxY6jcqVEkkZu+9Kw7waXpo8BY+Rj5HPf0ivploIXa5Erj5jhHijLbpc
+ BVEw==
+X-Gm-Message-State: AOJu0Yz34aXNLJYt23knGVAn2rY+J3e8D5JUluYNqR68jpKG01PTkt10
+ Dq/hQ0E/Uq+QZnp9Hzv6zinI5Ps3DGHd+ySJBLvjReqW0+oCcqFP3xZpV1M4x+o=
+X-Google-Smtp-Source: AGHT+IED5Era31m1eR2OiFcjyVaezBYkDmpr2PylrRLApwYInFmN8V0gGd6iD8V0idNegCCeT1ZzTA==
+X-Received: by 2002:a17:906:b88d:b0:a37:124b:4782 with SMTP id
+ hb13-20020a170906b88d00b00a37124b4782mr853882ejb.36.1707205085487; 
+ Mon, 05 Feb 2024 23:38:05 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXdykQr0UjzWYuUqofa9QOmvqnj9FRxpLWFqCxz8s5885/8cAPc+eIJJyY23nMj9pS2xZsDHNB2Gt6H3dnW8qYAWCo1BrGfHBGp5h5hWrlEKke1IcnTjZcWk36dochtFSGLtA7vOlEqoQcdfIhEFUuyzn7qW+7MMqWKmvO59FJ0PGkCTe3IuwSjKkr7bXgNvcfQWfNPoXGfLcpf6Z2Be0T2Ke/MKhCq
-Received: from meli.delivery (adsl-125.37.6.3.tellas.gr. [37.6.3.125])
- by smtp.gmail.com with ESMTPSA id
- ec44-20020a0564020d6c00b0055fed0e2017sm741674edb.16.2024.02.05.23.29.22
+ AJvYcCWbnmrSig0zudmGcat/vRpR20J/c32da7mj4RTFtn0/mfjwFxsdnE4SJXbVUQ9BmmwaccKT3Om6fZ03oRkKtKhD3Wy6WulqAbWybaSN6fnEUZTzL9uRJG0XB1USqDrNGwQJQRF0twuD7O6tksRju0UWZ5lov7QiadyWP8BWswceMmTxVDsrc4Z9G0rZLkzOmAz9yVtUE716/Xb/H5NTtbcBBzuep5aq
+Received: from meli.delivery (adsl-101.109.242.224.tellas.gr.
+ [109.242.224.101]) by smtp.gmail.com with ESMTPSA id
+ o2-20020a170906358200b00a377c2ec6b9sm811194ejb.82.2024.02.05.23.38.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 23:29:22 -0800 (PST)
-Date: Tue, 06 Feb 2024 09:28:57 +0200
+ Mon, 05 Feb 2024 23:38:05 -0800 (PST)
+Date: Tue, 06 Feb 2024 09:29:29 +0200
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  qemu-block@nongnu.org
-Subject: Re: [PATCH 5/5] monitor: use aio_co_reschedule_self()
+Subject: Re: [PATCH 1/5] virtio-blk: enforce iothread-vq-mapping validation
 User-Agent: meli 0.8.5-rc.3
 References: <20240205172659.476970-1-stefanha@redhat.com>
- <20240205172659.476970-6-stefanha@redhat.com>
-In-Reply-To: <20240205172659.476970-6-stefanha@redhat.com>
-Message-ID: <8fbgw.qqmdqoyo5bff@linaro.org>
+ <20240205172659.476970-2-stefanha@redhat.com>
+In-Reply-To: <20240205172659.476970-2-stefanha@redhat.com>
+Message-ID: <8fbve.tkrjtk9401p1@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,55 +102,285 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 05 Feb 2024 19:26, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->The aio_co_reschedule_self() API is designed to avoid the race
->condition between scheduling the coroutine in another AioContext and
->yielding.
+>Hanna Czenczek <hreitz@redhat.com> noticed that the safety of
+>`vq_aio_context[vq->value] = ctx;` with user-defined vq->value inputs is
+>not obvious.
 >
->The QMP dispatch code uses the open-coded version that appears
->susceptible to the race condition at first glance:
+>The code is structured in validate() + apply() steps so input validation
+>is there, but it happens way earlier and there is nothing that
+>guarantees apply() can only be called with validated inputs.
 >
->  aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
->  qemu_coroutine_yield();
+>This patch moves the validate() call inside the apply() function so
+>validation is guaranteed. I also added the bounds checking assertion
+>that Hanna suggested.
 >
->The code is actually safe because the iohandler and qemu_aio_context
->AioContext run under the Big QEMU Lock. Nevertheless, set a good example
->and use aio_co_reschedule_self() so it's obvious that there is no race.
->
->Suggested-by: Hanna Reitz <hreitz@redhat.com>
 >Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 >---
-> qapi/qmp-dispatch.c | 7 ++-----
-> 1 file changed, 2 insertions(+), 5 deletions(-)
+> hw/block/virtio-blk.c | 192 +++++++++++++++++++++++-------------------
+> 1 file changed, 107 insertions(+), 85 deletions(-)
 >
->diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
->index 176b549473..f3488afeef 100644
->--- a/qapi/qmp-dispatch.c
->+++ b/qapi/qmp-dispatch.c
->@@ -212,8 +212,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
->              * executing the command handler so that it can make progress if it
->              * involves an AIO_WAIT_WHILE().
->              */
->-            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
->-            qemu_coroutine_yield();
->+            aio_co_reschedule_self(qemu_get_aio_context());
->         }
+>diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+>index 227d83569f..e8b37fd5f4 100644
+>--- a/hw/block/virtio-blk.c
+>+++ b/hw/block/virtio-blk.c
+>@@ -1485,6 +1485,72 @@ static int virtio_blk_load_device(VirtIODevice *vdev, QEMUFile *f,
+>     return 0;
+> }
 > 
->         monitor_set_cur(qemu_coroutine_self(), cur_mon);
->@@ -227,9 +226,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
->              * Move back to iohandler_ctx so that nested event loops for
->              * qemu_aio_context don't start new monitor commands.
->              */
->-            aio_co_schedule(iohandler_get_aio_context(),
->-                            qemu_coroutine_self());
->-            qemu_coroutine_yield();
->+            aio_co_reschedule_self(iohandler_get_aio_context());
->         }
->     } else {
->        /*
+>+static void virtio_resize_cb(void *opaque)
+>+{
+>+    VirtIODevice *vdev = opaque;
+>+
+>+    assert(qemu_get_current_aio_context() == qemu_get_aio_context());
+>+    virtio_notify_config(vdev);
+>+}
+>+
+>+static void virtio_blk_resize(void *opaque)
+>+{
+>+    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
+>+
+>+    /*
+>+     * virtio_notify_config() needs to acquire the BQL,
+>+     * so it can't be called from an iothread. Instead, schedule
+>+     * it to be run in the main context BH.
+>+     */
+>+    aio_bh_schedule_oneshot(qemu_get_aio_context(), virtio_resize_cb, vdev);
+>+}
+>+
+>+static void virtio_blk_ioeventfd_detach(VirtIOBlock *s)
+>+{
+>+    VirtIODevice *vdev = VIRTIO_DEVICE(s);
+>+
+>+    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
+>+        VirtQueue *vq = virtio_get_queue(vdev, i);
+>+        virtio_queue_aio_detach_host_notifier(vq, s->vq_aio_context[i]);
+>+    }
+>+}
+>+
+>+static void virtio_blk_ioeventfd_attach(VirtIOBlock *s)
+>+{
+>+    VirtIODevice *vdev = VIRTIO_DEVICE(s);
+>+
+>+    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
+>+        VirtQueue *vq = virtio_get_queue(vdev, i);
+>+        virtio_queue_aio_attach_host_notifier(vq, s->vq_aio_context[i]);
+>+    }
+>+}
+>+
+>+/* Suspend virtqueue ioeventfd processing during drain */
+>+static void virtio_blk_drained_begin(void *opaque)
+>+{
+>+    VirtIOBlock *s = opaque;
+>+
+>+    if (s->ioeventfd_started) {
+>+        virtio_blk_ioeventfd_detach(s);
+>+    }
+>+}
+>+
+>+/* Resume virtqueue ioeventfd processing after drain */
+>+static void virtio_blk_drained_end(void *opaque)
+>+{
+>+    VirtIOBlock *s = opaque;
+>+
+>+    if (s->ioeventfd_started) {
+>+        virtio_blk_ioeventfd_attach(s);
+>+    }
+>+}
+>+
+>+static const BlockDevOps virtio_block_ops = {
+>+    .resize_cb     = virtio_blk_resize,
+>+    .drained_begin = virtio_blk_drained_begin,
+>+    .drained_end   = virtio_blk_drained_end,
+>+};
+>+
+> static bool
+> validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
+>         uint16_t num_queues, Error **errp)
+>@@ -1547,81 +1613,33 @@ validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
+>     return true;
+> }
+> 
+>-static void virtio_resize_cb(void *opaque)
+>-{
+>-    VirtIODevice *vdev = opaque;
+>-
+>-    assert(qemu_get_current_aio_context() == qemu_get_aio_context());
+>-    virtio_notify_config(vdev);
+>-}
+>-
+>-static void virtio_blk_resize(void *opaque)
+>-{
+>-    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
+>-
+>-    /*
+>-     * virtio_notify_config() needs to acquire the BQL,
+>-     * so it can't be called from an iothread. Instead, schedule
+>-     * it to be run in the main context BH.
+>-     */
+>-    aio_bh_schedule_oneshot(qemu_get_aio_context(), virtio_resize_cb, vdev);
+>-}
+>-
+>-static void virtio_blk_ioeventfd_detach(VirtIOBlock *s)
+>-{
+>-    VirtIODevice *vdev = VIRTIO_DEVICE(s);
+>-
+>-    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
+>-        VirtQueue *vq = virtio_get_queue(vdev, i);
+>-        virtio_queue_aio_detach_host_notifier(vq, s->vq_aio_context[i]);
+>-    }
+>-}
+>-
+>-static void virtio_blk_ioeventfd_attach(VirtIOBlock *s)
+>-{
+>-    VirtIODevice *vdev = VIRTIO_DEVICE(s);
+>-
+>-    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
+>-        VirtQueue *vq = virtio_get_queue(vdev, i);
+>-        virtio_queue_aio_attach_host_notifier(vq, s->vq_aio_context[i]);
+>-    }
+>-}
+>-
+>-/* Suspend virtqueue ioeventfd processing during drain */
+>-static void virtio_blk_drained_begin(void *opaque)
+>-{
+>-    VirtIOBlock *s = opaque;
+>-
+>-    if (s->ioeventfd_started) {
+>-        virtio_blk_ioeventfd_detach(s);
+>-    }
+>-}
+>-
+>-/* Resume virtqueue ioeventfd processing after drain */
+>-static void virtio_blk_drained_end(void *opaque)
+>-{
+>-    VirtIOBlock *s = opaque;
+>-
+>-    if (s->ioeventfd_started) {
+>-        virtio_blk_ioeventfd_attach(s);
+>-    }
+>-}
+>-
+>-static const BlockDevOps virtio_block_ops = {
+>-    .resize_cb     = virtio_blk_resize,
+>-    .drained_begin = virtio_blk_drained_begin,
+>-    .drained_end   = virtio_blk_drained_end,
+>-};
+>-
+>-/* Generate vq:AioContext mappings from a validated iothread-vq-mapping list */
+>-static void
+>-apply_vq_mapping(IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
+>-                 AioContext **vq_aio_context, uint16_t num_queues)
+>+/**
+>+ * apply_iothread_vq_mapping:
+>+ * @iothread_vq_mapping_list: The mapping of virtqueues to IOThreads.
+>+ * @vq_aio_context: The array of AioContext pointers to fill in.
+>+ * @num_queues: The length of @vq_aio_context.
+>+ * @errp: If an error occurs, a pointer to the area to store the error.
+>+ *
+>+ * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
+>+ * the iothread-vq-mapping parameter in @iothread_vq_mapping_list.
+>+ *
+>+ * Returns: %true on success, %false on failure.
+>+ **/
+>+static bool apply_iothread_vq_mapping(
+>+        IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
+>+        AioContext **vq_aio_context,
+>+        uint16_t num_queues,
+>+        Error **errp)
+> {
+>     IOThreadVirtQueueMappingList *node;
+>     size_t num_iothreads = 0;
+>     size_t cur_iothread = 0;
+> 
+>+    if (!validate_iothread_vq_mapping_list(iothread_vq_mapping_list,
+>+                                           num_queues, errp)) {
+>+        return false;
+>+    }
+>+
+>     for (node = iothread_vq_mapping_list; node; node = node->next) {
+>         num_iothreads++;
+>     }
+>@@ -1638,6 +1656,7 @@ apply_vq_mapping(IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
+> 
+>             /* Explicit vq:IOThread assignment */
+>             for (vq = node->value->vqs; vq; vq = vq->next) {
+>+                assert(vq->value < num_queues);
+>                 vq_aio_context[vq->value] = ctx;
+>             }
+>         } else {
+>@@ -1650,6 +1669,8 @@ apply_vq_mapping(IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
+> 
+>         cur_iothread++;
+>     }
+>+
+>+    return true;
+> }
+> 
+> /* Context: BQL held */
+>@@ -1660,6 +1681,14 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+>     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+>     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+> 
+>+    if (conf->iothread && conf->iothread_vq_mapping_list) {
+>+        if (conf->iothread) {
+>+            error_setg(errp, "iothread and iothread-vq-mapping properties "
+>+                             "cannot be set at the same time");
+>+            return false;
+>+        }
+>+    }
+>+
+>     if (conf->iothread || conf->iothread_vq_mapping_list) {
+>         if (!k->set_guest_notifiers || !k->ioeventfd_assign) {
+>             error_setg(errp,
+>@@ -1685,8 +1714,14 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+>     s->vq_aio_context = g_new(AioContext *, conf->num_queues);
+> 
+>     if (conf->iothread_vq_mapping_list) {
+>-        apply_vq_mapping(conf->iothread_vq_mapping_list, s->vq_aio_context,
+>-                         conf->num_queues);
+>+        if (!apply_iothread_vq_mapping(conf->iothread_vq_mapping_list,
+>+                                       s->vq_aio_context,
+>+                                       conf->num_queues,
+>+                                       errp)) {
+>+            g_free(s->vq_aio_context);
+>+            s->vq_aio_context = NULL;
+>+            return false;
+>+        }
+>     } else if (conf->iothread) {
+>         AioContext *ctx = iothread_get_aio_context(conf->iothread);
+>         for (unsigned i = 0; i < conf->num_queues; i++) {
+>@@ -1996,19 +2031,6 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
+>         return;
+>     }
+> 
+>-    if (conf->iothread_vq_mapping_list) {
+>-        if (conf->iothread) {
+>-            error_setg(errp, "iothread and iothread-vq-mapping properties "
+>-                             "cannot be set at the same time");
+>-            return;
+>-        }
+>-
+>-        if (!validate_iothread_vq_mapping_list(conf->iothread_vq_mapping_list,
+>-                                               conf->num_queues, errp)) {
+>-            return;
+>-        }
+>-    }
+>-
+>     s->config_size = virtio_get_config_size(&virtio_blk_cfg_size_params,
+>                                             s->host_features);
+>     virtio_init(vdev, VIRTIO_ID_BLOCK, s->config_size);
 >-- 
 >2.43.0
 >
 >
+
+
+virtio_block_ops and methods are moved around without changes in the 
+diff, is that on purpose? If no the patch and history would be less 
+noisy.
+
+
+Regardless:
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
