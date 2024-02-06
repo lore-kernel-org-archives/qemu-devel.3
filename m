@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4F5C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 746A7C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXS9S-0000Rv-0E; Tue, 06 Feb 2024 15:34:42 -0500
+	id 1rXSDJ-0001gB-3w; Tue, 06 Feb 2024 15:38:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXS9Q-0000RD-Qp
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:34:40 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1rXSDG-0001fJ-OZ
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:38:38 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXS9P-0007k1-EK
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:34:40 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1d958e0d73dso9074255ad.1
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 12:34:39 -0800 (PST)
+ id 1rXSDD-0008SJ-Rh
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:38:37 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-296043e44caso4742791a91.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 12:38:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707251677; x=1707856477; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707251914; x=1707856714; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CEt5J+6LdVSAOxfzeXKE68Kf+C7F2HF5Hao2SVqblEY=;
- b=VNmmyxGxm4SJUjNGv2jCGC0rFnTXqqNuPBefavhRdaz+EXFVnSk+Nkmj41ZKxdvXlA
- P38m2bCcCF8EqfEpF60LjZswpt4DSTHFj7Ia8teLCRejSz35FH0LDZKmU5Iqr3RpLJ50
- fWykQkTgVqe0jKThCrluNCEAIdIZ412G+KPsf0tMa9Ph5TUsV1Be925xzNqtMdzQ8fES
- y9l7nJvPiY5je1XiNiKYvde7BrCXm5/JRt8oeFNg+n+LPDOln49+pov5rE/h57KH5bsD
- LifmmvAtPhXn+z99if30W5dhCKHqkccRdBaAHxmICKhtao0Hx9p4Q6HlvRg9+4sXeq2R
- GkJA==
+ bh=QPZ4nDHu4Px4WR+0uxKo54dRmPzuN2VdMewUhXIXBr0=;
+ b=jQFNRU0O8N9HFdAndTeUM8MN6P5kQ5vglU0pUIirVHQPklsb/ZEGE+UBQBz/jiFJB6
+ lqOEs4jUMXLz4RuB4VoCr0V6btiR/ETrf1tuix52Nk2sZvCRvhjJt9EY4TpdmBcNqpzC
+ kKotoMV+sIYnlqRWf5OSn5AQxZvYZ77WCJzyxE5b39QB3KB9IuBj3a1Qc3LJkPEpS4qE
+ 4t7nWY9WeUxIvHO8cdmP02B4A7pDBiGNRUWL5fAXXbvPM6zihHuDMZdoOlc2J/AaGYeU
+ IneT/DnD3Mz6K/jhwhSN3fMjnd3TC6SQQq72cW70B7FqHgUQI+PtUVHe6hvFXwxwIPnv
+ 1Q0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707251677; x=1707856477;
+ d=1e100.net; s=20230601; t=1707251914; x=1707856714;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CEt5J+6LdVSAOxfzeXKE68Kf+C7F2HF5Hao2SVqblEY=;
- b=Ttqqte7FGn44r3JHVJTAy4nJARsA14M5TRH/NAUaWHLBnyXIOFOdeG6z03Du/dOT7F
- ejGrCx5Wlfkp+XX2sZoi+Tfv2N1giX/jnJcx8w7i9AqKpLOuILICWuibDFQ1Q+ld1l+1
- CP/FOGX/Li6akEpCRcguBb++7B+SLzxrSDzuSl/CrSFyTRPKyVLiO27IwMYhmAAT2zqq
- W2o3iuZfmpHPP/F0r+KIjdEpANxXmYfThdXyjWV2CblucSR/qiIWcgtBtHBAIf1k/kQ9
- V7XvGF95IKAIQQl30wVM8USPHXnlYc2ZfQZm6NLxVx5UUN0Uc+EEqMrdrnSAOKDF0Hvs
- LSJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoGeNZ3I3jAkBkBib5ETHCE5fjYjD1BR9+DNEx8UWor2J+YSfs9XelNzNqG2rFZvCdEE25xmJU0e6s4toCLNElY6r2FS8=
-X-Gm-Message-State: AOJu0YznsR4Npe2owFaO5eYbEEEfAIMYBeGDVZjBivHBCsMKZ8E0S3hC
- vEJk7aoWY/FAkRI1gmnInEU7j+qyENrpLwiyYsRvl2ScgkvVZJoOz20QSXzt7hM=
-X-Google-Smtp-Source: AGHT+IE03q38kJL8e0SROEanYSdLzSJQoEYPc1Pb+CvVRCxFWlWdcPsZyVr46xg204aOUwnyOc0Myg==
-X-Received: by 2002:a17:902:d546:b0:1d9:e181:51b0 with SMTP id
- z6-20020a170902d54600b001d9e18151b0mr3139225plf.23.1707251676904; 
- Tue, 06 Feb 2024 12:34:36 -0800 (PST)
+ bh=QPZ4nDHu4Px4WR+0uxKo54dRmPzuN2VdMewUhXIXBr0=;
+ b=ROwqE1s57+3WAFYMbmhFXiLe1Bp/reIPuWsAXqWrAoWvid+0dR5+kPisQ1q/6O+fIh
+ hrEy3tWtHqwa93lXqL4UnB4wYBAwDoOz709aMs+mrnallbcn6ETfih9BL8rCbyOGqSN7
+ LhRea5dRCxDub+8B5HJMX3uByxFOE0CEeFfzmF6ZFqCI9w48iGjmb6dby6F7EwXXlbHb
+ TGDKyK4/7Qx340o2A+y1pQ51M7f8MOKtWNn6JA817WfCy0KvGh80boPQJexlpNJFiZRi
+ Ce1kyVxglNqe52PUnVO4CyLkMD2LIuDAC57nmxlx9Zl0dl49gucRVERCClJLS+YtWlSN
+ wqmQ==
+X-Gm-Message-State: AOJu0YxPCpz7nMd1gdLjjI+XB3Jg1Y+mq483X8/1LDdJCdz+6p6dJM6q
+ CZkz7QvshPe0JOX3VRXzpxpRwjJdSx6K9rv8OkJQ8ItCJlweASZGD0DeyHCG8cg=
+X-Google-Smtp-Source: AGHT+IGmjZA9X5202UMS9HSOFLmTbhi+an2I7NmdMEuEmlNbIo/LRQBnVTh9DApdf8lZfztVbzrGpg==
+X-Received: by 2002:a17:90b:4f42:b0:296:12df:a93a with SMTP id
+ pj2-20020a17090b4f4200b0029612dfa93amr643643pjb.46.1707251914053; 
+ Tue, 06 Feb 2024 12:38:34 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCU6Hmf4JzgodANkiQ+nRr44uH98gYpw4wNEoyDOCJcb/GfiiJXzMJ7vvHVhZafvGbxsFxTRm5/eYkL7VkuJKb5y0ZB7DvqIsEx1XGOx6xPqGiGTyTtTd7JjhgY=
+ AJvYcCWBIRvlNQcIfA7GhgcfXISj3HWTO+j9F/XKaBi/tBh4g9FUWyKJ8u88j8MWaajk6+27qHoJ+XpN9WzJ0V+kiiX2SG61FU3J5WTb2hJECEVRh07n8iQIMZneZmw=
 Received: from [192.168.0.100] ([43.252.112.200])
  by smtp.gmail.com with ESMTPSA id
- kx15-20020a170902f94f00b001d8f82c61cdsm2297697plb.231.2024.02.06.12.34.34
+ qa7-20020a17090b4fc700b00296a7abe2aasm2199219pjb.8.2024.02.06.12.38.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 12:34:36 -0800 (PST)
-Message-ID: <768c7884-1a59-461c-a810-4f8a89d4bfda@linaro.org>
-Date: Wed, 7 Feb 2024 06:34:32 +1000
+ Tue, 06 Feb 2024 12:38:33 -0800 (PST)
+Message-ID: <668729ae-4305-4a6d-9f95-c92fea6cfcbd@linaro.org>
+Date: Wed, 7 Feb 2024 06:38:28 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] target/arm: Use new CBAR encoding for all v8 CPUs, 
- not all aarch64 CPUs
+Subject: Re: [PATCH 02/13] target/arm: The Cortex-R52 has a read-only CBAR
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240206132931.38376-1-peter.maydell@linaro.org>
- <20240206132931.38376-2-peter.maydell@linaro.org>
+ <20240206132931.38376-3-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240206132931.38376-2-peter.maydell@linaro.org>
+In-Reply-To: <20240206132931.38376-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +99,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/24 23:29, Peter Maydell wrote:
-> We support two different encodings for the AArch32 IMPDEF
-> CBAR register -- older cores like the Cortex A9, A7, A15
-> have this at 4, c15, c0, 0; newer cores like the
-> Cortex A35, A53, A57 and A72 have it at 1 c15 c0 0.
+> The Cortex-R52 implements the Configuration Base Address Register
+> (CBAR), as a read-only register.  Add ARM_FEATURE_CBAR_RO to this CPU
+> type, so that our implementation provides the register and the
+> associated qdev property.
 > 
-> When we implemented this we picked which encoding to
-> use based on whether the CPU set ARM_FEATURE_AARCH64.
-> However this isn't right for three cases:
->   * the qemu-system-arm 'max' CPU, which is supposed to be
->     a variant on a Cortex-A57; it ought to use the same
->     encoding the A57 does and which the AArch64 'max'
->     exposes to AArch32 guest code
->   * the Cortex-R52, which is AArch32-only but has the CBAR
->     at the newer encoding (and where we incorrectly are
->     not yet setting ARM_FEATURE_CBAR_RO anyway)
->   * any possible future support for other v8 AArch32
->     only CPUs, or for supporting "boot the CPU into
->     AArch32 mode" on our existing cores like the A57 etc
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/cpu32.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> Make the decision of the encoding be based on whether
-> the CPU implements the ARM_FEATURE_V8 flag instead.
-> 
-> This changes the behaviour only for the qemu-system-arm
-> '-cpu max'. We don't expect anybody to be relying on the
-> old behaviour because:
->   * it's not what the real hardware Cortex-A57 does
->     (and that's what our ID register claims we are)
+> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+> index 11253051156..311d654cdce 100644
+> --- a/target/arm/tcg/cpu32.c
+> +++ b/target/arm/tcg/cpu32.c
+> @@ -809,6 +809,7 @@ static void cortex_r52_initfn(Object *obj)
+>       set_feature(&cpu->env, ARM_FEATURE_PMSA);
+>       set_feature(&cpu->env, ARM_FEATURE_NEON);
+>       set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+> +    set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
 
-Not even that, because max resets MIDR.
-
-Anyway,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+I just noticed that arm_cpu_post_init can be simplified to not check CBAR_RO, now that we 
+have arm_cpu_propagate_feature_implications.
 
 
 r~
+
 
