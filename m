@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40847C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 833AFC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 18:41:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXPWf-0001NX-03; Tue, 06 Feb 2024 12:46:29 -0500
+	id 1rXQMd-0001Tr-0p; Tue, 06 Feb 2024 13:40:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXPWW-0001MG-22
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:46:20 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXPWS-0002a8-OK
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:46:19 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-33b1d7f7366so3132426f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 09:46:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707241575; x=1707846375; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Tp+8vZ617JGjQNAydqXDnkXmQj2eSEDuQMcwtamx0mc=;
- b=IimpNZVmNnGx3+ouZO7I2ztYIYbCuT2gJr7/qYPLvSZYsRzUe/X0bQnPXGhf9hEeN+
- KMw0kL81XjSzZ5DJbhWnsrAGpujHy8tSYzU6fheM+iBu/la4IpLVWoH/FsHg57/BRG08
- OMCkIExZ4tANnRwl5wn0ifVoZ7mfYDaWvtlBsIygVxIMgTW8DXl9/EvKPifiIygv9zPq
- DnvKJ/PmCWoc8bOlMVtWr8Xdv5dDSq5wX5XmsEdEw4QdZDWykTnLnb2Iv/XJ9YEgqGDn
- 7nu+LAzwVqydiecheOXhmQZPu3PwckoaprXX+EryXq8Y5VWwgbjdCQUY0DgvPEUrOaNH
- ZvXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707241575; x=1707846375;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Tp+8vZ617JGjQNAydqXDnkXmQj2eSEDuQMcwtamx0mc=;
- b=rXOlQ/WHZpL5lpUkjJxQ1U09xZWXgsJBhMj8uqOQUZ4Y+TlDV9wbW3MPQV6tLREj8F
- 5rJc1hbwCXdW0/5LyqKl5+Y3fQF5o0xRZXivEkSLmOn6z4kIe/vJC6rRq3u7/JecfHZl
- hCmhECaUB3PCLvEY4qBWDFnsDBDIIoU9q56ydu2q2ZJiX5b9NoDUmAsX2x1pNESyTz8E
- 2WDMoCBnLIv2lFfuDzzfc1EGGgMSU6acw0d6ZbLQJbVkSkCzayrrJQPCmofdnQwWoNsQ
- +HRB+hb++6MR5SEWGeBIFMG4dfzYe7INPFGkdYLcCJ1+wQmZHO8Aczn2uj8ARglw8HMs
- XytA==
-X-Gm-Message-State: AOJu0YwgGXEVZnVqgZS8EP9Rwea9w96u3UXpDt9w28I3ygoWh/2s8iG6
- X1XuTOx3wAK42psi3pQ5tx9SPt+2HzlIkYE6a6VLwx+/YyW/MKPMzetLtb6+ySUq/uv/JNXXQ8w
- 5t6/VJ33lu3oOvlTOz4l/0y55YckaQbblnJ4wPg==
-X-Google-Smtp-Source: AGHT+IFMytTx45naEg659TfRjQkOcHFSq7YTnK0S7gs1hbICXVC5NLy/lN7uf5LbzJvKRSyzbSVBNuqEllKeA7ns6e8=
-X-Received: by 2002:adf:fc88:0:b0:33b:304d:36b7 with SMTP id
- g8-20020adffc88000000b0033b304d36b7mr1686640wrr.56.1707241575063; Tue, 06 Feb
- 2024 09:46:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rXQMZ-0001TJ-6U
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 13:40:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rXQMV-00049J-Sv
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 13:40:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707244802;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G74dM3H4Xk7RodEG3GyYM3V8KytwHj3oMSJhSR0hXDQ=;
+ b=dgvYn5s0EOif+MoBchDSCiLlYVU3CYA7pt5wguZ7ngwGYkjTt6o6yGVzL3ZuXhlRVoACAl
+ aa8JIwA6xy3Cg8NY5SJRavxljoCK5mnwZL0Ts/2o4WkGIV5V8Wc02XhQWcsZv4jz1FKOKi
+ 1Mi1BEsYAoLWQiIpMAtkXGX/fJM5Fj8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-lG-Qb6hxMAOrBtpqbF-jUA-1; Tue, 06 Feb 2024 13:40:00 -0500
+X-MC-Unique: lG-Qb6hxMAOrBtpqbF-jUA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A4353101FA2C;
+ Tue,  6 Feb 2024 18:39:59 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.41])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8D092C0FDCB;
+ Tue,  6 Feb 2024 18:39:58 +0000 (UTC)
+Date: Tue, 6 Feb 2024 13:39:57 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Fiona Ebner <f.ebner@proxmox.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH v2 0/3] virtio: Re-enable notifications after drain
+Message-ID: <20240206183957.GE66397@fedora>
+References: <20240202153158.788922-1-hreitz@redhat.com>
 MIME-Version: 1.0
-References: <20240206171231.396392-1-peter.maydell@linaro.org>
- <20240206171231.396392-3-peter.maydell@linaro.org>
- <bfbeda026f49803025e2a90e41c5e043c93d1a59.camel@infradead.org>
-In-Reply-To: <bfbeda026f49803025e2a90e41c5e043c93d1a59.camel@infradead.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 6 Feb 2024 17:46:03 +0000
-Message-ID: <CAFEAcA_-opZFSEn4DLGzkpGkoAxJsCpD87SR2Hn3mGMtx-Hy7w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] tests/qtest/npcm7xx_emc-test: Connect all NICs to a
- backend
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Nabih Estefan <nabihestefan@google.com>, Hao Wu <wuhaotsh@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="OVggj7Yg2H2CVuep"
+Content-Disposition: inline
+In-Reply-To: <20240202153158.788922-1-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,37 +85,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Feb 2024 at 17:36, David Woodhouse <dwmw2@infradead.org> wrote:
->
-> On Tue, 2024-02-06 at 17:12 +0000, Peter Maydell wrote:
-> > Currently QEMU will warn if there is a NIC on the board that
-> > is not connected to a backend. By default the '-nic user' will
-> > get used for all NICs, but if you manually connect a specific
-> > NIC to a specific backend, then the other NICs on the board
-> > have no backend and will be warned about:
-> >
-> > qemu-system-arm: warning: nic npcm7xx-emc.1 has no peer
-> > qemu-system-arm: warning: nic npcm-gmac.0 has no peer
-> > qemu-system-arm: warning: nic npcm-gmac.1 has no peer
-> >
-> > So suppress those warnings by manually connecting every NIC
-> > on the board to some backend.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->
-> Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
->
->
-> ... although do we want to expand this test to cover the GMACs?
 
-It's very specific to details of how to program the particular
-ethernet controller. The GMAC is supposed to be covered by
-npcm_gmac-test.c (but that has issues of its own, see
-https://lore.kernel.org/qemu-devel/CAFEAcA_gkQz7q+PhiqrVd+YrVJvLt1H=Ypp4av9qn+6mYC6jdA@mail.gmail.com/
-and in any case doesn't yet try to actually exercise the device
-beyond a rather minimal "check the register reset values"
-test that doesn't need any particular backend connected).
+--OVggj7Yg2H2CVuep
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-thanks
--- PMM
+On Fri, Feb 02, 2024 at 04:31:55PM +0100, Hanna Czenczek wrote:
+> v1:
+>=20
+> https://lists.nongnu.org/archive/html/qemu-block/2024-01/msg00336.html
+>=20
+>=20
+> Hi,
+>=20
+> This is basically the same series as v1: When using
+> aio_set_event_notifier_poll(), the io_poll_end() callback is only
+> invoked when polling ends, not when the notifier is being removed while
+> in a polling section.  This can leave the virtqueue notifier disabled
+> during drained sections, which however is not a bad thing.  We just need
+> to ensure they are re-enabled after the drain, and kick the virtqueue
+> once to pick up all the requests that came in during the drained
+> section.
+>=20
+> Patch 1 is a technically unrelated fix, but addresses a problem that
+> became visible with patch 2 applied.
+>=20
+> Patch 3 is a small (optional) clean-up patch.
+>=20
+>=20
+> v2:
+> - Changed the title of this series and patch 2 (was: "Keep notifications
+>   disabled durin drain"): Keeping the notifier disabled was something
+>   the initial RFC did, this version (v1 too) just ensures the notifier
+>   is enabled after the drain, regardless of its state before.
+>=20
+> - Use event_notifier_set() instead of virtio_queue_notify() in patch 2
+>=20
+> - Added patch 3
+>=20
+>=20
+> Hanna Czenczek (3):
+>   virtio-scsi: Attach event vq notifier with no_poll
+>   virtio: Re-enable notifications after drain
+>   virtio-blk: Use ioeventfd_attach in start_ioeventfd
+>=20
+>  include/block/aio.h   |  7 ++++++-
+>  hw/block/virtio-blk.c | 21 ++++++++++-----------
+>  hw/scsi/virtio-scsi.c |  7 ++++++-
+>  hw/virtio/virtio.c    | 42 ++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 64 insertions(+), 13 deletions(-)
+>=20
+> --=20
+> 2.43.0
+>=20
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--OVggj7Yg2H2CVuep
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXCfP0ACgkQnKSrs4Gr
+c8geeQgAvXuGz7ZlWurHBJp4as/DJELijVFxQ30a3I9uN/ZWO+8L26iG2LXZL7rG
+Mf331MoIqza5jSMM22WUohKJ99dq5a06ECLinEbRlhIDAL0ryR9jglA8lRN8e6Rt
+TIUFrB07PpY9mjtf1Aj9GGqeF+7lWdBoiSlGC5ciRCHBXycVUNQdg9luBXSu1F85
+e654d3liDeyPk+I9epyJ6U9vR90JHMEqaKoaysSojXcI6hkeOhndoX9dRBWn4mb7
+kVEG85oefmi6xDqY7G1yQF5e+U6K5GM85aK8iuNGLyWQUvZQMPLE8zTnimJeT0Th
+fspyoOsjp1vGTd4BdIKgiDNrfvjl0w==
+=oyc4
+-----END PGP SIGNATURE-----
+
+--OVggj7Yg2H2CVuep--
+
 
