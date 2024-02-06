@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4522DC4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 07:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D6CC48286
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 07:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXFry-0007Jw-Bs; Tue, 06 Feb 2024 02:27:50 -0500
+	id 1rXFto-00083v-TW; Tue, 06 Feb 2024 02:29:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rXFrv-0007JC-2u
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:27:47 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1rXFtZ-00082w-8K
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:29:30 -0500
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rXFro-0007gp-Eo
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:27:46 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a26ed1e05c7so726967066b.2
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 23:27:39 -0800 (PST)
+ id 1rXFtW-0007od-G1
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:29:27 -0500
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2d0a0873404so31341411fa.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 23:29:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707204457; x=1707809257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707204564; x=1707809364; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=sZGjv6520p6xOKilSULwx8n/6DaCrkA7yqkUD/ca9mY=;
- b=XnsiBJav5akMB6u9C6u+j2RcUshtr8pFam/N/D2qfzHlSswG0XTX/gJB3xOcghHPRp
- tVkcYrmKPLfidMhs4vJZX+EuLO3kAZcRgRXYyPMqE8k2tW2dc82h29foGG5Gj6WCt6Oa
- W32D1vZ6aMcCMOy2lV6POFGMH64dLir38BvoOzJPJ3JcYFRigTgdjG6X9mzglKh/UgwI
- ippMrzlQgjchWw0oiYh/YI4QG/Ex8gbu0Q3m6LdjRCLjlYYJ9Ftyd09hlgKdL9Q0RpzY
- mlD89Gt/RFm3ERq2QTt7oKyWTMMYYdBta7VaLcCLNyoV4R4r6LnQTmzHG/km07ik2WGZ
- Xz/A==
+ bh=wLmeKxRwsugMUnvezte8WVXIxrVjqcnKlIAyTj3jfB4=;
+ b=D/1mHzRMf0Rokqsq/wNsmIZiSHv4FP9EIROBchKGE/Wl93r0mp+uc8HfRVOHSHObb/
+ PPQioabF4cTNmajbYVaRkDyrZbMiGfaGNwTz9Ip4qIDyQe3HjI805F4y39NtL6aYPKkf
+ woKW9jyuCXyXq06QX0pKnljEYJ/zimJxgeu0Y8DRXnZ5VCMlJN0Fa6p+NwE8FRKua7SD
+ RvaOfslZamftFEA58f2fKC+tjSfe3XcbfnjJECtGjW/LSu11rILd/YQkXaOY+pFjy4Jb
+ 8HEoD7n7PXM/vUkJ2jNNqBDvclKUJuoIPlfL4omA3ybzyU044nAMSxQxwKknYwY+jwwN
+ 8Ujg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707204457; x=1707809257;
+ d=1e100.net; s=20230601; t=1707204564; x=1707809364;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sZGjv6520p6xOKilSULwx8n/6DaCrkA7yqkUD/ca9mY=;
- b=rMWaBk74DPBFdS/92EudBzzip4JOxjvpk+VPzhdlSE4P2mgK2VCWa7fxhsnMEH55IY
- x9sIoHk1SBqt9zH1ZPvPm8X2cluP35I1wgOMLwwdeCvkM9BJHz8m4/nyZvEx810cFuk9
- XEHoMrsuYS1tmJ+w2/GBfM3ct8kOgPy1AmwK2EjVERUzkJkbz1aPqzrfRd/CNJQh2h7x
- SMtydSG5Dsugw5HbS2/cDrxeWhf5Sp3u7YUdkv6abBR+/ymTAnDh1eKqTt81ra7biS4i
- zrbCXpV0apNlgF9dt523rFZyc4DmOd7TKaG8S5aFzF1q7QVfluA+U8N40fjk/v4T7y87
- 6LhQ==
-X-Gm-Message-State: AOJu0YyIjHZ3qfduMo0N2k/awImXPf5WqaZKOn8j8ME8wSAc3Gii9bmc
- GriR0P3mm6qVOBjLOISSVKnXi2OY/rXvX3gdDWF4LpkVUuEfh4HTe0X74JZaTgRefSOQzj89UMr
- V
-X-Google-Smtp-Source: AGHT+IFmnyv1MVi+2S9vSv91EPCbU0NDbZQ6Xfb1QS5f3Ctix2n28TW/GsnWwc5reKw6zcE3yQAJ5w==
-X-Received: by 2002:a17:906:dd0:b0:a37:f77f:3d6c with SMTP id
- p16-20020a1709060dd000b00a37f77f3d6cmr1164710eji.25.1707204457156; 
- Mon, 05 Feb 2024 23:27:37 -0800 (PST)
+ bh=wLmeKxRwsugMUnvezte8WVXIxrVjqcnKlIAyTj3jfB4=;
+ b=swGKOuurXKSejBQsT3GVgtExfz6qoQgd7FuSsur1D+kjwEqUXW5ni7nWROKUM83gLz
+ +Ut7BLeZqRCC5WwaDIbEVnWfwY53xsOYh22VMCD/iuInH4/w/avt0XqsEX+NmaWR9YWG
+ NMaSYhmx6VdusHjx4Kecp5A+89jW883WEcsCnrHEktzXeqZVxS3SRxjDz1pd2coYLE2L
+ pwUflXvL6mNDHwVvNQsIG6i2eQov/5S6hM+SdBqTrHXdZ7/ND0NUp7/rNMftjoh6THcj
+ m8OFQsMLrG698VuYhqA+lS/PZyk5oQpTZMfojU+sedRP/tHSxbciy/SqAh2dtpOV6uDL
+ kaDg==
+X-Gm-Message-State: AOJu0YxIUx9tXytpMkL27I+U7RML2KTjCTHE1mYbFz07joqf9ZyHQfPB
+ BZkqu/PoPLYDAB0mfTGdNOQlcFMexnLuXTdiXoUtLd3r65sQA08Jhmz19QG6e8uqknUCvtoFPzK
+ a
+X-Google-Smtp-Source: AGHT+IE5OL0Z+GNqNEklrZ7WE2LauzrSQ+EQ8SUUj7X3NuD5NooAYuHQWit4CWf/Fdt0lw3yQ9m2wQ==
+X-Received: by 2002:a05:651c:1035:b0:2d0:c058:11c3 with SMTP id
+ w21-20020a05651c103500b002d0c05811c3mr284421ljm.20.1707204563553; 
+ Mon, 05 Feb 2024 23:29:23 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXUliJ5Jy6QCRx3PMAclQgoH+6gx/Wh4O+XPwrxMpwxqMDENuz5m1AnFYqCwKx+PrHv//Pa059CcEyAwfET4I/JnhiqfkXAlRipXJbd5vDUqu8gWkfNsH4dGE9poENqRHAsUAh73Kwu9v4C7vRuHxHK2/CTcQBm7xR+IkRYCGCanv0mra9L79oS+U/AfwWFn2wtCybjH1BmfPR8XH5h66XWY3YMgUMt
+ AJvYcCXdykQr0UjzWYuUqofa9QOmvqnj9FRxpLWFqCxz8s5885/8cAPc+eIJJyY23nMj9pS2xZsDHNB2Gt6H3dnW8qYAWCo1BrGfHBGp5h5hWrlEKke1IcnTjZcWk36dochtFSGLtA7vOlEqoQcdfIhEFUuyzn7qW+7MMqWKmvO59FJ0PGkCTe3IuwSjKkr7bXgNvcfQWfNPoXGfLcpf6Z2Be0T2Ke/MKhCq
 Received: from meli.delivery (adsl-125.37.6.3.tellas.gr. [37.6.3.125])
  by smtp.gmail.com with ESMTPSA id
- hu17-20020a170907a09100b00a360239f006sm784375ejc.37.2024.02.05.23.27.36
+ ec44-20020a0564020d6c00b0055fed0e2017sm741674edb.16.2024.02.05.23.29.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 23:27:36 -0800 (PST)
-Date: Tue, 06 Feb 2024 09:23:08 +0200
+ Mon, 05 Feb 2024 23:29:22 -0800 (PST)
+Date: Tue, 06 Feb 2024 09:28:57 +0200
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  qemu-block@nongnu.org
-Subject: Re: [PATCH 2/5] virtio-blk: clarify that there is at least 1 virtqueue
+Subject: Re: [PATCH 5/5] monitor: use aio_co_reschedule_self()
 User-Agent: meli 0.8.5-rc.3
 References: <20240205172659.476970-1-stefanha@redhat.com>
- <20240205172659.476970-3-stefanha@redhat.com>
-In-Reply-To: <20240205172659.476970-3-stefanha@redhat.com>
-Message-ID: <8fbdy.hdn7svf206al@linaro.org>
+ <20240205172659.476970-6-stefanha@redhat.com>
+In-Reply-To: <20240205172659.476970-6-stefanha@redhat.com>
+Message-ID: <8fbgw.qqmdqoyo5bff@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,41 +102,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 05 Feb 2024 19:26, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->It is not possible to instantiate a virtio-blk device with 0 virtqueues.
->The following check is located in ->realize():
+>The aio_co_reschedule_self() API is designed to avoid the race
+>condition between scheduling the coroutine in another AioContext and
+>yielding.
 >
->  if (!conf->num_queues) {
->      error_setg(errp, "num-queues property must be larger than 0");
->      return;
->  }
+>The QMP dispatch code uses the open-coded version that appears
+>susceptible to the race condition at first glance:
 >
->Later on we access s->vq_aio_context[0] under the assumption that there
->is as least one virtqueue. Hanna Czenczek <hreitz@redhat.com> noted that
->it would help to show that the array index is already valid.
+>  aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
+>  qemu_coroutine_yield();
 >
->Add an assertion to document that s->vq_aio_context[0] is always
->safe...and catch future code changes that break this assumption.
+>The code is actually safe because the iohandler and qemu_aio_context
+>AioContext run under the Big QEMU Lock. Nevertheless, set a good example
+>and use aio_co_reschedule_self() so it's obvious that there is no race.
 >
->Suggested-by: Hanna Czenczek <hreitz@redhat.com>
+>Suggested-by: Hanna Reitz <hreitz@redhat.com>
 >Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 >---
-> hw/block/virtio-blk.c | 1 +
-> 1 file changed, 1 insertion(+)
+> qapi/qmp-dispatch.c | 7 ++-----
+> 1 file changed, 2 insertions(+), 5 deletions(-)
 >
->diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
->index e8b37fd5f4..a0735a9bca 100644
->--- a/hw/block/virtio-blk.c
->+++ b/hw/block/virtio-blk.c
->@@ -1825,6 +1825,7 @@ static int virtio_blk_start_ioeventfd(VirtIODevice *vdev)
->      * Try to change the AioContext so that block jobs and other operations can
->      * co-locate their activity in the same AioContext. If it fails, nevermind.
->      */
->+    assert(nvqs > 0); /* enforced during ->realize() */
->     r = blk_set_aio_context(s->conf.conf.blk, s->vq_aio_context[0],
->                             &local_err);
->     if (r < 0) {
+>diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+>index 176b549473..f3488afeef 100644
+>--- a/qapi/qmp-dispatch.c
+>+++ b/qapi/qmp-dispatch.c
+>@@ -212,8 +212,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+>              * executing the command handler so that it can make progress if it
+>              * involves an AIO_WAIT_WHILE().
+>              */
+>-            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
+>-            qemu_coroutine_yield();
+>+            aio_co_reschedule_self(qemu_get_aio_context());
+>         }
+> 
+>         monitor_set_cur(qemu_coroutine_self(), cur_mon);
+>@@ -227,9 +226,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+>              * Move back to iohandler_ctx so that nested event loops for
+>              * qemu_aio_context don't start new monitor commands.
+>              */
+>-            aio_co_schedule(iohandler_get_aio_context(),
+>-                            qemu_coroutine_self());
+>-            qemu_coroutine_yield();
+>+            aio_co_reschedule_self(iohandler_get_aio_context());
+>         }
+>     } else {
+>        /*
 >-- 
 >2.43.0
+>
 >
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
