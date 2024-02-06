@@ -4,71 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E472C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 16:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBEADC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 16:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXOhc-0001ti-Ig; Tue, 06 Feb 2024 11:53:44 -0500
+	id 1rXOid-0002kH-HV; Tue, 06 Feb 2024 11:54:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXOha-0001sp-9o
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:53:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=f3tV=JP=kaod.org=clg@ozlabs.org>)
+ id 1rXOib-0002jv-SI; Tue, 06 Feb 2024 11:54:45 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXOhX-0007iv-FZ
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:53:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707238417;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Xrd29HG6N5Qa6lF2jWKMZM/p6uwRPoodG71XXeTSXvM=;
- b=dbDyF50IlGOkr44ta+LohibvEapFjAFmaZ1y9OPWW1maW04+gAQBLgGBTxwPXEEIux3iOw
- kMRUJDvHXc4CifOrzx5iiSMtj693UFbzEt2TnEM3fp/f+jn6ekCDaPaB9HbgIHWRfrO/F9
- ytbl4RATcD1Zya+pbi6ML4oLxVSl5j8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-277-SeZkpQ9xMSS4WWIOFHYGSg-1; Tue, 06 Feb 2024 11:53:33 -0500
-X-MC-Unique: SeZkpQ9xMSS4WWIOFHYGSg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ (Exim 4.90_1) (envelope-from <SRS0=f3tV=JP=kaod.org=clg@ozlabs.org>)
+ id 1rXOiZ-0007rU-Tq; Tue, 06 Feb 2024 11:54:45 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TTq9B5vsQz4wd0;
+ Wed,  7 Feb 2024 03:54:38 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3F173185A781;
- Tue,  6 Feb 2024 16:53:33 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.40])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7E5F6492BC7;
- Tue,  6 Feb 2024 16:53:32 +0000 (UTC)
-Date: Tue, 6 Feb 2024 11:53:30 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH 0/2] block: Allow concurrent BB context changes
-Message-ID: <20240206165330.GB66397@fedora>
-References: <20240202144755.671354-1-hreitz@redhat.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TTq983XM5z4wcC;
+ Wed,  7 Feb 2024 03:54:36 +1100 (AEDT)
+Message-ID: <a9c0d2b2-2bb4-4770-97e5-5a061862da02@kaod.org>
+Date: Tue, 6 Feb 2024 17:54:34 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="/HW2OnulM3aGawcA"
-Content-Disposition: inline
-In-Reply-To: <20240202144755.671354-1-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v0 2/2] aspeed: fix hardcode boot address 0
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20240205091415.935686-1-jamin_lin@aspeedtech.com>
+ <20240205091415.935686-3-jamin_lin@aspeedtech.com>
+ <46d14718-2b2c-45aa-aa12-854a2704383b@linaro.org>
+ <SI2PR06MB504143638045D7666B341C09FC462@SI2PR06MB5041.apcprd06.prod.outlook.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB504143638045D7666B341C09FC462@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=f3tV=JP=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,117 +71,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/6/24 02:48, Jamin Lin wrote:
+>> -----Original Message-----
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Sent: Monday, February 5, 2024 9:20 PM
+>> To: Jamin Lin <jamin_lin@aspeedtech.com>; Cédric Le Goater <clg@kaod.org>;
+>> Peter Maydell <peter.maydell@linaro.org>; Andrew Jeffery
+>> <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; open
+>> list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC here
+>> <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>
+>> Subject: Re: [PATCH v0 2/2] aspeed: fix hardcode boot address 0
+>>
+>> Hi Jamin,
+>>
+>> On 5/2/24 10:14, Jamin Lin via wrote:
+>>> In the previous design of QEMU model for ASPEED SOCs, it set the boot
+>>> address at 0 which was the hardcode setting for ast10x0, ast2600,
+>>> ast2500 and ast2400.
+>>>
+>>> According to the design of ast2700, it has bootmcu which is used for
+>>> executing SPL and initialize DRAM,
+>>
+>> Out of curiosity, what architecture is this MCU?
+> MCU is riscv-ibex and its architecture is riscv-32.
+> 
+>>
+>>> then, CPUs(cortex-a35)
+>>> execute u-boot, kernel and rofs. QEMU will only support
+>>> CPU(coretax-a35) parts and the boot address is "0x400000000" for ast2700.
+>>
+>> OK, but I don't get how you get from here ...
+>>
+> Our design make MCU execute SPL and copy u-boot image from SPI to DRAM at address 0x400000000 at SPL boot stage.
+> However, QEMU will only support to emulate CPU sides (coretex-a35) for ast2700, 
 
---/HW2OnulM3aGawcA
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The fby35 is an example of a machine with two ARM SoCs : ast1030-a1
+and ast2600-a3. There is work in progress for heterogeneous QEMU
+machines and It might be possible to model RISC-V and ARM one day.
 
-On Fri, Feb 02, 2024 at 03:47:53PM +0100, Hanna Czenczek wrote:
-> Hi,
->=20
-> Without the AioContext lock, a BB's context may kind of change at any
-> time (unless it has a root node, and I/O requests are pending).  That
-> also means that its own context (BlockBackend.ctx) and that of its root
-> node can differ sometimes (while the context is being changed).
->=20
-> blk_get_aio_context() doesn't know this yet and asserts that both are
-> always equal (if there is a root node).  Because it's no longer true,
-> and because callers don't seem to really care about the root node's
-> context, we can and should remove the assertion and just return the BB's
-> context.
->=20
-> Beyond that, the question is whether the callers of
-> blk_get_aio_context() are OK with the context potentially changing
-> concurrently.  Honestly, it isn't entirely clear to me; most look OK,
-> except for the virtio-scsi code, which operates under the general
-> assumption that the BB's context is always equal to that of the
-> virtio-scsi device.  I doubt that this assumption always holds (it is
-> definitely not obvious to me that it would), but then again, this series
-> will not make matters worse in that regard, and that is what counts for
-> me now.
->=20
-> One clear point of contention is scsi_device_for_each_req_async(), which
-> is addressed by patch 2.  Right now, it schedules a BH in the BB
-> context, then the BH double-checks whether the context still fits, and
-> if not, re-schedules itself.  Because virtio-scsi's context is fixed,
-> this seems to indicate to me that it wants to be able to deal with a
-> case where BB and virtio-scsi context differ, which seems to break that
-> aforementioned general virtio-scsi assumption.
+> that was why we want to change the boot address at 0x400000000
+> And use the following start command by QEMU.
+> 
+> ./qemu-system-aarch64 -M ast2750-evb -nographic -m 8G \
+>   -device loader,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin,force-raw=on \
+>   -device loader,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb,force-raw=on \
+>   ---
+>   ---
+ok. Makes sense.
+  
+> By the way, I will send a new patch series to support ast2700 in two weeks and
+> We set memory map for ast2700 as following.
+> 
+> static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>      [ASPEED_DEV_SPI_BOOT]  =  0x400000000,
+>      [ASPEED_DEV_SRAM]      =  0x10000000,
 
-I don't agree with the last sentence: virtio-scsi's context isn't fixed.
+Excellent !
 
-The AioContext changes when dataplane is started/stopped. virtio-scsi
-switches AioContext between the IOThread's AioContext and the main
-loop's qemu_aio_context.
+Thanks,
 
-However, virtio-scsi virtqueue processing only happens in the IOThread's
-AioContext. Maybe this is what you meant when you said the AioContext is
-fixed?
+C.
 
-The BH function is aware that the current AioContext might not be the
-same as the AioContext at the time the BH was scheduled. That doesn't
-break assumptions in the code.
-
-(It may be possible to rewrite virtio-blk, virtio-scsi, and core
-VirtIODevice ioeventfd code to use the simpler model where the
-AioContext really is fixed because things have changed significantly
-over the years, but I looked a few weeks ago and it's difficult work.)
-
-I'm just pointing out that I think this description is incomplete. I
-*do* agree with what this patch series is doing :).
-
-> Unfortunately, I definitely have to touch that code, because accepting
-> concurrent changes of AioContexts breaks the double-check (just because
-> the BB has the right context in that place does not mean it stays in
-> that context); instead, we must prevent any concurrent change until the
-> BH is done.  Because changing contexts generally involves a drained
-> section, we can prevent it by keeping the BB in-flight counter elevated.
->=20
-> Question is, how to reason for that.  I=E2=80=99d really rather not inclu=
-de the
-> need to follow the BB context in my argument, because I find that part a
-> bit fishy.
->=20
-> Luckily, there=E2=80=99s a second, completely different reason for having
-> scsi_device_for_each_req_async() increment the in-flight counter:
-> Specifically, scsi_device_purge_requests() probably wants to await full
-> completion of scsi_device_for_each_req_async(), and we can do that most
-> easily in the very same way by incrementing the in-flight counter.  This
-> way, the blk_drain() in scsi_device_purge_requests() will not only await
-> all (cancelled) I/O requests, but also the non-I/O requests.
->=20
-> The fact that this prevents the BB AioContext from changing while the BH
-> is scheduled/running then is just a nice side effect.
->=20
->=20
-> Hanna Czenczek (2):
->   block-backend: Allow concurrent context changes
->   scsi: Await request purging
->=20
->  block/block-backend.c | 22 +++++++++++-----------
->  hw/scsi/scsi-bus.c    | 30 +++++++++++++++++++++---------
->  2 files changed, 32 insertions(+), 20 deletions(-)
->=20
-> --=20
-> 2.43.0
->=20
-
---/HW2OnulM3aGawcA
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXCZAoACgkQnKSrs4Gr
-c8izUQf8D5vS3vMLhSH9ubrtDx3IieirDruWDGKuV2aLU6Hk8pJ6ndIzZu3E/aQN
-w8fiVo3eqCuVSkMoNwoL7E961ZggRNnBg0lc9/f3qqyrNE42B0rqy7RrCO/21U4y
-0Mw7MA1vQ/ioPRN29J5L/0T2xVCZ4h+BUDeNs6rvynlrhx9KCr3QL84KXcyh2wgm
-G7q0+8IeWk5bw3CapScx1Q/72BRGXzB2P2BO+QnXxTfjY5mo0cb47EMGUzQqUNwY
-DMaqXuTr1PbdSO9qHqBloiDI0k1v1DlQLk2wqJBGlx73zMQwo7cNmiwDHhiQHta7
-AiaVzO7nN5ZpRRzIEpyS1ywIRp+OQg==
-=cfTa
------END PGP SIGNATURE-----
-
---/HW2OnulM3aGawcA--
 
 
