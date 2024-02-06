@@ -4,53 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E9EEC4829C
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E287C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXSNT-0004un-Ny; Tue, 06 Feb 2024 15:49:11 -0500
+	id 1rXSPk-0000XY-IV; Tue, 06 Feb 2024 15:51:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1rXSNS-0004uE-MK
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:49:10 -0500
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1rXSNN-0001c5-73
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:49:10 -0500
-Received: from localhost.intra.ispras.ru (unknown [10.10.3.121])
- by mail.ispras.ru (Postfix) with ESMTP id 07BD84076728;
- Tue,  6 Feb 2024 20:48:41 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 07BD84076728
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1707252521;
- bh=LKlsP9qffl5TmFXf/YIJKHAGRdE7XUamBGJVaa+posg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=k2pmwYm0+tmnjh2Wza3wmePZA+Yw2DRnQ3OVmU60RRqVfPe1nHjz8E+IuMw9cDZip
- iY5ZzwriTkhLQExaupI5D983L4TOcDx3UPyPr8Fo84YHYIkGORI7w6qwX9uONJstAf
- R7hVf2W8c8+MC8XJaPHbshXkv8svzsdp1Fjj/0DM=
-From: Alexander Monakov <amonakov@ispras.ru>
-To: qemu-devel@nongnu.org
-Cc: Mikhail Romanov <mmromanov@ispras.ru>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Monakov <amonakov@ispras.ru>
-Subject: [PATCH v3 3/6] util/bufferiszero: remove AVX512 variant
-Date: Tue,  6 Feb 2024 23:48:06 +0300
-Message-Id: <20240206204809.9859-4-amonakov@ispras.ru>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20240206204809.9859-1-amonakov@ispras.ru>
-References: <20240206204809.9859-1-amonakov@ispras.ru>
+ (Exim 4.90_1) (envelope-from <alexghiti@rivosinc.com>)
+ id 1rXSPi-0000Wz-MG
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:51:30 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexghiti@rivosinc.com>)
+ id 1rXSPg-000239-S0
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:51:30 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-55ee686b5d5so8011093a12.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 12:51:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1707252687; x=1707857487;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n4jerX5u3GdPAZFbbFtgIwY0JRsEck8JPJyOaDuM158=;
+ b=m3p9Te+R//kHUNLl8kQems6brxnSCwSTEdSWX/gupoU3132rvSBdiy27dF1S6iz0RQ
+ ME8J/I+DrK2zacRI0Qw89BY+3bCjNIk5JIb/iGFjJ/DjDeWvsDO2/RvNzFXc9sxjCMP+
+ zvTcBBetRjLa8oaPdTbs/11MU5F2vNvLU0edk67hOBQRqxz4jJGTf7yBlvVj+y2nOoHT
+ uUqCMY4H2bpfVZW4Au//LwkM7f25OSp9ln4ianc6XzeL0uXb7quY0wVSbzacWR+TIPxc
+ fardE6AUEW8biaWuw0QrZnKkeyglNMIH5vH++W0dKrmb4FWoUU5Q07Ph+ylEax/ws4tV
+ 8WrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707252687; x=1707857487;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=n4jerX5u3GdPAZFbbFtgIwY0JRsEck8JPJyOaDuM158=;
+ b=sMn1a2wFgIrSFbriorBvFX2f0jmrUbDmHc4oXoMsZ4BMfc+Sxjv4POan1CttYR9pzZ
+ 4/hNDJUHX9Y+zHdZHMX4mH5j1vkap4qvhrPbPfwkVPqxjFf6f5PVDs+bcofhndxwzcw6
+ GxC6/bQsul0O5KoKz+kRGNw3TbowPjTOGOCLG4pUv3JVz419Frh0O5S8bLvl0NoXtonb
+ 8XEKcmgTgVE1970p9r6CU5tXbLEcO5FdDAHcwnw8MDAbqhIa2oUiKtsMiipajCSq943j
+ Y5kclwXsrftZj4+bFKX81sT8HO4uLujOp6wR+EjAdJyOCuLyFwZL/G9T2KalzYVvFNob
+ Ln3A==
+X-Gm-Message-State: AOJu0YzuWUjJETET4m45jVz9G9+4Jwyg0dszQyoXjBTFoqjeojsiZEUG
+ HE55B4paFo+n7U3Hzag53i0GxCF3jy34krvocJFbehETarX9gqa/mIg44il/g02di+dG+nv+ybZ
+ UvKjIxktP4q3cbwaFonMEyD5QnIxwEGAtqxGGuw==
+X-Google-Smtp-Source: AGHT+IEWJnGudiUYr6ric8rXBRWclUp8D6Nafoz+KOK3qLOkk/KJhR4q9DXFcuSLlXVfSDtK4tDJe5hcKLGh3m6Z1BY=
+X-Received: by 2002:a17:906:5651:b0:a30:d5ae:2833 with SMTP id
+ v17-20020a170906565100b00a30d5ae2833mr2651236ejr.56.1707252686997; Tue, 06
+ Feb 2024 12:51:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
- helo=mail.ispras.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+References: <20240206154042.514698-1-alexghiti@rivosinc.com>
+ <c8817977-a8ad-4f94-9847-a43d08c5b4df@ventanamicro.com>
+In-Reply-To: <c8817977-a8ad-4f94-9847-a43d08c5b4df@ventanamicro.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
+Date: Tue, 6 Feb 2024 21:51:16 +0100
+Message-ID: <CAHVXubgZq5rjpBPFirYVX0v7+Hjd7wVUO0pFbHxiirRDAoxPeg@mail.gmail.com>
+Subject: Re: [PATCH v2] hw: riscv: Allow large kernels to boot by moving the
+ initrd further away in RAM
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alexghiti@rivosinc.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,88 +95,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks to early checks in the inline buffer_is_zero wrapper, the SIMD
-routines are invoked much more rarely in normal use when most buffers
-are non-zero. This makes use of AVX512 unprofitable, as it incurs extra
-frequency and voltage transition periods during which the CPU operates
-at reduced performance, as described in
-https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html
+On Tue, Feb 6, 2024 at 9:39=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+>
+>
+> On 2/6/24 12:40, Alexandre Ghiti wrote:
+> > Currently, the initrd is placed at 128MB, which overlaps with the kerne=
+l
+> > when it is large (for example syzbot kernels are). From the kernel side=
+,
+> > there is no reason we could not push the initrd further away in memory
+> > to accommodate large kernels, so move the initrd at 512MB when possible=
+.
+> >
+> > The ideal solution would have been to place the initrd based on the
+> > kernel size but we actually can't since the bss size is not known when
+> > the image is loaded by load_image_targphys_as() and the initrd would
+> > then overlap with this section.
+> >
+> > Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> > ---
+>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
-Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
----
- util/bufferiszero.c | 36 ++----------------------------------
- 1 file changed, 2 insertions(+), 34 deletions(-)
+Thanks for your help!
 
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 01050694a6..c037d11d04 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -64,7 +64,7 @@ buffer_is_zero_len_4_plus(const void *buf, size_t len)
-     }
- }
- 
--#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
-+#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
- #include <immintrin.h>
- 
- /* Note that each of these vectorized functions require len >= 64.  */
-@@ -128,35 +128,6 @@ buffer_zero_avx2(const void *buf, size_t len)
- }
- #endif /* CONFIG_AVX2_OPT */
- 
--#ifdef CONFIG_AVX512F_OPT
--static bool __attribute__((target("avx512f")))
--buffer_zero_avx512(const void *buf, size_t len)
--{
--    /* Begin with an unaligned head of 64 bytes.  */
--    __m512i t = _mm512_loadu_si512(buf);
--    __m512i *p = (__m512i *)(((uintptr_t)buf + 5 * 64) & -64);
--    __m512i *e = (__m512i *)(((uintptr_t)buf + len) & -64);
--
--    /* Loop over 64-byte aligned blocks of 256.  */
--    while (p <= e) {
--        __builtin_prefetch(p);
--        if (unlikely(_mm512_test_epi64_mask(t, t))) {
--            return false;
--        }
--        t = p[-4] | p[-3] | p[-2] | p[-1];
--        p += 4;
--    }
--
--    t |= _mm512_loadu_si512(buf + len - 4 * 64);
--    t |= _mm512_loadu_si512(buf + len - 3 * 64);
--    t |= _mm512_loadu_si512(buf + len - 2 * 64);
--    t |= _mm512_loadu_si512(buf + len - 1 * 64);
--
--    return !_mm512_test_epi64_mask(t, t);
--
--}
--#endif /* CONFIG_AVX512F_OPT */
--
- static unsigned __attribute__((noinline))
- select_accel_cpuinfo(unsigned info)
- {
-@@ -165,9 +136,6 @@ select_accel_cpuinfo(unsigned info)
-         unsigned bit;
-         bool (*fn)(const void *, size_t);
-     } all[] = {
--#ifdef CONFIG_AVX512F_OPT
--        { CPUINFO_AVX512F, buffer_zero_avx512 },
--#endif
- #ifdef CONFIG_AVX2_OPT
-         { CPUINFO_AVX2,    buffer_zero_avx2 },
- #endif
-@@ -191,7 +159,7 @@ static unsigned used_accel
-     = 0;
- #endif
- 
--#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT)
-+#if defined(CONFIG_AVX2_OPT)
- static void __attribute__((constructor)) init_accel(void)
- {
-     used_accel = select_accel_cpuinfo(cpuinfo_init());
--- 
-2.32.0
+Alex
 
+>
+> >
+> > Changes in v2:
+> > - Fix typos in commit log (Daniel) and title
+> > - Added to the commit log why using the kernel size does not work
+> >    (Daniel)
+> >
+> >   hw/riscv/boot.c | 12 ++++++------
+> >   1 file changed, 6 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> > index 0ffca05189..9a367af2fa 100644
+> > --- a/hw/riscv/boot.c
+> > +++ b/hw/riscv/boot.c
+> > @@ -188,13 +188,13 @@ static void riscv_load_initrd(MachineState *machi=
+ne, uint64_t kernel_entry)
+> >        * kernel is uncompressed it will not clobber the initrd. However
+> >        * on boards without much RAM we must ensure that we still leave
+> >        * enough room for a decent sized initrd, and on boards with larg=
+e
+> > -     * amounts of RAM we must avoid the initrd being so far up in RAM
+> > -     * that it is outside lowmem and inaccessible to the kernel.
+> > -     * So for boards with less  than 256MB of RAM we put the initrd
+> > -     * halfway into RAM, and for boards with 256MB of RAM or more we p=
+ut
+> > -     * the initrd at 128MB.
+> > +     * amounts of RAM, we put the initrd at 512MB to allow large kerne=
+ls
+> > +     * to boot.
+> > +     * So for boards with less than 1GB of RAM we put the initrd
+> > +     * halfway into RAM, and for boards with 1GB of RAM or more we put
+> > +     * the initrd at 512MB.
+> >        */
+> > -    start =3D kernel_entry + MIN(mem_size / 2, 128 * MiB);
+> > +    start =3D kernel_entry + MIN(mem_size / 2, 512 * MiB);
+> >
+> >       size =3D load_ramdisk(filename, start, mem_size - start);
+> >       if (size =3D=3D -1) {
 
