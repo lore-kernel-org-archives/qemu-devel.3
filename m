@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389D9C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 15:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09223C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 15:18:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXN9i-00057A-Uc; Tue, 06 Feb 2024 10:14:38 -0500
+	id 1rXNCa-00060C-9k; Tue, 06 Feb 2024 10:17:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rXN9h-00056p-SD
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:14:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rXN9g-0004ao-Gs
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:14:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707232475;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5Ezl4Dqld4PLMxNC7ep4rHIJ7nvB/U7YfxaO1RYrLR0=;
- b=G+5t9DTGupoppvfGQmVwPKIFRfJOl0CKd5nBNZlanUDSb7xfvB9jNC+R8Z7GDpDscf7xEM
- JC7DQ5ySrcSxhTTszbzNxm8gMiXigUN8qc5GJEpbjA6k9vvwg2FTKusPR1RWEVDWUQRHn8
- iuAuHaH+xfSsTEVU+bOsFSGO434gd9o=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-nQHUfKXXMB-KykaLlgPg9Q-1; Tue, 06 Feb 2024 10:14:33 -0500
-X-MC-Unique: nQHUfKXXMB-KykaLlgPg9Q-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33b38ce055fso1213071f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 07:14:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1rXNCY-000604-Sx
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:17:34 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1rXNCN-00053S-6t
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:17:34 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1d7858a469aso42313555ad.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 07:17:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707232639; x=1707837439; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZSoX3wz+SC6Oc2pQuAPkNIb+l0HOZz5F86zphhSpob4=;
+ b=uBzfspip7Vs0SvEBraTMj2uTvYQ/x0x9u9WyenggLb7SS12vSSND1/PYVV0hDiN+uM
+ xyrEDWgEg8dGigMS42vSprKUeIUPVElt66V4037dQxAep7o9/PTlvr5Q99gfaEObypcP
+ cuYMao/WCzk/P9nGtnfiZ+YnFtOtDv6NsVitw9fS8iW5Dlrt0hpoi6Z0YuUOGma+6uNh
+ kzC9Frz4Fl/Fo8P5xh+kLNK5voErU505y+3vxZ2bFD/dLN6+cQzLjlLPjQ9QS0e8e8dj
+ MGNE4kjzWoYVIT9xwe1oO44bC8Ol8kX5Yh2v+sedYVD2Tj+1fIYU251zO8Ns98xE66bC
+ WwWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707232472; x=1707837272;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1707232639; x=1707837439;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5Ezl4Dqld4PLMxNC7ep4rHIJ7nvB/U7YfxaO1RYrLR0=;
- b=Z4KLisjYzaabiArxqGcIub445tpEOw8pzQy2eQLOSVL5GpF5Qe183JcaCqBp3Z71jS
- Y593wHP3V1IkJQYIvgQxpm5fTSmMhie46I5ysztbZlcEfEWOoIueSgNtMpAj3XncGBr2
- 66P38Yi8bQlC6d5hXjeHxcbir186ojfSOUZFmjNuhrEzlp1k8qvPUFyvIuRvQ2G4VaGR
- /admMv+0YN4fSgeGaT4wOnRlm+LU/IjoTW72FSxNeIKGO9eNRxCWYeDjI0xZif181MY4
- x3gjXqrfDjeMzD0DB+BIbjMBzTs145854GK4PgZp2dGmgNxSOdY4RdsZetgK5gaVKGL7
- HPdA==
-X-Gm-Message-State: AOJu0YxIcciasVoYypknOWwUt8FyLrE7zp3+vOeJN5qJmY7iKNISRSk6
- aR6lUWWzZKDPR4MO1Q2zhlO4/AYPDQxzgzVRMQSToQ5aMATOQNWvwJDOtB+WRP0AFHBUMZmtsx/
- 50mxJcJ8UPPEo0ry55RRodXU6mJgpH1jYxyEHJZkDJcuiHjTYAd8T
-X-Received: by 2002:adf:f505:0:b0:33b:2897:9cde with SMTP id
- q5-20020adff505000000b0033b28979cdemr1625549wro.57.1707232472390; 
- Tue, 06 Feb 2024 07:14:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHG1J6FxZnznjXoamd1OB986bfuvPyAdSwAdERz0MVqe8GSyTUdit/QIIcXgUom/6iKmv0feA==
-X-Received: by 2002:adf:f505:0:b0:33b:2897:9cde with SMTP id
- q5-20020adff505000000b0033b28979cdemr1625540wro.57.1707232472087; 
- Tue, 06 Feb 2024 07:14:32 -0800 (PST)
+ bh=ZSoX3wz+SC6Oc2pQuAPkNIb+l0HOZz5F86zphhSpob4=;
+ b=FmOCimS9dCf/5ndILoHQ2UP+mK+W8bi1xSxulo44Gp7lUMRWSE6QCOmC+M/64QUAT8
+ XW9WlJD0nMJNIdgz4iNJmpt7UgxcagS/cR4eYKGv5LURikb9MitSMbxge8PEqBRToUZw
+ x/XWOvB5+KuH+yfAobKh2j8VdQuyZLJN7npLyFcfelfHTt7Giqm4nko/Gv8PwV/vyBFu
+ BEl8z4Zxq2xdGZpm6oYJqSqWh+r212ESRMcgmWGbqc4ohOyBn3y60y87ywPQ5z7p2A4v
+ YLvH4zDoRQUTXmTxaw3jdGaVvgcg2jitS9wfLlc7kZEHBKdoxgzJQujM6/XcSjGqEceT
+ LZzg==
+X-Gm-Message-State: AOJu0YxLtjBOeyLkvc5AXJP8Fw5jxGgnvGaAdDJPUdzbSQrT6S7uajzj
+ CToJayii4PXpUHVq28mt7mAJeHBBhvz5992ZjOLDrogsJeF7FfugOUOcFJggwG8=
+X-Google-Smtp-Source: AGHT+IEiicFWzKebVXIYJdPV0PGC7T7TAnXQcsu9rkX6rX20fb2O/xFGUY7ZeLSXag7B5slv5sgwGQ==
+X-Received: by 2002:a17:90b:1981:b0:296:9766:11cb with SMTP id
+ mv1-20020a17090b198100b00296976611cbmr2362865pjb.27.1707232639483; 
+ Tue, 06 Feb 2024 07:17:19 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXiGeO0q/yjmnMKejogS7GCCYpa33CHLIbPxiBXTFl6NiakFqdyO+6s78LVQVyECkHEshneqZf/QDMV67fWo2MAYH5srDAE4V6WhJFHeJBvK0ZC+r0M6zHhVNK/Q3DuMfEohhT4sRAg
-Received: from ?IPV6:2003:cf:d740:65ef:7c9f:a118:b826:ff5f?
- (p200300cfd74065ef7c9fa118b826ff5f.dip0.t-ipconnect.de.
- [2003:cf:d740:65ef:7c9f:a118:b826:ff5f])
+ AJvYcCUneKDGHc6ElVGXJWMCKQbeg+dDz7ZWM8R6Siv3F4ZumvsvIzfkXrHdiYt8OW/b8SDYVEhMbBhT+LeCzCrH3ii/biosXQ4=
+Received: from ?IPv6:2804:7f0:b402:df90:2add:f1b6:5717:16e1?
+ ([2804:7f0:b402:df90:2add:f1b6:5717:16e1])
  by smtp.gmail.com with ESMTPSA id
- b17-20020a5d40d1000000b0033ae7d768b2sm2314438wrq.117.2024.02.06.07.14.31
+ k18-20020a170902c41200b001d8f12b0009sm1977004plk.293.2024.02.06.07.17.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 07:14:31 -0800 (PST)
-Message-ID: <544dbc24-e532-4e31-9de1-ad965bcccaf2@redhat.com>
-Date: Tue, 6 Feb 2024 16:14:30 +0100
+ Tue, 06 Feb 2024 07:17:19 -0800 (PST)
+Subject: Re: [PATCH v2 0/6] target/arm: assorted mte fixes
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20240206030527.169147-1-richard.henderson@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <b09670f6-7b0f-d8da-6187-e368c7c91bc2@linaro.org>
+Date: Tue, 6 Feb 2024 12:17:11 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-blk: do not use C99 mixed declarations
+In-Reply-To: <20240206030527.169147-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>
-References: <20240206140410.65650-1-stefanha@redhat.com>
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20240206140410.65650-1-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -64
+X-Spam_score: -6.5
+X-Spam_bar: ------
+X-Spam_report: (-6.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-4.371,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,14 +99,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.02.24 15:04, Stefan Hajnoczi wrote:
-> QEMU's coding style generally forbids C99 mixed declarations.
->
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->   hw/block/virtio-blk.c | 25 ++++++++++++++-----------
->   1 file changed, 14 insertions(+), 11 deletions(-)
+Hi Richard,
 
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+On 2/6/24 12:05 AM, Richard Henderson wrote:
+> The first patch is unchanged from
+> 
+> Supercedes: <20240131003557.176486-1-richard.henderson@linaro.org>
+> 
+> while the remaining patches replace
+> 
+> Supercedes: <20240205023948.25476-1-richard.henderson@linaro.org>
+> 
+> While digging through Gustavo's test case, wondering why it
+> should be failing at all, I finally noticed that we weren't
+> overflowing MTEDESC.SIZEM1, but underflowing (-1).  Oops.
+> 
+> But I did find a few other points by inspection where we
+> weren't properly handling or supplying MTEDESC.
+> 
+> 
+> r~
+> 
+> 
+> Richard Henderson (6):
+>    linux-user/aarch64: Extend PR_SET_TAGGED_ADDR_CTRL for FEAT_MTE3
+>    target/arm: Fix nregs computation in do_ld_zpa
+>    target/arm: Adjust and validate mtedesc sizem1
+>    target/arm: Split out make_svemte_desc
+>    target/arm: Handle mte in do_ldrq, do_ldro
+>    target/arm: Fix SVE/SME gross MTE suppression checks
+> 
+>   linux-user/aarch64/target_prctl.h | 25 +++++-----
+>   target/arm/internals.h            |  2 +-
+>   target/arm/tcg/translate-a64.h    |  2 +
+>   target/arm/tcg/sme_helper.c       |  8 ++--
+>   target/arm/tcg/sve_helper.c       | 12 ++---
+>   target/arm/tcg/translate-sme.c    | 15 ++----
+>   target/arm/tcg/translate-sve.c    | 80 ++++++++++++++++++-------------
+>   7 files changed, 78 insertions(+), 66 deletions(-)
+> 
 
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+
+
+Thanks!
 
