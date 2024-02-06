@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0FDC48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA93C48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXTLn-00087X-2M; Tue, 06 Feb 2024 16:51:31 -0500
+	id 1rXTLR-0007wq-5W; Tue, 06 Feb 2024 16:51:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rXTLj-00085d-1L
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:51:27 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rXTLP-0007wC-JZ
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:51:07 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rXTLg-000881-RN
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:51:26 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C3F0521FAD;
- Tue,  6 Feb 2024 21:51:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707256282; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=DsBJpfayx7WTJCs5swmyulwz2KjuTkcWsB74jxAKKE0=;
- b=uJGXLtXbMUqPQhuq3WXXr9CjDxSOQJlTt936XuGfPxWAo4YPhO+Vy92gohGPoGS5Yiyax4
- c9fHguWUKbQVfFOYtSX38g/k+0/LlTwqKnG2aHOrVCg5USb05E7u6PAR6Ahb332KNJ4WYN
- EmrI7IjGqoja0z9TeAb6AZJrjkW20es=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707256282;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=DsBJpfayx7WTJCs5swmyulwz2KjuTkcWsB74jxAKKE0=;
- b=OMTa8e0GdbZpZtsc6dHeWCaSWYOny2lx0DpCkWrzYdxqN53Dth+AREokFXq4iHwRcP5X5Q
- /zpHxtBaiLbOCEBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707256282; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=DsBJpfayx7WTJCs5swmyulwz2KjuTkcWsB74jxAKKE0=;
- b=uJGXLtXbMUqPQhuq3WXXr9CjDxSOQJlTt936XuGfPxWAo4YPhO+Vy92gohGPoGS5Yiyax4
- c9fHguWUKbQVfFOYtSX38g/k+0/LlTwqKnG2aHOrVCg5USb05E7u6PAR6Ahb332KNJ4WYN
- EmrI7IjGqoja0z9TeAb6AZJrjkW20es=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707256282;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=DsBJpfayx7WTJCs5swmyulwz2KjuTkcWsB74jxAKKE0=;
- b=OMTa8e0GdbZpZtsc6dHeWCaSWYOny2lx0DpCkWrzYdxqN53Dth+AREokFXq4iHwRcP5X5Q
- /zpHxtBaiLbOCEBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 62E8B132DD;
- Tue,  6 Feb 2024 21:51:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id tCktCtmpwmWzQAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 06 Feb 2024 21:51:21 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 0/6] migration/multifd: Fix channel creation vs. cleanup
- races
-Date: Tue,  6 Feb 2024 18:51:12 -0300
-Message-Id: <20240206215118.6171-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rXTLN-00086i-35
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:51:06 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1d93edfa76dso8725ad.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 13:51:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707256263; x=1707861063; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lO1js4YTTotuzqoFGlHNRmsl+7c1P8LmWDHVkpLbSHI=;
+ b=lbtlw7KmMi20NjBqpOVD9+xyoIddHpaQZyFHIkyQkSAZIABPrP5Sr0nxz/TG3ThoEv
+ ThXX1N/40J5XfWgk96fv0SjF72v0tqm/t3u49fZMM3PoF4SBhdjsFeiP2DQUHOZnDhl4
+ pFCxzEXTVIXVBnZGIF+0PbtuDHzoskyBghxz3Xc9IC5Lx35mUtENxdhC/r+dQfOIZZXN
+ YpL7LMku2k4vtXPKYzIHmhCdCYtgyeU4+U++e2rojckuO9Ph+MaN2Y5i1Ik+KDW70aFJ
+ wcr/30jQqGsxGwhSn1sYYxH8UdOGsGpP3iLM+jRpytFjd5E2yaPRosPrBPGeBFQDDubf
+ Fk1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707256263; x=1707861063;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lO1js4YTTotuzqoFGlHNRmsl+7c1P8LmWDHVkpLbSHI=;
+ b=qWO2fpwwj0+JsFArJnsz9aPp6unMiYpF3zpGdlBSYdXhubn5MUvB38AfI6uE4l0Zo1
+ a3dQycPOqzVTT+2EzpV7LtusiAN/ildEGppO6a2nPj+L0qsPbvwVazvhgVOx9O1++qpc
+ 0lc53DxmUxSuIKwAhRyjeoCJr7L1S7n1TTjdidDRpArMrVxs9mKFmVU0ETTXwRUvCiNl
+ Zpo1GhppzK1FOIlCEX1JGtMZx5oKF8UMrQba2iIw1aQhsl88h+3g9ggatayR2hhcdclE
+ w5zWSMbXX7KtKEHbrtbrJ4CSuJmSL6K8FkNGX722V+dWV+s8/X9UG2uRU/m8dQkiyneV
+ nAgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVV1mzXebNBWplciZLGcJ1+iF4llbktVJDhJ70QRrkYDv4k+o2RLyWclVbUNe4cRA/w1o+igPkGcKb9ktC8XEOcsDvaDcc=
+X-Gm-Message-State: AOJu0Yz50M9Tg7eSh4TH0/h2PNjfZ3ePdBVbpfXw/UFdeHUuWUMW3U5B
+ kuR8wAHLZEB2g7lT6DTwUsJo/F3HnheZJrlx10JeH5azb939F87NmDtwdzhE+2E=
+X-Google-Smtp-Source: AGHT+IEDMDHcUmUOvYS/3nReiYVopWTOOH/b6dJ+5JlL8vYSAs5DaR808NlPjys2MtU/tb7YgAubIA==
+X-Received: by 2002:a17:902:ebcd:b0:1d9:df9d:bcd3 with SMTP id
+ p13-20020a170902ebcd00b001d9df9dbcd3mr2959332plg.46.1707256263382; 
+ Tue, 06 Feb 2024 13:51:03 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCXGYuJvgQhJAFPd1hdveV1BRy/oT3lQISqzU7j+vB/SnKytt98ny8Ch3LxXSrIrOdAOTIgxKKXyreOwibEHF02ubfjOHdfkTRZ9uG2zBXHISza/WAhL8t+bDJQ=
+Received: from [192.168.0.100] ([43.252.112.200])
+ by smtp.gmail.com with ESMTPSA id
+ o9-20020a17090323c900b001d94a3f3987sm2356974plh.184.2024.02.06.13.51.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Feb 2024 13:51:03 -0800 (PST)
+Message-ID: <94d96365-1d93-40f4-96ee-e3fcb14a8040@linaro.org>
+Date: Wed, 7 Feb 2024 07:50:57 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [0.70 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; R_MISSING_CHARSET(2.50)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- BROKEN_CONTENT_TYPE(1.50)[]; TO_DN_SOME(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- BAYES_HAM(-3.00)[100.00%]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/13] hw/misc/mps2-scc: Make changes needed for AN536
+ FPGA image
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240206132931.38376-1-peter.maydell@linaro.org>
+ <20240206132931.38376-8-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240206132931.38376-8-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,74 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 20240202102857.110210-1-peterx@redhat.com
-[PATCH v2 00/23] migration/multifd: Refactor ->send_prepare() and cleanups
-https://lore.kernel.org/r/20240202102857.110210-1-peterx@redhat.com
+On 2/6/24 23:29, Peter Maydell wrote:
+> The MPS2 SCC device is broadly the same for all FPGA images, but has
+> minor differences in the behaviour of the CFG registers depending on
+> the image. In many cases we don't really care about the functionality
+> controlled by these registers and a reads-as-written or similar
+> behaviour is sufficient for the moment.
+> 
+> For the AN536 the required behaviour is:
+> 
+>   * A_CFG0 has CPU reset and halt bits
+>      - implement as reads-as-written for the moment
+>   * A_CFG1 has flash or ATCM address 0 remap handling
+>      - QEMU doesn't model this; implement as reads-as-written
+>   * A_CFG2 has QSPI select (like AN524)
+>      - implemented (no behaviour, as with AN524)
+>   * A_CFG3 is MCC_MSB_ADDR "additional MCC addressing bits"
+>      - QEMU doesn't care about these, so use the existing
+>        RAZ behaviour for convenience
+>   * A_CFG4 is board rev (like all other images)
+>      - no change needed
+>   * A_CFG5 is ACLK frq in hz (like AN524)
+>      - implemented as reads-as-written, as for other boards
+>   * A_CFG6 is core 0 vector table base address
+>      - implemented as reads-as-written for the moment
+>   * A_CFG7 is core 1 vector table base address
+>      - implemented as reads-as-written for the moment
+> 
+> Make the changes necessary for this; leave TODO comments where
+> appropriate to indicate where we might want to come back and
+> implement things like CPU reset.
+> 
+> The other aspects of the device specific to this FPGA image (like the
+> values of the board ID and similar registers) will be set via the
+> device's qdev properties.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   include/hw/misc/mps2-scc.h |   1 +
+>   hw/misc/mps2-scc.c         | 101 +++++++++++++++++++++++++++++++++----
+>   2 files changed, 92 insertions(+), 10 deletions(-)
 
-Hi,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-For v3 I fixed the refcounting issue spotted by Avihai. The situation
-there is a bit clunky due to historical reasons. The gist is that we
-have an assumption that channel creation never fails after p->c has
-been set, so when 'p->c == NULL' we have to unref and when 'p->c !=
-NULL' the cleanup code will do the unref.
-
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1166889341
-
-v2:
-https://lore.kernel.org/r/20240205194929.28963-1-farosas@suse.de
-
-In this v2 I made sure NO channel is created after the semaphores are
-posted. Feel free to call me out if that's not the case.
-
-Not much changes, except that now both TLS and non-TLS go through the
-same code, so there's a centralized place to do error handling and
-releasing the semaphore.
-
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1165206107
-based on Peter's code: https://gitlab.com/farosas/qemu/-/pipelines/1165303276
-
-v1:
-https://lore.kernel.org/r/20240202191128.1901-1-farosas@suse.de
-
-This contains 2 patches from my previous series addressing the
-p->running misuse and the TLS thread leak and 3 new patches to fix the
-cleanup-while-creating-threads race.
-
-For the p->running I'm keeping the idea from the other series to
-remove p->running and use a more narrow p->thread_created flag. This
-flag is used only inform whether the thread has been created so we can
-join it.
-
-For the cleanup race I have moved some code around and added a
-semaphore to make multifd_save_setup() only return once all channel
-creation tasks have started.
-
-The idea is that after multifd_save_setup() returns, no new creations
-are in flight and the p->thread_created flags will never change again,
-so they're enough to cause the cleanup code to wait for the threads to
-join.
-
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1162798843
-
-@Peter: I can rebase this on top of your series once we decide about
-it.
-
-Fabiano Rosas (6):
-  migration/multifd: Join the TLS thread
-  migration/multifd: Remove p->running
-  migration/multifd: Move multifd_send_setup error handling in to the
-    function
-  migration/multifd: Move multifd_send_setup into migration thread
-  migration/multifd: Unify multifd and TLS connection paths
-  migration/multifd: Add a synchronization point for channel creation
-
- migration/migration.c |  14 ++--
- migration/multifd.c   | 168 +++++++++++++++++++++++++-----------------
- migration/multifd.h   |  11 ++-
- 3 files changed, 109 insertions(+), 84 deletions(-)
-
--- 
-2.35.3
-
+r~
 
