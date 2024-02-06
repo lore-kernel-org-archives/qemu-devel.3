@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B846C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F4DC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXSNU-0004v4-Sd; Tue, 06 Feb 2024 15:49:12 -0500
+	id 1rXSNT-0004uK-1V; Tue, 06 Feb 2024 15:49:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1rXSNS-0004uB-Ho
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:49:10 -0500
+ id 1rXSNR-0004tt-C9
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:49:09 -0500
 Received: from mail.ispras.ru ([83.149.199.84])
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1rXSNN-0001c2-76
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:49:10 -0500
+ id 1rXSNN-0001cB-74
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:49:09 -0500
 Received: from localhost.intra.ispras.ru (unknown [10.10.3.121])
- by mail.ispras.ru (Postfix) with ESMTP id B85CC4076725;
- Tue,  6 Feb 2024 20:48:40 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru B85CC4076725
+ by mail.ispras.ru (Postfix) with ESMTP id 2C3094076729;
+ Tue,  6 Feb 2024 20:48:41 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 2C3094076729
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1707252520;
- bh=Y2cpClKJ7CYNoOrL26LehvbpSaAZoGzNt0b2/PjT/uc=;
+ s=default; t=1707252521;
+ bh=VFrTWUlG2vqWX9RDmzX8dOxdM4X5eGzOS6RJxjiMu2o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=eM+f+3WgQ0IWhT0tlwEJPDY7EbRRy8fabU9agpdDsI8eJf2oRGqMWgjszmFbUHIen
- YWuCmqXQ6jnZHWCaeGraFGWiyufMSJEp0HEuUxrWXAYgg1IXXvh5KeQ8LbdFuIfKvd
- w5/pGAbkD0K4981aK4jVeHRSvRNE6RsApOUmuQZY=
+ b=MvS/sCN7GSp4MF0lMpJkTKokikr4L+sbUSh9kXOC01mf7klPhtp2xzQCemckKKtak
+ i6pqC3altfKaZa96P50v4rkqIlvBpTwZISqAYVkxSkuVWrz3oR/duq01gqOum2XNQM
+ SDHMqgXg9/zQO4FPMM0i2zb4wcatETzlym8WKAAA=
 From: Alexander Monakov <amonakov@ispras.ru>
 To: qemu-devel@nongnu.org
 Cc: Mikhail Romanov <mmromanov@ispras.ru>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexander Monakov <amonakov@ispras.ru>
-Subject: [PATCH v3 1/6] util/bufferiszero: remove SSE4.1 variant
-Date: Tue,  6 Feb 2024 23:48:04 +0300
-Message-Id: <20240206204809.9859-2-amonakov@ispras.ru>
+Subject: [PATCH v3 4/6] util/bufferiszero: remove useless prefetches
+Date: Tue,  6 Feb 2024 23:48:07 +0300
+Message-Id: <20240206204809.9859-5-amonakov@ispras.ru>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20240206204809.9859-1-amonakov@ispras.ru>
 References: <20240206204809.9859-1-amonakov@ispras.ru>
@@ -67,74 +67,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SSE4.1 variant is virtually identical to the SSE2 variant, except
-for using 'PTEST+JNZ' in place of 'PCMPEQB+PMOVMSKB+CMP+JNE' for testing
-if an SSE register is all zeroes. The PTEST instruction decodes to two
-uops, so it can be handled only by the complex decoder, and since
-CMP+JNE are macro-fused, both sequences decode to three uops. The uops
-comprising the PTEST instruction dispatch to p0 and p5 on Intel CPUs, so
-PCMPEQB+PMOVMSKB is comparatively more flexible from dispatch
-standpoint.
+Use of prefetching in bufferiszero.c is quite questionable:
 
-Hence, the use of PTEST brings no benefit from throughput standpoint.
-Its latency is not important, since it feeds only a conditional jump,
-which terminates the dependency chain.
+- prefetches are issued just a few CPU cycles before the corresponding
+  line would be hit by demand loads;
 
-I never observed PTEST variants to be faster on real hardware.
+- they are done for simple access patterns, i.e. where hardware
+  prefetchers can perform better;
+
+- they compete for load ports in loops that should be limited by load
+  port throughput rather than ALU throughput.
 
 Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
 Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
 ---
- util/bufferiszero.c | 29 -----------------------------
- 1 file changed, 29 deletions(-)
+ util/bufferiszero.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 3e6a5dfd63..f5a3634f9a 100644
+index c037d11d04..cb3eb2543f 100644
 --- a/util/bufferiszero.c
 +++ b/util/bufferiszero.c
-@@ -100,34 +100,6 @@ buffer_zero_sse2(const void *buf, size_t len)
- }
+@@ -49,7 +49,6 @@ buffer_is_zero_len_4_plus(const void *buf, size_t len)
+         const uint64_t *e = (uint64_t *)(((uintptr_t)buf + len) & -8);
  
- #ifdef CONFIG_AVX2_OPT
--static bool __attribute__((target("sse4")))
--buffer_zero_sse4(const void *buf, size_t len)
--{
--    __m128i t = _mm_loadu_si128(buf);
--    __m128i *p = (__m128i *)(((uintptr_t)buf + 5 * 16) & -16);
--    __m128i *e = (__m128i *)(((uintptr_t)buf + len) & -16);
--
--    /* Loop over 16-byte aligned blocks of 64.  */
--    while (likely(p <= e)) {
+         for (; p + 8 <= e; p += 8) {
+-            __builtin_prefetch(p + 8);
+             if (t) {
+                 return false;
+             }
+@@ -79,7 +78,6 @@ buffer_zero_sse2(const void *buf, size_t len)
+ 
+     /* Loop over 16-byte aligned blocks of 64.  */
+     while (likely(p <= e)) {
 -        __builtin_prefetch(p);
--        if (unlikely(!_mm_testz_si128(t, t))) {
--            return false;
--        }
--        t = p[-4] | p[-3] | p[-2] | p[-1];
--        p += 4;
--    }
--
--    /* Finish the aligned tail.  */
--    t |= e[-3];
--    t |= e[-2];
--    t |= e[-1];
--
--    /* Finish the unaligned tail.  */
--    t |= _mm_loadu_si128(buf + len - 16);
--
--    return _mm_testz_si128(t, t);
--}
--
- static bool __attribute__((target("avx2")))
- buffer_zero_avx2(const void *buf, size_t len)
- {
-@@ -221,7 +193,6 @@ select_accel_cpuinfo(unsigned info)
- #endif
- #ifdef CONFIG_AVX2_OPT
-         { CPUINFO_AVX2,    128, buffer_zero_avx2 },
--        { CPUINFO_SSE4,     64, buffer_zero_sse4 },
- #endif
-         { CPUINFO_SSE2,     64, buffer_zero_sse2 },
-         { CPUINFO_ALWAYS,    0, buffer_zero_int },
+         t = _mm_cmpeq_epi8(t, zero);
+         if (unlikely(_mm_movemask_epi8(t) != 0xFFFF)) {
+             return false;
+@@ -110,7 +108,6 @@ buffer_zero_avx2(const void *buf, size_t len)
+ 
+     /* Loop over 32-byte aligned blocks of 128.  */
+     while (p <= e) {
+-        __builtin_prefetch(p);
+         if (unlikely(!_mm256_testz_si256(t, t))) {
+             return false;
+         }
 -- 
 2.32.0
 
