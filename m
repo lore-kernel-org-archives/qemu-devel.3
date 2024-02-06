@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA84C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 23:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C09D8C48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 23:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXUnG-0002Cg-2z; Tue, 06 Feb 2024 18:24:00 -0500
+	id 1rXVJU-0007md-8k; Tue, 06 Feb 2024 18:57:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3f7_CZQwKCj4sfgnmjxyjkfslttlqj.htrvjrz-ij0jqstslsz.twl@flex--nabihestefan.bounces.google.com>)
- id 1rXUn6-0002AF-Bo
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 18:23:48 -0500
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ (Exim 4.90_1) (envelope-from <ufimtseva@gmail.com>)
+ id 1rXVJP-0007mT-Ko
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 18:57:11 -0500
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3f7_CZQwKCj4sfgnmjxyjkfslttlqj.htrvjrz-ij0jqstslsz.twl@flex--nabihestefan.bounces.google.com>)
- id 1rXUn3-0006Wa-ND
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 18:23:48 -0500
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-5ee22efe5eeso639487b3.3
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 15:23:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ufimtseva@gmail.com>)
+ id 1rXVJN-0003Wb-HF
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 18:57:11 -0500
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2cf4d2175b2so768911fa.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 15:57:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1707261823; x=1707866623; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=3/7wq4rDW0adpnVVVOuyGh9CpM8L7rZHr/Fp+pYK5Z0=;
- b=R4xZeBghsTMCtq4jECASj1dsynqch+Pm0oVmM4mNg+cpPO+uWouvomT+3kvo8Qka0B
- cmq6pKZ9ojSNJrco2+bgrO5vNXqKs8/9ZbiEYXYcSgYqHFJymjsI/tNDT0aLNwbA9jy6
- OnGto4qd8F5HHLhyzYa+8wyxqwSKUsVIcb9qR3qhJ4u0jfz9EYTlUT+dl4/JCjUc8V6R
- 8AQVSvjnewq1cL9zxDAXytc1jxTX4KcOCFD+bmbahcj3C4k+aqyMzgLQM7L5KSTVQswF
- MxAS7EYn41Aevgr8932O7MiLSiZxtw7K98NX2Pg4BDLmPm8wVN4wQKHnusL0i58n/Y0g
- i49g==
+ d=gmail.com; s=20230601; t=1707263827; x=1707868627; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=pvpz9mnxZyvQgP7CWm7jXS7dfi5DmPcy7EyRI+FmB7U=;
+ b=fprrP4qIlCATKqG78NUxKLlg9CeTXegdR+DjJZVEVtqYLdt7VxAtb44t6DQOeo/8DW
+ aAGqMgKvJRUw7FuBgApmcILPo2Oatn8XSz7Sp9uWZ6f6vm4BvTh9xIoscSxuC9q8+qv/
+ Ki9asuWh9uurpigKDkkENArmTkA2xFeX8L99zFpgjsqPhvg6a1uiqbxm8bdm9cOhEl0W
+ yKv4I1Z/VZ2pA6nIYeGQybZ4DjpwLSOcBr71E3xkk+htPCnjuuKIJdjvqHmRSfrSo+r7
+ 9/YGwGCa7UYyGz9E97ubBKskkNt/26sw+vSCmMy+Ri1JhMzqvHVGaTdWk7kWp7HpO41+
+ ZJkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707261823; x=1707866623;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3/7wq4rDW0adpnVVVOuyGh9CpM8L7rZHr/Fp+pYK5Z0=;
- b=PpLy+THJuGOc0XQzmqlVWLl4tJeDt2bGvJB3JJdY6ZSG65cr4fbOyZOqfMNR3ZOrDQ
- B5xnp+fQ7MlQzeq/5W+cwRSG9jy+SU0p0QxBeW4+WGcO6xgkJ7QLPa2bEcKgOo1/rhh5
- gQbDy/Wp01vXUiT+FXCsjy/Jc9b0N0LYw/Q519TatP5yB/tMzMAzw9UHyZqcHiTBL3UY
- j/dYmhsGdCqZNC3KbAggLN0TZRyJ19rOE9i22Ay7SCYSNTwkjEMb9UewqE2Fuljs/M9z
- AHmJILAH6LkYddLpD1roxwMPpZXlrzkqyn5dStVli8XvOb4+m1Qou2AWfrbAlmXw03tj
- gFXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhD8+eSG3iDbUTEQ8nCa3bAW2KkmpRQMvrca8aZo41IdVg6Y9n1lZa51Ne4Vm9moJpbWh3/fgWa+9gf8hSvKL+N9HBREo=
-X-Gm-Message-State: AOJu0YzB77BkRFxdVxWhrO4ZnKuuwtv1sPZqoeKIKi443RJl+zD9nR+8
- JWReNBD5x7FJfpR6QSsetGq5x9EbhYURaJ+KA0ieEoTAJfi7FMEFdai3/voJRGuUWOAYITVbltg
- Xcmi9bIqsQ9uA6+s0nkBsDVsg6Q==
-X-Google-Smtp-Source: AGHT+IEnLijRM1Cw64MY0m2ygMs7GhSw1WvuyaQNA9rDhpiowewljMxzh0I+B5XgE9GcDFUS9/KDY0l1ZZBuMTOpFVY=
-X-Received: from nabihestefan.c.googlers.com
- ([fda3:e722:ac3:cc00:20:ed76:c0a8:2737])
- (user=nabihestefan job=sendgmr) by 2002:a05:690c:86:b0:604:b83:9cad with SMTP
- id be6-20020a05690c008600b006040b839cadmr559647ywb.5.1707261823646; Tue, 06
- Feb 2024 15:23:43 -0800 (PST)
-Date: Tue,  6 Feb 2024 23:23:37 +0000
-In-Reply-To: <20240206232337.1043760-1-nabihestefan@google.com>
-Mime-Version: 1.0
-References: <20240206232337.1043760-1-nabihestefan@google.com>
-X-Mailer: git-send-email 2.43.0.594.gd9cf4e227d-goog
-Message-ID: <20240206232337.1043760-2-nabihestefan@google.com>
-Subject: [PATCH 1/1] tests/qtest: Fixing GMAC test to run in 7xx
-From: Nabih Estefan <nabihestefan@google.com>
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- wuhaotsh@google.com, jasowang@redhat.com, avi.fishman@nuvoton.com, 
- nabihestefan@google.com, kwliu@nuvoton.com, tomer.maimon@nuvoton.com, 
- Hila.Miranda-Kuzi@nuvoton.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=3f7_CZQwKCj4sfgnmjxyjkfslttlqj.htrvjrz-ij0jqstslsz.twl@flex--nabihestefan.bounces.google.com;
- helo=mail-yw1-x1149.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1707263827; x=1707868627;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pvpz9mnxZyvQgP7CWm7jXS7dfi5DmPcy7EyRI+FmB7U=;
+ b=BEXSH31AbkNP+HSMX1m8yD+PnHP/Ymaz9ghj7AOECP8etaHBw/WJBLYVoXirqZdjDB
+ YXKjPoKWg4XhGCuV/mA8sTm9Iwkg5ZGuUdRmtIxUbQEbF06j7opn5oHZzRB1T1MKH2ET
+ 4TDAU9fxmFWXujVaY9QymjzNxN9+3rvZ75mquhN0Dd6Lrv2XDmg/YOTSbWaGTePtZE4k
+ mIEpQ2CX/6HrdLd7qvYlA6I8LnDHmHVawNh0k/q8xyu14D2f0UvgC/8Fcj3WYxdONm93
+ wqj8XJsHd49iLfPBnlFzyRht4v7D4xRuL5UXR+RcnnmUVc5+gvh9imfe9tFoFSZkS/3y
+ +7Vw==
+X-Gm-Message-State: AOJu0YwPdniLxq0qb0f/lNY6ZhTd5B0Qj0cVq0aeCgl1FPD/vSLZ4BDh
+ huEl4+EKr/lLUtG10OYdhV9YnhPRcbmw2xOZ5zHY12BaxO6uz7EQB7fOr+kZL1swtAgXDaiWP1a
+ wl/qsze+NfC+GzBrKpVpe9z5i70M=
+X-Google-Smtp-Source: AGHT+IHW8GkgD5FaV9R/0a7jQ1JfA+NCE0kNzCPxCgWIVBdOLgb8Jq9koo4LsX7MXvdsBsa32yzqSwcUE8MOECe+BEk=
+X-Received: by 2002:a2e:99d5:0:b0:2d0:b1a9:dfba with SMTP id
+ l21-20020a2e99d5000000b002d0b1a9dfbamr2994692ljj.29.1707263826597; Tue, 06
+ Feb 2024 15:57:06 -0800 (PST)
+MIME-Version: 1.0
+References: <20240206204809.9859-1-amonakov@ispras.ru>
+ <20240206204809.9859-4-amonakov@ispras.ru>
+In-Reply-To: <20240206204809.9859-4-amonakov@ispras.ru>
+From: Elena Ufimtseva <ufimtseva@gmail.com>
+Date: Tue, 6 Feb 2024 15:56:54 -0800
+Message-ID: <CAEr7rXiMEm12YqUJ5r+Nur7iJxcvfxLKmasJKJ2QGmFhZL7-5Q@mail.gmail.com>
+Subject: Re: [PATCH v3 3/6] util/bufferiszero: remove AVX512 variant
+To: Alexander Monakov <amonakov@ispras.ru>
+Cc: qemu-devel@nongnu.org, Mikhail Romanov <mmromanov@ispras.ru>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000ec1e120610bf55f0"
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=ufimtseva@gmail.com; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,76 +90,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixing the nocm_gmac-test.c file to run on a nuvoton 7xx machine instead
-of 8xx. Also fixing comments referencing this and values expecting 8xx.
+--000000000000ec1e120610bf55f0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Change-Id: I07b91e8be473e6a1ece65a2202608b52ed4025b8
-Signed-Off-By: Nabih Estefan <nabihestefan@google.com>
----
- tests/qtest/meson.build      |  4 ++--
- tests/qtest/npcm_gmac-test.c | 12 ++----------
- 2 files changed, 4 insertions(+), 12 deletions(-)
+Hello Alexander
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 39557d5ecb..2b89e8634b 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -192,7 +192,8 @@ qtests_npcm7xx = \
-    'npcm7xx_sdhci-test',
-    'npcm7xx_smbus-test',
-    'npcm7xx_timer-test',
--   'npcm7xx_watchdog_timer-test'] + \
-+   'npcm7xx_watchdog_timer-test',
-+   'npcm_gmac-test'] + \
-    (slirp.found() ? ['npcm7xx_emc-test'] : [])
- qtests_aspeed = \
-   ['aspeed_hace-test',
-@@ -231,7 +232,6 @@ qtests_aarch64 = \
-   (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
-   ['arm-cpu-features',
-    'numa-test',
-    'boot-serial-test',
-diff --git a/tests/qtest/npcm_gmac-test.c b/tests/qtest/npcm_gmac-test.c
-index 9e58b15ca1..0d1bc8107b 100644
---- a/tests/qtest/npcm_gmac-test.c
-+++ b/tests/qtest/npcm_gmac-test.c
-@@ -36,7 +36,7 @@ typedef struct TestData {
-     const GMACModule *module;
- } TestData;
- 
--/* Values extracted from hw/arm/npcm8xx.c */
-+/* Values extracted from hw/arm/npcm7xx.c */
- static const GMACModule gmac_module_list[] = {
-     {
-         .irq        = 14,
-@@ -46,14 +46,6 @@ static const GMACModule gmac_module_list[] = {
-         .irq        = 15,
-         .base_addr  = 0xf0804000
-     },
--    {
--        .irq        = 16,
--        .base_addr  = 0xf0806000
--    },
--    {
--        .irq        = 17,
--        .base_addr  = 0xf0808000
--    }
- };
- 
- /* Returns the index of the GMAC module. */
-@@ -196,7 +188,7 @@ static void test_init(gconstpointer test_data)
- {
-     const TestData *td = test_data;
-     const GMACModule *mod = td->module;
--    QTestState *qts = qtest_init("-machine npcm845-evb");
-+    QTestState *qts = qtest_init("-machine npcm750-evb");
- 
- #define CHECK_REG32(regno, value) \
-     do { \
--- 
-2.43.0.594.gd9cf4e227d-goog
+On Tue, Feb 6, 2024 at 12:50=E2=80=AFPM Alexander Monakov <amonakov@ispras.=
+ru>
+wrote:
 
+> Thanks to early checks in the inline buffer_is_zero wrapper, the SIMD
+> routines are invoked much more rarely in normal use when most buffers
+> are non-zero. This makes use of AVX512 unprofitable, as it incurs extra
+> frequency and voltage transition periods during which the CPU operates
+> at reduced performance, as described in
+> https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html
+
+
+I would like to point out that the frequency scaling is not currently an
+issue on AMD Zen4 Genoa CPUs, for example.
+And microcode architecture description here:
+https://www.amd.com/system/files/documents/4th-gen-epyc-processor-architect=
+ure-white-paper.pdf
+Although, the cpu frequency downscaling mentioned in the above document is
+only in relation to floating point operations.
+But from other online discussions I gather that the data path for the
+integer registers in Zen4 is also 256 bits and it allows to avoid
+frequency downscaling for FP and heavy instructions.
+And looking at the optimizations for AVX2 in your other patch, would
+unrolling the loop for AVX512 ops benefit from the speedup taken that the
+data path has the same width?
+If the frequency downscaling is not observed on some of the CPUs, can
+AVX512 be maintained and used selectively for some
+of the CPUs?
+
+Thank you!
+
+
+>
+>
+> Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
+> Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
+> ---
+>  util/bufferiszero.c | 36 ++----------------------------------
+>  1 file changed, 2 insertions(+), 34 deletions(-)
+>
+> diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+> index 01050694a6..c037d11d04 100644
+> --- a/util/bufferiszero.c
+> +++ b/util/bufferiszero.c
+> @@ -64,7 +64,7 @@ buffer_is_zero_len_4_plus(const void *buf, size_t len)
+>      }
+>  }
+>
+> -#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT) ||
+> defined(__SSE2__)
+> +#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
+>  #include <immintrin.h>
+>
+>  /* Note that each of these vectorized functions require len >=3D 64.  */
+> @@ -128,35 +128,6 @@ buffer_zero_avx2(const void *buf, size_t len)
+>  }
+>  #endif /* CONFIG_AVX2_OPT */
+>
+> -#ifdef CONFIG_AVX512F_OPT
+> -static bool __attribute__((target("avx512f")))
+> -buffer_zero_avx512(const void *buf, size_t len)
+> -{
+> -    /* Begin with an unaligned head of 64 bytes.  */
+> -    __m512i t =3D _mm512_loadu_si512(buf);
+> -    __m512i *p =3D (__m512i *)(((uintptr_t)buf + 5 * 64) & -64);
+> -    __m512i *e =3D (__m512i *)(((uintptr_t)buf + len) & -64);
+> -
+> -    /* Loop over 64-byte aligned blocks of 256.  */
+> -    while (p <=3D e) {
+> -        __builtin_prefetch(p);
+> -        if (unlikely(_mm512_test_epi64_mask(t, t))) {
+> -            return false;
+> -        }
+> -        t =3D p[-4] | p[-3] | p[-2] | p[-1];
+> -        p +=3D 4;
+> -    }
+> -
+> -    t |=3D _mm512_loadu_si512(buf + len - 4 * 64);
+> -    t |=3D _mm512_loadu_si512(buf + len - 3 * 64);
+> -    t |=3D _mm512_loadu_si512(buf + len - 2 * 64);
+> -    t |=3D _mm512_loadu_si512(buf + len - 1 * 64);
+> -
+> -    return !_mm512_test_epi64_mask(t, t);
+> -
+> -}
+> -#endif /* CONFIG_AVX512F_OPT */
+> -
+>  static unsigned __attribute__((noinline))
+>  select_accel_cpuinfo(unsigned info)
+>  {
+> @@ -165,9 +136,6 @@ select_accel_cpuinfo(unsigned info)
+>          unsigned bit;
+>          bool (*fn)(const void *, size_t);
+>      } all[] =3D {
+> -#ifdef CONFIG_AVX512F_OPT
+> -        { CPUINFO_AVX512F, buffer_zero_avx512 },
+> -#endif
+>  #ifdef CONFIG_AVX2_OPT
+>          { CPUINFO_AVX2,    buffer_zero_avx2 },
+>  #endif
+> @@ -191,7 +159,7 @@ static unsigned used_accel
+>      =3D 0;
+>  #endif
+>
+> -#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT)
+> +#if defined(CONFIG_AVX2_OPT)
+>  static void __attribute__((constructor)) init_accel(void)
+>  {
+>      used_accel =3D select_accel_cpuinfo(cpuinfo_init());
+> --
+> 2.32.0
+>
+>
+>
+
+--=20
+Elena
+
+--000000000000ec1e120610bf55f0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hello Alexander<br></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 6, 2024 =
+at 12:50=E2=80=AFPM Alexander Monakov &lt;<a href=3D"mailto:amonakov@ispras=
+.ru" target=3D"_blank">amonakov@ispras.ru</a>&gt; wrote:<br></div><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">Thanks to early checks in the inli=
+ne buffer_is_zero wrapper, the SIMD<br>
+routines are invoked much more rarely in normal use when most buffers<br>
+are non-zero. This makes use of AVX512 unprofitable, as it incurs extra<br>
+frequency and voltage transition periods during which the CPU operates<br>
+at reduced performance, as described in<br>
+<a href=3D"https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html" rel=
+=3D"noreferrer" target=3D"_blank">https://travisdowns.github.io/blog/2020/0=
+1/17/avxfreq1.html</a></blockquote><div><br></div><div>I would like to poin=
+t out that the frequency scaling is not currently an issue on AMD Zen4 Geno=
+a CPUs, for example.</div><div>And microcode architecture description here:=
+</div><div><a href=3D"https://www.amd.com/system/files/documents/4th-gen-ep=
+yc-processor-architecture-white-paper.pdf">https://www.amd.com/system/files=
+/documents/4th-gen-epyc-processor-architecture-white-paper.pdf</a></div><di=
+v></div><div></div><div>Although, the cpu frequency downscaling mentioned i=
+n the above document is only in relation to floating point operations.</div=
+><div>But from other online discussions I gather that the data path for the=
+ integer registers in Zen4 is also 256 bits and it allows to avoid=C2=A0</d=
+iv><div>frequency downscaling for FP and heavy instructions.<br></div><div>=
+</div>And looking at the optimizations for AVX2 in your other patch, would =
+unrolling the loop for AVX512 ops benefit from the speedup taken that the d=
+ata path has the same width?<br></div><div class=3D"gmail_quote"></div><div=
+ class=3D"gmail_quote">If the frequency downscaling is not observed on some=
+ of the CPUs, can AVX512 be maintained and used selectively for some <br></=
+div><div class=3D"gmail_quote">of the CPUs?<br></div><div class=3D"gmail_qu=
+ote"><br></div><div class=3D"gmail_quote">Thank you!<br></div><div class=3D=
+"gmail_quote"><div>=C2=A0<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex"><br>
+<br>
+Signed-off-by: Mikhail Romanov &lt;<a href=3D"mailto:mmromanov@ispras.ru" t=
+arget=3D"_blank">mmromanov@ispras.ru</a>&gt;<br>
+Signed-off-by: Alexander Monakov &lt;<a href=3D"mailto:amonakov@ispras.ru" =
+target=3D"_blank">amonakov@ispras.ru</a>&gt;<br>
+---<br>
+=C2=A0util/bufferiszero.c | 36 ++----------------------------------<br>
+=C2=A01 file changed, 2 insertions(+), 34 deletions(-)<br>
+<br>
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c<br>
+index 01050694a6..c037d11d04 100644<br>
+--- a/util/bufferiszero.c<br>
++++ b/util/bufferiszero.c<br>
+@@ -64,7 +64,7 @@ buffer_is_zero_len_4_plus(const void *buf, size_t len)<br=
+>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0}<br>
+<br>
+-#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT) || defined(__S=
+SE2__)<br>
++#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)<br>
+=C2=A0#include &lt;immintrin.h&gt;<br>
+<br>
+=C2=A0/* Note that each of these vectorized functions require len &gt;=3D 6=
+4.=C2=A0 */<br>
+@@ -128,35 +128,6 @@ buffer_zero_avx2(const void *buf, size_t len)<br>
+=C2=A0}<br>
+=C2=A0#endif /* CONFIG_AVX2_OPT */<br>
+<br>
+-#ifdef CONFIG_AVX512F_OPT<br>
+-static bool __attribute__((target(&quot;avx512f&quot;)))<br>
+-buffer_zero_avx512(const void *buf, size_t len)<br>
+-{<br>
+-=C2=A0 =C2=A0 /* Begin with an unaligned head of 64 bytes.=C2=A0 */<br>
+-=C2=A0 =C2=A0 __m512i t =3D _mm512_loadu_si512(buf);<br>
+-=C2=A0 =C2=A0 __m512i *p =3D (__m512i *)(((uintptr_t)buf + 5 * 64) &amp; -=
+64);<br>
+-=C2=A0 =C2=A0 __m512i *e =3D (__m512i *)(((uintptr_t)buf + len) &amp; -64)=
+;<br>
+-<br>
+-=C2=A0 =C2=A0 /* Loop over 64-byte aligned blocks of 256.=C2=A0 */<br>
+-=C2=A0 =C2=A0 while (p &lt;=3D e) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 __builtin_prefetch(p);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (unlikely(_mm512_test_epi64_mask(t, t))) {<=
+br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 t =3D p[-4] | p[-3] | p[-2] | p[-1];<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 p +=3D 4;<br>
+-=C2=A0 =C2=A0 }<br>
+-<br>
+-=C2=A0 =C2=A0 t |=3D _mm512_loadu_si512(buf + len - 4 * 64);<br>
+-=C2=A0 =C2=A0 t |=3D _mm512_loadu_si512(buf + len - 3 * 64);<br>
+-=C2=A0 =C2=A0 t |=3D _mm512_loadu_si512(buf + len - 2 * 64);<br>
+-=C2=A0 =C2=A0 t |=3D _mm512_loadu_si512(buf + len - 1 * 64);<br>
+-<br>
+-=C2=A0 =C2=A0 return !_mm512_test_epi64_mask(t, t);<br>
+-<br>
+-}<br>
+-#endif /* CONFIG_AVX512F_OPT */<br>
+-<br>
+=C2=A0static unsigned __attribute__((noinline))<br>
+=C2=A0select_accel_cpuinfo(unsigned info)<br>
+=C2=A0{<br>
+@@ -165,9 +136,6 @@ select_accel_cpuinfo(unsigned info)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned bit;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bool (*fn)(const void *, size_t);<br>
+=C2=A0 =C2=A0 =C2=A0} all[] =3D {<br>
+-#ifdef CONFIG_AVX512F_OPT<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 { CPUINFO_AVX512F, buffer_zero_avx512 },<br>
+-#endif<br>
+=C2=A0#ifdef CONFIG_AVX2_OPT<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ CPUINFO_AVX2,=C2=A0 =C2=A0 buffer_zero_=
+avx2 },<br>
+=C2=A0#endif<br>
+@@ -191,7 +159,7 @@ static unsigned used_accel<br>
+=C2=A0 =C2=A0 =C2=A0=3D 0;<br>
+=C2=A0#endif<br>
+<br>
+-#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT)<br>
++#if defined(CONFIG_AVX2_OPT)<br>
+=C2=A0static void __attribute__((constructor)) init_accel(void)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0used_accel =3D select_accel_cpuinfo(cpuinfo_init());<br=
+>
+-- <br>
+2.32.0<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Elena</div></=
+div>
+
+--000000000000ec1e120610bf55f0--
 
