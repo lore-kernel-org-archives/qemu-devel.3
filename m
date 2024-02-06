@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44427C48297
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5622FC4828D
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 19:07:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXQm1-0008IC-Ag; Tue, 06 Feb 2024 14:06:25 -0500
+	id 1rXQmF-0008MY-T2; Tue, 06 Feb 2024 14:06:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXQm0-0008Ha-C7
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:06:24 -0500
+ id 1rXQm9-0008LZ-QW
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:06:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXQly-0000eO-G2
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:06:24 -0500
+ id 1rXQm8-0000gk-9O
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 14:06:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707246381;
+ s=mimecast20190719; t=1707246391;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zd00/eSHCWjYaWUzdyc1RU+DgeFJvNq6u2T6kNcIzaU=;
- b=caEFnYDlD8JGaE7OFbtCKnkP0EvkrE09j/DBFHv8xWuPUqxtASfFqM0kT+2RO7+L3bjJ8L
- ybrR6wmEfvM0BWNQBuOYs6PjxP69NFOAn+Mbsd/hgUKvubQ7u8b4DXHRDXiNajvRKSnI8J
- dKil513aIXPE0HyfLff9N6rgtRfEj88=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-9-9AqYy2N4C1knD7epWozw-1; Tue, 06 Feb 2024 14:06:16 -0500
-X-MC-Unique: 9-9AqYy2N4C1knD7epWozw-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=jHxx7Y1CaQKC5d5CZ/TuSjaYs36sXCT1kADYNwNRTnM=;
+ b=MiRP5/imbsxu5ddbyXoYkLugmUmoWwe9G7Wz4sTpChuLkhqJ//R5dABGwpZrqTFw8UoZwV
+ DrzvHFEGY3mTXu0uWBBgASejiqyqdTiPGll0sDEdOk2hlw7zvH2+NYzN6Ox/Ev0CB+PGre
+ nbSTBSC8binvKmzBvBrskqlwwS3LUFA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-SDy16ovqN7OUT7FEDmw9nA-1; Tue,
+ 06 Feb 2024 14:06:26 -0500
+X-MC-Unique: SDy16ovqN7OUT7FEDmw9nA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 03D2E8489EF;
- Tue,  6 Feb 2024 19:06:15 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6EAD43804539;
+ Tue,  6 Feb 2024 19:06:25 +0000 (UTC)
 Received: from localhost (unknown [10.39.192.41])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5DAD5492BC7;
- Tue,  6 Feb 2024 19:06:14 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id CACE9112132A;
+ Tue,  6 Feb 2024 19:06:24 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v2 1/5] virtio-blk: enforce iothread-vq-mapping validation
-Date: Tue,  6 Feb 2024 14:06:06 -0500
-Message-ID: <20240206190610.107963-2-stefanha@redhat.com>
+Subject: [PATCH v2 5/5] monitor: use aio_co_reschedule_self()
+Date: Tue,  6 Feb 2024 14:06:10 -0500
+Message-ID: <20240206190610.107963-6-stefanha@redhat.com>
 In-Reply-To: <20240206190610.107963-1-stefanha@redhat.com>
 References: <20240206190610.107963-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -84,274 +84,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hanna Czenczek <hreitz@redhat.com> noticed that the safety of
-`vq_aio_context[vq->value] = ctx;` with user-defined vq->value inputs is
-not obvious.
+The aio_co_reschedule_self() API is designed to avoid the race
+condition between scheduling the coroutine in another AioContext and
+yielding.
 
-The code is structured in validate() + apply() steps so input validation
-is there, but it happens way earlier and there is nothing that
-guarantees apply() can only be called with validated inputs.
+The QMP dispatch code uses the open-coded version that appears
+susceptible to the race condition at first glance:
 
-This patch moves the validate() call inside the apply() function so
-validation is guaranteed. I also added the bounds checking assertion
-that Hanna suggested.
+  aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
+  qemu_coroutine_yield();
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+The code is actually safe because the iohandler and qemu_aio_context
+AioContext run under the Big QEMU Lock. Nevertheless, set a good example
+and use aio_co_reschedule_self() so it's obvious that there is no race.
+
+Suggested-by: Hanna Reitz <hreitz@redhat.com>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/block/virtio-blk.c | 191 +++++++++++++++++++++++-------------------
- 1 file changed, 106 insertions(+), 85 deletions(-)
+ qapi/qmp-dispatch.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 227d83569f..6e3e3a23ee 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1485,6 +1485,72 @@ static int virtio_blk_load_device(VirtIODevice *vdev, QEMUFile *f,
-     return 0;
- }
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index 176b549473..f3488afeef 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -212,8 +212,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+              * executing the command handler so that it can make progress if it
+              * involves an AIO_WAIT_WHILE().
+              */
+-            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
+-            qemu_coroutine_yield();
++            aio_co_reschedule_self(qemu_get_aio_context());
+         }
  
-+static void virtio_resize_cb(void *opaque)
-+{
-+    VirtIODevice *vdev = opaque;
-+
-+    assert(qemu_get_current_aio_context() == qemu_get_aio_context());
-+    virtio_notify_config(vdev);
-+}
-+
-+static void virtio_blk_resize(void *opaque)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
-+
-+    /*
-+     * virtio_notify_config() needs to acquire the BQL,
-+     * so it can't be called from an iothread. Instead, schedule
-+     * it to be run in the main context BH.
-+     */
-+    aio_bh_schedule_oneshot(qemu_get_aio_context(), virtio_resize_cb, vdev);
-+}
-+
-+static void virtio_blk_ioeventfd_detach(VirtIOBlock *s)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(s);
-+
-+    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
-+        VirtQueue *vq = virtio_get_queue(vdev, i);
-+        virtio_queue_aio_detach_host_notifier(vq, s->vq_aio_context[i]);
-+    }
-+}
-+
-+static void virtio_blk_ioeventfd_attach(VirtIOBlock *s)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(s);
-+
-+    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
-+        VirtQueue *vq = virtio_get_queue(vdev, i);
-+        virtio_queue_aio_attach_host_notifier(vq, s->vq_aio_context[i]);
-+    }
-+}
-+
-+/* Suspend virtqueue ioeventfd processing during drain */
-+static void virtio_blk_drained_begin(void *opaque)
-+{
-+    VirtIOBlock *s = opaque;
-+
-+    if (s->ioeventfd_started) {
-+        virtio_blk_ioeventfd_detach(s);
-+    }
-+}
-+
-+/* Resume virtqueue ioeventfd processing after drain */
-+static void virtio_blk_drained_end(void *opaque)
-+{
-+    VirtIOBlock *s = opaque;
-+
-+    if (s->ioeventfd_started) {
-+        virtio_blk_ioeventfd_attach(s);
-+    }
-+}
-+
-+static const BlockDevOps virtio_block_ops = {
-+    .resize_cb     = virtio_blk_resize,
-+    .drained_begin = virtio_blk_drained_begin,
-+    .drained_end   = virtio_blk_drained_end,
-+};
-+
- static bool
- validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
-         uint16_t num_queues, Error **errp)
-@@ -1547,81 +1613,33 @@ validate_iothread_vq_mapping_list(IOThreadVirtQueueMappingList *list,
-     return true;
- }
- 
--static void virtio_resize_cb(void *opaque)
--{
--    VirtIODevice *vdev = opaque;
--
--    assert(qemu_get_current_aio_context() == qemu_get_aio_context());
--    virtio_notify_config(vdev);
--}
--
--static void virtio_blk_resize(void *opaque)
--{
--    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
--
--    /*
--     * virtio_notify_config() needs to acquire the BQL,
--     * so it can't be called from an iothread. Instead, schedule
--     * it to be run in the main context BH.
--     */
--    aio_bh_schedule_oneshot(qemu_get_aio_context(), virtio_resize_cb, vdev);
--}
--
--static void virtio_blk_ioeventfd_detach(VirtIOBlock *s)
--{
--    VirtIODevice *vdev = VIRTIO_DEVICE(s);
--
--    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
--        VirtQueue *vq = virtio_get_queue(vdev, i);
--        virtio_queue_aio_detach_host_notifier(vq, s->vq_aio_context[i]);
--    }
--}
--
--static void virtio_blk_ioeventfd_attach(VirtIOBlock *s)
--{
--    VirtIODevice *vdev = VIRTIO_DEVICE(s);
--
--    for (uint16_t i = 0; i < s->conf.num_queues; i++) {
--        VirtQueue *vq = virtio_get_queue(vdev, i);
--        virtio_queue_aio_attach_host_notifier(vq, s->vq_aio_context[i]);
--    }
--}
--
--/* Suspend virtqueue ioeventfd processing during drain */
--static void virtio_blk_drained_begin(void *opaque)
--{
--    VirtIOBlock *s = opaque;
--
--    if (s->ioeventfd_started) {
--        virtio_blk_ioeventfd_detach(s);
--    }
--}
--
--/* Resume virtqueue ioeventfd processing after drain */
--static void virtio_blk_drained_end(void *opaque)
--{
--    VirtIOBlock *s = opaque;
--
--    if (s->ioeventfd_started) {
--        virtio_blk_ioeventfd_attach(s);
--    }
--}
--
--static const BlockDevOps virtio_block_ops = {
--    .resize_cb     = virtio_blk_resize,
--    .drained_begin = virtio_blk_drained_begin,
--    .drained_end   = virtio_blk_drained_end,
--};
--
--/* Generate vq:AioContext mappings from a validated iothread-vq-mapping list */
--static void
--apply_vq_mapping(IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
--                 AioContext **vq_aio_context, uint16_t num_queues)
-+/**
-+ * apply_iothread_vq_mapping:
-+ * @iothread_vq_mapping_list: The mapping of virtqueues to IOThreads.
-+ * @vq_aio_context: The array of AioContext pointers to fill in.
-+ * @num_queues: The length of @vq_aio_context.
-+ * @errp: If an error occurs, a pointer to the area to store the error.
-+ *
-+ * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
-+ * the iothread-vq-mapping parameter in @iothread_vq_mapping_list.
-+ *
-+ * Returns: %true on success, %false on failure.
-+ **/
-+static bool apply_iothread_vq_mapping(
-+        IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
-+        AioContext **vq_aio_context,
-+        uint16_t num_queues,
-+        Error **errp)
- {
-     IOThreadVirtQueueMappingList *node;
-     size_t num_iothreads = 0;
-     size_t cur_iothread = 0;
- 
-+    if (!validate_iothread_vq_mapping_list(iothread_vq_mapping_list,
-+                                           num_queues, errp)) {
-+        return false;
-+    }
-+
-     for (node = iothread_vq_mapping_list; node; node = node->next) {
-         num_iothreads++;
-     }
-@@ -1638,6 +1656,7 @@ apply_vq_mapping(IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
- 
-             /* Explicit vq:IOThread assignment */
-             for (vq = node->value->vqs; vq; vq = vq->next) {
-+                assert(vq->value < num_queues);
-                 vq_aio_context[vq->value] = ctx;
-             }
-         } else {
-@@ -1650,6 +1669,8 @@ apply_vq_mapping(IOThreadVirtQueueMappingList *iothread_vq_mapping_list,
- 
-         cur_iothread++;
-     }
-+
-+    return true;
- }
- 
- /* Context: BQL held */
-@@ -1660,6 +1681,13 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
-     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
- 
-+    if (conf->iothread && conf->iothread_vq_mapping_list) {
-+        error_setg(errp,
-+                   "iothread and iothread-vq-mapping properties cannot be set "
-+                   "at the same time");
-+        return false;
-+    }
-+
-     if (conf->iothread || conf->iothread_vq_mapping_list) {
-         if (!k->set_guest_notifiers || !k->ioeventfd_assign) {
-             error_setg(errp,
-@@ -1685,8 +1713,14 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
-     s->vq_aio_context = g_new(AioContext *, conf->num_queues);
- 
-     if (conf->iothread_vq_mapping_list) {
--        apply_vq_mapping(conf->iothread_vq_mapping_list, s->vq_aio_context,
--                         conf->num_queues);
-+        if (!apply_iothread_vq_mapping(conf->iothread_vq_mapping_list,
-+                                       s->vq_aio_context,
-+                                       conf->num_queues,
-+                                       errp)) {
-+            g_free(s->vq_aio_context);
-+            s->vq_aio_context = NULL;
-+            return false;
-+        }
-     } else if (conf->iothread) {
-         AioContext *ctx = iothread_get_aio_context(conf->iothread);
-         for (unsigned i = 0; i < conf->num_queues; i++) {
-@@ -1996,19 +2030,6 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    if (conf->iothread_vq_mapping_list) {
--        if (conf->iothread) {
--            error_setg(errp, "iothread and iothread-vq-mapping properties "
--                             "cannot be set at the same time");
--            return;
--        }
--
--        if (!validate_iothread_vq_mapping_list(conf->iothread_vq_mapping_list,
--                                               conf->num_queues, errp)) {
--            return;
--        }
--    }
--
-     s->config_size = virtio_get_config_size(&virtio_blk_cfg_size_params,
-                                             s->host_features);
-     virtio_init(vdev, VIRTIO_ID_BLOCK, s->config_size);
+         monitor_set_cur(qemu_coroutine_self(), cur_mon);
+@@ -227,9 +226,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+              * Move back to iohandler_ctx so that nested event loops for
+              * qemu_aio_context don't start new monitor commands.
+              */
+-            aio_co_schedule(iohandler_get_aio_context(),
+-                            qemu_coroutine_self());
+-            qemu_coroutine_yield();
++            aio_co_reschedule_self(iohandler_get_aio_context());
+         }
+     } else {
+        /*
 -- 
 2.43.0
 
