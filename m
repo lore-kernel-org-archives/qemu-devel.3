@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85848C48286
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 08:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546D3C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 08:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXGYs-0007go-Vx; Tue, 06 Feb 2024 03:12:11 -0500
+	id 1rXGZr-0008EN-6F; Tue, 06 Feb 2024 03:13:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXGYr-0007gP-8s
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 03:12:09 -0500
+ id 1rXGZq-0008B8-8E
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 03:13:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXGYo-0007Sp-TC
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 03:12:09 -0500
+ id 1rXGZo-0007dB-MZ
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 03:13:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707207124;
+ s=mimecast20190719; t=1707207188;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=io2N46QtVIPDdVrPGW5R87CULP6c8TnM17Stnoj1FFA=;
- b=Nh25uaJrXfOx9ViyevbXUjsjETdQf58XsGDatqAQ4oqaPfMvEypb5FHqFWbtCYNlHTIzUC
- q/fbK2laBwHZ20a5Zcz6Gg8Ankjp1VGJSpIAwXfoxdIfMnecCDO7/rm+fnkAfXTllNLpqe
- KrEQT+l7lvtrqao1dhHHsVf8d/rH51o=
+ bh=rmJdKfeqak3YaEcbY2a6W9nKhIzoWfXGEIxFjlMf+C0=;
+ b=e67/s0FoHKRPRewtNNOuSi+yjJhxK0Wcaq5rj1SypUpZee8AJcua++iwzgIXtBicwZBhki
+ 5l8WVZXZKFJFkI36Fl3A5rf3AjX55W6Np3X7VXP20FBRoMYZE4/dI2vozDgYB+d2fVLxVE
+ KtwSJ0l2PG8AREr4qgFjPVnMf7nTODk=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-176-kF5P0wpVMC2anzeF9paUvw-1; Tue,
- 06 Feb 2024 03:12:01 -0500
-X-MC-Unique: kF5P0wpVMC2anzeF9paUvw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-UTHDSbw0MOqOLzRywnULhg-1; Tue,
+ 06 Feb 2024 03:13:04 -0500
+X-MC-Unique: UTHDSbw0MOqOLzRywnULhg-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 49E813C000BA;
- Tue,  6 Feb 2024 08:12:01 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CF3C3282477D;
+ Tue,  6 Feb 2024 08:13:03 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.53])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 55EC42026D06;
- Tue,  6 Feb 2024 08:12:00 +0000 (UTC)
-Date: Tue, 6 Feb 2024 08:11:58 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id DD740492BF0;
+ Tue,  6 Feb 2024 08:13:02 +0000 (UTC)
+Date: Tue, 6 Feb 2024 08:13:00 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: peterx@redhat.com
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Peter Maydell <peter.maydell@linaro.org>,
  Eric Auger <eric.auger@redhat.com>, Sebastian Ott <sebott@redhat.com>
-Subject: Re: [PATCH 2/3] ci: Remove tag dependency for build-previous-qemu
-Message-ID: <ZcHpzsLYCPwFPMUq@redhat.com>
+Subject: Re: [PATCH 1/3] tests/migration-test: Stick with gicv3 in aarch64 test
+Message-ID: <ZcHqDLsGQ-X6RSVZ@redhat.com>
 References: <20240206063151.215986-1-peterx@redhat.com>
- <20240206063151.215986-3-peterx@redhat.com>
+ <20240206063151.215986-2-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240206063151.215986-3-peterx@redhat.com>
+In-Reply-To: <20240206063151.215986-2-peterx@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -89,46 +89,33 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 06, 2024 at 02:31:50PM +0800, peterx@redhat.com wrote:
+On Tue, Feb 06, 2024 at 02:31:49PM +0800, peterx@redhat.com wrote:
 > From: Peter Xu <peterx@redhat.com>
 > 
-> The new build-previous-qemu job relies on QEMU release tag being present,
-> while that may not be always true for personal git repositories since by
-> default tag is not pushed.  The job can fail on those CI kicks, as reported
-> by Peter Maydell.
+> Recently we introduced cross-binary migration test.  It's always wanted
+> that migration-test uses stable guest ABI for both QEMU binaries in this
+> case, so that both QEMU binaries will be compatible on the migration
+> stream with the cmdline specified.
 > 
-> Fix it by fetching the tags remotely from the official repository, as
-> suggested by Dan.
+> Switch to a static gic version "3" rather than using version "max", so that
+> GIC should be stable now across any future QEMU binaries for migration-test.
 > 
-> [1] https://lore.kernel.org/r/ZcC9ScKJ7VvqektA@redhat.com
+> Here the version can actually be anything as long as the ABI is stable.  We
+> choose "3" because it's the majority of what we already use in QEMU while
+> still new enough: "git grep gic-version=3" shows 6 hit, while version 4 has
+> no direct user yet besides "max".
 > 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Note that even with this change, aarch64 won't be able to work yet with
+> migration cross binary test, but then the only missing piece will be the
+> stable CPU model.
+> 
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  .gitlab-ci.d/buildtest.yml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index 79bbc8585b..df48c9d31d 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -189,6 +189,8 @@ build-previous-qemu:
->      TARGETS: x86_64-softmmu aarch64-softmmu
->    before_script:
->      - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
-> +    - git remote add upstream https://gitlab.com/qemu-project/qemu
-> +    - git fetch upstream $QEMU_PRRV_VERSION
+>  tests/qtest/migration-test.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-                              Typo^^^
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
->      - git checkout $QEMU_PREV_VERSION
->    after_script:
->      - mv build build-previous
-
-With that typo fixed, then
-
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 With regards,
 Daniel
