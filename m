@@ -4,88 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA93C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B2BCC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXTLR-0007wq-5W; Tue, 06 Feb 2024 16:51:09 -0500
+	id 1rXTLs-0008AS-Dt; Tue, 06 Feb 2024 16:51:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXTLP-0007wC-JZ
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:51:07 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1rXTLk-000866-En; Tue, 06 Feb 2024 16:51:29 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXTLN-00086i-35
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:51:06 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso8725ad.1
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 13:51:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707256263; x=1707861063; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lO1js4YTTotuzqoFGlHNRmsl+7c1P8LmWDHVkpLbSHI=;
- b=lbtlw7KmMi20NjBqpOVD9+xyoIddHpaQZyFHIkyQkSAZIABPrP5Sr0nxz/TG3ThoEv
- ThXX1N/40J5XfWgk96fv0SjF72v0tqm/t3u49fZMM3PoF4SBhdjsFeiP2DQUHOZnDhl4
- pFCxzEXTVIXVBnZGIF+0PbtuDHzoskyBghxz3Xc9IC5Lx35mUtENxdhC/r+dQfOIZZXN
- YpL7LMku2k4vtXPKYzIHmhCdCYtgyeU4+U++e2rojckuO9Ph+MaN2Y5i1Ik+KDW70aFJ
- wcr/30jQqGsxGwhSn1sYYxH8UdOGsGpP3iLM+jRpytFjd5E2yaPRosPrBPGeBFQDDubf
- Fk1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707256263; x=1707861063;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lO1js4YTTotuzqoFGlHNRmsl+7c1P8LmWDHVkpLbSHI=;
- b=qWO2fpwwj0+JsFArJnsz9aPp6unMiYpF3zpGdlBSYdXhubn5MUvB38AfI6uE4l0Zo1
- a3dQycPOqzVTT+2EzpV7LtusiAN/ildEGppO6a2nPj+L0qsPbvwVazvhgVOx9O1++qpc
- 0lc53DxmUxSuIKwAhRyjeoCJr7L1S7n1TTjdidDRpArMrVxs9mKFmVU0ETTXwRUvCiNl
- Zpo1GhppzK1FOIlCEX1JGtMZx5oKF8UMrQba2iIw1aQhsl88h+3g9ggatayR2hhcdclE
- w5zWSMbXX7KtKEHbrtbrJ4CSuJmSL6K8FkNGX722V+dWV+s8/X9UG2uRU/m8dQkiyneV
- nAgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVV1mzXebNBWplciZLGcJ1+iF4llbktVJDhJ70QRrkYDv4k+o2RLyWclVbUNe4cRA/w1o+igPkGcKb9ktC8XEOcsDvaDcc=
-X-Gm-Message-State: AOJu0Yz50M9Tg7eSh4TH0/h2PNjfZ3ePdBVbpfXw/UFdeHUuWUMW3U5B
- kuR8wAHLZEB2g7lT6DTwUsJo/F3HnheZJrlx10JeH5azb939F87NmDtwdzhE+2E=
-X-Google-Smtp-Source: AGHT+IEDMDHcUmUOvYS/3nReiYVopWTOOH/b6dJ+5JlL8vYSAs5DaR808NlPjys2MtU/tb7YgAubIA==
-X-Received: by 2002:a17:902:ebcd:b0:1d9:df9d:bcd3 with SMTP id
- p13-20020a170902ebcd00b001d9df9dbcd3mr2959332plg.46.1707256263382; 
- Tue, 06 Feb 2024 13:51:03 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCXGYuJvgQhJAFPd1hdveV1BRy/oT3lQISqzU7j+vB/SnKytt98ny8Ch3LxXSrIrOdAOTIgxKKXyreOwibEHF02ubfjOHdfkTRZ9uG2zBXHISza/WAhL8t+bDJQ=
-Received: from [192.168.0.100] ([43.252.112.200])
- by smtp.gmail.com with ESMTPSA id
- o9-20020a17090323c900b001d94a3f3987sm2356974plh.184.2024.02.06.13.51.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 13:51:03 -0800 (PST)
-Message-ID: <94d96365-1d93-40f4-96ee-e3fcb14a8040@linaro.org>
-Date: Wed, 7 Feb 2024 07:50:57 +1000
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1rXTLi-00088H-Eq; Tue, 06 Feb 2024 16:51:28 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D86192213C;
+ Tue,  6 Feb 2024 21:51:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707256285; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=ZE/hvJT0POy8bKbKBj/VmbeBMmSnstpwHb5aYBF8+HTaaQinkaH9jHeyjybjJS9G+fUeC0
+ CwTFso9q7OqV1aScJsCXql9qYa5Fp9wIyM1tYz3SYVxIMdz3aKcB7ic1HFa7Rkr0e9MBmO
+ a4h63J/3IKmyUZi6Ts5M7cqZ+Q0i4+o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707256285;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=udRlnSufKfNQyLxZ3cvNZ8EymMxXaoTGh6zIzAOCkcMp48fXG8cJS8i5wsZXN+IIpV/E32
+ Zx6ENlv5sTy4rOAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707256284; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=UU9g24n5pqGbFvAhuGdoUl/toHugxB6XSOJ3Zlb0jYCu9mqLLunXiqOpOdY334tIU7ybGg
+ fddDgYU/PJKcD67nRinscb/hB+uwHlT+mGMlXxAh2yzqAoOmV8fFQmrZjaGBD8t1R+ogxy
+ +2znQ5utpCh0I1KgWq+9MQCIt2WI6d4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707256284;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ycq1DKWOHGRISoq+AdX4R7quKU3E+TkylEAGSaqJFSM=;
+ b=J1zRs4I3ISjzjZqouB6nyJ11+qEfSSFm+sfcz1CnXxvvBocate+BnJ0gMp0sqU+NdoKad4
+ GG24xpdhv2mP6DCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3FA01132DD;
+ Tue,  6 Feb 2024 21:51:23 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kAsDAtupwmWzQAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 06 Feb 2024 21:51:23 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PATCH v3 1/6] migration/multifd: Join the TLS thread
+Date: Tue,  6 Feb 2024 18:51:13 -0300
+Message-Id: <20240206215118.6171-2-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240206215118.6171-1-farosas@suse.de>
+References: <20240206215118.6171-1-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] hw/misc/mps2-scc: Make changes needed for AN536
- FPGA image
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240206132931.38376-1-peter.maydell@linaro.org>
- <20240206132931.38376-8-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240206132931.38376-8-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spamd-Result: default: False [0.70 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[5];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,48 +120,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/24 23:29, Peter Maydell wrote:
-> The MPS2 SCC device is broadly the same for all FPGA images, but has
-> minor differences in the behaviour of the CFG registers depending on
-> the image. In many cases we don't really care about the functionality
-> controlled by these registers and a reads-as-written or similar
-> behaviour is sufficient for the moment.
-> 
-> For the AN536 the required behaviour is:
-> 
->   * A_CFG0 has CPU reset and halt bits
->      - implement as reads-as-written for the moment
->   * A_CFG1 has flash or ATCM address 0 remap handling
->      - QEMU doesn't model this; implement as reads-as-written
->   * A_CFG2 has QSPI select (like AN524)
->      - implemented (no behaviour, as with AN524)
->   * A_CFG3 is MCC_MSB_ADDR "additional MCC addressing bits"
->      - QEMU doesn't care about these, so use the existing
->        RAZ behaviour for convenience
->   * A_CFG4 is board rev (like all other images)
->      - no change needed
->   * A_CFG5 is ACLK frq in hz (like AN524)
->      - implemented as reads-as-written, as for other boards
->   * A_CFG6 is core 0 vector table base address
->      - implemented as reads-as-written for the moment
->   * A_CFG7 is core 1 vector table base address
->      - implemented as reads-as-written for the moment
-> 
-> Make the changes necessary for this; leave TODO comments where
-> appropriate to indicate where we might want to come back and
-> implement things like CPU reset.
-> 
-> The other aspects of the device specific to this FPGA image (like the
-> values of the board ID and similar registers) will be set via the
-> device's qdev properties.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   include/hw/misc/mps2-scc.h |   1 +
->   hw/misc/mps2-scc.c         | 101 +++++++++++++++++++++++++++++++++----
->   2 files changed, 92 insertions(+), 10 deletions(-)
+We're currently leaking the resources of the TLS thread by not joining
+it and also overwriting the p->thread pointer altogether.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: a1af605bd5 ("migration/multifd: fix hangup with TLS-Multifd due to blocking handshake")
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/multifd.c | 8 +++++++-
+ migration/multifd.h | 2 ++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-r~
+diff --git a/migration/multifd.c b/migration/multifd.c
+index ef13e2e781..8195c1daf3 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -630,6 +630,10 @@ static void multifd_send_terminate_threads(void)
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+ 
++        if (p->tls_thread_created) {
++            qemu_thread_join(&p->tls_thread);
++        }
++
+         if (p->running) {
+             qemu_thread_join(&p->thread);
+         }
+@@ -921,7 +925,9 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+     trace_multifd_tls_outgoing_handshake_start(ioc, tioc, hostname);
+     qio_channel_set_name(QIO_CHANNEL(tioc), "multifd-tls-outgoing");
+     p->c = QIO_CHANNEL(tioc);
+-    qemu_thread_create(&p->thread, "multifd-tls-handshake-worker",
++
++    p->tls_thread_created = true;
++    qemu_thread_create(&p->tls_thread, "multifd-tls-handshake-worker",
+                        multifd_tls_handshake_thread, p,
+                        QEMU_THREAD_JOINABLE);
+     return true;
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 78a2317263..720c9d50db 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -73,6 +73,8 @@ typedef struct {
+     char *name;
+     /* channel thread id */
+     QemuThread thread;
++    QemuThread tls_thread;
++    bool tls_thread_created;
+     /* communication channel */
+     QIOChannel *c;
+     /* is the yank function registered */
+-- 
+2.35.3
+
 
