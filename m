@@ -4,69 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25260C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32C4C48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXTG6-000514-AN; Tue, 06 Feb 2024 16:45:38 -0500
+	id 1rXTH8-0005em-SQ; Tue, 06 Feb 2024 16:46:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXTG4-00050v-K3
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:45:36 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rXTH7-0005eA-5t
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:46:41 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXTG2-00079v-Hc
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:45:36 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-410009b2ca8so2027485e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 13:45:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rXTH5-0007Fu-Hb
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:46:40 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1d93edfa76dso52342945ad.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 13:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707255932; x=1707860732; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XHErp0KGTgavRlz9GvC/uW7M8B0fACoQvnMJYLHayR4=;
- b=SynaagxSS/C+yDhzPvJcAwCbkZOcUgOmKd8vCTQ4CU4W9CWBxA1T08iYEDI235Dfx0
- G8hyKDWrn6gi2FSSN9TNhZcdovEg8HQMhuu379CTnSkQmCpxlxf6T5sqzAcjAx97f7hD
- lSlGjfAmuex4JMrlx3NaAPI7olhsxyNFsPq6kOT+RgKuMqcKQmuA8n5yDNBXWa+kArm+
- p2J2Q66O+qd+h5RC2S/uDTEbifq6mGzgBCHGPxXHoO5Qsrkutlim/+OlAXJFh1TeiWNE
- a+V88b130Eg3uXOS+LIrZeAKt3f2767qeQcTLqRsZaWFLGWy1zEuntVkjCSeAf/txpQa
- G5iQ==
+ d=linaro.org; s=google; t=1707255998; x=1707860798; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0QJX/S9IomovOBIoF/s3BNY4iWxBvuykWx4Cyek5lUA=;
+ b=NoG6w9cR1ZZTcIo8Ub/wExQILYo56/J0DmpA5sIiyufvD8mkJG6WUEf9BK6nk7smBL
+ evySXk5Nuhmm2MU/Bn8/fC/L/uWG5R89lrTHy5qqgZSHmhbZOiYv0nxobgjTggRr5WuL
+ sCSEySA+qTfcdq37odrZiTVLwz7g+GC/KVQZf3oT/eFwHky7YALTyC1UlTlX/LAHYHyv
+ bsMu9YIM8u0wYY6cQVjtEZiC699ITuLRnCH+1iQ6M4ubR9WLOGJIvJKDyZkOJvvbi8MO
+ zfY5BVoll8Z7T3Or5F7Yo3W2mgXD30/6HCsGU9tVND/Fie/9oSToo3qqNwAqznuiPfno
+ rQ4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707255932; x=1707860732;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XHErp0KGTgavRlz9GvC/uW7M8B0fACoQvnMJYLHayR4=;
- b=Bp5l/ttj00pI8ro4RQQFT8o31QusMWaceHIGUZqPSPIvKkf2cTYtma4GvFl/lgqMMG
- G5F+VVslm4x6zGCg+gdEL07E+/X76dcEyVOyTq8PQTqgo8eaFoX6dAD9kE+6Li9IINbp
- kYchYfBGbYzb4Bv7pDkXNbP/devmn93bCelcKmh/jwzu7i1fznDsnStew3Lw8P7tBCiv
- 71KYQ/QnN7Tcuz22FcEgqBW/eb6+Ig9o3bv3OCMhF35qmKKIqy0ACO3scsR0oHatNd2V
- 0sWqsZa+6SaxUnp4+oUl65e8w915CM6dOvRoNMJW89VN2gHLXGacyh6OySWt+ozMNsRQ
- GzxQ==
-X-Gm-Message-State: AOJu0Yw+3k4vXQJhTEc5lQR2xW+NSpuw9D7Bt1b4Q080pNP4CarWke1n
- bcDp3nsqWXPUFFqalV1rX2gRk5j6R3/AodMbrQ8F0U4rLat6FMVMQimwQ/RQ3wqOSrWIGNW2WS8
- iPoZm1pOZxvtv82pvPtFFcx1CNRW4i2UBRp3HZg==
-X-Google-Smtp-Source: AGHT+IGnf5U7akF0KDr5GThPh4e2AvrFOYxxSOaaJlr+sda3Ldv/9Aj4VPPFDIpBWvkgHjSYRpY+NMWIyw+ag6+YeDc=
-X-Received: by 2002:adf:e9c7:0:b0:33b:128d:333f with SMTP id
- l7-20020adfe9c7000000b0033b128d333fmr2269445wrn.41.1707255932300; Tue, 06 Feb
- 2024 13:45:32 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707255998; x=1707860798;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0QJX/S9IomovOBIoF/s3BNY4iWxBvuykWx4Cyek5lUA=;
+ b=jMQxXvzF1pGd00RCX1Ye2CsY4t2g/oXaDl07FZspRqGLqrGo//6T2xLueg+NikpvZt
+ fwqEM8Tvnp6QofpDug67387jhELbHsGCyP4BOZSBLQh82yLf8bISIaHmeW2SJCQk5cib
+ tkUq/ureXPNtYPl3UcmUo0oK3VMiWsgrI1UoweqIRdFmrIzh7g8OsnHmEX7SWTU1SPqL
+ HGzSc86St4VNuJc8rbNj3g3pPwJHuAMEFoMR2Z5QEKoO/7iOP2CRXDYf+GhmK/9eblbi
+ B65E+aLCW5s+SAq41b2/MkHpDdp7WLw0vz6G7lmas/gUByvOBcBME2kr7nU8JxYEld/p
+ vWfg==
+X-Gm-Message-State: AOJu0YzG2GAqsntj3l5bo02WMy5U5ZulLXIsozUn9Lw9ZyLgDIzdXDXl
+ ErVqP1si7BZBVth4xLRq+ftY0mH1eN/1KAm87LklK/8yT4YiuchDVJmdGV6utqk=
+X-Google-Smtp-Source: AGHT+IGMFMv3KG844sSbaI+FPyuu85AX33L0Ow6mzBUllHemdiKew49+OF82muxi5cq6RTO0MSQBGA==
+X-Received: by 2002:a17:902:654e:b0:1d7:4b27:4ac3 with SMTP id
+ d14-20020a170902654e00b001d74b274ac3mr3002296pln.31.1707255997999; 
+ Tue, 06 Feb 2024 13:46:37 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCVM0M3RF9vFliwSGAxXCxMvF1Jr5KVcksiEUSVQdD+Znh7pVC+dyqxuejmFMDIS8o8Tlkwm00xYtPeCYHrUdN2WsW7PbdvMv1BvchT8ru9spRA8x+kVtftYhqQ=
+Received: from [192.168.0.100] ([43.252.112.200])
+ by smtp.gmail.com with ESMTPSA id
+ e11-20020a170902ed8b00b001d940ae8ffasm2382196plj.6.2024.02.06.13.46.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Feb 2024 13:46:37 -0800 (PST)
+Message-ID: <7f812de0-c343-4d77-97c0-7bd8349db76b@linaro.org>
+Date: Wed, 7 Feb 2024 07:46:33 +1000
 MIME-Version: 1.0
-References: <20240206032151.174516-1-richard.henderson@linaro.org>
- <CAFEAcA-HOfLk9RHQpR40xz98V5r7cG5Me7_Y=1ZSoFPpHXudWw@mail.gmail.com>
-In-Reply-To: <CAFEAcA-HOfLk9RHQpR40xz98V5r7cG5Me7_Y=1ZSoFPpHXudWw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 6 Feb 2024 21:45:20 +0000
-Message-ID: <CAFEAcA9DaqnMJxHr5zXqDwMffKcgudLV_evJsStUCKwSyV-pJA@mail.gmail.com>
-Subject: Re: [PULL v2 00/39] tcg patch queue
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/13] target/arm: Allow access to SPSR_hyp from hyp mode
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240206132931.38376-1-peter.maydell@linaro.org>
+ <20240206132931.38376-5-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240206132931.38376-5-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,64 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Feb 2024 at 21:24, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 6 Feb 2024 at 03:22, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > v2: Fix rebase error in patch 38 (tcg/s390x: Support TCG_COND_TST{EQ,NE}).
-> >
-> >
-> > r~
-> >
-> >
-> > The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
-> >
-> >   Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240205-2
-> >
-> > for you to fetch changes up to 23c5692abc3917151dee36c00d751cf5bc46ef19:
-> >
-> >   tcg/tci: Support TCG_COND_TST{EQ,NE} (2024-02-05 22:45:41 +0000)
-> >
-> > ----------------------------------------------------------------
-> > tcg: Introduce TCG_COND_TST{EQ,NE}
-> > target/alpha: Use TCG_COND_TST{EQ,NE}
-> > target/m68k: Use TCG_COND_TST{EQ,NE} in gen_fcc_cond
-> > target/sparc: Use TCG_COND_TSTEQ in gen_op_mulscc
-> > target/s390x: Use TCG_COND_TSTNE for CC_OP_{TM,ICM}
-> > target/s390x: Improve general case of disas_jcc
->
-> This really doesn't want to pass the ubuntu-20.04-s390x-all job:
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/6109442678
-> https://gitlab.com/qemu-project/qemu/-/jobs/6108249863
-> https://gitlab.com/qemu-project/qemu/-/jobs/6106928534
-> https://gitlab.com/qemu-project/qemu/-/jobs/6105718495
->
-> Now, this has definitely been a flaky job recently, so maybe it's
-> not this pullreq's fault.
->
-> This is a passing job from the last successful merge:
-> https://gitlab.com/qemu-project/qemu/-/jobs/6089342252
-> That took 24 minutes to run, and all the failed jobs above
-> took 70 minutes plus.
+On 2/6/24 23:29, Peter Maydell wrote:
+> Architecturally, the AArch32 MSR/MRS to/from banked register
+> instructions are UNPREDICTABLE for attempts to access a banked
+> register that the guest could access in a more direct way (e.g.
+> using this insn to access r8_fiq when already in FIQ mode).  QEMU has
+> chosen to UNDEF on all of these.
+> 
+> However, for the case of accessing SPSR_hyp from hyp mode, it turns
+> out that real hardware permits this, with the same effect as if the
+> guest had directly written to SPSR. Further, there is some
+> guest code out there that assumes it can do this, because it
+> happens to work on hardware: an example Cortex-R52 startup code
+> fragment uses this, and it got copied into various other places,
+> including Zephyr. Zephyr was fixed to not use this:
+>   https://github.com/zephyrproject-rtos/zephyr/issues/47330
+> but other examples are still out there, like the selftest
+> binary for the MPS3-AN536.
+> 
+> For convenience of being able to run guest code, permit
+> this UNPREDICTABLE access instead of UNDEFing it.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+> Last time this came up I preferred the "keep QEMU behaviour
+> as it is, try to get the guest code fixed" approach:
+>   https://www.mail-archive.com/qemu-devel@nongnu.org/msg899970.html
+> but as this is the second time I lean a bit more towards
+> behaving like the hardware.
+> ---
+>   target/arm/tcg/op_helper.c | 43 ++++++++++++++++++++++++++------------
+>   target/arm/tcg/translate.c | 19 +++++++++++------
+>   2 files changed, 43 insertions(+), 19 deletions(-)
 
-Ruling out anything about this particular merge attempt:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-This is a passing job from a recent succesful merge:
- https://gitlab.com/qemu-project/qemu/-/jobs/6089089816
-That took 37 minutes to run (21 mins in configure-n-compile).
-
-This is a failing job for the same commit:
-  https://gitlab.com/qemu-project/qemu/-/jobs/6086439717
-That took 58 minutes (26 mins in configure-n-compile).
-
-So there's a lot of between run variation, though in that
-case it was not so much as in some of these examples.
-
--- PMM
+r~
 
