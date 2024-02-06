@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C3CC4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 16:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4763C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 16:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXOKD-0002Ay-0R; Tue, 06 Feb 2024 11:29:33 -0500
+	id 1rXOLu-0003Gn-Nx; Tue, 06 Feb 2024 11:31:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rXOKC-0002Ai-6F
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:29:32 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rXOLd-0003CW-27
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:31:05 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rXOKA-0001hf-5o
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:29:31 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-40ff812442aso2187365e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 08:29:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rXOLT-0002BH-7h
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:31:00 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-40fc549ab9bso39665095e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 08:30:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1707236968; x=1707841768; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=S0uANY8i4xWI7Qyl8WOf3ZMO6SrEUqaO4OLMFDJI5qM=;
- b=RkWWbDGxED5hm4UzcEwYbxIuk3YHBtF+Oz7wKGbe5Twmnf87EZS1EqO29zYCDxgc+N
- m3baaG9HroHWgUeD2PWooAI67OlMh1/VjbGfr1TVSA+wYtp21tXqqrYG3U3BX5ULKq17
- 8nLdt9fLBW/PUQh16u5AitW7y+x1PBUm0NzlCMQq8SFXphwKYEeCNsHN9oq88eZqHfaZ
- 39uJq05tgZW/pYdnvM1b9bJohxuTm8XjfVGGsBGWhmeWTTqEY/taCIehKxnsK+uR3EC9
- 4IHDAVhgpaEOblxtwARnSoEUwyQY8tDsQpYaNVwwPZb14HsqAiU/+G3zNkejMeESHn9h
- eotw==
+ d=linaro.org; s=google; t=1707237045; x=1707841845; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vXWEV1+hfBGKxYf3DFDRYVhG93i/x2bW7FCe3SU165k=;
+ b=jGNGAqVPCH3gOW+FXw+PNt5E0V8hb1v/NulHTY1ZsWC+gDap2zmQKE4Z9q3NWZ+QVK
+ ODJrpAAcOFyjFG799Jnyn8aF41/P26H++0ZzDilsz8FtufvOB7mhgesxS385MmfhUrZa
+ 1HMG6GWRHwLswWXV278OOCgNaDsHzH3/hS3ubCg3KUVg17TXnxXb64v1AdbNyYDdXtqI
+ E5itm+FKPMX2OfLK0M20QTSq3PRvCZDSJfNbO8c3XmocxQoh2ePRPlamJLHlLuVujsup
+ T+e0g0Ra7uJR/RsSZDALrq9w+QvGb+7OoSJbGpqyptozxbDQWhW7nRU1aLBU45wAmfyz
+ 0DOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707236968; x=1707841768;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S0uANY8i4xWI7Qyl8WOf3ZMO6SrEUqaO4OLMFDJI5qM=;
- b=FuqZkBBMn3Ublx8ZNgOKP2negrV9udiSUw4mqwS0DYrSJE/Coa6bEUUelvFgvOLrjK
- k/UtyZoJsXutWoFlj8mUVOgXbnGal9HrUop1x03BTxZNIRLo6NwfBTltsFw91usfJD+8
- VMlP5MdDe4Gvd1cOAOhvyGNzTf69/MgvdYt/HS4dFmWPSGd3agoc8RhGP2x+ATMGio3P
- Ehw074FvIk/TTizWjgfSJpJQklDuSDoKh4q3JsZ9Q33ocNYPF/6PFj7oAVDgPx40/1c+
- eS95epGAs5o3Um+N4AoUOoWC8z7Df0Gz9rZBMnIpaFq9rwosrtw3WlLr/cmx6mePKvpP
- TTIQ==
-X-Gm-Message-State: AOJu0YxVElNW5Z9OmeOrsGcWko5PnYtV5CdA5oAHJQjoyPh7oul2pC5q
- hxHKTlDyCi7CzgmEKmXTdoFSeTxqHUbIzpo+GueAeCjgarPIf4cc6vNobSJKEyibBACcd2Mdofy
- M
-X-Google-Smtp-Source: AGHT+IE/TGcbPIDkltKC28VL4OQV74M0wTVgt9NvGt1DPDuLfll/CQgB8WmXtqRk0yaVPNG3sPQLdQ==
-X-Received: by 2002:a05:6000:183:b0:33a:fe30:b8b4 with SMTP id
- p3-20020a056000018300b0033afe30b8b4mr1801054wrx.39.1707236968014; 
- Tue, 06 Feb 2024 08:29:28 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707237045; x=1707841845;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vXWEV1+hfBGKxYf3DFDRYVhG93i/x2bW7FCe3SU165k=;
+ b=NPUVfGdoC0pRLlL/bsVd9ZTP6kI39nldw/1IRLzXyT8VgzMnuaPGXWlM7s7Kxf6Fc+
+ Z5cEpl02rMo9b6IWmIfzR/0Jhi66hHaqoTd3bV/ljT3Qu4gq0hhfYTl2jqpW8D4R/FIg
+ RmXfndjZRDhoyQgc8xFKjiaXxpQh7RMPqlHN8Mwoz76AzSt294TqJ/0+xsR/fN7BDS7n
+ RvykS9ys7yx9z1oPP6XmoRvRtOD6JO339Cfzw0nUTSKqHxFYOjW/IXny8wCokme5XdB7
+ 7F2nH35DW0SKTeKiQF9A+TYFnwtee7CGs4d9/zEuKWm/6yplEWdmknAo7B/WjxQW3mIx
+ rW1w==
+X-Gm-Message-State: AOJu0Yy1CYamw2cgQNuD4Bx/LqBN09bi3O+zxKcaFBir8DYGqymimtA8
+ bQZe4JQuQ2tMP359lXL6FdZDwJcDaYkJ5lHWwwLl2UnckqmN6gqNJ1r1zafcu+E=
+X-Google-Smtp-Source: AGHT+IFXUK0sP/0vNPZZSJqR0KM7H+6oZ3jCXFUCA1FdK0cbNUD6xtWRb5aVLt4rf1ezmM1wC3Nq3Q==
+X-Received: by 2002:a5d:574b:0:b0:33a:e808:31a4 with SMTP id
+ q11-20020a5d574b000000b0033ae80831a4mr1530666wrw.55.1707237045138; 
+ Tue, 06 Feb 2024 08:30:45 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCWxjHydBf9l1vvAphjTmX8w8aSLI3V77ChNrF82Fsac84ztPSJyNhC9vA871r+/zdMLJBZ1VmNsayoEuxzWKYScuUinS6JrNeAPNT8B8zjYhmkE6yUwIAoM580cViBBLtKSV27uPf9mBreO1uoE0sMu5jWkJjbRNbQU3jrcClyNEI/7pZwH6SYBX7kx3E3wuSQ/jea0lQg8TpzaUUKaukdcscBYI70b+ArJmQPDoxYsFXs2qmvykFKJIp9IP6vkzb1gYv+GHOf/pRbbEPRaFFx7Ju/Jd6D/aS1p
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ AJvYcCXrDnJ7Q1LGq4WaVu5nPEtmTTwrMOb7FRuRRUSXRF689Eg9hcsH8Q9u1ol9VEy8ZSXCaJjGmLcUu6LKpWxZ8vDFQGO5yew=
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- j3-20020a5d4523000000b0033b17880eacsm2473722wra.56.2024.02.06.08.29.27
+ v17-20020adfa1d1000000b0033b4b1d180esm371325wrv.43.2024.02.06.08.30.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 08:29:27 -0800 (PST)
-Date: Tue, 6 Feb 2024 17:29:26 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Vadim Shakirov <vadim.shakirov@syntacore.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: Re: [PATCH v4] target/riscv: mcountinhibit, mcounteren, scounteren,
- hcounteren is 32-bit
-Message-ID: <20240206-f53ed33cab0ae364e10d9b6b@orel>
-References: <20240202113919.18236-1-vadim.shakirov@syntacore.com>
+ Tue, 06 Feb 2024 08:30:44 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Nabih Estefan Diaz <nabihestefan@google.com>
+Subject: [PATCH] tests/qtest/meson.build: Don't include qtests_npcm7xx in
+ qtests_aarch64
+Date: Tue,  6 Feb 2024 16:30:43 +0000
+Message-Id: <20240206163043.315535-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240202113919.18236-1-vadim.shakirov@syntacore.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,101 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 02, 2024 at 02:39:19PM +0300, Vadim Shakirov wrote:
-> mcountinhibit, mcounteren, scounteren and hcounteren must always be 32-bit
-> by privileged spec
-> 
-> Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
+We deliberately don't include qtests_npcm7xx in qtests_aarch64,
+because we already get the coverage of those tests via qtests_arm,
+and we don't want to use extra CI minutes testing them twice.
 
-You should have added my and Alistair's tags when reposting.
-And you should CC previous reviewers.
+In commit 327b680877b79c4b we added it to qtests_aarch64; revert
+that change.
 
-Anyway, here's mine again
+Fixes: 327b680877b79c4b ("tests/qtest: Creating qtest for GMAC Module")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/qtest/meson.build | 1 -
+ 1 file changed, 1 deletion(-)
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 39557d5ecbb..663338ae124 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -231,7 +231,6 @@ qtests_aarch64 = \
+   (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test'] : []) +  \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
+-- 
+2.34.1
 
-drew
-
-> ---
->  target/riscv/cpu.h     |  8 ++++----
->  target/riscv/machine.c | 16 ++++++++--------
->  2 files changed, 12 insertions(+), 12 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 5138187727..cf1867a6e2 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -271,7 +271,7 @@ struct CPUArchState {
->      target_ulong hstatus;
->      target_ulong hedeleg;
->      uint64_t hideleg;
-> -    target_ulong hcounteren;
-> +    uint32_t hcounteren;
->      target_ulong htval;
->      target_ulong htinst;
->      target_ulong hgatp;
-> @@ -334,10 +334,10 @@ struct CPUArchState {
->       */
->      bool two_stage_indirect_lookup;
->  
-> -    target_ulong scounteren;
-> -    target_ulong mcounteren;
-> +    uint32_t scounteren;
-> +    uint32_t mcounteren;
->  
-> -    target_ulong mcountinhibit;
-> +    uint32_t mcountinhibit;
->  
->      /* PMU counter state */
->      PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 72fe2374dc..a4d47ec17e 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -79,14 +79,14 @@ static bool hyper_needed(void *opaque)
->  
->  static const VMStateDescription vmstate_hyper = {
->      .name = "cpu/hyper",
-> -    .version_id = 3,
-> -    .minimum_version_id = 3,
-> +    .version_id = 4,
-> +    .minimum_version_id = 4,
->      .needed = hyper_needed,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINTTL(env.hstatus, RISCVCPU),
->          VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
->          VMSTATE_UINT64(env.hideleg, RISCVCPU),
-> -        VMSTATE_UINTTL(env.hcounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.hcounteren, RISCVCPU),
->          VMSTATE_UINTTL(env.htval, RISCVCPU),
->          VMSTATE_UINTTL(env.htinst, RISCVCPU),
->          VMSTATE_UINTTL(env.hgatp, RISCVCPU),
-> @@ -354,8 +354,8 @@ static const VMStateDescription vmstate_jvt = {
->  
->  const VMStateDescription vmstate_riscv_cpu = {
->      .name = "cpu",
-> -    .version_id = 9,
-> -    .minimum_version_id = 9,
-> +    .version_id = 10,
-> +    .minimum_version_id = 10,
->      .post_load = riscv_cpu_post_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> @@ -398,9 +398,9 @@ const VMStateDescription vmstate_riscv_cpu = {
->          VMSTATE_UINTTL(env.mtval, RISCVCPU),
->          VMSTATE_UINTTL(env.miselect, RISCVCPU),
->          VMSTATE_UINTTL(env.siselect, RISCVCPU),
-> -        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
-> +        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
->          VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
->                               vmstate_pmu_ctr_state, PMUCTRState),
->          VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
-> -- 
-> 2.34.1
-> 
-> 
 
