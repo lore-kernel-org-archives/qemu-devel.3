@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F07C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 09:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4244C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 09:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXHhg-0004xR-08; Tue, 06 Feb 2024 04:25:20 -0500
+	id 1rXHh5-0004cx-AM; Tue, 06 Feb 2024 04:24:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rXHha-0004rN-0I
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:25:14 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1rXHh3-0004bb-02
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:24:41 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rXHhY-0004xw-64
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:25:13 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-40fe6c66c3fso2001095e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 01:25:10 -0800 (PST)
+ id 1rXHh1-0004kX-6s
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:24:40 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-40fe2d3d5cbso3069555e9.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 01:24:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707211509; x=1707816309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707211477; x=1707816277; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HgTl20rCSJYbUu3H7bqnk8bx/uKJfuAIG49cFMEfy7s=;
- b=QNf3aFXACLNwrO8xs8mW3pgvkcVnXsxaJM4k+bnbzUQRWaHjYsiKJEpiu2el1J/L2i
- ZQmo7wnshoX7qQX1uy5Y/6avfQG1RynID6c8vEPXjcwtj11wZt0mMmRxIWp6uCkXZbRT
- 2LU2Y0OdIR+kguqiHGLwpwGBv/oCFiUs0/89LVa0DVjqaMzanKAO2o6+DbMiKpthYH+J
- GWp5WkPBSEZf0k9E0E1BeZKoO0JrDLq9QKvej+AWUftrYL3BvMz7hIQnfWDJ51kozPad
- HAB/bWY3G2XPyjbHrRj/jvu3ADnMmbEeHYDftwYtcVX5VO8NzPSNk4MdxrWXPbmGtAJq
- MXWA==
+ bh=HXH7ocyncB0lY9SgnkHxBEuiEnRgV5eLtUY0jbLrGRM=;
+ b=slicdj46WLpzASEsqejrWUXQEBz7dohFkXSJw8KsUdc5EGVRXARLBs9Sls/IoKlFLe
+ 2EwvPi3xCay63wK5ZCw7jHXulMyiUkgsS6AHjKskSF6wiS0O/Xicrd5t9pxKYn+BBc0H
+ KqjIdMfxXMjFBTd7dwPyOmhbMU+m/WFt1y8LD6XvFn8i455OqMoDw0VRd04nODUVzk+l
+ M+6cWsXVO9X5eXM2N6cVd4gPTGM8k1tVxkCe2ux2WVybKX7e8owep+IctpahewIPCXrB
+ VMtvAUvz6QbVaCwbKZ2oIYVOi8DEDDbnYZ2xO5dQXo+X3A4+VJ18/vwhCd1Rd0O0qSvP
+ zHbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707211509; x=1707816309;
+ d=1e100.net; s=20230601; t=1707211477; x=1707816277;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HgTl20rCSJYbUu3H7bqnk8bx/uKJfuAIG49cFMEfy7s=;
- b=LHtZJ+msmx3LycJiRDTRLx2erQ7pmXZ1ahUSbUMCaMhNEDFSCi7Z/tHih5d8Xkf/Fh
- 84rxfnEd1rrw4Wf6wPMcHAJjTBSsNXHOwBvl3GfHISOfn3brPH/XmQDuVqoGGLRF1Tk5
- 9UI5TzTPAFGc0gCWBQrnKptBJ7/2/fVnNnGYdRr2arDTVi/WPjXAmVxLXfZy4CBiJ2Nn
- Kb/yzfYnG8W7xPjPGjxW8slUgIVGKNbgxMfRM+VupA+ncFIbRPQZpoCmgwh+kUU8Hj8X
- JaswNxGfUA591LwVtAgZ3vQWfoI3WNHIJvGzxS9HJ8lOpJCEiQEakXAbHo0r4xCwbe17
- TI5g==
-X-Gm-Message-State: AOJu0YxUQKyNVJBs4+ai6RdhCQ6wDjutDKq8cmvCPmuZjlqjfmRgSlH5
- vOoEXY0uv8hFQXSkK9GYTJx6BQaJxwRTHO432d16+cSJukfCEH+dEM9daJnnIsmCPV320UUeAqD
- NcSM=
-X-Google-Smtp-Source: AGHT+IH2k1AJL9jMn/j4al6rq5fhyUpKh8w3Q5k6ATBWAwxqjhP7710gp20IUJLqo6JuhoTvqVT6lA==
-X-Received: by 2002:a05:600c:1551:b0:40e:f626:483d with SMTP id
- f17-20020a05600c155100b0040ef626483dmr1111760wmg.13.1707211509281; 
- Tue, 06 Feb 2024 01:25:09 -0800 (PST)
+ bh=HXH7ocyncB0lY9SgnkHxBEuiEnRgV5eLtUY0jbLrGRM=;
+ b=I9QcKV2koWvA+YFLoSmxEWjgRaAriOyMJ1j7+5KbNcpLIBCAhpRCRkK7DKiIx2J6WA
+ Or8JWfhsvC4fe9Bg50QFiONjptyZw4jTCf+hWPGYJSDTt7SmoCYCpfDSKlRQEmuUPd9R
+ fIxsZ7f8022elq//SU3VtoPT24QJRVHh3KzkVjvoqbQ7SVTBIsvfhh6jtYicu7BsZTnK
+ 5Pkzc83fgWt8/AUQiF2XJXpE3YbS/GP5c1GQi+L+Xp3fvivQ4gOnrcNSOXfGi16QGcly
+ MsR2CWAlzGbBLW+snpnAZfAnIpr4GCt2q9Lp+GaACP/aCCLJlvF/jkRISFqQapXltkyL
+ 424A==
+X-Gm-Message-State: AOJu0YyZ5kURfa48DlR5mu0AYIYJfIDd9pqqx6ok1vVO/D2GAvztXeKs
+ gSX/Kb8TEIlgb95CoQG+ZB7QsXKrFzl7gjjws/h7gzsP2TSi1+WuOZiCw6fo+PLArOh5Otx9Hsp
+ s5as=
+X-Google-Smtp-Source: AGHT+IF0GQ7WicCNpQtI0lDnNMO3dkTibxN9ma/0Vs3RzRG0cUiK6Kw2I6ViIjq5iRB1KX/A5rE9eg==
+X-Received: by 2002:a05:600c:4fcd:b0:40e:d2da:fc6b with SMTP id
+ o13-20020a05600c4fcd00b0040ed2dafc6bmr1719988wmq.38.1707211477459; 
+ Tue, 06 Feb 2024 01:24:37 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCXvxRllywUspVpYBmmU355BN8xDwFZHEB3DADkV4LFearbp5gSsJLNr21mt2pbLgp0STeO/2GkxehadlxIsUxSV1zsqbmnnrsaqnD8eFcPemSlbOnmUn/hVQbWdZ3n/0Vn35DKf2iUAdDnqLMIAm+D8o7eRAR4F5LtfWZRVAvwiioZzdBK7xOUm9Uo9qvDK2gb/e2HwtokIt+8QS1j4CIGAHcKxFVK8aKyEEMYzSVTj98tub+/KvwatcoVXOGdBZh/k+O+WgYFQP2rLI6cUVPYfi9jhrO4C2oLDPDmoq6yHVfUSo+TtNJpRUkgOogrGTUwfuyWI0lIytDbS6yXX0E9XRgIuBAfu0w==
+ AJvYcCXBnk1SOLUSowyBb+G/8ptWtFV0dXinU/A9ascoqNxK09UtRIN6La8DR57nYr6numsiNm1ApPzzRDgjcR28P17TXsAOkV5/Y6t+SpjcrYtuQR8wPpYAqT8IuvtcMVJf7qluQTDiGsFK6FHodR4/W3oFd4L5nSvXOXZn0BvjS/+WdTKKbG8i2Q8GaTNtnkufC2N4OdIpEBQpKMX8pfbYuG3VHaHjVQFXWoAxDMyypIagdEaUTNz4h3P2CUTRlQNtL5carar5BKahIWiZ9r56JtfgkS0nWTRXl17KWh6hn6pzn7mIAa58+urwMvY93F5taQz89/OMhD1F6nTmrAhTeZ2gHZESDGk/bg==
 Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- u17-20020a05600c211100b0040fc5460109sm1312756wml.35.2024.02.06.01.25.06
+ u17-20020a05600c211100b0040fc5460109sm1312756wml.35.2024.02.06.01.24.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 01:25:09 -0800 (PST)
+ Tue, 06 Feb 2024 01:24:37 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Alexandre Iooss <erdnaxe@crans.org>,
@@ -71,16 +71,16 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Alexandre Iooss <erdnaxe@crans.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 10/17] tests/plugin/mem: migrate to new per_vcpu API
-Date: Tue,  6 Feb 2024 13:24:15 +0400
-Message-ID: <20240206092423.3005995-11-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 01/17] plugins: remove previous n_vcpus functions from API
+Date: Tue,  6 Feb 2024 13:24:06 +0400
+Message-ID: <20240206092423.3005995-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240206092423.3005995-1-pierrick.bouvier@linaro.org>
 References: <20240206092423.3005995-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,97 +103,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This information is already accessible using qemu_info_t during plugin
+install.
+
+We will introduce another function (qemu_plugin_num_vcpus) which
+represent how many cpus were enabled, by tracking new cpu indexes.
+
+It's a breaking change, so we bump API version.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/plugin/mem.c | 40 +++++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ include/qemu/qemu-plugin.h   | 10 +++-------
+ plugins/plugin.h             |  2 +-
+ contrib/plugins/cache.c      |  2 +-
+ plugins/api.c                | 30 ------------------------------
+ plugins/qemu-plugins.symbols |  2 --
+ 5 files changed, 5 insertions(+), 41 deletions(-)
 
-diff --git a/tests/plugin/mem.c b/tests/plugin/mem.c
-index 44e91065ba7..d4729f5e015 100644
---- a/tests/plugin/mem.c
-+++ b/tests/plugin/mem.c
-@@ -16,9 +16,14 @@
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 2c1930e7e45..0e506ee644d 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -51,11 +51,13 @@ typedef uint64_t qemu_plugin_id_t;
+  *
+  * The plugins export the API they were built against by exposing the
+  * symbol qemu_plugin_version which can be checked.
++ *
++ * version 2: removed qemu_plugin_n_vcpus and qemu_plugin_n_max_vcpus
+  */
  
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+ extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
  
--static uint64_t inline_mem_count;
--static uint64_t cb_mem_count;
--static uint64_t io_count;
-+typedef struct {
-+    uint64_t mem_count;
-+    uint64_t io_count;
-+} CPUCount;
-+
-+static struct qemu_plugin_scoreboard *counts;
-+static qemu_plugin_u64 mem_count;
-+static qemu_plugin_u64 io_count;
- static bool do_inline, do_callback;
- static bool do_haddr;
- static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
-@@ -27,16 +32,16 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
- {
-     g_autoptr(GString) out = g_string_new("");
+-#define QEMU_PLUGIN_VERSION 1
++#define QEMU_PLUGIN_VERSION 2
  
--    if (do_inline) {
--        g_string_printf(out, "inline mem accesses: %" PRIu64 "\n", inline_mem_count);
--    }
--    if (do_callback) {
--        g_string_append_printf(out, "callback mem accesses: %" PRIu64 "\n", cb_mem_count);
-+    if (do_inline || do_callback) {
-+        g_string_printf(out, "mem accesses: %" PRIu64 "\n",
-+                        qemu_plugin_u64_sum(mem_count));
-     }
-     if (do_haddr) {
--        g_string_append_printf(out, "io accesses: %" PRIu64 "\n", io_count);
-+        g_string_append_printf(out, "io accesses: %" PRIu64 "\n",
-+                               qemu_plugin_u64_sum(io_count));
-     }
-     qemu_plugin_outs(out->str);
-+    qemu_plugin_scoreboard_free(counts);
+ /**
+  * struct qemu_info_t - system information for plugins
+@@ -644,12 +646,6 @@ QEMU_PLUGIN_API
+ void qemu_plugin_register_atexit_cb(qemu_plugin_id_t id,
+                                     qemu_plugin_udata_cb_t cb, void *userdata);
+ 
+-/* returns -1 in user-mode */
+-int qemu_plugin_n_vcpus(void);
+-
+-/* returns -1 in user-mode */
+-int qemu_plugin_n_max_vcpus(void);
+-
+ /**
+  * qemu_plugin_outs() - output string via QEMU's logging system
+  * @string: a string
+diff --git a/plugins/plugin.h b/plugins/plugin.h
+index 5eb2fdbc85e..90f3f324ab6 100644
+--- a/plugins/plugin.h
++++ b/plugins/plugin.h
+@@ -15,7 +15,7 @@
+ #include <gmodule.h>
+ #include "qemu/qht.h"
+ 
+-#define QEMU_PLUGIN_MIN_VERSION 0
++#define QEMU_PLUGIN_MIN_VERSION 2
+ 
+ /* global state */
+ struct qemu_plugin_state {
+diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+index 9e7ade3b374..c5c8ac75a9c 100644
+--- a/contrib/plugins/cache.c
++++ b/contrib/plugins/cache.c
+@@ -767,7 +767,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+ 
+     policy = LRU;
+ 
+-    cores = sys ? qemu_plugin_n_vcpus() : 1;
++    cores = sys ? info->system.smp_vcpus : 1;
+ 
+     for (i = 0; i < argc; i++) {
+         char *opt = argv[i];
+diff --git a/plugins/api.c b/plugins/api.c
+index 8d5cca53295..2aaae4e47f3 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -353,36 +353,6 @@ const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
+ #endif
  }
  
- static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
-@@ -46,12 +51,12 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
-         struct qemu_plugin_hwaddr *hwaddr;
-         hwaddr = qemu_plugin_get_hwaddr(meminfo, vaddr);
-         if (qemu_plugin_hwaddr_is_io(hwaddr)) {
--            io_count++;
-+            qemu_plugin_u64_add(io_count, cpu_index, 1);
-         } else {
--            cb_mem_count++;
-+            qemu_plugin_u64_add(mem_count, cpu_index, 1);
-         }
-     } else {
--        cb_mem_count++;
-+        qemu_plugin_u64_add(mem_count, cpu_index, 1);
-     }
- }
- 
-@@ -64,9 +69,10 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
- 
-         if (do_inline) {
--            qemu_plugin_register_vcpu_mem_inline(insn, rw,
--                                                 QEMU_PLUGIN_INLINE_ADD_U64,
--                                                 &inline_mem_count, 1);
-+            qemu_plugin_register_vcpu_mem_inline_per_vcpu(
-+                insn, rw,
-+                QEMU_PLUGIN_INLINE_ADD_U64,
-+                mem_count, 1);
-         }
-         if (do_callback) {
-             qemu_plugin_register_vcpu_mem_cb(insn, vcpu_mem,
-@@ -117,6 +123,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-         }
-     }
- 
-+    counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
-+    mem_count = qemu_plugin_scoreboard_u64_in_struct(
-+        counts, CPUCount, mem_count);
-+    io_count = qemu_plugin_scoreboard_u64_in_struct(counts, CPUCount, io_count);
-     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-     return 0;
+-/*
+- * Queries to the number and potential maximum number of vCPUs there
+- * will be. This helps the plugin dimension per-vcpu arrays.
+- */
+-
+-#ifndef CONFIG_USER_ONLY
+-static MachineState * get_ms(void)
+-{
+-    return MACHINE(qdev_get_machine());
+-}
+-#endif
+-
+-int qemu_plugin_n_vcpus(void)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    return -1;
+-#else
+-    return get_ms()->smp.cpus;
+-#endif
+-}
+-
+-int qemu_plugin_n_max_vcpus(void)
+-{
+-#ifdef CONFIG_USER_ONLY
+-    return -1;
+-#else
+-    return get_ms()->smp.max_cpus;
+-#endif
+-}
+-
+ /*
+  * Plugin output
+  */
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index 6963585c1ea..6088dd3714a 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -17,8 +17,6 @@
+   qemu_plugin_mem_is_sign_extended;
+   qemu_plugin_mem_is_store;
+   qemu_plugin_mem_size_shift;
+-  qemu_plugin_n_max_vcpus;
+-  qemu_plugin_n_vcpus;
+   qemu_plugin_outs;
+   qemu_plugin_path_to_binary;
+   qemu_plugin_read_register;
 -- 
 2.43.0
 
