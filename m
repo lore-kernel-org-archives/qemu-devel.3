@@ -4,92 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87734C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 11:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EAAEC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 12:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXJjW-0005Xc-1A; Tue, 06 Feb 2024 06:35:22 -0500
+	id 1rXKu1-0004WF-7a; Tue, 06 Feb 2024 07:50:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rXJjS-0005X1-Nb
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 06:35:19 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rXJjQ-00012J-Ni
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 06:35:18 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1d76671e5a4so43977725ad.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 03:35:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1707219315; x=1707824115; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=viOxfD0JcNPJSOpjzRoxX1cSnRwbLRV5nd1z0L0MWGE=;
- b=cxbGo1EyBfmYWD5Vj7kvSuCzxviNXWcK4IQp1QNOQIN/LzzoZi0sb9uPAHzncDx8rv
- nn4vUrkpqtTdNpEQD9BGl7cQ8bncuXwjWsZC56RX8hx7zNhgDsO4MfPMmEKHn8o2nmL+
- KmaJ7M32nTvSf9FV+9LazMQ2OXKVZ3+4kAfT1Q+Jtrw3pSi3rWW/WVGPpQiBjhHxqYQR
- t0ipeBcY5WEfy8dLarqQaEULWTtWZ3XUEWDykiEPlVuf0xny8TOfvVvxtdA3taLlg7Kq
- kiax63WF36hEd8GHtA0MHrxI3Q8sBVurcVbrUOEc+EDlDUm2b4mKwHEmo1nUQBNVPgbk
- wAVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707219315; x=1707824115;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=viOxfD0JcNPJSOpjzRoxX1cSnRwbLRV5nd1z0L0MWGE=;
- b=s2GAfOaXDrjt2l/8IxyRSEZTlyCHy6pU5qrh48r7C3DfWFlVm7S39u38FAHRuLegLm
- 1jrKoR6CKfsbwWhvtPrCEv+QrqWUgf2IzvSIQL3LLnle/tVXrvxw0e8a7iXexgOsqvLc
- Oc7sZhuJ8HmNfbGwbKVf5ZSoooHdhUW/gSGgf4sx83siudLfkiFVjpvqbdsGTmuh7+UW
- i4+Qhg/9ARxA+QDXAksy0xBFoJiMCta3cUZ1R7VS1cqMiLMITmJCCH7ZrtCGqZU5FQLk
- A5mRPbdZ1CuhPneUKSo+EgQGHJlq+ZgO5Hlq9b5DZNjmzNKU/offdBDY3Z/R6wSFYsiJ
- ExyA==
-X-Gm-Message-State: AOJu0Yycx8nyWnVS5S7DZJGNY+9p2Yqdh1wVmvsOwKXYE5W2zUWOp4rq
- XRB9QQGhyI6aFJ9jIFWXh00InsfFL7dHx057fUJwKWLzaKMsY7TxWlZlhm0bHi8=
-X-Google-Smtp-Source: AGHT+IEVYidMT2gA1ZsliW7LUxCyOWXEPh+dRSU5aLlrSpJdP4WrWewqnjmGmDIhpgBZv6GLdvF43A==
-X-Received: by 2002:a17:902:c101:b0:1d9:464b:688d with SMTP id
- 1-20020a170902c10100b001d9464b688dmr1109570pli.25.1707219315071; 
- Tue, 06 Feb 2024 03:35:15 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCX+/Q+NvWODeGevEeqnhvR9l4GYZKs5pBtsIjpxkKMBbgaDmL/7BccgQdMi/Us6aTbWoapCsgQABp/X2XLuLQvUHCxQfM6Dr/nLDFw5fcgZAiaAAC9TS6xhJdQUz4VRvhmCbjFRdnwPrUYSOFuyqlpMzQUSIBzwtlAIo9eYycMlwtaCF9OJJoKYW8yXx/y8suiuIpcEs3gNvN+SlPjV9moOUa3hYhH6IEGxrpS39VnRhckPJzGjj/bDTypg2WwEMiRG
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- v11-20020a170902d08b00b001d8dbb867b1sm1645643plv.179.2024.02.06.03.35.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 03:35:14 -0800 (PST)
-Message-ID: <e170e285-9e53-4e73-9179-4c40854177e5@ventanamicro.com>
-Date: Tue, 6 Feb 2024 08:35:10 -0300
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rXKtq-0004Vg-Hu
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 07:50:09 -0500
+Received: from mail-dm6nam11on2062.outbound.protection.outlook.com
+ ([40.107.223.62] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rXKto-0007iw-5B
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 07:50:06 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=btH6SGo7KjZHtdVGLhkkyECElS+s4hhkYmH9baugdFJ1Yua8YfLxr7UrVjxtRx+pIP85YWY4vv+z6PI9ItVefGDVZfmq8KiOOY+FQKoKcyCQXnr2HW/GBZyVeTlyTTbS+fiBPCHRZ4ALzqg2eUZt7vfSRfaVLHnFGGJmZefF2V+G/io9EUYhEz1SraplyatchvzZUXGdBNtWzmzeLMs6ev/mo0MppDXL+wtne4N1Tt/8rrvAvzPVmVzBQ1i9zL8Vs6FNVTHgTTq+Pz5dTyE9pX+J5bwPWBr5KFeeRKJEoP79qefqL78hYlKanW7ZU52z1dHImnkBIG8NXScGOfKGhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=v54odVXIYUGkMlqPvymi5nT+hDWFSH4hku8pD/iEr0s=;
+ b=eG08kYM+It6I/KHkk5Vjy4Cz6apS3dhviFhOdaolFPhnn4rjK5pTsfPsZkDx9Zy67SfUCVwO0tGTMYT4e614MJDCiUjJrqbD1zOgauUo7rW/fFcEhSARFVmCer+1Xy0kpApt30Q3vGZcWvDfqbpVMlsPSvIS3nHvUjUX+QJGoho+uWUAI18orqe5yaRE06su3wzc0Lft17F5MDsbQEeZkBlNcWlZins1f1+ifqPp62WkA05RLIPSVtBNrUR1nfJOSdnb7p4ans+ChQ6dfuMGopNZMwHSX+7i+eQwomYNP5F30ioMZVrzMjn0/m4Op1GK1DOsRHue63g5Tb0YVglziQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=v54odVXIYUGkMlqPvymi5nT+hDWFSH4hku8pD/iEr0s=;
+ b=bCdb6485fEVHr+qskHdULUvuCayeLkYcfxhugKSccN4Jdx6EuKBNh5LCEywYghfWHnOlDtwZ2TsCORIZAbztQh4qLjLRWSEzjkxIIYMzToDyd/crfhYVS3BBMMkRNZUmd++QIaWc3p8HnsGcwmH1XZXdwhiX4RHjBjbgcUCOVnJuYbii1Nc3b0pHspygWdeBaIqw5s7DAkynOhcW2C9iUIpWaxaBDbETrIObeKEuaNjuDBxByfsXqXM4zw/JM2Qi4i+cGY3W4+/bEitOiqbKdvlFmShG3nSriXOfok8MCo3DUmmInEmNdCL2nRyeI1FtRhWDNS12eiX43Jzs41Zp5g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by CYYPR12MB8940.namprd12.prod.outlook.com (2603:10b6:930:bd::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.17; Tue, 6 Feb
+ 2024 12:44:58 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::c444:5cde:d19a:c73e]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::c444:5cde:d19a:c73e%7]) with mapi id 15.20.7270.016; Tue, 6 Feb 2024
+ 12:44:58 +0000
+Message-ID: <e4f9337d-ed7d-4a11-84dd-76661009c3fc@nvidia.com>
+Date: Tue, 6 Feb 2024 14:44:52 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw: riscv: Allow large kernels to boot by moving the
- initrd further way in RAM
-To: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240205070040.367541-1-alexghiti@rivosinc.com>
- <624964b1-d0e7-42b2-b4c2-690107882d01@ventanamicro.com>
- <CAHVXubicir4xetoFxmESNW=jjM7gUrkwwaeLyEiSGrB7m1nyTQ@mail.gmail.com>
- <CAHVXubixZe9RfCow7t6Xq4T+62sj7-AGKmwG2K8JZUD2TfFmkA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] migration/multifd: Unify multifd and TLS
+ connection paths
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAHVXubixZe9RfCow7t6Xq4T+62sj7-AGKmwG2K8JZUD2TfFmkA@mail.gmail.com>
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20240205194929.28963-1-farosas@suse.de>
+ <20240205194929.28963-6-farosas@suse.de>
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20240205194929.28963-6-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR2P281CA0018.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a::28) To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|CYYPR12MB8940:EE_
+X-MS-Office365-Filtering-Correlation-Id: b80f7bda-0450-4fc6-0b63-08dc27116d1b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: HULQiaQmYiaCRzGVHykHHRgb+AA3eeH0FbVUxM88m+3wqSfnBrapgCtvr0iHTI3MBZWF7r9xTjJKV6zBN2wWyV7Jvh2UXpbLgjoP9eOa4lrXtjsCAY0FlOEbO6DAq7gUA8KrP+j47lDcOmCrxd6Q2kb4RAdaED0a/5Mwtp/kUxeK7Iv265iD3MSASAB5uzcb9gV4MHSbMG4maA99fiLKL+3XsC5RDsqUvveLF+cuh1KKQHa5CVSYuAyLfUH70TPaA4D3/AlnSt3IA+03k+8NAabBTRklcX9KK7qmDRnoq4pWMf86Ud/H1zr/InDbvZ+NvU9F1b9fiveHZqQpIxrDx0DxYPgUVYBszUYc0Z8OjMMy8gM8wzqyWykqN3LuoIajc6AXMb2ru5OpTmmpWzdBq8tBpm40AMAzLZCFoSNzPw4IIuoIA4QAUW7Pn1I5VtWi1nnfaGar2pcJldMd0l89PySQ+XyXN7fYQGxQIEATB/vIdbo/G529AEFc8kPEnYPvgpuQsOErzGYzY4zbdg2laJz5XVY3c5otP6dRHcMFSHsd8zcy3hnfmg0r27M3UZ5hNUjBGG/H8NXCQuphXH/hBiySNiF/qxZHoGX+Ntt5lPl1mREHSRzZ6LJ8hT2s5UyPf9pVS14GJTswtW95kI55Dg==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376002)(346002)(136003)(396003)(39860400002)(366004)(230273577357003)(230922051799003)(1800799012)(451199024)(186009)(64100799003)(41300700001)(83380400001)(6506007)(6666004)(2906002)(53546011)(66476007)(4326008)(316002)(66946007)(8676002)(54906003)(8936002)(66556008)(478600001)(5660300002)(6512007)(26005)(2616005)(36756003)(31696002)(31686004)(38100700002)(6486002)(86362001)(45980500001)(43740500002);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d09zdDJpTEVraGVCMWNzcExFRTJodWU1bUQ4cE9UOGNpQU9WUldwWDVsVUNq?=
+ =?utf-8?B?TUdYYmhpVnJmZG5oWWRhRHFGTWUyRDZweTVGYXJnbXJDVTV6MS9YWjdZdTFN?=
+ =?utf-8?B?cVczaUdtNGVaeFh0UXFwWE5Nd1ZLU09xSmdzZlRmU01XdTAvTEJ6SlIyRWpC?=
+ =?utf-8?B?ck52Z1NlcDhaT0lQU3NsQVZ6a29GNUJNTENSNURRWm15VXNNWXRia0pSY1NR?=
+ =?utf-8?B?bDhxWmpmcWF6M2lzaUVKVk1WbjNQaFh1ajYvTHppZ1JiMlcxK2Q1K3F0ZVRR?=
+ =?utf-8?B?dDRTbm5xMU5IVWxCRFEyMFhMUVV4UUpKU3NpbjluNHlhRVgvUE1TckV1eHZP?=
+ =?utf-8?B?clExNnFGalVvTTdiK0VrRlFZcEFHcFVvZnRrWHI4K3Y4dGQwOXVNQ21NMU9L?=
+ =?utf-8?B?eHA2RlczU0tBTnNwS1ZYdDRtcVJNNUFxNi9pdy9tY1VicmhkVFZoa0NjZ2Fk?=
+ =?utf-8?B?eWJuTTFBbXJvUWEzbXJSckNRT3ZDQkFycmN3NjdXTXhmR0ZPTkVBZmt1K1lu?=
+ =?utf-8?B?dXVNM2YrNU5Fa3NLN0tvQnpyMk1FWkNtNWQ5dVlpSXg3ejBHTy9mRzNGS3Fy?=
+ =?utf-8?B?UHJzckNWa2pSQ2taVHphTTc4cEtZM0xVVG4vZXZZM2lKYW9obEhoMk01dVVO?=
+ =?utf-8?B?dGxqZVlnNmtJZlJlMGt2NzVmNHJHMlVuWm00YVhNSUJQc2FaZFpPbWlobHds?=
+ =?utf-8?B?c21QMUJYRU4xRlJNdnRKaVNpM3dOME1NUEFTRDhYTTNHaE5nNTZiYksyNUV3?=
+ =?utf-8?B?SUZkT3dvaGhCeHVCSm5DZFVNRDlndXlnYVJuRkRRNVFoSUNzYW8vQXNIYzFm?=
+ =?utf-8?B?ZFozbjZTaGhjODU4OGhsb0Q0TGJXdXpOUDJqRFpqeUlYNEFINFdIbElFZmd4?=
+ =?utf-8?B?d2Y0WXBXY0lVdU1PNkR4amZmaXNzRlBqaDdHMTUrQytNM0sxMnZ0L1JwaFUy?=
+ =?utf-8?B?ZGpCbWFkSWp5NW5XNTk1VlBxeXZ3MTdCUGRhOUlZM0RIZWREeFh4MWpBWGEx?=
+ =?utf-8?B?TjhOa2FqUWd3dHJXbWJlYkhPREd3RHNrbkpYZ09NUHcxeWgwcUFCT0gveXlS?=
+ =?utf-8?B?aFVJU3YrajdMeFN2V1I5LzdTeCtSSGt4RzR3WnlhS3g3K2ZtTVV6VmFRWGZ2?=
+ =?utf-8?B?OTE1V3FLay9JdjRIaGRudGQyakoxTFdnbTZEdkNDZDRQbWtJeVYvUXUwV3pV?=
+ =?utf-8?B?aHNOZ3Z2eVZERTlMRVJxSXg1OFlUVy9FSW5ETytiRis0aytvbEF3K0lKY29q?=
+ =?utf-8?B?Z29IaVVlMm9QYTlmejFnUllrUnZZYWU4STFEL0hmak5mL3pHclpHOWNpckhT?=
+ =?utf-8?B?bFpoemNHQTFSMUNBWWpWdG45M3Y2OHo5RHkxOUJ6THNwSEZCS25ZVnJkSG92?=
+ =?utf-8?B?eFJiOUo3dmVqSGpJTmJDTzRKcStoOFN6VmZ3aHl6YVdWdkl6RXNIME9UNVVs?=
+ =?utf-8?B?Q0tXSndkMXJyVFBoTm01R1QzTWdmOEVvbXVsV25ZaGpvSmtaSlByQnpHMXJQ?=
+ =?utf-8?B?U0ZCaTVtQzFPWFkwT1ZHQUF6S2Q0QXFSRXc5dTlobGJtbFhya3JrdnRkYmxX?=
+ =?utf-8?B?eWpZN29Vd29SVWpvWUEyaGluckNLUHd4OEl1ejM2SGRJM05pYzNnODRqVUxN?=
+ =?utf-8?B?RkpOakFMYXJkbzVIUTJrczVCR1d6Y0c3dXJsUlZiZ29oZHpzdWRpdjluRlhG?=
+ =?utf-8?B?Rmc3V20xSFJIdW1lMVFpMlV2ZUhabXZWUjA5VjZvcTFMbDlzemM1bnBDRXBL?=
+ =?utf-8?B?Zkc5ODN1R0tIZHNIMGVPcWs1SXh3d2VCL0EzVHNWY2FuRlZVeWNRTEVSVGRJ?=
+ =?utf-8?B?S08yd0JFaENLbjZYOTFNMWx4d1pNcTNlMVEvcGJRSGVLRkN5NGlLUlIvR2R0?=
+ =?utf-8?B?TkpOSDJCMXBoaWkrWGJ1SnhIbWplMCtXWnBkclRPODlDTkF1MnNhdlZFZnFj?=
+ =?utf-8?B?Z0I4dXlxMVZoUWJkQ2poL3AvbE1RQTNpUVd6M1dBbnYzc2QvSW1UYTRnQUZY?=
+ =?utf-8?B?bCs4cnk4cmVYNnlqZEZDRjVvWVZFR0ZGOWpPTENUUUNUQWsycnlhek9nUjN3?=
+ =?utf-8?B?UnM0SmtzcytjZk9BdGJjSEl3VGI2b3U0Q01Za0h4MlJ5blh6NWRVREpEQnkw?=
+ =?utf-8?Q?cjortHAgkodwNL34hYI8Hdj2L?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b80f7bda-0450-4fc6-0b63-08dc27116d1b
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2024 12:44:58.0346 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: aju9LZpy4X4Xq4C6q7zua4k0tI57rxKhymG5b+yG57bZ64f4SdYbHdeuRzfgUDkmPS+6B/VmrV8fC4fdiQAapA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8940
+Received-SPF: softfail client-ip=40.107.223.62;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,132 +150,162 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 05/02/2024 21:49, Fabiano Rosas wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> During multifd channel creation (multifd_send_new_channel_async) when
+> TLS is enabled, the multifd_channel_connect function is called twice,
+> once to create the TLS handshake thread and another time after the
+> asynchrounous TLS handshake has finished.
+>
+> This creates a slightly confusing call stack where
+> multifd_channel_connect() is called more times than the number of
+> channels. It also splits error handling between the two callers of
+> multifd_channel_connect() causing some code duplication. Lastly, it
+> gets in the way of having a single point to determine whether all
+> channel creation tasks have been initiated.
+>
+> Refactor the code to move the reentrancy one level up at the
+> multifd_new_send_channel_async() level, de-duplicating the error
+> handling and allowing for the next patch to introduce a
+> synchronization point common to all the multifd channel creation,
+> regardless of TLS.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>   migration/multifd.c | 73 +++++++++++++++++++--------------------------
+>   1 file changed, 30 insertions(+), 43 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index cc10be2c3f..89d39fa67c 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -869,30 +869,7 @@ out:
+>       return NULL;
+>   }
+>
+> -static bool multifd_channel_connect(MultiFDSendParams *p,
+> -                                    QIOChannel *ioc,
+> -                                    Error **errp);
+> -
+> -static void multifd_tls_outgoing_handshake(QIOTask *task,
+> -                                           gpointer opaque)
+> -{
+> -    MultiFDSendParams *p = opaque;
+> -    QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
+> -    Error *err = NULL;
+> -
+> -    if (!qio_task_propagate_error(task, &err)) {
+> -        trace_multifd_tls_outgoing_handshake_complete(ioc);
+> -        if (multifd_channel_connect(p, ioc, &err)) {
+> -            return;
+> -        }
+> -    }
+> -
+> -    trace_multifd_tls_outgoing_handshake_error(ioc, error_get_pretty(err));
+> -
+> -    multifd_send_set_error(err);
+> -    multifd_send_kick_main(p);
+> -    error_free(err);
+> -}
+> +static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque);
+>
+>   static void *multifd_tls_handshake_thread(void *opaque)
+>   {
+> @@ -900,7 +877,7 @@ static void *multifd_tls_handshake_thread(void *opaque)
+>       QIOChannelTLS *tioc = QIO_CHANNEL_TLS(p->c);
+>
+>       qio_channel_tls_handshake(tioc,
+> -                              multifd_tls_outgoing_handshake,
+> +                              multifd_new_send_channel_async,
+>                                 p,
+>                                 NULL,
+>                                 NULL);
+> @@ -936,19 +913,6 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
+>                                       QIOChannel *ioc,
+>                                       Error **errp)
+>   {
+> -    trace_multifd_set_outgoing_channel(
+> -        ioc, object_get_typename(OBJECT(ioc)),
+> -        migrate_get_current()->hostname);
+> -
+> -    if (migrate_channel_requires_tls_upgrade(ioc)) {
+> -        /*
+> -         * tls_channel_connect will call back to this
+> -         * function after the TLS handshake,
+> -         * so we mustn't call multifd_send_thread until then
+> -         */
+> -        return multifd_tls_channel_connect(p, ioc, errp);
+> -    }
+> -
+>       migration_ioc_register_yank(ioc);
+>       p->registered_yank = true;
+>       p->c = ioc;
+> @@ -959,20 +923,43 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
+>       return true;
+>   }
+>
+> +/*
+> + * When TLS is enabled this function is called once to establish the
+> + * TLS connection and a second time after the TLS handshake to create
+> + * the multifd channel. Without TLS it goes straight into the channel
+> + * creation.
+> + */
+>   static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
+>   {
+>       MultiFDSendParams *p = opaque;
+>       QIOChannel *ioc = QIO_CHANNEL(qio_task_get_source(task));
+>       Error *local_err = NULL;
+>
+> +    bool ret;
+> +
+>       trace_multifd_new_send_channel_async(p->id);
+> -    if (!qio_task_propagate_error(task, &local_err)) {
+> -        qio_channel_set_delay(ioc, false);
+> -        if (multifd_channel_connect(p, ioc, &local_err)) {
+> -            return;
+> -        }
+> +
+> +    if (qio_task_propagate_error(task, &local_err)) {
+> +        ret = false;
+> +        goto out;
+> +    }
 
-On 2/6/24 06:41, Alexandre Ghiti wrote:
-> Hi Daniel,
-> 
-> On Mon, Feb 5, 2024 at 2:36 PM Alexandre Ghiti <alexghiti@rivosinc.com> wrote:
->>
->> Hi Daniel,
->>
->> On Mon, Feb 5, 2024 at 1:17 PM Daniel Henrique Barboza
->> <dbarboza@ventanamicro.com> wrote:
->>>
->>>
->>>
->>> On 2/5/24 04:00, Alexandre Ghiti wrote:
->>>> Currently, the initrd is placed at 128MB, which overlaps with the kernel
->>>> when it is large (for example syzbot kernels are). From the kernel side,
->>>> there is no reason we could not push the initrd further away in memory
->>>> to accomodate large kernels, so move the initrd at 512MB when possible.
->>>
->>> typo: accommodate
->>>
->>>>
->>>> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
->>>> ---
->>>
->>> Patch looks good - just tested with an Ubuntu guest and nothing bad happened.
->>>
->>> But I wonder ... what if there's an even bigger kernel we have to deal with?
->>> Move initrd even further away to fit it in?
->>>
->>> Instead of making assumptions about where initrd starts, we could grab the kernel
->>> size loaded in the board and use it as a reference. This would be done by storing
->>> the return of load_elf_ram_sym/load_uimage_as/load_image_targphys_as from
->>> riscv_load_kernel() an passing as argument to riscv_load_initrd().
-> 
-> So this does not work because the size returned by
-> load_image_targphys_as() does not take into account the size of the
-> BSS sections (and I guess other NOBITS sections) and then we end up
-> loading the initrd there. I'm a bit surprised though because arm64
-> does just that https://elixir.bootlin.com/qemu/latest/source/hw/arm/boot.c#L1034.
-> I also tried using the highaddr parameter, but that gives the same
-> result. We could parse the Image header (a PE header) to get the
-> "Virtual Size" of the .data section, but I did not find any PE header
-> parser in qemu, so that would be overkill?
-> 
-> Any idea?
+I think this common error handling for both TLS/non-TLS is a bit 
+problematic if there is an error in TLS handshake:
+multifd_tls_channel_connect() sets p->c = QIO_CHANNEL(tioc).
+TLS handshake fails.
+multifd_new_send_channel_async() errors and calls 
+object_unref(OBJECT(ioc)) which will result in freeing the IOC.
+Then, multifd_send_terminate_threads() will try to access p->ioc because 
+it's not NULL, causing a segfault.
 
+> +
+> +    qio_channel_set_delay(ioc, false);
 
-hmm that's unfortunate. The size retrieval in these cases might have to do with
-missing information from the image header, and we can't control that because we're
-not generating the images. It would be better if they return '0' in these cases
-(then we could special case them in the math), but if it's a non-zero return then
-there's not much we can do.
+Maybe qio_channel_set_delay() should be moved inside 
+multifd_channel_connect()? It's called two times when TLS is used.
 
-If we can't reliably get the kernel size in RAM then I believe your patch is going
-to make it do (until we want to load an even bigger kernel hehe). Can you please
-document these findings (i.e. we can't retrieve the kernel size reliably) in the
-commit msg?
-
-
-Thanks,
-
-Daniel
-
-> 
-> Thanks,
-> 
-> Alex
-> 
->>>
->>> initrd start would then be:
->>>
->>>       start = kernel_entry + MIN(mem_size / 2, kernel_size);
->>>
->>> However, I believe we would like to keep the existing 128Mb minimum initrd start,
->>> even if the kernel is smaller than 128Mb, to avoid breaking existing configs that
->>> might be making this assumption. initrd start would then become:
->>>
->>>
->>>       start = kernel_entry + MIN(mem_size / 2, MAX(kernel_size, 128 * MiB));
->>
->> Great, I agree with you, thanks for the pointers. I'll just align the
->> size on a 2MB boundary to make sure the kernel mapping (which in the
->> case of Linux uses PMD) does not overlap with the initrd.
->>
->> I'll get back soon with a v2.
->>
->> Thanks again,
->>
->> Alex
->>
->>>
->>>
->>>
->>> Thanks,
->>>
->>>
->>>
->>> Daniel
->>>
->>>
->>>>    hw/riscv/boot.c | 12 ++++++------
->>>>    1 file changed, 6 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
->>>> index 0ffca05189..9a367af2fa 100644
->>>> --- a/hw/riscv/boot.c
->>>> +++ b/hw/riscv/boot.c
->>>> @@ -188,13 +188,13 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
->>>>         * kernel is uncompressed it will not clobber the initrd. However
->>>>         * on boards without much RAM we must ensure that we still leave
->>>>         * enough room for a decent sized initrd, and on boards with large
->>>> -     * amounts of RAM we must avoid the initrd being so far up in RAM
->>>> -     * that it is outside lowmem and inaccessible to the kernel.
->>>> -     * So for boards with less  than 256MB of RAM we put the initrd
->>>> -     * halfway into RAM, and for boards with 256MB of RAM or more we put
->>>> -     * the initrd at 128MB.
->>>> +     * amounts of RAM, we put the initrd at 512MB to allow large kernels
->>>> +     * to boot.
->>>> +     * So for boards with less than 1GB of RAM we put the initrd
->>>> +     * halfway into RAM, and for boards with 1GB of RAM or more we put
->>>> +     * the initrd at 512MB.
->>>>         */
->>>> -    start = kernel_entry + MIN(mem_size / 2, 128 * MiB);
->>>> +    start = kernel_entry + MIN(mem_size / 2, 512 * MiB);
->>>>
->>>>        size = load_ramdisk(filename, start, mem_size - start);
->>>>        if (size == -1) {
+> +
+> +    trace_multifd_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)),
+> +                                       migrate_get_current()->hostname);
+> +
+> +    if (migrate_channel_requires_tls_upgrade(ioc)) {
+> +        ret = multifd_tls_channel_connect(p, ioc, &local_err);
+> +    } else {
+> +        ret = multifd_channel_connect(p, ioc, &local_err);
+> +    }
+> +
+> +    if (ret) {
+> +        return;
+>       }
+>
+> +out:
+>       trace_multifd_new_send_channel_async_error(p->id, local_err);
+>       multifd_send_set_error(local_err);
+>       multifd_send_kick_main(p);
+> --
+> 2.35.3
+>
 
