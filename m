@@ -4,71 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F26DAC48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 16:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7F1C4829C
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXOkq-0004Rj-Qd; Tue, 06 Feb 2024 11:57:04 -0500
+	id 1rXOnT-0005SG-7H; Tue, 06 Feb 2024 11:59:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXOko-0004RN-VR
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:57:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=f3tV=JP=kaod.org=clg@ozlabs.org>)
+ id 1rXOnR-0005Rl-33; Tue, 06 Feb 2024 11:59:45 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXOkn-0008Mn-JD
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 11:57:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707238620;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ztxho7oBB6inUtD3Sj7SmQfF6+CBLGoyXGPsDrDKIP8=;
- b=NxR9OrL9iAOi9I0jpRFrhaIiR4+7EwSmD96zumvrc8Gq3+0E/+DD74N2v6wOebP+DGCPMY
- zGYmkCAnjYFYxPjZOLxlrywm1YJBAn0Lw3uN3rTy4lgQaFX67DKHe1mrgZPZrMnFe63dSl
- VrveVBUJUz3tcFTkgzPZUzGXj90b4Ds=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-oxWs2-kBNs2RN7PGlSGVNw-1; Tue, 06 Feb 2024 11:56:57 -0500
-X-MC-Unique: oxWs2-kBNs2RN7PGlSGVNw-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
+ (Exim 4.90_1) (envelope-from <SRS0=f3tV=JP=kaod.org=clg@ozlabs.org>)
+ id 1rXOnO-0000TR-Qd; Tue, 06 Feb 2024 11:59:44 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TTqGx0gw4z4wyp;
+ Wed,  7 Feb 2024 03:59:37 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 996E184ACA5;
- Tue,  6 Feb 2024 16:56:56 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.40])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A4BD01C060AF;
- Tue,  6 Feb 2024 16:56:55 +0000 (UTC)
-Date: Tue, 6 Feb 2024 11:56:54 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH 2/2] scsi: Await request purging
-Message-ID: <20240206165654.GD66397@fedora>
-References: <20240202144755.671354-1-hreitz@redhat.com>
- <20240202144755.671354-3-hreitz@redhat.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TTqGv08ckz4wcB;
+ Wed,  7 Feb 2024 03:59:34 +1100 (AEDT)
+Message-ID: <21cf49a2-8e3a-4dc5-9b3c-841818b20469@kaod.org>
+Date: Tue, 6 Feb 2024 17:59:32 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="x3y+hhpOs+HwHZNX"
-Content-Disposition: inline
-In-Reply-To: <20240202144755.671354-3-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v0 1/2] aspeed: support uart controller both 0 and 1 base
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20240205091415.935686-1-jamin_lin@aspeedtech.com>
+ <20240205091415.935686-2-jamin_lin@aspeedtech.com>
+ <aab5b2fb-e7f0-434b-935c-ff5ad5d39f21@kaod.org>
+ <30e7e323-369b-4ee3-994e-a6cb9205a4f9@kaod.org>
+ <SI2PR06MB5041FC68062741DB853B979EFC462@SI2PR06MB5041.apcprd06.prod.outlook.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB5041FC68062741DB853B979EFC462@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=f3tV=JP=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,60 +73,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/6/24 04:29, Jamin Lin wrote:
+>> -----Original Message-----
+>> The uart definitions on the AST2700 are different :
+>>
+>>
+>> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm
+>> 64/boot/dts/aspeed/aspeed-g7.dtsi
+>>
+>> 	serial0 = &uart0;
+>> 	serial1 = &uart1;
+>> 	serial2 = &uart2;
+>> 	serial3 = &uart3;
+>> 	serial4 = &uart4;
+>> 	serial5 = &uart5;
+>> 	serial6 = &uart6;
+>> 	serial7 = &uart7;
+>> 	serial8 = &uart8;
+>>           ...
+>>
+>> I think the names in the DT (and consequently in the QEMU models) follow the
+>> IP names in the datasheet.
+>>
+>> I don't think we care in QEMU, so I would be inclined to change the indexing of
+>> the device names in QEMU and start at 0, which would introduce a
+>> discrepancy for the AST2400, AST2600, AST2600 SoC.
+>>
+>> Let's see what the other maintainers have to say.
+>>
+>> Thanks,
+>>
+>> C.
+> Hi Cedric,
+> 
+> Did you mean to change the naming of uart device to 0 base for all ASPEED SOCs?
+> If yes, it seems we need to do the following changes.
+> 1. add ASPEED_DEV_UART0 in aspeed_soc.h
+> 2. Re-defined uart memory map for ast2600, ast10x0, ast2500 and ast2400(uart0 -> ASPEED_DEV_UART0)
+> Take ast2600 for example:
+> static const hwaddr aspeed_soc_ast2600_memmap[] = {
+>      [ASPEED_DEV_UART1]     = 0x1E783000, ---> [ASPEED_DEV_UART0]
+>      [ASPEED_DEV_UART2]     = 0x1E78D000, ---> [ASPEED_DEV_UART1]
+>      [ASPEED_DEV_UART3]     = 0x1E78E000,
+>      [ASPEED_DEV_UART4]     = 0x1E78F000,
+>      [ASPEED_DEV_UART5]     = 0x1E784000,
+>      [ASPEED_DEV_UART6]     = 0x1E790000,
+>      [ASPEED_DEV_UART7]     = 0x1E790100,
+>      [ASPEED_DEV_UART8]     = 0x1E790200,
+>      [ASPEED_DEV_UART9]     = 0x1E790300,
+>      [ASPEED_DEV_UART10]    = 0x1E790400,
+>      [ASPEED_DEV_UART11]    = 0x1E790500,
+>      [ASPEED_DEV_UART12]    = 0x1E790600,
+>      [ASPEED_DEV_UART13]    = 0x1E790700, ---> [ASPEED_DEV_UART12]
+> };
+> If no, could you please descript it more detail? So, I can change it and re-send this patch series.
 
---x3y+hhpOs+HwHZNX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Let's keep the datasheet names. I had forgotten the reason initially
+and from an HW POV it makes sense to keep them in sync. I will add
+some more comments to the patch.
+  
+> By the way, I will send a new patch series to support AST2700 in two weeks.
+> We encountered GIC issues. It seems that QEMU support GIC v3 but SPI did not support, yet.
+>
+> https://github.com/qemu/qemu/blob/master/hw/intc/arm_gicv3_dist.c#L383
+> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-g7.dtsi#L229
 
-On Fri, Feb 02, 2024 at 03:47:55PM +0100, Hanna Czenczek wrote:
-> scsi_device_for_each_req_async() currently does not provide any way to
-> be awaited.  One of its callers is scsi_device_purge_requests(), which
-> therefore currently does not guarantee that all requests are fully
-> settled when it returns.
->=20
-> We want all requests to be settled, because scsi_device_purge_requests()
-> is called through the unrealize path, including the one invoked by
-> virtio_scsi_hotunplug() through qdev_simple_device_unplug_cb(), which
-> most likely assumes that all SCSI requests are done then.
->=20
-> In fact, scsi_device_purge_requests() already contains a blk_drain(),
-> but this will not fully await scsi_device_for_each_req_async(), only the
-> I/O requests it potentially cancels (not the non-I/O requests).
-> However, we can have scsi_device_for_each_req_async() increment the BB
-> in-flight counter, and have scsi_device_for_each_req_async_bh()
-> decrement it when it is done.  This way, the blk_drain() will fully
-> await all SCSI requests to be purged.
->=20
-> This also removes the need for scsi_device_for_each_req_async_bh() to
-> double-check the current context and potentially re-schedule itself,
-> should it now differ from the BB's context: Changing a BB's AioContext
-> with a root node is done through bdrv_try_change_aio_context(), which
-> creates a drained section.  With this patch, we keep the BB in-flight
-> counter elevated throughout, so we know the BB's context cannot change.
->=20
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  hw/scsi/scsi-bus.c | 30 +++++++++++++++++++++---------
->  1 file changed, 21 insertions(+), 9 deletions(-)
+If you did any hacks or workarounds in the QEMU models, please keep them
+separate from the other patches so that we can discuss.
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> It think that we can discuss it in a new AST2700 patch series.
+Sure.
 
---x3y+hhpOs+HwHZNX
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
 
------BEGIN PGP SIGNATURE-----
+C.
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXCZNYACgkQnKSrs4Gr
-c8jmfAf+MlOnPD9UT/LFzfN9+2d8kruKUFc/VL6EPgpXnC5qfxde0wWiWOJC/xLp
-h9czpC1EaTqVTvacjK5fsQQXX68knvITgbig48AWH3/tF+0eg3hSVTWWPLYzZuaz
-Aa5JzyZloNaPWPXd0E1Tufs1H+47WE2zACQg3gROcitQRqJpskT1zTg4sM5g4Wds
-lStjLnkta6isF7KChVkdFpPt4my3kZvVs0nbBa6LwmHc3kiBgDFlZ97csX0PVPFz
-K3Mc8K3EU5r1/odoYpEEtQFh3Lm6/GCaJLK4Gw8vndmK2ggmW65FEMrEmsl9xzVo
-/AQfuUxQ1yV5ZYYDo/UJN9giRo/KTw==
-=9z9H
------END PGP SIGNATURE-----
-
---x3y+hhpOs+HwHZNX--
 
 
