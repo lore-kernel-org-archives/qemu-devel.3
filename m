@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C86A3C4829C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BF6C4828D
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 00:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rX9Fo-0001kJ-W6; Mon, 05 Feb 2024 19:24:01 -0500
+	id 1rX9Fw-0001mz-Q3; Mon, 05 Feb 2024 19:24:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX9Fm-0001jG-7L
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:23:58 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX9Ft-0001mb-C7
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:24:05 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX9Fk-0003sR-7U
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:23:57 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rX9Fr-0003t9-Bc
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 19:24:05 -0500
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4160LX3c023430; Tue, 6 Feb 2024 00:23:52 GMT
+ 4160MJ4A025823; Tue, 6 Feb 2024 00:23:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=On0cXnAM/VIOLau6BhfyMy6ezCUC5MviB/LlM3G3vMg=;
- b=tgi4/nkVVof0lYAgMu/72WYxHHcUkxGHcdh3w+t13N7hbuAOxoBKmy4csurJwpNIoS0r
- lpTBvlHslsG2+3XMwIPEtTWfXRhxZ3AvPgZKo+rLgs/xRU4mrN+Yg4Bp0vzUnj8rCJN5
- 2ji4LhENnaJ3QkHSSQxSavAHVDBaDUye7OOKVXk8gepcgVdrI3nbE2lJoxbmHchJYOBP
- NaPBWW/lcGsa1ZzihVstpRnZLdkrP+OU31mQucCA0utqNUHHaqzybOBOnK+tvsV5LadT
- 9ydxMPmhmF9qajUHMplUrBhAjBBZ262kJ0WBXLkl+wEe/Ym9k5xSbQh8QH8Jr72yXBSi DA== 
+ bh=b5DDrymG6y6hoDXvZL54Cgzdaqfq/GvjB69xKDt3uAE=;
+ b=CM1yYIrsx6cdZ3l42L0esYzMQul6Ld/joGIAmZt+yhtFDIX0HCTk9AI5DfpBtAOZOP2h
+ iDs4HbcV1u5ATuJx2D5KwETn5NqhQRLPRVbto1AP9ytFFygffPzoHj/gjVCCs1nx+6Hq
+ CdOKm3kMVYdcLJ2ENGjXfwqd8a8Hj8MgP35mJgxdHSlqvmJsNw91Ck4UHHm45QKTmWEX
+ odo9TDPW8F7lPy8lKpme/SCNsCPfHCUBuB1fRW1U7PxuVGxCbspyNFyNccJ/o37FKj5u
+ zkNFDkS/QQ5CR/QFz5fzEyDL2ylIYzniLkhHzqKY4JwdraRe+Zn7bxMq4khZzdynAPeA FQ== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w3a1b04ur-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w3a5n00x1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Feb 2024 00:23:51 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4160MREZ027649;
- Tue, 6 Feb 2024 00:23:51 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w3a1b04uh-1
+ Tue, 06 Feb 2024 00:23:57 +0000
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4160NvbS029666;
+ Tue, 6 Feb 2024 00:23:57 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w3a5n00wh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Feb 2024 00:23:51 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 415L9ujq008527; Tue, 6 Feb 2024 00:23:50 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w221judsf-1
+ Tue, 06 Feb 2024 00:23:57 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 415LSC12016184; Tue, 6 Feb 2024 00:23:56 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w22h1u9vd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 Feb 2024 00:23:50 +0000
+ Tue, 06 Feb 2024 00:23:56 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4160NmMY22217390
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4160NsTH33816902
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 6 Feb 2024 00:23:48 GMT
+ Tue, 6 Feb 2024 00:23:54 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 739CE2004B;
- Tue,  6 Feb 2024 00:23:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3D6E720043;
+ Tue,  6 Feb 2024 00:23:54 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9006520043;
- Tue,  6 Feb 2024 00:23:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5FAB220040;
+ Tue,  6 Feb 2024 00:23:53 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.57.170])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  6 Feb 2024 00:23:47 +0000 (GMT)
+ Tue,  6 Feb 2024 00:23:53 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -77,28 +77,28 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v3 1/4] tests/vm: Set UseDNS=no in the sshd configuration
-Date: Tue,  6 Feb 2024 01:22:00 +0100
-Message-ID: <20240206002344.12372-2-iii@linux.ibm.com>
+Subject: [PATCH v3 4/4] meson: Link with libinotify on FreeBSD
+Date: Tue,  6 Feb 2024 01:22:03 +0100
+Message-ID: <20240206002344.12372-5-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240206002344.12372-1-iii@linux.ibm.com>
 References: <20240206002344.12372-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: WeyJueHIf02_T5wwHJZuz31MOJrrGh3i
-X-Proofpoint-ORIG-GUID: G4YbgauUn_SGLnoafyLauhsKfJncTkNt
+X-Proofpoint-GUID: 9xhiHaE8G1hRp09FCRAF30wKWnWA6H0w
+X-Proofpoint-ORIG-GUID: CCzA9FhmBl0OyGswEa2r1B8G87yz9wnp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-05_18,2024-01-31_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- lowpriorityscore=0 suspectscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- spamscore=0 malwarescore=0 adultscore=0 impostorscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ mlxscore=0 mlxlogscore=999
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0 malwarescore=0
+ phishscore=0 adultscore=0 suspectscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402060000
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -121,83 +121,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-make vm-build-freebsd sometimes fails with "Connection timed out during
-banner exchange". The client strace shows:
+make vm-build-freebsd fails with:
 
-    13:59:30 write(3, "SSH-2.0-OpenSSH_9.3\r\n", 21) = 21
-    13:59:30 getpid()                       = 252655
-    13:59:30 poll([{fd=3, events=POLLIN}], 1, 5000) = 1 ([{fd=3, revents=POLLIN}])
-    13:59:32 read(3, "S", 1)                = 1
-    13:59:32 poll([{fd=3, events=POLLIN}], 1, 3625) = 1 ([{fd=3, revents=POLLIN}])
-    13:59:32 read(3, "S", 1)                = 1
-    13:59:32 poll([{fd=3, events=POLLIN}], 1, 3625) = 1 ([{fd=3, revents=POLLIN}])
-    13:59:32 read(3, "H", 1)                = 1
+    ld: error: undefined symbol: inotify_init1
+    >>> referenced by filemonitor-inotify.c:183 (../src/util/filemonitor-inotify.c:183)
+    >>>               util_filemonitor-inotify.c.o:(qemu_file_monitor_new) in archive libqemuutil.a
 
-There is a 2s delay during connection, and ConnectTimeout is set to 1.
-Raising it makes the issue go away, but we can do better. The server
-truss shows:
+On FreeBSD the inotify functions are defined in libinotify.so. Add it
+to the dependencies.
 
-    888: 27.811414714 socket(PF_INET,SOCK_DGRAM|SOCK_CLOEXEC,0) = 5 (0x5)
-    888: 27.811765030 connect(5,{ AF_INET 10.0.2.3:53 },16) = 0 (0x0)
-    888: 27.812166941 sendto(5,"\^Z/\^A\0\0\^A\0\0\0\0\0\0\^A2"...,39,0,NULL,0) = 39 (0x27)
-    888: 29.363970743 poll({ 5/POLLRDNORM },1,5000) = 1 (0x1)
-
-So the delay is due to a DNS query. Disable DNS queries in the server
-config.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- tests/vm/basevm.py | 2 ++
- 1 file changed, 2 insertions(+)
+ meson.build      | 23 +++++++++++++++++++----
+ util/meson.build |  6 +++++-
+ 2 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
-index 61725b83254..c0d62c08031 100644
---- a/tests/vm/basevm.py
-+++ b/tests/vm/basevm.py
-@@ -406,40 +406,42 @@ def console_send(self, command):
-             vm.console_socket.send(char.encode("utf-8"))
-             time.sleep(0.01)
+diff --git a/meson.build b/meson.build
+index b5d6dc94a83..e5d6f2d057e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2367,60 +2367,72 @@ if rbd.found()
+ endif
+ if rdma.found()
+   config_host_data.set('HAVE_IBV_ADVISE_MR',
+                        cc.has_function('ibv_advise_mr',
+                                        dependencies: rdma,
+                                        prefix: '#include <infiniband/verbs.h>'))
+ endif
  
-     def console_wait_send(self, wait, command):
-         self.console_wait(wait)
-         self.console_send(command)
+ have_asan_fiber = false
+ if get_option('sanitizers') and \
+    not cc.has_function('__sanitizer_start_switch_fiber',
+                          args: '-fsanitize=address',
+                          prefix: '#include <sanitizer/asan_interface.h>')
+   warning('Missing ASAN due to missing fiber annotation interface')
+   warning('Without code annotation, the report may be inferior.')
+ else
+   have_asan_fiber = true
+ endif
+ config_host_data.set('CONFIG_ASAN_IFACE_FIBER', have_asan_fiber)
  
-     def console_ssh_init(self, prompt, user, pw):
-         sshkey_cmd = "echo '%s' > .ssh/authorized_keys\n" \
-                      % self._config['ssh_pub_key'].rstrip()
-         self.console_wait_send("login:",    "%s\n" % user)
-         self.console_wait_send("Password:", "%s\n" % pw)
-         self.console_wait_send(prompt,      "mkdir .ssh\n")
-         self.console_wait_send(prompt,      sshkey_cmd)
-         self.console_wait_send(prompt,      "chmod 755 .ssh\n")
-         self.console_wait_send(prompt,      "chmod 644 .ssh/authorized_keys\n")
++have_inotify_init = cc.has_header_symbol('sys/inotify.h', 'inotify_init')
++have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
++inotify = not_found
++if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
++  # libinotify-kqueue
++  inotify = cc.find_library('inotify')
++  if have_inotify_init
++    have_inotify_init = inotify.found()
++  endif
++  if have_inotify_init1
++    have_inotify_init1 = inotify.found()
++  endif
++endif
++config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
++config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
++
+ # has_header_symbol
+ config_host_data.set('CONFIG_BLKZONED',
+                      cc.has_header_symbol('linux/blkzoned.h', 'BLKOPENZONE'))
+ config_host_data.set('CONFIG_EPOLL_CREATE1',
+                      cc.has_header_symbol('sys/epoll.h', 'epoll_create1'))
+ config_host_data.set('CONFIG_FALLOCATE_PUNCH_HOLE',
+                      cc.has_header_symbol('linux/falloc.h', 'FALLOC_FL_PUNCH_HOLE') and
+                      cc.has_header_symbol('linux/falloc.h', 'FALLOC_FL_KEEP_SIZE'))
+ config_host_data.set('CONFIG_FALLOCATE_ZERO_RANGE',
+                      cc.has_header_symbol('linux/falloc.h', 'FALLOC_FL_ZERO_RANGE'))
+ config_host_data.set('CONFIG_FIEMAP',
+                      cc.has_header('linux/fiemap.h') and
+                      cc.has_header_symbol('linux/fs.h', 'FS_IOC_FIEMAP'))
+ config_host_data.set('CONFIG_GETRANDOM',
+                      cc.has_function('getrandom') and
+                      cc.has_header_symbol('sys/random.h', 'GRND_NONBLOCK'))
+-config_host_data.set('CONFIG_INOTIFY',
+-                     cc.has_header_symbol('sys/inotify.h', 'inotify_init'))
+-config_host_data.set('CONFIG_INOTIFY1',
+-                     cc.has_header_symbol('sys/inotify.h', 'inotify_init1'))
+ config_host_data.set('CONFIG_PRCTL_PR_SET_TIMERSLACK',
+                      cc.has_header_symbol('sys/prctl.h', 'PR_SET_TIMERSLACK'))
+ config_host_data.set('CONFIG_RTNETLINK',
+                      cc.has_header_symbol('linux/rtnetlink.h', 'IFLA_PROTO_DOWN'))
+ config_host_data.set('CONFIG_SYSMACROS',
+                      cc.has_header_symbol('sys/sysmacros.h', 'makedev'))
+ config_host_data.set('HAVE_OPTRESET',
+                      cc.has_header_symbol('getopt.h', 'optreset'))
+ config_host_data.set('HAVE_IPPROTO_MPTCP',
+                      cc.has_header_symbol('netinet/in.h', 'IPPROTO_MPTCP'))
  
-     def console_sshd_config(self, prompt):
-         self.console_wait(prompt)
-         self.console_send("echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\n")
-+        self.console_wait(prompt)
-+        self.console_send("echo 'UseDNS no' >> /etc/ssh/sshd_config\n")
-         for var in self.envvars:
-             self.console_wait(prompt)
-             self.console_send("echo 'AcceptEnv %s' >> /etc/ssh/sshd_config\n" % var)
+ # has_member
+ config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
+                      cc.has_member('struct sigevent', 'sigev_notify_thread_id',
+                                    prefix: '#include <signal.h>'))
+ config_host_data.set('HAVE_STRUCT_STAT_ST_ATIM',
+                      cc.has_member('struct stat', 'st_atim',
+                                    prefix: '#include <sys/stat.h>'))
+ config_host_data.set('HAVE_BLK_ZONE_REP_CAPACITY',
+                      cc.has_member('struct blk_zone', 'capacity',
+@@ -4390,40 +4402,43 @@ if host_os == 'windows'
+ endif
+ summary_info += {'seccomp support':   seccomp}
+ summary_info += {'GlusterFS support': glusterfs}
+ summary_info += {'hv-balloon support': hv_balloon}
+ summary_info += {'TPM support':       have_tpm}
+ summary_info += {'libssh support':    libssh}
+ summary_info += {'lzo support':       lzo}
+ summary_info += {'snappy support':    snappy}
+ summary_info += {'bzip2 support':     libbzip2}
+ summary_info += {'lzfse support':     liblzfse}
+ summary_info += {'zstd support':      zstd}
+ summary_info += {'NUMA host support': numa}
+ summary_info += {'capstone':          capstone}
+ summary_info += {'libpmem support':   libpmem}
+ summary_info += {'libdaxctl support': libdaxctl}
+ summary_info += {'libudev':           libudev}
+ # Dummy dependency, keep .found()
+ summary_info += {'FUSE lseek':        fuse_lseek.found()}
+ summary_info += {'selinux':           selinux}
+ summary_info += {'libdw':             libdw}
++if host_os == 'freebsd'
++  summary_info += {'libinotify-kqueue': inotify}
++endif
+ summary(summary_info, bool_yn: true, section: 'Dependencies')
  
-     def print_step(self, text):
-         sys.stderr.write("### %s ...\n" % text)
+ if host_arch == 'unknown'
+   message()
+   warning('UNSUPPORTED HOST CPU')
+   message()
+   message('Support for CPU host architecture ' + cpu + ' is not currently')
+   message('maintained. The QEMU project does not guarantee that QEMU will')
+   message('compile or work on this host CPU. You can help by volunteering')
+   message('to maintain it and providing a build host for our continuous')
+   message('integration setup.')
+   if get_option('tcg').allowed() and target_dirs.length() > 0
+     message()
+     message('configure has succeeded and you can continue to build, but')
+     message('QEMU will use a slow interpreter to emulate the target CPU.')
+   endif
+ endif
  
-     def wait_ssh(self, wait_root=False, seconds=300, cmd="exit 0"):
-         # Allow more time for VM to boot under TCG.
-         if not kvm_available(self.arch):
-             seconds *= self.tcg_timeout_multiplier
-         starttime = datetime.datetime.now()
-         endtime = starttime + datetime.timedelta(seconds=seconds)
-         cmd_success = False
-         while datetime.datetime.now() < endtime:
-             if wait_root and self.ssh_root(cmd) == 0:
-                 cmd_success = True
-                 break
-             elif self.ssh(cmd) == 0:
-                 cmd_success = True
+ if not supported_oses.contains(host_os)
+   message()
+diff --git a/util/meson.build b/util/meson.build
+index af3bf5692d8..0ef9886be04 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -87,40 +87,44 @@ if have_block or have_ga
+   util_ss.add(files('thread-pool.c', 'qemu-timer.c'))
+   util_ss.add(files('qemu-sockets.c'))
+ endif
+ if have_block
+   util_ss.add(files('aio-wait.c'))
+   util_ss.add(files('buffer.c'))
+   util_ss.add(files('bufferiszero.c'))
+   util_ss.add(files('hbitmap.c'))
+   util_ss.add(files('hexdump.c'))
+   util_ss.add(files('iova-tree.c'))
+   util_ss.add(files('iov.c', 'uri.c'))
+   util_ss.add(files('nvdimm-utils.c'))
+   util_ss.add(files('block-helpers.c'))
+   util_ss.add(files('qemu-coroutine-sleep.c'))
+   util_ss.add(files('qemu-co-shared-resource.c'))
+   util_ss.add(files('qemu-co-timeout.c'))
+   util_ss.add(files('readline.c'))
+   util_ss.add(files('throttle.c'))
+   util_ss.add(files('timed-average.c'))
+   if config_host_data.get('CONFIG_INOTIFY1')
+-    util_ss.add(files('filemonitor-inotify.c'))
++    freebsd_dep = []
++    if host_os == 'freebsd'
++      freebsd_dep = inotify
++    endif
++    util_ss.add(files('filemonitor-inotify.c'), freebsd_dep)
+   else
+     util_ss.add(files('filemonitor-stub.c'))
+   endif
+   if host_os == 'linux'
+     util_ss.add(files('vhost-user-server.c'), vhost_user)
+     util_ss.add(files('vfio-helpers.c'))
+     util_ss.add(files('chardev_open.c'))
+   endif
+ endif
+ 
+ if cpu == 'aarch64'
+   util_ss.add(files('cpuinfo-aarch64.c'))
+ elif cpu in ['x86', 'x86_64']
+   util_ss.add(files('cpuinfo-i386.c'))
+ elif cpu == 'loongarch64'
+   util_ss.add(files('cpuinfo-loongarch.c'))
+ elif cpu in ['ppc', 'ppc64']
+   util_ss.add(files('cpuinfo-ppc.c'))
+ endif
 -- 
 2.43.0
 
