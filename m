@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 925B7C4828D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC13C4829A
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 09:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXHiO-0005eo-8V; Tue, 06 Feb 2024 04:26:04 -0500
+	id 1rXHhQ-0004h1-H0; Tue, 06 Feb 2024 04:25:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rXHhv-0005Hy-Uh
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:25:37 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1rXHhO-0004gR-I0
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:25:02 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rXHhp-00051M-2M
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:25:32 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-40fe2d3d5cbso3073735e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 01:25:21 -0800 (PST)
+ id 1rXHhJ-0004mH-ML
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 04:25:02 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-511538be947so1844314e87.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 01:24:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707211520; x=1707816320; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707211495; x=1707816295; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RwJ8e6wUH7fqyic9sqG77ZVCFxcpo7vgFJo8+jFAkz0=;
- b=YRGmORrTHiLOENx0aCM7WPMQr0BoL+VC7H4YW1RfTyufQK51XxtIjNFhlJgG5Can7/
- KM2www3oAoPux+qlfwoTKpn0fLlBYaonfq1q3XKd26jtBMSI2C8bCp69AOC13nhIXLFp
- vXa0dAO2hh57IaVPJHTZN6VuX0dwU0/FUc7gHMxTQfkwBbfEOKGZIxRA7qtsMR7CCMZ8
- Pj/66l7jV/N8+k/4/V+GS5mdSBwSEwfs0AaKK9NBdhB6xcx0jEzxRMK1Susv1bmB7Ba+
- xZUzwpGUxUP0oNvIC6J4wmC9tVyfP29nrjn3rqv2dSXbyUmZMn9H/WC6zuXF/G6LZ+aj
- BgUw==
+ bh=OCiv7Y34jUunl2R1CBjG/RVHjCXAnByZwR7nxj0vfkc=;
+ b=eB6fOi2URhg44M0HI9Yb9X1g0YP5Xiw67+PJ3wDKBlgcyNOVkdwyeWU96BDWULCzjv
+ v8q63Uq24BTj6sY8yd0hMhOmFJ6F7shTm0TH/qBZbUpgtDZNtk31K6FvspRolWL2ONAT
+ duoL7l0LIW3zV/l5Zasw2kjv7TcrIkgGWiQRYazVjn90WtcKsD5XfpaBNWue0kMfJUjK
+ ybWIx7IKE4G+Jhm+V1LPubwuGG7vk60uBu6opJZqbhgsKxYInCpVgfi1vt/AEbryRsQk
+ GsTIDShGaKaTVC2goj0ik8AvF2qCDSTfwJjuduZeJ4S/F/tgKzAwXjy+lFMkAB2m2YOI
+ xcZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707211520; x=1707816320;
+ d=1e100.net; s=20230601; t=1707211495; x=1707816295;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RwJ8e6wUH7fqyic9sqG77ZVCFxcpo7vgFJo8+jFAkz0=;
- b=ruJ63beozt51y4wRBF9HzAakTsgtArknk3dvqP9u8J0R0MT60bUBqlvzEW8jPteHtk
- dHBBttumogs41Lc2vSfig1wi/gn2EFzwEWE8N4Wjz0J9UILL1+z9W3An3+1zmOJL4hfz
- HoCZ52J1qlJAoRGVmmvbuFxamycURkPoja0zTl3HZkAFLskziNxv1BCDFoN7Cv6zNt+L
- NNxap+OLhdsaicFrQVFSQddOBo9/ygFPkd7TPVZuyN7fXafPg4uvkKkcw3nt9mEFov2l
- sY0zdUZIDH4uGzUqyznHUbG0+fjdRMqA8xmldvcbU/ByBkqw2TE6V+s35SjvbsFGc7hJ
- URwA==
-X-Gm-Message-State: AOJu0YxaNIfo3qgrn9Tlnz672gmpmIObJHdXhEtU3166D5OLvJMvbPoS
- MN5dqg+JXFG+LLhSEAmV46KoLE4X5YXDSNybO/XntKLg4jAu6Ac4yjnMLyDv/6/TaqhBjjRXIoR
- wM6c=
-X-Google-Smtp-Source: AGHT+IFcCTk2RM2qW3ihoEvPNsFYwZPdMl2MkvdVmbrQ6DNu5NgkrdJO+Lp8Co3uvK24JnRNMskbNw==
-X-Received: by 2002:a05:600c:5491:b0:40f:c5cc:e756 with SMTP id
- iv17-20020a05600c549100b0040fc5cce756mr1632415wmb.32.1707211519787; 
- Tue, 06 Feb 2024 01:25:19 -0800 (PST)
+ bh=OCiv7Y34jUunl2R1CBjG/RVHjCXAnByZwR7nxj0vfkc=;
+ b=Th7KywdTXFdRsRbfMjfo1HtiUhuycSUv12nB0o5vBYOMQwqqcGEXeD0eoSvKxM7f/V
+ tuT1ijleOhvztxn3ZH2wDLHY0cPn76CBKwxjqXDmc4cbyPphhhAwIIMRUBqKbRMS35NW
+ k/QGICFW/3gjsX3B0ZzNi3S6nhUFRRMz6ahZLvdvZVqmSUXtAvFayLQkJYBE8Xn9tYRg
+ 2uZdgOKDqeQ6GQxB0aPQTOq3Vgt5zo0xBxjyhej+W1pgSad0GVTx3Om0FvtCG4KxKBAV
+ vPDXe5vGVAAR6DwhfbTExHzPOJ/gV8SsUGx+eYwvKm9+Dwqbq5NNWg63m7HjUfAGDetn
+ j08A==
+X-Gm-Message-State: AOJu0YztsKjWAGWbqUIMkFpoKjLkAzXWfmdOojTKCgPdyjj5UP4chPiQ
+ HhzGCNIHMU80h48OPgRLhvTokR5cALEiUMskkG0izTjpRGHZ1aVfaHAxgzJ+gZrVTVXw3njf4sV
+ qZ1g=
+X-Google-Smtp-Source: AGHT+IHru52oWdP93tWsXl7pJhE4vv0aQuGEIHUeL8plRIN+OUbrX/PQSYn8oGpMnc4hRBI5GSwikg==
+X-Received: by 2002:ac2:5e30:0:b0:511:1a26:daab with SMTP id
+ o16-20020ac25e30000000b005111a26daabmr1248917lfg.2.1707211495128; 
+ Tue, 06 Feb 2024 01:24:55 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCUYNq+56G9LiYdkKWk5PJs0ecb2uMS0vMn7bCVZoG3bPbuqG77fe6Q2elGy2QGGCKxoz+uFizB3mG9zibVa/3J2otP3ay01XWLkIH19XNWZxpDda8Sacl+DkN1EDVcxvHm7No33rci0V5M3a9O0k+0bhxgIreA0YPwAHid4lXvCQNhs/Hd3YitNipOie49BfkmqR4eAi5vr3wzSSQ/ybBali/4zl/Fej+oZZpSGkF0XMumJN9YfnFPXI6H2uN7kT/gHWcf5ljRQ6bhjbLKTaeInUHo6SVqjwQN7YElThFugFzg1HmEl/47pt19euMxq4x/6mZYxp1zWD5gwi/LDGblQeKegfKLkYg==
+ AJvYcCVl9T0xIJP6DKHUNs/jNndvkCf+w52YW0d6cumA8Wd9XllQgkSvbwavYMknmpeUqb9jFBk1sfgkKlXZQufdoPn36uGA8s6gP07eUCfmmXozc9D6ba1xunH6aPzLjowwQTS4//APpRX54l/CSzR7LifsV3kJtNEaPUY4EI0UPXD9fqRmGNqM+7ZBXqLI2sPXvfpq3URFnqMUZ82pNkKuHajwdhk5Q/h7m6QYudGd7HdDoFTisa+mv/9RpPl+gZ5gw/LfbqXVVt/ZIq0YKtqRljSoYxFDk8NEk+8UGBMiMyVvA1HRw1T806PSREhGFxoTots8/W3TtKbngDTgSxo1jVgqrZ36TpMNoA==
 Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- u17-20020a05600c211100b0040fc5460109sm1312756wml.35.2024.02.06.01.25.16
+ u17-20020a05600c211100b0040fc5460109sm1312756wml.35.2024.02.06.01.24.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 01:25:19 -0800 (PST)
+ Tue, 06 Feb 2024 01:24:54 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Alexandre Iooss <erdnaxe@crans.org>,
@@ -71,24 +71,23 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Alexandre Iooss <erdnaxe@crans.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 13/17] contrib/plugins/hotblocks: migrate to new per_vcpu
- API
-Date: Tue,  6 Feb 2024 13:24:18 +0400
-Message-ID: <20240206092423.3005995-14-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 06/17] docs/devel: plugins can trigger a tb flush
+Date: Tue,  6 Feb 2024 13:24:11 +0400
+Message-ID: <20240206092423.3005995-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240206092423.3005995-1-pierrick.bouvier@linaro.org>
 References: <20240206092423.3005995-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,122 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When scoreboards need to be reallocated.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/hotblocks.c | 50 ++++++++++++++++++++++---------------
- 1 file changed, 30 insertions(+), 20 deletions(-)
+ docs/devel/multi-thread-tcg.rst | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index 4de1b134944..02bc5078bdd 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -34,8 +34,8 @@ static guint64 limit = 20;
-  */
- typedef struct {
-     uint64_t start_addr;
--    uint64_t exec_count;
--    int      trans_count;
-+    struct qemu_plugin_scoreboard *exec_count;
-+    int trans_count;
-     unsigned long insns;
- } ExecCount;
+diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tcg.rst
+index 7302c3bf534..1420789fff3 100644
+--- a/docs/devel/multi-thread-tcg.rst
++++ b/docs/devel/multi-thread-tcg.rst
+@@ -109,6 +109,7 @@ including:
+   - debugging operations (breakpoint insertion/removal)
+   - some CPU helper functions
+   - linux-user spawning its first thread
++  - operations related to TCG Plugins
  
-@@ -43,7 +43,17 @@ static gint cmp_exec_count(gconstpointer a, gconstpointer b)
- {
-     ExecCount *ea = (ExecCount *) a;
-     ExecCount *eb = (ExecCount *) b;
--    return ea->exec_count > eb->exec_count ? -1 : 1;
-+    uint64_t count_a =
-+        qemu_plugin_u64_sum(qemu_plugin_scoreboard_u64(ea->exec_count));
-+    uint64_t count_b =
-+        qemu_plugin_u64_sum(qemu_plugin_scoreboard_u64(eb->exec_count));
-+    return count_a > count_b ? -1 : 1;
-+}
-+
-+static void exec_count_free(gpointer key, gpointer value, gpointer user_data)
-+{
-+    ExecCount *cnt = value;
-+    qemu_plugin_scoreboard_free(cnt->exec_count);
- }
- 
- static void plugin_exit(qemu_plugin_id_t id, void *p)
-@@ -52,7 +62,6 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     GList *counts, *it;
-     int i;
- 
--    g_mutex_lock(&lock);
-     g_string_append_printf(report, "%d entries in the hash table\n",
-                            g_hash_table_size(hotblocks));
-     counts = g_hash_table_get_values(hotblocks);
-@@ -63,16 +72,21 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
- 
-         for (i = 0; i < limit && it->next; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
--            g_string_append_printf(report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
--                                   rec->start_addr, rec->trans_count,
--                                   rec->insns, rec->exec_count);
-+            g_string_append_printf(
-+                report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
-+                rec->start_addr, rec->trans_count,
-+                rec->insns,
-+                qemu_plugin_u64_sum(
-+                    qemu_plugin_scoreboard_u64(rec->exec_count)));
-         }
- 
-         g_list_free(it);
-     }
--    g_mutex_unlock(&lock);
- 
-     qemu_plugin_outs(report->str);
-+
-+    g_hash_table_foreach(hotblocks, exec_count_free, NULL);
-+    g_hash_table_destroy(hotblocks);
- }
- 
- static void plugin_init(void)
-@@ -82,15 +96,9 @@ static void plugin_init(void)
- 
- static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
- {
--    ExecCount *cnt;
--    uint64_t hash = (uint64_t) udata;
--
--    g_mutex_lock(&lock);
--    cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
--    /* should always succeed */
--    g_assert(cnt);
--    cnt->exec_count++;
--    g_mutex_unlock(&lock);
-+    ExecCount *cnt = (ExecCount *)udata;
-+    qemu_plugin_u64_add(qemu_plugin_scoreboard_u64(cnt->exec_count),
-+                        cpu_index, 1);
- }
- 
- /*
-@@ -114,18 +122,20 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         cnt->start_addr = pc;
-         cnt->trans_count = 1;
-         cnt->insns = insns;
-+        cnt->exec_count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
-         g_hash_table_insert(hotblocks, (gpointer) hash, (gpointer) cnt);
-     }
- 
-     g_mutex_unlock(&lock);
- 
-     if (do_inline) {
--        qemu_plugin_register_vcpu_tb_exec_inline(tb, QEMU_PLUGIN_INLINE_ADD_U64,
--                                                 &cnt->exec_count, 1);
-+        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-+            tb, QEMU_PLUGIN_INLINE_ADD_U64,
-+            qemu_plugin_scoreboard_u64(cnt->exec_count), 1);
-     } else {
-         qemu_plugin_register_vcpu_tb_exec_cb(tb, vcpu_tb_exec,
-                                              QEMU_PLUGIN_CB_NO_REGS,
--                                             (void *)hash);
-+                                             (void *)cnt);
-     }
- }
- 
+ This is done with the async_safe_run_on_cpu() mechanism to ensure all
+ vCPUs are quiescent when changes are being made to shared global
 -- 
 2.43.0
 
