@@ -4,89 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7F3C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C757AC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 20:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXSEQ-0002Vm-BY; Tue, 06 Feb 2024 15:39:50 -0500
+	id 1rXSNE-0004t8-TM; Tue, 06 Feb 2024 15:48:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rXSEP-0002Vd-Cp
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:39:49 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rXSEC-00006T-5Y
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:39:49 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-5cedfc32250so5209165a12.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 12:39:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1707251974; x=1707856774; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3ArV/Gr5QDyfv+upyNqCWqRxvsU7ykcJKNSQH7JGZY8=;
- b=oNQXiF8EznifiTthpYZ77K9zBiH2tWi2UD86g+lcqV2ObOpkLa6Jrh0yG4LXaXAHHK
- 871KhAQCNaduRDHaYLKc41oAKjOTNzSu6CCwJOx/tQAI+hqH7P+a5iM/oqcWjCKUlznI
- JYtCM9KmI77ZoZElrbPdDaUwl5sksVn8nu+ZTqHW8P17qXT+zfpWQrCdocu3cbLTzQJt
- EIeenTR/rA98jBpTZ/gk8DGX8UlrkMy/wAhMGIJNkeqNQ+egghYAK0c0lg8yEGO439Ol
- chKdeVoHGPV/pMhn5x7I45zQvJNPj6OA2fPqaWZbbNKQfZ08NbYkmzv4kCTIz2omxkB+
- /jpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707251974; x=1707856774;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3ArV/Gr5QDyfv+upyNqCWqRxvsU7ykcJKNSQH7JGZY8=;
- b=LrMNJ787QRqmO7w6sp8sxaWduYhXQWCt5Kg/OPUJ7le2n/WCJOKr3agsvj0/RMi3hY
- Yz4WYeFfFhKWLiL76IDV8+QWUT5YknTh91TyAS6kYLqJwH20iZsnOfGykpOovypXGnzV
- Xzetf7bLcjCFhQBEmyh33jxZEao/uI3ylHnDn/MemmsLjVjWbFDGDzV1QJUZj6JMgsWu
- TKyukinGz/mbcRn01q6IzM6XquY5l1uJijCALwoQfA89zWPtKbEG+8cDsAqwx4KG+sNP
- sd6pfEMCER7Hl9Ti/emGBDQY8yKHozXymsmUIvyzH6Tf+fwT2RiEUhoO2FVhu5nERZk7
- 1PPA==
-X-Gm-Message-State: AOJu0YwqsK0nlCkF5VaYRaDJ0BI/Y5XznYx9y+yHu7lo1VKmgnVuKcpl
- TPn3TFrYhQS7qmVF/uFm482sbKPEwLXnmAXKeyf2Fnui4dNk1rUGXYL1inUtmDY=
-X-Google-Smtp-Source: AGHT+IGeNjdrZrSwQRsy3xK8PXv4h04LW2rrPrrsLhbz3vjcgwFoRPhSSlVIY0IglEGZYsS+OTXKlg==
-X-Received: by 2002:a05:6a20:e607:b0:19c:7560:e7d6 with SMTP id
- my7-20020a056a20e60700b0019c7560e7d6mr2650971pzb.1.1707251974441; 
- Tue, 06 Feb 2024 12:39:34 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUEi9yk5EZVpQt9s+z9RuaO943/oXoZ/b58Qcgr7g54ayKjpwIt8YKitAGWmJirElGn1GY+MP9VVGOUDSANJn3L90CoqOuK4EGyg7mzG4DOE1BItAEPOo7U8h8v04BQvC560b3wciVyXzetSRUXer07V7j6PgR0OCxmv2o/A16Z/73jZgG/FNhL78y0pWelcgpCr/UicdwJ30fKxFldMBxSeaQ4SHE8XKybbWcNtfa1YsAiEBOvftWa/VkjRh2K9Co0AXM+hOTgitw5UfLgH4kgzc00WhE=
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- 27-20020a63115b000000b005cd821a01d4sm2625230pgr.28.2024.02.06.12.39.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 12:39:33 -0800 (PST)
-Message-ID: <c8817977-a8ad-4f94-9847-a43d08c5b4df@ventanamicro.com>
-Date: Tue, 6 Feb 2024 17:39:27 -0300
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1rXSND-0004sn-EM
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:48:55 -0500
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1rXSNB-0001eU-Or
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 15:48:55 -0500
+Received: from localhost.intra.ispras.ru (unknown [10.10.3.121])
+ by mail.ispras.ru (Postfix) with ESMTP id 50E36407672A;
+ Tue,  6 Feb 2024 20:48:41 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 50E36407672A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1707252521;
+ bh=ETvOydZy8vnkWXRDCKf0mg+cgfZMi9kB2kJ9DVxrF2k=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=igCv2iXCaIWP1l3kVX7mQv/WCTK0G0E9xbMdyaElMjupXKXbcHm4rhqJbvQFmVHRI
+ RTLRjm2voPlqX9L3rRyCkG1/ii8iDf9WLjaNpSV3cPYIri+wYm8wPGTxFEsLkcMOs/
+ Vc5zsOeRh3Df5nX1pW4lv3yR2+FAzgYNHIIR/PtY=
+From: Alexander Monakov <amonakov@ispras.ru>
+To: qemu-devel@nongnu.org
+Cc: Mikhail Romanov <mmromanov@ispras.ru>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexander Monakov <amonakov@ispras.ru>
+Subject: [PATCH v3 5/6] util/bufferiszero: optimize SSE2 and AVX2 variants
+Date: Tue,  6 Feb 2024 23:48:08 +0300
+Message-Id: <20240206204809.9859-6-amonakov@ispras.ru>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20240206204809.9859-1-amonakov@ispras.ru>
+References: <20240206204809.9859-1-amonakov@ispras.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw: riscv: Allow large kernels to boot by moving the
- initrd further away in RAM
-Content-Language: en-US
-To: Alexandre Ghiti <alexghiti@rivosinc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240206154042.514698-1-alexghiti@rivosinc.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240206154042.514698-1-alexghiti@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x535.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
+ helo=mail.ispras.ru
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,55 +67,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Increase unroll factor in SIMD loops from 4x to 8x in order to move
+their bottlenecks from ALU port contention to load issue rate (two loads
+per cycle on popular x86 implementations).
 
+Avoid using out-of-bounds pointers in loop boundary conditions.
 
-On 2/6/24 12:40, Alexandre Ghiti wrote:
-> Currently, the initrd is placed at 128MB, which overlaps with the kernel
-> when it is large (for example syzbot kernels are). From the kernel side,
-> there is no reason we could not push the initrd further away in memory
-> to accommodate large kernels, so move the initrd at 512MB when possible.
-> 
-> The ideal solution would have been to place the initrd based on the
-> kernel size but we actually can't since the bss size is not known when
-> the image is loaded by load_image_targphys_as() and the initrd would
-> then overlap with this section.
-> 
-> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-> ---
+Follow SSE2 implementation strategy in the AVX2 variant. Avoid use of
+PTEST, which is not profitable there (like in the removed SSE4 variant).
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
+Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
+---
+ util/bufferiszero.c | 108 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 69 insertions(+), 39 deletions(-)
 
-> 
-> Changes in v2:
-> - Fix typos in commit log (Daniel) and title
-> - Added to the commit log why using the kernel size does not work
->    (Daniel)
-> 
->   hw/riscv/boot.c | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 0ffca05189..9a367af2fa 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -188,13 +188,13 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
->        * kernel is uncompressed it will not clobber the initrd. However
->        * on boards without much RAM we must ensure that we still leave
->        * enough room for a decent sized initrd, and on boards with large
-> -     * amounts of RAM we must avoid the initrd being so far up in RAM
-> -     * that it is outside lowmem and inaccessible to the kernel.
-> -     * So for boards with less  than 256MB of RAM we put the initrd
-> -     * halfway into RAM, and for boards with 256MB of RAM or more we put
-> -     * the initrd at 128MB.
-> +     * amounts of RAM, we put the initrd at 512MB to allow large kernels
-> +     * to boot.
-> +     * So for boards with less than 1GB of RAM we put the initrd
-> +     * halfway into RAM, and for boards with 1GB of RAM or more we put
-> +     * the initrd at 512MB.
->        */
-> -    start = kernel_entry + MIN(mem_size / 2, 128 * MiB);
-> +    start = kernel_entry + MIN(mem_size / 2, 512 * MiB);
->   
->       size = load_ramdisk(filename, start, mem_size - start);
->       if (size == -1) {
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index cb3eb2543f..d752edd8cc 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -66,62 +66,92 @@ buffer_is_zero_len_4_plus(const void *buf, size_t len)
+ #if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
+ #include <immintrin.h>
+ 
+-/* Note that each of these vectorized functions require len >= 64.  */
++/* Helper for preventing the compiler from reassociating
++   chains of binary vector operations.  */
++#define SSE_REASSOC_BARRIER(vec0, vec1) asm("" : "+x"(vec0), "+x"(vec1))
++
++/* Note that these vectorized functions may assume len >= 256.  */
+ 
+ static bool __attribute__((target("sse2")))
+ buffer_zero_sse2(const void *buf, size_t len)
+ {
+-    __m128i t = _mm_loadu_si128(buf);
+-    __m128i *p = (__m128i *)(((uintptr_t)buf + 5 * 16) & -16);
+-    __m128i *e = (__m128i *)(((uintptr_t)buf + len) & -16);
+-    __m128i zero = _mm_setzero_si128();
+-
+-    /* Loop over 16-byte aligned blocks of 64.  */
+-    while (likely(p <= e)) {
+-        t = _mm_cmpeq_epi8(t, zero);
+-        if (unlikely(_mm_movemask_epi8(t) != 0xFFFF)) {
++    /* Unaligned loads at head/tail.  */
++    __m128i v = *(__m128i_u *)(buf);
++    __m128i w = *(__m128i_u *)(buf + len - 16);
++    /* Align head/tail to 16-byte boundaries.  */
++    __m128i *p = (void *)(((uintptr_t)buf + 16) & -16);
++    __m128i *e = (void *)(((uintptr_t)buf + len - 1) & -16);
++    __m128i zero = { 0 };
++
++    /* Collect a partial block at tail end.  */
++    v |= e[-1]; w |= e[-2];
++    SSE_REASSOC_BARRIER(v, w);
++    v |= e[-3]; w |= e[-4];
++    SSE_REASSOC_BARRIER(v, w);
++    v |= e[-5]; w |= e[-6];
++    SSE_REASSOC_BARRIER(v, w);
++    v |= e[-7]; v |= w;
++
++    /* Loop over complete 128-byte blocks.  */
++    for (; p < e - 7; p += 8) {
++        v = _mm_cmpeq_epi8(v, zero);
++        if (unlikely(_mm_movemask_epi8(v) != 0xFFFF)) {
+             return false;
+         }
+-        t = p[-4] | p[-3] | p[-2] | p[-1];
+-        p += 4;
++        v = p[0]; w = p[1];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= p[2]; w |= p[3];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= p[4]; w |= p[5];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= p[6]; w |= p[7];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= w;
+     }
+ 
+-    /* Finish the aligned tail.  */
+-    t |= e[-3];
+-    t |= e[-2];
+-    t |= e[-1];
+-
+-    /* Finish the unaligned tail.  */
+-    t |= _mm_loadu_si128(buf + len - 16);
+-
+-    return _mm_movemask_epi8(_mm_cmpeq_epi8(t, zero)) == 0xFFFF;
++    return _mm_movemask_epi8(_mm_cmpeq_epi8(v, zero)) == 0xFFFF;
+ }
+ 
+ #ifdef CONFIG_AVX2_OPT
+ static bool __attribute__((target("avx2")))
+ buffer_zero_avx2(const void *buf, size_t len)
+ {
+-    /* Begin with an unaligned head of 32 bytes.  */
+-    __m256i t = _mm256_loadu_si256(buf);
+-    __m256i *p = (__m256i *)(((uintptr_t)buf + 5 * 32) & -32);
+-    __m256i *e = (__m256i *)(((uintptr_t)buf + len) & -32);
+-
+-    /* Loop over 32-byte aligned blocks of 128.  */
+-    while (p <= e) {
+-        if (unlikely(!_mm256_testz_si256(t, t))) {
++    /* Unaligned loads at head/tail.  */
++    __m256i v = *(__m256i_u *)(buf);
++    __m256i w = *(__m256i_u *)(buf + len - 32);
++    /* Align head/tail to 32-byte boundaries.  */
++    __m256i *p = (void *)(((uintptr_t)buf + 32) & -32);
++    __m256i *e = (void *)(((uintptr_t)buf + len - 1) & -32);
++    __m256i zero = { 0 };
++
++    /* Collect a partial block at tail end.  */
++    v |= e[-1]; w |= e[-2];
++    SSE_REASSOC_BARRIER(v, w);
++    v |= e[-3]; w |= e[-4];
++    SSE_REASSOC_BARRIER(v, w);
++    v |= e[-5]; w |= e[-6];
++    SSE_REASSOC_BARRIER(v, w);
++    v |= e[-7]; v |= w;
++
++    /* Loop over complete 256-byte blocks.  */
++    for (; p < e - 7; p += 8) {
++        /* PTEST is not profitable here.  */
++        v = _mm256_cmpeq_epi8(v, zero);
++        if (unlikely(_mm256_movemask_epi8(v) != 0xFFFFFFFF)) {
+             return false;
+         }
+-        t = p[-4] | p[-3] | p[-2] | p[-1];
+-        p += 4;
+-    } ;
+-
+-    /* Finish the last block of 128 unaligned.  */
+-    t |= _mm256_loadu_si256(buf + len - 4 * 32);
+-    t |= _mm256_loadu_si256(buf + len - 3 * 32);
+-    t |= _mm256_loadu_si256(buf + len - 2 * 32);
+-    t |= _mm256_loadu_si256(buf + len - 1 * 32);
++        v = p[0]; w = p[1];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= p[2]; w |= p[3];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= p[4]; w |= p[5];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= p[6]; w |= p[7];
++        SSE_REASSOC_BARRIER(v, w);
++        v |= w;
++    }
+ 
+-    return _mm256_testz_si256(t, t);
++    return _mm256_movemask_epi8(_mm256_cmpeq_epi8(v, zero)) == 0xFFFFFFFF;
+ }
+ #endif /* CONFIG_AVX2_OPT */
+ 
+-- 
+2.32.0
+
 
