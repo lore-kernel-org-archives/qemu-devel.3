@@ -4,91 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F2BC48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 13:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4E0EC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 13:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXLMT-0003i0-Qn; Tue, 06 Feb 2024 08:19:41 -0500
+	id 1rXLRB-0005YJ-VC; Tue, 06 Feb 2024 08:24:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rXLMO-0003fs-Q0
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 08:19:37 -0500
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
+ id 1rXFTD-00026l-Px
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:02:15 -0500
+Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rXLMJ-0005yB-CD
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 08:19:36 -0500
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5cddfe0cb64so4380842a12.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 05:19:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
+ id 1rXFTC-000372-4O
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:02:15 -0500
+Received: by mail-ua1-x92a.google.com with SMTP id
+ a1e0cc1a2514c-7d5fce59261so234462241.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 23:02:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1707225567; x=1707830367; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GMvi22rkrBmsZVwZknytn23922K4Y1Z689E1EhIiGOc=;
- b=Hcqr4uCGAGuDP70DhZPuPQaTfMGcqFW90vsvqtVLOKqsatxnEtgxZIUxKK0VvLzabL
- 5fYypeN2fPq2SOx4PIjdQ8gXfKkpn5Doo9UDR/Ft9pIeQz2/VCDluhZ7v7JUmbhoOJPX
- 1CFf2GyfaCXeQKmKxcrmJ7K6FuL+hFXxwIKeD7WbraYOLFBusE+LZM/XjmB/2/Y0MbEh
- 2RVhmbQtTvkLoCeTxuMPmSzq2OM54h0LvtTNlcA0/4Rx1CPVPfyvUKQm4D7lmqfy6sjH
- lq7juArQT2wJ2ZmfMMhTkDBotj3P9VkULOFOjHD9B/VU6O3uqu7MXfrEsGfmw/BTcVob
- lwng==
+ d=gmail.com; s=20230601; t=1707202932; x=1707807732; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=P5Dx10JkOUAbkQXsroVOO62dbh+qn5mA5DUfHm8O3xQ=;
+ b=gtm/kKwFC3KWBueT1r2UXyVAaADP52j4aXk/MCc7d5URHxeasZo7JeKy0DCmddbIKj
+ LVTLyhgA0iQOhrV0sihctSgUnughBqJiXHvCAToX2SNPcIL+BKS+CgXvia2oIuZJI00s
+ jwvddk/zP2CWfYIAuBpNPXUDp8xCc/Z/7sJbNfQwQvk5AdznM6bf33+k/kjFW8mdpOai
+ BCZIevh/NqqzTdpr2n2DMp0KjB0MRN0OenH2VuQjf4Os26t0/6qMtJuwEZ0Vwt3L04Rz
+ SJcAV2BdxO5d0tK1zGzTb8h1uEaDIMreqBJsIV2rxz8INpiWeXvdnbyWTGofMdZKyBFv
+ RjTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707225567; x=1707830367;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GMvi22rkrBmsZVwZknytn23922K4Y1Z689E1EhIiGOc=;
- b=YDw1iJM3O4tXOCv+sKH35vtqVhTWQYW6rhTwWbdNlgLMyz1xCNcKMF9p73CGA5e/hO
- 6NANnYtHVPFXGx+uqs/XZXJ+vp0KSlts0YhEAwox5TdoqAB5+6tUzdsCCI/QzlFFclhy
- SAN9Y/Fnz4D4rJAkx6WtvvbQAygad8sWY/7p7TfwHtrE/8Y5Hb9kOtA2VFNOZ2wcPFIv
- lZtmjix2YR7v0uwWtWGXPgiKw8rGKzeHHe8k7yeCDtpngQX8KbL+odZ6hKA6Z8Su5rAK
- lBejWZNqe+6nEyhQppmuSVmAXUrp9EigFvCLGhiGmzY6waNfFZas0KbWoULv1a9l5W5Q
- 3X8w==
-X-Gm-Message-State: AOJu0YytPE7L7/VzS0gY6A3BGHQw5AQhxTa0AB9C7QRTC9QA5FdPdBmS
- 4h0slNrD0RQDPkRFJpmvwFuy9O2jc4lVUjTawRfhKAQ9qLFj7cyGbx9TWEbdJvIXiwFa7EmoaC9
- MNPVa2mXUkH6iy3Y3rF+JMwSwZgqLXcQS4z2AK9lyubqvDhy+ZoT5vbXAoaRRjPc/hwVzC7iCAy
- DqcUWQCTytqQl34ywa1AhejUgFyBqaUC72dyytNyk=
-X-Google-Smtp-Source: AGHT+IGK05hxnLosC4RZVktCIsUlf65XRFm/EGNDcVQpcrKir8UrYZ5T/PAeDySXuKiGn46NSVD+mg==
-X-Received: by 2002:a05:6a00:9a0:b0:6db:d59c:a5b7 with SMTP id
- u32-20020a056a0009a000b006dbd59ca5b7mr3317383pfg.20.1707225567203; 
- Tue, 06 Feb 2024 05:19:27 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUjUImBatw7bAKJ5cUfYtKwc2S7NnfFZOd0Pl5sDSdoys1vyScsAAHFP0A5s6j1zuwi2yuetV9kv2mU3ujsrptfE2UwCeF/DgTMdMLk05GQhM078Be248qo/y+U2FXvE02ufdi+WO9BKzq54ZPiTQ88q1u4KHW/PhqeY45ehLHTOTdklpD2Fz7IC0imdQ+b3zxmASjgmzbg2jmHeHt6CUAEptRkpQz1ply0YFg+FHxyZ6zMYITHrHEcnYSwoqeLQE6nYDLbWWVhDzB6HWWK9qnxYsRG+ZN2Q1nIPt7Qxw6z4s4lkmHgAxleFuOzaL/awwfDz0wscDDLKGnzTkxljkA2KD5XQThDZ2VjBqTJrvEaRyNT
-Received: from hsinchu16.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- e11-20020aa798cb000000b006e04ddf97f7sm1837105pfm.107.2024.02.06.05.19.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 05:19:26 -0800 (PST)
-From: Jason Chien <jason.chien@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Jason Chien <jason.chien@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liweiwei@iscas.ac.cn>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Junqiang Wang <wangjunqiang@iscas.ac.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] target/riscv: Update $pc after linking to $ra in
- trans_cm_jalt()
-Date: Tue,  6 Feb 2024 21:18:42 +0800
-Message-ID: <20240206131911.10998-1-jason.chien@sifive.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1707202932; x=1707807732;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=P5Dx10JkOUAbkQXsroVOO62dbh+qn5mA5DUfHm8O3xQ=;
+ b=XP/ccmdeuURF3QA1JvcwmPY8ZaNJbKkg0csSc5agA6GeGooHOPnFmop7lVG2WZL58S
+ ypJRLPik+8xSOeSJv62wZ9YwcWjhdxn1e5tBSevyGXQGprrXuPwv7GJTsTHXFuFRy0ew
+ UA4PtrSfVoiipTH3kCxYuTco1AeEJxBpe+b7DUA3fKzo+Gls1wOnT3QxPZqDgwkzFYH7
+ EWlUigiMJiqYI88vdpGWpoy6s23wK3XUwKCAFgFMT8c0p2qG/h/RVF+wv6PwNVAaHfoS
+ CjSsRe33e7TaT60Dek2civ33ZFJ31oQq6mBd0EFCQYLRY9QHJ2J1tc7MIQdW6xQqOznd
+ uhyQ==
+X-Gm-Message-State: AOJu0YxZNHWl+T/du7yT7/NKwSshEkl4Nwv2xcDOaNfRD7FeP6e1VIoK
+ mq51F21BlQ6ojTk8MTo1KmfCTX+JILB115zlbgS6sTTqULOh5h/evSHZOKINHKm6wkgsJalwU/w
+ FF4+RhkRNPpd/V+cCQXr2Cb5en4nIPElgmrQ=
+X-Google-Smtp-Source: AGHT+IGqcZh9prgtpeqEO34lKCEzv3yiXhKxA/u+AcVVsvzlfuFRr4g1PfyPBoxMLGW8jMbFMj5Ox7vkoptt+NXUkAE=
+X-Received: by 2002:a05:6102:3a64:b0:46d:398d:757a with SMTP id
+ bf4-20020a0561023a6400b0046d398d757amr1911846vsb.13.1707202932215; Mon, 05
+ Feb 2024 23:02:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=jason.chien@sifive.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+From: Cord Amfmgm <dmamfmgm@gmail.com>
+Date: Tue, 6 Feb 2024 01:02:15 -0600
+Message-ID: <CACBuX0T3FqTY_BAYjfjQsevJWf=zKafQXO2oPs98hEv93ALHNQ@mail.gmail.com>
+Subject: hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
+ envelope-from=dmamfmgm@gmail.com; helo=mail-ua1-x92a.google.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 06 Feb 2024 08:24:29 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,53 +85,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original implementation sets $pc to the address read from the jump
-vector table first and links $ra with the address of the next instruction
-after the updated $pc. After jumping to the updated $pc and executing the
-next ret instruction, the program jumps to $ra, which is in the same
-function currently executing, which results in an infinite loop.
-This commit reverses the two action. Firstly, $ra is updated with the
-address of the next instruction after $pc, and sets $pc to the address
-read from the jump vector table.
+This changes the ohci validation to not assert if invalid
+data is fed to the ohci controller. The poc suggested in
+https://bugs.launchpad.net/qemu/+bug/1907042
+migrated to #303 does the following to feed it a
+SETUP pid and EndPt of 1:
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
----
- target/riscv/insn_trans/trans_rvzce.c.inc | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+        uint32_t MaxPacket = 64;
+        uint32_t TDFormat = 0;
+        uint32_t Skip = 0;
+        uint32_t Speed = 0;
+        uint32_t Direction = 0;  /* #define OHCI_TD_DIR_SETUP 0 */
+        uint32_t EndPt = 1;
+        uint32_t FuncAddress = 0;
+        ed->attr = (MaxPacket << 16) | (TDFormat << 15) |(Skip << 14)
+| (Speed << 13)
+                   | (Direction << 11) | (EndPt << 7) | FuncAddress;
+        ed->tailp = /*TDQTailPntr= */ 0;
+        ed->headp = ((/*TDQHeadPntr= */ &td[0]) & 0xfffffff0) | (/*
+ToggleCarry= */ 0 << 1);
+        ed->next_ed = (/* NextED= */ 0 & 0xfffffff0)
 
-diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
-index 8d8a64f493..a185e2315f 100644
---- a/target/riscv/insn_trans/trans_rvzce.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzce.c.inc
-@@ -293,13 +293,6 @@ static bool trans_cm_jalt(DisasContext *ctx, arg_cm_jalt *a)
- {
-     REQUIRE_ZCMT(ctx);
- 
--    /*
--     * Update pc to current for the non-unwinding exception
--     * that might come from cpu_ld*_code() in the helper.
--     */
--    gen_update_pc(ctx, 0);
--    gen_helper_cm_jalt(cpu_pc, cpu_env, tcg_constant_i32(a->index));
--
-     /* c.jt vs c.jalt depends on the index. */
-     if (a->index >= 32) {
-         TCGv succ_pc = dest_gpr(ctx, xRA);
-@@ -307,6 +300,13 @@ static bool trans_cm_jalt(DisasContext *ctx, arg_cm_jalt *a)
-         gen_set_gpr(ctx, xRA, succ_pc);
-     }
- 
-+    /*
-+     * Update pc to current for the non-unwinding exception
-+     * that might come from cpu_ld*_code() in the helper.
-+     */
-+    gen_update_pc(ctx, 0);
-+    gen_helper_cm_jalt(cpu_pc, cpu_env, tcg_constant_i32(a->index));
-+
-     tcg_gen_lookup_and_goto_ptr();
-     ctx->base.is_jmp = DISAS_NORETURN;
-     return true;
--- 
-2.43.0
+qemu-fuzz also caught the same issue in #1510
 
+The if (td.cbp > td.be) logic in ohci_service_td() causes an
+ohci_die() as well. My understanding of the OHCI spec 4.3.1.2
+Table 4-2 allows td.cbp to be one byte more than td.be to
+signal the buffer has zero length. The new check in qemu
+appears to have been added since qemu-4.2.
+
+Signed-off-by: David Hubbard <dmamfmgm@gmail.com>
+
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index d73b53f33c..d087f36618 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci,
+struct ohci_ed *ed)
+     case OHCI_TD_DIR_SETUP:
+         str = "setup";
+         pid = USB_TOKEN_SETUP;
++        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only allowed
+to ep == 0 */
++            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
++            ohci_die(ohci);
++            return 1;
++        }
+         break;
+     default:
+         trace_usb_ohci_td_bad_direction(dir);
+@@ -936,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct
+ohci_ed *ed)
+         if ((td.cbp & 0xfffff000) != (td.be & 0xfffff000)) {
+             len = (td.be & 0xfff) + 0x1001 - (td.cbp & 0xfff);
+         } else {
+-            if (td.cbp > td.be) {
+-                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp, td.be);
++            if (td.cbp > td.be + 1) {
++                trace_usb_ohci_td_bad_buf(td.cbp, td.be);
+                 ohci_die(ohci);
+                 return 1;
+             }
 
