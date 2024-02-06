@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728FAC4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 11:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D4FC48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 11:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXJMK-00019E-Cl; Tue, 06 Feb 2024 06:11:24 -0500
+	id 1rXJf9-0003zX-52; Tue, 06 Feb 2024 06:30:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rXJMJ-00017V-6x
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 06:11:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rXJMH-0002s4-FJ
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 06:11:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707217879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=m4OTAh7xP4KOT7F/Xee7SiXfa0lfqd4FUK/7YCdTDv0=;
- b=ghJjFxNjUbCHgWNy0I9wowHOKg+UVzUcoXpL9D8EITXncBpADN7kxgI05vSNWEKr3GWstv
- m7GBvpgDAlnsojqdlmkhey9URXVVtl0JuOzz1bw/QX0K1KCOr0QSNUh7WurjiLHj1lOW39
- +cTnj0qv+zZ+B8cnKrLRaSrgKmfgilU=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-xrZLabQdP5KbGGdljqL-Ng-1; Tue, 06 Feb 2024 06:11:18 -0500
-X-MC-Unique: xrZLabQdP5KbGGdljqL-Ng-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-511577b5f74so562779e87.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 03:11:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXJf7-0003zI-MH
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 06:30:49 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXJf5-0008LH-W1
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 06:30:49 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-40fdc63f4feso15536595e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 03:30:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707219046; x=1707823846; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R3jpptd8RXoHaXlN3NcepMoeKQLsWJxjKx6UUdLgNz0=;
+ b=t3tu+3u42XccxcKk06WytARqU8qcfJUt/Wm1K5hUa3Er+aQiW/Fl2GP6jsvAD1bKQa
+ vlMLePCvGU9Ek8zJwCfwc5h6m0NXEwUCnSEje3aed3pd2gjeO1PqOnesB1DV2WbbLtAY
+ PeQTbKGDK4zprcB99uHSjCJRQQkZpH6XHAuIgYuKCoGKRiVam3Z9Vt14ww6WvQZ5JOz+
+ NaffkGk5ACy3H4/gEqtPhitbBCzvu9AbDfqR0LVWrpf+XyTNU9suwy1bD/PxA0i2dpX+
+ u9U61fYf0uvucrCCtfxydYyaaGwSs5ghjnfMJgWvBhCSDGftDqjoMyWlrNphuzF/myVr
+ Cwzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707217876; x=1707822676;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=m4OTAh7xP4KOT7F/Xee7SiXfa0lfqd4FUK/7YCdTDv0=;
- b=rCPjZeNVMjvktddWLAsvFkGmVIo39qJ1Rgbf+bY6CnGOKM1y/KOnWB+e8BuRpf0x+r
- WNdzo4+l0QLnCKrluz+zbK6XrdrMQNzB/KB0v3JzO7XTwz3p6hKztYIuFQCkLbBnDrnT
- wgMVoR8w5qsGCv3uoIwmpj6SiCwAAaYUgQC15bTOgUtDXNTzIAgdkqDox3Urnc7vci8y
- hn6waWlC0rjUIg6yqHjClV+sz4XFRN49PGLLzOPrxGnF5Z2g4j1zZKo3ItaDtMgm6uR0
- WR+XEIPfLEMykttDGGPSak12jGL1gyLHrF3m7gGyVywSDy7JEh6zuV3nMh51Pos4quSl
- uV7g==
-X-Gm-Message-State: AOJu0YznAXSqcdZC02gXKfc7omEwpM6P39XMhmtiyImpKZZRID1N/Dfa
- oPv9APi+jI738yPiQF81t8IHf8oFRCsl6XtbbKaK8nI7dc2ifV7SvYm/+wG7yLm2Jxgx6uo5bW1
- QCFfrwu9vDUuOKCvxXeXAejPLOMi+Hr5V2r7tzMmUJw6fPqkhQrj6A2LRX/QHequWOLqttUbEfa
- FYHgBiiWIAeYJgtPbN7P5Qbo/o9zaPFNJRXqwBMw==
-X-Received: by 2002:a05:6512:1248:b0:511:5ff3:bd91 with SMTP id
- fb8-20020a056512124800b005115ff3bd91mr1061762lfb.69.1707217876079; 
- Tue, 06 Feb 2024 03:11:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE6s9KX2/Ao6v9n9QA/6VNDMGScyYFbGPvcd6qYTF/lcjgdKFt6P9yVDyPG/ZksB72ondPXfK/d8C6df33/8d4=
-X-Received: by 2002:a05:6512:1248:b0:511:5ff3:bd91 with SMTP id
- fb8-20020a056512124800b005115ff3bd91mr1061744lfb.69.1707217875741; Tue, 06
- Feb 2024 03:11:15 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707219046; x=1707823846;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R3jpptd8RXoHaXlN3NcepMoeKQLsWJxjKx6UUdLgNz0=;
+ b=qf+QysHeoBcTK5dFR0qoZF0k/uHGcW7w/OBqAUU1C4duzMmF2WLwfXa2iq5V7WIK1H
+ M7G+M997JwJ/0h9gtIdbKputzb0+eGlGnYS+SWT0bw2hr0C6i7i+lglLW9ikae4Cf+8b
+ K8GGesYremw8yuwzuUqe8wy5zgGPNgcRyqZMMaO7scIijsL43E/+tbdDVp6yTP8/tQdv
+ RQxhNyPk3H9DJWS5n5bT/kmagFGXfwS3j3H3FhKZgmnGhbQ2RcazscrDrOqEJzOtZtBe
+ Z+e6frv9XD0RDJ5cKOej8s0m8hXwSHO6fADLvFyAP8J9kw2nogSA4pXEVMILqcgDLIkm
+ zhVw==
+X-Gm-Message-State: AOJu0YyGJzIj1brlWXwOYEwq13LOWsbJYWdRRTj8v8N/kFHBWc0cQNcr
+ luNS7WL0q4MuPFzhf+U5OQop5Zqq1V4tSQ/MfhE1asIIoC1Y8kZN4OF6Mgx3Qic=
+X-Google-Smtp-Source: AGHT+IGLoWE8upMRANQd1j0lc9LDjVSBf+ay1HfzqAv0oRRqRjFK82uU8Q/l4xlyAGoloVK65Bbd6Q==
+X-Received: by 2002:a05:600c:314d:b0:40f:afc8:ac6b with SMTP id
+ h13-20020a05600c314d00b0040fafc8ac6bmr1847529wmo.6.1707219046259; 
+ Tue, 06 Feb 2024 03:30:46 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCUIckf7rRcHY8ZopdaKt4iLKhkHA6av16bVAxLc5dtAEXRN6TLiAWO0HwfUGlVmxkB6xmQx9tKsZfBAhcQPwobSgGwrHzBgRlPB+J+xQLYeSgGB28HeOJgp4zo=
+Received: from [192.168.69.100] ([176.176.170.112])
+ by smtp.gmail.com with ESMTPSA id
+ fa13-20020a05600c518d00b0040fb03f803esm1688085wmb.24.2024.02.06.03.30.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Feb 2024 03:30:45 -0800 (PST)
+Message-ID: <1c1b711a-d1d8-4d5b-ad28-e9555d848f9e@linaro.org>
+Date: Tue, 6 Feb 2024 12:30:43 +0100
 MIME-Version: 1.0
-References: <688c6446-1085-47f8-b1f1-c27e2d71c4dc@tls.msk.ru>
-In-Reply-To: <688c6446-1085-47f8-b1f1-c27e2d71c4dc@tls.msk.ru>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 6 Feb 2024 15:11:04 +0400
-Message-ID: <CAMxuvaz3D3KK6pzq_++RXgv3jfR3icvL2n-JpTsLzrXBOw-pNg@mail.gmail.com>
-Subject: Re: ui/dbus-display1.[ch] are not properly listed in dependencies
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net/tulip: add chip status register values
+To: Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>
+Cc: deller@gmx.de, qemu-devel@nongnu.org
+References: <20240205194717.2056026-1-svens@stackframe.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240205194717.2056026-1-svens@stackframe.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,44 +95,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael
+On 5/2/24 20:47, Sven Schnelle wrote:
+> Netbsd isn't able to detect a link on the emulated tulip card. That's
+> because netbsd reads the Chip Status Register of the Phy (address
+> 0x14). The default phy data in the qemu tulip driver is all zero,
+> which means no link is established and autonegotation isn't complete.
+> 
+> Therefore set the register to 0x3b40, which means:
+> 
+> Link is up, Autonegotation complete, Full Duplex, 100MBit/s Link
+> speed.
+> 
+> Also clear the mask because this register is read only.
+> 
+> Signed-off-by: Sven Schnelle <svens@stackframe.org>
+> ---
+>   hw/net/tulip.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-On Sat, Feb 3, 2024 at 5:41=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wro=
-te:
->
-> Doing a build of just a single target with --enable modules results in bu=
-ild
-> error:
->
->
->   rm -rf b; cd b
->   ../configure --enable-modules --target-list=3Dx86_64-softmmu
->   ninja qemu-system-x86_64
->
->    In file included from ../ui/dbus-chardev.c:34:
->   ../ui/dbus.h:34:10: fatal error: ui/dbus-display1.h: No such file or di=
-rectory
->      34 | #include "ui/dbus-display1.h"
->         |          ^~~~~~~~~~~~~~~~~~~~
->   compilation terminated.
->
->
-> When building without modules, or when not specifying a single target,
-> the build succeeded.  So I'm concluding not all deps for ui/dbus-display1=
-.h
-> are specified, - dbus_ss should depend on this file I guess..
-
-It looks like this can help, but I am not sure this is correct, as we
-don't want dbus_display1 sources to be included in the targets.
-
--  dbus_display1_dep =3D declare_dependency(link_with:
-dbus_display1_lib, include_directories: include_directories('.'))
-+  dbus_display1_dep =3D declare_dependency(link_with:
-dbus_display1_lib, include_directories: include_directories('.'),
-sources: dbus_display1)
-
-I have also opened a bug for meson,
-https://github.com/mesonbuild/meson/issues/12814 ("Dependencies should
-be built before any files of the target (?)")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
