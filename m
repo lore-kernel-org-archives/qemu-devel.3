@@ -4,71 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD8FC48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 15:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3619DC4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 15:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXNQ8-0000S1-HH; Tue, 06 Feb 2024 10:31:37 -0500
+	id 1rXNZ7-0003OB-6K; Tue, 06 Feb 2024 10:40:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXNPz-0000QU-Qw
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:31:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rXNPm-0007BE-28
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:31:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707233473;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sUTV/wovauE7Tui+188fiXIF9jqKdUW/0L9A0Jj4GT4=;
- b=FK+A+7ZPckyZ9HWo96r2ViAHiHrloav/NGNVAVo3mr+F6zcyAFa/JswhWio2keBXXjAGFd
- B18tN3QVA87iBIxAz6hlZYjHPqqTzpAh6VSSvORp82jQ/0wx9CgccHBwwg2YYToPU/yT5C
- VaghpOyjjnmSnc2Y4XcCNIiHkIbF724=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-443-Qhd7dZnqPuWKM1ztQ_9ZIQ-1; Tue, 06 Feb 2024 10:31:10 -0500
-X-MC-Unique: Qhd7dZnqPuWKM1ztQ_9ZIQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 420AF828CE9;
- Tue,  6 Feb 2024 15:31:10 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.40])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9EF232166B31;
- Tue,  6 Feb 2024 15:31:09 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Subject: [PULL 1/1] virtio-blk: avoid using ioeventfd state in irqfd
- conditional
-Date: Tue,  6 Feb 2024 10:31:05 -0500
-Message-ID: <20240206153105.81868-2-stefanha@redhat.com>
-In-Reply-To: <20240206153105.81868-1-stefanha@redhat.com>
-References: <20240206153105.81868-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <alexghiti@rivosinc.com>)
+ id 1rXNZ4-0003Nr-59
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:40:50 -0500
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexghiti@rivosinc.com>)
+ id 1rXNZ2-0000wa-CY
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:40:49 -0500
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-783045e88a6so384073085a.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 07:40:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1707234047; x=1707838847;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hLbg+SEBXldc/aM928IlX5UZSpp0lFtjrNh1hEw18hw=;
+ b=XATGJ2Q5au0IZjtKL1YBb6d9P8fOIDgvRodeFBbzCQSuLT4hukienprLNuJZxam/TR
+ N7/DlOgU4C7yXWzJPEvcHwX8Iqf8obMziFGFD9foYots/uGbn+rPQJdjTf/elVzKz+8U
+ nFRWFp+SbBuU9WHw7hVKrqC4SKI233CIBZMgknI9aocJYUPbvXDtjKRorSyN0NkfcuFg
+ OsV3uBsp78GsmPur2qRXWJdzPZ62/WFfmfnrCrvnZ1ysg4qnj5g2WIDrRD1iVkBBo0zC
+ t+dYao2r+ZQF+0E1Petp0ItzqjwWrmYX/lvL0Rap2omueWuF92MKxFiepekmlFce3u66
+ aYxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707234047; x=1707838847;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hLbg+SEBXldc/aM928IlX5UZSpp0lFtjrNh1hEw18hw=;
+ b=Swmeb/ohYCpvEKKbdnZrggm9+SIVyNEt9pJSBgAXFbibJl+nBAZ5iIbT+lVvzhzc6Z
+ Aq6coxpd8GRXt7uZIqMKwEyIWaVogI4ObbdUAGgLsPTISTgFRLAyqyXThLVaZLV6DnVP
+ f9NUBiax6dGDYyBqbrEDdZthjS03neD+JvhBfCbz0KM1RMoqP67G8Rik5k9YVdn0PJmt
+ 6KWUQjoOBztjzGrdYeNc4O1BcPF3SmG34V68RMvWl1f77vxnmbsrQDvm74VP5YJYlyZ1
+ tBTT7WGWQ80Af9UCI/SFywyP6HfRoF7E3SWX1lWM3ljaw7E3ka4mIPCr8Cf+zlRTpu66
+ a25Q==
+X-Gm-Message-State: AOJu0YzUqq72JH4QnHINKvABvU4VzXdI08N3quR8YgijvWmtT0d2+UQ1
+ LL34NUSsamWMZ4r2FapWk2N5Kr8gYze8wxr7YxhzMGm5mom2Q2PdxYUVg/SD8r8=
+X-Google-Smtp-Source: AGHT+IGI+EFmfb9CyK33aqTkOXtXjLRcG8Zutmqjv9tQ3kvgCqBcPphV04XvPCN2DxRNNQ+QyNDjWg==
+X-Received: by 2002:a05:620a:4550:b0:783:d83b:f588 with SMTP id
+ u16-20020a05620a455000b00783d83bf588mr4023642qkp.17.1707234046953; 
+ Tue, 06 Feb 2024 07:40:46 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCUjcqmQvqXFp/Ti14xA9qhvhu/iwP4t90OjzoCcR92GLqBjMl2zHYsbozbvvELtRNhpb5D9h91XtvahO55ZIVB9fCS31YZCp6qUoorJZFW7pwHYnHl8XoQjpCCRFZ18WinNmzLIoOo1C2Ymaby9dlRCSG6lGNx1VXHkd+O5B4zVDBA9CRh82HiFQ0qklKym/0ZDftClRO6FH3difuw79fchjKg/rvhHGeUMQSB03O4VHtvpHdgh+1iWi9wcDPSTquuQDmYDdZ7w3YcSLdtSWN+2y5g4/g66nJcmMRtw
+Received: from alex-rivos.ba.rivosinc.com
+ (amontpellier-656-1-456-62.w92-145.abo.wanadoo.fr. [92.145.124.62])
+ by smtp.gmail.com with ESMTPSA id
+ w25-20020a05620a095900b0078445f63dc4sm994875qkw.60.2024.02.06.07.40.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Feb 2024 07:40:46 -0800 (PST)
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
+Subject: [PATCH v2] hw: riscv: Allow large kernels to boot by moving the
+ initrd further away in RAM
+Date: Tue,  6 Feb 2024 16:40:42 +0100
+Message-Id: <20240206154042.514698-1-alexghiti@rivosinc.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=alexghiti@rivosinc.com; helo=mail-qk1-x732.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,59 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Requests that complete in an IOThread use irqfd to notify the guest
-while requests that complete in the main loop thread use the traditional
-qdev irq code path. The reason for this conditional is that the irq code
-path requires the BQL:
+Currently, the initrd is placed at 128MB, which overlaps with the kernel
+when it is large (for example syzbot kernels are). From the kernel side,
+there is no reason we could not push the initrd further away in memory
+to accommodate large kernels, so move the initrd at 512MB when possible.
 
-  if (s->ioeventfd_started && !s->ioeventfd_disabled) {
-      virtio_notify_irqfd(vdev, req->vq);
-  } else {
-      virtio_notify(vdev, req->vq);
-  }
+The ideal solution would have been to place the initrd based on the
+kernel size but we actually can't since the bss size is not known when
+the image is loaded by load_image_targphys_as() and the initrd would
+then overlap with this section.
 
-There is a corner case where the conditional invokes the irq code path
-instead of the irqfd code path:
-
-  static void virtio_blk_stop_ioeventfd(VirtIODevice *vdev)
-  {
-      ...
-      /*
-       * Set ->ioeventfd_started to false before draining so that host notifiers
-       * are not detached/attached anymore.
-       */
-      s->ioeventfd_started = false;
-
-      /* Wait for virtio_blk_dma_restart_bh() and in flight I/O to complete */
-      blk_drain(s->conf.conf.blk);
-
-During blk_drain() the conditional produces the wrong result because
-ioeventfd_started is false.
-
-Use qemu_in_iothread() instead of checking the ioeventfd state.
-
-Buglink: https://issues.redhat.com/browse/RHEL-15394
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20240122172625.415386-1-stefanha@redhat.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 ---
- hw/block/virtio-blk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 227d83569f..287c31ee3c 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -64,7 +64,7 @@ static void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
-     iov_discard_undo(&req->inhdr_undo);
-     iov_discard_undo(&req->outhdr_undo);
-     virtqueue_push(req->vq, &req->elem, req->in_len);
--    if (s->ioeventfd_started && !s->ioeventfd_disabled) {
-+    if (qemu_in_iothread()) {
-         virtio_notify_irqfd(vdev, req->vq);
-     } else {
-         virtio_notify(vdev, req->vq);
+Changes in v2:
+- Fix typos in commit log (Daniel) and title
+- Added to the commit log why using the kernel size does not work
+  (Daniel)
+
+ hw/riscv/boot.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 0ffca05189..9a367af2fa 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -188,13 +188,13 @@ static void riscv_load_initrd(MachineState *machine, uint64_t kernel_entry)
+      * kernel is uncompressed it will not clobber the initrd. However
+      * on boards without much RAM we must ensure that we still leave
+      * enough room for a decent sized initrd, and on boards with large
+-     * amounts of RAM we must avoid the initrd being so far up in RAM
+-     * that it is outside lowmem and inaccessible to the kernel.
+-     * So for boards with less  than 256MB of RAM we put the initrd
+-     * halfway into RAM, and for boards with 256MB of RAM or more we put
+-     * the initrd at 128MB.
++     * amounts of RAM, we put the initrd at 512MB to allow large kernels
++     * to boot.
++     * So for boards with less than 1GB of RAM we put the initrd
++     * halfway into RAM, and for boards with 1GB of RAM or more we put
++     * the initrd at 512MB.
+      */
+-    start = kernel_entry + MIN(mem_size / 2, 128 * MiB);
++    start = kernel_entry + MIN(mem_size / 2, 512 * MiB);
+ 
+     size = load_ramdisk(filename, start, mem_size - start);
+     if (size == -1) {
 -- 
-2.43.0
+2.39.2
 
 
