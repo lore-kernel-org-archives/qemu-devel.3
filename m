@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A76DAC4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFE9C48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 17:16:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXOzv-0003pJ-49; Tue, 06 Feb 2024 12:12:39 -0500
+	id 1rXP3h-0006Ie-4q; Tue, 06 Feb 2024 12:16:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXOzt-0003oo-LX
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:12:37 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1rXP3g-0006IH-Ba
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:16:32 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXOzq-0003XY-Je
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:12:37 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-40fb3b5893eso47649065e9.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 09:12:34 -0800 (PST)
+ id 1rXP3e-0004Ak-KI
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 12:16:32 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-55a035669d5so8166978a12.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 09:16:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707239553; x=1707844353; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1707239789; x=1707844589; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PrRJ5d76QadE8MBCkQGSm2LWsORcf86H/9Nb7qmGBtc=;
- b=ojx3gydlZ84j1rkyFXhGxr2oYHB73q3gjJeAEjmLek46Mgz3kLbhPbq87jObFmfxzA
- 2IIeWYw3oLQHNS927OusX48HhIZEGHIixzP4s5DLm9CXboxSCztFT8hgRn4Epz8CBst9
- 2AIqDRzqEOuGgCeYJTg/v4q+KtWHkSHwPmZyiv4Uzmmm+0TgxRak51c9G26n6zCKTI0K
- 6L0ag67z24xV+vo0hlCrXW3cV+3IMjDi9SoaCwuG7oCCx8Ab022sNF9DHFAfrjLRcVZF
- 5XObIFUvaWsMyi9ZA+TgTVRmMTQSsLJSW7Z02pkkWdSCMlNiLe7UjNVvCbavmFstULXx
- +MMw==
+ bh=9agnLMbdFvQaGn8zgw8Px7k/7ZwOY/58/R1FjZ2IZzc=;
+ b=D4EgD6U/+CCDd1VbybgQ2tIxNToIdPEV7/7FI6SiB1mVdKATEfcRPjZru3f/YnATdd
+ gnQ8QzOdGTr//+/9MFA04kfIAF90DEWS7BJOo9v3AjWUpFQWVGd6/MApr17ltQHzACUb
+ QEfG0Sei0I/UFUoCH8d1arwBCYHBvz6YesNCE7MjdYR7BXyPJHb/2zaysuHcep9zejoR
+ Q+5SSbcRAPNte/7xicuzRp+ALxBiZgqLiiuV3hIIRiPwscCrEe0KUbiefBBRgJo8plmQ
+ JQrtl5BwfQ3vt6vH8ainy6ht3RaS/25rNij3hqxPOQwKeDxyyWStBDHZ+Xzl5QQxvzKK
+ u1DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707239553; x=1707844353;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1707239789; x=1707844589;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PrRJ5d76QadE8MBCkQGSm2LWsORcf86H/9Nb7qmGBtc=;
- b=fLhEAvSr5fq7q5fxnxAzrW6jpxWJ6HgaL4fE7oWpD98+M5fVhLQb/oMSsufiqrPHEj
- N7QDfEDEKPLw0/xoDPgd9zVzIxPoxyLwSDP7or81gYbjsObZen5M8X5DMMbiESKWGJaH
- PUtX6v7r1dzF9IrSstCMWxvfjAnjRcBysa0qcVeinlyOpvhyE+0YWK1d4+l9li/J6lC0
- dEcoDtCTcyidmFcAS3q28w8E8CSkVm8ZCvURWGZkaOgJiTBaDOlFeQzDYXsGPtOwBnTP
- aEIy/NXAeAcljkgzotvCl0wMqjXL3WL8HBdMwP490twhL1T47GRXLxqJeTcBGVZSdzvu
- gaEQ==
-X-Gm-Message-State: AOJu0YxHz5pnkjgLpRGd4rGNOtpL+pH9yN3V7Da9gJjNNZ5dbqa8Q0/u
- GXceuQ4RIlXMu28s8WxTd7/b6AxgzKApQudwBgCCgmpWhFAWV4j9JkpxDdcY3jgr5CR7d+Rn44O
- R
-X-Google-Smtp-Source: AGHT+IElQ4Fhbni4yimfhg4x4bipMa0zIwk1u8skF7rSpI3LQkffIGa9o8Lt0Kj6tQj5kBIH1I2F5A==
-X-Received: by 2002:adf:cc8d:0:b0:336:76de:c171 with SMTP id
- p13-20020adfcc8d000000b0033676dec171mr1726208wrj.62.1707239553103; 
- Tue, 06 Feb 2024 09:12:33 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCWrtJt+URG6QvNQSw7sNjxDtAWWtLTan3pIGQKX7+MclM8g4YZyfgLNZ5F+SWfrzDbMwfhwMa/rRzwieUPjjca8A0Wqq8BpyJ7/W+cltLz8HuyQHB2DGK5Io2WagPOeL7sCqZKSivf6rS6PgT/DZBlxxmGg
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- l12-20020a5d4bcc000000b0033905a60689sm2561284wrt.45.2024.02.06.09.12.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 09:12:32 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: David Woodhouse <dwmw@amazon.co.uk>,
- Nabih Estefan <nabihestefan@google.com>, Hao Wu <wuhaotsh@google.com>
-Subject: [PATCH 1/2] hw/arm/npcm7xx: Call qemu_configure_nic_device() for GMAC
- modules
-Date: Tue,  6 Feb 2024 17:12:30 +0000
-Message-Id: <20240206171231.396392-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240206171231.396392-1-peter.maydell@linaro.org>
-References: <20240206171231.396392-1-peter.maydell@linaro.org>
+ bh=9agnLMbdFvQaGn8zgw8Px7k/7ZwOY/58/R1FjZ2IZzc=;
+ b=pI7ikIJ58ajFKfywMhOzbb2u33XcURo2F4UE9+L0zzQgwieaLTgWDA4bNQOoHwnaPv
+ 9P/OYLv+OJvSjdg2XTs2JES+eyLlXMRyvYR8KkBZ1Kq3hFwI00gZFpq6Mcsv1buKpGv5
+ yQRxulh1yzB7F3kzqC+mOuMVe1j6dLN24LwPedn7lMqoHMN3kXZ02WhOVTzmh1x98P+c
+ jLaeuQMN+y/rIZLSUGNlJrXqJBNUTtCJbCwgC3rVfAHWI561ADpLtkELLQ9GCz6lU83F
+ JvSPTufeq2VsGsj4/YhvYBQZvFOftzkxfkgdclOu05qWnrzA2sm5yd9az9HyHgx+VY7M
+ tblg==
+X-Gm-Message-State: AOJu0Yxf8FrWfZW+Q+5b5BckEOlDK1rp33XqnIqwVGyUSaI0+e3kAHWb
+ nqjPcftF6olvsbj66V1EvsXtgnsOTg1OAGu0RwIZ6ryMGjb61ZkWXcC6u67Kl6ONDo7u6oxobm3
+ g3H1Ds9L2aHfaAI44XFOaOU6UgerYm93UfVv9xYw4JrhAJcnp
+X-Google-Smtp-Source: AGHT+IHwoiPXBVMJOllTavB0kUdzGsmXuQ4uN1k5y9VKGQz+2Ta3CEcWF3c2SeBb7ObGekWQCQuEOWsOL1Jt+BOqhoM=
+X-Received: by 2002:aa7:d8d6:0:b0:560:24e:3caa with SMTP id
+ k22-20020aa7d8d6000000b00560024e3caamr2425748eds.7.1707239788864; Tue, 06 Feb
+ 2024 09:16:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+References: <CAFEAcA-WQa5rJK3e2Z8tgcm0ZN8dDnFnF0v=hTPdJpapN4vsNQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA-WQa5rJK3e2Z8tgcm0ZN8dDnFnF0v=hTPdJpapN4vsNQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 6 Feb 2024 17:16:17 +0000
+Message-ID: <CAFEAcA-wDvn47y9fG4q3HdcxvZsnNEY60-7db9-sbtj2sMN3ow@mail.gmail.com>
+Subject: Re: test-x86-cpuid-compat qtest produces warnings on TCG
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,33 +92,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The patchset adding the GMAC ethernet to this SoC crossed in the
-mail with the patchset cleaning up the NIC handling. When we
-create the GMAC modules we must call qemu_configure_nic_device()
-so that the user has the opportunity to use the -nic commandline
-option to create a network backend and connect it to the GMACs.
+On Fri, 12 Jan 2024 at 13:42, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> When running under TCG, the 'test-x86-cpuid-compat' qtest produces
+> warnings. You can see these for instance in the x64-freebsd-13-build
+> CI job; here's an example:
+>  https://gitlab.com/qemu-project/qemu/-/jobs/5918818568
+>
+> 24/837 qemu:qtest+qtest-x86_64 / qtest-x86_64/test-x86-cpuid-compat
+>           OK               7.32s   45 subtests passed
+> =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95
+> stderr:
+> qemu-system-x86_64: warning: TCG doesn't support requested feature:
+> CPUID.07H:EBX.intel-pt [bit 25]
+> qemu-system-x86_64: warning: TCG doesn't support requested feature:
+> CPUID.07H:EBX.intel-pt [bit 25]
+> qemu-system-x86_64: warning: TCG doesn't support requested feature:
+> CPUID.07H:EBX.intel-pt [bit 25]
+> qemu-system-x86_64: warning: TCG doesn't support requested feature:
+> CPUID.07H:EBX.intel-pt [bit 25]
+>
+>
+> Can somebody look at these and work out whether:
+>  (a) this is a real problem we need to fix
+>  (b) this is a problem in the test case and it shouldn't be trying to
+>      test a feature we don't implement
+>  (c) we should suppress this warning
+> ?
+>
+> (filed as https://gitlab.com/qemu-project/qemu/-/issues/2096 )
 
-Add the missing call.
+Ping, a month later ?
 
-Fixes: 21e5326a7c ("hw/arm: Add GMAC devices to NPCM7XX SoC")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/npcm7xx.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index ff3ecde9043..cc68b5d8f12 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -710,6 +710,7 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < ARRAY_SIZE(s->gmac); i++) {
-         SysBusDevice *sbd = SYS_BUS_DEVICE(&s->gmac[i]);
- 
-+        qemu_configure_nic_device(DEVICE(sbd), false, NULL);
-         /*
-          * The device exists regardless of whether it's connected to a QEMU
-          * netdev backend. So always instantiate it even if there is no
--- 
-2.34.1
-
+thanks
+-- PMM
 
