@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79659C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 13:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5868C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 13:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXLot-00077J-7z; Tue, 06 Feb 2024 08:49:03 -0500
+	id 1rXLp3-0007Ec-1H; Tue, 06 Feb 2024 08:49:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <twiederh@redhat.com>)
- id 1rXLor-00076T-9M
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 08:49:01 -0500
+ id 1rXLoz-0007Af-J3
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 08:49:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <twiederh@redhat.com>)
- id 1rXLop-0004F1-JJ
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 08:49:01 -0500
+ id 1rXLox-0004Ig-6u
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 08:49:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707227337;
+ s=mimecast20190719; t=1707227345;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VCtZX9pAdFZxRp25eSGR68yFkHsghCKg6ZckRzHhzGU=;
- b=cdxxjN5NxJ14mZ/o3b/eE4KMgISu6i5qQ6PG6Nm54ngbT7E1w8VQ0gTCnMv38aQ16/glwW
- ugHGvPYIYOww5fA9kbvPxvZ+LDEa7EHFuvFXH0iMhb5p4NPrfqX1pmNHBoxvS5Uyv/t5bs
- M2gal8eNCugdssRfQZ4ftsBR/eKOfIk=
+ bh=smqA5nLnLvUM2OZ7NPBeAPgnQBcq1Z6hm+52/eOsr9E=;
+ b=hGjgy352i+d2ZYuOJHINSrmd3rI6NYlVneDrcIfHyW6gwOMqRzOJfUi7T8j8v7LhA05Sk3
+ RYRFkvc/KCPBYWBhoN89ffPkZb3YGLqTEeAy0kgLOuxFkorxWX5W9VkPKig8O1fAa4kNh4
+ joJfz0t8VJBlAX0oOJqJU/GeXfv0Fvg=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-371-m_wIQgqtMZGXez1eQCyiZA-1; Tue, 06 Feb 2024 08:47:47 -0500
-X-MC-Unique: m_wIQgqtMZGXez1eQCyiZA-1
+ us-mta-85-Hi8NbOXZP6yfGPiz5jpCcA-1; Tue, 06 Feb 2024 08:47:44 -0500
+X-MC-Unique: Hi8NbOXZP6yfGPiz5jpCcA-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AE50B83FC24;
- Tue,  6 Feb 2024 13:47:47 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E6AB985A5A6;
+ Tue,  6 Feb 2024 13:47:43 +0000 (UTC)
 Received: from work.fritz.box (unknown [10.39.195.68])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AEAC32026D06;
- Tue,  6 Feb 2024 13:47:46 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E60DE2026D06;
+ Tue,  6 Feb 2024 13:47:42 +0000 (UTC)
 From: Tim Wiederhake <twiederh@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>,
@@ -53,9 +53,9 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Tim Wiederhake <twiederh@redhat.com>
-Subject: [PATCH v3 5/5] target/i386: Generate feature_word_info.c.inc
-Date: Tue,  6 Feb 2024 14:47:39 +0100
-Message-ID: <20240206134739.15345-6-twiederh@redhat.com>
+Subject: [PATCH v3 2/5] target/i386: Translate feature_word_info to yaml
+Date: Tue,  6 Feb 2024 14:47:36 +0100
+Message-ID: <20240206134739.15345-3-twiederh@redhat.com>
 In-Reply-To: <20240206134739.15345-1-twiederh@redhat.com>
 References: <20240206134739.15345-1-twiederh@redhat.com>
 MIME-Version: 1.0
@@ -85,153 +85,720 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is the data file that will be used to generate the C code.
+All information, including the comments, is preserved.
+
 Signed-off-by: Tim Wiederhake <twiederh@redhat.com>
 ---
- target/i386/feature_word_info.c.inc | 30 ++++++++++--
- target/i386/feature_word_info.py    | 71 +++++++++++++++++++++++++++++
- target/i386/feature_word_info.yaml  |  2 +
- 3 files changed, 99 insertions(+), 4 deletions(-)
- create mode 100755 target/i386/feature_word_info.py
+ target/i386/feature_word_info.yaml | 699 +++++++++++++++++++++++++++++
+ 1 file changed, 699 insertions(+)
+ create mode 100644 target/i386/feature_word_info.yaml
 
-diff --git a/target/i386/feature_word_info.c.inc b/target/i386/feature_word_info.c.inc
-index 4beae01918..b4bece08fe 100644
---- a/target/i386/feature_word_info.c.inc
-+++ b/target/i386/feature_word_info.c.inc
-@@ -1,3 +1,5 @@
-+/* This file is generated by feature_word_info.py. */
-+
- FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-     [FEAT_1_EDX] = {
-         .type = CPUID_FEATURE_WORD,
-@@ -587,9 +589,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-     [FEAT_VMX_BASIC] = {
-         .type = MSR_FEATURE_WORD,
-         .feat_names = {
--            [54] = "vmx-ins-outs",
--            [55] = "vmx-true-ctls",
--            [56] = "vmx-any-errcode",
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, "vmx-ins-outs", "vmx-true-ctls",
-+            "vmx-any-errcode", NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-         },
-         .msr = {
-             .index = MSR_IA32_VMX_BASIC,
-@@ -599,7 +614,14 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-     [FEAT_VMX_VMFUNC] = {
-         .type = MSR_FEATURE_WORD,
-         .feat_names = {
--            [0] = "vmx-eptp-switching",
-+            "vmx-eptp-switching", NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-         },
-         .msr = {
-             .index = MSR_IA32_VMX_VMFUNC,
-diff --git a/target/i386/feature_word_info.py b/target/i386/feature_word_info.py
-new file mode 100755
-index 0000000000..c9aa00900c
---- /dev/null
-+++ b/target/i386/feature_word_info.py
-@@ -0,0 +1,71 @@
-+#!/bin/env python3
-+
-+import os
-+import yaml
-+
-+
-+def write_feature_word(f, data):
-+    f.write("    [{}] = {{\n".format(data["index"]))
-+    f.write("        .type = {},\n".format(data["type"]))
-+
-+    if "feat_names" in data:
-+        keys = data.get("feat_names").keys()
-+        if not keys or max(keys) < 32:
-+            highest = 32
-+        else:
-+            highest = 64
-+
-+        f.write("        .feat_names = {\n")
-+        for i in range(0, highest, 4):
-+            names = [data.get("feat_names").get(j) for j in range(i, i + 4)]
-+            names = ["NULL" if not name else f"\"{name}\"" for name in names]
-+            display = ", ".join(names)
-+            if len(display) < 90:
-+                f.write("            {},\n".format(display))
-+            else:
-+                f.write("            {}, {},\n".format(names[0], names[1]))
-+                f.write("                {}, {},\n".format(names[2], names[3]))
-+        f.write("        },\n")
-+    if "cpuid" in data:
-+        cpuid = data["cpuid"]
-+        f.write("        .cpuid = {\n")
-+        f.write("            .eax = {},\n".format(cpuid["eax"]))
-+        if "ecx" in cpuid:
-+            f.write("            .needs_ecx = true,\n")
-+            f.write("            .ecx = {},\n".format(cpuid["ecx"]))
-+        f.write("            .reg = {},\n".format(cpuid["reg"]))
-+        f.write("        },\n")
-+    if "msr" in data:
-+        f.write("        .msr = {\n")
-+        f.write("            .index = {},\n".format(data["msr"]))
-+        f.write("        },\n")
-+    if "tcg_features" in data:
-+        f.write("        .tcg_features = {},\n".format(data["tcg_features"]))
-+    if "unmigratable_flags" in data:
-+        f.write("        .unmigratable_flags = {},\n".format(
-+            data["unmigratable_flags"]))
-+    if "migratable_flags" in data:
-+        f.write("        .migratable_flags = {},\n".format(
-+            data["migratable_flags"]))
-+    if "no_autoenable_flags" in data:
-+        f.write("        .no_autoenable_flags = {},\n".format(
-+            data["no_autoenable_flags"]))
-+    f.write("    },\n")
-+
-+
-+def main():
-+    dirname = os.path.dirname(__file__)
-+
-+    with open(os.path.join(dirname, "feature_word_info.yaml"), "tr") as f:
-+        feature_words = yaml.safe_load(f)
-+
-+    with open(os.path.join(dirname, "feature_word_info.c.inc"), "tw") as f:
-+        f.write("/* This file is generated by feature_word_info.py. */\n\n")
-+        f.write("FeatureWordInfo feature_word_info[FEATURE_WORDS] = {\n")
-+        for feature_word in feature_words:
-+            write_feature_word(f, feature_word)
-+        f.write("};\n")
-+
-+
-+if __name__ == "__main__":
-+    main()
 diff --git a/target/i386/feature_word_info.yaml b/target/i386/feature_word_info.yaml
-index 7a8ca3f051..0e9dbcb613 100644
---- a/target/i386/feature_word_info.yaml
+new file mode 100644
+index 0000000000..7a8ca3f051
+--- /dev/null
 +++ b/target/i386/feature_word_info.yaml
-@@ -1,3 +1,5 @@
-+# Run feature_word_info.py if you make changes to this file!
+@@ -0,0 +1,699 @@
++- index: FEAT_1_EDX
++  cpuid:
++    eax: '1'
++    reg: R_EDX
++  feat_names:
++    0: fpu
++    1: vme
++    2: de
++    3: pse
++    4: tsc
++    5: msr
++    6: pae
++    7: mce
++    8: cx8
++    9: apic
++    11: sep
++    12: mtrr
++    13: pge
++    14: mca
++    15: cmov
++    16: pat
++    17: pse36
++    18: pn          # Intel psn
++    19: clflush     # Intel clfsh
++    21: ds          # Intel dts
++    22: acpi
++    23: mmx
++    24: fxsr
++    25: sse
++    26: sse2
++    27: ss
++    28: ht          # Intel htt
++    29: tm
++    30: ia64
++    31: pbe
++  no_autoenable_flags: CPUID_HT
++  tcg_features: TCG_FEATURES
++  type: CPUID_FEATURE_WORD
 +
- - index: FEAT_1_EDX
-   cpuid:
-     eax: '1'
++- index: FEAT_1_ECX
++  cpuid:
++    eax: '1'
++    reg: R_ECX
++  feat_names:
++    0: pni          # Intel,AMD sse3
++    1: pclmulqdq
++    2: dtes64
++    3: monitor
++    4: ds-cpl
++    5: vmx
++    6: smx
++    7: est
++    8: tm2
++    9: ssse3
++    10: cid
++    12: fma
++    13: cx16
++    14: xtpr
++    15: pdcm
++    17: pcid
++    18: dca
++    19: sse4.1
++    20: sse4.2
++    21: x2apic
++    22: movbe
++    23: popcnt
++    24: tsc-deadline
++    25: aes
++    26: xsave
++    # 27: osxsave
++    28: avx
++    29: f16c
++    30: rdrand
++    31: hypervisor
++  tcg_features: TCG_EXT_FEATURES
++  type: CPUID_FEATURE_WORD
++
++# Feature names that are already defined on feature_name[] but are set on
++# CPUID[8000_0001].EDX on AMD CPUs don't have their names on feat_names below.
++# They are copied automatically to features[FEAT_8000_0001_EDX] if and only if
++# CPU vendor is AMD.
++- index: FEAT_8000_0001_EDX
++  cpuid:
++    eax: '0x80000001'
++    reg: R_EDX
++  feat_names:
++    # 0: fpu
++    # 1: vme
++    # 2: de
++    # 3: pse
++    # 4: tsc
++    # 5: msr
++    # 6: pae
++    # 7: mce
++    # 8: cx8
++    # 9: apic
++    11: syscall
++    # 12: mtrr
++    # 13: pge
++    # 14: mca
++    # 15: cmov
++    # 16: pat
++    # 17: pse36
++    # 19: Linux mp
++    20: nx
++    22: mmxext
++    # 23: mmx
++    # 24: fxsr
++    25: fxsr-opt
++    26: pdpe1gb
++    27: rdtscp
++    29: lm
++    30: 3dnowext
++    31: 3dnow
++  tcg_features: TCG_EXT2_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_8000_0001_ECX
++  cpuid:
++    eax: '0x80000001'
++    reg: R_ECX
++  feat_names:
++    0: lahf-lm
++    1: cmp-legacy
++    2: svm
++    3: extapic
++    4: cr8legacy
++    5: abm
++    6: sse4a
++    7: misalignsse
++    8: 3dnowprefetch
++    9: osvw
++    10: ibs
++    11: xop
++    12: skinit
++    13: wdt
++    15: lwp
++    16: fma4
++    17: tce
++    19: nodeid-msr
++    21: tbm
++    22: topoext
++    23: perfctr-core
++    24: perfctr-nb
++  # TOPOEXT is always allowed but can't be enabled blindly by "-cpu host", as
++  # it requires consistent cache topology info to be provided so it doesn't
++  # confuse guests.
++  no_autoenable_flags: CPUID_EXT3_TOPOEXT
++  tcg_features: TCG_EXT3_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_C000_0001_EDX
++  cpuid:
++    eax: '0xC0000001'
++    reg: R_EDX
++  feat_names:
++    2: xstore
++    3: xstore-en
++    6: xcrypt
++    7: xcrypt-en
++    8: ace2
++    9: ace2-en
++    10: phe
++    11: phe-en
++    12: pmm
++    13: pmm-en
++  tcg_features: TCG_EXT4_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_KVM
++  cpuid:
++    eax: KVM_CPUID_FEATURES
++    reg: R_EAX
++  feat_names:
++    0: kvmclock
++    1: kvm-nopiodelay
++    2: kvm-mmu
++    3: kvmclock
++    4: kvm-asyncpf
++    5: kvm-steal-time
++    6: kvm-pv-eoi
++    7: kvm-pv-unhalt
++    9: kvm-pv-tlb-flush
++    11: kvm-pv-ipi
++    12: kvm-poll-control
++    13: kvm-pv-sched-yield
++    14: kvm-asyncpf-int
++    15: kvm-msi-ext-dest-id
++    24: kvmclock-stable-bit
++  tcg_features: TCG_KVM_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_KVM_HINTS
++  cpuid:
++    eax: KVM_CPUID_FEATURES
++    reg: R_EDX
++  feat_names:
++    0: kvm-hint-dedicated
++  # KVM hints aren't auto-enabled by -cpu host, they need to be explicitly
++  # enabled in the command-line.
++  no_autoenable_flags: ~0U
++  tcg_features: TCG_KVM_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_SVM
++  cpuid:
++    eax: '0x8000000A'
++    reg: R_EDX
++  feat_names:
++    0: npt
++    1: lbrv
++    2: svm-lock
++    3: nrip-save
++    4: tsc-scale
++    5: vmcb-clean
++    6: flushbyasid
++    7: decodeassists
++    10: pause-filter
++    12: pfthreshold
++    13: avic
++    15: v-vmsave-vmload
++    16: vgif
++    25: vnmi
++    28: svme-addr-chk
++  tcg_features: TCG_SVM_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_7_0_EBX
++  cpuid:
++    eax: '7'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_EBX
++  feat_names:
++    0: fsgsbase
++    1: tsc-adjust
++    2: sgx
++    3: bmi1
++    4: hle
++    5: avx2
++    7: smep
++    8: bmi2
++    9: erms
++    10: invpcid
++    11: rtm
++    14: mpx
++    16: avx512f
++    17: avx512dq
++    18: rdseed
++    19: adx
++    20: smap
++    21: avx512ifma
++    22: pcommit
++    23: clflushopt
++    24: clwb
++    25: intel-pt
++    26: avx512pf
++    27: avx512er
++    28: avx512cd
++    29: sha-ni
++    30: avx512bw
++    31: avx512vl
++  tcg_features: TCG_7_0_EBX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_7_0_ECX
++  cpuid:
++    eax: '7'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_ECX
++  feat_names:
++    1: avx512vbmi
++    2: umip
++    3: pku
++    # 4: ospke
++    5: waitpkg
++    6: avx512vbmi2
++    8: gfni
++    9: vaes
++    10: vpclmulqdq
++    11: avx512vnni
++    12: avx512bitalg
++    14: avx512-vpopcntdq
++    16: la57
++    22: rdpid
++    24: bus-lock-detect
++    25: cldemote
++    27: movdiri
++    28: movdir64b
++    30: sgxlc
++    31: pks
++  tcg_features: TCG_7_0_ECX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_7_0_EDX
++  cpuid:
++    eax: '7'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_EDX
++  feat_names:
++    2: avx512-4vnniw
++    3: avx512-4fmaps
++    4: fsrm
++    8: avx512-vp2intersect
++    10: md-clear
++    14: serialize
++    16: tsx-ldtrk
++    # 18: pconfig
++    19: arch-lbr
++    22: amx-bf16
++    23: avx512-fp16
++    24: amx-tile
++    25: amx-int8
++    26: spec-ctrl
++    27: stibp
++    28: flush-l1d
++    29: arch-capabilities
++    30: core-capability
++    31: ssbd
++  tcg_features: TCG_7_0_EDX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_7_1_EAX
++  cpuid:
++    eax: '7'
++    ecx: '1'
++    needs_ecx: 'true'
++    reg: R_EAX
++  feat_names:
++    4: avx-vnni
++    5: avx512-bf16
++    7: cmpccxadd
++    10: fzrm
++    11: fsrs
++    12: fsrc
++    21: amx-fp16
++    23: avx-ifma
++  tcg_features: TCG_7_1_EAX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_7_1_EDX
++  cpuid:
++    eax: '7'
++    ecx: '1'
++    needs_ecx: 'true'
++    reg: R_EDX
++  feat_names:
++    4: avx-vnni-int8
++    5: avx-ne-convert
++    8: amx-complex
++    14: prefetchiti
++  tcg_features: TCG_7_1_EDX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_7_2_EDX
++  cpuid:
++    eax: '7'
++    ecx: '2'
++    needs_ecx: 'true'
++    reg: R_EDX
++  feat_names:
++    5: mcdt-no
++  tcg_features: TCG_7_2_EDX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_8000_0007_EDX
++  cpuid:
++    eax: '0x80000007'
++    reg: R_EDX
++  feat_names:
++    8: invtsc
++  tcg_features: TCG_APM_FEATURES
++  type: CPUID_FEATURE_WORD
++  unmigratable_flags: CPUID_APM_INVTSC
++
++- index: FEAT_8000_0008_EBX
++  cpuid:
++    eax: '0x80000008'
++    reg: R_EBX
++  feat_names:
++    0: clzero
++    2: xsaveerptr
++    9: wbnoinvd
++    12: ibpb
++    14: ibrs
++    15: amd-stibp
++    17: stibp-always-on
++    24: amd-ssbd
++    25: virt-ssbd
++    26: amd-no-ssb
++    28: amd-psfd
++  tcg_features: TCG_8000_0008_EBX
++  type: CPUID_FEATURE_WORD
++  unmigratable_flags: '0'
++
++- index: FEAT_8000_0021_EAX
++  cpuid:
++    eax: '0x80000021'
++    reg: R_EAX
++  feat_names:
++    0: no-nested-data-bp
++    2: lfence-always-serializing
++    6: null-sel-clr-base
++    8: auto-ibrs
++  tcg_features: '0'
++  type: CPUID_FEATURE_WORD
++  unmigratable_flags: '0'
++
++- index: FEAT_XSAVE
++  cpuid:
++    eax: '0xd'
++    ecx: '1'
++    needs_ecx: 'true'
++    reg: R_EAX
++  feat_names:
++    0: xsaveopt
++    1: xsavec
++    2: xgetbv1
++    3: xsaves
++    4: xfd
++  tcg_features: TCG_XSAVE_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_XSAVE_XSS_LO
++  cpuid:
++    eax: '0xD'
++    ecx: '1'
++    needs_ecx: 'true'
++    reg: R_ECX
++  feat_names: {}
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_XSAVE_XSS_HI
++  cpuid:
++    eax: '0xD'
++    ecx: '1'
++    needs_ecx: 'true'
++    reg: R_EDX
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_6_EAX
++  cpuid:
++    eax: '6'
++    reg: R_EAX
++  feat_names:
++    2: arat
++  tcg_features: TCG_6_EAX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_XSAVE_XCR0_LO
++  cpuid:
++    eax: '0xD'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_EAX
++  migratable_flags: |-
++    XSTATE_FP_MASK | XSTATE_SSE_MASK |
++                XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
++                XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
++                XSTATE_PKRU_MASK
++  tcg_features: ~0U
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_XSAVE_XCR0_HI
++  cpuid:
++    eax: '0xD'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_EDX
++  tcg_features: ~0U
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_ARCH_CAPABILITIES
++  msr: MSR_IA32_ARCH_CAPABILITIES
++  feat_names:
++    0: rdctl-no
++    1: ibrs-all
++    2: rsba
++    3: skip-l1dfl-vmentry
++    4: ssb-no
++    5: mds-no
++    6: pschange-mc-no
++    7: tsx-ctrl
++    8: taa-no
++    13: sbdr-ssdp-no
++    14: fbsdp-no
++    15: psdp-no
++    17: fb-clear
++    24: pbrsb-no
++    26: gds-no
++  # FEAT_ARCH_CAPABILITIES only affects a read-only MSR, which cannot be read
++  # from user mode.  Therefore, it has no impact on any user-mode operation,
++  # and warnings about unsupported features do not matter.
++  tcg_features: ~0U
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_CORE_CAPABILITY
++  msr: MSR_IA32_CORE_CAPABILITY
++  feat_names:
++    5: split-lock-detect
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_PERF_CAPABILITIES
++  msr: MSR_IA32_PERF_CAPABILITIES
++  feat_names:
++    13: full-width-write
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_PROCBASED_CTLS
++  msr: MSR_IA32_VMX_TRUE_PROCBASED_CTLS
++  feat_names:
++    2: vmx-vintr-pending
++    3: vmx-tsc-offset
++    7: vmx-hlt-exit
++    9: vmx-invlpg-exit
++    10: vmx-mwait-exit
++    11: vmx-rdpmc-exit
++    12: vmx-rdtsc-exit
++    15: vmx-cr3-load-noexit
++    16: vmx-cr3-store-noexit
++    19: vmx-cr8-load-exit
++    20: vmx-cr8-store-exit
++    21: vmx-flexpriority
++    22: vmx-vnmi-pending
++    23: vmx-movdr-exit
++    24: vmx-io-exit
++    25: vmx-io-bitmap
++    27: vmx-mtf
++    28: vmx-msr-bitmap
++    29: vmx-monitor-exit
++    30: vmx-pause-exit
++    31: vmx-secondary-ctls
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_SECONDARY_CTLS
++  msr: MSR_IA32_VMX_PROCBASED_CTLS2
++  feat_names:
++    0: vmx-apicv-xapic
++    1: vmx-ept
++    2: vmx-desc-exit
++    3: vmx-rdtscp-exit
++    4: vmx-apicv-x2apic
++    5: vmx-vpid
++    6: vmx-wbinvd-exit
++    7: vmx-unrestricted-guest
++    8: vmx-apicv-register
++    9: vmx-apicv-vid
++    10: vmx-ple
++    11: vmx-rdrand-exit
++    12: vmx-invpcid-exit
++    13: vmx-vmfunc
++    14: vmx-shadow-vmcs
++    15: vmx-encls-exit
++    16: vmx-rdseed-exit
++    17: vmx-pml
++    20: vmx-xsaves
++    25: vmx-tsc-scaling
++    26: vmx-enable-user-wait-pause
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_PINBASED_CTLS
++  msr: MSR_IA32_VMX_TRUE_PINBASED_CTLS
++  feat_names:
++    0: vmx-intr-exit
++    3: vmx-nmi-exit
++    5: vmx-vnmi
++    6: vmx-preemption-timer
++    7: vmx-posted-intr
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_EXIT_CTLS
++  msr: MSR_IA32_VMX_TRUE_EXIT_CTLS
++  feat_names:
++    2: vmx-exit-nosave-debugctl
++    #9: VMX_VM_EXIT_HOST_ADDR_SPACE_SIZE is copied from the LM CPUID bit.
++    12: vmx-exit-load-perf-global-ctrl
++    15: vmx-exit-ack-intr
++    18: vmx-exit-save-pat
++    19: vmx-exit-load-pat
++    20: vmx-exit-save-efer
++    21: vmx-exit-load-efer
++    22: vmx-exit-save-preemption-timer
++    23: vmx-exit-clear-bndcfgs
++    25: vmx-exit-clear-rtit-ctl
++    29: vmx-exit-load-pkrs
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_ENTRY_CTLS
++  msr: MSR_IA32_VMX_TRUE_ENTRY_CTLS
++  feat_names:
++    2: vmx-entry-noload-debugctl
++    9: vmx-entry-ia32e-mode
++    13: vmx-entry-load-perf-global-ctrl
++    14: vmx-entry-load-pat
++    15: vmx-entry-load-efer
++    16: vmx-entry-load-bndcfgs
++    18: vmx-entry-load-rtit-ctl
++    22: vmx-entry-load-pkrs
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_MISC
++  msr: MSR_IA32_VMX_MISC
++  feat_names:
++    5: vmx-store-lma
++    6: vmx-activity-hlt
++    7: vmx-activity-shutdown
++    8: vmx-activity-wait-sipi
++    29: vmx-vmwrite-vmexit-fields
++    30: vmx-zero-len-inject
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_EPT_VPID_CAPS
++  msr: MSR_IA32_VMX_EPT_VPID_CAP
++  feat_names:
++    0: vmx-ept-execonly
++    6: vmx-page-walk-4
++    7: vmx-page-walk-5
++    16: vmx-ept-2mb
++    17: vmx-ept-1gb
++    20: vmx-invept
++    21: vmx-eptad
++    22: vmx-ept-advanced-exitinfo
++    25: vmx-invept-single-context
++    26: vmx-invept-all-context
++    32: vmx-invvpid
++    40: vmx-invvpid-single-addr
++    41: vmx-invept-single-context
++    42: vmx-invvpid-all-context
++    43: vmx-invept-single-context-noglobals
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_BASIC
++  msr: MSR_IA32_VMX_BASIC
++  feat_names:
++    54: vmx-ins-outs
++    55: vmx-true-ctls
++    56: vmx-any-errcode
++  # Just to be safe - we don't support setting the MSEG version field.
++  no_autoenable_flags: MSR_VMX_BASIC_DUAL_MONITOR
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_VMX_VMFUNC
++  msr: MSR_IA32_VMX_VMFUNC
++  feat_names:
++    0: vmx-eptp-switching
++  type: MSR_FEATURE_WORD
++
++- index: FEAT_14_0_ECX
++  cpuid:
++    eax: '0x14'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_ECX
++  feat_names:
++    31: intel-pt-lip
++  tcg_features: TCG_14_0_ECX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_SGX_12_0_EAX
++  cpuid:
++    eax: '0x12'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_EAX
++  feat_names:
++    0: sgx1
++    1: sgx2
++    11: sgx-edeccssa
++  tcg_features: TCG_SGX_12_0_EAX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_SGX_12_0_EBX
++  cpuid:
++    eax: '0x12'
++    ecx: '0'
++    needs_ecx: 'true'
++    reg: R_EBX
++  feat_names:
++    0: sgx-exinfo
++  tcg_features: TCG_SGX_12_0_EBX_FEATURES
++  type: CPUID_FEATURE_WORD
++
++- index: FEAT_SGX_12_1_EAX
++  cpuid:
++    eax: '0x12'
++    ecx: '1'
++    needs_ecx: 'true'
++    reg: R_EAX
++  feat_names:
++    1: sgx-debug
++    2: sgx-mode64
++    4: sgx-provisionkey
++    5: sgx-tokenkey
++    7: sgx-kss
++    10: sgx-aex-notify
++  tcg_features: TCG_SGX_12_1_EAX_FEATURES
++  type: CPUID_FEATURE_WORD
 -- 
 2.43.0
 
