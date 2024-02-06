@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A04DC4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 02:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DBF8C48260
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 02:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXBQR-0002nA-RJ; Mon, 05 Feb 2024 21:43:07 -0500
+	id 1rXBVH-0003vv-Kl; Mon, 05 Feb 2024 21:48:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXBQQ-0002lN-Bp
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 21:43:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rXBVF-0003uA-Kd
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 21:48:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXBQJ-0006l9-S9
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 21:43:06 -0500
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rXBV5-0007t3-S9
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 21:48:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707187378;
+ s=mimecast20190719; t=1707187674;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ny034FCgatJcXwPuaGYU1WMblYKzesiwvEA6ARVynU4=;
- b=QO5HDnhEWDnKUMjU5zPJ+Dz6PJh5yjSPS/fUTubPmQNM73ojt2BUULe8rQLhgG9tIGwgQl
- aG9JN2nJ3cuKLXaXDoYdGvuipBecsvf6DY/TJw2qdf/pfKKR2OB+89pRlXqLBAixfLqfPW
- Wryo/x5iM7+XzHqkSwiVmQOE6rSSeCk=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=d4ZCB+7ROboc7hezLTAygYGe6I945IVPo0uZ8x5Swgc=;
+ b=WQ50QEblSfnuYOMbpkzhkkyxpazlTWLgmORG2u2uYMM2M4VtvIVCkD6c07IeClCS95aMae
+ WobQPPTsb58Oq5duSw4qEFAEF0y+gqUV2xAO/RJF7xzXAQgFUKMSZ5B2m78czdDZElHmKJ
+ NkmpqS93Mqa7pz0dEIvFt6E5Mtc3KKU=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-442-RhxFrqADNfmwwUT3siZkRg-1; Mon, 05 Feb 2024 21:42:16 -0500
-X-MC-Unique: RhxFrqADNfmwwUT3siZkRg-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5cf53f904f9so1869367a12.1
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 18:42:16 -0800 (PST)
+ us-mta-639-9dZ0qRUwOkOtOwghjTm_BA-1; Mon, 05 Feb 2024 21:47:53 -0500
+X-MC-Unique: 9dZ0qRUwOkOtOwghjTm_BA-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-5cf962e1fcbso5655086a12.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 18:47:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707187335; x=1707792135;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ny034FCgatJcXwPuaGYU1WMblYKzesiwvEA6ARVynU4=;
- b=eczQjimtZUOdO/SIzAtQZ8KTv7W8kKwI+jAvh7fyFSVu1cA17NbC9vum3m3oxmCCbq
- ZtFd91GcC4aheoiH1RlkCiBSSUx4C6eeC/qFWjFwmaChmpeRoE0BiXlSLrWtwGhsPLOi
- hHjFem0zswy5E8Z153RSDZyPDipKjUOIkOw3mD/LNaSg/g/krzr+klvil00MwFv+hSyZ
- nX9O41+MOPXv9fmqdi5m8OgWmwiz4lDp3K4sHrDpHsrQU/cFySNQSoRikKpQLhcOURi/
- QgJIxJjUS0m7S7rC6LJYUbeV6aINf9CE4boxKSDQ5NpGHo+/S2Z5FrkV05y+kCfGTr1b
- rM+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU30dKENbL01i+kItps7hllRH7eCbho9h6CTAZ4Kdwg7NGbSO5WiCOot+Hc7j3tMtccE7GL4Hgrm+Iuel+ywCwMuPXXB1E=
-X-Gm-Message-State: AOJu0YzXPug0E4XjiiwuBEt/xPF3XsYkTNxZwbzkg0mc99raen2G2o4j
- dSY+uQtYrGzU64DNiNwVupghekFIFsjg0SullACmkvQXLQKmoLgPEWhzymHcubuS8Jccx6/qLGv
- YcTYuD1T1g1cnpuicubwoTOiyTDE6SRk+PVWYrWvC1M+5xe2I2pr7
-X-Received: by 2002:a05:6a20:3ca1:b0:19e:35a3:78bc with SMTP id
- b33-20020a056a203ca100b0019e35a378bcmr1457344pzj.6.1707187335396; 
- Mon, 05 Feb 2024 18:42:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEYOT1gDRttpQKh+p5AJtxWWHWgxg+LYuhkQEm2naeoWOoWQkB0Gt0VotSRg5yuBauuZnRvHA==
-X-Received: by 2002:a05:6a20:3ca1:b0:19e:35a3:78bc with SMTP id
- b33-20020a056a203ca100b0019e35a378bcmr1457328pzj.6.1707187334961; 
- Mon, 05 Feb 2024 18:42:14 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCWxd5ZVvgtManA/zNHpOf+4b6neLBgRtYjU5zjnZG55tp4gAAVLwOLWEuFWRQCruo8niTs7B5q332usgEn3DyXrc4SL/NazSSSQD1tyq6LyI9SGznPAHg==
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- u3-20020a62d443000000b006e025e1fa61sm673798pfl.14.2024.02.05.18.42.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 18:42:14 -0800 (PST)
-Date: Tue, 6 Feb 2024 10:42:07 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 0/2] migration: Fix return-path thread exit
-Message-ID: <ZcGcf0sdBShK9q8A@x1n>
-References: <20240201184853.890471-1-clg@redhat.com> <Zby7o1O5Ox2NNbbP@x1n>
- <ZcC5QTO3tmt9gaCf@redhat.com>
+ d=1e100.net; s=20230601; t=1707187672; x=1707792472;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=d4ZCB+7ROboc7hezLTAygYGe6I945IVPo0uZ8x5Swgc=;
+ b=xL9Z6+tl3BRlcOOPAjoxkWgvuvW1WGrACOZOTAyOhgTOeZ6hOmyvJ4e0dQxDEFD5eZ
+ luh3qy3JhbgY2zNMBxg1aY2gwlQftvoFtYkIOboMq58J9eEgTPmqKCyNlA0S42Jxa9/H
+ u8Oc6pe3bg7sE7sLU9PVSVlSLm2cU1VtEij4gTdSy+lO+n0MVeRdb9WiGoNub/K4l+GX
+ g9UqN5fTru3QSQhwqDoSprYduWgkKa7tnNBkfohcvdEx/4rVnmgM4C9B99fT4CfALr7C
+ kvx7MFQWaNnpGBRUS5vqug9LsSu4Rx2N5BFPRozp7FgV6eYOll444gFxfnJnpQa2EIcL
+ v9zw==
+X-Gm-Message-State: AOJu0YxzwBx5MKlQTcxEcb3SwGrOVfsQ1ya3JZSQg79PvFq/mW3Wu6Fk
+ jCL+B/HcecIxpfPbsWp4bS6fyToT+/o4F0zS4I0tF/K+ztKxiOsHBjAaRg7ywV52oC2W/ISxgzZ
+ qWtegjdgvuNkF2pO1qCU1QeEXqUZGJk+PRdRP7OQYml/MpX87I7X1OG4jfXR/8lfrC4jNt06qA2
+ kJx5qeDP/zZy0rj2ei+aabYDFX95M=
+X-Received: by 2002:a05:6a20:f38a:b0:19e:2aab:f727 with SMTP id
+ qr10-20020a056a20f38a00b0019e2aabf727mr330242pzb.57.1707187672026; 
+ Mon, 05 Feb 2024 18:47:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHhfdxV7GtyI3LBnhLQ/Jh9Sd4H7x8fy3af7rI6eOJc1u2VSHQPvLXRZlwzmb6OmCxWfsLVRkzgxSZfLhQc1lU=
+X-Received: by 2002:a05:6a20:f38a:b0:19e:2aab:f727 with SMTP id
+ qr10-20020a056a20f38a00b0019e2aabf727mr330235pzb.57.1707187671764; Mon, 05
+ Feb 2024 18:47:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZcC5QTO3tmt9gaCf@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20240202132521.32714-1-kwolf@redhat.com>
+ <zmopxf5zt6m36nfujntn72idlinm7qmx23wjvwiazmq4b75lsa@a2omit34pjif>
+In-Reply-To: <zmopxf5zt6m36nfujntn72idlinm7qmx23wjvwiazmq4b75lsa@a2omit34pjif>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 6 Feb 2024 10:47:40 +0800
+Message-ID: <CACGkMEvLpg+nPgHsE_6stFM1OGXbHpuE=j7XLwt_YxpxhWJgZw@mail.gmail.com>
+Subject: Re: [PATCH] vdpa-dev: Fix initialisation order to restore VDUSE
+ compatibility
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ qemu-block@nongnu.org, mst@redhat.com, qemu-devel@nongnu.org, 
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.285,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,81 +101,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 10:32:33AM +0000, Daniel P. Berrangé wrote:
-> On Fri, Feb 02, 2024 at 05:53:39PM +0800, Peter Xu wrote:
-> > On Thu, Feb 01, 2024 at 07:48:51PM +0100, Cédric Le Goater wrote:
-> > > Hello,
-> > 
-> > Hi, Cédric,
-> > 
-> > Thanks for the patches.
-> > 
-> > > 
-> > > Today, close_return_path_on_source() can perform a shutdown to exit
-> > > the return-path thread if an error occured. However, migrate_fd_cleanup()
-> > > does cleanups too early and the shutdown in close_return_path_on_source()
-> > > fails, leaving the source and destination waiting for an event to occur.
-> > > 
-> > > This little series tries to fix that. Comments welcome !  
-> > 
-> > One thing I do agree is that relying on qemu_file_get_error(to_dst_file) in
-> > close_return_path_on_source() is weird: IMHO we have better way to detect
-> > "whether the migration has error" now, which is migrate_has_error().
-> > 
-> > For this specific issue, I think one long standing issue that might be
-> > relevant is we have two QEMUFile (from_dst_file, to_dst_file) that share
-> > the same QIOChannel now.  Logically the two QEMUFile should be able to be
-> > managed separately, say, close() of to_dst_file shouldn't affect the other.
-> > 
-> > However I don't think it's the case now, as qemu_fclose(to_dst_file) will
-> > do qio_channel_close() already, which means there will be a side effect to
-> > the other QEMUFile that its backing IOC is already closed.
-> > 
-> > Is this the issue we're facing?  IOW, the close() of to_dst_file will not
-> > properly kick the other thread who is blocked at reading from_dst_file,
-> > while the shutdown() will kick it out?
-> > 
-> > If so, not sure whether we can somehow relay the real qio_channel_close()
-> > to until the last user releases it? IOW, conditionally close() the channel
-> > in qio_channel_finalize(), if the channel is still open?  Would that make
-> > sense?
-> 
-> IMHO the problem described above is a result of the design mistake of
-> having 2 separate QEMUFile instances for what is ultimately the same
-> channel. This was a convenient approach to take originally, but it has
-> likely outlived its purpose.
-> 
-> In the ideal world IMHO, QEMUFile would not exist at all, and we would
-> have a QIOChannelCached that adds the read/write buffering above the
-> base QIOChannel.
+On Mon, Feb 5, 2024 at 6:51=E2=80=AFPM Stefano Garzarella <sgarzare@redhat.=
+com> wrote:
+>
+> On Fri, Feb 02, 2024 at 02:25:21PM +0100, Kevin Wolf wrote:
+> >VDUSE requires that virtqueues are first enabled before the DRIVER_OK
+> >status flag is set; with the current API of the kernel module, it is
+> >impossible to enable the opposite order in our block export code because
+> >userspace is not notified when a virtqueue is enabled.
 
-We have that in the TODO wiki page for a long time, I'll update it
-slightly.
+Did this mean virtio-blk will enable a virtqueue after DRIVER_OK? Sepc
+is not clear about this and that's why we introduce
+VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK.
 
-https://wiki.qemu.org/ToDo/LiveMigration#Rewrite_QEMUFile_for_migration
+>
+> Yeah, IMHO the VDUSE protocol is missing a VDUSE_SET_VQ_READY message,
 
-But yeah that might be too big a hammer to solve this specific issue.
-AFAIU Fabiano is looking into that direction, but I assume it should still
-be a long term thing.
+I think you meant when VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is
+negotiated. If this is truth, it seems a little more complicated, for
+example the get_backend_features needs to be forward to the userspace?
+This seems suboptimal to implement this in the spec first and then we
+can leverage the features. Or we can have another parameter for the
+ioctl that creates the vduse device.
 
-> 
-> That's doable, but bigger than a quick fix. A natural stepping stone
-> to get there though is to move from 2 QEMUFile objs down to 1 QEMUFile,
-> which might be more practical as a quick fix.
+> I'll start another thread about that, but in the meantime I agree that
+> we should fix QEMU since we need to work properly with old kernels as
+> well.
+>
+> >
+> >This requirement also mathces the normal initialisation order as done by
+> >the generic vhost code in QEMU. However, commit 6c482547 accidentally
+> >changed the order for vdpa-dev and broke access to VDUSE devices with
+> >this.
+> >
+> >This changes vdpa-dev to use the normal order again and use the standard
+> >vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
+> >used with vdpa-dev again after this fix.
+>
+> I like this approach and the patch LGTM, but I'm a bit worried about
+> this function in hw/net/vhost_net.c:
+>
+>      int vhost_set_vring_enable(NetClientState *nc, int enable)
+>      {
+>          VHostNetState *net =3D get_vhost_net(nc);
+>          const VhostOps *vhost_ops =3D net->dev.vhost_ops;
+>
+>          nc->vring_enable =3D enable;
+>
+>          if (vhost_ops && vhost_ops->vhost_set_vring_enable) {
+>              return vhost_ops->vhost_set_vring_enable(&net->dev, enable);
+>          }
+>
+>          return 0;
+>      }
+>
+> @Eugenio, @Jason, should we change some things there if vhost-vdpa
+> implements the vhost_set_vring_enable callback?
 
-Agree. However would this still be quite some change?
+Eugenio may know more, I remember we need to enable cvq first for
+shadow virtqueue to restore some states.
 
-We still have a lot of references on the four qemufiles (to/from_dst_file,
-to/from_src_file), at least that'll need a replacement; I didn't yet
-further check whether all places can be done with a direct replacement of
-such change, some tweaks may be needed here and there, but shouldn't be
-major.
+>
+> Do you remember why we didn't implement it from the beginning?
 
-Meanwhile IIUC it'll also need a major rework on QEMUFile, allowing it to
-be bi-directional?  We may need to duplicate the cache layer, IIUC, one for
-each direction IOs.
+It seems the vrings parameter is introduced after vhost-vdpa is implemented=
+.
 
--- 
-Peter Xu
+Thanks
+
+>
+> Thanks,
+> Stefano
+>
+> >
+> >Cc: qemu-stable@nongnu.org
+> >Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
+> >Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> >---
+> > hw/virtio/vdpa-dev.c   |  5 +----
+> > hw/virtio/vhost-vdpa.c | 17 +++++++++++++++++
+> > 2 files changed, 18 insertions(+), 4 deletions(-)
+> >
+> >diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> >index eb9ecea83b..13e87f06f6 100644
+> >--- a/hw/virtio/vdpa-dev.c
+> >+++ b/hw/virtio/vdpa-dev.c
+> >@@ -253,14 +253,11 @@ static int vhost_vdpa_device_start(VirtIODevice *v=
+dev, Error **errp)
+> >
+> >     s->dev.acked_features =3D vdev->guest_features;
+> >
+> >-    ret =3D vhost_dev_start(&s->dev, vdev, false);
+> >+    ret =3D vhost_dev_start(&s->dev, vdev, true);
+> >     if (ret < 0) {
+> >         error_setg_errno(errp, -ret, "Error starting vhost");
+> >         goto err_guest_notifiers;
+> >     }
+> >-    for (i =3D 0; i < s->dev.nvqs; ++i) {
+> >-        vhost_vdpa_set_vring_ready(&s->vdpa, i);
+> >-    }
+> >     s->started =3D true;
+> >
+> >     /*
+> >diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> >index 3a43beb312..c4574d56c5 100644
+> >--- a/hw/virtio/vhost-vdpa.c
+> >+++ b/hw/virtio/vhost-vdpa.c
+> >@@ -904,6 +904,22 @@ int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v=
+, unsigned idx)
+> >     return r;
+> > }
+> >
+> >+static int vhost_vdpa_set_vring_enable(struct vhost_dev *dev, int enabl=
+e)
+> >+{
+> >+    struct vhost_vdpa *v =3D dev->opaque;
+> >+    unsigned int i;
+> >+    int ret;
+> >+
+> >+    for (i =3D 0; i < dev->nvqs; ++i) {
+> >+        ret =3D vhost_vdpa_set_vring_ready(v, i);
+> >+        if (ret < 0) {
+> >+            return ret;
+> >+        }
+> >+    }
+> >+
+> >+    return 0;
+> >+}
+> >+
+> > static int vhost_vdpa_set_config_call(struct vhost_dev *dev,
+> >                                        int fd)
+> > {
+> >@@ -1524,6 +1540,7 @@ const VhostOps vdpa_ops =3D {
+> >         .vhost_set_features =3D vhost_vdpa_set_features,
+> >         .vhost_reset_device =3D vhost_vdpa_reset_device,
+> >         .vhost_get_vq_index =3D vhost_vdpa_get_vq_index,
+> >+        .vhost_set_vring_enable =3D vhost_vdpa_set_vring_enable,
+> >         .vhost_get_config  =3D vhost_vdpa_get_config,
+> >         .vhost_set_config =3D vhost_vdpa_set_config,
+> >         .vhost_requires_shm_log =3D NULL,
+> >--
+> >2.43.0
+> >
+>
 
 
