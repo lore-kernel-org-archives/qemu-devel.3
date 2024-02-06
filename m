@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62BB6C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 07:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4522DC4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 07:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXFnS-0003Io-Cc; Tue, 06 Feb 2024 02:23:10 -0500
+	id 1rXFry-0007Jw-Bs; Tue, 06 Feb 2024 02:27:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rXFnF-00030g-Tw
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:22:58 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1rXFrv-0007JC-2u
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:27:47 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rXFnE-0006yM-Ez
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:22:57 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-55a5e7fa471so6722656a12.1
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 23:22:55 -0800 (PST)
+ id 1rXFro-0007gp-Eo
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 02:27:46 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a26ed1e05c7so726967066b.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 23:27:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707204173; x=1707808973; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707204457; x=1707809257; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=DF5EPuaq6xivmvUQkDeVu/7GgnWWxGPZlyA4mhP6s1Q=;
- b=JrGPncbeWiSOKlYnBDXcdKvKvcDlfzn+axjQf5/GpgiUrVNAk5KkjUO8F+7xCmUhOE
- 00dgNG76yh8D5sksj7jNwVSaVYNxpvHtXpP+ZeIfCfbjZxJFkVHWOQwsTgUgQfEi6AYo
- ANnUABY69awrYtSG4isvXlrr+UV4QLfY4KaCjfydDX2zr4OMFxfwbh/yfiq2jsJehfma
- sOutqoaFNnx6hrV/dK4V2Oq1Td/3keANrDoUV4vygm4ssfnjMi4SsHHrOwMmA4WkhHH3
- Baf7ntzDLFy7PPD/bmqzfhjSgUHRtfIBF62erzEz4oQ3C8WsizSEh/66ShKfHxI8t3ML
- fWjw==
+ bh=sZGjv6520p6xOKilSULwx8n/6DaCrkA7yqkUD/ca9mY=;
+ b=XnsiBJav5akMB6u9C6u+j2RcUshtr8pFam/N/D2qfzHlSswG0XTX/gJB3xOcghHPRp
+ tVkcYrmKPLfidMhs4vJZX+EuLO3kAZcRgRXYyPMqE8k2tW2dc82h29foGG5Gj6WCt6Oa
+ W32D1vZ6aMcCMOy2lV6POFGMH64dLir38BvoOzJPJ3JcYFRigTgdjG6X9mzglKh/UgwI
+ ippMrzlQgjchWw0oiYh/YI4QG/Ex8gbu0Q3m6LdjRCLjlYYJ9Ftyd09hlgKdL9Q0RpzY
+ mlD89Gt/RFm3ERq2QTt7oKyWTMMYYdBta7VaLcCLNyoV4R4r6LnQTmzHG/km07ik2WGZ
+ Xz/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707204173; x=1707808973;
+ d=1e100.net; s=20230601; t=1707204457; x=1707809257;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DF5EPuaq6xivmvUQkDeVu/7GgnWWxGPZlyA4mhP6s1Q=;
- b=t0j6G+MHcgb42A3gaox/jsPFSrXIWXdIin+Zrrb0ibfg0epCK1hT7jl+uhcTHaVz+z
- 0GepsRvsvkXTAcXGSrBax1qs4hgll2QAIebv9ZkZdhdOssQoHgSebup2YzlIRzI+Ohzz
- RNXWpsRucAkFAXSyXMEm2FEogHcJnFOpzewNpXNta5LTdX5S/+b7sWN/wLxVj0N41kzv
- mWDkBkGkmvrzfn5SmLSMViGno2ZQa6Rui+SYdLw0ltMwU4L/3JlgZp3cBm9/o5I7jnny
- XiEyUGytqWj7l9tz/TFd1cDKxgBBt2C1yEm6gOs6KL6jtXD0wqHQyRhC1sJ4a17kh2tD
- r55Q==
-X-Gm-Message-State: AOJu0Yz7C9kriMNVqRHre5QR8Kc9k24sAE5EN+8lSZGrLYPRCWrCq+5u
- FOV3Y+Cj6M+igf8C9KfNo+0QjFWzk0xuj93n5EcA14pCpmsKgCL4b2hOO0AH0XPkgxi8fmM0V2F
- P
-X-Google-Smtp-Source: AGHT+IG+0MH6TJhwvFrMvgTnvbvnUrEHcTTDSfs6tbguqt3IPMAUG+LkwF6Xm4Pur4E5txLN3PHtmw==
-X-Received: by 2002:aa7:d654:0:b0:55e:f52d:1825 with SMTP id
- v20-20020aa7d654000000b0055ef52d1825mr993578edr.35.1707204173492; 
- Mon, 05 Feb 2024 23:22:53 -0800 (PST)
+ bh=sZGjv6520p6xOKilSULwx8n/6DaCrkA7yqkUD/ca9mY=;
+ b=rMWaBk74DPBFdS/92EudBzzip4JOxjvpk+VPzhdlSE4P2mgK2VCWa7fxhsnMEH55IY
+ x9sIoHk1SBqt9zH1ZPvPm8X2cluP35I1wgOMLwwdeCvkM9BJHz8m4/nyZvEx810cFuk9
+ XEHoMrsuYS1tmJ+w2/GBfM3ct8kOgPy1AmwK2EjVERUzkJkbz1aPqzrfRd/CNJQh2h7x
+ SMtydSG5Dsugw5HbS2/cDrxeWhf5Sp3u7YUdkv6abBR+/ymTAnDh1eKqTt81ra7biS4i
+ zrbCXpV0apNlgF9dt523rFZyc4DmOd7TKaG8S5aFzF1q7QVfluA+U8N40fjk/v4T7y87
+ 6LhQ==
+X-Gm-Message-State: AOJu0YyIjHZ3qfduMo0N2k/awImXPf5WqaZKOn8j8ME8wSAc3Gii9bmc
+ GriR0P3mm6qVOBjLOISSVKnXi2OY/rXvX3gdDWF4LpkVUuEfh4HTe0X74JZaTgRefSOQzj89UMr
+ V
+X-Google-Smtp-Source: AGHT+IFmnyv1MVi+2S9vSv91EPCbU0NDbZQ6Xfb1QS5f3Ctix2n28TW/GsnWwc5reKw6zcE3yQAJ5w==
+X-Received: by 2002:a17:906:dd0:b0:a37:f77f:3d6c with SMTP id
+ p16-20020a1709060dd000b00a37f77f3d6cmr1164710eji.25.1707204457156; 
+ Mon, 05 Feb 2024 23:27:37 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCWN1bCyrraDQwnHw5dyVwM9TFkvrwQ5esYwuJuYay7Hl96rOAVoN6j6+TjfHoVgkleLt2sTF57qmQn6XJpoLXd9CG51xCecbs0ywT+/5UfytVYm3AisumU8/3YUPELjMMXJDS5SyFk3yoggOOW7Zq1rvYKWhqqZJLT6zIKu4CqGXVEDg/xY9A5GnLA5Xes/mWGhJSS3ggz/yc37U4NhRV9VWhqLG4zj
-Received: from meli.delivery (adsl-245.37.6.163.tellas.gr. [37.6.163.245])
+ AJvYcCXUliJ5Jy6QCRx3PMAclQgoH+6gx/Wh4O+XPwrxMpwxqMDENuz5m1AnFYqCwKx+PrHv//Pa059CcEyAwfET4I/JnhiqfkXAlRipXJbd5vDUqu8gWkfNsH4dGE9poENqRHAsUAh73Kwu9v4C7vRuHxHK2/CTcQBm7xR+IkRYCGCanv0mra9L79oS+U/AfwWFn2wtCybjH1BmfPR8XH5h66XWY3YMgUMt
+Received: from meli.delivery (adsl-125.37.6.3.tellas.gr. [37.6.3.125])
  by smtp.gmail.com with ESMTPSA id
- c3-20020a0564021f8300b0055fef53460bsm752661edc.0.2024.02.05.23.22.53
+ hu17-20020a170907a09100b00a360239f006sm784375ejc.37.2024.02.05.23.27.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 23:22:53 -0800 (PST)
-Date: Tue, 06 Feb 2024 09:20:08 +0200
+ Mon, 05 Feb 2024 23:27:36 -0800 (PST)
+Date: Tue, 06 Feb 2024 09:23:08 +0200
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  qemu-block@nongnu.org
-Subject: Re: [PATCH 3/5] virtio-blk: add vq_rq[] bounds check in
- virtio_blk_dma_restart_cb()
+Subject: Re: [PATCH 2/5] virtio-blk: clarify that there is at least 1 virtqueue
 User-Agent: meli 0.8.5-rc.3
 References: <20240205172659.476970-1-stefanha@redhat.com>
- <20240205172659.476970-4-stefanha@redhat.com>
-In-Reply-To: <20240205172659.476970-4-stefanha@redhat.com>
-Message-ID: <8fb60.m9gtpx2hueq@linaro.org>
+ <20240205172659.476970-3-stefanha@redhat.com>
+In-Reply-To: <20240205172659.476970-3-stefanha@redhat.com>
+Message-ID: <8fbdy.hdn7svf206al@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,23 +102,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 05 Feb 2024 19:26, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->Hanna Czenczek <hreitz@redhat.com> noted that the array index in
->virtio_blk_dma_restart_cb() is not bounds-checked:
+>It is not possible to instantiate a virtio-blk device with 0 virtqueues.
+>The following check is located in ->realize():
 >
->  g_autofree VirtIOBlockReq **vq_rq = g_new0(VirtIOBlockReq *, num_queues);
->  ...
->  while (rq) {
->      VirtIOBlockReq *next = rq->next;
->      uint16_t idx = virtio_get_queue_index(rq->vq);
+>  if (!conf->num_queues) {
+>      error_setg(errp, "num-queues property must be larger than 0");
+>      return;
+>  }
 >
->      rq->next = vq_rq[idx];
->                 ^^^^^^^^^^
+>Later on we access s->vq_aio_context[0] under the assumption that there
+>is as least one virtqueue. Hanna Czenczek <hreitz@redhat.com> noted that
+>it would help to show that the array index is already valid.
 >
->The code is correct because both rq->vq and vq_rq[] depend on
->num_queues, but this is indirect and not 100% obvious. Add an assertion.
-
-This sentence could be useful as an inline comment too.
-
+>Add an assertion to document that s->vq_aio_context[0] is always
+>safe...and catch future code changes that break this assumption.
 >
 >Suggested-by: Hanna Czenczek <hreitz@redhat.com>
 >Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
@@ -128,17 +124,17 @@ This sentence could be useful as an inline comment too.
 > 1 file changed, 1 insertion(+)
 >
 >diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
->index a0735a9bca..f3193f4b75 100644
+>index e8b37fd5f4..a0735a9bca 100644
 >--- a/hw/block/virtio-blk.c
 >+++ b/hw/block/virtio-blk.c
->@@ -1209,6 +1209,7 @@ static void virtio_blk_dma_restart_cb(void *opaque, bool running,
->         VirtIOBlockReq *next = rq->next;
->         uint16_t idx = virtio_get_queue_index(rq->vq);
-> 
->+        assert(idx < num_queues);
->         rq->next = vq_rq[idx];
->         vq_rq[idx] = rq;
->         rq = next;
+>@@ -1825,6 +1825,7 @@ static int virtio_blk_start_ioeventfd(VirtIODevice *vdev)
+>      * Try to change the AioContext so that block jobs and other operations can
+>      * co-locate their activity in the same AioContext. If it fails, nevermind.
+>      */
+>+    assert(nvqs > 0); /* enforced during ->realize() */
+>     r = blk_set_aio_context(s->conf.conf.blk, s->vq_aio_context[0],
+>                             &local_err);
+>     if (r < 0) {
 >-- 
 >2.43.0
 >
