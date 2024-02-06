@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483CAC4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 15:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6AA9C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 15:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXNaA-0003lI-D1; Tue, 06 Feb 2024 10:41:58 -0500
+	id 1rXNdS-0005VL-80; Tue, 06 Feb 2024 10:45:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXNa8-0003ku-MH
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:41:56 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXNdP-0005Uw-Po
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:45:19 -0500
 Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rXNa6-000117-E7
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:41:55 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXNdO-0001RB-5L
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 10:45:19 -0500
 Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-40f033c2e30so51610305e9.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 07:41:54 -0800 (PST)
+ 5b1f17b1804b1-40f033c2e30so51646115e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 07:45:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707234113; x=1707838913; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=DShOABjLgoNKehmygkQQdNi6GSDp/6k2qhj3W7w/OeQ=;
- b=O36rVKOILLC6RyUeU9e0qSwqb5+OJz1Ua44lAy8lscEOVh1J0ZMDeSNgh3pg3kLhCY
- Q4bxR4FcbJ0bpze8AWEHSpvsS+/850wEOLh2sm7q6A1nene8VFL+582s1DanHKqGm87U
- cN0fCYm2Ecl3hk0rp5uRFD5EyMC8lyU+ilv8oEZC74UT9C0wy0taU70HEyJL8bSAOt1G
- q/6FQFVU/RxN/fBPbOzV3WkpsWpo+3XWG15VAcNo8aCv8TxsRhW/5afpLQqKn2qagS+7
- XofUbMEeUh4uWsfyERFtYJLFhrllO338m/xr35l99Bpsoo3lW8/BUm3Bgo8DaS9BAmAi
- +kew==
+ d=linaro.org; s=google; t=1707234316; x=1707839116; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Plyo5mknz8kPaE5BH2cdFDRghb7YK1RuLYsVJ6e7ax8=;
+ b=L1Bz+kZoEDXmRnPheleroWbK1VHkMRdIiJSKfM+Xw+JHQP8nkCHaBfwd/SWUPP/Ksz
+ hn5r4y1A27RHX1BAYZdEKFQhRe+zLTzBG1olizdNPWOt5qzxiqx7voINIFEvujhSPY0g
+ ArjKD+aOeAdNPF109PZOi+FbnG1dlqvabioinTZBmX4suRa1s7HePaxy06JiQYlIUKxS
+ OStRxZiFki+p7xfZD9EJJCviVgBaBwpWw95Se79ueT5fD4nHUrRi+7ZrbihS/YkAHJZz
+ av2hOU+yZ1/XauD1gTvIGwXXJYS1WOWXeeSXx9RZVryaPuQNrfVc9zjcSma8uhqrZcLV
+ K+dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707234113; x=1707838913;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DShOABjLgoNKehmygkQQdNi6GSDp/6k2qhj3W7w/OeQ=;
- b=qjvw4HfxkOKiedqWYba0/Utl4xmk01wVUFHC6DYHhxzoaHki1vjV6pTEExKHOOgQtN
- WT+CdbPNsSFM+G8QLVodVroV6WroRjgD0aVqGgpErlqOhJjQqXYyiUZhKoGFsXBE3iMU
- cSpfoV6wOUH7sWh0i6hx/Ze/YP8R3cwt3FxY+lfT8jr57uKB500G6S+NipDajCJqN0oY
- 6px5wL01b0Uoe/Lq7buLRtfbXkGaQmz+PZUFcP1LyXmd16OoIBiHPqU9ZE1sBYMwzBu/
- ZeZGQ1y7OCOZEaAD377lc2FVXov0lqtZHIw9gKYZ1Rp8adsxs+BSDOSEm5JitUmgXMT2
- ftTA==
-X-Gm-Message-State: AOJu0Yz3dNlrPVxeKwQTLBCOiS/PnaQNx8h3afFh0TdqEGr3VPbLH5K8
- ksXkuRQz0dYxOVjK8qYxPaqEkLWQrJU6uUTe5ulqxQCnQkYyO7S7dE3L1N4M1fjvAS0VJhjmaWz
- U
-X-Google-Smtp-Source: AGHT+IFwTv/+qNAULFkixNPRx3sEXfyjDZJxFKQY2K+VSpgSu0Du7WiKrwRSVadz8vz5Ij66cRKD+A==
-X-Received: by 2002:a05:6000:711:b0:33b:4a71:6b69 with SMTP id
- bs17-20020a056000071100b0033b4a716b69mr1137884wrb.49.1707234112725; 
- Tue, 06 Feb 2024 07:41:52 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1707234316; x=1707839116;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Plyo5mknz8kPaE5BH2cdFDRghb7YK1RuLYsVJ6e7ax8=;
+ b=wNrXJnl8FB+dDYg5pQuGuR7593vdr0Mcb71DpMW+vtpiRYqNIv3nQSbiiE9+fPJhNe
+ R8Wl6mN5ywFmEx//uHaCQJmLuoDcVMg4Li0uDSFQuGEL8+itwSFtGT7IQcJl6UHfENT6
+ pRCC65/ks6/14a2VvNKXxRN7+ddnF10P808thar41/z9e7eO3mMkg/4HDUAQ7aUuye50
+ Xtgq7tiXHQNvWTzAbQ5in7PD9Y6y6kRzm/ecXE3/Hb/CEKZw8nrpCKkM3CjPGIdZRpFS
+ PQfUY5LWzo0UOoEFkNaNPA6YLjtPgIVfaBuLfbZpVFFt63wAnKMV/O1p22LSUnPnXDYY
+ vsXw==
+X-Gm-Message-State: AOJu0YxA+K0xFeeiTglKx6jzcUdRcsOQgHoDe3JhiXgDLFx/is4URnOB
+ f9eyAWd4bD76qk3ssb5GXPN4KMKbr8pw4NYrrEPLaXG4A/zd+IMjhn55nQI4QWAuZ+8hRZwXuCX
+ R
+X-Google-Smtp-Source: AGHT+IGvXShRoDLg24PUkf2nYFQeMB3FAUEXa8B5FW4oRbUF5Baw2gKAYje+1ljARUMLXFTAGSVSOA==
+X-Received: by 2002:a5d:4748:0:b0:33b:2b:1921 with SMTP id
+ o8-20020a5d4748000000b0033b002b1921mr1308470wrs.23.1707234316352; 
+ Tue, 06 Feb 2024 07:45:16 -0800 (PST)
+X-Forwarded-Encrypted: i=0;
+ AJvYcCVHDs+UGZ5SVWq8jxcY2BLH1PY7KmKKYCvdUleu2zkykx6CDjDDty2kgY+pywCQ69n9Sqnd6yEbSStWsBpRzaKuyilJ8xVhCGs2ZZdPMw7ez722b4ZaQc3XYdT4q8lwA7bDO5Evb+1Vct5mCi8Q0T+cmjvsT1kIln8UHDe73Tt5YtY+/N7gXb8Ue6HFw+0jSQAyLhKzZnJKUoIPX+u0yT5ocwCWSUm7fJxVkaH9JHqFcywPduPS/KTGYOFcmZlTmXXRWLI1w6noNCB9d8IJysq/XOUoyqd2W6pfxVjUG481X8TwabY=
+Received: from [192.168.69.100] ([176.176.170.22])
  by smtp.gmail.com with ESMTPSA id
- w4-20020a5d4044000000b0033b3cd4ad89sm2364904wrp.59.2024.02.06.07.41.52
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 07:41:52 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] hw/block/tc58128: Don't emit deprecation warning under qtest
-Date: Tue,  6 Feb 2024 15:41:51 +0000
-Message-Id: <20240206154151.155620-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ f9-20020a5d4dc9000000b0033b483d1abcsm1609231wru.53.2024.02.06.07.45.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Feb 2024 07:45:15 -0800 (PST)
+Message-ID: <a93b8601-8f45-4781-8ba1-0d894c0e0139@linaro.org>
+Date: Tue, 6 Feb 2024 16:45:13 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] hw/pci-host/bonito: Access memory regions via
+ pci_address_space[_io]()
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, qemu-ppc@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20231011185954.10337-1-philmd@linaro.org>
+ <20231011185954.10337-4-philmd@linaro.org>
+ <5FD62714-3C33-4A93-B7E3-F3523FCE69C1@gmail.com>
+ <bf5d344c-84a1-c6b9-3d17-0362a4c2c9e7@linaro.org>
+In-Reply-To: <bf5d344c-84a1-c6b9-3d17-0362a4c2c9e7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,30 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Suppress the deprecation warning when we're running under qtest,
-to avoid "make check" including warning messages in its output.
+Hi Bernhard,
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/block/tc58128.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+On 16/10/23 09:04, Philippe Mathieu-Daudé wrote:
+> On 16/10/23 00:19, Bernhard Beschow wrote:
+>> Am 11. Oktober 2023 18:59:53 UTC schrieb "Philippe Mathieu-Daudé" 
+>> <philmd@linaro.org>:
+>>> PCI functions are plugged on a PCI bus. They can only access
+>>> external memory regions via the bus.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> hw/pci-host/bonito.c | 6 +++---
+>>> 1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> 
+>>> @@ -719,7 +719,7 @@ static void bonito_pci_realize(PCIDevice *dev, 
+>>> Error **errp)
+>>>
+>>>      memory_region_init_alias(pcimem_alias, NULL, "pci.mem.alias",
+>>>                               &bs->pci_mem, 0, BONITO_PCIHI_SIZE);
+>>> -    memory_region_add_subregion(get_system_memory(),
+>>> +    memory_region_add_subregion(pci_address_space(dev),
+>>
+>> I need to keep `get_system_memory()` here to get the same results for 
+>> `info mtree` in the QEMU console before and after this patch when 
+>> running `qemu-system-mips64el -M fuloong2e -S`. The other two changes 
+>> above seem to work as expected.
 
-diff --git a/hw/block/tc58128.c b/hw/block/tc58128.c
-index 6944cf58fa4..0984e37417b 100644
---- a/hw/block/tc58128.c
-+++ b/hw/block/tc58128.c
-@@ -202,7 +202,9 @@ static sh7750_io_device tc58128 = {
- 
- int tc58128_init(struct SH7750State *s, const char *zone1, const char *zone2)
- {
--    warn_report_once("The TC58128 flash device is deprecated");
-+    if (!qtest_enabled()) {
-+        warn_report_once("The TC58128 flash device is deprecated");
-+    }
-     init_dev(&tc58128_devs[0], zone1);
-     init_dev(&tc58128_devs[1], zone2);
-     return sh7750_register_io_device(s, &tc58128);
--- 
-2.34.1
+Can I use add R-b tag after dropping this change?
 
 
