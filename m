@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA103C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 10:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D947C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 10:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXIw4-0006y6-0d; Tue, 06 Feb 2024 05:44:16 -0500
+	id 1rXIw4-0006yc-LI; Tue, 06 Feb 2024 05:44:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIw1-0006wH-BJ
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIw3-0006xt-3Q
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIvy-0003F9-Rl
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXIw1-0003GP-Fu
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 05:44:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707216250;
+ s=mimecast20190719; t=1707216252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eimhRtsjWV2MoRpixaE183OLBcT4XGVxpmZ6MvDaw1A=;
- b=PoQx5RgxkiYVe9j53IyUUGx1nXSPKCZa3KOoNxCQkW5Qs12VZCYZ4XM3rQXKl/6aeW8OOX
- iqyTlz4K4uTtxHk8ac1FBEiIQHsUGp99LhP/NJqm3LGD3PdV5spl1iVwmer8vApQ4ks0pz
- fBezgYq/hwr0y5646EAbtg4ao0Xaze8=
+ bh=pYJ3aaiSLgzPt2lN2pk4fFmaJwdxRaFlbrLsXg2o9BQ=;
+ b=R/xgE3SbmlcOzgub3zU5zX3zgkk3MlDCd0VTfUpGWoPyV10ggyph7QfH9x/4p17WceCGfT
+ Qp2s3nTLBr4bR/w7dVdJWv3nV8SQ/zJffc/B9BFTRhSIP8v5afTVd+abp8OVmuusQbzHed
+ Sz163Hc32esJETLEHUVWdDcP4srV7Qo=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-408-o5wO_89CPhqGUbrfMWXGPw-1; Tue, 06 Feb 2024 05:44:04 -0500
-X-MC-Unique: o5wO_89CPhqGUbrfMWXGPw-1
+ us-mta-22-sPvofmW8OkC9tk_PbtxGbg-1; Tue, 06 Feb 2024 05:44:11 -0500
+X-MC-Unique: sPvofmW8OkC9tk_PbtxGbg-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1868D862DC0;
- Tue,  6 Feb 2024 10:44:04 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C044E862DC0;
+ Tue,  6 Feb 2024 10:44:10 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.195.21])
- by smtp.corp.redhat.com (Postfix) with ESMTP id C52A2492BF0;
- Tue,  6 Feb 2024 10:44:02 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id AD96B492BF0;
+ Tue,  6 Feb 2024 10:44:09 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/12] target/s390x: Prefer fast cpu_env() over slower CPU QOM
- cast macro
-Date: Tue,  6 Feb 2024 11:43:43 +0100
-Message-ID: <20240206104347.238825-9-thuth@redhat.com>
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PULL 12/12] meson: Link with libinotify on FreeBSD
+Date: Tue,  6 Feb 2024 11:43:47 +0100
+Message-ID: <20240206104347.238825-13-thuth@redhat.com>
 In-Reply-To: <20240206104347.238825-1-thuth@redhat.com>
 References: <20240206104347.238825-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -83,167 +80,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Mechanical patch produced running the command documented
-in scripts/coccinelle/cpu_env.cocci_template header.
+make vm-build-freebsd fails with:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+    ld: error: undefined symbol: inotify_init1
+    >>> referenced by filemonitor-inotify.c:183 (../src/util/filemonitor-inotify.c:183)
+    >>>               util_filemonitor-inotify.c.o:(qemu_file_monitor_new) in archive libqemuutil.a
+
+On FreeBSD the inotify functions are defined in libinotify.so. Add it
+to the dependencies.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240129164514.73104-25-philmd@linaro.org>
+Message-ID: <20240206002344.12372-5-iii@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/cpu-dump.c        |  3 +--
- target/s390x/gdbstub.c         |  6 ++----
- target/s390x/helper.c          |  3 +--
- target/s390x/kvm/kvm.c         |  6 ++----
- target/s390x/tcg/excp_helper.c | 11 +++--------
- target/s390x/tcg/misc_helper.c |  4 +---
- target/s390x/tcg/translate.c   |  3 +--
- 7 files changed, 11 insertions(+), 25 deletions(-)
+ meson.build      | 23 +++++++++++++++++++----
+ util/meson.build |  6 +++++-
+ 2 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/target/s390x/cpu-dump.c b/target/s390x/cpu-dump.c
-index ffa9e94d84..69cc9f7746 100644
---- a/target/s390x/cpu-dump.c
-+++ b/target/s390x/cpu-dump.c
-@@ -27,8 +27,7 @@
+diff --git a/meson.build b/meson.build
+index b5d6dc94a8..e5d6f2d057 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2384,6 +2384,22 @@ else
+ endif
+ config_host_data.set('CONFIG_ASAN_IFACE_FIBER', have_asan_fiber)
  
- void s390_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
-     int i;
++have_inotify_init = cc.has_header_symbol('sys/inotify.h', 'inotify_init')
++have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
++inotify = not_found
++if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
++  # libinotify-kqueue
++  inotify = cc.find_library('inotify')
++  if have_inotify_init
++    have_inotify_init = inotify.found()
++  endif
++  if have_inotify_init1
++    have_inotify_init1 = inotify.found()
++  endif
++endif
++config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
++config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
++
+ # has_header_symbol
+ config_host_data.set('CONFIG_BLKZONED',
+                      cc.has_header_symbol('linux/blkzoned.h', 'BLKOPENZONE'))
+@@ -2400,10 +2416,6 @@ config_host_data.set('CONFIG_FIEMAP',
+ config_host_data.set('CONFIG_GETRANDOM',
+                      cc.has_function('getrandom') and
+                      cc.has_header_symbol('sys/random.h', 'GRND_NONBLOCK'))
+-config_host_data.set('CONFIG_INOTIFY',
+-                     cc.has_header_symbol('sys/inotify.h', 'inotify_init'))
+-config_host_data.set('CONFIG_INOTIFY1',
+-                     cc.has_header_symbol('sys/inotify.h', 'inotify_init1'))
+ config_host_data.set('CONFIG_PRCTL_PR_SET_TIMERSLACK',
+                      cc.has_header_symbol('sys/prctl.h', 'PR_SET_TIMERSLACK'))
+ config_host_data.set('CONFIG_RTNETLINK',
+@@ -4407,6 +4419,9 @@ summary_info += {'libudev':           libudev}
+ summary_info += {'FUSE lseek':        fuse_lseek.found()}
+ summary_info += {'selinux':           selinux}
+ summary_info += {'libdw':             libdw}
++if host_os == 'freebsd'
++  summary_info += {'libinotify-kqueue': inotify}
++endif
+ summary(summary_info, bool_yn: true, section: 'Dependencies')
  
-     qemu_fprintf(f, "PSW=mask %016" PRIx64 " addr %016" PRIx64,
-diff --git a/target/s390x/gdbstub.c b/target/s390x/gdbstub.c
-index 6fbfd41bc8..f02fa316e5 100644
---- a/target/s390x/gdbstub.c
-+++ b/target/s390x/gdbstub.c
-@@ -30,8 +30,7 @@
- 
- int s390_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
- 
-     switch (n) {
-     case S390_PSWM_REGNUM:
-@@ -46,8 +45,7 @@ int s390_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int s390_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
-     target_ulong tmpl = ldtul_p(mem_buf);
- 
-     switch (n) {
-diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-index d76c06381b..00d5d403f3 100644
---- a/target/s390x/helper.c
-+++ b/target/s390x/helper.c
-@@ -139,8 +139,7 @@ void do_restart_interrupt(CPUS390XState *env)
- void s390_cpu_recompute_watchpoints(CPUState *cs)
- {
-     const int wp_flags = BP_CPU | BP_MEM_WRITE | BP_STOP_BEFORE_ACCESS;
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
- 
-     /* We are called when the watchpoints have changed. First
-        remove them all.  */
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 888d6c1a1c..4ce809c5d4 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -474,8 +474,7 @@ static int can_sync_regs(CPUState *cs, int regs)
- 
- int kvm_arch_put_registers(CPUState *cs, int level)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
-     struct kvm_fpu fpu = {};
-     int r;
-     int i;
-@@ -601,8 +600,7 @@ int kvm_arch_put_registers(CPUState *cs, int level)
- 
- int kvm_arch_get_registers(CPUState *cs)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
-     struct kvm_fpu fpu;
-     int i, r;
- 
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index b875bf14e5..f1c33f7967 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -90,10 +90,7 @@ void HELPER(data_exception)(CPUS390XState *env, uint32_t dxc)
- static G_NORETURN
- void do_unaligned_access(CPUState *cs, uintptr_t retaddr)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
--
--    tcg_s390_program_interrupt(env, PGM_SPECIFICATION, retaddr);
-+    tcg_s390_program_interrupt(cpu_env(cs), PGM_SPECIFICATION, retaddr);
- }
- 
- #if defined(CONFIG_USER_ONLY)
-@@ -146,8 +143,7 @@ bool s390_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                        MMUAccessType access_type, int mmu_idx,
-                        bool probe, uintptr_t retaddr)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
-     target_ulong vaddr, raddr;
-     uint64_t asc, tec;
-     int prot, excp;
-@@ -600,8 +596,7 @@ bool s390_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- 
- void s390x_cpu_debug_excp_handler(CPUState *cs)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
-     CPUWatchpoint *wp_hit = cs->watchpoint_hit;
- 
-     if (wp_hit && wp_hit->flags & BP_CPU) {
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index 89b5268fd4..8764846ce8 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -214,9 +214,7 @@ void HELPER(sckc)(CPUS390XState *env, uint64_t ckc)
- 
- void tcg_s390_tod_updated(CPUState *cs, run_on_cpu_data opaque)
- {
--    S390CPU *cpu = S390_CPU(cs);
--
--    update_ckc_timer(&cpu->env);
-+    update_ckc_timer(cpu_env(cs));
- }
- 
- /* Set Clock */
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 325b25959d..6e4e1f2082 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -6582,8 +6582,7 @@ void s390x_restore_state_to_opc(CPUState *cs,
-                                 const TranslationBlock *tb,
-                                 const uint64_t *data)
- {
--    S390CPU *cpu = S390_CPU(cs);
--    CPUS390XState *env = &cpu->env;
-+    CPUS390XState *env = cpu_env(cs);
-     int cc_op = data[1];
- 
-     env->psw.addr = data[0];
+ if host_arch == 'unknown'
+diff --git a/util/meson.build b/util/meson.build
+index af3bf5692d..0ef9886be0 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -104,7 +104,11 @@ if have_block
+   util_ss.add(files('throttle.c'))
+   util_ss.add(files('timed-average.c'))
+   if config_host_data.get('CONFIG_INOTIFY1')
+-    util_ss.add(files('filemonitor-inotify.c'))
++    freebsd_dep = []
++    if host_os == 'freebsd'
++      freebsd_dep = inotify
++    endif
++    util_ss.add(files('filemonitor-inotify.c'), freebsd_dep)
+   else
+     util_ss.add(files('filemonitor-stub.c'))
+   endif
 -- 
 2.43.0
 
