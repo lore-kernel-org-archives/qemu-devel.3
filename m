@@ -4,70 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CCAC4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 03:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E43C48260
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 03:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXC28-0007I7-Kt; Mon, 05 Feb 2024 22:22:04 -0500
+	id 1rXC2B-0007Ia-3y; Mon, 05 Feb 2024 22:22:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXC26-0007Hv-Fk
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:22:02 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1rXC28-0007IP-CC
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:22:04 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXC22-0006ns-Mo
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:22:01 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5ce07cf1e5dso4348320a12.2
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 19:21:57 -0800 (PST)
+ id 1rXC24-0006oF-CN
+ for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:22:03 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-290fb65531eso3790235a91.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 19:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707189717; x=1707794517; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=PZ7TAIEkqypJIeEATccuqHqaPyk3GSqOpN9PXndGqCo=;
- b=Jo9Yl2/3sIoCiGoXy+l6dhduQFoPL4fDVhDMeJMk7XYiPCdQcWWZKCzxBXCgzzocbz
- LnrVNtXizSBO7/R8VQjyo0t42PZJPYN5ckDJCuWHyAOqh43TsJoFQEqUUqYKy0wURCic
- jas1wWTsBvsB8HGweMouC8n+lnEDPgGpRY0XaGdTfUNw7cWsYy/XU06N1WdRQiI1Q9f/
- DjBDRCiry/9m2+HdY54kxz7WoX4OXMzY1wB68giNzyXiZ3IylJt9x+k6dFW3os674pbT
- W+AbShA7+7PaDu0aqPThTiLqMOG9EFrFp9NExYCTSXJWYk7wPuStKu/3NTUaAsMdBkBm
- qb+A==
+ d=linaro.org; s=google; t=1707189719; x=1707794519; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Q9oqNWXKjH3Nn1f4hE372yWXlayduoloL5amcRfRYLg=;
+ b=qZ4tsNQ2A1I8tLnnc+N+lKN1K8uvg3ApzYs8Qbe3Ux+br/b3s/04u0T2MxHcn01Pl/
+ Sx8L8ogYkqb46T9OkfPqv86frcKx8N+9svJBrCPAtfv9XPzphzN+u4O7GubvbYmtsOVY
+ Esq9NrR//zncY1ZG86jEJxUzbiK6367DTdKLgAjFwva5Q0BKemMhG7v+OZ5k7exJbUOn
+ 2DIA9GAlELyTGe5jJgF4cJJFZeB8FjynQXYc1qj/ROUF2yyfYL4lfENJ3lSn4g/DgHeh
+ W8au4Cp1NS6BkR7QR93+Hu6zS/IAHLNX4b/D3sK6Hjz5LrAA6ifhd+7v4QrPLCIgXDvF
+ Ht/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707189717; x=1707794517;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PZ7TAIEkqypJIeEATccuqHqaPyk3GSqOpN9PXndGqCo=;
- b=dILJrXucvOLdAjGSZSwglTUq+giBYEQjsKdb5y3wtgIDc/AgXzz8FPXmbmoS9NuAh5
- L7JeuMr9ESYotYbP8rURnMlW9lYMivhm9GjF4DosjWs17slem58vTwfkWGg//wOY8EPZ
- IHZUg3H6Q+nuDFZ3qPoPy7KZsOp86sRmF07XdsVFVrgFzlPVL4LVudOQxEps5gSzXCLH
- XfAk+kbv/fqHYgbRVkDnTZBYBIpY8gc6Nggqg1drM9WniigrJXrToth+n1/C+Ra67LPu
- XCW781qR3JjpNaInuA/8BKn72f0gb4r/8DeRlp+TMHrrS4EJhqKniTwO0FGP72Nl+sFA
- 461w==
-X-Gm-Message-State: AOJu0Yy8YcWx6tJQaQ5vnRJQAlxdFJVzhJy/rjbINBZ6izIlh98KGjNB
- MiA+k4a1Zo95A3C3ajMwnmOA/Tj3RBjSgkgMljh+tsjOkRgP0X4zQTT621Kis+H2pjwrS6I2Jij
- P7d4=
-X-Google-Smtp-Source: AGHT+IHZvJD/S+mqS4Wz+HlSmFLeyzVVwXhBPENyHtj3eYxQgGEmW2keLzmH5WXGbJx+prP53V2oZg==
-X-Received: by 2002:a05:6a20:43ab:b0:19e:97ee:af55 with SMTP id
- i43-20020a056a2043ab00b0019e97eeaf55mr613221pzl.1.1707189716616; 
- Mon, 05 Feb 2024 19:21:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707189719; x=1707794519;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Q9oqNWXKjH3Nn1f4hE372yWXlayduoloL5amcRfRYLg=;
+ b=jKCJE7DaenGcZn8raRvYLUZOgAhs2IucNdGsbTNyhWM2gyDVCJiZmelxVMSbHOhzUB
+ AHkdRFI9brwpyu5RLShcqnTAQ6U4W/TwlmEkrnAyeVPq3Cf5HNBqgGMHx24IVFplsCPi
+ kRRExAaa0KyOmkKdqlk/fg+zulCxnKm52RkyrRzj9Ek01kBxeHdjT9NUbTaODTRp7Q2u
+ /rdG2zSgwzX3F/K/hIwObZXJrwKhIcJUi6rAWCFlET92uennRTjx1jcxcZhTp5mppE6J
+ 4qXwmZXkxzt3VN54SYEwcaaC54s756r2PjoZR94x/r3RySOKsRKKfvLbYe2R4nf26FFe
+ Iz9Q==
+X-Gm-Message-State: AOJu0YwuFAbMGGURas6LZ/crQVWbXED3i++tdja41nWbG8XNPGEreXp5
+ zlAO0TSyIVvVC+uljXGPE2nyiG9a2K1GB0DJydANU9qXJsj7sA7o+bRdBxX6v0j9jeKmSkQl0nX
+ RZuM=
+X-Google-Smtp-Source: AGHT+IFAJfTX8PMjEtODuf0uI23hwOBWAChcuUARDlQbaz4z/7S6S+zp1YdoQxjNikbYzniKQgpG/A==
+X-Received: by 2002:a17:90b:4394:b0:295:1e7d:bc14 with SMTP id
+ in20-20020a17090b439400b002951e7dbc14mr1372870pjb.20.1707189718692; 
+ Mon, 05 Feb 2024 19:21:58 -0800 (PST)
 Received: from stoup.. ([43.252.112.200]) by smtp.gmail.com with ESMTPSA id
- gz22-20020a17090b0ed600b00290ae3bf8d7sm264152pjb.21.2024.02.05.19.21.54
+ gz22-20020a17090b0ed600b00290ae3bf8d7sm264152pjb.21.2024.02.05.19.21.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 19:21:56 -0800 (PST)
+ Mon, 05 Feb 2024 19:21:58 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/39] tcg patch queue
-Date: Tue,  6 Feb 2024 13:21:50 +1000
-Message-Id: <20240206032151.174516-1-richard.henderson@linaro.org>
+Subject: [PULL v2 38/39] tcg/s390x: Support TCG_COND_TST{EQ,NE}
+Date: Tue,  6 Feb 2024 13:21:51 +1000
+Message-Id: <20240206032151.174516-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240206032151.174516-1-richard.henderson@linaro.org>
+References: <20240206032151.174516-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,115 +92,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2: Fix rebase error in patch 38 (tcg/s390x: Support TCG_COND_TST{EQ,NE}).
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/s390x/tcg-target.h     |   2 +-
+ tcg/s390x/tcg-target.c.inc | 139 +++++++++++++++++++++++++------------
+ 2 files changed, 97 insertions(+), 44 deletions(-)
 
+diff --git a/tcg/s390x/tcg-target.h b/tcg/s390x/tcg-target.h
+index 53bed8c8d2..ae448c3a3a 100644
+--- a/tcg/s390x/tcg-target.h
++++ b/tcg/s390x/tcg-target.h
+@@ -138,7 +138,7 @@ extern uint64_t s390_facilities[3];
+ 
+ #define TCG_TARGET_HAS_qemu_ldst_i128 1
+ 
+-#define TCG_TARGET_HAS_tst            0
++#define TCG_TARGET_HAS_tst            1
+ 
+ #define TCG_TARGET_HAS_v64            HAVE_FACILITY(VECTOR)
+ #define TCG_TARGET_HAS_v128           HAVE_FACILITY(VECTOR)
+diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
+index 7f97080f52..ad587325fc 100644
+--- a/tcg/s390x/tcg-target.c.inc
++++ b/tcg/s390x/tcg-target.c.inc
+@@ -112,6 +112,9 @@ typedef enum S390Opcode {
+     RI_OILH     = 0xa50a,
+     RI_OILL     = 0xa50b,
+     RI_TMLL     = 0xa701,
++    RI_TMLH     = 0xa700,
++    RI_TMHL     = 0xa703,
++    RI_TMHH     = 0xa702,
+ 
+     RIEb_CGRJ    = 0xec64,
+     RIEb_CLGRJ   = 0xec65,
+@@ -404,10 +407,15 @@ static TCGReg tcg_target_call_oarg_reg(TCGCallReturnKind kind, int slot)
+ #define S390_CC_NEVER   0
+ #define S390_CC_ALWAYS  15
+ 
++#define S390_TM_EQ      8  /* CC == 0 */
++#define S390_TM_NE      7  /* CC in {1,2,3} */
++
+ /* Condition codes that result from a COMPARE and COMPARE LOGICAL.  */
+-static const uint8_t tcg_cond_to_s390_cond[] = {
++static const uint8_t tcg_cond_to_s390_cond[16] = {
+     [TCG_COND_EQ]  = S390_CC_EQ,
+     [TCG_COND_NE]  = S390_CC_NE,
++    [TCG_COND_TSTEQ] = S390_CC_EQ,
++    [TCG_COND_TSTNE] = S390_CC_NE,
+     [TCG_COND_LT]  = S390_CC_LT,
+     [TCG_COND_LE]  = S390_CC_LE,
+     [TCG_COND_GT]  = S390_CC_GT,
+@@ -421,9 +429,11 @@ static const uint8_t tcg_cond_to_s390_cond[] = {
+ /* Condition codes that result from a LOAD AND TEST.  Here, we have no
+    unsigned instruction variation, however since the test is vs zero we
+    can re-map the outcomes appropriately.  */
+-static const uint8_t tcg_cond_to_ltr_cond[] = {
++static const uint8_t tcg_cond_to_ltr_cond[16] = {
+     [TCG_COND_EQ]  = S390_CC_EQ,
+     [TCG_COND_NE]  = S390_CC_NE,
++    [TCG_COND_TSTEQ] = S390_CC_ALWAYS,
++    [TCG_COND_TSTNE] = S390_CC_NEVER,
+     [TCG_COND_LT]  = S390_CC_LT,
+     [TCG_COND_LE]  = S390_CC_LE,
+     [TCG_COND_GT]  = S390_CC_GT,
+@@ -542,10 +552,13 @@ static bool risbg_mask(uint64_t c)
+ static bool tcg_target_const_match(int64_t val, int ct,
+                                    TCGType type, TCGCond cond, int vece)
+ {
++    uint64_t uval = val;
++
+     if (ct & TCG_CT_CONST) {
+         return true;
+     }
+     if (type == TCG_TYPE_I32) {
++        uval = (uint32_t)val;
+         val = (int32_t)val;
+     }
+ 
+@@ -567,6 +580,15 @@ static bool tcg_target_const_match(int64_t val, int ct,
+         case TCG_COND_GTU:
+             ct |= TCG_CT_CONST_U32;  /* CLGFI */
+             break;
++        case TCG_COND_TSTNE:
++        case TCG_COND_TSTEQ:
++            if (is_const_p16(uval) >= 0) {
++                return true;  /* TMxx */
++            }
++            if (risbg_mask(uval)) {
++                return true;  /* RISBG */
++            }
++            break;
+         default:
+             g_assert_not_reached();
+         }
+@@ -588,10 +610,6 @@ static bool tcg_target_const_match(int64_t val, int ct,
+     if (ct & TCG_CT_CONST_INV) {
+         val = ~val;
+     }
+-    /*
+-     * Note that is_const_p16 is a subset of is_const_p32,
+-     * so we don't need both constraints.
+-     */
+     if ((ct & TCG_CT_CONST_P32) && is_const_p32(val) >= 0) {
+         return true;
+     }
+@@ -868,6 +886,9 @@ static const S390Opcode oi_insns[4] = {
+ static const S390Opcode lif_insns[2] = {
+     RIL_LLILF, RIL_LLIHF,
+ };
++static const S390Opcode tm_insns[4] = {
++    RI_TMLL, RI_TMLH, RI_TMHL, RI_TMHH
++};
+ 
+ /* load a register with an immediate value */
+ static void tcg_out_movi(TCGContext *s, TCGType type,
+@@ -1228,6 +1249,36 @@ static int tgen_cmp2(TCGContext *s, TCGType type, TCGCond c, TCGReg r1,
+     TCGCond inv_c = tcg_invert_cond(c);
+     S390Opcode op;
+ 
++    if (is_tst_cond(c)) {
++        tcg_debug_assert(!need_carry);
++
++        if (!c2const) {
++            if (type == TCG_TYPE_I32) {
++                tcg_out_insn(s, RRFa, NRK, TCG_REG_R0, r1, c2);
++            } else {
++                tcg_out_insn(s, RRFa, NGRK, TCG_REG_R0, r1, c2);
++            }
++            goto exit;
++        }
++
++        if (type == TCG_TYPE_I32) {
++            c2 = (uint32_t)c2;
++        }
++
++        int i = is_const_p16(c2);
++        if (i >= 0) {
++            tcg_out_insn_RI(s, tm_insns[i], r1, c2 >> (i * 16));
++            *inv_cc = c == TCG_COND_TSTEQ ? S390_TM_NE : S390_TM_EQ;
++            return *inv_cc ^ 15;
++        }
++
++        if (risbg_mask(c2)) {
++            tgen_andi_risbg(s, TCG_REG_R0, r1, c2);
++            goto exit;
++        }
++        g_assert_not_reached();
++    }
++
+     if (c2const) {
+         if (c2 == 0) {
+             if (!(is_unsigned && need_carry)) {
+@@ -1553,46 +1604,49 @@ static void tgen_brcond(TCGContext *s, TCGType type, TCGCond c,
+                         TCGReg r1, TCGArg c2, int c2const, TCGLabel *l)
+ {
+     int cc;
+-    bool is_unsigned = is_unsigned_cond(c);
+-    bool in_range;
+-    S390Opcode opc;
+ 
+-    cc = tcg_cond_to_s390_cond[c];
++    if (!is_tst_cond(c)) {
++        bool is_unsigned = is_unsigned_cond(c);
++        bool in_range;
++        S390Opcode opc;
+ 
+-    if (!c2const) {
+-        opc = (type == TCG_TYPE_I32
+-               ? (is_unsigned ? RIEb_CLRJ : RIEb_CRJ)
+-               : (is_unsigned ? RIEb_CLGRJ : RIEb_CGRJ));
+-        tgen_compare_branch(s, opc, cc, r1, c2, l);
+-        return;
+-    }
++        cc = tcg_cond_to_s390_cond[c];
+ 
+-    /*
+-     * COMPARE IMMEDIATE AND BRANCH RELATIVE has an 8-bit immediate field.
+-     * If the immediate we've been given does not fit that range, we'll
+-     * fall back to separate compare and branch instructions using the
+-     * larger comparison range afforded by COMPARE IMMEDIATE.
+-     */
+-    if (type == TCG_TYPE_I32) {
+-        if (is_unsigned) {
+-            opc = RIEc_CLIJ;
+-            in_range = (uint32_t)c2 == (uint8_t)c2;
+-        } else {
+-            opc = RIEc_CIJ;
+-            in_range = (int32_t)c2 == (int8_t)c2;
++        if (!c2const) {
++            opc = (type == TCG_TYPE_I32
++                   ? (is_unsigned ? RIEb_CLRJ : RIEb_CRJ)
++                   : (is_unsigned ? RIEb_CLGRJ : RIEb_CGRJ));
++            tgen_compare_branch(s, opc, cc, r1, c2, l);
++            return;
+         }
+-    } else {
+-        if (is_unsigned) {
+-            opc = RIEc_CLGIJ;
+-            in_range = (uint64_t)c2 == (uint8_t)c2;
++
++        /*
++         * COMPARE IMMEDIATE AND BRANCH RELATIVE has an 8-bit immediate field.
++         * If the immediate we've been given does not fit that range, we'll
++         * fall back to separate compare and branch instructions using the
++         * larger comparison range afforded by COMPARE IMMEDIATE.
++         */
++        if (type == TCG_TYPE_I32) {
++            if (is_unsigned) {
++                opc = RIEc_CLIJ;
++                in_range = (uint32_t)c2 == (uint8_t)c2;
++            } else {
++                opc = RIEc_CIJ;
++                in_range = (int32_t)c2 == (int8_t)c2;
++            }
+         } else {
+-            opc = RIEc_CGIJ;
+-            in_range = (int64_t)c2 == (int8_t)c2;
++            if (is_unsigned) {
++                opc = RIEc_CLGIJ;
++                in_range = (uint64_t)c2 == (uint8_t)c2;
++            } else {
++                opc = RIEc_CGIJ;
++                in_range = (int64_t)c2 == (int8_t)c2;
++            }
++        }
++        if (in_range) {
++            tgen_compare_imm_branch(s, opc, cc, r1, c2, l);
++            return;
+         }
+-    }
+-    if (in_range) {
+-        tgen_compare_imm_branch(s, opc, cc, r1, c2, l);
+-        return;
+     }
+ 
+     cc = tgen_cmp(s, type, c, r1, c2, c2const, false);
+@@ -1871,11 +1925,10 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+             ldst->oi = oi;
+             ldst->addrlo_reg = addr_reg;
+ 
+-            /* We are expecting a_bits to max out at 7, much lower than TMLL. */
+             tcg_debug_assert(a_mask <= 0xffff);
+             tcg_out_insn(s, RI, TMLL, addr_reg, a_mask);
+ 
+-            tcg_out16(s, RI_BRC | (7 << 4)); /* CC in {1,2,3} */
++            tcg_out16(s, RI_BRC | (S390_TM_NE << 4));
+             ldst->label_ptr[0] = s->code_ptr++;
+         }
+ 
+@@ -1956,7 +2009,7 @@ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
+             l2 = gen_new_label();
+ 
+             tcg_out_insn(s, RI, TMLL, addr_reg, 15);
+-            tgen_branch(s, 7, l1); /* CC in {1,2,3} */
++            tgen_branch(s, S390_TM_NE, l1);
+         }
+ 
+         tcg_debug_assert(!need_bswap);
+-- 
+2.34.1
 
-r~
-
-
-The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
-
-  Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
-
-are available in the Git repository at:
-
-  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240205-2
-
-for you to fetch changes up to 23c5692abc3917151dee36c00d751cf5bc46ef19:
-
-  tcg/tci: Support TCG_COND_TST{EQ,NE} (2024-02-05 22:45:41 +0000)
-
-----------------------------------------------------------------
-tcg: Introduce TCG_COND_TST{EQ,NE}
-target/alpha: Use TCG_COND_TST{EQ,NE}
-target/m68k: Use TCG_COND_TST{EQ,NE} in gen_fcc_cond
-target/sparc: Use TCG_COND_TSTEQ in gen_op_mulscc
-target/s390x: Use TCG_COND_TSTNE for CC_OP_{TM,ICM}
-target/s390x: Improve general case of disas_jcc
-
-----------------------------------------------------------------
-Paolo Bonzini (1):
-      tcg/i386: Use TEST r,r to test 8/16/32 bits
-
-Philippe Mathieu-Daudé (1):
-      tcg/aarch64: Massage tcg_out_brcond()
-
-Richard Henderson (37):
-      tcg: Introduce TCG_COND_TST{EQ,NE}
-      tcg: Introduce TCG_TARGET_HAS_tst
-      tcg/optimize: Split out arg_is_const_val
-      tcg/optimize: Split out do_constant_folding_cond1
-      tcg/optimize: Do swap_commutative2 in do_constant_folding_cond2
-      tcg/optimize: Handle TCG_COND_TST{EQ,NE}
-      tcg/optimize: Lower TCG_COND_TST{EQ,NE} if unsupported
-      target/alpha: Pass immediate value to gen_bcond_internal()
-      target/alpha: Use TCG_COND_TST{EQ,NE} for BLB{C,S}
-      target/alpha: Use TCG_COND_TST{EQ,NE} for CMOVLB{C,S}
-      target/alpha: Use TCG_COND_TSTNE for gen_fold_mzero
-      target/m68k: Use TCG_COND_TST{EQ,NE} in gen_fcc_cond
-      target/sparc: Use TCG_COND_TSTEQ in gen_op_mulscc
-      target/s390x: Use TCG_COND_TSTNE for CC_OP_{TM,ICM}
-      target/s390x: Improve general case of disas_jcc
-      tcg: Add TCGConst argument to tcg_target_const_match
-      tcg/aarch64: Support TCG_COND_TST{EQ,NE}
-      tcg/aarch64: Generate TBZ, TBNZ
-      tcg/aarch64: Generate CBNZ for TSTNE of UINT32_MAX
-      tcg/arm: Split out tcg_out_cmp()
-      tcg/arm: Support TCG_COND_TST{EQ,NE}
-      tcg/i386: Pass x86 condition codes to tcg_out_cmov
-      tcg/i386: Move tcg_cond_to_jcc[] into tcg_out_cmp
-      tcg/i386: Support TCG_COND_TST{EQ,NE}
-      tcg/i386: Improve TSTNE/TESTEQ vs powers of two
-      tcg/sparc64: Hoist read of tcg_cond_to_rcond
-      tcg/sparc64: Pass TCGCond to tcg_out_cmp
-      tcg/sparc64: Support TCG_COND_TST{EQ,NE}
-      tcg/ppc: Sink tcg_to_bc usage into tcg_out_bc
-      tcg/ppc: Use cr0 in tcg_to_bc and tcg_to_isel
-      tcg/ppc: Tidy up tcg_target_const_match
-      tcg/ppc: Add TCG_CT_CONST_CMP
-      tcg/ppc: Support TCG_COND_TST{EQ,NE}
-      tcg/s390x: Split constraint A into J+U
-      tcg/s390x: Add TCG_CT_CONST_CMP
-      tcg/s390x: Support TCG_COND_TST{EQ,NE}
-      tcg/tci: Support TCG_COND_TST{EQ,NE}
-
- docs/devel/tcg-ops.rst           |   2 +
- include/tcg/tcg-cond.h           |  74 ++++--
- tcg/aarch64/tcg-target-con-set.h |   5 +-
- tcg/aarch64/tcg-target-con-str.h |   1 +
- tcg/aarch64/tcg-target.h         |   2 +
- tcg/arm/tcg-target.h             |   2 +
- tcg/i386/tcg-target-con-set.h    |   6 +-
- tcg/i386/tcg-target-con-str.h    |   1 +
- tcg/i386/tcg-target.h            |   2 +
- tcg/loongarch64/tcg-target.h     |   2 +
- tcg/mips/tcg-target.h            |   2 +
- tcg/ppc/tcg-target-con-set.h     |   5 +-
- tcg/ppc/tcg-target-con-str.h     |   1 +
- tcg/ppc/tcg-target.h             |   2 +
- tcg/riscv/tcg-target.h           |   2 +
- tcg/s390x/tcg-target-con-set.h   |   8 +-
- tcg/s390x/tcg-target-con-str.h   |   3 +-
- tcg/s390x/tcg-target.h           |   2 +
- tcg/sparc64/tcg-target.h         |   2 +
- tcg/tcg-internal.h               |   2 +
- tcg/tci/tcg-target.h             |   2 +
- target/alpha/translate.c         |  94 ++++----
- target/m68k/translate.c          |  74 +++---
- target/s390x/tcg/translate.c     | 100 +++------
- target/sparc/translate.c         |   4 +-
- tcg/optimize.c                   | 474 ++++++++++++++++++++++++++++++---------
- tcg/tcg.c                        |  40 +++-
- tcg/tci.c                        |  14 ++
- tcg/aarch64/tcg-target.c.inc     | 166 +++++++++++---
- tcg/arm/tcg-target.c.inc         |  62 +++--
- tcg/i386/tcg-target.c.inc        | 201 ++++++++++++-----
- tcg/loongarch64/tcg-target.c.inc |   3 +-
- tcg/mips/tcg-target.c.inc        |   3 +-
- tcg/ppc/tcg-target.c.inc         | 294 ++++++++++++++++++------
- tcg/riscv/tcg-target.c.inc       |   3 +-
- tcg/s390x/tcg-target.c.inc       | 246 +++++++++++++-------
- tcg/sparc64/tcg-target.c.inc     |  65 ++++--
- tcg/tci/tcg-target.c.inc         |   3 +-
- 38 files changed, 1379 insertions(+), 595 deletions(-)
 
