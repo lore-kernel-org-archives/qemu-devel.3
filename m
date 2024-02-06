@@ -4,79 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32097C4828D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 03:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7088C4828D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 05:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXCMC-0006eP-KP; Mon, 05 Feb 2024 22:42:48 -0500
+	id 1rXEOh-0007Zk-Bh; Tue, 06 Feb 2024 00:53:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXCMB-0006aE-EO
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:42:47 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rXEOf-0007ZW-Tq
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 00:53:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXCMA-0002lB-0W
- for qemu-devel@nongnu.org; Mon, 05 Feb 2024 22:42:47 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rXEOX-0008PZ-Mt
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 00:53:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707190965;
+ s=mimecast20190719; t=1707198800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4Z8m+RsAGYiuiaohzp3qbwBlZD8EVzQkiuEzeGLPYhk=;
- b=FCHDHSGj+DjO9gtVvuS6ouc2mDmmcWQu6lNgK4LpF1ZQhi2gzQkhGkscMi5URuUm9soo5P
- V2aJkhVhX3gZYVQzLfqc2jqkpkFBuhD1gWa6VJYLNnBLwGOI5n/shGQwTAUVl3kmcmi9y9
- ipcIZZvgbjJ/rDyCh+Toaq9oAKCkYaA=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-K0RrOEs0ORK4wbMtDuvdSg-1; Mon, 05 Feb 2024 22:42:43 -0500
-X-MC-Unique: K0RrOEs0ORK4wbMtDuvdSg-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2969feb0dbaso350240a91.0
- for <qemu-devel@nongnu.org>; Mon, 05 Feb 2024 19:42:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707190962; x=1707795762;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4Z8m+RsAGYiuiaohzp3qbwBlZD8EVzQkiuEzeGLPYhk=;
- b=mJCEVowmdeUxZ1xkeuEFH0a3p1tstl5RlztOfOEwaTjLig+qhZw/dgdvXi/R0L2Fwj
- WsfGM5ah5OMpMBqaKCOuVpRneqxRFEnWjAVbfg47pFPIzmxWEdtoDtxeTY8eFkfXNU2g
- IvR6wHKvj4ijbNGjd26dTLRJ/HMkHTGXvjm/4QTGtjkRmWBTKpJGg7SYpoZloJMCoHLc
- fZdUKFqazYbhuwicMpRXivuZx4QQJy1BJp/ojJNbMwu24H13TxiIxLsB0iKciSjGlb0f
- D6d9iVltTsEaoyAHuBQcYClfu62qy5oy5fiVhNkGQc2gSdP9VlwA/WmZeRWdBhufy+97
- 2dtg==
-X-Gm-Message-State: AOJu0Yw2S0Eq0u2oEzD/CDa/xdDLWsBlqHkQn2N+hqe5Ex4mH9Z+ILm7
- S+dWd0pcAolGCFIuzHB5a+s0iUtkqquLRJIejUX0gBEwOAKJEMbmYfDvacRzKhK5tF3STTediFo
- lsd6qshSZDFMOh9QAwFQswT/Lt39oNs+n4fovIXIiVqbxaMHDgYWA1zbd/CuZIHw=
-X-Received: by 2002:a17:902:ec8a:b0:1d5:efd6:20f with SMTP id
- x10-20020a170902ec8a00b001d5efd6020fmr1660466plg.1.1707190962316; 
- Mon, 05 Feb 2024 19:42:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEqJWBNfo87wNh6Qkyv9D+Z7qzADMkc3exbFpZgb4y1UhLcm8G//usAA75E7KcZ5NkbI65JDw==
-X-Received: by 2002:a17:902:ec8a:b0:1d5:efd6:20f with SMTP id
- x10-20020a170902ec8a00b001d5efd6020fmr1660454plg.1.1707190962010; 
- Mon, 05 Feb 2024 19:42:42 -0800 (PST)
-X-Forwarded-Encrypted: i=0;
- AJvYcCUjK/LtcCtcaAcaz1vao3rSzvjSoWS52mMTx2Wv/vJcx8Tgv+V9MycM3WdumoLlFCx09qGHAvUcmsOUSQjWLYmZnz6xAp2QIHohSvjHeeip1CEbVfrnvJ0=
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- p15-20020a170902e74f00b001d90a67e10bsm675926plf.109.2024.02.05.19.42.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Feb 2024 19:42:41 -0800 (PST)
-Date: Tue, 6 Feb 2024 11:42:35 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 0/6] migration/multifd: Fix channel creation vs.
- cleanup races
-Message-ID: <ZcGqq5kTiLGU0z_r@x1n>
-References: <20240205194929.28963-1-farosas@suse.de>
+ bh=CgPm7w61z1OJlRDo/qwfFaF3etRPzRA6lJssE31M0wk=;
+ b=eRef+cwBywHkbsY2Ow5BTJIR3fHTanYNH+UGS+DyygKEH3eszp3ADVHVw+wLTOx1oX5V7D
+ BJtEH4tKsTsaLNfoHtBgElAOrBaucFmhfq3Ca2qEW1xNdc8mS+VryUxbDfsgc74lv9z5Qy
+ q8qIT89q6Edi2uDF6VOKls8Mn/tboq4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-8OqfzgYIOeyWiTG0v1J1cQ-1; Tue,
+ 06 Feb 2024 00:53:17 -0500
+X-MC-Unique: 8OqfzgYIOeyWiTG0v1J1cQ-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B3A0D1C0BA47;
+ Tue,  6 Feb 2024 05:53:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6319A492BC6;
+ Tue,  6 Feb 2024 05:53:16 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6EBDB21E6757; Tue,  6 Feb 2024 06:53:15 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,  qemu-devel@nongnu.org,  Hanna
+ Czenczek <hreitz@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] docs/style: allow C99 mixed declarations
+In-Reply-To: <ZcEdrp-y5YFsfir4@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 5 Feb 2024 17:41:02 +0000")
+References: <20240205171819.474283-1-stefanha@redhat.com>
+ <ZcEdrp-y5YFsfir4@redhat.com>
+Date: Tue, 06 Feb 2024 06:53:15 +0100
+Message-ID: <87r0hqyw8k.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240205194929.28963-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -101,20 +91,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 04:49:23PM -0300, Fabiano Rosas wrote:
-> Based-on: 20240202102857.110210-1-peterx@redhat.com
-> [PATCH v2 00/23] migration/multifd: Refactor ->send_prepare() and cleanups
-> https://lore.kernel.org/r/20240202102857.110210-1-peterx@redhat.com
-> 
-> Hi,
-> 
-> In this v2 I made sure NO channel is created after the semaphores are
-> posted. Feel free to call me out if that's not the case.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Queued into -staging.  Plan to send a pull only before I'll be out (Feb
-9-19), so comments are still welcomed.  Thanks.
+> On Mon, Feb 05, 2024 at 12:18:19PM -0500, Stefan Hajnoczi wrote:
+>> C99 mixed declarations support interleaving of local variable
+>> declarations and code.
+>>=20
+>> The coding style "generally" forbids C99 mixed declarations with some
+>> exceptions to the rule. This rule is not checked by checkpatch.pl and
+>> naturally there are violations in the source tree.
+>>=20
+>> While contemplating adding another exception, I came to the conclusion
+>> that the best location for declarations depends on context. Let the
+>> programmer declare variables where it is best for legibility. Don't try
+>> to define all possible scenarios/exceptions.
+>
+> IIRC, we had a discussion on this topic sometime last year, but can't
+> remember what the $SUBJECT was, so I'll just repeat what I said then.
 
--- 
-Peter Xu
+From: Juan Quintela <quintela@redhat.com>
+Subject: [PATCH] Change the default for Mixed declarations.
+Date: Tue, 14 Feb 2023 17:07:38 +0100
+Message-Id: <20230214160738.88614-1-quintela@redhat.com>
+https://lore.kernel.org/qemu-devel/20230214160738.88614-1-quintela@redhat.c=
+om/
+
+> Combining C99 mixed declarations with 'goto' is dangerous.
+>
+> Consider this program:
+>
+> $ cat jump.c
+> #include <stdlib.h>
+>
+> int main(int argc, char**argv) {
+>
+>   if (getenv("SKIP"))
+>     goto target;
+>
+>   char *foo =3D malloc(30);
+>
+>  target:
+>   free(foo);
+> }
+>
+> $ gcc -Wall -Wuninitialized -o jump jump.c
+>
+> $ SKIP=3D1 ./jump=20
+> free(): invalid pointer
+> Aborted (core dumped)
+>
+>
+>  -> The programmer thinks they have initialized 'foo'
+>  -> GCC thinks the programmer has initialized 'foo'
+>  -> Yet 'foo' is not guaranteed to be initialized at 'target:'
+>
+> Given that QEMU makes heavy use of 'goto', allowing C99 mixed
+> declarations exposes us to significant danger.
+>
+> Full disclosure, GCC fails to diagnmose this mistake, even
+> with a decl at start of 'main', but at least the mistake is
+> now more visible to the programmer.
+>
+> Fortunately with -fanalyzer GCC can diagnose this:
+>
+> $ gcc -fanalyzer -Wall -o jump jump.c
+> jump.c: In function =E2=80=98main=E2=80=99:
+> jump.c:12:3: warning: use of uninitialized value =E2=80=98foo=E2=80=99 [C=
+WE-457] [-Wanalyzer-use-of-uninitialized-value]
+>    12 |   free(foo);
+>       |   ^~~~~~~~~
+>   =E2=80=98main=E2=80=99: events 1-5
+>     |
+>     |    6 |   if (getenv("SKIP"))
+>     |      |      ~=20=20
+>     |      |      |
+>     |      |      (3) following =E2=80=98true=E2=80=99 branch...
+>     |    7 |     goto target;
+>     |      |     ~~~~
+>     |      |     |
+>     |      |     (4) ...to here
+>     |    8 |=20
+>     |    9 |  char *foo =3D malloc(30);
+>     |      |        ^~~
+>     |      |        |
+>     |      |        (1) region created on stack here
+>     |      |        (2) capacity: 8 bytes
+>     |......
+>     |   12 |   free(foo);
+>     |      |   ~~~~~~~~~
+>     |      |   |
+>     |      |   (5) use of uninitialized value =E2=80=98foo=E2=80=99 here
+>
+>
+> ...but -fanalyzer isn't something we have enabled by default, it
+> is opt-in. I'm also not sure how comprehensive the flow control
+> analysis of -fanalyzer is ?  Can we be sure it'll catch these
+> mistakes in large complex functions with many code paths ?
+>
+> Even if the compiler does reliably warn, I think the code pattern
+> remains misleading to contributors, as the flow control flaw is
+> very non-obvious.
+
+Yup.  Strong dislike.
+
+> Rather than accept the status quo and remove the coding guideline,
+> I think we should strengthen the guidelines, such that it is
+> explicitly forbidden in any method that uses 'goto'. Personally
+> I'd go all the way to -Werror=3Ddeclaration-after-statement, as
+
+I support this.
+
+> while C99 mixed decl is appealing,
+
+Not to me.
+
+I much prefer declarations and statements to be visually distinct.
+Putting declarations first and separating from statements them with a
+blank line accomplishes that.  Less necessary in languages where
+declarations are syntactically obvious.
+
+>                                    it isn't exactly a game
+> changer in improving code maintainability.
+
+
+[...]
 
 
