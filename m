@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32C4C48297
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E1C1C48297
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Feb 2024 21:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXTH8-0005em-SQ; Tue, 06 Feb 2024 16:46:42 -0500
+	id 1rXTHX-0005y3-Cl; Tue, 06 Feb 2024 16:47:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXTH7-0005eA-5t
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:46:41 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1rXTHW-0005s1-2L
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:47:06 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXTH5-0007Fu-Hb
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:46:40 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso52342945ad.1
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 13:46:39 -0800 (PST)
+ id 1rXTHU-0007PJ-JK
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 16:47:05 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1d93f2c3701so33769385ad.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 13:47:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707255998; x=1707860798; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707256023; x=1707860823; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0QJX/S9IomovOBIoF/s3BNY4iWxBvuykWx4Cyek5lUA=;
- b=NoG6w9cR1ZZTcIo8Ub/wExQILYo56/J0DmpA5sIiyufvD8mkJG6WUEf9BK6nk7smBL
- evySXk5Nuhmm2MU/Bn8/fC/L/uWG5R89lrTHy5qqgZSHmhbZOiYv0nxobgjTggRr5WuL
- sCSEySA+qTfcdq37odrZiTVLwz7g+GC/KVQZf3oT/eFwHky7YALTyC1UlTlX/LAHYHyv
- bsMu9YIM8u0wYY6cQVjtEZiC699ITuLRnCH+1iQ6M4ubR9WLOGJIvJKDyZkOJvvbi8MO
- zfY5BVoll8Z7T3Or5F7Yo3W2mgXD30/6HCsGU9tVND/Fie/9oSToo3qqNwAqznuiPfno
- rQ4A==
+ bh=415qHFYNEGh1hFe0iT8uX89EgN+vnOMnD6jFX4CySZg=;
+ b=rsB19+2Nu4UrjrRJFgqE0KxIy4hYtt2HygfbnIhLBC9XjMC6kA2PyZklbDEJWcp+Us
+ 37cqY6KNTURArOr0cbXvnAm+4Qy0CrgoS2DcVBSye8242YdM9R5v9DrUeQG+orlGI0lo
+ M8avv2qJTcVKVXxFKcmaMdTePa8xy1Fm420DV336JY+WEBdWU3YcoZmBOtFWHbtm3t+c
+ lxciI0xC8qvyXO/5ZdTYtTT+jcf/6yo2G7s83wA5qDXR29Ee7SMwCpD21Ief9HNtKIig
+ 1QjBkfvD3xTpPuMkuQilVmFgzGQAlp9VFZfh/38vmrhqtWlaNBdIJlXVdj2h/K/H/thS
+ XWDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707255998; x=1707860798;
+ d=1e100.net; s=20230601; t=1707256023; x=1707860823;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0QJX/S9IomovOBIoF/s3BNY4iWxBvuykWx4Cyek5lUA=;
- b=jMQxXvzF1pGd00RCX1Ye2CsY4t2g/oXaDl07FZspRqGLqrGo//6T2xLueg+NikpvZt
- fwqEM8Tvnp6QofpDug67387jhELbHsGCyP4BOZSBLQh82yLf8bISIaHmeW2SJCQk5cib
- tkUq/ureXPNtYPl3UcmUo0oK3VMiWsgrI1UoweqIRdFmrIzh7g8OsnHmEX7SWTU1SPqL
- HGzSc86St4VNuJc8rbNj3g3pPwJHuAMEFoMR2Z5QEKoO/7iOP2CRXDYf+GhmK/9eblbi
- B65E+aLCW5s+SAq41b2/MkHpDdp7WLw0vz6G7lmas/gUByvOBcBME2kr7nU8JxYEld/p
- vWfg==
-X-Gm-Message-State: AOJu0YzG2GAqsntj3l5bo02WMy5U5ZulLXIsozUn9Lw9ZyLgDIzdXDXl
- ErVqP1si7BZBVth4xLRq+ftY0mH1eN/1KAm87LklK/8yT4YiuchDVJmdGV6utqk=
-X-Google-Smtp-Source: AGHT+IGMFMv3KG844sSbaI+FPyuu85AX33L0Ow6mzBUllHemdiKew49+OF82muxi5cq6RTO0MSQBGA==
-X-Received: by 2002:a17:902:654e:b0:1d7:4b27:4ac3 with SMTP id
- d14-20020a170902654e00b001d74b274ac3mr3002296pln.31.1707255997999; 
- Tue, 06 Feb 2024 13:46:37 -0800 (PST)
+ bh=415qHFYNEGh1hFe0iT8uX89EgN+vnOMnD6jFX4CySZg=;
+ b=kuaAaB4UhMm3cznR0JEKTz1gvB6ARNzh5lXqBa5Khugf7tWJ1sgkCqE/4M39Z46GRg
+ dMnyCIlai7FvWbpu0xcLn5Nv9N8rjl26X9DgjIzqHWoIrcZcYS8oIu9pekXUYq1yfzvg
+ aPqvCvVFIwC/YqRZxg2hLxM7JafsCdFpOL0xy1mtHozC13zqZsDpvs6q2k72EK8a7VHz
+ J5qhAwaqOdvb7G1yS1Rg3OHVfSZh0a+GPO8qIIxk8Yg1UuNUzGHTEI9rMkrgGb4oFU2P
+ WxUllOLFovlIZ+tEcGms8CpjxeAfGyoF35X4XaMGnKlr8a5i5EkqQjoRR8m86ISmPULI
+ HpLA==
+X-Gm-Message-State: AOJu0YwqcrvA4njXAMGm6AkpD4dKSYN3OMlhKtmM+jg2uBu4EVdok+n6
+ HgBR1+uLkiWWVd+suiffneLdJY2mfrnJ99K2nbZsiaS1TJv+EUsCwzO8yygA8tgC81DjUujst0Y
+ wtD0=
+X-Google-Smtp-Source: AGHT+IHhAZDsfzVPrNMUV/cUZQ9+dkKSpzn43/faRu4hxAs+/XAOu7Yd8V2phhlKOxLuKeZHxPG92g==
+X-Received: by 2002:a17:902:c403:b0:1d9:6420:7867 with SMTP id
+ k3-20020a170902c40300b001d964207867mr3655433plk.11.1707256023167; 
+ Tue, 06 Feb 2024 13:47:03 -0800 (PST)
 X-Forwarded-Encrypted: i=0;
- AJvYcCVM0M3RF9vFliwSGAxXCxMvF1Jr5KVcksiEUSVQdD+Znh7pVC+dyqxuejmFMDIS8o8Tlkwm00xYtPeCYHrUdN2WsW7PbdvMv1BvchT8ru9spRA8x+kVtftYhqQ=
+ AJvYcCX7lnSLcram6eHu04XyVDVtd7iBnIipMppbnsTDtdw9BmhEE5l8oDo/7Q4Isos6fCfKS4lbI5eeyhzGeUKmzEel+hmLFDqhgorzGd2B+1AjLKGt07jFtSWz2+Q=
 Received: from [192.168.0.100] ([43.252.112.200])
  by smtp.gmail.com with ESMTPSA id
- e11-20020a170902ed8b00b001d940ae8ffasm2382196plj.6.2024.02.06.13.46.35
+ e11-20020a170902ed8b00b001d940ae8ffasm2382196plj.6.2024.02.06.13.47.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 13:46:37 -0800 (PST)
-Message-ID: <7f812de0-c343-4d77-97c0-7bd8349db76b@linaro.org>
-Date: Wed, 7 Feb 2024 07:46:33 +1000
+ Tue, 06 Feb 2024 13:47:02 -0800 (PST)
+Message-ID: <9d67ac5c-abf5-45af-be06-c75498b9ecbe@linaro.org>
+Date: Wed, 7 Feb 2024 07:47:00 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/13] target/arm: Allow access to SPSR_hyp from hyp mode
+Subject: Re: [PATCH 05/13] hw/misc/mps2-scc: Fix condition for CFG3 register
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240206132931.38376-1-peter.maydell@linaro.org>
- <20240206132931.38376-5-peter.maydell@linaro.org>
+ <20240206132931.38376-6-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240206132931.38376-5-peter.maydell@linaro.org>
+In-Reply-To: <20240206132931.38376-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,37 +100,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/6/24 23:29, Peter Maydell wrote:
-> Architecturally, the AArch32 MSR/MRS to/from banked register
-> instructions are UNPREDICTABLE for attempts to access a banked
-> register that the guest could access in a more direct way (e.g.
-> using this insn to access r8_fiq when already in FIQ mode).  QEMU has
-> chosen to UNDEF on all of these.
+> We currently guard the CFG3 register read with
+>   (scc_partno(s) == 0x524 && scc_partno(s) == 0x547)
+> which is clearly wrong as it is never true.
 > 
-> However, for the case of accessing SPSR_hyp from hyp mode, it turns
-> out that real hardware permits this, with the same effect as if the
-> guest had directly written to SPSR. Further, there is some
-> guest code out there that assumes it can do this, because it
-> happens to work on hardware: an example Cortex-R52 startup code
-> fragment uses this, and it got copied into various other places,
-> including Zephyr. Zephyr was fixed to not use this:
->   https://github.com/zephyrproject-rtos/zephyr/issues/47330
-> but other examples are still out there, like the selftest
-> binary for the MPS3-AN536.
+> This register is present on all board types except AN524
+> and AN527; correct the condition.
 > 
-> For convenience of being able to run guest code, permit
-> this UNPREDICTABLE access instead of UNDEFing it.
-> 
+> Fixes: 6ac80818941829c0 ("hw/misc/mps2-scc: Implement changes for AN547")
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
-> Last time this came up I preferred the "keep QEMU behaviour
-> as it is, try to get the guest code fixed" approach:
->   https://www.mail-archive.com/qemu-devel@nongnu.org/msg899970.html
-> but as this is the second time I lean a bit more towards
-> behaving like the hardware.
-> ---
->   target/arm/tcg/op_helper.c | 43 ++++++++++++++++++++++++++------------
->   target/arm/tcg/translate.c | 19 +++++++++++------
->   2 files changed, 43 insertions(+), 19 deletions(-)
+>   hw/misc/mps2-scc.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
