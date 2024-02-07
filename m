@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45461C4829A
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 21:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5AE4C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 21:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXpu8-0007AC-Bn; Wed, 07 Feb 2024 16:56:28 -0500
+	id 1rXpu8-00079f-6x; Wed, 07 Feb 2024 16:56:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu6-00077J-4W
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu6-000783-Jd
  for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu4-0007dz-Cw
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:25 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu5-0007eF-1I
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707342983;
+ s=mimecast20190719; t=1707342984;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7mQJ5DC1wsfQgh7/jquzUVLwaHKif1MulGs6+1cbpeY=;
- b=DqL84J9/oZ0X2HHLixEi/ncRed60C99wUIcP3Kp/YChQeoGxehWfLaW28qY5S051hOGftH
- KJqlCcsHbkQkF5taNuse8QEWfrHiTDrBNlKiUJ8fopDFUGRq/ebx8IJAhqzKcgoITSLVh0
- MrXNwxnl0AeHnmB6iGnAaJSjJj8IDQg=
+ bh=a7p5x2fcwKWLwW7RHE3p8xiZBd6Y/sYtDmGs1L7gZkM=;
+ b=ir0LrAVobarVXe8STN7Ar1rR7bKM2DkLLeC1BZO5rfcFjT9B87eGXYfpujyFS8nSnG/HFn
+ eCuBbwZ3LcF1kbkfn8qnNUc7UzmSg8ZmiHEeGtxFqyL//RihVwGD+VA6lVe5g9XvPo+z0S
+ zW4Yidb7zOUj4Mrlh3xDNOuHyvxPOoo=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-PZvfr3LeM_SaAJOu33T6UA-1; Wed,
- 07 Feb 2024 16:56:20 -0500
-X-MC-Unique: PZvfr3LeM_SaAJOu33T6UA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-fu3H8selNy-p459LkpqW2Q-1; Wed,
+ 07 Feb 2024 16:56:21 -0500
+X-MC-Unique: fu3H8selNy-p459LkpqW2Q-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 70FEF2825BA6;
- Wed,  7 Feb 2024 21:56:20 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3DCBD3C11C74;
+ Wed,  7 Feb 2024 21:56:21 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.192.31])
- by smtp.corp.redhat.com (Postfix) with ESMTP id D875B492BC6;
- Wed,  7 Feb 2024 21:56:19 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id A58DC492BC6;
+ Wed,  7 Feb 2024 21:56:20 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 11/16] scsi: Don't ignore most usb-storage properties
-Date: Wed,  7 Feb 2024 22:56:01 +0100
-Message-ID: <20240207215606.206038-12-kwolf@redhat.com>
+Subject: [PULL 12/16] blkio: Respect memory-alignment for bounce buffer
+ allocations
+Date: Wed,  7 Feb 2024 22:56:02 +0100
+Message-ID: <20240207215606.206038-13-kwolf@redhat.com>
 In-Reply-To: <20240207215606.206038-1-kwolf@redhat.com>
 References: <20240207215606.206038-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -80,143 +81,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usb-storage is for the most part just a wrapper around an internally
-created scsi-disk device. It uses DEFINE_BLOCK_PROPERTIES() to offer all
-of the usual block device properties to the user, but then only forwards
-a few select properties to the internal device while the rest is
-silently ignored.
+blkio_alloc_mem_region() requires that the requested buffer size is a
+multiple of the memory-alignment property. If it isn't, the allocation
+fails with a return value of -EINVAL.
 
-This changes scsi_bus_legacy_add_drive() to accept a whole BlockConf
-instead of some individual values inside of it so that usb-storage can
-now pass the whole configuration to the internal scsi-disk. This enables
-the remaining block device properties, e.g. logical/physical_block_size
-or discard_granularity.
+Fix the call in blkio_resize_bounce_pool() to make sure the requested
+size is properly aligned.
 
-Buglink: https://issues.redhat.com/browse/RHEL-22375
+I observed this problem with vhost-vdpa, which requires page aligned
+memory. As the virtio-blk device behind it still had 512 byte blocks, we
+got bs->bl.request_alignment = 512, but actually any request that needed
+a bounce buffer and was not aligned to 4k would fail without this fix.
+
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20240131130607.24117-1-kwolf@redhat.com>
+Message-ID: <20240131173140.42398-1-kwolf@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/hw/scsi/scsi.h       |  5 +----
- hw/scsi/scsi-bus.c           | 33 +++++++++++++--------------------
- hw/usb/dev-storage-classic.c |  5 +----
- 3 files changed, 15 insertions(+), 28 deletions(-)
+ block/blkio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 10c4e8288d..c3d5e17e38 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -199,10 +199,7 @@ static inline SCSIBus *scsi_bus_from_device(SCSIDevice *d)
- }
+diff --git a/block/blkio.c b/block/blkio.c
+index bc2f21784c..882e1c297b 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -89,6 +89,9 @@ static int blkio_resize_bounce_pool(BDRVBlkioState *s, int64_t bytes)
+     /* Pad size to reduce frequency of resize calls */
+     bytes += 128 * 1024;
  
- SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
--                                      int unit, bool removable, int bootindex,
--                                      bool share_rw,
--                                      BlockdevOnError rerror,
--                                      BlockdevOnError werror,
-+                                      int unit, bool removable, BlockConf *conf,
-                                       const char *serial, Error **errp);
- void scsi_bus_set_ua(SCSIBus *bus, SCSISense sense);
- void scsi_bus_legacy_handle_cmdline(SCSIBus *bus);
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 230313022c..9e40b0c920 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -376,15 +376,13 @@ static void scsi_qdev_unrealize(DeviceState *qdev)
- 
- /* handle legacy '-drive if=scsi,...' cmd line args */
- SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
--                                      int unit, bool removable, int bootindex,
--                                      bool share_rw,
--                                      BlockdevOnError rerror,
--                                      BlockdevOnError werror,
-+                                      int unit, bool removable, BlockConf *conf,
-                                       const char *serial, Error **errp)
- {
-     const char *driver;
-     char *name;
-     DeviceState *dev;
-+    SCSIDevice *s;
-     DriveInfo *dinfo;
- 
-     if (blk_is_sg(blk)) {
-@@ -402,11 +400,10 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
-     object_property_add_child(OBJECT(bus), name, OBJECT(dev));
-     g_free(name);
- 
-+    s = SCSI_DEVICE(dev);
-+    s->conf = *conf;
++    /* Align the pool size to avoid blkio_alloc_mem_region() failure */
++    bytes = QEMU_ALIGN_UP(bytes, s->mem_region_alignment);
 +
-     qdev_prop_set_uint32(dev, "scsi-id", unit);
--    if (bootindex >= 0) {
--        object_property_set_int(OBJECT(dev), "bootindex", bootindex,
--                                &error_abort);
--    }
-     if (object_property_find(OBJECT(dev), "removable")) {
-         qdev_prop_set_bit(dev, "removable", removable);
-     }
-@@ -417,19 +414,12 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
-         object_unparent(OBJECT(dev));
-         return NULL;
-     }
--    if (!object_property_set_bool(OBJECT(dev), "share-rw", share_rw, errp)) {
--        object_unparent(OBJECT(dev));
--        return NULL;
--    }
--
--    qdev_prop_set_enum(dev, "rerror", rerror);
--    qdev_prop_set_enum(dev, "werror", werror);
+     WITH_QEMU_LOCK_GUARD(&s->blkio_lock) {
+         int ret;
  
-     if (!qdev_realize_and_unref(dev, &bus->qbus, errp)) {
-         object_unparent(OBJECT(dev));
-         return NULL;
-     }
--    return SCSI_DEVICE(dev);
-+    return s;
- }
- 
- void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
-@@ -437,6 +427,12 @@ void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
-     Location loc;
-     DriveInfo *dinfo;
-     int unit;
-+    BlockConf conf = {
-+        .bootindex = -1,
-+        .share_rw = false,
-+        .rerror = BLOCKDEV_ON_ERROR_AUTO,
-+        .werror = BLOCKDEV_ON_ERROR_AUTO,
-+    };
- 
-     loc_push_none(&loc);
-     for (unit = 0; unit <= bus->info->max_target; unit++) {
-@@ -446,10 +442,7 @@ void scsi_bus_legacy_handle_cmdline(SCSIBus *bus)
-         }
-         qemu_opts_loc_restore(dinfo->opts);
-         scsi_bus_legacy_add_drive(bus, blk_by_legacy_dinfo(dinfo),
--                                  unit, false, -1, false,
--                                  BLOCKDEV_ON_ERROR_AUTO,
--                                  BLOCKDEV_ON_ERROR_AUTO,
--                                  NULL, &error_fatal);
-+                                  unit, false, &conf, NULL, &error_fatal);
-     }
-     loc_pop(&loc);
- }
-diff --git a/hw/usb/dev-storage-classic.c b/hw/usb/dev-storage-classic.c
-index 84d19752b5..50a3ad6285 100644
---- a/hw/usb/dev-storage-classic.c
-+++ b/hw/usb/dev-storage-classic.c
-@@ -67,10 +67,7 @@ static void usb_msd_storage_realize(USBDevice *dev, Error **errp)
-     scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev),
-                  &usb_msd_scsi_info_storage);
-     scsi_dev = scsi_bus_legacy_add_drive(&s->bus, blk, 0, !!s->removable,
--                                         s->conf.bootindex, s->conf.share_rw,
--                                         s->conf.rerror, s->conf.werror,
--                                         dev->serial,
--                                         errp);
-+                                         &s->conf, dev->serial, errp);
-     blk_unref(blk);
-     if (!scsi_dev) {
-         return;
 -- 
 2.43.0
 
