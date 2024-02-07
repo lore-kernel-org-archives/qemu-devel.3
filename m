@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913C4C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0731C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXnPB-0003sE-10; Wed, 07 Feb 2024 14:16:21 -0500
+	id 1rXna0-0006T1-KB; Wed, 07 Feb 2024 14:27:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rXnP8-0003s0-OQ
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:16:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ivarhol-21@enst.fr>)
+ id 1rXnZx-0006R5-Ut; Wed, 07 Feb 2024 14:27:29 -0500
+Received: from zproxy3.enst.fr ([2001:660:330f:2::de])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rXnP7-00022u-66
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:16:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707333374;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CxAAYFCbDi6BWT7ByTYlJlEPzP9id4bi6dyg1vwQL3U=;
- b=bxrsa4PlS6QdocYsJZIrMjWbA2Jld79xew2NbD9CJs1lBBfTpXUYyKrGOYmPgMSPBHuypO
- 9AcAKSLg1UhZ5+rzrguq9DR/jEJu64TY4EdVAKFjmqHao+05cl+u/9ger5U5K21DLf4hX9
- yXZQh67wT21e0YQfU/zA2EFT7UNqLhk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-qE-otwCNOCSufyoXbm3Z3A-1; Wed,
- 07 Feb 2024 14:16:02 -0500
-X-MC-Unique: qE-otwCNOCSufyoXbm3Z3A-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8939F28BBF01;
- Wed,  7 Feb 2024 19:16:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.143])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4928BAC1E;
- Wed,  7 Feb 2024 19:16:01 +0000 (UTC)
-Date: Wed, 7 Feb 2024 13:15:59 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
- pbonzini@redhat.com, devel@lists.libvirt.org
-Subject: Re: [PATCH 1/4] chardev/parallel: Don't close stdin on inappropriate
- device
-Message-ID: <rnzorvci7ca55cisgobnwfkz6yvjh74nnxyhnr4nnozeszw5no@rqnyu73dg7wf>
-References: <20240203080228.2766159-1-armbru@redhat.com>
- <20240203080228.2766159-2-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <ivarhol-21@enst.fr>)
+ id 1rXnZu-0004Sy-VY; Wed, 07 Feb 2024 14:27:28 -0500
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 1D8C0A0529;
+ Wed,  7 Feb 2024 20:27:22 +0100 (CET)
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id uK6sQRQDRVcw; Wed,  7 Feb 2024 20:27:21 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 69699A06ED;
+ Wed,  7 Feb 2024 20:27:21 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 69699A06ED
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1707334041;
+ bh=VqrU69F1Upxy2wSuSJcQIQbvaVpfBNHflNBbVNIunew=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=ghoinMPTsN6/3/GLibRSYrz03/gywEaL7dXP88T0Usa2X2mJx/Iy0I4dPo01ijUUT
+ db72jL+FBtnr4vLRN9OUSLT89yWBXYmKz0a86gmCGYV+I4wSlM+Eo3Vdr9nHQ6IhKD
+ PzKngY2PXQoiDfi0wLmfynItc5qKRLqbjK+zFGQQ=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id O-AmbFWFV8hZ; Wed,  7 Feb 2024 20:27:21 +0100 (CET)
+Received: from zmail-tp2.enst.fr (zmail-tp2.enst.fr [137.194.2.199])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 05406A0529;
+ Wed,  7 Feb 2024 20:27:20 +0100 (CET)
+Date: Wed, 7 Feb 2024 20:27:20 +0100 (CET)
+From: =?utf-8?B?SW7DqHM=?= Varhol <ines.varhol@telecom-paris.fr>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm <qemu-arm@nongnu.org>, 
+ Samuel Tardieu <sam@rfc1149.net>, 
+ peter maydell <peter.maydell@linaro.org>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Message-ID: <166919954.385629.1707334040744.JavaMail.zimbra@enst.fr>
+In-Reply-To: <f20a325e-7998-4065-b4ed-d43da7d4b5df@linaro.org>
+References: <20240126193657.792005-1-ines.varhol@telecom-paris.fr>
+ <f20a325e-7998-4065-b4ed-d43da7d4b5df@linaro.org>
+Subject: Re: [PATCH 0/3] Add device DM163 (led driver, matrix colors shield
+ & display)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240203080228.2766159-2-armbru@redhat.com>
-User-Agent: NeoMutt/20231221
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.106,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [::ffff:80.125.0.74]
+X-Mailer: Zimbra 9.0.0_GA_4583 (ZimbraWebClient - FF122 (Linux)/9.0.0_GA_4583)
+Thread-Topic: Add device DM163 (led driver, matrix colors shield & display)
+Thread-Index: qPYjeKm+4dDFkfeuKlXBubwdHL2NFA==
+Received-SPF: pass client-ip=2001:660:330f:2::de;
+ envelope-from=ivarhol-21@enst.fr; helo=zproxy3.enst.fr
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,85 +90,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 03, 2024 at 09:02:25AM +0100, Markus Armbruster wrote:
-> The __linux__ version of qemu_chr_open_pp_fd() tries to claim the
-> parport device with a PPCLAIM ioctl().  On success, it stores the file
-> descriptor in the chardev object, and returns success.  On failure, it
-> closes the file descriptor, and returns failure.
-> 
-> chardev_new() then passes the Chardev to object_unref().  This duly
-> calls char_parallel_finalize(), which closes the file descriptor
-> stored in the chardev object.  Since qemu_chr_open_pp_fd() didn't
-> store it, it's still zero, so this closes standard input.  Ooopsie.
-> 
-> To demonstate, add a unit test.  With the bug above unfixed, running
-> this test closes standard input.  char_hotswap_test() happens to run
-> next.  It opens a socket, duly gets file descriptor 0, and since it
-> tests for success with > 0 instead of >= 0, it fails.
+Hello,
 
-Two bugs for the price of one!
+> De: "Philippe Mathieu-Daud=C3=A9" <philmd@linaro.org>
+> Envoy=C3=A9: Lundi 5 F=C3=A9vrier 2024 15:03:59
+>=20
+> Hi In=C3=A8s,
+>=20
+> On 26/1/24 20:31, In=C3=A8s Varhol wrote:
+> > This device implements the IM120417002 colors shield v1.1 for Arduino
+> > (which relies on the DM163 8x3-channel led driving logic) and features
+> > a simple display of an 8x8 RGB matrix.
+> >=20
+> > This color shield can be plugged on the Arduino board (or the
+> > B-L475E-IOT01A board) to drive an 8x8 RGB led matrix.
+>=20
+> Nice. Do you have an example? Or better, a test :)
+>=20
 
-> 
-> The test needs to be conditional exactly like the chardev it tests.
-> Since the condition is rather complicated, steal the solution from the
-> serial chardev: define HAVE_CHARDEV_PARALLEL in qemu/osdep.h.  This
-> also permits simplifying chardev/meson.build a bit.
-> 
-> The bug fix is easy enough: store the file descriptor, and leave
-> closing it to char_parallel_finalize().
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
+Actually I don't know how to test the display with QTest :/
+(I've tested it by running custom executables)
 
-> +++ b/include/qemu/osdep.h
-> @@ -508,11 +508,18 @@ void qemu_anon_ram_free(void *ptr, size_t size);
->  
->  #ifdef _WIN32
->  #define HAVE_CHARDEV_SERIAL 1
-> -#elif defined(__linux__) || defined(__sun__) || defined(__FreeBSD__)    \
-> +#define HAVE_CHARDEV_PARALLEL 1
-> +#else
-> +#if defined(__linux__) || defined(__sun__) || defined(__FreeBSD__)   \
->      || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) \
->      || defined(__GLIBC__) || defined(__APPLE__)
->  #define HAVE_CHARDEV_SERIAL 1
->  #endif
-> +#if defined(__linux__) || defined(__FreeBSD__) \
-> +    || defined(__FreeBSD_kernel__) || defined(__DragonFly__)
-> +#define HAVE_CHARDEV_PARALLEL 1
-> +#endif
-> +#endif
+I've seen that `qtest_init_internal` sets `-display none`
+so I imagine there's no way to test the display visually.
 
-Not for this patch, but I've grown to like a preprocessor style I've
-seen in other projects to make it easier to read nested #if:
+It seems to me that I can't use a qdev property (to access
+the DM163 buffer and check its content) either since there's
+no `visit_type_*` for arrays.
 
-#ifdef _WIN32
-# define HAVE_CHARDEV_SERIAL 1
-# define HAVE_CHARDEV_PARALLEL 1
-#else
-# if defined(__linux__) ... defined(__APPLE__)
-#  define HAVE_CHARDEV_SERIAL 1
-# endif
-# if defined(__linux__) ... defined(__DragonFly__)
-#  define HAVE_CHARDEV_PARALLEL 1
-# endif
-#endif
+I could technically access all the elements in the array=20
+(returning a different element each time in the getter for
+example), but that seems sketchy.
 
-> +++ b/chardev/meson.build
-> @@ -21,11 +21,9 @@ if host_os == 'windows'
->  else
->    chardev_ss.add(files(
->        'char-fd.c',
-> +        'char-parallel.c',
->        'char-pty.c',
 
-Indentation looks off.  Otherwise,
+In short, how can I provide a test or an example?
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Best regards,
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+Ines
 
