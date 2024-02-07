@@ -4,51 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1958EC4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE232C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXnyK-0005q2-0r; Wed, 07 Feb 2024 14:52:40 -0500
+	id 1rXo3b-0007yn-IL; Wed, 07 Feb 2024 14:58:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rXnyG-0005kW-VB; Wed, 07 Feb 2024 14:52:37 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rXnyB-0001QJ-3I; Wed, 07 Feb 2024 14:52:36 -0500
-Received: from TWMBX02.aspeed.com (192.168.0.25) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 8 Feb
- 2024 03:52:27 +0800
-Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 8 Feb 2024 03:52:27 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>
-Subject: [PATCH v2 2/2] aspeed: fix hardcode boot address 0
-Date: Thu, 8 Feb 2024 03:52:24 +0800
-Message-ID: <20240207195224.452987-3-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240207195224.452987-1-jamin_lin@aspeedtech.com>
-References: <20240207195224.452987-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1rXo3a-0007y5-6U
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:58:06 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1rXo3Y-0002he-3k
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:58:05 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2cf4fafa386so13620001fa.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 11:58:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1707335881; x=1707940681;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=e2r8ewQ3GKlhxv+VAGTlsx90mzqAeYJV/OC68iAZzz4=;
+ b=s6S3YJLh8k4uFPDmldHjfLlM+ObEIwvjRaMipPypVnCa2k/2oDt1E3ID0yoh8Sqr6w
+ gP5/EBBJRB1Rl+xwo7R1kF7dLaZtzJhEdXx5iAJwIm7pCl3BTEzYhmHDCxtECzo6L4nY
+ PXTERke6q3sOzoGTuKKDPXbLk7rr0RvsqYT1b4IFuAJHBjLcQ1agLNqR6W5Ac0JCR5ms
+ tTYN3I+B/WqZqv2K0XFN5jPT8lHPpHRh36Thqj58DbessAp8NVTcqyradzrVaB1WRt+B
+ W6UXa+dpben2mx13ipshZ/um0xBV6s8C27QuArMkOmSu4uGWrNWP7zuvoBIJWwjEuR0x
+ RWqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707335881; x=1707940681;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=e2r8ewQ3GKlhxv+VAGTlsx90mzqAeYJV/OC68iAZzz4=;
+ b=EaUvrqgSqs96cmLE2KFoGN/kCN8/XJvIH5d7QAT37UM6n4fLxMuzSxIOQxevnDP5L5
+ P8aToevbyZEH8IGIUtkiqF7InEI8D/fkpzHOrArLI/vHKt+kaf0jX5oxxtHoQGdjUI+J
+ Km6kQWbhJEfTuBeCtDjXUnypT8LGAs9CDeB7SnC/yofiaIsq2CXKeSvDSOfsJf3VIpHz
+ 7lLXE1vLHzKbB3WGL4Watx9GuH6gFk9z4dKWn2bsQ4BbgWkS4xvIP0gAcn2xcWk62PkX
+ ArfVMKdZp1Pd0C3Tpmt+nNgx9tGsZP+AG7T8+rAm+4SwNimGC3wI44FSMaHMTVAbyTWE
+ IkHQ==
+X-Gm-Message-State: AOJu0YzrDO0A9dqFDRU+FYmxm4vIjSGZG26PsUCKbN/DZ0S/jvf3QQdx
+ m+6EpDAaWtgOYQGw6h6xTPUDtZ4u0evSS4vDk160tCoHdOtroFQvSkGc1ve5YukWuMDQO1uPuKQ
+ ewaz66ohK57jpYZSJGkNr3FIJXgwsKVMkSLae0g==
+X-Google-Smtp-Source: AGHT+IEnNiIp7DVMeTEf9W8ZiZ9tV3spxV7ZvP/tnsMsVWy67rLQQ5oRCp/mcLdONHaHaessZ2oh0z9kRSR+uHtFTl8=
+X-Received: by 2002:a05:651c:388:b0:2d0:7b53:9330 with SMTP id
+ e8-20020a05651c038800b002d07b539330mr3915736ljp.14.1707335881131; Wed, 07 Feb
+ 2024 11:58:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=twmbx02.aspeed.com;
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX02.aspeed.com
+References: <20240207163812.3231697-1-alex.bennee@linaro.org>
+ <20240207163812.3231697-8-alex.bennee@linaro.org>
+In-Reply-To: <20240207163812.3231697-8-alex.bennee@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Wed, 7 Feb 2024 12:57:50 -0700
+Message-ID: <CANCZdfqNka9Ro50BcGAXhVU00bjUpsSjNSe8F00-053cBHmrzA@mail.gmail.com>
+Subject: Re: [PATCH v2 07/14] test-util-filemonitor: Adapt to the FreeBSD
+ inotify rename semantics
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Chris Wulff <crwulff@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Bin Meng <bin.meng@windriver.com>, 
+ Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
+ Marek Vasut <marex@denx.de>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Beraldo Leal <bleal@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Max Filippov <jcmvbkbc@gmail.com>, Ed Maste <emaste@freebsd.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Li-Wen Hsu <lwhsu@freebsd.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Kyle Evans <kevans@freebsd.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000b5201a0610d01c93"
+Received-SPF: none client-ip=2a00:1450:4864:20::22e;
+ envelope-from=wlosh@bsdimp.com; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,99 +103,153 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the previous design of ASPEED SOCs QEMU model, it set the boot
-address at "0" which was the hardcode setting for ast10x0, ast2600,
-ast2500 and ast2400.
+--000000000000b5201a0610d01c93
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-According to the design of ast2700, it has bootmcu which is used for
-executing SPL and initialize DRAM, then, CPUs(cortex-a35)
-execute u-boot, kernel and rofs. QEMU will only support CPU(cortex-a35)
-parts and the boot address is "0x4 00000000" for ast2700.
-Therefore, fixed hardcode boot address 0.
+On Wed, Feb 7, 2024 at 9:38=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linaro=
+.org> wrote:
 
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/arm/aspeed.c             | 4 +++-
- hw/arm/aspeed_ast2400.c     | 4 ++--
- hw/arm/aspeed_ast2600.c     | 2 +-
- include/hw/arm/aspeed_soc.h | 2 --
- 4 files changed, 6 insertions(+), 6 deletions(-)
+> From: Ilya Leoshkevich <iii@linux.ibm.com>
+>
+> Unlike on Linux, on FreeBSD renaming a file when the destination
+> already exists results in an IN_DELETE event for that existing file:
+>
+>     $ FILEMONITOR_DEBUG=3D1 build/tests/unit/test-util-filemonitor
+>     Rename /tmp/test-util-filemonitor-K13LI2/fish/one.txt ->
+> /tmp/test-util-filemonitor-K13LI2/two.txt
+>     Event id=3D200000000 event=3D2 file=3Done.txt
+>     Queue event id 200000000 event 2 file one.txt
+>     Queue event id 100000000 event 2 file two.txt
+>     Queue event id 100000002 event 2 file two.txt
+>     Queue event id 100000000 event 0 file two.txt
+>     Queue event id 100000002 event 0 file two.txt
+>     Event id=3D100000000 event=3D0 file=3Dtwo.txt
+>     Expected event 0 but got 2
+>
+> This difference in behavior is not expected to break the real users, so
+> teach the test to accept it.
+>
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 06d863958b..39758557be 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -289,12 +289,14 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
-                                     uint64_t rom_size)
- {
-     AspeedSoCState *soc = bmc->soc;
-+    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
- 
-     memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
-                            &error_abort);
-     memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
-                                         &bmc->boot_rom, 1);
--    write_boot_rom(blk, ASPEED_SOC_SPI_BOOT_ADDR, rom_size, &error_abort);
-+    write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT],
-+                   rom_size, &error_abort);
- }
- 
- void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index 95da85fee0..d125886207 100644
---- a/hw/arm/aspeed_ast2400.c
-+++ b/hw/arm/aspeed_ast2400.c
-@@ -26,7 +26,7 @@
- #define ASPEED_SOC_IOMEM_SIZE       0x00200000
- 
- static const hwaddr aspeed_soc_ast2400_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  =  ASPEED_SOC_SPI_BOOT_ADDR,
-+    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
-     [ASPEED_DEV_IOMEM]  = 0x1E600000,
-     [ASPEED_DEV_FMC]    = 0x1E620000,
-     [ASPEED_DEV_SPI1]   = 0x1E630000,
-@@ -61,7 +61,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
- };
- 
- static const hwaddr aspeed_soc_ast2500_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
-+    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
-     [ASPEED_DEV_IOMEM]  = 0x1E600000,
-     [ASPEED_DEV_FMC]    = 0x1E620000,
-     [ASPEED_DEV_SPI1]   = 0x1E630000,
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index f74561ecdc..174be53770 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -22,7 +22,7 @@
- #define ASPEED_SOC_DPMCU_SIZE       0x00040000
- 
- static const hwaddr aspeed_soc_ast2600_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
-+    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
-     [ASPEED_DEV_SRAM]      = 0x10000000,
-     [ASPEED_DEV_DPMCU]     = 0x18000000,
-     /* 0x16000000     0x17FFFFFF : AHB BUS do LPC Bus bridge */
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 5ab0902da0..bf43ad8351 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -224,8 +224,6 @@ enum {
-     ASPEED_DEV_FSI2,
- };
- 
--#define ASPEED_SOC_SPI_BOOT_ADDR 0x0
--
- qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
- bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp);
- void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr);
--- 
-2.25.1
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 
+
+Suggested-by: Daniel P. Berrange <berrange@redhat.com>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Message-Id: <20240206002344.12372-4-iii@linux.ibm.com>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  tests/unit/test-util-filemonitor.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/tests/unit/test-util-filemonitor.c
+> b/tests/unit/test-util-filemonitor.c
+> index a22de275955..02e67fc96ac 100644
+> --- a/tests/unit/test-util-filemonitor.c
+> +++ b/tests/unit/test-util-filemonitor.c
+> @@ -360,6 +360,14 @@ test_file_monitor_events(void)
+>          { .type =3D QFILE_MONITOR_TEST_OP_EVENT,
+>            .filesrc =3D "one.txt", .watchid =3D &watch4,
+>            .eventid =3D QFILE_MONITOR_EVENT_DELETED },
+> +#ifdef __FreeBSD__
+> +        { .type =3D QFILE_MONITOR_TEST_OP_EVENT,
+> +          .filesrc =3D "two.txt", .watchid =3D &watch0,
+> +          .eventid =3D QFILE_MONITOR_EVENT_DELETED },
+> +        { .type =3D QFILE_MONITOR_TEST_OP_EVENT,
+> +          .filesrc =3D "two.txt", .watchid =3D &watch2,
+> +          .eventid =3D QFILE_MONITOR_EVENT_DELETED },
+> +#endif
+>          { .type =3D QFILE_MONITOR_TEST_OP_EVENT,
+>            .filesrc =3D "two.txt", .watchid =3D &watch0,
+>            .eventid =3D QFILE_MONITOR_EVENT_CREATED },
+> --
+> 2.39.2
+>
+>
+
+--000000000000b5201a0610d01c93
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 7, 2024 at 9:38=E2=80=AFA=
+M Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.benne=
+e@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">From: Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com"=
+ target=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
+<br>
+Unlike on Linux, on FreeBSD renaming a file when the destination<br>
+already exists results in an IN_DELETE event for that existing file:<br>
+<br>
+=C2=A0 =C2=A0 $ FILEMONITOR_DEBUG=3D1 build/tests/unit/test-util-filemonito=
+r<br>
+=C2=A0 =C2=A0 Rename /tmp/test-util-filemonitor-K13LI2/fish/one.txt -&gt; /=
+tmp/test-util-filemonitor-K13LI2/two.txt<br>
+=C2=A0 =C2=A0 Event id=3D200000000 event=3D2 file=3Done.txt<br>
+=C2=A0 =C2=A0 Queue event id 200000000 event 2 file one.txt<br>
+=C2=A0 =C2=A0 Queue event id 100000000 event 2 file two.txt<br>
+=C2=A0 =C2=A0 Queue event id 100000002 event 2 file two.txt<br>
+=C2=A0 =C2=A0 Queue event id 100000000 event 0 file two.txt<br>
+=C2=A0 =C2=A0 Queue event id 100000002 event 0 file two.txt<br>
+=C2=A0 =C2=A0 Event id=3D100000000 event=3D0 file=3Dtwo.txt<br>
+=C2=A0 =C2=A0 Expected event 0 but got 2<br>
+<br>
+This difference in behavior is not expected to break the real users, so<br>
+teach the test to accept it.<br></blockquote><div><br></div><div>Reviewed-b=
+y: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;=
+</div><div><br></div><div><br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+Suggested-by: Daniel P. Berrange &lt;<a href=3D"mailto:berrange@redhat.com"=
+ target=3D"_blank">berrange@redhat.com</a>&gt;<br>
+Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com" ta=
+rget=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
+Message-Id: &lt;<a href=3D"mailto:20240206002344.12372-4-iii@linux.ibm.com"=
+ target=3D"_blank">20240206002344.12372-4-iii@linux.ibm.com</a>&gt;<br>
+Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.or=
+g" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0tests/unit/test-util-filemonitor.c | 8 ++++++++<br>
+=C2=A01 file changed, 8 insertions(+)<br>
+<br>
+diff --git a/tests/unit/test-util-filemonitor.c b/tests/unit/test-util-file=
+monitor.c<br>
+index a22de275955..02e67fc96ac 100644<br>
+--- a/tests/unit/test-util-filemonitor.c<br>
++++ b/tests/unit/test-util-filemonitor.c<br>
+@@ -360,6 +360,14 @@ test_file_monitor_events(void)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ .type =3D QFILE_MONITOR_TEST_OP_EVENT,<=
+br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.filesrc =3D &quot;one.txt&quot;, =
+.watchid =3D &amp;watch4,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.eventid =3D QFILE_MONITOR_EVENT_D=
+ELETED },<br>
++#ifdef __FreeBSD__<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 { .type =3D QFILE_MONITOR_TEST_OP_EVENT,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .filesrc =3D &quot;two.txt&quot;, .watc=
+hid =3D &amp;watch0,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .eventid =3D QFILE_MONITOR_EVENT_DELETE=
+D },<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 { .type =3D QFILE_MONITOR_TEST_OP_EVENT,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .filesrc =3D &quot;two.txt&quot;, .watc=
+hid =3D &amp;watch2,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .eventid =3D QFILE_MONITOR_EVENT_DELETE=
+D },<br>
++#endif<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ .type =3D QFILE_MONITOR_TEST_OP_EVENT,<=
+br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.filesrc =3D &quot;two.txt&quot;, =
+.watchid =3D &amp;watch0,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.eventid =3D QFILE_MONITOR_EVENT_C=
+REATED },<br>
+-- <br>
+2.39.2<br>
+<br>
+</blockquote></div></div>
+
+--000000000000b5201a0610d01c93--
 
