@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9452FC4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 03:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 243D6C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 03:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXYUv-0000tV-1j; Tue, 06 Feb 2024 22:21:17 -0500
+	id 1rXYVK-00019R-46; Tue, 06 Feb 2024 22:21:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXYUt-0000t5-Bt
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:21:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXYUr-0007PL-5K
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:21:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707276072;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=I8P++wokhLYvdZnN/0j1AcWSUh+yIkQj0FrsycXaoRs=;
- b=X6ZY/dY3+65Y8LG9iPwPwZVxEFk7kcvAr++UEETcJCf6fbFXTWQqSGEdVlqoaIHGJxoPtY
- 9Ku60alaJnYGmicnx3REjxWkTWWIVSZq0e/H9OquvER0RvvbEDVDh4sC1tbn+uQ3CzCJFf
- IUOo2CJHYjxd+xENofDupAMq2tBOrkk=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-fd40ZFCvM4as53-aSBHzIg-1; Tue, 06 Feb 2024 22:21:10 -0500
-X-MC-Unique: fd40ZFCvM4as53-aSBHzIg-1
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-3bfde273841so96556b6e.0
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 19:21:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rXYVI-00016Z-Aa
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:21:40 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rXYVG-0007RN-0p
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:21:39 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1d8ef977f1eso1868515ad.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 19:21:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707276095; x=1707880895; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ut0mdhuOw19C4ktbIgM8zys3AStfoIFnjh+Ho8GeaVM=;
+ b=Q/cyDjaeYpLCNuxKHBMiyYF33BQIp1LdUfDQeRi+BuqLnsX8HM+HBz61MeYk8UAvHp
+ tzFJrJHCaVBSX0yZR+6WCs8BLAFGRnvHW1XWJmzJ1IJ8XKH5PcLyPc0jRcWtyfFYDifM
+ C+IdEHxbxGdf+7tJUtyvImnSqX9dmLtE9opejdnpkcV6+syfXQ4FDXRw2zzPTRtYiipF
+ k+45qx5vB/ywZgQClBAwX6ME4W4Ejxe3GvqLmElKmlYhT6h2Xz6AVLdBZTt+0YVX/76d
+ C6iLnZ75KiYUefdAcGAT2M4YX6/PuFzRsGrglG03gyqSVUPadLYIxjgIX2nNG14VFJ61
+ E80w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707276070; x=1707880870;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=I8P++wokhLYvdZnN/0j1AcWSUh+yIkQj0FrsycXaoRs=;
- b=krG7Pys6kcPEq+yL2TxbsgPNHSWno1KIqbOGbzpBkx8eGDqnOjETqLWdX2N/uiC9HY
- 1LGt9vHUJf2yoC19lUXXkPFVAO1Z2zbOE/YPLFdS7mg3Ll1Rv3Y+xdTnODnrkS4rMiEH
- JuY3tcH8jgMJSb9Fre8esmOMCvQAKyDW4q2/7hWMpaqB9sexwissrBhbVIGrwlsccgYx
- XmGMWInao2ER/ajC9mqiDhJR8yu6NWyGpQ6Ejle1PpKJ39gc9ADIUapxMtBmAbRIZKq7
- DT1e+T9Ewe8T5Ww2uhCSUokvq1ojBKJ7OSW3tq2PV0sV6L/1ODis9VK/MQ0f5Vd0lcGc
- mzQw==
-X-Gm-Message-State: AOJu0Yxqe2P88OF24ELOSBxopyET+wuQyUa09Wdl56uwRQkckH8C7biX
- 2P05T4C2Kq5NO8Yxpah5mn0hCrNMj376W51vdlAy7ymiCYm0zugsk3IPA48O9Eks8ptiu9kqvLr
- H+a2U+3pbZRHmCKPrC1+qdSKU2D5GGYvtJcpf19vHmdu9x8PIYphI
-X-Received: by 2002:a05:6358:7e14:b0:176:6149:5558 with SMTP id
- o20-20020a0563587e1400b0017661495558mr5181214rwm.1.1707276069905; 
- Tue, 06 Feb 2024 19:21:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG4S9NyeSb+igFQt271znTb1Wh5TdtzYTWr6wMlhGWEwxkk6Fo2zR69At7FtXkIAW0P2P+sFQ==
-X-Received: by 2002:a05:6358:7e14:b0:176:6149:5558 with SMTP id
- o20-20020a0563587e1400b0017661495558mr5181181rwm.1.1707276069584; 
- Tue, 06 Feb 2024 19:21:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707276095; x=1707880895;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ut0mdhuOw19C4ktbIgM8zys3AStfoIFnjh+Ho8GeaVM=;
+ b=AbqjlynlOfqn0ubW4XhzhlIpJln8ts+GnGVldw0+YmI8u8V3WBHptYhEYAz53BU5Uh
+ /lZ1hup31NFo61Rsr2s7V1jLIJIhRD8EuZYvEGpnHbmQp2nGjdp33DCRmqFHt0OJ6fR+
+ Bp5V4eKdnEbr0mSUtwdE3eEPqe3ZbbKIpfE5/MStdSJ0Yr862OEZUdONlnUWMmK34gy1
+ pPhns+mCT4GIAqI+PPKFATnkHy5O5Pp/bmxSfO7XSmfpsRb4jH66W2uNgSJeYBpcdKDd
+ rubQZTTbCYxHS4VJNYU9KIox4cdsx14iPbk/+R40OZGGOxi6YfixoYCDOSbmqiVFXjz8
+ e2BQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXd704DDHmrD4JbygLyd4INq2k9t/vcZxfIdWA+7tuNmc78EmyuXxRgqJg1DPmNth3kwJqugCnxhAw4RipBejjT6ko86qSXJN4lvvyayAmF+MdQHXp9qyrhKRq79wOa8PTX2M8KU+fEj7wFl7DjsPrClFqk5/UGwgvAHnYPRDaeaTviVtVRykTFsJD9uSLAiK7KYKUGyEMWK2NKOp9r4a2pA9dQAmdDmcUaIaW57S5sHggwrgZDTQ8ojpU1PJG8YXQsUbsiy782RvsTJsXW0XFAeD5AAaOI5nSTLLjhzD58fPg14y74XHSPvxgG69/vdIRyLlc+hql2zmiMFzEZ2E5SK1mHNX1MLPQS3eYgYFotWIJVmlCthPDP0cvUaYj1AA6AeC/kLibClKKZQpbxJp1rdOahjPXCUQlq1mmzK415OJ2gp1p9soqdzzIP9soeuOc2YD3OnysuhIJ7xiCj08BMkSVmfHQ2Oqdd9lJqIoFtrzCt4ACIcRlStDZfpgepIlorRsS2nPGSIXWJfWezJw9w/l/5NFLRlxTFv9JscqKAFhwSQayKQQAYYuQJHqFX5d4BSsXW+gV1VHzJ3G2i83q+aT4fk5izB3Mr6H6/hyL+FbdvI7GCd5UToF7TQ0YaqJPZfWbdBV26TlLcb+IfMTJ81xr1o9oR1Tkl1UuHwnZCQs9bKdvrkBWyBLmgFsZ2bVypEa8P3ncYsxI98jUtAFH5MR+G8qCdvxnniyA8hfXuzmMngW433oXm+pKizwxMwyU4QXrp4smpydXlYQpJgik=
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- t19-20020a056a0021d300b006e04eff6323sm268732pfj.53.2024.02.06.19.21.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 19:21:09 -0800 (PST)
-Date: Wed, 7 Feb 2024 11:20:57 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, berrange@redhat.com,
- eblake@redhat.com, eduardo@habkost.net, fan.ni@samsung.com,
- farosas@suse.de, hreitz@redhat.com, jasowang@redhat.com,
- jiri@resnulli.us, jonathan.cameron@huawei.com, kkostiuk@redhat.com,
- kraxel@redhat.com, kwolf@redhat.com, lukasstraub2@web.de,
- marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
- michael.roth@amd.com, mst@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, philmd@linaro.org,
- pizhenwei@bytedance.com, qemu-block@nongnu.org,
- stefanb@linux.ibm.com, wangyanan55@huawei.com
-Subject: Re: [PATCH 00/15] qapi: Require member documentation (with loophole)
-Message-ID: <ZcL3GfIZj-GSLX-W@x1n>
-References: <20240205074709.3613229-1-armbru@redhat.com>
+ AJvYcCVgTd3VywSMM5mtPVVWrDP+TytiaEcde9j8XcJlO8OMst6Gc+NVETSzxwsOCfl1ejxzTauB+WKxeib2y8n2nNAaaEXzncg=
+X-Gm-Message-State: AOJu0Yyx90Z9iGSp6OIJ4qEWkjcuZmpmxHoWPr+DAAic7p6bpwUOsP8w
+ TJK7YVAFjQ16538jjpJ5yLYIalhQlDNHGLwvnUnel0/0G1OXH+cRL0w5a76WioE=
+X-Google-Smtp-Source: AGHT+IF91akSQnEnX4pWka0pmpH36P8U9BZCesYDtSsvd8rm8MxjnwV+A9yaNp7w5suZxbsBN64IcQ==
+X-Received: by 2002:a17:903:98f:b0:1d9:df9a:3e7e with SMTP id
+ mb15-20020a170903098f00b001d9df9a3e7emr3738611plb.36.1707276095005; 
+ Tue, 06 Feb 2024 19:21:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEpkHpIZYSysYCnw0ZsHoCEZa4N3/qP3s0c9+4FR5HTREM09d7t/Jy0gkrfaOi66KMbBGHLyFSSuzvXjYeZ4Kt11W2PeNr6zCl7K2Lk1r/sRKQ2nsJzW8c7VPzPmAIex2ZyqzPnhxQT+/Xtii6N75f+yyMZqPSgZg7utLmCXGyPFbgeg/2qgOMVsgnH7D1yFOlp5cDD0NohoIiDRXQmNiayT3wpfexkLV9aKdg0EqrIc0OQkYadQYcTzkN1yGiUZEvDmPv/KtlCCyDubCfvq470dXm9Nyj80Q2+SmZOohI8jp+pQ==
+Received: from [192.168.188.227] (60-242-98-186.static.tpgi.com.au.
+ [60.242.98.186]) by smtp.gmail.com with ESMTPSA id
+ r1-20020a170903410100b001d8f81ecebesm277656pld.192.2024.02.06.19.21.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Feb 2024 19:21:34 -0800 (PST)
+Message-ID: <e4db51de-a040-4c9e-93fa-64a378e4e5fa@linaro.org>
+Date: Wed, 7 Feb 2024 13:21:24 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240205074709.3613229-1-armbru@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/17] plugins: scoreboard API
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>, Alexandre Iooss
+ <erdnaxe@crans.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240206092423.3005995-1-pierrick.bouvier@linaro.org>
+ <20240206092423.3005995-6-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240206092423.3005995-6-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,15 +105,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 08:46:54AM +0100, Markus Armbruster wrote:
->     qapi/migration.json
-> 	MigrateSetParameters 1
+On 2/6/24 19:24, Pierrick Bouvier wrote:
+> We introduce a cpu local storage, automatically managed (and extended)
+> by QEMU itself. Plugin allocate a scoreboard, and don't have to deal
+> with how many cpus are launched.
+> 
+> This API will be used by new inline functions but callbacks can benefit
+> from this as well. This way, they can operate without a global lock for
+> simple operations.
+> 
+> At any point during execution, any scoreboard will be dimensioned with
+> at least qemu_plugin_num_vcpus entries.
+> 
+> New functions:
+> - qemu_plugin_scoreboard_find
+> - qemu_plugin_scoreboard_free
+> - qemu_plugin_scoreboard_new
+> 
+> In more, we define a qemu_plugin_u64, which is a simple struct holding
+> a pointer to a scoreboard, and a given offset.
+> This allows to have a scoreboard containing structs, without having to
+> bring offset for all operations on a specific field.
+> 
+> Since most of the plugins are simply collecting a sum of per-cpu values,
+> qemu_plugin_u64 directly support this operation as well.
+> 
+> New functions:
+> - qemu_plugin_u64_add
+> - qemu_plugin_u64_get
+> - qemu_plugin_u64_set
+> - qemu_plugin_u64_sum
+> New macros:
+> - qemu_plugin_scoreboard_u64
+> - qemu_plugin_scoreboard_u64_in_struct
 
-It's tls-authz.  I'll send a patch for this one.
+I think the u64 stuff should be a second patch built upon the basic scoreboard support.
 
-Thanks,
+> +/* A scoreboard is an array of values, indexed by vcpu_index */
+> +struct qemu_plugin_scoreboard {
+> +    GArray *data;
+> +};
 
--- 
-Peter Xu
+Unnecessary?  Generates an extra pointer dereference for no apparent benefit. 
+Alternately, might be useful for other data structure changes...
 
+> +/**
+> + * typedef qemu_plugin_u64 - uint64_t member of an entry in a scoreboard
+> + *
+> + * This field allows to access a specific uint64_t member in one given entry,
+> + * located at a specified offset. Inline operations expect this as entry.
+> + */
+> +typedef struct {
+> +    struct qemu_plugin_scoreboard *score;
+
+Embed the struct instead?
+
+> @@ -31,6 +31,9 @@ struct qemu_plugin_state {
+>        * but with the HT we avoid adding a field to CPUState.
+>        */
+>       GHashTable *cpu_ht;
+> +    /* Scoreboards, indexed by their addresses. */
+> +    GHashTable *scoreboards;
+
+Why a hash table?  All you want is to be able to iterate through all, and add/remove 
+easily.  Seems like QLIST from <qemu/queue.h> would be better, and the QLIST_ENTRY member 
+would make struct qemu_plugin_scoreboard useful.
+
+
+r~
 
