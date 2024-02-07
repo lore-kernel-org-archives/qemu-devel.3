@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7EBC4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 17:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E396C4829C
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 17:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXmC9-0003iR-4e; Wed, 07 Feb 2024 12:58:50 -0500
+	id 1rXmCY-0004FT-3B; Wed, 07 Feb 2024 12:59:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rXmBu-0003WY-3x; Wed, 07 Feb 2024 12:58:35 -0500
+ id 1rXmBx-0003ZB-Lh; Wed, 07 Feb 2024 12:58:39 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rXmBr-00041k-Vg; Wed, 07 Feb 2024 12:58:33 -0500
+ id 1rXmBv-000446-EO; Wed, 07 Feb 2024 12:58:36 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7FF2A4B3D5;
- Wed,  7 Feb 2024 20:59:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3BAE84B3D6;
+ Wed,  7 Feb 2024 20:59:36 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A8540763A5;
- Wed,  7 Feb 2024 20:58:23 +0300 (MSK)
-Received: (nullmailer pid 296934 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 58AFB763A6;
+ Wed,  7 Feb 2024 20:58:24 +0300 (MSK)
+Received: (nullmailer pid 296937 invoked by uid 1000);
  Wed, 07 Feb 2024 17:58:19 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 6/8] qemu-img: refresh options/--help for "commit" command
-Date: Wed,  7 Feb 2024 20:58:15 +0300
-Message-Id: <76c05bdf1bd337f75b11ea4e33d201a29aa57ecd.1707328606.git.mjt@tls.msk.ru>
+Subject: [PATCH 7/8] qemu-img: refresh options/--help for "compare" command
+Date: Wed,  7 Feb 2024 20:58:16 +0300
+Message-Id: <26f7115bd518de2b85955520ff714035ba21aee1.1707328606.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1707328606.git.mjt@tls.msk.ru>
 References: <cover.1707328606.git.mjt@tls.msk.ru>
@@ -60,55 +60,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing long options and --help output.
-
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ qemu-img.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 31c1891b43..7ff63aeea2 100644
+index 7ff63aeea2..ea3fe95169 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -1015,8 +1015,15 @@ static int img_commit(const char *cmdname, int argc, char **argv)
-     for(;;) {
+@@ -1447,9 +1447,15 @@ static int img_compare(const char *cmdname, int argc, char **argv)
+     for (;;) {
          static const struct option long_options[] = {
              {"help", no_argument, 0, 'h'},
 +            {"quiet", no_argument, 0, 'q'},
              {"object", required_argument, 0, OPTION_OBJECT},
-+            {"format", required_argument, 0, 'f'},
++            {"cache", required_argument, 0, 'T'},
              {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"cache", required_argument, 0, 't'},
-+            {"drop", no_argument, 0, 'd'},
-+            {"base", required_argument, 0, 'b'},
++            {"format", required_argument, 0, 'f'},
++            {"format2?", required_argument, 0, 'F'},
+             {"force-share", no_argument, 0, 'U'},
++            {"strict", no_argument, 0, 's'},
 +            {"progress", no_argument, 0, 'p'},
-+            {"rate", required_argument, 0, 'r'},
              {0, 0, 0, 0}
          };
-         c = getopt_long(argc, argv, ":f:ht:b:dpqr:",
-@@ -1032,7 +1039,20 @@ static int img_commit(const char *cmdname, int argc, char **argv)
+         c = getopt_long(argc, argv, ":hf:F:T:pqsU",
+@@ -1465,7 +1471,18 @@ static int img_compare(const char *cmdname, int argc, char **argv)
              unrecognized_option(cmdname, argv[optind - 1]);
              break;
          case 'h':
 -            help();
-+            cmd_help(cmdname, "[OPTIONS] FILENAME",
-+                     "Commit changes recorded in FILENAME to its base image",
-+" -q|--quiet - quiet operations\n"
-+" -f|--format FMT - specify FILENAME image format explicitly\n"
-+" --image-opts - indicates that FILENAME is a complete image specification\n"
-+"  instead of a file name (incompatible with --format)\n"
-+" -t|--cache CACHE_MODE cache mode when opening image (" BDRV_DEFAULT_CACHE ")\n"
-+" -d|--drop - skip emptying FILENAME on completion\n"
-+" -b|--base BASE_IMG - image in the backing chain to which to commit\n"
-+"  changes instead of the previous one (implies --drop)\n"
++            cmd_help(cmdname, "[OPTIONS] FILENAME1 FILENAME2",
++                     "Check if two images have the same content",
++" -q|--quiet - quiet operation\n"
++" -T|--cache - CACHE_MODE cache mode when opening images (" BDRV_DEFAULT_CACHE ")\n"
++"  instead of file names (incompatible with --format)\n"
++" -f|--format FMT - specify FILENAME1 image format explicitly\n"
++" -F|--format2? FMT - specify FILENAME2 image format explicitly\n"
++" -U|--force-share - open images in shared mode for concurrent access\n"
++" -s|--strict - strict mode, also check if sizes are equal\n"
 +" -p|--progress - show operation progress\n"
-+" -r|--rate RATE - I/O rate limit\n"
 +" --object OBJDEF - QEMU user-creatable object (eg encryption key)\n"
-+" FILENAME - name of the image file to operate on\n");
++" FILENAME1, FILENAME2 - image files to compare\n");
              break;
          case 'f':
-             fmt = optarg;
+             fmt1 = optarg;
 -- 
 2.39.2
 
