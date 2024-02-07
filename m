@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FE5C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFC1C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXnAj-0005fl-16; Wed, 07 Feb 2024 14:01:25 -0500
+	id 1rXnBh-00062C-Jd; Wed, 07 Feb 2024 14:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnAh-0005fH-DR
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:01:23 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rXnBZ-0005zT-RM
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:02:19 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnAg-0007rB-0A
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:01:23 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-33b28aadb28so752984f8f.3
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 11:01:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rXnBY-0007wy-57
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:02:17 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5602500d1a6so1192631a12.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 11:02:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707332479; x=1707937279; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wixonZyV5OoUUndRRPrkDq4cdseFQRGa3Rsi/kRysTM=;
- b=wtmjrePa8XMsx28pheNjkErBefrytlPceP9jj3fq/aeFRCamxiIpoCHT/gpDIoNMp4
- 9Ic77SnO7vCUfFN7Nc1tOC1lWKclR+wrEdO1K0+BtfVOPVP7XvE5QU7jcOhZMQDcACx0
- kZU6gIiddiB0wODQ3RVLypCreF0etCyOu0weoitKrdMu/iUehRAj4FCNtenJ4NWPpWsQ
- IHfoS/SjI47pig26L3yOqhjBmY43733GgKa14skUUkIsU1yitb7Ri3PgmHhDM9s3H3qm
- Eu5AM3a0RywXeoYalpsncbl4VHb8Tywnye51z5YEmE1Z0YX2+asRMd8e/3u5FfFnhmbL
- G6Cw==
+ d=linaro.org; s=google; t=1707332532; x=1707937332; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=m0e1Ozh26siZnoU9VGZDH09QR1A+Fe636EHreHEpzeE=;
+ b=E/x4bcqg2X7ngOvqK5teumjg+DhZdSZg34Zc0+Oc0EbTSNGN6E8gVLRLRTeMgX2Et4
+ tsMaFV/AhN7CKXG+5wlHDzkthxuDOCyLbMkmJQsyvZ7CRJGbaV6J2V3d5KzTodMWqUlX
+ r8lxm5xcm1jOEfzRmTBl5WNoiV1212hrpcdnC/LGshivNIOdpnoNw5GiktWkgP0Z0TVs
+ y11myZfYUhjQP7iOtof28InSe2/cLtvZerS6LMwJOjneEXR3nui670szXCeECFTYpvnh
+ 51bPux/PLvi0dZArSPdzPXtO/EROkWr1IhWUlkO4SHfI+SpAjmretvdqJTg/spAamhjq
+ JtMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707332479; x=1707937279;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wixonZyV5OoUUndRRPrkDq4cdseFQRGa3Rsi/kRysTM=;
- b=dm7w4zSsRudJ3rLcaHCQ+JonPOZ/Vgo5NrKMIfTsEKJ0iRTi4oWkgAK72ZkwYWP7wz
- OcU18kpqPhsV8DlllFkFbsKJPe+rnkeg47Desx3YjnnfJqPp49SdviI0bpvzCBDrBo/1
- i90ndNK0CajeCkVhbQxq0wR3777erQD3i9PoIv2bumWR7Do6lcK6CNiQ9G0qlp3OxHPK
- N1DLEXTusm+ISksvukCX7vGzzlDQvgtl8oVKDQatMDZhz1gTqKBEFRC1nw394m9r+AnV
- ocJHoVt8XO483hyBY/0E5S83FRneWRsMJC2/w5wIYHT9WcylQAbmoV6HTwpxEDQr9RvW
- Hiqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGMPnKS7PwISfEDaNUdA8XDwKMRU4WykIlEVmxatD089xOotYQvPkiplwqi5jKMIssHKdsZafsT+XfpOxOGCekSFXaHm0=
-X-Gm-Message-State: AOJu0YyOdjWRTDnMC/Ts6x/8AZHC9DpLfPCKKBeD4FXUpEaj/4uMaH6q
- +zvJ1wX1rCR7s0wIUUYfX/ANlBCbZKEECSHWMtCVZnMdOPAtNTONlihBBoGFWms=
-X-Google-Smtp-Source: AGHT+IEtt81Kg61jQVSlctjzDz6Xm1f6JoHwaUUK2zgnxZvMgsNgo6jgjTLfqs1Ls6cm34HzO/AlEQ==
-X-Received: by 2002:a5d:4850:0:b0:33b:2fba:1ea7 with SMTP id
- n16-20020a5d4850000000b0033b2fba1ea7mr4443457wrs.67.1707332479052; 
- Wed, 07 Feb 2024 11:01:19 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkbcX0XReudSQ++ZaSvnfPGlVrhtw8/5aXLAch/tvpa+ccbHWhCc3l7P7CdHSPEWn89LGz3z94bZuNm3U/NbrFOtquTvQ=
-Received: from [192.168.69.100] ([176.187.214.82])
- by smtp.gmail.com with ESMTPSA id
- s17-20020a5d4ed1000000b0033b17880eacsm2077822wrv.56.2024.02.07.11.01.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 11:01:18 -0800 (PST)
-Message-ID: <895ad330-8e43-49bd-bd92-2a7077c04ef9@linaro.org>
-Date: Wed, 7 Feb 2024 20:01:16 +0100
+ d=1e100.net; s=20230601; t=1707332532; x=1707937332;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m0e1Ozh26siZnoU9VGZDH09QR1A+Fe636EHreHEpzeE=;
+ b=eY/1K6zu/GR9KQPHrMJFu8YKK7J4BVR+SQvANuFqfty1NWxNMUBwFTpSaOvsBSfljs
+ R1B76UGMwLJR6UfT9nozalzBBagc/JEhP9gZGYc94ub/MsV8/Ddbw6aA6+t4lHS/P4G+
+ OmEGUWx0f4PcT510z+OOh9K8hCwi7Vi4igjFQNoasjuyhtWgywZk0O7xkJsWopeZ5SCc
+ d0F8gFXZfaMdYLuGQ3CVGDVveyxJ221oiIYLQtELvVHpqlzht6eOSXcOCYaYDy/vIATR
+ a9z1S9OKo+5jfc3dLY1qTa8i4toH5QBmf+ThAQWHmStzrLEwICvw7Yqey3+9Rhm0BKXY
+ lqRw==
+X-Gm-Message-State: AOJu0YyFah0sOv2L0oesv7BV4MMKmRMaXDeIClWEgOPQ/AkZqF6aHpuo
+ nWq7SzbanbokXx8B1dMAiWe9gevKv6iTOpfeCaUDeS4EW5QAMNS54nR3QcHFUy60KwZOWeaFNj4
+ UiM6YRMnN6D/I4f0oFkrUrcIHSYgzig+GmAs23asXsWxnY8VZ
+X-Google-Smtp-Source: AGHT+IEh3dpjJO6GPfLobwFhQdqVHZyMs0FaPIB/7ZpXgRUtMcoPUOr6ZmWUJeBoQTCX9D1o2lInVZIglgcUjHoSmk0=
+X-Received: by 2002:aa7:df95:0:b0:55f:39d3:6d5e with SMTP id
+ b21-20020aa7df95000000b0055f39d36d5emr4919741edy.39.1707332531715; Wed, 07
+ Feb 2024 11:02:11 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] isa: fix ISA_SUPERIO dependencies
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: shentey@gmail.com
-References: <20240207111411.115040-1-pbonzini@redhat.com>
- <20240207111411.115040-5-pbonzini@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240207111411.115040-5-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+References: <cover.1707328606.git.mjt@tls.msk.ru>
+In-Reply-To: <cover.1707328606.git.mjt@tls.msk.ru>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 7 Feb 2024 21:01:55 +0200
+Message-ID: <CAAjaMXaF3z4DriMzy+isdBZHOj4dWe-B2U0UFy2Kjk=8zwGbgA@mail.gmail.com>
+Subject: Re: [RFC/INCOMPLETE PATCH 0/8] Attempt to make qemu-img options
+ consistent and --help working
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,16 +88,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/24 12:14, Paolo Bonzini wrote:
-> ISA_SUPERIO does not provide an ISA bus, so it should not select the symbol:
-> instead it requires one.  Among its users, VT82C686 is the only one that
-> is a PCI-ISA bridge and does not already select ISA_BUS.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/isa/Kconfig | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+Hello Michael,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Such changes are long overdue. However given the complexity of
+commands and arguments, maybe it'd be a good idea to write a code
+generator for the command line interface, This way you could also
+generate --help outputs, manpages, shell completions just from the
+command line spec we'd use to generate the argv parsing routines.
 
+
+On Wed, 7 Feb 2024 at 19:58, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>
+> This is an incomplete first attempt only, there's a lot left to do.
+>
+> All the options in qemu-img is a complete mess, - no, inconsistent or
+> incomplete syntax in documentation, many undocumented options, option
+> names are used inconsistently and differently for different commands,
+> no long options exists for many short options, --help output is a huge
+> mess by its own, and the way how it all is generated is another story.
+> docs/tools/qemu-img.rst with qemu-img-opts.hx is yet another.
+>
+> I hoped to fix just an option or two, but it ended up in a large task,
+> and I need some help and discussion, hence the RFC.
+>
+> The idea is:
+>
+>  - create more or less consistent set of options between different
+>    subcommands
+>  - provide long options which can be used without figuring out which
+>    -T/-t, -f|-F|-O etc to use for which of the two images given
+>  - have qemu-img --help provide just a list of subcommands
+>  - have qemu-img COMMAND --help to describe just this subcommand
+>  - get rid of qemu-img-opts.hx, instead finish documentation in
+>    qemu-img.rst based on the actual options implemented in
+>    qemu-img.c.
+>
+> I started converting subcommands one by one, providing long options
+> and --help output.  And immediately faced some questions which needs
+> wider discussion.
+>
+>  o We have --image-opts and --target-image-opts.  Do we really need both?
+>    In my view, --image-opts should be sort of global, turning *all*
+>    filenames on this command line into complete image specifications,
+>    there's no need to have separate image-opts and --target-image-opts.
+>    Don't know what to do wrt compatibility though.  It shouldn't be made
+>    this way from the beginning.  As a possible solution, introduce a new
+>    option and deprecate current set.
+>
+>  o For conversion (convert, dd, etc), we've source and destination,
+>    so it's easy to distinguish using long options, like --source-format
+>    --target-cache etc (-t/-T -f/-F is a mess here already).  What to
+>    do with compare? --format1 --format2 is ugly, maybe --a-format and
+>    --b-format?  Maybe we can get off with --source (a) and --target (b)
+>    instead of filename1 & filename2?
+>    (--cache in this context is global for both).
+>
+>  o qemu-img convert.  It's the most messy one, and it is not really
+>    documented (nor in qemu-img.rst , eg there's nothing in there about
+>    FILENAME2, -B is difficult to understand, etc).
+>    At the very least, I'd say the options should be
+>     --source-format, --source-cache etc
+>     --target-format, --target-options
+>     --target-image-opts - this shold go IMHO
+>
+>  o check and commit - inconsistent cache flags?
+>    In convert, cache is backwards (source/target)?
+>
+> At first, I tried to have more or less common option descriptions,
+> using various parameters, variables or #defines, but in different
+> commands the same options has slightly different wording, and in
+> some option names are different, so it looks like it's best to
+> have complete text in each subcommand.
+>
+>
+> Michael Tokarev (8):
+>   qemu-img: pass current cmdname into command handlers
+>   qemu-img: refresh options/--help for "create" subcommand
+>   qemu-img: factor out parse_output_format() and use it in the code
+>    (this one has been sent in a separate patch, here it is just for completness)
+>   qemu-img: refresh options/--help for "check" command
+>   qemu-img: simplify --repair error message
+>   qemu-img: refresh options/--help for "commit" command
+>   qemu-img: refresh options/--help for "compare" command
+>   qemu-img: refresh options/--help for "convert" command
+>
+>  qemu-img.c | 352 ++++++++++++++++++++++++++++++++++-------------------
+>  1 file changed, 226 insertions(+), 126 deletions(-)
+>
+> --
+> 2.39.2
+>
+>
+
+
+-- 
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
