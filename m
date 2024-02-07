@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 862F5C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 16:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B91BBC4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 16:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXkwT-00030Z-R6; Wed, 07 Feb 2024 11:38:33 -0500
+	id 1rXkwG-0002p2-2y; Wed, 07 Feb 2024 11:38:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rXkwS-0002zp-Cx
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:32 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1rXkwE-0002oO-Eo
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:18 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rXkwP-0006CO-9M
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:32 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-33b0e5d1e89so735567f8f.0
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 08:38:28 -0800 (PST)
+ id 1rXkwC-00066r-Pq
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:18 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33aeb088324so629375f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 08:38:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707323908; x=1707928708; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707323895; x=1707928695; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z2vgt/WjJf2HA0KugTv1vBfaaG9X3Kl8endzGiNtDT8=;
- b=Rger1u/EA5hB/OPg2o7wlBnAcehbs/KAx/zLTduzfZafJEs6DB9/oc8qVhdW8kvV7c
- KO4UugWVRYcku7q5HwRZBENFfyD/LVMqFzpXexKtfs71rZn5fihPz8IC1TyqRORti0Yu
- GuQWU37dV0Qs2X54ore7gJp83PJ3El/56+ZJnSzuf32SSsKuUR0+S7X1lceR6qHTq33n
- LXGhlzfW7YTHqYqdvVsCQtBnZJ48NSfNTbv38GRYVZ7Maw7+84S2Pie1pmkgWLHfGZ+G
- 8K0kBlcaBP/yVnH5KDcFpZ5nIex+ZaQS5EJhBuA+L/bRjDy3iS1krD+fvFv3WvbG7S/y
- RYZw==
+ bh=LXky2CMDdzuIC8PBdEAHx/6nddz6mi+8QtS2LPbBGiM=;
+ b=NAQQcfYHLL2BKX1Gdad3Jl6EucdWuXbq/UfjbsidFzBrd1PKuGRMfjnysWETedfrUg
+ 3Oc4fNpGRe/pMo8itUwclDP80nX8gXUg5gem3m6oJ2rE3+zwUhSOFpgZ2sGPcXaWGZol
+ NdM0OsJLi5ekbqetvtjzZbFU0gfEVMGbihbhamKOiPdSkKrE8i0Wix3doJu4jjkgB8bS
+ 6yqJEkWguOfuAe0KBB+BPbG5Anxseje8hEAdOWHQCc7l7f8KCQ4TRGDYhJ8wfPS1E0XO
+ z6JA05PDz2Guw4Q6AfNQ+K6BCEsIyZBWKZzgy4ycS3xkFFA8jEx3szwy2+rCJCmckjW8
+ UUlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707323908; x=1707928708;
+ d=1e100.net; s=20230601; t=1707323895; x=1707928695;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z2vgt/WjJf2HA0KugTv1vBfaaG9X3Kl8endzGiNtDT8=;
- b=hKy4OYw33327U6uMpqSgVF+1S3uG+CzeNxcGpjhQ4bjjKC+r/+HMH0AamllGGsupfH
- AzzdIe9e27nNQ0K+ZNgiHEuZ3YUUu+1+YQD/hbeDEJWlUQL96FvtBDNhvwj33W07xrlo
- NRKt15zaQTMnFF4wKOGUrQlQtzJYmwh5Kz355wybuzJe2xOBTE24EuAjR/d6cmISXFE7
- mCxigxjqdE4mfn/X4L5q4oWQ5/4MELK1rsWPblsNNYRLzEhMIEyI1w0AS0SIdcILmdoH
- vsEgntxQoT3Wlxqg3J/efofWHSNJZjujr8qoYWqrXLB2MaMNxueNVrdFmiKrXXc7kABY
- cOJw==
-X-Gm-Message-State: AOJu0YzGB/d2RfBxh8BxNIUrvcu7B36tX9do7ma1ZbMI1xQ4wO3NCFiZ
- 9D+YjOkHRhNAiYSxknJrXxZDrx5/wNXEZSqR7siAUQXCpc/Dsmrxwhm1lMaV+p4=
-X-Google-Smtp-Source: AGHT+IEKKrSH9TvE15V4DeeR704L/Bk2TeAzEHO0Yq3f62/MiSfujIaWP0z45XJEoBodYKePZS99pQ==
-X-Received: by 2002:a5d:4523:0:b0:33b:1ac8:aebe with SMTP id
- j3-20020a5d4523000000b0033b1ac8aebemr4863574wra.44.1707323907793; 
- Wed, 07 Feb 2024 08:38:27 -0800 (PST)
+ bh=LXky2CMDdzuIC8PBdEAHx/6nddz6mi+8QtS2LPbBGiM=;
+ b=cyVXrI9+lZJFmcDJhGPXKiRJlSBti++p2nT2bAvfBh/SFCf5b/jI1Rg+nSLeVJLwzf
+ UOo9t4kloXV/NIQyeeyxYrloCDdfn25Zg8U8bnJiMpeBHpBlbhGZkAMw5N4N8xEZPCtv
+ iV6tX2IAwhj9JIzSbLpgR3y93f+rmtl/Fq9ojglfvaGYcDuAr+Rnc43eAzuSRNZGMAmd
+ HgqfHg8TIflBUikAI6+9LZ4VUprJcnmcAceRudpiIRpmfPpqdyN5gTo05XXEAMqltrey
+ 8RfuaXaJzyoDvHob6uwgc2UaTgUNkAJVAyCTSt6QA2EYLZk72XMQAfCqnjcj4ymt/rJ5
+ /rOA==
+X-Gm-Message-State: AOJu0YxC935s2x0GoGQ2zzFZFK7Xe7dYiQmYpwssTDI2QxBneVJI8AuN
+ D/miF4eYCFkaY2QXhSX7RWj/5q9IVI0IUqn+krByrKDoFT3PDMACuvUl4P8Re3M=
+X-Google-Smtp-Source: AGHT+IHGEvKiiXfJtsUpanJg17mF2fKs5Eih1K368Ch8Oz/fe7APF/YeZkinCz0RuMWhMjnGU/oXyQ==
+X-Received: by 2002:adf:cf10:0:b0:33b:10ca:d190 with SMTP id
+ o16-20020adfcf10000000b0033b10cad190mr4595531wrj.24.1707323895429; 
+ Wed, 07 Feb 2024 08:38:15 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgaPKcBeGwVcF6F+SJ0hnc3uIR62pO2+ap1TjSypdzohrcatPumrhMX0akevBZfKLOfqcrDRzsQIQjrFGyyNlrG7SAcJZXQMoDCcMReckIaeAV8Z//SGrX0AHMjt7RW7q2xOws8W5fKApdCc4o9woSEsq8F98zbeBAUtxWMcBOVjK3rHrxSd2ueaOT6AzEOcpkGhcBUdXtH2uy8Mo82p0Z9SJ/yivEjR5YWtfcJ2M6hnR+SBQ4YhsFWJwurXcSXeJto8KRGLlqZBuaQmLqklmhaJ128nbNu/UomVUd+29BYe9aBe9EfCaL3DL2WiOjeJUEQQ5jbddFRfsWWBWdWvDuV0fm3SqajHpb/1uNbU3NktxQVK8j4aZ+9z+H8PeNPVUytM14riF1MpNEQbs4DLmDJsNTyefVQm9VOfCjZcNBJ5Qrh/NNx8sXqn1F5QLzP/lopJCu0pkqVx/GMmeSHmBOjc//pqStLNe8s2JBtdK43q+2lLwsOvFpL4RZnG6N2X8fd5cvLUIhHyGvGm1aYvC6Wb6a27UoNoCHwmaK89VH/AST6QuZubu2FNFT31j5L9I9+bvV9CxJxZgwrt8MfuQvY2OoFqids2x2v0q1tpzyGmMX6KWNJao940ZKguac0uKBZ0+YKhKQjPS5mlM7/9vC3pXZzU+Z3GgFL9xQ+mf+OF5DxTyciLF/82OZkJ3sM6TU2CSQ4ojpE78WblY33uOt/l3Mr6k/YwoTSDlJ+ZhXBvAb5AgVBFUbBlMVyixS7wCfqP6PRnqeB77Mfm0ZbEX2YugAcUrqEnr+YccYcsthugdgLC4Q/+jBOptYfFbOktfRhhnFwW1P/JlgCtK/QJk4+tPJ1srbDPQ2k61Y
+ AJvYcCURBABIzhGa29GJYD85vS1JlzBfwWWDBHDHNWOOt+PDigk4w90BZ3LBumxAS0OFVAuoaDI4+lsk7CucyNvPbqBGgPHFsYFinOKkl294O8mFv60MgGCuy4cfDNpwcESvls/IDaLuI0xLuZGQBlceyDOcm1BtQsPS3DwPIKG1pJsY0CKXE85vkiCOC5bpv4NqsMvXlrNiH+66D4FXPhJwcAaludYFlGuXZOBw8TS5+hXHog7Y9RvVH9w+9ELXoC1WmIsTIIes1CL2f2PVsHhPrehOAtvLgyFiLJ2TY2Au27b6J3g+JqvLZ29ub+POWomgB+PZvRRHUiSMWJiyV79xsffnIeTMqpLKA7cpDE5F4FwGPreWAvQbOuURwQGIJJt1Szu/NdSEP+c66Esr/qN5KpgFBPNDAtz2lT/9snhtUuKUZGBDouVjzKZ3L24RVJMjGPfAGsbUJIBnLdIz8UTJBulXVxcHdpkKhoCz/wU0/v8QURznRA80nUFgw+iTHn8HJXQ+GALLM6tJtV6J3Eq1FOR6CBYU8TDS5Ice2wJYpkCDnciaCM8auI6l87jUoAKQ9ijqTHUjyOIuJb/fnbF5oHr/NTGKJENwmXEqPi2JCDMfzZHw7tC3nAxnjspSOP4VmYMenExo7E9CqLgFJ6OfWMMXy+uUSZIoeiPjYfH9aXhr0iVCaPTp6xPhD0ekVcwPDdT4Ju7JZ2HrqpS+p0WCKKGRKcWIioHe+C+jF7GnI/U7wwvYe604yr8Fu/G6KWhADhDIp7olwjkaVRbtCIMzmVry3dZKHrQcfb01tIExhqMdxWWhgKVOoteIuxjpO6C3GNgjB/GfazFo1yAIcZE4dgqfXCDvW2sOAczAePfKxKSSoNi6AC6DpL6QxjaITmtrmNZYo2pC
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- y16-20020a5d6150000000b0033b443a7aa7sm1829371wrt.97.2024.02.07.08.38.17
+ d11-20020adff2cb000000b0033b278cf5fesm1852878wrp.102.2024.02.07.08.38.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Feb 2024 08:38:24 -0800 (PST)
+ Wed, 07 Feb 2024 08:38:13 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5A4ED5F951;
- Wed,  7 Feb 2024 16:38:13 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 510C05F88E;
+ Wed,  7 Feb 2024 16:38:12 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -83,18 +83,19 @@ Cc: devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Li-Wen Hsu <lwhsu@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
  Kyle Evans <kevans@freebsd.org>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 13/14] gdbstub: Implement catching syscalls
-Date: Wed,  7 Feb 2024 16:38:11 +0000
-Message-Id: <20240207163812.3231697-14-alex.bennee@linaro.org>
+ Riku Voipio <riku.voipio@iki.fi>, Rabin Vincent <rabinv@axis.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH v2 02/14] docs: mark CRIS support as deprecated
+Date: Wed,  7 Feb 2024 16:38:00 +0000
+Message-Id: <20240207163812.3231697-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240207163812.3231697-1-alex.bennee@linaro.org>
 References: <20240207163812.3231697-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,196 +118,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+This might be premature but while streamlining the avocado tests I
+realised the only tests we have are "check-tcg" ones. The ageing
+fedora-cris-cross image works well enough for developers but can't be
+used in CI as we need supported build platforms to build QEMU.
 
-GDB supports stopping on syscall entry and exit using the "catch
-syscall" command. It relies on 3 packets, which are currently not
-supported by QEMU:
+Does this mean the writing is on the wall for this architecture?
 
-* qSupported:QCatchSyscalls+ [1]
-* QCatchSyscalls: [2]
-* T05syscall_entry: and T05syscall_return: [3]
-
-Implement generation and handling of these packets.
-
-[1] https://sourceware.org/gdb/current/onlinedocs/gdb.html/General-Query-Packets.html#qSupported
-[2] https://sourceware.org/gdb/current/onlinedocs/gdb.html/General-Query-Packets.html#QCatchSyscalls
-[3] https://sourceware.org/gdb/current/onlinedocs/gdb.html/Stop-Reply-Packets.html
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240202152506.279476-5-iii@linux.ibm.com>
-[AJB: GString -> g_strdup_printf]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Rabin Vincent <rabinv@axis.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20230925144854.1872513-5-alex.bennee@linaro.org>
 ---
- gdbstub/internals.h |  1 +
- gdbstub/gdbstub.c   |  9 +++++
- gdbstub/user.c      | 91 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 101 insertions(+)
+ docs/about/deprecated.rst | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index aeb0d9b5377..56b7c13b750 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -195,6 +195,7 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx); /* user */
- void gdb_handle_v_file_pread(GArray *params, void *user_ctx); /* user */
- void gdb_handle_v_file_readlink(GArray *params, void *user_ctx); /* user */
- void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx); /* user */
-+void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx); /* user */
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index d4492b94604..82922476d72 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -183,6 +183,14 @@ Nios II CPU (since 8.2)
+ The Nios II architecture is orphan. The ``nios2`` guest CPU support is
+ deprecated and will be removed in a future version of QEMU.
  
- void gdb_handle_query_attached(GArray *params, void *user_ctx); /* both */
- 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 46d752bbc2c..7e73e916bdc 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1617,6 +1617,7 @@ static void handle_query_supported(GArray *params, void *user_ctx)
-     if (gdbserver_state.c_cpu->opaque) {
-         g_string_append(gdbserver_state.str_buf, ";qXfer:auxv:read+");
-     }
-+    g_string_append(gdbserver_state.str_buf, ";QCatchSyscalls+");
- #endif
-     g_string_append(gdbserver_state.str_buf, ";qXfer:exec-file:read+");
- #endif
-@@ -1810,6 +1811,14 @@ static const GdbCmdParseEntry gdb_gen_set_table[] = {
-         .schema = "l0"
-     },
- #endif
-+#if defined(CONFIG_USER_ONLY)
-+    {
-+        .handler = gdb_handle_set_catch_syscalls,
-+        .cmd = "CatchSyscalls:",
-+        .cmd_startswith = 1,
-+        .schema = "s0",
-+    },
-+#endif
- };
- 
- static void handle_gen_query(GArray *params, void *user_ctx)
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 2ba01c17faf..14918d1a217 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -10,6 +10,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/bitops.h"
- #include "qemu/cutils.h"
- #include "qemu/sockets.h"
- #include "exec/hwaddr.h"
-@@ -21,11 +22,20 @@
- #include "trace.h"
- #include "internals.h"
- 
-+#define GDB_NR_SYSCALLS 1024
-+typedef unsigned long GDBSyscallsMask[BITS_TO_LONGS(GDB_NR_SYSCALLS)];
++CRIS CPU architecture (since 9.0)
++'''''''''''''''''''''''''''''''''
 +
- /* User-mode specific state */
- typedef struct {
-     int fd;
-     char *socket_path;
-     int running_state;
-+    /*
-+     * Store syscalls mask without memory allocation in order to avoid
-+     * implementing synchronization.
-+     */
-+    bool catch_all_syscalls;
-+    GDBSyscallsMask catch_syscalls_mask;
- } GDBUserState;
++The CRIS architecture was pulled from Linux in 4.17 and the compiler
++is no longer packaged in any distro making it harder to run the
++``check-tcg`` tests. Unless we can improve the testing situation there
++is a chance the code will bitrot without anyone noticing.
++
  
- static GDBUserState gdbserver_user_state;
-@@ -503,10 +513,91 @@ void gdb_syscall_handling(const char *syscall_packet)
-     gdb_handlesig(gdbserver_state.c_cpu, 0);
- }
- 
-+static bool should_catch_syscall(int num)
-+{
-+    if (gdbserver_user_state.catch_all_syscalls) {
-+        return true;
-+    }
-+    if (num < 0 || num >= GDB_NR_SYSCALLS) {
-+        return false;
-+    }
-+    return test_bit(num, gdbserver_user_state.catch_syscalls_mask);
-+}
-+
- void gdb_syscall_entry(CPUState *cs, int num)
- {
-+    if (should_catch_syscall(num)) {
-+        g_autofree char *reason = g_strdup_printf("syscall_entry:%x;", num);
-+        gdb_handlesig_reason(cs, gdb_target_sigtrap(), reason);
-+    }
- }
- 
- void gdb_syscall_return(CPUState *cs, int num)
- {
-+    if (should_catch_syscall(num)) {
-+        g_autofree char *reason = g_strdup_printf("syscall_return:%x;", num);
-+        gdb_handlesig_reason(cs, gdb_target_sigtrap(), reason);
-+    }
-+}
-+
-+void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx)
-+{
-+    const char *param = get_param(params, 0)->data;
-+    GDBSyscallsMask catch_syscalls_mask;
-+    bool catch_all_syscalls;
-+    unsigned int num;
-+    const char *p;
-+
-+    /* "0" means not catching any syscalls. */
-+    if (strcmp(param, "0") == 0) {
-+        gdbserver_user_state.catch_all_syscalls = false;
-+        memset(gdbserver_user_state.catch_syscalls_mask, 0,
-+               sizeof(gdbserver_user_state.catch_syscalls_mask));
-+        gdb_put_packet("OK");
-+        return;
-+    }
-+
-+    /* "1" means catching all syscalls. */
-+    if (strcmp(param, "1") == 0) {
-+        gdbserver_user_state.catch_all_syscalls = true;
-+        gdb_put_packet("OK");
-+        return;
-+    }
-+
-+    /*
-+     * "1;..." means catching only the specified syscalls.
-+     * The syscall list must not be empty.
-+     */
-+    if (param[0] == '1' && param[1] == ';') {
-+        catch_all_syscalls = false;
-+        memset(catch_syscalls_mask, 0, sizeof(catch_syscalls_mask));
-+        for (p = &param[2];; p++) {
-+            if (qemu_strtoui(p, &p, 16, &num) || (*p && *p != ';')) {
-+                goto err;
-+            }
-+            if (num >= GDB_NR_SYSCALLS) {
-+                /*
-+                 * Fall back to reporting all syscalls. Reporting extra
-+                 * syscalls is inefficient, but the spec explicitly allows it.
-+                 * Keep parsing in case there is a syntax error ahead.
-+                 */
-+                catch_all_syscalls = true;
-+            } else {
-+                set_bit(num, catch_syscalls_mask);
-+            }
-+            if (!*p) {
-+                break;
-+            }
-+        }
-+        gdbserver_user_state.catch_all_syscalls = catch_all_syscalls;
-+        if (!catch_all_syscalls) {
-+            memcpy(gdbserver_user_state.catch_syscalls_mask,
-+                   catch_syscalls_mask, sizeof(catch_syscalls_mask));
-+        }
-+        gdb_put_packet("OK");
-+        return;
-+    }
-+
-+err:
-+    gdb_put_packet("E00");
- }
+ System emulator machines
+ ------------------------
 -- 
 2.39.2
 
