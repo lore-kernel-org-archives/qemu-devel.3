@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B730C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7DDC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXdVa-0004Ly-55; Wed, 07 Feb 2024 03:42:19 -0500
+	id 1rXdam-0006Rq-VW; Wed, 07 Feb 2024 03:47:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXdVV-0004HY-OD
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:42:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXdVU-0001zN-6O
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:42:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707295331;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9euMdI1JentFYHbJTWpDyc7H7JzSg9DiYjcStOMDP+U=;
- b=TUm59PmLPmEA5we/hbeI52PXzA3U1X80MYPNKHZLFOyq7UZAwoEA759TGyuEd6ASxGnPcY
- /1khDxN28eS1WSAztw+Co/o1xsFKEXCqM5XC0SoWALMVEn+nrwFZ7aFC9dAp6X/llsG5P7
- jJQxXIAh/nbwCf6om9GwWhIgULULJ0g=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-DZdxH055P_KAsFTEia5QxA-1; Wed, 07 Feb 2024 03:42:09 -0500
-X-MC-Unique: DZdxH055P_KAsFTEia5QxA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D5A4F101FA2A;
- Wed,  7 Feb 2024 08:42:08 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.54])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3044EAC1A;
- Wed,  7 Feb 2024 08:42:05 +0000 (UTC)
-Date: Wed, 7 Feb 2024 08:42:03 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, eblake@redhat.com,
- eduardo@habkost.net, fan.ni@samsung.com, farosas@suse.de,
- hreitz@redhat.com, jasowang@redhat.com, jiri@resnulli.us,
- jonathan.cameron@huawei.com, kkostiuk@redhat.com, kraxel@redhat.com,
- kwolf@redhat.com, lukasstraub2@web.de, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
- pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
- philmd@linaro.org, pizhenwei@bytedance.com, qemu-block@nongnu.org,
- stefanb@linux.ibm.com, wangyanan55@huawei.com
-Subject: Re: [PATCH 15/15] qapi: Add missing union tag documentation
-Message-ID: <ZcNCW-j9mC2v2qwv@redhat.com>
-References: <20240205074709.3613229-1-armbru@redhat.com>
- <20240205074709.3613229-16-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdaj-0006RW-9E
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:47:37 -0500
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdag-0003Ez-0P
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:47:36 -0500
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2d094bc2244so3637821fa.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 00:47:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707295651; x=1707900451; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=E81wdmjqVBdZnfYE3yph211KNjmHI7u3Z6Id1C6xguY=;
+ b=T4wqb5csRyYAEmB2AGWKDwqD2o02BpraO0PD93TgxZYlpPuc7k+lNwj1lADvHKfdBS
+ EQrrYquTZC+pgDGjE9SbwlW9F3zzCXejoXYfX2hSLNZ8wFS62xy+YLwulbelpYK6AvSe
+ CA9wTyC1mBcueyhygvjfKqzra0vbyHpR2Dh4/zTx7NhWlfSeFligNoG6fyXmj5lIVDQv
+ YN+lRtrvtwVcN9uqR9Fv1/qNT9Y+GAzhfTTK27GMuSABSNh0KyIfI+mEkRzcfMJMcKIy
+ YITfELApEQarpFFk33xm1XwIZcQGLtcdJynfDGGLltcVn/osuinQMqj3AxNBb+qoErl/
+ iHCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707295651; x=1707900451;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=E81wdmjqVBdZnfYE3yph211KNjmHI7u3Z6Id1C6xguY=;
+ b=LcVcPa0uLfKQkxklpV0XT36Xu9ZUWx6IdZfXJykRLUG6oPsueKhniRBptVCZsOtLFL
+ 3ZhLTg1skpLZ1gV0wglYPMx0Qi5XC/uCCSp3tlZ6+VzdGJc6/HesDx+4RO7CIxmNns1A
+ 6pCB8bITJIREfvlIakbFqfJsV8CdG1vPMCKC3KpdD5JRcjlZWAH/fQvk+SNfZdGri0SB
+ zLn9kJTIriHKrn53IFANoMXiKl0A67kCavOF6zTb4fLAfwLSTPgaB8htpFm76WD0QV/v
+ B/h3ngBGw5XohkfKCkpQp7HXasI7yjyZnwJ19cJTf6wOBPkmCeYcToDfWfhZD+L7cpHk
+ XPtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0Ss/82sKmlT4NC9RU6v2qNOW9sp0NxsglJJr/9vDUc8v+eB8z/1YNuK0G1Wj0R09VP2qq+fDeQwMjODqDmiQEOha+YPw=
+X-Gm-Message-State: AOJu0Yz0NeTvSGdl2Av68+W2uhmgAZ0QEfeBWN9rUB8/6orPXtbhTUmu
+ QO1pyasOWdkqr8flIAUacnE81RQUAszF04pelHgmf6vbC1irZjOBls/O1877d3M=
+X-Google-Smtp-Source: AGHT+IHlvzGTdzHrCt5ATjsTqnCTbOoACEag8ibHuoBhgnv6K04g8Np3Mfx4OnZNtTlaRooX8lhkag==
+X-Received: by 2002:a2e:9902:0:b0:2d0:a0a6:9a3f with SMTP id
+ v2-20020a2e9902000000b002d0a0a69a3fmr3350192lji.38.1707295651016; 
+ Wed, 07 Feb 2024 00:47:31 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXt5M54f3CK4fBcRsfahFI8PfbJLdTJuzUiNk43BuPJ+0SzinSgk/aWj288kMNiwykUIqWrMfm8JD7ymJ3AzOaePiA0xYiHQwsoJb1OoK40FPt4rzxb+RJrOp4=
+Received: from [192.168.69.100] ([176.176.170.22])
+ by smtp.gmail.com with ESMTPSA id
+ g13-20020a056402428d00b0055c82e27412sm443612edc.75.2024.02.07.00.47.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Feb 2024 00:47:30 -0800 (PST)
+Message-ID: <76017b2e-f519-480e-8ad5-b45fda1670d3@linaro.org>
+Date: Wed, 7 Feb 2024 09:47:28 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240205074709.3613229-16-armbru@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/13] hw/misc/mps2-scc: Factor out which-board
+ conditionals
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240206132931.38376-1-peter.maydell@linaro.org>
+ <20240206132931.38376-7-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240206132931.38376-7-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,38 +96,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 08:47:09AM +0100, Markus Armbruster wrote:
-> Low-hanging fruit, and except for StatsFilter, the only members of
-> these unions lacking documentation.
+On 6/2/24 14:29, Peter Maydell wrote:
+> The MPS SCC device has a lot of different flavours for the various
+> different MPS FPGA images, which look mostly similar but have
+> differences in how particular registers are handled.  Currently we
+> deal with this with a lot of open-coded checks on scc_partno(), but
+> as we add more board types this is getting a bit hard to read.
 > 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Factor out the conditions into some functions which we can
+> give more descriptive names to.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  qapi/block-core.json   | 12 ++++++++++++
->  qapi/block-export.json |  2 ++
->  qapi/char.json         |  2 ++
->  qapi/crypto.json       |  2 ++
->  qapi/machine.json      |  4 ++++
->  qapi/migration.json    |  2 ++
->  qapi/pragma.json       | 16 ----------------
->  qapi/sockets.json      |  2 ++
->  qapi/stats.json        |  2 ++
->  qapi/transaction.json  |  2 ++
->  qapi/ui.json           |  2 ++
->  qapi/yank.json         |  2 ++
->  12 files changed, 34 insertions(+), 16 deletions(-)
+>   hw/misc/mps2-scc.c | 45 +++++++++++++++++++++++++++++++--------------
+>   1 file changed, 31 insertions(+), 14 deletions(-)
+> 
+> diff --git a/hw/misc/mps2-scc.c b/hw/misc/mps2-scc.c
+> index 6c1b1cd3795..02a80bacd71 100644
+> --- a/hw/misc/mps2-scc.c
+> +++ b/hw/misc/mps2-scc.c
+> @@ -59,6 +59,30 @@ static int scc_partno(MPS2SCC *s)
+>       return extract32(s->id, 4, 8);
+>   }
+>   
+> +/* Is CFG_REG2 present? */
+> +static bool have_cfg2(MPS2SCC *s)
+> +{
+> +    return scc_partno(s) == 0x524 || scc_partno(s) == 0x547;
+> +}
+> +
+> +/* Is CFG_REG3 present? */
+> +static bool have_cfg3(MPS2SCC *s)
+> +{
+> +    return scc_partno(s) != 0x524 && scc_partno(s) != 0x547;
+> +}
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Looking at next patch and nitpicking, if we want to avoid
+a switch() case use, this style is easier to review IMHO:
 
+    static bool have_cfg2(MPS2SCC *s)
+    {
+        return    scc_partno(s) == 0x524
+               || scc_partno(s) == 0x547;
+    }
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Anyway, already R-b.
 
