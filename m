@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5F6C48297
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 02:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAAA4C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 02:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXXOY-00026H-1j; Tue, 06 Feb 2024 21:10:38 -0500
+	id 1rXXhJ-0004yZ-3P; Tue, 06 Feb 2024 21:30:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXXOT-00025Z-K9
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:10:33 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXXOG-0000BV-3f
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:10:33 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-5d8b519e438so84710a12.1
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 18:10:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707271818; x=1707876618; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EVQKN/Pi5kHdlmu4AcjjVSVeVN6r0rU/9RwRvbWg3Z0=;
- b=edNGb1audfszmPie/yYSY3G2FTJE+JiWgGu/TPZ0O1sfEv1LfdbvHWvUE5cGkFKf8X
- g6oQTpiB8txZNUXzLTGxwbm2TCKHZYSpSXfOh4rT1xLyZ8KtNaRC/zYOs7CXrdHIpwdV
- 9rRNaPleTjiTGgMitVw8MSaxsXHfhoxlULJdFz8Zj6H2g8q5oYx5366SRUArwrCFFPAu
- UfgrEO5fwjKFE4Nb259BL+Vxv+wF1dcvoP79+5Z4S70ZRQdpmf2iao1r1ID5hggrBAtm
- jtXjNwSLtBwvUJrS4AVNHzONSJzatoFvv3PgR1dWF2d5z/RnmcMY6i8ii3QCTVSn1bkI
- gEGA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXXhG-0004yI-8N
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:29:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXXhE-0003rJ-Bq
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:29:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707272995;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FHKoqWeCkfwWmqm4OjvcEjLYYI3Y6rD+/+1+wEjf/so=;
+ b=bhhXcTuY4ykeHKTVEoggbTu+xvNGbsodDqMTwc3geOfOWLHooGpsBbjm3Fx1PCl2xjqrjz
+ /tfr6xd5tBAOSjbpuf4HdZZKWgx2xVcPRwp5pBIMTzMxQXtjPy5LEyluQ0srxb1TqbYvi1
+ 4rTNABart/k3jm0qas1ouA5JX+DsuiY=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-529-UhjJPBmOOAKW_hQ5b-9G6Q-1; Tue, 06 Feb 2024 21:29:53 -0500
+X-MC-Unique: UhjJPBmOOAKW_hQ5b-9G6Q-1
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-6e02f10287cso57915b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 18:29:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707271818; x=1707876618;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EVQKN/Pi5kHdlmu4AcjjVSVeVN6r0rU/9RwRvbWg3Z0=;
- b=cspoOc8K/OvEB5qJQi/Il6ZsrB8kwR0cExt2CKocjV2EVUcxw/apSlx0j1SPgmmAc5
- IMsHNuMdCh0CHRfEU+/83TQLNKBjdFSlJMOy/LU9r14ZRIVCx8JmRFnjXRWhpWzmCuOp
- V2AMgYqq0rKktpOY00wQ2X8sVrMFN4OS9WtA5NpNRaUOyBhwg1WEjjS7hDesGzI/jpAz
- wtXhKVczmOJfqEIVvxlCU0P2xZYzaSesakNbHca14bwcuOTgJVwMrojpO8wXCKaUcO2b
- prsGH63CyCuNA6PwxUGfEc87RNQk0zgUG3J7EmbJt8S2HRDsqa64PRI+tRibcnrb9MRy
- CWMA==
-X-Gm-Message-State: AOJu0Yy+NZF3Zgiy6iLrXzdbkH00iin/g8muMiBZd6+Hkc0E/mUhIYAm
- QiaaQQ5CxTg5EYE6+289U2NgE57/HApRuGPIQGc6tCTy4O498mYu11t55/f+kX0=
-X-Google-Smtp-Source: AGHT+IEygj9i+Mow0bgAwAORug8a3JjkCSd976MJ4bJwepFgX6NB3iRkgZtwoDaX3URQQ2jjIkbgyQ==
-X-Received: by 2002:a05:6a21:2d86:b0:19e:9f2d:9818 with SMTP id
- ty6-20020a056a212d8600b0019e9f2d9818mr2058491pzb.57.1707271818288; 
- Tue, 06 Feb 2024 18:10:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707272992; x=1707877792;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FHKoqWeCkfwWmqm4OjvcEjLYYI3Y6rD+/+1+wEjf/so=;
+ b=RWM1YwMwpcyyBkoR4zXGX1z1PnbC5WG93ewtp33F2FRCGJD2o8m6K/mdaN4uM3HGtH
+ pLM/RWuvgTc+Dvg6kH3NmwW74Pq3tCSrZDEACbs3tfDBHO7Lybq6CAdSYOQuj71rDqQ3
+ bpkpIUQ6pSgSWGWihUm80s/T2Tkk8sIExFuoZ2aUtimOT59l9d/MPFGsxgF7+76WpI2K
+ Z/cn0QpCkdgjpUxAsQBMCDG8cJasA4e638DVY+eA3IFQPD/mPATUFRqFJhXXzyFfviIu
+ vEIPNSnQpHZrDEiyayW7/xZWPmIMpUo8hHgY6mNyxeDeUxcC0TzJVFlaUiHYYOGkhVmH
+ xuUQ==
+X-Gm-Message-State: AOJu0Yw/BiQNMNybp5dNSPooENE9C0OWxTdQeEDTKxGLN/818ppirbLp
+ nSfZ2Gc+WUqkiZ65u6VYs8gFC9W2acIDQ5o2SVrGFy2QhKJ1yz3bCgWzFISEdD5WiyKLbW+vHVJ
+ Vhx5jt/Ce7SbrvB77HwRSw9luLp5O9+X3ZmYkxkvzdHceRqqPiZVm
+X-Received: by 2002:a05:6a21:7896:b0:19e:5c91:1f64 with SMTP id
+ bf22-20020a056a21789600b0019e5c911f64mr4664808pzc.1.1707272992242; 
+ Tue, 06 Feb 2024 18:29:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHgtrQdnOSyhAsXuOiOwlS8kin6h9Ru1nYLi7SnkTO9LQ1i6VEwBoAYywixIV5ziu+cZith0Q==
+X-Received: by 2002:a05:6a21:7896:b0:19e:5c91:1f64 with SMTP id
+ bf22-20020a056a21789600b0019e5c911f64mr4664793pzc.1.1707272991865; 
+ Tue, 06 Feb 2024 18:29:51 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWd85tV07kuOwngxEoHDV0qR2G6YXMBmCgv63M3LBtxbcU6Tb4QkXxuUglNFeOJy/kh2G3T/zlKp5jz4UQRf9TdpjpFby/LCo7PRRx1KTeOFc5R2wCW/ZKZZVCnBAd2
-Received: from [192.168.188.227] (60-242-98-186.static.tpgi.com.au.
- [60.242.98.186]) by smtp.gmail.com with ESMTPSA id
- sl12-20020a17090b2e0c00b0029649f4ceb9sm244090pjb.54.2024.02.06.18.10.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 18:10:17 -0800 (PST)
-Message-ID: <4fee3af5-eeab-42b8-b5e0-1f36235ebc3d@linaro.org>
-Date: Wed, 7 Feb 2024 12:10:11 +1000
+ AJvYcCVy6R0VQgpZsCTuBUeT8qjmi23bQrCo6q3CO8dR/uJdIGpfSF7FGQgeSCQs85Bpf+8+mE2dZ3aOMP0S2sdA8jEpILiF3BcxQsWZb5K7n2GA8snlcGxU0dE=
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ mi14-20020a170902fcce00b001d8e41b3f95sm233436plb.51.2024.02.06.18.29.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Feb 2024 18:29:51 -0800 (PST)
+Date: Wed, 7 Feb 2024 10:29:43 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH v3 0/6] migration/multifd: Fix channel creation vs.
+ cleanup races
+Message-ID: <ZcLrF5HN920rUTSw@x1n>
+References: <20240206215118.6171-1-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] linux-user/aarch64: Extend PR_SET_TAGGED_ADDR_CTRL
- for FEAT_MTE3
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, gustavo.romero@linaro.org
-References: <20240206030527.169147-1-richard.henderson@linaro.org>
- <20240206030527.169147-2-richard.henderson@linaro.org>
- <CAFEAcA8AuQZNbT=7WFXVPDzDywPPp1YZ=Bkow7Dgq2pC9=9X-g@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA8AuQZNbT=7WFXVPDzDywPPp1YZ=Bkow7Dgq2pC9=9X-g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240206215118.6171-1-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,36 +100,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/24 00:23, Peter Maydell wrote:
->> +++ b/linux-user/aarch64/target_prctl.h
->> @@ -173,21 +173,22 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
->>       env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
->>
->>       if (cpu_isar_feature(aa64_mte, cpu)) {
->> -        switch (arg2 & PR_MTE_TCF_MASK) {
->> -        case PR_MTE_TCF_NONE:
->> -        case PR_MTE_TCF_SYNC:
->> -        case PR_MTE_TCF_ASYNC:
->> -            break;
->> -        default:
->> -            return -EINVAL;
->> -        }
+On Tue, Feb 06, 2024 at 06:51:12PM -0300, Fabiano Rosas wrote:
+> Based-on: 20240202102857.110210-1-peterx@redhat.com
+> [PATCH v2 00/23] migration/multifd: Refactor ->send_prepare() and cleanups
+> https://lore.kernel.org/r/20240202102857.110210-1-peterx@redhat.com
 > 
-> We should probably check here and reject unknown bits being
-> set in arg2, as set_tagged_addr_ctrl() does; but the old
-> code didn't get that right either.
+> Hi,
+> 
+> For v3 I fixed the refcounting issue spotted by Avihai. The situation
+> there is a bit clunky due to historical reasons. The gist is that we
+> have an assumption that channel creation never fails after p->c has
+> been set, so when 'p->c == NULL' we have to unref and when 'p->c !=
+> NULL' the cleanup code will do the unref.
 
-This is done higher up in this function:
+Yes, this looks good to me.  That's a good catch.
 
-     if (arg2 & ~valid_mask) {
-         return -TARGET_EINVAL;
+I'll leave at least one more day for Avihai and/or Dan to have another
+look.  My r-b persist as of now on patch 5.
+
+Actually I think the conditional unref is slightly tricky, but it's not its
+own fault, IMHO, OTOH it's more about a1af605bd5ad where p->c is slightly
+abused.  My understanding is we can avoid that conditional unref with below
+patch 1 as a cleanup (on top of this series).  Then patch 2 comes all
+alongside.
+
+We don't need to rush on these, though, we should fix the thread race first
+because multiple of us hit it, and all cleanups can be done later.
+
+=====
+From 0830819d86e08c5175d6669505aa712a0a09717f Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Wed, 7 Feb 2024 10:08:35 +0800
+Subject: [PATCH 1/2] migration/multifd: Cleanup TLS iochannel referencing
+
+Commit a1af605bd5 ("migration/multifd: fix hangup with TLS-Multifd due to
+blocking handshake") introduced a thread for TLS channels, which will
+resolve the issue on blocking the main thread.  However in the same commit
+p->c is slightly abused just to be able to pass over the pointer "p" into
+the thread.
+
+That's the major reason we'll need to conditionally free the io channel in
+the fault paths.
+
+To clean it up, using a separate structure to pass over both "p" and "tioc"
+in the tls handshake thread.  Then we can make it a rule that p->c will
+never be set until the channel is completely setup.  With that, we can drop
+the tricky conditional unref of the io channel in the error path.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/multifd.c | 37 +++++++++++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
+
+diff --git a/migration/multifd.c b/migration/multifd.c
+index adfe8c9a0a..4a85a6b7b3 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -873,16 +873,22 @@ out:
+ 
+ static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque);
+ 
++typedef struct {
++    MultiFDSendParams *p;
++    QIOChannelTLS *tioc;
++} MultiFDTLSThreadArgs;
++
+ static void *multifd_tls_handshake_thread(void *opaque)
+ {
+-    MultiFDSendParams *p = opaque;
+-    QIOChannelTLS *tioc = QIO_CHANNEL_TLS(p->c);
++    MultiFDTLSThreadArgs *args = opaque;
+ 
+-    qio_channel_tls_handshake(tioc,
++    qio_channel_tls_handshake(args->tioc,
+                               multifd_new_send_channel_async,
+-                              p,
++                              args->p,
+                               NULL,
+                               NULL);
++    g_free(args);
++
+     return NULL;
+ }
+ 
+@@ -892,6 +898,7 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+ {
+     MigrationState *s = migrate_get_current();
+     const char *hostname = s->hostname;
++    MultiFDTLSThreadArgs *args;
+     QIOChannelTLS *tioc;
+ 
+     tioc = migration_tls_client_create(ioc, hostname, errp);
+@@ -906,11 +913,14 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+     object_unref(OBJECT(ioc));
+     trace_multifd_tls_outgoing_handshake_start(ioc, tioc, hostname);
+     qio_channel_set_name(QIO_CHANNEL(tioc), "multifd-tls-outgoing");
+-    p->c = QIO_CHANNEL(tioc);
++
++    args = g_new0(MultiFDTLSThreadArgs, 1);
++    args->tioc = tioc;
++    args->p = p;
+ 
+     p->tls_thread_created = true;
+     qemu_thread_create(&p->tls_thread, "multifd-tls-handshake-worker",
+-                       multifd_tls_handshake_thread, p,
++                       multifd_tls_handshake_thread, args,
+                        QEMU_THREAD_JOINABLE);
+     return true;
+ }
+@@ -923,6 +933,7 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
+ 
+     migration_ioc_register_yank(ioc);
+     p->registered_yank = true;
++    /* Setup p->c only if the channel is completely setup */
+     p->c = ioc;
+ 
+     p->thread_created = true;
+@@ -976,14 +987,12 @@ out:
+ 
+     trace_multifd_new_send_channel_async_error(p->id, local_err);
+     multifd_send_set_error(local_err);
+-    if (!p->c) {
+-        /*
+-         * If no channel has been created, drop the initial
+-         * reference. Otherwise cleanup happens at
+-         * multifd_send_channel_destroy()
+-         */
+-        object_unref(OBJECT(ioc));
+-    }
++    /*
++     * For error cases (TLS or non-TLS), IO channel is always freed here
++     * rather than when cleanup multifd: since p->c is not set, multifd
++     * cleanup code doesn't even know its existance.
++     */
++    object_unref(OBJECT(ioc));
+     error_free(local_err);
+ }
+ 
+-- 
+2.43.0
+=====
+From 9e574c3216f6459e3a808096d905e2554d962cad Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Wed, 7 Feb 2024 10:24:39 +0800
+Subject: [PATCH 2/2] migration/multifd: Drop registered_yank
+
+With a clear definition of p->c protocol, where we only set it up if the
+channel is fully established (TLS or non-TLS), registered_yank boolean will
+have equal meaning of "p->c != NULL".
+
+Drop registered_yank by checking p->c instead.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/multifd.h | 2 --
+ migration/multifd.c | 7 +++----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 8a1cad0996..b3fe27ae93 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -78,8 +78,6 @@ typedef struct {
+     bool tls_thread_created;
+     /* communication channel */
+     QIOChannel *c;
+-    /* is the yank function registered */
+-    bool registered_yank;
+     /* packet allocated len */
+     uint32_t packet_len;
+     /* guest page size */
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 4a85a6b7b3..278453cf84 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -648,11 +648,11 @@ static int multifd_send_channel_destroy(QIOChannel *send)
+ 
+ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+ {
+-    if (p->registered_yank) {
++    if (p->c) {
+         migration_ioc_unregister_yank(p->c);
++        multifd_send_channel_destroy(p->c);
++        p->c = NULL;
      }
+-    multifd_send_channel_destroy(p->c);
+-    p->c = NULL;
+     qemu_sem_destroy(&p->sem);
+     qemu_sem_destroy(&p->sem_sync);
+     g_free(p->name);
+@@ -932,7 +932,6 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
+     qio_channel_set_delay(ioc, false);
+ 
+     migration_ioc_register_yank(ioc);
+-    p->registered_yank = true;
+     /* Setup p->c only if the channel is completely setup */
+     p->c = ioc;
+ 
+-- 
+2.43.0
+====
 
-The rejection of ASYNC | SYNC here was either a bug in my original implementation, or the 
-kernel API changed since the initial implementation in June 2020 (not worth digging to 
-find out).
+Thanks,
 
-
-r~
+-- 
+Peter Xu
 
 
