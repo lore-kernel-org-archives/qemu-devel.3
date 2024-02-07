@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C4B9C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 03:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FF48C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 03:40:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXYg2-0003ij-C3; Tue, 06 Feb 2024 22:32:46 -0500
+	id 1rXYmd-0005jP-9r; Tue, 06 Feb 2024 22:39:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rXYg0-0003iI-Bx
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:32:44 -0500
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rXYfy-00011t-KR
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:32:44 -0500
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-51165a488baso182358e87.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 19:32:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1707276759; x=1707881559; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H+7mfik/qsuw26YTNv+4TvESFtvaUC1lE+jZpdxOzls=;
- b=fijRlVxV98ItqS9Lz+LqPkY3HKo/X/UGhVbi32fSXspjKQnVbvZbg5z+eS/hvxEswm
- K8emz4dpcA2d1JrV6384DSvrhqm07S8vVuDSWiq5xMf+Id6k/TWXo9JHscxZnVqa3sNJ
- Iwl0rq9djCWD+89beMVK6/xfzzC5DzNwiCJ6/U/q64uUzSaYhrNQ8PfbFxx2NYfe134p
- 0JhRtnqwOPw0QCcZI1KEAKjj1M02sXxfZ+lmJmz35Hmkh7Nvx3E03w2IibsXRuxKZS43
- zjHl13SVyf213ILVktqSrw4KWSEcDzO7DWGJPtKJrP6wdFLe13Ufm1TFvRmt/ay1FEIR
- JgBA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXYmb-0005j0-OP
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:39:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXYma-0002DN-41
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:39:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707277171;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4hzoFADmRnItH2GaPBNPIhsFjSsC8cJGyUVCxUIsZIM=;
+ b=J5+DVJmDt13LpzRt5qYxPdQB8Q39T0FPBGCHsb8Z8Op91vhVPvYbUktT1EfwabjIITVpG0
+ 7czQzzp0rpg5Cf4FnNGw2b/1Axzf6VNtniNyFG45CuWpHMk5VNoJhB/7NZ7kdFwziBUymU
+ v5wfRYr0hc/oZ44W4sti3hxiPSYMim4=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-195-_NtzlT8iN-OQrnjGKU7icA-1; Tue, 06 Feb 2024 22:39:29 -0500
+X-MC-Unique: _NtzlT8iN-OQrnjGKU7icA-1
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-5dc1aeb6a58so85338a12.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 19:39:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707276759; x=1707881559;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H+7mfik/qsuw26YTNv+4TvESFtvaUC1lE+jZpdxOzls=;
- b=Gh2jmIarZNEyP7uM8+PzqiCF505jVnU8/CwJCKg4Wl+LLP1vhCFhO2SWRNihCZtGF3
- 4Epf1wQNiPoqUvxYbFdLQGPVsidnIDfwCIse3FYMD62fpoOKVuHN7L0DZHyMR2HqjB/e
- cwaOq+I3DrGau0p1csH9YIVYr1sXGpzt3kevRLtAVaP3CvxvmHqXmYw1s+zeucTt54vg
- PFbTHzrfgoaUMy4InAAn78gaZ+Ac41e+5hd7CiI8VKL6MM81fpdZi/uwkELAvM4I2CM4
- So0xlE6FqTEZnBfIJYvrYfxm+p0aqM6ebUdIaG2Wro6EMhfMjjqjh/sOeqpxAnfq1sKO
- zU+g==
-X-Gm-Message-State: AOJu0Yy/HdlYPs6y/IEtdyoSQ1mqsTAEccKtZKVh4qGZBz5hwCzqr3r4
- k+lamoxsf/vldwqZiy2311qfM+D1wFeXTHRY/vriSR1XFRSIT8ys276JToZNv9+J61rQheG0Ec8
- mvkQyrxnCgWolyK4Migi0y+2zq/Is5b/wdrM5fw==
-X-Google-Smtp-Source: AGHT+IEUdmb6+p590P7Mry4Ht6TF87xhmUv4ge9FUaS15f1pCfZ4xEEK8oELgmznHbJcHmDevI64owvK8UpVyhqXSMQ=
-X-Received: by 2002:a05:651c:624:b0:2d0:a56f:95b5 with SMTP id
- k36-20020a05651c062400b002d0a56f95b5mr2547187lje.37.1707276759421; Tue, 06
- Feb 2024 19:32:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707277168; x=1707881968;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4hzoFADmRnItH2GaPBNPIhsFjSsC8cJGyUVCxUIsZIM=;
+ b=u3ljtsC93XPIY8Wo6Fm9FlXspRBR7d1eCRWlA01RyII6tRIn7QqK2JU6UypPas8jNA
+ uwipqkpxOpj8ZMfWBnUPgy7x/nDbrSAlVG0cFm8BBXjnaTCd9DLIQ3RU6FmIWFcZ9Uy0
+ /62bi8hM14JOd2wAkJ82wSUHvWJiTFeMgal6Lq5IlwTlplmzawn8VG0xLPiSvsi8NBFt
+ +BYnSU1GT0+Umyv71U/DABi0dSqPTwzakv14+Cb79Nv/gdTLGNXKPx8wN8RURprUuFWk
+ /CTSiBqJZRq+rLMyJsJEE3M4TUIe2rmXk5cbu4EZ+K/zlrg86731l6XDcdWlddXvign3
+ wwcw==
+X-Gm-Message-State: AOJu0YwQ7EIjjC0TSZdGMO+VniXLrbXWKMOzwjBmFgECOgIQ2U+3ULWB
+ i+1+o5H0auY8OKBg+ekhTWH/WODfhg7yJ4g93dILrAY9OIiYvhnoh8fTvUs7R76nwykEPRgLY3s
+ UFLN5CtNiuuMJkOqW0zmo/b5qQ8lUbcKOwMgJvbjl4ZJ3K6++mD1B
+X-Received: by 2002:a17:902:d4ca:b0:1d8:f06a:9b6f with SMTP id
+ o10-20020a170902d4ca00b001d8f06a9b6fmr4772430plg.1.1707277168264; 
+ Tue, 06 Feb 2024 19:39:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEv+d3zBJ8/gqodF7QCi+YOgJw5SRsD4FBURaesMgohM8RkcrtXnX+tUUgS/Ou/tQ+QYgJgjg==
+X-Received: by 2002:a17:902:d4ca:b0:1d8:f06a:9b6f with SMTP id
+ o10-20020a170902d4ca00b001d8f06a9b6fmr4772415plg.1.1707277167905; 
+ Tue, 06 Feb 2024 19:39:27 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0CJHedVAjpHePgdvzyohMYfpkGJHzYFLm6Sa1sODAjR8ZJkfmATZYaAeW9Xfw/ECltKkVvmGL77BtQHLD6co=
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ mm14-20020a1709030a0e00b001d7726c4a40sm294270plb.277.2024.02.06.19.39.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Feb 2024 19:39:27 -0800 (PST)
+Date: Wed, 7 Feb 2024 11:39:20 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Hao Xiang <hao.xiang@bytedance.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH 0/6] Introduce multifd zero page checking.
+Message-ID: <ZcL7aIwo_Z8gn6h3@x1n>
+References: <20240206231908.1792529-1-hao.xiang@bytedance.com>
 MIME-Version: 1.0
-References: <20240206131911.10998-1-jason.chien@sifive.com>
- <162e0b5c-ed98-4e84-af6e-9fdaea0dcc04@linaro.org>
-In-Reply-To: <162e0b5c-ed98-4e84-af6e-9fdaea0dcc04@linaro.org>
-From: Jason Chien <jason.chien@sifive.com>
-Date: Wed, 7 Feb 2024 11:33:51 +0800
-Message-ID: <CADr__8rwLz7=FvkCwncRy4fGsHYxe0BXEstB_1o_P14p37ZmYA@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Update $pc after linking to $ra in
- trans_cm_jalt()
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liweiwei@iscas.ac.cn>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Junqiang Wang <wangjunqiang@iscas.ac.cn>
-Content-Type: multipart/alternative; boundary="000000000000c7739a0610c258c6"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=jason.chien@sifive.com; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240206231908.1792529-1-hao.xiang@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,123 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c7739a0610c258c6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Feb 06, 2024 at 11:19:02PM +0000, Hao Xiang wrote:
+> This patchset is based on Juan Quintela's old series here
+> https://lore.kernel.org/all/20220802063907.18882-1-quintela@redhat.com/
+> 
+> In the multifd live migration model, there is a single migration main
+> thread scanning the page map, queuing the pages to multiple multifd
+> sender threads. The migration main thread runs zero page checking on
+> every page before queuing the page to the sender threads. Zero page
+> checking is a CPU intensive task and hence having a single thread doing
+> all that doesn't scale well. This change introduces a new function
+> to run the zero page checking on the multifd sender threads. This
+> patchset also lays the ground work for future changes to offload zero
+> page checking task to accelerator hardwares.
+> 
+> Use two Intel 4th generation Xeon servers for testing.
+> 
+> Architecture:        x86_64
+> CPU(s):              192
+> Thread(s) per core:  2
+> Core(s) per socket:  48
+> Socket(s):           2
+> NUMA node(s):        2
+> Vendor ID:           GenuineIntel
+> CPU family:          6
+> Model:               143
+> Model name:          Intel(R) Xeon(R) Platinum 8457C
+> Stepping:            8
+> CPU MHz:             2538.624
+> CPU max MHz:         3800.0000
+> CPU min MHz:         800.0000
+> 
+> Perform multifd live migration with below setup:
+> 1. VM has 100GB memory. All pages in the VM are zero pages.
+> 2. Use tcp socket for live migratio.
+> 3. Use 4 multifd channels and zero page checking on migration main thread.
+> 4. Use 1/2/4 multifd channels and zero page checking on multifd sender
+> threads.
+> 5. Record migration total time from sender QEMU console's "info migrate"
+> command.
+> 6. Calculate throughput with "100GB / total time".
+> 
+> +------------------------------------------------------+
+> |zero-page-checking | total-time(ms) | throughput(GB/s)|
+> +------------------------------------------------------+
+> |main-thread        | 9629           | 10.38GB/s       |
+> +------------------------------------------------------+
+> |multifd-1-threads  | 6182           | 16.17GB/s       |
+> +------------------------------------------------------+
+> |multifd-2-threads  | 4643           | 21.53GB/s       |
+> +------------------------------------------------------+
+> |multifd-4-threads  | 4143           | 24.13GB/s       |
+> +------------------------------------------------------+
 
-You are right. I'll send patch v2 shortly. Thank you for the reply.
+This "throughput" is slightly confusing; I was initially surprised to see a
+large throughput for idle guests.  IMHO the "total-time" would explain.
+Feel free to drop that column if there's a repost.
 
-Richard Henderson <richard.henderson@linaro.org> =E6=96=BC 2024=E5=B9=B42=
-=E6=9C=887=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=884:24=E5=AF=AB=E9=
-=81=93=EF=BC=9A
+Did you check why 4 channels mostly already reached the top line?  Is it
+because main thread is already spinning 100%?
 
-> On 2/6/24 23:18, Jason Chien wrote:
-> > The original implementation sets $pc to the address read from the jump
-> > vector table first and links $ra with the address of the next instructi=
-on
-> > after the updated $pc. After jumping to the updated $pc and executing t=
-he
-> > next ret instruction, the program jumps to $ra, which is in the same
-> > function currently executing, which results in an infinite loop.
-> > This commit reverses the two action. Firstly, $ra is updated with the
-> > address of the next instruction after $pc, and sets $pc to the address
-> > read from the jump vector table.
->
-> This is unlikely to be correct in the case the vector table read faults,
-> leaving $ra updated.
->
-> I guess this got broken with CF_PCREL.  Anyway, the solution is to use a
-> temporary...
->
-> > -    /*
-> > -     * Update pc to current for the non-unwinding exception
-> > -     * that might come from cpu_ld*_code() in the helper.
-> > -     */
-> > -    gen_update_pc(ctx, 0);
-> > -    gen_helper_cm_jalt(cpu_pc, cpu_env, tcg_constant_i32(a->index));
->
-> ... here and then ...
->
-> > @@ -307,6 +300,13 @@ static bool trans_cm_jalt(DisasContext *ctx,
-> arg_cm_jalt *a)
-> >           gen_set_gpr(ctx, xRA, succ_pc);
-> >       }
-> >
->
-> ... copy the temp to cpu_pc here.
->
-> >       tcg_gen_lookup_and_goto_ptr();
-> >       ctx->base.is_jmp =3D DISAS_NORETURN;
-> >       return true;
->
->
->
-> r~
->
+Thanks,
 
---000000000000c7739a0610c258c6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-- 
+Peter Xu
 
-<div dir=3D"ltr">You are=C2=A0right. I&#39;ll send patch v2 shortly. Thank =
-you for the reply.=C2=A0</div><br><div class=3D"gmail_quote"><div dir=3D"lt=
-r" class=3D"gmail_attr">Richard Henderson &lt;<a href=3D"mailto:richard.hen=
-derson@linaro.org">richard.henderson@linaro.org</a>&gt; =E6=96=BC 2024=E5=
-=B9=B42=E6=9C=887=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=884:24=E5=AF=
-=AB=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">On 2/6/24 23:18, Jason Chien wrote:<br>
-&gt; The original implementation sets $pc to the address read from the jump=
-<br>
-&gt; vector table first and links $ra with the address of the next instruct=
-ion<br>
-&gt; after the updated $pc. After jumping to the updated $pc and executing =
-the<br>
-&gt; next ret instruction, the program jumps to $ra, which is in the same<b=
-r>
-&gt; function currently executing, which results in an infinite loop.<br>
-&gt; This commit reverses the two action. Firstly, $ra is updated with the<=
-br>
-&gt; address of the next instruction after $pc, and sets $pc to the address=
-<br>
-&gt; read from the jump vector table.<br>
-<br>
-This is unlikely to be correct in the case the vector table read faults,<br=
->
-leaving $ra updated.<br>
-<br>
-I guess this got broken with CF_PCREL.=C2=A0 Anyway, the solution is to use=
- a temporary...<br>
-<br>
-&gt; -=C2=A0 =C2=A0 /*<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0* Update pc to current for the non-unwinding exce=
-ption<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0* that might come from cpu_ld*_code() in the help=
-er.<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; -=C2=A0 =C2=A0 gen_update_pc(ctx, 0);<br>
-&gt; -=C2=A0 =C2=A0 gen_helper_cm_jalt(cpu_pc, cpu_env, tcg_constant_i32(a-=
-&gt;index));<br>
-<br>
-... here and then ...<br>
-<br>
-&gt; @@ -307,6 +300,13 @@ static bool trans_cm_jalt(DisasContext *ctx, arg_=
-cm_jalt *a)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gen_set_gpr(ctx, xRA, succ_pc)=
-;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-<br>
-... copy the temp to cpu_pc here.<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0tcg_gen_lookup_and_goto_ptr();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ctx-&gt;base.is_jmp =3D DISAS_NORETURN;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return true;<br>
-<br>
-<br>
-<br>
-r~<br>
-</blockquote></div>
-
---000000000000c7739a0610c258c6--
 
