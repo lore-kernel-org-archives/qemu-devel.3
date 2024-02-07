@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EAC3C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E689CC4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXnCs-0007AG-Bd; Wed, 07 Feb 2024 14:03:38 -0500
+	id 1rXnLV-0001YY-F3; Wed, 07 Feb 2024 14:12:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnCp-00078T-Nr
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:03:35 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnLS-0001Y9-IK
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:12:30 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnCn-00084t-TB
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:03:35 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4102a186cfbso2036595e9.2
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 11:03:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnLP-0001Ek-LZ
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:12:30 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a34c5ca2537so137863366b.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 11:12:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707332612; x=1707937412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707333145; x=1707937945; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ad2X9jzS20shlsnS31QS4wwNroAAiHsJDT07fx/lEUA=;
- b=NoW0hK8M4HEhzm96iXLFJJTbkheZbpFt/hQyuxjpfG0mDtvATMLMs0IwTQvL3507ia
- OZG+UVnN2zEhJlTKIzP355GIaYMdzR/zuNhs+cJ+QZPL2/LDh/J4r9yu7m5HzrtpFRkU
- 8bOlCRITj7BZLIFoYqVsL8/i/izu+D/5yhE7B83SYO8/2GRllYY+BheMquLBMmxUnZgs
- UwqbqAi+6ssZvygKKuuJ4tyoPCjI1rUqwZZOpguJdGzMLRlIGI8qMHhBK6hx24nxHSr9
- DoCA17Uspfx4YzbXjg5Wm/agd9kLX2hHCnDBmlrPr9p1mK3UyR8ih4C8NIcb13FwTbpL
- /peg==
+ bh=Fg3aQvMLQImHatVBk6pgafeUA/BBuVfBJRwx3UwdUGU=;
+ b=BqBVbkjvsrVols+kdZ4s4202MrJ/hmNzw+8dM1Nl3le7qfAlDOYTlTF8JpbSI0fuhU
+ kf8iPmNrMJG+S0rQuhYeNDpMt/kCStRUdubu3xzkwEToKbDUmBTkZ/6EsidlUaLkIvF8
+ KtQphoCDVmlL2MEGmXooOkjfcDchIhwDY0+EtaawVRWOPAxAtonkW6gN1+vQM8C1MC0a
+ mHBr3E+QjxaGG/S+2KNasy6WmuxTB9CB4QOPbs5/2v1abip4eC0SxbRfp75jGALcmVlm
+ Vq862o9WpnJVEQG+eB3kM4eTpWRtUjOJU9/u+sSWhueq37Z9U9JThx6P2uma1k9pJfuW
+ XWeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707332612; x=1707937412;
+ d=1e100.net; s=20230601; t=1707333145; x=1707937945;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ad2X9jzS20shlsnS31QS4wwNroAAiHsJDT07fx/lEUA=;
- b=j8A/tzsrpEd5XLTux7k9LPrKaQaC+xTeY1AZJ2Bui1rWVyoOezKqtoszDMk1I6SRqq
- hyKzwf498YYq/29QFggtDwqDvBv2FVruN1+0oVASJEMBCnV52fR4d3wfzRRyxaMmDXrp
- CK+qyCdBT2Y0O4O8HkRBW9YJFRYiWFfVU6ZFiDuPk+fQn/mbPCQMEDT798343kKZb3h1
- GtureWKEUfdI+fP34+bhQIyZDSrMzUUqhRi83gAyfqTMdqQ0JS8W2j+MXrCOQNtMV/2h
- ObCQEBz15jT975QVQ4vnNlER6OHQeA8mrCCawXlGovX73rfkGxli2pyXj7vhVpGZ3IZf
- RCuQ==
+ bh=Fg3aQvMLQImHatVBk6pgafeUA/BBuVfBJRwx3UwdUGU=;
+ b=Bb35P6NXgTiXIf/pNUlA+THMgxKyUVlMJMEF9j6QEudCxv58AwnuyOF39fEBG0vXUG
+ Je/MItkkBCE0emaqGsgv8Fd3p0zV4LK9hL/lhxrc/oIX/81rwdyopAfUijm2++m3c4Xg
+ kJwbgNP7jv9fEo4uTrzReKefbvYgG6LeeJRkbT5Y4yJtEVK81b1y+CUjcEDUW8b4y/K0
+ gCzXxcbhnWM40NKKKv/7Vm3LeCTdouMSTpWFx86ey1TOYuv71MYx3TgCEvIP1WJEiwwS
+ ann+G6BnzLsZiRqOGbD0VRwUj4WPd1EWRUsMD1INZl02sc81g9ZXIithAozo5QoQZCk4
+ mKvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEx2fivFCqvKftl6riK0er4sDMZpAmFMkGR2Jtctis5VeWSK6JZ9LXXqWaLDlvwQpKYSYfKdnetbprqASqzPqA/BLu2VA=
-X-Gm-Message-State: AOJu0Yx5EfeDQCRKQsRCQhwMVxf0o1bzXVDedWLjqJ+CqA65BKSZ3oz0
- nAF/BmPUjXbyk49SrW2PGOmbaKbGl798iAp7ie2AgWExPbrAzos6spMyX3JCVoI=
-X-Google-Smtp-Source: AGHT+IFAAvDU6UScNLN+IaIuKl3kjkPpSFJ2MIa3xeq1fEneY6GCamnCPfsVcSxj5KoyNbcQkEC76g==
-X-Received: by 2002:a05:600c:474a:b0:410:27e7:4c5 with SMTP id
- w10-20020a05600c474a00b0041027e704c5mr622220wmo.29.1707332612317; 
- Wed, 07 Feb 2024 11:03:32 -0800 (PST)
+ AJvYcCUpzTuzoLrT6eDM0EUauIErJY+aJOn84Xy+oM+CCJbX83i+8Ig1M1pp8UJiVxlYYVWh+zo1rWcA8cgo5isKewxagTv8dGY=
+X-Gm-Message-State: AOJu0YwzWMbfM5mR+bT297HGovJ9FV4ijQgB4VPYezImcjNlNNDwD3n0
+ VwaSFYwSJ8kFy2w4Y+tkkRSFRZioDppt0r6QdMGItN2lu6vXw5xLZLodtG1+JQ25bXGqPLloxnW
+ n
+X-Google-Smtp-Source: AGHT+IFtmj4uZQcQxVp06oBTyb8sIqmP/5unJ1034aQ8IU7rpCGtJeIGMd895+NexRBNJIsSW4+z0g==
+X-Received: by 2002:a17:907:77d7:b0:a38:2ca6:5b5d with SMTP id
+ kz23-20020a17090777d700b00a382ca65b5dmr3775396ejc.16.1707333143665; 
+ Wed, 07 Feb 2024 11:12:23 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCCZFKlhZF4cr5w+ZqeJLWxgBvBWk2G9IH+CXkE5SY6SPfn0rD/bxDI3EPykOFUfwsNYTNXom0quU8hiP2cK4Eto6s33M=
+ AJvYcCXo+KcFKbKISxzoPvTLUqyE2jX6r54CXQLhLn7mibp1lS5pUS4cA9EvTeUneobnmaAYRgXyEOoid6eqRtPHn9cegg2k2jg=
 Received: from [192.168.69.100] ([176.187.214.82])
  by smtp.gmail.com with ESMTPSA id
- bi20-20020a05600c3d9400b004101e0960e7sm1395232wmb.44.2024.02.07.11.03.31
+ rn3-20020a170906d92300b00a3829e6015fsm1055838ejb.55.2024.02.07.11.12.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 11:03:31 -0800 (PST)
-Message-ID: <f53b1dc9-779a-4166-878e-42fd7889cc6f@linaro.org>
-Date: Wed, 7 Feb 2024 20:03:30 +0100
+ Wed, 07 Feb 2024 11:12:23 -0800 (PST)
+Message-ID: <81d117a3-ed1d-4023-a9ce-128729ec2e73@linaro.org>
+Date: Wed, 7 Feb 2024 20:12:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] isa: specify instance_size in isa_superio_type_info
+Subject: Re: [PATCH v2 7/8] mips: allow compiling out CONFIG_MIPS_ITU
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: shentey@gmail.com
 References: <20240207111411.115040-1-pbonzini@redhat.com>
- <20240207111411.115040-6-pbonzini@redhat.com>
+ <20240207111411.115040-8-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240207111411.115040-6-pbonzini@redhat.com>
+In-Reply-To: <20240207111411.115040-8-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,24 +99,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Paolo,
+
 On 7/2/24 12:14, Paolo Bonzini wrote:
-> Right now all subclasses of TYPE_ISA_SUPERIO have to specify an instance_size,
-> because the ISASuperIODevice struct adds fields to ISADevice but the type does
-> not include the increased instance size.  Failure to do so results in an access
-> past the bounds of struct ISADevice as soon as isa_superio_realize is called.
-> Fix this by specifying the instance_size already in the superclass.
+> itc_reconfigure() is referenced from TCG, provide a stub if needed.
+> This makes it possible to build a QEMU binary that only includes
+> boards without a CPS device (only Malta and Boston create one).
 > 
-> Cc: Bernhard Beschow <shentey@gmail.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/isa/isa-superio.c       | 2 +-
->   hw/isa/smc37c669-superio.c | 1 -
->   2 files changed, 1 insertion(+), 2 deletions(-)
+>   hw/mips/mips_itu-stub.c | 26 ++++++++++++++++++++++++++
+>   hw/mips/meson.build     |  1 +
+>   2 files changed, 27 insertions(+)
+>   create mode 100644 hw/mips/mips_itu-stub.c
+> 
+> diff --git a/hw/mips/mips_itu-stub.c b/hw/mips/mips_itu-stub.c
+> new file mode 100644
+> index 00000000000..4cc82b8461f
+> --- /dev/null
+> +++ b/hw/mips/mips_itu-stub.c
+> @@ -0,0 +1,26 @@
+> +/*
+> + * Inter-Thread Communication Unit emulation.
+> + *
+> + * Copyright (c) 2016 Imagination Technologies
+> + *
+> + * This library is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU Lesser General Public
+> + * License as published by the Free Software Foundation; either
+> + * version 2.1 of the License, or (at your option) any later version.
+> + *
+> + * This library is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> + * Lesser General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU Lesser General Public
+> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
 
-Oops, thanks!
+This is your code addition, so "Inter-Thread Communication Unit stubs" /
+RH / SPDX GPLv2-or-later.
 
-Fixes: 4c3119a6e3 ("hw/isa/superio: Factor out the parallel code from 
-pc87312.c")
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/misc/mips_itu.h"
+> +
+> +void itc_reconfigure(MIPSITUState *tag)
+> +{
+> +    abort();
+
+As Zoltan suggested, g_assert_not_reached(). Indeed this path
+can't be reached without ITU, TCG won't emit anything and will
+call instead:
+
+     qemu_log_mask(LOG_UNIMP, "mthc0 %s (reg %d sel %d)\n",
+                   register_name, reg, sel);
+
+I'm reluctant to add stubs, but since it helps you (hoping we
+can figure a clean way to split architectural access to hw/ from
+tcg/ one day):
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Regards,
+
+Phil.
 
