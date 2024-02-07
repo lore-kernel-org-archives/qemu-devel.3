@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5383C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 21:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D39BC4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 21:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXpuB-0007E9-35; Wed, 07 Feb 2024 16:56:31 -0500
+	id 1rXptx-0006tR-3J; Wed, 07 Feb 2024 16:56:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu9-0007BR-35
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:29 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXptv-0006sY-Ek
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu7-0007ff-MM
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:28 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXptt-0007Zg-RG
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707342987;
+ s=mimecast20190719; t=1707342973;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4GLF3wa8P9xkb87QUi5+BupCGdFUx0NiGcKNyw5i1Qo=;
- b=A9+B7mOc0LfXmw2kNGlFhRoFTIE9P3FPqFUf1q08H9LfpjSvrhmB7+N6On1KUmtEYz+taB
- DwXdputpqOSBdU3hFndedYqmjjzDruAcabXKLHCUgG5xFawz6L1o+wazzKy/IhEyttIIkI
- 9hdkL7B9cEJjnRfDAKwk3t2Pu5RVg4c=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-CZEDogdCOCSS-1XeEANisQ-1; Wed,
- 07 Feb 2024 16:56:23 -0500
-X-MC-Unique: CZEDogdCOCSS-1XeEANisQ-1
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gFHdAOVQTsRaSOUgVQ8b6/e4QuLEvB+ID/BFiR7oHGo=;
+ b=fnbylmaaCw+vP51upr44E9n3ExVaYll6RkrMX37qjaUOqV1ecz0QkQ7ToQyzlMCSD7FPCt
+ WKDCCQsizzc9LNiTdBiSpv98i9rTRIbKc/4ZxwLwKkwAGJfPRk31gU5EARo17/Kllc95pB
+ 6qZbY3VmDjJ+G+vWlAN8C7i4AKRSInk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-264-Fhi8y22NORapfBnM2CDIEA-1; Wed, 07 Feb 2024 16:56:10 -0500
+X-MC-Unique: Fhi8y22NORapfBnM2CDIEA-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 97BB338143B2;
- Wed,  7 Feb 2024 21:56:23 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B3766185A780;
+ Wed,  7 Feb 2024 21:56:09 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.192.31])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 0AE2F492BC6;
- Wed,  7 Feb 2024 21:56:22 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 25926492BC6;
+ Wed,  7 Feb 2024 21:56:08 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 15/16] virtio-blk: Use ioeventfd_attach in start_ioeventfd
-Date: Wed,  7 Feb 2024 22:56:05 +0100
-Message-ID: <20240207215606.206038-16-kwolf@redhat.com>
-In-Reply-To: <20240207215606.206038-1-kwolf@redhat.com>
-References: <20240207215606.206038-1-kwolf@redhat.com>
+Subject: [PULL 00/16] Block layer patches
+Date: Wed,  7 Feb 2024 22:55:50 +0100
+Message-ID: <20240207215606.206038-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
@@ -80,68 +78,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
 
-Commit d3f6f294aeadd5f88caf0155e4360808c95b3146 ("virtio-blk: always set
-ioeventfd during startup") has made virtio_blk_start_ioeventfd() always
-kick the virtqueue (set the ioeventfd), regardless of whether the BB is
-drained.  That is no longer necessary, because attaching the host
-notifier will now set the ioeventfd, too; this happens either
-immediately right here in virtio_blk_start_ioeventfd(), or later when
-the drain ends, in virtio_blk_ioeventfd_attach().
+  Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
 
-With event_notifier_set() removed, the code becomes the same as the one
-in virtio_blk_ioeventfd_attach(), so we can reuse that function.
+are available in the Git repository at:
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20240202153158.788922-4-hreitz@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/block/virtio-blk.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+  https://repo.or.cz/qemu/kevin.git tags/for-upstream
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index bda5c117d4..4ca5e632ea 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -37,6 +37,8 @@
- #include "hw/virtio/virtio-blk-common.h"
- #include "qemu/coroutine.h"
- 
-+static void virtio_blk_ioeventfd_attach(VirtIOBlock *s);
-+
- static void virtio_blk_init_request(VirtIOBlock *s, VirtQueue *vq,
-                                     VirtIOBlockReq *req)
- {
-@@ -1847,17 +1849,14 @@ static int virtio_blk_start_ioeventfd(VirtIODevice *vdev)
-     s->ioeventfd_started = true;
-     smp_wmb(); /* paired with aio_notify_accept() on the read side */
- 
--    /* Get this show started by hooking up our callbacks */
--    for (i = 0; i < nvqs; i++) {
--        VirtQueue *vq = virtio_get_queue(vdev, i);
--        AioContext *ctx = s->vq_aio_context[i];
--
--        /* Kick right away to begin processing requests already in vring */
--        event_notifier_set(virtio_queue_get_host_notifier(vq));
--
--        if (!blk_in_drain(s->conf.conf.blk)) {
--            virtio_queue_aio_attach_host_notifier(vq, ctx);
--        }
-+    /*
-+     * Get this show started by hooking up our callbacks.  If drained now,
-+     * virtio_blk_drained_end() will do this later.
-+     * Attaching the notifier also kicks the virtqueues, processing any requests
-+     * they may already have.
-+     */
-+    if (!blk_in_drain(s->conf.conf.blk)) {
-+        virtio_blk_ioeventfd_attach(s);
-     }
-     return 0;
- 
--- 
-2.43.0
+for you to fetch changes up to 7ccd0415f2d67e6739da756241f60d98d5c80bf8:
+
+  virtio-blk: avoid using ioeventfd state in irqfd conditional (2024-02-07 21:59:07 +0100)
+
+----------------------------------------------------------------
+Block layer patches
+
+- Allow concurrent BB context changes
+- virtio: Re-enable notifications after drain
+- virtio-blk: Fix missing use of irqfd
+- scsi: Don't ignore most usb-storage properties
+- blkio: Respect memory-alignment for bounce buffer allocations
+- iotests tmpdir fixes
+- virtio-blk: Code cleanups
+
+----------------------------------------------------------------
+Daniel P. Berrangé (2):
+      iotests: fix leak of tmpdir in dry-run mode
+      iotests: give tempdir an identifying name
+
+Hanna Czenczek (5):
+      block-backend: Allow concurrent context changes
+      scsi: Await request purging
+      virtio-scsi: Attach event vq notifier with no_poll
+      virtio: Re-enable notifications after drain
+      virtio-blk: Use ioeventfd_attach in start_ioeventfd
+
+Kevin Wolf (2):
+      scsi: Don't ignore most usb-storage properties
+      blkio: Respect memory-alignment for bounce buffer allocations
+
+Stefan Hajnoczi (7):
+      virtio-blk: enforce iothread-vq-mapping validation
+      virtio-blk: clarify that there is at least 1 virtqueue
+      virtio-blk: add vq_rq[] bounds check in virtio_blk_dma_restart_cb()
+      virtio-blk: declare VirtIOBlock::rq with a type
+      monitor: use aio_co_reschedule_self()
+      virtio-blk: do not use C99 mixed declarations
+      virtio-blk: avoid using ioeventfd state in irqfd conditional
+
+ include/block/aio.h            |   7 +-
+ include/hw/scsi/scsi.h         |   5 +-
+ include/hw/virtio/virtio-blk.h |   2 +-
+ block/blkio.c                  |   3 +
+ block/block-backend.c          |  22 ++--
+ hw/block/virtio-blk.c          | 226 +++++++++++++++++++++++------------------
+ hw/scsi/scsi-bus.c             |  63 ++++++------
+ hw/scsi/virtio-scsi.c          |   7 +-
+ hw/usb/dev-storage-classic.c   |   5 +-
+ hw/virtio/virtio.c             |  42 ++++++++
+ qapi/qmp-dispatch.c            |   7 +-
+ tests/qemu-iotests/testenv.py  |   2 +-
+ tests/qemu-iotests/check       |   3 +-
+ 13 files changed, 236 insertions(+), 158 deletions(-)
 
 
