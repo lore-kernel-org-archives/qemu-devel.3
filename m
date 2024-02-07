@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA83C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FE5C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXn8I-0004h3-7P; Wed, 07 Feb 2024 13:58:54 -0500
+	id 1rXnAj-0005fl-16; Wed, 07 Feb 2024 14:01:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXn8G-0004gr-Fe
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:58:52 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnAh-0005fH-DR
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:01:23 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXn8E-0007EW-SG
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:58:52 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-33b28aadb28so750901f8f.3
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 10:58:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXnAg-0007rB-0A
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:01:23 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33b28aadb28so752984f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 11:01:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707332328; x=1707937128; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707332479; x=1707937279; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qKsyMgjAhaOgB73+6+cP57A3bnhGu4oc+/RrQRs6Cx0=;
- b=MNYRi4N9MGvq3/GowJHtm3PRckZqytb33OG9YPUSV6NB5C3VX7fChx13wuGH8r5HlP
- rKy4t47mhIVOhIcD4eEtTAbLWjAvydmq0hg3MW2UEkXiqrtFLWNJHGAWt6YKcLP0XtwD
- puDGmWJde72Re5tsJhyfzb6TTT5RhO4Pp9lfhGR2HzptaI6tKgdW0iM+D2+Ilpve2dj6
- xWi2Q9IWdylncqGRb0vgkglQ8NpU+CHpEakXNcrVVJMNQVs3+1kMW3ANj7z1mM+f965o
- A3FQnCwVdyfiKkrJo5dMW7GUjIBFMEc4QdlbRZ6hm6RjNELlBPxzqDCcC+rQ/ttIlkvA
- pVPw==
+ bh=wixonZyV5OoUUndRRPrkDq4cdseFQRGa3Rsi/kRysTM=;
+ b=wtmjrePa8XMsx28pheNjkErBefrytlPceP9jj3fq/aeFRCamxiIpoCHT/gpDIoNMp4
+ 9Ic77SnO7vCUfFN7Nc1tOC1lWKclR+wrEdO1K0+BtfVOPVP7XvE5QU7jcOhZMQDcACx0
+ kZU6gIiddiB0wODQ3RVLypCreF0etCyOu0weoitKrdMu/iUehRAj4FCNtenJ4NWPpWsQ
+ IHfoS/SjI47pig26L3yOqhjBmY43733GgKa14skUUkIsU1yitb7Ri3PgmHhDM9s3H3qm
+ Eu5AM3a0RywXeoYalpsncbl4VHb8Tywnye51z5YEmE1Z0YX2+asRMd8e/3u5FfFnhmbL
+ G6Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707332328; x=1707937128;
+ d=1e100.net; s=20230601; t=1707332479; x=1707937279;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qKsyMgjAhaOgB73+6+cP57A3bnhGu4oc+/RrQRs6Cx0=;
- b=M3QAPc4q6xaxNO5xZpRKreQXZmG74Hye5YVtqtBQ88kVBg5EhNHBf3aoBec5uteuGx
- hyEFbIgw9TtuCQ9oB0xFpEi+MW7jdeISjJU0oGS8rG4t7kAU68RsofkTFc/XEVo68ggw
- wpThgaPNyZgwb5EnvPcisW3Bkqa8hiGcJu6/c9pjVafdjErEIxGLRLA9MIkeeDxSq3sB
- nKYxpsWq2VHUYNBc+jkqUYuA+mBdyrgEOTSJBfrB059jGJRE/5oh+2HTN5EdQOYUXXyo
- pq6w93ZuAatKLFRj6vJSnt+3YLaoTAcy2o9DcIpSjWxeem1JEFW+MSISIUHBLpUVkVOS
- 6hFQ==
-X-Gm-Message-State: AOJu0Yz1gEeH/nKdAfaKTz5lI+g4yklW4uTVNEYle3sZHNRvQvcZlqKN
- hfoNZqg4xja7JikGM+9RqZDdJx3nSNiP4TiyXvF05Q/0J9Cisus+hTjRmreOe6U=
-X-Google-Smtp-Source: AGHT+IHlpW2MsiODuijx4uIpi5etyWVOsIl3tqnoKdEoub1fiiTjhW1aIHYQ/oUVMCBtFIGP1W018w==
-X-Received: by 2002:adf:ef89:0:b0:33a:e8be:51bd with SMTP id
- d9-20020adfef89000000b0033ae8be51bdmr4076952wro.51.1707332328248; 
- Wed, 07 Feb 2024 10:58:48 -0800 (PST)
+ bh=wixonZyV5OoUUndRRPrkDq4cdseFQRGa3Rsi/kRysTM=;
+ b=dm7w4zSsRudJ3rLcaHCQ+JonPOZ/Vgo5NrKMIfTsEKJ0iRTi4oWkgAK72ZkwYWP7wz
+ OcU18kpqPhsV8DlllFkFbsKJPe+rnkeg47Desx3YjnnfJqPp49SdviI0bpvzCBDrBo/1
+ i90ndNK0CajeCkVhbQxq0wR3777erQD3i9PoIv2bumWR7Do6lcK6CNiQ9G0qlp3OxHPK
+ N1DLEXTusm+ISksvukCX7vGzzlDQvgtl8oVKDQatMDZhz1gTqKBEFRC1nw394m9r+AnV
+ ocJHoVt8XO483hyBY/0E5S83FRneWRsMJC2/w5wIYHT9WcylQAbmoV6HTwpxEDQr9RvW
+ Hiqw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdb8AFaBrOfNc2naNAuODFjjVFPj4kOOqPti5VfB9eij3w9qQOPr9nq3/5N0Rvs902S5jk3NA8XX2a/4VcsSjosWVLQUU=
+ AJvYcCWGMPnKS7PwISfEDaNUdA8XDwKMRU4WykIlEVmxatD089xOotYQvPkiplwqi5jKMIssHKdsZafsT+XfpOxOGCekSFXaHm0=
+X-Gm-Message-State: AOJu0YyOdjWRTDnMC/Ts6x/8AZHC9DpLfPCKKBeD4FXUpEaj/4uMaH6q
+ +zvJ1wX1rCR7s0wIUUYfX/ANlBCbZKEECSHWMtCVZnMdOPAtNTONlihBBoGFWms=
+X-Google-Smtp-Source: AGHT+IEtt81Kg61jQVSlctjzDz6Xm1f6JoHwaUUK2zgnxZvMgsNgo6jgjTLfqs1Ls6cm34HzO/AlEQ==
+X-Received: by 2002:a5d:4850:0:b0:33b:2fba:1ea7 with SMTP id
+ n16-20020a5d4850000000b0033b2fba1ea7mr4443457wrs.67.1707332479052; 
+ Wed, 07 Feb 2024 11:01:19 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkbcX0XReudSQ++ZaSvnfPGlVrhtw8/5aXLAch/tvpa+ccbHWhCc3l7P7CdHSPEWn89LGz3z94bZuNm3U/NbrFOtquTvQ=
 Received: from [192.168.69.100] ([176.187.214.82])
  by smtp.gmail.com with ESMTPSA id
- g16-20020adfa490000000b0033b50ed5f98sm1384764wrb.72.2024.02.07.10.58.47
+ s17-20020a5d4ed1000000b0033b17880eacsm2077822wrv.56.2024.02.07.11.01.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 10:58:47 -0800 (PST)
-Message-ID: <078c8c89-f468-43d1-9ca6-4c485f09c9ba@linaro.org>
-Date: Wed, 7 Feb 2024 19:58:45 +0100
+ Wed, 07 Feb 2024 11:01:18 -0800 (PST)
+Message-ID: <895ad330-8e43-49bd-bd92-2a7077c04ef9@linaro.org>
+Date: Wed, 7 Feb 2024 20:01:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] hw/mips/Kconfig: Remove ISA dependencies from
- MIPSsim board
+Subject: Re: [PATCH v2 4/8] isa: fix ISA_SUPERIO dependencies
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: shentey@gmail.com
 References: <20240207111411.115040-1-pbonzini@redhat.com>
- <20240207111411.115040-4-pbonzini@redhat.com>
+ <20240207111411.115040-5-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240207111411.115040-4-pbonzini@redhat.com>
+In-Reply-To: <20240207111411.115040-5-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,58 +99,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/2/24 12:14, Paolo Bonzini wrote:
-> From: Bernhard Beschow <shentey@gmail.com>
+> ISA_SUPERIO does not provide an ISA bus, so it should not select the symbol:
+> instead it requires one.  Among its users, VT82C686 is the only one that
+> is a PCI-ISA bridge and does not already select ISA_BUS.
 > 
-> The board doesn't seem to have an ISA bus at all.
-> 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> Message-ID: <20230109204124.102592-3-shentey@gmail.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/mips/mipssim.c | 1 -
->   hw/mips/Kconfig   | 3 +--
->   2 files changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
-> index 01e323904d9..abbeb6390e1 100644
-> --- a/hw/mips/mipssim.c
-> +++ b/hw/mips/mipssim.c
-> @@ -31,7 +31,6 @@
->   #include "hw/clock.h"
->   #include "hw/mips/mips.h"
->   #include "hw/char/serial.h"
-> -#include "hw/isa/isa.h"
->   #include "net/net.h"
->   #include "sysemu/sysemu.h"
->   #include "hw/boards.h"
-> diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-> index ab61af209a0..afcfb2b8eca 100644
-> --- a/hw/mips/Kconfig
-> +++ b/hw/mips/Kconfig
-> @@ -6,8 +6,7 @@ config MALTA
->   
->   config MIPSSIM
->       bool
-> -    select ISA_BUS
-> -    select SERIAL_ISA
-> +    select SERIAL
+>   hw/isa/Kconfig | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-Hmm there is an ISA bus which can be exposed with:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
--- >8 --
-diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
-index 16af31648e..a1a4688861 100644
---- a/hw/mips/mipssim.c
-+++ b/hw/mips/mipssim.c
-@@ -209,8 +209,9 @@ mips_mipssim_init(MachineState *machine)
-      /* Register 64 KB of ISA IO space at 0x1fd00000. */
-      memory_region_init_alias(isa, NULL, "isa_mmio",
-                               get_system_io(), 0, 0x00010000);
-      memory_region_add_subregion(get_system_memory(), 0x1fd00000, isa);
-+    isa_bus_new(NULL, get_system_memory(), get_system_io(), &error_abort);
-
-      /*
-       * A single 16450 sits at offset 0x3f8. It is attached to
-       * MIPS CPU INT2, which is interrupt 4.
----
 
