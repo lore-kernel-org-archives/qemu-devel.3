@@ -4,91 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791E5C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 12:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6543AC4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 12:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXgxM-0006vS-DA; Wed, 07 Feb 2024 07:23:12 -0500
+	id 1rXgzf-0000hm-8P; Wed, 07 Feb 2024 07:25:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rXgxF-0006tI-J9
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 07:23:06 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rXgxE-0007D6-51
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 07:23:05 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a3884b1a441so48536766b.2
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 04:23:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=vrull.eu; s=google; t=1707308583; x=1707913383; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M2mD/C0rP4kd3MQb0al+PrLOXSiBVfqFrpY8FsaZgMg=;
- b=UrOV9EvVV8SfVt0s8WrFJUaEgAOY9Di1s+kTtzM265271gQqD+jnL34F6LfZIS4j7j
- sSgS4nNaLq5EVDoCj+yLkOpUXX1V93Igak4Ci0FVNd7Gdx9GioAbkqKM8Ly/mCBp74/2
- 9kbH5TsdvaLk2ARaFMRZ8lpzme4auuRkGi4IE3GcZUgjn3X6uTWfqlYrg2bnuBQn4yxb
- 8KI1BuM7kaOqfifvs/0DtfYlTMJrGQWpxhQfQZRdr0hx5Lnk5CkUmJEGALH2Yzd/x33K
- rTL8+bPuBRN5TXjVbuYt/9rvJcQ+zDeHufBdy+XVbtBdqkyx1Dc+m3bKmSuyG1AgszlR
- bBaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707308583; x=1707913383;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M2mD/C0rP4kd3MQb0al+PrLOXSiBVfqFrpY8FsaZgMg=;
- b=rZT34PEtgm+J86MiPl+1xqgxzODlavelLH0d571Y51YF/Mny0FvO7X1JuDA13mn5iZ
- 6FX9IA/NAFazHz/hAZ+iI+tHfjSch6NENX76KYZJncMTzKa2dlOVJN4FzYsKzVQ+tbe2
- EchbSY58X+PnRBnzkyqpJI6QmukN1zqHF36GpVqPsU3U2P2reDeasydv3z8Wjph+fioj
- MuYj++kmbXolJB0JAJdmairZnmyB0GbvWy2d7qrl8SPo9qkUfGtjMtf64b7hsKnyVcJO
- IgXGDp1qfBQzuq4jeCInaplWDs/y3gE0NlB49wvBL6PT2/gIjmntIMSRPKQ+91X7VVjU
- xmOg==
-X-Gm-Message-State: AOJu0Yw4yOfzYojluRaSnB7/v2Yz4IpaszaGufJF/7rTEN7XXNVAR2/t
- gkVnIjrQz2HaOw7sg3S0Y6v9EEidRu9pPdODbVs8hc3HpTISEQKPgyFkhc+M7EM=
-X-Google-Smtp-Source: AGHT+IEHBp53ZrCFbzZuHyFoLtmbx8iGa7isZd3ykvcx85ipWHcZuS3hIybueK33p/8scZl1T4QuZw==
-X-Received: by 2002:a17:906:b208:b0:a38:71e8:3182 with SMTP id
- p8-20020a170906b20800b00a3871e83182mr1243037ejz.23.1707308582807; 
- Wed, 07 Feb 2024 04:23:02 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0CEO29wy8m+7RRggoIrYxQ95Si4c5bMfx+JnQn3ez138hfzzJmV86vC/E+DEJH6YsAXdwNpB+LHWiM/54FDg2bikB/2tPA4xq6mPlt0+HDEufoJ3158y8Oi5hhV77qFu02O9oAtOLixBNdUuPYflG0aKzjFm5M1Fgq05nxOoUC0JmWLIVtUmY0SlsRlsAZNdCShzONF1dEQnk72cY+cpSWzqof0tjnaDCSG9zTE3LmosizhB4z3cI9D0QCcnc/5ee4IfVJ+RH9tIR9kg2Mv8PuVXhnTxV6GWomqoXrAc5xuM3g2rYDFFcjt6gkD/k5PZYprOT0DYrxdh/QtHzivm1V8FIfyViQdiwIA==
-Received: from beast.fritz.box (62-178-148-172.cable.dynamic.surfer.at.
- [62.178.148.172]) by smtp.gmail.com with ESMTPSA id
- v8-20020a1709063bc800b00a3515b35be4sm702284ejf.104.2024.02.07.04.23.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Feb 2024 04:23:01 -0800 (PST)
-From: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>
-Cc: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH 2/2] linux-user/riscv: Add Ztso extension to hwprobe
-Date: Wed,  7 Feb 2024 13:22:55 +0100
-Message-ID: <20240207122256.902627-3-christoph.muellner@vrull.eu>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240207122256.902627-1-christoph.muellner@vrull.eu>
-References: <20240207122256.902627-1-christoph.muellner@vrull.eu>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rXgzY-0000a8-P4; Wed, 07 Feb 2024 07:25:29 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rXgzT-0007v9-0m; Wed, 07 Feb 2024 07:25:26 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 165F34E6096;
+ Wed,  7 Feb 2024 13:25:08 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id UCV4WmfofHJJ; Wed,  7 Feb 2024 13:25:06 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 1E8C04E60D1; Wed,  7 Feb 2024 13:25:06 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 16A677456FE;
+ Wed,  7 Feb 2024 13:25:06 +0100 (CET)
+Date: Wed, 7 Feb 2024 13:25:06 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: Re: [PATCH v2 2/4] hw/ppc/ppc4xx_pci: Extract PCI host definitions
+ to hw/pci-host/ppc4xx.h
+In-Reply-To: <20240207091254.1478-3-philmd@linaro.org>
+Message-ID: <ff46ab77-1d1c-112d-cde0-4367427844a9@eik.bme.hu>
+References: <20240207091254.1478-1-philmd@linaro.org>
+ <20240207091254.1478-3-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=christoph.muellner@vrull.eu; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1810067198-1707308706=:38665"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,35 +69,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch exposes Ztso via hwprobe in QEMU's user space emulator.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
----
- linux-user/syscall.c | 3 +++
- 1 file changed, 3 insertions(+)
+--3866299591-1810067198-1707308706=:38665
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 3ba20f99ad..24fa11d946 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8826,6 +8826,7 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
- #define		RISCV_HWPROBE_EXT_ZVFH		(1 << 30)
- #define		RISCV_HWPROBE_EXT_ZVFHMIN	(1 << 31)
- #define		RISCV_HWPROBE_EXT_ZFA		(1ULL << 32)
-+#define		RISCV_HWPROBE_EXT_ZTSO		(1ULL << 33)
- #define		RISCV_HWPROBE_EXT_ZACAS		(1ULL << 34)
- #define		RISCV_HWPROBE_EXT_ZICOND	(1ULL << 35)
- 
-@@ -8940,6 +8941,8 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
-                      RISCV_HWPROBE_EXT_ZVFHMIN : 0;
-             value |= cfg->ext_zfa ?
-                      RISCV_HWPROBE_EXT_ZFA : 0;
-+            value |= cfg->ext_ztso ?
-+                     RISCV_HWPROBE_EXT_ZTSO : 0;
-             value |= cfg->ext_zacas ?
-                      RISCV_HWPROBE_EXT_ZACAS : 0;
-             value |= cfg->ext_zicond ?
--- 
-2.43.0
+On Wed, 7 Feb 2024, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Message-Id: <20231011132427.65001-3-philmd@linaro.org>
+> ---
+> MAINTAINERS                  |  1 +
+> include/hw/pci-host/ppc4xx.h | 17 +++++++++++++++++
+> include/hw/ppc/ppc4xx.h      |  5 -----
+> hw/ppc/ppc440_bamboo.c       |  1 +
+> hw/ppc/ppc440_pcix.c         |  2 +-
+> hw/ppc/ppc440_uc.c           |  1 +
+> hw/ppc/ppc4xx_pci.c          |  2 +-
+> hw/ppc/sam460ex.c            |  1 +
+> 8 files changed, 23 insertions(+), 7 deletions(-)
+> create mode 100644 include/hw/pci-host/ppc4xx.h
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 2f9741b898..b288f0dc76 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2068,6 +2068,7 @@ F: hw/ppc/ppc4xx*.c
+> F: hw/ppc/ppc440_uc.c
+> F: hw/ppc/ppc440.h
+> F: hw/i2c/ppc4xx_i2c.c
+> +F: include/hw/pci-host/ppc4xx.h
+> F: include/hw/ppc/ppc4xx.h
+> F: include/hw/i2c/ppc4xx_i2c.h
+> F: hw/intc/ppc-uic.c
+> diff --git a/include/hw/pci-host/ppc4xx.h b/include/hw/pci-host/ppc4xx.h
+> new file mode 100644
+> index 0000000000..dc36e1ea29
+> --- /dev/null
+> +++ b/include/hw/pci-host/ppc4xx.h
+> @@ -0,0 +1,17 @@
+> +/*
+> + * QEMU PowerPC 4xx PCI-host definitions
+> + *
+> + * Copyright (c) 2007 Jocelyn Mayer
+> + *
+> + * SPDX-License-Identifier: MIT
 
+Not that it matters much for simple definitions but these lines were added 
+by me and I prefer GPLv2+.
+
+Regards,
+BALATON Zoltan
+
+> + */
+> +
+> +#ifndef HW_PCIHOST_PPC4XX_H
+> +#define HW_PCIHOST_PPC4XX_H
+> +
+> +#define TYPE_PPC4xx_HOST_BRIDGE "ppc4xx-host-bridge"
+> +#define TYPE_PPC4xx_PCI_HOST "ppc4xx-pci-host"
+> +#define TYPE_PPC440_PCIX_HOST "ppc440-pcix-host"
+> +#define TYPE_PPC460EX_PCIE_HOST "ppc460ex-pcie-host"
+> +
+> +#endif
+> diff --git a/include/hw/ppc/ppc4xx.h b/include/hw/ppc/ppc4xx.h
+> index ea7740239b..1bd9b8821b 100644
+> --- a/include/hw/ppc/ppc4xx.h
+> +++ b/include/hw/ppc/ppc4xx.h
+> @@ -29,11 +29,6 @@
+> #include "exec/memory.h"
+> #include "hw/sysbus.h"
+>
+> -#define TYPE_PPC4xx_HOST_BRIDGE "ppc4xx-host-bridge"
+> -#define TYPE_PPC4xx_PCI_HOST "ppc4xx-pci-host"
+> -#define TYPE_PPC440_PCIX_HOST "ppc440-pcix-host"
+> -#define TYPE_PPC460EX_PCIE_HOST "ppc460ex-pcie-host"
+> -
+> /*
+>  * Generic DCR device
+>  */
+> diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
+> index c75c3083e6..e18f57efce 100644
+> --- a/hw/ppc/ppc440_bamboo.c
+> +++ b/hw/ppc/ppc440_bamboo.c
+> @@ -24,6 +24,7 @@
+> #include "elf.h"
+> #include "hw/char/serial.h"
+> #include "hw/ppc/ppc.h"
+> +#include "hw/pci-host/ppc4xx.h"
+> #include "sysemu/sysemu.h"
+> #include "sysemu/reset.h"
+> #include "hw/sysbus.h"
+> diff --git a/hw/ppc/ppc440_pcix.c b/hw/ppc/ppc440_pcix.c
+> index d84418cb7b..1926ae2a27 100644
+> --- a/hw/ppc/ppc440_pcix.c
+> +++ b/hw/ppc/ppc440_pcix.c
+> @@ -25,7 +25,7 @@
+> #include "qemu/module.h"
+> #include "qemu/units.h"
+> #include "hw/irq.h"
+> -#include "hw/ppc/ppc4xx.h"
+> +#include "hw/pci-host/ppc4xx.h"
+> #include "hw/pci/pci_device.h"
+> #include "hw/pci/pci_host.h"
+> #include "trace.h"
+> diff --git a/hw/ppc/ppc440_uc.c b/hw/ppc/ppc440_uc.c
+> index 7d6ca70387..1312aa2080 100644
+> --- a/hw/ppc/ppc440_uc.c
+> +++ b/hw/ppc/ppc440_uc.c
+> @@ -14,6 +14,7 @@
+> #include "qemu/log.h"
+> #include "hw/irq.h"
+> #include "hw/ppc/ppc4xx.h"
+> +#include "hw/pci-host/ppc4xx.h"
+> #include "hw/qdev-properties.h"
+> #include "hw/pci/pci.h"
+> #include "sysemu/reset.h"
+> diff --git a/hw/ppc/ppc4xx_pci.c b/hw/ppc/ppc4xx_pci.c
+> index e4101398c9..b6c6c8993c 100644
+> --- a/hw/ppc/ppc4xx_pci.c
+> +++ b/hw/ppc/ppc4xx_pci.c
+> @@ -24,7 +24,7 @@
+> #include "qemu/osdep.h"
+> #include "qemu/log.h"
+> #include "hw/irq.h"
+> -#include "hw/ppc/ppc4xx.h"
+> +#include "hw/pci-host/ppc4xx.h"
+> #include "migration/vmstate.h"
+> #include "qemu/module.h"
+> #include "sysemu/reset.h"
+> diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+> index 1e615b8d35..a28498f39c 100644
+> --- a/hw/ppc/sam460ex.c
+> +++ b/hw/ppc/sam460ex.c
+> @@ -25,6 +25,7 @@
+> #include "elf.h"
+> #include "exec/memory.h"
+> #include "ppc440.h"
+> +#include "hw/pci-host/ppc4xx.h"
+> #include "hw/block/flash.h"
+> #include "sysemu/sysemu.h"
+> #include "sysemu/reset.h"
+>
+--3866299591-1810067198-1707308706=:38665--
 
