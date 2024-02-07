@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B02C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F9EFC4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXmXJ-0004ji-OP; Wed, 07 Feb 2024 13:20:41 -0500
+	id 1rXmXG-0004ho-Pl; Wed, 07 Feb 2024 13:20:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXI-0004ie-2i
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:40 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXF-0004hA-CF
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:37 -0500
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXG-0008AI-IJ
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:39 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXD-00086J-NG
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:37 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id A793761999;
- Wed,  7 Feb 2024 18:20:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87727C433C7;
- Wed,  7 Feb 2024 18:20:36 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id A191961A17;
+ Wed,  7 Feb 2024 18:20:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82738C43390;
+ Wed,  7 Feb 2024 18:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707330037;
- bh=vqjS4Tn8JsTETJjKAhscWBmZAWUWeDAIiHK9Uvc1mpY=;
+ s=k20201202; t=1707330033;
+ bh=x2QqFV0OrTV+B0MBMSpUKn1JRbPiQZhKDBTVpogYAiY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IL+jR9Qq+myOvvZsQ/8Ie4IfEkzVD8SUY90tNqIFBRM2CKeVD1L7hxDl7soKlQBzd
- LDMY1Mgd79jrWIkmzMgOsHEn45E0lrQGEdZX3kCBrMbcnsJTFT5SRNMoGqn3Tb0zpi
- bbex5SiAnuJk0qfHu2iT8y5IywAo1Hzzuk26+yK8r3z7SgQ+5zh3xNTHkznnzETPyR
- 4/7Npbb+dvBARGEQR07CTulXysSvT/0jQ53wlldMgsNBOPB6OqwUGJqOs5acy2uxwp
- 9IqomqZHxKkcUVY4Lcv2IQjfcQu1FvBshN7YHIsrgt62xtTXfS+x6kA+g22V1VLkz6
- hK7ABblut0ydg==
+ b=tC54nD+38Adey29kFuNhnmdIp4Y/T1zUYpzutCuYTOCIRY2b84wEknq6WZh04w7fi
+ zJcwMiVjgX0OCNuz0KJ0aX27sKa7HtdZquux4MZZaKUSLIwwDNETOPP7ebAYT2WiMi
+ BEfu+JQX5zeXQlmkPfTqAtkfZbyn3j8aT8VoM7hnLD/tydP7Ve2yoHDD/pNTbJj9fy
+ UyyW24u8yoAl2Y2YqaZpGMlfql/89IpB4hMD84vXDnoMKv5imogeIa7z8Ca9tfKHsv
+ 5zIXzfLzyHG4oE9eJc11on5sA7JgvBbmjX85O4JjSgTnPQ/S8RO2E57BebT30W7LT0
+ 5cqGqQga0IZ+g==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PATCH 08/13] lasi: Add reset I/O ports for LASI audio and FDC
-Date: Wed,  7 Feb 2024 19:20:18 +0100
-Message-ID: <20240207182023.36316-9-deller@kernel.org>
+Subject: [PATCH 05/13] hw/pci-host/astro: Implement Hard Fail and Soft Fail
+ mode
+Date: Wed,  7 Feb 2024 19:20:15 +0100
+Message-ID: <20240207182023.36316-6-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240207182023.36316-1-deller@kernel.org>
 References: <20240207182023.36316-1-deller@kernel.org>
@@ -71,78 +72,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Linux writes zeroes at bootup into the default ports for LASI audio and
-LASI floppy controller to reset those devices.  Allow writing to those
-registers to avoid HPMCs.
+The Astro/Elroy chip can work in either Hard-Fail or Soft-Fail mode.
+
+Hard fail means the system bus will send an HPMC (=crash) to the
+processor, soft fail means the system bus will ignore timeouts of
+MMIO-reads or MMIO-writes and return -1ULL.
+
+The HF mode is controlled by a bit in the status register and is usually
+programmed by the OS. Return the corresponing values based on the current
+value of that bit.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/misc/lasi.c         | 11 +++++++++++
- include/hw/misc/lasi.h |  2 ++
- 2 files changed, 13 insertions(+)
+ hw/pci-host/astro.c         | 23 +++++++++++++++++------
+ include/hw/pci-host/astro.h |  2 ++
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
-index 9cfa5bb316..970fc98b5c 100644
---- a/hw/misc/lasi.c
-+++ b/hw/misc/lasi.c
-@@ -36,10 +36,13 @@ static bool lasi_chip_mem_valid(void *opaque, hwaddr addr,
-     case LASI_IAR:
+diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+index 42bd65de53..39549df3f5 100644
+--- a/hw/pci-host/astro.c
++++ b/hw/pci-host/astro.c
+@@ -131,15 +131,21 @@ static MemTxResult elroy_chip_read_with_attrs(void *opaque, hwaddr addr,
+             if (s->iosapic_reg_select < ARRAY_SIZE(s->iosapic_reg)) {
+                 val = s->iosapic_reg[s->iosapic_reg_select];
+             } else {
+-                val = 0;
+-                ret = MEMTX_DECODE_ERROR;
++                goto check_hf;
+             }
+         }
+         trace_iosapic_reg_read(s->iosapic_reg_select, size, val);
+         break;
+     default:
+-        val = 0;
+-        ret = MEMTX_DECODE_ERROR;
++    check_hf:
++        if (s->status_control & HF_ENABLE) {
++            val = 0;
++            ret = MEMTX_DECODE_ERROR;
++        } else {
++            /* return -1ULL if HardFail is disabled */
++            val = ~0;
++            ret = MEMTX_OK;
++        }
+     }
+     trace_elroy_read(addr, size, val);
  
-     case LASI_LPT:
-+    case LASI_AUDIO:
-+    case LASI_AUDIO + 4:
-     case LASI_UART:
-     case LASI_LAN:
-     case LASI_LAN + 12: /* LASI LAN MAC */
-     case LASI_RTC:
-+    case LASI_FDC:
+@@ -188,7 +194,7 @@ static MemTxResult elroy_chip_write_with_attrs(void *opaque, hwaddr addr,
+         if (s->iosapic_reg_select < ARRAY_SIZE(s->iosapic_reg)) {
+             s->iosapic_reg[s->iosapic_reg_select] = val;
+         } else {
+-            ret = MEMTX_DECODE_ERROR;
++            goto check_hf;
+         }
+         break;
+     case 0x0840:                /* IOSAPIC_REG_EOI */
+@@ -201,7 +207,12 @@ static MemTxResult elroy_chip_write_with_attrs(void *opaque, hwaddr addr,
+         }
+         break;
+     default:
+-        ret = MEMTX_DECODE_ERROR;
++    check_hf:
++        if (s->status_control & HF_ENABLE) {
++            ret = MEMTX_DECODE_ERROR;
++        } else {
++            ret = MEMTX_OK;
++        }
+     }
+     return ret;
+ }
+diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
+index f63fd220f3..e2966917cd 100644
+--- a/include/hw/pci-host/astro.h
++++ b/include/hw/pci-host/astro.h
+@@ -27,6 +27,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ElroyState, ELROY_PCI_HOST_BRIDGE)
+ #define IOS_DIST_BASE_ADDR      0xfffee00000ULL
+ #define IOS_DIST_BASE_SIZE           0x10000ULL
  
-     case LASI_PCR ... LASI_AMR:
-         ret = true;
-@@ -80,6 +83,7 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
-     case LASI_UART:
-     case LASI_LAN:
-     case LASI_LAN + 12:
-+    case LASI_FDC:
-         val = 0;
-         break;
-     case LASI_RTC:
-@@ -145,12 +149,19 @@ static MemTxResult lasi_chip_write_with_attrs(void *opaque, hwaddr addr,
-     case LASI_LPT:
-         /* XXX: reset parallel port */
-         break;
-+    case LASI_AUDIO:
-+    case LASI_AUDIO + 4:
-+        /* XXX: reset audio port */
-+        break;
-     case LASI_UART:
-         /* XXX: reset serial port */
-         break;
-     case LASI_LAN:
-         /* XXX: reset LAN card */
-         break;
-+    case LASI_FDC:
-+        /* XXX: reset Floppy controller */
-+        break;
-     case LASI_RTC:
-         s->rtc_ref = val - time(NULL);
-         break;
-diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
-index 0a8c7352be..f01c0f680a 100644
---- a/include/hw/misc/lasi.h
-+++ b/include/hw/misc/lasi.h
-@@ -26,9 +26,11 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
- #define LASI_IAR        0x10
++#define HF_ENABLE       0x40    /* enable HF mode (default is -1 mode) */
++
+ struct AstroState;
  
- #define LASI_LPT        0x02000
-+#define LASI_AUDIO      0x04000
- #define LASI_UART       0x05000
- #define LASI_LAN        0x07000
- #define LASI_RTC        0x09000
-+#define LASI_FDC        0x0A000
- 
- #define LASI_PCR        0x0C000 /* LASI Power Control register */
- #define LASI_ERRLOG     0x0C004 /* LASI Error Logging register */
+ struct ElroyState {
 -- 
 2.43.0
 
