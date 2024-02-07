@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3E0C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 20:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1057C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 20:17:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXoKy-0002lZ-Bc; Wed, 07 Feb 2024 15:16:04 -0500
+	id 1rXoLl-0003C0-HX; Wed, 07 Feb 2024 15:16:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoKs-0002kg-1s
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:15:58 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoLk-0003BW-NH
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:16:52 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoKo-0006Qe-LW
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:15:56 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a26fa294e56so142675266b.0
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 12:15:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoLj-0006br-7M
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:16:52 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a3510d79ae9so129788366b.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 12:16:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707336951; x=1707941751; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707337009; x=1707941809; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bSl+FKhZWTsWIuS2+/5PcEKJbx1dYx0K0dOrMl3WDyY=;
- b=DNkbrTKhXs5qsMz2LRo4cIPvtF+IXncpePtolh3+PJoUjfTiyHSVAOMbKiu/lGXUej
- 8E3XeVjaL+spjxmgki9Fu4eWNr+K69nCvFMCKeuQIdj0svkA1uP9FaIs4/4xLOa5Lz9C
- YLaMy+x/Qoyw9KqWg5i//B1v8VGEJsGBTyXqxNX1hTNV6LB973VbZSSDsskEOKY9BSri
- 2VKCjP9TMd4+4UORUY8xtYxTqmfGIqUlWVXlSd3tzTla9eNWunTe+n1i0NFHecItmzq2
- HApbXpEoGY/b9TovUxVSEMZK6JCiZqe/+x0a+6hz5fStVO1+gq9mV/MxZHr1UrGHTx9B
- 0ZnA==
+ bh=yuMs4atNuAlSfjHW16r6i7n3j4Q0SU76OI+2jOBmN1M=;
+ b=ZH2BqaImYRBKecjs2/JpYa1GmLTch3KlQ7s/U3sjStj4S6Mp2zyK7dixrAfbK/9bE1
+ iqP30cpBnCTs1arwsPwM9wiB3/Edxt+Jz9RPiZMYZ7xK/iD08PBlPfQGmoeDWdL2WMcI
+ iQbeeHj4Ezdk6jb4RK0cBUvGg80Su7pvmQSnfHaH79STABLBxtQc+HcjXDsJGd6VNuA4
+ 5Fgrtvpfh2pXyaImRD+T6WS44y1N1Dwla78jOeB9OeoDJ7m+S7JIVKrRpi+HDKQ3FyGv
+ XioaCsNXT4KdfYK91i0wPfM3/OIZBhZ73LTxALLonuC3kbOkslm9F79+uXmspd21r5Xy
+ YCfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707336951; x=1707941751;
+ d=1e100.net; s=20230601; t=1707337009; x=1707941809;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bSl+FKhZWTsWIuS2+/5PcEKJbx1dYx0K0dOrMl3WDyY=;
- b=czOtIG0ZThjPGJkPWiNqiLR6kJnIgVLMWCyKOKTSmch2gG+XPibZIMqZPdGH/IrP+3
- lYwyhL88vR5rNDnY3OtxeCoJrFHjO5Dzce2AXK/Jmuh5I2F/jy0g7uil19JORfAFrJ94
- /WbQgZc5GC4cYyCLprsFQTGx1S0PqfiPfSHsYr/tAaNoFP0RL1Ljk1IsWd21YvVhehos
- iT5ExqMSfle5E0FHevT/1uzWS7KnmNkvpX+iak4QULr0WnzG3KnydU8tzrGHLdQI7JL9
- RcCvZL3i0skS8lFb/khBl3tSHUQAxJR3+J5DKhna6XtqNC+iDA3dNs8/PrgnblsTjIGM
- bgDw==
+ bh=yuMs4atNuAlSfjHW16r6i7n3j4Q0SU76OI+2jOBmN1M=;
+ b=n6NyKws4mtS+xPR6jT9EpKYvMS9punmRJyVwt1ZYPBcPmmatW7ITSf3OuaptYAbDrK
+ A1ZJ2c0iYc+JFMRwuP4PJNnwdW1UHGdIpBhntUHwZDGSjElBnAPQIpiWZ9ZzdagV/S30
+ Uf01ZzuuW2XBNaQ8GiBOr+3QUFUqE199/9+cv0DJ3F20/vfl/2J5jnOE87SRv4MfUfS+
+ Lft1knjB0wlOWAzbe02k0GhbV0EXjA3PWb68n7nV0v9hwT/iwFdCiu81Q90TdRUb+GAl
+ bW8GKTWWvsnvH2l25BrFR+g1ME7ZbzgDU+u1tzvFqiXwtCiBoTucev7Cf+s5B6p/WmEq
+ o2yA==
+X-Gm-Message-State: AOJu0Yx92vJ0a5woC71TbEmKL05Mb7lAJlEEUFc0P4j6ojD1rz6KdOJo
+ buBHrh+LOi1PDU1G01G5J6stD2J+Rm0JuewCol8SklxEONKq4CXYZGtdkXepMLQ=
+X-Google-Smtp-Source: AGHT+IEuyTgAta7iNLIzmW4ZOfO98qD2ciDQTZWZAA3PRDQo0Y9s3WgX+v2+T2Q5lFLVwWtB4DAe7A==
+X-Received: by 2002:a17:906:f356:b0:a37:bca9:45d0 with SMTP id
+ hg22-20020a170906f35600b00a37bca945d0mr4544792ejb.72.1707337009547; 
+ Wed, 07 Feb 2024 12:16:49 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnT9lI/n75T8EBmDWepl8dwp58GIu3/AZlVXsehX1QP0BSsHAiFmdsMscGVh7oGigYD0L/MYGlt70JQs7M7Uc1ojPcnYM=
-X-Gm-Message-State: AOJu0Yy+V2y/RiGX059g7RPDjquQ3gz/RqdPA8Q5hjjorqeRqAwa4fEm
- hTWENNZ4R6JmnA8AkI4u5krQiI05tMiODlvDSxbOKlQ5N6vXeAWdZR08CS2StKQ=
-X-Google-Smtp-Source: AGHT+IH9q8CoEKPOL9Xcn9Y4Tu142I2r+xwLquQ6Is0N3mO7sleJqGp6yQQ8HMfKGaMgt7wS+V2+NA==
-X-Received: by 2002:a17:906:32c2:b0:a38:4fb5:571d with SMTP id
- k2-20020a17090632c200b00a384fb5571dmr3424365ejk.1.1707336951533; 
- Wed, 07 Feb 2024 12:15:51 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSSrbnnRayu5UaVEvp3CetnWlkV4QKR5ze/7lixHscPhtNN8DP+j16WUqtJJTllmKe283u1AxVsPHgLWyOnZVkju4eHiSchsViZ0+kcapjvjFpDXlzUeIAGjiY95gr3qmy2zrNCriA2CO2jl0xYhGXmpI=
+ AJvYcCX8dzNOdPMRzwGTPoPAbuOcwAVaGijKjjF7C/uXPYHGL15THoH4sxoCWbEriGFEAY5Ecyb0VUul8vkrVh55VBA/GgnD3hNkRQk6IlU4Xl4WlCGk0rVnmFXud2CtcayvR6K0DxNwAQcoxtXzOJr/Nsrvxso=
 Received: from [192.168.69.100] ([176.187.214.82])
  by smtp.gmail.com with ESMTPSA id
- hw16-20020a170907a0d000b00a36f28baa8dsm1108764ejc.111.2024.02.07.12.15.50
+ hw16-20020a170907a0d000b00a36f28baa8dsm1108764ejc.111.2024.02.07.12.16.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 12:15:51 -0800 (PST)
-Message-ID: <357afa82-3cfa-41a7-8b6f-de96d236ad5a@linaro.org>
-Date: Wed, 7 Feb 2024 21:15:48 +0100
+ Wed, 07 Feb 2024 12:16:49 -0800 (PST)
+Message-ID: <8d528c75-a254-4cfd-8512-344acb6308dd@linaro.org>
+Date: Wed, 7 Feb 2024 21:16:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/14] migration: Modify ram_init_bitmaps() to report
- dirty tracking errors
+Subject: Re: [PATCH 05/14] vfio: Add Error** argument to
+ .set_dirty_page_tracking() handler
 Content-Language: en-US
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>
 References: <20240207133347.1115903-1-clg@redhat.com>
- <20240207133347.1115903-5-clg@redhat.com>
+ <20240207133347.1115903-6-clg@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240207133347.1115903-5-clg@redhat.com>
+In-Reply-To: <20240207133347.1115903-6-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +99,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/2/24 14:33, Cédric Le Goater wrote:
-> The .save_setup() handler has now an Error** argument that we can use
-> to propagate errors reported by the .log_global_start() handler. Do
-> that for the RAM. qemu_savevm_state_setup() will store the error under
-> the migration stream for later detection in the migration sequence.
+> We will use the Error object to improve error reporting in the
+> .log_global*() handlers of VFIO.
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   migration/ram.c | 19 ++++++++++---------
->   1 file changed, 10 insertions(+), 9 deletions(-)
+>   include/hw/vfio/vfio-container-base.h | 4 ++--
+>   hw/vfio/common.c                      | 4 ++--
+>   hw/vfio/container-base.c              | 4 ++--
+>   hw/vfio/container.c                   | 6 +++---
+>   4 files changed, 9 insertions(+), 9 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index b2813b0c117985425c842d91f011bb895955d738..f22fcb5a214be2717b42815371346401bb7fce51 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -81,7 +81,7 @@ int vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+>   void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+>                                          MemoryRegionSection *section);
+>   int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+> -                                           bool start);
+> +                                           bool start, Error **errp);
 
+Since here, please document modified prototypes, otherwise:
 
-> -static void ram_init_bitmaps(RAMState *rs)
-> +static void ram_init_bitmaps(RAMState *rs, Error **errp)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Please return a boolean.
-
->   {
-> -    Error *local_err = NULL;
-> -
->       qemu_mutex_lock_ramlist();
->   
->       WITH_RCU_READ_LOCK_GUARD() {
->           ram_list_init_bitmaps();
->           /* We don't use dirty log with background snapshots */
->           if (!migrate_background_snapshot()) {
-> -            memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION, &local_err);
-> -            if (local_err) {
-> -                error_report_err(local_err);
-> +            memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION, errp);
-> +            if (*errp) {
-> +                break;
->               }
->               migration_bitmap_sync_precopy(rs, false);
->           }
-> @@ -2828,7 +2826,7 @@ static void ram_init_bitmaps(RAMState *rs)
->       migration_bitmap_clear_discarded_pages(rs);
->   }
+>   int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                                         VFIOBitmap *vbmap,
+>                                         hwaddr iova, hwaddr size);
+> @@ -122,7 +122,7 @@ struct VFIOIOMMUClass {
+>       void (*detach_device)(VFIODevice *vbasedev);
+>       /* migration feature */
+>       int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+> -                                   bool start);
+> +                                   bool start, Error **errp);
+>       int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+>                                 VFIOBitmap *vbmap,
+>                                 hwaddr iova, hwaddr size);
 
 
