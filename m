@@ -4,67 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B759C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 06:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227A9C4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 06:55:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXbmr-0000PQ-FV; Wed, 07 Feb 2024 01:52:01 -0500
+	id 1rXbpl-0001fA-QI; Wed, 07 Feb 2024 01:55:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rXbmp-0000G4-8R
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 01:51:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXbpi-0001eq-M7
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 01:54:59 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rXbmn-0006Te-9v
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 01:51:58 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXbpg-0006sM-G9
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 01:54:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707288715;
+ s=mimecast20190719; t=1707288895;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HF5y9eSByAFiyVqZywtQLU54hyzU1gc1R7olA1k3F78=;
- b=d13HNeNTD4YlaZjVNSi9sXr8qQ5aPYvc2ekodlc3sPhyGVvzfwWxYdJtKK4+HekL1DZsbI
- AS0TDSWdRftctIow/aFVBQYyh/WHrbfMKzMLlYMLlEPrTyLv4oQDtMmUng27AaB2VBxUbo
- pkNn1H5SWTMjo/UZ1zlEcI4+wtu6S80=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xg1lj879D3VIhM61yRu3naU6ggdd9zhRW+3NBFpYdww=;
+ b=FanpRMRJhT2uyJF5cbs8/A0mYXKM7Ib+JTiQ9wHSbyJFoEy4HI1y1ShIjn7Z44NJk/lZE8
+ kOmmVVGO35gsqO9bpImbUUgjFmHdUNZ0dSWkjeP4IlIPOaqkqhkYSs4gS/++l+Fu/0729U
+ CzfKi3tZJWa3ZSxrG/Rv04LPwYDJfLM=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-83-loRVEkj3MlqGn77NWJgoVQ-1; Wed, 07 Feb 2024 01:51:54 -0500
-X-MC-Unique: loRVEkj3MlqGn77NWJgoVQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BF22785A58C;
- Wed,  7 Feb 2024 06:51:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.123])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 63A99400D6D2;
- Wed,  7 Feb 2024 06:51:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5D54221E66D0; Wed,  7 Feb 2024 07:51:52 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael S
- . Tsirkin" <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org,  qemu-trivial@nongnu.org,  Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH] hw/intc: Handle the error of IOAPICCommonClass.realize()
-In-Reply-To: <ZbsPRB4OM027fbMA@intel.com> (Zhao Liu's message of "Thu, 1 Feb
- 2024 11:25:56 +0800")
-References: <20240131142902.115964-1-zhao1.liu@linux.intel.com>
- <cdb1c6cd-0095-4787-a740-17b42e061548@linaro.org>
- <ZbsPRB4OM027fbMA@intel.com>
-Date: Wed, 07 Feb 2024 07:51:52 +0100
-Message-ID: <875xz0ojg7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ us-mta-153-DKZjLAaLNTqJanS3h6RqJA-1; Wed, 07 Feb 2024 01:54:53 -0500
+X-MC-Unique: DKZjLAaLNTqJanS3h6RqJA-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-29692c99979so60438a91.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 22:54:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707288892; x=1707893692;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xg1lj879D3VIhM61yRu3naU6ggdd9zhRW+3NBFpYdww=;
+ b=lbCrVUlA1mQ8+Gn78VEqkYLtXSWan9sMOFAR+rk6FACIthgQRbXLze2KJv+7x1pDVe
+ 9f3m5hmyderKjMfz0DIUkKCBJvoBFg+EQL0b7PQskdEl4H9gm3JnwJ4H7DHZ7OHdMaW7
+ Zz66b0Fiubw6ceV3Rx1yMGd+FQxXhd0p4kQrkHvJ4sKRKPrGcL6BNfgROeKb9AXFC0zc
+ zdzPPeqTdgHL47Zc4rTOiCFcMT/x9jGMkzFf+ZFDyjA5nxh0cX1nyiA2yH/F07SY4D2i
+ VkW8WK1MZq3aMpJPESz+QI9vSx3aD/p4oosX83XmzJbCdNnqkE3d8hFVxadClmLTIVZi
+ VzbA==
+X-Gm-Message-State: AOJu0Yy83aHtNmySwYhORZiq8toFxvJToUW5SlEpQhCWZfhaX7o55GC0
+ f/YUEzjDOeJQLDpigKvaJ2ugV7bo7mxOtd1vqjHHdMFaSe/E9POtvFlxrBv1qHFYJGM01vzLGM+
+ H1gYifO0VTgtzHgTnCICdHDT/T/rAJ6MYyqsFxQ69W4TtaqALJ3h0
+X-Received: by 2002:a17:902:e884:b0:1d9:d43e:598a with SMTP id
+ w4-20020a170902e88400b001d9d43e598amr5371443plg.5.1707288892722; 
+ Tue, 06 Feb 2024 22:54:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF9ZiqxJYHkHX1Ia2B94+EW+UERb1loRTdk/STC84Du5tYNmULOB6EHlaCXSZrklzfYk3QZYw==
+X-Received: by 2002:a17:902:e884:b0:1d9:d43e:598a with SMTP id
+ w4-20020a170902e88400b001d9d43e598amr5371429plg.5.1707288892413; 
+ Tue, 06 Feb 2024 22:54:52 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW6ZQs0YC6KpcsvE7NqKm8FZEawVqIfUtWIM5iSic6fyxNS+Ht3I4NFaVwuYsjq3P9AX22vbzH3S+0hbCkfu19bvpkbUDlpzZDnCwLDWxyOA6sPyq0=
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ 21-20020a170902ee5500b001d752c4f180sm661433plo.94.2024.02.06.22.54.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Feb 2024 22:54:52 -0800 (PST)
+Date: Wed, 7 Feb 2024 14:54:43 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] qapi/migration: Add missing tls-authz documentation
+Message-ID: <ZcMpM5BU5F5qcP2v@x1n>
+References: <20240207032836.268183-1-peterx@redhat.com>
+ <877cjgx0w1.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <877cjgx0w1.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -88,205 +103,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@linux.intel.com> writes:
+On Wed, Feb 07, 2024 at 07:07:58AM +0100, Markus Armbruster wrote:
+> peterx@redhat.com writes:
+> 
+> > From: Peter Xu <peterx@redhat.com>
+> >
+> > As reported in Markus's recent enforcement series on qapi doc [1], we
+> > accidentally miss one entry for tls-authz.  Add it.  Then we can drop
+> > @MigrateSetParameters from documentation-exceptions safely later.
+> >
+> > [1] https://lore.kernel.org/r/20240205074709.3613229-1-armbru@redhat.com
+> >
+> > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> > Cc: Fabiano Rosas <farosas@suse.de>
+> > Reported-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  qapi/migration.json | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index 819708321d..f4c5f59e01 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -980,6 +980,10 @@
+> >  #     2.9) Previously (since 2.7), this was reported by omitting
+> >  #     tls-hostname instead.
+> >  #
+> > +# @tls-authz: ID of the 'authz' object subclass that provides access
+> > +#     control checking of the TLS x509 certificate distinguished name.
+> > +#     (Since 4.0)
+> > +#
+> >  # @max-bandwidth: to set maximum speed for migration.  maximum speed
+> >  #     in bytes per second.  (Since 2.8)
+> >  #
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> 
+> I propose I queue this right after [1] with the update to pragma.json
+> squashed in (appended), and the sentence "Then we can drop ... later"
+> dropped.
+> 
+> Thanks for your help!
+> 
+> 
+> diff --git a/qapi/pragma.json b/qapi/pragma.json
+> index 7ac05ccc26..6929ab776e 100644
+> --- a/qapi/pragma.json
+> +++ b/qapi/pragma.json
+> @@ -69,7 +69,6 @@
+>          'JSONType',
+>          'KeyValueKind',
+>          'MemoryDeviceInfoKind',
+> -        'MigrateSetParameters',
+>          'NetClientDriver',
+>          'ObjectType',
+>          'PciMemoryRegion',
+> 
 
-> Hi Philippe,
->
-> On Wed, Jan 31, 2024 at 05:48:24PM +0100, Philippe Mathieu-Daud=C3=A9 wro=
-te:
->> Date: Wed, 31 Jan 2024 17:48:24 +0100
->> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> Subject: Re: [PATCH] hw/intc: Handle the error of  IOAPICCommonClass.rea=
-lize()
->>=20
->> Hi Zhao,
->>=20
->> On 31/1/24 15:29, Zhao Liu wrote:
->> > From: Zhao Liu <zhao1.liu@intel.com>
->> >=20
->> > IOAPICCommonClass implements its own private realize(), and this priva=
-te
->> > realize() allows error.
->> >=20
->> > Therefore, return directly if IOAPICCommonClass.realize() meets error.
->> >=20
->> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
->> > ---
->> >   hw/intc/ioapic_common.c | 3 +++
->> >   1 file changed, 3 insertions(+)
->> >=20
->> > diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
->> > index cb9bf6214608..3772863377c2 100644
->> > --- a/hw/intc/ioapic_common.c
->> > +++ b/hw/intc/ioapic_common.c
->> > @@ -162,6 +162,9 @@ static void ioapic_common_realize(DeviceState *dev=
-, Error **errp)
->> >      info =3D IOAPIC_COMMON_GET_CLASS(s);
->> >      info->realize(dev, errp);
->> > +    if (*errp) {
->> > +        return;
->> > +    }
+Yes, please.
 
-This is wrong, although it'll work in practice.
+Or queue this prior to that series, then below diff can be squashed into
+the other patch; either way works.
 
-It's wrong, because dereferencing @errp requires ERRP_GUARD().
-qapi/error.h:
+Thanks Markus!
 
- * =3D Why, when and how to use ERRP_GUARD() =3D
- *
- * Without ERRP_GUARD(), use of the @errp parameter is restricted:
- * - It must not be dereferenced, because it may be null.
- * - It should not be passed to error_prepend() or
- *   error_append_hint(), because that doesn't work with &error_fatal.
- * ERRP_GUARD() lifts these restrictions.
- *
- * To use ERRP_GUARD(), add it right at the beginning of the function.
- * @errp can then be used without worrying about the argument being
- * NULL or &error_fatal.
- *
- * Using it when it's not needed is safe, but please avoid cluttering
- * the source with useless code.
-
-It'll work anyway, because the caller never passes null.
-
-Obvious fix:
-
-diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
-index cb9bf62146..280404cba5 100644
---- a/hw/intc/ioapic_common.c
-+++ b/hw/intc/ioapic_common.c
-@@ -152,6 +152,7 @@ static int ioapic_dispatch_post_load(void *opaque, int =
-version_id)
-=20
- static void ioapic_common_realize(DeviceState *dev, Error **errp)
- {
-+    ERRP_GUARD();
-     IOAPICCommonState *s =3D IOAPIC_COMMON(dev);
-     IOAPICCommonClass *info;
-=20
->> Could be clearer to deviate from DeviceRealize and let the
->> handler return a boolean:
->>=20
->> -- >8 --
->> diff --git a/hw/intc/ioapic_internal.h b/hw/intc/ioapic_internal.h
->> index 37b8565539..9664bb3e00 100644
->> --- a/hw/intc/ioapic_internal.h
->> +++ b/hw/intc/ioapic_internal.h
->> @@ -92,3 +92,3 @@ struct IOAPICCommonClass {
->>=20
->> -    DeviceRealize realize;
->> +    bool (*realize)(DeviceState *dev, Error **errp);
-
-qapi.error.h advises:
-
- * - Whenever practical, also return a value that indicates success /
- *   failure.  This can make the error checking more concise, and can
- *   avoid useless error object creation and destruction.  Note that
- *   we still have many functions returning void.  We recommend
- *   =E2=80=A2 bool-valued functions return true on success / false on fail=
-ure,
- *   =E2=80=A2 pointer-valued functions return non-null / null pointer, and
- *   =E2=80=A2 integer-valued functions return non-negative / negative.
-
-The patch then becomes
-
-          info =3D IOAPIC_COMMON_GET_CLASS(s);
-     -    info->realize(dev, errp);
-     +    if (!info->realize(dev, errp) {
-     +        return;
-     +    }
-
-DeviceClass and BusClass callbacks realize, unrealize ignore this
-advice: they return void.  Why?
-
-Following the advice makes calls easier to read, but the callees have to
-do a tiny bit of extra work: return something.  Good trade when we have
-at least as many callers as callees.
-
-But these callbacks have many more callees: many devices implement them,
-but only a few places call.  Changing them to return something looked
-like more trouble than it's worth, so we didn't.
-
-> What about I change the name of this interface?
->
-> Maybe ioapic_realize(), to distinguish it from DeviceClass.realize().
-
-I wouldn't bother.
-
->>      DeviceUnrealize unrealize;
->
-> Additionally, if I change the pattern of realize(), should I also avoid
-> the DeviceUnrealize macro for symmetry's sake and just declare a similar
-> function pointer as you said?
->
-> Further, do you think it's necessary to introduce InternalRealize and
-> InternalUnrealize macros for qdev
-
-You mean typedefs?
-
->                          for qdev to wrap these special realize/unrealize
-> to differentiate them from normal DeviceRealize/DeviceUnrealize?
->
-> Because I found that this pattern of realize() (i.e. registering the
-> realize() of the child class in the parent class instead of DeviceClass,
-> and then calling the registered realize() in parent realize()) is also
-> widely used in many cases:
->
-> * xen_block_realize()
-> * virtser_port_device_realize()
-> * x86_iommu_realize()
-> * virtio_input_device_realize()
-> * apic_common_realize()
-> * pc_dimm_realize()
-> * virtio_device_realize()
-> ...
-
-Yes.
-
-When a subtype overrides a supertype's method, it often makes sense to
-have the subtype's method call the supertype's method.
-
-> I'm not quite sure if this is a generic way to use it, although it looks
-> like it could easily be confused with DeviceClass.realize().
-
-Did I answer your question?  I'm not sure :)
-
->> diff --git a/hw/i386/kvm/ioapic.c b/hw/i386/kvm/ioapic.c
->> index 409d0c8c76..96747ef2b8 100644
->> --- a/hw/i386/kvm/ioapic.c
->> +++ b/hw/i386/kvm/ioapic.c
->> @@ -121,3 +121,3 @@ static void kvm_ioapic_set_irq(void *opaque, int irq,
->> int level)
->>=20
->> -static void kvm_ioapic_realize(DeviceState *dev, Error **errp)
->> +static bool kvm_ioapic_realize(DeviceState *dev, Error **errp)
->>  {
->> @@ -133,2 +133,4 @@ static void kvm_ioapic_realize(DeviceState *dev, Err=
-or
->> **errp)
->>      qdev_init_gpio_in(dev, kvm_ioapic_set_irq, IOAPIC_NUM_PINS);
->> +
->> +    return true;
->>  }
->> diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
->> index cb9bf62146..beab65be04 100644
->> --- a/hw/intc/ioapic_common.c
->> +++ b/hw/intc/ioapic_common.c
->> @@ -163,3 +163,5 @@ static void ioapic_common_realize(DeviceState *dev,
->> Error **errp)
->>      info =3D IOAPIC_COMMON_GET_CLASS(s);
->> -    info->realize(dev, errp);
->> +    if (!info->realize(dev, errp)) {
->> +        return;
->> +    }
->>=20
->> ---
->>=20
->> What do you think?
->
-> I'm OK with the change here, but not sure if the return of private
-> realize() should be changed elsewhere as well.
-
-I think I'd add the missing ERRP_GUARD() and call it a day.
+-- 
+Peter Xu
 
 
