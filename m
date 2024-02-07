@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7EF3C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D490C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXmXK-0004kR-Ft; Wed, 07 Feb 2024 13:20:42 -0500
+	id 1rXmXT-0004nG-9I; Wed, 07 Feb 2024 13:20:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXH-0004hy-3S
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:39 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXP-0004ll-UG
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:48 -0500
 Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXF-00087u-Fp
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:38 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXO-0008EW-6D
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:47 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 5616B619D7;
- Wed,  7 Feb 2024 18:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3419EC43390;
- Wed,  7 Feb 2024 18:20:35 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 44D4B61A34;
+ Wed,  7 Feb 2024 18:20:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AE3C433F1;
+ Wed,  7 Feb 2024 18:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707330036;
- bh=98mbO8TIJY8H/aHyk2tyxWud+0ypEkYGWnHIB/+v55o=;
+ s=k20201202; t=1707330044;
+ bh=FpOCoPgFYE4MpPAthlIj28nIxN0rYpoircX68gN/zpM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=J33HycEiFoJvFiphlurxfoPMYFzYlTto+n2J+NkvCYNXlK8CYfvryhXfqxuNRVBSy
- zJgcpeUJQmtLQR1pxVE2jkzplqPa6SaVDB0ypZTebP9w21ko+kUVvlBWqNH/K8vyTY
- sDusbKOLLHYLWqisAmSgiA/zJFSFDh7dwF7byJ1ZPQz6GVeGiVhsuHtjE70FgH9l4Q
- KWFoxGM9+zkgKSpSZ2YCaxXc6TbOZg8PdxBWHqE1pdf5tNAZeKIE/IKQd53VaPba9z
- ofArXS0Tq5r9fJjV/lIavEVCd70Hhp5yjWh08NwYLOhg7lNLEu9NyTu5uoRka0XsOH
- H0e95FmarA3nw==
+ b=rf0dHE3eXGVyQZcVhHmyp+/z31vguo4Nwi+tplOGCaA1kHyHPvEgBqsSeXBXTt4gY
+ tvkPVHLZ0Dsd1sSk8vDZGgyg+vdKaeBYJOz2zlLqYrYMd84L9yHKVpZuy4afrST0Cp
+ /qYwXacGKvU8nQtw5LZgqyomM8pgIlAN8ZtWrG7ESrFB2S3Rlim00SG6BKH2Jdm8X9
+ TYH4RK4eNbx5Qe8QeY1SLnhsZfZufb59G832YFNNs5aqHt/78iQrvdL/52BkiEG35i
+ a6Rc3yd5y9Qfl4yTtOaCAAM+qX5fMYB6RQVIo+Q+YxQ2iZfLroY4fENOVJyygl2c7g
+ kdxvDpSW7yYug==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PATCH 07/13] target/hppa: Implement do_transaction_failed handler
- for I/O errors
-Date: Wed,  7 Feb 2024 19:20:17 +0100
-Message-ID: <20240207182023.36316-8-deller@kernel.org>
+Subject: [PATCH 13/13] hw/hppa/machine: Load 64-bit firmware on 64-bit machines
+Date: Wed,  7 Feb 2024 19:20:23 +0100
+Message-ID: <20240207182023.36316-14-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240207182023.36316-1-deller@kernel.org>
 References: <20240207182023.36316-1-deller@kernel.org>
@@ -72,79 +71,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Add the do_transaction_failed() handler to tigger a HPMC to the CPU
-in case of I/O transaction errors.
+Load the 64-bit SeaBIOS-hppa firmware by default when running on a 64-bit
+machine. This will enable us to later support more than 4GB of RAM and is
+required that the OS (or PALO bootloader) will start or install a 64-bit kernel
+instead of a 32-bit kernel.
 
-This is a preparation commit.
-We still lack implementation for some registers, so do not yet enable sending
-HPMCs.  Having this hunk here now nevertheless helps for the further
-development, so that it can easily be enabled later on.
+Note that SeaBIOS-hppa v16 provides the "-fw_cfg opt/OS64,string=3" option with
+which the user can control what the firmware shall report back to the OS:
+Support of 32-bit OS, support of a 64-bit OS, or support for both (default).
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/hppa/cpu.c        |  1 +
- target/hppa/cpu.h        |  5 +++++
- target/hppa/mem_helper.c | 19 +++++++++++++++++++
- 3 files changed, 25 insertions(+)
+ hw/hppa/machine.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 5f87c1b12a..afe73d4474 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -191,6 +191,7 @@ static const TCGCPUOps hppa_tcg_ops = {
-     .cpu_exec_interrupt = hppa_cpu_exec_interrupt,
-     .do_interrupt = hppa_cpu_do_interrupt,
-     .do_unaligned_access = hppa_cpu_do_unaligned_access,
-+    .do_transaction_failed = hppa_cpu_do_transaction_failed,
- #endif /* !CONFIG_USER_ONLY */
- };
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index eb78c46ff1..a47baa572d 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -333,6 +333,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+     const char *kernel_filename = machine->kernel_filename;
+     const char *kernel_cmdline = machine->kernel_cmdline;
+     const char *initrd_filename = machine->initrd_filename;
++    const char *firmware = machine->firmware;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     DeviceState *dev;
+     PCIDevice *pci_dev;
+@@ -408,9 +409,13 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
  
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 06b65f2258..5a4b56c975 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -383,6 +383,11 @@ bool hppa_cpu_exec_interrupt(CPUState *cpu, int int_req);
- int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
-                               int type, hwaddr *pphys, int *pprot,
-                               HPPATLBEntry **tlb_entry);
-+void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-+                                     vaddr addr, unsigned size,
-+                                     MMUAccessType access_type,
-+                                     int mmu_idx, MemTxAttrs attrs,
-+                                     MemTxResult response, uintptr_t retaddr);
- extern const MemoryRegionOps hppa_io_eir_ops;
- extern const VMStateDescription vmstate_hppa_cpu;
- void hppa_cpu_alarm_timer(void *);
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 629a9d90ef..676c0b3003 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -353,6 +353,25 @@ raise_exception_with_ior(CPUHPPAState *env, int excp, uintptr_t retaddr,
-     cpu_loop_exit_restore(cs, retaddr);
- }
- 
-+void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-+                                     vaddr addr, unsigned size,
-+                                     MMUAccessType access_type,
-+                                     int mmu_idx, MemTxAttrs attrs,
-+                                     MemTxResult response, uintptr_t retaddr)
-+{
-+    CPUHPPAState *env = cpu_env(cs);
-+
-+    qemu_log_mask(LOG_GUEST_ERROR, "HPMC at " TARGET_FMT_lx ":" TARGET_FMT_lx
-+                " while accessing I/O at %#08" HWADDR_PRIx "\n",
-+                env->iasq_f, env->iaoq_f, physaddr);
-+
-+    /* FIXME: Enable HPMC exceptions when firmware has clean device probing */
-+    if (0) {
-+        raise_exception_with_ior(env, EXCP_HPMC, retaddr, addr,
-+                                 MMU_IDX_MMU_DISABLED(mmu_idx));
+     /* Load firmware.  Given that this is not "real" firmware,
+        but one explicitly written for the emulation, we might as
+-       well load it directly from an ELF image.  */
+-    firmware_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS,
+-                                       machine->firmware ?: "hppa-firmware.img");
++       well load it directly from an ELF image. Load the 64-bit
++       firmware on 64-bit machines by default if not specified
++       on command line. */
++    if (!firmware) {
++        firmware = lasi_dev ? "hppa-firmware.img" : "hppa-firmware64.img";
 +    }
-+}
-+
- bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-                        MMUAccessType type, int mmu_idx,
-                        bool probe, uintptr_t retaddr)
++    firmware_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, firmware);
+     if (firmware_filename == NULL) {
+         error_report("no firmware provided");
+         exit(1);
 -- 
 2.43.0
 
