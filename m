@@ -4,81 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 013D0C4828D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE86C4828F
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 05:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXa4q-0004Ew-Gf; Wed, 07 Feb 2024 00:02:28 -0500
+	id 1rXa5h-0004zg-2c; Wed, 07 Feb 2024 00:03:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
- id 1rXa4o-0004ES-H9
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 00:02:26 -0500
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
- id 1rXa4m-0000Uy-SR
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 00:02:26 -0500
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3bda4bd14e2so253791b6e.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 21:02:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707282143; x=1707886943; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HPDL006u4Y/f+j7F7SdoeRFchc9MjlKOa9T+hk+MibM=;
- b=ngG7Ep0nCTaXR180KLm6hzRGK3zGEQ8YI7ryR9MYkGtnhrvFAIHklYrhLHq1Z1kfoF
- QYqTk2qZkyyRVC+7NrUOyGeyPe/DRYyiPS9tkUvVTmMYUDnEgklpW8v0ox225cGzc9G7
- w7vCVrgjIZ+EAayu7ChHAZJQEJP5HtXykeb1V687MCcdufYqeMtSHfohms6T4jYS1061
- TZmu2szrNeCmCPEWOrc+Jm+EDcck14ywSjNKc29qIEcAcY1Amm0T7jQ1N4plJCvajOAG
- wrfsf+JSy10+lFQArAAcDbIVqTHIF33HJXbC2WfkFTubH2EeU2JlcKmh3ehhk7eHFLWr
- EOYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707282143; x=1707886943;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HPDL006u4Y/f+j7F7SdoeRFchc9MjlKOa9T+hk+MibM=;
- b=gwSHvkQvXZaixrrWkKLw3Yp0rx6yEe0MEN0pmjyPXr+vo9YrspM7rVumoqHER8tIZ6
- Ph5hySLcIaBWBo1cUOTfqBSHl6gMLlqCTaDGTIS/KpJi54cxldJBngKghTeFg3itAJ6F
- rqamyOIKnePZlK6WzgKWa62tKK/2R1ijvTzFGd2nsQ80vRiJ8BvPDub0CdGqkLvdKNqM
- iQWgXDkn458AOctO3MXFpUohuiheOTxs8V0aOtvtMFlF/ewRM9tVkYbuPZLeSZF4HvoH
- hbvq22fabTMNxAwTKUYLzBLJSgjwFQlV93DcDb82p3S46osnbLtlkx/FD29YaSwSEv7o
- eJcw==
-X-Gm-Message-State: AOJu0YyigbK9nM3RaiDP/0nokuQmhD/A488XZf4zbH5PyWCxl6Pe7bG3
- N99dIqCPCYpuOl6ADZVUFk7iAxRmqFxAQvfAqE7qJHIY8zSCzG3f8FXZDyNS
-X-Google-Smtp-Source: AGHT+IFe5LgZu0WJoTfYjKUVMv9S1ygJEgYEOt91c9HMAT7vSz/5fMp3U2Iq1Y28Xa0DANgiGuPhjQ==
-X-Received: by 2002:a05:6808:15:b0:3bf:ce2e:c4b2 with SMTP id
- u21-20020a056808001500b003bfce2ec4b2mr4628818oic.50.1707282143395; 
- Tue, 06 Feb 2024 21:02:23 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDHyPUjTLmIB5bPrM/r0ImyGeZ46hl56WxCGk/RUz5gqlsUxsPOWTew4+y/mI8d2nnU1R5ynxAGBZ5UTLZHpz8P4M=
-Received: from mintleaf.lan ([136.49.150.227])
- by smtp.gmail.com with ESMTPSA id
- bq2-20020a05680823c200b003bfd4e4fee0sm82646oib.58.2024.02.06.21.02.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 21:02:23 -0800 (PST)
-From: David Hubbard <dmamfmgm@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
-	David Hubbard <dmamfmgm@gmail.com>
-Subject: [PATCH] hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or OUT
-Date: Tue,  6 Feb 2024 23:02:33 -0600
-Message-Id: <20240207050233.183972-1-dmamfmgm@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <tong.ho@amd.com>)
+ id 1rXa5e-0004yK-9c; Wed, 07 Feb 2024 00:03:18 -0500
+Received: from mail-dm3nam02on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2405::600]
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tong.ho@amd.com>)
+ id 1rXa5b-0000ho-VK; Wed, 07 Feb 2024 00:03:18 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cyLxxOzougZXTXRVQJ3vXLCxAWibUpB/YqusVMwIKr93E2Kav0HL5tIvYz6dLliVkLKf0IgkfTUeJV3KMUUd8lCkGbeirj3/TpmMwVQKLrTrTloGRylINFQ1up3NqsstZxCOZA6MNdSWjt/egq2SRvrYZwo0rfxZH+q74+Y4gyon6ZMe2DSI3gsXsev+ZEGg/EIWVy7ZpjO21bj82TX40pYnhIcV4kK3vPEY0nX+WrBSpQI1TILQNZ0B6mOS18N9dWS+voUj+Axvcqyn6BizVTzDVap7PuihWsjO3zlg9/0jpW3fhQGALeWKWgHuIQDm2LEoqgCKsimjlFGG5iGkUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=a2O0fD9H/7OxCGOXVCEsk9fEmsriQA2ok6LgnRtZ1oM=;
+ b=RxXoHnhNR9/rsVKMEJ2RSHYWtL6PBYuu1nAREpNa1qH9p/ugrxukejBhx1I5eWTemLbLslHESIRxu6ZlZqxvxTb2y5u4gP/bVEI1ARWU9cfQCl/rlw9f7xrnrnvx5AnczFvRKZVYSEBVF/g1qx96ZAPGXst6L3ObFtlygrYTk2xpWCNgBMfP0tNTmQVP7H8Z20hGJQ7C+KIL9ZhmaPRZOsZo7IdcT/pTlUfG/PVi4EMDTb55AdQ87g8QlNRFQMTVMmM42UXHdnw3ddCKO7f5s87DoSv5iDbjQ6JDtvUAQBytk2JGwvHbvrIkLy3zBXCw/JFY/umtwXvVc1PMRdY1Fw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=a2O0fD9H/7OxCGOXVCEsk9fEmsriQA2ok6LgnRtZ1oM=;
+ b=hYwg/jGM5+h6YFjfh5BRLsVm7G6CssOw/sNIOurU9hSA0iboL+kCA8xJRaCSphj57LQwbt6jOSwcgy9fJVc/t2L+4f1M4vFGwoBQEDwfF6gCbSd/wg+FlKoNDDn64Do7oxbe05M43dNj6ni4n8gGzeNstVKKGih7UE+K/wViGnw=
+Received: from CYZPR14CA0014.namprd14.prod.outlook.com (2603:10b6:930:8f::12)
+ by DM4PR12MB5184.namprd12.prod.outlook.com (2603:10b6:5:397::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.16; Wed, 7 Feb
+ 2024 05:03:10 +0000
+Received: from CY4PEPF0000E9D9.namprd05.prod.outlook.com
+ (2603:10b6:930:8f:cafe::86) by CYZPR14CA0014.outlook.office365.com
+ (2603:10b6:930:8f::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.38 via Frontend
+ Transport; Wed, 7 Feb 2024 05:03:10 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ CY4PEPF0000E9D9.mail.protection.outlook.com (10.167.241.77) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7249.19 via Frontend Transport; Wed, 7 Feb 2024 05:03:10 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.34; Tue, 6 Feb
+ 2024 23:03:09 -0600
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.34; Tue, 6 Feb
+ 2024 23:03:09 -0600
+Received: from xsjtongh40.xilinx.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.34 via Frontend
+ Transport; Tue, 6 Feb 2024 23:03:08 -0600
+From: Tong Ho <tong.ho@amd.com>
+To: <qemu-arm@nongnu.org>
+CC: <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
+ <marcandre.lureau@redhat.com>, <pbonzini@redhat.com>, <tong.ho@amd.com>
+Subject: [PATCH] hw/char/pl011: Add support for loopback
+Date: Tue, 6 Feb 2024 21:03:08 -0800
+Message-ID: <20240207050308.3221396-1-tong.ho@amd.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=dmamfmgm@gmail.com; helo=mail-oi1-x236.google.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9D9:EE_|DM4PR12MB5184:EE_
+X-MS-Office365-Filtering-Correlation-Id: 670866d2-0a41-4117-cd65-08dc279a1490
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: F6fuWKnm6TNSEEBWMlV8xcC2e2JQdmGHvhGpANNevvL/D4ZLXZsBNI9DOPAnr1aUGmicouBjkSw/poRKB42pmMI2DMrE/Hqrno/mCynygVvhS6vY8uCJ+x2g7Zi5F4N+qZXgcsJSG9Lxs/75C70hC5+pb3Lg07RF30j8SBuj+aJ6Zb7P/mld2W/1vGsfHFLYXbukzY59Zgc/u1RGxKQ6+P+hNwjMJ72uniAphtTjgrxnO141+7/XhMIf5zNVirUf4oWor/6XpbYA3EwfQsILCWxTPz+H+0zv0gey27iKpu10sb3UUqJolh9Y8F/W4C/rpcX7OHyk3uFHwQ7kN+8OQZNwQ8H9rc5IikLIhK0AxfweYGTHD0iMZJINDySQKD7SEu9Yg+Dui7vchagSWXqZIb66dCQLc7MyeCDnvWYByTpv4woqrcV+QICBAjZlF1JtIMlkBdm9QsxvVOQLNqZWhT4Oc+WvXImkG7L1P8QjI0FqeLrFAnzJ1HwU8N2+X5JPlqRQnDpIeKyyRHUi6mMFSYlUx/6TtuHbOEY8BhBhXDDyi4ClHyYukxYCNbdXimlCSjnlKCGK36RPyfxMKde4Y1gdqbGPE/5jp9PAxlYOaT0oWaKKnv1mBjTmGzg+n46ZHPYDbeFnfO9qCsAN4UC/2oP4AUmc80bR/jhelzkKJ7PTJ5agaf021bylEokbh/6kxDDSnPTJ9HhzEdp6gTqh0+s3lv0fMz2nJ9HdFbi4uegNm1zjJBKAacGdW/Q9xzdwzOvAZEnSlxR61J1tRxfOrw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(4636009)(376002)(346002)(39860400002)(396003)(136003)(230922051799003)(82310400011)(1800799012)(64100799003)(186009)(451199024)(36840700001)(40470700004)(46966006)(40460700003)(40480700001)(41300700001)(478600001)(86362001)(36756003)(83380400001)(426003)(47076005)(336012)(356005)(82740400003)(26005)(2616005)(1076003)(81166007)(44832011)(70586007)(2906002)(5660300002)(70206006)(8936002)(6916009)(8676002)(54906003)(36860700001)(4326008)(316002)(36900700001);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2024 05:03:10.2155 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 670866d2-0a41-4117-cd65-08dc279a1490
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000E9D9.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5184
+Received-SPF: softfail client-ip=2a01:111:f403:2405::600;
+ envelope-from=tong.ho@amd.com;
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,85 +124,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This changes the ohci validation to not assert if invalid
-data is fed to the ohci controller. The poc suggested in
-https://bugs.launchpad.net/qemu/+bug/1907042
-and then migrated to bug #303 does the following to
-feed it a SETUP pid and EndPt of 1:
+This patch adds loopback for sent characters as well as
+modem-control signals.
 
-        uint32_t MaxPacket = 64;
-        uint32_t TDFormat = 0;
-        uint32_t Skip = 0;
-        uint32_t Speed = 0;
-        uint32_t Direction = 0;  /* #define OHCI_TD_DIR_SETUP 0 */
-        uint32_t EndPt = 1;
-        uint32_t FuncAddress = 0;
-        ed->attr = (MaxPacket << 16) | (TDFormat << 15) | (Skip << 14)
-                   | (Speed << 13) | (Direction << 11) | (EndPt << 7)
-                   | FuncAddress;
-        ed->tailp = /*TDQTailPntr= */ 0;
-        ed->headp = ((/*TDQHeadPntr= */ &td[0]) & 0xfffffff0)
-                   | (/* ToggleCarry= */ 0 << 1);
-        ed->next_ed = (/* NextED= */ 0 & 0xfffffff0)
+Loopback of send and modem-control is often used for uart
+self tests in real hardware but missing from current pl011
+model, resulting in self-test failures when running in QEMU.
 
-qemu-fuzz also caught the same issue in #1510. They are
-both fixed by this patch.
-
-The if (td.cbp > td.be) logic in ohci_service_td() causes an
-ohci_die(). My understanding of the OHCI spec 4.3.1.2
-Table 4-2 allows td.cbp to be one byte more than td.be to
-signal the buffer has zero length. The new check in qemu
-appears to have been added since qemu-4.2. This patch
-includes both fixes since they are located very close
-to each other.
-
-Signed-off-by: David Hubbard <dmamfmgm@gmail.com>
+Signed-off-by: Tong Ho <tong.ho@amd.com>
+Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
 ---
- hw/usb/hcd-ohci.c   | 9 +++++++--
- hw/usb/trace-events | 2 ++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ hw/char/pl011.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 49 insertions(+), 2 deletions(-)
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index d73b53f33c..a53808126f 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -927,6 +927,11 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
-     case OHCI_TD_DIR_SETUP:
-         str = "setup";
-         pid = USB_TOKEN_SETUP;
-+        if (OHCI_BM(ed->flags, ED_EN) > 0) {  /* setup only allowed to ep 0 */
-+            trace_usb_ohci_td_bad_pid(str, ed->flags, td.flags);
-+            ohci_die(ohci);
-+            return 1;
-+        }
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index 855cb82d08..3c0e07aa35 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -121,6 +121,51 @@ static void pl011_update(PL011State *s)
+     }
+ }
+ 
++static void pl011_put_fifo(void *opaque, uint32_t value);
++
++static bool pl011_is_loopback(PL011State *s)
++{
++    return !!(s->cr & (1U << 7));
++}
++
++static void pl011_tx_loopback(PL011State *s, uint32_t value)
++{
++    if (pl011_is_loopback(s)) {
++        pl011_put_fifo(s, value);
++    }
++}
++
++static uint32_t pl011_cr_loopback(PL011State *s, bool update)
++{
++    uint32_t cr = s->cr;
++    uint32_t fr = s->flags;
++    uint32_t ri = 1 << 8, dcd = 1 << 2, dsr = 1 << 1, cts = 0;
++    uint32_t out2 = 1 << 13, out1 = 1 << 12, rts = 1 << 11, dtr = 1 << 10;
++
++    if (!pl011_is_loopback(s)) {
++        return fr;
++    }
++
++    fr &= ~(ri | dcd | dsr | cts);
++    fr |= (cr & out2) ?  ri : 0;   /* FR.RI  <= CR.Out2 */
++    fr |= (cr & out1) ? dcd : 0;   /* FR.DCD <= CR.Out1 */
++    fr |= (cr &  rts) ? cts : 0;   /* FR.CTS <= CR.RTS */
++    fr |= (cr &  dtr) ? dsr : 0;   /* FR.DSR <= CR.DTR */
++
++    if (!update) {
++        return fr;
++    }
++
++    s->int_level &= ~(INT_DSR | INT_DCD | INT_CTS | INT_RI);
++    s->int_level |= (fr & dsr) ? INT_DSR : 0;
++    s->int_level |= (fr & dcd) ? INT_DCD : 0;
++    s->int_level |= (fr & cts) ? INT_CTS : 0;
++    s->int_level |= (fr &  ri) ? INT_RI  : 0;
++    pl011_update(s);
++
++    return fr;
++}
++
+ static bool pl011_is_fifo_enabled(PL011State *s)
+ {
+     return (s->lcr & LCR_FEN) != 0;
+@@ -172,7 +217,7 @@ static uint64_t pl011_read(void *opaque, hwaddr offset,
+         r = s->rsr;
          break;
-     default:
-         trace_usb_ohci_td_bad_direction(dir);
-@@ -936,8 +941,8 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
-         if ((td.cbp & 0xfffff000) != (td.be & 0xfffff000)) {
-             len = (td.be & 0xfff) + 0x1001 - (td.cbp & 0xfff);
-         } else {
--            if (td.cbp > td.be) {
--                trace_usb_ohci_iso_td_bad_cc_overrun(td.cbp, td.be);
-+            if (td.cbp > td.be + 1) {
-+                trace_usb_ohci_td_bad_buf(td.cbp, td.be);
-                 ohci_die(ohci);
-                 return 1;
-             }
-diff --git a/hw/usb/trace-events b/hw/usb/trace-events
-index ed7dc210d3..b47d082fa3 100644
---- a/hw/usb/trace-events
-+++ b/hw/usb/trace-events
-@@ -28,6 +28,8 @@ usb_ohci_iso_td_data_overrun(int ret, ssize_t len) "DataOverrun %d > %zu"
- usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
- usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
- usb_ohci_iso_td_bad_response(int ret) "Bad device response %d"
-+usb_ohci_td_bad_buf(uint32_t cbp, uint32_t be) "Bad cbp = 0x%x > be = 0x%x"
-+usb_ohci_td_bad_pid(const char *s, uint32_t edf, uint32_t tdf) "Bad pid %s: ed.flags 0x%x td.flags 0x%x"
- usb_ohci_port_attach(int index) "port #%d"
- usb_ohci_port_detach(int index) "port #%d"
- usb_ohci_port_wakeup(int index) "port #%d"
+     case 6: /* UARTFR */
+-        r = s->flags;
++        r = pl011_cr_loopback(s, false);
+         break;
+     case 8: /* UARTILPR */
+         r = s->ilpr;
+@@ -267,6 +312,7 @@ static void pl011_write(void *opaque, hwaddr offset,
+          * qemu_chr_fe_write and background I/O callbacks */
+         qemu_chr_fe_write_all(&s->chr, &ch, 1);
+         s->int_level |= INT_TX;
++        pl011_tx_loopback(s, ch);
+         pl011_update(s);
+         break;
+     case 1: /* UARTRSR/UARTECR */
+@@ -300,8 +346,9 @@ static void pl011_write(void *opaque, hwaddr offset,
+         pl011_set_read_trigger(s);
+         break;
+     case 12: /* UARTCR */
+-        /* ??? Need to implement the enable and loopback bits.  */
++        /* ??? Need to implement the enable bit.  */
+         s->cr = value;
++        pl011_cr_loopback(s, true);
+         break;
+     case 13: /* UARTIFS */
+         s->ifl = value;
 -- 
-2.34.1
+2.25.1
 
 
