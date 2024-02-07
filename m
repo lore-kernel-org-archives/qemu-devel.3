@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B54C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 13:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20F2C4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 13:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXi4C-0006j0-7C; Wed, 07 Feb 2024 08:34:20 -0500
+	id 1rXi4S-0006zp-61; Wed, 07 Feb 2024 08:34:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=zwZg=JQ=redhat.com=clg@ozlabs.org>)
- id 1rXi49-0006hC-Nk
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 08:34:17 -0500
+ id 1rXi4P-0006wQ-Kq
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 08:34:33 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=zwZg=JQ=redhat.com=clg@ozlabs.org>)
- id 1rXi47-0008QI-OM
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 08:34:17 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TVLgT5H73z4x0t;
- Thu,  8 Feb 2024 00:34:13 +1100 (AEDT)
+ id 1rXi4N-0008Uo-Tj
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 08:34:33 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TVLgn5zxMz4x1s;
+ Thu,  8 Feb 2024 00:34:29 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TVLgR6pGtz4x0m;
- Thu,  8 Feb 2024 00:34:11 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TVLgm0KSgz4x1m;
+ Thu,  8 Feb 2024 00:34:27 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 07/14] vfio: Add Error** argument to
- vfio_devices_dma_logging_stop()
-Date: Wed,  7 Feb 2024 14:33:40 +0100
-Message-ID: <20240207133347.1115903-8-clg@redhat.com>
+Subject: [RFC PATCH 14/14] migration: Fix return-path thread exit
+Date: Wed,  7 Feb 2024 14:33:47 +0100
+Message-ID: <20240207133347.1115903-15-clg@redhat.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240207133347.1115903-1-clg@redhat.com>
 References: <20240207133347.1115903-1-clg@redhat.com>
@@ -70,72 +68,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This improves error reporting in the log_global_stop() VFIO handler.
+In case of error, close_return_path_on_source() can perform a shutdown
+to exit the return-path thread.  However, in migrate_fd_cleanup(),
+'to_dst_file' is closed before calling close_return_path_on_source()
+and the shutdown fails, leaving the source and destination waiting for
+an event to occur.
+
+Close the file after calling close_return_path_on_source() so that the
+shutdown succeeds and the return-path thread exits.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/common.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index a5d53e67efaa921e89ad918390a22506c7b1ed66..82173b039c47150f5edd05d329192c5b9c8a9a0f 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -938,12 +938,14 @@ static void vfio_dirty_tracking_init(VFIOContainerBase *bcontainer,
-     memory_listener_unregister(&dirty.listener);
- }
+ This is an RFC because the correct fix implies reworking the QEMUFile
+ construct, built on top of the QEMU I/O channel.
+
+ migration/migration.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index 5f55af3d7624750ca416c4177781241b3e291e5d..de329f2c553288935d824748286e79e535929b8b 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1313,6 +1313,8 @@ void migrate_set_state(int *state, int old_state, int new_state)
  
--static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
-+static int vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer,
-+                                          Error **errp)
+ static void migrate_fd_cleanup(MigrationState *s)
  {
-     uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
-                               sizeof(uint64_t))] = {};
-     struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
-     VFIODevice *vbasedev;
-+    int ret = 0;
- 
-     feature->argsz = sizeof(buf);
-     feature->flags = VFIO_DEVICE_FEATURE_SET |
-@@ -955,11 +957,17 @@ static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
-         }
- 
-         if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
--            warn_report("%s: Failed to stop DMA logging, err %d (%s)",
--                        vbasedev->name, -errno, strerror(errno));
-+            /* Keep first error */
-+            if (!ret) {
-+                ret = -errno;
-+                error_setg(errp, "%s: Failed to stop DMA logging, err %d (%s)",
-+                           vbasedev->name, -errno, strerror(errno));
-+            }
-         }
-         vbasedev->dirty_tracking = false;
-     }
++    QEMUFile *tmp = NULL;
 +
-+    return ret;
- }
+     g_free(s->hostname);
+     s->hostname = NULL;
+     json_writer_free(s->vmdesc);
+@@ -1321,8 +1323,6 @@ static void migrate_fd_cleanup(MigrationState *s)
+     qemu_savevm_state_cleanup();
  
- static struct vfio_device_feature *
-@@ -1068,7 +1076,8 @@ static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
- 
- out:
-     if (ret) {
--        vfio_devices_dma_logging_stop(bcontainer);
-+        /* Ignore the potential errors when doing rollback */
-+        vfio_devices_dma_logging_stop(bcontainer, NULL);
+     if (s->to_dst_file) {
+-        QEMUFile *tmp;
+-
+         trace_migrate_fd_cleanup();
+         bql_unlock();
+         if (s->migration_thread_running) {
+@@ -1341,15 +1341,14 @@ static void migrate_fd_cleanup(MigrationState *s)
+          * critical section won't block for long.
+          */
+         migration_ioc_unregister_yank_from_file(tmp);
+-        qemu_fclose(tmp);
      }
  
-     vfio_device_feature_dma_logging_start_destroy(feature);
-@@ -1102,7 +1111,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener,
-     int ret = 0;
+-    /*
+-     * We already cleaned up to_dst_file, so errors from the return
+-     * path might be due to that, ignore them.
+-     */
+     close_return_path_on_source(s);
  
-     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
--        vfio_devices_dma_logging_stop(bcontainer);
-+        ret = vfio_devices_dma_logging_stop(bcontainer, errp);
-     } else {
-         ret = vfio_container_set_dirty_page_tracking(bcontainer, false, errp);
-     }
++    if (tmp) {
++        qemu_fclose(tmp);
++    }
++
+     assert(!migration_is_active(s));
+ 
+     if (s->state == MIGRATION_STATUS_CANCELLING) {
 -- 
 2.43.0
 
