@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D28D3C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 16:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D92FC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 16:41:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXkwT-00030O-F7; Wed, 07 Feb 2024 11:38:33 -0500
+	id 1rXkwK-0002sA-Ba; Wed, 07 Feb 2024 11:38:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rXkwR-0002yg-EB
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:31 -0500
+ id 1rXkwJ-0002q4-0B
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:23 -0500
 Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rXkwO-0006CG-Sl
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:31 -0500
+ id 1rXkwG-00067i-7x
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:38:22 -0500
 Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-40ff28388a6so7630565e9.1
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 08:38:28 -0800 (PST)
+ 5b1f17b1804b1-40fc6578423so7467315e9.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 08:38:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707323907; x=1707928707; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707323898; x=1707928698; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NZEnJqnRtjHTYADU54FKGw8u/qLIoqp7a6/Lc+0JhOI=;
- b=gfcUw6FdsXwGE1FD/EB8khiaSdJWBLoVSCkCwzub66Pt9ORycJw6qomC4Ax0KEkTg+
- 5pVXQwcuZxwr4HBP0vFIKWf02jbs/vDZ/Zslg+EyWGXoLuhpbBJKR+FfnTBc/Iy09MqB
- k/Vcl8lSdoG0koikOSBl1HNosyZTkED0pKCUY1qxahZoTCMCb2U/r674Y+v+ezb32kxA
- Wv3ZbEnZTGYFd8YxQqRerN5ELJR8so8nNUZyVAXvQme0IwOzHt/gvhgM1YSxXmJD/f3Y
- 4ECXlDQGaprGub9HHWStS46XBRUGsOZQxJYk/Pv+Va8NX25tYLSK3oC3y1sK9dTqk/pV
- 352A==
+ bh=7r6TD7yChzqzHwHFrhbxu1OMWzC/pBSk9CaZVccyvoc=;
+ b=D0d76ixfydzCvymGynM4XSeC/0Wr35r779jBaRwDgQuzgPaugYpmhsOwAM1ajh0Qm7
+ YzgwGdAabvggaKK4uXEutdysALzzt29sUlg21F6pwohiA1ohmuvmOtodQM9/iQi88d+2
+ q/aB9R1dvBkka6410p/DaEFi+7xi38Lqi3IIfhUk6RMHSLFrXLqlLNDx05tBfdbyeyZX
+ NpY/dVI3W6we2/O4RxnglDSn+pTYGVsHKYUjgENItTm8vZ62WMXEP+WwGsKp0fFPPfpO
+ ECkIvZt74vY6PKBToTb6I1JQ/k7K8KehOl8KVSHk80B0938gW6ZqvsrpFyY7mSmb04eY
+ 2Y5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707323907; x=1707928707;
+ d=1e100.net; s=20230601; t=1707323898; x=1707928698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NZEnJqnRtjHTYADU54FKGw8u/qLIoqp7a6/Lc+0JhOI=;
- b=Rc+oORgAvldGKjsUd/36/udxOjq32YKfCos1CV0JVccCu9m88WLCTeCgWPrasgHUXB
- KyvVC34gJQNFV+m+ImU1MCTxhopXHw+WM2Zal0Z0gImywsvYX44+9EyEdNL5k17VJZlv
- 9vV7uqfmFMxR/ehfclzQjfp4ms1E95tKVEUhLSkdS5tzCob2odJTuLn/JmpUDMVgZdOH
- y7WSI7xZ1JfvL+v6syNc6q11r3ofHeEY1jO6JuUYdsTzQPd9ZMSZNR4Qw9BfCzr+3AkD
- WWbUn5LyAlHVJyQvz+djbXLipZVPFDBJa7g2eTO4sxu96fy2GodgeOxAwVBPD+TQXtPK
- wo1w==
-X-Gm-Message-State: AOJu0Yw0FaBl7ioFoeMh8bDMECloRdFwc3Vbr9RtwwT7vHPxdZXwQRCX
- rEFA7dM1zkJ3B5bnM93BvJ9bENpd1vn39tOtRuqqFNur1lUMkd0kvJ/q4OHkYsY=
-X-Google-Smtp-Source: AGHT+IEs5VzykUrPZZ/a8E0suhAGYeAe+JVPGaxzI2YNKpjCClE233UfaCR0f5RWvU2Zj+QL6HW2hg==
-X-Received: by 2002:a05:600c:1553:b0:410:2496:ccdd with SMTP id
- f19-20020a05600c155300b004102496ccddmr522761wmg.27.1707323907446; 
- Wed, 07 Feb 2024 08:38:27 -0800 (PST)
+ bh=7r6TD7yChzqzHwHFrhbxu1OMWzC/pBSk9CaZVccyvoc=;
+ b=wlTcgluXIkoHiQTHTASLiO0NiYw5JytGCRh0cZ04sQM48sii6g/r1ywVGWA0uS0FNG
+ EPb+LwA8dw5WEiSIySzxtf9rZoQGUKWT/EOzi9xb3BMquewCD1E85DzlAdk4Lgg8xOk8
+ PmQzUONolYIBkewRdDYxhZaxVvb1bQh4uLB5BowfaiTRuPg1rkQSZkzqdMV8+8wcYpIC
+ A9S49CCK3PGrKBaN+M4zifJbWK+NGnqVrnHU5XBPe0qallPXS+Fiil9hgXyybIzZ49y1
+ Bmmzu1tzcwBVnX3dX1KjzPIiXFQGrwA8ovhMiI2Mrtzg8+DfM00tsgTUcZ2GSKxkmp2c
+ KyAQ==
+X-Gm-Message-State: AOJu0YwYZbpx31XORdTgJ8dTf0ofir4RtHwCcO+P2aVq3skbakz6JSi/
+ HCV1oUhhY0WVphNRCmTPZlgpmejnW+SdrkBpPrF+4vBfYwUUV/4FAUjeCC7FzRU=
+X-Google-Smtp-Source: AGHT+IGHwl3tW2nUX2wfBLHUrlSOM6cjxqlwmBBgVdwDbJmr/R/vGDi2c3wnvq3QzxKL6BY7CYBQug==
+X-Received: by 2002:a05:600c:4509:b0:40e:61d4:5d3b with SMTP id
+ t9-20020a05600c450900b0040e61d45d3bmr5501081wmo.20.1707323898707; 
+ Wed, 07 Feb 2024 08:38:18 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2twQPA/imKU8TXnjh8RXEOe87TDnJV7LjaUystw7Iipdfu4tRqFIR6jmxZLiZvq8iJJbbUyUtf4zHNMB+e5LW+khol3VhtpuFOqOUoMbF+Ko03I6/r0pPjSAi88ffV7sVliFGwb/eZPufsf8tCuUYnjAh3OSskNSFkveT6EDZnMUBxAVjRlepPxNHnShJRn4PAxzXvomj4+CEuuqmNKkaZ2xJGAkNDuCj+6E2siTpTHVmlmd803nIe2OOGdGmF2q6lvmZ6r6bkk62g8fNRCw4JlH14azS1pNP8cC8mQf7FwSN9zcG4lLVKf5B9Ekhrv+o+Itxh1PI5Jro2/byTmwEGc5FRkH1Eb6B6cqzY701LO6UFFaFuh17a86Z3T8+0E8nrrxERyZ8pXL29bE8FYLrqY25Hy8kdElo/ajUHWuovys/uUIbtFVhhUtGBd/3XtAtNgPBlI0Q5X/Md9xsDm60zH/AOhMRye27qoo6Fiprj6T9WjnolNhmvELVKO+G9TFQKJKh0BCWSfjdZbNOIZLZ+4zHTshILfRU+VUcd5VWRuvow+/9w9pbyt4NFOY3hspWqanUGC0lnuDKrrSufHDhu74Xccrhvx9w9mQl0PCYa+HjGCS3rn2RouU7i28kQCH49irLXqLCiB0ewuQHIvGHN6YuNk5xk5chcipTG/0xgjy1P3t/iWKx704X1yCDuwB0yOHbmaA8twCpazeb8Kt0Fe+ReQ8FNk6t6h3dlkV91fTvdgdtSu1Po+NKixtglHHqO+TqKeueteFkLYiJwFWA1gEkgfp+hrHfo4g/YQOFp0Lp+7HiD3yqsny4W6jiFe4qAnoFonlWW4OQwdl+U+pi1MNw8g7pAT5JgiL8
+ AJvYcCU85CmzezWXYjs7d04q56iflk3XNrfO92Z/yFqfgWD8aHJHO0wKepHAKyLrXeM78NoyCem0hOqWjs//+iigpEwll3DGDCdotjlWHO9Vlii+1KZoYVv4UpRFTx4A9R1nWwBtPU6gkjW11JZpfg5QBcgJe/6k/KSCeNC/iTnLyYKckSeBQ4HBPXTiueMLYb9mXjJhcR08zAVu9VQxQp4UkWD/Xmmx0pjD+hoCVsRyIkIcFpuuK7pZVh3pUSkzB7MeuCtIQPARuUOrv4Krsd7lbteVU5RKdCfZF1q2ZAB0/lUlAQM68BJ6yfqiKfguHEjv5H6v1K5vzuLBzuwVT7Fk8iQQGYB8d7RMIFQ42UGsF3eUJCGD0Fz7MqH/+nhApqx4R6q2CMxmsOY/Lln/3x46LUWky2QZYHduRTqcBgkrUnLALtczONlSCTSdAYDy43qlUacDkffDWuflJ/HDF8LzeGvOqlArR9A13QYSQRuVgNGRgmBmIU2et8X6Q1qrKoJyJ1xZ27+fdqzaRMHwb85Pc2Z/g5KF6w15ZAzvFGzkzkMaDqFdPISrK5NpaGsHUC2YvZzzrJ/P6hHgYj+NzcGVT0mGSpUlzBPPP5kOpByjGwBfDGAzacgRz00mH+/E5QZrAIin44MdlWRsuBR0NGXi2EhjfLgRpfXNK6g1Ju5cyXCbfdmi3dmu8ldCMNNuL0P2c1uwLAthHHpcXA6uDiewoiFDufeM/G6Gnea/RyV9lXjjx7Xw8TxSKgQsbLrQHw4TBTVG4gOVTpoXlrE8ZiXUKZLj5FEnzYe5m4JHpWdhXJ7MPZgECXZFVgEP9aImd0lCwLjtf2hMMjLQW71uDBcRTCMdlG2MjzdGj8XHOg3c
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- b15-20020a05600010cf00b0033b4e58746asm1809148wrx.69.2024.02.07.08.38.17
+ m14-20020a05600c3b0e00b004100826da82sm2653264wms.21.2024.02.07.08.38.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Feb 2024 08:38:24 -0800 (PST)
+ Wed, 07 Feb 2024 08:38:17 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 292D85F7B1;
- Wed,  7 Feb 2024 16:38:13 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 8F7AA5F8DA;
+ Wed,  7 Feb 2024 16:38:12 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -84,9 +84,9 @@ Cc: devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Kyle Evans <kevans@freebsd.org>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 11/14] gdbstub: Allow specifying a reason in stop packets
-Date: Wed,  7 Feb 2024 16:38:09 +0000
-Message-Id: <20240207163812.3231697-12-alex.bennee@linaro.org>
+Subject: [PATCH v2 05/14] tests/vm: Set UseDNS=no in the sshd configuration
+Date: Wed,  7 Feb 2024 16:38:03 +0000
+Message-Id: <20240207163812.3231697-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240207163812.3231697-1-alex.bennee@linaro.org>
 References: <20240207163812.3231697-1-alex.bennee@linaro.org>
@@ -101,7 +101,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,78 +119,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-The upcoming syscall catchpoint support needs to send stop packets with
-an associated reason to GDB. Add an extra parameter to gdb_handlesig()
-for that, and rename it to gdb_handlesig_reason(). Provide a
-compatibility wrapper with an old name.
+make vm-build-freebsd sometimes fails with "Connection timed out during
+banner exchange". The client strace shows:
 
+    13:59:30 write(3, "SSH-2.0-OpenSSH_9.3\r\n", 21) = 21
+    13:59:30 getpid()                       = 252655
+    13:59:30 poll([{fd=3, events=POLLIN}], 1, 5000) = 1 ([{fd=3, revents=POLLIN}])
+    13:59:32 read(3, "S", 1)                = 1
+    13:59:32 poll([{fd=3, events=POLLIN}], 1, 3625) = 1 ([{fd=3, revents=POLLIN}])
+    13:59:32 read(3, "S", 1)                = 1
+    13:59:32 poll([{fd=3, events=POLLIN}], 1, 3625) = 1 ([{fd=3, revents=POLLIN}])
+    13:59:32 read(3, "H", 1)                = 1
+
+There is a 2s delay during connection, and ConnectTimeout is set to 1.
+Raising it makes the issue go away, but we can do better. The server
+truss shows:
+
+    888: 27.811414714 socket(PF_INET,SOCK_DGRAM|SOCK_CLOEXEC,0) = 5 (0x5)
+    888: 27.811765030 connect(5,{ AF_INET 10.0.2.3:53 },16) = 0 (0x0)
+    888: 27.812166941 sendto(5,"\^Z/\^A\0\0\^A\0\0\0\0\0\0\^A2"...,39,0,NULL,0) = 39 (0x27)
+    888: 29.363970743 poll({ 5/POLLRDNORM },1,5000) = 1 (0x1)
+
+So the delay is due to a DNS query. Disable DNS queries in the server
+config.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240202152506.279476-3-iii@linux.ibm.com>
+Message-Id: <20240206002344.12372-2-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/gdbstub/user.h | 16 ++++++++++++++--
- gdbstub/user.c         |  5 ++++-
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ tests/vm/basevm.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
-index d392e510c59..1fc43e04af5 100644
---- a/include/gdbstub/user.h
-+++ b/include/gdbstub/user.h
-@@ -10,9 +10,10 @@
- #define GDBSTUB_USER_H
- 
- /**
-- * gdb_handlesig() - yield control to gdb
-+ * gdb_handlesig_reason() - yield control to gdb
-  * @cpu: CPU
-  * @sig: if non-zero, the signal number which caused us to stop
-+ * @reason: stop reason for stop reply packet or NULL
-  *
-  * This function yields control to gdb, when a user-mode-only target
-  * needs to stop execution. If @sig is non-zero, then we will send a
-@@ -24,7 +25,18 @@
-  * or 0 if no signal should be delivered, ie the signal that caused
-  * us to stop should be ignored.
-  */
--int gdb_handlesig(CPUState *, int);
-+int gdb_handlesig_reason(CPUState *, int, const char *);
-+
-+/**
-+ * gdb_handlesig() - yield control to gdb
-+ * @cpu CPU
-+ * @sig: if non-zero, the signal number which caused us to stop
-+ * @see gdb_handlesig_reason()
-+ */
-+static inline int gdb_handlesig(CPUState *cpu, int sig)
-+{
-+    return gdb_handlesig_reason(cpu, sig, NULL);
-+}
- 
- /**
-  * gdb_signalled() - inform remote gdb of sig exit
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index dbe1d9b8875..63edca131ab 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -121,7 +121,7 @@ void gdb_qemu_exit(int code)
-     exit(code);
- }
- 
--int gdb_handlesig(CPUState *cpu, int sig)
-+int gdb_handlesig_reason(CPUState *cpu, int sig, const char *reason)
- {
-     char buf[256];
-     int n;
-@@ -141,6 +141,9 @@ int gdb_handlesig(CPUState *cpu, int sig)
-                             "T%02xthread:", gdb_target_signal_to_gdb(sig));
-             gdb_append_thread_id(cpu, gdbserver_state.str_buf);
-             g_string_append_c(gdbserver_state.str_buf, ';');
-+            if (reason) {
-+                g_string_append(gdbserver_state.str_buf, reason);
-+            }
-             gdb_put_strbuf();
-             gdbserver_state.allow_stop_reply = false;
-         }
+diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+index 61725b83254..c0d62c08031 100644
+--- a/tests/vm/basevm.py
++++ b/tests/vm/basevm.py
+@@ -423,6 +423,8 @@ def console_ssh_init(self, prompt, user, pw):
+     def console_sshd_config(self, prompt):
+         self.console_wait(prompt)
+         self.console_send("echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config\n")
++        self.console_wait(prompt)
++        self.console_send("echo 'UseDNS no' >> /etc/ssh/sshd_config\n")
+         for var in self.envvars:
+             self.console_wait(prompt)
+             self.console_send("echo 'AcceptEnv %s' >> /etc/ssh/sshd_config\n" % var)
 -- 
 2.39.2
 
