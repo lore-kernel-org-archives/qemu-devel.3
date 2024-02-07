@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28A8C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0BFC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXmXH-0004iJ-Ow; Wed, 07 Feb 2024 13:20:39 -0500
+	id 1rXmXL-0004ku-W3; Wed, 07 Feb 2024 13:20:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXF-0004fp-0e
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:37 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXJ-0004jW-Ci
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:41 -0500
 Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXD-00084w-9i
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:36 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXH-0008BV-Ts
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:41 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id EBABF61A14;
- Wed,  7 Feb 2024 18:20:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF80C433C7;
- Wed,  7 Feb 2024 18:20:25 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 05F6B61A14;
+ Wed,  7 Feb 2024 18:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA70FC433F1;
+ Wed,  7 Feb 2024 18:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707330026;
- bh=fyx4t/wd+HoBgs+powsZLo9dv0JfIOTv2vwESQtk0ZA=;
- h=From:To:Cc:Subject:Date:From;
- b=sI6ql0aJemkxW3cnykTz/+RwZ2dQSB9pRrEc0v/AP6NeV81IlkJk5k8BiYSLsw/gG
- l3qBekj4JmFA3RxCYBRCplKSNSB8bqZHvyNGlSDch64BMAGpVgpLcViOxQUolDeVBM
- C3152jq+JD/2S9pQ+//+vLmwwGW76uyJE7o4vBPP1a4sQACYmP3eto7oaNxqNKIqJ/
- GsZs2eEZldIQnbD5gewkuwjAq08ykla2G3pKqN8f5VLiNUK8uN7BSx30OLq/oFLswx
- 3GfP8NQ7OzhOsrSv36l+1emq/PtRTGya1HCJxQd3z7aPfT6A6GxZLPQwX0VpANhuH+
- kVpMA/+SyOobA==
+ s=k20201202; t=1707330038;
+ bh=KoFYV1cuiAvIfsT/+E/M7QzFRHRdtCx8I9CYomiWxOQ=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=dhFnrxvI0FODuvGp03xWec7LxBlbciVZNt4O4Codv3Di2CCXiSU+4N4D8+vsr4BeB
+ IZJGcLfZIRPuODDtVcVs9vjyddagdYNRzr7fQfmX9MB5a3WyPXpfvY6U9gZauG/Vzh
+ OIg3Zq3EW3Tx6lv0blXDYYxYAcPi6yfa7gvWtqtdxHVDTazz0DNTP8nlTEP96E7p3Y
+ UHMBbbcUk0YKwMj5FBH3HBS0IDGCmHrBzI0DKnzdfS+4SMcJcoLzLO4fVr7Sd6/AKP
+ XSZc0D+goeGIXH9BExZCZJD6yqQsXL19Vtjfsu40nzC+RQXwfYHpOhEtrlzuQjHfej
+ NPidzhQZw3Lqw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PATCH 00/13] target/hppa: Enhancements and fixes
-Date: Wed,  7 Feb 2024 19:20:10 +0100
-Message-ID: <20240207182023.36316-1-deller@kernel.org>
+Subject: [PATCH 09/13] target/hppa: Allow read-access to PSW with rsm 0,
+ reg instruction
+Date: Wed,  7 Feb 2024 19:20:19 +0100
+Message-ID: <20240207182023.36316-10-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240207182023.36316-1-deller@kernel.org>
+References: <20240207182023.36316-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2604:1380:4641:c500::1;
@@ -70,52 +72,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Some enhancements and fixes for the hppa target.
+HP-UX 11 and HP ODE tools use the "rsm 0,%reg" instruction in not priviledged
+code paths to get the current PSW flags. The constant 0 means that no bits of
+the PSW shall be reset, so this is effectively a read-only access to the PSW.
+Allow this read-only access even for not privileged code.
 
-The major change is, that this patchset adds a new SeaBIOS-hppa firmware
-which is built as 32- and 64-bit firmware.
-The new 64-bit firmware is necessary to fully support 64-bit operating systems
-(HP-UX, Linux, NetBSD,...).
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ target/hppa/translate.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Please review!
-
-Helge
-
-Helge Deller (13):
-  disas/hppa: Add disassembly for qemu specific instructions
-  target/hppa: Add "diag 0x101" for console output support
-  target/hppa: Fix PSW_W and PSW_E bits in rsm, ssm and mtsm
-  hw/pci-host/astro: Avoid aborting on access failure
-  hw/pci-host/astro: Implement Hard Fail and Soft Fail mode
-  lasi: allow access to LAN MAC address registers
-  target/hppa: Implement do_transaction_failed handler for I/O errors
-  lasi: Add reset I/O ports for LASI audio and FDC
-  target/hppa: Allow read-access to PSW with rsm 0,reg instruction
-  target/hppa: Check privilege only when PSW.P is set
-  target/hppa: PDC_BTLB_INFO uses 32-bit ints
-  target/hppa: Update SeaBIOS-hppa to version 16
-  hw/hppa/machine: Load 64-bit firmware on 64-bit machines
-
- disas/hppa.c                |   4 +++
- hw/hppa/machine.c           |  11 ++++++--
- hw/misc/lasi.c              |  13 +++++++++
- hw/pci-host/astro.c         |  41 +++++++++++++++------------
- include/hw/misc/lasi.h      |   2 ++
- include/hw/pci-host/astro.h |   2 ++
- pc-bios/hppa-firmware.img   | Bin 163324 -> 167836 bytes
- pc-bios/hppa-firmware64.img | Bin 0 -> 205944 bytes
- roms/seabios-hppa           |   2 +-
- target/hppa/cpu.c           |   1 +
- target/hppa/cpu.h           |   7 +++++
- target/hppa/helper.h        |   5 +++-
- target/hppa/mem_helper.c    |  21 +++++++++++++-
- target/hppa/op_helper.c     |  32 +++++++++++++++++++++
- target/hppa/sys_helper.c    |  46 ++++++++++++++++++++++++++++--
- target/hppa/translate.c     |  54 ++++++++++++++++++++++++++----------
- 16 files changed, 200 insertions(+), 41 deletions(-)
- mode change 100644 => 100755 pc-bios/hppa-firmware.img
- create mode 100755 pc-bios/hppa-firmware64.img
-
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 10fdc0813d..7e58775bbf 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -2156,10 +2156,16 @@ static bool trans_ldsid(DisasContext *ctx, arg_ldsid *a)
+ 
+ static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
+ {
++#ifdef CONFIG_USER_ONLY
+     CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
+-#ifndef CONFIG_USER_ONLY
++#else
+     TCGv_i64 tmp;
+ 
++    /* HP-UX 11i and HP ODE use rsm for read-access to PSW */
++    if (a->i) {
++        CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
++    }
++
+     nullify_over(ctx);
+ 
+     tmp = tcg_temp_new_i64();
 -- 
 2.43.0
 
