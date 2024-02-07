@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F6AC4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 21:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C82C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 21:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXpu2-0006zx-4L; Wed, 07 Feb 2024 16:56:22 -0500
+	id 1rXpu3-000720-2h; Wed, 07 Feb 2024 16:56:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpty-0006vm-Ar
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:18 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu1-0006z0-Ae
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXptw-0007b8-4t
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:18 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXptz-0007cV-OV
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707342975;
+ s=mimecast20190719; t=1707342979;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6ulCP5y1bPV8WD14M42aT1AWi4MtKmD+olFOV6aACBU=;
- b=beBGTWl8RtHDENHfL/pf9OAi1NS0gZW0aghrtSnqZ8mux4jIDdFy1B6tvKEV4d9PWy9Kp8
- B0VdgYqJvi/VCK+9kRHd/mqjzqi+8PPX2iH5a0irMu95hi3tyMY/VG5YYsj7keDAQl+E9H
- Q9lN7FnoY3Q6ysU6REhl8zSBJS8tM6Q=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-MmW3uiGkO66nrsAXKpVFHg-1; Wed, 07 Feb 2024 16:56:12 -0500
-X-MC-Unique: MmW3uiGkO66nrsAXKpVFHg-1
+ bh=wAx0RdZYogkrfCKJZGl1P9CU2kkEBXzY+du27/JRMO8=;
+ b=YVVsfKaHaEvjp8KSMnlVm+x4apxAFWbioew4sfkeWcpFbOfq5tpJxwdDrOIyRZV8UwoJGb
+ MhXLGf90stDlTqwZLOxTiIcTV3Bk5EgIBdEWINoV/ms/VqHTNFswmF1JJ6u+cKWVe6Ua5O
+ CqmmJZ1STn7ug85KDzRslKS6Gsmqti0=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-WvBTDAXEPwynSGxeqv-rmg-1; Wed,
+ 07 Feb 2024 16:56:15 -0500
+X-MC-Unique: WvBTDAXEPwynSGxeqv-rmg-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 219B684AE41;
- Wed,  7 Feb 2024 21:56:12 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7BFC93C11C77;
+ Wed,  7 Feb 2024 21:56:15 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.192.31])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 87E13492BC7;
- Wed,  7 Feb 2024 21:56:11 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E32AA492BC6;
+ Wed,  7 Feb 2024 21:56:14 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 03/16] virtio-blk: add vq_rq[] bounds check in
- virtio_blk_dma_restart_cb()
-Date: Wed,  7 Feb 2024 22:55:53 +0100
-Message-ID: <20240207215606.206038-4-kwolf@redhat.com>
+Subject: [PULL 06/16] block-backend: Allow concurrent context changes
+Date: Wed,  7 Feb 2024 22:55:56 +0100
+Message-ID: <20240207215606.206038-7-kwolf@redhat.com>
 In-Reply-To: <20240207215606.206038-1-kwolf@redhat.com>
 References: <20240207215606.206038-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -81,48 +80,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-Hanna Czenczek <hreitz@redhat.com> noted that the array index in
-virtio_blk_dma_restart_cb() is not bounds-checked:
+Since AioContext locks have been removed, a BlockBackend's AioContext
+may really change at any time (only exception is that it is often
+confined to a drained section, as noted in this patch).  Therefore,
+blk_get_aio_context() cannot rely on its root node's context always
+matching that of the BlockBackend.
 
-  g_autofree VirtIOBlockReq **vq_rq = g_new0(VirtIOBlockReq *, num_queues);
-  ...
-  while (rq) {
-      VirtIOBlockReq *next = rq->next;
-      uint16_t idx = virtio_get_queue_index(rq->vq);
+In practice, whether they match does not matter anymore anyway: Requests
+can be sent to BDSs from any context, so anyone who requests the BB's
+context should have no reason to require the root node to have the same
+context.  Therefore, we can and should remove the assertion to that
+effect.
 
-      rq->next = vq_rq[idx];
-                 ^^^^^^^^^^
+In addition, because the context can be set and queried from different
+threads concurrently, it has to be accessed with atomic operations.
 
-The code is correct because both rq->vq and vq_rq[] depend on
-num_queues, but this is indirect and not 100% obvious. Add an assertion.
-
-Suggested-by: Hanna Czenczek <hreitz@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20240206190610.107963-4-stefanha@redhat.com>
+Buglink: https://issues.redhat.com/browse/RHEL-19381
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20240202144755.671354-2-hreitz@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- hw/block/virtio-blk.c | 2 ++
- 1 file changed, 2 insertions(+)
+ block/block-backend.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index e430ba583c..31212506ca 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1209,6 +1209,8 @@ static void virtio_blk_dma_restart_cb(void *opaque, bool running,
-         VirtIOBlockReq *next = rq->next;
-         uint16_t idx = virtio_get_queue_index(rq->vq);
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 209eb07528..9c4de79e6b 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -44,7 +44,7 @@ struct BlockBackend {
+     char *name;
+     int refcnt;
+     BdrvChild *root;
+-    AioContext *ctx;
++    AioContext *ctx; /* access with atomic operations only */
+     DriveInfo *legacy_dinfo;    /* null unless created by drive_new() */
+     QTAILQ_ENTRY(BlockBackend) link;         /* for block_backends */
+     QTAILQ_ENTRY(BlockBackend) monitor_link; /* for monitor_block_backends */
+@@ -2414,22 +2414,22 @@ void blk_op_unblock_all(BlockBackend *blk, Error *reason)
+     }
+ }
  
-+        /* Only num_queues vqs were created so vq_rq[idx] is within bounds */
-+        assert(idx < num_queues);
-         rq->next = vq_rq[idx];
-         vq_rq[idx] = rq;
-         rq = next;
++/**
++ * Return BB's current AioContext.  Note that this context may change
++ * concurrently at any time, with one exception: If the BB has a root node
++ * attached, its context will only change through bdrv_try_change_aio_context(),
++ * which creates a drained section.  Therefore, incrementing such a BB's
++ * in-flight counter will prevent its context from changing.
++ */
+ AioContext *blk_get_aio_context(BlockBackend *blk)
+ {
+-    BlockDriverState *bs;
+     IO_CODE();
+ 
+     if (!blk) {
+         return qemu_get_aio_context();
+     }
+ 
+-    bs = blk_bs(blk);
+-    if (bs) {
+-        AioContext *ctx = bdrv_get_aio_context(blk_bs(blk));
+-        assert(ctx == blk->ctx);
+-    }
+-
+-    return blk->ctx;
++    return qatomic_read(&blk->ctx);
+ }
+ 
+ int blk_set_aio_context(BlockBackend *blk, AioContext *new_context,
+@@ -2442,7 +2442,7 @@ int blk_set_aio_context(BlockBackend *blk, AioContext *new_context,
+     GLOBAL_STATE_CODE();
+ 
+     if (!bs) {
+-        blk->ctx = new_context;
++        qatomic_set(&blk->ctx, new_context);
+         return 0;
+     }
+ 
+@@ -2471,7 +2471,7 @@ static void blk_root_set_aio_ctx_commit(void *opaque)
+     AioContext *new_context = s->new_ctx;
+     ThrottleGroupMember *tgm = &blk->public.throttle_group_member;
+ 
+-    blk->ctx = new_context;
++    qatomic_set(&blk->ctx, new_context);
+     if (tgm->throttle_state) {
+         throttle_group_detach_aio_context(tgm);
+         throttle_group_attach_aio_context(tgm, new_context);
 -- 
 2.43.0
 
