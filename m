@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA39C48297
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 03:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9452FC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 03:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXYRf-0008JX-7f; Tue, 06 Feb 2024 22:17:55 -0500
+	id 1rXYUv-0000tV-1j; Tue, 06 Feb 2024 22:21:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rXYRd-0008J4-7O
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:17:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXYUt-0000t5-Bt
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:21:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rXYRa-00068v-Ar
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:17:52 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXYUr-0007PL-5K
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 22:21:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707275868;
+ s=mimecast20190719; t=1707276072;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+MyVM6e3skz+aOnUg/RRvZJqnNMp7BfkRW9DUx/5z0E=;
- b=O5TE7OTdvIcGD/YrpNo3MzwgN5+QaZhXJTknObUKrgSldiQvYlaao2WsV/Q5QGBI/SCh1Y
- 7yYNdHsHgulxsFibAAbNvMpEhueR5ES3bkeunvuGJnCZ50Qf4+d83CL77klfpQHiDFeo5C
- rsBIqAeXZ8JZjtT87mnuxQz9J3GNfEQ=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=I8P++wokhLYvdZnN/0j1AcWSUh+yIkQj0FrsycXaoRs=;
+ b=X6ZY/dY3+65Y8LG9iPwPwZVxEFk7kcvAr++UEETcJCf6fbFXTWQqSGEdVlqoaIHGJxoPtY
+ 9Ku60alaJnYGmicnx3REjxWkTWWIVSZq0e/H9OquvER0RvvbEDVDh4sC1tbn+uQ3CzCJFf
+ IUOo2CJHYjxd+xENofDupAMq2tBOrkk=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-PQMCxmjdMK6ed24PYIvTNw-1; Tue, 06 Feb 2024 22:17:46 -0500
-X-MC-Unique: PQMCxmjdMK6ed24PYIvTNw-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-59a6d6c51c4so179322eaf.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 19:17:46 -0800 (PST)
+ us-mta-9-fd40ZFCvM4as53-aSBHzIg-1; Tue, 06 Feb 2024 22:21:10 -0500
+X-MC-Unique: fd40ZFCvM4as53-aSBHzIg-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3bfde273841so96556b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 19:21:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707275866; x=1707880666;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+MyVM6e3skz+aOnUg/RRvZJqnNMp7BfkRW9DUx/5z0E=;
- b=N4rHX/V3U4JFsLSUrZPUpjOSAkUXHtcMmCUKMJtWMHIPMDkcZxjrnHx14gLh53C5DT
- dLpqlr5wjVCk16RqCCHbOTgcQVVpSv0TFVBWMbNwzA4G8F13B8aYGPKOtu2ew4Txntzh
- Agr2u33FcYAo5DBC2qpEugx/4nN2lPxnYkTFTqvfsaZWUcy/1LB37FjGtUUf4b5G3EI4
- x/A3IYpAJu6J4yjBqkV1Bs2z+kCnu0qSBDGK5KWmWO6nSSXzETuo2k7GBNlM5rvaUS3M
- QHdBxWPkaR253QWzLx6KRpf6Ts0DdSresTc3GmM6/iKiSxIi2FFRIpYuNvMU14NNX12m
- VEiQ==
-X-Gm-Message-State: AOJu0YxOK2e3zS6A88qrxN6T8iaHAX8j+Q4MdItRbOP5yM3C+BE6+9mp
- GrK/c0lc2pfloI+bUSIvfa6jckwhnvR6BqHs48XWLGXChLhOUnmyRx3oFn1TE7IIP0bhzlY6mwL
- JKVu4KenSZa6SG48IxYte2dFp/OLLU61hZ2EPh4UaHK7JrwIrYxrOLU5k65EU5jzxhe/+bPPlcx
- MwZReUZLcrVdeKXD+5PtVhNDJy984=
-X-Received: by 2002:a05:6358:7f02:b0:178:951b:d1a6 with SMTP id
- p2-20020a0563587f0200b00178951bd1a6mr1674265rwn.25.1707275865768; 
- Tue, 06 Feb 2024 19:17:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEyx7k2nqWJ7QPi8FUZ9rJF6U5p1gYyffbpvAU0RW90ynTJH7Hc6kU0J9Z/Cp0ck3dbAIkJI5U9yd4IM6CqavI=
-X-Received: by 2002:a05:6358:7f02:b0:178:951b:d1a6 with SMTP id
- p2-20020a0563587f0200b00178951bd1a6mr1674252rwn.25.1707275865480; Tue, 06 Feb
- 2024 19:17:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707276070; x=1707880870;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I8P++wokhLYvdZnN/0j1AcWSUh+yIkQj0FrsycXaoRs=;
+ b=krG7Pys6kcPEq+yL2TxbsgPNHSWno1KIqbOGbzpBkx8eGDqnOjETqLWdX2N/uiC9HY
+ 1LGt9vHUJf2yoC19lUXXkPFVAO1Z2zbOE/YPLFdS7mg3Ll1Rv3Y+xdTnODnrkS4rMiEH
+ JuY3tcH8jgMJSb9Fre8esmOMCvQAKyDW4q2/7hWMpaqB9sexwissrBhbVIGrwlsccgYx
+ XmGMWInao2ER/ajC9mqiDhJR8yu6NWyGpQ6Ejle1PpKJ39gc9ADIUapxMtBmAbRIZKq7
+ DT1e+T9Ewe8T5Ww2uhCSUokvq1ojBKJ7OSW3tq2PV0sV6L/1ODis9VK/MQ0f5Vd0lcGc
+ mzQw==
+X-Gm-Message-State: AOJu0Yxqe2P88OF24ELOSBxopyET+wuQyUa09Wdl56uwRQkckH8C7biX
+ 2P05T4C2Kq5NO8Yxpah5mn0hCrNMj376W51vdlAy7ymiCYm0zugsk3IPA48O9Eks8ptiu9kqvLr
+ H+a2U+3pbZRHmCKPrC1+qdSKU2D5GGYvtJcpf19vHmdu9x8PIYphI
+X-Received: by 2002:a05:6358:7e14:b0:176:6149:5558 with SMTP id
+ o20-20020a0563587e1400b0017661495558mr5181214rwm.1.1707276069905; 
+ Tue, 06 Feb 2024 19:21:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG4S9NyeSb+igFQt271znTb1Wh5TdtzYTWr6wMlhGWEwxkk6Fo2zR69At7FtXkIAW0P2P+sFQ==
+X-Received: by 2002:a05:6358:7e14:b0:176:6149:5558 with SMTP id
+ o20-20020a0563587e1400b0017661495558mr5181181rwm.1.1707276069584; 
+ Tue, 06 Feb 2024 19:21:09 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXd704DDHmrD4JbygLyd4INq2k9t/vcZxfIdWA+7tuNmc78EmyuXxRgqJg1DPmNth3kwJqugCnxhAw4RipBejjT6ko86qSXJN4lvvyayAmF+MdQHXp9qyrhKRq79wOa8PTX2M8KU+fEj7wFl7DjsPrClFqk5/UGwgvAHnYPRDaeaTviVtVRykTFsJD9uSLAiK7KYKUGyEMWK2NKOp9r4a2pA9dQAmdDmcUaIaW57S5sHggwrgZDTQ8ojpU1PJG8YXQsUbsiy782RvsTJsXW0XFAeD5AAaOI5nSTLLjhzD58fPg14y74XHSPvxgG69/vdIRyLlc+hql2zmiMFzEZ2E5SK1mHNX1MLPQS3eYgYFotWIJVmlCthPDP0cvUaYj1AA6AeC/kLibClKKZQpbxJp1rdOahjPXCUQlq1mmzK415OJ2gp1p9soqdzzIP9soeuOc2YD3OnysuhIJ7xiCj08BMkSVmfHQ2Oqdd9lJqIoFtrzCt4ACIcRlStDZfpgepIlorRsS2nPGSIXWJfWezJw9w/l/5NFLRlxTFv9JscqKAFhwSQayKQQAYYuQJHqFX5d4BSsXW+gV1VHzJ3G2i83q+aT4fk5izB3Mr6H6/hyL+FbdvI7GCd5UToF7TQ0YaqJPZfWbdBV26TlLcb+IfMTJ81xr1o9oR1Tkl1UuHwnZCQs9bKdvrkBWyBLmgFsZ2bVypEa8P3ncYsxI98jUtAFH5MR+G8qCdvxnniyA8hfXuzmMngW433oXm+pKizwxMwyU4QXrp4smpydXlYQpJgik=
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ t19-20020a056a0021d300b006e04eff6323sm268732pfj.53.2024.02.06.19.21.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Feb 2024 19:21:09 -0800 (PST)
+Date: Wed, 7 Feb 2024 11:20:57 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, berrange@redhat.com,
+ eblake@redhat.com, eduardo@habkost.net, fan.ni@samsung.com,
+ farosas@suse.de, hreitz@redhat.com, jasowang@redhat.com,
+ jiri@resnulli.us, jonathan.cameron@huawei.com, kkostiuk@redhat.com,
+ kraxel@redhat.com, kwolf@redhat.com, lukasstraub2@web.de,
+ marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
+ michael.roth@amd.com, mst@redhat.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, philmd@linaro.org,
+ pizhenwei@bytedance.com, qemu-block@nongnu.org,
+ stefanb@linux.ibm.com, wangyanan55@huawei.com
+Subject: Re: [PATCH 00/15] qapi: Require member documentation (with loophole)
+Message-ID: <ZcL3GfIZj-GSLX-W@x1n>
+References: <20240205074709.3613229-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20240202132521.32714-1-kwolf@redhat.com>
- <zmopxf5zt6m36nfujntn72idlinm7qmx23wjvwiazmq4b75lsa@a2omit34pjif>
- <CACGkMEvLpg+nPgHsE_6stFM1OGXbHpuE=j7XLwt_YxpxhWJgZw@mail.gmail.com>
- <nvk6n7ln3ryga2ww4a6evbprauptzcn7uz34ar3uecbxjfre2z@msikqqpuk2vh>
-In-Reply-To: <nvk6n7ln3ryga2ww4a6evbprauptzcn7uz34ar3uecbxjfre2z@msikqqpuk2vh>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 7 Feb 2024 11:17:34 +0800
-Message-ID: <CACGkMEtODf_NGGa-XbyDMM7=z6CsCkazV9A-4z8W7oCOnu-Ybg@mail.gmail.com>
-Subject: Re: Re: [PATCH] vdpa-dev: Fix initialisation order to restore VDUSE
- compatibility
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- qemu-block@nongnu.org, mst@redhat.com, qemu-devel@nongnu.org, 
- qemu-stable@nongnu.org, Cindy Lu <lulu@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240205074709.3613229-1-armbru@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,146 +108,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 6, 2024 at 4:31=E2=80=AFPM Stefano Garzarella <sgarzare@redhat.=
-com> wrote:
->
-> On Tue, Feb 06, 2024 at 10:47:40AM +0800, Jason Wang wrote:
-> >On Mon, Feb 5, 2024 at 6:51=E2=80=AFPM Stefano Garzarella <sgarzare@redh=
-at.com> wrote:
-> >>
-> >> On Fri, Feb 02, 2024 at 02:25:21PM +0100, Kevin Wolf wrote:
-> >> >VDUSE requires that virtqueues are first enabled before the DRIVER_OK
-> >> >status flag is set; with the current API of the kernel module, it is
-> >> >impossible to enable the opposite order in our block export code beca=
-use
-> >> >userspace is not notified when a virtqueue is enabled.
-> >
-> >Did this mean virtio-blk will enable a virtqueue after DRIVER_OK?
->
-> It's not specific to virtio-blk, but to the generic vdpa device we have
-> in QEMU (i.e. vhost-vdpa-device). Yep, after commit
-> 6c4825476a4351530bcac17abab72295b75ffe98, virtqueues are enabled after
-> DRIVER_OK.
+On Mon, Feb 05, 2024 at 08:46:54AM +0100, Markus Armbruster wrote:
+>     qapi/migration.json
+> 	MigrateSetParameters 1
 
-Right.
+It's tls-authz.  I'll send a patch for this one.
 
->
-> >Sepc is not clear about this and that's why we introduce
-> >VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK.
->
-> Ah, I didn't know about this new feature. So after commit
-> 6c4825476a4351530bcac17abab72295b75ffe98 the vhost-vdpa-device is not
-> complying with the specification, right?
+Thanks,
 
-Kind of, but as stated, it's just because spec is unclear about the
-behaviour. There's a chance that spec will explicitly support it in
-the future.
-
->
-> >
-> >>
-> >> Yeah, IMHO the VDUSE protocol is missing a VDUSE_SET_VQ_READY message,
-> >
-> >I think you meant when VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is
-> >negotiated.
->
-> At this point yes. But if VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not
-> negotiated, should we return an error in vhost-vdpa kernel module if
-> VHOST_VDPA_SET_VRING_ENABLE is called when DRIVER_OK is already set?
-
-I'm not sure if this can break some setups or not. It might be better
-to leave it as is?
-
-Without VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK, we don't know if
-parent support vq_ready after driver_ok.
-With VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK, we know parent support
-vq_ready after driver_ok.
-
->
-> >If this is truth, it seems a little more complicated, for
-> >example the get_backend_features needs to be forward to the userspace?
->
-> I'm not understanding, don't we already have VHOST_GET_BACKEND_FEATURES
-> for this? Or do you mean userspace on the VDUSE side?
-
-Yes, since in this case the parent is in the userspace, there's no way
-for VDUSE to know if user space supports vq_ready after driver_ok or
-not.
-
-As you may have noticed, we don't have a message for vq_ready which
-implies that vq_ready after driver_ok can't be supported.
-
->
-> >This seems suboptimal to implement this in the spec first and then we
-> >can leverage the features. Or we can have another parameter for the
-> >ioctl that creates the vduse device.
->
-> I got a little lost, though in vhost-user, the device can always expect
-> a vring_enable/disable, so I thought it was not complicated in VDUSE.
-
-Yes, the problem is assuming we have a message for vq_ready, there
-could be  a "legacy" userspace that doesn't support that.  So in that
-case, VDUSE needs to know if the userspace parent can support that or
-not.
-
->
-> >
-> >> I'll start another thread about that, but in the meantime I agree that
-> >> we should fix QEMU since we need to work properly with old kernels as
-> >> well.
-> >>
-> >> >
-> >> >This requirement also mathces the normal initialisation order as done=
- by
-> >> >the generic vhost code in QEMU. However, commit 6c482547 accidentally
-> >> >changed the order for vdpa-dev and broke access to VDUSE devices with
-> >> >this.
-> >> >
-> >> >This changes vdpa-dev to use the normal order again and use the stand=
-ard
-> >> >vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
-> >> >used with vdpa-dev again after this fix.
-> >>
-> >> I like this approach and the patch LGTM, but I'm a bit worried about
-> >> this function in hw/net/vhost_net.c:
-> >>
-> >>      int vhost_set_vring_enable(NetClientState *nc, int enable)
-> >>      {
-> >>          VHostNetState *net =3D get_vhost_net(nc);
-> >>          const VhostOps *vhost_ops =3D net->dev.vhost_ops;
-> >>
-> >>          nc->vring_enable =3D enable;
-> >>
-> >>          if (vhost_ops && vhost_ops->vhost_set_vring_enable) {
-> >>              return vhost_ops->vhost_set_vring_enable(&net->dev, enabl=
-e);
-> >>          }
-> >>
-> >>          return 0;
-> >>      }
-> >>
-> >> @Eugenio, @Jason, should we change some things there if vhost-vdpa
-> >> implements the vhost_set_vring_enable callback?
-> >
-> >Eugenio may know more, I remember we need to enable cvq first for
-> >shadow virtqueue to restore some states.
-> >
-> >>
-> >> Do you remember why we didn't implement it from the beginning?
-> >
-> >It seems the vrings parameter is introduced after vhost-vdpa is
-> >implemented.
->
-> Sorry, I mean why we didn't implement the vhost_set_vring_enable
-> callback for vhost-vdpa from the beginning.
-
-Adding Cindy who writes those codes for more thoughts.
-
-Thanks
-
->
-> Thanks,
-> Stefano
->
+-- 
+Peter Xu
 
 
