@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA54BC4829C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28A8C4828D
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 18:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXmXM-0004l5-6A; Wed, 07 Feb 2024 13:20:45 -0500
+	id 1rXmXH-0004iJ-Ow; Wed, 07 Feb 2024 13:20:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXI-0004ic-1N
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:40 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXF-0004fp-0e
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:37 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXG-00087d-90
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:39 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rXmXD-00084w-9i
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 13:20:36 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 7713FCE1AD0;
- Wed,  7 Feb 2024 18:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54F8C433F1;
- Wed,  7 Feb 2024 18:20:33 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id EBABF61A14;
+ Wed,  7 Feb 2024 18:20:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF80C433C7;
+ Wed,  7 Feb 2024 18:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707330034;
- bh=FaxA3mFrSxmY5kTESFNBYrTItNp7faYaL5jQs64YYHE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Rmu/KzsaU6UABUhm+KVn4mv8gcHJLeW6qMC7lknsg7yfFJNSLciicdRKIs3Ou9Sps
- Tjn1EJUqze7h/emedNv8qIRq8hMb45Y889I5kQhgOq4qOSON2P+biItAnfFhjI1RiR
- RcyZHRZ2ZEsB8c06jjYUOrmuIa/9DYA8OPXVP/5Jzqn9Ys2fmeal1fYAGmLkxB7Tb8
- OHrI/rlj5UJWxyjbXbYzJWiK0BZNnEOFAO3ScA5kstrPH4jgJuYKdF5TINlH2TgIiN
- NEdYxsdRh+kHrpbXD86XoqaFeMwiiQTZejtJGz5wr2WVy68y9IfQ8Xf8kafZ/Nsftt
- InunyqljsWgwQ==
+ s=k20201202; t=1707330026;
+ bh=fyx4t/wd+HoBgs+powsZLo9dv0JfIOTv2vwESQtk0ZA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=sI6ql0aJemkxW3cnykTz/+RwZ2dQSB9pRrEc0v/AP6NeV81IlkJk5k8BiYSLsw/gG
+ l3qBekj4JmFA3RxCYBRCplKSNSB8bqZHvyNGlSDch64BMAGpVgpLcViOxQUolDeVBM
+ C3152jq+JD/2S9pQ+//+vLmwwGW76uyJE7o4vBPP1a4sQACYmP3eto7oaNxqNKIqJ/
+ GsZs2eEZldIQnbD5gewkuwjAq08ykla2G3pKqN8f5VLiNUK8uN7BSx30OLq/oFLswx
+ 3GfP8NQ7OzhOsrSv36l+1emq/PtRTGya1HCJxQd3z7aPfT6A6GxZLPQwX0VpANhuH+
+ kVpMA/+SyOobA==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PATCH 06/13] lasi: allow access to LAN MAC address registers
-Date: Wed,  7 Feb 2024 19:20:16 +0100
-Message-ID: <20240207182023.36316-7-deller@kernel.org>
+Subject: [PATCH 00/13] target/hppa: Enhancements and fixes
+Date: Wed,  7 Feb 2024 19:20:10 +0100
+Message-ID: <20240207182023.36316-1-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240207182023.36316-1-deller@kernel.org>
-References: <20240207182023.36316-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
@@ -71,35 +70,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Firmware and qemu reads and writes the MAC address for the LASI LAN via
-registers in LASI. Allow those accesses and return zero even if LASI
-LAN isn't enabled to avoid HPMCs (=crashes).
+Some enhancements and fixes for the hppa target.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- hw/misc/lasi.c | 2 ++
- 1 file changed, 2 insertions(+)
+The major change is, that this patchset adds a new SeaBIOS-hppa firmware
+which is built as 32- and 64-bit firmware.
+The new 64-bit firmware is necessary to fully support 64-bit operating systems
+(HP-UX, Linux, NetBSD,...).
 
-diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
-index 003f5b5ed8..9cfa5bb316 100644
---- a/hw/misc/lasi.c
-+++ b/hw/misc/lasi.c
-@@ -38,6 +38,7 @@ static bool lasi_chip_mem_valid(void *opaque, hwaddr addr,
-     case LASI_LPT:
-     case LASI_UART:
-     case LASI_LAN:
-+    case LASI_LAN + 12: /* LASI LAN MAC */
-     case LASI_RTC:
- 
-     case LASI_PCR ... LASI_AMR:
-@@ -78,6 +79,7 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
-     case LASI_LPT:
-     case LASI_UART:
-     case LASI_LAN:
-+    case LASI_LAN + 12:
-         val = 0;
-         break;
-     case LASI_RTC:
+Please review!
+
+Helge
+
+Helge Deller (13):
+  disas/hppa: Add disassembly for qemu specific instructions
+  target/hppa: Add "diag 0x101" for console output support
+  target/hppa: Fix PSW_W and PSW_E bits in rsm, ssm and mtsm
+  hw/pci-host/astro: Avoid aborting on access failure
+  hw/pci-host/astro: Implement Hard Fail and Soft Fail mode
+  lasi: allow access to LAN MAC address registers
+  target/hppa: Implement do_transaction_failed handler for I/O errors
+  lasi: Add reset I/O ports for LASI audio and FDC
+  target/hppa: Allow read-access to PSW with rsm 0,reg instruction
+  target/hppa: Check privilege only when PSW.P is set
+  target/hppa: PDC_BTLB_INFO uses 32-bit ints
+  target/hppa: Update SeaBIOS-hppa to version 16
+  hw/hppa/machine: Load 64-bit firmware on 64-bit machines
+
+ disas/hppa.c                |   4 +++
+ hw/hppa/machine.c           |  11 ++++++--
+ hw/misc/lasi.c              |  13 +++++++++
+ hw/pci-host/astro.c         |  41 +++++++++++++++------------
+ include/hw/misc/lasi.h      |   2 ++
+ include/hw/pci-host/astro.h |   2 ++
+ pc-bios/hppa-firmware.img   | Bin 163324 -> 167836 bytes
+ pc-bios/hppa-firmware64.img | Bin 0 -> 205944 bytes
+ roms/seabios-hppa           |   2 +-
+ target/hppa/cpu.c           |   1 +
+ target/hppa/cpu.h           |   7 +++++
+ target/hppa/helper.h        |   5 +++-
+ target/hppa/mem_helper.c    |  21 +++++++++++++-
+ target/hppa/op_helper.c     |  32 +++++++++++++++++++++
+ target/hppa/sys_helper.c    |  46 ++++++++++++++++++++++++++++--
+ target/hppa/translate.c     |  54 ++++++++++++++++++++++++++----------
+ 16 files changed, 200 insertions(+), 41 deletions(-)
+ mode change 100644 => 100755 pc-bios/hppa-firmware.img
+ create mode 100755 pc-bios/hppa-firmware64.img
+
 -- 
 2.43.0
 
