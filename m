@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10890C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 20:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C118BC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 20:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXoV4-0001Xk-Af; Wed, 07 Feb 2024 15:26:30 -0500
+	id 1rXoXN-0002YK-MQ; Wed, 07 Feb 2024 15:28:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoV3-0001Xb-Eh
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:26:29 -0500
-Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoXM-0002YC-5m
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:28:52 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoV2-0000R1-5o
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:26:29 -0500
-Received: by mail-qv1-xf32.google.com with SMTP id
- 6a1803df08f44-68c431c6c91so4404176d6.0
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 12:26:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoXJ-0000fv-J3
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:28:51 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-40fd280421aso9540465e9.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 12:28:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707337587; x=1707942387; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707337726; x=1707942526; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UgJUWGCUarrtEPimddgkaMvfR2WMOKtuuoX0sL06ZG4=;
- b=SoPHSvyVlpRRSkRlPnYPrR+fX4Avnxd7YRtjXfRuYKcqJJRYG9ZeLyzO9v4c+AaFxb
- rRBT1GZBWtTBun5OMdg57FRVjAs697MhTH8bsVs8GFBGacPDuaJE8eups3whTD/AlnBc
- Sl6B41ode3enLtSpcycue9bwIfrUUcEIONACuwraxqQ0SEGCyZdXld7SVP2tnd+q5aJI
- xHzM/Ev5UnvZiJSfRIjSOtcGzGl86fu+hGmHbVkxHOXKbgDIBARDbQcNdJnneGGjew5o
- K1/gylhQqd/y8ZtH7bBmh9XOKtSJHHzMVZ1BlvB7jGIXjuJPQa/8zwtDurlHcAB77Sw1
- /y0w==
+ bh=zT/I2jyxv8Y6sRBMJjpn4cs8UMqDcuyYLnU2M2pYSaA=;
+ b=P0fuPjCZiEzSbxHltwLFbgoy2rxVyBm/iqVsMHpDfy4IrySeAlwmkF8M8SrIOBpPMk
+ qh7OHs/evcl9jlZn0dou+zL86Qq+1NOAMIMM3gk9Km57PjXQWgjpOsHOKCDr/IbbFiu6
+ 4T3qLyJ1cjNTWSjFJ511XKh9NrIboUL436ZflpQ+m7kLZ7gFBn+896OHq90vq4od8w+s
+ kLr23Rl4YEkMPnVgpDpggfFl8mKYy9Mw2Quf5pW+M/YYbcuCUY3Qh62V/bGtZX1TjCyC
+ KupeVcRdyFH6k68C4EKXJzLIiDapQhm4jjva+9IWM0XNPSkz1UL85mfhuvfEsoukYVol
+ nCfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707337587; x=1707942387;
+ d=1e100.net; s=20230601; t=1707337726; x=1707942526;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UgJUWGCUarrtEPimddgkaMvfR2WMOKtuuoX0sL06ZG4=;
- b=jFbCFRW8/HXexa64MfeTZQZUE37HIvsYNvNErGAi0HZ5UJ3FWRNxkCnU1/GAFGs6wI
- 1lK52JnnOlpoXRgARmEjhINVToR+zOqn/wm0H6DYId9fAfJsme3WHcZxSM/6OiOQrAD3
- uOni1swFH6OKhh20Cwf8A+POSENc0q6aR1JRrAJ1EIWEVudis3wEKrNV1WPxgusQ9l4M
- 6hh8nDUpZ4IY1oPLoWt+niveJAU9dftECujOPhudscNowYipwhHoEsNoQTiomABPOLPf
- /1jL7/0f3/mpBBGHlbukA5IQykBr+/6rM7yYdbedQdszrK1WGgjTW3NlarJ/N+vz6tTd
- gprQ==
+ bh=zT/I2jyxv8Y6sRBMJjpn4cs8UMqDcuyYLnU2M2pYSaA=;
+ b=ey2UIZW3pvLXb02ZYSjmowi4rmJLrNnsJ9YLcmjtGQSGC0a1zLzxEMIsnyEYnQd2hz
+ gaCrEvPX/H7TajQrcOfkgsAijYQ/OhlivVo0+oXVyVIaaGO0sur2UNvA6bAJpp8aPGvt
+ lDZXxAYmpjA0uUA+TpObwsHYeLrJXAvep/hD3W1tpDUBKRKjTlIobpJuA+ahylbSHvBV
+ NfqUK8+C6dEJhkcZ0d8U+n14Gcm+qWXbLsfXFulb8N8T0wUDFyQeix0IcWDuwBCDMxgu
+ 3ApuJgVjbX+bjYRSmbKuCSBhePJOKwicH/vQ2XMNAL7mAhbGPyq05TnL8jJLWGzUutla
+ JVJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRp/wy9zC+qY9RQkDWFUO/Ksss7DW3i0K5Glm/MOtDA41shWv5QbJ/bN/nEr31VBHBiC0IG9BFx4ajduneaWVm5336E6E=
-X-Gm-Message-State: AOJu0Yzl/+3u8xxz1R6u3J/Dkq2oGxGYcxQ9hRfk+7nvyTKMV0kUZU3e
- Qps7YGcY13zK/vJ+m0GM3C+tYKhBCl6slQQ4WroafVkNbJJSlcn13XFDuvm05QM=
-X-Google-Smtp-Source: AGHT+IGbIJQV+nUS45j1FmEo+NE4g2WJp7T8C5BwfWcFtMc7b3DIH6JQZzkVJwWBp9TIBnXNiMWUaA==
-X-Received: by 2002:a05:6214:301e:b0:68c:8a1c:53fa with SMTP id
- ke30-20020a056214301e00b0068c8a1c53famr8106476qvb.46.1707337586881; 
- Wed, 07 Feb 2024 12:26:26 -0800 (PST)
+ AJvYcCUDSJQoBQ2sOiTyML0+yZN1qhIYx6qIeYBhu91YU/Lq0ly9C/a1ev0e+6bl3Hn7pEl5znZGSVV0agOWfpwn/Grfe+wSfC8=
+X-Gm-Message-State: AOJu0Yy+/PhSCqnPiaPDkS1MJQGQcATc8vkk9YLAW2ZWbexCuzGjx2j3
+ 4UrY5C5AOVMtVDKsVyw7AXkWxQJUhjJor5R7aGh+XMmzYHwgRxd/MG5+6/JuAUY=
+X-Google-Smtp-Source: AGHT+IH0TOkbc2DSI6KQljqnMERpO4FLwUMLPc7uhGSXg8QGLrHPVxNFY7kmsMgcPBLU5du9I3FAyg==
+X-Received: by 2002:a05:600c:998:b0:40f:bdda:161b with SMTP id
+ w24-20020a05600c099800b0040fbdda161bmr5359779wmp.22.1707337726000; 
+ Wed, 07 Feb 2024 12:28:46 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfKORN6uOc87GAEsBhl7t6Ai1nWrieewWvPNeiyjdex6AzDtr48U3JMZ344nSp8PdGjOexL6V0RomndD2r67z2EZqx0sCS4/8OBY3dVzibHPLtUvuV8J4em1w9UyeojObfic/XXFgQkGVp7BskTIvx3Tk=
+ AJvYcCVggWr/FFLVx6egaHyshsIEBGpCJSI/2YGBT7isVcto54EZ0MX6bcACBjR3nEEzeX3ln6zV9NKluE0ph1prgtjtVuZx+k1nrC3No454Rnbbqvm+J/dyylYwaCo2YctkwbYPrfOOssGNbMwpWNKPVket1iSo3FcZrBrIvax9DgQUJc04we4pOHRL1GKONe8zPGQMCJRbuY5X84LkZr/D4d+HF2FoYdLv1+A9pfAwSopV
 Received: from [192.168.69.100] ([176.187.214.82])
  by smtp.gmail.com with ESMTPSA id
- kr4-20020a0562142b8400b0068cc67a4070sm80801qvb.94.2024.02.07.12.26.25
+ d11-20020adff2cb000000b0033b278cf5fesm2203720wrp.102.2024.02.07.12.28.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 12:26:26 -0800 (PST)
-Message-ID: <7d900cea-53ef-4224-aded-1d8dc93aacb8@linaro.org>
-Date: Wed, 7 Feb 2024 21:26:25 +0100
+ Wed, 07 Feb 2024 12:28:45 -0800 (PST)
+Message-ID: <09f9ca34-4e0c-4ada-b808-643a8c578511@linaro.org>
+Date: Wed, 7 Feb 2024 21:28:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/14] migration: Report error when shutdown fails
+Subject: Re: [PATCH v2 2/2] aspeed: fix hardcode boot address 0
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20240207133347.1115903-1-clg@redhat.com>
- <20240207133347.1115903-13-clg@redhat.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20240207195224.452987-1-jamin_lin@aspeedtech.com>
+ <20240207195224.452987-3-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240207133347.1115903-13-clg@redhat.com>
+In-Reply-To: <20240207195224.452987-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
- envelope-from=philmd@linaro.org; helo=mail-qv1-xf32.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,17 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/24 14:33, Cédric Le Goater wrote:
-> This will help detect issues regarding I/O channels usage.
+Hi Jamin,
 
-English isn't my native language but I'd expect "detecting" here.
+On 7/2/24 20:52, Jamin Lin via wrote:
+> In the previous design of ASPEED SOCs QEMU model, it set the boot
+> address at "0" which was the hardcode setting for ast10x0, ast2600,
+> ast2500 and ast2400.
+> 
+> According to the design of ast2700, it has bootmcu which is used for
+> executing SPL and initialize DRAM, then, CPUs(cortex-a35)
+> execute u-boot, kernel and rofs. QEMU will only support CPU(cortex-a35)
+> parts and the boot address is "0x4 00000000" for ast2700.
 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   migration/qemu-file.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+This justification from here ...
 
+> Therefore, fixed hardcode boot address 0.
+
+... to here is still unclear. You provided an explanation in previous
+patch, maybe worth including it in this description?
+
+Otherwise for the code changes:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed.c             | 4 +++-
+>   hw/arm/aspeed_ast2400.c     | 4 ++--
+>   hw/arm/aspeed_ast2600.c     | 2 +-
+>   include/hw/arm/aspeed_soc.h | 2 --
+>   4 files changed, 6 insertions(+), 6 deletions(-)
 
 
