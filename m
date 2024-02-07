@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE62C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 12:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791E5C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 12:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXgxH-0006uC-8y; Wed, 07 Feb 2024 07:23:07 -0500
+	id 1rXgxM-0006vS-DA; Wed, 07 Feb 2024 07:23:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rXgxD-0006sm-JZ
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 07:23:03 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1rXgxF-0006tI-J9
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 07:23:06 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rXgxB-0007CF-RF
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 07:23:03 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a3810e975aaso73354966b.3
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 04:23:00 -0800 (PST)
+ id 1rXgxE-0007D6-51
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 07:23:05 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a3884b1a441so48536766b.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 04:23:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=vrull.eu; s=google; t=1707308579; x=1707913379; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6c0+jAJcIvM2Q/kEsWP4N3nMwV9L3z0k0TxQk9Bd3gU=;
- b=eatoIPr1Y5b5ASKVDFdqvDf9VNU3mXY3qUENJ3UZLq/GGcnYmIcBFhqpnkabpEgZoM
- GQeLSlgnCBv7g1ezvkXvlQNnhC4KIEAA6ufEbeeI0KyCCnQ0ztZ7MtLDshlAi3ws7QG7
- Dgw/xZC2JLNuh9bGZY4bqMD2KbI4/FAYy6maLzwjHauIvJCmQDrhSGLWqGv4LlhEOjw9
- dHrRCPPlTm4jFv1tKyWDVD5+n+MjdtlF0qRtUUHLiNl1LjjfKptG4ggAzSm4zy9XqWav
- iSD0/svWZbAe8nzeaSKIVtMofLyV85GmlK/tcywXC6TaEr26cjgjmwU+Ks/vi2AbFxrm
- dHLA==
+ d=vrull.eu; s=google; t=1707308583; x=1707913383; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M2mD/C0rP4kd3MQb0al+PrLOXSiBVfqFrpY8FsaZgMg=;
+ b=UrOV9EvVV8SfVt0s8WrFJUaEgAOY9Di1s+kTtzM265271gQqD+jnL34F6LfZIS4j7j
+ sSgS4nNaLq5EVDoCj+yLkOpUXX1V93Igak4Ci0FVNd7Gdx9GioAbkqKM8Ly/mCBp74/2
+ 9kbH5TsdvaLk2ARaFMRZ8lpzme4auuRkGi4IE3GcZUgjn3X6uTWfqlYrg2bnuBQn4yxb
+ 8KI1BuM7kaOqfifvs/0DtfYlTMJrGQWpxhQfQZRdr0hx5Lnk5CkUmJEGALH2Yzd/x33K
+ rTL8+bPuBRN5TXjVbuYt/9rvJcQ+zDeHufBdy+XVbtBdqkyx1Dc+m3bKmSuyG1AgszlR
+ bBaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707308579; x=1707913379;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6c0+jAJcIvM2Q/kEsWP4N3nMwV9L3z0k0TxQk9Bd3gU=;
- b=A3yrLxLua8vUNMivRaLcVP7K8Jnkm3r7Fdo0P0rpFi/sKzNuB4jDORkBCQ8xl8p9HR
- 73sv5ATnq+2+FmUq+nAUORmiqMAc4wE6EeDUGLWv+K203oobjbfs5NxlvP8w3B9Vixqc
- 53eoawed6AhcMhMCruI+9WmzamXnWJwp+xCS/HmGVS/s8kgnJU3aEh7Chf4Vvh9lArrj
- u5Ee1vD0b9fCxI22Vo3JlKwmoQO8jKsaX2BHE9ZUZA5aTcxfgoGuVcTaPyh19w4fQ+/d
- NgnDKV3+n0Vvu9hWmjKhctxwLaHVYdmeVDEydthQuHw9UZn0jbL4/uEY8wcTXTE3Hu5o
- 0VDg==
+ d=1e100.net; s=20230601; t=1707308583; x=1707913383;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M2mD/C0rP4kd3MQb0al+PrLOXSiBVfqFrpY8FsaZgMg=;
+ b=rZT34PEtgm+J86MiPl+1xqgxzODlavelLH0d571Y51YF/Mny0FvO7X1JuDA13mn5iZ
+ 6FX9IA/NAFazHz/hAZ+iI+tHfjSch6NENX76KYZJncMTzKa2dlOVJN4FzYsKzVQ+tbe2
+ EchbSY58X+PnRBnzkyqpJI6QmukN1zqHF36GpVqPsU3U2P2reDeasydv3z8Wjph+fioj
+ MuYj++kmbXolJB0JAJdmairZnmyB0GbvWy2d7qrl8SPo9qkUfGtjMtf64b7hsKnyVcJO
+ IgXGDp1qfBQzuq4jeCInaplWDs/y3gE0NlB49wvBL6PT2/gIjmntIMSRPKQ+91X7VVjU
+ xmOg==
+X-Gm-Message-State: AOJu0Yw4yOfzYojluRaSnB7/v2Yz4IpaszaGufJF/7rTEN7XXNVAR2/t
+ gkVnIjrQz2HaOw7sg3S0Y6v9EEidRu9pPdODbVs8hc3HpTISEQKPgyFkhc+M7EM=
+X-Google-Smtp-Source: AGHT+IEHBp53ZrCFbzZuHyFoLtmbx8iGa7isZd3ykvcx85ipWHcZuS3hIybueK33p/8scZl1T4QuZw==
+X-Received: by 2002:a17:906:b208:b0:a38:71e8:3182 with SMTP id
+ p8-20020a170906b20800b00a3871e83182mr1243037ejz.23.1707308582807; 
+ Wed, 07 Feb 2024 04:23:02 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGIijic5A5yc84rP1GL4AZrPppGDjNmybFc9aK1fS7eIe+dnSoNHrfQUtXUmP+VHbkSZMj6Pcp4Ri9z79IqgCjWwbzHn4=
-X-Gm-Message-State: AOJu0Yx/XQTsNL5i9YBYmnk4GHORGbS8S1b2UU4PrtWvyxhUoAEaZItA
- hH851PQz8LW3fJs0MUJnayh5efGNhT3rS/k9iwTd0LOZyEXvclEBj49xio+2Ehs=
-X-Google-Smtp-Source: AGHT+IHjL/nZxzrrz73nZKGbIRnfc947P9WwJStfPY+2FPxAsPtwl4rgQqoB9AA3pgzg3ZbXPyA5UQ==
-X-Received: by 2002:a17:906:4908:b0:a35:b808:8f1d with SMTP id
- b8-20020a170906490800b00a35b8088f1dmr4667243ejq.67.1707308579523; 
- Wed, 07 Feb 2024 04:22:59 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3CAXFO/olopSw+0AmoMdfCAmlRbTaZQJvkYJPKvajZNTgSqWG90aNCtNmpsgfU50l9uId/nT3uaRZ3l3jlr0Iy00ooZUtJWZALwlwMkC13OeQC35r6pAE03Oc4T+ZKYnB3cspbUGYpSnpokmxcwhHpaPX5EBAicgVCz6sOrWPtX5ezSYF1M7MKlPwG1qJnX9If7fQQuHv66Za7VQ2hlCfoCdG2aXMoFHErDBouMjYbNdWNlB2XEcBRARL4DNa+4s2eQHpba6Vhjn1muwZjlNvEtG8Lgcd128K70wM+g4YbtLZxbjTyBzDMlqWXXxKvRxgt7DkbGq2
+ AJvYcCU0CEO29wy8m+7RRggoIrYxQ95Si4c5bMfx+JnQn3ez138hfzzJmV86vC/E+DEJH6YsAXdwNpB+LHWiM/54FDg2bikB/2tPA4xq6mPlt0+HDEufoJ3158y8Oi5hhV77qFu02O9oAtOLixBNdUuPYflG0aKzjFm5M1Fgq05nxOoUC0JmWLIVtUmY0SlsRlsAZNdCShzONF1dEQnk72cY+cpSWzqof0tjnaDCSG9zTE3LmosizhB4z3cI9D0QCcnc/5ee4IfVJ+RH9tIR9kg2Mv8PuVXhnTxV6GWomqoXrAc5xuM3g2rYDFFcjt6gkD/k5PZYprOT0DYrxdh/QtHzivm1V8FIfyViQdiwIA==
 Received: from beast.fritz.box (62-178-148-172.cable.dynamic.surfer.at.
  [62.178.148.172]) by smtp.gmail.com with ESMTPSA id
- v8-20020a1709063bc800b00a3515b35be4sm702284ejf.104.2024.02.07.04.22.58
+ v8-20020a1709063bc800b00a3515b35be4sm702284ejf.104.2024.02.07.04.23.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Feb 2024 04:22:58 -0800 (PST)
+ Wed, 07 Feb 2024 04:23:01 -0800 (PST)
 From: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -70,16 +69,19 @@ To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Andrew Jones <ajones@ventanamicro.com>
-Cc: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Subject: [PATCH 0/2] RISC-V: Add Ztso extension
-Date: Wed,  7 Feb 2024 13:22:53 +0100
-Message-ID: <20240207122256.902627-1-christoph.muellner@vrull.eu>
+Cc: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH 2/2] linux-user/riscv: Add Ztso extension to hwprobe
+Date: Wed,  7 Feb 2024 13:22:55 +0100
+Message-ID: <20240207122256.902627-3-christoph.muellner@vrull.eu>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240207122256.902627-1-christoph.muellner@vrull.eu>
+References: <20240207122256.902627-1-christoph.muellner@vrull.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=christoph.muellner@vrull.eu; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=christoph.muellner@vrull.eu; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,48 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The first patch of this series picks up an earlier v2 Ztso patch from Palmer,
-which can be found here:
-  https://patchwork.kernel.org/project/qemu-devel/patch/20220917072635.11616-1-palmer@rivosinc.com/
-This patch did not apply cleanly but the necessary changes were trivial.
-There was a request to extend the commit message, which is part of the
-posted patch of this series.  As this patch was reviewed a year ago,
-I believe it could be merged.
+This patch exposes Ztso via hwprobe in QEMU's user space emulator.
 
-The second patch simply exposes Ztso via hwprobe.
+Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
+---
+ linux-user/syscall.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Relevant in this context might be also, that Richard's patch to improve
-TCG's memory barrier selection depending on host and guest memory ordering
-landed in June 2023:
-  https://lore.kernel.org/all/a313b36b-dcc1-f812-ccbd-afed1cbd523b@linaro.org/T/
-
-The first patch was already sent as part of an RFC series for Ssdtso:
-  https://lists.nongnu.org/archive/html/qemu-devel/2023-11/msg02962.html
-Since I don't want to keep this patch until the ratification of Ssdtso,
-I would like to get this merged independent of Ssdtso.
-
-This series is based on today's riscv-to-apply.next with my other series
-that adds the new hwprobe keys
-(https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01293.html).
-
-This series can also be found here:
-  https://github.com/cmuellner/qemu/tree/ztso
-
-Christoph Müllner (1):
-  linux-user/riscv: Add Ztso extension to hwprobe
-
-Palmer Dabbelt (1):
-  RISC-V: Add support for Ztso
-
- linux-user/syscall.c                    |  3 +++
- target/riscv/cpu.c                      |  2 ++
- target/riscv/cpu_cfg.h                  |  1 +
- target/riscv/insn_trans/trans_rva.c.inc | 11 ++++++++---
- target/riscv/insn_trans/trans_rvi.c.inc | 16 ++++++++++++++--
- target/riscv/insn_trans/trans_rvv.c.inc | 20 ++++++++++++++++++++
- target/riscv/translate.c                |  3 +++
- 7 files changed, 51 insertions(+), 5 deletions(-)
-
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3ba20f99ad..24fa11d946 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8826,6 +8826,7 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
+ #define		RISCV_HWPROBE_EXT_ZVFH		(1 << 30)
+ #define		RISCV_HWPROBE_EXT_ZVFHMIN	(1 << 31)
+ #define		RISCV_HWPROBE_EXT_ZFA		(1ULL << 32)
++#define		RISCV_HWPROBE_EXT_ZTSO		(1ULL << 33)
+ #define		RISCV_HWPROBE_EXT_ZACAS		(1ULL << 34)
+ #define		RISCV_HWPROBE_EXT_ZICOND	(1ULL << 35)
+ 
+@@ -8940,6 +8941,8 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
+                      RISCV_HWPROBE_EXT_ZVFHMIN : 0;
+             value |= cfg->ext_zfa ?
+                      RISCV_HWPROBE_EXT_ZFA : 0;
++            value |= cfg->ext_ztso ?
++                     RISCV_HWPROBE_EXT_ZTSO : 0;
+             value |= cfg->ext_zacas ?
+                      RISCV_HWPROBE_EXT_ZACAS : 0;
+             value |= cfg->ext_zicond ?
 -- 
 2.43.0
 
