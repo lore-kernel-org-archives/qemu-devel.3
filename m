@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0AE6C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A890C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXdV2-0003tF-B3; Wed, 07 Feb 2024 03:41:44 -0500
+	id 1rXdVi-0004Q8-1P; Wed, 07 Feb 2024 03:42:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXdUz-0003sq-9S
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:41:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
+ id 1rXdVT-0004G8-VI
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:42:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXdUx-0001rH-1H
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:41:40 -0500
+ (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
+ id 1rXdVS-0001zC-DP
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:42:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707295298;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1707295329;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=u10Q0WQWwK962qLutzbLXSoZkqWo2oI6kVxSm4kKtUA=;
- b=A87bR2qJieyAeCZSLZ/RKFPIc1UPSNVN6xgESpzZmYKgzR4mNf30tLDXN4a7Mi3sAaly+Q
- 4/nyJXCeQu9NThh22abpJhnuzMbVl1D0/FqtYiK6OG4FX4irh0HQkn5U/kv60qZ7EL9+rY
- xsSmcN/aaZWezoy25wKolo1jr6lFqiE=
+ bh=kUcLyn/KXvDOwvs0ZF2srembB6ZAc/qXkAyP/Z5vSpI=;
+ b=Of3mtrCFv24GTA6PBi71qzfo5xa2C1vb9ffG+hSIXuHDXw8zpGvS9fU7jYs9iCwVPqhH1X
+ ALWKgddE4oH/yQb0UuMoOU5OZZIlt8tL5gRWh4/Fe5hke6fHEZSv9x4+Q9/qFT+m6ogUYZ
+ 9DnoLUP/pyHGvYYUbNxSWjR/5BjzEHo=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-lfuvBJ95NkuXikNkTvFQNg-1; Wed,
- 07 Feb 2024 03:41:34 -0500
-X-MC-Unique: lfuvBJ95NkuXikNkTvFQNg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-avBS_1E1Pg6ebF6sZ5NweQ-1; Wed,
+ 07 Feb 2024 03:41:02 -0500
+X-MC-Unique: avBS_1E1Pg6ebF6sZ5NweQ-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C0B0B299E740;
- Wed,  7 Feb 2024 08:41:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.54])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8D59E492BC6;
- Wed,  7 Feb 2024 08:41:30 +0000 (UTC)
-Date: Wed, 7 Feb 2024 08:41:28 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, eblake@redhat.com,
- eduardo@habkost.net, fan.ni@samsung.com, farosas@suse.de,
- hreitz@redhat.com, jasowang@redhat.com, jiri@resnulli.us,
- jonathan.cameron@huawei.com, kkostiuk@redhat.com, kraxel@redhat.com,
- kwolf@redhat.com, lukasstraub2@web.de, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
- pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
- philmd@linaro.org, pizhenwei@bytedance.com, qemu-block@nongnu.org,
- stefanb@linux.ibm.com, wangyanan55@huawei.com
-Subject: Re: [PATCH 14/15] qapi: Move @String out of common.json to
- discourage reuse
-Message-ID: <ZcNCOIhAxuIed9Sq@redhat.com>
-References: <20240205074709.3613229-1-armbru@redhat.com>
- <20240205074709.3613229-15-armbru@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5D96E29AC009;
+ Wed,  7 Feb 2024 08:41:02 +0000 (UTC)
+Received: from orkuz (unknown [10.43.3.115])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1F58B492BF0;
+ Wed,  7 Feb 2024 08:41:01 +0000 (UTC)
+Date: Wed, 7 Feb 2024 09:41:01 +0100
+From: Jiri Denemark <jdenemar@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Hao Xiang <hao.xiang@bytedance.com>, qemu-devel@nongnu.org, 
+ farosas@suse.de
+Subject: Re: Re: [PATCH 2/6] migration/multifd: Add zero pages and zero bytes
+ counter to migration status interface.
+Message-ID: <qhvli57ctzn3cyt2fwppmcauhmlrqoz7ubljxswx7ghroshop2@kmiaukhnvfko>
+References: <20240206231908.1792529-1-hao.xiang@bytedance.com>
+ <20240206231908.1792529-3-hao.xiang@bytedance.com>
+ <ZcMDVpLilA-PZ3he@x1n> <ZcMI-wPq94x6cO2Z@x1n>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240205074709.3613229-15-armbru@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <ZcMI-wPq94x6cO2Z@x1n>
+User-Agent: NeoMutt/20231221
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jdenemar@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,32 +82,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 08:47:08AM +0100, Markus Armbruster wrote:
-> Use of String is problematic, because it results in awkward interface
-> documentation.  The previous commit cleaned up one instance.
+On Wed, Feb 07, 2024 at 12:37:15 +0800, Peter Xu wrote:
+> On Wed, Feb 07, 2024 at 12:13:10PM +0800, Peter Xu wrote:
+> > On Tue, Feb 06, 2024 at 11:19:04PM +0000, Hao Xiang wrote:
+> > > This change extends the MigrationStatus interface to track zero pages
+> > > and zero bytes counter.
+> > > 
+> > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> > 
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
 > 
-> Move String out of common.json next to its remaining users in net.json
-> to discourage reuse elsewhere.
+> I'll need to scratch this, sorry..
 > 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  qapi/common.json     | 11 -----------
->  qapi/net.json        | 12 +++++++++++-
->  include/net/filter.h |  2 +-
->  3 files changed, 12 insertions(+), 13 deletions(-)
+> The issue is I forgot we have "duplicate" which is exactly "zero
+> page"s.. See:
+> 
+>     info->ram->duplicate = stat64_get(&mig_stats.zero_pages);
+> 
+> If you think the name too confusing and want a replacement, maybe it's fine
+> and maybe we can do that.  Then we can keep this zero page counter
+> introduced, reporting the same value as duplicates, then with a follow up
+> patch to deprecate "duplicate" parameter.  See an exmaple on how to
+> deprecate in 7b24d326348e1672.
+> 
+> One thing I'm not sure is whether Libvirt will be fine on losing
+> "duplicates" after 2+ QEMU major releases.  Copy Jiri for this.  My
+> understanding is that Libvirt should be keeping an eye on deprecation list
+> and react, but I'd like to double check..
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+This should not be a big deal as we can internally map either one
+(depending on what QEMU supports) to the same libvirt's field. AFAIK
+there is a consensus on Cc-ing libvirt-devel on patches that deprecate
+QEMU interfaces so that we can update our code in time before the
+deprecated interface is dropped.
 
+BTW, libvirt maps "duplicate" to:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+/**
+ * VIR_DOMAIN_JOB_MEMORY_CONSTANT:
+ *
+ * virDomainGetJobStats field: number of pages filled with a constant
+ * byte (all bytes in a single page are identical) transferred since the
+ * beginning of the migration job, as VIR_TYPED_PARAM_ULLONG.
+ *
+ * The most common example of such pages are zero pages, i.e., pages filled
+ * with zero bytes.
+ *
+ * Since: 1.0.3
+ */
+# define VIR_DOMAIN_JOB_MEMORY_CONSTANT          "memory_constant"
+
+Jirka
 
 
