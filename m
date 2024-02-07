@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 076CDC4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150E7C4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:33:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXdLy-000506-HX; Wed, 07 Feb 2024 03:32:22 -0500
+	id 1rXdMg-00064D-OK; Wed, 07 Feb 2024 03:33:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXdLw-0004zK-Gf
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:32:20 -0500
+ id 1rXdMf-00063k-K0
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:33:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXdLu-00005N-U2
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:32:20 -0500
+ id 1rXdMe-0000CX-42
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:33:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707294738;
+ s=mimecast20190719; t=1707294783;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BgiePFOsOHoR70U4bQLbQnWp2LlwieyVA/ADBTrsnqc=;
- b=hnWlsFLkLqH9cR3gHIeRrpBcF6T90fBN5IrmTf7YH0rblyytUBlRxHu4XsKOOiAmA90c4Y
- PBK9hfs5aGfd8ZaHdCZv+oWcaRZLf6atJSZ69m0ezyIMAJYrYoZY3Fp55tlXxL+E3hpaeC
- /doxYyrZp63tFQZEQBtF2ezEPCcHQWg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-215-hf5P526BNDW96ICJTZnORw-1; Wed,
- 07 Feb 2024 03:32:14 -0500
-X-MC-Unique: hf5P526BNDW96ICJTZnORw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ bh=FLQeDka7jebI0PVPNkXGMfiiMyrb5AuENo8IHzmKxJI=;
+ b=IcC+vOr4LUudFLFay41p4IhhZ9xcE9KaR3Mfcsgw+SN4vM3lparqNc+Apa4DOUDePwQLz8
+ prVh2R4zkbwUQM/kg+oeoI+VOUAyhZXlA1cfK9OAQ/cm2AK64qnwQN1tTZHna2qn06av1Y
+ MjkFLR6n/mgUKX7GVLcVdBwHgqj8uQs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-335-Sk1ODS0sMraS2xBGJUFpzg-1; Wed, 07 Feb 2024 03:32:59 -0500
+X-MC-Unique: Sk1ODS0sMraS2xBGJUFpzg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D15DC38130AA;
- Wed,  7 Feb 2024 08:32:13 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EA75983B86C;
+ Wed,  7 Feb 2024 08:32:58 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.54])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9D9C7400D783;
- Wed,  7 Feb 2024 08:32:10 +0000 (UTC)
-Date: Wed, 7 Feb 2024 08:32:08 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6399F111F9;
+ Wed,  7 Feb 2024 08:32:55 +0000 (UTC)
+Date: Wed, 7 Feb 2024 08:32:53 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, eblake@redhat.com,
@@ -58,18 +58,18 @@ Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, eblake@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
  philmd@linaro.org, pizhenwei@bytedance.com, qemu-block@nongnu.org,
  stefanb@linux.ibm.com, wangyanan55@huawei.com
-Subject: Re: [PATCH 07/15] qga/qapi-schema: Clean up documentation of
- guest-set-memory-blocks
-Message-ID: <ZcNACK4zzmbQy1RU@redhat.com>
+Subject: Re: [PATCH 08/15] qga/qapi-schema: Clean up documentation of
+ guest-set-vcpus
+Message-ID: <ZcNANYjXcbzoa3nX@redhat.com>
 References: <20240205074709.3613229-1-armbru@redhat.com>
- <20240205074709.3613229-8-armbru@redhat.com>
+ <20240205074709.3613229-9-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240205074709.3613229-8-armbru@redhat.com>
+In-Reply-To: <20240205074709.3613229-9-armbru@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -96,14 +96,14 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 05, 2024 at 08:47:01AM +0100, Markus Armbruster wrote:
+On Mon, Feb 05, 2024 at 08:47:02AM +0100, Markus Armbruster wrote:
 > The command's doc comment describes the argument, but it's not marked
 > up as such.  Easy enough to fix.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  qga/qapi-schema.json | 19 ++++++++++---------
->  1 file changed, 10 insertions(+), 9 deletions(-)
+>  qga/qapi-schema.json | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
