@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D3DC4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 11:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15616C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 11:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXfst-0002s4-Mh; Wed, 07 Feb 2024 06:14:31 -0500
+	id 1rXft1-0002tx-G3; Wed, 07 Feb 2024 06:14:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rXfss-0002ru-6N
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:14:30 -0500
+ id 1rXfsz-0002tM-Ts
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:14:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rXfsq-0003QV-L6
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:14:29 -0500
+ id 1rXfsy-0003S1-AC
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:14:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707304467;
+ s=mimecast20190719; t=1707304475;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=paACPjx5AjJVvktrAw4tevc/RRfo0mRznAwClB4qJvw=;
- b=blnR9KF34Av4whSRx7tzfSHBY0Ci+Z4yVlaiRVA/4qNt3sZrnLbRO8E1jGPknNWuvkVs+8
- JIs4YyqDhhYwLTwyHmOFdzdnoWBh8FU8ePzC1blvsBmz3N6QjZqCqUV12kNHteVsYkyAlJ
- 6CiNYYZMhggEK14Axi5EdMtVClJo2F8=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LYJ8/tFAmrh3VcWdElUpsPrqIWISPJqBMUPEWn4+ITY=;
+ b=YvgT/9jiMsqoPdL2cP2Qu5AuyGHRuNSsUPq6p/ElzKSnYegQErt63+5alO/TFX4VgeSUSV
+ 9LzCo1kbyVKHS+ir0E+FFvlj5hR5UE/QMLQJ51pFPF0qb5VGEgOcSLelMFCE0Vq4vwwpf8
+ RllXJscE5sy9gQD0ECQvNyFqlGSdg18=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-j4aA4aYGPLyujMnYoRxIbg-1; Wed, 07 Feb 2024 06:14:26 -0500
-X-MC-Unique: j4aA4aYGPLyujMnYoRxIbg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a2bc664528fso38452066b.3
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 03:14:26 -0800 (PST)
+ us-mta-349-zrJ0iPp5NpipG2Z8S5kTNQ-1; Wed, 07 Feb 2024 06:14:33 -0500
+X-MC-Unique: zrJ0iPp5NpipG2Z8S5kTNQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a3821399b38so28030666b.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 03:14:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707304465; x=1707909265;
+ d=1e100.net; s=20230601; t=1707304472; x=1707909272;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=paACPjx5AjJVvktrAw4tevc/RRfo0mRznAwClB4qJvw=;
- b=VDagfUZ3aNZtDh/5rHbzUkOSeEZEzKQd7Pi8jDwI4nHmMziqGHOxWpSPi3kNWF6Sxv
- gq7io5o13ROLvJDJL+GQyMwdXPopMeBSH8PNz/kWfoh2Adl/HsAfEPTLnD2t82cCQbT0
- godlP9Fx2nIelXMeQVAff+Dxw58MQbFVoYhfWOaBkb5xZl0QAAdU94jrkS76Zo5sDEcw
- IQcG8OBHQ0z1yQTAK0lUjxxISTHP1PBmbnppvkZMgg7LZtHLsWePMnDy1oO3X7B+P5Oo
- KiBKxN/j3BwOkF+Yt9NHHvUMiRYaOMKUSGBG+2qxXQGof0J0ossx6/jlj1GBOmztv03l
- HXSA==
-X-Gm-Message-State: AOJu0Yxnqhmvcv8s//qzeUSItNfpaNaXuMtqJjufYxEQGkEXnDcQMRh0
- +8CVdH5rvDrF4RCxlWuMxqT0ENSIAN18TyZFgbkgDzl+JH8RWDcA4eS3pyvZHCElyLi5UFZFdAR
- 01JLays5567Ml7OLDGvaL6CDORrUiVwJBLjxHBG3+hgCOWPRBZGBUMZyGNK3kFWDW7eRIF/dunE
- OX7j3gfy1+0LOfpt9breJHypwwr27dnns3giV7
-X-Received: by 2002:a17:907:30c5:b0:a38:5cce:1bad with SMTP id
- vl5-20020a17090730c500b00a385cce1badmr1594826ejb.68.1707304465058; 
- Wed, 07 Feb 2024 03:14:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEBegPk8NMvyYS9bRNuEzov70JG/E2VoC7DBp/TnXxVgjJnmn3i3PuSogfhT8OUjORf9ibypA==
-X-Received: by 2002:a17:907:30c5:b0:a38:5cce:1bad with SMTP id
- vl5-20020a17090730c500b00a385cce1badmr1594808ejb.68.1707304464741; 
- Wed, 07 Feb 2024 03:14:24 -0800 (PST)
+ bh=LYJ8/tFAmrh3VcWdElUpsPrqIWISPJqBMUPEWn4+ITY=;
+ b=WAnw7UNj1sXixR0EDZbOCx3yvilbyU0qxxMTWHWzKPh1Ua5HhwTNlvjUjiEMB6KZlt
+ nITtkpOfte2TIHu/PmVur9LDK2+7djuFOm6MYGAty4386THBNX7I1WtG9lgwnGrjERYL
+ BKFNceJBLYwrPIQoyyYjv/kmwcT8hX1ey2J+FPEJ8karPurKmLlg2s0w4NpdLTtte+YL
+ H+25Ciybh4a6ogPvm4mNMnJ8oWGM0iJ7dQ8a+lQ8Vtn52gGdosEp/cLv6RqIWYdNNCbf
+ 45iZaFHJ90qYWeqQ9UzOPzvDdgLn/hm5ZP/aF5g/XjWonhfyyTCI+V4ITRYsxbTND1we
+ hn8Q==
+X-Gm-Message-State: AOJu0YzpjUfIm80Hx4NFaK5i4IHqesLbaOhgYyfvBb01dxcygahtTrBh
+ P4RSLl6rDmlmMrgmxb0NuL9xcb5QgrLjhXLevCfGNAF5BiwAUSRZOOBLp0denfzfMY7f1dSoRvx
+ Ea4yeGHpk3ffdYNtte76JXAsAIg3TFjtavC1XFHnIJCqtfES7CuPvoQ7YT0JPdMHbkc6uQSbIIV
+ obS7/5oB3LC7y/RRFgcxvSS5edwwq4eU4uNJ4G
+X-Received: by 2002:a17:906:710e:b0:a36:5079:d6c9 with SMTP id
+ x14-20020a170906710e00b00a365079d6c9mr3434321ejj.76.1707304472282; 
+ Wed, 07 Feb 2024 03:14:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFt7d4EUP9ian+AzAurGomldHgYv/TOxXdYxnsVEfgwtCbrhkVmhIs/bTF4DV+is4tnLJFb9g==
+X-Received: by 2002:a17:906:710e:b0:a36:5079:d6c9 with SMTP id
+ x14-20020a170906710e00b00a365079d6c9mr3434303ejj.76.1707304471966; 
+ Wed, 07 Feb 2024 03:14:31 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZZ1os9kWU/5oYW2MozpVKZ4jD4Y4kKHyfq/p38dCZTCjMPI0PQ4GPAZYJy5XHy6fWOw53Vt04Sie8qrdljmI+/w==
+ AJvYcCUJTewOuL7R/I4PQlNiLbtrZ0paX3w1QGY9OKOKEXs53zrJ+BvTOeoDukpggfQsDeXSp1CyxA2BD77zequ1CO1QfQ==
 Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
  by smtp.gmail.com with ESMTPSA id
- qo8-20020a170907874800b00a2b1a20e662sm644165ejc.34.2024.02.07.03.14.23
+ ty13-20020a170907c70d00b00a338fedb9ebsm650303ejc.54.2024.02.07.03.14.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Feb 2024 03:14:23 -0800 (PST)
+ Wed, 07 Feb 2024 03:14:30 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: shentey@gmail.com,
 	philmd@linaro.org
-Subject: [PATCH v2 5/8] isa: specify instance_size in isa_superio_type_info
-Date: Wed,  7 Feb 2024 12:14:07 +0100
-Message-ID: <20240207111411.115040-6-pbonzini@redhat.com>
+Subject: [PATCH v2 8/8] mips: do not list individual devices from configs/
+Date: Wed,  7 Feb 2024 12:14:10 +0100
+Message-ID: <20240207111411.115040-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240207111411.115040-1-pbonzini@redhat.com>
 References: <20240207111411.115040-1-pbonzini@redhat.com>
@@ -105,51 +105,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Right now all subclasses of TYPE_ISA_SUPERIO have to specify an instance_size,
-because the ISASuperIODevice struct adds fields to ISADevice but the type does
-not include the increased instance size.  Failure to do so results in an access
-past the bounds of struct ISADevice as soon as isa_superio_realize is called.
-Fix this by specifying the instance_size already in the superclass.
+Add new "select" and "imply" directives if needed.  The resulting
+config-devices.mak files are the same as before.
 
-Cc: Bernhard Beschow <shentey@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/isa/isa-superio.c       | 2 +-
- hw/isa/smc37c669-superio.c | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ configs/devices/mips-softmmu/common.mak      | 28 +++-----------------
+ configs/devices/mips64el-softmmu/default.mak |  3 ---
+ hw/mips/loongson3_virt.c                     |  5 ++--
+ hw/display/Kconfig                           |  2 +-
+ hw/mips/Kconfig                              | 20 +++++++++++++-
+ 5 files changed, 27 insertions(+), 31 deletions(-)
 
-diff --git a/hw/isa/isa-superio.c b/hw/isa/isa-superio.c
-index e06a548c682..98d50844f71 100644
---- a/hw/isa/isa-superio.c
-+++ b/hw/isa/isa-superio.c
-@@ -187,6 +187,7 @@ static const TypeInfo isa_superio_type_info = {
-     .abstract = true,
-     .class_size = sizeof(ISASuperIOClass),
-     .class_init = isa_superio_class_init,
-+    .instance_size = sizeof(ISASuperIODevice),
- };
+diff --git a/configs/devices/mips-softmmu/common.mak b/configs/devices/mips-softmmu/common.mak
+index 1a853841b27..416a5d353e8 100644
+--- a/configs/devices/mips-softmmu/common.mak
++++ b/configs/devices/mips-softmmu/common.mak
+@@ -1,28 +1,8 @@
+ # Common mips*-softmmu CONFIG defines
  
- /* SMS FDC37M817 Super I/O */
-@@ -203,7 +204,6 @@ static void fdc37m81x_class_init(ObjectClass *klass, void *data)
- static const TypeInfo fdc37m81x_type_info = {
-     .name          = TYPE_FDC37M81X_SUPERIO,
-     .parent        = TYPE_ISA_SUPERIO,
--    .instance_size = sizeof(ISASuperIODevice),
-     .class_init    = fdc37m81x_class_init,
- };
+-CONFIG_ISA_BUS=y
+-CONFIG_PCI=y
+-CONFIG_PCI_DEVICES=y
+-CONFIG_VGA_ISA=y
+-CONFIG_VGA_MMIO=y
+-CONFIG_VGA_CIRRUS=y
+-CONFIG_VMWARE_VGA=y
+-CONFIG_SERIAL=y
+-CONFIG_SERIAL_ISA=y
+-CONFIG_PARALLEL=y
+-CONFIG_I8254=y
+-CONFIG_PCSPK=y
+-CONFIG_PCKBD=y
+-CONFIG_FDC=y
+-CONFIG_I8257=y
+-CONFIG_IDE_ISA=y
+-CONFIG_PFLASH_CFI01=y
+-CONFIG_I8259=y
+-CONFIG_MC146818RTC=y
+-CONFIG_MIPS_CPS=y
+-CONFIG_MIPS_ITU=y
++# Uncomment the following lines to disable these optional devices:
++# CONFIG_PCI_DEVICES=n
++# CONFIG_TEST_DEVICES=n
++
+ CONFIG_MALTA=y
+-CONFIG_PCNET_PCI=y
+ CONFIG_MIPSSIM=y
+-CONFIG_SMBUS_EEPROM=y
+-CONFIG_TEST_DEVICES=y
+diff --git a/configs/devices/mips64el-softmmu/default.mak b/configs/devices/mips64el-softmmu/default.mak
+index d5188f7ea58..88a37cf27f1 100644
+--- a/configs/devices/mips64el-softmmu/default.mak
++++ b/configs/devices/mips64el-softmmu/default.mak
+@@ -3,8 +3,5 @@
+ include ../mips-softmmu/common.mak
+ CONFIG_FULOONG=y
+ CONFIG_LOONGSON3V=y
+-CONFIG_ATI_VGA=y
+-CONFIG_RTL8139_PCI=y
+ CONFIG_JAZZ=y
+-CONFIG_VT82C686=y
+ CONFIG_MIPS_BOSTON=y
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 33eae01eca2..da47af2fa71 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -447,8 +447,9 @@ static inline void loongson3_virt_devices_init(MachineState *machine,
  
-diff --git a/hw/isa/smc37c669-superio.c b/hw/isa/smc37c669-superio.c
-index 388e2ed9371..d2e58c9a895 100644
---- a/hw/isa/smc37c669-superio.c
-+++ b/hw/isa/smc37c669-superio.c
-@@ -85,7 +85,6 @@ static void smc37c669_class_init(ObjectClass *klass, void *data)
- static const TypeInfo smc37c669_type_info = {
-     .name          = TYPE_SMC37C669_SUPERIO,
-     .parent        = TYPE_ISA_SUPERIO,
--    .instance_size = sizeof(ISASuperIODevice),
-     .class_size    = sizeof(ISASuperIOClass),
-     .class_init    = smc37c669_class_init,
- };
+     if (defaults_enabled() && object_class_by_name("pci-ohci")) {
+         pci_create_simple(pci_bus, -1, "pci-ohci");
+-        usb_create_simple(usb_bus_find(-1), "usb-kbd");
+-        usb_create_simple(usb_bus_find(-1), "usb-tablet");
++        Object *usb_bus = object_resolve_path_type("", TYPE_USB_BUS, NULL);
++        usb_create_simple(USB_BUS(usb_bus), "usb-kbd");
++        usb_create_simple(USB_BUS(usb_bus), "usb-tablet");
+     }
+ 
+     for (i = 0; i < nb_nics; i++) {
+diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+index 1aafe1923d2..5b2b3840f7a 100644
+--- a/hw/display/Kconfig
++++ b/hw/display/Kconfig
+@@ -55,7 +55,7 @@ config VGA_MMIO
+ 
+ config VMWARE_VGA
+     bool
+-    default y if PCI_DEVICES && PC_PCI
++    default y if PCI_DEVICES && (PC_PCI || MIPS)
+     depends on PCI
+     select VGA
+ 
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index e57db4f6412..5c83ef49cf6 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -1,8 +1,15 @@
+ config MALTA
+     bool
++    imply PCNET_PCI
++    imply PCI_DEVICES
++    imply TEST_DEVICES
+     select FDC37M81X
+     select GT64120
++    select MIPS_CPS
+     select PIIX
++    select PFLASH_CFI01
++    select SERIAL
++    select SMBUS_EEPROM
+ 
+ config MIPSSIM
+     bool
+@@ -31,17 +38,26 @@ config JAZZ
+ 
+ config FULOONG
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
++    imply ATI_VGA
++    imply RTL8139_PCI
+     select PCI_BONITO
++    select SMBUS_EEPROM
+     select VT82C686
+ 
+ config LOONGSON3V
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
++    imply VIRTIO_PCI
++    imply VIRTIO_NET
+     imply VIRTIO_VGA
+     imply QXL if SPICE
++    imply USB_OHCI_PCI
+     select SERIAL
+     select GOLDFISH_RTC
+     select LOONGSON_LIOINTC
+-    select PCI_DEVICES
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select MSI_NONBROKEN
+     select FW_CFG_MIPS
+@@ -53,6 +69,8 @@ config MIPS_CPS
+ 
+ config MIPS_BOSTON
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
+     select FITLOADER
+     select MIPS_CPS
+     select PCI_EXPRESS_XILINX
 -- 
 2.43.0
 
