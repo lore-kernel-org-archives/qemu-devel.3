@@ -4,83 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A09FFC4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 11:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35862C4829A
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 12:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXga4-0008Qs-UC; Wed, 07 Feb 2024 06:59:09 -0500
+	id 1rXgan-0000NQ-HH; Wed, 07 Feb 2024 06:59:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rXgZz-0008QC-E8
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:59:03 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1rXgal-0000FJ-JM
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:59:51 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rXgZu-0008G8-55
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:59:03 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-290d59df3f0so398231a91.2
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 03:58:57 -0800 (PST)
+ id 1rXgac-0008PC-7U
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 06:59:51 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-55a5e7fa471so613518a12.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 03:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=vrull.eu; s=google; t=1707307136; x=1707911936; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=vrull.eu; s=google; t=1707307180; x=1707911980; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6f7k1ITIn46WhQRbg6AUapNlOS7yCFi0qL4EED+7Ah4=;
- b=nCBk/O7DTVnuTRKnvDKWHaZ+ow+O5yxOrS1ptVvT1JUh1z/gtmGGCqyBvPNiMX7WZD
- s2Yw/04smK4CKpP8S51Up+IOfjjcvbp3GMtPhDiU6NCQ/tc8xTlUcHYBMvSaiwkn26il
- Lj3nVOua0SvB00eGuH54by9cwSfxF4lIyXhA+K5ExaMq+osvGXEzwSozrq8ucUREmUCi
- ZX/3Ov44vUSjj+6wsAm9nY5aSJsZcyNkw/nnKAxMW/VsfZOquk8Od74PZPbPNSrIx5Ug
- poUHvEmQiPjSw3idsz6ILd8SOXjWLkao4JYNEHyxvU9j+qoVYb8/gV8MCnkw3eV28ZW/
- LoxA==
+ bh=oHSK/y3sJR3GtAZLbH1e96ZNbJa/SUNy9xhqjabO6E8=;
+ b=RFzcjKiLOkAxZHX4rQndtC8ARSrRggquZlQ9zsupWLBH/FeCQRY1WJ6akc/4Ynkw2w
+ N6+M2biapn3o4lNN9C/4XkgT9e6ccaS8TD3HJKUMje9q5/EEioDgiBrCWJwHwxVux/WH
+ kX67320yCqZG/IpkCUef9Ek7C/NjGTZH/zTIVJbYM/weyAE/rahGdohZqBDyHjy9PbZY
+ mhH3B4WDfc9ezNLwUgRUG0D9qE6dVAfTMcWZWT7DbPNmnpFdiPjv7F0bvKzjAaGHHLwJ
+ qU5LaNdjSLmIN0ZjfAyagNQuS67fE9uz7nCYIklsdAsTIXVZA7i6XYS07qSJPeM590Ns
+ 9Cmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707307136; x=1707911936;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1707307180; x=1707911980;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6f7k1ITIn46WhQRbg6AUapNlOS7yCFi0qL4EED+7Ah4=;
- b=IgruXnPLUK2AtQKiRHqHhc5l79fEVCkUnGbbhq0NpiEBzWXfqvD8LlpbZATLwcx0tF
- lw+Th3sM38DUIE1K40z4krkiCqro2Ha5OZpzWKNqWBljJApFUH0TGvi6UNRC1NPpqPAH
- ePAoX6PF0J9PY4KkevN5/opD35KQ5cyZ0cVT1itLOo99+WyZG9m9bzUqXX5sFLchUANR
- 5RXO3pSUKNrmdq2+daMWigyJ2Vf/wUOpKRjGw3BUHithPuqomCHJ/pEZg9RL9i0OVIg6
- 0KKQZoVJsUNZBIe82Qoa1S5CsKSghc+pdymLBttf4xgnqMVqBvLhnwwC27+invV/bcIQ
- Z87g==
-X-Gm-Message-State: AOJu0YxrTODwQ+4NCCSTJ7DuqNGyxdWaC4DGDQnSMTW8DuMC+sLY8iqu
- qVly8vZief3IeYuY/Im2tlw4G8Z3lqbk2zH4v1Kz1Eo/2gmlOh62pbd2M/rtnvYIt1/okHeSrB3
- GLkKOFzK6TvPv+qsoQHVG53wtVXFzzq5CiKMGEg==
-X-Google-Smtp-Source: AGHT+IFdxWZ48704fPH/slsLPd2Cyvh+csLJ+JbauReKMVaN2HWCm3BOlnd9rmoDZdWJHpm4tYrMNMKDPvbEqGuAs7E=
-X-Received: by 2002:a17:90b:33c9:b0:295:e8ea:3724 with SMTP id
- lk9-20020a17090b33c900b00295e8ea3724mr2290289pjb.34.1707307136032; Wed, 07
- Feb 2024 03:58:56 -0800 (PST)
-MIME-Version: 1.0
-References: <20231123181300.2140622-1-christoph.muellner@vrull.eu>
- <CAKmqyKOoH1+Gc7oUw5-fW5wZX3yiQDWs2xoQQDNyci=W=D0MuQ@mail.gmail.com>
-In-Reply-To: <CAKmqyKOoH1+Gc7oUw5-fW5wZX3yiQDWs2xoQQDNyci=W=D0MuQ@mail.gmail.com>
-From: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Date: Wed, 7 Feb 2024 12:58:44 +0100
-Message-ID: <CAEg0e7ifJqDR4RYfHxPjnz-O2Mz8zZaOEisuwzY4=TVT2nTd3w@mail.gmail.com>
-Subject: Re: [PATCH v2] linux-user/riscv: Add Zicboz extensions to hwprobe
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
+ bh=oHSK/y3sJR3GtAZLbH1e96ZNbJa/SUNy9xhqjabO6E8=;
+ b=eJ1+RLXFxPXgFlSCxqjuvUTcfIeJjzZe1WkpT52iy8cxlTEp/n8b8P9qzXT6uQSyX7
+ BfRJmjLj8qdyqn7hQjIqdQJY2a39FiZtv8VibAxBi26x12Y4aJQ8hklL90jEaGBYd2si
+ 7TogRFz1gJWtcl2dM1j5Q6PXWMCg1J1DFc/oI0FO3u6VULukluynzh43OOiduKbpEwey
+ maPBhxHiJZwgnxhebwo03WgLffcste5BM2d8k8VBTE1cq9uiMmtzBZzP4pITXvkRUnFk
+ fegFwdjc/quB7KBX0yPCXZM54kYMiXMutCRgqf8HZooWFzmxuOKuRH0YAb/eR4qA4w4C
+ UXhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXr/ObjCIqTHBggx0tkm+EKOBBE/GPkOkqLuTKR0E8PT8hZtxU9zy/rQLprtmrk/IWez6miA7uUOqYi8UCSGuWOpGRQ59E=
+X-Gm-Message-State: AOJu0YyPsV43dl5QM0JKTSeXEsLVCoSoUbfvVrByFpHBt28scZ+VLGSE
+ XiahogAqsAfZbP+ytfBwIxHzoRwI9KzZ2xW8Z1trbF/aEtIV5MaE813kzYDq+SY=
+X-Google-Smtp-Source: AGHT+IEYytWjmhzze2Isrscxm2cyHdidg4WaetHFUa6QWDc7yNRKMOj96QBY66x9LgeyFpoztV4GKA==
+X-Received: by 2002:aa7:da98:0:b0:55f:f7bb:40fd with SMTP id
+ q24-20020aa7da98000000b0055ff7bb40fdmr3884954eds.2.1707307179957; 
+ Wed, 07 Feb 2024 03:59:39 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQCebfiB3VfkaYroZAbzHPu2oW3AwwVIm3ZNq2Xf1otDR2iDEQyDbVHJ+kdTRBT09kOKIy1DTzAJOfDnIzKhTGRpHctlxywhTUH/s7riz4fYKsEP/YlMqY1k9Ji9kcSxX0paQCPvU7YLundun4VpewHqcdPdZ2CqxQb9eYvCdBKrqmsU9A1hMCrsfs6Uv2dM6GgqPo5nOu2xHnM8G2/0P998TZrkGdUYIwW3lu6VI5UjXMGe/065sYAJoFaUlAd7BqHFlfvH+blC5yXZm327TeKl53p9/ZAXTxr4uuMZFKGyejEQe59DlJ69UOZn37gelnMkVS5ieeCvClEcWn/EgpSsQ5X/iIlkwIqQ==
+Received: from beast.fritz.box (62-178-148-172.cable.dynamic.surfer.at.
+ [62.178.148.172]) by smtp.gmail.com with ESMTPSA id
+ v2-20020aa7d802000000b0055efaddeafdsm588455edq.86.2024.02.07.03.59.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Feb 2024 03:59:39 -0800 (PST)
+From: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, 
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Andrew Jones <ajones@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=christoph.muellner@vrull.eu; helo=mail-pj1-x102d.google.com
+Cc: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH 1/2] linux-user/riscv: Add Zicboz extensions to hwprobe
+Date: Wed,  7 Feb 2024 12:59:25 +0100
+Message-ID: <20240207115926.887816-2-christoph.muellner@vrull.eu>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240207115926.887816-1-christoph.muellner@vrull.eu>
+References: <20240207115926.887816-1-christoph.muellner@vrull.eu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=christoph.muellner@vrull.eu; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,69 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 6, 2023 at 1:57=E2=80=AFAM Alistair Francis <alistair23@gmail.c=
-om> wrote:
->
-> On Mon, Nov 27, 2023 at 12:37=E2=80=AFAM Christoph Muellner
-> <christoph.muellner@vrull.eu> wrote:
-> >
-> > From: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
-> >
-> > Upstream Linux recently added RISC-V Zicboz support to the hwprobe API.
-> > This patch introduces this for QEMU's user space emulator.
-> >
-> > Signed-off-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
->
-> Thanks!
->
-> Applied to riscv-to-apply.next
+Upstream Linux recently added RISC-V Zicboz support to the hwprobe API.
+This patch introduces this for QEMU's user space emulator.
 
-I just saw that this did not land yet on master.
-I also noticed that this patch is not in
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next or
-https://github.com/alistair23/qemu/commits/riscv-to-apply.for-upstream.
-Was there some issue with the patch?
+Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
+---
+ linux-user/syscall.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Meanwhile a lot of additional extensions got defined in the hwprobe
-interface (patches are already merged in the kernel).
-I'll send out a patch for these in a few minutes and include this
-patch here as well.
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e384e14248..43467c9707 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8799,6 +8799,7 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
+ #define     RISCV_HWPROBE_EXT_ZBA      (1 << 3)
+ #define     RISCV_HWPROBE_EXT_ZBB      (1 << 4)
+ #define     RISCV_HWPROBE_EXT_ZBS      (1 << 5)
++#define     RISCV_HWPROBE_EXT_ZICBOZ   (1 << 6)
+ 
+ #define RISCV_HWPROBE_KEY_CPUPERF_0     5
+ #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
+@@ -8857,6 +8858,8 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
+                      RISCV_HWPROBE_EXT_ZBB : 0;
+             value |= cfg->ext_zbs ?
+                      RISCV_HWPROBE_EXT_ZBS : 0;
++            value |= cfg->ext_zicboz ?
++                     RISCV_HWPROBE_EXT_ZICBOZ : 0;
+             __put_user(value, &pair->value);
+             break;
+         case RISCV_HWPROBE_KEY_CPUPERF_0:
+-- 
+2.43.0
 
-BR
-Christoph
-
->
-> Alistair
->
-> > ---
-> >  linux-user/syscall.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> > index 65ac3ac796..2f9a1c5279 100644
-> > --- a/linux-user/syscall.c
-> > +++ b/linux-user/syscall.c
-> > @@ -8799,6 +8799,7 @@ static int do_getdents64(abi_long dirfd, abi_long=
- arg2, abi_long count)
-> >  #define     RISCV_HWPROBE_EXT_ZBA      (1 << 3)
-> >  #define     RISCV_HWPROBE_EXT_ZBB      (1 << 4)
-> >  #define     RISCV_HWPROBE_EXT_ZBS      (1 << 5)
-> > +#define     RISCV_HWPROBE_EXT_ZICBOZ   (1 << 6)
-> >
-> >  #define RISCV_HWPROBE_KEY_CPUPERF_0     5
-> >  #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
-> > @@ -8855,6 +8856,8 @@ static void risc_hwprobe_fill_pairs(CPURISCVState=
- *env,
-> >                       RISCV_HWPROBE_EXT_ZBB : 0;
-> >              value |=3D cfg->ext_zbs ?
-> >                       RISCV_HWPROBE_EXT_ZBS : 0;
-> > +            value |=3D cfg->ext_zicboz ?
-> > +                     RISCV_HWPROBE_EXT_ZICBOZ : 0;
-> >              __put_user(value, &pair->value);
-> >              break;
-> >          case RISCV_HWPROBE_KEY_CPUPERF_0:
-> > --
-> > 2.41.0
-> >
-> >
 
