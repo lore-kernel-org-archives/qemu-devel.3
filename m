@@ -4,99 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36EECC4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C92C4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 08:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXdgS-0000bH-5u; Wed, 07 Feb 2024 03:53:32 -0500
+	id 1rXdjB-0001Xg-3I; Wed, 07 Feb 2024 03:56:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rXdgN-0000aT-Nj
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:53:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rXdgL-000447-UN
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:53:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707296004;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hroAqgfaG7sf6mzX2d4PZoHSpHaHy608KvZiOeGVQbg=;
- b=Rrm9VE/s2jQV0jhPZs09oTmfUM+rGz/u6ppsh7P8psz6cMlj/rqZzoUUNEwXgenGTa7JWz
- DPDYIoRAjJlIrTU/MOOxjdh2+niPbTSFeh4cTE7PnP/18BtZVYKH8f/qkB50nI0enGzcWF
- Yt38QRYG+T73AuRkxktVcNUvWPC9eSs=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-_zbN5sl5NoKf9NtdHK4MSQ-1; Wed, 07 Feb 2024 03:53:23 -0500
-X-MC-Unique: _zbN5sl5NoKf9NtdHK4MSQ-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2d0c3f8d557so3214721fa.3
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 00:53:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdjA-0001XK-56
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:56:20 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdj8-0004iL-Gx
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 03:56:19 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-40fdd65a9bdso2876845e9.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 00:56:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707296177; x=1707900977; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fyhEqDbns1miPBAfn+h3ZKIxGo/tiCvBbdNxTjmFELw=;
+ b=sfWq4D16QKVoz4HWk+bUSx/c5EWzZidxfdC/VV59ifV2cuLCKACvDIiBslvIDk/nbc
+ 8Ai4VYR9t31Cqv2Z5DABTQ+I8RaW8FrBQy7wIJ8niNfwC35psLwxjV8uMTGyk5k9yh86
+ M5SygEa2fWaAVvLnzQG+jJwcXxU1L0g8LqgqVoo4pmM62tVlzB2c8MzJMu+YuD4ljCQV
+ V0XByjfROHJHdBA7tPopymvBrS8cgXXf8HinEWq5KIYC3d/xJh+14nGNcqAkC5nip6ET
+ deGL33SD+LgIvrDxLwidxjMIOAXrEboSYWg0YKCnUxlKlRmsB2z8gv+AeTM2VFe0xSg7
+ SxLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707296001; x=1707900801;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1707296177; x=1707900977;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hroAqgfaG7sf6mzX2d4PZoHSpHaHy608KvZiOeGVQbg=;
- b=gl7Z78cEImSJfvyQjwjUjyjkO1NgBA9BHJPXSBYi9oLppb5ca43/omy0oZXcxA3Mws
- CXWzzvG6tYJGXWo9Awazw/v3NixjkiLroc9h7wxgRrEOFXNcwgQmbAIqrKvjgiBJ+vlR
- MQ0wOH5qcEXDR+1VYpRilZiZaxKfEhNuZcYacNsqZk2Vnd3k29gfhpbUDR6jTvPzFI79
- GGfka2T/g60RcmPrAptvUXtTIpFLQYr5uLFAT+YJPZlZXOjxhb09MS0g+bqVIaddMJhs
- LLP/bBqHXkeykLOgBbzv+Gc+AM4WNDJFyaxuthCKXHoWBDhR78GjWjXtc0IfABUTtNYe
- +ptQ==
-X-Gm-Message-State: AOJu0YwTE4IeQJMQVz0P1fvJ09sfvZKNjZ/+QP4pjgDhgIAKq8LHMBWK
- gPVgFr8KcQ8kkeLDfKhBLOypYXBdAqPQoyVItGc37ZdwQJxMe6oGdwyC0179/ibXcGaIEqRwXFw
- sJWb8L3+tNx4U2f+ID05zoSkCNqoSnZZ4xTuVqNIFri61qNr7TJK/
-X-Received: by 2002:a2e:8ed8:0:b0:2d0:b663:5093 with SMTP id
- e24-20020a2e8ed8000000b002d0b6635093mr3774324ljl.23.1707296001418; 
- Wed, 07 Feb 2024 00:53:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGhbydCLd+2TP7kmJdFl41lbp1VrmfhEL+Q/Gkn6fwnyMeJuTaIi12IkAfKJ4jNZmLTfUexuw==
-X-Received: by 2002:a2e:8ed8:0:b0:2d0:b663:5093 with SMTP id
- e24-20020a2e8ed8000000b002d0b6635093mr3774308ljl.23.1707296001057; 
- Wed, 07 Feb 2024 00:53:21 -0800 (PST)
+ bh=fyhEqDbns1miPBAfn+h3ZKIxGo/tiCvBbdNxTjmFELw=;
+ b=TqaFgpArbSnVGw8NvUkuENlx68Up7CE4Om1AyRuxKwYS77Cq2fV7OhXTrsvp2HqARD
+ PUB1zhAwuoATO9iXkrhDKKo1WvGUCX7MTAxdgFlirvdMHp6oaJpkfNM5aGyCw0BIlLLa
+ VX9tWp+xrPbY2RTliqeoHkHJgHtvM1X1dv5JdS4JbHkPCa8CLw+c1XzFhenomvv2vOZP
+ d+of9bsAMS5l/QXcx8sPmU+UPBcT0IcnTQZHu7fW/WzebRrHIswQnB1mrBa7DrpiZ7bi
+ rjKCoXgf4yiS3gtufZqtqLquTnOxkqYOt/U7D3/lPih42q/LrrWydSw5pqfhL614P7R6
+ m7pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGeqZ/jHgh3t/ccBMN9MCJpjePVSxkTkqE0K4RsZVoTuGUFC35EwqfUMvY+vLNZ37HR7cGeGbHWiTb89Fph8rWPhizUM5qAso8j1h9U2tRVJOrLTKokVzuPUwB1fBU5TCgroJMXe+vvIGPQuoWhfdQzXm5C+yN/fwEBKyRHStOKQirtzStKXBo934/roNKbCHq60OPOEZQHz3wRAX+bryaAPc664yGnABSVz0=
-Received: from sgarzare-redhat (host-87-12-25-87.business.telecomitalia.it.
- [87.12.25.87]) by smtp.gmail.com with ESMTPSA id
- d23-20020aa7c1d7000000b0056022d78141sm442980edp.56.2024.02.07.00.53.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Feb 2024 00:53:20 -0800 (PST)
-Date: Wed, 7 Feb 2024 09:53:16 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Cindy Lu <lulu@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>, qemu-block@nongnu.org,
- mst@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: Re: Re: [PATCH] vdpa-dev: Fix initialisation order to restore
- VDUSE compatibility
-Message-ID: <xlk2pspyo4gwguxopm6k534nzjei5y3m6zbh2l6dagmuwpamtk@dtkgca6yppce>
-References: <20240202132521.32714-1-kwolf@redhat.com>
- <zmopxf5zt6m36nfujntn72idlinm7qmx23wjvwiazmq4b75lsa@a2omit34pjif>
- <CACGkMEvLpg+nPgHsE_6stFM1OGXbHpuE=j7XLwt_YxpxhWJgZw@mail.gmail.com>
- <nvk6n7ln3ryga2ww4a6evbprauptzcn7uz34ar3uecbxjfre2z@msikqqpuk2vh>
- <CACGkMEtODf_NGGa-XbyDMM7=z6CsCkazV9A-4z8W7oCOnu-Ybg@mail.gmail.com>
- <CACLfguUmPpnjTgLcATFHjMDDT_FbNZM4uHc8mLp5CpofC6nECQ@mail.gmail.com>
+ AJvYcCV1SBb1ZUxzY9+u4t/nhtNjDPT7Pg1FpDw9zBG8qSpcctCE9VtJLGju0zS3pFcvMDQBmBKGTdxh53oMdlmSjfpDDUSl2lc=
+X-Gm-Message-State: AOJu0YxYWKqG49W95FECyeJWmWImXdgfEwG3NhbENX8x1FL2WAmujiuC
+ 4cQmzMEcNDOttuWXdPDCeI5+Irw0ol0+4OA7A/P+d1l2ioKSQustZeu8zmm0q1I=
+X-Google-Smtp-Source: AGHT+IG7ZjqDsdmQUvxUMvonwVD2+U2Z6e/D53jVdVWkekSDsyeZzFYUJwOWtDAZMa5ZHs6d4lKDRg==
+X-Received: by 2002:a05:600c:3b16:b0:40f:b732:1ed7 with SMTP id
+ m22-20020a05600c3b1600b0040fb7321ed7mr3969583wms.34.1707296176762; 
+ Wed, 07 Feb 2024 00:56:16 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkz9759xdPzUURy1GfubVYvivzocqNfyrKqpvRnVX8Gq80a0MjR7wsSPf0uBCaNRTpZrJyoNWymCB/q6BGmCB5bbEamEJqtJqSwfky/sNi5QuTK0707u7iLpw=
+Received: from [192.168.69.100] ([176.176.170.22])
+ by smtp.gmail.com with ESMTPSA id
+ u14-20020a05600c19ce00b0040fdf2832desm1338202wmq.12.2024.02.07.00.56.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Feb 2024 00:56:16 -0800 (PST)
+Message-ID: <4a99697d-99fb-4df5-a6d2-4ea4e4214437@linaro.org>
+Date: Wed, 7 Feb 2024 09:56:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/13] hw/misc/mps2-scc: Make changes needed for AN536
+ FPGA image
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240206132931.38376-1-peter.maydell@linaro.org>
+ <20240206132931.38376-8-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240206132931.38376-8-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACLfguUmPpnjTgLcATFHjMDDT_FbNZM4uHc8mLp5CpofC6nECQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,170 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 07, 2024 at 04:05:29PM +0800, Cindy Lu wrote:
->Jason Wang <jasowang@redhat.com> 于2024年2月7日周三 11:17写道：
->>
->> On Tue, Feb 6, 2024 at 4:31 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
->> >
->> > On Tue, Feb 06, 2024 at 10:47:40AM +0800, Jason Wang wrote:
->> > >On Mon, Feb 5, 2024 at 6:51 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
->> > >>
->> > >> On Fri, Feb 02, 2024 at 02:25:21PM +0100, Kevin Wolf wrote:
->> > >> >VDUSE requires that virtqueues are first enabled before the DRIVER_OK
->> > >> >status flag is set; with the current API of the kernel module, it is
->> > >> >impossible to enable the opposite order in our block export code because
->> > >> >userspace is not notified when a virtqueue is enabled.
->> > >
->> > >Did this mean virtio-blk will enable a virtqueue after DRIVER_OK?
->> >
->> > It's not specific to virtio-blk, but to the generic vdpa device we have
->> > in QEMU (i.e. vhost-vdpa-device). Yep, after commit
->> > 6c4825476a4351530bcac17abab72295b75ffe98, virtqueues are enabled after
->> > DRIVER_OK.
->>
->> Right.
->>
->> >
->> > >Sepc is not clear about this and that's why we introduce
->> > >VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK.
->> >
->> > Ah, I didn't know about this new feature. So after commit
->> > 6c4825476a4351530bcac17abab72295b75ffe98 the vhost-vdpa-device is not
->> > complying with the specification, right?
->>
->> Kind of, but as stated, it's just because spec is unclear about the
->> behaviour. There's a chance that spec will explicitly support it in
->> the future.
->>
->> >
->> > >
->> > >>
->> > >> Yeah, IMHO the VDUSE protocol is missing a VDUSE_SET_VQ_READY message,
->> > >
->> > >I think you meant when VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is
->> > >negotiated.
->> >
->> > At this point yes. But if VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not
->> > negotiated, should we return an error in vhost-vdpa kernel module if
->> > VHOST_VDPA_SET_VRING_ENABLE is called when DRIVER_OK is already set?
->>
->> I'm not sure if this can break some setups or not. It might be better
->> to leave it as is?
->>
->> Without VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK, we don't know if
->> parent support vq_ready after driver_ok.
->> With VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK, we know parent support
->> vq_ready after driver_ok.
->>
->> >
->> > >If this is truth, it seems a little more complicated, for
->> > >example the get_backend_features needs to be forward to the userspace?
->> >
->> > I'm not understanding, don't we already have VHOST_GET_BACKEND_FEATURES
->> > for this? Or do you mean userspace on the VDUSE side?
->>
->> Yes, since in this case the parent is in the userspace, there's no way
->> for VDUSE to know if user space supports vq_ready after driver_ok or
->> not.
->>
->> As you may have noticed, we don't have a message for vq_ready which
->> implies that vq_ready after driver_ok can't be supported.
->>
->> >
->> > >This seems suboptimal to implement this in the spec first and then we
->> > >can leverage the features. Or we can have another parameter for the
->> > >ioctl that creates the vduse device.
->> >
->> > I got a little lost, though in vhost-user, the device can always expect
->> > a vring_enable/disable, so I thought it was not complicated in VDUSE.
->>
->> Yes, the problem is assuming we have a message for vq_ready, there
->> could be  a "legacy" userspace that doesn't support that.  So in that
->> case, VDUSE needs to know if the userspace parent can support that or
->> not.
->>
->> >
->> > >
->> > >> I'll start another thread about that, but in the meantime I agree that
->> > >> we should fix QEMU since we need to work properly with old kernels as
->> > >> well.
->> > >>
->> > >> >
->> > >> >This requirement also mathces the normal initialisation order as done by
->> > >> >the generic vhost code in QEMU. However, commit 6c482547 accidentally
->> > >> >changed the order for vdpa-dev and broke access to VDUSE devices with
->> > >> >this.
->> > >> >
->> > >> >This changes vdpa-dev to use the normal order again and use the standard
->> > >> >vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
->> > >> >used with vdpa-dev again after this fix.
->> > >>
->> > >> I like this approach and the patch LGTM, but I'm a bit worried about
->> > >> this function in hw/net/vhost_net.c:
->> > >>
->> > >>      int vhost_set_vring_enable(NetClientState *nc, int enable)
->> > >>      {
->> > >>          VHostNetState *net = get_vhost_net(nc);
->> > >>          const VhostOps *vhost_ops = net->dev.vhost_ops;
->> > >>
->> > >>          nc->vring_enable = enable;
->> > >>
->> > >>          if (vhost_ops && vhost_ops->vhost_set_vring_enable) {
->> > >>              return vhost_ops->vhost_set_vring_enable(&net->dev, enable);
->> > >>          }
->> > >>
->> > >>          return 0;
->> > >>      }
->> > >>
->> > >> @Eugenio, @Jason, should we change some things there if vhost-vdpa
->> > >> implements the vhost_set_vring_enable callback?
->> > >
->> > >Eugenio may know more, I remember we need to enable cvq first for
->> > >shadow virtqueue to restore some states.
->> > >
->> > >>
->> > >> Do you remember why we didn't implement it from the beginning?
->> > >
->> > >It seems the vrings parameter is introduced after vhost-vdpa is
->> > >implemented.
->> >
->> > Sorry, I mean why we didn't implement the vhost_set_vring_enable
->> > callback for vhost-vdpa from the beginning.
->>
->> Adding Cindy who writes those codes for more thoughts.
->>
->it's a really long time ago, and I can't remember it clearly. It seems
->like there might be an issue with the sequence being called for
->dev_start and vhost_set_vring_enable?
->I have searched my mail but find nothing. I think we should do a full
->test if we want to this
+On 6/2/24 14:29, Peter Maydell wrote:
+> The MPS2 SCC device is broadly the same for all FPGA images, but has
+> minor differences in the behaviour of the CFG registers depending on
+> the image. In many cases we don't really care about the functionality
+> controlled by these registers and a reads-as-written or similar
+> behaviour is sufficient for the moment.
+> 
+> For the AN536 the required behaviour is:
+> 
+>   * A_CFG0 has CPU reset and halt bits
+>      - implement as reads-as-written for the moment
+>   * A_CFG1 has flash or ATCM address 0 remap handling
+>      - QEMU doesn't model this; implement as reads-as-written
+>   * A_CFG2 has QSPI select (like AN524)
+>      - implemented (no behaviour, as with AN524)
+>   * A_CFG3 is MCC_MSB_ADDR "additional MCC addressing bits"
+>      - QEMU doesn't care about these, so use the existing
+>        RAZ behaviour for convenience
+>   * A_CFG4 is board rev (like all other images)
+>      - no change needed
+>   * A_CFG5 is ACLK frq in hz (like AN524)
+>      - implemented as reads-as-written, as for other boards
+>   * A_CFG6 is core 0 vector table base address
+>      - implemented as reads-as-written for the moment
+>   * A_CFG7 is core 1 vector table base address
+>      - implemented as reads-as-written for the moment
+> 
+> Make the changes necessary for this; leave TODO comments where
+> appropriate to indicate where we might want to come back and
+> implement things like CPU reset.
+> 
+> The other aspects of the device specific to this FPGA image (like the
+> values of the board ID and similar registers) will be set via the
+> device's qdev properties.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/hw/misc/mps2-scc.h |   1 +
+>   hw/misc/mps2-scc.c         | 101 +++++++++++++++++++++++++++++++++----
+>   2 files changed, 92 insertions(+), 10 deletions(-)
 
-IMHO in hw/net/vhost_net.c we should check the type of backend (e.g. 
-vhost-vdpa) to decide whether to call 
-vhost_ops->vhost_set_vring_enable() or not, instead of just checking 
-whether the callback is implemented or not, because in the future we 
-might have other backends (e.g. a native vdpa-blk driver) that might 
-want that callback implemented.
-
-Something like this (untested):
-
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index e8e1661646..1fea678e29 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -543,7 +543,8 @@ int vhost_set_vring_enable(NetClientState *nc, int enable)
-
-      nc->vring_enable = enable;
-
--    if (vhost_ops && vhost_ops->vhost_set_vring_enable) {
-+    if (nc->info->type != NET_CLIENT_DRIVER_VHOST_VDPA &&
-+            vhost_ops && vhost_ops->vhost_set_vring_enable) {
-          return vhost_ops->vhost_set_vring_enable(&net->dev, enable);
-      }
-
-WDYT?
-
-Thanks,
-Stefano
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
