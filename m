@@ -4,66 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D41C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 21:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF49DC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 22:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXpu2-00070G-9b; Wed, 07 Feb 2024 16:56:22 -0500
+	id 1rXpzu-0001H3-SZ; Wed, 07 Feb 2024 17:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXpu0-0006ye-UF
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rXptz-0007cK-BM
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 16:56:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707342978;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XDIzmmWE/ZB05/go2POBMcN6FbyjA18O7Soilm/47Zg=;
- b=YceXCv6/XpYm/Lk+T+I3d6vJSl41jKDy6H8gl2uj0lpqUlfIhLHD+ZN/ucRNOq0Jqmx2j/
- 614i/DeiR66hhSLXe3NO29GC7I9spuamUXbK+Qlaes50u68JFBk4vBHMp3lRhuPoR5IcqW
- CZbmkHoOcfDskdifIBzDsWAhFkbN5PQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-6WX5j1NCOBOROVPL2k1TLw-1; Wed,
- 07 Feb 2024 16:56:16 -0500
-X-MC-Unique: 6WX5j1NCOBOROVPL2k1TLw-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 47AEA29AC00E;
- Wed,  7 Feb 2024 21:56:16 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.39.192.31])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AF64F492BC6;
- Wed,  7 Feb 2024 21:56:15 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 07/16] scsi: Await request purging
-Date: Wed,  7 Feb 2024 22:55:57 +0100
-Message-ID: <20240207215606.206038-8-kwolf@redhat.com>
-In-Reply-To: <20240207215606.206038-1-kwolf@redhat.com>
-References: <20240207215606.206038-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXpzs-0001Ga-VQ
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 17:02:25 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXpzr-00008R-5r
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 17:02:24 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a30e445602cso60075366b.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 14:02:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707343341; x=1707948141; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uAc1wvIUDxU1I9G8ZSlaEAqd9DpOun06YT3b5GbCdSU=;
+ b=kWW7DxjJa2vJ24DjjHbrZI8NITOkxJPieqDFLWKG+2hR6mHF6jXXiFIWbYk4FK390C
+ TyufxgNW1MxtmgduK6TTf2ZMc+zfXL1X+dBkxdPU5m6sCmVvlXNo1bw55vvlZ8PDp9bP
+ vNN7ebrE256xWe/toazem+aowTsFDpBFFP9mO6gMiBO29+em0nndxOpDd5fsQzHZ108w
+ 21TYkC1h139SZcnjwokEC/eBp7ypIUYluxnH83jZNlvmRW0vM6ODirSDFXmo3w4PMjXS
+ 1W4OY+Deb5jeMLLX1UHaqxhb1Ck3wJIV3xXglXMdlwtC2CHs1hr6SCXZGa70iXRabj2U
+ JMfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707343341; x=1707948141;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uAc1wvIUDxU1I9G8ZSlaEAqd9DpOun06YT3b5GbCdSU=;
+ b=EttQII5WPsoRzo+DBIDVleKSaORZT9n6ds7ExsWsw5VxinV7BHNBjx0aTom3syWkK2
+ D09+89AFqvkp0c538HaC8Smphhn5Sxb0oTHzfQ4PjrYXr9KQIpndTv2mYwgnK6bowxWe
+ S1x3VXPit/4LKIBBii/heLhDQGzT8tTJm4PL13e272frVwJrrzM/uv/iaW11DHMQRI/w
+ MeHYRtCxDlDyJ7mhwT9xhcUJRe+v4UXrrEzMrOP7CTIAmvkYLHTyR+36dAhVFHfIcywK
+ o8Ig9N/cYLU51YpQWnKBzizHojzb1YkitCikj5gRc/9hogQ0znnSzgscJxwk03T/fQho
+ ttZg==
+X-Gm-Message-State: AOJu0YxIaHtBvnbAkJwmDBF0e6PACKp8D1GRtC9twuaxFi/hZhuJP3z4
+ kqga/m2vwUcrutRBNOBpTqaPsBQgsqK9vKYcoCLNEKqDA2FepgvbHXg1fOs6iVE=
+X-Google-Smtp-Source: AGHT+IFRukTQdds0W/rmZrELSCKmQHRV4Q+xo29lgsdHx7j4JvKjnRL98byTtnBUT/5/kpoD9lszDg==
+X-Received: by 2002:a17:906:5fc2:b0:a38:3fbb:9186 with SMTP id
+ k2-20020a1709065fc200b00a383fbb9186mr762517ejv.29.1707343341330; 
+ Wed, 07 Feb 2024 14:02:21 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWl3SMw5VtZQQCXPxiwYwN+K16ID0LOiFhUeQQ2r5Ya87rQzjq78EvmAHDqYFLNu20g0JmBKykityhVJCZ4bkcPrjq6OwBBB5zEugKP/86GOIkChdCyvkwpQtBoxm3Dt9CUZWkHLfpltfSABbNEShMXOfFJTOsRS0SrS193oKYIpTIKXaRM+ZqG06PtwFrP5Pt4o9/2iWNSpRBEj5oK63wpxHR0t6exGfSYPIsW9ZAVz3lQHwPddA1Js1kbLu6sYWIisJGGcXZW3CXgQvrbOCbfjei8kjwoj2u6tuBvSMomzMUOkj1hnFA1QBDO1yALocFcCHNcI5S7bS3Q16+egt7XM4v4GSWNHiLKmKs=
+Received: from [192.168.69.100] ([176.187.214.82])
+ by smtp.gmail.com with ESMTPSA id
+ jt20-20020a170906ca1400b00a3843b13729sm1195671ejb.35.2024.02.07.14.02.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Feb 2024 14:02:20 -0800 (PST)
+Message-ID: <5a7594d9-3fbd-4d90-a5f9-81b7b845fba7@linaro.org>
+Date: Wed, 7 Feb 2024 23:02:18 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 2/3] hw/arm: Connect STM32L4x5 EXTI to STM32L4x5 SoC
+Content-Language: en-US
+To: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Alistair Francis <alistair@alistair23.me>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20240109160658.311932-1-ines.varhol@telecom-paris.fr>
+ <20240109160658.311932-3-ines.varhol@telecom-paris.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240109160658.311932-3-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.106,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,117 +103,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+Hi Inès,
 
-scsi_device_for_each_req_async() currently does not provide any way to
-be awaited.  One of its callers is scsi_device_purge_requests(), which
-therefore currently does not guarantee that all requests are fully
-settled when it returns.
+(this is now commit 52671f69f7).
 
-We want all requests to be settled, because scsi_device_purge_requests()
-is called through the unrealize path, including the one invoked by
-virtio_scsi_hotunplug() through qdev_simple_device_unplug_cb(), which
-most likely assumes that all SCSI requests are done then.
+On 9/1/24 17:06, Inès Varhol wrote:
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   hw/arm/Kconfig                 |  1 +
+>   hw/arm/stm32l4x5_soc.c         | 52 +++++++++++++++++++++++++++++++++-
+>   include/hw/arm/stm32l4x5_soc.h |  3 ++
+>   3 files changed, 55 insertions(+), 1 deletion(-)
 
-In fact, scsi_device_purge_requests() already contains a blk_drain(),
-but this will not fully await scsi_device_for_each_req_async(), only the
-I/O requests it potentially cancels (not the non-I/O requests).
-However, we can have scsi_device_for_each_req_async() increment the BB
-in-flight counter, and have scsi_device_for_each_req_async_bh()
-decrement it when it is done.  This way, the blk_drain() will fully
-await all SCSI requests to be purged.
 
-This also removes the need for scsi_device_for_each_req_async_bh() to
-double-check the current context and potentially re-schedule itself,
-should it now differ from the BB's context: Changing a BB's AioContext
-with a root node is done through bdrv_try_change_aio_context(), which
-creates a drained section.  With this patch, we keep the BB in-flight
-counter elevated throughout, so we know the BB's context cannot change.
+> +#define NUM_EXTI_IRQ 40
+> +/* Match exti line connections with their CPU IRQ number */
+> +/* See Vector Table (Reference Manual p.396) */
+> +static const int exti_irq[NUM_EXTI_IRQ] = {
+> +    6,                      /* GPIO[0]                 */
+> +    7,                      /* GPIO[1]                 */
+> +    8,                      /* GPIO[2]                 */
+> +    9,                      /* GPIO[3]                 */
+> +    10,                     /* GPIO[4]                 */
+> +    23, 23, 23, 23, 23,     /* GPIO[5..9]              */
+> +    40, 40, 40, 40, 40, 40, /* GPIO[10..15]            */
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20240202144755.671354-3-hreitz@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/scsi/scsi-bus.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+I'm sorry because I missed that earlier, and I'm surprised
+you aren't chasing weird bugs. Due to how QEMU IRQs are
+implemented, we can not wire multiple input lines to the same
+output without using an intermediate "OR gate". We model it
+as TYPE_OR_IRQ. See the comment in "hw/qdev-core.h" added in
+commit cd07d7f9f5 ("qdev: Document GPIO related functions"):
 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 0a2eb11c56..230313022c 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -120,17 +120,13 @@ static void scsi_device_for_each_req_async_bh(void *opaque)
-     SCSIRequest *next;
- 
-     /*
--     * If the AioContext changed before this BH was called then reschedule into
--     * the new AioContext before accessing ->requests. This can happen when
--     * scsi_device_for_each_req_async() is called and then the AioContext is
--     * changed before BHs are run.
-+     * The BB cannot have changed contexts between this BH being scheduled and
-+     * now: BBs' AioContexts, when they have a node attached, can only be
-+     * changed via bdrv_try_change_aio_context(), in a drained section.  While
-+     * we have the in-flight counter incremented, that drain must block.
-      */
-     ctx = blk_get_aio_context(s->conf.blk);
--    if (ctx != qemu_get_current_aio_context()) {
--        aio_bh_schedule_oneshot(ctx, scsi_device_for_each_req_async_bh,
--                                g_steal_pointer(&data));
--        return;
--    }
-+    assert(ctx == qemu_get_current_aio_context());
- 
-     QTAILQ_FOREACH_SAFE(req, &s->requests, next, next) {
-         data->fn(req, data->fn_opaque);
-@@ -138,11 +134,16 @@ static void scsi_device_for_each_req_async_bh(void *opaque)
- 
-     /* Drop the reference taken by scsi_device_for_each_req_async() */
-     object_unref(OBJECT(s));
-+
-+    /* Paired with blk_inc_in_flight() in scsi_device_for_each_req_async() */
-+    blk_dec_in_flight(s->conf.blk);
- }
- 
- /*
-  * Schedule @fn() to be invoked for each enqueued request in device @s. @fn()
-  * runs in the AioContext that is executing the request.
-+ * Keeps the BlockBackend's in-flight counter incremented until everything is
-+ * done, so draining it will settle all scheduled @fn() calls.
-  */
- static void scsi_device_for_each_req_async(SCSIDevice *s,
-                                            void (*fn)(SCSIRequest *, void *),
-@@ -163,6 +164,8 @@ static void scsi_device_for_each_req_async(SCSIDevice *s,
-      */
-     object_ref(OBJECT(s));
- 
-+    /* Paired with blk_dec_in_flight() in scsi_device_for_each_req_async_bh() */
-+    blk_inc_in_flight(s->conf.blk);
-     aio_bh_schedule_oneshot(blk_get_aio_context(s->conf.blk),
-                             scsi_device_for_each_req_async_bh,
-                             data);
-@@ -1728,11 +1731,20 @@ static void scsi_device_purge_one_req(SCSIRequest *req, void *opaque)
-     scsi_req_cancel_async(req, NULL);
- }
- 
-+/**
-+ * Cancel all requests, and block until they are deleted.
-+ */
- void scsi_device_purge_requests(SCSIDevice *sdev, SCSISense sense)
- {
-     scsi_device_for_each_req_async(sdev, scsi_device_purge_one_req, NULL);
- 
-+    /*
-+     * Await all the scsi_device_purge_one_req() calls scheduled by
-+     * scsi_device_for_each_req_async(), and all I/O requests that were
-+     * cancelled this way, but may still take a bit of time to settle.
-+     */
-     blk_drain(sdev->conf.blk);
-+
-     scsi_device_set_ua(sdev, sense);
- }
- 
--- 
-2.43.0
+  * It is not valid to try to connect one outbound GPIO to multiple
+  * qemu_irqs at once, or to connect multiple outbound GPIOs to the
+  * same qemu_irq. (Warning: there is no assertion or other guard to
+  * catch this error: the model will just not do the right thing.)
+  * Instead, for fan-out you can use the TYPE_SPLIT_IRQ device: connect
+  * a device's outbound GPIO to the splitter's input, and connect each
+  * of the splitter's outputs to a different device.  For fan-in you
+  * can use the TYPE_OR_IRQ device, which is a model of a logical OR
+  * gate with multiple inputs and one output.
 
+So for example for the GPIO[10..15] you need to create a 6-line
+OR gate as (totally untested):
+
+   /* 6-line OR IRQ gate */
+   Object *orgate40 = object_new(TYPE_OR_IRQ);
+   object_property_set_int(orgate40, "num-lines", 6, &error_fatal);
+   qdev_realize(DEVICE(orgate), NULL, &error_fatal);
+
+   /* OR gate -> IRQ #40 */
+   qdev_connect_gpio_out(DEVICE(orgate40), 0,
+                         qdev_get_gpio_in(armv7m, 40));
+
+   /* EXTI GPIO[10..15] -> OR gate */
+   for (unsigned i = 0; i < 6; i++) {
+       sysbus_connect_irq(SYS_BUS_DEVICE(&s->exti), 10 + i,
+                          qdev_get_gpio_in(DEVICE(orgate40), i));
+   }
+
+> +    1,                      /* PVD                     */
+> +    67,                     /* OTG_FS_WKUP, Direct     */
+> +    41,                     /* RTC_ALARM               */
+> +    2,                      /* RTC_TAMP_STAMP2/CSS_LSE */
+> +    3,                      /* RTC wakeup timer        */
+> +    63,                     /* COMP1                   */
+> +    63,                     /* COMP2                   */
+> +    31,                     /* I2C1 wakeup, Direct     */
+> +    33,                     /* I2C2 wakeup, Direct     */
+> +    72,                     /* I2C3 wakeup, Direct     */
+> +    37,                     /* USART1 wakeup, Direct   */
+> +    38,                     /* USART2 wakeup, Direct   */
+> +    39,                     /* USART3 wakeup, Direct   */
+> +    52,                     /* UART4 wakeup, Direct    */
+> +    53,                     /* UART4 wakeup, Direct    */
+> +    70,                     /* LPUART1 wakeup, Direct  */
+> +    65,                     /* LPTIM1, Direct          */
+> +    66,                     /* LPTIM2, Direct          */
+> +    76,                     /* SWPMI1 wakeup, Direct   */
+> +    1,                      /* PVM1 wakeup             */
+> +    1,                      /* PVM2 wakeup             */
+> +    1,                      /* PVM3 wakeup             */
+> +    1,                      /* PVM4 wakeup             */
+> +    78                      /* LCD wakeup, Direct      */
+> +};
+
+> +    busdev = SYS_BUS_DEVICE(&s->exti);
+> +    if (!sysbus_realize(busdev, errp)) {
+> +        return;
+> +    }
+> +    sysbus_mmio_map(busdev, 0, EXTI_ADDR);
+> +    for (unsigned i = 0; i < NUM_EXTI_IRQ; i++) {
+> +        sysbus_connect_irq(busdev, i, qdev_get_gpio_in(armv7m, exti_irq[i]));
+
+                                                               ^^^^^^^^^^
+> +    }
+Regards,
+
+Phil.
 
