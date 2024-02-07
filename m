@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45701C48297
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 02:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C267CC48297
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 02:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXY3O-0003LN-BU; Tue, 06 Feb 2024 21:52:50 -0500
+	id 1rXY3H-0003JF-Es; Tue, 06 Feb 2024 21:52:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXY3N-0003L1-8R
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:52:49 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1rXY3G-0003IS-EU
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:52:42 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rXY3H-0000iG-JD
- for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:52:49 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1d731314e67so1467025ad.1
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 18:52:43 -0800 (PST)
+ id 1rXY3D-0000ha-RK
+ for qemu-devel@nongnu.org; Tue, 06 Feb 2024 21:52:42 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6da9c834646so139428b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 18:52:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707274362; x=1707879162; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707274358; x=1707879158; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EwSkPSHiupn05u+RAeWRJRNLnJ0SRDTtyOincwirVhY=;
- b=DetoBs8CegDJzKFU3S775vQUiF8ehTIKfeHtS8JBOdpGcRSyzvTsmeAZcH/s4t6yA5
- 1U8RYkfjJnZov1+RW0DQKQ9OjW4fCaplcIMDxbxR0vBK7fyoyFNO0MBk3WSZt8zhkTvr
- fB6YowJfe80IMJ7qgh1KSILUdRPce3N3Hd8chB4WyoSP12lKMtrMVy+EPPyosrO6mES+
- eagMF0lnuRvPX+UjUkJ2PYnfIxEtXf3xB6hJbbageDTT6HEMN9G/NxOgL8avSMJJsZ+E
- ytsIv6iiCHKzDImFNQ92yWWA5doy8m0kwSmjJWcJaFxzRNX6U+h/UJeBd4V+MhCRJVd/
- eIFQ==
+ bh=KE5lr6JW9Hb5FNHnTu7wAvaaKUMTGQjD484Q9RZmfv8=;
+ b=I8QxszfuWmxyGn0hZWzeGy85VONnNye4JIqdywAaElbsgR2Idyr8gYcLHVxs/R32+W
+ n95TTBG7dw07XDvk0QqASut/HpE9l2+agw8i6RTMES65oxEbF5vTOwFzr9U/78sqSlf9
+ elVQkqr3ZEcSQFNUcBocNF4FW8jE9zQ4EGiqFtI4gL00hLntFYextaldrukXd/EucxyK
+ wnW8itDVI7IX+SkWaFpS/gwMnf+YSIu2CUK1h7nKa6rag9/8qeQbyNvdeB7w7jk8ET51
+ IXQye4f58BJ73wu72dJkluqtt9K2Mlry9cRUbCfKULHj3SI3rf0Dq9XTbGhMyn7t6JAt
+ u3EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707274362; x=1707879162;
+ d=1e100.net; s=20230601; t=1707274358; x=1707879158;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EwSkPSHiupn05u+RAeWRJRNLnJ0SRDTtyOincwirVhY=;
- b=GIGtlzHbS6D5J44xc2cIwEQLVOVv/x/q+6DEQGhS7copbG57Q6FMHwHZneUa+CYkpT
- Oh4p9Zr973ipjfXxNSMaBE8FZKcOMKdxCBDdPJTkMrXB4bYAAunl4TN1oOvn6YdCXZOs
- 22FkGnHzGarBv38abJg0yTsAoxloi2LmqtXbNsBO6XLUT4T4b3dYd3NIb60VBfAXPh1B
- xfIgCkJZgqcLF9pSWoiYUkqU3tsu+3MShTmtRNqrEguUqPN+xbdIfRjWPnCs2+kmNaSf
- 2zf4gkia1z5YHKwUjs6Vp2mm7bl18bX7HZ5Vj/98MnH79gEuWFaOElihLLh3Zbf4S6KL
- qcQw==
-X-Gm-Message-State: AOJu0Ywi31dftBZaeepsmAdeR+dwkt08Q66RRVTd9gxiB7PBzrQUCTe9
- SeRmCbaOEJg3eQUloOy1RIkzy1H6oW+585err6b3p1OUZYLRP+zexqOcoVqeO0vk7SyZYYkKyeE
- YTQ4=
-X-Google-Smtp-Source: AGHT+IHiwJuWhkDHCHm6UDdWmrOa8/za0Hk4Ynw7ntX1eu1DWxai4qNS7A+XH0MUbuvtePoARr9Gfg==
-X-Received: by 2002:a17:903:442:b0:1d9:624e:126d with SMTP id
- iw2-20020a170903044200b001d9624e126dmr3298272plb.62.1707274362305; 
- Tue, 06 Feb 2024 18:52:42 -0800 (PST)
+ bh=KE5lr6JW9Hb5FNHnTu7wAvaaKUMTGQjD484Q9RZmfv8=;
+ b=EG5mqtSpa7GGPIudEiSPaVRWOJ1u4DpO3suSYbm6dN0RTl1e+Dzw4/rmJcTsyS73aA
+ DUIEv5YVfLZHpyZa/JXbjmpktUPzG7EOt14skfRoBLeqNi+JGaH6K3NO+q2P4f0h4JC5
+ EJ1mzEKnKcXQ3tfZhlO4e91ndlpJ1Tk3mhmbyqxkj0hgwJ4twMShRvximmQ1VqT6bA+Z
+ vABYsgIPijue81hGmACkovVIXdiyqr7dU7ik9nPLzpKkgDcfuJ9l03y2nsgkQHirmRli
+ L1+WB72gpbnm6sFXJ8lBKqKFtBa4RACqJsPYKAtwqGOq360ag33F3jpI3i77oo0X69/F
+ 1N8A==
+X-Gm-Message-State: AOJu0Yx7u6IVe5KpT3mGYB9BYXz18je0Eh4R581yT8N1mTugP9+igjYs
+ n7XqVyVzhZcq2/tahOir46py8FGJvWykZUKw6cg3sxTQ8ZRLFqGRQJ22rfbl3JI/uwcNgnb7lKm
+ vZX0=
+X-Google-Smtp-Source: AGHT+IFCXYj8nwBT2ww/xlVOkZhFqNRzZZNbFtQxvUsb86YTTRM51XXapOzecMBEXzjPLjRPqcztgQ==
+X-Received: by 2002:a05:6a21:6d98:b0:19a:4418:1e86 with SMTP id
+ wl24-20020a056a216d9800b0019a44181e86mr4262411pzb.58.1707274358277; 
+ Tue, 06 Feb 2024 18:52:38 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdM8CBAqet6sXU+v4XakJHPz2Xo7DnrAF6LFex+GVd1xuy/EAvBj995Jarghp1JVDN8kwpq1tBOyWW2x6v4oSzZ8JhR27Jx5AVbEFGZ/Zs/SFLoTWR44zvfkb+aaEL7fHCZkOIFPE8mQ0SatPHswFQgoj8JiRWQvUWIN4=
+ AJvYcCWxqpYzYGjo+qKTG+7sZrr7d1XLfgwzefc4tUX9Y+WpenNlHz3T25lp7BrCdXss/0h71Zg3lF/phF+vbpB+WR1JQF+QkG8AKeRkfgi3UBZT/DrqOezu+fKuQvQgLiP4IcnG6WIpmZPbGJOnGPYGZWcvikkTmA9xjpFksFI=
 Received: from stoup.. (60-242-98-186.static.tpgi.com.au. [60.242.98.186])
  by smtp.gmail.com with ESMTPSA id
- kr8-20020a170903080800b001d8ef97de4asm255435plb.38.2024.02.06.18.52.39
+ kr8-20020a170903080800b001d8ef97de4asm255435plb.38.2024.02.06.18.52.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Feb 2024 18:52:41 -0800 (PST)
+ Tue, 06 Feb 2024 18:52:37 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, gustavo.romero@linaro.org, qemu-stable@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 6/6] target/arm: Fix SVE/SME gross MTE suppression checks
-Date: Wed,  7 Feb 2024 12:52:10 +1000
-Message-Id: <20240207025210.8837-7-richard.henderson@linaro.org>
+Subject: [PATCH v3 5/6] target/arm: Handle mte in do_ldrq, do_ldro
+Date: Wed,  7 Feb 2024 12:52:09 +1000
+Message-Id: <20240207025210.8837-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240207025210.8837-1-richard.henderson@linaro.org>
 References: <20240207025210.8837-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,79 +97,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TBI and TCMA bits are located within mtedesc, not desc.
+These functions "use the standard load helpers", but
+fail to clean_data_tbi or populate mtedesc.
 
 Cc: qemu-stable@nongnu.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/sme_helper.c |  8 ++++----
- target/arm/tcg/sve_helper.c | 12 ++++++------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ target/arm/tcg/translate-sve.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 1ee2690ceb..904bfdac43 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -573,8 +573,8 @@ void sme_ld1_mte(CPUARMState *env, void *za, uint64_t *vg,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 508f7b6bbd..ada05aa530 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -4861,8 +4861,13 @@ static void do_ldrq(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
+     unsigned vsz = vec_full_reg_size(s);
+     TCGv_ptr t_pg;
+     int poff;
++    uint32_t desc;
  
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
+     /* Load the first quadword using the normal predicated load helpers.  */
++    if (!s->mte_active[0]) {
++        addr = clean_data_tbi(s, addr);
++    }
++
+     poff = pred_full_reg_offset(s, pg);
+     if (vsz > 16) {
+         /*
+@@ -4886,7 +4891,8 @@ static void do_ldrq(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
+ 
+     gen_helper_gvec_mem *fn
+         = ldr_fns[s->mte_active[0]][s->be_data == MO_BE][dtype][0];
+-    fn(tcg_env, t_pg, addr, tcg_constant_i32(simd_desc(16, 16, zt)));
++    desc = make_svemte_desc(s, 16, 1, dtype_msz(dtype), false, zt);
++    fn(tcg_env, t_pg, addr, tcg_constant_i32(desc));
+ 
+     /* Replicate that first quadword.  */
+     if (vsz > 16) {
+@@ -4929,6 +4935,7 @@ static void do_ldro(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
+     unsigned vsz_r32;
+     TCGv_ptr t_pg;
+     int poff, doff;
++    uint32_t desc;
+ 
+     if (vsz < 32) {
+         /*
+@@ -4941,6 +4948,9 @@ static void do_ldro(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
      }
  
-@@ -750,8 +750,8 @@ void sme_st1_mte(CPUARMState *env, void *za, uint64_t *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+     /* Load the first octaword using the normal predicated load helpers.  */
++    if (!s->mte_active[0]) {
++        addr = clean_data_tbi(s, addr);
++    }
  
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
+     poff = pred_full_reg_offset(s, pg);
+     if (vsz > 32) {
+@@ -4965,7 +4975,8 @@ static void do_ldro(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
  
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index bce4295d28..6853f58c19 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5800,8 +5800,8 @@ void sve_ldN_r_mte(CPUARMState *env, uint64_t *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+     gen_helper_gvec_mem *fn
+         = ldr_fns[s->mte_active[0]][s->be_data == MO_BE][dtype][0];
+-    fn(tcg_env, t_pg, addr, tcg_constant_i32(simd_desc(32, 32, zt)));
++    desc = make_svemte_desc(s, 32, 1, dtype_msz(dtype), false, zt);
++    fn(tcg_env, t_pg, addr, tcg_constant_i32(desc));
  
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
-@@ -6156,8 +6156,8 @@ void sve_ldnfff1_r_mte(CPUARMState *env, void *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
- 
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
-@@ -6410,8 +6410,8 @@ void sve_stN_r_mte(CPUARMState *env, uint64_t *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
- 
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
+     /*
+      * Replicate that first octaword.
 -- 
 2.34.1
 
