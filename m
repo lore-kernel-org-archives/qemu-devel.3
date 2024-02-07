@@ -4,109 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D969FC4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 16:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEEF0C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 16:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXkad-0001xL-Km; Wed, 07 Feb 2024 11:16:00 -0500
+	id 1rXkiG-0005aN-Cj; Wed, 07 Feb 2024 11:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rXkaT-0001vN-1p
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:15:49 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rXkiE-0005Zx-De; Wed, 07 Feb 2024 11:23:50 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rXkaQ-0001vL-Mo
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 11:15:48 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 417FbDeh024934; Wed, 7 Feb 2024 16:15:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=xkdBSKWeI0YNU0fcFh2/lK5lgYj7W18YVvd1hRFT69k=;
- b=eDlGUF7rT0gytau6QcFMJive2bnnV37kx/GP80LI2IW4tSxA56us0B6hjt85N0oIvEGn
- TELzTNuD4PFmfs2/Z98bYHrD+tbDHezWDpU1b9jTrVihA2Q8LQbBhINkrqMj4pDuZ8v9
- YQwA4dmnzOaFXzUQryWu2vTKcHynqnBHVvMPU4kDqjwEELLoobc88RyXwHKYR1kWvdCb
- AYoZurSJJDW86MP2vYDG50be0NZ5YRhfK8FL7drtkFeAlkZF7XS6Jl/7rnwnVlu5r1vw
- zKH7JictvfuocDCe6GeXjYzrXg/79QLvQb/WOZc0XhVBuOgVZ/ObkreCs3BQmjrcUApz XQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w4cnkh397-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Feb 2024 16:15:32 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 417GAuIJ015671;
- Wed, 7 Feb 2024 16:15:31 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w4cnkh38s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Feb 2024 16:15:31 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 417FVqku016148; Wed, 7 Feb 2024 16:15:30 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w22h26957-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Feb 2024 16:15:30 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 417GFSX28979110
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 7 Feb 2024 16:15:28 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 966CB2004B;
- Wed,  7 Feb 2024 16:15:28 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2F77420040;
- Wed,  7 Feb 2024 16:15:28 +0000 (GMT)
-Received: from [9.155.200.166] (unknown [9.155.200.166])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  7 Feb 2024 16:15:28 +0000 (GMT)
-Message-ID: <be8001fa50db711d0d5d9cbcfb6a752d2b057749.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 0/4] make vm-build-freebsd fixes
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Ed Maste <emaste@freebsd.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>, "Daniel
- P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Thomas Huth
- <thuth@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
- qemu-devel@nongnu.org
-Date: Wed, 07 Feb 2024 17:15:27 +0100
-In-Reply-To: <87sf24l3l9.fsf@draig.linaro.org>
-References: <20240206002344.12372-1-iii@linux.ibm.com>
- <87sf24l3l9.fsf@draig.linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Q8ERSkGN-9yn6Ek_Mqbxc5qVm6jX-DzG
-X-Proofpoint-ORIG-GUID: Da5nEe6SjoGKFnqMLONVFs62JEDx5bf2
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rXkiB-0003D0-CU; Wed, 07 Feb 2024 11:23:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1707323026; x=1738859026;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=r9x3/ipm1R1qJ0uy4DsMp3s3ZBjq5BTt+ZSrQxABzOE=;
+ b=bm8zKZ/n0VTd96sClgYa3krh7CmhjNy7cKRYnjeg8u4Ul/u/Z2nkgEVW
+ jiK+KIAptcJyutUu8spe3LO5zsgbO00E3LyvNSPU4gPMeK1hfTukkgg0v
+ PR7PKkyF/iVL5pjCZDvbr6zBtDM0vZLbLZYKgVz3r8k30dHueN155n9nA
+ +digHtphdwZv3URFNSWfM2kxzELvlAuiUQWZQvjNvKPz2ETpw03MStJe8
+ mOPiRsD4PVPHqtJUmGnwPXn3wOrWcdGoCvol6ZHo4UsNqktahKJwnxozS
+ Ga4WYT9UfgjoeHFs8YOtQNvX1HAMUszi7TAcYT3rmcSM90g4Rdi5QS0zF A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10977"; a="26467514"
+X-IronPort-AV: E=Sophos;i="6.05,251,1701158400"; d="scan'208";a="26467514"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Feb 2024 08:23:41 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,251,1701158400"; 
+   d="scan'208";a="5991661"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa004.fm.intel.com with ESMTP; 07 Feb 2024 08:23:39 -0800
+Date: Thu, 8 Feb 2024 00:37:12 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH] hw/intc: Handle the error of IOAPICCommonClass.realize()
+Message-ID: <ZcOxuELwO3KLUeuH@intel.com>
+References: <20240131142902.115964-1-zhao1.liu@linux.intel.com>
+ <cdb1c6cd-0095-4787-a740-17b42e061548@linaro.org>
+ <ZbsPRB4OM027fbMA@intel.com> <875xz0ojg7.fsf@pond.sub.org>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-07_06,2024-02-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=889
- lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0
- priorityscore=1501 suspectscore=0 spamscore=0 adultscore=0 malwarescore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402070119
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <875xz0ojg7.fsf@pond.sub.org>
+Received-SPF: none client-ip=192.198.163.7;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.106,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,38 +81,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-02-07 at 15:02 +0000, Alex Benn=C3=A9e wrote:
-> Ilya Leoshkevich <iii@linux.ibm.com> writes:
->=20
-> > v2:
-> > https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg00890.html
-> > v2 -> v3: Structure the meson check similar to have_asan_fiber;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Reduce the conte=
-xt size a little (Philippe).
-> >=20
-> > v1:
-> > https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg05155.html
-> > v1 -> v2: Link with libinotify instead of disabling the inotify
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 support (Daniel).
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Use a bit more c=
-ontext lines in order to prevent the
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 incorrect applic=
-ation of the test patch.
-> >=20
-> > Hi,
-> >=20
-> > I needed to verify that my qemu-user changes didn't break BSD, and
-> > Daniel Berrange suggested vm-build-freebsd on IRC. I had several
-> > problems with it, which this series resolves.
->=20
-> Queued to testing/next, thanks.
+Hi Markus,
 
-Hi Alex,
+On Wed, Feb 07, 2024 at 07:51:52AM +0100, Markus Armbruster wrote:
+> Date: Wed, 07 Feb 2024 07:51:52 +0100
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH] hw/intc: Handle the error of
+>  IOAPICCommonClass.realize()
+> 
+> Zhao Liu <zhao1.liu@linux.intel.com> writes:
+> 
+> > Hi Philippe,
+> >
+> > On Wed, Jan 31, 2024 at 05:48:24PM +0100, Philippe Mathieu-Daudé wrote:
+> >> Date: Wed, 31 Jan 2024 17:48:24 +0100
+> >> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> >> Subject: Re: [PATCH] hw/intc: Handle the error of  IOAPICCommonClass.realize()
+> >> 
+> >> Hi Zhao,
+> >> 
+> >> On 31/1/24 15:29, Zhao Liu wrote:
+> >> > From: Zhao Liu <zhao1.liu@intel.com>
+> >> > 
+> >> > IOAPICCommonClass implements its own private realize(), and this private
+> >> > realize() allows error.
+> >> > 
+> >> > Therefore, return directly if IOAPICCommonClass.realize() meets error.
+> >> > 
+> >> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> >> > ---
+> >> >   hw/intc/ioapic_common.c | 3 +++
+> >> >   1 file changed, 3 insertions(+)
+> >> > 
+> >> > diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
+> >> > index cb9bf6214608..3772863377c2 100644
+> >> > --- a/hw/intc/ioapic_common.c
+> >> > +++ b/hw/intc/ioapic_common.c
+> >> > @@ -162,6 +162,9 @@ static void ioapic_common_realize(DeviceState *dev, Error **errp)
+> >> >      info = IOAPIC_COMMON_GET_CLASS(s);
+> >> >      info->realize(dev, errp);
+> >> > +    if (*errp) {
+> >> > +        return;
+> >> > +    }
+> 
+> This is wrong, although it'll work in practice.
+> 
+> It's wrong, because dereferencing @errp requires ERRP_GUARD().
+> qapi/error.h:
+> 
+>  * = Why, when and how to use ERRP_GUARD() =
+>  *
+>  * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+>  * - It must not be dereferenced, because it may be null.
+>  * - It should not be passed to error_prepend() or
+>  *   error_append_hint(), because that doesn't work with &error_fatal.
+>  * ERRP_GUARD() lifts these restrictions.
+>  *
+>  * To use ERRP_GUARD(), add it right at the beginning of the function.
+>  * @errp can then be used without worrying about the argument being
+>  * NULL or &error_fatal.
+>  *
+>  * Using it when it's not needed is safe, but please avoid cluttering
+>  * the source with useless code.
+> 
+> It'll work anyway, because the caller never passes null.
+> 
+> Obvious fix:
+> 
+> diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
+> index cb9bf62146..280404cba5 100644
+> --- a/hw/intc/ioapic_common.c
+> +++ b/hw/intc/ioapic_common.c
+> @@ -152,6 +152,7 @@ static int ioapic_dispatch_post_load(void *opaque, int version_id)
+>  
+>  static void ioapic_common_realize(DeviceState *dev, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      IOAPICCommonState *s = IOAPIC_COMMON(dev);
+>      IOAPICCommonClass *info;
 
-thanks! But I think Thomas already took it into his tree:
+Thanks for explaining and educating me!
 
-https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01015.html
+>  
+> >> Could be clearer to deviate from DeviceRealize and let the
+> >> handler return a boolean:
+> >> 
+> >> -- >8 --
+> >> diff --git a/hw/intc/ioapic_internal.h b/hw/intc/ioapic_internal.h
+> >> index 37b8565539..9664bb3e00 100644
+> >> --- a/hw/intc/ioapic_internal.h
+> >> +++ b/hw/intc/ioapic_internal.h
+> >> @@ -92,3 +92,3 @@ struct IOAPICCommonClass {
+> >> 
+> >> -    DeviceRealize realize;
+> >> +    bool (*realize)(DeviceState *dev, Error **errp);
+> 
+> qapi.error.h advises:
+> 
+>  * - Whenever practical, also return a value that indicates success /
+>  *   failure.  This can make the error checking more concise, and can
+>  *   avoid useless error object creation and destruction.  Note that
+>  *   we still have many functions returning void.  We recommend
+>  *   • bool-valued functions return true on success / false on failure,
+>  *   • pointer-valued functions return non-null / null pointer, and
+>  *   • integer-valued functions return non-negative / negative.
+> 
+> The patch then becomes
+> 
+>           info = IOAPIC_COMMON_GET_CLASS(s);
+>      -    info->realize(dev, errp);
+>      +    if (!info->realize(dev, errp) {
+>      +        return;
+>      +    }
+> 
+> DeviceClass and BusClass callbacks realize, unrealize ignore this
+> advice: they return void.  Why?
+> 
+> Following the advice makes calls easier to read, but the callees have to
+> do a tiny bit of extra work: return something.  Good trade when we have
+> at least as many callers as callees.
+> 
+> But these callbacks have many more callees: many devices implement them,
+> but only a few places call.  Changing them to return something looked
+> like more trouble than it's worth, so we didn't.
 
-Best regards,
-Ilya
+Thanks! Got it.
+
+> 
+> > What about I change the name of this interface?
+> >
+> > Maybe ioapic_realize(), to distinguish it from DeviceClass.realize().
+> 
+> I wouldn't bother.
+
+;-)
+
+> 
+> >>      DeviceUnrealize unrealize;
+> >
+> > Additionally, if I change the pattern of realize(), should I also avoid
+> > the DeviceUnrealize macro for symmetry's sake and just declare a similar
+> > function pointer as you said?
+> >
+> > Further, do you think it's necessary to introduce InternalRealize and
+> > InternalUnrealize macros for qdev
+> 
+> You mean typedefs?
+
+Yes!
+
+> 
+> >                          for qdev to wrap these special realize/unrealize
+> > to differentiate them from normal DeviceRealize/DeviceUnrealize?
+> >
+> > Because I found that this pattern of realize() (i.e. registering the
+> > realize() of the child class in the parent class instead of DeviceClass,
+> > and then calling the registered realize() in parent realize()) is also
+> > widely used in many cases:
+> >
+> > * xen_block_realize()
+> > * virtser_port_device_realize()
+> > * x86_iommu_realize()
+> > * virtio_input_device_realize()
+> > * apic_common_realize()
+> > * pc_dimm_realize()
+> > * virtio_device_realize()
+> > ...
+> 
+> Yes.
+> 
+> When a subtype overrides a supertype's method, it often makes sense to
+> have the subtype's method call the supertype's method.
+
+Thanks! I can consider a simple RFC to introduce a new typedef.
+
+> 
+> > I'm not quite sure if this is a generic way to use it, although it looks
+> > like it could easily be confused with DeviceClass.realize().
+> 
+> Did I answer your question?  I'm not sure :)
+
+Of course you did. :-)
+
+> 
+> >> diff --git a/hw/i386/kvm/ioapic.c b/hw/i386/kvm/ioapic.c
+> >> index 409d0c8c76..96747ef2b8 100644
+> >> --- a/hw/i386/kvm/ioapic.c
+> >> +++ b/hw/i386/kvm/ioapic.c
+> >> @@ -121,3 +121,3 @@ static void kvm_ioapic_set_irq(void *opaque, int irq,
+> >> int level)
+> >> 
+> >> -static void kvm_ioapic_realize(DeviceState *dev, Error **errp)
+> >> +static bool kvm_ioapic_realize(DeviceState *dev, Error **errp)
+> >>  {
+> >> @@ -133,2 +133,4 @@ static void kvm_ioapic_realize(DeviceState *dev, Error
+> >> **errp)
+> >>      qdev_init_gpio_in(dev, kvm_ioapic_set_irq, IOAPIC_NUM_PINS);
+> >> +
+> >> +    return true;
+> >>  }
+> >> diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
+> >> index cb9bf62146..beab65be04 100644
+> >> --- a/hw/intc/ioapic_common.c
+> >> +++ b/hw/intc/ioapic_common.c
+> >> @@ -163,3 +163,5 @@ static void ioapic_common_realize(DeviceState *dev,
+> >> Error **errp)
+> >>      info = IOAPIC_COMMON_GET_CLASS(s);
+> >> -    info->realize(dev, errp);
+> >> +    if (!info->realize(dev, errp)) {
+> >> +        return;
+> >> +    }
+> >> 
+> >> ---
+> >> 
+> >> What do you think?
+> >
+> > I'm OK with the change here, but not sure if the return of private
+> > realize() should be changed elsewhere as well.
+> 
+> I think I'd add the missing ERRP_GUARD() and call it a day.
+> 
+
+Okay, let me add the missing ERRP_GUARD(). I'll also check and clean up
+other place where the ERRP_GUARD() is also missing.
+
+Regards,
+Zhao
+
 
