@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAB5C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 09:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9831AC4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 09:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXdpc-0002u0-CZ; Wed, 07 Feb 2024 04:03:01 -0500
+	id 1rXdzR-0005Lc-Ln; Wed, 07 Feb 2024 04:13:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdpV-0002tK-10
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:02:53 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdzL-0005Gq-EX
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:13:04 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdpR-0005yx-DH
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:02:50 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a388c5542e9so19638966b.1
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 01:02:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXdzI-0008G6-49
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:13:03 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a3856588ba8so51963466b.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 01:12:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707296568; x=1707901368; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fHwGSjHVXVHNUiahUB2RJJ0LQ7CGSwuntWOhWSUPVbM=;
- b=WDbg4sLTFXMcZddxbgPfuqN5sMplGBTGc33dykKNduBvx5GNOEBI+p7Z4ifiqMU+xP
- Cu3omVNgbnh0TS6v1qNa5+hZ2qBP2kIL7Bh8OWo01vlgDo6SsBu+MAsmRkNtHoUuCwTY
- 473vHgQnRD46tCrlIVOI6iQ6H/yTPtQtsLci4PF4CsiSrKwg6f/O8LA728PsJMZegByu
- //zuIS2/TmiP8mbFVkfYu90O3kOuV8uMvTsEQzA1/a5/kjefbONnI+hDHXVOyl4evSW1
- eBsPxCnYcAlDWfR2SaHIzqcdNPN10NhBbivhCCGqjIEfN22e+242mjPpABtWFTMhBA/j
- FNWg==
+ d=linaro.org; s=google; t=1707297177; x=1707901977; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rvshgmdAA5Z9fVAd8EoKdPZKSfsy5+D49z9WZdIL5PU=;
+ b=fn0IJFAy4hz2NvFbjIl20vS5YaFXFFj9U0ENHLDX+gKUn6y9hN1Y5xeKoJItWpl7Af
+ 5SgA5gaC2w3EZu5kM3JPR7H4yFeoW0q1hKMxIwr7HbabQ5FJQOoaHLtqhw1fmEVeMNMn
+ uFbE0rYu524gBvz0jAmsc1+wEbMnECDHZWfgDf0eBC/4doYT8+MYmfIRK87lV4jYStFl
+ sUSWdbpXzCf+UZQ4rlMh13tloJ3FTOhmzi0pvKsMCdPywHO1xJZvS1jjhWoiUqoST8Ak
+ eZHSVIYkpNdOlCiX35DWVLRC3MiWlszWa0zQQfcARip8k5TXhgQga/jxO4y3N5tm/rba
+ XvEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707296568; x=1707901368;
- h=content-transfer-encoding:in-reply-to:from:cc:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fHwGSjHVXVHNUiahUB2RJJ0LQ7CGSwuntWOhWSUPVbM=;
- b=Ofl9U0zBCQuhpLtyPkw5LeoXC++rAv0r3Cm6WbKbgRPaI4pbLRCdbuZ7Sk7Xn5e/Lh
- 7Fx14mLZ17y2PNidPUr2WTM3LIzpc7aBcgRkuPj/WQeL4z7ECzbpW7Xm8ePR+/pC7dB2
- 2Sqv4XFjfZSqcXFCsJ6bXGz4rAfgeIgzIClK2CAk7Eg2O0A2czMDfkvpmQllilWtyV2Y
- 3HZBb9GJ9udcY1taK/I9gpGhJt/O2rFFXjNV2BhSlSSWiyWc3DnRqs+Ro/+rWnOXBm3d
- 2hvPLeGHtOE3h1Pb2IPCN42zOZxk6+X+GRxnf/PDRh0FAKNJfZgGOXh6ndAzq226yKbY
- RzJg==
+ d=1e100.net; s=20230601; t=1707297177; x=1707901977;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rvshgmdAA5Z9fVAd8EoKdPZKSfsy5+D49z9WZdIL5PU=;
+ b=I3F6wPzL7V+sWKjVhdS7xuMBzjR/3LjFTzcPl5uFPp1WduBWbKsLb0OR0QnYyyq5Zx
+ jXNEJl70Co9jprEmRg1fzA1NwxPLlDWwtWabqizFmkRjInaMYTk2sROCc/Aj8RH+b+it
+ +Tsf+1uWz58sgoP9uuOSCwVZg7rNZpqzfG9kQab7ZTA2S8nK+2EbybbXnRao10tWoQn/
+ rBuXBeiYWSHIPPUfMt4ruduTUNWz6wAT2EsW5k2PmhKARqa69Zo+EWSqZSDUKVYW7etl
+ iLugM6q5QRKsr0LanqA4fd30yCAsAMZuRHyqh4xZeVfzRGuwU+DKKLZ8TtmKcAptZDBC
+ z9Mg==
+X-Gm-Message-State: AOJu0YyKTws22/E3MdLzKEB2e4FnOkUxFGFxAJRugE7bUYZWUEEq45wG
+ esU2NVEVkk4Cc2MQu8noEeGKG4nSDi3oZ6lfItfT8TsD7Z42F/pQSAUksM4rq/H1WLALZqd0KSa
+ 4
+X-Google-Smtp-Source: AGHT+IHNMYZk+V/O6fQf41F0iFdaCOv7uI2VzrZvI9FKwP1lujtaiauR35LWSG5wbnCAyzQey1d6NQ==
+X-Received: by 2002:a17:906:41:b0:a37:1e9a:c549 with SMTP id
+ 1-20020a170906004100b00a371e9ac549mr3500501ejg.49.1707297177466; 
+ Wed, 07 Feb 2024 01:12:57 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCgfV4E9+THxCFLpK3gpWEyaMOR3xapTFAn3Tqoc5TIjLobzSHtIA+X+CIr4aGed+eUSkXyMF1ZEhhRFCqt+Q7Jmy1wVU=
-X-Gm-Message-State: AOJu0Yx86sbgOJMdVGwai47eGFHBbaApfe1U3W/qBzJakrULfFZPPZv5
- WusY/qBYuTYyW5caNn6Q0scjNwUb32gJ2g6FndoAGXO8+eqzIPG3as2sN5aGQZU=
-X-Google-Smtp-Source: AGHT+IGr5LzKLIjki0UL3IQXkYk3LN2ZfE3dwFfbdfLVx0aziK1jXuKQxybymSwO+Vv1YUDuA9uiog==
-X-Received: by 2002:a17:906:eb07:b0:a35:e5bf:b585 with SMTP id
- mb7-20020a170906eb0700b00a35e5bfb585mr5424550ejb.35.1707296567862; 
- Wed, 07 Feb 2024 01:02:47 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUI4Y1gynNcQwOPQ09t+oZ1RUDWJUh3tzfWrA5Efy6jOpoRS+2mqrHfMfuapl9Y2HiBxPdS5ib3OtIZ0+QBgVR53HxejwXR565bWeEDVnsEEL64wrZU27ckiqjs45fQxKF3BWX+/hDRJFJC6He4PxEYE2DU5BbrREj3bnaS//Y=
-Received: from [192.168.69.100] ([176.176.170.22])
+ AJvYcCWCe3UDrq6s5tcsXGZgNF5pNKpgM13WOo4pOhE6uA/m5wWnknHG5Bn0PzwUqZ5rvZdjz5IL//K/DN08Q4dI8mPjpca5Dxzo1trsn3CITGZofsL1S5yhi+onC5ex0kIRqi3ig9xmWVhj6AulTPg0AbEdoHjV40LEljG535LB+5YyxQ4AuYOanpl8QPGxmy9LxG4ZYPah0rIdsLjU5T//F4JQ6CSETgP9vXRWvcdaq5IQecbwwdWVQ3Q=
+Received: from m1x-phil.lan ([176.176.170.22])
  by smtp.gmail.com with ESMTPSA id
- vh10-20020a170907d38a00b00a3875804883sm459014ejc.124.2024.02.07.01.02.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 01:02:47 -0800 (PST)
-Message-ID: <b8fbf313-1b24-4cf3-b5c1-f9289b413a75@linaro.org>
-Date: Wed, 7 Feb 2024 10:02:45 +0100
+ n11-20020a170906b30b00b00a35920de35dsm521234ejz.188.2024.02.07.01.12.56
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 07 Feb 2024 01:12:57 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/4] hw/pci-host: Build ppc4xx_pci.c/ppc440_pcix.c once
+Date: Wed,  7 Feb 2024 10:12:50 +0100
+Message-ID: <20240207091254.1478-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] hw/arm/mps3r: Initial skeleton for mps3-an536 board
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240206132931.38376-1-peter.maydell@linaro.org>
- <20240206132931.38376-9-peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240206132931.38376-9-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,69 +97,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/24 14:29, Peter Maydell wrote:
-> The AN536 is another FPGA image for the MPS3 development board. Unlike
-> the existing FPGA images we already model, this board uses a Cortex-R
-> family CPU, and it does not use any equivalent to the M-profile
-> "Subsystem for Embedded" SoC-equivalent that we model in hw/arm/armsse.c.
-> It's therefore more convenient for us to model it as a completely
-> separate C file.
-> 
-> This commit adds the basic skeleton of the board model, and the
-> code to create all the RAM and ROM. We assume that we're probably
-> going to want to add more images in future, so use the same
-> base class/subclass setup that mps2-tz.c uses, even though at
-> the moment there's only a single subclass.
-> 
-> Following commits will add the CPUs and the peripherals.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   MAINTAINERS                             |   3 +-
->   configs/devices/arm-softmmu/default.mak |   1 +
->   hw/arm/mps3r.c                          | 239 ++++++++++++++++++++++++
->   hw/arm/Kconfig                          |   5 +
->   hw/arm/meson.build                      |   1 +
->   5 files changed, 248 insertions(+), 1 deletion(-)
->   create mode 100644 hw/arm/mps3r.c
+v2:
+- Squashed 2 patches (Zoltan)
 
+v1:
+- Move ppc4xx_pci.c/ppc440_pcix.c from hw/ppc/ to hw/pci-host/
+- Build them once for all targets
 
-> +/*
-> + * The MPS3 DDR is 3GiB, but on a 32-bit host QEMU doesn't permit
-> + * emulation of that much guest RAM, so artificially make it smaller.
-> + */
-> +#if HOST_LONG_BITS == 32
-> +#define MPS3_DDR_SIZE (1 * GiB)
-> +#else
-> +#define MPS3_DDR_SIZE (3 * GiB)
-> +#endif
+If it is convenient for PPC maintainers I can queue
+this via my misc-hw tree.
 
-Generically, can we migrate a VM started on a 32-bit host to a 64-bit
-one?
+Thanks,
 
-> +static void mps3r_set_default_ram_info(MPS3RMachineClass *mmc)
-> +{
-> +    /*
-> +     * Set mc->default_ram_size and default_ram_id from the
-> +     * information in mmc->raminfo.
-> +     */
-> +    MachineClass *mc = MACHINE_CLASS(mmc);
-> +    const RAMInfo *p;
-> +
-> +    for (p = mmc->raminfo; p->name; p++) {
-> +        if (p->mrindex < 0) {
-> +            /* Found the entry for "system memory" */
-> +            mc->default_ram_size = p->size;
-> +            mc->default_ram_id = p->name;
+Phil.
 
-Nice.
+Philippe Mathieu-Daudé (4):
+  hw/ppc/ppc4xx_pci: Remove unused "hw/ppc/ppc.h" header
+  hw/ppc/ppc4xx_pci: Extract PCI host definitions to
+    hw/pci-host/ppc4xx.h
+  hw/ppc/ppc4xx_pci: Move ppc4xx_pci.c to hw/pci-host/
+  hw/ppc/ppc440_pcix: Move ppc440_pcix.c to hw/pci-host/
 
-> +            return;
-> +        }
-> +    }
-> +    g_assert_not_reached();
-> +}
+ MAINTAINERS                        |  4 +++-
+ include/hw/pci-host/ppc4xx.h       | 17 +++++++++++++++++
+ include/hw/ppc/ppc4xx.h            |  5 -----
+ hw/{ppc => pci-host}/ppc440_pcix.c |  3 +--
+ hw/{ppc => pci-host}/ppc4xx_pci.c  |  3 +--
+ hw/pci-host/ppce500.c              |  2 +-
+ hw/ppc/ppc440_bamboo.c             |  1 +
+ hw/ppc/ppc440_uc.c                 |  1 +
+ hw/ppc/sam460ex.c                  |  1 +
+ hw/pci-host/Kconfig                |  8 ++++++++
+ hw/pci-host/meson.build            |  2 ++
+ hw/pci-host/trace-events           | 12 ++++++++++++
+ hw/ppc/Kconfig                     |  3 ++-
+ hw/ppc/meson.build                 |  3 +--
+ hw/ppc/trace-events                | 12 ------------
+ 15 files changed, 51 insertions(+), 26 deletions(-)
+ create mode 100644 include/hw/pci-host/ppc4xx.h
+ rename hw/{ppc => pci-host}/ppc440_pcix.c (99%)
+ rename hw/{ppc => pci-host}/ppc4xx_pci.c (99%)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+-- 
+2.41.0
 
 
