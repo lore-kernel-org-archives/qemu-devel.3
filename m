@@ -4,90 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B531CC4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 20:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F00C4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 20:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXo9U-0004ei-0s; Wed, 07 Feb 2024 15:04:16 -0500
+	id 1rXoBO-0005zo-8t; Wed, 07 Feb 2024 15:06:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1rXo9N-0004cN-Uf
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:04:06 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoBL-0005yb-2s
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:06:07 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1rXo9M-0003hs-4A
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:04:05 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d98fc5ebceso7039325ad.1
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 12:04:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXoBD-0004Fj-8M
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 15:06:06 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33b4e5ed890so780412f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 12:05:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707336242; x=1707941042; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ioKl1Fdwa9P3L3uKTM+GqEAzOADfMNO4SBTyXhL2C0I=;
- b=Y4l4U8PsDQIKtBk8+nQ/MKnVSe6jhpGyJEINZd4Rkm0IqSkR9FSkPdC0BAmvqek5pk
- Ib4NIDvq1oC6/dz9LFHJlXOtdisRFmXHBUMxMOY65wHmLpoPDkORWzEQSM34iwPLbqN7
- GjTDH+B6g4U39RDVoek02z4mgBO8/0cVeCzVe4SAPCm7L0i27ocDuBydN15OLOWZYJFr
- +kDnzzIUmfneeYWyYYJ/Y7k+Q4RbBghox6+1mFRWUDEiUcccz6EN0O/nVUenqCd84baK
- YJNe29LnMQzixBEYxWuPiYQSQ6W2f8N/9+B8SNbHXbnn++nBMqynn/+vjXWoI6XQECnV
- qMAw==
+ d=linaro.org; s=google; t=1707336356; x=1707941156; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=N37tJ00VgGFI2022Rb5MhedKmpx3N6qNEfBSYXO6aIg=;
+ b=goip1U7ouwGHgIQtDXvd7U1K1Vcl8wkgju93n3CghXdl0hRS31DE+dbp/dO9TWbWFI
+ d+rL/0+mIs3/KWHddFEbXR2v61ztXhOPpWp0rXdy2UAKUGxi37Np/+uv0ad8dzh3QM7j
+ gIr39aHVoLaMy3SV4gILOfekKr+dHVfGOLb8BfmpAVQcbG2/ZqZeJJW7D/XWQ01VU1RJ
+ RtJ7H2b2TVfxDPDNbGdAW6T1zRSM6DlF4iBNKCHLCZbh4TRlpClqD2T/uRA5a1bWyAV0
+ YgPDKk5vu5uSW7pxO0WuWNGyXnX/RJ+kxRJM0N6EqHuI6tuJhprmApWcuzd6iUCOWlbv
+ EOmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707336242; x=1707941042;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject
+ d=1e100.net; s=20230601; t=1707336356; x=1707941156;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ioKl1Fdwa9P3L3uKTM+GqEAzOADfMNO4SBTyXhL2C0I=;
- b=nQHvJ8yX5xC0lbqnNbdk39pvK0PKiPUi/f46yZDo+dDY25laUWCORgpogYHCepPZ3i
- /ioFo6n4X9IrxCMB99XwWsJsjLcE6y9yUqCMUYkY17KdbjRvJpJY97b5kAP+Z/lhLib8
- nMToee2MxSB/UymjFeXIO4aLhfTk41AxG8x7Dac0SZ6reLga+EzPo0bpYwEeeSlRe5YQ
- l+QYhMBo4eV47szXzfCVTlkXgQbmnVDkF5I0Qio8mxs5NaEmbt7v05FpqQFO/P6/3DC0
- WbN7zbG6b1iVW0I8RLY4dxAye8uR0lH26ZXEfT23e85BQYK9cMC1Tm9oSa9/XQQ8qpPd
- 09jw==
+ bh=N37tJ00VgGFI2022Rb5MhedKmpx3N6qNEfBSYXO6aIg=;
+ b=T7n04MnF7V4Q7r6h+Dfiichu19fgwu/sK6tDgyjD28rYHIYATJ53kjBOMVFw35NUaW
+ 7dHLhRJ9rGHZSb4EuLeR8VkT7fRHujLZWcYbr1v6+gwc0xc36Mx+wP4s5A5I2qALow/z
+ CcNVEBr9e3LilOMURUn6M8T9LoTyfPwCveUusRPmntrauDRbOrd5ePTmXCJlgKn/rYHh
+ Z2XPpJoyo+7PG9DzLqLVmraKQavA9jRQAz/2wInTCsppbv1ClBQREdYNCpqNapW3dBPn
+ xxROvpTYTAmvooHhPbZ/0p3P8LBMWYQWhCFm2zfAxoudjtFT1cLZulohpTU/yCrQo3Hi
+ nEKw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVmsTtwkw+xJIzlZH2R1cjEi6KFMHHFIUkyNWo0WY0+tJfM/O2+BeCsd4kDymx5lK1KOEmLJBvztfjPqSfIlr96Tvy1f8M=
-X-Gm-Message-State: AOJu0YxxKFabBfP2ND5EnoBYhOMXaf6eraDcfRVuQBsd48EeJ9CicnQF
- ZQq828N7YY3fnomNd9rQw005xTAefE28h/nDNt3zfoPOmy6BtUkHOFmEoC6aXBc=
-X-Google-Smtp-Source: AGHT+IEoLWdZVjUo/hL9PsZYiYEV+zkxuqNhVbYXg9hlCu6k9aLVEhCmzgIE5QKf2G3AA1WNcj0fpA==
-X-Received: by 2002:a17:902:7406:b0:1d8:ed67:c360 with SMTP id
- g6-20020a170902740600b001d8ed67c360mr5378051pll.65.1707336242093; 
- Wed, 07 Feb 2024 12:04:02 -0800 (PST)
+ AJvYcCXaWHDCBNLzXsiggkHa+FRkfMhzLxOY6Fk0bQ3AxZWba5zDIkxB/di0xeT7tJ6Y7t6pmgl7osj2w7hkk0ZUpO2MTn7th9Y=
+X-Gm-Message-State: AOJu0YxKWRT0sNRzkmHblEMUw2Rih/OFHPl/Y6IfepeIFMf2Et7bXKAR
+ +toL7To+wdjff3bZ87wUZNb4RoHPT7Gk5ZgblpL0Nj9pCuHOfM0Eo9WuiAEUiuw=
+X-Google-Smtp-Source: AGHT+IH2Phbmh9ji3XBtWp0SxypZwyrnxN4wclobVGUOTQ60Lti6h6bx32WiwTfHHZlyMCiHOoeMfg==
+X-Received: by 2002:a5d:5f44:0:b0:33b:3d35:1ee9 with SMTP id
+ cm4-20020a5d5f44000000b0033b3d351ee9mr4781374wrb.37.1707336356137; 
+ Wed, 07 Feb 2024 12:05:56 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvG2sxrEFk4s2plYd2i4SEUnAZieGcyi8AKybQxlwUeo7THpbF09KuEUacakoE1q7A8/CNHE/EFOMXG0vpvD1syfu7IcPPTVZotyKCKugI0Vi3znE7UlONSQtoX0M=
-Received: from ?IPv6:2804:7f0:b402:df90:2add:f1b6:5717:16e1?
- ([2804:7f0:b402:df90:2add:f1b6:5717:16e1])
+ AJvYcCUJVJR0bOJSTtz0S8XeGI5oeSDg2FJ3FNQQjaH2ZNeNhEa3w9Clv8ZbA8JrLTQ6fzjP2D0q/6Nxun0B9w4MxeumKK/N/jjy7MDqiShG8ssHlbq9u0nBKpHLN6DRqugmymOsCxxlz5YqdpkWY4hT86R7OHqO412vyhdffRhFbR0DN7G0+zLkdqhh1IFJfW2DavMUANPIPjtZZ0OJQ4ocvql34Iz1uXJcBZ4hGDrrR5ew0RapRbgBmMBmtUoZ5VdhI4qAy6TXJBo4hpfXNt35+erPtox+GXCUH9zL39yx1U3wsmc7BliwtlMIXqaE5jD4GoPigpFQRe4RUlUapXuQXN78dImjl/YbS0cFKhAt02ajU8hlHxN5V/BvfT0C6Uirkj+OLruaBDhZFPzEb5Tf+CWCi90/jkx13P5O3n7Fh5VAfj54I95xFZ5isVY7MA23uyYHC4uSJQJ9eaFSchhUHpqP03RWqrEYml8Eql4Ich4+KMkZBiw4UobCGd6N5RKEwpUXTYbTBdlZYJC5aZYJRSR5dLRblQtL/kgBP6m25QE/NO3Tazn38haKXjs7Rv2KcCAEXNiJLfiL+/wSWt6Dqj8h5R5lrrunxKv2HwkumckvJ6WchC/mmIlmYj5p6SrdSafbmqN4q4L2gzDaI3yQC/k36bGlN0uJogKbP2DXMDd+R8uG2EjAHzaPdj6/h/Uxp7hDBesznxfpdICafFWfhjfBcKV/5Iip0PeqEUBC9Dw7eQvdO7SU3OpRNuNkr/vsi1R8FlEK8ql1RtbmuxxWbEUPUCo5hoLq7dgpH46N7rdZOeLL9lfp7jqEmBNbBpoPxSqsY0ABQ8JhmhR/GTkDsyY9GfCnkeg=
+Received: from [192.168.69.100] ([176.187.214.82])
  by smtp.gmail.com with ESMTPSA id
- jz4-20020a170903430400b001d8fe6cd0f0sm1844373plb.150.2024.02.07.12.04.00
+ e11-20020adffd0b000000b0033b47ee01f1sm2174954wrr.49.2024.02.07.12.05.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 12:04:01 -0800 (PST)
-Subject: Re: [PATCH v3 1/6] linux-user/aarch64: Choose SYNC as the preferred
- MTE mode
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-stable@nongnu.org
-References: <20240207025210.8837-1-richard.henderson@linaro.org>
- <20240207025210.8837-2-richard.henderson@linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <2ba0228b-fec3-0710-11a1-18825bc1476d@linaro.org>
-Date: Wed, 7 Feb 2024 17:03:59 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ Wed, 07 Feb 2024 12:05:55 -0800 (PST)
+Message-ID: <3f911aae-542c-45ba-a8c6-eed0626baacd@linaro.org>
+Date: Wed, 7 Feb 2024 21:05:52 +0100
 MIME-Version: 1.0
-In-Reply-To: <20240207025210.8837-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/14] gdbstub: Expose TARGET_SIGTRAP in a
+ target-agnostic way
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: devel@lists.libvirt.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Chris Wulff <crwulff@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-riscv@nongnu.org, Marek Vasut <marex@denx.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Warner Losh <imp@bsdimp.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Beraldo Leal <bleal@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Ed Maste <emaste@freebsd.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
+ Kyle Evans <kevans@freebsd.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>
+References: <20240207163812.3231697-1-alex.bennee@linaro.org>
+ <20240207163812.3231697-11-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240207163812.3231697-11-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-0.632,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,80 +117,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 2/6/24 11:52 PM, Richard Henderson wrote:
-> The API does not generate an error for setting ASYNC | SYNC; that merely
-> constrains the selection vs the per-cpu default.  For qemu linux-user,
-> choose SYNC as the default.
+On 7/2/24 17:38, Alex Bennée wrote:
+> From: Ilya Leoshkevich <iii@linux.ibm.com>
 > 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> The upcoming syscall catchpoint support needs to send SIGTRAP stop
+> packets to GDB. Being able to compile this support only once for all
+> targets is a good thing, and it requires hiding TARGET_SIGTRAP behind
+> a function call.
+> 
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Message-Id: <20240202152506.279476-2-iii@linux.ibm.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   linux-user/aarch64/target_prctl.h | 29 +++++++++++++++++------------
->   1 file changed, 17 insertions(+), 12 deletions(-)
+>   gdbstub/internals.h   | 1 +
+>   gdbstub/user-target.c | 5 +++++
+>   2 files changed, 6 insertions(+)
 > 
-> diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
-> index 5067e7d731..aa8e203c15 100644
-> --- a/linux-user/aarch64/target_prctl.h
-> +++ b/linux-user/aarch64/target_prctl.h
-> @@ -173,21 +173,26 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
->       env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
+> diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+> index 5c0c725e54c..aeb0d9b5377 100644
+> --- a/gdbstub/internals.h
+> +++ b/gdbstub/internals.h
+> @@ -136,6 +136,7 @@ void gdb_append_thread_id(CPUState *cpu, GString *buf);
+>   int gdb_get_cpu_index(CPUState *cpu);
+>   unsigned int gdb_get_max_cpus(void); /* both */
+>   bool gdb_can_reverse(void); /* softmmu, stub for user */
+> +int gdb_target_sigtrap(void); /* user */
 >   
->       if (cpu_isar_feature(aa64_mte, cpu)) {
-> -        switch (arg2 & PR_MTE_TCF_MASK) {
-> -        case PR_MTE_TCF_NONE:
-> -        case PR_MTE_TCF_SYNC:
-> -        case PR_MTE_TCF_ASYNC:
-> -            break;
-> -        default:
-> -            return -EINVAL;
-> -        }
-> -
->           /*
->            * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
-> -         * Note that the syscall values are consistent with hw.
-> +         *
-> +         * The kernel has a per-cpu configuration for the sysadmin,
-> +         * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
-> +         * which qemu does not implement.
-> +         *
-> +         * Because there is no performance difference between the modes, and
-> +         * because SYNC is most useful for debugging MTE errors, choose SYNC
-> +         * as the preferred mode.  With this preference, and the way the API
-> +         * uses only two bits, there is no way for the program to select
-> +         * ASYMM mode.
->            */
-> -        env->cp15.sctlr_el[1] =
-> -            deposit64(env->cp15.sctlr_el[1], 38, 2, arg2 >> PR_MTE_TCF_SHIFT);
-> +        unsigned tcf = 0;
-> +        if (arg2 & PR_MTE_TCF_SYNC) {
-> +            tcf = 1;
-> +        } else if (arg2 & PR_MTE_TCF_ASYNC) {
-> +            tcf = 2;
-> +        }
-> +        env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
+>   void gdb_create_default_process(GDBState *s);
 >   
->           /*
->            * Write PR_MTE_TAG to GCR_EL1[Exclude].
-> 
+> diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+> index c4bba4c72c7..b7d4c37cd81 100644
+> --- a/gdbstub/user-target.c
+> +++ b/gdbstub/user-target.c
+> @@ -418,3 +418,8 @@ void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx)
+>                       ts->bprm->filename + offset);
+>       gdb_put_strbuf();
+>   }
+> +
+> +int gdb_target_sigtrap(void)
+> +{
+> +    return TARGET_SIGTRAP;
+> +}
 
-ok, so no ASYMM in QEMU user-mode, plus if both SYNC and ASYNC flags are
-specified by the user SYNC is selected. Contrary to what happens by default
-on Linux, because of the mte_tcf_preferred value, which is ASYNC, and the
-final value selected is define by:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-resolved_mte_tcf = (mte_ctrl & pref) ? pref : mte_ctrl; [0]
-
-where pref is mte_tcf_preferred (CPU, the value set in sys /mte_tcf_preferred)
-and mte_ctr comes from the process, i.e. is the value specified by the user in
-the flags -- hence the default on Linux if both flags are specified is ASYNC,
-not SYNC.
-
-(just some notes for the records).
-
-Thanks.
-
-
-[0] https://github.com/torvalds/linux/blob/master/arch/arm64/kernel/mte.c#L180-L186
 
