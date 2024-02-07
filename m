@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF9D6C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 05:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D684DC4828F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 05:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXaTi-0000kz-LP; Wed, 07 Feb 2024 00:28:10 -0500
+	id 1rXaxs-0005Fb-FI; Wed, 07 Feb 2024 00:59:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXaTg-0000kV-7y
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 00:28:08 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rXaxp-0005FS-3w
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 00:59:18 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rXaTe-0005x4-MP
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 00:28:08 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5600c43caddso206325a12.2
- for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 21:28:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rXaxn-00047o-BX
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 00:59:16 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-40ff802496cso2168345e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Feb 2024 21:59:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707283685; x=1707888485; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1707285552; x=1707890352; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UFdNumxh09HXVXsWxvCyd5EjBDi2kHPQddlAMmekB20=;
- b=yB+HBcMTZ7zzwXdssGy0t24HlAICIpzjgpsWNnIjpd1I/pal4N5+2MfXCksHgZqU08
- dn4ZlF454qtgoJkMhrKPYVD2ldEI4v5sfJVtDRV/XFy8vIdbNal7zHk5h+UZuMWgISvk
- oJ1EDvjRKRFqwb2KEFYrQ2DRZip9+vPDIUMcwaN9ICGTGjVakgspk59gg7kU5rxPPYIs
- ujUBecRA9lnx/KsCgxJIoW6T3hkaePJhg/1cz8yy4TvN8GG3cnaEN3oibvaVsyGQVUYX
- ERURPunQiSpJ190L58qNiIF8PNNx2BkyczK6g8a/8LmKoh6fa+wWjKX2zvOFOR3o1dnd
- indw==
+ bh=Sg9hS2RK7Otcfvv/hmrq8inRApQkMSZBojAH7oLYTPo=;
+ b=c7jKJiHpVQVHkoywnH1egwBr/WeC5FDiW+l5gOOrTVEyHYjexxASW7GQ4EOUSTeY3G
+ jrpNDpgXrjfO/dpwFadM6mcBcPQrGlAuXIhQUJVremq3sV3kMdTwR5EM0VhuhxL4a/tN
+ RO7/6O+VBghQKif4DLFNtOokK+dqHlFfTNrMdIiBSgfhzpbg4EJkia6Nk5m8p89/eRE0
+ Y/mu4zUs0pgzg8JFMU/IPdV/ALoiviwxf23D9VKV5P84mD5ChGACby0oGqbmjy5lPrNH
+ 6klRkYrdCcTxnb4P55tlgE7sDp4XUs076r40uGcsq3JY4F5b2Ej6T6aPFhlr/j17d9BX
+ ZbIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707283685; x=1707888485;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1707285552; x=1707890352;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UFdNumxh09HXVXsWxvCyd5EjBDi2kHPQddlAMmekB20=;
- b=ws4e1f/4+gueTpG0lFWETNe/jVjZ+I7qC6qNu9f1wsGV5gFNJ4s0mgJT6dBLSHSEZo
- YdVH7ji1D4EUBWwOX3Ml7BF9bghXia7O1tuGbu3F1M/0WrPL5q3+YHo2cySYq7wX6Hai
- nasRMCLm22/M2wa+n/5+RQK+rPmVcyYzlib5R3L9XJsMXsfGtkq2EVjYrYRlppXIyKNK
- 1I0Rd/x2HqYeiir0iLVC3lQfykYlNp5eKO+zI5lVDD9gsCg3pA4yYV6lHBaYOZ7mq1V8
- 5+3bi0ZN9P3Q9HKgddZhrecC9hg+OSCOHlr7GoVwVCWM/+YjLtJaLH4FDrgjzgjaY4bD
- xEBg==
-X-Gm-Message-State: AOJu0YxvNXbS/Aw6EXUJc0gs0/Ldg3SilbYz69nLE6Ul9OoatlmKcRFm
- q4T4qFZm9Fy3Z2orXe3rhqSOPO7HgRRJU+mkgURn4djKz9QdouHKeyUGshMavkA=
-X-Google-Smtp-Source: AGHT+IHKH3KU7a7j7vL6RSGS+X7Uvq1tdMFrxZjKjixD5B4K4rTv+2vJ7CQliUmEnUDFTMS5o9OD1Q==
-X-Received: by 2002:aa7:d846:0:b0:55f:e147:2524 with SMTP id
- f6-20020aa7d846000000b0055fe1472524mr3145374eds.38.1707283684913; 
- Tue, 06 Feb 2024 21:28:04 -0800 (PST)
+ bh=Sg9hS2RK7Otcfvv/hmrq8inRApQkMSZBojAH7oLYTPo=;
+ b=rIaZKIi+c3XzmO5q4tSsmYK8lPyFYumAXnlzTCO9rnIXtUWBdZLFbEt8hugfC916GE
+ /vAx78IW61kVosq7HuIWVjY7LWnXHXF/0i4mFkkf+eZ59KhknACLG+dwqwxtUSqzPDPQ
+ URdPAL2yEmgmZr6u2Ex44Z64sVL5TJ3sv/zZeKPia8S180f1BGThD3bEo8rTcUo6A9QI
+ YBj7stbkPCPls9jp/l/rq/+IFzllu/CxR2s+cxuO0xAodZpnAi8xtz8WkxqoSX4Sz+bY
+ UtOpBjSLH1yFrKzYXefa63GjX9ZXw7/VWM47r/rioD0eNmFNKsMmlbTSRUM2faFFxj0e
+ BZPA==
+X-Gm-Message-State: AOJu0YylXjcqpuKPmX5pUeZ2a+rciC8rRequNb/2/nD8BcyCZtnYYjq1
+ X0G6wXDVlEDzOCFwWtZWKcEYW7FwfhwllxPHvl/EbzEIFmrTpTA2WrllyLJcWks=
+X-Google-Smtp-Source: AGHT+IE8HFWIfTpJfF7lz6twHniMZvqIx7jKkl2UcMaRYbTvlI+TJPQGemdIXxe4EnbRMaCDF+9Wqg==
+X-Received: by 2002:a05:600c:4fcf:b0:40e:f111:f259 with SMTP id
+ o15-20020a05600c4fcf00b0040ef111f259mr3006924wmq.37.1707285551950; 
+ Tue, 06 Feb 2024 21:59:11 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXvHT2XDcZvMiApi+BDs/QizXkLAgPn/sAM+5w9RO2npcv0DOg3VO4vBsCmoxr8gOZKxR5vsv/vMK960ZJ8X4FLfCJPVeOeInerUbbsqqFmq4oabQnpOT4XeuubYboz7H9qe+wLn0VHWtCWtLg+jgfyoX53+BDDeA5ido+RgDGZ0L+pAaVjpwNjRPcMvx5Hu7CAZLFnX2Uu942oO8woWhkEnvEjee0b8tPxSmfVPKvr+drbs+QTG4huDaRMnqWwJKvXkM11649qRe+X0cINoQG810LdElWLC9PK1a+6z/qvr6C9EbJXdrisDzE=
-Received: from [192.168.69.100] ([176.176.170.22])
+ AJvYcCVXASj2FJaSwmd0KPfXVbAlUT3NEuxyfGs9OTPRUknUkZh5v6vRRi++wkFTe+fIWzzKiFBZmenVIR3n3g6a2684FH7/1qRnlzwm3qQVsFn7yB78876t66GsO0M9n5F1URbqjY6LFfWAe5wdcE+tZtHqAyj/5kRc12mBKqAgWvtG3sfmQ+bw9XF838QENOSCmvbiop0k0vugMg1/nCz/Xut+N92CEBzHc/4fkJty6gh1v1yP8dHNUkjLTs3pxtwIwDYr9uFpEi1FcjVkOejRCB9lOsPctFlGAQsSDQD5HbSCN4ND5R0hNZ8e/biP+1cMdX/+D1cRpa2Ic5g4IoJAzEOA
+Received: from [192.168.1.24] ([102.35.208.160])
  by smtp.gmail.com with ESMTPSA id
- et6-20020a056402378600b0055d37af4d20sm268309edb.74.2024.02.06.21.28.02
+ a11-20020a05600c348b00b0040e541ddcb1sm838578wmq.33.2024.02.06.21.59.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Feb 2024 21:28:04 -0800 (PST)
-Message-ID: <683557e9-fa84-4384-961f-7c29daafe860@linaro.org>
-Date: Wed, 7 Feb 2024 06:28:01 +0100
+ Tue, 06 Feb 2024 21:59:11 -0800 (PST)
+Message-ID: <3381ba3a-ae14-4160-b651-d88a7893189b@linaro.org>
+Date: Wed, 7 Feb 2024 09:59:05 +0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/style: allow C99 mixed declarations
+Subject: Re: [PATCH v3 05/17] plugins: scoreboard API
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>, Alexandre Iooss
+ <erdnaxe@crans.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240206092423.3005995-1-pierrick.bouvier@linaro.org>
+ <20240206092423.3005995-6-pierrick.bouvier@linaro.org>
+ <e4db51de-a040-4c9e-93fa-64a378e4e5fa@linaro.org>
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Hanna Czenczek <hreitz@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Richard Henderson
- <richard.henderson@linaro.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-References: <20240205171819.474283-1-stefanha@redhat.com>
- <ZcEdrp-y5YFsfir4@redhat.com> <87r0hqyw8k.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87r0hqyw8k.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <e4db51de-a040-4c9e-93fa-64a378e4e5fa@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,71 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/24 06:53, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 2/7/24 07:21, Richard Henderson wrote:
+> On 2/6/24 19:24, Pierrick Bouvier wrote:
+>> We introduce a cpu local storage, automatically managed (and extended)
+>> by QEMU itself. Plugin allocate a scoreboard, and don't have to deal
+>> with how many cpus are launched.
+>>
+>> This API will be used by new inline functions but callbacks can benefit
+>> from this as well. This way, they can operate without a global lock for
+>> simple operations.
+>>
+>> At any point during execution, any scoreboard will be dimensioned with
+>> at least qemu_plugin_num_vcpus entries.
+>>
+>> New functions:
+>> - qemu_plugin_scoreboard_find
+>> - qemu_plugin_scoreboard_free
+>> - qemu_plugin_scoreboard_new
+>>
+>> In more, we define a qemu_plugin_u64, which is a simple struct holding
+>> a pointer to a scoreboard, and a given offset.
+>> This allows to have a scoreboard containing structs, without having to
+>> bring offset for all operations on a specific field.
+>>
+>> Since most of the plugins are simply collecting a sum of per-cpu values,
+>> qemu_plugin_u64 directly support this operation as well.
+>>
+>> New functions:
+>> - qemu_plugin_u64_add
+>> - qemu_plugin_u64_get
+>> - qemu_plugin_u64_set
+>> - qemu_plugin_u64_sum
+>> New macros:
+>> - qemu_plugin_scoreboard_u64
+>> - qemu_plugin_scoreboard_u64_in_struct
 > 
->> On Mon, Feb 05, 2024 at 12:18:19PM -0500, Stefan Hajnoczi wrote:
->>> C99 mixed declarations support interleaving of local variable
->>> declarations and code.
->>>
->>> The coding style "generally" forbids C99 mixed declarations with some
->>> exceptions to the rule. This rule is not checked by checkpatch.pl and
->>> naturally there are violations in the source tree.
->>>
->>> While contemplating adding another exception, I came to the conclusion
->>> that the best location for declarations depends on context. Let the
->>> programmer declare variables where it is best for legibility. Don't try
->>> to define all possible scenarios/exceptions.
-...
-
->> Even if the compiler does reliably warn, I think the code pattern
->> remains misleading to contributors, as the flow control flaw is
->> very non-obvious.
+> I think the u64 stuff should be a second patch built upon the basic scoreboard support.
 > 
-> Yup.  Strong dislike.
+
+You're right, should be easier to review.
+
+>> +/* A scoreboard is an array of values, indexed by vcpu_index */
+>> +struct qemu_plugin_scoreboard {
+>> +    GArray *data;
+>> +};
 > 
->> Rather than accept the status quo and remove the coding guideline,
->> I think we should strengthen the guidelines, such that it is
->> explicitly forbidden in any method that uses 'goto'. Personally
->> I'd go all the way to -Werror=declaration-after-statement, as
+> Unnecessary?  Generates an extra pointer dereference for no apparent benefit.
+> Alternately, might be useful for other data structure changes...
 > 
-> I support this.
+
+Thought to change it to a typedef after removing other members. Will do 
+if you noticed this too.
+
+>> +/**
+>> + * typedef qemu_plugin_u64 - uint64_t member of an entry in a scoreboard
+>> + *
+>> + * This field allows to access a specific uint64_t member in one given entry,
+>> + * located at a specified offset. Inline operations expect this as entry.
+>> + */
+>> +typedef struct {
+>> +    struct qemu_plugin_scoreboard *score;
 > 
->> while C99 mixed decl is appealing,
+> Embed the struct instead?
 > 
-> Not to me.
+
+Several qemu_plugin_u64 can point to the same scoreboard, so it has to 
+be a pointer. It saves a scoreboard pointer + offset for a given entry.
+
+>> @@ -31,6 +31,9 @@ struct qemu_plugin_state {
+>>         * but with the HT we avoid adding a field to CPUState.
+>>         */
+>>        GHashTable *cpu_ht;
+>> +    /* Scoreboards, indexed by their addresses. */
+>> +    GHashTable *scoreboards;
 > 
-> I much prefer declarations and statements to be visually distinct.
-> Putting declarations first and separating from statements them with a
-> blank line accomplishes that.  Less necessary in languages where
-> declarations are syntactically obvious.
+> Why a hash table?  All you want is to be able to iterate through all, and add/remove
+> easily.  Seems like QLIST from <qemu/queue.h> would be better, and the QLIST_ENTRY member
+> would make struct qemu_plugin_scoreboard useful.
+> 
 
-But we already implicitly suggest C99, see commit ae7c80a7bd
-("error: New macro ERRP_GUARD()"):
+Thought that having O(1) removal was a nice property, compared to a 
+linked list. I can switch to a QLIST if you still think it's better.
 
-  * To use ERRP_GUARD(), add it right at the beginning of the function.
-  * @errp can then be used without worrying about the argument being
-  * NULL or &error_fatal.
+What do you mean by "make struct qemu_plugin_scoreboard useful"?
 
-  #define ERRP_GUARD()                                           \
-     g_auto(ErrorPropagator) _auto_errp_prop = {.errp = errp};   \
-     do {                                                        \
-         if (!errp || errp == &error_fatal) {                    \
-             errp = &_auto_errp_prop.local_err;                  \
-         }                                                       \
-     } while (0)
-
-Or commit 5626f8c6d4 ("rcu: Add automatically released rcu_read_lock
-variants") with WITH_RCU_READ*:
-
-util/aio-posix.c:540:5: error: mixing declarations and code is 
-incompatible with standards before C99 
-[-Werror,-Wdeclaration-after-statement]
-     RCU_READ_LOCK_GUARD();
-     ^
-include/qemu/rcu.h:189:28: note: expanded from macro 'RCU_READ_LOCK_GUARD'
-     g_autoptr(RCUReadAuto) _rcu_read_auto __attribute__((unused)) = 
-rcu_read_auto_lock()
-                            ^
-
+> 
+> r~
 
