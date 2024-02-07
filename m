@@ -4,69 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488B0C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1958EC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 19:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXnuC-00048z-JQ; Wed, 07 Feb 2024 14:48:24 -0500
+	id 1rXnyK-0005q2-0r; Wed, 07 Feb 2024 14:52:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rXnuB-00048Z-C4
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:48:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rXnuA-0000PZ-5K
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 14:48:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707335301;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xxIDZB9WAgWQcKONxM/l6i1HeyKbAj9TLo+eHU8TfAo=;
- b=eW8YFgrF51x+wyPNo/CeOxsjA4XgW6Ia8PfVAODsPkbnbnXJ8cOiSI2VTjIQIW+WW/ffa+
- 7P6CpBZq+VnYkueDp3amkwwMUvJCGeYpIAKXH4QkjFty/I3NbTXoMIs89ceKcHKvX50jbp
- 780Vs75s+uh8uhhUb+KTSeaCDffP/ws=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-TErJw_X_MeuV1Hr_H9Xulg-1; Wed,
- 07 Feb 2024 14:48:18 -0500
-X-MC-Unique: TErJw_X_MeuV1Hr_H9Xulg-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C5CE11C06910;
- Wed,  7 Feb 2024 19:48:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.143])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 37CCDC08EF7;
- Wed,  7 Feb 2024 19:48:17 +0000 (UTC)
-Date: Wed, 7 Feb 2024 13:48:15 -0600
-From: Eric Blake <eblake@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
- pbonzini@redhat.com, devel@lists.libvirt.org
-Subject: Re: [PATCH 4/4] qapi/char: Deprecate backend type "memory"
-Message-ID: <twtuzx4hecvg4pjcrzw6lgnro5p6mnjcfnzboqtgcu6rlkr2jv@ta5dcdu3dxko>
-References: <20240203080228.2766159-1-armbru@redhat.com>
- <20240203080228.2766159-5-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1rXnyG-0005kW-VB; Wed, 07 Feb 2024 14:52:37 -0500
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1rXnyB-0001QJ-3I; Wed, 07 Feb 2024 14:52:36 -0500
+Received: from TWMBX02.aspeed.com (192.168.0.25) by TWMBX02.aspeed.com
+ (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 8 Feb
+ 2024 03:52:27 +0800
+Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Thu, 8 Feb 2024 03:52:27 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 2/2] aspeed: fix hardcode boot address 0
+Date: Thu, 8 Feb 2024 03:52:24 +0800
+Message-ID: <20240207195224.452987-3-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240207195224.452987-1-jamin_lin@aspeedtech.com>
+References: <20240207195224.452987-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240203080228.2766159-5-armbru@redhat.com>
-User-Agent: NeoMutt/20231221
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.106,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
+ does not designate 192.168.10.10 as permitted sender)
+ receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
+ helo=twmbx02.aspeed.com;
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX02.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,25 +61,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 03, 2024 at 09:02:28AM +0100, Markus Armbruster wrote:
-> It's an alias for "ringbuf" we kept for backward compatibility; see
-> commit 3a1da42eb35 (qapi: Rename ChardevBackend member "memory" to
-> "ringbuf").  Deprecation is long overdue.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  docs/about/deprecated.rst | 8 ++++++++
->  qapi/char.json            | 8 +++++---
->  2 files changed, 13 insertions(+), 3 deletions(-)
+In the previous design of ASPEED SOCs QEMU model, it set the boot
+address at "0" which was the hardcode setting for ast10x0, ast2600,
+ast2500 and ast2400.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+According to the design of ast2700, it has bootmcu which is used for
+executing SPL and initialize DRAM, then, CPUs(cortex-a35)
+execute u-boot, kernel and rofs. QEMU will only support CPU(cortex-a35)
+parts and the boot address is "0x4 00000000" for ast2700.
+Therefore, fixed hardcode boot address 0.
 
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/arm/aspeed.c             | 4 +++-
+ hw/arm/aspeed_ast2400.c     | 4 ++--
+ hw/arm/aspeed_ast2600.c     | 2 +-
+ include/hw/arm/aspeed_soc.h | 2 --
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 06d863958b..39758557be 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -289,12 +289,14 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+                                     uint64_t rom_size)
+ {
+     AspeedSoCState *soc = bmc->soc;
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
+ 
+     memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
+                            &error_abort);
+     memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
+                                         &bmc->boot_rom, 1);
+-    write_boot_rom(blk, ASPEED_SOC_SPI_BOOT_ADDR, rom_size, &error_abort);
++    write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT],
++                   rom_size, &error_abort);
+ }
+ 
+ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index 95da85fee0..d125886207 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -26,7 +26,7 @@
+ #define ASPEED_SOC_IOMEM_SIZE       0x00200000
+ 
+ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  =  ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_IOMEM]  = 0x1E600000,
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
+@@ -61,7 +61,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+ };
+ 
+ static const hwaddr aspeed_soc_ast2500_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_IOMEM]  = 0x1E600000,
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index f74561ecdc..174be53770 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -22,7 +22,7 @@
+ #define ASPEED_SOC_DPMCU_SIZE       0x00040000
+ 
+ static const hwaddr aspeed_soc_ast2600_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_SRAM]      = 0x10000000,
+     [ASPEED_DEV_DPMCU]     = 0x18000000,
+     /* 0x16000000     0x17FFFFFF : AHB BUS do LPC Bus bridge */
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 5ab0902da0..bf43ad8351 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -224,8 +224,6 @@ enum {
+     ASPEED_DEV_FSI2,
+ };
+ 
+-#define ASPEED_SOC_SPI_BOOT_ADDR 0x0
+-
+ qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
+ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp);
+ void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr);
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.25.1
 
 
