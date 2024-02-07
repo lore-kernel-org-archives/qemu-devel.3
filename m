@@ -4,131 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2460C4828F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 09:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F79EC4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 09:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXe7K-0002V6-U0; Wed, 07 Feb 2024 04:21:18 -0500
+	id 1rXeD9-0003v5-JZ; Wed, 07 Feb 2024 04:27:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXe7F-0002Ty-BK
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:21:13 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rXeD6-0003tY-A4
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:27:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXe7C-0001u8-8m
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:21:13 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rXeD3-00039N-Ek
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:27:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707297668;
+ s=mimecast20190719; t=1707298032;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yTcjraMjbKyviBDNnka5k6oTaB23g8v44QFIg9LDeGQ=;
- b=avtHVLuPFTcgBI0aaeuhdBAAwvHwu/cq4m+O4meYy2AsYETqvV4Pp6N7nEveJI+zPd5T8z
- zPgNtTiWLLi4AZzVjXizb5WYE+5gbNjutg0+n0Ai+yS3WvpAKb/Ro4QHxeH26pO0YhwUSC
- giTr3j93+Q8Idx8+hRQgqQHX9rbRdxk=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=2AHfDip28ceCoNEc/Nk5bgpaUjQg31c33ri4gjGsWyk=;
+ b=PsaPQ4sUp0QVnPF/C2ZCsKDLzBM9oOfvNchP+S6F//xoKUZF3kkO+Ca87idG58ZzV2N03r
+ 3Qed06Am2gg00oWqx6KTEy79C9V/owoy+Iy3FsnmjHHraHWYpg6iZFQdr+6yMkvF0uHnuD
+ uCr9aKqj+GU8Me/MC+/PkWG/XXG7h0o=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-PpKPa8vMOyuhl4zISYVidg-1; Wed, 07 Feb 2024 04:21:06 -0500
-X-MC-Unique: PpKPa8vMOyuhl4zISYVidg-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-68c4f4411f8so9085206d6.0
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 01:21:06 -0800 (PST)
+ us-mta-363-k-HD7a5YNHqUhOCQTdlH4Q-1; Wed, 07 Feb 2024 04:27:11 -0500
+X-MC-Unique: k-HD7a5YNHqUhOCQTdlH4Q-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a3120029877so155158566b.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 01:27:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707297666; x=1707902466;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yTcjraMjbKyviBDNnka5k6oTaB23g8v44QFIg9LDeGQ=;
- b=REx8kwiStEPYsdOOqeG7f2Zu4oY1nvo0j14pJprpE9/oUlEP4pu12yTxB7kzsg3c7I
- axPu55ZMRJMsKKJJOSDTduADp7CSCo7hcIYh6hh2dxcZYYJhfuTdDm2T51ycVntUdtAQ
- af2LdJ9VVx1YQnx1cnKUBEN/3IUH/5YESDLV5h1/p9t80rGLgFy/rPVUY7fJ2SpzHKX/
- q29VbVrvJlIiHQSKzcNHmnyjQwe1r6o+Z6YUMcycYBu3CxehMOm+vtkETOO5W5apDZiP
- +TZmyXm0PBalKjCjcTv4wP8NBWFz5oJVFz1h36sce42cA+Lx+rzel03PDCXkSGyrmv2Q
- WinQ==
+ d=1e100.net; s=20230601; t=1707298030; x=1707902830;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2AHfDip28ceCoNEc/Nk5bgpaUjQg31c33ri4gjGsWyk=;
+ b=vlL+rAsKoyeSrDEFSe+ff5zsGcdOE7y8WOs94x1w7Xl0cpbiremaLY6rQm9Nwa2XR2
+ 98j8GVKm7i1zlMGeOaCqx8v0UtM6W6QvL0570MWLcuGvUqh1N0YkduflPkiiQnAmm06a
+ DEp1GUxBhUEw/pf3pCQYyE/GWVBmPIBqswITsJ1u6J5jd3bZenhNAzI2I46nJR0HU1TM
+ 0Fosc77z8kA0izQLYTkBfZ6n6K6jY6iQRDABD398WxaA0RJ0HFyRANlmpaUqBKI4WsGN
+ W7L1ZEdQmSqeJMKxLQQOT9QB4Lb8Mj5Km/YIHX3unVNyiOf6pcwt6Jm4lQ3DDXYaeiI2
+ Rpxg==
+X-Gm-Message-State: AOJu0YzwF7rCk4zUqAmMAHpap7uOnwi1LArlXrQH5MH6b6vi/bdMXlxm
+ rjl9Emmka9QXKfZRxxIve0qUApEbgQjVoNoiT+BdF0mHD5PGUYhXOqQSYOlECyQyrKc3M0zENp+
+ x7PeRUb2O8GloJcjzYTFUJgORHgAL4yXeEBnfUZVkWJhuO51rqoIdT5mMGuUErq29xdWgTV3sbh
+ JMvegdOVHmkktRSmKjXq0QMdKlVBXOuvXc2CH2
+X-Received: by 2002:a17:906:aac9:b0:a38:4634:b922 with SMTP id
+ kt9-20020a170906aac900b00a384634b922mr3282190ejb.34.1707298029819; 
+ Wed, 07 Feb 2024 01:27:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGaD6Q9PY8w2alrSII+6OoT4DeV1pUsM4kIpmzgchotiRIhUlQaYlyBTnmi0v/xM6W9gt5k7g==
+X-Received: by 2002:a17:906:aac9:b0:a38:4634:b922 with SMTP id
+ kt9-20020a170906aac900b00a384634b922mr3282168ejb.34.1707298029416; 
+ Wed, 07 Feb 2024 01:27:09 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUf1fUehUvTpwB7LxNB78XCfWo5J8CPWmMFDH1vNs0wkUbjrhhkWtC/PeFsoWeEKZqOnLShjBsP04lOELfDUuJRp8dGFbE=
-X-Gm-Message-State: AOJu0Ywgi3SY9S9scwDNtFB4X+y/+GdF9HYgmS4UDEZZxp5GH+aIteQ1
- a2vgrcQKP4a9KMKBkjZChMBz04R+E5IT9bopYbJxajICmQ7/fDeNPWQ2e3tsCfM8YNFXJQEyaM6
- hppCe3GiD8+8heqSVWAA1MUPHOJrnkmzch/4oq7kZ0f+kbgw2uRyi
-X-Received: by 2002:a05:6214:184b:b0:68c:a8df:37e1 with SMTP id
- d11-20020a056214184b00b0068ca8df37e1mr10503371qvy.4.1707297666576; 
- Wed, 07 Feb 2024 01:21:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHAr4hs9qY0B/Jdd0MQDYKH+QBrI4xM2HE+d7P43/6IAeLV6axPuB5u5d8XxWYxCp7ze1G3RA==
-X-Received: by 2002:a05:6214:184b:b0:68c:a8df:37e1 with SMTP id
- d11-20020a056214184b00b0068ca8df37e1mr10503359qvy.4.1707297666356; 
- Wed, 07 Feb 2024 01:21:06 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtyw6+UWuPw3Klg0YbBXT+PFusQG1XK+A8rQ6uCm6uoPtCbJZ+zQU2mIvGmS9SUOmvLozk2oZkEc8ofGPMlCI9dG6is6toXNUD+lZ1QRWcyH1hZo9/Ydik1295Zj0fSbN5Z2pcPUURR66yMnkmHB33cCd46TCjJFMJ9CMdoksvo0VfFfXPoDLlfzWO4hjev8ymCay7kc5xVlW0zo1LwfZrDLF41gK4k/A=
-Received: from [192.168.0.9] (ip-109-43-177-145.web.vodafone.de.
- [109.43.177.145]) by smtp.gmail.com with ESMTPSA id
- nw1-20020a0562143a0100b0068caf764281sm399804qvb.39.2024.02.07.01.21.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 01:21:06 -0800 (PST)
-Message-ID: <ffd36e1f-293c-4e14-adc5-51c520a9b77c@redhat.com>
-Date: Wed, 7 Feb 2024 10:21:02 +0100
+ AJvYcCX4hv2Lujo+0aJqlyDG6G9x0zAPdRGxgGutRMPjHcWqlLWATkr1Xh8h4PQJcwEzUK/eY43qI31F4VP4iEE5nf0y5ajYKEDpdpHyj4f9MdX4oT8JeqRkLPN2tQuXDF+ifv2SJPJ3nYyadz2TiSENnAcah0wkP2z57bxDBdU1GWMSsn1kVbr0YIfqwIZhC691Wag=
+Received: from localhost.localdomain
+ (host-87-12-25-87.business.telecomitalia.it. [87.12.25.87])
+ by smtp.gmail.com with ESMTPSA id
+ vw4-20020a170907a70400b00a3881262235sm310369ejc.78.2024.02.07.01.27.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Feb 2024 01:27:08 -0800 (PST)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, lulu@redhat.com, kwolf@redhat.com, eperezma@redhat.com,
+ Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH] vhost-vdpa: check vhost_vdpa_set_vring_ready() return value
+Date: Wed,  7 Feb 2024 10:27:02 +0100
+Message-ID: <20240207092702.25242-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] hw/ppc/ppc4xx_pci: Move ppc4xx_pci.c to
- hw/pci-host/
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
- qemu-ppc@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-References: <20240207091254.1478-1-philmd@linaro.org>
- <20240207091254.1478-4-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240207091254.1478-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -152,28 +103,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/02/2024 10.12, Philippe Mathieu-Daudé wrote:
-> ppc4xx_pci.c is moved from the target specific ppc_ss[] meson
-> source set to pci_ss[] which is common to all targets: the
-> object is built once.
-> 
-> Declare PPC4XX_PCI selector in pci-host/Kconfig.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   MAINTAINERS                       | 1 +
->   hw/{ppc => pci-host}/ppc4xx_pci.c | 0
->   hw/pci-host/ppce500.c             | 2 +-
->   hw/pci-host/Kconfig               | 4 ++++
->   hw/pci-host/meson.build           | 1 +
->   hw/pci-host/trace-events          | 4 ++++
->   hw/ppc/Kconfig                    | 2 +-
->   hw/ppc/meson.build                | 1 -
->   hw/ppc/trace-events               | 4 ----
->   9 files changed, 12 insertions(+), 7 deletions(-)
->   rename hw/{ppc => pci-host}/ppc4xx_pci.c (100%)
+vhost_vdpa_set_vring_ready() could already fail, but if Linux's
+patch [1] will be merged, it may fail with more chance if
+userspace does not activate virtqueues before DRIVER_OK when
+VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+So better check its return value anyway.
 
+[1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
+
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+Note: This patch conflicts with [2], but the resolution is simple,
+so for now I sent a patch for the current master, but I'll rebase
+this patch if we merge the other one first.
+
+[2] https://lore.kernel.org/qemu-devel/20240202132521.32714-1-kwolf@redhat.com/
+---
+ hw/virtio/vdpa-dev.c |  8 +++++++-
+ net/vhost-vdpa.c     | 15 ++++++++++++---
+ 2 files changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index eb9ecea83b..d57cd76c18 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -259,7 +259,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
+         goto err_guest_notifiers;
+     }
+     for (i = 0; i < s->dev.nvqs; ++i) {
+-        vhost_vdpa_set_vring_ready(&s->vdpa, i);
++        ret = vhost_vdpa_set_vring_ready(&s->vdpa, i);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret, "Error starting vring %d", i);
++            goto err_dev_stop;
++        }
+     }
+     s->started = true;
+ 
+@@ -274,6 +278,8 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
+ 
+     return ret;
+ 
++err_dev_stop:
++    vhost_dev_stop(&s->dev, vdev, false);
+ err_guest_notifiers:
+     k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+ err_host_notifiers:
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 3726ee5d67..e3d8036479 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -381,7 +381,10 @@ static int vhost_vdpa_net_data_load(NetClientState *nc)
+     }
+ 
+     for (int i = 0; i < v->dev->nvqs; ++i) {
+-        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
++        int ret = vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
++        if (ret < 0) {
++            return ret;
++        }
+     }
+     return 0;
+ }
+@@ -1213,7 +1216,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+ 
+-    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
++    r = vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
++    if (unlikely(r < 0)) {
++        return r;
++    }
+ 
+     if (v->shadow_vqs_enabled) {
+         n = VIRTIO_NET(v->dev->vdev);
+@@ -1252,7 +1258,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
+     }
+ 
+     for (int i = 0; i < v->dev->vq_index; ++i) {
+-        vhost_vdpa_set_vring_ready(v, i);
++        r = vhost_vdpa_set_vring_ready(v, i);
++        if (unlikely(r < 0)) {
++            return r;
++        }
+     }
+ 
+     return 0;
+-- 
+2.43.0
 
 
