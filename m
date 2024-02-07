@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F67C4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 09:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D035C4828D
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 09:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXe1p-0000Im-LG; Wed, 07 Feb 2024 04:15:37 -0500
+	id 1rXe3t-0001Lr-Vz; Wed, 07 Feb 2024 04:17:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXe1n-0000IE-E7
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:15:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXe3s-0001LQ-H6
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:17:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXe1X-0000Hu-6x
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:15:32 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rXe3r-0000qB-5r
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 04:17:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707297315;
+ s=mimecast20190719; t=1707297462;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eysEyhnpyIuDWLeu3mNxyGIpZCWY+EKgCyGElUYvUhk=;
- b=F7vAJSKcx+s63u5W3p8kjPonpj8R3QqwiUtyF3slbhfg83q6ICZGHgiVGpEvEqb0vn5MU3
- +MOcr1pH6lOwwqERo3kxuDEvRfEWrddevnnVjmgoaOhN8n2LhvR4FsWpfB5CA0uUBnV/Sd
- MNtXFM35MpS8Tn6igtuacWbd1eBtisY=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OtwCSurdLZmDC32mWMMUPRVywjyn+vffzMDkT5tj2Z8=;
+ b=E0C1w+icJJgPdhKVVsyrB8hwbHwhOoa5sEQ+zsnQGII2oCSGor6fX0VwXCbcJxpseJkDf1
+ OMCvkvnqYeCL6q2y3+1v65Bl3UQBFJ4ypdiCFle/VLoEi8slKGmZusZlCNDoIMGdKjK2mr
+ mMLn7JQLJJwVdoIa6Y/4QZJYao9Ehx0=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-ijsCS_fCPe6997GiKg-rUg-1; Wed, 07 Feb 2024 04:15:14 -0500
-X-MC-Unique: ijsCS_fCPe6997GiKg-rUg-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7855216bc07so32948985a.3
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 01:15:13 -0800 (PST)
+ us-mta-671-PhrK3NouNymEtMedp76laA-1; Wed, 07 Feb 2024 04:17:41 -0500
+X-MC-Unique: PhrK3NouNymEtMedp76laA-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7817253831cso47148985a.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 01:17:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707297313; x=1707902113;
+ d=1e100.net; s=20230601; t=1707297460; x=1707902260;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eysEyhnpyIuDWLeu3mNxyGIpZCWY+EKgCyGElUYvUhk=;
- b=fOksgDDUpWP3XwOHxwrMC892lHgvHho7j8CsnNA3PgdIl8n7buCg13TjULhJ84tV+c
- 6Po/vv1U/+Bjyi6se4NWSI+I6Ct2Vq4wdc679UyEGAeESaogGTY9bWe2tqnRJXlz/XaH
- S2/nM/fjltIQ5TlwqMorJzs6563QmPkPKZETpblcfEzCsLfVaq7huAFTh314wcXiZWHR
- EtPDtzwmmZiq9y+fxXedhBORCDHzBir2CGuu/S8EplQsMmoyQRfbZMvZwZffKKKCzAVc
- SZE4Czla0nGRAj661O5l1zKhkrGxtrnJYCbaM1qpNzeSZkQ3yKjeH4lZZ9qEHjB8M7xB
- J/3Q==
-X-Gm-Message-State: AOJu0YyjQsYbJ6Vv9IpTnydHH2cFGHdfIG7D/PKXyi9IaIspO+jxPtRx
- Ju74T+U3NGVcdEhegWCJfs6wpEuqVZzLFRS/yJs0VIW28i4YnhfkhL5ou5x05gm7A4qVamvOuEw
- ROmdET9/tHDAx1FkGr+kLYbs11DCWHx6NMEB1Gq/EsiQ4BN/gzdcT
-X-Received: by 2002:a05:620a:2792:b0:785:9402:c67d with SMTP id
- g18-20020a05620a279200b007859402c67dmr3939168qkp.4.1707297313584; 
- Wed, 07 Feb 2024 01:15:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IENG40xR1jHiF1mWPV9cBazGfHm0VTLjUez+LnwoMcay+pLJckC96f6Bx7aJZsFkBKl95qXyA==
-X-Received: by 2002:a05:620a:2792:b0:785:9402:c67d with SMTP id
- g18-20020a05620a279200b007859402c67dmr3939148qkp.4.1707297313335; 
- Wed, 07 Feb 2024 01:15:13 -0800 (PST)
+ bh=OtwCSurdLZmDC32mWMMUPRVywjyn+vffzMDkT5tj2Z8=;
+ b=TJllgaqaD+C58X+N4yKLXbS5u5IEVZc36LZ1DkWO/zawt183MYbDRMp6Mir03hDSHq
+ ezxPFhxTrYTJUTGxHZKX3S6grINfHSlWYDhJhnTSYb3ew4qRe8qyEcPqY6VtCHQfChhL
+ uVxoMegch06tZqzKbJoEDtHlthpAd8sGD7oYTWE3n7jS8oykf8iAyE1gQowQCbi9O7ls
+ WomlLtfiVGWHYcNKasDkNp0TeaiqEDvUY2MAycSn+hh4B9JH3dE7DNlEIoJyeFLikDzo
+ ou0Xo2O15cC9wLFiGFoMKO5L9zeaQnM9nuf5w6e9jO6zduFm8s7UCYoeTXv1CdB2kRbO
+ eytg==
+X-Gm-Message-State: AOJu0Yz6QB7U+K0vOpt4bCQywdl/YoyfMD+ECgTnyhSIEGR26vA4OUv3
+ +sjWvchNli+MTFHHQtXaxOOXYW+XwO0EXiksBpfJ1J5qNL7KeIrAGZaZX55+1HNK0n4bd4kLC1X
+ WgDwpGgDAuvsnuxYopDu6ZdpIRUhKWZ4nCb0QJZN21sZeNosH0AlP
+X-Received: by 2002:a05:620a:2290:b0:785:6fea:907a with SMTP id
+ o16-20020a05620a229000b007856fea907amr4901433qkh.31.1707297460617; 
+ Wed, 07 Feb 2024 01:17:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHOV6XdyHisNyLfe2wYlXjGzHT7kjh78+WnBdl4dAggilAam9hqPrSIQv6dQd4uknBiZUekCQ==
+X-Received: by 2002:a05:620a:2290:b0:785:6fea:907a with SMTP id
+ o16-20020a05620a229000b007856fea907amr4901362qkh.31.1707297458445; 
+ Wed, 07 Feb 2024 01:17:38 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsbkFKG1FRGefcztLnaYyOom8sgs9AtVL5EB8E2GQRLidIJSOmZkfbDqp9SZcr/9IWxdXpR9cloo83/PSnQdKv8goqzRJJw87V/zrauSZujNkCa6fqvW4e6yyKBI9FNtI8CnvfaavHEFuUbJTly2GitLM8175wRe3/BBsKvjnkIOIjXsRzXb9iSBeeNB0AZNnpoUn6pHpPfa9+nJhCBCROmC9S7Aq6TRc=
+ AJvYcCUpg9jHruikkfyWByvCYVUMwY96yAm7VBZ09LjCz8ddVkmabmXtwbLA37m9zHYlIWvjg1wtS/HFdYNSujya28AYoM5a5D0ZtaBFhRv6cRp+B2rVQAs/70EujxoU4aKt41JcCBNKd9CrOK3BJxzJ8SixrxGgAK+AJBcIXs4EsdnNC7Dn6OXYPQ6fgQj6J6JLKptJooi6/X9C1tuzUa2q37ggc47t4q4jkYA=
 Received: from [192.168.0.9] (ip-109-43-177-145.web.vodafone.de.
  [109.43.177.145]) by smtp.gmail.com with ESMTPSA id
- d15-20020a05620a158f00b007859d590478sm335740qkk.64.2024.02.07.01.15.11
+ z10-20020ae9e60a000000b00783fe340e2asm347967qkf.107.2024.02.07.01.17.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Feb 2024 01:15:12 -0800 (PST)
-Message-ID: <43c4e4a8-c0d2-47eb-93b7-c83dceee00c3@redhat.com>
-Date: Wed, 7 Feb 2024 10:15:10 +0100
+ Wed, 07 Feb 2024 01:17:38 -0800 (PST)
+Message-ID: <7a558ca8-8006-40db-add1-517a6e2dd83d@redhat.com>
+Date: Wed, 7 Feb 2024 10:17:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] hw/ppc/ppc4xx_pci: Remove unused "hw/ppc/ppc.h"
- header
+Subject: Re: [PATCH v2 2/4] hw/ppc/ppc4xx_pci: Extract PCI host definitions to
+ hw/pci-host/ppc4xx.h
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -79,7 +79,7 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
 References: <20240207091254.1478-1-philmd@linaro.org>
- <20240207091254.1478-2-philmd@linaro.org>
+ <20240207091254.1478-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -123,19 +123,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240207091254.1478-2-philmd@linaro.org>
+In-Reply-To: <20240207091254.1478-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,12 +154,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 07/02/2024 10.12, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Message-Id: <20231011132427.65001-2-philmd@linaro.org>
+> Message-Id: <20231011132427.65001-3-philmd@linaro.org>
 > ---
->   hw/ppc/ppc440_pcix.c | 1 -
->   hw/ppc/ppc4xx_pci.c  | 1 -
->   2 files changed, 2 deletions(-)
+>   MAINTAINERS                  |  1 +
+>   include/hw/pci-host/ppc4xx.h | 17 +++++++++++++++++
+>   include/hw/ppc/ppc4xx.h      |  5 -----
+>   hw/ppc/ppc440_bamboo.c       |  1 +
+>   hw/ppc/ppc440_pcix.c         |  2 +-
+>   hw/ppc/ppc440_uc.c           |  1 +
+>   hw/ppc/ppc4xx_pci.c          |  2 +-
+>   hw/ppc/sam460ex.c            |  1 +
+>   8 files changed, 23 insertions(+), 7 deletions(-)
+>   create mode 100644 include/hw/pci-host/ppc4xx.h
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
 
