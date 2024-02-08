@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD89C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 22:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 174E4C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 22:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYCV4-0007GR-7E; Thu, 08 Feb 2024 17:04:06 -0500
+	id 1rYCVC-0007IC-71; Thu, 08 Feb 2024 17:04:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rYCV2-0007FG-JE
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 17:04:04 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rYCV9-0007HW-9I
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 17:04:11 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rYCV0-0005Dn-JW
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 17:04:04 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5600c43caddso400373a12.2
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 14:04:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rYCV2-0005E5-GG
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 17:04:11 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a3a77f27524so33791166b.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 14:04:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707429841; x=1708034641; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707429842; x=1708034642; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eDgGO5XlvY/PWkEjL5h/oDmPieaVe3A51Df6gEqV1oQ=;
- b=ScAJwdCeAlVE2L+bwrdhf8HcQMb9yeOxJdwBORZk3goGnKJTUVFpGkDt/AL8Wj7wpr
- rFdFioQ3eTSlOXvcd9NkNNrA+oME8clcFoNslnIiTW+vUmHd9csr1QHZSjE4L15oUJz5
- rWpsx5KtF3UQZH5p89uqQY0LEOvsmttk3ZKU9TgkBpriLwWlPAeyTK1cJJVqODxbjDY2
- DYMcTtieOxfcmj8wPoCKR62pkrmbOVlgyDqpaQraeNvKbHnXwVZaTkWTnBE5JjA1UFGi
- JOjFPpqIfButUOTMcXBbHvwtIm3p6+EZNu6ADhZQiigRwRR5F8f2kuRsJkO5CdB+RIT6
- L3Tw==
+ bh=J+sbS1QwX/gsxCqYTOaBHcFunWzBKDsUd+myGLHH3IA=;
+ b=kYp7wAR0wxRtq9z97lKL4ccDopjCA0YADnNfYkycILCuJfLigxbXFkK1gE8wNwKH2j
+ 91azF/2yuDhrHmnGZVFnc8w8WYu7AkRUhztFpvr4eqV+U9FqdNv+cZjeAuykpj66ShPo
+ 6mDUcc7Zg62BFMAeKgfN0B/1Fu78HWaiye/Zo87S05gQLm6rrAs9HrGPXdb3U/rL/wQn
+ DOrjbAGzK6liJFhgl5//apWSqJciKVg9ed9aNHfhIIfDJoNnyjAKs6wGndty7wAOwk6D
+ Ujh4c0FN16y49qdB0GpWvjVskSDEqzlKo6GYNJZMJxWXxHCZ4TuceZQcApid16Te9Yf9
+ ELoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707429841; x=1708034641;
+ d=1e100.net; s=20230601; t=1707429842; x=1708034642;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eDgGO5XlvY/PWkEjL5h/oDmPieaVe3A51Df6gEqV1oQ=;
- b=i8xUTNSudIK518mynQeA6hE2PugAVaxy/TvWaEQmZwCAbIK7LvdG7U3LzGPMhfkZsE
- V8jvz5DQaiKXJ2x60WQ5Mf2+284oyfnajLazg+nhqfX3omMa5XGlU7wASiXl4fC6ATKV
- zVsD9yOFmjn5MliUO16qjlLT7nn5p2JlSYTEcqFhxeDGYr7zpkS9MF4pc6E71ezXJYm2
- yYvJBWnw6p+3bANWrsxwed2GWbMuimcFLb/yQcJD4+UvgBqOVKZOdlymeqeO3Abm6qLN
- UURM9+QyQgHQhDc/9aWNXee7mk5sq6O0DVz/EI7y//cxRzazSQ4im3V3CeXJbTKchkr5
- NQ9Q==
-X-Gm-Message-State: AOJu0YyTUdE9MuUH6FK3Hdh/1dEMlITro5IqvdUDgzGo9AsOdfa8JCE3
- VLHT/D8NQV4t9tvG3xDxsjCGNPx4FyNKpoyn0m6HhbJD7p9yzsYrm/RJ8ul6
-X-Google-Smtp-Source: AGHT+IHI/kdOo0LEDtCo5dRoTOL3XaQbT2rQ9UH+MLCplGSd0WBActaQuqbImjNevZDeZGvMRkg7BQ==
-X-Received: by 2002:a17:906:80ca:b0:a36:fc15:c6b2 with SMTP id
- a10-20020a17090680ca00b00a36fc15c6b2mr388409ejx.35.1707429840597; 
- Thu, 08 Feb 2024 14:04:00 -0800 (PST)
+ bh=J+sbS1QwX/gsxCqYTOaBHcFunWzBKDsUd+myGLHH3IA=;
+ b=uyztfdF5Y6c61sux1tZFn5d70f4BJovHA9zjVq7soBa8LtnWTNd51MXkZRYSKRtxuf
+ RUVPCe1T/6Mo8BVxK8GDUhH9QEjp5RP8xMaLviNArkmiRMpt+8BL8UbbsLkWVJQIwgib
+ dKRdRqKSvX0cQlkU7Rew/S+9+LIAaxyon3ewPa+f2r0v4PlhWmZ1kLkjft0AVq06N77E
+ cyVbyebxCOQxsq0cdIY63QLc4MCOE9MOJkP1rYRmdVDKsbG7ffJuy2nORuDrgP0clYwi
+ HHFToMFqHZ/5Lhfb8fXchxACLIPJ8i6IMPoBLwXtMJ50Dqvei2+Z27t2NXXEjEexU/gG
+ HDmA==
+X-Gm-Message-State: AOJu0YwizgYUaD+sHabMkmG1E9CNxBAOKNG/2yvHn1PGzuMCmBXVdJgt
+ +LI2BUSyx5BY+TiFBah3CaXqPmyhdyzAHtuSSw64K0wBckPejxO2uvcY+I6Q
+X-Google-Smtp-Source: AGHT+IHnLwWssXDQhYvd42Fg3tl3ZBvZmgVvUsGqnnMBpr9jvIhODvlj+038nJGJ4MYvT7+lc1A1DA==
+X-Received: by 2002:a17:906:bcf4:b0:a38:3f84:1a67 with SMTP id
+ op20-20020a170906bcf400b00a383f841a67mr441121ejb.17.1707429841707; 
+ Thu, 08 Feb 2024 14:04:01 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+UhKv+HDJlgJRBvuXodrKr9Zj7hyv0/SCgs5gCRA0tWW2D6F0HwkcOcuNXe+OjEVeULHaLQ4NG8tyQLDOY3Gc+ObQP7DEJDS47SQkM53B9NPjbNyfu2B/+31AvGPqcdCd5OUqE22Ix50/+IShHFJ0gCYpeoz0SpH0eT7rtmyvnNuDbbi53YpFy6/7ZbTyIkG+Ss2F+uDfb9dL7pcY1riHlKjwHHz/I1PqoNk1jmBbSJrTwahN
+ AJvYcCVu6RsUJhGgSWDiobHrZBqXUU3AoH/zy/nscoI8WVCMDIE0hVzx5Wv9sv+uQNb6bmkH6L++CgUUMo+ikkSdxaUutL9B7CyTnnuLwWcL+vGcJySqbG0Ki8AxNL3A8CyCXWpxu9l3RydCbSZYXeHIVs9PqvOIs74PxNVz9guTMhuDE8/uPm7WbklIShHDGNCcFEv7xnWJheBcui/rhkGIe1o5K+tkmJrMKmqSGV8ef8WtbTtbBOkB
 Received: from archlinux.. (pd95ed842.dip0.t-ipconnect.de. [217.94.216.66])
  by smtp.gmail.com with ESMTPSA id
- ti9-20020a170907c20900b00a3109a492d4sm109753ejc.20.2024.02.08.14.03.59
+ ti9-20020a170907c20900b00a3109a492d4sm109753ejc.20.2024.02.08.14.04.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Feb 2024 14:03:59 -0800 (PST)
+ Thu, 08 Feb 2024 14:04:01 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -66,24 +66,24 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 4/9] hw/i386/pc: Merge pc_guest_info_init() into
- pc_machine_initfn()
-Date: Thu,  8 Feb 2024 23:03:44 +0100
-Message-ID: <20240208220349.4948-5-shentey@gmail.com>
+Subject: [PATCH 5/9] hw/i386/pc: Defer smbios_set_defaults() to machine_done
+Date: Thu,  8 Feb 2024 23:03:45 +0100
+Message-ID: <20240208220349.4948-6-shentey@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240208220349.4948-1-shentey@gmail.com>
 References: <20240208220349.4948-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ TVD_PH_BODY_ACCOUNTS_POST=0.001, TVD_PH_BODY_META_ALL=1.771,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,82 +99,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Resolves redundant code in the piix and q35 machines.
+Handling most of smbios data generation in the machine_done notifier is similar
+to how the ARM virt machine handles it which also calls smbios_set_defaults()
+there. The result is that all pc machines are freed from explicitly worrying
+about smbios setup.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/i386/pc.h | 2 --
- hw/i386/pc.c         | 9 +++------
- hw/i386/pc_piix.c    | 2 --
- hw/i386/pc_q35.c     | 2 --
- 4 files changed, 3 insertions(+), 12 deletions(-)
+ hw/i386/fw_cfg.h     |  3 ++-
+ include/hw/i386/pc.h |  1 -
+ hw/i386/fw_cfg.c     | 12 +++++++++++-
+ hw/i386/pc.c         |  2 +-
+ hw/i386/pc_piix.c    | 10 ----------
+ hw/i386/pc_q35.c     |  9 ---------
+ 6 files changed, 14 insertions(+), 23 deletions(-)
 
+diff --git a/hw/i386/fw_cfg.h b/hw/i386/fw_cfg.h
+index 86ca7c1c0c..1e1de6b4a3 100644
+--- a/hw/i386/fw_cfg.h
++++ b/hw/i386/fw_cfg.h
+@@ -10,6 +10,7 @@
+ #define HW_I386_FW_CFG_H
+ 
+ #include "hw/boards.h"
++#include "hw/i386/pc.h"
+ #include "hw/nvram/fw_cfg.h"
+ 
+ #define FW_CFG_IO_BASE     0x510
+@@ -22,7 +23,7 @@
+ FWCfgState *fw_cfg_arch_create(MachineState *ms,
+                                uint16_t boot_cpus,
+                                uint16_t apic_id_limit);
+-void fw_cfg_build_smbios(MachineState *ms, FWCfgState *fw_cfg);
++void fw_cfg_build_smbios(PCMachineState *ms, FWCfgState *fw_cfg);
+ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg);
+ void fw_cfg_add_acpi_dsdt(Aml *scope, FWCfgState *fw_cfg);
+ 
 diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index ec0e5efcb2..287f1ab553 100644
+index 287f1ab553..0e6c41e908 100644
 --- a/include/hw/i386/pc.h
 +++ b/include/hw/i386/pc.h
-@@ -151,8 +151,6 @@ extern int fd_bootchk;
+@@ -12,7 +12,6 @@
+ #include "hw/hotplug.h"
+ #include "qom/object.h"
+ #include "hw/i386/sgx-epc.h"
+-#include "hw/firmware/smbios.h"
+ #include "hw/cxl/cxl.h"
  
- void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
+ #define HPET_INTCAP "hpet-intcap"
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 7362daa45a..98a478c276 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -48,15 +48,25 @@ const char *fw_cfg_arch_key_name(uint16_t key)
+     return NULL;
+ }
  
--void pc_guest_info_init(PCMachineState *pcms);
--
- #define PCI_HOST_PROP_RAM_MEM          "ram-mem"
- #define PCI_HOST_PROP_PCI_MEM          "pci-mem"
- #define PCI_HOST_PROP_SYSTEM_MEM       "system-mem"
+-void fw_cfg_build_smbios(MachineState *ms, FWCfgState *fw_cfg)
++void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg)
+ {
+ #ifdef CONFIG_SMBIOS
+     uint8_t *smbios_tables, *smbios_anchor;
+     size_t smbios_tables_len, smbios_anchor_len;
+     struct smbios_phys_mem_area *mem_array;
+     unsigned i, array_count;
++    MachineState *ms = MACHINE(pcms);
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++    MachineClass *mc = MACHINE_GET_CLASS(pcms);
+     X86CPU *cpu = X86_CPU(ms->possible_cpus->cpus[0].cpu);
+ 
++    if (pcmc->smbios_defaults) {
++        /* These values are guest ABI, do not change */
++        smbios_set_defaults("QEMU", mc->desc, mc->name,
++                            pcmc->smbios_legacy_mode, pcmc->smbios_uuid_encoded,
++                            pcms->smbios_entry_point_type);
++    }
++
+     /* tell smbios about cpuid version and features */
+     smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
+ 
 diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 12facf73b1..45738d8548 100644
+index 45738d8548..369c21fb99 100644
 --- a/hw/i386/pc.c
 +++ b/hw/i386/pc.c
-@@ -706,12 +706,6 @@ void pc_machine_done(Notifier *notifier, void *data)
-     }
- }
+@@ -699,7 +699,7 @@ void pc_machine_done(Notifier *notifier, void *data)
  
--void pc_guest_info_init(PCMachineState *pcms)
--{
--    pcms->machine_done.notify = pc_machine_done;
--    qemu_add_machine_init_done_notifier(&pcms->machine_done);
--}
--
- /* setup pci memory address space mapping into system address space */
- void pc_pci_as_mapping_init(MemoryRegion *system_memory,
-                             MemoryRegion *pci_address_space)
-@@ -1751,6 +1745,9 @@ static void pc_machine_initfn(Object *obj)
-     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
-                               OBJECT(pcms->pcspk), "audiodev");
-     cxl_machine_init(obj, &pcms->cxl_devices_state);
-+
-+    pcms->machine_done.notify = pc_machine_done;
-+    qemu_add_machine_init_done_notifier(&pcms->machine_done);
- }
- 
- int pc_machine_kvm_type(MachineState *machine, const char *kvm_type)
+     acpi_setup();
+     if (x86ms->fw_cfg) {
+-        fw_cfg_build_smbios(MACHINE(pcms), x86ms->fw_cfg);
++        fw_cfg_build_smbios(pcms, x86ms->fw_cfg);
+         fw_cfg_build_feature_control(MACHINE(pcms), x86ms->fw_cfg);
+         /* update FW_CFG_NB_CPUS to account for -device added CPUs */
+         fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
 diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index adb3b5ed43..4ca2dc08e7 100644
+index 4ca2dc08e7..5addaae978 100644
 --- a/hw/i386/pc_piix.c
 +++ b/hw/i386/pc_piix.c
-@@ -226,8 +226,6 @@ static void pc_init1(MachineState *machine,
+@@ -36,7 +36,6 @@
+ #include "hw/rtc/mc146818rtc.h"
+ #include "hw/southbridge/piix.h"
+ #include "hw/display/ramfb.h"
+-#include "hw/firmware/smbios.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_ids.h"
+ #include "hw/usb.h"
+@@ -226,15 +225,6 @@ static void pc_init1(MachineState *machine,
                                                 &error_abort);
      }
  
--    pc_guest_info_init(pcms);
+-    if (pcmc->smbios_defaults) {
+-        MachineClass *mc = MACHINE_GET_CLASS(machine);
+-        /* These values are guest ABI, do not change */
+-        smbios_set_defaults("QEMU", mc->desc,
+-                            mc->name, pcmc->smbios_legacy_mode,
+-                            pcmc->smbios_uuid_encoded,
+-                            pcms->smbios_entry_point_type);
+-    }
 -
-     if (pcmc->smbios_defaults) {
-         MachineClass *mc = MACHINE_GET_CLASS(machine);
-         /* These values are guest ABI, do not change */
+     /* allocate ram and load rom/bios */
+     if (!xen_enabled()) {
+         pc_memory_init(pcms, system_memory, rom_memory, hole64_size);
 diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 53da8b552d..fe0c2849fd 100644
+index fe0c2849fd..5184abda92 100644
 --- a/hw/i386/pc_q35.c
 +++ b/hw/i386/pc_q35.c
-@@ -199,8 +199,6 @@ static void pc_q35_init(MachineState *machine)
+@@ -45,7 +45,6 @@
+ #include "hw/i386/amd_iommu.h"
+ #include "hw/i386/intel_iommu.h"
+ #include "hw/display/ramfb.h"
+-#include "hw/firmware/smbios.h"
+ #include "hw/ide/pci.h"
+ #include "hw/ide/ahci.h"
+ #include "hw/intc/ioapic.h"
+@@ -199,14 +198,6 @@ static void pc_q35_init(MachineState *machine)
          rom_memory = system_memory;
      }
  
--    pc_guest_info_init(pcms);
+-    if (pcmc->smbios_defaults) {
+-        /* These values are guest ABI, do not change */
+-        smbios_set_defaults("QEMU", mc->desc,
+-                            mc->name, pcmc->smbios_legacy_mode,
+-                            pcmc->smbios_uuid_encoded,
+-                            pcms->smbios_entry_point_type);
+-    }
 -
-     if (pcmc->smbios_defaults) {
-         /* These values are guest ABI, do not change */
-         smbios_set_defaults("QEMU", mc->desc,
+     /* create pci host bus */
+     phb = OBJECT(qdev_new(TYPE_Q35_HOST_DEVICE));
+ 
 -- 
 2.43.0
 
