@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6AAC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4521FC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYAbP-0008ST-LT; Thu, 08 Feb 2024 15:02:31 -0500
+	id 1rYAbT-0008Vk-16; Thu, 08 Feb 2024 15:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbO-0008S2-BH
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:30 -0500
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbP-0008SV-Gb
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:31 -0500
 Received: from todd.t-8ch.de ([159.69.126.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbM-0001TK-7K
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:30 -0500
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbM-0001TJ-UD
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1707422544; bh=TyE3V4WNTBi5C+FXFjl4iBVhtJ1IqwhgPBjqAGaupiw=;
+ t=1707422544; bh=X4WxZBufGX/UnJFogrkJp44vwGZ4MHDnluYEmxnIQqk=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=jVIMkAB5oGV1OkvmzuX99q91NIn3nS0JO+loky76MqvvZEARlHZxR66EFnswm9dbw
- Jk9WK6F40Ab26nj1NW8Y0sWmt7pa5wUP6X+Ll97jNI0aq/2tAcoqEMpRwaBlzxU0U+
- HG5JcbzENoMS0+MVVfnpqDNifcCm5EKJpf0S0AIE=
+ b=coq6Tv8SGo2suB3Tvu6Jwaz435XbauZKLp++p9hvCLdtA59JqH894266EbAILZyv9
+ KnAULc0Dltd6luqTsdHnHOYk7XorrXQbwRnKdukhLcUWp5S6x1mzmWORY4/sF3dziq
+ ws1n21YK2TP6lF4lx+6VEWaylMqS9dFqwQICrwO4=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Date: Thu, 08 Feb 2024 21:02:21 +0100
-Subject: [PATCH v6 2/6] hw/misc/pvpanic: centralize definition of supported
- events
+Date: Thu, 08 Feb 2024 21:02:20 +0100
+Subject: [PATCH v6 1/6] linux-headers: drop pvpanic.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240208-pvpanic-shutdown-v6-2-965580ac057b@t-8ch.de>
+Message-Id: <20240208-pvpanic-shutdown-v6-1-965580ac057b@t-8ch.de>
 References: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
 In-Reply-To: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -41,11 +40,11 @@ Cc: qemu-devel@nongnu.org,
  Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=2517;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=3773;
  i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
- bh=TyE3V4WNTBi5C+FXFjl4iBVhtJ1IqwhgPBjqAGaupiw=;
- b=q89XnfH0qw3+6DpRG0uhX2SVh7WqWA5F6MkguukOgiYxwGn3AwcTOboilnGf/061mlZPFOdGh
- AfOX53PW1WRC71HtLIy0Xe2n/NBpqaYp9emQS8mPhlIfdrnATK1RNfP
+ bh=X4WxZBufGX/UnJFogrkJp44vwGZ4MHDnluYEmxnIQqk=;
+ b=BODgN2nbXP6sEMaqPTjRE+vUJAHObxCXp2ImuPEUed0m0+r6zqP+8bpEm5Z4gKLy1R4aLvOdy
+ wG0q87p4SYvC96SOvv6n4hvOL+1uyAyOpc8746DkkNi0j7NHDvBYCIB
 X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
@@ -71,71 +70,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The different components of pvpanic duplicate the list of supported
-events. Move it to the shared header file to minimize changes when new
-events are added.
+misc/pvpanic.h from the Linux UAPI does not define a Linux UAPI but a
+qemu device API.
 
+This leads to a weird process when updates to the interface are needed:
+1) Change to the specification in the qemu tree
+2) Change to the header in the Linux tree
+3) Re-import of the header into Qemu.
+
+The kernel prefers to drop the header anyways.
+
+Prepare for the removal from the Linux UAPI headers by moving the
+contents to the existing pvpanic.h header.
+
+Link: https://lore.kernel.org/lkml/2023110431-pacemaker-pruning-0e4c@gregkh/
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Cornelia Huck <cohuck@redhat.com>
 Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
 ---
- hw/misc/pvpanic-isa.c     | 2 +-
- hw/misc/pvpanic-pci.c     | 2 +-
- hw/misc/pvpanic.c         | 2 +-
- include/hw/misc/pvpanic.h | 1 +
- 4 files changed, 4 insertions(+), 3 deletions(-)
+ hw/misc/pvpanic-isa.c                    | 1 -
+ hw/misc/pvpanic-pci.c                    | 1 -
+ hw/misc/pvpanic.c                        | 1 -
+ include/hw/misc/pvpanic.h                | 3 +++
+ include/standard-headers/linux/pvpanic.h | 9 ---------
+ scripts/update-linux-headers.sh          | 3 +--
+ 6 files changed, 4 insertions(+), 14 deletions(-)
 
 diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
-index ef438a31fbe9..9a923b786907 100644
+index ccec50f61bbd..ef438a31fbe9 100644
 --- a/hw/misc/pvpanic-isa.c
 +++ b/hw/misc/pvpanic-isa.c
-@@ -101,7 +101,7 @@ static void build_pvpanic_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
- static Property pvpanic_isa_properties[] = {
-     DEFINE_PROP_UINT16(PVPANIC_IOPORT_PROP, PVPanicISAState, ioport, 0x505),
-     DEFINE_PROP_UINT8("events", PVPanicISAState, pvpanic.events,
--                      PVPANIC_PANICKED | PVPANIC_CRASH_LOADED),
-+                      PVPANIC_EVENTS),
-     DEFINE_PROP_END_OF_LIST(),
- };
+@@ -21,7 +21,6 @@
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+ #include "hw/isa/isa.h"
+-#include "standard-headers/linux/pvpanic.h"
+ #include "hw/acpi/acpi_aml_interface.h"
  
+ OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
 diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
-index 01e269b55284..be4063121e1d 100644
+index c01e4ce8646a..01e269b55284 100644
 --- a/hw/misc/pvpanic-pci.c
 +++ b/hw/misc/pvpanic-pci.c
-@@ -54,7 +54,7 @@ static void pvpanic_pci_realizefn(PCIDevice *dev, Error **errp)
+@@ -21,7 +21,6 @@
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+ #include "hw/pci/pci_device.h"
+-#include "standard-headers/linux/pvpanic.h"
  
- static Property pvpanic_pci_properties[] = {
-     DEFINE_PROP_UINT8("events", PVPanicPCIState, pvpanic.events,
--                      PVPANIC_PANICKED | PVPANIC_CRASH_LOADED),
-+                      PVPANIC_EVENTS),
-     DEFINE_PROP_END_OF_LIST(),
- };
+ OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
  
 diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
-index 4915ef256e74..a4982cc5928e 100644
+index 1540e9091a45..4915ef256e74 100644
 --- a/hw/misc/pvpanic.c
 +++ b/hw/misc/pvpanic.c
-@@ -26,7 +26,7 @@ static void handle_event(int event)
- {
-     static bool logged;
+@@ -21,7 +21,6 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+-#include "standard-headers/linux/pvpanic.h"
  
--    if (event & ~(PVPANIC_PANICKED | PVPANIC_CRASH_LOADED) && !logged) {
-+    if (event & ~PVPANIC_EVENTS && !logged) {
-         qemu_log_mask(LOG_GUEST_ERROR, "pvpanic: unknown event %#x.\n", event);
-         logged = true;
-     }
+ static void handle_event(int event)
+ {
 diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
-index dffca827f77a..48f2ec4c86a1 100644
+index fab94165d03d..dffca827f77a 100644
 --- a/include/hw/misc/pvpanic.h
 +++ b/include/hw/misc/pvpanic.h
-@@ -20,6 +20,7 @@
+@@ -18,6 +18,9 @@
+ #include "exec/memory.h"
+ #include "qom/object.h"
  
- #define PVPANIC_PANICKED	(1 << 0)
- #define PVPANIC_CRASH_LOADED	(1 << 1)
-+#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED)
- 
++#define PVPANIC_PANICKED	(1 << 0)
++#define PVPANIC_CRASH_LOADED	(1 << 1)
++
  #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
  #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
+ 
+diff --git a/include/standard-headers/linux/pvpanic.h b/include/standard-headers/linux/pvpanic.h
+deleted file mode 100644
+index 54b7485390d3..000000000000
+--- a/include/standard-headers/linux/pvpanic.h
++++ /dev/null
+@@ -1,9 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+-
+-#ifndef __PVPANIC_H__
+-#define __PVPANIC_H__
+-
+-#define PVPANIC_PANICKED	(1 << 0)
+-#define PVPANIC_CRASH_LOADED	(1 << 1)
+-
+-#endif /* __PVPANIC_H__ */
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index a0006eec6fd1..c4fea51c93fd 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -218,8 +218,7 @@ for i in "$tmpdir"/include/linux/*virtio*.h \
+          "$tmpdir/include/linux/const.h" \
+          "$tmpdir/include/linux/kernel.h" \
+          "$tmpdir/include/linux/vhost_types.h" \
+-         "$tmpdir/include/linux/sysinfo.h" \
+-         "$tmpdir/include/misc/pvpanic.h"; do
++         "$tmpdir/include/linux/sysinfo.h"; do
+     cp_portable "$i" "$output/include/standard-headers/linux"
+ done
+ mkdir -p "$output/include/standard-headers/drm"
 
 -- 
 2.43.0
