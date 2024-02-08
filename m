@@ -4,82 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 374D4C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D99A8C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYAgI-0004xl-HY; Thu, 08 Feb 2024 15:07:34 -0500
+	id 1rYAhP-0005bh-Qt; Thu, 08 Feb 2024 15:08:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rYAgH-0004xN-4x
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:07:33 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rYAhO-0005ax-5N
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:08:42 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rYAgF-0002GN-LA
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:07:32 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d51ba18e1bso2005475ad.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 12:07:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rYAhM-0002Ns-H4
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:08:41 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-560c696ccffso2393142a12.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 12:08:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707422849; x=1708027649; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1J/T0NWpLpQNugR1MVsfCXzq0xs5VWOLjbRJqqhRDE4=;
- b=OgK4N1e8s9jhnztbqxdjBkFvF9GmRs63sxiMGs3OkB2IIEiNcbW56MZ2+aNV6Ya+2L
- 8EJFkWeby3fVdq0g2Ynu0f4dTE402HnolhgC/f/zUyBE7hp+EtuonBnm9lSIEi7sNi2H
- znCUG5dd4khRHQuh+2nl+8yvApUUg1I8YO0js5aqNJVIXBBjchy2YRPaSOu8i2i0IdQ4
- C7jDRVNo2UNPfUwK2dg1my+Pp/UV0zLqFGGsx9LffFisuaNA+7mn+xZAbfPNSSKZzzoL
- LuxY3JWBCIAXjHjN+x6Sav9gvfuCXQ1d7RpUDRAHTTsUitHUXhnBJuyuMyDHuibWOQai
- idTg==
+ d=linaro.org; s=google; t=1707422918; x=1708027718; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JZ65eydw4YCzuP6CJb07VtIdfMy3zzeho4/H76W1l2g=;
+ b=bW0rHREe1CsZNRnC3EjgH/4/TqhaifhoC/+Am/UYc18JXLqAulDWPebzOhp1mhgpe3
+ CvU8H9+lhxgZXv84yK6ZbYZz7N43VnZ0QWTrIEGT+UYZlZZcA8+thcxsOkLuEoa8KZv8
+ T7gJjaYIpCOb7mTBB3URIr2ZT5vE26nuKIVMe6KMsrXgTDXZ6M6y7fPciMWwls2Oi+Rx
+ dYg5me0H7S8LNsVgxebdoJvoC9UC6HRJdPJA5hddrUl6XJa1DU3U1GOV4qPcscMkIUeY
+ I/JXZn1Tc+t3d0owzja7ABKfdyp1yIw6/l6W0M2uwBq7ab0jGjGwLtVVORoReHcPgW/X
+ eRuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707422849; x=1708027649;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1J/T0NWpLpQNugR1MVsfCXzq0xs5VWOLjbRJqqhRDE4=;
- b=RSCZITDjUCXyzF2J2sx7dU5v64OLbE8HVKqFilhLak00uLpubry4fDgokQf4UT0wxU
- dAnn70dy5mRUZEF9KdZAkHm9xKu3qF9y2oMZSE1FD0anKEURfhNElEYhURbzLFv66MwQ
- IOpDdglfXuAJq9Vi02GjFEvndIF8sgaKZb+8NChrv4xkBcln9WFkLQhsJxgV/pQ76iv2
- h3Dfmf18LDidlkOGO7FbNQWBgc3PtWe4JQQ/gE+91+WZTC6+KQhnuQlby33yAJnL5JxC
- sukdsdsYnOy8kuaQG5K37jg68Gi/RZ/ZUzGRbhiFOsgyZ3U0p0UaHdkwnvz9LjhJTc6g
- D1QA==
-X-Gm-Message-State: AOJu0YzgBhq5yvkeQEW1Dt7t5vbRQL2DMPSOJ3TiH8+fww7DU3/LP23m
- GuTyHGg7w2d2tMrzBfpfUu7v8zrrRGZuca6na7VwbtkV8Pxmxq3xKgFrlkUxbQ1qneeO30Djb7x
- 8
-X-Google-Smtp-Source: AGHT+IFGOviUdrAnbCvmrWc8vU/YWL4enTUbS6YwZ71fcWBjgbjrq/jgqBfwk20dLN2UaDbiA8+xpQ==
-X-Received: by 2002:a17:903:18b:b0:1d7:428f:50fd with SMTP id
- z11-20020a170903018b00b001d7428f50fdmr204830plg.31.1707422849467; 
- Thu, 08 Feb 2024 12:07:29 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWH7zvwlFu28iVq/+Fhl/1wxEzKdhr/9Ejw7toZpqE2lGdeozoE2XPSWD46yuQAOJD5HNcEJb9mJDS6XwllU56fbRBvuIzLMS1KiyHmx/UCBv9NTdVRK3jw
-Received: from [192.168.4.112] (066-027-223-101.inf.spectrum.com.
- [66.27.223.101]) by smtp.gmail.com with ESMTPSA id
- e16-20020a170902cf5000b001d77a0e1374sm147972plg.151.2024.02.08.12.07.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Feb 2024 12:07:29 -0800 (PST)
-Message-ID: <099ba824-7e79-4c2b-a548-5922d69a5720@linaro.org>
-Date: Thu, 8 Feb 2024 10:07:26 -1000
+ d=1e100.net; s=20230601; t=1707422918; x=1708027718;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JZ65eydw4YCzuP6CJb07VtIdfMy3zzeho4/H76W1l2g=;
+ b=Ubrw/vPnXvGZnlFqLhT7eYP3r74RnqX2955BeTe+7yhbvHYPja1dIe+pZ/FfrZZ6S5
+ I1xbXmthRQCoU8VTU5fo1HIyBxmDpKOaOZqS1pkENBZa1FSaglx81XtoGzOWZFbCjyr8
+ BJvJei91cLrUPGGFzPyyVrpT68gPRHEZ8XLe8AoB0Tg8/4THoOhiNSVfdsY8IQ8fYhEI
+ h8H/uQOdcFXUj1WGIrntExggC9r23pSFpFKGgQU1/kdK2bT9HKAFIBcW/I1kBATbzqtv
+ VFDCbxKYOE1jMsFmb/2aKQXai+MzGHcddoHtKNh3WsdnC6hCQ2wnKl0tmONxpjM1BkUd
+ sscQ==
+X-Gm-Message-State: AOJu0YwyTJ/AjkrDk3i5Q7Q+jUyc543mHGKcyrlK0FYfUogDG+He/m9m
+ h0iOVU7Cs/OO0QRaVE0BXQ7EosSPeYG+svf4HUfLzZkjnb1e/Qsj8ZHq3YP3JNnHlIMV0mwJzLE
+ /ahf4I0h2zO6cD+UtTb6OSCqzfG/F1e12mUuZWY9ocqjtVPYN
+X-Google-Smtp-Source: AGHT+IFZbxmGVWKgzaImKDJ8xOKjA9ztTQicZzDuY27BNRc525aGlnLauJMMOobt8mRjDyyjz+4R2QrsUYoImFzSemg=
+X-Received: by 2002:a05:6402:3203:b0:561:ea0:e234 with SMTP id
+ g3-20020a056402320300b005610ea0e234mr2974327eda.16.1707422917712; Thu, 08 Feb
+ 2024 12:08:37 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/6] util/bufferiszero: introduce an inline wrapper
-Content-Language: en-US
-To: Alexander Monakov <amonakov@ispras.ru>
-Cc: qemu-devel@nongnu.org, Mikhail Romanov <mmromanov@ispras.ru>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240206204809.9859-1-amonakov@ispras.ru>
- <20240206204809.9859-3-amonakov@ispras.ru>
- <b2160783-08ae-4ec7-8e49-e493cabac7b2@linaro.org>
- <cdbe132a-38e0-1200-bebb-ca0dfc3e1e7b@ispras.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cdbe132a-38e0-1200-bebb-ca0dfc3e1e7b@ispras.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+References: <20240206032151.174516-1-richard.henderson@linaro.org>
+In-Reply-To: <20240206032151.174516-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 8 Feb 2024 20:08:26 +0000
+Message-ID: <CAFEAcA-kBn7S3e=4UqMyzHtVRwQjyKF0dYoeFsSURQb_UF4ZHQ@mail.gmail.com>
+Subject: Re: [PULL v2 00/39] tcg patch queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,57 +87,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/24 21:13, Alexander Monakov wrote:
-> Thank you. I agree we shouldn't penalize non-x86 hosts here, but to be honest
-> I'd really like to keep this optimization because so many places in Qemu invoke
-> buffer_is_zero with a constant length, allowing the compiler to optimize out
-> the length test.
-
-Hmm.  True, both migration and image copy use large blocks frequently.
-
-
-> Would you be open to testing availability of optimized variants
-> in the inline wrapper like this:
-> 
-> diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-> index 62b153e603..7a2145ffef 100644
-> --- a/include/qemu/cutils.h
-> +++ b/include/qemu/cutils.h
-> @@ -209,11 +209,12 @@ static inline bool buffer_is_zero(const void *vbuf, size_t len)
->           return true;
->       }
-> 
-> +#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
->       if (len >= 256) {
->           return buffer_is_zero_len_256_plus(vbuf, len);
-> -    } else {
-> -        return buffer_is_zero_len_4_plus(vbuf, len);
->       }
-> +#endif
-> +    return buffer_is_zero_len_4_plus(vbuf, len);
-
-Plausible.
-
-Also, now that we're down to two variants instead of four, perhaps a statically predicted 
-direct branch or two might be better than an indirect branch?  E.g.
-
-bool buffer_is_zero_len_256_plus(buf, len)
-{
-#ifdef CONFIG_AVX2_OPT
-     if (select_accel & CPUINFO_AVX2) {
-         return buffer_zero_avx2(buf, len);
-     }
-#endif
-#ifdef __SSE2__
-     if (select_accel & CPUINFO_SSE2) {
-         return buffer_zero_sse2(buf, len);
-     }
-#endif
-     return buffer_is_zero_len_4_plus(buf, len);
-}
-
-where select_accel would be set by test_buffer_is_zero_next_accel() etc.
+On Tue, 6 Feb 2024 at 03:22, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> v2: Fix rebase error in patch 38 (tcg/s390x: Support TCG_COND_TST{EQ,NE}).
+>
+>
+> r~
+>
+>
+> The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
+>
+>   Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240205-2
+>
+> for you to fetch changes up to 23c5692abc3917151dee36c00d751cf5bc46ef19:
+>
+>   tcg/tci: Support TCG_COND_TST{EQ,NE} (2024-02-05 22:45:41 +0000)
+>
+> ----------------------------------------------------------------
+> tcg: Introduce TCG_COND_TST{EQ,NE}
+> target/alpha: Use TCG_COND_TST{EQ,NE}
+> target/m68k: Use TCG_COND_TST{EQ,NE} in gen_fcc_cond
+> target/sparc: Use TCG_COND_TSTEQ in gen_op_mulscc
+> target/s390x: Use TCG_COND_TSTNE for CC_OP_{TM,ICM}
+> target/s390x: Improve general case of disas_jcc
+>
 
 
-r~
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
+-- PMM
 
