@@ -4,95 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E5FC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 02:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B46C4829B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 03:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXuVp-0001uY-D0; Wed, 07 Feb 2024 21:51:41 -0500
+	id 1rXufP-0003dB-7s; Wed, 07 Feb 2024 22:01:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXuVn-0001u5-Qn
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 21:51:39 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXufN-0003cj-Nj
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 22:01:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXuVk-0001xg-If
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 21:51:38 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXufI-0003d9-Fy
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 22:01:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707360695;
+ s=mimecast20190719; t=1707361287;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xoWqfZIV4x9mMS2BBLyxp5HCz4NSc3Kur1VBSieijAo=;
- b=MF/SHY6p0MdouJ/rug3TeD1sGSXcUG6FxeWed9TUMIc63mkwXNeGfT2y6yPKlAKTskx4gK
- fDe+ivocGB8d3ICa+aNS6YUsm8xf+4Qx+eqbs9xKQQUjXkRVx6nWiKpPd+qk7xw5nbvkPA
- qaKWz7qdjnIhMOvAQ2IYj5LlyBY5gKs=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W16T7E/Sp7m0u0mJzBIZzC/1ggXDnZUTAvF49M9WktE=;
+ b=HksdNPhEXKZLu9fKY06vgZAy2hk+fXDwugcZ2UOqOFUh4JEWheyDgr7t4gw7brda9inyLn
+ xn5EJqxI3HcI+XZMmdOLbxqO9InfxGTj0Yv5y0wH9cNiVn1lIiqcnjcQOUYeEBOK/6VgIq
+ jyugYcmyjlhul3g0BjMOm+0MewY30qY=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-Aj65iThJNsC-tdz-QOkw_Q-1; Wed, 07 Feb 2024 21:51:33 -0500
-X-MC-Unique: Aj65iThJNsC-tdz-QOkw_Q-1
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-1d9f83b7857so880695ad.0
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 18:51:33 -0800 (PST)
+ us-mta-527-eeQXyx-wN2uUT2kE4B7_pw-1; Wed, 07 Feb 2024 22:01:25 -0500
+X-MC-Unique: eeQXyx-wN2uUT2kE4B7_pw-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-29692c99979so283089a91.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 19:01:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707360692; x=1707965492;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xoWqfZIV4x9mMS2BBLyxp5HCz4NSc3Kur1VBSieijAo=;
- b=rohBq8xztewLcaepQz15QCzUEa6w62g5/kM2p1RW7WRoTSkWOQpurpOQ92ckb4euyg
- VmbuLAD4LyTjAlD75DUU55YS87dvvtSAELBkzYY4IS9Ooau+VITO7ygdB5+zxjPIJcIR
- Pc3YA+ZqZWIDZS9G1+QspPuMEHiI63vzxul5iTDYl3JbyGvGNwm0UAwYCW/m8w9nHHhd
- AI8YfrLq3HlgRrP1KRbF282FxrLR4xJfRxaNGY3R/Gr/noonTV8cPlpcvLGOHBENP6Hf
- Rjv92OgQ7btM3Uabli9XpstphfdYH4qsEbmi5bdSlNIqKpf6qxuGNf7pHP8cHi4LnWXr
- o6ZA==
+ d=1e100.net; s=20230601; t=1707361284; x=1707966084;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W16T7E/Sp7m0u0mJzBIZzC/1ggXDnZUTAvF49M9WktE=;
+ b=FMTB0aeLKGS/aYCbP3e9h3Hp8srswqe9mKyb02riltvaWlkWimJNBwEKum3xMIV0jP
+ eCLLimoP7j5U7coECoo7EdJhEwxx+uK9kQIXMkqeOONLPucM+LpS240D6MLZVMxX5DKy
+ N32ZGCY6xYoSw9uK0pWe1DhQJjbJ7794cqnvfrYDSAH270dpg/GZ5WIt1u/P5KwrFca2
+ bnKGbMPphgUOCA2iG4JJ6WYu9OzN4qygmRRWbB201s0PVmesrKXUUIOLWvaPrQjJKs27
+ gIsXWBq2lEZ8f2ffVeqHkMkW2P0QqMlFyT/5bou7edyCrlUe7LENN4++e/3sz+lIMLuU
+ Dfvg==
+X-Gm-Message-State: AOJu0YwuIT5YJB1ZC5cVK7w74G7qLH4V9bW4sY61WnlUos1CyLig3nhW
+ AkIia/91HZko+Its/vwSvWXt4Un8MiEY07RFjb6p2kACi+fszdZKFQbnl/OEmk+SLkVZRWLjKFm
+ vlnjFx5+x6K6HIlvHYyXuGZTDILkrQQsusWKi1jEmXwory3n3uDbv8x30bfmAI3A=
+X-Received: by 2002:a17:90a:2f42:b0:296:faf0:988c with SMTP id
+ s60-20020a17090a2f4200b00296faf0988cmr147072pjd.3.1707361282547; 
+ Wed, 07 Feb 2024 19:01:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IExnt0XW9qFJgoqekTD1opPvjVZBB0fyg7uqYoZ0YluL8ezzCNvsS+ZwaKJBH9A/bWz+Er4Wg==
+X-Received: by 2002:a17:90a:2f42:b0:296:faf0:988c with SMTP id
+ s60-20020a17090a2f4200b00296faf0988cmr147049pjd.3.1707361282098; 
+ Wed, 07 Feb 2024 19:01:22 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCpiNedSS9NJ2WaNvI0+HU9gGLr8Z/Ne4V+67J0RZMrXj1UYRp1vcJjd+ktpfz4W820mwwjzhIsMDuwThd53EXIP0bPLM=
-X-Gm-Message-State: AOJu0YwKwsPFuI85cBNDMtjmYx2QPC0EBtRqO5c2cZlqE7xZ5PVQAHfO
- VaTTLlqfmvM28CU1AQRbprqECGO5tHcr3PaFxdX4xyVrlhXz8pvO1GWtTI6MqKTRLbciLKztCRD
- R/WlbCNZAmZiuimDFj7wfUmxWfzM0gbTVMtTC3sqNNtdNhmP81IAFmpZLtcP40Q8=
-X-Received: by 2002:a17:902:d505:b0:1d7:1480:6538 with SMTP id
- b5-20020a170902d50500b001d714806538mr8222592plg.1.1707360691842; 
- Wed, 07 Feb 2024 18:51:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEiBPH2Nc7t/VuKzajR+hhjXN2iO9aI25XTYX7RrZXIurgShFFn4d8fz7rAgWgcdjlW7G1P3w==
-X-Received: by 2002:a17:902:d505:b0:1d7:1480:6538 with SMTP id
- b5-20020a170902d50500b001d714806538mr8222579plg.1.1707360691458; 
- Wed, 07 Feb 2024 18:51:31 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEyJtanm2UkYdbdhymsyY7ge+U9hP3ia0Qk0CZrNqyOfZ+JF0UMYxR3hwIda8/7epCZkqWvFqW/nb7kZg35zpghJqzBM1pg+pePkBcZizaJbO+KGmlQg==
+ AJvYcCW2js8d90J5Yd3sxFebwmRS4+/OqQTRyg1GAC604pEo+w0XhK3rOwIFBUi3YgyC91hLdrxayF/K6wePd3PPfwE6zkrRj4dlUnivrEGl7rtD8i0seurVJI0=
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- b18-20020a170902d51200b001d70af5be17sm2178782plg.229.2024.02.07.18.51.29
+ s93-20020a17090a2f6600b00296ba96cda9sm227299pjd.55.2024.02.07.19.01.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Feb 2024 18:51:31 -0800 (PST)
-Date: Thu, 8 Feb 2024 10:51:26 +0800
+ Wed, 07 Feb 2024 19:01:21 -0800 (PST)
+Date: Thu, 8 Feb 2024 11:01:17 +0800
 From: Peter Xu <peterx@redhat.com>
-To: Hao Xiang <hao.xiang@bytedance.com>
-Cc: Jiri Denemark <jdenemar@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [External] Re: Re: [PATCH 2/6] migration/multifd: Add zero pages
- and zero bytes counter to migration status interface.
-Message-ID: <ZcRBrmTfxQixTeaJ@x1n>
-References: <20240206231908.1792529-1-hao.xiang@bytedance.com>
- <20240206231908.1792529-3-hao.xiang@bytedance.com>
- <ZcMDVpLilA-PZ3he@x1n> <ZcMI-wPq94x6cO2Z@x1n>
- <qhvli57ctzn3cyt2fwppmcauhmlrqoz7ubljxswx7ghroshop2@kmiaukhnvfko>
- <CAAYibXi3BUxjg+b1ZXiT_AnnV5LkAN11G-UZc6bZQr4sFz5uzw@mail.gmail.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Avihai Horon <avihaih@nvidia.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH v3 0/6] migration/multifd: Fix channel creation vs.
+ cleanup races
+Message-ID: <ZcRD_R0lR6MwHZe6@x1n>
+References: <20240206215118.6171-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAYibXi3BUxjg+b1ZXiT_AnnV5LkAN11G-UZc6bZQr4sFz5uzw@mail.gmail.com>
+In-Reply-To: <20240206215118.6171-1-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.106,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.106,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,84 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 07, 2024 at 03:44:18PM -0800, Hao Xiang wrote:
-> On Wed, Feb 7, 2024 at 12:41 AM Jiri Denemark <jdenemar@redhat.com> wrote:
-> >
-> > On Wed, Feb 07, 2024 at 12:37:15 +0800, Peter Xu wrote:
-> > > On Wed, Feb 07, 2024 at 12:13:10PM +0800, Peter Xu wrote:
-> > > > On Tue, Feb 06, 2024 at 11:19:04PM +0000, Hao Xiang wrote:
-> > > > > This change extends the MigrationStatus interface to track zero pages
-> > > > > and zero bytes counter.
-> > > > >
-> > > > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > > >
-> > > > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > >
-> > > I'll need to scratch this, sorry..
-> > >
-> > > The issue is I forgot we have "duplicate" which is exactly "zero
-> > > page"s.. See:
-> > >
-> > >     info->ram->duplicate = stat64_get(&mig_stats.zero_pages);
-> > >
-> > > If you think the name too confusing and want a replacement, maybe it's fine
-> > > and maybe we can do that.  Then we can keep this zero page counter
-> > > introduced, reporting the same value as duplicates, then with a follow up
-> > > patch to deprecate "duplicate" parameter.  See an exmaple on how to
-> > > deprecate in 7b24d326348e1672.
-> > >
-> > > One thing I'm not sure is whether Libvirt will be fine on losing
-> > > "duplicates" after 2+ QEMU major releases.  Copy Jiri for this.  My
-> > > understanding is that Libvirt should be keeping an eye on deprecation list
-> > > and react, but I'd like to double check..
-> >
-> > This should not be a big deal as we can internally map either one
-> > (depending on what QEMU supports) to the same libvirt's field. AFAIK
-> > there is a consensus on Cc-ing libvirt-devel on patches that deprecate
-
-I see.
-
-> > QEMU interfaces so that we can update our code in time before the
-> > deprecated interface is dropped.
-
-Right.
-
-What I mostly worried is "old libvirt" + "new qemu", where the old libvirt
-only knows "duplicates", while the new (after 2 releases) will only report
-"zeros".
-
-> >
-> > BTW, libvirt maps "duplicate" to:
-> >
-> > /**
-> >  * VIR_DOMAIN_JOB_MEMORY_CONSTANT:
-> >  *
-> >  * virDomainGetJobStats field: number of pages filled with a constant
-> >  * byte (all bytes in a single page are identical) transferred since the
-> >  * beginning of the migration job, as VIR_TYPED_PARAM_ULLONG.
-> >  *
-> >  * The most common example of such pages are zero pages, i.e., pages filled
-> >  * with zero bytes.
-> >  *
-> >  * Since: 1.0.3
-> >  */
-> > # define VIR_DOMAIN_JOB_MEMORY_CONSTANT          "memory_constant"
-> >
-> > Jirka
-> >
+On Tue, Feb 06, 2024 at 06:51:12PM -0300, Fabiano Rosas wrote:
+> Based-on: 20240202102857.110210-1-peterx@redhat.com
+> [PATCH v2 00/23] migration/multifd: Refactor ->send_prepare() and cleanups
+> https://lore.kernel.org/r/20240202102857.110210-1-peterx@redhat.com
 > 
-> Interesting. I didn't notice the existence of "duplicate" for zero
-> pages. I do think the name is quite confusing. I will create the
-> "zero/zero_bytes" counter and a separate commit to deprecate
-> "duplicate". Will add libvirt devs per instruction above.
+> Hi,
+> 
+> For v3 I fixed the refcounting issue spotted by Avihai. The situation
+> there is a bit clunky due to historical reasons. The gist is that we
+> have an assumption that channel creation never fails after p->c has
+> been set, so when 'p->c == NULL' we have to unref and when 'p->c !=
+> NULL' the cleanup code will do the unref.
+> 
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1166889341
 
-Yeah, please go ahead, and I hope my worry is not a real concern above; we
-can figure that out later.  Even without deprecating "duplicate", maybe
-it'll at least still be worthwhile we start having "zeros" reported
-alongside.  Then after 10/20/30/N years we always have a chance to
-deprecate the other one, just a matter of compatible window.
+Apologize if I queue this too fast, but i'll disappear tomorrow, so I want
+to have this thread race fixed soon.  I hope that's already complete from
+angle of all race can happen, but if otherwise we work on top.
 
-Thanks,
+queued, thanks.
 
 -- 
 Peter Xu
