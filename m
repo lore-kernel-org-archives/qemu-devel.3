@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EF1C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 18:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C378C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 18:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY8uK-0005ZZ-UH; Thu, 08 Feb 2024 13:13:56 -0500
+	id 1rY8tk-0004gS-CH; Thu, 08 Feb 2024 13:13:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rY8u1-0005Me-71
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:13:38 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rY8tg-0004P7-KJ
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:13:16 -0500
 Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rY8tx-0006os-Qx
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:13:35 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rY8te-0006mP-FV
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:13:16 -0500
 Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a39e31e1aa9so12210066b.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 10:13:33 -0800 (PST)
+ a640c23a62f3a-a3bbad234feso12490666b.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 10:13:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707416011; x=1708020811; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707415993; x=1708020793; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=49ud5Yjb30rn8SP9Mr5OVYTkrS5yFB+17IJ/cfY04ss=;
- b=LIMfBEEIRCYqMVNfECDt9W/Oy3qom2pvaKtrUCP2zzx/dfbyupZbdvTiFl5XZODU//
- /lqR4op+YrNaoB5XhpFaskWz8qTo+Ff5rOyq78BSIhrCmLU07+uGvJOKVTzAHeVFg8Ly
- RY8RK2HJFa5XE+F12yZ1yJis3fai+trNMAIot4gQDR/eNIXDpUk72kfHIXRHgWGIJVWI
- gq8Y7I804gASPjdwVKgn/PDVbCjcvW2KuZhXS3gNfliPtj8DDVsUwrf8/IgHV2sSfa8Z
- Nt24uHzHJV5SNHnvwl/LT4O6oWLC3h5kklXRjN3l3+QHP3M2dOvbYKS3eFPqn/Dn1PfB
- MrRw==
+ bh=/LcvVs02z5wCqQ7/8i6+yu1iXa6S9Xb47UoWtCZNINM=;
+ b=kLChST3MpqAINYSWIKQ7SvZsfDAj4eCpLU11rm+axmFfvUj7LaHPCR4t/qmeAjWGrq
+ mBOB9jsrAcSGK6OsZXaiqPewx0VjnuxewG/OI9vyn2MCwA3s8PeiKNdouphtuxd28kON
+ 1sD5+5YepU0/e2ovZbQcB5zRayxRxEBcGTgXsPCRls/3TOwYZSRDBV2/mNRIXSx8rhjz
+ qh9HHkv/acwSNwjQm2nx4HOIWAGwb9MAFu5f7yIpIcba6EpTvPwLqXvzGI06KWFqLTc8
+ x+g+Y7oIt9A+Im4769VpNx5dJ8hkJD5pixXB+bsTcNkENJiCmWkTSLCWZ+e6pt3bSj4X
+ 7XAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707416011; x=1708020811;
+ d=1e100.net; s=20230601; t=1707415993; x=1708020793;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=49ud5Yjb30rn8SP9Mr5OVYTkrS5yFB+17IJ/cfY04ss=;
- b=adr/9dPLNU0dX5W3r9sHpFR04fghqKAjeThLd5HVTW7La+iEEvp4S0Kfvne73LQuA/
- MzOsMXcWsJBqNwCCBI3Uwn1YXNt23sKNjLkWAQzBZBXnBAKzseFgFlyMLWemCF5o6MhP
- MxRy3jXwC0hivMug6o3yReFFqn8KUXis0h8Q0yZ+e2NtuZBmQncsTh96oq/OMF/z5oCl
- DjuWoD2+Sj+uH2Nj+wmIU/DJQkJTiVP/aMUe23ZFx6DBsuULmw/V4oj1+jdeEwSREf4r
- 6Uxc40paqJU7U0M7hTKBBKSfGX2M8Vr0DGVEPOsExsejE8Q8Z645zIHPUhFTFbQgVtSD
- 4HdQ==
-X-Gm-Message-State: AOJu0YwGRDSxMVUNnr7jp80vKKtrkkKsrl8PWfjMgtn5ng1T8xzzjlbf
- zeJZ5iDReEz/JdMk/2ZA8dvFPttOJ6cqbp1p4SyC3VskugtTWcPJ1hNDH6bcyJEwSkSzhNlERM/
- YOhY=
-X-Google-Smtp-Source: AGHT+IElKnKnfr2w+uv+DJybwknWUt2WS+hrduCNrzndqBMvy8oa1xWESV1rOzmK5yYbgzhIAsV8yA==
-X-Received: by 2002:a17:906:1cc3:b0:a38:6b3e:8bd with SMTP id
- i3-20020a1709061cc300b00a386b3e08bdmr93193ejh.37.1707416011498; 
- Thu, 08 Feb 2024 10:13:31 -0800 (PST)
+ bh=/LcvVs02z5wCqQ7/8i6+yu1iXa6S9Xb47UoWtCZNINM=;
+ b=mlUTLnp4YWSBBeEkTpcGOs78dLfCh2JRrmqKRpVJ1nEu4tgllHmnldT4fSXmFhZW2G
+ j+QQRK8KPbu20s/tXnV56mvSOssZBS/E2jBltCuwS4e8bKjjWXNSI+BUyC2+bqE3z+Xe
+ MzVsBCL5BJ3PGj9KPo0YIezIG6spRYGaMgdJoumAUyylX5/654RZC3418KQ8mqJAroyx
+ 3S1s8cpDw5guvsZBv3EOBZlZG4rHmkXMWzRxiEtQL3tyZjnSXcp5EdK88v6x7rB0Ntrd
+ zMa+FMqKyG6um2NhEt8IzK5ip87iFJfN1PyDppNmLhaEIyJP0y/SPqy/2gtxAV9Sr0iS
+ oVWg==
+X-Gm-Message-State: AOJu0YzwXkLOpU7ZBLOTvHsw0Ce5eVlgQQzLOC+RIAWMttlN+BOrBq+c
+ kNZSxSTAnmbz61m39XG0iWL6z7SwGWiidEp3E71dU0Hgu6RITiAXocEXzZtoAK7TRRZ6PTFVnZl
+ /Sco=
+X-Google-Smtp-Source: AGHT+IF9oGbnvDl4+VyGCQIuejjirp+ANIadCNr6qvOWURsIzMZTFVNFqsnhNDl65/uRZRDtVNRy2Q==
+X-Received: by 2002:a17:906:35db:b0:a37:5bf7:f64a with SMTP id
+ p27-20020a17090635db00b00a375bf7f64amr86361ejb.41.1707415993010; 
+ Thu, 08 Feb 2024 10:13:13 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWu2EbPuE4dOdkSp7nul+FpNq+9PE8jv5D0KfYqhDgArRE57ave53OHf/heI6zT4eJVrEkTNtyt8x4aN5C8rpwpzxSAv30Klpc+CgZqcaiftxlryebGJ8pjHyG8tT6XHnkoJecs+aHlKKLCxaK116PUB3ASLy7jpH9MVM3oSvV5BEy7HyJu8p6NmBwvotGQxRETSqJzIGXSGfKdfM155VlEXgpmzOkeHd4yt1ptNA7svbf5rnhIc0mNhetgZIFJFJTAxcTlXvxH/7ioqra/jiOUh0uxs0d3v9rEOGgpDLS1gfqpHD1/Mj1Wuey+PrIaLqJZTnSLSrHzX1++NMw91yJOnHQGB+aB7TriTyefKhM4eaMBoKvo4jANJQv/RTvFp+2tS++EzcPAmg==
+ AJvYcCUZfWjveanJQ5aK1sWpJZqar0gAVGSp61K9g/bixFm0BOrX7dgH5vTaB5OvNGW+/SnuYXSKAt6OUtxnBup2L2Rjq3Z0Akmmd526UHBN1ZC4i46OOstrEDooU4Cm+WmoI5FHAk8cMrg/qWOcctApmm28cbxVfMUPxqYFIiUvaa5v7Lzw1ZyeeoE0Zpbi5OV8bqeoJFuKmqlkC3f22Q9I3McCVYr04T0PwmSfcP9YQOyCGRV9VskMzRoT6is3d9fi5ktgcv7p4J1gpUEv2IuJzk3+/djLw1+/SglqTQ06alvFjIAG7zQ8aIReGY9o31bIvyrKYUHCcVtu4/Sr7o/XV6zFN5GhlPaHtStglkU/0ei44duEijInvEoeHqkJbwDHeSaC
 Received: from m1x-phil.lan ([176.187.218.105])
  by smtp.gmail.com with ESMTPSA id
- e3-20020a17090681c300b00a3826937a33sm292715ejx.211.2024.02.08.10.13.29
+ cu12-20020a170906ba8c00b00a397c2ab4a5sm297011ejd.120.2024.02.08.10.13.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 Feb 2024 10:13:31 -0800 (PST)
+ Thu, 08 Feb 2024 10:13:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -68,12 +68,12 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>
-Subject: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before accessing
- it
-Date: Thu,  8 Feb 2024 19:12:40 +0100
-Message-ID: <20240208181245.96617-8-philmd@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v3 04/11] hw/i386/pc_q35: Realize LPC PCI function before
+ accessing it
+Date: Thu,  8 Feb 2024 19:12:37 +0100
+Message-ID: <20240208181245.96617-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240208181245.96617-1-philmd@linaro.org>
 References: <20240208181245.96617-1-philmd@linaro.org>
@@ -108,24 +108,26 @@ We should not wire IRQs on unrealized device.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sh4/r2d.c | 2 +-
+ hw/i386/pc_q35.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
-index e9f316a6ce..c73e8f49b8 100644
---- a/hw/sh4/r2d.c
-+++ b/hw/sh4/r2d.c
-@@ -285,9 +285,9 @@ static void r2d_init(MachineState *machine)
-     dinfo = drive_get(IF_IDE, 0, 0);
-     dev = qdev_new("mmio-ide");
-     busdev = SYS_BUS_DEVICE(dev);
--    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
-     qdev_prop_set_uint32(dev, "shift", 1);
-     sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_connect_irq(busdev, 0, irq[CF_IDE]);
-     sysbus_mmio_map(busdev, 0, 0x14001000);
-     sysbus_mmio_map(busdev, 1, 0x1400080c);
-     mmio_ide_init_drives(dev, dinfo, NULL);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 7ca3f465e0..f67e5a55df 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -250,11 +250,11 @@ static void pc_q35_init(MachineState *machine)
+                                 TYPE_ICH9_LPC_DEVICE);
+     qdev_prop_set_bit(DEVICE(lpc), "smm-enabled",
+                       x86_machine_is_smm_enabled(x86ms));
++    pci_realize_and_unref(lpc, host_bus, &error_fatal);
+     lpc_dev = DEVICE(lpc);
+     for (i = 0; i < IOAPIC_NUM_PINS; i++) {
+         qdev_connect_gpio_out_named(lpc_dev, ICH9_GPIO_GSI, i, x86ms->gsi[i]);
+     }
+-    pci_realize_and_unref(lpc, host_bus, &error_fatal);
+ 
+     rtc_state = ISA_DEVICE(object_resolve_path_component(OBJECT(lpc), "rtc"));
+ 
 -- 
 2.41.0
 
