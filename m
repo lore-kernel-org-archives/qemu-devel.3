@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E932C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901CEC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY72z-0000p6-E1; Thu, 08 Feb 2024 11:14:45 -0500
+	id 1rY75A-00020A-EQ; Thu, 08 Feb 2024 11:17:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rY72s-0000oN-Ca
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:14:38 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rY759-0001yq-33
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:16:59 -0500
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rY72r-00027v-2l
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:14:38 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33b0ecb1965so1309864f8f.1
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:14:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rY757-0002hi-DI
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:16:58 -0500
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-51147d0abd1so2390637e87.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707408875; x=1708013675; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707409015; x=1708013815; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=heF0cSHATX80qHBQRktHQiHn5vMlOCoImYwMez7a0uo=;
- b=BN7HjPUxZeZSto3IENRwVzi83K/QnHbJBBBpVJZ+XW4v+V5otm8C1CtRJSx9Zdy6Ey
- KaSkZKlQ40kx7gB8y2P5QGupd+RNltdZ3CiSrzobcfyIL40EFGxErx1XGm2Z1q85Q97J
- zniWXKcgb6LydYhXtSJAXaCCnhIUUFIS059DrnetnWddYk+3dsf2294fdxcAP8ZPCupg
- 9YP10UP+Fk2LQ/KcN8xS4RZ0RBD31q3GHsXOVuPzIGLdlNlrkP+XkgGhexWnYh/ya6qv
- 7Bhq3pPAPxbSMdGM8kej9PRI10xA5DW42QAY9SXOViLZAFpCCv5xamXjMuIjvvTHBXHy
- 353A==
+ bh=LzHUM3HkKrr5qUlTZx47MQ+nhW8W/D14nHvbJQDJQoY=;
+ b=QvXVpWXCeK9W/3142o9regs1EHJNT0ttqk2fny0vzmEcrjI2POd7mTWkzu/5qZAoL5
+ Mxe9L42tFe2s+V4OE6uiP594yEk1/wk7UNTqS7wkhG4PjUBiCx1SaCiaRxQ6DcvCqFD6
+ P7GSUp8/EZF9M7YwK1oBmR5TsakdJhwJs9UHflHdy1gJ/RI0Lzj1Sh233ajFoBDbMxH4
+ Veuqetk0e/VK0CUw20tiE8uUmQBtkT2kX/KNM52WBn0nD4YXcxuGx41C3gDqSa7qz3q5
+ 5zMvxfZ6xyqskA4EHIrQ3exPWEGJ8rYcA+Q7NHpOx6pMnkTp5njtBpHWSU1Mc68hwb6K
+ p97g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707408875; x=1708013675;
+ d=1e100.net; s=20230601; t=1707409015; x=1708013815;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=heF0cSHATX80qHBQRktHQiHn5vMlOCoImYwMez7a0uo=;
- b=q8OEE/LkK2afLsBiNqhPMIytMe4bFqvieZo7GoWOs/J2ruBpI8dHkqgB6MhB4Qchy0
- 0z8wlgH2OFUfUtFTCbWbA02195fmC+C7BD4XQMJGHYoZVii35voC9a7QluKDT9OKEaSG
- ksA29w0I1ootYsDbdnPikNnRdQwl0dUc7XpjxgV1vVRARaj9jbw0BLuwiSVs1cuWlHHF
- cUlL5+V9EL5yGWT2plUpNZErONTGEuhBffIoupQbAnUIgKthNvqOhMJUct8gb2MhSmCU
- v4bqTj4qIOwkPNhSl0YBvNvrEyYLvLQs/aniuEe6RPwV1dl4c9viB3ihyw6uuflMG9ai
- VvVQ==
-X-Gm-Message-State: AOJu0Yy8HRyXpi0NXYqmm46xhny/rI9JDJg/B6hI/CpNGc4BTEP15q7y
- YLOdYjSZ4o+gsbthempKHE8VntOBl4lsSIpua1ObAUdVuGoi/rHZ8dEkIx+P
-X-Google-Smtp-Source: AGHT+IH4ubh++CiIc5ZzNTwExzhqO53v3JTi6caNRo7oirPsTxZ5Jrdd1wqzHvwhhwobXdON/ZrhSw==
-X-Received: by 2002:adf:f185:0:b0:33b:234c:ec04 with SMTP id
- h5-20020adff185000000b0033b234cec04mr6800548wro.32.1707408875117; 
- Thu, 08 Feb 2024 08:14:35 -0800 (PST)
+ bh=LzHUM3HkKrr5qUlTZx47MQ+nhW8W/D14nHvbJQDJQoY=;
+ b=JMpvJZn86NtClNRkMQueF8bAbfGN+CXYEtGcbom/1PHKWbhPnqiA/pNmbp2yZWVdqU
+ 2C4mutqHg+1xEgVSQjEZN0PTL8km2oz+03BS78ROLBDaiV4obQHLlMta9p11Ex9m2bTi
+ K5dm/3esQ778DC8uEQ2pp2ro6MWle2gmDfXlMLsykDF2G6kUmyTXH/cC17/QTPSX51SY
+ sXvBdaCn6IbO6y+GXyt8Z9Oly95nGYagJiLpyth4OkPM0PhseXNLPQLfg1NTT713wWg3
+ CO2xAiM89bXtgdNXv8OIRnsLuXBVZi302Qb51GpWM+kbaUXFbkYANOAPNZYKyOsef2Mk
+ 1bRw==
+X-Gm-Message-State: AOJu0YwHJMV/agCe/M65udmUdQPRDUsqmKYRi1GizMF/hDUuBPAgN3fl
+ sjjt3YZCfTagx1Z9UvQJGlPPh8+jRP8tx8v4hRQd0RKbIESex5YH
+X-Google-Smtp-Source: AGHT+IF5PqvE6Q5J6wAYFWaJDv4wtY7vsoiqiFJUHZCasyxaH8JiaOThbaXAyxvu7s6Z/iHqS987Lw==
+X-Received: by 2002:ac2:559a:0:b0:511:54f2:df07 with SMTP id
+ v26-20020ac2559a000000b0051154f2df07mr5963643lfg.11.1707409015255; 
+ Thu, 08 Feb 2024 08:16:55 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXM86oZHVot1a3lrvqzUh1b/msYvOC8asWAhx+KyAU2XaV1dO+9YQfzS1cxJA3bxcEFiWUkimAMHQm7pVXT0VQpZ1wgh20=
+ AJvYcCWKJn8x82BbtgmisScZakLmtmdfgVkUgbhx1mS4UPSmHs0DNvhfZIamNoWNHl7ju4jbY8cuC7sNrnSYQsCMZF+yLDf86poTHhUAdWvD6URfF65a4l9M
 Received: from ?IPv6:::1?
  (p200300faaf1724007ccdd0ba9e70da1e.dip0.t-ipconnect.de.
  [2003:fa:af17:2400:7ccd:d0ba:9e70:da1e])
  by smtp.gmail.com with ESMTPSA id
- e3-20020a5d5303000000b0033afe816977sm3861638wrv.66.2024.02.08.08.14.34
+ g11-20020a05600c4ecb00b0040d5ae2906esm2055232wmq.30.2024.02.08.08.16.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Feb 2024 08:14:34 -0800 (PST)
-Date: Thu, 08 Feb 2024 16:14:32 +0000
+ Thu, 08 Feb 2024 08:16:54 -0800 (PST)
+Date: Thu, 08 Feb 2024 16:16:47 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-CC: philmd@linaro.org
-Subject: Re: [PATCH v2 6/8] isa: extract FDC37M81X to a separate file
-In-Reply-To: <20240207111411.115040-7-pbonzini@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
+CC: qemu-devel <qemu-devel@nongnu.org>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 8/8] mips: do not list individual devices from configs/
+In-Reply-To: <CABgObfY=va3f6By4PtAVDeJv7o7-YVVA+d7pA7YzZ1=bPQ3_QQ@mail.gmail.com>
 References: <20240207111411.115040-1-pbonzini@redhat.com>
- <20240207111411.115040-7-pbonzini@redhat.com>
-Message-ID: <DA1AA8E4-F862-43BF-AD78-239281BAE702@gmail.com>
+ <20240207111411.115040-9-pbonzini@redhat.com>
+ <d218b1b0-3436-6120-55bc-f629ee1d667e@eik.bme.hu>
+ <CABgObfY=va3f6By4PtAVDeJv7o7-YVVA+d7pA7YzZ1=bPQ3_QQ@mail.gmail.com>
+Message-ID: <D6B1F7B5-DE42-4189-9FA7-BCE26BB47DF7@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,12 +102,114 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 7=2E Februar 2024 11:14:08 UTC schrieb Paolo Bonzini <pbonzini@redhat=
+Am 7=2E Februar 2024 13:55:51 UTC schrieb Paolo Bonzini <pbonzini@redhat=
 =2Ecom>:
->isa-superio=2Ec currently defines a SuperIO chip that is not used
->by any other user of the faile=2E  Extract the chip to a separate file=2E
+>Il mer 7 feb 2024, 14:18 BALATON Zoltan <balaton@eik=2Ebme=2Ehu> ha scrit=
+to:
 >
->Signed-off-by: Paolo Bonzini <pbonzini@redhat=2Ecom>
+>> >     if (defaults_enabled() && object_class_by_name("pci-ohci")) {
+>> >         pci_create_simple(pci_bus, -1, "pci-ohci");
+>> > -        usb_create_simple(usb_bus_find(-1), "usb-kbd");
+>> > -        usb_create_simple(usb_bus_find(-1), "usb-tablet");
+>> > +        Object *usb_bus =3D object_resolve_path_type("", TYPE_USB_BU=
+S,
+>> NULL);
+>> > +        usb_create_simple(USB_BUS(usb_bus), "usb-kbd");
+>> > +        usb_create_simple(USB_BUS(usb_bus), "usb-tablet");
+>> >     }
+>> >
+>> >     for (i =3D 0; i < nb_nics; i++) {
+>>
+>> Is this hunk supposed to be in this patch?
+>>
+>
+>Yes, it fixes compilation --without-default-devices (where usb_bus_find
+>does not exist)=2E Before this patch CONFIG_USB is always selected, even
+>without default devices=2E
 
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+Might be worth pointing out in the commit message=2E I wondered about this=
+, too=2E
+
+Bernhard
+
+>
+>Paolo
+>
+>
+>> Regards,
+>> BALATON Zoltan
+>>
+>> > diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+>> > index 1aafe1923d2=2E=2E5b2b3840f7a 100644
+>> > --- a/hw/display/Kconfig
+>> > +++ b/hw/display/Kconfig
+>> > @@ -55,7 +55,7 @@ config VGA_MMIO
+>> >
+>> > config VMWARE_VGA
+>> >     bool
+>> > -    default y if PCI_DEVICES && PC_PCI
+>> > +    default y if PCI_DEVICES && (PC_PCI || MIPS)
+>> >     depends on PCI
+>> >     select VGA
+>> >
+>> > diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+>> > index e57db4f6412=2E=2E5c83ef49cf6 100644
+>> > --- a/hw/mips/Kconfig
+>> > +++ b/hw/mips/Kconfig
+>> > @@ -1,8 +1,15 @@
+>> > config MALTA
+>> >     bool
+>> > +    imply PCNET_PCI
+>> > +    imply PCI_DEVICES
+>> > +    imply TEST_DEVICES
+>> >     select FDC37M81X
+>> >     select GT64120
+>> > +    select MIPS_CPS
+>> >     select PIIX
+>> > +    select PFLASH_CFI01
+>> > +    select SERIAL
+>> > +    select SMBUS_EEPROM
+>> >
+>> > config MIPSSIM
+>> >     bool
+>> > @@ -31,17 +38,26 @@ config JAZZ
+>> >
+>> > config FULOONG
+>> >     bool
+>> > +    imply PCI_DEVICES
+>> > +    imply TEST_DEVICES
+>> > +    imply ATI_VGA
+>> > +    imply RTL8139_PCI
+>> >     select PCI_BONITO
+>> > +    select SMBUS_EEPROM
+>> >     select VT82C686
+>> >
+>> > config LOONGSON3V
+>> >     bool
+>> > +    imply PCI_DEVICES
+>> > +    imply TEST_DEVICES
+>> > +    imply VIRTIO_PCI
+>> > +    imply VIRTIO_NET
+>> >     imply VIRTIO_VGA
+>> >     imply QXL if SPICE
+>> > +    imply USB_OHCI_PCI
+>> >     select SERIAL
+>> >     select GOLDFISH_RTC
+>> >     select LOONGSON_LIOINTC
+>> > -    select PCI_DEVICES
+>> >     select PCI_EXPRESS_GENERIC_BRIDGE
+>> >     select MSI_NONBROKEN
+>> >     select FW_CFG_MIPS
+>> > @@ -53,6 +69,8 @@ config MIPS_CPS
+>> >
+>> > config MIPS_BOSTON
+>> >     bool
+>> > +    imply PCI_DEVICES
+>> > +    imply TEST_DEVICES
+>> >     select FITLOADER
+>> >     select MIPS_CPS
+>> >     select PCI_EXPRESS_XILINX
+>> >
+>>
+>>
 
