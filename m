@@ -4,111 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C22C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 12:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0449EC48260
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 12:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY3pc-0002Z2-CG; Thu, 08 Feb 2024 07:48:44 -0500
+	id 1rY3vX-0003gH-30; Thu, 08 Feb 2024 07:54:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rY3pa-0002Ys-TM
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 07:48:42 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rY3pV-0002rp-D4
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 07:48:42 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0DF811FCEB;
- Thu,  8 Feb 2024 12:48:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707396516; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0gKpS8s6UffzZvH6c7qDzXKotViwwdS4jaRsd7zTs0g=;
- b=1iLW4tTKr2KGiRQUZzP9Dtq/Y4IDFVR9kOGQpanoLmZo7rXZk28pROOG3S7E+hBOTjMG5+
- SXPkZ2fLOfeG3HgboIK9jaxB9zFPVgcyAnKYCWFsB8x7QzosDO70jXEpOC7mMG+AfmlqQk
- Ou1tci6mkCqFhv5GG78qQhsqy8zIKxU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707396516;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0gKpS8s6UffzZvH6c7qDzXKotViwwdS4jaRsd7zTs0g=;
- b=WSYrM0hD9jm9eEC9MkevbCXJwixLFw4FOkCms7j40mpoGSMJ7U8e45VA5nX99QnGMI6ZM3
- KcGr8gnOUq5OmLDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707396516; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0gKpS8s6UffzZvH6c7qDzXKotViwwdS4jaRsd7zTs0g=;
- b=1iLW4tTKr2KGiRQUZzP9Dtq/Y4IDFVR9kOGQpanoLmZo7rXZk28pROOG3S7E+hBOTjMG5+
- SXPkZ2fLOfeG3HgboIK9jaxB9zFPVgcyAnKYCWFsB8x7QzosDO70jXEpOC7mMG+AfmlqQk
- Ou1tci6mkCqFhv5GG78qQhsqy8zIKxU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707396516;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0gKpS8s6UffzZvH6c7qDzXKotViwwdS4jaRsd7zTs0g=;
- b=WSYrM0hD9jm9eEC9MkevbCXJwixLFw4FOkCms7j40mpoGSMJ7U8e45VA5nX99QnGMI6ZM3
- KcGr8gnOUq5OmLDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8D0FF1326D;
- Thu,  8 Feb 2024 12:48:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id XQQSFaPNxGVATAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 08 Feb 2024 12:48:35 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: peterx@redhat.com, qemu-devel@nongnu.org
-Cc: Avihai Horon <avihaih@nvidia.com>, peterx@redhat.com, =?utf-8?Q?Daniel?=
- =?utf-8?Q?_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 2/2] migration/multifd: Drop registered_yank
-In-Reply-To: <20240208035126.370620-3-peterx@redhat.com>
-References: <20240208035126.370620-1-peterx@redhat.com>
- <20240208035126.370620-3-peterx@redhat.com>
-Date: Thu, 08 Feb 2024 09:48:33 -0300
-Message-ID: <871q9nceam.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1rY3vV-0003g8-FA
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 07:54:49 -0500
+Received: from fhigh3-smtp.messagingengine.com ([103.168.172.154])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1rY3vT-0003jK-5t
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 07:54:49 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id A6EE3114008A;
+ Thu,  8 Feb 2024 07:54:45 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Thu, 08 Feb 2024 07:54:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1707396885; x=
+ 1707483285; bh=WPvg7hzcTmS/cXanTsn7l/D9tQWA93iNr7++aO+PMaA=; b=B
+ kmDYc9a7gGxcWeKTGHnUtpCMpwom6VKVurJjdwdXs0imbCdO7A6uIR8YWcBOf7Hx
+ R5ngvq8qEZY47fdJpxVqKzXWiVTTZeh8sf0GJ02z9OZMvNF6l0rgfkCDpa+9UJB+
+ /uNz76FRPaJ32oA7TT3rq4C3rFIoJZeSqc2xdrVEIFn+YdhFXoMxnLHd35yglD6x
+ Dlqcexcnd0+ILLTrj70SnP8ltsYd8iEaxeMY77vBlQtWgY1VeLs2ByMk54ZEPG9v
+ 1CwrBVY+lkP7x/pMz9edopVWadB/cx0g+8lPY7UyU+gyb7+OJPwVPb6TA+tpAHQT
+ SMm3K/UsEx4ANpzoX9kFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; t=1707396885; x=1707483285; bh=WPvg7hzcTmS/c
+ XanTsn7l/D9tQWA93iNr7++aO+PMaA=; b=D1GDfCiq93+rwVVOQsMCY8mbcx3ZU
+ POvZ6TNiKnBQlA0VuTNZdyQrUvpVbD98GkgxW5Lh2PXS5PluBUNUbw6p0f1L45Zk
+ cva8e/lwDdTjSlTp057dotqNjhL61JoZ0oXBAXZEB0m4G+koA0Q5sHNjGynP0ThR
+ 0Kb4r64m786d/eXeqfZ4O5AuD+tbHS26JJ27QEMJ+CSkYReyIsmtHtdmsk3S+YLZ
+ bHf0ztMO/FR3V+q2l8E+5B1Lem40KBaHjOmBt0EH356MuJck8CQkILddluO3iFFk
+ kkRe9x9MAsRG5su6bDdYYulTs+5DevxVwe/dsTGhaAmDhFowb97AckwZQ==
+X-ME-Sender: <xms:FM_EZRpxVNjMfIPJPaWXGcIkCXBVh-xcLCObZ6khlOWhH21ZqX6sJA>
+ <xme:FM_EZTqgfxEA_4CkAnCWG5c1QlKsiHgB_iH2Ylrs3N8i88zr-MGQ9t35VMhexdA4O
+ 7NpVUzcJNG1DYO9QB0>
+X-ME-Received: <xmr:FM_EZeOsIxbgJgsLiJLXIJZrfpwm-FehnHMJtgprb3zNMR9ydXasaH4RoP9t0SxYntRGhVVEWXsAdzanNBDbeFWtvwaeyGCBDm52V0DV0Rq71yxOHrCitbKJLZwLyfklakPDPAEO6Bwzg0sj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdeggdeggecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkffvvefosehtjeertd
+ ertdejnecuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghv
+ rghnthdrughkqeenucggtffrrghtthgvrhhnpedtheevjeeihffggeeihfefheeuiefgue
+ fglefhtdffveehffekhfekgeetteffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+ rhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:Fc_EZc76q_rdA2dU7MueW8e0iwhiJxOxAoNor5Adh7rc3dQBmc_sYg>
+ <xmx:Fc_EZQ6iulRHpGVwLPyZPrdzhAokqJ-JwvENSWB3fTqLH_lsOo0aFA>
+ <xmx:Fc_EZUgw3spFp2Njsi0MZJnPGg0Rs2hIOR1cC2BVHRMVnhh86lM50g>
+ <xmx:Fc_EZelWsb6Yw_hqHDAtPXWqCNYD45O7cfg7OVky1zclXB3i04pcQg>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Feb 2024 07:54:44 -0500 (EST)
+From: Klaus Jensen <its@irrelevant.dk>
+Date: Thu, 08 Feb 2024 13:54:20 +0100
+Subject: [PATCH] MAINTAINERS: add Jesper as reviewer on hw/nvme
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1iLW4tTK;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WSYrM0hD
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-6.01 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; BAYES_HAM(-3.00)[100.00%];
- MID_RHS_MATCH_FROM(0.00)[]; ARC_NA(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_DKIM_ARC_DNSWL_HI(-1.00)[]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_IN_DNSWL_HI(-0.50)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_TLS_ALL(0.00)[]
-X-Rspamd-Queue-Id: 0DF811FCEB
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240208-maintainers-add-jesper-v1-1-1ed7eb9f8291@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAPvOxGUC/x2MsQrDMAwFf8VojsAxHUx/JWQw9UujQJ0ghRIw+
+ feKDjfccNfJoAKjZ+ik+IrJ3lzGIdBrLe0NlupOKaZHTDHzp0g7HahxqZU32AHlOkbkjMUBeXw
+ oFrn+42m+7x8KfvubaAAAAA==
+To: qemu-devel@nongnu.org
+Cc: Klaus Jensen <k.jensen@samsung.com>, Jesper Devantier <foss@defmacro.it>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=827; i=k.jensen@samsung.com;
+ h=from:subject:message-id; bh=xnSF7Qw8KWamEPYYAHMElocvF7SoKcm+v4NpTLA7r7I=;
+ b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGXEzxSAPldlr5U5zbDE8vMl9iE++MWb28enb
+ 6Ojvc6HBXAvgIkBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJlxM8UAAoJEE3hrzFt
+ Tw3pbRMIAIMWDszcdf0OKc59aWnHWfVChd/tV40yTHoUnDyEWFNO3w+pEOgIu9iHTC+1eb+wD6i
+ VfOABzkROJqHKHPVrdA0cvEziMYFC/nEczi8Zqih/0gSSgjDGim0g6HceJ6uX6xX3PRL8bWMesB
+ 6eZdTiLm+cc4KMzgG1YBxKWfs2ucaZ9+A4c8dZ3on6UVzUah0+fMLE0J0MLAANI/pendJVM7eJr
+ abTIDjEqRXi/x60arZfJiRADOzJoYXXKhXhO8j28f7UmZtxf9B6fDHtQTFYWpaE33X2CiTJ2G/u
+ mDJiJxUANtNYeZQoHA0tR2mutqLOwB86VVQv5F4a2cTBdwS+VxaZHadC
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Received-SPF: pass client-ip=103.168.172.154; envelope-from=its@irrelevant.dk;
+ helo=fhigh3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,66 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-peterx@redhat.com writes:
+From: Klaus Jensen <k.jensen@samsung.com>
 
-> From: Peter Xu <peterx@redhat.com>
->
-> With a clear definition of p->c protocol, where we only set it up if the
-> channel is fully established (TLS or non-TLS), registered_yank boolean will
-> have equal meaning of "p->c != NULL".
->
-> Drop registered_yank by checking p->c instead.
->
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/multifd.h | 2 --
->  migration/multifd.c | 7 +++----
->  2 files changed, 3 insertions(+), 6 deletions(-)
->
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index 8a1cad0996..b3fe27ae93 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -78,8 +78,6 @@ typedef struct {
->      bool tls_thread_created;
->      /* communication channel */
->      QIOChannel *c;
-> -    /* is the yank function registered */
-> -    bool registered_yank;
->      /* packet allocated len */
->      uint32_t packet_len;
->      /* guest page size */
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 4a85a6b7b3..278453cf84 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -648,11 +648,11 @@ static int multifd_send_channel_destroy(QIOChannel *send)
->  
->  static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
->  {
-> -    if (p->registered_yank) {
-> +    if (p->c) {
->          migration_ioc_unregister_yank(p->c);
-> +        multifd_send_channel_destroy(p->c);
+My colleague, Jesper, will be assiting with hw/nvme related reviews. Add
+him with R: so he gets automatically bugged going forward.
 
-At socket_send_channel_destroy the clean up of outgoing_args.saddr will
-now be skipped. The failure at multifd_new_send_channel_async might have
-been due to TLS, in which case all of plain socket setup will have
-happened properly.
+Cc: Jesper Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-> +        p->c = NULL;
->      }
-> -    multifd_send_channel_destroy(p->c);
-> -    p->c = NULL;
->      qemu_sem_destroy(&p->sem);
->      qemu_sem_destroy(&p->sem_sync);
->      g_free(p->name);
-> @@ -932,7 +932,6 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
->      qio_channel_set_delay(ioc, false);
->  
->      migration_ioc_register_yank(ioc);
-> -    p->registered_yank = true;
->      /* Setup p->c only if the channel is completely setup */
->      p->c = ioc;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2f9741b898e8..ef70cc9f4166 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2378,6 +2378,7 @@ F: docs/system/devices/virtio-snd.rst
+ nvme
+ M: Keith Busch <kbusch@kernel.org>
+ M: Klaus Jensen <its@irrelevant.dk>
++R: Jesper Devantier <foss@defmacro.it>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: hw/nvme/*
+
+---
+base-commit: 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440
+change-id: 20240208-maintainers-add-jesper-d10e88ef88ee
+
+Best regards,
+-- 
+Klaus Jensen <k.jensen@samsung.com>
+
 
