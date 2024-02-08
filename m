@@ -4,74 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0D1C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 15:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A1CC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 15:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY6ZE-0007fl-Ne; Thu, 08 Feb 2024 10:44:00 -0500
+	id 1rY6dr-0000Oj-7K; Thu, 08 Feb 2024 10:48:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY6ZD-0007fT-7j
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 10:43:59 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY6ZB-0005Am-MC
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 10:43:58 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-556c3f0d6c5so2412171a12.2
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 07:43:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707407036; x=1708011836; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MIlgp7c3WkYA2b+aebwwSO7bAEXpR0cjF81qe3HfwNM=;
- b=lScd+v9JHkyOfXKKDco17YWSi5tv1lSao2X8K3EbCd0cXSCi9+XZ199i6FM+zkqwtv
- lIDQQ3LCp4aEFQTJzoSX5Zs6TiMYpkN1goehtQzaL6v19ja8EdOy0fBMDXmNDTAfdo+4
- pvVa2FAf+3TblNPcfUeADVdGszYk7ln+GlhY04BWbFTXm3gxPMdMadYYfQ/fRkO8oBST
- hpBKXkjzeDDtrjV8XD8NC3V/9hm0lyS/x0GlI+1122jaXv/piQBTfP6WX15+ooym9Aij
- dbYWGw1s7RvRiU0rd8nG9hRmEbzBz5mVIrMg2LW9bkIVziUPkpjBPEmMgQy7fRVJ11Co
- IFPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707407036; x=1708011836;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MIlgp7c3WkYA2b+aebwwSO7bAEXpR0cjF81qe3HfwNM=;
- b=VDqyW8cqVK9ONAYVm9mCpcL8bZfIt+qhV0ZmACD5AWfeCO3iNOnx4l0WFGggSnJ55A
- TKUt4Jkwv2wB0u5iIaoJAZ4fXIoR/aGTQ7QJD0rC9a33d5DSKw49+b95gRDi3vc8Avgp
- bsGX1vrhLd2M6WCQAuvdRy7lr9A2RXg+cebvaLk3n2bDm7NoPH4MXL4oI9qQ2vGIFFJ2
- UoWsG1IsZYIm9+X0nCjZcB7s2XyeQ90ap1OsZnyoTkoREKsNGCQ1WGGFl99eXDVAQlAm
- DYnlFLFy1rksWuhQ90FcSmHV0m/ZRIaLHBt0qGXj8rwo2hs8w+jKPKPEyREoTsAKqhyy
- mvwQ==
-X-Gm-Message-State: AOJu0Yz53jL+S1dinm5mJMgeSDFGGxLORfek4wRxOIplGle+Hi+Ad7zP
- yANW8Q/kQG16HisFOLZdT8bfJ1oqFYQ162dHYxlLt01Q0ghFEL99BbMBJkdDFJwKGMsbBAmoeUM
- yKlRvkMc9bq2CBpiowGBj7eA4w0ryABbURZ1JfqfXm9cEGMzO
-X-Google-Smtp-Source: AGHT+IHFjRhFEA5He7aVoEJGB7GsdXZjWKPmBOfWcJwK3AtImygA8cHnlMXWK+LuqLQ4tb2h4C1ksDCIb2gpiW8TxVg=
-X-Received: by 2002:aa7:d646:0:b0:560:590:1044 with SMTP id
- v6-20020aa7d646000000b0056005901044mr6655292edr.6.1707407036121; Thu, 08 Feb
- 2024 07:43:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <bobby825@126.com>)
+ id 1rY6dm-0000OQ-V4; Thu, 08 Feb 2024 10:48:43 -0500
+Received: from m16.mail.126.com ([220.197.31.6])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <bobby825@126.com>)
+ id 1rY6dk-0005uV-KM; Thu, 08 Feb 2024 10:48:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+ s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
+ Content-Type; bh=sVHV6PYUwN23rSqvWgebqgUt2SID3QbNVQEPg+8em8A=;
+ b=R3gz6aS62NiDoNt2oBXdj8jL5u6fctQ3GZAau7F6rV9v4uP7ZlkEZXoHi3iOJ/
+ +ik8OrmDcCJG63hL1G3sbU50EsOcPxb4u1JorQ7VovJq/M+Jccjvd8XSIVoF+DUL
+ 6YbxgSEyl5LRKsva7vug/BDKOW+yXe2xMmatEJP0KjphA=
+Received: from localhost.localdomain (unknown [183.192.131.113])
+ by gzga-smtp-mta-g1-3 (Coremail) with SMTP id _____wDnD4bH98RlvabfAQ--.0S2;
+ Thu, 08 Feb 2024 23:48:26 +0800 (CST)
+From: Tianlan Zhou <bobby825@126.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Tianlan Zhou <bobby825@126.com>
+Subject: [PATCH v2] ui/console: Fix console resize with placeholder surface
+Date: Thu,  8 Feb 2024 23:47:06 +0800
+Message-Id: <20240208154705.1896-1-bobby825@126.com>
+X-Mailer: git-send-email 2.38.1.windows.1
 MIME-Version: 1.0
-References: <20240208154038.553385-1-mjt@tls.msk.ru>
-In-Reply-To: <20240208154038.553385-1-mjt@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Feb 2024 15:43:44 +0000
-Message-ID: <CAFEAcA_x1Rhivkk-mGRavYcNi-hgz+xK6bu_V_Q6rThtGev=HQ@mail.gmail.com>
-Subject: Re: [PATCH trivial v2] qemu-options.hx: document that tftp=dir is
- readonly
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wDnD4bH98RlvabfAQ--.0S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw4kuF4DKrWrWF1DCrWruFg_yoW8Gr1xpF
+ nxJF95Jrn8WryFvr9xtw4SgFWxu3909F4j9FWYkw17Zw1DJrWSv34xtw15u3yavw1ktas0
+ kFWUKFs8AF17Zw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zieMK_UUUUU=
+X-Originating-IP: [183.192.131.113]
+X-CM-SenderInfo: xereu5qysvqiyswou0bp/1tbiOg1+UmVEuzSHswAAsB
+Received-SPF: pass client-ip=220.197.31.6; envelope-from=bobby825@126.com;
+ helo=m16.mail.126.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,35 +70,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 8 Feb 2024 at 15:40, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1286
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
-> v2: include suggestion by Peter.
->    Not keeping Reviewed-by tags.
->
->  qemu-options.hx | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 5adbed1101..e7f07d8ccf 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -3100,6 +3100,8 @@ SRST
->          server. The files in dir will be exposed as the root of a TFTP
->          server. The TFTP client on the guest must be configured in
->          binary mode (use the command ``bin`` of the Unix TFTP client).
-> +        The built-in TFTP server is read-only, it does not implement any
+In `qemu_console_resize()`, the old surface of the console is kept if
+the new console size is the same as the old one. If the old surface is a
+placeholder, and the new size of console is the same as the placeholder
+surface (640*480), it won't be replaced.
+In this situation, the surface's `QEMU_PLACEHOLDER_FLAG` flag is still
+set, so the console won't be displayed in SDL display mode.
+This patch fixes this problem by forcing a new surface if the old one is
+a placeholder.
 
-semicolon, not comma.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Tianlan Zhou <bobby825@126.com>
 
-> +        command for writing files. QEMU will not write to this directory.
+---
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+v2:
+- Slightly modify the commit message
+- Add Reviewed-by: Marc-André Lureau
 
-thanks
--- PMM
+v1:
+- Initial patch
+
+---
+ ui/console.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ui/console.c b/ui/console.c
+index 7db921e3b7..832055675c 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -1577,7 +1577,7 @@ void qemu_console_resize(QemuConsole *s, int width, int height)
+     assert(QEMU_IS_GRAPHIC_CONSOLE(s));
+ 
+     if ((s->scanout.kind != SCANOUT_SURFACE ||
+-         (surface && surface->flags & QEMU_ALLOCATED_FLAG)) &&
++         (surface && !is_buffer_shared(surface) && !is_placeholder(surface))) &&
+         qemu_console_get_width(s, -1) == width &&
+         qemu_console_get_height(s, -1) == height) {
+         return;
+-- 
+2.38.1.windows.1
+
 
