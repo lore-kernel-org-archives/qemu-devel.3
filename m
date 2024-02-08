@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52005C4828F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55022C4829C
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 14:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY5cL-0007hK-8i; Thu, 08 Feb 2024 09:43:09 -0500
+	id 1rY5cY-0007j1-7v; Thu, 08 Feb 2024 09:43:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rY5cK-0007gc-5j
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:43:08 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rY5cU-0007i5-4M
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:43:19 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rY5cI-0001qr-9k
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:43:07 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-33aeb088324so1328863f8f.2
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 06:43:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rY5cS-0001sC-Fd
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:43:17 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5605c7b0ca2so2113413a12.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 06:43:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707403384; x=1708008184; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=y1S4UelR9CNPx0frZBsgWPnXiIkVW38h5UY4dbA5Chc=;
- b=FdFJcPrU1frbjz80DHuFGeGXgUJRSOV1WvEqPUtrgPL7OYxPCh9c7RWl1fcKIWdxZE
- QkLU3A1c6HW6ohLyh3t/PWxBDzwAXmRwaEr6rZn40mRWS8s1fNo3Cnn9vyLctDstCDyQ
- qkWlnusNE0yHWBx5b48DuqCNsQ9KQn4S6rt2xSa38IOAeKXtY1VvdJUZcAimJ1xlD1ap
- TnEi0ahVZzwfXZDXMa3YzOF8xjOrPUL0SuiEeMvnJzlfdQhFhM3ZunZPV2nD5E1uYaNw
- QVBWIw/tbb3AqH7YaT31Yu66j2TUvbKzvviSQJsy8hb7BmR/AKE5Izv2yTEwQGTcIAhm
- yI/Q==
+ d=linaro.org; s=google; t=1707403394; x=1708008194; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DDEzf0VLlSmb+7qiyrgB4qv8T95Iv7kpgIkLoN8gBwQ=;
+ b=t7wQ+F/g0Kt6OCXClzfEktvNGfrhYSJn/9bSb/Z8cEynQVcFAPUXii4cQ1ZLQ1bWD3
+ YuqccDz+5vQ2Btj9HK2EJQjpTcjB3LaJLkurao9BZorb/uAuRIr+WwVhwzs8dyFjfyyq
+ MQPcUC7agwDlZfHvlopvR0Iot6OWW1COsBGXNmpWWqrTkLLjGqenXXEDzEjC88EyCw8l
+ 2Vz3HKfIwS7jXt5n1qaGYLDE8Yzm3lj++0hxSn6hQnpC5lFOPkaKtFnCbzJtbXoEwrTD
+ LeORXGeVVD2OQnfm+U63OENTeGz94PmqNKIn5xMeU/iiZwu4B0VZGK1NTLJRDwocrF99
+ WMRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707403384; x=1708008184;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y1S4UelR9CNPx0frZBsgWPnXiIkVW38h5UY4dbA5Chc=;
- b=t+vHXA1DCTSCce/2h5FVw53LsL7l2vaxxpMhdS6M8oB/6SLmP1u4BbBxz32d9LB9qi
- e0tpB/vOpVGCQmHObEaH/WL5aNYoEwEAKZ3wmNjsnatBTlBoUu1VG+Qho8JpAk5XGMex
- L1BtvSZAoyAXpRUWiOSHfWGyNsZpLF8FQXTDJLKJJ1ZMjFBR3Agj/E7DSBudVZGejq4C
- 4x+MB2H3DR9fucqV1919EBoouxBDnUMaMmLB9MDTxTFkK49PcYVI89QBxeaTutVjjcF5
- l1ViSeNWTVPzvNWPt/UjStF0HOIuKfZJpAz3xf4jSLoJ/pRLsBGCxaqmiJ1jHeDVTAMG
- WQVA==
+ d=1e100.net; s=20230601; t=1707403394; x=1708008194;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DDEzf0VLlSmb+7qiyrgB4qv8T95Iv7kpgIkLoN8gBwQ=;
+ b=wWfaK9gkyYzPN0wxylf5lc6d0wSY7c/dMXI/qBqs1dLQITWnwPXGorcOGWv+eUJQkH
+ Cm+uvoZnHUgrGCbJ2j7kmgACQJBYClGTFWjWYWCOw23P3YoYXW35+6eF/oEK2jFeYlLT
+ bkpOI6RUvAPfZ33D43V9VfY3fGMrwgcTLTaQUZYFYZIPM9mWCAc0xggt0c8vtfKlcZru
+ JT9YJYn1q1vzvvzBsafDmKq2n/1UPwSLQQmVOFYaeI+BzNYR5JrMDCpTSDTMkMM+zOJm
+ K8KvgTQeirmOV5oR+G+fb0RrICCysimijROpF/G0/iU5/uZXw1KpesF5dcIkfQpS7oac
+ v6pQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEYM09IQGB2ixGchWUeJLW67Dr9BTzHGi6x6qOWJkdi4/qigVhp9xxBLmlRzWa0gOr3cKAQVzoOzgGqrqSJmk4R9nUszM=
-X-Gm-Message-State: AOJu0Yw+c2Jg8nJyGPDmeiffhX0IJhOuo33wc3fQ1uQ5WNOWY8DUpVOs
- UR4dgPx+dyoI69c0n1Ogt+oxC5stO+6OGEQrc61IHSqNiDNJcr1jmUGl/FMJnA8=
-X-Google-Smtp-Source: AGHT+IE0XEVrBKvt9CRj0tZP34lu1e13Zgt7vP7Lc26uYT2lf2aKbtUYuyWboaWELNgMsAMVkCehJQ==
-X-Received: by 2002:a5d:498a:0:b0:33b:24b3:83d1 with SMTP id
- r10-20020a5d498a000000b0033b24b383d1mr7243822wrq.27.1707403384582; 
- Thu, 08 Feb 2024 06:43:04 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPa5KaQbqKb80SgJeKxEYDaZsVh69t7UIE1OE2+FyfFC8Eot8Ug9IBIML0zPGQ//FU6Ww2F/LxqsKcsssIHbOifazMrMpbqHB166x4Wz3pJxn7lkggSrts6p8/I1I4RTvrQwX5MGzxwvjjEAgpQTp5ywt4vbz3nhEGo4f+zqAOCl01xEGvwv98bNlKDVxAAizZwk3Gf729PoIaGvqSHB+RjnlS27A/3jzaDEHWxXamfeE7R51dyfSBFD4H1K5lT2HH6iItPc1CdqHvdLO1IbfaEAXbH587uynsNFLl1NVdcG8QaZnl7tnFy0tHYMtqSyC1wTkQ
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- c13-20020a056000184d00b0033b07f428b6sm3777501wri.0.2024.02.08.06.43.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Feb 2024 06:43:04 -0800 (PST)
-Date: Thu, 8 Feb 2024 14:42:57 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- mst@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
- zhenzhong.duan@intel.com, yanghliu@redhat.com,
- alex.williamson@redhat.com, jasowang@redhat.com
-Subject: Re: [PATCH v3 0/3] VIRTIO-IOMMU: Introduce an aw-bits option
-Message-ID: <20240208144257.GA2863476@myrica>
-References: <20240208101128.655167-1-eric.auger@redhat.com>
+ AJvYcCWvnzwcM/ehLjD8APw0Q37WTErPv1iuQX3lie1XuNQ8napSI61qkKnucQOMwMmFtB1obY5qe9udPDvveJ0laQIadi0H3R8=
+X-Gm-Message-State: AOJu0Yxh82SMhjzXFVpT43UWOWHrGpwZKiitXDHdlO/Az/xkluCZ75eQ
+ I3xCv5j0K8/COrkjIpqsBU7Dsasu4nx0U+KqfgFeQWELXMvrU+gNE+0+fIyfahPVeShpqH8fMTq
+ OWDwneOJ2AqeyE9XNTshnhnGpk8Sbgw1btXXsbQ==
+X-Google-Smtp-Source: AGHT+IHetivHlDdAG4dhvOqn+s3kfjjplRerVEUAiXTMPsIC0BUNEWyK+DcA5rm4eYlzCmEgobZoGQRpCdbrRTvuUNs=
+X-Received: by 2002:aa7:de04:0:b0:55e:f9c4:3525 with SMTP id
+ h4-20020aa7de04000000b0055ef9c43525mr6686403edv.30.1707403394624; Thu, 08 Feb
+ 2024 06:43:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240208101128.655167-1-eric.auger@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x433.google.com
+References: <20240206232337.1043760-1-nabihestefan@google.com>
+In-Reply-To: <20240206232337.1043760-1-nabihestefan@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 8 Feb 2024 14:43:03 +0000
+Message-ID: <CAFEAcA_mpxnXWX=9mYTUPnrqPrwK+VWgJxb4p07Q9y-xuZY5ng@mail.gmail.com>
+Subject: Re: [PATCH 0/1] Sending small fix for NPCM GMAC test to properly test
+ on Nuvoton 7xx
+To: Nabih Estefan <nabihestefan@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
+ wuhaotsh@google.com, jasowang@redhat.com, avi.fishman@nuvoton.com, 
+ kwliu@nuvoton.com, tomer.maimon@nuvoton.com, Hila.Miranda-Kuzi@nuvoton.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,85 +92,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 11:10:16AM +0100, Eric Auger wrote:
-> In [1] and [2] we attempted to fix a case where a VFIO-PCI device
-> protected with a virtio-iommu is assigned to an x86 guest. On x86
-> the physical IOMMU may have an address width (gaw) of 39 or 48 bits
-> whereas the virtio-iommu exposes a 64b input address space by default.
-> Hence the guest may try to use the full 64b space and DMA MAP
-> failures may be encountered. To work around this issue we endeavoured
-> to pass usable host IOVA regions (excluding the out of range space) from
-> VFIO to the virtio-iommu device so that the virtio-iommu driver can
-> query those latter during the probe request and let the guest iommu
-> kernel subsystem carve them out. 
-> 
-> However if there are several devices in the same iommu group,
-> only the reserved regions of the first one are taken into
-> account by the iommu subsystem of the guest. This generally
-> works on baremetal because devices are not going to
-> expose different reserved regions. However in our case, this
-> may prevent from taking into account the host iommu geometry.
-> 
-> So the simplest solution to this problem looks to introduce an
-> input address width option, aw-bits, which matches what is
-> done on the intel-iommu. By default, from now on it is set
-> to 39 bits with pc_q35 and 48 with arm virt. This replaces the
-> previous default value of 64b. So we need to introduce a compat
-> for machines older than 9.0 to behave similarly. We use
-> hw_compat_8_2 to acheive that goal.
+On Tue, 6 Feb 2024 at 23:23, Nabih Estefan <nabihestefan@google.com> wrote:
+>
+>
+> Nabih Estefan (1):
+>   tests/qtest: Fixing GMAC test to run in 7xx
 
-For the series:
+This fails "make check". Perhaps you forgot to configure QEMU with
+the arm-softmmu target enabled when doing your build and test?
 
-Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-> 
-> Outstanding series [2] remains useful to let resv regions beeing
-> communicated on time before the probe request.
-> 
-> [1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
->     https://lore.kernel.org/all/20231019134651.842175-1-eric.auger@redhat.com/
->     - This is merged -
-> 
-> [2] [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling for hotplugged devices
->     https://lore.kernel.org/all/20240117080414.316890-1-eric.auger@redhat.com/
->     - This is pending for review on the ML -
-> 
-> This series can be found at:
-> https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v3
-> previous
-> https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v2
-> 
-> Applied on top of [3]
-> [PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default page_size_mask
-> https://lore.kernel.org/all/20240117132039.332273-1-eric.auger@redhat.com/
-> 
-> History:
-> v2 -> v3:
-> - Collected Zhenzhong and Cédric's R-b + Yanghang's T-b
-> - use &error_abort instead of NULL error handle
->   on object_property_get_uint() call (Cédric)
-> - use VTD_HOST_AW_39BIT (Cédric)
-> 
-> v1 -> v2
-> - Limit aw to 48b on ARM
-> - Check aw is within [32,64]
-> - Use hw_compat_8_2
-> 
-> 
-> Eric Auger (3):
->   virtio-iommu: Add an option to define the input range width
->   virtio-iommu: Trace domain range limits as unsigned int
->   hw: Set virtio-iommu aw-bits default value on pc_q35 and arm virt
-> 
->  include/hw/virtio/virtio-iommu.h | 1 +
->  hw/arm/virt.c                    | 6 ++++++
->  hw/core/machine.c                | 5 ++++-
->  hw/i386/pc.c                     | 6 ++++++
->  hw/virtio/virtio-iommu.c         | 7 ++++++-
->  hw/virtio/trace-events           | 2 +-
->  6 files changed, 24 insertions(+), 3 deletions(-)
-> 
-> -- 
-> 2.41.0
-> 
+=================================== 34/357 ===================================
+test:         qemu:qtest+qtest-arm / qtest-arm/npcm_gmac-test
+start time:   14:32:48
+duration:     0.34s
+result:       killed by signal 6 SIGABRT
+command:      MALLOC_PERTURB_=46 QTEST_QEMU_BINARY=./qemu-system-arm
+PYTHON=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/pyvenv/bin/python3
+QTEST_QEMU_IMG=./qemu-img
+QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon
+G_TEST_DBUS_DAEMON=/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/dbus-vmstate-daemon.sh
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/qtest/npcm_gmac-test
+--tap -k
+----------------------------------- stdout -----------------------------------
+# random seed: R02S12ecd459925511b522511dd789dfb6d8
+1..2
+# Start of arm tests
+# Start of npcm7xx_gmac tests
+# Start of gmac[0] tests
+# starting QEMU: exec ./qemu-system-arm -qtest
+unix:/tmp/qtest-797739.sock -qtest-log /dev/null -chardev
+socket,path=/tmp/qtest-797739.qmp,id=char0 -mon
+chardev=char0,mode=control -display none -audio none -machine
+npcm750-evb -accel qtest
+Bail out! ERROR:../../tests/qtest/npcm_gmac-test.c:254:test_init:
+assertion failed (pcs_read(qts, mod, (NPCM_PCS_SR_CTL_ID1)) ==
+(0x699e)): (0x00000000 == 0x0000699e)
+----------------------------------- stderr -----------------------------------
+**
+ERROR:../../tests/qtest/npcm_gmac-test.c:254:test_init: assertion
+failed (pcs_read(qts, mod, (NPCM_PCS_SR_CTL_ID1)) == (0x699e)):
+(0x00000000 == 0x0000699e)
+
+(test program exited with status code -6)
+==============================================================================
+
+-- PMM
 
