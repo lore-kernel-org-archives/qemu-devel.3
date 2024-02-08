@@ -4,69 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E2C5C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2804AC48260
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:13:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYAin-0006r4-V1; Thu, 08 Feb 2024 15:10:09 -0500
+	id 1rYAlS-00009N-U2; Thu, 08 Feb 2024 15:12:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYAim-0006qm-E4
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:10:08 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rYAlS-00009F-25
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:12:54 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYAil-0002dC-0M
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:10:08 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5605c7b1f32so386549a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 12:10:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rYAlQ-0003BL-Ho
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:12:53 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1d94323d547so1805475ad.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 12:12:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707423005; x=1708027805; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=x3ov+QTtMF8Zj2Z6EbLA3awLDSIs9WxnMZMcqe96+Lo=;
- b=K9n4SqwJkE5MeOyf4lpIwAsMCWgflZxmPxl7L6hNnUr1JIqKKJn+5Zu40eQGf+9rjd
- AB/Lpgnm7UN8KGbjdapFtReF9bxKz+EXEGS6Tsda2AcD/n/EgpHLUInoZ5d9zoAqmmco
- yJ6RMcgCWVuXrzaSYCCNVTmKluUl/GG5MmOPZM8RmtBW+taJBH1gwCoNmJ12ekjIhi7D
- Oj7yXbRbHD/bEugBbMK1HS+rAROEFIj2fPIoHGY2EOfoZ2Yu0SHSu9SVR3fONHIXeNp+
- 4kbYo7A4udGgvgmbyJ3hMw+BbMeKwltXUKt+vH0du2k5x3Cw8r959Pe2wa5+AskES4nB
- DXOg==
+ d=linaro.org; s=google; t=1707423169; x=1708027969; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+GaW7JBSEEdKnTRNC03TMkZWyuAWeIJVcwofp5H/kbk=;
+ b=xdG0S6zn8fFmvl5cBk54Nx4wNkPEv9cTUAZlJPK112OYHTDUUKbvxMeM9dKrTuLlT0
+ x0nxTZXmhIDYDZpoAj0qenc/nEgcHOdIH9bGMQgCmwL71FoYRFAZyEPXuuowXsUB2qVk
+ zZl+xiOGBxJ7hQ6OeXNkPdrFgI2lA55c9hIR3TZ/I7F5KgCQAbZwxRR5pBKlaBK+oCfY
+ wEa+mWSWpnertyEpZbDrbyjJQCP4386groEKBDxLCBCWCLLPJPty+QqMgpgg+9AInEaX
+ dJtIQExu8KEKCJB2WUKhiee+ML84K9o61PHVuFsXvz3j/2iJocYe9ohaVTAOSrR5BNav
+ CIHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707423005; x=1708027805;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x3ov+QTtMF8Zj2Z6EbLA3awLDSIs9WxnMZMcqe96+Lo=;
- b=LaqMRL4jaAGIwSMP70NijxAAP1lr42jzPSONCLNIQ0Tz/ftclUsu7HCF9v+NQ0VYHL
- qbN4HnxMWzHT/UvinvRPUoKr1OjAfg6l/5HorT0OLt86qmKSIZ3MOsl4jYUHqnVuEhug
- O8ovPb13qe1MMbqBnXz5j+38MAikJ2omlwylJAC759uGvFNj7VL6+JqahBwJPKudku/K
- Nyi/XTepcgvFgfd5MIFpAXqToLgenesFk5NnWdCukxVbH3bgN5drFVBcZf3t3BF2S5Y5
- kyXQfahEyMHWP6AAev/pdbmW/r5RrG36q7tLdyXgN5PG2bR0uo2Ij3gUxWBazFIgdmv1
- PO8A==
-X-Gm-Message-State: AOJu0YyKOtAOWS2Lv4LBauHqFXoUkigemLTKQEvSCsEwhbZ6wGa6b3ih
- EYSDH9kZEupRqGa6HXs2D0btxqzdfdrqNwnIlahpkqbUX1wINyL/skC8XswgFlIupycec3WY9fh
- dsqeJlvSVlx2/pVK5VTJcqnttZC1hYkZwbUEEzg==
-X-Google-Smtp-Source: AGHT+IFGCWgA9B7TOh05HfsD51BtYg+pB4WbVg9D6xFqy6pjSlPVFMt6KorQBIcPo+k1zVBgNaQ3rK7W/OWaZyWZU4c=
-X-Received: by 2002:a05:6402:14cf:b0:55f:abe7:8f33 with SMTP id
- f15-20020a05640214cf00b0055fabe78f33mr205528edx.15.1707423005681; Thu, 08 Feb
- 2024 12:10:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707423169; x=1708027969;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+GaW7JBSEEdKnTRNC03TMkZWyuAWeIJVcwofp5H/kbk=;
+ b=Y7pQlXvah1fLgHIw4L5iy6+/agWq87TsGoCmW/iQzz0p4f8ev2h/nVvI1pJ+gxz8lj
+ fgQL4AkgN05YgO0Rb0SDbAys7AoTixr8+KJbi0YxFpiNcBtGEFJsj5ouQGzxwHAA3kwK
+ 7j/cl2K/X4qXVnx+PwJQZYnjdyudIEvtz56c638d0T6cO0u10MMKIfYcRb7KOTc/CKT3
+ +x908racNJqLZYwapi5oTfLcKUbnTWavo6GSQee93o6wtWCn3MC6AMl8U6JBn2t7xp1Y
+ Qt9Zoj21DQgTqK5xVIBAGDcCU2ubXPI9jfISoOr23k9lmB7GT+fXPG9oZnyHi7nRBHlM
+ Np4A==
+X-Gm-Message-State: AOJu0Yy88YDQyTxT3LYE8zblq/VVkY/rwI5+2ZtYacH2+ba1ydAArih1
+ nqLOulQId6KS4bHqveyRTElHxJGd0eofCNezSM3Q/hVNXq97/C0PxVWsPfjrnjo=
+X-Google-Smtp-Source: AGHT+IGkVBfuq/LWSlL10T0fxHj8d8c5mhRb74udui1WapraDL9bvK8+Cv1xxUFuJVz6N2i6JlT/PQ==
+X-Received: by 2002:a17:902:64d7:b0:1d9:c1a9:29d3 with SMTP id
+ y23-20020a17090264d700b001d9c1a929d3mr259284pli.25.1707423152076; 
+ Thu, 08 Feb 2024 12:12:32 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOgYy4mJ7O6KIlTFkObtARpOVt1SS9Nmql2/Ls06Ta4Uf2H5KhF8LA2MtES7b0K+VWBBl1LeMKyNT/i/ObgQAWoRqohV0=
+Received: from [192.168.4.112] (066-027-223-101.inf.spectrum.com.
+ [66.27.223.101]) by smtp.gmail.com with ESMTPSA id
+ d4-20020a170903230400b001d9469967e8sm151736plh.122.2024.02.08.12.12.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Feb 2024 12:12:31 -0800 (PST)
+Message-ID: <559cb196-6bbe-481f-9499-de89ea73b535@linaro.org>
+Date: Thu, 8 Feb 2024 10:12:28 -1000
 MIME-Version: 1.0
-References: <CAFEAcA8p9BKCrn9EfFXTpHE+5w-_8zhtE_52SpZLuS-+zpF5Gg@mail.gmail.com>
- <87plx6bzo8.fsf@suse.de>
-In-Reply-To: <87plx6bzo8.fsf@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Feb 2024 20:09:54 +0000
-Message-ID: <CAFEAcA_cLRruqwz+3muBE-RfyV5RQgyrFgz4beeVo3TtGaoPXw@mail.gmail.com>
-Subject: Re: migration-test random intermittent failure, openbsd VM
-To: Fabiano Rosas <farosas@suse.de>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] disas/hppa: Add disassembly for qemu specific
+ instructions
+Content-Language: en-US
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+References: <20240207182023.36316-1-deller@kernel.org>
+ <20240207182023.36316-2-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240207182023.36316-2-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,20 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 8 Feb 2024 at 18:04, Fabiano Rosas <farosas@suse.de> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> +cc Daniel.
->
-> > Random intermittent in migration-test when running the tests
-> > in the openbsd VM (i.e. what you get from 'make -C build vm-build-openbsd')
-> > Any ideas?
->
-> Where's your HEAD at?
+On 2/7/24 08:20, deller@kernel.org wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> Add disassembly of opcodes for "HALT QEMU", "RESET QEMU" and
+> "RESTORE SHR" (restore shadow registers).
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   disas/hppa.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-03e4bc0bc02 in this case.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-thanks
--- PMM
+r~
+
+> 
+> diff --git a/disas/hppa.c b/disas/hppa.c
+> index cce4f4aa37..22dce9b41b 100644
+> --- a/disas/hppa.c
+> +++ b/disas/hppa.c
+> @@ -1609,6 +1609,10 @@ static const struct pa_opcode pa_opcodes[] =
+>   { "call",	0xe800a000, 0xffe0e000, "nW", pa10, FLAG_STRICT},
+>   { "ret",	0xe840d000, 0xfffffffd, "n", pa20, FLAG_STRICT},
+>   
+> +/* Opcodes assigned to QEMU, used by SeaBIOS firmware and Linux kernel */
+> +{ "HALT QEMU",	0xfffdead0, 0xfffffffd, "n", pa10, FLAG_STRICT},
+> +{ "RESET QEMU",	0xfffdead1, 0xfffffffd, "n", pa10, FLAG_STRICT},
+> +{ "RESTORE SHR",0xfffdead2, 0xfffffffd, "n", pa10, FLAG_STRICT},
+>   };
+>   
+>   #define NUMOPCODES ((sizeof pa_opcodes)/(sizeof pa_opcodes[0]))
+
 
