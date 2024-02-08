@@ -4,65 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B1FCC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 07:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB19AC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 08:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXzGb-0008CL-UF; Thu, 08 Feb 2024 02:56:17 -0500
+	id 1rXzW4-0002GJ-W1; Thu, 08 Feb 2024 03:12:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXzGZ-0008Bp-VJ
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 02:56:16 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rXzW0-0002G4-2T
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 03:12:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rXzGY-0001av-Gt
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 02:56:15 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rXzVx-0004ES-EM
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 03:12:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707378973;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1707379928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jpfi2e+GLXIcgCElwL8zZOkecaAKVHTE76QcHxXGwgo=;
- b=V5oXy9ubjoupIISgvnazmYIF3Ey54DkTjJVk1wqh6Tvb8ObNYC4SHkXL+cdVkLHnE8SuXh
- NPFA0Uz/W2l+GzF3Y0Cg5mknwviM+rusPfMV7yRvHrDyC6lO5PbAuo4mmrOhBI4A92e2jE
- ZUK7TC7OEBoIzy+XLjcEmZfg4uGCHV8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-OFElbEjOOB2bVB_Dkjqy8Q-1; Thu,
- 08 Feb 2024 02:56:09 -0500
-X-MC-Unique: OFElbEjOOB2bVB_Dkjqy8Q-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 209A8280FEC0;
- Thu,  8 Feb 2024 07:56:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 70EA0AC1A;
- Thu,  8 Feb 2024 07:56:06 +0000 (UTC)
-Date: Thu, 8 Feb 2024 07:56:04 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH trivial] qemu-options.hx: document that tftp=dir is
- readonly
-Message-ID: <ZcSI8DnKHwdMkMy1@redhat.com>
-References: <20240208060228.313616-1-mjt@tls.msk.ru>
+ bh=WhJlRuNB/MMqlVQ7nQKreU65PO6Xb60C+ZM1hqnrIMA=;
+ b=XkzJ6pTc1sEVvbSMObcE8nUD1ef0PswskzcrUXaUKlNHrPMVWvd7Z970BjClcmfscPplNL
+ qeizjE256X4E1ptiveqRw0PkJz/osm91CgZaFcgOwEdll0PbXBxH68nOwppMTdnLe8/htu
+ QNjXKDNFgu/O5CWT0yuLkUikP7KYyvc=
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-241-IFG5BBR4M0ycB_wQQl5nyA-1; Thu, 08 Feb 2024 03:12:05 -0500
+X-MC-Unique: IFG5BBR4M0ycB_wQQl5nyA-1
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-7d5bbbe57b8so654933241.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 00:12:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707379925; x=1707984725;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WhJlRuNB/MMqlVQ7nQKreU65PO6Xb60C+ZM1hqnrIMA=;
+ b=POISCeFP7nEIMbHSLBX6R4W3TglH5ysbaRTgFoP+i8C5u4UxlxM4EH2gmvnZQQ4fii
+ WuRwSbMGDcSjC/dUp3g3WTqpG+mS2niiVqy2bDK1oC1lhBHiuSyWCZZJnufAhbtNnWDL
+ bX586qGyH8haPJ/Tutu9QKGw66YjTTtDsV04ht0AmRDtXhypzvgH3/2W/84ALx5Agqbi
+ rU0QcJat/H2bk2HscwNqL4T3t+3FmLBVHRMMtN3Th9nlSnHP1VARk+V3IEcS9WB5iSeW
+ 8wb3EewDQRh7Hjeih9SxKzaqmdMtUeOTtGdFkiW63tbd8tchuN2PHDB43QK1k/2QTvGz
+ qj9w==
+X-Gm-Message-State: AOJu0YzEp4epnzRTbhnOCzSWhyXTCSKHloOoO0YHlVxh91sTAJGevYcH
+ 5LF1FQIVp9kY4l8JsQd7KRX20rJgvQJfvT/8kXgE9QVDyuom1D2XBFWVhORFW7cqf9L3yIU5Qf7
+ C7LmAg9/MxJuz3OqNcmihvopHfArBrXMuVu5DGDCgUcce5IODAF75ys564KTY5kR7sCdj30EDwY
+ 8XjIzfUdRYcxRqpFHGM1rP3E0IdVw=
+X-Received: by 2002:a05:6102:5110:b0:46d:3625:6d67 with SMTP id
+ bm16-20020a056102511000b0046d36256d67mr6262483vsb.14.1707379925422; 
+ Thu, 08 Feb 2024 00:12:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEK8XQJViIIOWkZ5qDewElO6yPvzbLvsc674QjACOiTLZ5I1LjGrJ2/yt6Uzs1u6tXf5XXpBm9B5sjCQ3Fxvoc=
+X-Received: by 2002:a05:6102:5110:b0:46d:3625:6d67 with SMTP id
+ bm16-20020a056102511000b0046d36256d67mr6262467vsb.14.1707379925188; Thu, 08
+ Feb 2024 00:12:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240208060228.313616-1-mjt@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20240207111411.115040-1-pbonzini@redhat.com>
+ <20240207111411.115040-4-pbonzini@redhat.com>
+ <078c8c89-f468-43d1-9ca6-4c485f09c9ba@linaro.org>
+In-Reply-To: <078c8c89-f468-43d1-9ca6-4c485f09c9ba@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 8 Feb 2024 09:11:52 +0100
+Message-ID: <CABgObfb+EdNzqqDiAtzf5B9YPhe+p1cf94KKzCd2fgLCKFAbmQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] hw/mips/Kconfig: Remove ISA dependencies from
+ MIPSsim board
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, shentey@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -83,25 +96,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 09:02:28AM +0300, Michael Tokarev wrote:
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1286
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+On Wed, Feb 7, 2024 at 7:58=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+> > @@ -6,8 +6,7 @@ config MALTA
+> >
+> >   config MIPSSIM
+> >       bool
+> > -    select ISA_BUS
+> > -    select SERIAL_ISA
+> > +    select SERIAL
+>
+> Hmm there is an ISA bus which can be exposed with:
+>
+> -- >8 --
+> diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
+> index 16af31648e..a1a4688861 100644
+> --- a/hw/mips/mipssim.c
+> +++ b/hw/mips/mipssim.c
+> @@ -209,8 +209,9 @@ mips_mipssim_init(MachineState *machine)
+>       /* Register 64 KB of ISA IO space at 0x1fd00000. */
+>       memory_region_init_alias(isa, NULL, "isa_mmio",
+>                                get_system_io(), 0, 0x00010000);
+>       memory_region_add_subregion(get_system_memory(), 0x1fd00000, isa);
+> +    isa_bus_new(NULL, get_system_memory(), get_system_io(), &error_abort=
+);
+
+Quoting you from
+https://lists.gnu.org/archive/html/qemu-devel/2020-09/msg08752.html,
+"there is an ISA MMIO space mapped at 0x1fd00000, however this is not
+a real ISA bus (no ISA IRQ)".
+
+If mipssim cannot support "-device isa-serial" as a replacement for
+"-serial", there's no reason for it to expose the bus. In the end,
+-device support is the main thing that an ISA bus provides over
+sysbus, and if it cannot work due to the missing interrupts, I think
+this patch is correct.
+
+I can add a comment:
+
+diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
+index 01e323904d9..47b37b454e7 100644
+--- a/hw/mips/mipssim.c
++++ b/hw/mips/mipssim.c
+@@ -204,7 +204,11 @@ mips_mipssim_init(MachineState *machine)
+     cpu_mips_irq_init_cpu(cpu);
+     cpu_mips_clock_init(cpu);
+
+-    /* Register 64 KB of ISA IO space at 0x1fd00000. */
++    /*
++     * Register 64 KB of ISA IO space at 0x1fd00000.  But without interrup=
+ts
++     * (except for the hardcoded serial port interrupt) -device cannot wor=
+k,
++     * so do not expose the ISA bus to the user.
++     */
+     memory_region_init_alias(isa, NULL, "isa_mmio",
+                              get_system_io(), 0, 0x00010000);
+     memory_region_add_subregion(get_system_memory(), 0x1fd00000, isa);
+
+Paolo
+
+>       /*
+>        * A single 16450 sits at offset 0x3f8. It is attached to
+>        * MIPS CPU INT2, which is interrupt 4.
 > ---
->  qemu-options.hx | 2 ++
->  1 file changed, 2 insertions(+)
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>
 
 
