@@ -4,137 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F4CC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 18:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F27CC4829A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 18:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY9Gu-0005vY-Lo; Thu, 08 Feb 2024 13:37:16 -0500
+	id 1rY9XS-0001X6-Qr; Thu, 08 Feb 2024 13:54:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rY9Gq-0005qd-B5
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:37:13 -0500
-Received: from mail-he1eur04on2130.outbound.protection.outlook.com
- ([40.107.7.130] helo=EUR04-HE1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rY9XN-0001Qc-Bs
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:17 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rY9Go-00031L-E2
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:37:12 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=crrzPvK700PH79RLOAZosMRfuZuGP/Qc3ttKJY7o4465kZ8jXrBrWwy4Sfm7j3yWzOQUPoqhct1aWvRUDvvgnzMYGU/8vQDD4MQyOEMfjL0H4s/4xBvDBK22zck35/qjif52sgCSVI2P04RY7b2TilsJRJiZ+QpemFoieQAwaBZfc0w6X9xTMnrXyal0k5UF+xDYr+zVAjbh5o/4kas/yraVGg6gx+TvOwbG0vSntqMoyGq/XuC2/QQaE1BhrjgOSOGFgJsFpFwL56Utq1rei54+zTAydASeJ+3Fhp9FgVaWfmpNOy6oJk5mCODPdruYG7qAtzsxZ2TuI867/AB89A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JUBO9JkPzVPAUqb/BYQi1dXnCyB/Eqht9+UG3fvGBzc=;
- b=BVZVxxfouKMGlRJpLQ84/aEV91uon7k+ZD7X0k7bL40vUfXkpdklsNZLuk2XlxY/D1Bml9yp+6i7FdfprNFh+hx7mEK8x1F4lZxYE0UCzy0lcvbBjWhhOlISZVMRwbHW5xNzqhjDqJCs5uycKxiCAQe8D/DTS1D1kGDEdtkif5120o+ytlV7KbY9/7q85ll1xqOSChsiS2qHkhjnGN6UkrvFY11Y1AIE04rCEQrWQcB8YvHGWZfHQKGedTEk0yMU7H3airDzcaOENISe+KHrNywg2AGFWY9Wa2gdP5Ma82Ujty2sURjfsJbM1BfR6rm2BcuhXH4Bs6zELW1JdE+8Qw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JUBO9JkPzVPAUqb/BYQi1dXnCyB/Eqht9+UG3fvGBzc=;
- b=ufNNGy9xehvVr+YXzfcNMWwPk6E/gjq09gYi9MrLQEsfM2hPKO0EY8oqtdIbqVh3SZQVzWLszg8bEVsNgcVp7lnm4brw9ox9fLUEiZ2M5W0KJg+xbWhs/446yAdcdsL1S+JT0fHd2eMjk3Rzjd8wL/P/58Po8FQ3OKvW9EJDV5//dNjKZk1m/9osPtdqAttNsoXlkbtQ5txJV2rnPmKgftCihFnC9SMeUsW3b9bWRIeqUI64+4O3KHEBXMAFuhrz0Z9SZj9sh5OYpeBXBer5XXg5wWypn4mi/7pgCpU9hmJf9xJYif+IdRg6pSLX5+LB2m45EJDyamxHYvndJB+r6Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from DBBPR08MB10650.eurprd08.prod.outlook.com (2603:10a6:10:52d::7)
- by AS8PR08MB10098.eurprd08.prod.outlook.com (2603:10a6:20b:62a::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.37; Thu, 8 Feb
- 2024 18:32:03 +0000
-Received: from DBBPR08MB10650.eurprd08.prod.outlook.com
- ([fe80::d027:c96c:6bb1:d5c3]) by DBBPR08MB10650.eurprd08.prod.outlook.com
- ([fe80::d027:c96c:6bb1:d5c3%6]) with mapi id 15.20.7249.039; Thu, 8 Feb 2024
- 18:32:03 +0000
-Message-ID: <c490a7ac-4bb5-494d-9e74-833b83da8e2b@virtuozzo.com>
-Date: Thu, 8 Feb 2024 20:32:33 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] kvm: emit GUEST_PANICKED event in case of abnormal KVM
- exit
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rY9XK-0005nG-Js
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:16 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 418Ik2Ah031385; Thu, 8 Feb 2024 18:54:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
+ bh=FcJTiqsgF1X2wz8iNV5OhBrAgSn2FRO2IaN6FRWM09g=;
+ b=Mw93NN3LmFCl1vByrmnm9bjLTdAObxihe6RmE8NAeGXHihRGHzPDlBOrfCvwQ4EtH+ZQ
+ AfqSzciqeFHfmgqaoEBzhRcS3C19feNFK9od/nFjgBVDHRT67cUETVZKJiPBBTn9Nf6T
+ J3GjtXaPbzJmuggzQq9aQFC2aRxD8f6+EWq5Jvgeq90wdw32zqGr1gWO0g8jgvTB+B60
+ dKHuwyZS4z7MvYer4nshr5/5z5YFxNmPzfkMshACAWBFxsdk9KhIbNi/OV61rqMJEkXP
+ frIa+bL9570Kcr28kxtAf0j1KqM8rn2k1UfpIxe2dPRzc/KbqET17p2JvpLOWFhPg8uo dg== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w1dcbne61-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 08 Feb 2024 18:54:13 +0000
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 418ID0pt038393; Thu, 8 Feb 2024 18:54:11 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3w1bxawn1c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 08 Feb 2024 18:54:11 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 418Iq361013534;
+ Thu, 8 Feb 2024 18:54:11 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 3w1bxawmw9-3; Thu, 08 Feb 2024 18:54:11 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, den@openvz.org, richard.henderson@linaro.org
-References: <20231101152311.181817-1-andrey.drobyshev@virtuozzo.com>
- <f588c351-a7cc-48a7-9ac0-201171a9ed4b@virtuozzo.com>
- <de8eed0a-468d-4433-ab45-4ef2c666e6b6@virtuozzo.com>
- <0e33c0ce-4052-4c2a-8405-13f1385e7947@virtuozzo.com>
-In-Reply-To: <0e33c0ce-4052-4c2a-8405-13f1385e7947@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR0P281CA0218.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:ac::14) To DBBPR08MB10650.eurprd08.prod.outlook.com
- (2603:10a6:10:52d::7)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DBBPR08MB10650:EE_|AS8PR08MB10098:EE_
-X-MS-Office365-Filtering-Correlation-Id: 86187112-1e62-41e3-504a-08dc28d43edf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: vaM8MwiAR4AMn65DhhJ1f6lNsU4dNDCpg7iNUDzTRzZoXjhRXhqUqFGF7rqPD7str4yGhv/mQQChphDS8Lp5+XudH3UIwHGdaYKm7GMrzwBEvPKlIDl8B5NbDzKeVm6X1sGnWUmZ4Ye/EF4F/HuLjUvsXXKPNz21UQ82GfjvVYCPI34FdwBVghlNEZcdarEbFl9x8BPoROHeXh4lCMz5J5hsP/67sRlocLhZ4cMe3RjSTcJUrZH2uaMHA3FjoY3kJV7hS+c0yqgwlhn7e4nTPxx/1N3Sktjn9wiKEb4vaLFbuNk5cPUU2dWogOh+UXistGR2Kk00W6t0U8esKXB0M8YFGDSxnNyKYnp9L4dpvqeg1hhSR8RulJXgO7cPRbUXFUGbFYnbNSTNwZA20Ye2ofIWMf2LtMDprFkBs5Csy8CoSMz/QdsNSsL2m/5om0gA+5/kuscnyfzgrWCtaI8iX4t/oSTyOJULYCyEVIxQX4ixQbGT1XXdYCxGMtgUN7PvM360/13AgScbjuT6WP+WmOGQkgMOc/mcZIn/OIj27dnRInL1Qtr3XC0sdcVhc0Zn
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DBBPR08MB10650.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(396003)(346002)(376002)(39850400004)(366004)(136003)(230922051799003)(64100799003)(1800799012)(186009)(451199024)(31686004)(2906002)(44832011)(5660300002)(41300700001)(83380400001)(31696002)(38100700002)(2616005)(26005)(86362001)(55236004)(6916009)(6512007)(66476007)(6486002)(6666004)(66946007)(6506007)(66556008)(478600001)(36756003)(8936002)(8676002)(53546011)(4326008)(316002);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dU95a2hxa1hWaFZjVVh6WVNhMWlrQWhMejdPWGRVRlRLaWZ6UlU1d1F0NFZI?=
- =?utf-8?B?T2dqOVB3cGdpMGFWd01DR3N0WnB2U21MSzFpeTFhbmVaTWE1amNJRkdsMHBy?=
- =?utf-8?B?Z3lmTWUrbjN4NHFiTmRQNTV3dkxwWnl2dlNJdDJBNlc1alVpUWdBWmF4RER0?=
- =?utf-8?B?UzNmRVNmTkQrSnc2U283Ry9GSlIwQ1BqYjJhbjZab2JpOTlEY1RwTEZ2bEpi?=
- =?utf-8?B?Y2h0d1NuRHhVNDYrVXc0Y3l6RHRQYTdoazdZQWZZRzd3RWdhdnBxNzNOcWJ2?=
- =?utf-8?B?RU5nWDJRZ3Y1Ky91QmlYMkp0cStaQ2UrTFdOQWwrWTk3VFkvUlQyZVo4VFJN?=
- =?utf-8?B?Wnl2Y1JhNG9qWGx0b3NVcW9RdXkwTFR5YVRMd3ZKUWJYdXVDYXNHNExFYzlE?=
- =?utf-8?B?dHh0ODhGNFBIWUJBUHRlb0g2dHlvUERkZ0hLWGJGSDl6aURjNFRUVlR4bkFU?=
- =?utf-8?B?Y3lSMlZYUEI1ZExrSm92ZE5zbUdTMWlPMmNDUzRGZ3FqOWFyaWgveVZQeHp1?=
- =?utf-8?B?cERrUDJhbm9jVG5PZUt5S2xOVFVHaGtMbWdkekdVL2prQURqZ2o0QUNVaUFn?=
- =?utf-8?B?NWVFSUdIZUJaRjZyclZQVkw5TVR5ajA4L2ZTTDRXWHdzcjFjcjFrYTl3R3R3?=
- =?utf-8?B?Yk5uZ041M3pCRnAvbnVmK3FrakV0cjVCQTM2ZGFLV2xYMXovUDJKQmVtbjE3?=
- =?utf-8?B?anR3T3JBRG1MdVo5NkdFeDkzVEFLWnlzYU5sRWJZRVMzRGNQWkFpRml3TmUr?=
- =?utf-8?B?by8xOUJPS0UxWlErUk55Qm5UbmtrV0oraHlJektqVXFsdS84ZDNsWHJwcnBo?=
- =?utf-8?B?R0RZNHRlSFUwNnl3YmpIMUg0VEtnaFlTZFcvZUtxSkZ4WWd1VVlIMVFCbWo5?=
- =?utf-8?B?ajdrT2VYV0Ixa0ZkelZOQWNhOWt5Nm1Sb3pFNDE3dDhobFBzaHp1c2tXdzEz?=
- =?utf-8?B?a3dWSVB0ZW4zOE54SkFKWm5sZ3RBbStZMU5yQ3BqbGdSYzJhQkg0MUtWYnIr?=
- =?utf-8?B?ajVQKzIxcDNiQ3BDUitYdGorMFliVzNYbzYzdjBLd2EybFNkNm9ZZEdlbVht?=
- =?utf-8?B?Z3haRjVnY1MyTFhPWW9BcDVKa25YUXJEVTJuNE85WjVpSVBrRCtwcTl0cnJs?=
- =?utf-8?B?UVRLYm9MQjZ2WVpWSzR5OS9haTVnUGt2a1ZzbXNKOTZrcEZ3UGVZYmcveEwy?=
- =?utf-8?B?czZiQ0JEK1B1TEU3RnlOamFYYis2VmJQNXlWK3VZQ2ljVEJsN3ZTenVGblgy?=
- =?utf-8?B?Mjk5NFQ2WnVCTHFBcXJkUU1qSTk1clc2bEQvNU9iZ25hVlFJS2tFNGtreFBo?=
- =?utf-8?B?M1VaaUFKVmZkTThYSWxHUmhONFZPQjBtMXN0dTBNNThRWWZOanczQW5qMEN3?=
- =?utf-8?B?Sy8vWDBaYUZHcDRpMDdsVFRNM0pMZStkS2J2Mm9XOFA3Vmh0Unl6blhSRnNi?=
- =?utf-8?B?Y2pEVFJmcUhoZ05KbEtaN1NCZHA2UFpOYTBzMExuTytoVDJuMTh5OGp5Ui9n?=
- =?utf-8?B?ZEFmZ2RnOW1JUHQ2RlQ3TU9mK3J2SklPanNDMWVESmoybUNDWUFURmJTNmIy?=
- =?utf-8?B?WXFnU2xzUXkxYVVyaFJWN29KMVhLMXBTdG1LWC9LVmpyTWxGYUVYZ1laMWFz?=
- =?utf-8?B?RURBbXRkUHB2UXNYWWFQUnI2RG8zdlRnbUN0YXNPbUN6K2paYkxqbUIyUWdM?=
- =?utf-8?B?N0taemJ4VUpTK1JiVXdGSXJsL2k1NXk5NjhRWnBTODV3djlUeXpRQ2U3Mlk3?=
- =?utf-8?B?U09Wa1d6U2Vsa1VYN1p0eCtOTWtjR1BTQmdZN3d4SXRTL0E3Q0UzazQ1dE82?=
- =?utf-8?B?WFdaRGwvWTRESkxDTUZPdkd0aHVPT1d5bWtIdDlkL0hHM2lPWVNiNlZpa1hQ?=
- =?utf-8?B?MWpPeW95V3VlSHVIdEJMWTBJbS9kb3dUU3phRll5REZjN1NuRjg5SUxjZFdX?=
- =?utf-8?B?NVR0ZVRIRWRYRFd4V0RQaG5VejcvTm1WMWh2U1Fmd0VKbjh1NU03MUpzdlJo?=
- =?utf-8?B?anpHcUFYTm5EWDRnOUVzQUx2dGJCNXA3YWhYclA1MmtoZWhjTTl2UFh2Smpk?=
- =?utf-8?B?OHhvZXREWWFMWTlYaFNkZ1F5ZDFRUmxLMFI2bElnSEhZdEFrZnV3d2FkdHgv?=
- =?utf-8?B?aktzNHkyYlVMY0dMbGltZlIrait5a3lMcU54bG5DU1d4MkpVWjJDaDhCVVl0?=
- =?utf-8?B?VlE9PQ==?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86187112-1e62-41e3-504a-08dc28d43edf
-X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10650.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2024 18:32:03.3990 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PN3JOVO4SZUNmmMDGdnkdQ72iBxve9B1kvF9qWox1h2H07PdbP895lbZ6alCGPITNndU5kPm0W6kuT0x6nqrSM5Ck7iWdMvr57T6ATDmC5Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB10098
-Received-SPF: pass client-ip=40.107.7.130;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=EUR04-HE1-obe.outbound.protection.outlook.com
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V3 02/13] migration: remove error from notifier data
+Date: Thu,  8 Feb 2024 10:53:55 -0800
+Message-Id: <1707418446-134863-3-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
+References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-08_08,2024-02-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ spamscore=0
+ mlxlogscore=999 bulkscore=0 mlxscore=0 phishscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402080099
+X-Proofpoint-GUID: 4hHglG1xEQTyfiqm79SLH31w-6TAAMd7
+X-Proofpoint-ORIG-GUID: 4hHglG1xEQTyfiqm79SLH31w-6TAAMd7
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,75 +102,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/25/24 18:36, Andrey Drobyshev wrote:
-> On 1/11/24 15:15, Andrey Drobyshev wrote:
->> On 11/1/23 18:13, Denis V. Lunev wrote:
->>> On 11/1/23 16:23, Andrey Drobyshev wrote:
->>>> Currently we emit GUEST_PANICKED event in case kvm_vcpu_ioctl() returns
->>>> KVM_EXIT_SYSTEM_EVENT with the event type KVM_SYSTEM_EVENT_CRASH.  Let's
->>>> extend this scenario and emit GUEST_PANICKED in case of an abnormal KVM
->>>> exit.  That's a natural thing to do since in this case guest is no
->>>> longer operational anyway.
->>>>
->>>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>>> Acked-by: Denis V. Lunev <den@virtuozzo.com>
->>>> ---
->>>>   accel/kvm/kvm-all.c | 19 +++++++++++++++----
->>>>   1 file changed, 15 insertions(+), 4 deletions(-)
->>>>
->>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>>> index e39a810a4e..d74b3f0b0e 100644
->>>> --- a/accel/kvm/kvm-all.c
->>>> +++ b/accel/kvm/kvm-all.c
->>>> @@ -2816,6 +2816,14 @@ static void kvm_eat_signals(CPUState *cpu)
->>>>       } while (sigismember(&chkset, SIG_IPI));
->>>>   }
->>>>   +static void kvm_emit_guest_crash(CPUState *cpu)
->>>> +{
->>>> +    kvm_cpu_synchronize_state(cpu);
->>>> +    qemu_mutex_lock_iothread();
->>>> +    qemu_system_guest_panicked(cpu_get_crash_info(cpu));
->>>> +    qemu_mutex_unlock_iothread();
->>>> +}
->>>> +
->>>>   int kvm_cpu_exec(CPUState *cpu)
->>>>   {
->>>>       struct kvm_run *run = cpu->kvm_run;
->>>> @@ -2969,21 +2977,24 @@ int kvm_cpu_exec(CPUState *cpu)
->>>>                   ret = EXCP_INTERRUPT;
->>>>                   break;
->>>>               case KVM_SYSTEM_EVENT_CRASH:
->>>> -                kvm_cpu_synchronize_state(cpu);
->>>> -                qemu_mutex_lock_iothread();
->>>> -                qemu_system_guest_panicked(cpu_get_crash_info(cpu));
->>>> -                qemu_mutex_unlock_iothread();
->>>> +                kvm_emit_guest_crash(cpu);
->>>>                   ret = 0;
->>>>                   break;
->>>>               default:
->>>>                   DPRINTF("kvm_arch_handle_exit\n");
->>>>                   ret = kvm_arch_handle_exit(cpu, run);
->>>> +                if (ret < 0) {
->>>> +                    kvm_emit_guest_crash(cpu);
->>>> +                }
->>>>                   break;
->>>>               }
->>>>               break;
->>>>           default:
->>>>               DPRINTF("kvm_arch_handle_exit\n");
->>>>               ret = kvm_arch_handle_exit(cpu, run);
->>>> +            if (ret < 0) {
->>>> +                kvm_emit_guest_crash(cpu);
->>>> +            }
->>>>               break;
->>>>           }
->>>>       } while (ret == 0);
->>> This allows to gracefully handle this problem in production
->>> and reset the guest using on_crash action in libvirt.
->>
->> Ping
-> 
-> Ping
+Remove the error object from opaque data passed to notifiers.
+Use the new error parameter passed to the notifier instead.
 
-Yet another ping
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+---
+ hw/virtio/vhost-user.c   | 8 ++++----
+ include/migration/misc.h | 1 -
+ migration/postcopy-ram.c | 1 -
+ migration/postcopy-ram.h | 1 -
+ migration/ram.c          | 1 -
+ 5 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index f502345..a1eea85 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -2096,20 +2096,20 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
+         if (!virtio_has_feature(dev->protocol_features,
+                                 VHOST_USER_PROTOCOL_F_PAGEFAULT)) {
+             /* TODO: Get the device name into this error somehow */
+-            error_setg(pnd->errp,
++            error_setg(errp,
+                        "vhost-user backend not capable of postcopy");
+             return -ENOENT;
+         }
+         break;
+ 
+     case POSTCOPY_NOTIFY_INBOUND_ADVISE:
+-        return vhost_user_postcopy_advise(dev, pnd->errp);
++        return vhost_user_postcopy_advise(dev, errp);
+ 
+     case POSTCOPY_NOTIFY_INBOUND_LISTEN:
+-        return vhost_user_postcopy_listen(dev, pnd->errp);
++        return vhost_user_postcopy_listen(dev, errp);
+ 
+     case POSTCOPY_NOTIFY_INBOUND_END:
+-        return vhost_user_postcopy_end(dev, pnd->errp);
++        return vhost_user_postcopy_end(dev, errp);
+ 
+     default:
+         /* We ignore notifications we don't know */
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 1bc8902..5e65c18 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -31,7 +31,6 @@ typedef enum PrecopyNotifyReason {
+ 
+ typedef struct PrecopyNotifyData {
+     enum PrecopyNotifyReason reason;
+-    Error **errp;
+ } PrecopyNotifyData;
+ 
+ void precopy_infrastructure_init(void);
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 3ab2f6b..0273dc6 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -77,7 +77,6 @@ int postcopy_notify(enum PostcopyNotifyReason reason, Error **errp)
+ {
+     struct PostcopyNotifyData pnd;
+     pnd.reason = reason;
+-    pnd.errp = errp;
+ 
+     return notifier_with_return_list_notify(&postcopy_notifier_list,
+                                             &pnd, errp);
+diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+index 442ab89..ecae941 100644
+--- a/migration/postcopy-ram.h
++++ b/migration/postcopy-ram.h
+@@ -128,7 +128,6 @@ enum PostcopyNotifyReason {
+ 
+ struct PostcopyNotifyData {
+     enum PostcopyNotifyReason reason;
+-    Error **errp;
+ };
+ 
+ void postcopy_add_notifier(NotifierWithReturn *nn);
+diff --git a/migration/ram.c b/migration/ram.c
+index ed9241a..fe90024 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -426,7 +426,6 @@ int precopy_notify(PrecopyNotifyReason reason, Error **errp)
+ {
+     PrecopyNotifyData pnd;
+     pnd.reason = reason;
+-    pnd.errp = errp;
+ 
+     return notifier_with_return_list_notify(&precopy_notifier_list, &pnd, errp);
+ }
+-- 
+1.8.3.1
+
 
