@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B554C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA8CDC48260
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY7dy-0000jk-CH; Thu, 08 Feb 2024 11:52:58 -0500
+	id 1rY7gV-0001qh-Ds; Thu, 08 Feb 2024 11:55:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rY7dl-0000j4-VC
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:52:53 -0500
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1rY7gT-0001qI-RT
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:55:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rY7dk-0000xo-5n
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:52:45 -0500
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1rY7gS-0001Mf-CG
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:55:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707411161;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1707411331;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HnFPdWA5EVpY9l0ZaXfI71Ps/9IZ7jMzjXiDCC35kwI=;
- b=bGormSP6g0vw9yN35gHSpFTlCwK/VSTtZZBVM7gBiellOCa2vXx/qJk080p6zkIyF3RX+J
- 2gtE2sxNnpMLtfJulMwPpiCHBtHNoH1r4ahsecGbCsPmb5lNBVJLlyChqXS3krN+4wY56F
- KEjKMomOFngM2rWdXm4YtY8Pp9pLtxo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-noKUIWZTNZCHdQvA0-KxkA-1; Thu,
- 08 Feb 2024 11:52:39 -0500
-X-MC-Unique: noKUIWZTNZCHdQvA0-KxkA-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 61249282D3D7;
- Thu,  8 Feb 2024 16:52:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 72C30492BF0;
- Thu,  8 Feb 2024 16:52:35 +0000 (UTC)
-Date: Thu, 8 Feb 2024 16:52:33 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Babu Moger <babu.moger@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
-Message-ID: <ZcUG0Uc8KylEQhUW@redhat.com>
-References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
- <Zbog2vDrrWFbujrs@redhat.com> <ZbsInI6Z66edm3eH@intel.com>
- <ZbtirK-orqCb5sba@redhat.com> <ZbvCktGZFj4v3I/P@intel.com>
+ bh=pMoXHXY4+qZJUeESHsnlS6as99TdnkReAv8/2YwmyFc=;
+ b=Q2pMqymUUAyuglxWGO3Es5sicgoGCqPhwrfG2RH+joEbzWR0rdmvlckLh2y6mkf57Erstp
+ BvUiq/1W89nWelHji0KIaT4oRkYXnSHDWar1jAce2uFUI4dNQpVqE/Ybzql8hcJjCdipeT
+ Y2j9jdR3Dhy5MVyNyI2EI48SVWcPHJE=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-571-LNRpkZexPFKjM2UH6h7K5Q-1; Thu, 08 Feb 2024 11:55:28 -0500
+X-MC-Unique: LNRpkZexPFKjM2UH6h7K5Q-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-42c4346a56dso140691cf.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:55:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707411328; x=1708016128;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pMoXHXY4+qZJUeESHsnlS6as99TdnkReAv8/2YwmyFc=;
+ b=LJJqJ6Vh6Bpk2apjD3ku4wIgOqEjEczlu5uJUFbsnCmXKqwb43DCQPteNJJRyC0JeG
+ ed5ccaixJG9Co/5OlBxAasRXt78xlYdZL2oJsnQo0mtdUpxr4NDGTW++jyB0hk80wqjS
+ 7LgKTEAspzCOfqYnKizihTl3nqxdohXV6q+2dwoWD6AuIfUVdjUD6aY+1NP8r7WxPuif
+ S5PB/yMEVxpSEFHcYgy2QQvkGXqqa6TkdFmk3Lcw1Atrk63wNPJzp96GP9nlbr1UN57S
+ txlC0iEeje3j3oEVy2SsVToxYmbrEAO2ddRhgqVN2IFhGAUCxo5rxiB990Vi1rYFpXjs
+ mTOQ==
+X-Gm-Message-State: AOJu0YxQokLjcq+WZanrg/qB2Ojv7igbiUnyLhtbMTVYyPvl8AiXTWXY
+ 3oz81CK8KNwOoT0qNoYjwm8cFt//2DmRNDvSj4HliQyVZzyQ5cYfNd8375qBapxwDOAlsoCHTeR
+ tNktXEha/k/wYOw6auEvedmo7Qajow7QX3W2HEHrwwj4VlqSb0God
+X-Received: by 2002:ac8:48c2:0:b0:42c:35e4:3cc6 with SMTP id
+ l2-20020ac848c2000000b0042c35e43cc6mr8166344qtr.3.1707411327952; 
+ Thu, 08 Feb 2024 08:55:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGHTUvt6+9XsB4dFreOWX47R9TxG8zqZv/VOJoiksc6oyDd9cLFcSxf7OoTKYYgdl264aNidg==
+X-Received: by 2002:ac8:48c2:0:b0:42c:35e4:3cc6 with SMTP id
+ l2-20020ac848c2000000b0042c35e43cc6mr8166327qtr.3.1707411327686; 
+ Thu, 08 Feb 2024 08:55:27 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0MsbI4sXkZ9EFzkklzZHbdlraq6P1pZFfv11g5LJ0Ac6oud/PoQh/z0Jr7I953hvqsvKrFejLdLpFPkcMTZl8pH7LzX6u1nIfkpefR2hGtT/abz+9scooBMx2EVJulbAYZYh06hD0boFsRH3XXqxzFK5dQOW06WnvfKrh6imAvFMiqIs26SGwhPNiIdTlTDTJlqy2qZo01TjL0nsVCBEMeSveqI1KCGMN+3+19GbMKSeFj9bOZhe3t98r7SDM5XQdeHLCXR/+EtahhAuypFcRQGcr5TkryosL1b1gQI74sCMa7/J2
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ gx11-20020a05622a27cb00b0042bf5ec20f0sm148876qtb.30.2024.02.08.08.55.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Feb 2024 08:55:26 -0800 (PST)
+Message-ID: <5ede0197-4587-43e8-976f-d3001f42b8b9@redhat.com>
+Date: Thu, 8 Feb 2024 17:55:23 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZbvCktGZFj4v3I/P@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/5] QEMU v7.2.0 aarch64 Nested Virtualization Support
+Content-Language: en-US
+To: Miguel Luis <miguel.luis@oracle.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Haibo Xu <haibo.xu@linaro.org>,
+ Andrew Jones <drjones@redhat.com>, Marc Zyngier <maz@kernel.org>
+References: <20230227163718.62003-1-miguel.luis@oracle.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20230227163718.62003-1-miguel.luis@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -95,91 +104,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 02, 2024 at 12:10:58AM +0800, Zhao Liu wrote:
-> Hi Daniel,
-> 
-> On Thu, Feb 01, 2024 at 09:21:48AM +0000, Daniel P. Berrangé wrote:
-> > Date: Thu, 1 Feb 2024 09:21:48 +0000
-> > From: "Daniel P. Berrangé" <berrange@redhat.com>
-> > Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
-> > 
-> > On Thu, Feb 01, 2024 at 10:57:32AM +0800, Zhao Liu wrote:
-> > > Hi Daniel,
-> > > 
-> > > On Wed, Jan 31, 2024 at 10:28:42AM +0000, Daniel P. Berrangé wrote:
-> > > > Date: Wed, 31 Jan 2024 10:28:42 +0000
-> > > > From: "Daniel P. Berrangé" <berrange@redhat.com>
-> > > > Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
-> > > > 
-> > > > On Wed, Jan 31, 2024 at 06:13:29PM +0800, Zhao Liu wrote:
-> > > > > From: Zhao Liu <zhao1.liu@intel.com>
-> > > 
-> > > [snip]
-> > > 
-> > > > > However, after digging deeper into the description and use cases of
-> > > > > cluster in the device tree [3], I realized that the essential
-> > > > > difference between clusters and modules is that cluster is an extremely
-> > > > > abstract concept:
-> > > > >   * Cluster supports nesting though currently QEMU doesn't support
-> > > > >     nested cluster topology. However, modules will not support nesting.
-> > > > >   * Also due to nesting, there is great flexibility in sharing resources
-> > > > >     on clusters, rather than narrowing cluster down to sharing L2 (and
-> > > > >     L3 tags) as the lowest topology level that contains cores.
-> > > > >   * Flexible nesting of cluster allows it to correspond to any level
-> > > > >     between the x86 package and core.
-> > > > > 
-> > > > > Based on the above considerations, and in order to eliminate the naming
-> > > > > confusion caused by the mapping between general cluster and x86 module
-> > > > > in v7, we now formally introduce smp.modules as the new topology level.
-> > > > 
-> > > > What is the Linux kernel calling this topology level on x86 ?
-> > > > It will be pretty unfortunate if Linux and QEMU end up with
-> > > > different names for the same topology level.
-> > > > 
-> > > 
-> > > Now Intel's engineers in the Linux kernel are starting to use "module"
-> > > to refer to this layer of topology [4] to avoid confusion, where
-> > > previously the scheduler developers referred to the share L2 hierarchy
-> > > collectively as "cluster".
-> > > 
-> > > Looking at it this way, it makes more sense for QEMU to use the
-> > > "module" for x86.
-> > 
-> > I was thinking specificially about what Linux calls this topology when
-> > exposing it in sysfs and /proc/cpuinfo. AFAICT, it looks like it is
-> > called 'clusters' in this context, and so this is the terminology that
-> > applications and users are going to expect.
-> 
-> The cluster related topology information under "/sys/devices/system/cpu/
-> cpu*/topology" indicates the L2 cache topology (CPUID[0x4]), not module
-> level CPU topology (CPUID[0x1f]).
-> 
-> So far, kernel hasn't exposed module topology related sysfs. But we will
-> add new "module" related information in sysfs. The relevant patches are
-> ready internally, but not posted yet.
-> 
-> In the future, we will use "module" in sysfs to indicate module level CPU
-> topology, and "cluster" will be only used to refer to the l2 cache domain
-> as it is now.
+Hi Miguel,
 
-So, if they're distinct concepts both relevant to x86 CPUs, then from
-the QEMU POV, should this patch series be changing the -smp arg to
-allowing configuration of both 'clusters' and 'modules' for x86 ?
+On 2/27/23 17:37, Miguel Luis wrote:
+> This series adds ARMv8.3/8.4 nested virtualization support in KVM mode.
+>     
+> To enable nested virtualization for a guest, the host must expose EL2
+> support via QEMU command line switches:
+> 
+> -machine virt,accel=kvm,virtualization=on
+> 
+> Inspired on Haibo Xu's previous work [0][1], Marc Zyngier's kvmtool branch [2]
+> and kernel patches [3] on nested virtualization for aarch64, this has been
+> tested on an Ampere implementation.
+> 
+> This series adapts previous work on top of v7.2.0, it considers comments given
+> at the time and preserves authorship of the original patches.
+> 
+> [0]: https://lore.kernel.org/qemu-devel/cover.1616052889.git.haibo.xu@linaro.org/
+> [1]: https://lore.kernel.org/qemu-devel/cover.1617281290.git.haibo.xu@linaro.org/
+> [2]: https://git.kernel.org/pub/scm/linux/kernel/git/maz/kvmtool.git/log/?h=arm64/nv-5.16
+> [3]: https://lore.kernel.org/linux-arm-kernel/20230131092504.2880505-1-maz@kernel.org/
 
-An earlier version of this series just supported 'clusters', and this
-changed to 'modules', but your description of Linux reporting both
-suggests QEMU would need both.
+I rebased the series on top of v8.2. I was able to boot some L2 guests
+with it, although it still does not work with guests featuring edk2.
 
+Do you plan to send a respin or may I do?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks
+
+Eric
+> 
+> Miguel Luis (5):
+>   linux-headers: [kvm,arm64] add the necessary definitions to match host
+>     kernel
+>   hw/intc/gicv3: add support for setting KVM vGIC maintenance IRQ
+>   target/arm/kvm: add helper to detect EL2 when using KVM
+>   target/arm: enable feature ARM_FEATURE_EL2 if EL2 is supported
+>   arm/virt: provide virtualization extensions to the guest
+> 
+>  hw/arm/virt.c                      |  8 +++++++-
+>  hw/intc/arm_gicv3_common.c         |  1 +
+>  hw/intc/arm_gicv3_kvm.c            | 25 +++++++++++++++++++++++++
+>  include/hw/intc/arm_gicv3_common.h |  1 +
+>  linux-headers/asm-arm64/kvm.h      |  2 ++
+>  linux-headers/linux/kvm.h          |  1 +
+>  target/arm/cpu.h                   |  2 +-
+>  target/arm/kvm64.c                 | 21 +++++++++++++++++++++
+>  target/arm/kvm_arm.h               | 12 ++++++++++++
+>  9 files changed, 71 insertions(+), 2 deletions(-)
+> 
 
 
