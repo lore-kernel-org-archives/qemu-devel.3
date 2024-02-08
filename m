@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6699EC4829F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649CDC4829E
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYAbP-0008Sn-T8; Thu, 08 Feb 2024 15:02:31 -0500
+	id 1rYAbS-0008Tu-B3; Thu, 08 Feb 2024 15:02:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbO-0008S1-7v
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:30 -0500
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbQ-0008TM-OT
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:32 -0500
 Received: from todd.t-8ch.de ([159.69.126.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbM-0001U7-8r
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:29 -0500
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbP-0001Wh-4v
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1707422544; bh=pLDGQUmcOkurLoPLQFej1T/V3Bo/OA3pqVp4oxQAW5A=;
+ t=1707422544; bh=0LAbgFNCCqlXKxT4Y1xcDsvJ5Wrs/E3n103ZtqEjjX8=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=lpHkDhK02czEiVIrZdJ2gKXMFyLNSIEGdmEwpSAa9lWJmXepihTkrS4T5Tt6OCmvq
- R9E/A73d7mtaBvCLNvYSgDPIep7on8o/RppO3p+L81eyeF4/XPGnTdyCjUvAWD7a3e
- 8O3mo5ujH2Qd9LXxaUpGye3sj8KeP8WsHiZLt+N4=
+ b=ZUH7RfW0l7Z4GfnsUT/BB/GKJtjzyuVZc/lFEUyn7FeFd7Z6ZxdG6N8O8rAPx9B7F
+ OlBqEIoRXbxXp+2EfCP1wbEPy/YFY4oZnZ4GLe6r/8flYFdr8tsDvrwNfQTdRe06KJ
+ 8AWcMMy9GB4FlxyT/tzsVEqj4vZA3re3Nows0kwc=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Date: Thu, 08 Feb 2024 21:02:24 +0100
-Subject: [PATCH v6 5/6] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
- shutdown signal
+Date: Thu, 08 Feb 2024 21:02:25 +0100
+Subject: [PATCH v6 6/6] tests/qtest/pvpanic: add tests for pvshutdown event
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240208-pvpanic-shutdown-v6-5-965580ac057b@t-8ch.de>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240208-pvpanic-shutdown-v6-6-965580ac057b@t-8ch.de>
 References: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
 In-Reply-To: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -41,11 +40,11 @@ Cc: qemu-devel@nongnu.org,
  Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=1642;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=3527;
  i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
- bh=jDQrzFDng3hs6cePBwRlPLgJKcbRtWnG6BeDN4GONAU=;
- b=uLOZl52gNFXacR5e9cY073yixw9VZKwQcnNK6K/pyZ5u+kqTmfmN1q0n/ZFvR9QWa2E+YVsww
- CVNwV0iv5eJDOdZ+vX5CE9XN7c3O9JUqFqQiVdp7O/3H5laD3yBxPn3
+ bh=0LAbgFNCCqlXKxT4Y1xcDsvJ5Wrs/E3n103ZtqEjjX8=;
+ b=vC0QX9sY82J8T+nye1HK0v/f5vQ49hlAcLxZimKA8y7UFHXAsd4BHVQHc4Ve1/nTlT/Qxd06F
+ I/cL5vmjcyIBBe+kvs64oSXCW7v4Yme8GnT5/WP54PszejfuuU7MOY0
 X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
@@ -71,58 +70,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Validate that a shutdown via the pvpanic device emits the correct
+QMP events.
 
-Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
-SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
-originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
-that also issue the guest-shutdown cause.
-A management layer application can detect the new GUEST_PVSHUTDOWN event to
-determine if the guest is using the pvpanic interface to request shutdowns.
-
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- qapi/run-state.json | 14 ++++++++++++++
- system/runstate.c   |  1 +
- 2 files changed, 15 insertions(+)
+ tests/qtest/pvpanic-pci-test.c | 39 +++++++++++++++++++++++++++++++++++++++
+ tests/qtest/pvpanic-test.c     | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index 08bc99cb8561..d5a63e14ba7e 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -460,6 +460,20 @@
- { 'event': 'GUEST_CRASHLOADED',
-   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
- 
-+##
-+# @GUEST_PVSHUTDOWN:
-+#
-+# Emitted when guest submits a shutdown request via pvpanic interface
-+#
-+# Since: 8.3
-+#
-+# Example:
-+#
-+# <- { "event": "GUEST_PVSHUTDOWN",
-+#      "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
-+##
-+{ 'event': 'GUEST_PVSHUTDOWN' }
-+
- ##
- # @GuestPanicAction:
- #
-diff --git a/system/runstate.c b/system/runstate.c
-index 572499513034..02b0a1f8b9d0 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -574,6 +574,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
- 
- void qemu_system_guest_pvshutdown(void)
- {
-+    qapi_event_send_guest_pvshutdown();
-     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+diff --git a/tests/qtest/pvpanic-pci-test.c b/tests/qtest/pvpanic-pci-test.c
+index b372caf41dc0..dc021c2fdf77 100644
+--- a/tests/qtest/pvpanic-pci-test.c
++++ b/tests/qtest/pvpanic-pci-test.c
+@@ -85,11 +85,50 @@ static void test_panic(void)
+     qtest_quit(qts);
  }
  
++static void test_pvshutdown(void)
++{
++    uint8_t val;
++    QDict *response, *data;
++    QTestState *qts;
++    QPCIBus *pcibus;
++    QPCIDevice *dev;
++    QPCIBar bar;
++
++    qts = qtest_init("-device pvpanic-pci,addr=04.0");
++    pcibus = qpci_new_pc(qts, NULL);
++    dev = qpci_device_find(pcibus, QPCI_DEVFN(0x4, 0x0));
++    qpci_device_enable(dev);
++    bar = qpci_iomap(dev, 0, NULL);
++
++    qpci_memread(dev, bar, 0, &val, sizeof(val));
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
++
++    val = PVPANIC_SHUTDOWN;
++    qpci_memwrite(dev, bar, 0, &val, sizeof(val));
++
++    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
++    qobject_unref(response);
++
++    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
++    g_assert(qdict_haskey(response, "data"));
++    data = qdict_get_qdict(response, "data");
++    g_assert(qdict_haskey(data, "guest"));
++    g_assert(qdict_get_bool(data, "guest"));
++    g_assert(qdict_haskey(data, "reason"));
++    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
++    qobject_unref(response);
++
++    g_free(dev);
++    qpci_free_pc(pcibus);
++    qtest_quit(qts);
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+     qtest_add_func("/pvpanic-pci/panic", test_panic);
+     qtest_add_func("/pvpanic-pci/panic-nopause", test_panic_nopause);
++    qtest_add_func("/pvpanic-pci/pvshutdown", test_pvshutdown);
+ 
+     return g_test_run();
+ }
+diff --git a/tests/qtest/pvpanic-test.c b/tests/qtest/pvpanic-test.c
+index ccc603472f5d..d49d2ba9313e 100644
+--- a/tests/qtest/pvpanic-test.c
++++ b/tests/qtest/pvpanic-test.c
+@@ -58,11 +58,40 @@ static void test_panic(void)
+     qtest_quit(qts);
+ }
+ 
++static void test_pvshutdown(void)
++{
++    uint8_t val;
++    QDict *response, *data;
++    QTestState *qts;
++
++    qts = qtest_init("-device pvpanic");
++
++    val = qtest_inb(qts, 0x505);
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
++
++    qtest_outb(qts, 0x505, PVPANIC_SHUTDOWN);
++
++    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
++    qobject_unref(response);
++
++    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
++    g_assert(qdict_haskey(response, "data"));
++    data = qdict_get_qdict(response, "data");
++    g_assert(qdict_haskey(data, "guest"));
++    g_assert(qdict_get_bool(data, "guest"));
++    g_assert(qdict_haskey(data, "reason"));
++    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
++    qobject_unref(response);
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+     qtest_add_func("/pvpanic/panic", test_panic);
+     qtest_add_func("/pvpanic/panic-nopause", test_panic_nopause);
++    qtest_add_func("/pvpanic/pvshutdown", test_pvshutdown);
+ 
+     return g_test_run();
+ }
 
 -- 
 2.43.0
