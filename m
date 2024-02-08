@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EABC48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 18:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980ADC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 18:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY9Xe-0001bm-4O; Thu, 08 Feb 2024 13:54:34 -0500
+	id 1rY9Xc-0001bB-Qn; Thu, 08 Feb 2024 13:54:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rY9Xc-0001b9-MN
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:32 -0500
+ id 1rY9XW-0001Yj-SG
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:26 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rY9Xa-0005pe-QS
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:32 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ id 1rY9XU-0005oh-Lw
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:26 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 418Ijvi3002703; Thu, 8 Feb 2024 18:54:30 GMT
+ 418Ik6d0020088; Thu, 8 Feb 2024 18:54:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=ta4RajXp4A5/tKccMGjZ7rIh6kE+PS4323ZhW1w6QlQ=;
- b=CeoSY2hzZTjGdO2BAy68dCkXoEWvbYS3vcYl/4M/d8JW3lWsoVpRzB2yWHnYiQtOs9zT
- OWWHA3evuLyjKCniX4qWjCt1qRVh90raxOpkIfXlhB/JBJAJqnz7sCCrmIIm4k8Kdc9e
- mIfyewp+nBgwGFC+IB2lqxeIFOXqz1U+nSDHP3yNGSNzJSLU7cOzv2sjXdla743Y+4/U
- F4F6mHv1aWOp8zt02CB99TAalSHa4ZLjeOt2gELTB/RB6pcNW0P7hV+QwgVhFQ9RB6kb
- x+u2P/pQVDBi1WZjdZBq/CMtWBaHHNe4gaS1H1BUVnfHnmu1ujP/WzbkCwjVgJITbZ8o 4Q== 
+ bh=zPAMmVxL+ok2jMGzEmCWKDz75wO7j7NGVcD7kUCLI9A=;
+ b=G7kwu6Mp4/SCK+W3t0ozWFce+bulZjFHj3NKb+WYWZ8MEFfEwqtD9grd+uqVobovSkXl
+ wf7G1yrlrTd/2/U/5Wby0figemuhj9ehh5sg9zyDWgxqfC/ZPt66QDXwC8TV7AZAw9Bl
+ iJ9y4nA6vbA9yuh3MdNJCbJOnZ7Po8pVWaETN/TXLpfdrlfJWGASL+5hb8UCP09XitJn
+ S889quMLW3SwzWs3fFZCcw9jNwatjy+QeKdJq/zlx5loscBBNOE3tKJ3UNGYV2P0K2LN
+ ToF+jzaVp5y3ss27HeqFrSfZEjC0sDhY1ad2PddaSKU613+ofmjt3QY2mNANsElFIIHY LQ== 
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w1dhdnqyk-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w1bwewdeq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 08 Feb 2024 18:54:29 +0000
+ Thu, 08 Feb 2024 18:54:23 +0000
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 418Iikfi038387; Thu, 8 Feb 2024 18:54:29 GMT
+ with ESMTP id 418HWkMx038686; Thu, 8 Feb 2024 18:54:22 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3w1bxawnmv-1
+ 3w1bxawncg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 08 Feb 2024 18:54:29 +0000
+ Thu, 08 Feb 2024 18:54:22 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 418Iq36N013534;
- Thu, 8 Feb 2024 18:54:28 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 418Iq36F013534;
+ Thu, 8 Feb 2024 18:54:22 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3w1bxawmw9-14; Thu, 08 Feb 2024 18:54:28 +0000
+ ESMTP id 3w1bxawmw9-10; Thu, 08 Feb 2024 18:54:21 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -62,9 +62,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Marc-Andre Lureau <marcandre.lureau@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 13/13] migration: update cpr-reboot description
-Date: Thu,  8 Feb 2024 10:54:06 -0800
-Message-Id: <1707418446-134863-14-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3 09/13] migration: notifier error checking
+Date: Thu,  8 Feb 2024 10:54:02 -0800
+Message-Id: <1707418446-134863-10-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
 References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
@@ -76,8 +76,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  mlxlogscore=999 bulkscore=0 mlxscore=0 phishscore=0 adultscore=0
  suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402080099
-X-Proofpoint-GUID: r3XyUTUAsIrAl3DENq1TPxr9BtdmWjcN
-X-Proofpoint-ORIG-GUID: r3XyUTUAsIrAl3DENq1TPxr9BtdmWjcN
+X-Proofpoint-ORIG-GUID: L_HM-5lXPE70miD4wBHITZEjCcxr9mrH
+X-Proofpoint-GUID: L_HM-5lXPE70miD4wBHITZEjCcxr9mrH
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -103,60 +103,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clarify qapi for cpr-reboot migration mode, and add vfio support.
+Check the status returned by migration notifiers and report errors.
+If notifiers fail, call the notifiers again so they can clean up.
+None of the notifiers return an error status at this time.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- qapi/migration.json | 36 +++++++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 13 deletions(-)
+ include/migration/misc.h |  3 ++-
+ migration/migration.c    | 40 +++++++++++++++++++++++++++++-----------
+ 2 files changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 8197083..c83e0c0 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -636,19 +636,29 @@
- #
- # @normal: the original form of migration. (since 8.2)
- #
--# @cpr-reboot: The migrate command saves state to a file, allowing one to
--#              quit qemu, reboot to an updated kernel, and restart an updated
--#              version of qemu.  The caller must specify a migration URI
--#              that writes to and reads from a file.  Unlike normal mode,
--#              the use of certain local storage options does not block the
--#              migration, but the caller must not modify guest block devices
--#              between the quit and restart.  To avoid saving guest RAM to the
--#              file, the memory backend must be shared, and the @x-ignore-shared
--#              migration capability must be set.  Guest RAM must be non-volatile
--#              across reboot, such as by backing it with a dax device, but this
--#              is not enforced.  The restarted qemu arguments must match those
--#              used to initially start qemu, plus the -incoming option.
--#              (since 8.2)
-+# @cpr-reboot: The migrate command stops the VM, saves state to the URI,
-+#     and qemu exits.  After qemu exits, the user resumes by running
-+#     qemu -incoming.
-+#
-+#     This mode allows the user to quit qemu, and restart an updated version
-+#     of qemu.  The user may even update and reboot the OS before restarting,
-+#     as long as the URI persists across a reboot.
-+#
-+#     Unlike normal mode, the use of certain local storage options does not
-+#     block the migration, but the user must not modify guest block devices
-+#     between the quit and restart.
-+#
-+#     This mode supports vfio devices provided the user first puts the guest
-+#     in the suspended runstate, such as by issuing guest-suspend-ram to the
-+#     qemu guest agent.
-+#
-+#     Best performance is achieved when the memory backend is shared and the
-+#     @x-ignore-shared migration capability is set, but this is not required.
-+#     Further, if the user reboots before restarting such a configuration, the
-+#     shared backend must be be non-volatile across reboot, such as by backing
-+#     it with a dax device.
-+#
-+#     (since 8.2)
- ##
- { 'enum': 'MigMode',
-   'data': [ 'normal', 'cpr-reboot' ] }
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 0ea1902..6dc234b 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -82,7 +82,8 @@ void migration_add_notifier(NotifierWithReturn *notify,
+ void migration_add_notifier_mode(NotifierWithReturn *notify,
+                                  MigrationNotifyFunc func, MigMode mode);
+ void migration_remove_notifier(NotifierWithReturn *notify);
+-void migration_call_notifiers(MigrationState *s, MigrationEventType type);
++int migration_call_notifiers(MigrationState *s, MigrationEventType type,
++                             Error **errp);
+ bool migration_in_setup(MigrationState *);
+ bool migration_has_finished(MigrationState *);
+ bool migration_has_failed(MigrationState *);
+diff --git a/migration/migration.c b/migration/migration.c
+index 01d8867..d1fce9e 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1318,6 +1318,8 @@ void migrate_set_state(int *state, int old_state, int new_state)
+ 
+ static void migrate_fd_cleanup(MigrationState *s)
+ {
++    Error *local_err = NULL;
++
+     g_free(s->hostname);
+     s->hostname = NULL;
+     json_writer_free(s->vmdesc);
+@@ -1362,13 +1364,23 @@ static void migrate_fd_cleanup(MigrationState *s)
+                           MIGRATION_STATUS_CANCELLED);
+     }
+ 
++    if (!migration_has_failed(s) &&
++        migration_call_notifiers(s, MIG_EVENT_PRECOPY_DONE, &local_err)) {
++
++        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
++        migrate_set_error(s, local_err);
++        error_free(local_err);
++    }
++
+     if (s->error) {
+         /* It is used on info migrate.  We can't free it */
+         error_report_err(error_copy(s->error));
+     }
+-    migration_call_notifiers(s, s->state == MIGRATION_STATUS_COMPLETED ?
+-                             MIG_EVENT_PRECOPY_DONE :
+-                             MIG_EVENT_PRECOPY_FAILED);
++
++    if (migration_has_failed(s)) {
++        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
++    }
++
+     block_cleanup_parameters();
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+ }
+@@ -1481,13 +1493,15 @@ void migration_remove_notifier(NotifierWithReturn *notify)
+     }
+ }
+ 
+-void migration_call_notifiers(MigrationState *s, MigrationEventType type)
++int migration_call_notifiers(MigrationState *s, MigrationEventType type,
++                             Error **errp)
+ {
+     MigMode mode = s->parameters.mode;
+     MigrationEvent e;
+ 
+     e.type = type;
+-    notifier_with_return_list_notify(&migration_state_notifiers[mode], &e, 0);
++    return notifier_with_return_list_notify(&migration_state_notifiers[mode],
++                                            &e, errp);
+ }
+ 
+ bool migration_in_setup(MigrationState *s)
+@@ -2535,7 +2549,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+      * at the transition to postcopy and after the device state; in particular
+      * spice needs to trigger a transition now
+      */
+-    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE);
++    if (migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, errp)) {
++        goto fail;
++    }
+ 
+     migration_downtime_end(ms);
+ 
+@@ -2555,11 +2571,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+ 
+     ret = qemu_file_get_error(ms->to_dst_file);
+     if (ret) {
+-        error_setg(errp, "postcopy_start: Migration stream errored");
+-        migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+-                              MIGRATION_STATUS_FAILED);
++        error_setg_errno(errp, -ret, "postcopy_start: Migration stream error");
++        bql_lock();
++        goto fail;
+     }
+-
+     trace_postcopy_preempt_enabled(migrate_postcopy_preempt());
+ 
+     return ret;
+@@ -2580,6 +2595,7 @@ fail:
+             error_report_err(local_err);
+         }
+     }
++    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+     bql_unlock();
+     return -1;
+ }
+@@ -3594,7 +3610,9 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+         rate_limit = migrate_max_bandwidth();
+ 
+         /* Notify before starting migration thread */
+-        migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP);
++        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
++            goto fail;
++        }
+     }
+ 
+     migration_rate_set(rate_limit);
 -- 
 1.8.3.1
 
