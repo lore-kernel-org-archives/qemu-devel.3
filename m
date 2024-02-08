@@ -4,57 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A6EC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 374D4C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYAbT-0008W4-Ih; Thu, 08 Feb 2024 15:02:35 -0500
+	id 1rYAgI-0004xl-HY; Thu, 08 Feb 2024 15:07:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbR-0008Tl-Oi
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:33 -0500
-Received: from todd.t-8ch.de ([2a01:4f8:c010:41de::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbQ-0001Wg-4v
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1707422548; bh=4DspYvGcedbZAyyXHFoUQRfkUa0jnSBjsecnaCtoxI4=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=DD+d9V8akalFAKsERe5QJl04ZwUDvgS9RoXgKsWx1KJVltd7Fho0u3gxoZmJpmzjX
- 0n89qA+32sSWPpuQYP31b8nZagr8Tst9f7o3zbDyfrmL+22f1JO4fN3AGOc9U0nfem
- GfL0KkPWWDqiIZXv4RJscFtk1Omuxjifu3/SJNjU=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Date: Thu, 08 Feb 2024 21:02:23 +0100
-Subject: [PATCH v6 4/6] hw/misc/pvpanic: add support for normal shutdowns
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rYAgH-0004xN-4x
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:07:33 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rYAgF-0002GN-LA
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:07:32 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1d51ba18e1bso2005475ad.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 12:07:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707422849; x=1708027649; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1J/T0NWpLpQNugR1MVsfCXzq0xs5VWOLjbRJqqhRDE4=;
+ b=OgK4N1e8s9jhnztbqxdjBkFvF9GmRs63sxiMGs3OkB2IIEiNcbW56MZ2+aNV6Ya+2L
+ 8EJFkWeby3fVdq0g2Ynu0f4dTE402HnolhgC/f/zUyBE7hp+EtuonBnm9lSIEi7sNi2H
+ znCUG5dd4khRHQuh+2nl+8yvApUUg1I8YO0js5aqNJVIXBBjchy2YRPaSOu8i2i0IdQ4
+ C7jDRVNo2UNPfUwK2dg1my+Pp/UV0zLqFGGsx9LffFisuaNA+7mn+xZAbfPNSSKZzzoL
+ LuxY3JWBCIAXjHjN+x6Sav9gvfuCXQ1d7RpUDRAHTTsUitHUXhnBJuyuMyDHuibWOQai
+ idTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707422849; x=1708027649;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1J/T0NWpLpQNugR1MVsfCXzq0xs5VWOLjbRJqqhRDE4=;
+ b=RSCZITDjUCXyzF2J2sx7dU5v64OLbE8HVKqFilhLak00uLpubry4fDgokQf4UT0wxU
+ dAnn70dy5mRUZEF9KdZAkHm9xKu3qF9y2oMZSE1FD0anKEURfhNElEYhURbzLFv66MwQ
+ IOpDdglfXuAJq9Vi02GjFEvndIF8sgaKZb+8NChrv4xkBcln9WFkLQhsJxgV/pQ76iv2
+ h3Dfmf18LDidlkOGO7FbNQWBgc3PtWe4JQQ/gE+91+WZTC6+KQhnuQlby33yAJnL5JxC
+ sukdsdsYnOy8kuaQG5K37jg68Gi/RZ/ZUzGRbhiFOsgyZ3U0p0UaHdkwnvz9LjhJTc6g
+ D1QA==
+X-Gm-Message-State: AOJu0YzgBhq5yvkeQEW1Dt7t5vbRQL2DMPSOJ3TiH8+fww7DU3/LP23m
+ GuTyHGg7w2d2tMrzBfpfUu7v8zrrRGZuca6na7VwbtkV8Pxmxq3xKgFrlkUxbQ1qneeO30Djb7x
+ 8
+X-Google-Smtp-Source: AGHT+IFGOviUdrAnbCvmrWc8vU/YWL4enTUbS6YwZ71fcWBjgbjrq/jgqBfwk20dLN2UaDbiA8+xpQ==
+X-Received: by 2002:a17:903:18b:b0:1d7:428f:50fd with SMTP id
+ z11-20020a170903018b00b001d7428f50fdmr204830plg.31.1707422849467; 
+ Thu, 08 Feb 2024 12:07:29 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWH7zvwlFu28iVq/+Fhl/1wxEzKdhr/9Ejw7toZpqE2lGdeozoE2XPSWD46yuQAOJD5HNcEJb9mJDS6XwllU56fbRBvuIzLMS1KiyHmx/UCBv9NTdVRK3jw
+Received: from [192.168.4.112] (066-027-223-101.inf.spectrum.com.
+ [66.27.223.101]) by smtp.gmail.com with ESMTPSA id
+ e16-20020a170902cf5000b001d77a0e1374sm147972plg.151.2024.02.08.12.07.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Feb 2024 12:07:29 -0800 (PST)
+Message-ID: <099ba824-7e79-4c2b-a548-5922d69a5720@linaro.org>
+Date: Thu, 8 Feb 2024 10:07:26 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240208-pvpanic-shutdown-v6-4-965580ac057b@t-8ch.de>
-References: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
-In-Reply-To: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
-To: "Michael S. Tsirkin" <mst@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=3037;
- i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
- bh=4DspYvGcedbZAyyXHFoUQRfkUa0jnSBjsecnaCtoxI4=;
- b=L8gQPtWSd+oMyxXIXF3F3iZw19dVxQCQUdgDW9VWx+/Jxzy/BOqxyKXpqFKbYLgNAZ3LCvIGN
- 913tZcLiM77AeG4u148sioAnKFrpO81oXSNiV84qlN2i9qP8X0oqoW/
-X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-Received-SPF: pass client-ip=2a01:4f8:c010:41de::1;
- envelope-from=thomas@t-8ch.de; helo=todd.t-8ch.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/6] util/bufferiszero: introduce an inline wrapper
+Content-Language: en-US
+To: Alexander Monakov <amonakov@ispras.ru>
+Cc: qemu-devel@nongnu.org, Mikhail Romanov <mmromanov@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240206204809.9859-1-amonakov@ispras.ru>
+ <20240206204809.9859-3-amonakov@ispras.ru>
+ <b2160783-08ae-4ec7-8e49-e493cabac7b2@linaro.org>
+ <cdbe132a-38e0-1200-bebb-ca0dfc3e1e7b@ispras.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <cdbe132a-38e0-1200-bebb-ca0dfc3e1e7b@ispras.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,94 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shutdown requests are normally hardware dependent.
-By extending pvpanic to also handle shutdown requests, guests can
-submit such requests with an easily implementable and cross-platform
-mechanism.
+On 2/6/24 21:13, Alexander Monakov wrote:
+> Thank you. I agree we shouldn't penalize non-x86 hosts here, but to be honest
+> I'd really like to keep this optimization because so many places in Qemu invoke
+> buffer_is_zero with a constant length, allowing the compiler to optimize out
+> the length test.
 
-Acked-by: Cornelia Huck <cohuck@redhat.com>
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
----
- docs/specs/pvpanic.rst    | 2 ++
- hw/misc/pvpanic.c         | 5 +++++
- include/hw/misc/pvpanic.h | 3 ++-
- include/sysemu/runstate.h | 1 +
- system/runstate.c         | 5 +++++
- 5 files changed, 15 insertions(+), 1 deletion(-)
+Hmm.  True, both migration and image copy use large blocks frequently.
 
-diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
-index f894bc19555f..796cc0348a38 100644
---- a/docs/specs/pvpanic.rst
-+++ b/docs/specs/pvpanic.rst
-@@ -29,6 +29,8 @@ bit 1
-   a guest panic has happened and will be handled by the guest;
-   the host should record it or report it, but should not affect
-   the execution of the guest.
-+bit 2
-+  a guest shutdown has happened and should be processed by the host
- 
- PCI Interface
- -------------
-diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
-index a4982cc5928e..0e9505451a7a 100644
---- a/hw/misc/pvpanic.c
-+++ b/hw/misc/pvpanic.c
-@@ -40,6 +40,11 @@ static void handle_event(int event)
-         qemu_system_guest_crashloaded(NULL);
-         return;
+
+> Would you be open to testing availability of optimized variants
+> in the inline wrapper like this:
+> 
+> diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
+> index 62b153e603..7a2145ffef 100644
+> --- a/include/qemu/cutils.h
+> +++ b/include/qemu/cutils.h
+> @@ -209,11 +209,12 @@ static inline bool buffer_is_zero(const void *vbuf, size_t len)
+>           return true;
+>       }
+> 
+> +#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
+>       if (len >= 256) {
+>           return buffer_is_zero_len_256_plus(vbuf, len);
+> -    } else {
+> -        return buffer_is_zero_len_4_plus(vbuf, len);
+>       }
+> +#endif
+> +    return buffer_is_zero_len_4_plus(vbuf, len);
+
+Plausible.
+
+Also, now that we're down to two variants instead of four, perhaps a statically predicted 
+direct branch or two might be better than an indirect branch?  E.g.
+
+bool buffer_is_zero_len_256_plus(buf, len)
+{
+#ifdef CONFIG_AVX2_OPT
+     if (select_accel & CPUINFO_AVX2) {
+         return buffer_zero_avx2(buf, len);
      }
-+
-+    if (event & PVPANIC_SHUTDOWN) {
-+        qemu_system_guest_pvshutdown();
-+        return;
-+    }
- }
- 
- /* return supported events on read */
-diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
-index 48f2ec4c86a1..9e36a02d5a4f 100644
---- a/include/hw/misc/pvpanic.h
-+++ b/include/hw/misc/pvpanic.h
-@@ -20,7 +20,8 @@
- 
- #define PVPANIC_PANICKED	(1 << 0)
- #define PVPANIC_CRASH_LOADED	(1 << 1)
--#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED)
-+#define PVPANIC_SHUTDOWN	(1 << 2)
-+#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED | PVPANIC_SHUTDOWN)
- 
- #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
- #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
-diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
-index 0117d243c4ed..e210a37abf0f 100644
---- a/include/sysemu/runstate.h
-+++ b/include/sysemu/runstate.h
-@@ -104,6 +104,7 @@ void qemu_system_killed(int signal, pid_t pid);
- void qemu_system_reset(ShutdownCause reason);
- void qemu_system_guest_panicked(GuestPanicInformation *info);
- void qemu_system_guest_crashloaded(GuestPanicInformation *info);
-+void qemu_system_guest_pvshutdown(void);
- bool qemu_system_dump_in_progress(void);
- 
- #endif
-diff --git a/system/runstate.c b/system/runstate.c
-index d6ab860ecaa7..572499513034 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -572,6 +572,11 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
-     qapi_free_GuestPanicInformation(info);
- }
- 
-+void qemu_system_guest_pvshutdown(void)
-+{
-+    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-+}
-+
- void qemu_system_reset_request(ShutdownCause reason)
- {
-     if (reboot_action == REBOOT_ACTION_SHUTDOWN &&
+#endif
+#ifdef __SSE2__
+     if (select_accel & CPUINFO_SSE2) {
+         return buffer_zero_sse2(buf, len);
+     }
+#endif
+     return buffer_is_zero_len_4_plus(buf, len);
+}
 
--- 
-2.43.0
+where select_accel would be set by test_buffer_is_zero_next_accel() etc.
 
+
+r~
 
