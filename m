@@ -4,75 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 931DDC48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B554C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:53:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY7Qs-0005Op-JY; Thu, 08 Feb 2024 11:39:26 -0500
+	id 1rY7dy-0000jk-CH; Thu, 08 Feb 2024 11:52:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY7Qq-0005OF-EN
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:39:24 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY7Qo-0006iV-Vz
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:39:24 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5601eb97b29so131019a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:39:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707410361; x=1708015161; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xwgqSLILmN81PpPDr1feygrnHBHWAHPBrU3h95SQpbk=;
- b=Y31l/3zlXpFBnP9Y8bXRiA/Q4C+cWaUnL/VlC8QahvdABcLlObFecI2hLvH1/RJfky
- g31Sd0Lz7oVxnAWo4/TXX+wuLhqNQr2ttPng7j/zUNfjgfraTBQYgiDrdWqL/pj8pzox
- JyxcqC3Rh/TgL+WUbWj/BFJehfrvicUorDRI1SVcfRsPpNKINpN7ABLPaL6Ip7KojMgn
- AXbGutcfw60Wz5JYKwMKXmSxFu/YL3rvrU9e+LKd2BFJsnaQ5DWaB9d5+x+8oR+Ahe6D
- CexZG7mxovf1JuHlN+MWXecnZi7Ze5i1hVEaVarN7E4rfH/GYnescogaDLurM8qbKqbj
- c1aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707410361; x=1708015161;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xwgqSLILmN81PpPDr1feygrnHBHWAHPBrU3h95SQpbk=;
- b=KIqAhXon0Zm4U6wbraKIT2ME3o2QVhi2SE/dYY4ro8P1mSyxwmndbMJqBI5R0GzWd2
- MTL0OcBffEGv/+CND0Ih3PgoZ9raVh7cMWupDBcWEA+yUT2dk6j31UCUD0VcJsQVwnF5
- TmLv6HGJ/iaIh7Y9gLlp4oe2kSrdvovUJZjZ9XKNu4MPbMV1IOG2L1KftygD1thY4G9/
- RAYZ3xjYLoJdxvh/VDJaiCrgRhViQykLCxyDs/WTyDeK24aNIQnC9ymCM9+cLv/i6C0B
- rPII9IehZU7VlG2dt+all5KNNVjLrAf2G9K5nu7eieE74hkkzC8ilbkFPaZ6hIg4wV22
- lmBQ==
-X-Gm-Message-State: AOJu0Yzblabt0w1V/sxl5k7WuvRkO9xsgovp6Hdi4OW4n8WedidD+byh
- NvhN2n4EZjfZoaPYeLwzcF+k+mMFyZbYGINZNXShuMlHW1pX591uHGe/tqdiSiTiHq1GBhUSneP
- o2qy/OwYUuEdZ3hdmaN4nUs2Iy+zTyN57Qk4ueFYM7+LTKHAW
-X-Google-Smtp-Source: AGHT+IFJ1E7FF97cDZQKHSoVXR1fryN92VebkYUrLe8uYetkn78x/cjTwAOkM4SYJKwKy6p3xekBU4xHRwWZcA54h5g=
-X-Received: by 2002:a05:6402:710:b0:560:24d8:d2d1 with SMTP id
- w16-20020a056402071000b0056024d8d2d1mr74365edx.11.1707410361182; Thu, 08 Feb
- 2024 08:39:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rY7dl-0000j4-VC
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:52:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rY7dk-0000xo-5n
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:52:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707411161;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HnFPdWA5EVpY9l0ZaXfI71Ps/9IZ7jMzjXiDCC35kwI=;
+ b=bGormSP6g0vw9yN35gHSpFTlCwK/VSTtZZBVM7gBiellOCa2vXx/qJk080p6zkIyF3RX+J
+ 2gtE2sxNnpMLtfJulMwPpiCHBtHNoH1r4ahsecGbCsPmb5lNBVJLlyChqXS3krN+4wY56F
+ KEjKMomOFngM2rWdXm4YtY8Pp9pLtxo=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-noKUIWZTNZCHdQvA0-KxkA-1; Thu,
+ 08 Feb 2024 11:52:39 -0500
+X-MC-Unique: noKUIWZTNZCHdQvA0-KxkA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 61249282D3D7;
+ Thu,  8 Feb 2024 16:52:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.60])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 72C30492BF0;
+ Thu,  8 Feb 2024 16:52:35 +0000 (UTC)
+Date: Thu, 8 Feb 2024 16:52:33 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Babu Moger <babu.moger@amd.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+Message-ID: <ZcUG0Uc8KylEQhUW@redhat.com>
+References: <20240131101350.109512-1-zhao1.liu@linux.intel.com>
+ <Zbog2vDrrWFbujrs@redhat.com> <ZbsInI6Z66edm3eH@intel.com>
+ <ZbtirK-orqCb5sba@redhat.com> <ZbvCktGZFj4v3I/P@intel.com>
 MIME-Version: 1.0
-References: <20240202204847.2062798-1-komlodi@google.com>
- <20240202204847.2062798-2-komlodi@google.com>
-In-Reply-To: <20240202204847.2062798-2-komlodi@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Feb 2024 16:39:10 +0000
-Message-ID: <CAFEAcA8R13bQ7niSXhZPJ3vUD_OdNWpvjpKrWpz-gZsJxO_=dg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] hw/i2c: core: Add reset
-To: Joe Komlodi <komlodi@google.com>
-Cc: qemu-devel@nongnu.org, venture@google.com, minyard@acm.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZbvCktGZFj4v3I/P@intel.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,83 +95,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Feb 2024 at 20:48, Joe Komlodi <komlodi@google.com> wrote:
->
-> It's possible for a reset to come in the middle of a transaction, which
-> causes the bus to be in an old state when a new transaction comes in.
->
-> Signed-off-by: Joe Komlodi <komlodi@google.com>
-> ---
->  hw/i2c/core.c        | 19 +++++++++++++++++++
->  include/hw/i2c/i2c.h |  2 +-
->  2 files changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-> index 4cf30b2c86..3128067bba 100644
-> --- a/hw/i2c/core.c
-> +++ b/hw/i2c/core.c
-> @@ -23,10 +23,29 @@ static Property i2c_props[] = {
->      DEFINE_PROP_END_OF_LIST(),
->  };
->
-> +static void i2c_bus_hold_reset(Object *obj)
-> +{
-> +    I2CBus *bus = I2C_BUS(obj);
-> +    I2CNode *node, *next;
-> +
-> +    bus->broadcast = false;
-> +    QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
-> +        QLIST_REMOVE(node, next);
-> +        g_free(node);
-> +    }
-> +}
+On Fri, Feb 02, 2024 at 12:10:58AM +0800, Zhao Liu wrote:
+> Hi Daniel,
+> 
+> On Thu, Feb 01, 2024 at 09:21:48AM +0000, Daniel P. Berrangé wrote:
+> > Date: Thu, 1 Feb 2024 09:21:48 +0000
+> > From: "Daniel P. Berrangé" <berrange@redhat.com>
+> > Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+> > 
+> > On Thu, Feb 01, 2024 at 10:57:32AM +0800, Zhao Liu wrote:
+> > > Hi Daniel,
+> > > 
+> > > On Wed, Jan 31, 2024 at 10:28:42AM +0000, Daniel P. Berrangé wrote:
+> > > > Date: Wed, 31 Jan 2024 10:28:42 +0000
+> > > > From: "Daniel P. Berrangé" <berrange@redhat.com>
+> > > > Subject: Re: [PATCH v8 00/21] Introduce smp.modules for x86 in QEMU
+> > > > 
+> > > > On Wed, Jan 31, 2024 at 06:13:29PM +0800, Zhao Liu wrote:
+> > > > > From: Zhao Liu <zhao1.liu@intel.com>
+> > > 
+> > > [snip]
+> > > 
+> > > > > However, after digging deeper into the description and use cases of
+> > > > > cluster in the device tree [3], I realized that the essential
+> > > > > difference between clusters and modules is that cluster is an extremely
+> > > > > abstract concept:
+> > > > >   * Cluster supports nesting though currently QEMU doesn't support
+> > > > >     nested cluster topology. However, modules will not support nesting.
+> > > > >   * Also due to nesting, there is great flexibility in sharing resources
+> > > > >     on clusters, rather than narrowing cluster down to sharing L2 (and
+> > > > >     L3 tags) as the lowest topology level that contains cores.
+> > > > >   * Flexible nesting of cluster allows it to correspond to any level
+> > > > >     between the x86 package and core.
+> > > > > 
+> > > > > Based on the above considerations, and in order to eliminate the naming
+> > > > > confusion caused by the mapping between general cluster and x86 module
+> > > > > in v7, we now formally introduce smp.modules as the new topology level.
+> > > > 
+> > > > What is the Linux kernel calling this topology level on x86 ?
+> > > > It will be pretty unfortunate if Linux and QEMU end up with
+> > > > different names for the same topology level.
+> > > > 
+> > > 
+> > > Now Intel's engineers in the Linux kernel are starting to use "module"
+> > > to refer to this layer of topology [4] to avoid confusion, where
+> > > previously the scheduler developers referred to the share L2 hierarchy
+> > > collectively as "cluster".
+> > > 
+> > > Looking at it this way, it makes more sense for QEMU to use the
+> > > "module" for x86.
+> > 
+> > I was thinking specificially about what Linux calls this topology when
+> > exposing it in sysfs and /proc/cpuinfo. AFAICT, it looks like it is
+> > called 'clusters' in this context, and so this is the terminology that
+> > applications and users are going to expect.
+> 
+> The cluster related topology information under "/sys/devices/system/cpu/
+> cpu*/topology" indicates the L2 cache topology (CPUID[0x4]), not module
+> level CPU topology (CPUID[0x1f]).
+> 
+> So far, kernel hasn't exposed module topology related sysfs. But we will
+> add new "module" related information in sysfs. The relevant patches are
+> ready internally, but not posted yet.
+> 
+> In the future, we will use "module" in sysfs to indicate module level CPU
+> topology, and "cluster" will be only used to refer to the l2 cache domain
+> as it is now.
 
-This does what it says it's going to do; but I think it
-would be good to hear from Corey whether it's better to
-do this, or instead to call i2c_end_transfer() in the
-reset-enter phase.
+So, if they're distinct concepts both relevant to x86 CPUs, then from
+the QEMU POV, should this patch series be changing the -smp arg to
+allowing configuration of both 'clusters' and 'modules' for x86 ?
 
-Mostly QEMU's "reset" is like power-cycling, in which case
-I guess that what we have here where we just forget about
-the in-progress transfer and assume the device on the other
-end is also going to reset back to a neutral state is what
-we want.
-
-Does i2c have a concept of a bus-level "reset" operation?
-
-> +
-> +static void i2c_bus_class_init(ObjectClass *klass, void *data)
-> +{
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +    rc->phases.hold = i2c_bus_hold_reset;
-> +}
-> +
->  static const TypeInfo i2c_bus_info = {
->      .name = TYPE_I2C_BUS,
->      .parent = TYPE_BUS,
->      .instance_size = sizeof(I2CBus),
-> +    .class_init = i2c_bus_class_init,
->  };
+An earlier version of this series just supported 'clusters', and this
+changed to 'modules', but your description of Linux reporting both
+suggests QEMU would need both.
 
 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
->  static int i2c_bus_pre_save(void *opaque)
-> diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-> index 2a3abacd1b..49580e30e2 100644
-> --- a/include/hw/i2c/i2c.h
-> +++ b/include/hw/i2c/i2c.h
-> @@ -64,7 +64,7 @@ struct I2CSlave {
->  };
->
->  #define TYPE_I2C_BUS "i2c-bus"
-> -OBJECT_DECLARE_SIMPLE_TYPE(I2CBus, I2C_BUS)
-> +OBJECT_DECLARE_TYPE(I2CBus, I2CBusClass, I2C_BUS)
-
-I don't think you need this change any more ?
-
-thanks
--- PMM
 
