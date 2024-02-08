@@ -4,102 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D73C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 10:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98DEC48260
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 10:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY1XH-0001gm-5c; Thu, 08 Feb 2024 05:21:39 -0500
+	id 1rY1X9-0001cA-Ff; Thu, 08 Feb 2024 05:21:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1rY1XD-0001cf-RK; Thu, 08 Feb 2024 05:21:36 -0500
-Received: from mout.kundenserver.de ([212.227.126.131])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rY1X7-0001bS-BY
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 05:21:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1rY1XC-00022z-BD; Thu, 08 Feb 2024 05:21:35 -0500
-Received: from [192.168.100.1] ([82.142.8.70]) by mrelayeu.kundenserver.de
- (mreue012 [213.165.67.103]) with ESMTPSA (Nemesis) id
- 1MTfgb-1rQd1A0xUz-00TyeL; Thu, 08 Feb 2024 11:21:29 +0100
-Message-ID: <02d3f2bb-5a27-41aa-90ec-7405e0957cb8@vivier.eu>
-Date: Thu, 8 Feb 2024 11:21:27 +0100
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rY1X5-00022P-TJ
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 05:21:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707387687;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Uyhl4gljIvylUxxsk4RjoaeNUwT3guyr/FMP3HOu0OI=;
+ b=ZG3bDDePpQrvuse3EhKJ8eZojKUUK7hjWV09ezNWxFOluEwur2gibuseA63/1EgQXYu6SR
+ Kiz8yoGGgR/guK2xoJDHo7OwNKC+MQYAWHcZiEQI4D06JBphLYAB9SC617ykqbDEqvRYbT
+ PznWG/TsfeCJUc4lOmnFgdcwawo66fc=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-mAArt141O-O_TF3xnBq1fg-1; Thu, 08 Feb 2024 05:21:25 -0500
+X-MC-Unique: mAArt141O-O_TF3xnBq1fg-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-78408c4e2c2so186592685a.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 02:21:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707387684; x=1707992484;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Uyhl4gljIvylUxxsk4RjoaeNUwT3guyr/FMP3HOu0OI=;
+ b=WzIp43mPGqwZV50U1XAUmsNFaB9JUxk3Ne/99CIsjfHG7mOiFwrE9Ur3LTEl35+F15
+ TaWD4t0BhOiPRD7mfAgKPKD3dR9X5aDjwAqBNVJqPtIz8F7fphe/V1p3Wu8Z+5a3RFLW
+ aRh3KTalFMCYnMCgI6TMuS9bBX47zTofnbbvpQKD93jT8BTB6WYmf8V6UXW22VseiZT+
+ TEfImbFhMPOBeA8OGrPZra5n6ZlYlKtMR8lZP11xK8K4op7+c2gydz1mIFyOBvuKV61R
+ Ht57s+DGEeDNSzC7v4qKy1RYFd8qNUaeQXqa+PYZNV20Ckayy575Vc9NOHyseIJcem/R
+ YIiA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWObhIElwLInAqTXvb0wbDH6M8DjdCQdpEb/IlbzBRAfcE+3We6u/HNkUUets1dkjoYiLR2V50kEhtzgygLQTQ3K8gj8o0=
+X-Gm-Message-State: AOJu0Yw+BcsJX03LdM1w8i+1WNUyvy6Cfa4dIpqKUMuF6rDCK0n9nr+x
+ nYqaqmYXo/iyMK/Ikp6hqQASbNBnhRuM6d3jwO+L4gfRCjDZsnziFFi4uPj12T/33EESvoWtLv3
+ rlwzivFkbGDfYKExVrCX+OrEOU3eMN93PyCZCTeTffH99FLADi89l
+X-Received: by 2002:a05:620a:21c7:b0:785:5fde:bf32 with SMTP id
+ h7-20020a05620a21c700b007855fdebf32mr7869463qka.68.1707387683911; 
+ Thu, 08 Feb 2024 02:21:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF1kx5WzitmZPmhX/fiEEpruOKnUdGdKflcVCl5lINOr7QKaRwEZf5V1uFku2vb0gx2OqwFdw==
+X-Received: by 2002:a05:620a:21c7:b0:785:5fde:bf32 with SMTP id
+ h7-20020a05620a21c700b007855fdebf32mr7869446qka.68.1707387683525; 
+ Thu, 08 Feb 2024 02:21:23 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXfg+U6omYLmE9pV2gaJm8GDpBHjBClhpAZPkgYIiIBnjcWq+bjhZT9kIWZ2tXySRhZRJZCMN7+DJcgRFuxI9a/5ZiVFrIzBXA+8Pcmqr7fTxoENx05uxC7Kamja9l/U99wZiFiB84dP3vnZANl/6iivV5inlw/jd+tNwzs/BBL1RnK7q2C9Tw/RFNyH5a1yocvDgkEBNWEHzoDEqM6/469RUbyFiKHmgtErk8jEoVKRpFdmmgqNrkefikG2DczgIEM+aoiev6uZi2ao/wEKMgoXA08ypIGMsTgZYJ36AUNw2e3eBdbOThMk184TmvcVYmTLf8K32yu5gfnG0=
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ oo20-20020a05620a531400b00783f534706esm1283323qkn.61.2024.02.08.02.21.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Feb 2024 02:21:23 -0800 (PST)
+Message-ID: <8c0ac34a-58cb-4301-8293-e58596c208f2@redhat.com>
+Date: Thu, 8 Feb 2024 11:21:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iothread: Simplify expression in qemu_in_iothread()
-Content-Language: fr
-To: Kevin Wolf <kwolf@redhat.com>, qemu-trivial@nongnu.org
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240208101657.15962-1-kwolf@redhat.com>
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <20240208101657.15962-1-kwolf@redhat.com>
+Subject: Re: [PATCH v3 3/3] hw: Set virtio-iommu aw-bits default value on
+ pc_q35 and arm virt
+Content-Language: en-US
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jean-philippe@linaro.org,
+ mst@redhat.com, peter.maydell@linaro.org, zhenzhong.duan@intel.com,
+ yanghliu@redhat.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com
+References: <20240208101128.655167-1-eric.auger@redhat.com>
+ <20240208101128.655167-4-eric.auger@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240208101128.655167-4-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:q8znJd7NDNeRB6VuzJOGiecKBHwAWPSPOa7IsS/tV7XBo16gYgv
- c6jKK8ldxo7nJzLDQjnQTQEJQGQoCzyoth164Mf2CgtvuXE7tw8BNAeZ2VCUvrM8KoqB5Yz
- f/RVVllG6b8jO3vkh0JmnimB7Seo1OUTRXtJyqmfoDwwSvjUDJrRg2gjcpKFidhCEcbsjaY
- 2paeJBFE/NtF67JRAulfw==
-UI-OutboundReport: notjunk:1;M01:P0:fOv4xpZWtfs=;aufBqqCRs4nJFvoSJ8zsHY9tED1
- mff3u2uAJvDkdtke3rRqqd/pwkBpY1cgaXXZ3rPmqrEfioNlL9oEnmQ/GfXk1usGxJSm3Ap2m
- 256+liLNwPAa9lONGOO8MQn/nPlIYuSjYbTtvXX/Lu48yw8VmMHS8RTzp7kyFlUV+O+BHb1Ue
- seB1D0YvaGoGdz7F5IOG/7ZwPeHGDeix2pQ0yitc5mEi6DMX3tW5JQ10ZyVKrNaoHc2BEAqdf
- qmOunew8HXBnfUNVHOybm7UaMhZ4Yu5k854rhcETy4yLbPgo+LVf71MvIwEnAbcEVCSmlqi1p
- i3/e4ecZOcG12ZX8+3Auud63JEz4SjYC14oRaiLYPoq5GnE/OxGo4jx6GuMRHcF5rmFoMLPMe
- vG3+J0klAvBenKI9w4GKlrrLfh7JyCDe2JZl5/PeLbbFejHzMlya4LY/cOqOvBo/8Od/pqLyv
- oXLUerI/HRyjZ+IIaHDbBzWHh7E2iju8RTXTaoVnpqD6Fx2/2ezNnGQQGqORO5rC93xA8C3lm
- x7PPy9Veuooa2wd+65CMmk7calrdqoFOcO9MftSZrKTzMBJyS3FJsuEy2wNzpv+m/l8mvehvY
- sONrD9ImwxYDTQjKW9rEH9ANpbFJ1BaTCBKUAwISEiXWVCzAM0zdhfDt6ClMdD/zgUKs1qmy6
- X4xWQV13DJI0wFLLQ87ET5WtXlFkU7KvP4PZp/Pz/JbyFnijLARPPdk1VnK2BaRicYyko+xtX
- fJUAr1rFqGza/omLAeuWgAOcD/RJwMT0vGAgJzcXJ2zg5NP5ShRrL4=
-Received-SPF: pass client-ip=212.227.126.131; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.106,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,27 +111,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 08/02/2024 à 11:16, Kevin Wolf a écrit :
-> 'a == b ? false : true' is a rather convoluted way of writing 'a != b'.
-> Use the more obvious way to write it.
+On 2/8/24 11:10, Eric Auger wrote:
+> Currently the default input range can extend to 64 bits. On x86,
+> when the virtio-iommu protects vfio devices, the physical iommu
+> may support only 39 bits. Let's set the default to 39, as done
+> for the intel-iommu. On ARM we set 48b as a default (matching
+> SMMUv3 SMMU_IDR5.VAX == 0).
 > 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   iothread.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+> We use hw_compat_8_2 to handle the compatibility for machines
+> before 9.0 which used to have a virtio-iommu default input range
+> of 64 bits.
 > 
-> diff --git a/iothread.c b/iothread.c
-> index 6c1fc8c856..e1e9e04736 100644
-> --- a/iothread.c
-> +++ b/iothread.c
-> @@ -404,6 +404,5 @@ IOThread *iothread_by_id(const char *id)
->   
->   bool qemu_in_iothread(void)
->   {
-> -    return qemu_get_current_aio_context() == qemu_get_aio_context() ?
-> -                    false : true;
-> +    return qemu_get_current_aio_context() != qemu_get_aio_context();
->   }
+> Of course if aw-bits is set from the command line, the default
+> is overriden.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Tested-by: Yanghang Liu<yanghliu@redhat.com>
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+> ---
+> 
+> v2 -> v3:
+> - collected Zhenzhong's R-b
+> - use &error_abort instead of NULL error handle
+>    on object_property_get_uint() call (Cédric)
+> - use VTD_HOST_AW_39BIT (Cédric)
+> 
+> v1 -> v2:
+> - set aw-bits to 48b on ARM
+> - use hw_compat_8_2 to handle the compat for older machines
+>    which used 64b as a default
+> ---
+>   hw/arm/virt.c            | 6 ++++++
+>   hw/core/machine.c        | 5 ++++-
+>   hw/i386/pc.c             | 6 ++++++
+>   hw/virtio/virtio-iommu.c | 2 +-
+>   4 files changed, 17 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 368c2a415a..0994f2a560 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2716,10 +2716,16 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
+> +                                                   "aw-bits", &error_abort);
+>           hwaddr db_start = 0, db_end = 0;
+>           QList *reserved_regions;
+>           char *resv_prop_str;
+>   
+> +        if (!aw_bits) {
+> +            qdev_prop_set_uint8(dev, "aw-bits", 48);
+> +        }
+> +
+>           if (vms->iommu != VIRT_IOMMU_NONE) {
+>               error_setg(errp, "virt machine does not support multiple IOMMUs");
+>               return;
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index fb5afdcae4..70ac96954c 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -30,9 +30,12 @@
+>   #include "exec/confidential-guest-support.h"
+>   #include "hw/virtio/virtio-pci.h"
+>   #include "hw/virtio/virtio-net.h"
+> +#include "hw/virtio/virtio-iommu.h"
+>   #include "audio/audio.h"
+>   
+> -GlobalProperty hw_compat_8_2[] = {};
+> +GlobalProperty hw_compat_8_2[] = {
+> +    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
+> +};
+>   const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
+>   
+>   GlobalProperty hw_compat_8_1[] = {
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 196827531a..ee2d379c90 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1456,6 +1456,8 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
+> +                                                   "aw-bits", &error_abort);
+>           /* Declare the APIC range as the reserved MSI region */
+>           char *resv_prop_str = g_strdup_printf("0xfee00000:0xfeefffff:%d",
+>                                                 VIRTIO_IOMMU_RESV_MEM_T_MSI);
+> @@ -1464,6 +1466,10 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>           qlist_append_str(reserved_regions, resv_prop_str);
+>           qdev_prop_set_array(dev, "reserved-regions", reserved_regions);
+>   
+> +        if (!aw_bits) {
+> +            qdev_prop_set_uint8(dev, "aw-bits", VTD_HOST_AW_39BIT);
+> +        }
+> +
+>           g_free(resv_prop_str);
+>       }
+>   
+> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> index 7870bdbeee..c468e9b13b 100644
+> --- a/hw/virtio/virtio-iommu.c
+> +++ b/hw/virtio/virtio-iommu.c
+> @@ -1529,7 +1529,7 @@ static Property virtio_iommu_properties[] = {
+>       DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
+>                        TYPE_PCI_BUS, PCIBus *),
+>       DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
+> -    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
+> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+>   
+
 
