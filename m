@@ -4,69 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3150C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 13:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3A5C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 13:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY4by-0002ln-K9; Thu, 08 Feb 2024 08:38:42 -0500
+	id 1rY4ij-0006Yw-KD; Thu, 08 Feb 2024 08:45:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rY4bw-0002lZ-UL
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:38:40 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rY4if-0006YL-Sc
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:45:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rY4bv-00062M-2x
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:38:40 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 742E84B868;
- Thu,  8 Feb 2024 16:39:47 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A44FB76E92;
- Thu,  8 Feb 2024 16:38:32 +0300 (MSK)
-Message-ID: <d35607b0-0abe-4074-9bea-b27f14bdb146@tls.msk.ru>
-Date: Thu, 8 Feb 2024 16:38:32 +0300
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rY4ib-0007Ni-VW
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:45:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707399932;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4GcKTlB7LrrpFyQv7OWnJaJSF5s+nodIeEU4VFGOnnU=;
+ b=GLV2EwV0xV/M2gvx3NksRUVcMipv0fBCdKJq4lZLiyFTWvwBX3wv63H4S67+ebSFFoJ+Y6
+ iFh6XRctd423Q1/sbH0kOqLs8vLW+WlQxhZP8V2ES9cvN3sMeO/I16ykpKWpLOuAzgBmxW
+ 38Hzx4PYGwGPWMluFLBRNduNqZWiNPo=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-qHhRkVd6PL-ReBuMh-EcvQ-1; Thu, 08 Feb 2024 08:45:31 -0500
+X-MC-Unique: qHhRkVd6PL-ReBuMh-EcvQ-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7855216bc07so148496085a.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 05:45:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707399930; x=1708004730;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4GcKTlB7LrrpFyQv7OWnJaJSF5s+nodIeEU4VFGOnnU=;
+ b=eq9EJgdffPxqD8z2h6wgC+dRD29vn1jffgDBrhS7iqWF0rc+HHAnAUCHsJ3dxWzdDf
+ S+6tO8Heh8FeYxxQhkhattdseqHpUfJsAAjgitRtAtZHT9iwXPfhnwRKBueY/9sqs8ro
+ cme5DQMooxAJnU/0zBc+EDsMpfbzPXPIDtd16fkmauL1JBdJaQk+NGyQyWj4SzmqCtgU
+ 1gDUNHOCt21KVxOWv37ZDspYOh+Bsa6kWG+8sPEof+unSpyrA34IB/ri4nLg5q+ccHB8
+ 2URkWx0Gx4i18BnZUWbYNXfIJlBfTpc7c/6VikH+OLCJ2iUUKIKfX/xwOWOpAR1kcGNl
+ nutw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVsg5DaQtQA75fCugNb+gM9Pfm8U9lZ8MHqhoY2XkXH3wCWlwbfPN8nGFs19ugBbtcWw1HxGxdD7uudPVJBWMECucWL00=
+X-Gm-Message-State: AOJu0YxA9UjfPabyNNh1Tv26p6l5b8NPDim0pNhjN69ot5+/7pC0Iyq7
+ iA+pUYFt+I7YGZVY2asY26Gkrm+F3XnnIGjGjWE75sUt+XJXoLzfgsDlVJksWfU+YhGy9dcEgek
+ cySLS31UnUBL5zTPJOnd20FO5Q2K+9VC/1I4M6qdfOqLamt2jace/
+X-Received: by 2002:a05:620a:1a90:b0:783:f788:51c6 with SMTP id
+ bl16-20020a05620a1a9000b00783f78851c6mr10062554qkb.19.1707399930593; 
+ Thu, 08 Feb 2024 05:45:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLzh0Do3OZN1IBmzLt19fv5Xstu/qG3aufk5EtBd0+ndcbmkmx3aO2AnCDIChcnGlRIgxGew==
+X-Received: by 2002:a05:620a:1a90:b0:783:f788:51c6 with SMTP id
+ bl16-20020a05620a1a9000b00783f78851c6mr10062535qkb.19.1707399930349; 
+ Thu, 08 Feb 2024 05:45:30 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWA5s2sVt8LIBkNeaVE+Je1UWhdE3ja+YYKYUAw/2idyO6rc0SR220mAT69py5kLevXpLSQ1Rs7l1FUFCalpUL0v+tQdwdjbbdV4XJmvYatzwa5zV3zCFWJnwYQ1ESri/Hb
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ b13-20020a05620a04ed00b0078575747a18sm10494qkh.30.2024.02.08.05.45.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Feb 2024 05:45:30 -0800 (PST)
+Message-ID: <fbdb9fbc-c3de-4b0a-be1f-2bed405dfd86@redhat.com>
+Date: Thu, 8 Feb 2024 14:45:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/14] migration: Use migrate_has_error() in
+ close_return_path_on_source()
 Content-Language: en-US
-To: QEMU Developers <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: pc-bios/optionrom can't be built anymore since 33ab4787422b04
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson <alex.williamson@redhat.com>
+References: <20240207133347.1115903-1-clg@redhat.com>
+ <20240207133347.1115903-14-clg@redhat.com> <87y1bvayu7.fsf@suse.de>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <87y1bvayu7.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,23 +107,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit v7.0.0-1454-g33ab478742 "configure: enable cross-compilation of optionrom"
-effectively broke building of optionroms on anything but real i386 or using
-newly supported cross/docker image.  Before that, it was trivial to do that
-using native x86_64 tools.
+On 2/8/24 14:07, Fabiano Rosas wrote:
+> Cédric Le Goater <clg@redhat.com> writes:
+> 
+>> close_return_path_on_source() retrieves the migration error from the
+>> the QEMUFile '->to_dst_file' to know if a shutdown is required. This
+>> shutdown is required to exit the return-path thread. However, in
+>> migrate_fd_cleanup(), '->to_dst_file' is cleaned up before calling
+>> close_return_path_on_source() and the shutdown is never performed,
+>> leaving the source and destination waiting for an event to occur.
+>>
+>> Avoid relying on '->to_dst_file' and use migrate_has_error() instead.
+>>
+>> Suggested-by: Peter Xu <peterx@redhat.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   migration/migration.c | 3 +--
+>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index d5f705ceef4c925589aa49335969672c0d761fa2..5f55af3d7624750ca416c4177781241b3e291e5d 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -2372,8 +2372,7 @@ static bool close_return_path_on_source(MigrationState *ms)
+>>        * cause it to unblock if it's stuck waiting for the destination.
+>>        */
+>>       WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+>> -        if (ms->to_dst_file && ms->rp_state.from_dst_file &&
+>> -            qemu_file_get_error(ms->to_dst_file)) {
+>> +        if (migrate_has_error(ms) && ms->rp_state.from_dst_file) {
+>>               qemu_file_shutdown(ms->rp_state.from_dst_file);
+>>           }
+>>       }
+> 
+> Hm, maybe Peter can help defend this, but this assumes that every
+> function that takes an 'f' and sets the file error also sets
+> migrate_set_error(). I'm not sure we have determined that, have we?
 
-# Mac OS X ships with a broken assembler
-if have_target i386-softmmu x86_64-softmmu && \
-         test "$targetos" != "darwin" && test "$targetos" != "sunos" && \
-         test "$targetos" != "haiku" && \
-         probe_target_compiler i386-softmmu; then
-     subdirs="$subdirs pc-bios/optionrom"
-...
+How could we check all the code path ? I agree it is difficult when
+looking at the code :/
 
-There, when run on x86_64 system, `probe_target_compiler i386-softmmu' return
-false immediately, so whole thing gets skipped.
+Thanks,
 
-FWIW.
+C.
 
-/mjt
+
 
