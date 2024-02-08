@@ -4,84 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0A8C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 19:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6699EC4829F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYANU-0001Zv-AZ; Thu, 08 Feb 2024 14:48:08 -0500
+	id 1rYAbP-0008Sn-T8; Thu, 08 Feb 2024 15:02:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <38i_FZQwKCpsI56DC9NO9A5IBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--nabihestefan.bounces.google.com>)
- id 1rYANS-0001ZS-Ci
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 14:48:06 -0500
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <38i_FZQwKCpsI56DC9NO9A5IBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--nabihestefan.bounces.google.com>)
- id 1rYANR-00071Q-1T
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 14:48:06 -0500
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-5cfd94f9433so111091a12.2
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 11:48:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1707421682; x=1708026482; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=/dUY9x+67FvkVBEF/XyJqYKGwZN4xMXS3WjbK5pVzbc=;
- b=S2AjgUKHrV7pdHsSVlx4EaFbK7Ke4FHKIUe/rozzJSDQ/2wVXOFMAAD8fPzTRq48rb
- 9fjOCXOhDCXna7mU22OAoC24bel+LxSPpgKmbHKd2p8cX3rugngn3cpK3Ox/hW2aa4Vs
- FsbT4MF+P55uiKCiLWrYu9SDrsh7ZlxDbQgoeVcaySY0hPYp21h61yEVrbupKCwSq/bt
- wySfJPpZeitkUsesUXKV0Mkqr9WvkfCCC8nV66ckw72p1ozj7E0DQlqVusNamXAWTucY
- CvroyW0hSsaxab0Tq6ltk3pg7hJeWFTHM4m3GH3pAf9pbdJJiun9ci2GaU30JCjnwyV5
- fCSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707421682; x=1708026482;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/dUY9x+67FvkVBEF/XyJqYKGwZN4xMXS3WjbK5pVzbc=;
- b=l2P2+c6Fs8/q83sfTP3BI9db+h3dTykPMlJm/ke3opMapOXHtl6VlDeZHvVIpgKhxT
- /QdUbb8goC1XHN4IY6OI8Isa4roAuSZBBwI9qIDNbT+NniIsR1olWVYw7JURbmjHaTtn
- xrWZESuNQP4YM/nu4E5EJAP7l6ShSd884bANQUPsP/NAcmjAzilGDq3e2FsPr3fn/Mh9
- KvwvuqBHinf8FRxgBgPLxadW0Q2uY/ryaAQYCX0oldkUN8oCvSeRd6tjRWUGAJLDK6oD
- 9JPVSE2TeWYBXxpQ4ra7OgvkxDjvuMfFabMRtHSWyCvmCsgxg3rwjITCg2LPDA6DKeto
- EbNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8/4f09zDGn6TtaKftI3chDIIsLkhe4G2U0dRo+YR61FLkLRctxYAJNgLE+GuWbv7WZM+qOMNk8EaMTFNs9Y5WG+uSX7s=
-X-Gm-Message-State: AOJu0YwM1EkWa5wlHgBFrmgLNeiwf51QgD8hu6uKj753Nj+p4omAkum2
- B4kE/uPRpr+hNUJV6QzOLETR9xJSeEligoJ0WPuttmDLI+850B38O5+z9+QYTVrh8SLlJCZAzwG
- vFplvNKpAD/rg8cHebCYtiz8+EA==
-X-Google-Smtp-Source: AGHT+IG5OKPfZ2YeSNzH3d7SBRKQcbfBY6z7vKn3AUyCnHZDFns78YqnPJdt27FjPkyU9ecJM5GdZAA1hXO8JR2pqhs=
-X-Received: from nabihestefan.c.googlers.com
- ([fda3:e722:ac3:cc00:20:ed76:c0a8:2737])
- (user=nabihestefan job=sendgmr) by 2002:a05:6a02:f98:b0:5dc:1cc9:36ab with
- SMTP id dq24-20020a056a020f9800b005dc1cc936abmr8705pgb.12.1707421682224; Thu,
- 08 Feb 2024 11:48:02 -0800 (PST)
-Date: Thu,  8 Feb 2024 19:47:58 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.43.0.687.g38aa6559b0-goog
-Message-ID: <20240208194759.2858582-1-nabihestefan@google.com>
-Subject: [PATCH v3 0/1] Sending small fix for NPCM GMAC test to properly test
- on Nuvoton 7xx
-From: Nabih Estefan <nabihestefan@google.com>
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- wuhaotsh@google.com, jasowang@redhat.com, avi.fishman@nuvoton.com, 
- nabihestefan@google.com, kwliu@nuvoton.com, tomer.maimon@nuvoton.com, 
- Hila.Miranda-Kuzi@nuvoton.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=38i_FZQwKCpsI56DC9NO9A5IBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--nabihestefan.bounces.google.com;
- helo=mail-pg1-x54a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbO-0008S1-7v
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:30 -0500
+Received: from todd.t-8ch.de ([159.69.126.157])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbM-0001U7-8r
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
+ t=1707422544; bh=pLDGQUmcOkurLoPLQFej1T/V3Bo/OA3pqVp4oxQAW5A=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=lpHkDhK02czEiVIrZdJ2gKXMFyLNSIEGdmEwpSAa9lWJmXepihTkrS4T5Tt6OCmvq
+ R9E/A73d7mtaBvCLNvYSgDPIep7on8o/RppO3p+L81eyeF4/XPGnTdyCjUvAWD7a3e
+ 8O3mo5ujH2Qd9LXxaUpGye3sj8KeP8WsHiZLt+N4=
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+Date: Thu, 08 Feb 2024 21:02:24 +0100
+Subject: [PATCH v6 5/6] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
+ shutdown signal
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240208-pvpanic-shutdown-v6-5-965580ac057b@t-8ch.de>
+References: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
+In-Reply-To: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
+To: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=1642;
+ i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
+ bh=jDQrzFDng3hs6cePBwRlPLgJKcbRtWnG6BeDN4GONAU=;
+ b=uLOZl52gNFXacR5e9cY073yixw9VZKwQcnNK6K/pyZ5u+kqTmfmN1q0n/ZFvR9QWa2E+YVsww
+ CVNwV0iv5eJDOdZ+vX5CE9XN7c3O9JUqFqQiVdp7O/3H5laD3yBxPn3
+X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
+ pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
+Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
+ helo=todd.t-8ch.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,19 +71,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Accidentally added extra file to v2 that broke email sending (and was
-not meant to be upstreamed). Sending our v3 to skip that confusion.
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-Removing testing for PCS registers since that doesn't exist on 7xx.
+Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
+SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
+originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
+that also issue the guest-shutdown cause.
+A management layer application can detect the new GUEST_PVSHUTDOWN event to
+determine if the guest is using the pvpanic interface to request shutdowns.
 
-Nabih Estefan (1):
-  tests/qtest: Fixing GMAC test to run in 7xx
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+---
+ qapi/run-state.json | 14 ++++++++++++++
+ system/runstate.c   |  1 +
+ 2 files changed, 15 insertions(+)
 
- tests/qtest/meson.build      |  4 +-
- tests/qtest/npcm_gmac-test.c | 84 +-----------------------------------
- 2 files changed, 4 insertions(+), 84 deletions(-)
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index 08bc99cb8561..d5a63e14ba7e 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -460,6 +460,20 @@
+ { 'event': 'GUEST_CRASHLOADED',
+   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
+ 
++##
++# @GUEST_PVSHUTDOWN:
++#
++# Emitted when guest submits a shutdown request via pvpanic interface
++#
++# Since: 8.3
++#
++# Example:
++#
++# <- { "event": "GUEST_PVSHUTDOWN",
++#      "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
++##
++{ 'event': 'GUEST_PVSHUTDOWN' }
++
+ ##
+ # @GuestPanicAction:
+ #
+diff --git a/system/runstate.c b/system/runstate.c
+index 572499513034..02b0a1f8b9d0 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -574,6 +574,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+ 
+ void qemu_system_guest_pvshutdown(void)
+ {
++    qapi_event_send_guest_pvshutdown();
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+ }
+ 
 
 -- 
-2.43.0.687.g38aa6559b0-goog
+2.43.0
 
 
