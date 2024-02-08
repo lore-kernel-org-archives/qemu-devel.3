@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF5D6C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 14:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52005C4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 14:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY5P4-0003V1-17; Thu, 08 Feb 2024 09:29:26 -0500
+	id 1rY5cL-0007hK-8i; Thu, 08 Feb 2024 09:43:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY5Ow-0003QO-59
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:29:19 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1rY5cK-0007gc-5j
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:43:08 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY5Op-0006vM-Lu
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:29:17 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5601eb97b29so1856459a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 06:29:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1rY5cI-0001qr-9k
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 09:43:07 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33aeb088324so1328863f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 06:43:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707402547; x=1708007347; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uswSyOm1D4WQ+dn1PI8wLnB3SL0ieGuRJZq33vNjcvQ=;
- b=fIAgp4c5gxEs9YAkIHNgaLL5AdosKEhVDDpG508+Ns7MhPPLC/z4JJKzFLiGfNtYWo
- t4QGzlsFFgaGe+a8CJRZObGAZweatSKiTxCg+cbfta7EufK8cjalxsFkeGaboJ3DyBJF
- wsfiuQ0Ur6Qhdl5rUzuTZ/S15Bwyg8+6gIfByf5D4X9lcCh57spM1Gtl+6vqspGVbDHH
- qLxKEkpBPNWgdrqirZJAbyHG7OObiPJOc2yEcUW/4/E9wFa+m5HM64mxPby4qajcksh2
- EwG/kSEx0gM8n8Ux/A6oRdjokyjfUpQ/BQ/Da7LoLeC+pP3WYo8IyvSRrcTOa8jtzdnb
- fO7g==
+ d=linaro.org; s=google; t=1707403384; x=1708008184; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=y1S4UelR9CNPx0frZBsgWPnXiIkVW38h5UY4dbA5Chc=;
+ b=FdFJcPrU1frbjz80DHuFGeGXgUJRSOV1WvEqPUtrgPL7OYxPCh9c7RWl1fcKIWdxZE
+ QkLU3A1c6HW6ohLyh3t/PWxBDzwAXmRwaEr6rZn40mRWS8s1fNo3Cnn9vyLctDstCDyQ
+ qkWlnusNE0yHWBx5b48DuqCNsQ9KQn4S6rt2xSa38IOAeKXtY1VvdJUZcAimJ1xlD1ap
+ TnEi0ahVZzwfXZDXMa3YzOF8xjOrPUL0SuiEeMvnJzlfdQhFhM3ZunZPV2nD5E1uYaNw
+ QVBWIw/tbb3AqH7YaT31Yu66j2TUvbKzvviSQJsy8hb7BmR/AKE5Izv2yTEwQGTcIAhm
+ yI/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707402547; x=1708007347;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uswSyOm1D4WQ+dn1PI8wLnB3SL0ieGuRJZq33vNjcvQ=;
- b=i7Oo0dcJ5KO2j/atYDNH+23lUtu7hbXLmlYdSEOy9O2JwtyTUhfeZHTXOH8GcTC8xX
- 3Z8WPeSxpO7d02nKPOJjLsOj4/IGRfUipCpt4hiPfjWEpm0eDsVrK4RZyf6wRi3kkNRe
- JnZ70FiuheTd8zWqFz4Oy8UiTMliacCRiFYwDODT3T7cDjLSXLF+H3r5lm+UsD43JI3i
- 9YagMVX9o4x02shOBHtLgSbzfi1fQqjWigIjqIwqQt8d98enT+kXlWE4yzvOhi/zYYVg
- 3wf8riBF3PBwbv3GOOsDWHsGepSZXEWtzN18I2Sb+2Y2lXNahxgwoZeaxeypODS7IQrq
- rGDw==
+ d=1e100.net; s=20230601; t=1707403384; x=1708008184;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y1S4UelR9CNPx0frZBsgWPnXiIkVW38h5UY4dbA5Chc=;
+ b=t+vHXA1DCTSCce/2h5FVw53LsL7l2vaxxpMhdS6M8oB/6SLmP1u4BbBxz32d9LB9qi
+ e0tpB/vOpVGCQmHObEaH/WL5aNYoEwEAKZ3wmNjsnatBTlBoUu1VG+Qho8JpAk5XGMex
+ L1BtvSZAoyAXpRUWiOSHfWGyNsZpLF8FQXTDJLKJJ1ZMjFBR3Agj/E7DSBudVZGejq4C
+ 4x+MB2H3DR9fucqV1919EBoouxBDnUMaMmLB9MDTxTFkK49PcYVI89QBxeaTutVjjcF5
+ l1ViSeNWTVPzvNWPt/UjStF0HOIuKfZJpAz3xf4jSLoJ/pRLsBGCxaqmiJ1jHeDVTAMG
+ WQVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWl7U1UGcdLvrA2fNBhSJiNGc7LOaAzsolkhJdjPP8aoGvZJWmMTwxeut/KBP+7vQ0UdlKvb43b1T6/hM1y8zmXeNiph0I=
-X-Gm-Message-State: AOJu0YygXXligshLw0MzMEujn7TTum/gGbhBQyhHR4/Fwk6SUQjs/KPc
- ZjkC/eQK1Y+3FSyphKQRVt7npKHqFLMyOQJXAc7Rg7V0ZgEUVBIPW1q0S33V4sKT4HTmZt1lTHS
- zUrQh1ILHSZQ33hl5fUTp7J95xcJBYEkIQ+vYK7IOGnhmUHJ0
-X-Google-Smtp-Source: AGHT+IH/V8FP1ooPtmqO2IuX8FjlUS3TfCc4m47tQr04sKzFZFbA5e5fMV6xAX020IH5gcncK6Tkcn4jD0GE42FKjZg=
-X-Received: by 2002:a05:6402:180a:b0:560:24d8:d2d1 with SMTP id
- g10-20020a056402180a00b0056024d8d2d1mr2773675edy.11.1707402547443; Thu, 08
- Feb 2024 06:29:07 -0800 (PST)
+ AJvYcCXEYM09IQGB2ixGchWUeJLW67Dr9BTzHGi6x6qOWJkdi4/qigVhp9xxBLmlRzWa0gOr3cKAQVzoOzgGqrqSJmk4R9nUszM=
+X-Gm-Message-State: AOJu0Yw+c2Jg8nJyGPDmeiffhX0IJhOuo33wc3fQ1uQ5WNOWY8DUpVOs
+ UR4dgPx+dyoI69c0n1Ogt+oxC5stO+6OGEQrc61IHSqNiDNJcr1jmUGl/FMJnA8=
+X-Google-Smtp-Source: AGHT+IE0XEVrBKvt9CRj0tZP34lu1e13Zgt7vP7Lc26uYT2lf2aKbtUYuyWboaWELNgMsAMVkCehJQ==
+X-Received: by 2002:a5d:498a:0:b0:33b:24b3:83d1 with SMTP id
+ r10-20020a5d498a000000b0033b24b383d1mr7243822wrq.27.1707403384582; 
+ Thu, 08 Feb 2024 06:43:04 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPa5KaQbqKb80SgJeKxEYDaZsVh69t7UIE1OE2+FyfFC8Eot8Ug9IBIML0zPGQ//FU6Ww2F/LxqsKcsssIHbOifazMrMpbqHB166x4Wz3pJxn7lkggSrts6p8/I1I4RTvrQwX5MGzxwvjjEAgpQTp5ywt4vbz3nhEGo4f+zqAOCl01xEGvwv98bNlKDVxAAizZwk3Gf729PoIaGvqSHB+RjnlS27A/3jzaDEHWxXamfeE7R51dyfSBFD4H1K5lT2HH6iItPc1CdqHvdLO1IbfaEAXbH587uynsNFLl1NVdcG8QaZnl7tnFy0tHYMtqSyC1wTkQ
+Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
+ c13-20020a056000184d00b0033b07f428b6sm3777501wri.0.2024.02.08.06.43.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Feb 2024 06:43:04 -0800 (PST)
+Date: Thu, 8 Feb 2024 14:42:57 +0000
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ mst@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
+ zhenzhong.duan@intel.com, yanghliu@redhat.com,
+ alex.williamson@redhat.com, jasowang@redhat.com
+Subject: Re: [PATCH v3 0/3] VIRTIO-IOMMU: Introduce an aw-bits option
+Message-ID: <20240208144257.GA2863476@myrica>
+References: <20240208101128.655167-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-References: <20240208101657.15962-1-kwolf@redhat.com>
- <ffe07fee-0cda-4517-a64b-031cb922d806@linaro.org>
- <ZcTjlNeibKUnIDcL@redhat.com>
-In-Reply-To: <ZcTjlNeibKUnIDcL@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Feb 2024 14:28:56 +0000
-Message-ID: <CAFEAcA_qnVdTh96KsxPRguy--SLD1-xD=Uxp6MzE6dK6e98Cew@mail.gmail.com>
-Subject: Re: [PATCH] iothread: Simplify expression in qemu_in_iothread()
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-trivial@nongnu.org, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- qemu-arm <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240208101128.655167-1-eric.auger@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,57 +100,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 8 Feb 2024 at 14:22, Kevin Wolf <kwolf@redhat.com> wrote:
->
-> Am 08.02.2024 um 11:48 hat Philippe Mathieu-Daud=C3=A9 geschrieben:
-> > BTW using the same pattern:
-> >
-> > -- >8 --
-> > diff --git a/hw/nvram/xlnx-zynqmp-efuse.c b/hw/nvram/xlnx-zynqmp-efuse.=
-c
-> > index ec98456e5d..d074762a25 100644
-> > --- a/hw/nvram/xlnx-zynqmp-efuse.c
-> > +++ b/hw/nvram/xlnx-zynqmp-efuse.c
-> > @@ -582,7 +582,7 @@ static uint64_t
-> > zynqmp_efuse_cache_load_prew(RegisterInfo *reg,
-> >
-> >  static uint64_t zynqmp_efuse_wr_lock_prew(RegisterInfo *reg, uint64_t =
-val)
-> >  {
-> > -    return val =3D=3D 0xDF0D ? 0 : 1;
-> > +    return val !=3D 0xDF0D;
-> >  }
->
-> Maybe. I would have to know that device to tell if this is really meant
-> as boolean. Or maybe it should be written 0x0 and 0x1 to signify that
-> it's a register value or something.
+On Thu, Feb 08, 2024 at 11:10:16AM +0100, Eric Auger wrote:
+> In [1] and [2] we attempted to fix a case where a VFIO-PCI device
+> protected with a virtio-iommu is assigned to an x86 guest. On x86
+> the physical IOMMU may have an address width (gaw) of 39 or 48 bits
+> whereas the virtio-iommu exposes a 64b input address space by default.
+> Hence the guest may try to use the full 64b space and DMA MAP
+> failures may be encountered. To work around this issue we endeavoured
+> to pass usable host IOVA regions (excluding the out of range space) from
+> VFIO to the virtio-iommu device so that the virtio-iommu driver can
+> query those latter during the probe request and let the guest iommu
+> kernel subsystem carve them out. 
+> 
+> However if there are several devices in the same iommu group,
+> only the reserved regions of the first one are taken into
+> account by the iommu subsystem of the guest. This generally
+> works on baremetal because devices are not going to
+> expose different reserved regions. However in our case, this
+> may prevent from taking into account the host iommu geometry.
+> 
+> So the simplest solution to this problem looks to introduce an
+> input address width option, aw-bits, which matches what is
+> done on the intel-iommu. By default, from now on it is set
+> to 39 bits with pc_q35 and 48 with arm virt. This replaces the
+> previous default value of 64b. So we need to introduce a compat
+> for machines older than 9.0 to behave similarly. We use
+> hw_compat_8_2 to acheive that goal.
 
-This is a RegisterAccessinfo pre_write hook. The docs say:
- * @pre_write: Pre write callback. Passed the value that's to be written,
- * immediately before the actual write. The returned value is what is writt=
-en,
- * giving the handler a chance to modify the written value.
+For the series:
 
-So it is indeed returning a register value, not a boolean flag
-masquerading as a uint64_t.
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-> > diff --git a/tests/tcg/aarch64/sysregs.c b/tests/tcg/aarch64/sysregs.c
-> > index 301e61d0dd..bdd73bd181 100644
-> > --- a/tests/tcg/aarch64/sysregs.c
-> > +++ b/tests/tcg/aarch64/sysregs.c
-> > @@ -183,5 +183,5 @@ int main(void)
-> >          return 1;
-> >      }
-> >
-> > -    return should_fail_count =3D=3D 6 ? 0 : 1;
-> > +    return should_fail_count !=3D 6;
-> >  }
->
-> This one isn't unclear to me, though. This is EXIT_SUCCESS and
-> EXIT_FAILURE, just open-coded. I think making your change would make it
-> only more confusing.
-
-I agree on this one.
-
--- PMM
+> 
+> Outstanding series [2] remains useful to let resv regions beeing
+> communicated on time before the probe request.
+> 
+> [1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
+>     https://lore.kernel.org/all/20231019134651.842175-1-eric.auger@redhat.com/
+>     - This is merged -
+> 
+> [2] [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling for hotplugged devices
+>     https://lore.kernel.org/all/20240117080414.316890-1-eric.auger@redhat.com/
+>     - This is pending for review on the ML -
+> 
+> This series can be found at:
+> https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v3
+> previous
+> https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v2
+> 
+> Applied on top of [3]
+> [PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default page_size_mask
+> https://lore.kernel.org/all/20240117132039.332273-1-eric.auger@redhat.com/
+> 
+> History:
+> v2 -> v3:
+> - Collected Zhenzhong and Cédric's R-b + Yanghang's T-b
+> - use &error_abort instead of NULL error handle
+>   on object_property_get_uint() call (Cédric)
+> - use VTD_HOST_AW_39BIT (Cédric)
+> 
+> v1 -> v2
+> - Limit aw to 48b on ARM
+> - Check aw is within [32,64]
+> - Use hw_compat_8_2
+> 
+> 
+> Eric Auger (3):
+>   virtio-iommu: Add an option to define the input range width
+>   virtio-iommu: Trace domain range limits as unsigned int
+>   hw: Set virtio-iommu aw-bits default value on pc_q35 and arm virt
+> 
+>  include/hw/virtio/virtio-iommu.h | 1 +
+>  hw/arm/virt.c                    | 6 ++++++
+>  hw/core/machine.c                | 5 ++++-
+>  hw/i386/pc.c                     | 6 ++++++
+>  hw/virtio/virtio-iommu.c         | 7 ++++++-
+>  hw/virtio/trace-events           | 2 +-
+>  6 files changed, 24 insertions(+), 3 deletions(-)
+> 
+> -- 
+> 2.41.0
+> 
 
