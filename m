@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142D4C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 21:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD4D0C48260
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 21:15:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYBhl-00007P-GD; Thu, 08 Feb 2024 16:13:09 -0500
+	id 1rYBjG-0001AW-KZ; Thu, 08 Feb 2024 16:14:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rYBhi-00006p-Vx
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 16:13:07 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1rYBjE-00019s-8r
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 16:14:40 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rYBhd-00053j-2w
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 16:13:06 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1d8da50bffaso1483495ad.2
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 13:13:00 -0800 (PST)
+ id 1rYBj8-00059o-S6
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 16:14:36 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1d8da50bffaso1489275ad.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 13:14:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707426779; x=1708031579; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707426873; x=1708031673; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ipc2NmqOs9CgMDunTFwU/6Jw/KOoy4huD5QiC9nbkzY=;
- b=GHcxMQZntDWZA091pQkYC0/gYT1zv3NvTLq6573GNaLcE2lOOijahObLJpFo4kU59j
- mcEhiOooE/4xwnUZj6clOXeQHrIPfH8zZlc+Hez8NMO6RltotvjZMszMif8h6494ApXq
- fGDG8fEldvH20wvEmnwmLPz5svpBJ/zz82BSq1XL1B9oLYjJeplK9KV8JFxpIy4uDY4k
- fpyJumINMFCIq0ALlvuouT4jMbWTRf+wecJwH3I8qYbTDHFsjQqB/I7n0DoTn1Fh1j7f
- Rbx006zOsbMXHMChyU2fSRELSfGm+jE9Z8clCNwIVSu0wzAJLVTId9LPrUiK4sjqqzTU
- pHZg==
+ bh=uzOdaFIhHCNFkEwO5ZqaaJ4UYQlmsjt1EeOWpRjy4TA=;
+ b=nY9+iPrc5VVvIqU0ms8nKLcZlZ/k3EMsN2RjygoBFVrMqWO7ruQMeEefFDwo4c39Ba
+ h4ARKsNYoDvu/MrR9cHt5pMbjKSAqBxiIPEFFoK0JCdX6xCtpiPI+qT/REXvZMNxyVuY
+ GztmoydnedLUbe1Sw0KDvH+lDSWZh3tDbhxgg7PacVdEd7c2ZZpYAG+KycKlSN/qX6dv
+ cONzno3Knkv5lTBRELh6+lbKfElrcAVxaibfD5chSMVx7d9Y4EEuifpoNehcuJTZuAPY
+ LSc0i2AaxyCV3EXm27AS+U38RpfDS6asIPOhMmw5O8P2UUcuVTsufrUfXqUshzGeKGRG
+ I0hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707426779; x=1708031579;
+ d=1e100.net; s=20230601; t=1707426873; x=1708031673;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ipc2NmqOs9CgMDunTFwU/6Jw/KOoy4huD5QiC9nbkzY=;
- b=BUbD70tinZbJWVU5Q9RuqpLs1viHBQKHemS5D/9kbxWpdbmJrDEVNJmJiED9wmddLN
- 27NgaqmveWDEX8gomfWsaDE+dkHMLIcC+YG/LJrdzzXXrpGgh5AQ6cBTJB/R2m0ZBnBl
- 1MXM+8gMLGdLi0z+0GSz74BR1lpFlZM7hTbVdIHjnlcYFmkmyV5R0hr9wkIFS70D0UKZ
- PGxsUKv4hn9P9Py54MUieyxZdytRVHa0aRKbd0B5bJ7v3FkGm+a5da0hkoDkap0AzFJe
- TDHjFg6xfzJk7MTFLlSmQ+2oASzOUhnR30KNCOFSpv0Px1KTtF1vkhrz0ZeCE9dEvw1w
- lzdw==
-X-Gm-Message-State: AOJu0YyxxT1+IYQcbIMMISP74ysbD4hXYHgxxCi9PjNZC1I77TRNv2Lu
- Zf/L6vyTTqS8UWag9PZ/mG8OqopuGrJfIs7go5CryGri/46/3mT4Yz6Gp/htFCw=
-X-Google-Smtp-Source: AGHT+IFjxwh835rGPE4+wHkRNAGhmtkKXWULXR7C5jRuxgka6gHirMyQUEn4M9bgOHEr7SDTgdyO5A==
-X-Received: by 2002:a17:902:d48b:b0:1d9:ee5f:a980 with SMTP id
- c11-20020a170902d48b00b001d9ee5fa980mr617087plg.26.1707426779325; 
- Thu, 08 Feb 2024 13:12:59 -0800 (PST)
+ bh=uzOdaFIhHCNFkEwO5ZqaaJ4UYQlmsjt1EeOWpRjy4TA=;
+ b=AVRcnMPnx8Rwyzz1ZbwtnG6v7455RJeyVggAU+Wf24ZLJW4IJ/GVUcUEH/gDSxuizW
+ Q6qf6NbPSVjOan8vcCp51b6/I2MvEdZvNL1AqY0SfPKMHAhcZuOZn7fjp1DTixcRQjLn
+ 6ozSbOuRgQsHb20cXasvOe6ToOyGg6fv1NT5Si9b9gcK3GqyYwWqCXg/3oroaJJYMYW9
+ Ctwy/IxN6CrzPOaqafY9ol30clRDLNiqrjZwlVCnvd12N87+caffbZCNuU6Y+mOaivrY
+ J1CJH9P1eAHVe6SRqAzA5rimCt/85OWch5zKG58t7ZNnrnLhwZcxNDIYbsdNjF+TbPps
+ ke5w==
+X-Gm-Message-State: AOJu0YyIgli1ZulmGMCPfVB10k62lZ9zu9fJYws8t6Auv2dkco/z7eac
+ vgjqqf9QwFnHLYTuqp8hFYtUDJvTY3JndwXD038tyLykSJWdBoHvs7nIVCFC63s=
+X-Google-Smtp-Source: AGHT+IESiHP/YK+u11vogJIQmrjqUdgGOk6J2BH/nXZK1UtFKfw/MqSYR3uriMW6wxrX4+DJU2WK4g==
+X-Received: by 2002:a17:903:2ad0:b0:1d8:deb5:3390 with SMTP id
+ lw16-20020a1709032ad000b001d8deb53390mr483783plb.42.1707426873352; 
+ Thu, 08 Feb 2024 13:14:33 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjfeIglCJ+6/cRrA5aiRSaFbUvoJ4O3K3lPqPx1Kj2RvjmnqDDi9xhE4I5NPZAM62jHC0bwzCnvApOxFg5KRF24fuR0mw=
+ AJvYcCVV4issy7JbKL5SkRuEuooTmri4LnqXoolME3XBmX52h5b9s2fotBj8PZWoax6LzGJUsv7PD//rQfHjZoBmPaWVGG8wl9w=
 Received: from [192.168.4.112] (066-027-223-101.inf.spectrum.com.
  [66.27.223.101]) by smtp.gmail.com with ESMTPSA id
- jk15-20020a170903330f00b001d947e65ad8sm199627plb.251.2024.02.08.13.12.58
+ jk15-20020a170903330f00b001d947e65ad8sm199627plb.251.2024.02.08.13.14.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Feb 2024 13:12:58 -0800 (PST)
-Message-ID: <f3fe1d8c-cd40-4753-8d2a-dca881be7846@linaro.org>
-Date: Thu, 8 Feb 2024 11:12:55 -1000
+ Thu, 08 Feb 2024 13:14:33 -0800 (PST)
+Message-ID: <eae9c8de-ac34-485b-bb0b-f2903f6ba16d@linaro.org>
+Date: Thu, 8 Feb 2024 11:14:30 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/13] target/hppa: Allow read-access to PSW with rsm
- 0,reg instruction
+Subject: Re: [PATCH 10/13] target/hppa: Check privilege only when PSW.P is set
 Content-Language: en-US
 To: deller@kernel.org, qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>
 References: <20240207182023.36316-1-deller@kernel.org>
- <20240207182023.36316-10-deller@kernel.org>
+ <20240207182023.36316-11-deller@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240207182023.36316-10-deller@kernel.org>
+In-Reply-To: <20240207182023.36316-11-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,43 +101,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/7/24 08:20, deller@kernel.org wrote:
 > From: Helge Deller <deller@gmx.de>
 > 
-> HP-UX 11 and HP ODE tools use the "rsm 0,%reg" instruction in not priviledged
-> code paths to get the current PSW flags. The constant 0 means that no bits of
-> the PSW shall be reset, so this is effectively a read-only access to the PSW.
-> Allow this read-only access even for not privileged code.
+> CHECK_MOST_PRIVILEGED() should check the privilege level only when the PSW.P
+> bit is set.
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
 > ---
->   target/hppa/translate.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
+>   target/hppa/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 10fdc0813d..7e58775bbf 100644
+> index 7e58775bbf..21c2734a1f 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -2156,10 +2156,16 @@ static bool trans_ldsid(DisasContext *ctx, arg_ldsid *a)
->   
->   static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
->   {
-> +#ifdef CONFIG_USER_ONLY
->       CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
-> -#ifndef CONFIG_USER_ONLY
-> +#else
->       TCGv_i64 tmp;
->   
-> +    /* HP-UX 11i and HP ODE use rsm for read-access to PSW */
-> +    if (a->i) {
-> +        CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
-> +    }
-> +
->       nullify_over(ctx);
+> @@ -604,7 +604,7 @@ static bool gen_illegal(DisasContext *ctx)
+>   #else
+>   #define CHECK_MOST_PRIVILEGED(EXCP) \
+>       do {                                     \
+> -        if (ctx->privilege != 0) {           \
+> +        if (ctx->privilege != 0 && (ctx->tb_flags & PSW_P)) { \
+>               return gen_excp_iir(ctx, EXCP);  \
+>           }                                    \
+>       } while (0)
 
-Wow, that is not documented in the manual.  I wonder what this user-land software uses 
-this for?  There aren't many bits in there that are relevant to user-land.
-
-I suppose PSW_W is readable from there, but that can be inferred from SAR...
-
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+PSW_P is documented as applying only to protection identifiers.
+I do not believe this to be correct at all.
 
 
 r~
