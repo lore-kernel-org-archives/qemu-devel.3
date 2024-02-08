@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D51C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 812DCC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:11:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY6xD-0005mD-4V; Thu, 08 Feb 2024 11:08:47 -0500
+	id 1rY6z0-0007RC-Lk; Thu, 08 Feb 2024 11:10:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY6xA-0005m1-Qk
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:08:44 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rY6yy-0007Qy-By
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:10:36 -0500
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY6wv-000190-80
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:08:44 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5610c233b95so34051a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:08:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rY6yc-0001Qm-PS
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:10:36 -0500
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-511616b73ddso3443320e87.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:10:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707408508; x=1708013308; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Zw3K+kF1g1xtnX3vQzL/uf/MsfjKpDBd/xEq0WYhB6U=;
- b=pYl4zH/N2K562mJpopCN3NmpBT42YBBrQ4AFBmVQiOGEHOJIDDpMg6RH/IOLEpkmwX
- cw4i9raNccprFYV9+aSMzOFGbKbYti7VcF90zXdEVBnJLP/nByT00F6C0Z7vdGq231LX
- R43sWfC0yzoS6/mvi2NpweT4tOxGGIhRP8JiYUHatm/CN/tvhuA9Jdcm6SOXvh7yw/co
- jc1GPQ6W57PLclDkMz61AXYD4nIwFSUpXbxx1v64/qbtEURIcXKAHyhmtin8+e+doOqT
- evnUGp+1ifeXYouq9fqWJ1azQbfuveLhZBw7oUHJ2SrnaQNdzf7xCYkkDrjW0rUCSmBh
- ZbFw==
+ d=gmail.com; s=20230601; t=1707408610; x=1708013410; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=cUMRxN2xty5KKNWqgryBeh0t0iFDuqxILhwGRGLcYjA=;
+ b=h97XmIKfTO4Udf+qEMz/eu/OXQttoeSkbBlylM1WszK1qchSPOZHrcUEIx4i9++ZIf
+ hTlRJhhu1GXRoyzKovXA8MEu7LOg12y4Cwjk4j0Dwo8p6n33MOTPR0YW9kmw5xgK5QmK
+ HnDAVqLAgMgnDP3ydMiyCemwRlHSBrKJ4Kie4PkGM9y9SiPDinldac50WCFDCESyi0bw
+ x+dWgG47kLxSQGREM3KPQbKDjTNn59/oAFtjwbK4OhZUqhYaOMukbIJAis4YUggCmoau
+ WRYoe474cVbvjd3h+gOA/fuUEK5fLI0mEz3ldv7jnd4/5y6u7xKKYbzHF/2zcdjTOjj2
+ QEwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707408508; x=1708013308;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Zw3K+kF1g1xtnX3vQzL/uf/MsfjKpDBd/xEq0WYhB6U=;
- b=EBB6lSBOV0l5jzIOb+7j3jIn+7+tgZTkWii9D2jnSMfzCOMPn9nQ/X3d3ctpHRsAb8
- Hhlu3vsscXB+sr/eGgfLTT/ocuYVyo5ZwgEgFHjRSLInHbhN3fHQTVma+AgMZq7CTlkw
- Jm5p1J0tjN7IeqqnKrIGBxdXB1w7iyibIHy0DMHktsj/Ym5pzB8Uz1lRlocv8xLJBzww
- lcoVKEatHoNMfUZy7VbGE+8Xqv3fZCDO1JIJnHD5ujsrfol7isz+rDewAAJZs1DF4nzs
- EsVYnG0xC/6XCRdNyzoutyEXLa914xxzJFzIzl8+Hu78GBhbV6PvUBEpXwMVtA5JJFra
- 9raQ==
-X-Gm-Message-State: AOJu0YwJohuInkrU9hP9bfodTJJLD0z18jfZSUGWoazztDrLKD7yqfBb
- JS6f/Biu7Don4lER2uMTf5Qhz8nIch7qgs8UMO3Ccom6+plQnqDi90HKaqRNtFCT2rugqtvlyvV
- FVS3zrSalH5duyt3iSzuZpVooWvhNlpt3iqtD/Y5G/BgmK1Xs
-X-Google-Smtp-Source: AGHT+IFNnZWTXgrSKDSJ/BBVq5eNVuVyynYMbpK5YqSzdYcs5+/WyTFXxeYywGAJ+3wYTYzPeZTN8oejivnlu5eJW1k=
-X-Received: by 2002:aa7:cf06:0:b0:560:4e6:c6d8 with SMTP id
- a6-20020aa7cf06000000b0056004e6c6d8mr6984463edy.19.1707408507831; Thu, 08 Feb
- 2024 08:08:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707408610; x=1708013410;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cUMRxN2xty5KKNWqgryBeh0t0iFDuqxILhwGRGLcYjA=;
+ b=joI1fazqHKS4pJsR1H6+JhA2aqaONi7eJ9joqwCrniulfH4QxvzuRmez174h+tfAf6
+ +VkTablS8+6S2szyiexG7ZEsBlHwyL+v/YhkBnuersEbYP/YKK2GPbS5JqYSaSm0ryyf
+ LyUY74Wm6vcf2HXiSeHRHySFG9iKOqHJ9oOm5oc1IQwsRTYs8JvvajSGn37StDh1PD9f
+ OUZhHwFJZQ3ci2fLvHufPgIJ4rVyj6OROAzNmoj1s6o3buBg3KnEa64yEBbV1vGL53+R
+ P1GAoO5uo2jsBrd1l4QeE3Gd7xfDZv07F/Xynhm63evlzRbJQo6SMJFs2ySGwOBBc2Ta
+ HTRQ==
+X-Gm-Message-State: AOJu0YxDAr83pKOk310DqFblLcOL2WiKPVAppgUaojFftCWP3V2TTEuD
+ 3ZBZEh+A+tTGviqFgjLw8Tx7spBavT5HbsbSYxxTyiBm2bekktqsrgS+Wxk6
+X-Google-Smtp-Source: AGHT+IEs72umYVxzsCA0RGK8RLFpIs63psUo0VhPHEAP6jh/SPh9pXSts0t2PALbCJMTq0B22O7OAg==
+X-Received: by 2002:a05:6512:39c7:b0:511:48f4:e748 with SMTP id
+ k7-20020a05651239c700b0051148f4e748mr7911072lfu.69.1707408609945; 
+ Thu, 08 Feb 2024 08:10:09 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVH24g5ydVr+0hq5EfwTwMiLrpY9GoLV/SYp6GRkpJqBzYWeP0gyQkfqRKnFqZuR/1FurvZnmYJ2RZr+W1UbI16DePUyTnF70EhvRdHtui+DJMmc7D5ttNBFeQ=
+Received: from ?IPv6:::1?
+ (p200300faaf1724007ccdd0ba9e70da1e.dip0.t-ipconnect.de.
+ [2003:fa:af17:2400:7ccd:d0ba:9e70:da1e])
+ by smtp.gmail.com with ESMTPSA id
+ je3-20020a05600c1f8300b004101bdae3a0sm2074781wmb.38.2024.02.08.08.10.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Feb 2024 08:10:09 -0800 (PST)
+Date: Thu, 08 Feb 2024 16:10:02 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_5/8=5D_isa=3A_specify_ins?=
+ =?US-ASCII?Q?tance=5Fsize_in_isa=5Fsuperio=5Ftype=5Finfo?=
+In-Reply-To: <f53b1dc9-779a-4166-878e-42fd7889cc6f@linaro.org>
+References: <20240207111411.115040-1-pbonzini@redhat.com>
+ <20240207111411.115040-6-pbonzini@redhat.com>
+ <f53b1dc9-779a-4166-878e-42fd7889cc6f@linaro.org>
+Message-ID: <8B3398D7-17DC-4EB5-83D3-A08A378E0A61@gmail.com>
 MIME-Version: 1.0
-References: <20240206072225.21187-1-david@redhat.com>
-In-Reply-To: <20240206072225.21187-1-david@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Feb 2024 16:08:17 +0000
-Message-ID: <CAFEAcA9e7SeSmphp8EBq7eXJ7YVzVzufSRDu1OVBDkThfiaJLQ@mail.gmail.com>
-Subject: Re: [PULL v3 0/3] Host Memory Backends and Memory devices queue
- 2024-02-06
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,36 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Feb 2024 at 07:22, David Hildenbrand <david@redhat.com> wrote:
->
-> The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
->
->   Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/davidhildenbrand/qemu.git tags/mem-2024-02-06-v3
->
-> for you to fetch changes up to 04accf43df83aa10f06f7dbda3ecf0db97f0c5a6:
->
->   oslib-posix: initialize backend memory objects in parallel (2024-02-06 08:15:22 +0100)
->
-> ----------------------------------------------------------------
-> Hi,
->
-> "Host Memory Backends" and "Memory devices" queue ("mem"):
-> - Reintroduce memory region size checks for memory devices; the removal
->   lead to some undesired side effects
-> - Preallocate memory of memory backends in selected configurations
->   asynchronously (so we preallocate concurrently), to speed up QEMU
->   startup time.
->
 
 
-Applied, thanks.
+Am 7=2E Februar 2024 19:03:30 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
+hilmd@linaro=2Eorg>:
+>On 7/2/24 12:14, Paolo Bonzini wrote:
+>> Right now all subclasses of TYPE_ISA_SUPERIO have to specify an instanc=
+e_size,
+>> because the ISASuperIODevice struct adds fields to ISADevice but the ty=
+pe does
+>> not include the increased instance size=2E  Failure to do so results in=
+ an access
+>> past the bounds of struct ISADevice as soon as isa_superio_realize is c=
+alled=2E
+>> Fix this by specifying the instance_size already in the superclass=2E
+>>=20
+>> Cc: Bernhard Beschow <shentey@gmail=2Ecom>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat=2Ecom>
+>> ---
+>>   hw/isa/isa-superio=2Ec       | 2 +-
+>>   hw/isa/smc37c669-superio=2Ec | 1 -
+>>   2 files changed, 1 insertion(+), 2 deletions(-)
+>
+>Oops, thanks!
+>
+>Fixes: 4c3119a6e3 ("hw/isa/superio: Factor out the parallel code from pc8=
+7312=2Ec")
+>Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+Fixes a latent bug which thankfully isn't materialized at the moment=2E
 
--- PMM
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+
 
