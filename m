@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D66BC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 21:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB7BC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 21:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYBkE-0001sD-CX; Thu, 08 Feb 2024 16:15:42 -0500
+	id 1rYBmP-0002jn-FD; Thu, 08 Feb 2024 16:17:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rYBkB-0001rP-LB; Thu, 08 Feb 2024 16:15:39 -0500
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rYBmN-0002jB-Q9
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 16:17:55 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rYBk8-0005SU-Rx; Thu, 08 Feb 2024 16:15:39 -0500
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2d0a4e8444dso3138381fa.2; 
- Thu, 08 Feb 2024 13:15:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rYBmM-0005r3-DU
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 16:17:55 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1d99c5f6bfeso10034845ad.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 13:17:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707426931; x=1708031731; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0sTMKwAk9xU61UIhqd3j4DWJQwI+YQ3up8gs0TB6J0g=;
- b=IpADpmoHNMvIB8iVwpmK/BJh+aCVQWgRcHvWFrNguEU3kQMMFJVTfAW7UPg75s3vNP
- BBRzYTSbaJNhxBcXdOnxOb7B4VIrlWsYdhJs616jsTM6AQPWDmtI2iWOKkZbhhmU+8+q
- +pIFTRYN3lemw9fpsRhKsb1r0V5qjXPIUFEZ1zAoGTGrppmpMND8EidIeAJXqJ7nD0sz
- M9XCh+4f/qo3M5gXmSh+bA0c7psIAyUoHBwR8n68KGc8YNFz9x0OqvXW9is1DAT/4DkJ
- WMPv4Y4YSpTUlaZb661EL/Gq8QMNt2V5n/dnJ/TBj4D2Wya8Jen8PGlacJaTsJGPTYhV
- zAAw==
+ d=linaro.org; s=google; t=1707427073; x=1708031873; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sMqayHFgeTmFTK6rscFoPhRtTuGguPDYOGnk0TtlTFI=;
+ b=PSCjJiltmNV+yQ62TkKex7q9mreLzR/MWzLIEXNB8Wy8sk64XQx5Vq2KIcS6pp4ZfF
+ mdg2Zqhd7Xcu8XdNU2+n9hmUO2E/r3yw4Ev+8/oh+cYQRbSTNMt7GuajjddNGf0j8Iap
+ ks6D0t0tyZbgsiimRsLyih+2awqdxypauu+ODkHk0DEUgnn5OfQK8XNEznTamxED28aO
+ Nf4AkSpGwiyg4wQKVriQH+G0zZUaL/CimcfHpxDEONXWYhMexPRFeXDzhER0G6jRXlTv
+ 1/ysrZkv+t82I97Swq95rLfApxIWFrbojndTxKGOHyH6fobDhIHAlj6LIi9f5VAqur+l
+ hB9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707426931; x=1708031731;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0sTMKwAk9xU61UIhqd3j4DWJQwI+YQ3up8gs0TB6J0g=;
- b=FKVfKWKTg1oqBk9SVWfMJEFCsMYejOsx1PAQD6qeoX8lMmxW4fcrAYzxCl5e3wSe2L
- ajRUGJyNUoCjFyGzdh2foMTm8qSHQkm7bqejr2uzqq1oM/34HLljxxTst/VhKjmowGCz
- hJZN9FYECS08e3A44jIkIfCP8UHUxN6LgxrCU95b/nad9V2+t6mszFy3cW9msbpS0JOy
- bm93bOozdKcjDKARNOcTbnI7/QqFM8hlZ66dP+3He0B4q7pQSwTtr9xtaiJF1FzISBY/
- RWrQ3Cxb+TNxHX4s8W+FUhk4a9hrBWpUbXMIcF2sNUY8JdLcAxLUN1NAGSeos9VzqEdP
- eREA==
-X-Gm-Message-State: AOJu0Yx4xIUwk6HKylrARXHyC0uTNNpLgzFyW+KXzc4xK1gBjQ7olG/1
- 3rYqiptwG9Ez3wQqb5LqDljWs//DnMnzXt38Y8Io9bvqUk0iQ2n/1m48+tiU/1LOip/wjUJ5mFe
- Gsv8et2pccD0EDysjLWgQ1y4t+zg=
-X-Google-Smtp-Source: AGHT+IGPxMRbf9SnH5ew2XnOUSN/q2gVTtGewhK1ha+CuDp4/EuGiM8HE0DOWepP9/XjogqLb1LIz8GvD7+bZOkDA4M=
-X-Received: by 2002:a2e:a0c5:0:b0:2d0:9b25:3417 with SMTP id
- f5-20020a2ea0c5000000b002d09b253417mr259956ljm.52.1707426930309; Thu, 08 Feb
- 2024 13:15:30 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707427073; x=1708031873;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sMqayHFgeTmFTK6rscFoPhRtTuGguPDYOGnk0TtlTFI=;
+ b=jds6oSKhCo8XufmMUDGAf00UyHh4A19pi4romnC+cadf9XBol2UGtzBKB2A5FwD4UL
+ 0sALImrwSAQLmIDS5YFd6OowJ98ez4cTXXKiu7jNRWFBEn/Las5bU5bfLer15PZiH2fe
+ qfmTPULBvka57A/FIOx7KTqSLFse9/p4Lx/EGa8YIqCH1TEData/u8iF//LmFGRpwUT5
+ PiBx3NIuIpKGQM4zn2OULZUgART7pXvY9IYpsIq1399oC64vXpsNSo85ON+g8Ov7N637
+ BI4VcJW2wgUuoxlPAlz3vycHhWyTBE/YgNF06heB6OapOXT/11RHbNdK52Nn8svdO15p
+ yNTg==
+X-Gm-Message-State: AOJu0YzTkCt/NlxsMCU5H5F3iMzJX53+JryklBKyd423UcJv1pn8SXV+
+ MtuCoMsd3g13ehN8k7q6nj0lguDTp9Q0U1qbXnW09tJezZEg+bR5iBJA4go8bJFx/50qCMbo2G1
+ S
+X-Google-Smtp-Source: AGHT+IHwt3lYq52H49gSLNnKfMQHsbuUubtkw2gM/4oxi+2fFjS+ZMAELzVRK/wfiaSQEjdIjeRfpg==
+X-Received: by 2002:a17:90a:b395:b0:28f:fa9d:ebdf with SMTP id
+ e21-20020a17090ab39500b0028ffa9debdfmr6167747pjr.3.1707427072816; 
+ Thu, 08 Feb 2024 13:17:52 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2XRf+qxFFlg8psNHp09GOKVLFWWO4CLdsMRydJH3Xv/El91T6jQAmK8xZqKWwkHU8nxuodJ+HrPxnymBSUxJQgBjdGYs=
+Received: from [192.168.4.112] (066-027-223-101.inf.spectrum.com.
+ [66.27.223.101]) by smtp.gmail.com with ESMTPSA id
+ q13-20020a170902c74d00b001d8d04a4fa8sm198458plq.300.2024.02.08.13.17.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Feb 2024 13:17:52 -0800 (PST)
+Message-ID: <2eb7afd6-af71-45df-bcf8-5c514f58b473@linaro.org>
+Date: Thu, 8 Feb 2024 11:17:49 -1000
 MIME-Version: 1.0
-References: <20240202144755.671354-1-hreitz@redhat.com>
- <20240206165330.GB66397@fedora>
- <5c7c5239-f665-4845-8448-14226e1337cc@redhat.com>
-In-Reply-To: <5c7c5239-f665-4845-8448-14226e1337cc@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 8 Feb 2024 16:15:14 -0500
-Message-ID: <CAJSP0QUqvg88BGZF83EXFXTQwvwmUPGTJkPqTL-O1VVh-6FGZQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] block: Allow concurrent BB context changes
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, 
- qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=stefanha@gmail.com; helo=mail-lj1-x22a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/13] target/hppa: PDC_BTLB_INFO uses 32-bit ints
+Content-Language: en-US
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+References: <20240207182023.36316-1-deller@kernel.org>
+ <20240207182023.36316-12-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240207182023.36316-12-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,91 +99,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Feb 2024 at 04:36, Hanna Czenczek <hreitz@redhat.com> wrote:
->
-> On 06.02.24 17:53, Stefan Hajnoczi wrote:
->
-> On Fri, Feb 02, 2024 at 03:47:53PM +0100, Hanna Czenczek wrote:
->
-> Hi,
->
-> Without the AioContext lock, a BB's context may kind of change at any
-> time (unless it has a root node, and I/O requests are pending).  That
-> also means that its own context (BlockBackend.ctx) and that of its root
-> node can differ sometimes (while the context is being changed).
->
-> blk_get_aio_context() doesn't know this yet and asserts that both are
-> always equal (if there is a root node).  Because it's no longer true,
-> and because callers don't seem to really care about the root node's
-> context, we can and should remove the assertion and just return the BB's
-> context.
->
-> Beyond that, the question is whether the callers of
-> blk_get_aio_context() are OK with the context potentially changing
-> concurrently.  Honestly, it isn't entirely clear to me; most look OK,
-> except for the virtio-scsi code, which operates under the general
-> assumption that the BB's context is always equal to that of the
-> virtio-scsi device.  I doubt that this assumption always holds (it is
-> definitely not obvious to me that it would), but then again, this series
-> will not make matters worse in that regard, and that is what counts for
-> me now.
->
-> One clear point of contention is scsi_device_for_each_req_async(), which
-> is addressed by patch 2.  Right now, it schedules a BH in the BB
-> context, then the BH double-checks whether the context still fits, and
-> if not, re-schedules itself.  Because virtio-scsi's context is fixed,
-> this seems to indicate to me that it wants to be able to deal with a
-> case where BB and virtio-scsi context differ, which seems to break that
-> aforementioned general virtio-scsi assumption.
->
-> I don't agree with the last sentence: virtio-scsi's context isn't fixed.
->
-> The AioContext changes when dataplane is started/stopped. virtio-scsi
-> switches AioContext between the IOThread's AioContext and the main
-> loop's qemu_aio_context.
->
-> However, virtio-scsi virtqueue processing only happens in the IOThread's
-> AioContext. Maybe this is what you meant when you said the AioContext is
-> fixed?
->
->
-> Specifically, I meant VirtIOSCSI.ctx, which is set only once in virtio_sc=
-si_dataplane_setup().  That=E2=80=99s at least where the virtqueue notifier=
-s are registered, so yes, virtqueue processing should at least be fixed to =
-that context.  It seems like it=E2=80=99s always possible some things are p=
-rocessed in the main thread (not just setup/teardown, but also e.g. TMF_LOG=
-ICAL_UNIT_RESET), so to me it seems like virtio-scsi kind of runs in two co=
-ntexts simultaneously.  Yes, when virtqueue processing is paused, all proce=
-ssing VirtIOSCSI.ctx is stopped, but I wouldn=E2=80=99t say it switches con=
-texts there.  It just stops processing some requests.
->
-> Either way, virtio-scsi request processing doesn=E2=80=99t stop just beca=
-use a scsi-hd device is hot-plugged or -unplugged.  If the BB changes conte=
-xts in the hot-unplug path (while vq request processing is continuing in th=
-e I/O thread), its context will differ from that of virtio-scsi.
->
-> So should I just replace the =E2=80=9Cthe context is fixed=E2=80=9D and s=
-ay that in this specific instance, virtio-scsi vq processing continues in t=
-he I/O thread?
->
-> The BH function is aware that the current AioContext might not be the
-> same as the AioContext at the time the BH was scheduled. That doesn't
-> break assumptions in the code.
->
-> (It may be possible to rewrite virtio-blk, virtio-scsi, and core
-> VirtIODevice ioeventfd code to use the simpler model where the
-> AioContext really is fixed because things have changed significantly
-> over the years, but I looked a few weeks ago and it's difficult work.)
->
-> I'm just pointing out that I think this description is incomplete. I
-> *do* agree with what this patch series is doing :).
->
->
-> Well, this description won=E2=80=99t land in any commit log, so from my s=
-ide, I=E2=80=99m not too worried about its correctness. O:)
+On 2/7/24 08:20, deller@kernel.org wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> The BTLB helper function stores the BTLB info (four 32-bit ints) into
+> the memory of the guest. They are only available when emulating a 32-bit
+> CPU in the guest, so use "uint32_t" instead of "target_ulong" here.
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
 
-Okay, I think we're in agreement. What you described in your reply
-matches how I understand the code. No need to resend anything.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Stefan
+
+r~
 
