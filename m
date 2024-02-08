@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F12C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 03:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C6CC4829B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 03:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXujj-0006CR-3s; Wed, 07 Feb 2024 22:06:03 -0500
+	id 1rXulP-0000zN-CP; Wed, 07 Feb 2024 22:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXujf-0006AB-0g
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 22:05:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXukG-0006cU-L6
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 22:06:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXujc-0004LF-7o
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 22:05:58 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rXukE-0004O3-Sw
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 22:06:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707361555;
+ s=mimecast20190719; t=1707361594;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F8rpuPTioywxfY/ZvOjWZTcWw2/q7y++Xn+a9fof+s0=;
- b=IRern8mtjEw4YmTY/lHvnosl2OIljGIjHTh1cIE3oJ2XVMGfC/NC5RDft60cRCodXTmIau
- SIQ4r964DiJQRIXZOUuezjxRJB55bz6zfgH33EZh84aGC6llD6Udw4K4h6QPwrYplvTKNi
- J7HiBOJBZGShXXREJTt2pPD2RwTemTM=
+ bh=BjEECB6U8e4HSNn1mocHtFPk1eY0mOC4/hjT4mwFxKs=;
+ b=bOBOPKRVzLMeSFvFg04WSuXMuikBib0wJTLz4Q4WTCWoyWzcBtoa8ruHXErO4AhhHlwdE2
+ KJ53FevZF4E+b0SHj8KKw12Z8XFHo7744lFS0JWDIsvoS1gLRqy6K95YXK46T0+G7xQW3M
+ cDBPIBzPGpLsDYXM8oN+u/EHLLVR9MU=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-393-9dDuNEYlNP2lsiH5NGSpwA-1; Wed, 07 Feb 2024 22:05:52 -0500
-X-MC-Unique: 9dDuNEYlNP2lsiH5NGSpwA-1
+ us-mta-511-zMFkFRQmOouuQj2iL_oCoA-1; Wed, 07 Feb 2024 22:06:32 -0500
+X-MC-Unique: zMFkFRQmOouuQj2iL_oCoA-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D3493845E63;
- Thu,  8 Feb 2024 03:05:51 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1BD4B101FA2C;
+ Thu,  8 Feb 2024 03:06:32 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.45])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 60158492BC7;
- Thu,  8 Feb 2024 03:05:48 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B43BC492BC7;
+ Thu,  8 Feb 2024 03:06:29 +0000 (UTC)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 06/34] migration/multifd: Drop MultiFDSendParams.normal[] array
-Date: Thu,  8 Feb 2024 11:05:00 +0800
-Message-ID: <20240208030528.368214-7-peterx@redhat.com>
+Subject: [PULL 19/34] migration/multifd: Rewrite multifd_queue_page()
+Date: Thu,  8 Feb 2024 11:05:13 +0800
+Message-ID: <20240208030528.368214-20-peterx@redhat.com>
 In-Reply-To: <20240208030528.368214-1-peterx@redhat.com>
 References: <20240208030528.368214-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -82,206 +82,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-This array is redundant when p->pages exists.  Now we extended the life of
-p->pages to the whole period where pending_job is set, it should be safe to
-always use p->pages->offset[] rather than p->normal[].  Drop the array.
+The current multifd_queue_page() is not easy to read and follow.  It is not
+good with a few reasons:
 
-Alongside, the normal_num is also redundant, which is the same to
-p->pages->num.
+  - No helper at all to show what exactly does a condition mean; in short,
+  readability is low.
 
-This doesn't apply to recv side, because there's no extra buffering on recv
-side, so p->normal[] array is still needed.
+  - Rely on pages->ramblock being cleared to detect an empty queue.  It's
+  slightly an overload of the ramblock pointer, per Fabiano [1], which I
+  also agree.
+
+  - Contains a self recursion, even if not necessary..
+
+Rewrite this function.  We add some comments to make it even clearer on
+what it does.
+
+[1] https://lore.kernel.org/r/87wmrpjzew.fsf@suse.de
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240202102857.110210-6-peterx@redhat.com
+Link: https://lore.kernel.org/r/20240202102857.110210-19-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/multifd.h      |  4 ----
- migration/multifd-zlib.c |  7 ++++---
- migration/multifd-zstd.c |  7 ++++---
- migration/multifd.c      | 33 +++++++++++++--------------------
- 4 files changed, 21 insertions(+), 30 deletions(-)
+ migration/multifd.c | 56 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 37 insertions(+), 19 deletions(-)
 
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 7c040cb85a..3920bdbcf1 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -122,10 +122,6 @@ typedef struct {
-     struct iovec *iov;
-     /* number of iovs used */
-     uint32_t iovs_num;
--    /* Pages that are not zero */
--    ram_addr_t *normal;
--    /* num of non zero pages */
--    uint32_t normal_num;
-     /* used for compression methods */
-     void *data;
- }  MultiFDSendParams;
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 37ce48621e..100809abc1 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -116,17 +116,18 @@ static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
-  */
- static int zlib_send_prepare(MultiFDSendParams *p, Error **errp)
- {
-+    MultiFDPages_t *pages = p->pages;
-     struct zlib_data *z = p->data;
-     z_stream *zs = &z->zs;
-     uint32_t out_size = 0;
-     int ret;
-     uint32_t i;
- 
--    for (i = 0; i < p->normal_num; i++) {
-+    for (i = 0; i < pages->num; i++) {
-         uint32_t available = z->zbuff_len - out_size;
-         int flush = Z_NO_FLUSH;
- 
--        if (i == p->normal_num - 1) {
-+        if (i == pages->num - 1) {
-             flush = Z_SYNC_FLUSH;
-         }
- 
-@@ -135,7 +136,7 @@ static int zlib_send_prepare(MultiFDSendParams *p, Error **errp)
-          * with compression. zlib does not guarantee that this is safe,
-          * therefore copy the page before calling deflate().
-          */
--        memcpy(z->buf, p->pages->block->host + p->normal[i], p->page_size);
-+        memcpy(z->buf, p->pages->block->host + pages->offset[i], p->page_size);
-         zs->avail_in = p->page_size;
-         zs->next_in = z->buf;
- 
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index b471daadcd..2023edd8cc 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -113,6 +113,7 @@ static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
-  */
- static int zstd_send_prepare(MultiFDSendParams *p, Error **errp)
- {
-+    MultiFDPages_t *pages = p->pages;
-     struct zstd_data *z = p->data;
-     int ret;
-     uint32_t i;
-@@ -121,13 +122,13 @@ static int zstd_send_prepare(MultiFDSendParams *p, Error **errp)
-     z->out.size = z->zbuff_len;
-     z->out.pos = 0;
- 
--    for (i = 0; i < p->normal_num; i++) {
-+    for (i = 0; i < pages->num; i++) {
-         ZSTD_EndDirective flush = ZSTD_e_continue;
- 
--        if (i == p->normal_num - 1) {
-+        if (i == pages->num - 1) {
-             flush = ZSTD_e_flush;
-         }
--        z->in.src = p->pages->block->host + p->normal[i];
-+        z->in.src = p->pages->block->host + pages->offset[i];
-         z->in.size = p->page_size;
-         z->in.pos = 0;
- 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 5633ac245a..8bb1fd95cf 100644
+index 35d4e8ad1f..4ab8e6eff2 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -90,13 +90,13 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
- {
-     MultiFDPages_t *pages = p->pages;
- 
--    for (int i = 0; i < p->normal_num; i++) {
--        p->iov[p->iovs_num].iov_base = pages->block->host + p->normal[i];
-+    for (int i = 0; i < pages->num; i++) {
-+        p->iov[p->iovs_num].iov_base = pages->block->host + pages->offset[i];
-         p->iov[p->iovs_num].iov_len = p->page_size;
-         p->iovs_num++;
-     }
- 
--    p->next_packet_size = p->normal_num * p->page_size;
-+    p->next_packet_size = pages->num * p->page_size;
-     p->flags |= MULTIFD_FLAG_NOCOMP;
-     return 0;
+@@ -506,35 +506,53 @@ static bool multifd_send_pages(void)
+     return true;
  }
-@@ -269,21 +269,22 @@ static void multifd_pages_clear(MultiFDPages_t *pages)
- static void multifd_send_fill_packet(MultiFDSendParams *p)
+ 
++static inline bool multifd_queue_empty(MultiFDPages_t *pages)
++{
++    return pages->num == 0;
++}
++
++static inline bool multifd_queue_full(MultiFDPages_t *pages)
++{
++    return pages->num == pages->allocated;
++}
++
++static inline void multifd_enqueue(MultiFDPages_t *pages, ram_addr_t offset)
++{
++    pages->offset[pages->num++] = offset;
++}
++
+ /* Returns true if enqueue successful, false otherwise */
+ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset)
  {
-     MultiFDPacket_t *packet = p->packet;
-+    MultiFDPages_t *pages = p->pages;
-     int i;
+-    MultiFDPages_t *pages = multifd_send_state->pages;
+-    bool changed = false;
++    MultiFDPages_t *pages;
++
++retry:
++    pages = multifd_send_state->pages;
  
-     packet->flags = cpu_to_be32(p->flags);
-     packet->pages_alloc = cpu_to_be32(p->pages->allocated);
--    packet->normal_pages = cpu_to_be32(p->normal_num);
-+    packet->normal_pages = cpu_to_be32(pages->num);
-     packet->next_packet_size = cpu_to_be32(p->next_packet_size);
-     packet->packet_num = cpu_to_be64(p->packet_num);
- 
--    if (p->pages->block) {
--        strncpy(packet->ramblock, p->pages->block->idstr, 256);
-+    if (pages->block) {
-+        strncpy(packet->ramblock, pages->block->idstr, 256);
+-    if (!pages->block) {
++    /* If the queue is empty, we can already enqueue now */
++    if (multifd_queue_empty(pages)) {
+         pages->block = block;
++        multifd_enqueue(pages, offset);
++        return true;
      }
  
--    for (i = 0; i < p->normal_num; i++) {
-+    for (i = 0; i < pages->num; i++) {
-         /* there are architectures where ram_addr_t is 32 bit */
--        uint64_t temp = p->normal[i];
-+        uint64_t temp = pages->offset[i];
- 
-         packet->offset[i] = cpu_to_be64(temp);
-     }
-@@ -570,8 +571,6 @@ void multifd_save_cleanup(void)
-         p->packet = NULL;
-         g_free(p->iov);
-         p->iov = NULL;
--        g_free(p->normal);
--        p->normal = NULL;
-         multifd_send_state->ops->send_cleanup(p, &local_err);
-         if (local_err) {
-             migrate_set_error(migrate_get_current(), local_err);
-@@ -688,8 +687,8 @@ static void *multifd_send_thread(void *opaque)
- 
-         if (p->pending_job) {
-             uint64_t packet_num = p->packet_num;
-+            MultiFDPages_t *pages = p->pages;
-             uint32_t flags;
--            p->normal_num = 0;
- 
-             if (use_zero_copy_send) {
-                 p->iovs_num = 0;
-@@ -697,12 +696,7 @@ static void *multifd_send_thread(void *opaque)
-                 p->iovs_num = 1;
-             }
- 
--            for (int i = 0; i < p->pages->num; i++) {
--                p->normal[p->normal_num] = p->pages->offset[i];
--                p->normal_num++;
--            }
+-    if (pages->block == block) {
+-        pages->offset[pages->num] = offset;
+-        pages->num++;
 -
--            if (p->normal_num) {
-+            if (pages->num) {
-                 ret = multifd_send_state->ops->send_prepare(p, &local_err);
-                 if (ret != 0) {
-                     qemu_mutex_unlock(&p->mutex);
-@@ -713,10 +707,10 @@ static void *multifd_send_thread(void *opaque)
-             flags = p->flags;
-             p->flags = 0;
-             p->num_packets++;
--            p->total_normal_pages += p->normal_num;
-+            p->total_normal_pages += pages->num;
-             qemu_mutex_unlock(&p->mutex);
+-        if (pages->num < pages->allocated) {
+-            return true;
++    /*
++     * Not empty, meanwhile we need a flush.  It can because of either:
++     *
++     * (1) The page is not on the same ramblock of previous ones, or,
++     * (2) The queue is full.
++     *
++     * After flush, always retry.
++     */
++    if (pages->block != block || multifd_queue_full(pages)) {
++        if (!multifd_send_pages()) {
++            return false;
+         }
+-    } else {
+-        changed = true;
+-    }
+-
+-    if (!multifd_send_pages()) {
+-        return false;
+-    }
+-
+-    if (changed) {
+-        return multifd_queue_page(block, offset);
++        goto retry;
+     }
  
--            trace_multifd_send(p->id, packet_num, p->normal_num, flags,
-+            trace_multifd_send(p->id, packet_num, pages->num, flags,
-                                p->next_packet_size);
- 
-             if (use_zero_copy_send) {
-@@ -924,7 +918,6 @@ int multifd_save_setup(Error **errp)
-         p->name = g_strdup_printf("multifdsend_%d", i);
-         /* We need one extra place for the packet header */
-         p->iov = g_new0(struct iovec, page_count + 1);
--        p->normal = g_new0(ram_addr_t, page_count);
-         p->page_size = qemu_target_page_size();
-         p->page_count = page_count;
++    /* Not empty, and we still have space, do it! */
++    multifd_enqueue(pages, offset);
+     return true;
+ }
  
 -- 
 2.43.0
