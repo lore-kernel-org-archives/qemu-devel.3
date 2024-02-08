@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D122FC4828D
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Feb 2024 23:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9ADC4828D
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 00:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rXrau-00021W-Ud; Wed, 07 Feb 2024 18:44:44 -0500
+	id 1rXsa4-0008Sv-Eg; Wed, 07 Feb 2024 19:47:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rXras-00021J-T5
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 18:44:42 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1rXsZt-0008OP-1j
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 19:47:45 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rXraq-0001za-1t
- for qemu-devel@nongnu.org; Wed, 07 Feb 2024 18:44:42 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2d09cf00214so15461261fa.0
- for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 15:44:32 -0800 (PST)
+ id 1rXsZq-00061B-NS
+ for qemu-devel@nongnu.org; Wed, 07 Feb 2024 19:47:44 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-40efcb37373so11611435e9.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Feb 2024 16:47:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1707349470; x=1707954270; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1707353258; x=1707958058; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jqy/Pj+yNPAIT9HHF0OvBTnLDNzISGkZDC8cmirvaCo=;
- b=dDFokno3X3zp5pOEtFhwquHU3OJ/4FZrzz2NCGluK320EtnrKiSki77I31mUe+o9zH
- RYnLF9k7NKQ+T8nks7ILdLIEutmHeE0QuppLWZyRgHP1XqonMKIaelZW5gpCp3StyDrT
- 1Xe42qLDQIG4FhllRWeGdQm8k+NseSkZOuQJdBVtjYCwDRxSFjSfadA+sQiGq2+bp4af
- vxSA2+cIQQrXVUonC0ZRcOub7Jzvkpru6bGVDRNK/KtE3eg5P5Y17mTdK6IULjaTm0oJ
- KCYIOo7/egL99qYa4bq8ur8woraUL5DHcT3KNjeHpc1snh/4aRE1qbjMfRsXNK274TR/
- eFYA==
+ bh=jFVoDOBEh0E8Oz1n3p1fvwFUP4G7bkewPRQZKza5i10=;
+ b=ff6LGPBPYz+7gTxINuIWcnIfm9rthn5hUijxCvMCi5Tx26HPEsKIKZSw+98LRtQ/oc
+ BNkFqOYiV8dQd1RI7MGlh91Zr5YtY51/Q5bBN+F/3Y4qTzlCOh4tPvhwwA2DHLKRLaYZ
+ iCxz6Cy7YDqEwBDRVg+dKS1D06y+ODu7N/LaVvXrOGO98JXNKutrDStBUPl+SQre5lUS
+ +vxyqn5MX9nLhIz5VKyBp02HvckL6XF3lyxaxldVIq77SVU7cAR1P6TySfB/jU1uO0+9
+ ZqTJrzFuW0ShtMAy5/VO2SJT0mORZNLvNZqzMglGCH8G+32eBpYSYE91o5YXqBsMcZ53
+ +gxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707349470; x=1707954270;
+ d=1e100.net; s=20230601; t=1707353258; x=1707958058;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jqy/Pj+yNPAIT9HHF0OvBTnLDNzISGkZDC8cmirvaCo=;
- b=wFWAhkP3tijTE/7KeVtfeXqqj7mQU9nH1Ep+/q8Nuduuik6MHmiGcHZegHHQzL4LeF
- u1dx9kw24BY4AfikVqgfk2Sa/5XnOAzKn64UMuFjHY1dc8Wju/einJFu0wVujDTISZnW
- WATopmvht36oNe8Rfj4MPY/MVq3eqiRXiz6EM6e8PKrOgPigakdRYxsHY1yFq/7P8tI3
- PD+KCxe24ztJkLT7qw9hXOr3Fj+aWJtulvT8jDYlgKjjthknrjKp3e7LpI4CK/O4ufCD
- 7IRjj6iu7bRvPcDc5J1SGlTwcTy85/MLj3OJ61+wzHiM8fhZaXfuSd8kkCT1YBCVvRk9
- RI5Q==
-X-Gm-Message-State: AOJu0YwTo/pGBinmSLqdbrgH4dz2Nqt7bsn+X2Tc4p99bvxoYwKlPkEK
- v99KaQDp1sFvQDd5KKqCKNtVrzj8LMaAL0w0fZ+ejd40qXhFBTab8i6K1ChAcQhBuwShWMxs8eo
- WcIejxgYNxjFi5PgvIMNixCTu4PzJDZPb7ZKVkw==
-X-Google-Smtp-Source: AGHT+IFgleB65lJhSD4+wKpwSrKfcLgmeaqJcO6JD90NM3N6bZq3mVotjuSZY/i2dQnT40HDMrcl/48uT36hgNtO7O8=
-X-Received: by 2002:a2e:9f41:0:b0:2d0:c77c:b1ca with SMTP id
- v1-20020a2e9f41000000b002d0c77cb1camr2549128ljk.49.1707349470217; Wed, 07 Feb
- 2024 15:44:30 -0800 (PST)
+ bh=jFVoDOBEh0E8Oz1n3p1fvwFUP4G7bkewPRQZKza5i10=;
+ b=jTjLW8LR4naspDqpD5vpqna+h+gKPLlpAxBuSCVdoisi6Pk5e/V0C4sj7e7Z+Kw/xg
+ V1gERBZmtzz7HlMeDFiu4qCmM9AEQwtXXmQPZ6mTk2iacK0Jbok5TM/2FCfFl1mDeht/
+ dyfnO7seY4N6ktmqc+eaeckX1Bv2KqSsk+4c4MDGaHd9WoMGAbsEO4A3aQnkjgdd6ACp
+ Hnm7PkKL14qP45s7wFAJe8fSsu/Uwai4d5LjJVSFOXzhJ2ddWJUN/4u4P/3Ih/vamAXY
+ ynP/mzVo0Vx99TT2PC26zqQImId7ESrmOq19queyebCVvNozd0+uw4DN9yWzKwY4KE7F
+ xqqw==
+X-Gm-Message-State: AOJu0YzJ9pb2/HG11cjjfJMkt0+HHtL1/TAEjjiJikmaI3WRwAvzMlMo
+ PAMwqDB5kX17o+q7ZD3pbahebG/iGavpEokm4pSf07YENwrgULdeHaI8aLuYx9YWghZ+obrPT2C
+ hYOFDruFQA/bm2p/wrlO/ofPdlHjOyt2rMxpqiTLg17mzy4nx
+X-Google-Smtp-Source: AGHT+IFZASS5sJRitI48ABvnWMFyBTaMBVQQn5IlwBSdkDZWwtQd4LS6uCeqc3zy6rXqj7I4Os7YLWkfyesRk48DUyg=
+X-Received: by 2002:adf:ffc3:0:b0:33b:506e:5513 with SMTP id
+ x3-20020adfffc3000000b0033b506e5513mr2338883wrs.9.1707353258262; Wed, 07 Feb
+ 2024 16:47:38 -0800 (PST)
 MIME-Version: 1.0
 References: <20240206231908.1792529-1-hao.xiang@bytedance.com>
- <20240206231908.1792529-3-hao.xiang@bytedance.com> <ZcMDVpLilA-PZ3he@x1n>
- <ZcMI-wPq94x6cO2Z@x1n>
- <qhvli57ctzn3cyt2fwppmcauhmlrqoz7ubljxswx7ghroshop2@kmiaukhnvfko>
-In-Reply-To: <qhvli57ctzn3cyt2fwppmcauhmlrqoz7ubljxswx7ghroshop2@kmiaukhnvfko>
+ <ZcL7aIwo_Z8gn6h3@x1n>
+In-Reply-To: <ZcL7aIwo_Z8gn6h3@x1n>
 From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Wed, 7 Feb 2024 15:44:18 -0800
-Message-ID: <CAAYibXi3BUxjg+b1ZXiT_AnnV5LkAN11G-UZc6bZQr4sFz5uzw@mail.gmail.com>
-Subject: Re: [External] Re: Re: [PATCH 2/6] migration/multifd: Add zero pages
- and zero bytes counter to migration status interface.
-To: Jiri Denemark <jdenemar@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de
+Date: Wed, 7 Feb 2024 16:47:27 -0800
+Message-ID: <CAAYibXjQYkpL+L8pLX5DQ4hTWqFAc2pcpkJFmE5bs=O5vzhDPg@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH 0/6] Introduce multifd zero page checking.
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=hao.xiang@bytedance.com; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=hao.xiang@bytedance.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,69 +90,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 7, 2024 at 12:41=E2=80=AFAM Jiri Denemark <jdenemar@redhat.com>=
- wrote:
+On Tue, Feb 6, 2024 at 7:39=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
 >
-> On Wed, Feb 07, 2024 at 12:37:15 +0800, Peter Xu wrote:
-> > On Wed, Feb 07, 2024 at 12:13:10PM +0800, Peter Xu wrote:
-> > > On Tue, Feb 06, 2024 at 11:19:04PM +0000, Hao Xiang wrote:
-> > > > This change extends the MigrationStatus interface to track zero pag=
-es
-> > > > and zero bytes counter.
-> > > >
-> > > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > >
-> > > Reviewed-by: Peter Xu <peterx@redhat.com>
+> On Tue, Feb 06, 2024 at 11:19:02PM +0000, Hao Xiang wrote:
+> > This patchset is based on Juan Quintela's old series here
+> > https://lore.kernel.org/all/20220802063907.18882-1-quintela@redhat.com/
 > >
-> > I'll need to scratch this, sorry..
+> > In the multifd live migration model, there is a single migration main
+> > thread scanning the page map, queuing the pages to multiple multifd
+> > sender threads. The migration main thread runs zero page checking on
+> > every page before queuing the page to the sender threads. Zero page
+> > checking is a CPU intensive task and hence having a single thread doing
+> > all that doesn't scale well. This change introduces a new function
+> > to run the zero page checking on the multifd sender threads. This
+> > patchset also lays the ground work for future changes to offload zero
+> > page checking task to accelerator hardwares.
 > >
-> > The issue is I forgot we have "duplicate" which is exactly "zero
-> > page"s.. See:
+> > Use two Intel 4th generation Xeon servers for testing.
 > >
-> >     info->ram->duplicate =3D stat64_get(&mig_stats.zero_pages);
+> > Architecture:        x86_64
+> > CPU(s):              192
+> > Thread(s) per core:  2
+> > Core(s) per socket:  48
+> > Socket(s):           2
+> > NUMA node(s):        2
+> > Vendor ID:           GenuineIntel
+> > CPU family:          6
+> > Model:               143
+> > Model name:          Intel(R) Xeon(R) Platinum 8457C
+> > Stepping:            8
+> > CPU MHz:             2538.624
+> > CPU max MHz:         3800.0000
+> > CPU min MHz:         800.0000
 > >
-> > If you think the name too confusing and want a replacement, maybe it's =
-fine
-> > and maybe we can do that.  Then we can keep this zero page counter
-> > introduced, reporting the same value as duplicates, then with a follow =
-up
-> > patch to deprecate "duplicate" parameter.  See an exmaple on how to
-> > deprecate in 7b24d326348e1672.
+> > Perform multifd live migration with below setup:
+> > 1. VM has 100GB memory. All pages in the VM are zero pages.
+> > 2. Use tcp socket for live migratio.
+> > 3. Use 4 multifd channels and zero page checking on migration main thre=
+ad.
+> > 4. Use 1/2/4 multifd channels and zero page checking on multifd sender
+> > threads.
+> > 5. Record migration total time from sender QEMU console's "info migrate=
+"
+> > command.
+> > 6. Calculate throughput with "100GB / total time".
 > >
-> > One thing I'm not sure is whether Libvirt will be fine on losing
-> > "duplicates" after 2+ QEMU major releases.  Copy Jiri for this.  My
-> > understanding is that Libvirt should be keeping an eye on deprecation l=
-ist
-> > and react, but I'd like to double check..
+> > +------------------------------------------------------+
+> > |zero-page-checking | total-time(ms) | throughput(GB/s)|
+> > +------------------------------------------------------+
+> > |main-thread        | 9629           | 10.38GB/s       |
+> > +------------------------------------------------------+
+> > |multifd-1-threads  | 6182           | 16.17GB/s       |
+> > +------------------------------------------------------+
+> > |multifd-2-threads  | 4643           | 21.53GB/s       |
+> > +------------------------------------------------------+
+> > |multifd-4-threads  | 4143           | 24.13GB/s       |
+> > +------------------------------------------------------+
 >
-> This should not be a big deal as we can internally map either one
-> (depending on what QEMU supports) to the same libvirt's field. AFAIK
-> there is a consensus on Cc-ing libvirt-devel on patches that deprecate
-> QEMU interfaces so that we can update our code in time before the
-> deprecated interface is dropped.
+> This "throughput" is slightly confusing; I was initially surprised to see=
+ a
+> large throughput for idle guests.  IMHO the "total-time" would explain.
+> Feel free to drop that column if there's a repost.
 >
-> BTW, libvirt maps "duplicate" to:
+> Did you check why 4 channels mostly already reached the top line?  Is it
+> because main thread is already spinning 100%?
 >
-> /**
->  * VIR_DOMAIN_JOB_MEMORY_CONSTANT:
->  *
->  * virDomainGetJobStats field: number of pages filled with a constant
->  * byte (all bytes in a single page are identical) transferred since the
->  * beginning of the migration job, as VIR_TYPED_PARAM_ULLONG.
->  *
->  * The most common example of such pages are zero pages, i.e., pages fill=
-ed
->  * with zero bytes.
->  *
->  * Since: 1.0.3
->  */
-> # define VIR_DOMAIN_JOB_MEMORY_CONSTANT          "memory_constant"
+> Thanks,
 >
-> Jirka
->
+> --
+> Peter Xu
 
-Interesting. I didn't notice the existence of "duplicate" for zero
-pages. I do think the name is quite confusing. I will create the
-"zero/zero_bytes" counter and a separate commit to deprecate
-"duplicate". Will add libvirt devs per instruction above.
+Sure I will drop "throughput" to avoid confusion. In my testing, 1
+multifd channel already makes the main thread spin at 100%. So the
+total-time is the same across 1/2/4 multifd channels as long as zero
+page is run on the main migration thread. Of course, this is based on
+the fact that the network is not the bottleneck. One interesting
+finding is that multifd 1 channel with multifd zero page has better
+performance than multifd 1 channel with main migration thread.
+>
 
