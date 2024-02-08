@@ -4,96 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6746C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 13:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D8BC48260
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 13:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY4Rq-0005Cr-1W; Thu, 08 Feb 2024 08:28:14 -0500
+	id 1rY4TE-0005xe-Ds; Thu, 08 Feb 2024 08:29:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rY4Rk-00058l-D5
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:28:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rY4Ri-00021Q-T8
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:28:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707398885;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rY4TC-0005xE-RH
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:29:38 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rY4TB-0002Hy-39
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 08:29:38 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 567CA21F8D;
+ Thu,  8 Feb 2024 13:29:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707398975; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n4uIA4vdy+EkQrwo5R0NEo3wLubbFougz1l6WhUpRUU=;
- b=KOJGxJgcbhb2oqFTXuzvKbMrrl7Cw2tad0ylt/C72ucAGR3V64diK7aUTyrkBCIfU9aftw
- 2LLplTkzCI/VZ54sxMLXmhUaxSEu73sAKZX5vZZIjtXdU7aAoEmkl39rTouimbV/qbVmsJ
- GUImCGVKk/Wck2VMiNyA+RlvrVFYQtg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-icXGvOr6O5eaguSVI4SGxw-1; Thu, 08 Feb 2024 08:28:03 -0500
-X-MC-Unique: icXGvOr6O5eaguSVI4SGxw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-68c43a4cc11so29452636d6.1
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 05:28:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707398883; x=1708003683;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n4uIA4vdy+EkQrwo5R0NEo3wLubbFougz1l6WhUpRUU=;
- b=FrOb+pvpm3MWKGSRB6hK6TJXk2TPTD0dNqzb7JS45XuR1aLzrsOVQHO9MwSWPeODCE
- 1alvi3UFD2LrivMwzNiGIQUUY/pvyBbkpZx1HU95xTxlo3LQJVrKRxmHy6xUJFjXr/ey
- dSqQGV6yX858WO+QT/hbutHs0vT/x+sZbwAi1DCwdqtspX9WgwB8EAT3W39b8P/77qzY
- O6qHN0S2wmQQ+HoBVLvH4qTJbcKpg/dtyNnRkkCe3/ockdroDNRoFQbZ1jRkwbrkvVGb
- 40UcAT3sz4EW/PY9RI09z895K7Sw1+1DoSqEnr0lyV3SAmembt9Q2KuwgAqXv4Hmpq00
- YSPw==
-X-Gm-Message-State: AOJu0YzaYCLlOLLOw6hamORFFIm54MtX30dcnTsNwKa/cxks/JGZBOMK
- MjQRFv9Q+Jvoeu2IeM7E6fub4b0UCLEv+7xADuF2RJ88QpZS5/Wmc12loXHJr/2oryTu+VqqkAw
- 4R+D+v10wb+J4t6FCwYkA+tDkI7cnfZOXwvdGjdkPwBIPeruvqom2
-X-Received: by 2002:a0c:9e89:0:b0:685:c584:6e8b with SMTP id
- r9-20020a0c9e89000000b00685c5846e8bmr6326146qvd.0.1707398882823; 
- Thu, 08 Feb 2024 05:28:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGh8e90PQy1O6WXMVTsUTh0fs5ZWVSZOYaUQboVdJSeEmzVwfmPejXstag1gJTIpETN9jOGfA==
-X-Received: by 2002:a0c:9e89:0:b0:685:c584:6e8b with SMTP id
- r9-20020a0c9e89000000b00685c5846e8bmr6326136qvd.0.1707398882521; 
- Thu, 08 Feb 2024 05:28:02 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6VjMMvTqsvl20KavNVtoPx7GKTp7aFE0Il48FMWg8ncEk/3QgWKbB4XKZyq+Hfbc2r/G0/5aopNvPe6ORlywZ5md7I57eE7sye1Zj/UXT559CgjLpb9HSrDpmyz9e3BuT2vWNspLDrdzewOBGVlZhVWE=
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- z21-20020a05620a101500b00783b6da58a9sm1386334qkj.39.2024.02.08.05.28.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Feb 2024 05:28:02 -0800 (PST)
-Message-ID: <db5564fd-d8fe-4aff-96d8-6aee3a387e6b@redhat.com>
-Date: Thu, 8 Feb 2024 14:27:59 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] migration: Add Error** argument to .save_setup()
- handler
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>
+ bh=m/L4EO7m720G9JNwpCafm/bl3QGEm5EHRlJhEuWbisA=;
+ b=aIgHUE8fJrlRh1N68vk9M4XtJlXQou3Z88s/0PAfMPNctyNi6SMsRtZRNRkQPlyfTGx813
+ WqXKJ1TBG6/SbduCXRmbVkJEzrknFCkH85Ko0fE/InTMBm1a+cM68DqCugfomq55QU86Z9
+ Btmalsj8wU1P2y9Nb+lkcL78tR1V+Hk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707398975;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m/L4EO7m720G9JNwpCafm/bl3QGEm5EHRlJhEuWbisA=;
+ b=Z3bbIdmpUQjrZ/pR3ievuct9QhX9xHLapHt0s8+v43Bs2TKI052okVOdBhMMI56vnut/W/
+ Fz0+uF1lKfxYcrAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707398975; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m/L4EO7m720G9JNwpCafm/bl3QGEm5EHRlJhEuWbisA=;
+ b=aIgHUE8fJrlRh1N68vk9M4XtJlXQou3Z88s/0PAfMPNctyNi6SMsRtZRNRkQPlyfTGx813
+ WqXKJ1TBG6/SbduCXRmbVkJEzrknFCkH85Ko0fE/InTMBm1a+cM68DqCugfomq55QU86Z9
+ Btmalsj8wU1P2y9Nb+lkcL78tR1V+Hk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707398975;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m/L4EO7m720G9JNwpCafm/bl3QGEm5EHRlJhEuWbisA=;
+ b=Z3bbIdmpUQjrZ/pR3ievuct9QhX9xHLapHt0s8+v43Bs2TKI052okVOdBhMMI56vnut/W/
+ Fz0+uF1lKfxYcrAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D6B6013984;
+ Thu,  8 Feb 2024 13:29:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CXohJz7XxGVTVgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 08 Feb 2024 13:29:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
+ <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>
+Subject: Re: [RFC PATCH 14/14] migration: Fix return-path thread exit
+In-Reply-To: <20240207133347.1115903-15-clg@redhat.com>
 References: <20240207133347.1115903-1-clg@redhat.com>
- <20240207133347.1115903-2-clg@redhat.com>
- <6b71edf4-26cd-4a13-8696-51c18ad1b207@linaro.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <6b71edf4-26cd-4a13-8696-51c18ad1b207@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ <20240207133347.1115903-15-clg@redhat.com>
+Date: Thu, 08 Feb 2024 10:29:32 -0300
+Message-ID: <87v86zaxtv.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=aIgHUE8f;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Z3bbIdmp
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: 567CA21F8D
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,52 +127,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/24 21:11, Philippe Mathieu-Daudé wrote:
-> On 7/2/24 14:33, Cédric Le Goater wrote:
->> The purpose is to record a potential error in the migration stream if
->> qemu_savevm_state_setup() fails. Most of the current .save_setup()
->> handlers can be modified to use the Error argument instead of managing
->> their own and calling locally error_report(). The following patches
->> will introduce such changes for VFIO first.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   include/migration/register.h   | 2 +-
->>   hw/ppc/spapr.c                 | 2 +-
->>   hw/s390x/s390-stattrib.c       | 2 +-
->>   hw/vfio/migration.c            | 2 +-
->>   migration/block-dirty-bitmap.c | 2 +-
->>   migration/block.c              | 2 +-
->>   migration/ram.c                | 2 +-
->>   migration/savevm.c             | 4 ++--
->>   8 files changed, 9 insertions(+), 9 deletions(-)
->>
->> diff --git a/include/migration/register.h b/include/migration/register.h
->> index 9ab1f79512c605f0c88a45b560c57486fa054441..831600a00eae4efd0464b60925d65de4d9dbcff8 100644
->> --- a/include/migration/register.h
->> +++ b/include/migration/register.h
->> @@ -25,7 +25,7 @@ typedef struct SaveVMHandlers {
->>        * used to perform early checks.
->>        */
->>       int (*save_prepare)(void *opaque, Error **errp);
->> -    int (*save_setup)(QEMUFile *f, void *opaque);
->> +    int (*save_setup)(QEMUFile *f, void *opaque, Error **errp);
-> 
-> Since you change this, do you mind adding a docstring
-> describing this prototype?
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
-I can send an initial patch adding the documentation tags and then
-resend the same patch with the updates people will provide. I don't
-have the knowledge to cover all of the SaveVMHandlers struct on my
-own.
+> In case of error, close_return_path_on_source() can perform a shutdown
+> to exit the return-path thread.  However, in migrate_fd_cleanup(),
+> 'to_dst_file' is closed before calling close_return_path_on_source()
+> and the shutdown fails, leaving the source and destination waiting for
+> an event to occur.
 
-Thanks,
+Hi, C=C3=A9dric
 
-C.
+Are you sure this is not caused by patch 13? That 'if (ms->to_dst_file'
+was there to avoid this sort of thing happening.
 
+Is there some reordering possibility that I'm not spotting in the code
+below? I think the data dependency on to_dst_file shouldn't allow it.
 
-> Otherwise,
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+migrate_fd_cleanup:
+        qemu_mutex_lock(&s->qemu_file_lock);
+        tmp =3D s->to_dst_file;
+        s->to_dst_file =3D NULL;
+        qemu_mutex_unlock(&s->qemu_file_lock);
+        ...
+        qemu_fclose(tmp);
 
+close_return_path_on_source:
+    WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+        if (ms->to_dst_file && ms->rp_state.from_dst_file &&
+            qemu_file_get_error(ms->to_dst_file)) {
+            qemu_file_shutdown(ms->rp_state.from_dst_file);
+        }
+    }
+
+I'm thinking maybe the culprit is the close_return_path_on_source() at
+migration_completion(). It might be possible for it to race with the
+migrate_fd_cleanup_bh from migration_iteration_finish().
+
+If that's the case, then I think that one possible fix would be to hold
+the BQL at migration_completion() so the BH doesn't get dispatched until
+we properly close the return path.
+
+>
+> Close the file after calling close_return_path_on_source() so that the
+> shutdown succeeds and the return-path thread exits.
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> ---
+>
+>  This is an RFC because the correct fix implies reworking the QEMUFile
+>  construct, built on top of the QEMU I/O channel.
+>
+>  migration/migration.c | 13 ++++++-------
+>  1 file changed, 6 insertions(+), 7 deletions(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 5f55af3d7624750ca416c4177781241b3e291e5d..de329f2c553288935d8247482=
+86e79e535929b8b 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1313,6 +1313,8 @@ void migrate_set_state(int *state, int old_state, i=
+nt new_state)
+>=20=20
+>  static void migrate_fd_cleanup(MigrationState *s)
+>  {
+> +    QEMUFile *tmp =3D NULL;
+> +
+>      g_free(s->hostname);
+>      s->hostname =3D NULL;
+>      json_writer_free(s->vmdesc);
+> @@ -1321,8 +1323,6 @@ static void migrate_fd_cleanup(MigrationState *s)
+>      qemu_savevm_state_cleanup();
+>=20=20
+>      if (s->to_dst_file) {
+> -        QEMUFile *tmp;
+> -
+>          trace_migrate_fd_cleanup();
+>          bql_unlock();
+>          if (s->migration_thread_running) {
+> @@ -1341,15 +1341,14 @@ static void migrate_fd_cleanup(MigrationState *s)
+>           * critical section won't block for long.
+>           */
+>          migration_ioc_unregister_yank_from_file(tmp);
+> -        qemu_fclose(tmp);
+>      }
+>=20=20
+> -    /*
+> -     * We already cleaned up to_dst_file, so errors from the return
+> -     * path might be due to that, ignore them.
+> -     */
+>      close_return_path_on_source(s);
+>=20=20
+> +    if (tmp) {
+> +        qemu_fclose(tmp);
+> +    }
+> +
+>      assert(!migration_is_active(s));
+>=20=20
+>      if (s->state =3D=3D MIGRATION_STATUS_CANCELLING) {
 
