@@ -4,84 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD418C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 10:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A61BC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 11:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY25u-00041N-1s; Thu, 08 Feb 2024 05:57:26 -0500
+	id 1rY2hw-0001Kg-Hq; Thu, 08 Feb 2024 06:36:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rY25s-00040a-5O
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 05:57:24 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rY2hu-0001KB-Nf
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 06:36:42 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1rY25p-0008MB-M4
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 05:57:23 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33b58ca0b95so274024f8f.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 02:57:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rY2hr-0006Z9-SC
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 06:36:41 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5600c43caddso1813057a12.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 03:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707389838; x=1707994638; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=/dw+xWqFYmUkuRfQ2nFPqLvzYy5Cx+uLxeoDYgsKfeA=;
- b=RpS2glSSUznNmB5EjD+WyH3NndZeb2hDNeCZ/ABKJ1C3UfrVm1Rt0LClwsvoWQm6+O
- GGajlJje/SeHYsA3MCH0crkZ03BxUQLax/yi1goMQbG9T/roXW0ZLCTW1/4K9xrSL/i+
- E/5tzqzP9YEKK1p1gZieETdT6N6wHDq6KgqrDTxVLxIOUJekkUqVTm6ea/hgKYz4juJD
- PtySW+8I90TMG/NPL6VKn4+3X4XWU+pz3nFDokOMofZZxt0UL09PBROEJ7+A+KgSyYnS
- umtgbEYqzZ0go77ogpCYN5Egn667CIM6OAInZbh2SvcoXNtlGn33qKKi2jy3ADr2JsdI
- 7NnQ==
+ d=linaro.org; s=google; t=1707392198; x=1707996998; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8x/YgZw1AGkDrc//lQ1l/l9Zb/CYBXjpvIK5sQ8j7Mg=;
+ b=v4DA128wj1T8bPBX98MzWJSMDWWkcRbSVKo8bkGltMgfZVKXaq43oLHRCLUxO6TFpy
+ b2MYzDsi5F6UbguLXevoNG1jl0/bCHxgv3XO4GE9CR/lL2v+IdSbHykG9oUHA/UXtueH
+ LcgP0HfhOoKCvacxjWAx07iWM0BzvxeV+bEION2K9AaZ7HOobZnfIiiUfIZz6qVvTDVe
+ +4SopAlRwYnmar7IBiNMc2zOFZS7beBq70XEX+6TKXirzxy29E+345Wb6jxH6HjOLu/U
+ YSODt7H3RfIG9RgZnEqjpkipj3//XOJtbk0aOt8+cR4+/SwnHJ2OYksPB3XLYDBSfJbo
+ GDIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707389838; x=1707994638;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/dw+xWqFYmUkuRfQ2nFPqLvzYy5Cx+uLxeoDYgsKfeA=;
- b=m1xWv15ZlHm2h/lN98fuhDwas4FL0UUkNsro70Rzs1+nvXVKa/s8jnAQKCB7XLFs8p
- f4BsJHwZYFhdXcFanT8Qkn2oLXuWiXbU0Kg9hQDsyKD7rbqqP4whpt3vCV72/NMzjtxX
- 0iEjQO6/nx30cudmqylNls52EdqzVoFl+7ohMJxxQq+f/YGs8wCVfCCtKlJM14y83xc2
- eOV9/JETqMgJNX0dy61R/LaL+l/3FmdQEsuuyt4jd/iqsyuE5MDliZfxytMg71FU6X7j
- +ux0pVH9R4m+7GTGFzFJaCkjHxvWUqZb0QfH0gyYX3QGWbhSI6SSFdVCSD30YjzIcom0
- QSbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPw+5R6Sk9mvNq5xJbWP/cBLKWeb/axfFTQWqOF324Z6lbtkOPP6UHf7/kl7F+KmR1+rmoEnXLEtCKyf8irwFru20x2U4=
-X-Gm-Message-State: AOJu0YwcWpE/YADk+XMuzzRkaZeaBU1pwswQ/BjY/m4fouRHI3pEAkMZ
- ok/R58VbFzCTsi0d95zmrBcIPOW3vgg7Hio6OeHcjvcA4KaNBA4X7f5E8pXhdCI=
-X-Google-Smtp-Source: AGHT+IHHVfwzOBDvnsI4PytMOt+cR80CTzeO4WpGMtlso/YCEAkeScLQVx3hxvTL+3IXrNstvaiKSw==
-X-Received: by 2002:a5d:4247:0:b0:33b:26e3:3587 with SMTP id
- s7-20020a5d4247000000b0033b26e33587mr4305290wrr.21.1707389838008; 
- Thu, 08 Feb 2024 02:57:18 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWoVMu7gtcdUhmriI/xYSLKOd380NLKmOvHcrMPpzNY0A4a/MFDSFPqfDA+3rkiWjMeqsaIE5MZEtOhyxJ6PaKKpJlwNiSJPH6YvY55IavQH2xT+CxCb/bxY37ayb5LOPUf6J3WF5jItPVmWofSlqYN9EjJlp40jFebsomq0ye87O5P44uEy1OQkYpdLXwkd1PHHPqwix8XQJ6/8fevfPZZqnPNV/hkJlOXe/oVTF+6MS5pic8NDpZ1/BjGxOnEmlVlnfyeH3uulfiFUzVxlrFF37ODkFsV5wdKZYx/mHeYF/WOPUYp1DFzhW9EnibJU4gRr0Fn
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- e37-20020a5d5965000000b0033b4f82b301sm3006911wri.3.2024.02.08.02.57.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Feb 2024 02:57:17 -0800 (PST)
-Date: Thu, 8 Feb 2024 10:57:11 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- alex.williamson@redhat.com, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, yanghliu@redhat.com, mst@redhat.com,
- clg@redhat.com, jasowang@redhat.com
-Subject: Re: [PATCH v2 1/3] virtio-iommu: Add an option to define the input
- range width
-Message-ID: <20240208105711.GA2737746@myrica>
-References: <20240201163324.564525-1-eric.auger@redhat.com>
- <20240201163324.564525-2-eric.auger@redhat.com>
- <20240205101322.GA2086490@myrica>
- <1790d917-9360-4ce4-b1ad-aba9b72bc418@redhat.com>
+ d=1e100.net; s=20230601; t=1707392198; x=1707996998;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8x/YgZw1AGkDrc//lQ1l/l9Zb/CYBXjpvIK5sQ8j7Mg=;
+ b=fguGjbIXrP23UTynNS3VqmJkLB5SuRNKArPv7pzcfQ7lWxb2AZaMC7L09wJ3+C8RdH
+ 8YkoV1GoiN2uZFQVuIVBykFgyLQx3ymlL9xe2A429u3wZEOGs/AsWdXaCcJQlyIutIpc
+ SxAyasQ3Tcob54FXIThl+/h5GMgrasffkgyvO4fW9hSrZMqld516j73Q/ynVTaplAp2F
+ M82IS3saSSsq/vMhCCrnw8WuHQtr79HfFRsdvDizasEh+HSz6YWoLNyAd5Lb1Am3Qs1f
+ ktK8NmRKppfdZN591IYqdlPdirEj80jx4/qGyvKQSptrawP8gD9i8hYT47T9MMEH3BLe
+ Z38Q==
+X-Gm-Message-State: AOJu0YyC7gu6XUN1ojSn9yxhCXW3U0N6597cNPNsfh1ovbbgFrNFAhps
+ PSvosALZ5T8h+1RhS3A6Cn7bek9j7RB3p5p+2tlzm/9p/GbbrC66lbnHROQNoMy6pgshrD2VVUG
+ BrOE/YAtQGGwBwzO6ZMO9Xs21pfhNM4x5lbrOug==
+X-Google-Smtp-Source: AGHT+IEby3JCci+anHsUw2GEOm5RffDDlsjBlcNpVKMiZRFY9taXkgqpM/w3J5wkj6ptJ6pQm3w7R/nQjD3so8w6VOk=
+X-Received: by 2002:a05:6402:1b1c:b0:55f:99:c895 with SMTP id
+ by28-20020a0564021b1c00b0055f0099c895mr5580279edb.20.1707392197849; Thu, 08
+ Feb 2024 03:36:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1790d917-9360-4ce4-b1ad-aba9b72bc418@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x42a.google.com
+References: <20240207050308.3221396-1-tong.ho@amd.com>
+In-Reply-To: <20240207050308.3221396-1-tong.ho@amd.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 8 Feb 2024 11:36:26 +0000
+Message-ID: <CAFEAcA-JnKM9TCbp5=_Ogsnz+GSO96CcP1T-_5jTrSEXAyXc2Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/char/pl011: Add support for loopback
+To: Tong Ho <tong.ho@amd.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
+ pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,58 +88,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 09:16:35AM +0100, Eric Auger wrote:
-> >> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> >> index ec2ba11d1d..7870bdbeee 100644
-> >> --- a/hw/virtio/virtio-iommu.c
-> >> +++ b/hw/virtio/virtio-iommu.c
-> >> @@ -1314,7 +1314,11 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-> >>       */
-> >>      s->config.bypass = s->boot_bypass;
-> >>      s->config.page_size_mask = qemu_real_host_page_mask();
-> >> -    s->config.input_range.end = UINT64_MAX;
-> >> +    if (s->aw_bits < 32 || s->aw_bits > 64) {
-> > I'm wondering if we should lower this to 16 bits, just to support all
-> > possible host SMMU configurations (the smallest address space configurable
-> > with T0SZ is 25-bit, or 16-bit with the STT extension).
-> Is it a valid use case case to assign host devices protected by
-> virtio-iommu with a physical SMMU featuring Small Translation Table?
+On Wed, 7 Feb 2024 at 05:03, Tong Ho <tong.ho@amd.com> wrote:
+>
+> This patch adds loopback for sent characters as well as
+> modem-control signals.
+>
+> Loopback of send and modem-control is often used for uart
+> self tests in real hardware but missing from current pl011
+> model, resulting in self-test failures when running in QEMU.
+>
+> Signed-off-by: Tong Ho <tong.ho@amd.com>
+> Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
-Probably not, I'm guessing STT is for tiny embedded implementations where
-QEMU or even virtualization is not a use case. But because smaller mobile
-platforms now implement SMMUv3, using smaller IOVA spaces and thus fewer
-page tables can be beneficial. One use case I have in mind is android with
-pKVM, each app has its own VM, and devices can be partitioned into lots of
-address spaces with PASID, so you can save a lot of memory and table-walk
-time by shrinking those address space. But that particular case will use
-crosvm so isn't relevant here, it's only an example.
+Hi; thanks for this patch.
 
-Mainly I was concerned that if the Linux driver decides to allow
-configuring smaller address spaces (maybe a linux cmdline option), then
-using a architectural limit here would be a safe bet that things can still
-work. But we can always change it in a later version, or implement finer
-controls (ideally the guest driver would configure the VA size in ATTACH).
+> ---
+>  hw/char/pl011.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 49 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> index 855cb82d08..3c0e07aa35 100644
+> --- a/hw/char/pl011.c
+> +++ b/hw/char/pl011.c
+> @@ -121,6 +121,51 @@ static void pl011_update(PL011State *s)
+>      }
+>  }
+>
+> +static void pl011_put_fifo(void *opaque, uint32_t value);
+> +
+> +static bool pl011_is_loopback(PL011State *s)
+> +{
+> +    return !!(s->cr & (1U << 7));
+> +}
+> +
+> +static void pl011_tx_loopback(PL011State *s, uint32_t value)
+> +{
+> +    if (pl011_is_loopback(s)) {
+> +        pl011_put_fifo(s, value);
+> +    }
+> +}
+> +
+> +static uint32_t pl011_cr_loopback(PL011State *s, bool update)
+> +{
+> +    uint32_t cr = s->cr;
+> +    uint32_t fr = s->flags;
+> +    uint32_t ri = 1 << 8, dcd = 1 << 2, dsr = 1 << 1, cts = 0;
+> +    uint32_t out2 = 1 << 13, out1 = 1 << 12, rts = 1 << 11, dtr = 1 << 10;
 
-> It leaves 64kB IOVA space only. Besides in the spec, it is wriiten the
-> min T0SZ can even be 12.
-> 
-> "The minimum valid value is 16 unless all of the following also hold, in
-> which case the minimum permitted
-> value is 12:
-> – SMMUv3.1 or later is supported.
-> – SMMU_IDR5.VAX indicates support for 52-bit Vas.
-> – The corresponding CD.TGx selects a 64KB granule.
-> "
+Please don't use local variables for these -- define some
+CR_whatever constants at the top of the file for the CR bits,
+as we already do for eg LCR bits.
 
-Yes that's confusing because va_size = 64 - T0SZ, so T0SZ=12 actually
-describes the largest address size, 52.
+We already have some PL011_FLAG_* constants for FR bit values;
+you can extend those to cover the new bits you want to set here.
 
-> 
-> At the moment I would prefer to stick to the limit suggested by Alex
-> which looks also sensible for other archs whereas 16 doesn't.
+> +
+> +    if (!pl011_is_loopback(s)) {
+> +        return fr;
+> +    }
+> +
+> +    fr &= ~(ri | dcd | dsr | cts);
+> +    fr |= (cr & out2) ?  ri : 0;   /* FR.RI  <= CR.Out2 */
+> +    fr |= (cr & out1) ? dcd : 0;   /* FR.DCD <= CR.Out1 */
+> +    fr |= (cr &  rts) ? cts : 0;   /* FR.CTS <= CR.RTS */
+> +    fr |= (cr &  dtr) ? dsr : 0;   /* FR.DSR <= CR.DTR */
+> +
+> +    if (!update) {
+> +        return fr;
+> +    }
+> +
+> +    s->int_level &= ~(INT_DSR | INT_DCD | INT_CTS | INT_RI);
+> +    s->int_level |= (fr & dsr) ? INT_DSR : 0;
+> +    s->int_level |= (fr & dcd) ? INT_DCD : 0;
+> +    s->int_level |= (fr & cts) ? INT_CTS : 0;
+> +    s->int_level |= (fr &  ri) ? INT_RI  : 0;
+> +    pl011_update(s);
+> +
+> +    return fr;
+> +}
 
-Agreed, it should be sufficient.
+I think we should not call this function "pl011_cr_loopback()",
+because it handles all cases, not merely the "loopback enabled"
+case. It also seems to be doing double duty as both
+"return the flags register value" and "handle a write to
+the cr register" -- I think it wolud be clearer to separate
+those two out.
 
-Thanks,
-Jean
+> +
+>  static bool pl011_is_fifo_enabled(PL011State *s)
+>  {
+>      return (s->lcr & LCR_FEN) != 0;
+> @@ -172,7 +217,7 @@ static uint64_t pl011_read(void *opaque, hwaddr offset,
+>          r = s->rsr;
+>          break;
+>      case 6: /* UARTFR */
+> -        r = s->flags;
+> +        r = pl011_cr_loopback(s, false);
+>          break;
+>      case 8: /* UARTILPR */
+>          r = s->ilpr;
+> @@ -267,6 +312,7 @@ static void pl011_write(void *opaque, hwaddr offset,
+>           * qemu_chr_fe_write and background I/O callbacks */
+>          qemu_chr_fe_write_all(&s->chr, &ch, 1);
+>          s->int_level |= INT_TX;
+> +        pl011_tx_loopback(s, ch);
+
+This implementation will send the transmitted characters
+to the QEMU chardev and also loop them back into the UART
+when loopback is enabled. Similarly if we receive a character
+from the real input we will put it into the FIFO still, so
+the FIFO will get both looped-back and real input together.
+
+I think we only have one other UART where loopback is implemented,
+and that is hw/char/serial.c. In that device we make loopback not
+send transmitted characters out when in loopback mode, because
+the 16550 datasheet explicitly says that's how its loopback
+mode works. The PL011 datasheet is unfortunately silent on
+this question. Do you have a real hardware PL011 that you
+can check to see whether when it is in loopback mode
+transmitted data is also sent to the output port as well
+as looped back? Similarly for input: we should check whether
+the UART continues to accept real input or if the real input
+is completely disconnected while in loopback mode.
+
+>          pl011_update(s);
+>          break;
+>      case 1: /* UARTRSR/UARTECR */
+> @@ -300,8 +346,9 @@ static void pl011_write(void *opaque, hwaddr offset,
+>          pl011_set_read_trigger(s);
+>          break;
+>      case 12: /* UARTCR */
+> -        /* ??? Need to implement the enable and loopback bits.  */
+> +        /* ??? Need to implement the enable bit.  */
+>          s->cr = value;
+> +        pl011_cr_loopback(s, true);
+>          break;
+>      case 13: /* UARTIFS */
+>          s->ifl = value;
+> --
+
+thanks
+-- PMM
 
