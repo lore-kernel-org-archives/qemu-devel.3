@@ -4,89 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1BA8C48260
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 18:56:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE41AC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 19:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY9XV-0001YG-Kk; Thu, 08 Feb 2024 13:54:25 -0500
+	id 1rY9gu-0003nT-2X; Thu, 08 Feb 2024 14:04:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rY9XP-0001R5-Ar
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:20 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rY9XN-0005nO-4M
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 13:54:19 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 418IjxQB009895; Thu, 8 Feb 2024 18:54:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=+52dW+iSmKyY+R2k17NQNKjn67GI/mL9UJVxxR+4Mlo=;
- b=ISVOYzJw44RoEvGrw7LuyUvlmxTWiphCMXvK+65MOogUcVhJp6AfqAdv1t6KGbNmQa6w
- YAAHUpIxzjY7joEADccWFt5RcVpULdLvsFZ+gErHt/qTbBGZGcsSpMJ8VcCNZ6PjxpQ3
- xERdNWug6Laz/s3aRcbG03cysAo5+esi/6YonC4V3xpCZgL7hC9wBjoz6sOH6KUyIaTR
- 5r4xhf0NBgggXDsjmGO9CeE5FO5B03Kv4V6ppaX7b882GF50ZpAKsmrMzcB7W/fB0wX8
- peCjDo+t88DGGXiHlkqgcC6bO3F1C8aDHTCzsuX+sPCSx+U76jVMcZ8z+zxodIM886NT /Q== 
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w1c945qad-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 08 Feb 2024 18:54:15 +0000
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 418IIpBO038401; Thu, 8 Feb 2024 18:54:14 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3w1bxawn3e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 08 Feb 2024 18:54:14 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 418Iq365013534;
- Thu, 8 Feb 2024 18:54:14 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3w1bxawmw9-5; Thu, 08 Feb 2024 18:54:13 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marc-Andre Lureau <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 04/13] migration: MigrationEvent for notifiers
-Date: Thu,  8 Feb 2024 10:53:57 -0800
-Message-Id: <1707418446-134863-5-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
-References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-08_08,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0
- mlxlogscore=999 bulkscore=0 mlxscore=0 phishscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402080099
-X-Proofpoint-ORIG-GUID: wHwZqpmocRIM_mCX6j0zE4XSuHy6mx_a
-X-Proofpoint-GUID: wHwZqpmocRIM_mCX6j0zE4XSuHy6mx_a
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rY9gs-0003nH-5R
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 14:04:06 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rY9gp-0007Wu-5v
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 14:04:05 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5611e54a92dso302748a12.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 11:04:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1707419040; x=1708023840; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=T+yNJxtcDiWuh/CSH68/DxwAc5LA4FKKC3pmjG+yvaI=;
+ b=lhPklEv+OGCh6XaP24uk2jU3gGTb1b0ifnNspf8dBUS9cQO34qBE8R22AOteH/d9Wk
+ CEzJLFCAQNvElNaFIhVIRuw2cgrckM//8+vu2T7Kd7a5wytM8TNn812ORpvHbNuLwksM
+ Fk/jnezHUmBmyGrR+5jl73C04B3zat+sgkD1SxpAvytCBMbL4UiR390LxOEH5dO9beAD
+ zChdIRzro1SM3Qme0KXGpo/RQVf1JV0APre9ub6hQdV1rpcsUqmZloM9djHMsk6cSlsg
+ wJJKthwUMt0CfodweJhl7FCSpouWl80G17SLxiJH3je32ZsaCOOrByFultq1bGG+CXii
+ XNkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707419040; x=1708023840;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T+yNJxtcDiWuh/CSH68/DxwAc5LA4FKKC3pmjG+yvaI=;
+ b=Qdgr5LdfwSzNPHd5E4uViWB37KzKhTnhhyYdsaiMSl+qlwPQZ1pcvx1awpnF4IWdi3
+ 99yWlDx4GwR1/hD6x+uXckUCmvthmOFpqJKY7Anp2+WImLwEuAc1mY0dNdbWDO+kB1Hq
+ RktxQbsSiXZ+UEi3AhLGT6GOqPRNr96ODn/fk9IApLrsxYwgYvqfGqCE5bLIeDgZWTjE
+ at5/ygI93iXCLtXpp+6sDwCErC1/+3hWd/lXEOHZzn0Hwkk7s+fbIqCvGA6ocMpX/ea8
+ s22vb3F5UqgV2W73u/5gypdaNuYtTizLwdM2nS1SIDoV+wWvy0PaIT+tPQyYqEwZNTow
+ D0iQ==
+X-Gm-Message-State: AOJu0YyFT9sQvC6M23yXUUg/RbRN9D7hLD1d2gUwfachtPOWd2EHKzZM
+ ctHTO6eQHhcaD1uhm01slCcP8OofR1qPyRNs0CATssrLyj1K8k8mvU2ZdU9EJIlRt0fi84Iq9Th
+ lJTITGrrhUx4NSrtbeqtbOT2LswpBm0EB++30fw==
+X-Google-Smtp-Source: AGHT+IFsaRUg6J90o2zZdxMnnLt7RU0lG3p4G55Z3KAojbRhanSFeUMaFc3JUF70KuoJcGRxDo8/8aj32SCrUWIthuI=
+X-Received: by 2002:a05:6402:5172:b0:55f:a7d6:fd6a with SMTP id
+ d18-20020a056402517200b0055fa7d6fd6amr124288ede.5.1707419040611; Thu, 08 Feb
+ 2024 11:04:00 -0800 (PST)
+MIME-Version: 1.0
+References: <20240206231908.1792529-1-hao.xiang@bytedance.com>
+ <20240206231908.1792529-4-hao.xiang@bytedance.com> <ZcMGHeXkV-079vVX@x1n>
+In-Reply-To: <ZcMGHeXkV-079vVX@x1n>
+From: Hao Xiang <hao.xiang@bytedance.com>
+Date: Thu, 8 Feb 2024 11:03:49 -0800
+Message-ID: <CAAYibXifj50FiZ_0Le=FesKnTYpdVnD6qci1r0DFjY40H==gcw@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH 3/6] migration/multifd: Support for zero
+ pages transmission in multifd format.
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=hao.xiang@bytedance.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,232 +91,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Passing MigrationState to notifiers is unsound because they could access
-unstable migration state internals or even modify the state.  Instead, pass
-the minimal info needed in a new MigrationEvent struct, which could be
-extended in the future if needed.
+On Tue, Feb 6, 2024 at 8:25=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Tue, Feb 06, 2024 at 11:19:05PM +0000, Hao Xiang wrote:
+> > diff --git a/migration/multifd.c b/migration/multifd.c
+> > index 25cbc6dc6b..a20d0ed10e 100644
+> > --- a/migration/multifd.c
+> > +++ b/migration/multifd.c
+> > @@ -264,6 +264,7 @@ static void multifd_send_fill_packet(MultiFDSendPar=
+ams *p)
+> >      packet->flags =3D cpu_to_be32(p->flags);
+> >      packet->pages_alloc =3D cpu_to_be32(p->pages->allocated);
+> >      packet->normal_pages =3D cpu_to_be32(p->normal_num);
+> > +    packet->zero_pages =3D cpu_to_be32(p->zero_num);
+>
+> This doesn't look right..
+>
+> If to fill up the zero accounting only, we shouldn't be touching multifd
+> packet at all since multifd zero page detection is not yet supported.
+>
+> We should only reference mig_stats.zero_pages.
 
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/net/virtio-net.c      | 11 ++++++-----
- hw/vfio/migration.c      | 10 +++-------
- hw/vfio/trace-events     |  2 +-
- include/migration/misc.h | 14 +++++++++++++-
- migration/migration.c    | 15 ++++++++++-----
- net/vhost-vdpa.c         |  6 +++---
- ui/spice-core.c          |  9 ++++-----
- 7 files changed, 40 insertions(+), 27 deletions(-)
+p->zero_num will always be 0 because multifd zero page checking is not
+yet enabled. The next commit will contain the code to calculate
+p->zero_num for each packet. This is just a preparation for the next
+commit that enables the feature. Main migration thread zero page goes
+through a different format. We are using the same counter
+mig_stats.zero_pages to track zero pages for both the legacy zero page
+checking and multifd zero page checking. These two are mutually
+exclusive so zero page will not be double counted.
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 75f4e86..e803f98 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3504,7 +3504,7 @@ out:
-     return !err;
- }
- 
--static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationState *s)
-+static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationEvent *e)
- {
-     bool should_be_hidden;
-     Error *err = NULL;
-@@ -3516,7 +3516,7 @@ static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationState *s)
- 
-     should_be_hidden = qatomic_read(&n->failover_primary_hidden);
- 
--    if (migration_in_setup(s) && !should_be_hidden) {
-+    if (e->type == MIG_EVENT_PRECOPY_SETUP && !should_be_hidden) {
-         if (failover_unplug_primary(n, dev)) {
-             vmstate_unregister(VMSTATE_IF(dev), qdev_get_vmsd(dev), dev);
-             qapi_event_send_unplug_primary(dev->id);
-@@ -3524,7 +3524,7 @@ static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationState *s)
-         } else {
-             warn_report("couldn't unplug primary device");
-         }
--    } else if (migration_has_failed(s)) {
-+    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-         /* We already unplugged the device let's plug it back */
-         if (!failover_replug_primary(n, dev, &err)) {
-             if (err) {
-@@ -3537,9 +3537,10 @@ static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationState *s)
- static int virtio_net_migration_state_notifier(NotifierWithReturn *notifier,
-                                                void *data, Error **errp)
- {
--    MigrationState *s = data;
-+    MigrationEvent *e = data;
-+
-     VirtIONet *n = container_of(notifier, VirtIONet, migration_state);
--    virtio_net_handle_migration_primary(n, s);
-+    virtio_net_handle_migration_primary(n, e);
-     return 0;
- }
- 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 6b6acc4..869d841 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -757,18 +757,14 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
- static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
-                                          void *data, Error **errp)
- {
--    MigrationState *s = data;
-+    MigrationEvent *e = data;
-     VFIOMigration *migration = container_of(notifier, VFIOMigration,
-                                             migration_state);
-     VFIODevice *vbasedev = migration->vbasedev;
- 
--    trace_vfio_migration_state_notifier(vbasedev->name,
--                                        MigrationStatus_str(s->state));
-+    trace_vfio_migration_state_notifier(vbasedev->name, e->type);
- 
--    switch (s->state) {
--    case MIGRATION_STATUS_CANCELLING:
--    case MIGRATION_STATUS_CANCELLED:
--    case MIGRATION_STATUS_FAILED:
-+    if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-         vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_RUNNING);
-     }
-     return 0;
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 8fdde54..f0474b2 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -153,7 +153,7 @@ vfio_load_state(const char *name, uint64_t data) " (%s) data 0x%"PRIx64
- vfio_load_state_device_data(const char *name, uint64_t data_size, int ret) " (%s) size 0x%"PRIx64" ret %d"
- vfio_migration_realize(const char *name) " (%s)"
- vfio_migration_set_state(const char *name, const char *state) " (%s) state %s"
--vfio_migration_state_notifier(const char *name, const char *state) " (%s) state %s"
-+vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
- vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
- vfio_save_cleanup(const char *name) " (%s)"
- vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index b62e351..ff8cc57 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -60,10 +60,22 @@ void migration_object_init(void);
- void migration_shutdown(void);
- bool migration_is_idle(void);
- bool migration_is_active(MigrationState *);
-+
-+typedef enum MigrationEventType {
-+    MIG_EVENT_PRECOPY_SETUP,
-+    MIG_EVENT_PRECOPY_DONE,
-+    MIG_EVENT_PRECOPY_FAILED,
-+    MIG_EVENT_MAX
-+} MigrationEventType;
-+
-+typedef struct MigrationEvent {
-+    MigrationEventType type;
-+} MigrationEvent;
-+
- void migration_add_notifier(NotifierWithReturn *notify,
-                             NotifierWithReturnFunc func);
- void migration_remove_notifier(NotifierWithReturn *notify);
--void migration_call_notifiers(MigrationState *s);
-+void migration_call_notifiers(MigrationState *s, MigrationEventType type);
- bool migration_in_setup(MigrationState *);
- bool migration_has_finished(MigrationState *);
- bool migration_has_failed(MigrationState *);
-diff --git a/migration/migration.c b/migration/migration.c
-index ff9945b..82098ad 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1361,7 +1361,9 @@ static void migrate_fd_cleanup(MigrationState *s)
-         /* It is used on info migrate.  We can't free it */
-         error_report_err(error_copy(s->error));
-     }
--    migration_call_notifiers(s);
-+    migration_call_notifiers(s, s->state == MIGRATION_STATUS_COMPLETED ?
-+                             MIG_EVENT_PRECOPY_DONE :
-+                             MIG_EVENT_PRECOPY_FAILED);
-     block_cleanup_parameters();
-     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
- }
-@@ -1468,9 +1470,12 @@ void migration_remove_notifier(NotifierWithReturn *notify)
-     }
- }
- 
--void migration_call_notifiers(MigrationState *s)
-+void migration_call_notifiers(MigrationState *s, MigrationEventType type)
- {
--    notifier_with_return_list_notify(&migration_state_notifiers, s, 0);
-+    MigrationEvent e;
-+
-+    e.type = type;
-+    notifier_with_return_list_notify(&migration_state_notifiers, &e, 0);
- }
- 
- bool migration_in_setup(MigrationState *s)
-@@ -2525,7 +2530,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-      * spice needs to trigger a transition now
-      */
-     ms->postcopy_after_devices = true;
--    migration_call_notifiers(ms);
-+    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE);
- 
-     migration_downtime_end(ms);
- 
-@@ -3584,7 +3589,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
-         rate_limit = migrate_max_bandwidth();
- 
-         /* Notify before starting migration thread */
--        migration_call_notifiers(s);
-+        migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP);
-     }
- 
-     migration_rate_set(rate_limit);
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 1c00519..a29d18a 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -325,13 +325,13 @@ static void vhost_vdpa_net_log_global_enable(VhostVDPAState *s, bool enable)
- static int vdpa_net_migration_state_notifier(NotifierWithReturn *notifier,
-                                              void *data, Error **errp)
- {
--    MigrationState *migration = data;
-+    MigrationEvent *e = data;
-     VhostVDPAState *s = container_of(notifier, VhostVDPAState,
-                                      migration_state);
- 
--    if (migration_in_setup(migration)) {
-+    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-         vhost_vdpa_net_log_global_enable(s, true);
--    } else if (migration_has_failed(migration)) {
-+    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-         vhost_vdpa_net_log_global_enable(s, false);
-     }
-     return 0;
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index b3cd229..0a59876 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -571,19 +571,18 @@ static SpiceInfo *qmp_query_spice_real(Error **errp)
- static int migration_state_notifier(NotifierWithReturn *notifier,
-                                     void *data, Error **errp)
- {
--    MigrationState *s = data;
-+    MigrationEvent *e = data;
- 
-     if (!spice_have_target_host) {
-         return 0;
-     }
- 
--    if (migration_in_setup(s)) {
-+    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-         spice_server_migrate_start(spice_server);
--    } else if (migration_has_finished(s) ||
--               migration_in_postcopy_after_devices(s)) {
-+    } else if (e->type == MIG_EVENT_PRECOPY_DONE) {
-         spice_server_migrate_end(spice_server, true);
-         spice_have_target_host = false;
--    } else if (migration_has_failed(s)) {
-+    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-         spice_server_migrate_end(spice_server, false);
-         spice_have_target_host = false;
-     }
--- 
-1.8.3.1
+Let me know if I am missing something.
 
+>
+> >      packet->next_packet_size =3D cpu_to_be32(p->next_packet_size);
+> >      packet->packet_num =3D cpu_to_be64(p->packet_num);
+>
+> --
+> Peter Xu
+>
 
