@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4521FC4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A6EC4828F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 20:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYAbT-0008Vk-16; Thu, 08 Feb 2024 15:02:35 -0500
+	id 1rYAbT-0008W4-Ih; Thu, 08 Feb 2024 15:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbP-0008SV-Gb
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:31 -0500
-Received: from todd.t-8ch.de ([159.69.126.157])
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbR-0008Tl-Oi
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:33 -0500
+Received: from todd.t-8ch.de ([2a01:4f8:c010:41de::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbM-0001TJ-UD
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:31 -0500
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rYAbQ-0001Wg-4v
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 15:02:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1707422544; bh=X4WxZBufGX/UnJFogrkJp44vwGZ4MHDnluYEmxnIQqk=;
+ t=1707422548; bh=4DspYvGcedbZAyyXHFoUQRfkUa0jnSBjsecnaCtoxI4=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=coq6Tv8SGo2suB3Tvu6Jwaz435XbauZKLp++p9hvCLdtA59JqH894266EbAILZyv9
- KnAULc0Dltd6luqTsdHnHOYk7XorrXQbwRnKdukhLcUWp5S6x1mzmWORY4/sF3dziq
- ws1n21YK2TP6lF4lx+6VEWaylMqS9dFqwQICrwO4=
+ b=DD+d9V8akalFAKsERe5QJl04ZwUDvgS9RoXgKsWx1KJVltd7Fho0u3gxoZmJpmzjX
+ 0n89qA+32sSWPpuQYP31b8nZagr8Tst9f7o3zbDyfrmL+22f1JO4fN3AGOc9U0nfem
+ GfL0KkPWWDqiIZXv4RJscFtk1Omuxjifu3/SJNjU=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Date: Thu, 08 Feb 2024 21:02:20 +0100
-Subject: [PATCH v6 1/6] linux-headers: drop pvpanic.h
+Date: Thu, 08 Feb 2024 21:02:23 +0100
+Subject: [PATCH v6 4/6] hw/misc/pvpanic: add support for normal shutdowns
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240208-pvpanic-shutdown-v6-1-965580ac057b@t-8ch.de>
+Message-Id: <20240208-pvpanic-shutdown-v6-4-965580ac057b@t-8ch.de>
 References: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
 In-Reply-To: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -40,15 +40,15 @@ Cc: qemu-devel@nongnu.org,
  Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=3773;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707422542; l=3037;
  i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
- bh=X4WxZBufGX/UnJFogrkJp44vwGZ4MHDnluYEmxnIQqk=;
- b=BODgN2nbXP6sEMaqPTjRE+vUJAHObxCXp2ImuPEUed0m0+r6zqP+8bpEm5Z4gKLy1R4aLvOdy
- wG0q87p4SYvC96SOvv6n4hvOL+1uyAyOpc8746DkkNi0j7NHDvBYCIB
+ bh=4DspYvGcedbZAyyXHFoUQRfkUa0jnSBjsecnaCtoxI4=;
+ b=L8gQPtWSd+oMyxXIXF3F3iZw19dVxQCQUdgDW9VWx+/Jxzy/BOqxyKXpqFKbYLgNAZ3LCvIGN
+ 913tZcLiM77AeG4u148sioAnKFrpO81oXSNiV84qlN2i9qP8X0oqoW/
 X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
- helo=todd.t-8ch.de
+Received-SPF: pass client-ip=2a01:4f8:c010:41de::1;
+ envelope-from=thomas@t-8ch.de; helo=todd.t-8ch.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,111 +70,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-misc/pvpanic.h from the Linux UAPI does not define a Linux UAPI but a
-qemu device API.
+Shutdown requests are normally hardware dependent.
+By extending pvpanic to also handle shutdown requests, guests can
+submit such requests with an easily implementable and cross-platform
+mechanism.
 
-This leads to a weird process when updates to the interface are needed:
-1) Change to the specification in the qemu tree
-2) Change to the header in the Linux tree
-3) Re-import of the header into Qemu.
-
-The kernel prefers to drop the header anyways.
-
-Prepare for the removal from the Linux UAPI headers by moving the
-contents to the existing pvpanic.h header.
-
-Link: https://lore.kernel.org/lkml/2023110431-pacemaker-pruning-0e4c@gregkh/
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Acked-by: Cornelia Huck <cohuck@redhat.com>
 Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
 ---
- hw/misc/pvpanic-isa.c                    | 1 -
- hw/misc/pvpanic-pci.c                    | 1 -
- hw/misc/pvpanic.c                        | 1 -
- include/hw/misc/pvpanic.h                | 3 +++
- include/standard-headers/linux/pvpanic.h | 9 ---------
- scripts/update-linux-headers.sh          | 3 +--
- 6 files changed, 4 insertions(+), 14 deletions(-)
+ docs/specs/pvpanic.rst    | 2 ++
+ hw/misc/pvpanic.c         | 5 +++++
+ include/hw/misc/pvpanic.h | 3 ++-
+ include/sysemu/runstate.h | 1 +
+ system/runstate.c         | 5 +++++
+ 5 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
-index ccec50f61bbd..ef438a31fbe9 100644
---- a/hw/misc/pvpanic-isa.c
-+++ b/hw/misc/pvpanic-isa.c
-@@ -21,7 +21,6 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/isa/isa.h"
--#include "standard-headers/linux/pvpanic.h"
- #include "hw/acpi/acpi_aml_interface.h"
+diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
+index f894bc19555f..796cc0348a38 100644
+--- a/docs/specs/pvpanic.rst
++++ b/docs/specs/pvpanic.rst
+@@ -29,6 +29,8 @@ bit 1
+   a guest panic has happened and will be handled by the guest;
+   the host should record it or report it, but should not affect
+   the execution of the guest.
++bit 2
++  a guest shutdown has happened and should be processed by the host
  
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
-diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
-index c01e4ce8646a..01e269b55284 100644
---- a/hw/misc/pvpanic-pci.c
-+++ b/hw/misc/pvpanic-pci.c
-@@ -21,7 +21,6 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/pci/pci_device.h"
--#include "standard-headers/linux/pvpanic.h"
- 
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
- 
+ PCI Interface
+ -------------
 diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
-index 1540e9091a45..4915ef256e74 100644
+index a4982cc5928e..0e9505451a7a 100644
 --- a/hw/misc/pvpanic.c
 +++ b/hw/misc/pvpanic.c
-@@ -21,7 +21,6 @@
- #include "hw/qdev-properties.h"
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
--#include "standard-headers/linux/pvpanic.h"
+@@ -40,6 +40,11 @@ static void handle_event(int event)
+         qemu_system_guest_crashloaded(NULL);
+         return;
+     }
++
++    if (event & PVPANIC_SHUTDOWN) {
++        qemu_system_guest_pvshutdown();
++        return;
++    }
+ }
  
- static void handle_event(int event)
- {
+ /* return supported events on read */
 diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
-index fab94165d03d..dffca827f77a 100644
+index 48f2ec4c86a1..9e36a02d5a4f 100644
 --- a/include/hw/misc/pvpanic.h
 +++ b/include/hw/misc/pvpanic.h
-@@ -18,6 +18,9 @@
- #include "exec/memory.h"
- #include "qom/object.h"
+@@ -20,7 +20,8 @@
  
-+#define PVPANIC_PANICKED	(1 << 0)
-+#define PVPANIC_CRASH_LOADED	(1 << 1)
-+
+ #define PVPANIC_PANICKED	(1 << 0)
+ #define PVPANIC_CRASH_LOADED	(1 << 1)
+-#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED)
++#define PVPANIC_SHUTDOWN	(1 << 2)
++#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED | PVPANIC_SHUTDOWN)
+ 
  #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
  #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
+diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+index 0117d243c4ed..e210a37abf0f 100644
+--- a/include/sysemu/runstate.h
++++ b/include/sysemu/runstate.h
+@@ -104,6 +104,7 @@ void qemu_system_killed(int signal, pid_t pid);
+ void qemu_system_reset(ShutdownCause reason);
+ void qemu_system_guest_panicked(GuestPanicInformation *info);
+ void qemu_system_guest_crashloaded(GuestPanicInformation *info);
++void qemu_system_guest_pvshutdown(void);
+ bool qemu_system_dump_in_progress(void);
  
-diff --git a/include/standard-headers/linux/pvpanic.h b/include/standard-headers/linux/pvpanic.h
-deleted file mode 100644
-index 54b7485390d3..000000000000
---- a/include/standard-headers/linux/pvpanic.h
-+++ /dev/null
-@@ -1,9 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
--
--#ifndef __PVPANIC_H__
--#define __PVPANIC_H__
--
--#define PVPANIC_PANICKED	(1 << 0)
--#define PVPANIC_CRASH_LOADED	(1 << 1)
--
--#endif /* __PVPANIC_H__ */
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index a0006eec6fd1..c4fea51c93fd 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -218,8 +218,7 @@ for i in "$tmpdir"/include/linux/*virtio*.h \
-          "$tmpdir/include/linux/const.h" \
-          "$tmpdir/include/linux/kernel.h" \
-          "$tmpdir/include/linux/vhost_types.h" \
--         "$tmpdir/include/linux/sysinfo.h" \
--         "$tmpdir/include/misc/pvpanic.h"; do
-+         "$tmpdir/include/linux/sysinfo.h"; do
-     cp_portable "$i" "$output/include/standard-headers/linux"
- done
- mkdir -p "$output/include/standard-headers/drm"
+ #endif
+diff --git a/system/runstate.c b/system/runstate.c
+index d6ab860ecaa7..572499513034 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -572,6 +572,11 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+     qapi_free_GuestPanicInformation(info);
+ }
+ 
++void qemu_system_guest_pvshutdown(void)
++{
++    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
++}
++
+ void qemu_system_reset_request(ShutdownCause reason)
+ {
+     if (reboot_action == REBOOT_ACTION_SHUTDOWN &&
 
 -- 
 2.43.0
