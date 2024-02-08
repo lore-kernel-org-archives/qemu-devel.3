@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7C6C4828F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D366C48260
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Feb 2024 16:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rY7CI-0005u6-Rf; Thu, 08 Feb 2024 11:24:24 -0500
+	id 1rY7FS-0007S2-KT; Thu, 08 Feb 2024 11:27:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY7CD-0005tL-CR
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:24:18 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1rY7FR-0007Rh-IP
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:27:37 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rY7C9-00043l-UO
- for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:24:16 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-55f50cf2021so67030a12.1
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:24:13 -0800 (PST)
+ id 1rY7FQ-0004pE-3s
+ for qemu-devel@nongnu.org; Thu, 08 Feb 2024 11:27:37 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-56061ad3d3dso75388a12.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 08:27:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707409452; x=1708014252; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707409654; x=1708014454; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=j1/3N8kqMv5Z8EP+nClXyaiPRcwz8IMdFCYnpkvoizU=;
- b=ED1y5Au8cmoMxgIGp49Sg9SW3MFN0A9SuyD02vhn/Y2+h63hFgMs8nBNSL/QEh9JRa
- kOXlKAKOyXVRBaJsRzMYd1rPjbfeP8KDf5l8e8qCx9jVUR8G+OAXgyBUlXNMqvyWj4FA
- LIlcdSMGv2HV4SpPXqYOAE2Ti9OeNisprtFuOMuAOCvZRuVlXW0S2/+e8Z6MXpxtewQ2
- M6BMqdAqW+/xIjTSf8PLnn4J9CbQ0W4pXKaj+I/4MD/kguctqiZdoqif5bRCEYUz/MWD
- 98+WQy40ruF2poFQe/MD7VjzLOyAcZn6JlA13Iol8iqWDpN4hqAU0B2keAzYdjhZn15S
- fw0A==
+ bh=ib0zpQvZqce9hgQ2qOlvF0FSGeNVQok9J1UbRHD0HBc=;
+ b=e8PdnSxRjY3SVVBMpcTqcD2Aaqccs3rcMagxnArEWOdKsI83Q+Us9b23QkXJ1c2k0v
+ wHxIRM2yBaxN4dZbeCvJ2vI9zwNl2rbmzxq2AIQJekO8mnD/zTanG6PdEYjLFRfW7Sr9
+ SommZE8lsC4SZjJhCZ6miWr/fyGEoQlWhH6INgiM27WafEom/sysKE71LZRFFr59GVQv
+ M6AwQ2QBQZFt82oecr1FKBXOC6rmE9GmAGEDPzbMuL7kYvErXHzCaIlT0StCCZzAgX9I
+ xtZoMSvYB3qsSSrae5f++RAcOuYk3UiLvcgsHE/yz7EoP5uaXAvcMxvjgcwaZTfabGF/
+ li8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707409452; x=1708014252;
+ d=1e100.net; s=20230601; t=1707409654; x=1708014454;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=j1/3N8kqMv5Z8EP+nClXyaiPRcwz8IMdFCYnpkvoizU=;
- b=w+1ucXGQ4laGb8baZkINc6RI9JhfU4dRKMQW81k9oGaoLRwZlkfbRWUnnzIkJr/+fF
- lVtTMBSgERrea+Jr1MzA2/NSzxKh5UObcP1z6EEzyfJRaJ2ik8eYAlaU53vyVjTOE57M
- 9wRzpW9XhgjyIrVbzNAQ+Lsv+k7Go1yp+vXMezJOsSTEMfPRRJR8H9MskIFnxJlijJwd
- LZNAPQfhZHQt5bhi7f8kNECiEZUHeFUAcnpMfeOhEbmvtzaClIwoqPNXciCttF9W16Kl
- hpK9yyhblZauCcCRVf4a0PYt2nBthGoP+Exm1jGyC+yzdcWJktSljj4L2If1T82ZDrDv
- uMTw==
-X-Gm-Message-State: AOJu0YztkM5T/aX19U7D3jrVo5phSJBkbvb6HO6usxVaLcWCxwwtyNff
- 1PhIB9fdH4rF8pxTiBcoS5RUnnjRWVajypSWmqmwjsqM5FYQx/mhg7JWyyyHonAJovO/H/vza7/
- FyU822kwGhVvR6QgEY9t8HnO4hgTTqhs11x0ZiA==
-X-Google-Smtp-Source: AGHT+IGOv1z3Ram/5Dyy0eUje/r+2L1L8yyKR6pKXlv3RD9BZdAhF7Kuf+H5I0jehnX8LS3h7AtjssXXzJszq83MSPk=
-X-Received: by 2002:aa7:cd04:0:b0:561:1214:c9e5 with SMTP id
- b4-20020aa7cd04000000b005611214c9e5mr1475075edw.12.1707409452260; Thu, 08 Feb
- 2024 08:24:12 -0800 (PST)
+ bh=ib0zpQvZqce9hgQ2qOlvF0FSGeNVQok9J1UbRHD0HBc=;
+ b=TGcBvogBgS4JoSFtXdXN1zF3JiLWz/gvaj5FVw81tzPt9smCPGAXp6nqeBXF4iYGMy
+ PgRX4juJTA0PHd6uMlzOXWW/fIVOGMMPTpqsXmqUR5CSBp6+P2mD80SgNdpYrVkAe6XQ
+ C4+jixxVRhCMM8NViSUKU6xsuo9dpqnSSkUXp805G8aCiYOtowPqBWtdsTorMrwtc6Cq
+ YX7HnGa21m8RxzS9dkVjrvF2JXE5YXJUUhkbA4xrhFyIMl+nx7kRaua1U/WTp6HuFwIR
+ kR0vP7seBS0LKp3a6IPRVdlD8vBpWnLEZa5A0rxHCZfG6mVkYhdpa+pyySUb44ZykgY+
+ 8mpA==
+X-Gm-Message-State: AOJu0YyHU3YGx12B2fC8lTYr/TxkXHDnt8H+jRTj8JxmEUVuPCbUF9Li
+ O2r+Al7yHZc90BpBbANAZe906ep3zD/qqynHc7ILiUZECu3mBxHVdtj27JptuB5FcOONwGjEdry
+ wmCx8i2j5OmdYvz3T5SSSVyu3lPXxo5Ro3DNM7g==
+X-Google-Smtp-Source: AGHT+IEdMX4eIq/B5pOhHM0PevHnUq7zkRUbH5o7hQno29IUjMcizlW/eR+7wMJj5KzLhx8rezactjmc2S/Jx+pW1Ug=
+X-Received: by 2002:aa7:d982:0:b0:560:2c15:38b9 with SMTP id
+ u2-20020aa7d982000000b005602c1538b9mr65546eds.4.1707409654589; Thu, 08 Feb
+ 2024 08:27:34 -0800 (PST)
 MIME-Version: 1.0
 References: <20240207025210.8837-1-richard.henderson@linaro.org>
- <20240207025210.8837-3-richard.henderson@linaro.org>
-In-Reply-To: <20240207025210.8837-3-richard.henderson@linaro.org>
+In-Reply-To: <20240207025210.8837-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Feb 2024 16:24:01 +0000
-Message-ID: <CAFEAcA_aVb0a3=fxijwwrQChXZ1MXRVyx9ChCHSDMEjQcMYrsg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/6] target/arm: Fix nregs computation in do_{ld,
- st}_zpa
+Date: Thu, 8 Feb 2024 16:27:23 +0000
+Message-ID: <CAFEAcA-ogsfj7+3Xft4k-0YmAuTqO0qpC5FWqdGE3ZdXuo4z1g@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] target/arm: assorted mte fixes
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, gustavo.romero@linaro.org, 
- qemu-stable@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, gustavo.romero@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,23 +87,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Feb 2024 at 02:53, Richard Henderson
+On Wed, 7 Feb 2024 at 02:52, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> The field is encoded as [0-3], which is convenient for
-> indexing our array of function pointers, but the true
-> value is [1-4].  Adjust before calling do_mem_zpa.
+> Changes for v3:
+>   - As if /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred is "sync".
+>   - Fix do_st_zpa as well as do_ld_zpa.  Oops.
 >
-> Add an assert, and move the comment re passing ZT to
-> the helper back next to the relevant code.
+> Because of the above, I dropped Gustavo's t-b.
 >
-> Cc: qemu-stable@nongnu.org
-> Fixes: 206adacfb8d ("target/arm: Add mte helpers for sve scalar + int loads")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+>
+> r~
+>
+>
+> Richard Henderson (6):
+>   linux-user/aarch64: Choose SYNC as the preferred MTE mode
+>   target/arm: Fix nregs computation in do_{ld,st}_zpa
+>   target/arm: Adjust and validate mtedesc sizem1
+>   target/arm: Split out make_svemte_desc
+>   target/arm: Handle mte in do_ldrq, do_ldro
+>   target/arm: Fix SVE/SME gross MTE suppression checks
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
+
+Applied to target-arm.next, thanks.
+
 -- PMM
 
