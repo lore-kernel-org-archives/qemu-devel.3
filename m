@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB46C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7943BC4829F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:12:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYOgO-0002kJ-9N; Fri, 09 Feb 2024 06:04:37 -0500
+	id 1rYObL-0000wv-Cd; Fri, 09 Feb 2024 05:59:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOcw-0006aq-IH
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:05 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rYObJ-0000wV-DY
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:21 -0500
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOct-0000pj-1n
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:01 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e071953676so532922b3a.2
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:57 -0800 (PST)
+ id 1rYObH-0000GI-Rp
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:21 -0500
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-219122781a3so417389fac.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476455; x=1708081255; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476358; x=1708081158; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DVMEKw/MMi+uCAfBLiZxsoc3y2OkOUnHp6oV3e7W5eU=;
- b=ag2dy/VimWkRMfONJRw2zUX14pM1z/6JyZJZSfErBQaVJlJEmoWlkR1ZIJdj+2+Jsi
- oZ7c8g5gVjKjygh0VY5BCapxj9KDZNFXzWFIXXw4ALSNMcC3EiSBguv7J/0Avjyrdnhj
- ve/F11BIGaem9qOA+j0arf02Y/o4bGrauc9CGb6PmObLKgEP59HN9+s22JCgyLbV5s47
- m2ct9XLDRIlxu/JOFh08yKxdvyJXWL0SRQOOJ+hVUdq0W4wb3elw9pwcF3inbLaBq0XA
- ODfjSI6nSBV87aKS/wq9oG2o2QAjilOMPfGX0L5H8VubCEhGtYtcJD8OoNEga8S9BPw4
- UAHw==
+ bh=hr51UkfS9KrgxOQVsxVtiiiAUSbgyo6cNS0t0YX3ZV4=;
+ b=ikhWaYAzizEBdten77eLSjlWMX3zbUnyNtuh3U8ThC19JgIfriMscug/3kab65Yf6B
+ BsV286TugdRwSpNLBta9neMInjLg2IlcRoXtrD5isTUFtbwA4Si9VaBfsHz8Vjk/DMFM
+ vYFF+a+8Fp1CP1dlDhT9q5Qt0IoWYDuhtqtLFTiqf6mynwlXQ1EgS8HgNmAw2961LlGL
+ ElGUjOCPP4c2e3okuIfGzZ/kFEcgbU+p9h+DQ4eRnUboWqnnxTs1OHh5KV/ZULfP3/C/
+ NGYgIoOEhLKUd2lwM9hBEqKDCNa+wtQapUbW/W8bjEtv8tKWOmAyf7PwJwZ8Nxrh9xRy
+ yIzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476455; x=1708081255;
+ d=1e100.net; s=20230601; t=1707476358; x=1708081158;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DVMEKw/MMi+uCAfBLiZxsoc3y2OkOUnHp6oV3e7W5eU=;
- b=jq0d37LPQsw4HCZ4w9SUhoKhvTVfIxeXPtznf5gwl6YkdZ0wmtIVLd4v2YnEtQE3h9
- eHXQiGPNlIRXbWDCt3a3UwhF6GYG0bn04B9A8eNZbt5+IACWMAEeSEP/zva0aVRQfoE7
- 7niJpme6WiIkQ/BMpcvRTpoUvxoVc/Elk33ngA8hApmLCyidVhzMO1fwOdpkeK37EJdW
- fvno1LSMrxeflPKRIcOKtYqc/b0WKuRS39Dk1NVcR8dSbsun83rtTHZNRGjFvGdGeyUD
- 4+O6tDS2WZlVftaCyDefO7hxrCRXlBEgQSIbSJ0VlqBqNVBjBEs2E0EMO5E3p3FMCTx2
- FCGg==
-X-Gm-Message-State: AOJu0YzqPBeEpwMNnf+b7YnijsOcgPBPMmMwufqzOFM/7PEd6NHf2xGR
- VN3SteYPUu4gpeYowRALjXl9xFNLMn5K/6GjuAmH8N6FoxSRW4krvIUFrLkGCkUN2g==
-X-Google-Smtp-Source: AGHT+IGHiQ/VqAE/cUts/hLTUdmN5vw1zizhVvIe2SvaU/k00e/lkRK1E2VwFL2P1C4WW2CqvnDsJQ==
-X-Received: by 2002:a05:6a00:704:b0:6e0:6dbb:38f6 with SMTP id
- 4-20020a056a00070400b006e06dbb38f6mr1179184pfl.13.1707476455391; 
- Fri, 09 Feb 2024 03:00:55 -0800 (PST)
+ bh=hr51UkfS9KrgxOQVsxVtiiiAUSbgyo6cNS0t0YX3ZV4=;
+ b=fjC5bOcCyBQ4w3oSjSEKU9pFmsrcORCAy92CPUHPt4V2Vo4jaw+iyuVQNzVLjYiHiB
+ cBPkKAd2Ml9BIFyIxKV+uFc9ITDf1nq6JW3bz0v+llBV5F1uFvXIfManJawPg7KLh5lf
+ yb8oAqQeFqIlh1b/YLEPF+QzahsxM9+AAecqSaG3svJJ7sa/eqiEjc+WR8x7TSrW9YN7
+ Xc/czMtC0EfCTw2jQLf7uBQ6lOXEvJOk9bW4mlnO54PBLShImPz8+hYgbHLbPIEQtRQy
+ L19+vupeXRfp3pzT4LgWGO0WV5OSVc5sOW78U0NRcfK4c/C+MnJX/N/+/JJQc+TkNlxw
+ kP3A==
+X-Gm-Message-State: AOJu0YzVTCoGzdDyXcY2URQamYlBbZVp4BHEz6fA/9RbLlz8BqIHRsuX
+ pqtejbhOLb/y2CZks4LCfZpIxd6nKBa2lXFm6r1s4Lhd1Kfp3RVGodq+IKtVtgrYtg==
+X-Google-Smtp-Source: AGHT+IHMBF1UHvF/WTomxB3OhO4oaCyPKRO270RvJzPBG90oeh4MrGFJJ7KeZE+IMSOeXqRdhjVXdA==
+X-Received: by 2002:a05:6870:330b:b0:219:f071:416c with SMTP id
+ x11-20020a056870330b00b00219f071416cmr1092684oae.16.1707476358415; 
+ Fri, 09 Feb 2024 02:59:18 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0QyyCWu17Thps81JSYYJu00ySp7pNSOmOeU2NAAxvWslG3J3R9oIuEYBbuG1fN43IXvv8IsDdIZMiWgbHFogDS8iw80H0JXwK1Xhk1clmd1EqFrsMZB3ObQ5JVfNa3zBSROI=
+ AJvYcCWIJYSSuNvQG6hPb7xoyV8Kb9tRT78E1ZRggJUI3pnht08Nb2LemgW64DGpLwlnVs9Jk3Y7Ezgi22nhsWCtUeikrO+ynj5JwChYZSktGr0LBPtcVpJfTcJyt+DCyNiGVEPWmmsEegehVjgPrWrbO2jBtdcKQZcrUeaH1++/1llMPbo=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.00.53
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 03:00:54 -0800 (PST)
+ Fri, 09 Feb 2024 02:59:17 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 46/61] hw/riscv/virt.c: use g_autofree in create_fdt_sockets()
-Date: Fri,  9 Feb 2024 20:57:58 +1000
-Message-ID: <20240209105813.3590056-47-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>,
+ Vladimir Isaev <vladimir.isaev@syntacore.com>
+Subject: [PULL 16/61] target/riscv: move 'cboz_blocksize' to
+ riscv_cpu_properties[]
+Date: Fri,  9 Feb 2024 20:57:28 +1000
+Message-ID: <20240209105813.3590056-17-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=alistair23@gmail.com; helo=mail-oa1-x31.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,63 +104,129 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Move 'clust_name' inside the loop, and g_autofree, to avoid having to
-g_free() manually in each loop iteration.
-
-'intc_phandles' is also g_autofreed to avoid another manual g_free().
+And remove the now unused kvm_cpu_set_cbomz_blksize() setter.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240122221529.86562-5-dbarboza@ventanamicro.com>
+Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+tested-by tags added, rebased with Alistair's riscv-to-apply.next.
+Message-ID: <20240112140201.127083-5-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ target/riscv/cpu.c         | 38 +++++++++++++++++++++++++++++++++++++-
+ target/riscv/kvm/kvm-cpu.c | 28 ----------------------------
+ 2 files changed, 37 insertions(+), 29 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 373b1dd96b..d0f402e0d5 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -721,11 +721,11 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
-                                uint32_t *irq_virtio_phandle,
-                                uint32_t *msi_pcie_phandle)
- {
--    char *clust_name;
-     int socket, phandle_pos;
-     MachineState *ms = MACHINE(s);
-     uint32_t msi_m_phandle = 0, msi_s_phandle = 0;
--    uint32_t *intc_phandles, xplic_phandles[MAX_NODES];
-+    uint32_t xplic_phandles[MAX_NODES];
-+    g_autofree uint32_t *intc_phandles = NULL;
-     int socket_count = riscv_socket_count(ms);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 1828366d93..da8d19c790 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1328,6 +1328,7 @@ static void riscv_cpu_init(Object *obj)
+     cpu->cfg.elen = 64;
+     cpu->cfg.cbom_blocksize = 64;
+     cpu->cfg.cbop_blocksize = 64;
++    cpu->cfg.cboz_blocksize = 64;
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+ }
  
-     qemu_fdt_add_subnode(ms->fdt, "/cpus");
-@@ -739,6 +739,7 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+@@ -1949,8 +1950,42 @@ static const PropertyInfo prop_cbop_blksize = {
+     .set = prop_cbop_blksize_set,
+ };
  
-     phandle_pos = ms->smp.cpus;
-     for (socket = (socket_count - 1); socket >= 0; socket--) {
-+        g_autofree char *clust_name = NULL;
-         phandle_pos -= s->soc[socket].num_harts;
++static void prop_cboz_blksize_set(Object *obj, Visitor *v, const char *name,
++                                  void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    uint16_t value;
++
++    if (!visit_type_uint16(v, name, &value, errp)) {
++        return;
++    }
++
++    if (value != cpu->cfg.cboz_blocksize && riscv_cpu_is_vendor(obj)) {
++        cpu_set_prop_err(cpu, name, errp);
++        error_append_hint(errp, "Current '%s' val: %u\n",
++                          name, cpu->cfg.cboz_blocksize);
++        return;
++    }
++
++    cpu_option_add_user_setting(name, value);
++    cpu->cfg.cboz_blocksize = value;
++}
++
++static void prop_cboz_blksize_get(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    uint16_t value = RISCV_CPU(obj)->cfg.cboz_blocksize;
++
++    visit_type_uint16(v, name, &value, errp);
++}
++
++static const PropertyInfo prop_cboz_blksize = {
++    .name = "cboz_blocksize",
++    .get = prop_cboz_blksize_get,
++    .set = prop_cboz_blksize_set,
++};
++
+ Property riscv_cpu_options[] = {
+-    DEFINE_PROP_UINT16("cboz_blocksize", RISCVCPU, cfg.cboz_blocksize, 64),
  
-         clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket);
-@@ -749,8 +750,6 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+     DEFINE_PROP_END_OF_LIST(),
+ };
+@@ -2039,6 +2074,7 @@ static Property riscv_cpu_properties[] = {
  
-         create_fdt_socket_memory(s, memmap, socket);
+     {.name = "cbom_blocksize", .info = &prop_cbom_blksize},
+     {.name = "cbop_blocksize", .info = &prop_cbop_blksize},
++    {.name = "cboz_blocksize", .info = &prop_cboz_blksize},
  
--        g_free(clust_name);
+ #ifndef CONFIG_USER_ONLY
+     DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 094bc5f47c..748a690b73 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -352,30 +352,6 @@ static KVMCPUConfig kvm_cboz_blocksize = {
+     .kvm_reg_id = KVM_REG_RISCV_CONFIG_REG(zicboz_block_size)
+ };
+ 
+-static void kvm_cpu_set_cbomz_blksize(Object *obj, Visitor *v,
+-                                      const char *name,
+-                                      void *opaque, Error **errp)
+-{
+-    KVMCPUConfig *cbomz_cfg = opaque;
+-    RISCVCPU *cpu = RISCV_CPU(obj);
+-    uint16_t value, *host_val;
 -
-         if (tcg_enabled()) {
-             if (s->have_aclint) {
-                 create_fdt_socket_aclint(s, memmap, socket,
-@@ -793,8 +792,6 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
-         }
+-    if (!visit_type_uint16(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    host_val = kvmconfig_get_cfg_addr(cpu, cbomz_cfg);
+-
+-    if (value != *host_val) {
+-        error_report("Unable to set %s to a different value than "
+-                     "the host (%u)",
+-                     cbomz_cfg->name, *host_val);
+-        exit(EXIT_FAILURE);
+-    }
+-
+-    cbomz_cfg->user_set = true;
+-}
+-
+ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
+ {
+     CPURISCVState *env = &cpu->env;
+@@ -493,10 +469,6 @@ static void kvm_riscv_add_cpu_user_properties(Object *cpu_obj)
+                             NULL, multi_cfg);
      }
  
--    g_free(intc_phandles);
+-    object_property_add(cpu_obj, "cboz_blocksize", "uint16",
+-                        NULL, kvm_cpu_set_cbomz_blksize,
+-                        NULL, &kvm_cboz_blocksize);
 -
-     if (kvm_enabled() && virt_use_kvm_aia(s)) {
-         *irq_mmio_phandle = xplic_phandles[0];
-         *irq_virtio_phandle = xplic_phandles[0];
+     riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_extensions);
+     riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_vendor_exts);
+     riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_experimental_exts);
 -- 
 2.43.0
 
