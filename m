@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F895C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 16:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6D5C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 16:52:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYTw7-0002po-Oc; Fri, 09 Feb 2024 11:41:11 -0500
+	id 1rYU63-0005aQ-9u; Fri, 09 Feb 2024 11:51:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYTw4-0002oe-Vq
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:41:10 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYTw1-0006gw-9j
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:41:07 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-41068e36cbbso6762775e9.2
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 08:41:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707496863; x=1708101663; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iSA6HhjgtgS+VYvw61Q384rZfEab29SZDHt8SdZCCu0=;
- b=Foiy2Iis/++URF+mx52f7rC3XvltJ49Z2vhBvZoVBCxhPUQ1ADvBKys5IMOCsPx2k/
- 646bkh2lZHzcEtzl5jIMbHuUCWoJOzvKOw2mRBZhwM6Uh1yWhHRneIz/NCST8RAzThrm
- Loa/0gKGMbWPRZybwGE/q6qitDavSKNs2Cz2FGvkMfaCWlmaqO7exiCwCLQtQA3xZqr6
- mxWwvIGgh7bXkR6yVcktveoxgsOv01T0EWmerH95mzjfWtOR3znE0oM1B1EF0Wfd6kiW
- nFY0qmz+9+1dkhgUClg0z5521Bm9lI/Q/j46t/63VbFiDRiDM77sXCcqXzmyB/HN9Pjm
- 0JFw==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rYU61-0005YB-Co
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:51:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rYU60-0000Yc-3R
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:51:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707497482;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bgnD26pSBmRKMLDnCw0kuqUKi3UuiB1i+n6sDMnU/mQ=;
+ b=azaRGAHPzfvco91M/uDQEHEWVGyeTxeyWbRIu5TDEYcASfFQXf1XfzzbfLoGI7ewgET8mF
+ Homis54zUFUP6H1w78wdnp6rpmMI7MSCrpKKml1EWlz28BMciK1qZojCJkiEPTOtWYn1fY
+ ApsYGGHKV3U6SNbWvjI266sTxLY9AKo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-1K5fKqjNOf6Ga0UipYSQAw-1; Fri, 09 Feb 2024 11:51:21 -0500
+X-MC-Unique: 1K5fKqjNOf6Ga0UipYSQAw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33b2a223047so414416f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 08:51:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707496863; x=1708101663;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1707497480; x=1708102280;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iSA6HhjgtgS+VYvw61Q384rZfEab29SZDHt8SdZCCu0=;
- b=u9JV2tZDWRDXl307Yzdl5L3a3qQtAZ5emDOLiXWYJWb63G9Q+SNKBxtaCYFtQA+Q6J
- Bq+4kfFEMzM3fKLif6SeODRSbnxy7t5OMZWxIZ0rDMgCU+zf1j1q7/mg70128y0xa7oK
- XgzKyVMC9tk3cWdEopgPLo/qD6u1NRMQuRbeQGYRL6OGTlk7tZnMukh5+lDKCyb6g8T6
- JEOrR51GvRN5cUo8AQxoGT/3qCBRzEQUKLymsGQdAkAaO++4Y7U9YqFNV9bCi7yAVImE
- AfURpVBuYXR1L3OwEq0jIaR9pVlvVlQENcFBcuAFWfkf1b7PMEOOxQ9xeNBsdLwrd425
- gY9A==
-X-Gm-Message-State: AOJu0YyZGQUQzS5S+gW5c9rUVLe3t1eAIkpY89LqRFX+Kon9ItalxF4O
- 2P4gqeDlpejywrhH+5LDP53a2ftRHFrXarT/YCV2tueQVzRR0Hcjyuwc1EGNV44=
-X-Google-Smtp-Source: AGHT+IFE6M/HDLUe7XvRKr9Xb8XD1golMsntQyrxDY63eWBSLOr/zd39TdRYQgGL//rrpKuEZK6jPQ==
-X-Received: by 2002:a05:600c:3ac6:b0:410:3bf6:fabe with SMTP id
- d6-20020a05600c3ac600b004103bf6fabemr2044644wms.6.1707496863410; 
- Fri, 09 Feb 2024 08:41:03 -0800 (PST)
+ bh=bgnD26pSBmRKMLDnCw0kuqUKi3UuiB1i+n6sDMnU/mQ=;
+ b=IaIr35NDEhY64Jz4CQV5NgtcIV532SlhpstkhW/xna/VL6bUzyQbCYFwu48JBm0/T3
+ Y4nsT20d2gtkWHsEqHOKme2nhkTzL9BDu+JIMPQGVY/5S7Rwf1MWi/vNFJLSmF3RKe4y
+ /vqCuCI+a7fVVMLe37yzfTrSuh/nHujQWnK08gBCieSRwWHYOQtqtPAhqn6On1TdGEtD
+ qqh6gTfR0Q7s+OQFsodV3IpgTYTFGaZJpPsAX+xSfBhDIUmV3Py4FsOqV+tgIH1Lq1F6
+ bUcvFW28raf9QSjOJ91YiISBOub88xsacGyG2TDAxV26gEWyIxjI5BxcMGbmdv7Ix/Ze
+ /AzA==
+X-Gm-Message-State: AOJu0YxYQZ1lYasNI/FrQ6Dxxn7Y33VEjjZ3V7CIQUQkfARU+V6jhI0X
+ SONaFLFLvqqzgK6ibtWF2doPkE8FzQjZSrEpPfGdxEdBdDmgZHy/LRt1q2kCP6hqJxZdBHRpz2p
+ wUlUbCS4uqfrOjZCqYEEclVJpB7JSRTUt6UpwNaAI4faJRYDsSFfR
+X-Received: by 2002:a5d:61cf:0:b0:33b:3d5a:d9f6 with SMTP id
+ q15-20020a5d61cf000000b0033b3d5ad9f6mr1622758wrv.50.1707497480341; 
+ Fri, 09 Feb 2024 08:51:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGCik8EXyqeqpkBBpcA2QTJVebqV/SJ/Zm+8NopbCg45HHYr4zJtK4uAYx03EdL/vl0cp1PBw==
+X-Received: by 2002:a5d:61cf:0:b0:33b:3d5a:d9f6 with SMTP id
+ q15-20020a5d61cf000000b0033b3d5ad9f6mr1622748wrv.50.1707497480058; 
+ Fri, 09 Feb 2024 08:51:20 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMloP6m+ODjqWexS0tsMf9Cp6/YAZytC2vti9mJw8ePmpXZmvfRSgZm9ALoWT6b/LudPxxmUIwyZxq/fZSG203GyDtT2C6eBUNpRwMOLh8AJIRn1jUqlCWeF6r73+GY6vHXokh9MY6TTNsbN7Mg/h0q00kq9ymCCA8W3Sou2a5qTwt5TMtv1eY/NyNYUkt1Z8rfobzhP/F8+zNFFWLNP8osghBSKt/KUlCmBAEPj/A5yr7uxgbBQLGI6esN6VA5EWYfA048keNhvzmQeiM01YKxJN/BFniuvT4HY6IlTVtiYkXQKhUQRY=
-Received: from [192.168.69.100] ([176.176.147.207])
+ AJvYcCU2EdLrUKQEOBXtVQL3ljfLisk75obyd3YUgUbRwZOFRBrhTUIp7SBFoo3wKTnxQj57Aub/kMzmbUUpewl4bdBgOiURFs0G/nceqnV4i8yCC33t+CxD3Dx2sA+A4ic8ih34rXerWXJy0y1EQSfjVtcd8cAvN2FumWgtLhTk1cI/kcPKRJHeNRx9bP2tpwCfJCMn64cACAC2EWQCctMeTqkZH7ZbyFMqqbzk
+Received: from ?IPV6:2003:cf:d740:65dc:b9e8:48d5:8408:b27?
+ (p200300cfd74065dcb9e848d584080b27.dip0.t-ipconnect.de.
+ [2003:cf:d740:65dc:b9e8:48d5:8408:b27])
  by smtp.gmail.com with ESMTPSA id
- jn14-20020a05600c6b0e00b004104bc8d841sm1157700wmb.13.2024.02.09.08.41.02
+ u7-20020a056000038700b0033b5730d6aasm2320272wrf.10.2024.02.09.08.51.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Feb 2024 08:41:03 -0800 (PST)
-Message-ID: <06da11bb-424c-49d8-a650-b846acb82298@linaro.org>
-Date: Fri, 9 Feb 2024 17:41:01 +0100
+ Fri, 09 Feb 2024 08:51:19 -0800 (PST)
+Message-ID: <272941d6-fb76-4c5c-968e-d441c7957646@redhat.com>
+Date: Fri, 9 Feb 2024 17:51:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] system/physmem: Assign global system I/O Memory to
- machine
+Subject: Re: [PATCH 0/2] block: Allow concurrent BB context changes
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+References: <20240202144755.671354-1-hreitz@redhat.com>
+ <9bc07eef-da55-4ebf-a4ee-1d55eb6fd921@tls.msk.ru>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-trivial@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, David Hildenbrand <david@redhat.com>
-References: <20240209150039.22211-1-philmd@linaro.org>
- <20240209150039.22211-4-philmd@linaro.org>
- <CAFEAcA9+6aK_uPa6tFV2-yh3g_2oeuvFaOs=nd=2dexm=uxN9Q@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9+6aK_uPa6tFV2-yh3g_2oeuvFaOs=nd=2dexm=uxN9Q@mail.gmail.com>
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <9bc07eef-da55-4ebf-a4ee-1d55eb6fd921@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.269,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,53 +108,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(+Markus I forgot to Cc)
-
-On 9/2/24 17:06, Peter Maydell wrote:
-> On Fri, 9 Feb 2024 at 15:01, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+On 09.02.24 15:08, Michael Tokarev wrote:
+> 02.02.2024 17:47, Hanna Czenczek :
+>> Hi,
 >>
->> So far there is only one system I/O and one system
->> memory per machine.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   system/physmem.c | 7 ++++---
->>   1 file changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/system/physmem.c b/system/physmem.c
->> index 5e66d9ae36..50947a374e 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -2554,12 +2554,13 @@ static void memory_map_init(void)
->>   {
->>       system_memory = g_malloc(sizeof(*system_memory));
->>
->> -    memory_region_init(system_memory, NULL, "system", UINT64_MAX);
->> +    memory_region_init(system_memory, OBJECT(current_machine),
->> +                       "system", UINT64_MAX);
->>       address_space_init(&address_space_memory, system_memory, "memory");
->>
->>       system_io = g_malloc(sizeof(*system_io));
->> -    memory_region_init_io(system_io, NULL, &unassigned_io_ops, NULL, "io",
->> -                          65536);
->> +    memory_region_init_io(system_io, OBJECT(current_machine),
->> +                          &unassigned_io_ops, NULL, "io", 65535);
->>       address_space_init(&address_space_io, system_io, "I/O");
->>   }
-> 
-> What's the intention in doing this? What does it change?
+>> Without the AioContext lock, a BB's context may kind of change at any
+>> time (unless it has a root node, and I/O requests are pending). That
+>> also means that its own context (BlockBackend.ctx) and that of its root
+>> node can differ sometimes (while the context is being changed).
+>
+> How relevant this is for -stable (8.2 at least) which does not have
+> "scsi: eliminate AioContext lock" patchset, and in particular,:
+> v8.2.0-124-geaad0fe260 "scsi: only access SCSIDevice->requests from
+> one thread"?
+>
+> The issue first patch "block-backend: Allow concurrent context changes"
+> fixes (RHEL-19381) seems to be for 8.1.something, so it exists in 8.2
+> too, and this particular fix applies to 8.2.
+>
+> But with other changes around all this, I'm a bit lost as of what should
+> be done on stable.  Not even thinking about 7.2 here :)
 
-We want to remove access to pre-QOM and possibly hotplug QOM paths
-from external API (CLI & QMP so far).
+Ah, sorry, yes.  Since we do still have the AioContext lock, this series 
+won’t be necessary in -stable.  Sorry for the noise!
 
-When the parent object is obvious and missing we simply have to
-explicit it.
+Hanna
 
-> It seems to be OK to pass a non-Device owner in for
-> memory_region_init() (whereas it is *not* OK to do that
-> for memory_region_init_ram()), but this seems to be
-> getting a bit tricky.
-
-Yes, memory_region_init_ram() is problematic; I'm hardly trying
-to ignore it at this point.
 
