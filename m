@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95992C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F82EC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYObE-0000nj-AU; Fri, 09 Feb 2024 05:59:16 -0500
+	id 1rYObY-0002Ab-IF; Fri, 09 Feb 2024 05:59:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObC-0000lI-Jk
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:14 -0500
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1rYObW-0001wt-TE
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:34 -0500
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObA-0000Fs-V1
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:14 -0500
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-6e2b5f48763so413578a34.0
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:12 -0800 (PST)
+ id 1rYObU-0000Ij-V3
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:34 -0500
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-21920c78c9fso391027fac.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476351; x=1708081151; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476371; x=1708081171; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5/ZZkBQH/7y9CpDxczlh/aHj0hgFtDWH4iSxB0x/2jQ=;
- b=GGg2c9tc+Dul9i03lBiyzH4mJKXG/vWfNSOPtRSoj21G3ThHt5EIJ+t2wr88hFOSvr
- VTyWN6xjOCTy1RzWTcZ9dWCA+qSDlbClxLxWH7F6DDA0aXSlpKl37GuanR2Hf8OodP5B
- AcQiBj9yrCCoxRvmwCQAfAQ1itV5xtu8mhMeHjsD1d/p8uDpOnSaWMdHlX2rO7rXP48O
- PUXgkRwedz9xTFv4H9W12PL+Sew3rW5+2D3bpE2nBaQzVbRGpX00Vbslp3CC/dXBj3WF
- Y2XI5giZOs8/Q4XAtvPmaNYtpPqb2993Kh9JFWV/4U7T+zblYOp0OAU6iWMPCRJR7pzl
- 4Qqw==
+ bh=OOf62pxwajXdelK5+pHplTSF3EihEn5ntNS6KqedNMU=;
+ b=NwQGJKAgHvs44LanShO7SMoJWkZOMZNmZ75zHm04L4qa6dYKC+p9cq6VUj7RxNbS2N
+ N4Zx7uH2fnOyZZwJeSgzKiyZuDyAtc490wWiRc2nnodpBwnoQHfZzi0q07GkLPTOQHLj
+ cGbCFk1DBtRGYc9uwsBnysTveiZB0TyEcP0SRNOsmu9VnUxNY07h8qO/VBz58g6J8gFQ
+ P2mqciWmsghC62mW38BmqwXECnaiShu4PSKadZaICYrFHdVl89JAuZp6t1brnOSMgfSi
+ oOfLNLmerUMvKvjSLQ7M0KK/zTLb2+po2JG7pq828wndxG3ofnx9O8ryhw1S33b4bBqT
+ rYIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476351; x=1708081151;
+ d=1e100.net; s=20230601; t=1707476371; x=1708081171;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5/ZZkBQH/7y9CpDxczlh/aHj0hgFtDWH4iSxB0x/2jQ=;
- b=gD0OwRGhNQBAt08SqAr2efF5rJWHqUbdVzhxVuUlrirowaJDKLSVceShs6Cu8nSpwF
- dzBgRlrPqSDPsFtBgEZqBZxQGbQqJF9KEFdUBLaj5jX0f1TsRA0fHC1k14GVBnj0OCv+
- X6m9dfqMuSsufEFDo4sGFv5mpFpdaca+RiWGDxCAo6/j9tzm+JcF8ykAPEhkImhCdn48
- eHkiGV59ee3VQdbNNCtmcngWOmBM0xwFzW+SA+jwR8nUYB5WSvUhllPihRry5C01Oqj8
- 3IOSupVMosUZ084pG8CI99FHWeHWIAecQ8voSYkjkctOq4FEKtGbBWbbQOTnyN1zweJX
- VybA==
-X-Gm-Message-State: AOJu0YwaN30E3/CmgM1IlfFJ83P7p//q1QS8mEfbnw4zqYqd/5Lucyoa
- mKE6i8koWcgj6nAY3Rl6/3Zger3wqHXQpFLHVRYN6YzZsly//EA/pWsvZvCe02G5cQ==
-X-Google-Smtp-Source: AGHT+IESMzxfedsU5731WA1/pYC6sMw7TpkjMMg+J2QPZj66E01rgEHQedN2N00deLuYeCYCNNVi6A==
-X-Received: by 2002:a9d:74cf:0:b0:6e1:140d:2747 with SMTP id
- a15-20020a9d74cf000000b006e1140d2747mr1107376otl.21.1707476351618; 
- Fri, 09 Feb 2024 02:59:11 -0800 (PST)
+ bh=OOf62pxwajXdelK5+pHplTSF3EihEn5ntNS6KqedNMU=;
+ b=SWDbpomsZ7t0hRUg2Pugs+gPRpHQIzB4zNnx+YtJIYzZn45ABFOocWsCt5IZ6mRr+0
+ u7MnsA8Q+C9OUVGajuUyfULJB3zcSGVRIVx/rE3+cxvlxpTtNHCQRaWCx3jDB7BktMm9
+ y50tk38bXiZ4T5boR8DU3AXLQe2xwK/dIpJf35U93hz1S5roZr0tEpZjvrkux1gogwGs
+ ItWDhnNDB3OkXZ4w51EF+Ap0nvuQhdDzTdBAK+KtkDqFGi/pi5Pbyuti1RhCs4TGTJEc
+ rjqbS6NWSQVxLOAGdXXitbbggbC0D01YUyIOTPv+6JeviYjF2g67FIlStkMNhfCsAkKK
+ lW+A==
+X-Gm-Message-State: AOJu0YyEhcIO3RWlZ3KD8tbAWy9nx+FKboRQGY1qQo5G98vkcAEB7AQV
+ CRfF+2pOUbtOtKtx3NSC9ftlLM9VzQnl1gnSt42iFMiRw3lnLVkgmBz0VEcL+TAvsA==
+X-Google-Smtp-Source: AGHT+IFeKFGBwGVHc3lORk/PQcxC1UVUb7PRPSj/5/HSEl+XulLXwLiJhKonioqDLQxAKY5Cf570vA==
+X-Received: by 2002:a05:6870:c1d3:b0:219:ab97:4a5b with SMTP id
+ i19-20020a056870c1d300b00219ab974a5bmr1192944oad.57.1707476371484; 
+ Fri, 09 Feb 2024 02:59:31 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFl+bbC4KzjY7OEXV3rfJ0cx1BFjZ+TURrstbmf8g0vOIcaPSqJ+NfTR+bJYFsAwe5ENJbOtYaZeClmL89QbwkFgjtlqbFXZvrlNP2CHl0LIyPj/b4o7EemHlBVd4f+/sXf4oqLwS0cNt9XL4of+MEy5XuZ3Q7Jvv8geVzgiQcZ0o=
+ AJvYcCWR4ha7di0IHt4APjtaFI2uB9c+MnoDViZvcw4swe0M1sU+b7g6mS1V6lzPUBQAkNKusw65BLAKsoVoEDhAgOrUe4NB3krOvPDTgQj2VtsXPjLjjuL3SZ8OFBBrI5fnqo+sGxaaNypyj1tdBnQkY/bj3/lUI/axqwgZFwLKPshgX3E=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.08
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 02:59:11 -0800 (PST)
+ Fri, 09 Feb 2024 02:59:30 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Vladimir Isaev <vladimir.isaev@syntacore.com>
-Subject: [PULL 14/61] target/riscv: move 'cbom_blocksize' to
+Subject: [PULL 20/61] target/riscv/cpu.c: move 'marchid' to
  riscv_cpu_properties[]
-Date: Fri,  9 Feb 2024 20:57:26 +1000
-Message-ID: <20240209105813.3590056-15-alistair.francis@wdc.com>
+Date: Fri,  9 Feb 2024 20:57:32 +1000
+Message-ID: <20240209105813.3590056-21-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=alistair23@gmail.com; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=alistair23@gmail.com; helo=mail-oa1-x29.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,103 +104,160 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-After adding a KVM finalize() implementation, turn cbom_blocksize into a
-class property. Follow the same design we used with 'vlen' and 'elen'.
-
-The duplicated 'cbom_blocksize' KVM property can be removed from
-kvm_riscv_add_cpu_user_properties().
+Keep all class properties in riscv_cpu_properties[].
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
 tested-by tags added, rebased with Alistair's riscv-to-apply.next.
-Message-ID: <20240112140201.127083-3-dbarboza@ventanamicro.com>
+Message-ID: <20240112140201.127083-9-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c         | 39 +++++++++++++++++++++++++++++++++++++-
- target/riscv/kvm/kvm-cpu.c |  4 ----
- 2 files changed, 38 insertions(+), 5 deletions(-)
+ target/riscv/cpu.c | 110 +++++++++++++++++++++++----------------------
+ 1 file changed, 57 insertions(+), 53 deletions(-)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 3703efe702..3b3098ee76 100644
+index 1a6524f01f..cce75aec3e 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -1326,6 +1326,7 @@ static void riscv_cpu_init(Object *obj)
-     cpu->cfg.pmu_mask = MAKE_64BIT_MASK(3, 16);
-     cpu->cfg.vlen = 128;
-     cpu->cfg.elen = 64;
-+    cpu->cfg.cbom_blocksize = 64;
-     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
- }
- 
-@@ -1877,8 +1878,42 @@ static const PropertyInfo prop_elen = {
-     .set = prop_elen_set,
+@@ -2055,6 +2055,62 @@ static const PropertyInfo prop_mimpid = {
+     .set = prop_mimpid_set,
  };
  
-+static void prop_cbom_blksize_set(Object *obj, Visitor *v, const char *name,
-+                                  void *opaque, Error **errp)
++static void prop_marchid_set(Object *obj, Visitor *v, const char *name,
++                             void *opaque, Error **errp)
 +{
++    bool dynamic_cpu = riscv_cpu_is_dynamic(obj);
 +    RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint16_t value;
++    uint64_t prev_val = cpu->cfg.marchid;
++    uint64_t value, invalid_val;
++    uint32_t mxlen = 0;
 +
-+    if (!visit_type_uint16(v, name, &value, errp)) {
++    if (!visit_type_uint64(v, name, &value, errp)) {
 +        return;
 +    }
 +
-+    if (value != cpu->cfg.cbom_blocksize && riscv_cpu_is_vendor(obj)) {
-+        cpu_set_prop_err(cpu, name, errp);
-+        error_append_hint(errp, "Current '%s' val: %u\n",
-+                          name, cpu->cfg.cbom_blocksize);
++    if (!dynamic_cpu && prev_val != value) {
++        error_setg(errp, "Unable to change %s marchid (0x%" PRIu64 ")",
++                   object_get_typename(obj), prev_val);
 +        return;
 +    }
 +
-+    cpu_option_add_user_setting(name, value);
-+    cpu->cfg.cbom_blocksize = value;
++    switch (riscv_cpu_mxl(&cpu->env)) {
++    case MXL_RV32:
++        mxlen = 32;
++        break;
++    case MXL_RV64:
++    case MXL_RV128:
++        mxlen = 64;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    invalid_val = 1LL << (mxlen - 1);
++
++    if (value == invalid_val) {
++        error_setg(errp, "Unable to set marchid with MSB (%u) bit set "
++                         "and the remaining bits zero", mxlen);
++        return;
++    }
++
++    cpu->cfg.marchid = value;
 +}
 +
-+static void prop_cbom_blksize_get(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
++static void prop_marchid_get(Object *obj, Visitor *v, const char *name,
++                             void *opaque, Error **errp)
 +{
-+    uint16_t value = RISCV_CPU(obj)->cfg.cbom_blocksize;
++    uint64_t value = RISCV_CPU(obj)->cfg.marchid;
 +
-+    visit_type_uint16(v, name, &value, errp);
++    visit_type_uint64(v, name, &value, errp);
 +}
 +
-+static const PropertyInfo prop_cbom_blksize = {
-+    .name = "cbom_blocksize",
-+    .get = prop_cbom_blksize_get,
-+    .set = prop_cbom_blksize_set,
++static const PropertyInfo prop_marchid = {
++    .name = "marchid",
++    .get = prop_marchid_get,
++    .set = prop_marchid_set,
 +};
 +
- Property riscv_cpu_options[] = {
--    DEFINE_PROP_UINT16("cbom_blocksize", RISCVCPU, cfg.cbom_blocksize, 64),
-     DEFINE_PROP_UINT16("cbop_blocksize", RISCVCPU, cfg.cbop_blocksize, 64),
-     DEFINE_PROP_UINT16("cboz_blocksize", RISCVCPU, cfg.cboz_blocksize, 64),
+ /*
+  * RVA22U64 defines some 'named features' or 'synthetic extensions'
+  * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
+@@ -2143,6 +2199,7 @@ static Property riscv_cpu_properties[] = {
  
-@@ -1967,6 +2002,8 @@ static Property riscv_cpu_properties[] = {
-     {.name = "vlen", .info = &prop_vlen},
-     {.name = "elen", .info = &prop_elen},
+      {.name = "mvendorid", .info = &prop_mvendorid},
+      {.name = "mimpid", .info = &prop_mimpid},
++     {.name = "marchid", .info = &prop_marchid},
  
-+    {.name = "cbom_blocksize", .info = &prop_cbom_blksize},
-+
  #ifndef CONFIG_USER_ONLY
      DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
+@@ -2224,56 +2281,6 @@ static const struct SysemuCPUOps riscv_sysemu_ops = {
+ };
  #endif
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index dc0466df69..094bc5f47c 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -493,10 +493,6 @@ static void kvm_riscv_add_cpu_user_properties(Object *cpu_obj)
-                             NULL, multi_cfg);
-     }
  
--    object_property_add(cpu_obj, "cbom_blocksize", "uint16",
--                        NULL, kvm_cpu_set_cbomz_blksize,
--                        NULL, &kvm_cbom_blocksize);
+-static void cpu_set_marchid(Object *obj, Visitor *v, const char *name,
+-                            void *opaque, Error **errp)
+-{
+-    bool dynamic_cpu = riscv_cpu_is_dynamic(obj);
+-    RISCVCPU *cpu = RISCV_CPU(obj);
+-    uint64_t prev_val = cpu->cfg.marchid;
+-    uint64_t value, invalid_val;
+-    uint32_t mxlen = 0;
 -
-     object_property_add(cpu_obj, "cboz_blocksize", "uint16",
-                         NULL, kvm_cpu_set_cbomz_blksize,
-                         NULL, &kvm_cboz_blocksize);
+-    if (!visit_type_uint64(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    if (!dynamic_cpu && prev_val != value) {
+-        error_setg(errp, "Unable to change %s marchid (0x%" PRIu64 ")",
+-                   object_get_typename(obj), prev_val);
+-        return;
+-    }
+-
+-    switch (riscv_cpu_mxl(&cpu->env)) {
+-    case MXL_RV32:
+-        mxlen = 32;
+-        break;
+-    case MXL_RV64:
+-    case MXL_RV128:
+-        mxlen = 64;
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-
+-    invalid_val = 1LL << (mxlen - 1);
+-
+-    if (value == invalid_val) {
+-        error_setg(errp, "Unable to set marchid with MSB (%u) bit set "
+-                         "and the remaining bits zero", mxlen);
+-        return;
+-    }
+-
+-    cpu->cfg.marchid = value;
+-}
+-
+-static void cpu_get_marchid(Object *obj, Visitor *v, const char *name,
+-                           void *opaque, Error **errp)
+-{
+-    uint64_t value = RISCV_CPU(obj)->cfg.marchid;
+-
+-    visit_type_uint64(v, name, &value, errp);
+-}
+-
+ static void riscv_cpu_class_init(ObjectClass *c, void *data)
+ {
+     RISCVCPUClass *mcc = RISCV_CPU_CLASS(c);
+@@ -2305,9 +2312,6 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
+     cc->gdb_arch_name = riscv_gdb_arch_name;
+     cc->gdb_get_dynamic_xml = riscv_gdb_get_dynamic_xml;
+ 
+-    object_class_property_add(c, "marchid", "uint64", cpu_get_marchid,
+-                              cpu_set_marchid, NULL, NULL);
+-
+     device_class_set_props(dc, riscv_cpu_properties);
+ }
+ 
 -- 
 2.43.0
 
