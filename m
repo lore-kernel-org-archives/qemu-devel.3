@@ -4,75 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD76BC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6375AC4829E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 15:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYS1A-0002sm-Hq; Fri, 09 Feb 2024 09:38:17 -0500
+	id 1rYSNS-0007DW-0v; Fri, 09 Feb 2024 10:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYS18-0002pv-Jt; Fri, 09 Feb 2024 09:38:14 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYS16-0003t8-BW; Fri, 09 Feb 2024 09:38:14 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 941704BE12;
- Fri,  9 Feb 2024 17:39:22 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E855777CB6;
- Fri,  9 Feb 2024 17:38:06 +0300 (MSK)
-Message-ID: <566223d4-514a-4282-ab51-1abc688654e2@tls.msk.ru>
-Date: Fri, 9 Feb 2024 17:38:06 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYSNM-0007Br-74
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 10:01:12 -0500
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYSNE-0000WQ-Lz
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 10:01:08 -0500
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-51165a488baso1325608e87.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 07:01:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707490862; x=1708095662; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0+v+hVYqqgGqr1jR1gLh8c+Nc8frKXqRwnR2qVdfBAM=;
+ b=gQZ+/++9DhdhU+cVWQZEWYpuOq9m6m7J8yrpBWBqb7CbPjxkYdNrQE6SBmLr1jloA4
+ OoyW4vlcTlD/HuY5NKAlfL5Fa/1jC8GAOmQiEtx+xfSVQPHxvqpAqUui0fpWvB4GfZH9
+ 8yK5N+wa17HZWKkkW9J3djnj7WoTK4s++pQeWTASgt4uDIkPWiWGSrv8t2JHUIcvCprh
+ qNpxVa7DFnSiGApdJlDM6R4P+woOAEQdhAJKM/4VpB/zLtXGe63F5zy+FpxOzdpxVYOG
+ 53XOmEjCJlK8PmGEaZOvxxEZzy67cexi6t3qdehwsTv4kSELcKCID+JBczMZLcLs9e97
+ Dz0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707490862; x=1708095662;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0+v+hVYqqgGqr1jR1gLh8c+Nc8frKXqRwnR2qVdfBAM=;
+ b=dR4aUPfv7SKQiieRrlUEb/bWYkLM+cU45eUawCqYkGV5fUVvcKbLBgEYSpY6+YXAdt
+ BcRkh//EnHC5xukcg1DAEmZlRvyMcCAqa6t+hDyGLLaNIGfh5Q2vfR8iW0RUuE79/jso
+ 5GuOQzI6H5fJICRFng0b/05OhKZHZKKZG93Uma01RmQbzROfqia1shqxXI9WmS+VcxS5
+ BEF1JmDFi1RTLzgTOXOzbGypBsCg7jJOC/oOPwGIb3f/OnaCtNzCKFzwQDRqBcR/kZBU
+ Wg+1JZKyMjLQsmFPQv5mRuBGlfuL0XezYcv1xvuVMFuqvmmPcsqILzwT8zLXhu262ubH
+ hHSg==
+X-Gm-Message-State: AOJu0YzCjKxd4gXGqmQO/loIHT6aR9Al4yHhfa0o1LvWst/imhKIvzbY
+ laBHR7Imq9FhOoraDLCzE07qbNg70rI1popJ3b8x3hiZWR/CYNNF3aCvVpt3QeduuOiPmtKGNby
+ U
+X-Google-Smtp-Source: AGHT+IFj+aGJPIoWWprFQKssNruIS63gbqlWCLeY5MKQt390gW3/zz++pRSa2b2EN65G6hitUVtmCw==
+X-Received: by 2002:a05:6512:2c96:b0:511:4f29:7fab with SMTP id
+ dw22-20020a0565122c9600b005114f297fabmr1475511lfb.67.1707490862517; 
+ Fri, 09 Feb 2024 07:01:02 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZNjfWqNiyfom6BZ2L7hpksOZx/tzkSC2EQ5fQRv0BbS+gqkdph1PmuO848Z9G/fJWY8ua7PA+mkYC97ImZjv4svlV4205j16Ac9q/xdM3f8cQCx2mBaSBPz0+AfztfvuzbGIogF6yepqAF0bzG/+zdnz+BaoTYkaSShE3mbreVMKgmku5T/0XZUneOm1NLSJ6Vz7iyDivLheiGOb/Mw8DDreeMoJinQbBhTkK43+h+O9oQ7Wu7kd4Ol+1P+H8yCuP9JaHIccIMlN5E9ppCoxqRY/8Wqh3lw==
+Received: from m1x-phil.lan ([176.187.218.105])
+ by smtp.gmail.com with ESMTPSA id
+ n14-20020a05600c4f8e00b0040fafd84095sm924049wmq.41.2024.02.09.07.01.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 09 Feb 2024 07:01:02 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-trivial@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, David Hildenbrand <david@redhat.com>
+Subject: [PATCH 3/3] system/physmem: Assign global system I/O Memory to machine
+Date: Fri,  9 Feb 2024 16:00:39 +0100
+Message-ID: <20240209150039.22211-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240209150039.22211-1-philmd@linaro.org>
+References: <20240209150039.22211-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] virtio-blk: Use ioeventfd_attach in start_ioeventfd
-Content-Language: en-US
-To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
-References: <20240202153158.788922-1-hreitz@redhat.com>
- <20240202153158.788922-4-hreitz@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240202153158.788922-4-hreitz@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,22 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-02.02.2024 18:31, Hanna Czenczek :
-> Commit d3f6f294aeadd5f88caf0155e4360808c95b3146 ("virtio-blk: always set
-> ioeventfd during startup") has made virtio_blk_start_ioeventfd() always
-> kick the virtqueue (set the ioeventfd), regardless of whether the BB is
-> drained.  That is no longer necessary, because attaching the host
-> notifier will now set the ioeventfd, too; this happens either
-> immediately right here in virtio_blk_start_ioeventfd(), or later when
-> the drain ends, in virtio_blk_ioeventfd_attach().
-> 
-> With event_notifier_set() removed, the code becomes the same as the one
-> in virtio_blk_ioeventfd_attach(), so we can reuse that function.
+So far there is only one system I/O and one system
+memory per machine.
 
-The mentioned comit is v8.2.0-812-gd3f6f294ae, - ie, past 8.2.
-Is this new change still relevant for stable?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ system/physmem.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Thanks,
+diff --git a/system/physmem.c b/system/physmem.c
+index 5e66d9ae36..50947a374e 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2554,12 +2554,13 @@ static void memory_map_init(void)
+ {
+     system_memory = g_malloc(sizeof(*system_memory));
+ 
+-    memory_region_init(system_memory, NULL, "system", UINT64_MAX);
++    memory_region_init(system_memory, OBJECT(current_machine),
++                       "system", UINT64_MAX);
+     address_space_init(&address_space_memory, system_memory, "memory");
+ 
+     system_io = g_malloc(sizeof(*system_io));
+-    memory_region_init_io(system_io, NULL, &unassigned_io_ops, NULL, "io",
+-                          65536);
++    memory_region_init_io(system_io, OBJECT(current_machine),
++                          &unassigned_io_ops, NULL, "io", 65535);
+     address_space_init(&address_space_io, system_io, "I/O");
+ }
+ 
+-- 
+2.41.0
 
-/mjt
 
