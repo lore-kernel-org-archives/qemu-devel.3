@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB55BC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4D4C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYYQX-0004oZ-1x; Fri, 09 Feb 2024 16:28:53 -0500
+	id 1rYYQv-00057z-93; Fri, 09 Feb 2024 16:29:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYQV-0004oP-NB
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 16:28:51 -0500
+ id 1rYYQu-00055J-0W; Fri, 09 Feb 2024 16:29:16 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYQU-0000tY-1j
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 16:28:51 -0500
+ id 1rYYQs-0000vK-FK; Fri, 09 Feb 2024 16:29:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=a4v+mKWCOpO0LFSJftm3ab0uDaJaunyu7XlYuJCL0M0=; b=kuCWjgQYo7TQjJuleV4zARKUN1
- v3VtWbWBnUhy75n2kvNtHHGXZUxxFwXIMFqOeRkkuxtbS8Ch+QcHID4OpFrWiHAVXRtXjGLLCXmB9
- DN+YbMoqLL9sv65GsFp/nOKlsJfroaZ+YLrPRcVFjgki4pMabeH/RdVSRnJ4sY3leG7x06uBz5On9
- A2gjz/fix6zpe9CVxCEAfFH9D8v9NoPO3tvBfGMUCiT79j7UQZLxSmaXYLwN2gR8EAnDINyN/dKKK
- IyjPvo0I5XYs0QGV2TxY7CkdAddnJ9UnHFkBqb0kTKxJ6kXRT+iPvO9RWm48HkKzDFq7xE5xXk2l+
- Udq9/eWdaRsYhYzp9FVZKfVBe2r4no4NpzBOB7jzPr/ssXzMa4zEb8YpgXBkGUVN3jk1/xipymwhl
- ykZ6EkBEQNa1Jr20IllhueYXWhbkb4yZVZZfJ+PxMkTqO26/oSkB6thcSL0g3IrZg2gNyXxME7z81
- RAwBZWbU7M0s7/THsIAgLuIXuKKDPUj0toYaomTWVpfGdj2UH+FKMON2OKRPEaJ/ajUcUjgGlC2YP
- S7d0X/+4fpyRe0cC+RX/aan2hjR7dVrbTa7IUiPlYDmkjQm2HI+ayt7V+z5O2ShHQ+A+L+5LevKz5
- 0iFH5ztn069fOo8CAVYOe5iCroTlePdaf7rnEAkn4=;
+ bh=tc41nzlhPfcnvcnQlQu2yUetEJaW8wNBxXxeuL7JRBE=; b=Sp7Aw5T5ISMD9uMGUTSRaQ3/mn
+ uv/gQYgpOHcfAi92AbWwdl6B4HPAkfxYHZqSo3b4JfLrfHBxOyNfFirYovfOiu/t4o16pSOGNVc9M
+ mlF6dn7ms5VOHvTBymB6Cbo0Ip4+fhGl13j6d50pXj3+MjxIX24b0OIAaF0MrzvN19fCXS1uN0tn4
+ igFLmqH43aHi9IlxLF3oQmCmhPtbuPu7lYqFQvxvrd9kg/kyyBTkqinvYxdsgFGA/Py4niuv7GT2d
+ JJdMScj170wDzco+GuuN6kq40av1RtMhWddrgRcB1Tf/zCVwLwj4dhFH3qqzshi67A46auxgCG5Hf
+ 1kNL8Z4zIsf70UeGuCEE7AgmP4rAOD5/IyAW8nURcG96PinjPgUY3dvGCBQ7Li1CHIYMnDYBN9QxU
+ EFERtfjQ+ybGoVsTYFBlt4Gwce7S302GKvNObffxKKzdz5G5lOlH3obrBpXVpXtTMvmd+gnqO38Lt
+ GwnZRWcMifJtkOCkZnz2HC94tRvnNSRP/VcwsBvTKvO/EZxGtdYmr5V0quffB9qFW5Khg4//4uuky
+ aRDygZApfdpFc/727wRUN83jo01ECmONQma6fI7oyFP4P0Ic+UJBUOM+NKGFWXOpNxdxLKY4qQlh6
+ 8AXAfN1YGBF1W69XwdoblKe0QRLFAvKo4FE6/c3gI=;
 Received: from [2a00:23c4:8bb2:1300:1032:5a09:fd17:2b9e]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYPa-0002PI-OI; Fri, 09 Feb 2024 21:27:58 +0000
-Message-ID: <4fc506bf-717e-4177-9aeb-62eaa9155b27@ilande.co.uk>
-Date: Fri, 9 Feb 2024 21:28:28 +0000
+ id 1rYYQ7-0002PI-Hx; Fri, 09 Feb 2024 21:28:31 +0000
+Message-ID: <942e7659-af0a-4805-822b-43b182868c3d@ilande.co.uk>
+Date: Fri, 9 Feb 2024 21:29:05 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Fam Zheng <fam@euphon.net>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, Laurent Vivier <laurent@vivier.eu>,
- Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-References: <20240112125420.514425-1-mark.cave-ayland@ilande.co.uk>
- <20240112125420.514425-10-mark.cave-ayland@ilande.co.uk>
- <CABgObfZ3VY84p8A=+3nOnkttQk=64vQAyNk76VRHqzURwHrYww@mail.gmail.com>
- <c9dfd1d3-c784-456f-ba6e-dc56388fd79e@ilande.co.uk>
- <CABgObfbWqHBq0udoqaPxe=H=oGQe4WwdsfU6+iJVJMF9LoGRow@mail.gmail.com>
- <f18b34b6-449f-4926-b353-bf3b830919d0@ilande.co.uk>
- <CABgObfbF-R2O7Ly0jVRWF08Y-P3tbkQbUaF4N6oB5Dtcy_FswA@mail.gmail.com>
 Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ qemu-ppc@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+References: <20240208181245.96617-1-philmd@linaro.org>
+ <20240208181245.96617-6-philmd@linaro.org>
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
@@ -81,13 +78,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <CABgObfbF-R2O7Ly0jVRWF08Y-P3tbkQbUaF4N6oB5Dtcy_FswA@mail.gmail.com>
+In-Reply-To: <20240208181245.96617-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:1032:5a09:fd17:2b9e
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 09/88] esp: update TC check logic in do_dma_pdma_cb() to
- check for TC == 0
+Subject: Re: [PATCH v3 05/11] hw/ppc/prep: Realize ISA bridge before accessing
+ it
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -113,95 +110,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/02/2024 18:11, Paolo Bonzini wrote:
+On 08/02/2024 18:12, Philippe Mathieu-Daudé wrote:
 
-> On Thu, Feb 8, 2024 at 10:46 AM Mark Cave-Ayland
-> <mark.cave-ayland@ilande.co.uk> wrote:
->>
->> On 01/02/2024 11:36, Paolo Bonzini wrote:
->>
->>> Il gio 1 feb 2024, 12:25 Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk
->>> <mailto:mark.cave-ayland@ilande.co.uk>> ha scritto:
->>>
->>>      On 01/02/2024 10:46, Paolo Bonzini wrote:
->>>
->>>       > On Fri, Jan 12, 2024 at 1:55 PM Mark Cave-Ayland
->>>       > <mark.cave-ayland@ilande.co.uk <mailto:mark.cave-ayland@ilande.co.uk>> wrote:
->>>       >>
->>>       >> Invert the logic so that the end of DMA transfer check becomes one that checks
->>>       >> for TC == 0 in the from device path in do_dma_pdma_cb().
->>>       >>
->>>       >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk
->>>      <mailto:mark.cave-ayland@ilande.co.uk>>
->>>       >> ---
->>>       >>   hw/scsi/esp.c | 24 +++++++++++-------------
->>>       >>   1 file changed, 11 insertions(+), 13 deletions(-)
->>>       >>
->>>       >> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
->>>       >> index fecfef7c89..63c828c1b2 100644
->>>       >> --- a/hw/scsi/esp.c
->>>       >> +++ b/hw/scsi/esp.c
->>>       >> @@ -602,21 +602,19 @@ static void do_dma_pdma_cb(ESPState *s)
->>>       >>               return;
->>>       >>           }
->>>       >>
->>>       >> -        if (esp_get_tc(s) != 0) {
->>>       >> -            /* Copy device data to FIFO */
->>>       >> -            len = MIN(s->async_len, esp_get_tc(s));
->>>       >> -            len = MIN(len, fifo8_num_free(&s->fifo));
->>>       >> -            fifo8_push_all(&s->fifo, s->async_buf, len);
->>>       >> -            s->async_buf += len;
->>>       >> -            s->async_len -= len;
->>>       >> -            s->ti_size -= len;
->>>       >> -            esp_set_tc(s, esp_get_tc(s) - len);
->>>       >> -            return;
->>>       >> +        if (esp_get_tc(s) == 0) {
->>>       >> +            esp_lower_drq(s);
->>>       >> +            esp_dma_done(s);
->>>       >>           }
->>>       >
->>>       > I'm only doing a cursory review, but shouldn't there be a return here?
->>>       >
->>>       > Paolo
->>>
->>>      (goes and looks)
->>>
->>>      Possibly there should, but my guess is that adding the return at that particular
->>>      point in time at the series broke one of my reference images. In particular MacOS is
->>>      notorious for requesting data transfers of X len, and setting the TC either too high
->>>      or too low and let the in-built OS recovery logic handle these cases.
->>>
->>>
->>> Absolutely, just noticing that there is a functional change but the commit message
->>> showed it as a refactoring only.
->>
->> Would you like me to come up with a reworded commit message here?
+> We should not wire IRQs on unrealized device.
 > 
-> If you want to change it, it's okay because len is zero at this point
-> and the code after the "if" therefore does nothing. And the "if" will
-> become esp_dma_ti_check() so adding a return is kind of messy here.
-
-Okay I'll leave it as it is - I'm not too worried about the detail here, since that 
-particular section ends up being removed.
-
->>> The fact that this is bisectable is quite insane, and I am not asking for any code
->>> changes. TBH I wouldn't have blamed you if you just sent a patch to create esp2.c and
->>> a patch to delete esp.c...
->>
->> Heh... spending a chunk of time rewriting the emulation of a 30 year-old SCSI
->> controller is probably an odd choice, but the result is something that is
->> considerably more maintainable than the current implementation.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/ppc/prep.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> I absolutely agree, you went above and beyond and sorry if it wasn't
-> clear from the joke.
+> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+> index 1a6cd05c61..4eb5477069 100644
+> --- a/hw/ppc/prep.c
+> +++ b/hw/ppc/prep.c
+> @@ -278,9 +278,9 @@ static void ibm_40p_init(MachineState *machine)
+>   
+>       /* PCI -> ISA bridge */
+>       i82378_dev = DEVICE(pci_new(PCI_DEVFN(11, 0), "i82378"));
+> +    qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
+>       qdev_connect_gpio_out(i82378_dev, 0,
+>                             qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
+> -    qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
+>   
+>       sysbus_connect_irq(pcihost, 0, qdev_get_gpio_in(i82378_dev, 15));
+>       isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
 
-No worries, I wasn't taking it seriously either :)
-
->> Anything else that you'd like me to change before the series can be considered for merge?
-> 
-> No, go ahead!
-
-Thanks! I'll take that as a nod to send a PR over the next few days.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
