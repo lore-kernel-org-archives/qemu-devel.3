@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E59C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 12:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6515BC48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 12:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYQ4R-0008DV-4r; Fri, 09 Feb 2024 07:33:31 -0500
+	id 1rYQ40-00081A-A3; Fri, 09 Feb 2024 07:33:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ45-00086K-CD
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:33:09 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3v-0007xT-3q
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:32:59 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ42-0001wg-SP
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:33:08 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4107ed0c536so766095e9.2
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 04:33:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3s-0001uM-PW
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:32:58 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4105f6fbdd9so6211055e9.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 04:32:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707481984; x=1708086784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707481973; x=1708086773; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EzmCAZqDnP2GixBxkCB+iCs3cLSrfN0BzrHq0xGFwRw=;
- b=O3StNvGaCW5pR50S+3/8bugspf+NpvrYo2inwabPaLaGhb1D0NR0E2UfPzXgRTKjQz
- C2jw26s7AMjngnf9v6Tmm73YiaxJHPZbzP58LFQS6Fut6ZqFn+yL8ie50h8Mywd2PN90
- FXPE5wCgPO7QUaSyNzE/Lg+ug4Mw+V+NnlJZCNwxDO9jmwJkwGrlrACgau0Vb7Bv8yn1
- 2wO+cR0lIQJeoSriyfJj/HedoqdMBoR+lxtxppnjjsyKrbPEsjPtE9I8Ogyf1KJnVw3T
- NkdviWAf2qDHpTqzt5hy72fTnqJKuz4OSqxWvC8X1CrfRMIWyw7db9oBxzUD4WSIMZ3W
- D6xA==
+ bh=iars+m6ELdOmlbrG1ApaqWkxoTlLYosuewWqu/opFsQ=;
+ b=inoq6me77vw5qAZRQtT5UskNoUiUJO6C4DKkv69ve9TubZm1XAiyBtHnty1sB2utqB
+ 8+f4v+J/M3fAy9GV+QqSkscNO3PVgUULkFmU+B6cYOTFg7+tSTM+8mST3Ltn3cM9SZQv
+ ZCltmOvZflBKFKiCVkz1yJoHcL8acCMXoLglOiyAgIY1Gm2p1mLymprXo88dyaSXOTgW
+ hF2kT0dHz06YdszZA1/zvYZDTkcBZ9jPmGrSB8IE27NopdbmTe2maOratqQtiagadXa+
+ +Z/cV/mf3apej1sznwNlJrcanwOx5WkskNcyGdvnHmsvBjsKBlJzRAbf4l2T6ge33JxG
+ Kj8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707481984; x=1708086784;
+ d=1e100.net; s=20230601; t=1707481973; x=1708086773;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EzmCAZqDnP2GixBxkCB+iCs3cLSrfN0BzrHq0xGFwRw=;
- b=HAmRrk+axQx65guHkqtV3RkLl8hVmfRFnZlMmX44R1duoNX6Ts8Gtdgis6uyKEugF0
- 3cMc/fiaI3x97I65KRnzxPxjlRVp7hqPhk1e8ua0E0MFeiNjqjB2vM+VgQ1YySj09Qsm
- eUnYu3B/pBgdAhK0v9bp0vdnmlpJprhNG4SlRfnhhXgcLrqILJ8ZM/fwzvNBEomAG4oJ
- rXG6IQ1oYBeXuinJHkLekno3fxljKbHgl96V5e+AdW+qbpnUtc4Yy/FuKd/ifb13xqzX
- toU7+YG7EH1Bbw3oMw7PLcUDl/uGAGfD/bo2ZFSsfwKriQsmk5/76avb6giu8O/doJo1
- JOaA==
-X-Gm-Message-State: AOJu0YwdC3IcOUE32uerljMpz281NPrBN8kNoi+yR/e76F/nwd/1/UhT
- R+hK8lZvgBDrK5pXeA6vWE4F0wo8ky0d65LxY414JsxKx840sG4egSUbOfRMv/42n+Z4yFNrzBM
- Z
-X-Google-Smtp-Source: AGHT+IFFniHgzTURLnYglT2Uf75r2lJLrVzOD6Zm8Bv/u5mrekpnhWZ1KZ33dJ8yDe2BK21x7bT0Ug==
-X-Received: by 2002:a05:600c:35cc:b0:40f:dc50:aea5 with SMTP id
- r12-20020a05600c35cc00b0040fdc50aea5mr1230765wmq.22.1707481984432; 
- Fri, 09 Feb 2024 04:33:04 -0800 (PST)
+ bh=iars+m6ELdOmlbrG1ApaqWkxoTlLYosuewWqu/opFsQ=;
+ b=m8RDynQiBxhz9AoP7k6oerkrb/r/BKXba7BOzaW8o/88yKXbVTSWWFlznmpA3IifvU
+ ghIiDL2Z5zbILvw1zp41MDVdbbkcSQpc5ajKjd53Y5UWYUMFXiW91Hmt2FFZ6BoGV1En
+ TsfgLJMehND1Ikd2wO0bxGIPEjMnpj6Pe1W7NS+Bi6xAwp4Vf42u1eka9SszT6I4tMvC
+ BEJTsUq0Pge25Fnqmc9C/J4l4R3WEBnRIE0OQmoCs95h4h6/LhTECqpU8gTGJDIFwt+C
+ aJj2OU8/hV2dodFvLonwbMYJh7wyK19tK9ILMlhPUHgwTF65EVQjUwj9rQ55ahSRgQgm
+ V62g==
+X-Gm-Message-State: AOJu0Ywo/CQzcKTqlQjPiJcFSyraq9Gyt5n65eZscmN4n4aUblQu3z+p
+ grRyfu/uUuF9mB8874MQqLXQKbOnmwcY6qghNxsPyl8GA1odp88Zx6W+1NnoEjxJ+KU6/S0CFod
+ S
+X-Google-Smtp-Source: AGHT+IFhuXlP1HQ0mk7K83K3UZl7uxsUcLNtFypgnAm8OFyLSVHRxDFx0IjjJfs+FHhl/+yBiUyepA==
+X-Received: by 2002:a05:600c:3545:b0:410:5897:1d85 with SMTP id
+ i5-20020a05600c354500b0041058971d85mr1062496wmq.14.1707481972821; 
+ Fri, 09 Feb 2024 04:32:52 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWXEEO6MR0jNSBaQ5p3sBdVfhNDOQv+N8rvHqTksw8HLNFUba8y0enrZEmMbRvtARpx8UGiGpZ9GoGHaQSXrLcMd78ZhvjzYc/2CmKvvVspbTDqsZEEiq+A8Xv6/Fi2PGsILNbSfLGVlU0KZzW3h/9SgoQ6X4h+W/9/rHyo8ix8162J5gbvi+Gj+xO7c8rCiIjvS7yH0BOOu50owsAcS83l0F2cO91lIt5B0wONiwUZyd8ZhZEL4kPDJZrrzkhoqhr1S1BpF2e5xmjUWAtm7p30SS4GZ6ZMkgZlzC/akWb53O6Wy1R85E8wi03gXRa6eEiqm49eRzWSPZY=
+ AJvYcCUkodP0uPw5GgjrxDbnO38ZL0XQOV/5NjIwLOhSQUdCDFrIpY9pKjTPdXb42aWbI0QlLCzr5JWcrc5/M0vfkI62DUAGJThJVo3/kdz0QBkevIpi/1asmsD6DHK3pebHsTO3U1zt6X/0K3DfoYCUcPBbmmFCM8Wmruni64mw0VKzZdiKhslJhxfsCLW49VJPYanSMK7l92ybrSoHDh5rEyKHV7sTJaW5dA/I7TiRLu3bc2MDsuGaVucFMg0x2CKZOjSEX4A9PEQhE06TTAVNzpC1ukcM2LPswe3Y7/G2UMTXAYuGL9m3KtHmEOo7vJqeJX63VEYuecYzJYM=
 Received: from m1x-phil.lan ([176.187.218.105])
  by smtp.gmail.com with ESMTPSA id
- jr6-20020a05600c560600b0041079d336c7sm484051wmb.39.2024.02.09.04.33.02
+ bw26-20020a0560001f9a00b0033b5b6a186dsm1717121wrb.69.2024.02.09.04.32.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Feb 2024 04:33:04 -0800 (PST)
+ Fri, 09 Feb 2024 04:32:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -68,18 +68,18 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
  Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC PATCH 6/7] hw/intc/mips_gic: Initialize IRQ array once device is
- realized
-Date: Fri,  9 Feb 2024 13:32:24 +0100
-Message-ID: <20240209123226.32576-7-philmd@linaro.org>
+Subject: [RFC PATCH 4/7] hw/ide/sii3112: Configure IDE bus IRQs after
+ realization
+Date: Fri,  9 Feb 2024 13:32:22 +0100
+Message-ID: <20240209123226.32576-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240209123226.32576-1-philmd@linaro.org>
 References: <20240209123226.32576-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,45 +106,40 @@ We shouldn't call qdev_get_gpio_in() on unrealized devices.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/mips_gic.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+Ideally we should rework the current IDE bus model to really
+use QOM and not globals. Left for later.
+---
+ hw/ide/sii3112.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/intc/mips_gic.c b/hw/intc/mips_gic.c
-index 77ba7348a3..05c8b8f4c4 100644
---- a/hw/intc/mips_gic.c
-+++ b/hw/intc/mips_gic.c
-@@ -419,7 +419,6 @@ static void mips_gic_realize(DeviceState *dev, Error **errp)
-         return;
-     }
-     s->vps = g_new(MIPSGICVPState, s->num_vps);
--    s->irq_state = g_new(MIPSGICIRQState, s->num_irq);
-     /* Register the env for all VPs with the GIC */
-     for (i = 0; i < s->num_vps; i++) {
-         if (cs != NULL) {
-@@ -433,7 +432,14 @@ static void mips_gic_realize(DeviceState *dev, Error **errp)
-     }
-     s->gic_timer = mips_gictimer_init(s, s->num_vps, gic_timer_expire_cb);
-     qdev_init_gpio_in(dev, gic_set_irq, s->num_irq);
--    for (i = 0; i < s->num_irq; i++) {
+diff --git a/hw/ide/sii3112.c b/hw/ide/sii3112.c
+index 63dc4a0494..8b6e931f27 100644
+--- a/hw/ide/sii3112.c
++++ b/hw/ide/sii3112.c
+@@ -282,6 +282,15 @@ static void sii3112_pci_realize(PCIDevice *dev, Error **errp)
+     qdev_init_gpio_in(ds, sii3112_set_irq, 2);
+     for (i = 0; i < 2; i++) {
+         ide_bus_init(&s->bus[i], sizeof(s->bus[i]), ds, i, 1);
++    }
 +}
 +
-+static void mips_gic_wire(DeviceState *dev)
++static void sii3112_pci_wire(DeviceState *dev)
 +{
-+    MIPSGICState *s = MIPS_GIC(dev);
++    PCIIDEState *s = PCI_IDE(dev);
++    DeviceState *ds = DEVICE(dev);
 +
-+    s->irq_state = g_new(MIPSGICIRQState, s->num_irq);
-+    for (unsigned i = 0; i < s->num_irq; i++) {
-         s->irq_state[i].irq = qdev_get_gpio_in(dev, i);
-     }
- }
-@@ -450,6 +456,7 @@ static void mips_gic_class_init(ObjectClass *klass, void *data)
++    for (unsigned i = 0; i < 2; i++) {
+         ide_bus_init_output_irq(&s->bus[i], qdev_get_gpio_in(ds, i));
  
-     device_class_set_props(dc, mips_gic_properties);
-     dc->realize = mips_gic_realize;
-+    dc->wire = mips_gic_wire;
- }
- 
- static const TypeInfo mips_gic_info = {
+         bmdma_init(&s->bus[i], &s->bmdma[i], s);
+@@ -299,6 +308,7 @@ static void sii3112_pci_class_init(ObjectClass *klass, void *data)
+     pd->class_id = PCI_CLASS_STORAGE_RAID;
+     pd->revision = 1;
+     pd->realize = sii3112_pci_realize;
++    dc->wire = sii3112_pci_wire;
+     dc->reset = sii3112_reset;
+     dc->desc = "SiI3112A SATA controller";
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
 -- 
 2.41.0
 
