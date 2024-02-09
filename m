@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5217BC48297
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6407BC4829E
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYPV5-0003de-QO; Fri, 09 Feb 2024 06:57:01 -0500
+	id 1rYPUt-0003VU-QE; Fri, 09 Feb 2024 06:56:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV1-0003bv-KY
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:55 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPUs-0003UF-GR
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:46 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPUx-0002RN-Ms
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:54 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPUq-0002On-Ry
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:46 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 13345CE2007;
- Fri,  9 Feb 2024 11:56:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7A8C43394;
- Fri,  9 Feb 2024 11:56:46 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id EE85D6153B;
+ Fri,  9 Feb 2024 11:56:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677E9C433C7;
+ Fri,  9 Feb 2024 11:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707479808;
- bh=vqjS4Tn8JsTETJjKAhscWBmZAWUWeDAIiHK9Uvc1mpY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fqsfhCy0CmsJqv9zC6GfjOd92wjHzUHxao524QtRJE81BT+VAakC5oCn1+MSEbZMU
- 5uGtmkxiriqJehqvbMw3y3ql78xYjAFo0lWHftXidfvSFGmMYz9+qOOGc4fa5BOAOx
- 6+8esWd8yRi7FdknbjFQCNatNrPCGpMingN2KbHDA41QFWtX9EI7YmjI8M1HRgFFgE
- ice6woecg3JuWEKsxv80paNSp90FUkeUlTnRCsqTnADQXF8MiaaHv0mXPfVueTpqde
- jB89dj6/Abn6X/LgaL2Wguar9CaB1Nsx75lyBqYspz6plWR9E1B9qhGUGnljSOVlcM
- 2PyIFd/lkWouw==
+ s=k20201202; t=1707479796;
+ bh=CRAhizHXgmBxKYA1z7YB/8lE3siLM2aru+2FUkC4VaY=;
+ h=From:To:Cc:Subject:Date:From;
+ b=tkMGhFzfd31kGWUOr3N/CqstNv0k1zMRLjllTHfRRtJEsS/pP+algmZP9KMJg/NNv
+ h8wR9xNmAjAn4idJYTJFeButIcOhDsKx1CSxpOM9FEJo38qt/qS7130MjG3yaag2zx
+ o4aX2pNY+EuDUQfnf9FyVLyeAmOdmWIPVN+JBfjzqALpmdH2pCUcuokGL5zfTDm+SC
+ dPRZa2ommb4trLVVQO0fSTaMQr/LiEl5F6hiTXBLuS+U/Ck1o0WG1OO6DvpGYE26/D
+ yCc476WxfmA/tb7DACsrAwkV1+oE2xVqYWE0Gl6SgpMxiMrKG2125w97rR532CeVnw
+ 3yMaxr1Xg2yTA==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Sven Schnelle <svens@stackframe.org>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v2 07/12] lasi: Add reset I/O ports for LASI audio and FDC
-Date: Fri,  9 Feb 2024 12:56:28 +0100
-Message-ID: <20240209115633.55823-8-deller@kernel.org>
+Subject: [PATCH v2 00/12] target/hppa: Enhancements and fixes
+Date: Fri,  9 Feb 2024 12:56:21 +0100
+Message-ID: <20240209115633.55823-1-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240209115633.55823-1-deller@kernel.org>
-References: <20240209115633.55823-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,78 +71,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Linux writes zeroes at bootup into the default ports for LASI audio and
-LASI floppy controller to reset those devices.  Allow writing to those
-registers to avoid HPMCs.
+Some enhancements and fixes for the hppa target.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- hw/misc/lasi.c         | 11 +++++++++++
- include/hw/misc/lasi.h |  2 ++
- 2 files changed, 13 insertions(+)
+The major change is, that this patchset adds a new SeaBIOS-hppa firmware
+which is built as 32- and 64-bit firmware.
+The new 64-bit firmware is necessary to fully support 64-bit operating systems
+(HP-UX, Linux, NetBSD,...).
 
-diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
-index 9cfa5bb316..970fc98b5c 100644
---- a/hw/misc/lasi.c
-+++ b/hw/misc/lasi.c
-@@ -36,10 +36,13 @@ static bool lasi_chip_mem_valid(void *opaque, hwaddr addr,
-     case LASI_IAR:
- 
-     case LASI_LPT:
-+    case LASI_AUDIO:
-+    case LASI_AUDIO + 4:
-     case LASI_UART:
-     case LASI_LAN:
-     case LASI_LAN + 12: /* LASI LAN MAC */
-     case LASI_RTC:
-+    case LASI_FDC:
- 
-     case LASI_PCR ... LASI_AMR:
-         ret = true;
-@@ -80,6 +83,7 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
-     case LASI_UART:
-     case LASI_LAN:
-     case LASI_LAN + 12:
-+    case LASI_FDC:
-         val = 0;
-         break;
-     case LASI_RTC:
-@@ -145,12 +149,19 @@ static MemTxResult lasi_chip_write_with_attrs(void *opaque, hwaddr addr,
-     case LASI_LPT:
-         /* XXX: reset parallel port */
-         break;
-+    case LASI_AUDIO:
-+    case LASI_AUDIO + 4:
-+        /* XXX: reset audio port */
-+        break;
-     case LASI_UART:
-         /* XXX: reset serial port */
-         break;
-     case LASI_LAN:
-         /* XXX: reset LAN card */
-         break;
-+    case LASI_FDC:
-+        /* XXX: reset Floppy controller */
-+        break;
-     case LASI_RTC:
-         s->rtc_ref = val - time(NULL);
-         break;
-diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
-index 0a8c7352be..f01c0f680a 100644
---- a/include/hw/misc/lasi.h
-+++ b/include/hw/misc/lasi.h
-@@ -26,9 +26,11 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
- #define LASI_IAR        0x10
- 
- #define LASI_LPT        0x02000
-+#define LASI_AUDIO      0x04000
- #define LASI_UART       0x05000
- #define LASI_LAN        0x07000
- #define LASI_RTC        0x09000
-+#define LASI_FDC        0x0A000
- 
- #define LASI_PCR        0x0C000 /* LASI Power Control register */
- #define LASI_ERRLOG     0x0C004 /* LASI Error Logging register */
+v2:
+- included all suggested changes from Richard
+- dropped mtsm/rsm/ssm patch
+- include tulip patch from Sven Schnelle
+- dropped SeaBIOS binary files in v2 review series, will be included in final pull request
+
+Patches 2,3,5,6,7 still miss a review.
+
+Helge
+
+Helge Deller (11):
+  disas/hppa: Add disassembly for qemu specific instructions
+  target/hppa: Add "diag 0x101" for console output support
+  hw/pci-host/astro: Avoid aborting on access failure
+  hw/pci-host/astro: Implement Hard Fail and Soft Fail mode
+  lasi: allow access to LAN MAC address registers
+  target/hppa: Implement do_transaction_failed handler for I/O errors
+  lasi: Add reset I/O ports for LASI audio and FDC
+  target/hppa: Allow read-access to PSW with rsm 0,reg instruction
+  target/hppa: PDC_BTLB_INFO uses 32-bit ints
+  target/hppa: Update SeaBIOS-hppa to version 16
+  hw/hppa/machine: Load 64-bit firmware on 64-bit machines
+
+Sven Schnelle (1):
+  hw/net/tulip: add chip status register values
+
+ disas/hppa.c                |  4 ++++
+ hw/hppa/machine.c           | 11 ++++++++---
+ hw/misc/lasi.c              | 13 +++++++++++++
+ hw/net/tulip.c              |  4 ++--
+ hw/pci-host/astro.c         | 36 ++++++++++++++++++++----------------
+ include/hw/misc/lasi.h      |  2 ++
+ include/hw/pci-host/astro.h |  2 ++
+ roms/seabios-hppa           |  2 +-
+ target/hppa/cpu.c           |  1 +
+ target/hppa/cpu.h           |  5 +++++
+ target/hppa/helper.h        |  1 +
+ target/hppa/mem_helper.c    | 21 ++++++++++++++++++++-
+ target/hppa/sys_helper.c    | 36 ++++++++++++++++++++++++++++++++++++
+ target/hppa/translate.c     | 14 +++++++++++++-
+ 14 files changed, 128 insertions(+), 24 deletions(-)
+
 -- 
 2.43.0
 
