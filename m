@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7841DC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB7CC48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYYKw-0006i1-OW; Fri, 09 Feb 2024 16:23:06 -0500
+	id 1rYYKn-0006cW-8H; Fri, 09 Feb 2024 16:22:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYYKu-0006hJ-Cb; Fri, 09 Feb 2024 16:23:04 -0500
+ id 1rYYKl-0006cJ-K8; Fri, 09 Feb 2024 16:22:55 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYYKs-00008d-N7; Fri, 09 Feb 2024 16:23:04 -0500
+ id 1rYYKk-00006Y-07; Fri, 09 Feb 2024 16:22:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C5A174BF60;
+ by isrv.corpit.ru (Postfix) with ESMTP id 676644BF5A;
  Sat, 10 Feb 2024 00:24:03 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A68EC77EDA;
+ by tsrv.corpit.ru (Postfix) with SMTP id 549BB77ED4;
  Sat, 10 Feb 2024 00:22:47 +0300 (MSK)
-Received: (nullmailer pid 1123163 invoked by uid 1000);
+Received: (nullmailer pid 1123145 invoked by uid 1000);
  Fri, 09 Feb 2024 21:22:47 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 08/23] qemu-img: refresh options/--help for "convert" command
-Date: Sat, 10 Feb 2024 00:22:29 +0300
-Message-Id: <4962a298d3f4adbeb93726fc5f505d963c684442.1707513011.git.mjt@tls.msk.ru>
+Subject: [PATCH 02/23] qemu-img: refresh options/--help for "create" subcommand
+Date: Sat, 10 Feb 2024 00:22:23 +0300
+Message-Id: <43c69e56b65b39da7c9bd878fd9c6fad4f788c1a.1707513011.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1707513011.git.mjt@tls.msk.ru>
 References: <cover.1707513011.git.mjt@tls.msk.ru>
@@ -60,93 +60,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing long options and --help output.
+Add missing long options (eg --format).
 
-convert uses -B for --backing, - why not -b?
+Create helper function cmd_help() to display command-specific
+help text, and use it to print --help for 'create' subcommand.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 51 insertions(+), 1 deletion(-)
+ qemu-img.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 8f16ee9deb..d4dafebff9 100644
+index 05f80b6e5b..7edfc56572 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -2374,14 +2374,29 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+@@ -126,6 +126,25 @@ void unrecognized_option(const img_cmd_t *ccmd, const char *option)
+     error_exit(ccmd, "unrecognized option '%s'", option);
+ }
+ 
++/*
++ * Print --help output for a command and exit.
++ * syntax and description are multi-line with trailing EOL
++ * (to allow easy extending of the text)
++ * syntax has each subsequent line starting with \t
++ * desrciption is indented by one char
++ */
++static G_NORETURN
++void cmd_help(const img_cmd_t *ccmd,
++              const char *syntax, const char *arguments)
++{
++    printf("qemu-img %s %s"
++           "Arguments:\n"
++           " -h|--help - print this help and exit\n"
++           "%s",
++           ccmd->name, syntax, arguments);
++    exit(EXIT_SUCCESS);
++}
++
+ /* Please keep in synch with docs/tools/qemu-img.rst */
+ static G_NORETURN
+ void help(void)
+@@ -524,7 +543,13 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
      for(;;) {
          static const struct option long_options[] = {
              {"help", no_argument, 0, 'h'},
 +            {"quiet", no_argument, 0, 'q'},
              {"object", required_argument, 0, OPTION_OBJECT},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"source-image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"source-format", required_argument, 0, 'f'},
-+            {"source-cache", required_argument, 0, 'T'},
-+            {"snapshot", required_argument, 0, 'l'},
-+            {"sparse-size", required_argument, 0, 'S'},
-+            {"output-format", required_argument, 0, 'O'},
-+            {"options", required_argument, 0, 'o'},
-+            {"output-cache", required_argument, 0, 't'},
-+            {"backing", required_argument, 0, 'B'},
++            {"format", required_argument, 0, 'f'},
++            {"backing", required_argument, 0, 'b'},
 +            {"backing-format", required_argument, 0, 'F'},
-             {"force-share", no_argument, 0, 'U'},
-             {"target-image-opts", no_argument, 0, OPTION_TARGET_IMAGE_OPTS},
-             {"salvage", no_argument, 0, OPTION_SALVAGE},
-             {"target-is-zero", no_argument, 0, OPTION_TARGET_IS_ZERO},
-             {"bitmaps", no_argument, 0, OPTION_BITMAPS},
-             {"skip-broken-bitmaps", no_argument, 0, OPTION_SKIP_BROKEN},
-+            {"rate", required_argument, 0, 'r'},
-+            {"parallel", required_argument, 0, 'm'},
-+            {"oob-writes", no_argument, 0, 'W'},
-+            {"copy-range-offloading", no_argument, 0, 'C'},
++            {"backing-unsafe", no_argument, 0, 'u'},
++            {"options", required_argument, 0, 'o'},
              {0, 0, 0, 0}
          };
-         c = getopt_long(argc, argv, ":hf:O:B:CcF:o:l:S:pt:T:qnm:WUr:",
-@@ -2397,7 +2412,42 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+         c = getopt_long(argc, argv, ":F:b:f:ho:qu",
+@@ -540,7 +565,25 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
              unrecognized_option(ccmd, argv[optind - 1]);
              break;
          case 'h':
 -            help();
 +            cmd_help(ccmd,
-+"[-f SRC_FMT|--image-opts] [-T SRC_CACHE] [--bitmaps [--skip-broken-bitmaps]]\n"
-+"	[-o TGT_OPTS|--target-image-opts] [-t TGT_CACHE] [-n]\n"
-+"	[-B BACKING_FILENAME [-F BACKING_FMT]]\n"
-+"	SRC_FILENAME [SRC_FILENAME2 [...]] TGT_FILENAME\n"
++"[-f FMT] [-o FMT_OPTS] [-b BACKING_FILENAME [-F BACKING_FMT]]\n"
++"	[--object OBJDEF] [-u] FILENAME [SIZE[bkKMGTPE]]\n"
 +,
 +" -q|--quiet - quiet operations\n"
-+" -p|--progress - show operation progress\n"
-+" -f|--source-format SRC_FMT - specify SRC_FILENAME source image format explicitly\n"
-+" --source-image-opts - indicates that SRC_FILENAME is a complete image specification\n"
-+"  instead of a file name (incompatible with --source-format)\n"
-+" -l|--source-snapshot SNAPSHOT_PARAMS - specify source snapshot parameters\n"
-+" -T|--source-cache SRC_CACHE - cache mode when opening source image (" BDRV_DEFAULT_CACHE ")\n"
-+" -O|--target-format TGT_FMT - specify TGT_FILENAME image format (default is raw)\n"
-+" --target-image-opts - indicates that TGT_FILENAME is a complete image specification\n"
-+"  instead of a file name (incompatible with --output-format)\n"
-+" -o|--target-options TGT_OPTS - TARGET_FMT-specific options\n"
-+" -c|--compress - create compressed output image (qcow and qcow2 format only)\n"
-+" -t|--target-cache TGT_CACHE - cache mode when opening output image (unsafe)\n"
-+" -B|--backing BACKING_FILENAME - create output to be a CoW on top of BACKING_FILENAME\n"
-+" -F|--backing-format BACKING_FMT - specify BACKING_FILENAME image format explicitly\n"
-+" -n|--no-create - omit target volume creation (eg on rbd)\n"
-+" --target-is-zero\n"
-+" -S|--sparse-size SPARSE_SIZE\n"
-+" --bitmaps - also copy any persistent bitmaps present in source\n"
-+" --skip-broken-bitmaps - skip (do not error out) any broken bitmaps\n"
-+" -U|--force-share - open images in shared mode for concurrent access\n"
-+" -r|--rate RATE - I/O rate limit\n"
-+" -m|--parallel NUM_COROUTINES - specify parallelism (default 8)\n"
-+" -C|--copy-range-offloading - use copy_range offloading\n"
-+" --salvage\n"
-+" -W|--oob-writes - enable out-of-order writes to improve performance\n"
++" -f|--format FMT - specifies format of the new image, default is raw\n"
++" -o|--options FMT_OPTS - format-specific options ('-o list' for list)\n"
++" -b|--backing BACKING_FILENAME - stack new image on top of BACKING_FILENAME\n"
++"  (for formats which support stacking)\n"
++" -F|--backing-format BACKING_FMT - specify format of BACKING_FILENAME\n"
++" -u|--backing-unsafe - do not fail if BACKING_FMT can not be read\n"
 +" --object OBJDEF - QEMU user-creatable object (eg encryption key)\n"
-+" SRC_FILENAME - source image file name (or specification with --image-opts)\n"
-+" TGT_FILENAME - target (output) image file name\n"
++" FILENAME - image file to create.  It will be overriden if exists\n"
++" SIZE - image size with optional suffix: 'b' (byte, default), 'k' or\n"
++"  'K' (kilobyte, 1024b), 'M' (megabyte, 1024K), 'G' (gigabyte, 1024M),\n"
++"  'T' (terabyte, 1024G), 'P' (petabyte, 1024T), or 'E' (exabyte, 1024P)\n"
++"  SIZE is required unless BACKING_IMG is specified, in which case\n"
++"  it will be the same as size of BACKING_IMG\n"
 +);
              break;
-         case 'f':
-             fmt = optarg;
+         case 'F':
+             base_fmt = optarg;
 -- 
 2.39.2
 
