@@ -4,132 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA366C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5787C4829E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:05:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYObm-0003kq-5G; Fri, 09 Feb 2024 05:59:50 -0500
+	id 1rYOce-0005zM-H0; Fri, 09 Feb 2024 06:00:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1rYObk-0003UQ-9R
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:48 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1rYObh-0000Jo-9b
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:47 -0500
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailout.nyi.internal (Postfix) with ESMTP id 4324A5C01A3;
- Fri,  9 Feb 2024 05:59:43 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Fri, 09 Feb 2024 05:59:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1707476383;
- x=1707562783; bh=8vxOURXgfWb/5Wm4okHVBaq4kt1aGZ3FoHDb6NQm/ZY=; b=
- uezKO+AsXMIo0bqNDnMS83nRfIjODWUxQz7Ipk/U16vgFEMcViADaaLtFL4N2d0A
- x3pKjxJ+FgcII8NCCF4tn5A1ALvWqJPa4MO2SZtDwKB33Dk2vBFEyjLUzvkHF582
- UxdoIKRrDzKHExTzJUpYrKiw69CLwuQCbOjRrhu3N3+WXTqP/0TinLj7JUnxZW2U
- gMMk0M8N1k5LZ7+zRn/1rhgjYl80CtD/9KxFoSUoput7bqjN8y/OFlp2GZdTkZqc
- t+A+gISVeVCcP1H8xRjklQeKW0ACGM4cm+R7i62ye0nGUH2+o9L0zxexOGsUO6Si
- 4vl0DRp7mqgouy73POqiVw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707476383; x=
- 1707562783; bh=8vxOURXgfWb/5Wm4okHVBaq4kt1aGZ3FoHDb6NQm/ZY=; b=y
- 3f0Dwm8BWuMjtXBO1ktP7f7nuRx6FlX2v0az9fzEncz3opU3aSIbZRMxgGDXFqT5
- BAN2lC+bMga2uYd6TVtm72Gh1L9Honp+UVChmVIn15+ZyGP/ubAEQho3+/UtQTPw
- 34f0XmhD108nHZr2JjQSXNkg5VKTGv9meb1frvEed6coV3Qe8oI1CzOMa8/vBZd9
- 5lRpw192PGiJI+D10otsJAYaHyeWb3qLM4yudUAaCttXN1yS42jpNyHg1kIVrmmE
- /eTICV69FubwPqnrMbF6WdkYgXBjAspfvH3w08MQ0tgGK419O6nuJqefbXWkrSpY
- hW2YwOKdZGJagscm1IsAg==
-X-ME-Sender: <xms:ngXGZSpMRQJtYYoPPb8leetU-sv2C8qJtt9EwFJ6exTukAE92LpPQQ>
- <xme:ngXGZQpGnSQPM6Vh3Y2JbIo76iYTA11sbQ5kBky0p3qeTI-cAHise3a3mizKO3a9b
- ca3Y8K-uWiRtJqp6Ow>
-X-ME-Received: <xmr:ngXGZXMmfBhHGrfZEzmiJYNRkSY1CtFjoH0Du9_I4h7HZ1Fo9qhf1EOHJB_pTUjehMjZwJyP35aMdmpSDn0VUc7DJfIaXc-T9s0hsmA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdeigddvudcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomheplfhirgig
- uhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqeenuc
- ggtffrrghtthgvrhhnpeduheejgfetvdekvedvveeikeelkefhveekveelheeikeefudet
- ueffudfhhedtheenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
- fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghes
- fhhlhihgohgrthdrtghomh
-X-ME-Proxy: <xmx:ngXGZR4dT2iilXpOnG1RGJCoLWl9giVsjHS4eJDAlA1dr7e3tMJ2cg>
- <xmx:ngXGZR4exJXBhQQWUYURXDzNkONdORG-8SP9AOBjDJuHarADphpeOw>
- <xmx:ngXGZRhjHkBbtwnsBN8RnBduat8aMcwkyMhv1Wz9qtgzoAz4KWh4QA>
- <xmx:nwXGZWHB_ag5QSxEkoB12ky7xKZU1u7ieigbitSemzg8_x5sCoobQw>
-Feedback-ID: ifd894703:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Feb 2024 05:59:41 -0500 (EST)
-Message-ID: <2ffa6eac-eb52-4b2f-952a-228328d6003c@flygoat.com>
-Date: Fri, 9 Feb 2024 10:59:40 +0000
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rYOcD-0005gy-GV
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:20 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rYOcB-0000ZO-Ci
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:16 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3be9e11ee59so330929b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1707476413; x=1708081213; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4G0W0v9r4J8ABl80ZHBwRJa7fTZwomUFMbyTGYeTvbs=;
+ b=mfaMi7RrEJqiRZl4hsM8kxE62c8Fx5qtxYQVbmrEtEwvOoX6Os8Yt2OGTS3A9ZLkMr
+ 3AqIqeHEAHjf/Xah0lShzn0buwxlB7W0cQJzX3ZWuAHPXGCIOfwuqPSw1ZqhjFUXdfIR
+ CZK//t8LyRqugxXR7RjGUYuKvlsfhcL86myC6FcOfeZjeZm2cBdCL6Ub4NQyPvuZ5Uyq
+ Sg30Cwx0c5MokCurK2LdV16KOzH15Hl7LRFBUe7td/8q1XucxiEj+vh50TASA8AmQxBI
+ TjOl+iCPkphlNPHJ0MJk2cFxy+LhsK7a1yzHbCqaGmGKq3iA4IEKN6uT/My+OS9Gaghr
+ Yqsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707476413; x=1708081213;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4G0W0v9r4J8ABl80ZHBwRJa7fTZwomUFMbyTGYeTvbs=;
+ b=LwCfAvvx/ncVl9bHTjeqeHfPvqGooruQqd2xsduzpLq372xwuEQ4oDfW5hURLcgRBe
+ KZ0JdrsxDxrUyh6xrOll0br9sFW/wiWL4sm1UcshEQD/HerNLGSzce3JdnwdTYYf56Ts
+ fviv/No5Bm3YEBwx4uTVWf9pLCBFdRb+43Qcrvj53Ppn2mif/Sa9waS8XJyl69MumHLg
+ tfM87U5WTFShqANIcFbVIYQS0xvSeBnDJE+IE2+MH5qrre0k5bE/uN2BZOfX5Aj3AoZc
+ SifEwLjg3PwqkxcvE8wda2MdU3kIo5czOgC9Xl6WWV/+ed6vPSL7DDcgQQOOPQ9pNXmj
+ VH8w==
+X-Gm-Message-State: AOJu0YzemR/ynzHHZyzFMUKsikliDqOzenTAQr1k/vZLx69ThvYXQKq5
+ /UZmuo1QrOvE6aMVqXm2qgd5SlucEVF/HA6DyWecxA9bXImQBFe/wu119sc9b/CY8g==
+X-Google-Smtp-Source: AGHT+IHCyq23y3nD/nWFezNmSVbpefFEQBJrVezamF+JV7wY3e4/CitSQQrL3KzZVspFycKxYh97pw==
+X-Received: by 2002:a05:6359:458d:b0:176:bef2:634a with SMTP id
+ no13-20020a056359458d00b00176bef2634amr1519760rwb.0.1707476413486; 
+ Fri, 09 Feb 2024 03:00:13 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoFhcldusbfidX0dguT8lTWdjgKKUGps+NcpJuzfzjHPAtbX5Kp9XbKDX4BTYQWVWr1+pZwzhBnkLpJ1R+o+GdhxuzQ3Iz3cz4R7tJ09dOhli6dJXBawzJDKVTtjVbbcnF+Yw=
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
+ [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
+ by smtp.gmail.com with ESMTPSA id
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.00.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Feb 2024 03:00:13 -0800 (PST)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 33/61] trans_rvv.c.inc: use vext_get_vlmax() in
+ trans_vrgather_v*()
+Date: Fri,  9 Feb 2024 20:57:45 +1000
+Message-ID: <20240209105813.3590056-34-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
+References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/11] target/mips: Remove I6500 CPU definition
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Huacai Chen
- <chenhuacai@kernel.org>, Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
-References: <20240209090513.9401-1-philmd@linaro.org>
-Content-Language: en-US
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Autocrypt: addr=jiaxun.yang@flygoat.com; keydata=
- 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
- HVO98ZmbMeg=
-In-Reply-To: <20240209090513.9401-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=66.111.4.27; envelope-from=jiaxun.yang@flygoat.com;
- helo=out3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=alistair23@gmail.com; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,58 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
+Use the helper instead of calculating vlmax by hand.
 
-在 2024/2/9 09:05, Philippe Mathieu-Daudé 写道:
-> Alternative to:
-> https://lore.kernel.org/qemu-devel/20240209085347.8446-1-philmd@linaro.org/
-> If the I6500 can not be tested or its support is incomplete,
-> there is no point in wasting energy maintaining it.
-
-Actually all SAAR and ITU stuff are optional for I6500 in real world so 
-it's fine
-to just leave I6500 defined without SAAR support.
-
-The main difference between I6400 and I6500 is multi-cluster support, I do
-have some patch for bringing proper multi-cluster support to QEMU, but
-it can't work with boston due to address space limitations.
-
-Should I give mips-virt stuff another go?
-
-Thanks
-- Jiaxun
-
->
-> Philippe Mathieu-Daudé (11):
->    target/mips: Remove helpers accessing SAAR registers
->    hw/misc/mips: Reduce itc_reconfigure() scope
->    target/mips: Remove MIPSITUState::itu field
->    target/mips: Remove CPUMIPSState::saarp field
->    hw/misc/mips_itu: Remove MIPSITUState::cpu0 field
->    hw/misc/mips_itu: Remove MIPSITUState::saar field
->    target/mips: Remove CPUMIPSState::CP0_SAAR[2] field
->    target/mips: Remove helpers accessing SAARI register
->    target/mips: Remove CPUMIPSState::CP0_SAARI field
->    target/mips: Remove the unused DisasContext::saar field
->    target/mips: Remove I6500 CPU definition
->
->   docs/about/removed-features.rst     |  5 +++
->   include/hw/misc/mips_itu.h          |  6 ---
->   target/mips/cpu.h                   |  4 --
->   target/mips/tcg/translate.h         |  1 -
->   target/mips/tcg/sysemu_helper.h.inc |  6 ---
->   hw/mips/cps.c                       |  3 --
->   hw/misc/mips_itu.c                  | 35 ++--------------
->   target/mips/sysemu/machine.c        |  4 +-
->   target/mips/tcg/sysemu/cp0_helper.c | 63 -----------------------------
->   target/mips/tcg/translate.c         | 62 ----------------------------
->   tests/qtest/machine-none-test.c     |  2 +-
->   target/mips/cpu-defs.c.inc          | 40 ------------------
->   12 files changed, 12 insertions(+), 219 deletions(-)
->
-
--- 
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240122161107.26737-13-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
-Jiaxun Yang
+ target/riscv/insn_trans/trans_rvv.c.inc | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index b4663b6e1f..9e101ab434 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3535,8 +3535,7 @@ static bool trans_vrgather_vx(DisasContext *s, arg_rmrr *a)
+     }
+ 
+     if (a->vm && s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
+-        int scale = s->lmul - (s->sew + 3);
+-        int vlmax = s->cfg_ptr->vlen >> -scale;
++        int vlmax = vext_get_vlmax(s->cfg_ptr->vlenb, s->sew, s->lmul);
+         TCGv_i64 dest = tcg_temp_new_i64();
+ 
+         if (a->rs1 == 0) {
+@@ -3566,8 +3565,7 @@ static bool trans_vrgather_vi(DisasContext *s, arg_rmrr *a)
+     }
+ 
+     if (a->vm && s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
+-        int scale = s->lmul - (s->sew + 3);
+-        int vlmax = s->cfg_ptr->vlen >> -scale;
++        int vlmax = vext_get_vlmax(s->cfg_ptr->vlenb, s->sew, s->lmul);
+         if (a->rs1 >= vlmax) {
+             tcg_gen_gvec_dup_imm(MO_64, vreg_ofs(s, a->rd),
+                                  MAXSZ(s), MAXSZ(s), 0);
+-- 
+2.43.0
 
 
