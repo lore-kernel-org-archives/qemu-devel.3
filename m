@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A5BC48297
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCDF5C48BC0
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYPVH-0003i0-Vd; Fri, 09 Feb 2024 06:57:12 -0500
+	id 1rYPVH-0003hr-7H; Fri, 09 Feb 2024 06:57:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV5-0003eA-VM
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:57:01 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV3-0003dV-V7
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:59 -0500
 Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV3-0002SA-LV
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:59 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV1-0002Re-CK
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:56 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 4412DCE2016;
- Fri,  9 Feb 2024 11:56:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F320C43399;
- Fri,  9 Feb 2024 11:56:51 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id B80FFCE200D;
+ Fri,  9 Feb 2024 11:56:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED17C433C7;
+ Fri,  9 Feb 2024 11:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707479813;
- bh=WnjkRHA+PxnhJ2hwB5R3kLTKfKDbD/nEu0xgZtuTRoo=;
+ s=k20201202; t=1707479810;
+ bh=QEDKIdARto+ZCseIU47VCEGfs+CMVMZ3Lv39zKgePHQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=sSvYS7CpRyQx8urWRkaI3kYCu3Skel/4K0kfm6bYQ3/JvQbhfLpkVkmKGng2Qsrp1
- cEmHMIRGPX/zsWnAeqcQFluyEUnHj4HsWSw3kTfcF4aydasN0WB74HJ/2kmf8qnQIh
- 6uhvVZ1sAXeMh4cw0+VoMj5BCjuD8JN/YhzOqUwj5177tEdkH2J3p75jEAiO3XTxBV
- f7vBZ2zNnpWE/6QPNO4i/v5DB/iPUk1Fpt0mw2D+JsTGwe193LV144DaQRlGSZ51kK
- 7bpMenM+vkNDql6K1SWypxKMoPaDvkhP981XzrUKvsQ56CmsxQOyVzdkPpzjuuKpyV
- gLDwCY2TrCdHg==
+ b=brqT05GkcBmw0v/ZI20VPXfrrPyzVHHDcO1CGTouqIFaUfH9f7riT/vbPIJHpjCN1
+ UVWT2Srt/PmAAyfrnPmap9vW5sWe3oCvwAFdFVDCbnInh8SS04nVXZhhj/gsfX7+Ap
+ e3nVQvib9W+xnvySO1CA6rIwMpnNVk4+3Ogo9MARXOoZd+7cRv/Qz6Dzd/IJxS/U1T
+ 9xsuA6XHs0Nky+2YHjeX6yyFp7PT90ZBPx1QhtWLlvW964gQNjzDwurJ44wTGasqsu
+ o+D1sc6eLr1CrX4whxw05DNUT9PLK6E2O/ePSfGStv4MwhXrtWcjLT+epc3j94RpTI
+ QsbRgaRrH7lNA==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Sven Schnelle <svens@stackframe.org>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 10/12] hw/net/tulip: add chip status register values
-Date: Fri,  9 Feb 2024 12:56:31 +0100
-Message-ID: <20240209115633.55823-11-deller@kernel.org>
+ Jason Wang <jasowang@redhat.com>
+Subject: [PATCH v2 08/12] target/hppa: Allow read-access to PSW with rsm 0,
+ reg instruction
+Date: Fri,  9 Feb 2024 12:56:29 +0100
+Message-ID: <20240209115633.55823-9-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209115633.55823-1-deller@kernel.org>
 References: <20240209115633.55823-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
  helo=sin.source.kernel.org
@@ -72,51 +71,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sven Schnelle <svens@stackframe.org>
+From: Helge Deller <deller@gmx.de>
 
-Netbsd isn't able to detect a link on the emulated tulip card. That's
-because netbsd reads the Chip Status Register of the Phy (address
-0x14). The default phy data in the qemu tulip driver is all zero,
-which means no link is established and autonegotation isn't complete.
+HP-UX 11 and HP ODE tools use the "rsm 0,%reg" instruction in not priviledged
+code paths to get the current PSW flags. The constant 0 means that no bits of
+the PSW shall be reset, so this is effectively a read-only access to the PSW.
+Allow this read-only access even for not privileged code.
 
-Therefore set the register to 0x3b40, which means:
-
-Link is up, Autonegotation complete, Full Duplex, 100MBit/s Link
-speed.
-
-Also clear the mask because this register is read only.
-
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/net/tulip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/hppa/translate.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/tulip.c b/hw/net/tulip.c
-index 6d4fb06dad..1f2ef20977 100644
---- a/hw/net/tulip.c
-+++ b/hw/net/tulip.c
-@@ -421,7 +421,7 @@ static uint16_t tulip_mdi_default[] = {
-     /* MDI Registers 8 - 15 */
-     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-     /* MDI Registers 16 - 31 */
--    0x0003, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-+    0x0003, 0x0000, 0x0001, 0x0000, 0x3b40, 0x0000, 0x0000, 0x0000,
-     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
- };
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 53ec57ee86..01f3188656 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -2156,10 +2156,16 @@ static bool trans_ldsid(DisasContext *ctx, arg_ldsid *a)
  
-@@ -429,7 +429,7 @@ static uint16_t tulip_mdi_default[] = {
- static const uint16_t tulip_mdi_mask[] = {
-     0x0000, 0xffff, 0xffff, 0xffff, 0xc01f, 0xffff, 0xffff, 0x0000,
-     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
--    0x0fff, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff,
-+    0x0fff, 0x0000, 0xffff, 0xffff, 0x0000, 0xffff, 0xffff, 0xffff,
-     0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
- };
+ static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
+ {
++#ifdef CONFIG_USER_ONLY
+     CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
+-#ifndef CONFIG_USER_ONLY
++#else
+     TCGv_i64 tmp;
  
++    /* HP-UX 11i and HP ODE use rsm for read-access to PSW */
++    if (a->i) {
++        CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
++    }
++
+     nullify_over(ctx);
+ 
+     tmp = tcg_temp_new_i64();
 -- 
 2.43.0
 
