@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB48C4829C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 09:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43AAC48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 09:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYMpi-0005Z5-2i; Fri, 09 Feb 2024 04:06:06 -0500
+	id 1rYMpH-0005BE-L0; Fri, 09 Feb 2024 04:05:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMph-0005Yv-3j
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:06:05 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMpF-00052n-Cj
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:05:37 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMpa-0000gp-6a
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:06:04 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-511531f03f6so773581e87.0
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 01:05:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMox-0000Xo-Et
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:05:36 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-33b401fd72bso372279f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 01:05:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707469556; x=1708074356; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y81PALGbwlj4LEixOoZpqNxmKjEUvcPM6tG+ojj/Tqo=;
- b=mZMa+xlH6Qx2ODQA+x5BTdPrSSuztNawoKibzAZGj4bLPD1VerPW0oNsqLGxflge0A
- qLtKh+RsjfiTSr1MuyIoYFmMGhcee29GY7BGmaB10y1ooQIqE10u1kEygNAOxDncyEiq
- IQga6qmuDvoACPun9whh7BRMjxjXmphc+kuq3mtIXB+tSsdcl7qOXvzyR9z4GGcDieQ0
- exxTf3K38o4adflZW+v3HgSOdsj7Gae7D8l952UpGul8tJAryobJxQNyewHVWkj/3+EJ
- vqRCeHnkQXh9nmA0oZ+IpPW6skJeJ2SkPQ+unoQAzoVTMCARirHEbg6RRclp504wrAF+
- 4WmA==
+ d=linaro.org; s=google; t=1707469516; x=1708074316; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=JwCfqJ3Ez0Lr6G31mkvU42qgszP4QebKIdCzDv4GODM=;
+ b=GrvD0tkjP4s3dOk6GtweWK6Ov2E0Nraxno8KWeAQvCBeml4SSgDED9MdSO9sMMt3AP
+ ZWloNB8PdIJ6SxQ7lwfuW9tIEsMIsauvHbBU0GAwRs5IPLpRJIh7yFdLrvwkdxUNiHJa
+ TiDiGu1aJNREwCJYfn30wK5Ks/13bMh8nr46SCHrJDPv/2Ngd3/70dC3imWFZuKVilyx
+ TdYB68mqt2ONhQMZ9gcsCOOFDZFWt1oWH2ZAmPEdRq0Tc6Uj6qUTcYccbaMBx905/2qb
+ yJn8B9Ysui2k9ebo5qMBBhg/Bf7q+VyK7h46ykLoY2zpsIg1VeGxR4Xb8sRwBEcBPGLG
+ wo6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707469556; x=1708074356;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=y81PALGbwlj4LEixOoZpqNxmKjEUvcPM6tG+ojj/Tqo=;
- b=tbnRegYsb3e47+LL4oYIOYRnGwu2OrV70/zEmKMKB1aJC0oms2R5IOYVmRNfJPQuFq
- wa1Ev13czWWf52cn+ekY6jfpQiFvB3FZEb+lZKVaRgKBDodX7lsm6iG+iO61cwTrsl/3
- vjMJAib1SBgDZB/07Izld7CETZaj6dN5/EnSjXJ4SjAF/wRWb+WFXyD8MT+9G2YjRqum
- dg6wHZ2ino9IuMj487FkSiuCZd5UhykxilU75FPMg8paD0bzB7LdKgDG913aUT98oKFh
- zsyuKtggdYk8isPqH+y+UeO4NtIB9zNPxzbiFAhsjqhnCTE4P9sqEWyy7AjviJLiOVMT
- PgLg==
-X-Gm-Message-State: AOJu0Yzf6cD9TPiGJ7vuobKPJmacldzIKLwmkgSxnMowKVDST24ncMSx
- UUiHPH98fyZWn24z8HEjSZFrHd+K7LIY7levPZIFwR6N2lQHKneKVAnMZljVm628RsyYv4DLh3u
- +fvQ=
-X-Google-Smtp-Source: AGHT+IFBuFXpwbtgzFL/ZSi5c5D0ry4wCj30RuC0r4bpYWTUeUPXVQCvcGc5psKBmOzFu279Rqu0Tw==
-X-Received: by 2002:a05:6512:404:b0:511:4ff2:ee40 with SMTP id
- u4-20020a056512040400b005114ff2ee40mr666294lfk.2.1707469556462; 
- Fri, 09 Feb 2024 01:05:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707469516; x=1708074316;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JwCfqJ3Ez0Lr6G31mkvU42qgszP4QebKIdCzDv4GODM=;
+ b=aN+3TOrJHArPO641yt/TlLtPfOEQiC9MYbpStxCbvfTKh5taeQXvNUo+WJN2zzfQQw
+ QTZZLSqHRrbI/gNc/bB4drAKU3S+4q1o6osBXDlVBe2/vv/eCFQh0n0XA/XCI8LXrPpL
+ GKp70gtDTCwpOmmWWDMrj/D1xRVJEypSNdjrn85rMZVPF8/NrTwLS52HGFx2DwDMWuj8
+ fP4l7JVHOY32ZPamIVRE+1HgPUvUBt/TUKIN/VgSQ18tdez9QtJg/hIMMQrk4WfrgvZ4
+ HDb+kpc4cAIH2kBwiFr90qvgGiuIPk69uFBxpmesK3jrTcWN6WyjXZUQvkHff2MOMDqz
+ G02w==
+X-Gm-Message-State: AOJu0Yw7an3BlmBH21S038Nh5bVeuRX0Q0EfBanlzAYEt8AhNQfHzAGn
+ wNtsq/oXGD09BTa9jG0udUPsisTqBvuk0QAEhhZmSYSKzkoHYxcuHKFUm1zVRqccNQzcOryi5HS
+ uX40=
+X-Google-Smtp-Source: AGHT+IHG6CR18Od9krUUVp5m1CmWVuF8/AVSjkgTdx52rCfODspWtjdTT/3y9olWNLlsy9LUWqk3ew==
+X-Received: by 2002:adf:a35e:0:b0:33b:4acd:22dc with SMTP id
+ d30-20020adfa35e000000b0033b4acd22dcmr677190wrb.16.1707469516089; 
+ Fri, 09 Feb 2024 01:05:16 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVt38m0p3DJ0l2NasgWE0AqkuiW4pq80U3G2dLbCONtGfGnaQ97Ck3nNZ6M7DA+4/3ElYE0U5xV1BafjVeIvDVJi+Huql0RzojZgQZyhGS1CLubnoD/lI/0HEnLJThpwMtcQ/S9ksp+Wt82f+Vtm9YV7Sszgb8oPN1bmXbx5NpCgTOALjs2E6PoSYbfvEba3nVKVp1z2wmZDvPXm1zmVo5M/M477gsXBeMEVyrZY48K0m8EUmukbc2KN/ftlrYoVB+5XEWL4V1S/PjiLl6M6RtiRQNjrYYNoBQziyYdObydyfyN6JwethpCaY/Ge59kEQk9tKYd5kr9AWPSEAWCR+L7HIvJhuU=
+ AJvYcCXjIwYphfoXYTivwXAlxTBQgrAUXcN83O0GWXR9cXX6TtUFmC7WP6klMuHADGXuvElW0GRHAcae41gFEUzBPbPinO1HN7IvfMM1Sk+MwUX9LJXeJbrgKgE3bSU7baojYl6AJCWnR4UHD0xgsA1+7CALjUxFbxKXLMj4i9zRH9NpL501Wp6lvLPGaUD8gsy86GtsaRhqei++jUra8o6FjLb1UOFR1qWGRDuYMDcIsNTmZcN6fmbiD90Am/lWS5AXn0/PdJz0FmN8SxsEFEXDNxU1bQJtqv3V9lXGsI+aLrsVTPTBHphMIVoOh6vxfg0Lh/nCuSDoETmEVEN9mwoYm0ZY1A6u5AI=
 Received: from m1x-phil.lan ([176.187.218.105])
  by smtp.gmail.com with ESMTPSA id
- t16-20020a05600c451000b0040ecdd672fasm1915559wmo.13.2024.02.09.01.05.55
+ o13-20020a5d58cd000000b0033b443a7aa7sm1255255wrf.97.2024.02.09.01.05.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Feb 2024 01:05:56 -0800 (PST)
+ Fri, 09 Feb 2024 01:05:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -69,24 +68,21 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Huacai Chen <chenhuacai@kernel.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
-Subject: [RFC PATCH 07/11] target/mips: Remove CPUMIPSState::CP0_SAAR[2] field
-Date: Fri,  9 Feb 2024 10:05:08 +0100
-Message-ID: <20240209090513.9401-8-philmd@linaro.org>
+Subject: [RFC PATCH 00/11] target/mips: Remove I6500 CPU definition
+Date: Fri,  9 Feb 2024 10:05:01 +0100
+Message-ID: <20240209090513.9401-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240209090513.9401-1-philmd@linaro.org>
-References: <20240209090513.9401-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,39 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the unused CP0_SAAR[2] registers.
+Alternative to:
+https://lore.kernel.org/qemu-devel/20240209085347.8446-1-philmd@linaro.org/
+If the I6500 can not be tested or its support is incomplete,
+there is no point in wasting energy maintaining it.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/cpu.h            | 1 -
- target/mips/sysemu/machine.c | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+Philippe Mathieu-Daudé (11):
+  target/mips: Remove helpers accessing SAAR registers
+  hw/misc/mips: Reduce itc_reconfigure() scope
+  target/mips: Remove MIPSITUState::itu field
+  target/mips: Remove CPUMIPSState::saarp field
+  hw/misc/mips_itu: Remove MIPSITUState::cpu0 field
+  hw/misc/mips_itu: Remove MIPSITUState::saar field
+  target/mips: Remove CPUMIPSState::CP0_SAAR[2] field
+  target/mips: Remove helpers accessing SAARI register
+  target/mips: Remove CPUMIPSState::CP0_SAARI field
+  target/mips: Remove the unused DisasContext::saar field
+  target/mips: Remove I6500 CPU definition
 
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 3b93591f7e..e621196ae1 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -749,7 +749,6 @@ typedef struct CPUArchState {
-     int32_t CP0_Count;
-     uint32_t CP0_SAARI;
- #define CP0SAARI_TARGET 0    /*  5..0  */
--    uint64_t CP0_SAAR[2];
- #define CP0SAAR_BASE    12   /* 43..12 */
- #define CP0SAAR_SIZE    1    /*  5..1  */
- #define CP0SAAR_EN      0
-diff --git a/target/mips/sysemu/machine.c b/target/mips/sysemu/machine.c
-index 218f4c3a67..6d1299a89e 100644
---- a/target/mips/sysemu/machine.c
-+++ b/target/mips/sysemu/machine.c
-@@ -282,7 +282,7 @@ const VMStateDescription vmstate_mips_cpu = {
-         VMSTATE_UINT32(env.CP0_BadInstrX, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Count, MIPSCPU),
-         VMSTATE_UINT32(env.CP0_SAARI, MIPSCPU),
--        VMSTATE_UINT64_ARRAY(env.CP0_SAAR, MIPSCPU, 2),
-+        VMSTATE_UNUSED(2 * sizeof(uint64_t)), /* was CP0_SAAR[2] */
-         VMSTATE_UINTTL(env.CP0_EntryHi, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Compare, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Status, MIPSCPU),
+ docs/about/removed-features.rst     |  5 +++
+ include/hw/misc/mips_itu.h          |  6 ---
+ target/mips/cpu.h                   |  4 --
+ target/mips/tcg/translate.h         |  1 -
+ target/mips/tcg/sysemu_helper.h.inc |  6 ---
+ hw/mips/cps.c                       |  3 --
+ hw/misc/mips_itu.c                  | 35 ++--------------
+ target/mips/sysemu/machine.c        |  4 +-
+ target/mips/tcg/sysemu/cp0_helper.c | 63 -----------------------------
+ target/mips/tcg/translate.c         | 62 ----------------------------
+ tests/qtest/machine-none-test.c     |  2 +-
+ target/mips/cpu-defs.c.inc          | 40 ------------------
+ 12 files changed, 12 insertions(+), 219 deletions(-)
+
 -- 
 2.41.0
 
