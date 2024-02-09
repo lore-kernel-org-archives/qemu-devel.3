@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13276C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBEC7C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYObX-0001za-F4; Fri, 09 Feb 2024 05:59:35 -0500
+	id 1rYOfG-00006A-Hg; Fri, 09 Feb 2024 06:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObV-0001kh-6N
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:33 -0500
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1rYOde-0007cD-3k
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:49 -0500
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObT-0000IV-FZ
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:32 -0500
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-218eea4f1a7so374978fac.3
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:29 -0800 (PST)
+ id 1rYOda-0000vP-B0
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:43 -0500
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-599fc25071bso524383eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:01:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476368; x=1708081168; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476498; x=1708081298; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/TrPW9N8SpOBte0FLoX35VEFjsJt0FpqJtvdStcogcw=;
- b=lb2op6uCnnBpeorp68a8ATB8mlYW0S425GtDxqxDzZVcPgCtZesJyUPjp4vb3C/vlr
- B9V+CRfmjaIQz/whWKiF/jbuuFE6fxHmizSd02gUlTPxYoVskoxLSVw6R479ZqPQWBaV
- 6tmv/8p8o9lRfKOggZTnZWIR3tZBqVnCKUZintuvTNyRwCPvfGOluhIVJC+GKiGmk8EO
- yWai4NIa3pfdkJlLuIHPheIiR18v0gdipM5JRgfq9PXyBPmoHLRVAMCTWWjgC3WVNxI7
- Zjs1y7SEtBrNlFHLMg5WiP2kaA0wEUB6KkWTFEKP2veQunFyi3qc+9x3ZinA4Tf9YX52
- /F7A==
+ bh=teOr56nysygkArJLfbemVfbfCqk3Hq8Cj+dj8nqNSbM=;
+ b=SIrqIsjhfz531NU1XMgOXAEYPhGDI8/BduxZHixff1FgwX9+QworcnROuvwHX8TLOM
+ e/8pVA7elpTxJ4fv0vmHkWz9BlTXiCzNCpKj0A80EkCYEQLukaUCETJiyjdvfLCdr3f+
+ lnrhMw/ncNZBb+tjeNUpXHJt2JIp7yD7CCO7xclUYbauDpyrDA1rsDfOWIodi0uzXTfr
+ oluD67qw4TQU8CCLaaTXdIEdXi6JRmcCuUUcOVeQICkCEmlajdADc+KdCp1Iq52AGgsB
+ nNgpoRtHNqzqnA0Z4TMP2CU6p4RoY9fbqli3ITtQqJ2C5E2lr0zKATVrVeUJZgTQiEKu
+ MIIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476368; x=1708081168;
+ d=1e100.net; s=20230601; t=1707476498; x=1708081298;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/TrPW9N8SpOBte0FLoX35VEFjsJt0FpqJtvdStcogcw=;
- b=oLvZH7jcqsNISC7qZYsHixkQAJegwHkBp2hyu9myyqj44ZGpTwCKJSD9CBIf1JHSDD
- tTQyr4Nx4sCLFLmSeFlCDNZoFYVaylMVDSuE6qm8PZGc8qxN0x1J2+Pxt73oYtXD8D/w
- GPGlLMhy3zcE+8gX292bIpplO8jhkaVTPdk/NTC7WqfRgc8QdTBDtJRl6QtjXEKILeOF
- hAgcHUWoAVuh3f0Sq/sWqwBBMSINhOZsUmwSdkPxkW/2nDU1MZJ+BzCFjL2GSoYKoUcM
- R/5s4ABCrSUW4qAA8FehxTOdyoNJRsoG9O9p20ZP5AuZSgHeBtHhO0m8GfpsA00RpvVj
- kjQA==
-X-Gm-Message-State: AOJu0YylACkSTK0K8c4lb1OnpunSPXkMzPxve99aO8eQ0JPIS3JBM0L2
- BProsRNlN0XngSJkBDkGlsrqL27TW40uTWCcVfZgXsxXeo45k7AD3jrfjni9C1//8g==
-X-Google-Smtp-Source: AGHT+IHimu/VxYnnhdlV+tEcrAh0KQURB9ds+U07OTj/pOkKbs82mxAuTDfggu6uu5ytW2XJDm8eTw==
-X-Received: by 2002:a05:6870:8193:b0:218:43e6:716 with SMTP id
- k19-20020a056870819300b0021843e60716mr1150115oae.33.1707476368191; 
- Fri, 09 Feb 2024 02:59:28 -0800 (PST)
+ bh=teOr56nysygkArJLfbemVfbfCqk3Hq8Cj+dj8nqNSbM=;
+ b=R8chAXaEsefvrSKwFrAnLtuEauhcbYqVoDVSOfEePFttwI089kl66CEr1JPUVafHxz
+ FRFEvaBHDLpG/CHHoexLVVPSqZ7VKNsk+PriXhKMgYRlcIexF56EBe/OB4ursal6WPZH
+ Bk3oBMTcfI2gqQvWRLaf5uVcmMSYcDrUowmzDdEd7WztdU/VPtbE6QvGj3P8dTvpN/q3
+ jI91BT5MT/lNLVOn2iAzb5r4p3aeq9RUcMo1h5j1IOMun3VaMFXCri/NOxXTr7mO4q6B
+ POvWq6LrKlAPfLBC6nfy/qRl9JMShmrDUMjkXm0f9BZ3xdwgo55may2aIwUjN2xJdCqa
+ qCng==
+X-Gm-Message-State: AOJu0YzrIW4kO64lncKzokySyxNDDH31rJgJlVYL1rhnSu6sfkckNvTY
+ Y3OZBj54HA0KMgCwriHTXrliSMj67dAD8qt45kpS9zwQNxztxJXxV7Sz5APPf1+2nA==
+X-Google-Smtp-Source: AGHT+IHaJejPsGG686dYe7cJknD6r3yxvNZyhNpTqqLQzhd8kPwZn3asUhPCrMwR27vka3Um/nDwdQ==
+X-Received: by 2002:a05:6358:896:b0:176:3e0d:8a36 with SMTP id
+ m22-20020a056358089600b001763e0d8a36mr1387554rwj.0.1707476498383; 
+ Fri, 09 Feb 2024 03:01:38 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVc5XA04sn5J3tgKnhGnhFS1s8YyCQb3MDIYjoX+LuHGJNBwysjgj4mXBbzVsIp2zCaLfssA3BjKUDE8bR7oPB7xzbVSLyI9ThpMZljJgo4oFFHWHwW9FIIKsB3leIToutgUX+U3ZSPnnUQXQb4nR32lSrqYFpoVBKk/rpnwVDo09A=
+ AJvYcCXvDZnQpNOnDE+4fcoxFXL63zVqiRjVLhNowymYAnJSCHrVVxFqhIom/yTU+gjjF77FDofYJcztoI4O0ljZEmSU018aTWz3Mw2rACBknKwMSBxFNl7aAmEm009t8PRIxJGi0rsX+oY=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.25
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.01.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 02:59:27 -0800 (PST)
+ Fri, 09 Feb 2024 03:01:37 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Vladimir Isaev <vladimir.isaev@syntacore.com>
-Subject: [PULL 19/61] target/riscv/cpu.c: move 'mimpid' to
- riscv_cpu_properties[]
-Date: Fri,  9 Feb 2024 20:57:31 +1000
-Message-ID: <20240209105813.3590056-20-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 59/61] target/riscv: Enable xtheadsync under user mode
+Date: Fri,  9 Feb 2024 20:58:11 +1000
+Message-ID: <20240209105813.3590056-60-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=alistair23@gmail.com; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=alistair23@gmail.com; helo=mail-oo1-xc32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,120 +100,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Keep all class properties in riscv_cpu_properties[].
+According to xtheadsync[1][2] documentation, it can be used in user mode and
+the behavior is same with other priviledges.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
-tested-by tags added, rebased with Alistair's riscv-to-apply.next.
-Message-ID: <20240112140201.127083-8-dbarboza@ventanamicro.com>
+[1]:https://github.com/T-head-Semi/thead-extension-spec/blob/master/xtheadsync/sync.adoc
+[2]:https://github.com/T-head-Semi/thead-extension-spec/blob/master/xtheadsync/sync_i.adoc
+
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240204055228.900-1-zhiwei_liu@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c | 68 ++++++++++++++++++++++++----------------------
- 1 file changed, 36 insertions(+), 32 deletions(-)
+ target/riscv/insn_trans/trans_xthead.c.inc | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a14d7da11d..1a6524f01f 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2020,6 +2020,41 @@ static const PropertyInfo prop_mvendorid = {
-     .set = prop_mvendorid_set,
- };
- 
-+static void prop_mimpid_set(Object *obj, Visitor *v, const char *name,
-+                            void *opaque, Error **errp)
-+{
-+    bool dynamic_cpu = riscv_cpu_is_dynamic(obj);
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint64_t prev_val = cpu->cfg.mimpid;
-+    uint64_t value;
-+
-+    if (!visit_type_uint64(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    if (!dynamic_cpu && prev_val != value) {
-+        error_setg(errp, "Unable to change %s mimpid (0x%" PRIu64 ")",
-+                   object_get_typename(obj), prev_val);
-+        return;
-+    }
-+
-+    cpu->cfg.mimpid = value;
-+}
-+
-+static void prop_mimpid_get(Object *obj, Visitor *v, const char *name,
-+                            void *opaque, Error **errp)
-+{
-+    uint64_t value = RISCV_CPU(obj)->cfg.mimpid;
-+
-+    visit_type_uint64(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_mimpid = {
-+    .name = "mimpid",
-+    .get = prop_mimpid_get,
-+    .set = prop_mimpid_set,
-+};
-+
- /*
-  * RVA22U64 defines some 'named features' or 'synthetic extensions'
-  * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
-@@ -2107,6 +2142,7 @@ static Property riscv_cpu_properties[] = {
-     {.name = "cboz_blocksize", .info = &prop_cboz_blksize},
- 
-      {.name = "mvendorid", .info = &prop_mvendorid},
-+     {.name = "mimpid", .info = &prop_mimpid},
- 
- #ifndef CONFIG_USER_ONLY
-     DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
-@@ -2188,35 +2224,6 @@ static const struct SysemuCPUOps riscv_sysemu_ops = {
- };
+diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/insn_trans/trans_xthead.c.inc
+index dbb6411239..22488412d4 100644
+--- a/target/riscv/insn_trans/trans_xthead.c.inc
++++ b/target/riscv/insn_trans/trans_xthead.c.inc
+@@ -992,7 +992,6 @@ static bool trans_th_sfence_vmas(DisasContext *ctx, arg_th_sfence_vmas *a)
  #endif
+ }
  
--static void cpu_set_mimpid(Object *obj, Visitor *v, const char *name,
--                           void *opaque, Error **errp)
--{
--    bool dynamic_cpu = riscv_cpu_is_dynamic(obj);
--    RISCVCPU *cpu = RISCV_CPU(obj);
--    uint64_t prev_val = cpu->cfg.mimpid;
--    uint64_t value;
--
--    if (!visit_type_uint64(v, name, &value, errp)) {
--        return;
--    }
--
--    if (!dynamic_cpu && prev_val != value) {
--        error_setg(errp, "Unable to change %s mimpid (0x%" PRIu64 ")",
--                   object_get_typename(obj), prev_val);
--        return;
--    }
--
--    cpu->cfg.mimpid = value;
--}
--
--static void cpu_get_mimpid(Object *obj, Visitor *v, const char *name,
--                           void *opaque, Error **errp)
--{
--    uint64_t value = RISCV_CPU(obj)->cfg.mimpid;
--
--    visit_type_uint64(v, name, &value, errp);
--}
--
- static void cpu_set_marchid(Object *obj, Visitor *v, const char *name,
-                             void *opaque, Error **errp)
+-#ifndef CONFIG_USER_ONLY
+ static void gen_th_sync_local(DisasContext *ctx)
  {
-@@ -2298,9 +2305,6 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
-     cc->gdb_arch_name = riscv_gdb_arch_name;
-     cc->gdb_get_dynamic_xml = riscv_gdb_get_dynamic_xml;
+     /*
+@@ -1003,14 +1002,12 @@ static void gen_th_sync_local(DisasContext *ctx)
+     tcg_gen_exit_tb(NULL, 0);
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
+-#endif
  
--    object_class_property_add(c, "mimpid", "uint64", cpu_get_mimpid,
--                              cpu_set_mimpid, NULL, NULL);
--
-     object_class_property_add(c, "marchid", "uint64", cpu_get_marchid,
-                               cpu_set_marchid, NULL, NULL);
+ static bool trans_th_sync(DisasContext *ctx, arg_th_sync *a)
+ {
+     (void) a;
+     REQUIRE_XTHEADSYNC(ctx);
  
+-#ifndef CONFIG_USER_ONLY
+     REQUIRE_PRIV_MSU(ctx);
+ 
+     /*
+@@ -1019,9 +1016,6 @@ static bool trans_th_sync(DisasContext *ctx, arg_th_sync *a)
+     gen_th_sync_local(ctx);
+ 
+     return true;
+-#else
+-    return false;
+-#endif
+ }
+ 
+ static bool trans_th_sync_i(DisasContext *ctx, arg_th_sync_i *a)
+@@ -1029,7 +1023,6 @@ static bool trans_th_sync_i(DisasContext *ctx, arg_th_sync_i *a)
+     (void) a;
+     REQUIRE_XTHEADSYNC(ctx);
+ 
+-#ifndef CONFIG_USER_ONLY
+     REQUIRE_PRIV_MSU(ctx);
+ 
+     /*
+@@ -1038,9 +1031,6 @@ static bool trans_th_sync_i(DisasContext *ctx, arg_th_sync_i *a)
+     gen_th_sync_local(ctx);
+ 
+     return true;
+-#else
+-    return false;
+-#endif
+ }
+ 
+ static bool trans_th_sync_is(DisasContext *ctx, arg_th_sync_is *a)
 -- 
 2.43.0
 
