@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4D4C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA479C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYYQv-00057z-93; Fri, 09 Feb 2024 16:29:17 -0500
+	id 1rYYUO-0006TI-9s; Fri, 09 Feb 2024 16:32:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYQu-00055J-0W; Fri, 09 Feb 2024 16:29:16 -0500
+ id 1rYYUM-0006Sm-4i; Fri, 09 Feb 2024 16:32:50 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYQs-0000vK-FK; Fri, 09 Feb 2024 16:29:15 -0500
+ id 1rYYUK-0001br-O3; Fri, 09 Feb 2024 16:32:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=tc41nzlhPfcnvcnQlQu2yUetEJaW8wNBxXxeuL7JRBE=; b=Sp7Aw5T5ISMD9uMGUTSRaQ3/mn
- uv/gQYgpOHcfAi92AbWwdl6B4HPAkfxYHZqSo3b4JfLrfHBxOyNfFirYovfOiu/t4o16pSOGNVc9M
- mlF6dn7ms5VOHvTBymB6Cbo0Ip4+fhGl13j6d50pXj3+MjxIX24b0OIAaF0MrzvN19fCXS1uN0tn4
- igFLmqH43aHi9IlxLF3oQmCmhPtbuPu7lYqFQvxvrd9kg/kyyBTkqinvYxdsgFGA/Py4niuv7GT2d
- JJdMScj170wDzco+GuuN6kq40av1RtMhWddrgRcB1Tf/zCVwLwj4dhFH3qqzshi67A46auxgCG5Hf
- 1kNL8Z4zIsf70UeGuCEE7AgmP4rAOD5/IyAW8nURcG96PinjPgUY3dvGCBQ7Li1CHIYMnDYBN9QxU
- EFERtfjQ+ybGoVsTYFBlt4Gwce7S302GKvNObffxKKzdz5G5lOlH3obrBpXVpXtTMvmd+gnqO38Lt
- GwnZRWcMifJtkOCkZnz2HC94tRvnNSRP/VcwsBvTKvO/EZxGtdYmr5V0quffB9qFW5Khg4//4uuky
- aRDygZApfdpFc/727wRUN83jo01ECmONQma6fI7oyFP4P0Ic+UJBUOM+NKGFWXOpNxdxLKY4qQlh6
- 8AXAfN1YGBF1W69XwdoblKe0QRLFAvKo4FE6/c3gI=;
+ bh=i2xTU4eB9wQSSDXd275/NgIoWTSDDYWnrdpu8tjxFv0=; b=EkEzO39MysEVIZ/O5y57aGB30+
+ gfOv8/2NsDqaMjaM8rKSZZ95eCEL+ZsXpC0byUNyY2FZn7cDGOX/cXhpaqzWFghm0IhYzlCzX26Ga
+ 55FnZAi0wrqoBRn3MYbToDXGk7fqKc15WKyDZUMr/hyRjDFCYtwJP8AsyqzFj5kf8OzJw5dLFMwGi
+ qtWcrS3vuPN24itRFIwqtkzmMzKenUOiHLagml+aX4W5Pmq6in/4IgxE3RRiuJop3I+77kHkoIBi1
+ Ccp8yNpZ/8vMZeWRsAKIDa5xws7S6fqlY6etwRdg8/iB7ENU6X6+vfFYg+WYsNeXW/T1qjf8J/bQO
+ cCq3bgfp1Os7895wNDtXf4aX3CCwkzvc/RoeBzq6HHV86z4cmaXIEdeSySs/TUHqDPnrMtTk0V/QK
+ puizWs6Eoszm/vIpbzOfGxDgn4k21pfo8c7k46n7ygUpdfQ1Qecsyo/+pjhqvrlaNjxjg2U1ghyBw
+ xt+7U5dt/XIYtCKlQY+5nNWoJU1BXrYhpX9pAGsVOryYwFnIRDooj0nacslDJxJK34BuXYqstBrNl
+ 4kEE6s28SJxgrIv5aae6h3zpJh1ZLcWzm21S1BrXz/WPPr9was6IdHo9As9wTfLIETi7QFgGkKgrX
+ 1VYNApAKWu/qsBZ/HeAWuaIAvrZQBn45YgsayJY9Q=;
 Received: from [2a00:23c4:8bb2:1300:1032:5a09:fd17:2b9e]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYQ7-0002PI-Hx; Fri, 09 Feb 2024 21:28:31 +0000
-Message-ID: <942e7659-af0a-4805-822b-43b182868c3d@ilande.co.uk>
-Date: Fri, 9 Feb 2024 21:29:05 +0000
+ id 1rYYTb-0002Qr-Bk; Fri, 09 Feb 2024 21:32:07 +0000
+Message-ID: <447e67e2-82dc-4843-961e-4f10e5f48835@ilande.co.uk>
+Date: Fri, 9 Feb 2024 21:32:40 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Content-Language: en-US
@@ -49,10 +49,9 @@ Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini
  <pbonzini@redhat.com>, qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+ Markus Armbruster <armbru@redhat.com>
 References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-6-philmd@linaro.org>
+ <20240208181245.96617-7-philmd@linaro.org>
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
@@ -78,13 +77,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240208181245.96617-6-philmd@linaro.org>
+In-Reply-To: <20240208181245.96617-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:1032:5a09:fd17:2b9e
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 05/11] hw/ppc/prep: Realize ISA bridge before accessing
- it
+Subject: Re: [PATCH v3 06/11] hw/misc/macio: Realize IDE controller before
+ accessing it
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -116,24 +115,37 @@ On 08/02/2024 18:12, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/ppc/prep.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/misc/macio/macio.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-> index 1a6cd05c61..4eb5477069 100644
-> --- a/hw/ppc/prep.c
-> +++ b/hw/ppc/prep.c
-> @@ -278,9 +278,9 @@ static void ibm_40p_init(MachineState *machine)
+> diff --git a/hw/misc/macio/macio.c b/hw/misc/macio/macio.c
+> index c9f22f8515..db662a2065 100644
+> --- a/hw/misc/macio/macio.c
+> +++ b/hw/misc/macio/macio.c
+> @@ -122,15 +122,17 @@ static bool macio_realize_ide(MacIOState *s, MACIOIDEState *ide,
+>                                 Error **errp)
+>   {
+>       SysBusDevice *sbd = SYS_BUS_DEVICE(ide);
+> +    bool success;
 >   
->       /* PCI -> ISA bridge */
->       i82378_dev = DEVICE(pci_new(PCI_DEVFN(11, 0), "i82378"));
-> +    qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
->       qdev_connect_gpio_out(i82378_dev, 0,
->                             qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
-> -    qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
+> -    sysbus_connect_irq(sbd, 0, irq0);
+> -    sysbus_connect_irq(sbd, 1, irq1);
+>       qdev_prop_set_uint32(DEVICE(ide), "channel", dmaid);
+>       object_property_set_link(OBJECT(ide), "dbdma", OBJECT(&s->dbdma),
+>                                &error_abort);
+>       macio_ide_register_dma(ide);
+> +    success = qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp);
+> +    sysbus_connect_irq(sbd, 0, irq0);
+> +    sysbus_connect_irq(sbd, 1, irq1);
 >   
->       sysbus_connect_irq(pcihost, 0, qdev_get_gpio_in(i82378_dev, 15));
->       isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
+> -    return qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp);
+> +    return success;
+>   }
+>   
+>   static void macio_oldworld_realize(PCIDevice *d, Error **errp)
+
+I see that Zoltan has already commented about checking the success of qdev_realise() 
+before wiring the sysbus IRQs, so with that fixed:
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
