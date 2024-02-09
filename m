@@ -4,84 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 924BDC4829E
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 08:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A924C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 08:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYMdw-00023V-4K; Fri, 09 Feb 2024 03:53:56 -0500
+	id 1rYMfZ-0002iV-8d; Fri, 09 Feb 2024 03:55:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMdu-000238-8M
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:53:54 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMds-0006LX-Li
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:53:54 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a3810e975aaso78848966b.3
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 00:53:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707468830; x=1708073630; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pwSfvCJqzj+wIq2XrLR1OJ8LL64wnx0Gphh6ut+YpUs=;
- b=CVghlhw8L1h5xSA3pxSauCb1VWgrdGxUYReo1r9cpnwYIXMQC+1ExfC7G6xu9vyBVX
- BnK2pPET7KEWbXEi0ZIX338OiC9iN4NsKBDFgGbPsEUiVVFsQb7/XVAHvZHNsMt2L83x
- IJulDjbX/1iygcYAWyRlgJlzv9kCBkD0avY+C4cvJ7vvO+qgGdETD2BAyB59zqBtQ5W+
- dJOq9+ahXC6ShvVR4VTtXiUfHu7omo0FI6CJMNlIEEzj7nKNbE6vf5nFUeEASEyjTgqp
- cEpFPRG2FgLf2XfmBh7YA4ozYLFD1f5EOq6U8Y68WDCfy2dMmZuEKZjAw6UycDUWX1yf
- p7qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707468830; x=1708073630;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pwSfvCJqzj+wIq2XrLR1OJ8LL64wnx0Gphh6ut+YpUs=;
- b=ZtG7pVoqGvk7a2Y7lVNGHhYDJ8tEzw98Lty7H8kd12v1k66bpoAo4IJac6BL2v4jOY
- 31xpfGk+mpo4MHvIqKX2lGsMaP95Zwuh3T2Lr1evpTNoDXk5D1Qe5rHwf+R5OQVRWLTt
- bjza2mBtRl/w9UKnc/0aZMfAUFgHT/j6/F1gjsXiDzajQHcrcSzWXmb2E2qlJuJ9vWig
- rot72X0Xnsj1jQ863nJ3TSXtLfnJyk+kJdGNcccnyvAnndRNcKRST053Qv1AiBKzamnr
- MF6xO8XaNxQsXHbQQWwYcPoHpb546a6Bua36qBM/Euf9xAX0litzS+EBr5/DAn4VZdmh
- gpJA==
-X-Gm-Message-State: AOJu0YyKmxXnGpBjpyV+TMX10nR9QL5EoQpxMsK/6WtkWNheMhXCnC5M
- XnJzwjOKvle360L+EgWvyRcPoYSiXBMlyd4zDjhqpzA1x5FOz+ltngjLkm1QYH8X0eDIRl2G2Rk
- wIR8=
-X-Google-Smtp-Source: AGHT+IGW+79XK6so27T4BOMQRbx6oUMi1gYTgq8jWnFpAzWJr2h3+Bdvfk91G+Nd0nbn5fRZg7GpOg==
-X-Received: by 2002:a17:906:4a45:b0:a37:625d:397d with SMTP id
- a5-20020a1709064a4500b00a37625d397dmr730948ejv.44.1707468830492; 
- Fri, 09 Feb 2024 00:53:50 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWc2qVm7ipOoFRXJA6+rz12A5prG6T1E7XPxtx5Z3lYUcp6m9nFvEfgw96H4uv4Rmw9bbbJRRu0L3GbzDCz+d3BqSTqEMImrdf4ElcbC+/oDQPDjke1OWn8QZM2rD7xYbxBrX65RYutr32AYg1nstgsVhTt4HsgjlmvtM0sPRGYcFKOV4I3fJZf/LvaFCnxN8OztcggLuserBwUtCARIz9Wwcns7BiXQ2xJ84KMlx0tGaWIBZzcWWvE4d+Rv8o=
-Received: from m1x-phil.lan ([176.187.218.105])
- by smtp.gmail.com with ESMTPSA id
- t23-20020a17090605d700b00a38a476fc08sm545645ejt.87.2024.02.09.00.53.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Feb 2024 00:53:49 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [dubious RFC PATCH] target/mips: Allow I6500 CPU to access CP0 SAAR
- registers
-Date: Fri,  9 Feb 2024 09:53:47 +0100
-Message-ID: <20240209085347.8446-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rYMfY-0002i9-16
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:55:36 -0500
+Received: from mout.gmx.net ([212.227.15.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rYMfW-0006oq-5d
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:55:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+ t=1707468930; x=1708073730; i=deller@gmx.de;
+ bh=msDndIM/0AnRjkd7hidSr4pvE5Egr7ts6GG1mfWSxPA=;
+ h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
+ b=BDrBPh+fyid6KavJKSkaWQ5E1S7zyVMaE4zCWFsJNx1llctmUHRYLav2ZdpsjCm6
+ Zew52PnftasQNlLF98qbd22urQ9IitVG5FVNcpo/Ef6+Y1NfHOHAXLO1FmJ4IcyP9
+ 3WjJS60UfNu+PZQQ20EF5O4UtTvsFnY881TJe4kAnSuPf7j+bJXe2zWF6K627gNL4
+ zkOOv3VD0ykdQE5eK6Ex6QTEtA8xTiQWqtSeOSr9Ce922SQglVZyft07gFmbO06TW
+ bz633V9HutpfbajHeWve/DL/mcursRUsk64lgSC6pou7m78FC3+9EeazQRMlCowU7
+ dZuwCk9mB6uVnPliMw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([94.134.148.154]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1McY8d-1qzqnf0Doz-00cwXU; Fri, 09
+ Feb 2024 09:55:30 +0100
+Message-ID: <98a27af7-a7f5-4f8e-9478-437d53d656bf@gmx.de>
+Date: Fri, 9 Feb 2024 09:55:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/13] target/hppa: Fix PSW_W and PSW_E bits in rsm, ssm
+ and mtsm
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, deller@kernel.org,
+ qemu-devel@nongnu.org
+References: <20240207182023.36316-1-deller@kernel.org>
+ <20240207182023.36316-4-deller@kernel.org>
+ <2736d6d1-5585-4bbd-82c7-a3b7f5c87fb9@linaro.org>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
+ HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
+ r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
+ CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
+ 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
+ dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
+ Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
+ GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
+ aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
+ 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
+ ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
+ FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
+ uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
+ uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
+ REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
+ qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
+ iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
+ gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
+ Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
+ qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
+ 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
+ dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
+ rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
+ UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
+ eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
+ ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
+ dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
+ lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
+ 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
+ xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
+ wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
+ fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
+ Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
+ l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
+ RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
+ BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
+ Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
+ XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
+ MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
+ FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
+ 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
+ ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
+In-Reply-To: <2736d6d1-5585-4bbd-82c7-a3b7f5c87fb9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:R0eoVwsux3xAe+hNBpfRP8NbtJtoNQw62yEFYUE6AligKtvQj/N
+ E5s2nT6iza+sHaoxzQ5cTTRUildOPaNa+JjLn3HjZNzio9DE6SklVZHiyXywWcxl03urCcx
+ nsczaODebRNXIJ7tBV0ra9WT9mBAN/vN6lHHGH5lbASYE1m+i6g1kNCJFj9J5Hs4NNvwTLA
+ CLNEuBiebSbO+T6po42aA==
+UI-OutboundReport: notjunk:1;M01:P0:gfbyGxRtgZk=;2AOHPXyIx3uoNihGIiGTI6NtDTv
+ mmmVvbIdyWWZWeMZfU7iQ+rSGKH4Rjh5yUufx/qwuwXSMwNWj31oOu6VK2Fozvzes/COkh8SB
+ T8fTFPt0PwvpMAlPx6aR1ZLvKY5a7qBWc1CCQfYkCTsYEj148zx3wObnJFqab95SUdmvZxx7A
+ OazMVbNTBxMWm5hQZvp7uqD/bndObgw5EKcI7HHoIPZmEr+SKex7f39ul6OTdDn1TFFHWeyMd
+ dZCGAC61ZkJXtYIOPCIn09vS8HwEhaQSsxml3sJHpSOzI1DkLRY1s5SlYGuuHZjVXr00STqvm
+ 1iAzOIBi+cV17N1L3HhLmCX+puXXUITNdaQvd+9wXprZvTTmrWhfdHqr+SNpvUXTwzyl9bI7D
+ bBamOFcs5FAt+rHw+K5jtV4qBUWOifmxfkVpmoKe+MPVmDIGAWA0cCvJL7XYSlbnHdj9zyWy/
+ b/skMg46UqiGpYuI5zwPMJ5JpRQUj3c3La1up4qVhPnyH/D/xLu7u8hfndNcYz1mAdwX8UA5d
+ Clw90YxTgnC91Q+3YzhMIWnJHTBS/GMqw51CmIHI/aBjdr97yFFRcsixDDsGgQsff4d/BaVD3
+ /XtIiyZMgll+9KSde/7S72rnfOjH467s91Sc0FO98oLyEfrgg8IIGI7v1pdJMJH5+RiMP3sow
+ HkqBsmUcEqiNlzn3CD2JCnkeaw3/PaEWcWzmsAqEOSqzJfKrABBrL93bGB56GmKdd4mHZDx7t
+ Pc0Su1t/PLRBKYKOM2A3+p5cfaqxhs2VI7gc4OUD/RSs/Cdc6YpVuOZhI/3LbBXjbHRTvETVL
+ lfDD0/Mno3uJtsAHhktZUe1UWsvEa9R/QMO9uh+UaGLss=
+Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,66 +133,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Desperate attempt to enable access from ITU to SAAR registers, by
-taking missing part of commits c9340491cc ("target-mips: implement
-SAARI/SAAR registers") and c1af807054 ("target-mips: add I6500 core
-configuration") from [*] which were partly committed as 5fb2dcd179
-("target/mips: Provide R/W access to SAARI and SAAR CP0 registers").
+On 2/8/24 21:43, Richard Henderson wrote:
+> On 2/7/24 08:20, deller@kernel.org wrote:
+>> =C2=A0 #define PSW_E=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 0x04000000
+>> +#define PSW_E_BIT=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 37 /* PA2.0 only */
+>> =C2=A0 #define PSW_W=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 0x08000000 /* PA2.0 only */
+>> +#define PSW_W_BIT=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 36 /* PA2.0 only */
+> ...
+>> +target_ulong HELPER(get_system_mask)(CPUHPPAState *env)
+>> +{
+>> +=C2=A0=C2=A0=C2=A0 target_ulong psw =3D env->psw;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 /* mask out invalid bits */
+>> +=C2=A0=C2=A0=C2=A0 target_ulong psw_new =3D psw & PSW_SM;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 /* ssm/rsm instructions number PSW_W and PSW_E diff=
+erently */
+>> +=C2=A0=C2=A0=C2=A0 psw_new &=3D ~PSW_W;
+>> +=C2=A0=C2=A0=C2=A0 if (psw & PSW_W) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 psw_new |=3D 1ull << (63 - =
+PSW_W_BIT);
+>> +=C2=A0=C2=A0=C2=A0 }
+>
+> Um, this has changed nothing, since 1 << (63 - 36) =3D=3D 0x8000000 =3D=
+=3D PSW_W.
 
-[*] https://github.com/MIPS/qemu/commit/c9340491cc.
+Yep.
+I seem to have mixed strange things when writing that.
+I've dropped the patch for now.
 
-Reported-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-I can not test this. We don't test the I6500 anyway. Besides this
-CPU lacks DSPRAM support which was never merged, see:
-https://lore.kernel.org/qemu-devel/1566216496-17375-2-git-send-email-aleksandar.markovic@rt-rk.com/
-and:
-https://github.com/MIPS/qemu/commit/a4c1477c84#diff-5362bb61a4a73490270458b19e452bac9b3b907f4efd59ece6494ec19d033a81
-so I doubt it is really useful in its current incomplete state.
----
- target/mips/cpu.c           | 1 +
- target/mips/tcg/translate.c | 1 +
- target/mips/cpu-defs.c.inc  | 1 +
- 3 files changed, 3 insertions(+)
+Thanks!
+Helge
 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index d644adbc77..6fa5902ec7 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -256,6 +256,7 @@ static void mips_cpu_reset_hold(Object *obj)
-     env->active_fpu.fcr31 = env->cpu_model->CP1_fcr31;
-     env->msair = env->cpu_model->MSAIR;
-     env->insn_flags = env->cpu_model->insn_flags;
-+    env->saarp = env->cpu_model->SAARP;
- 
- #if defined(CONFIG_USER_ONLY)
-     env->CP0_Status = (MIPS_HFLAG_UM << CP0St_KSU);
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 12094cc1e7..ee2b4051f3 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -15405,6 +15405,7 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-              (env->insn_flags & (INSN_LOONGSON2E | INSN_LOONGSON2F));
-     ctx->vp = (env->CP0_Config5 >> CP0C5_VP) & 1;
-     ctx->mrp = (env->CP0_Config5 >> CP0C5_MRP) & 1;
-+    ctx->saar = (bool) env->saarp;
-     ctx->nan2008 = (env->active_fpu.fcr31 >> FCR31_NAN2008) & 1;
-     ctx->abs2008 = (env->active_fpu.fcr31 >> FCR31_ABS2008) & 1;
-     ctx->mi = (env->CP0_Config5 >> CP0C5_MI) & 1;
-diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
-index fbf787d8ce..6885196dca 100644
---- a/target/mips/cpu-defs.c.inc
-+++ b/target/mips/cpu-defs.c.inc
-@@ -817,6 +817,7 @@ const mips_def_t mips_defs[] =
-         .PABITS = 48,
-         .insn_flags = CPU_MIPS64R6,
-         .mmu_type = MMU_TYPE_R4000,
-+        .SAARP = 1,
-     },
-     {
-         .name = "Loongson-2E",
--- 
-2.41.0
+
+> The conversion of PSW_SM_W to PSW_W happens in expand_sm_imm().
+> There's a comment there about keeping unimplemented bits disabled, inclu=
+ding PSW_E. Perhaps this is the wrong layer in which to do this?
+>
+> In any case, what is the actual problem that you're seeing?=C2=A0 Becaus=
+e it *isn't* that we were not considering the different placement of the b=
+its, as your commit message suggests.
+>
+>> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+>> index 53ec57ee86..10fdc0813d 100644
+>> --- a/target/hppa/translate.c
+>> +++ b/target/hppa/translate.c
+>> @@ -2163,13 +2163,20 @@ static bool trans_rsm(DisasContext *ctx, arg_rs=
+m *a)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 nullify_over(ctx);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tmp =3D tcg_temp_new_i64();
+>> -=C2=A0=C2=A0=C2=A0 tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState,=
+ psw));
+>> -=C2=A0=C2=A0=C2=A0 tcg_gen_andi_i64(tmp, tmp, ~a->i);
+>> -=C2=A0=C2=A0=C2=A0 gen_helper_swap_system_mask(tmp, tcg_env, tmp);
+>> -=C2=A0=C2=A0=C2=A0 save_gpr(ctx, a->t, tmp);
+>> +=C2=A0=C2=A0=C2=A0 if (a->t !=3D 0) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gen_helper_get_system_mask(=
+tmp, tcg_env);
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 save_gpr(ctx, a->t, tmp);
+>> +=C2=A0=C2=A0=C2=A0 }
+>
+> If a->t =3D=3D 0, tmp is uninitialized...
+>
+>> +
+>> +=C2=A0=C2=A0=C2=A0 if (a->i) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_ld_i64(tmp, tcg_env=
+, offsetof(CPUHPPAState, psw));
+>
+> ... but read here.
+>
+>> @@ -2183,11 +2190,17 @@ static bool trans_ssm(DisasContext *ctx, arg_ss=
+m *a)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 nullify_over(ctx);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tmp =3D tcg_temp_new_i64();
+>> -=C2=A0=C2=A0=C2=A0 tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPUHPPAState,=
+ psw));
+>> -=C2=A0=C2=A0=C2=A0 tcg_gen_ori_i64(tmp, tmp, a->i);
+>> -=C2=A0=C2=A0=C2=A0 gen_helper_swap_system_mask(tmp, tcg_env, tmp);
+>> -=C2=A0=C2=A0=C2=A0 save_gpr(ctx, a->t, tmp);
+>> +=C2=A0=C2=A0=C2=A0 if (a->t !=3D 0) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gen_helper_get_system_mask(=
+tmp, tcg_env);
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 save_gpr(ctx, a->t, tmp);
+>> +=C2=A0=C2=A0=C2=A0 }
+>> +
+>> +=C2=A0=C2=A0=C2=A0 if (a->i) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_ld_i64(tmp, tcg_env=
+, offsetof(CPUHPPAState, psw));
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_ori_i64(tmp, tmp, a=
+->i);
+>
+> Likewise.
+>
+>
+> r~
 
 
