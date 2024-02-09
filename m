@@ -4,90 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C44A6C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 19:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07C2C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 19:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYWAw-0004oR-Pr; Fri, 09 Feb 2024 14:04:38 -0500
+	id 1rYWP6-0000n1-BA; Fri, 09 Feb 2024 14:19:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rYWAv-0004oC-Kt
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:04:37 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rYWAt-0003aO-Mo
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:04:37 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1d7431e702dso12222965ad.1
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 11:04:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707505473; x=1708110273; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=hLI+DnLAUF0CmVB8aA9JgOPaPHjiy2v35lOZdbLXb/U=;
- b=mC3LQrLcJa4J2EyK4ZHJTGnsizv5cuyrNtQoo1SbNNfe1V6XN4ICRqhnHwy+8BeZ8f
- ehw/+Zmy+KLkIRveqMiZCGa3LlW9IMn1+55VjiVdUnNOlm89k5Xvl+hA0ziItZtZ7r1p
- IezumyL9WndcfxZAmyU1cjqDz+s7ubYPUSzGDGcVAHdk4KgqbSr7Jai1yXUzvlxC833m
- dBI2Y9Po4u1XrWIs97m0yzRcnCrF7zwAul06GKVMTZcP7IsEJLQnMIs9aI7aJ/TO9NeI
- gZaZSkDad0zsYqVat4pEI37MLUOg4JdZaY66takvEquy9kQFfXETG1aK2DKiB1uqpo5I
- YPVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707505473; x=1708110273;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hLI+DnLAUF0CmVB8aA9JgOPaPHjiy2v35lOZdbLXb/U=;
- b=pkEn6QwZqjJJWg/sXKopJTZCP0O2j0wHihW+/Wuz2+YOqpTbYY7Q8avma4ZJoLNwto
- pE/LAxYoeIej9Dn66JYWR1mLRIc1RzLZXvBdwnSqKzEQyiVOQRK46aTNNW9pu37vuyT+
- NNbHfVzFo5lVNwcwOjop2Y+pA2m8x5+Yj0TeHleJf7yS6HI8dTVV7vEFNxHpVQ8/2Bdt
- NcS2lQeQ9X+cTXDwBpAuSan5ug304Ob/C2pAECYv5sIpru53eX3pPsZF+8rLr5TWIo/X
- U3659pjUeAqemUjcV6Wmx2jeZRBaNIIhehTSEP5QfvHZv92DfkqW2eqpUiiTwTJc4M6P
- mYZQ==
-X-Gm-Message-State: AOJu0YybppiNn5S7n5fJPlpy9t/g2HJ1znM3IFwiuHvaEyhQXP8U5JX/
- f8XsgwvOtdKchiuWmrPhrLYnb/J29SeBAyDHqBOV/k2HhLLL4D4b
-X-Google-Smtp-Source: AGHT+IFAKeIpM5HBs8uhyYJXitvSknzU8xFlSnpeBRlIL3wrrZ19jFh6XtYQYKVPHkqkTbE0Bqr5TQ==
-X-Received: by 2002:a17:903:988:b0:1d9:a5ec:30c6 with SMTP id
- mb8-20020a170903098800b001d9a5ec30c6mr90736plb.44.1707505472634; 
- Fri, 09 Feb 2024 11:04:32 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4sa+AiQu2q/mj4EPZYDBqmnNLtFk7pAy9uXWraQQf39DuubXS4BpmbOlEzRLy3rzNuunlxVw7veyXZhUld7hoP55gvKfODbvhUVm4YtvyJxnpFia8SdLtZDUe1FcF4Dv2e8vKuXES9wvdxroowrFisCTkQXdUigaZTKrpsuObfCZIjCHnnlveaMoHUH/7Leo0v7NPabjyPncmQXq8t5sIKZGVSOm8W8/KucSh4BFELIN8mX/D265xeooKcTyxyRS5femorvrlP0ILxStEkO7hwZpcv840jXvv20uPWWriYtL9G2ylOAE37hE6Cz/ElqNL3b0w9uV5jnKO2d3wj/fLLElR72ZMzzo8TAX1mvDMmZ9djZkSeQ==
-Received: from debian ([2601:641:300:14de:9652:d83b:aa3c:1e1f])
- by smtp.gmail.com with ESMTPSA id
- kk7-20020a170903070700b001d8f99dbe4asm1829773plb.4.2024.02.09.11.04.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 11:04:32 -0800 (PST)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Fri, 9 Feb 2024 11:04:13 -0800
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net,
- nmtadam.samsung@gmail.com, nifan@outlook.com,
- jim.harris@samsung.com, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v3 9/9] hw/mem/cxl_type3: Add dpa range validation for
- accesses to dc regions
-Message-ID: <ZcZ3LU9bM20Lomce@debian>
-References: <20231107180907.553451-1-nifan.cxl@gmail.com>
- <20231107180907.553451-10-nifan.cxl@gmail.com>
- <20240124165815.00007e46@Huawei.com>
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>)
+ id 1rYWP4-0000mR-0C; Fri, 09 Feb 2024 14:19:14 -0500
+Received: from mout.gmx.net ([212.227.15.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>)
+ id 1rYWP1-0007A1-Rj; Fri, 09 Feb 2024 14:19:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+ t=1707506347; x=1708111147; i=deller@gmx.de;
+ bh=76cOUPQpYX2lz+rHx7nC/M5aC3BBO0gOfWalX9L82HE=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+ In-Reply-To;
+ b=Xro7CSObeCp8GbS5F200AKX3o0I0zEAsjfmhynZ+CjU7auGlyxH+PO2RZ4lTPLFG
+ d4LqGYtk5xFCwnbQ2WYNy8yNDHTAf5GMWEwN8OB3Yqg2oQ5ASDMTI65ZRcUvMgGN5
+ pyb5UlG1rh32U1o3oUB1c8kBm5Q456b1lqz9Hsha7p+3cCNUdcjGjLHnQRv84koyf
+ qXFkxOz7G+gNGDSb/OR9u4Tlr5vIm/kpZ8Htd1SB3lRBSW1Ac8XLbnILQbW/Gt0qQ
+ 0refsD4DF+qt+3pUqDmUwnaWam8O/yRVpoLOA2Ysn/GcixjWedMJsG09/owfyn8cd
+ DrB1wAEZA66MxTfCiw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([94.134.148.154]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUXpK-1rPcS23N0S-00QUA6; Fri, 09
+ Feb 2024 20:19:06 +0100
+Message-ID: <41399ad8-006d-4480-919e-d64395c5cfe9@gmx.de>
+Date: Fri, 9 Feb 2024 20:19:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240124165815.00007e46@Huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/hppa/Kconfig: Fix building with "configure
+ --without-default-devices"
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org,
+ qemu-trivial@nongnu.org
+References: <20240209185506.248001-1-thuth@redhat.com>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20240209185506.248001-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:NGNlqiZi995P1KUzNosLN+laBunFROxEkfal2WhCcW9lLkIallk
+ APpeTngNAtoUV9DUYceenW3sqHfdGJ5vOeqp1UPIFoLm7+Nmd8RjHVl/lDn++V44YPVVT/9
+ eeSmAzdO87g9iij3OJHid15I2gG+DU9wUVcNJyh6wPlYW03arwvUw8C797WTBMNwbvh6jYI
+ DnxVa81Q6lAEpONPi0TlQ==
+UI-OutboundReport: notjunk:1;M01:P0:65AAi800ki4=;Vslg0gObrzqCd6YGRfwnZ/v4s6x
+ tVhkZO4OCLJ3JaMQrlI8P+15QoQW+nkz+cbs0W0gjZQqMFQk1SP2Q3zBA7bsJkxrTIDVFicq/
+ AbeTd37yV0i1JwqO8LGVygFM7eDB780a+VY92vDWTjX8KYWra+NvTzR1wB/A8QwhgjGqzwYaF
+ eNhf3mLDYhd9Y7oFA+RqFYAkRGf0Pk2RvZy7uyjASZc1bVrBHlXIjkUVPphmrRhTBgg/3JVmV
+ ViDp/Va0oYl9yZZShc8a0lxnvQ/f1wTP3XuBmDt1YjcQVS+l4CiEHi6L/QgDY+LlVaqMRWgnr
+ KiNzekeFEaTBuZO+GjKF49TApy+DvBN8ivR4mbFRa2H+W33MnqCQjrnChNIy/NI1MlPb3LIy8
+ Ok4BqnbDhe8yaJu8pFk4rM4uoUQSjD1OCCdc5eu8iVNKfapJbrYJOIPNPgFzV2lj/+KHr0Trp
+ 8cfxYOLBh073vrSPgj2GDLhtQCR6RJ4kzgAJ6t0knijcdZWvwH+spIdsn4jsQPre0OsXxRhlF
+ f+thDgVJAFDC4qo5/njgks5Qovdl52PX0H5wvCEDfS3edmFlUFgQ7e2haelaatxsacf4/3yHs
+ iEHKRkcfHWNDYxWmBvMzhlUxJOsHrhHMeqQiUCa9LMmAP8/qjvaEfRpLJ08tJc1/f7vk2ePPr
+ j/vCmJ5rbNugSTE/94cpgD3DgiUDaL8wakFmjLJtrIOUvcTky0U4UbQ1TBBYwhPE3ZQkEh9JK
+ pmBMfajFp6PeaNEtfcgSxPsC079HljGZmC9kZdZs4tQBtRmJe4Zt+IC9FkVbCxtF7WoHswSS3
+ UmZlrxU/+gdstapZ0zhIr793afLloGx/BWbMyqxhHih6w=
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,137 +134,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 24, 2024 at 04:58:15PM +0000, Jonathan Cameron wrote:
-> On Tue,  7 Nov 2023 10:07:13 -0800
-> nifan.cxl@gmail.com wrote:
-> 
-> > From: Fan Ni <fan.ni@samsung.com>
-> > 
-> > Not all dpa range in the dc regions is valid to access until an extent
-> DPA ... DC etc
-> 
-> > covering the range has been added. Add a bitmap for each region to
-> > record whether a dc block in the region has been backed by dc extent.
-> > For the bitmap, a bit in the bitmap represents a dc block. When a dc
-> > extent is added, all the bits of the blocks in the extent will be set,
-> > which will be cleared when the extent is released.
-> > 
-> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
-> 
-> Hi Fan, one query inline and a few comments.
-> 
-> Jonathan
-> 
-> > 
-> > --
-> > JC changes:
-> > - Rebase on what will be next gitlab.com/jic23/qemu CXL staging tree.
-> > - Drop unnecessary handling of failed bitmap allocations. In common with
-> >   most QEMU allocations they fail hard anyway.
-> > - Use previously factored out cxl_find_region() helper
-> > - Minor editorial stuff in comments such as spec version references
-> >   according to the standard form I'm trying to push through the code.
-> > Picked up Jørgen's fix:
-> > https://lore.kernel.org/qemu-devel/d0d7ca1d-81bc-19b3-4904-d60046ded844@wdc.com/T/#u
-> > ---
-> >  hw/cxl/cxl-mailbox-utils.c  | 31 +++++++++------
-> >  hw/mem/cxl_type3.c          | 78 +++++++++++++++++++++++++++++++++++++
-> >  include/hw/cxl/cxl_device.h | 15 +++++--
-> >  3 files changed, 109 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > index 8e6a98753a..6be92fb5ba 100644
-> > --- a/hw/cxl/cxl-mailbox-utils.c
-> > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > @@ -1401,10 +1401,9 @@ CXLDCDRegion *cxl_find_dc_region(CXLType3Dev *ct3d, uint64_t dpa, uint64_t len)
-> >  }
-> >  
-> >  void cxl_insert_extent_to_extent_list(CXLDCDExtentList *list,
-> > -                                             uint64_t dpa,
-> > -                                             uint64_t len,
-> > -                                             uint8_t *tag,
-> > -                                             uint16_t shared_seq)
-> > +                                      uint64_t dpa, uint64_t len,
-> > +                                      uint8_t *tag,
-> > +                                      uint16_t shared_seq)
-> 
-> avoid noisy whitespace changes like this.
-> 
-> 
-> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > index 43cea3d818..4ec65a751a 100644
-> > --- a/hw/mem/cxl_type3.c
-> > +++ b/hw/mem/cxl_type3.c
-> 
-> > +/*
-> > + * Check whether a DPA range [dpa, dpa + len) has been backed with DC extents.
-> > + * Used when validating read/write to dc regions
-> > + */
-> > +bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-> > +                                  uint64_t len)
-> > +{
-> > +    CXLDCDRegion *region;
-> > +    uint64_t nbits;
-> > +    long nr;
-> > +
-> > +    region = cxl_find_dc_region(ct3d, dpa, len);
-> > +    if (!region) {
-> > +        return false;
-> > +    }
-> > +
-> > +    nr = (dpa - region->base) / region->block_size;
-> > +    nbits = DIV_ROUND_UP(len, region->block_size);
-> > +    return find_next_zero_bit(region->blk_bitmap, nr + nbits, nr) == nr + nbits;
-> I'm not sure how this works... Is it taking a size or an end point?
-> 
-> Linux equivalent takes size, so I'd expect
-> 
->     return find_next_zero_bit(region->blk_bitmap, nbits, nr);
-> Perhaps a comment would avoid any future confusion on this.
-> 
+On 2/9/24 19:55, Thomas Huth wrote:
+> When running "configure" with "--without-default-devices", building
+> of qemu-system-hppa currently fails with:
+>
+>   /usr/bin/ld: libqemu-hppa-softmmu.fa.p/hw_hppa_machine.c.o: in functio=
+n `machine_HP_common_init_tail':
+>   hw/hppa/machine.c:399: undefined reference to `usb_bus_find'
+>   /usr/bin/ld: hw/hppa/machine.c:399: undefined reference to `usb_create=
+_simple'
+>   /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_bus_fi=
+nd'
+>   /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_create=
+_simple'
+>   collect2: error: ld returned 1 exit status
+>   ninja: build stopped: subcommand failed.
+>   make: *** [Makefile:162: run-ninja] Error 1
+>
+> And after fixing this, the qemu-system-hppa binary refuses to run
+> due to the missing 'pci-ohci' and 'pci-serial' devices. Let's add
+> the right config switches to fix these problems.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/hppa/Kconfig | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
+> index ff8528aaa8..124d5e9e47 100644
+> --- a/hw/hppa/Kconfig
+> +++ b/hw/hppa/Kconfig
+> @@ -6,7 +6,7 @@ config HPPA_B160L
+>       select ASTRO
+>       select DINO
+>       select LASI
+> -    select SERIAL
+> +    select SERIAL_PCI
 
-My understanding is that the size is the size of the bitmap, which is
-also end of the range to check, not the length of the range to check.
+I think the "SERIAL" is needed too for the B160L machine.
+Other than that,
 
-The function find_next_zero_bit(bitmap, size, offset) checks the bitmap range
-[offset, size) to find the next unset bit, for the above test, we want to
-check range [nr, nr + nbits), so the arguments passed to the function
-should be right.
+Acked-by: Helge Deller <deller@gmx.de>
 
-In the definition of the function, whenever offset >= size, it returns size
-because size is the end of the range, So if we pass nbits and nr
-to the function and nr >= nbits, which can be common, meaning (dpa-region_base)
-\> len, the function will always return true; that is not what we want.
+Thank you!
+Helge
 
-To sum up, the second parameter of the function should always be the end
-of the range to check, for our case, it is nr + nbits.
+>       select ISA_BUS
+>       select I8259
+>       select IDE_CMD646
+> @@ -16,3 +16,4 @@ config HPPA_B160L
+>       select LASIPS2
+>       select PARALLEL
+>       select ARTIST
+> +    select USB_OHCI_PCI
 
-Fan
-
-
-
-> > +}
-> > +
-> > +/*
-> > + * Mark the DPA range [dpa, dap + len) to be unbacked and inaccessible. This
-> > + * happens when a dc extent is return by the host.
-> > + */
-> > +void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-> > +                                   uint64_t len)
-> > +{
-> > +    CXLDCDRegion *region;
-> > +    uint64_t nbits;
-> > +    long nr;
-> > +
-> > +    region = cxl_find_dc_region(ct3d, dpa, len);
-> > +    if (!region) {
-> > +        return;
-> > +    }
-> > +
-> > +    nr = (dpa - region->base) / region->block_size;
-> > +    nbits = len / region->block_size;
-> > +    bitmap_clear(region->blk_bitmap, nr, nbits);
-> > +}
-> > +
-> 
 
