@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FA7C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 12:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 267F4C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 12:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYQ3w-0007zN-Lk; Fri, 09 Feb 2024 07:33:00 -0500
+	id 1rYQ3e-0007kC-Gx; Fri, 09 Feb 2024 07:32:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3m-0007rx-Jn
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:32:58 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3c-0007ix-H5
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:32:40 -0500
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3k-0001sz-Gm
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:32:50 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33b401fd72bso495714f8f.3
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 04:32:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3Z-0001pS-BW
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:32:40 -0500
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-5116b017503so1145525e87.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 04:32:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707481967; x=1708086767; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707481955; x=1708086755; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DoeBrV+EEZMMsB2lJU5mfdts4xYAcXXfL7ZG+bYHvck=;
- b=mwVIjU74L8EpSrWA9GC+FnmdAzyXxTT+Lmx3qbxkNBpXeQNry7PU83htKlu1nn7i9H
- 1r7eYgQtRMlPOJLy8llHaVrF6xz/76bzXwk4XNw4OFmcnP9/KT13MKipzjidpP8N69RQ
- OXTQmLmy2hcMeuDpCw9U7t3TjJYDNmXVFLYskXvsV4OfvjhGUR3vgFiWmWnacJbMBJ2/
- fO+ZlLNoqGThDsntD1pI5UnH1jB6GDhBW9vWXjmU9aHoAkRgpAC7Kgw6gm4eRhqBJ1KU
- 6S9Hcm8GHebNSjsVzpmCMsw8jMijph3XdtGHkRJ4TBlIHeJQvwSVoEn4xJQXEC2PYMSq
- o/Pg==
+ bh=D/EF0ukeLn1gu/zaqcDjARqMaoRLvmGATkelLRoHEzw=;
+ b=wT9dB7Rhhr4feEQsUkJWsAoMzDnk41S7aB+GfGEB3NbzKbD0wHCMFP13HKpJbtgAA0
+ ghkiupFWJVmKDTUiONufcOStB4jeLiq1EWrXTS2j55bKa7+ZLHxk9U/dz5WYTVCuX/Uv
+ lYu1BAj2L/Paw9V27JHKe5cGTMCDsr9dE3wKpwTF16RcyzAxOX01yBOWmcNnJAWxP5pZ
+ em4qyLDBvRLHEGUzft2q2lrBXGebRz1T4+WpI1SyOvc+pDkN6sCoQrYeuFfl2TVR62bF
+ fQyc5TV+vgHtOi4trnfnU53dGldDnTCbKkc8EQlUCc3WN2O6yzYb1QTdUjBgIL1E/SGb
+ x7mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707481967; x=1708086767;
+ d=1e100.net; s=20230601; t=1707481955; x=1708086755;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DoeBrV+EEZMMsB2lJU5mfdts4xYAcXXfL7ZG+bYHvck=;
- b=gQE94tbzNMowQ6OT1nhldu8pprgMFZmnmfVxT3Jv9BAHaOngRZov17L2OlH4iIqsms
- YdCSRTIINiFPYrF211VKO3dQ+QIH82/8ce0AVGo0wwgyb73PryQ7xo1CjealweQPkCNo
- 47GkQEt5tydtQQKa+M87PqC80nzhG0BLTZU7ISO1kl9fxgTEafhdLibFRpqeZfHpEd52
- XejBtMSsMmzVoQ9h4sJ5X0jadQaN7URMZz8Whc8CmwZP6x1/pUJsjU6KRLxS/3mpBfR+
- wPChhNn/wEg/rxnblDzJhWTVysLVKpa01yXsMj3FW3TA4W83tWRZV63uSohCD8tNiKyI
- 4uzQ==
-X-Gm-Message-State: AOJu0YxAfyVcSnL3iHe/J/wJcl2wlW+y6x7pubmfbwz/+VAvLUTct93x
- 1SJp65f7QLFVZakQkVhVZxy/vd/5R/+mzHi8LDfo4z+qOpkOMx77FJr0lJkPkj8F8B0yUu5w28h
- Y
-X-Google-Smtp-Source: AGHT+IH6ARJjacuRf08FpRNTvoF3O1HvWResn8vP28ypStmZYCDHLC/5YVi242T8Fhhh+agYdxqLmw==
-X-Received: by 2002:adf:a442:0:b0:33b:61ed:b899 with SMTP id
- e2-20020adfa442000000b0033b61edb899mr892320wra.56.1707481966785; 
- Fri, 09 Feb 2024 04:32:46 -0800 (PST)
+ bh=D/EF0ukeLn1gu/zaqcDjARqMaoRLvmGATkelLRoHEzw=;
+ b=rxI7jjhf2aLhuNCaS7fIfe4QLD5fqEkWXm+vtERA7DeoS7PyNcA3iplubWxjmnweEv
+ yYjXxNX9MLsQe0e1/2bxGt8BEoDIWmStFbxE/Vi4trjY8ENejrc+kCNLEzohUxHxilCu
+ zx8K8nSOyW2NjEZC9kvZqL4DckC2gHBQINie26Bn5P0yIC6RHySEgo9tJz7+Rfh5o0yM
+ vDbnWDUTtZEZJrrX0C4ZkN3KZGCiXkPhWK4asFbZCL+XPGjo22QqkdDVG/NcCNSRD76E
+ YnF3j4+UntQbAms3xXuCAWN94E+1DguEespzXGstSn6/mDTnsj0PtBFn1rtlxlLLG93A
+ lpSQ==
+X-Gm-Message-State: AOJu0YxvwrLVjbckowGudeApXBBQrjqaXHlM43omR/ef0DiIUf823lay
+ Y8uMTLGGKJ9tpqa62wBZpi4efXwzO5on3/yv7p0ppK6XGnJrIC6BaOFnocAUTDtV4rKpQ5hxPQ3
+ A
+X-Google-Smtp-Source: AGHT+IFzNlLJIV6KFJNI6HMcsm4k41Q4sAMQPIqNmxYPKb1MoiNw7vxYC8cczpLfscF0PI7UTQ8IrQ==
+X-Received: by 2002:ac2:5213:0:b0:511:78bb:a9da with SMTP id
+ a19-20020ac25213000000b0051178bba9damr1050764lfl.39.1707481955364; 
+ Fri, 09 Feb 2024 04:32:35 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzfgXHMN47aQ/KCNhBxpV4Z3YyKPRl2YquyCugn1MlusU6NZEj5P66bCUgW3gpussgOGP+xANi+EeuF+NG8em8JEZKUh2yttWi4MnxBqiDLxQXopMjKPdXDU+90V/3v1NeIbXhr7cdmnh+hWKmOxADeH7HtF5hNd7e76gOgYou3cfEjEDdRk0c+QcWPz3/262htCsWFmn+KBJU1JLprRzmorl+uwiCJUo2oI/k3WcCdoAjeAQItdLyJ/52aEZiEzRw9bBmS3lOoAqbutHOB55EsKbgx5dz8wxZghUYOmrRhr5bCp5lQMfS68bjY1wAAGbWm/bDS0GNpFc=
+ AJvYcCWOxnzVCCy/U/2x4P2+0KM350C3xhqnQsKdrTEyWhR73+BTmRLGIr6ib1IOOGp8wKrXY3m5Ew8fI8vgpaeHbL58EZ67MtBtC8SAyviYbCiAEUENUfRQfJ/P6+oCFZ/SDCVW+jowkVVQpahRotlAHzlXntDPh+V4kyIcFvk2fn9NtyDKRB1tfyPkL2iUgnumUkj0dmzIw9NHNuupSJoQnAW9MvqNWNXQVEAvkvRqi7Pp17CIMioFku4/J5iKUM/eOpuP6FHQIxOdTXf7szYJBcdmc9CU4p+y1aFO6F22dVzl7X07kreNMoNiJs/pN42aV3jh7DXLWNuh3FE=
 Received: from m1x-phil.lan ([176.187.218.105])
  by smtp.gmail.com with ESMTPSA id
- d23-20020adfa357000000b0033ae50e2c6asm1712299wrb.83.2024.02.09.04.32.45
+ 7-20020a05600c248700b0040fddaf9ff4sm482987wms.40.2024.02.09.04.32.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Feb 2024 04:32:46 -0800 (PST)
+ Fri, 09 Feb 2024 04:32:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -68,18 +68,17 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
  Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC PATCH 3/7] hw/ide/cmd646: Configure IDE bus IRQs after
- realization
-Date: Fri,  9 Feb 2024 13:32:21 +0100
-Message-ID: <20240209123226.32576-4-philmd@linaro.org>
+Subject: [RFC PATCH 1/7] hw/qdev: Introduce DeviceClass::[un]wire() handlers
+Date: Fri,  9 Feb 2024 13:32:19 +0100
+Message-ID: <20240209123226.32576-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240209123226.32576-1-philmd@linaro.org>
 References: <20240209123226.32576-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,48 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We shouldn't call qdev_get_gpio_in() on unrealized devices.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Ideally we should rework the current IDE bus model to really
-use QOM and not globals. Left for later.
----
- hw/ide/cmd646.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/hw/qdev-core.h |  8 +++++++-
+ hw/core/qdev.c         | 21 ++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ide/cmd646.c b/hw/ide/cmd646.c
-index c0bcfa4414..92e1e7a4fc 100644
---- a/hw/ide/cmd646.c
-+++ b/hw/ide/cmd646.c
-@@ -291,9 +291,18 @@ static void pci_cmd646_ide_realize(PCIDevice *dev, Error **errp)
-     /* TODO: RST# value should be 0 */
-     pci_conf[PCI_INTERRUPT_PIN] = 0x01; // interrupt on pin 1
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index d47536eadb..2ca33aea3b 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -101,8 +101,12 @@ typedef void (*BusUnrealize)(BusState *bus);
+  * @props: Properties accessing state fields.
+  * @realize: Callback function invoked when the #DeviceState:realized
+  * property is changed to %true.
++ * @wire: Callback function called after @realize to connect IRQs,
++ * clocks and map memories. Can not fail.
++ * @unwire: Callback function to undo @wire. Called before @unrealize.
++ * Can not fail.
+  * @unrealize: Callback function invoked when the #DeviceState:realized
+- * property is changed to %false.
++ * property is changed to %false. Can not fail.
+  * @hotpluggable: indicates if #DeviceClass is hotpluggable, available
+  * as readonly "hotpluggable" property of #DeviceState instance
+  *
+@@ -161,6 +165,8 @@ struct DeviceClass {
+      */
+     DeviceReset reset;
+     DeviceRealize realize;
++    void (*wire)(DeviceState *dev);
++    void (*unwire)(DeviceState *dev);
+     DeviceUnrealize unrealize;
  
--    qdev_init_gpio_in(ds, cmd646_set_irq, 2);
-     for (i = 0; i < 2; i++) {
-         ide_bus_init(&d->bus[i], sizeof(d->bus[i]), ds, i, 2);
+     /**
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index c68d0f7c51..1d399aae71 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -303,6 +303,16 @@ bool qdev_realize_and_unref(DeviceState *dev, BusState *bus, Error **errp)
+ 
+ void qdev_unrealize(DeviceState *dev)
+ {
++    DeviceClass *dc = DEVICE_GET_CLASS(dev);
++
++    if (dc->unwire) {
++        if (!dc->wire) {
++            error_report("disconnect() without connect() for type '%s'",
++                         object_get_typename(OBJECT(dev)));
++            abort();
++        }
++        dc->unwire(dev);
 +    }
-+}
-+
-+static void pci_cmd646_ide_wire(DeviceState *dev)
-+{
-+    PCIIDEState *d = PCI_IDE(dev);
-+    DeviceState *ds = DEVICE(dev);
-+
-+    qdev_init_gpio_in(ds, cmd646_set_irq, 2);
-+    for (unsigned i = 0; i < 2; i++) {
-         ide_bus_init_output_irq(&d->bus[i], qdev_get_gpio_in(ds, i));
+     object_property_set_bool(OBJECT(dev), "realized", false, &error_abort);
+ }
  
-         bmdma_init(&d->bus[i], &d->bmdma[i], d);
-@@ -324,6 +333,7 @@ static void cmd646_ide_class_init(ObjectClass *klass, void *data)
+@@ -601,8 +611,17 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+         dev->pending_deleted_event = true;
+         DEVICE_LISTENER_CALL(unrealize, Reverse, dev);
+     }
+-
+     assert(local_err == NULL);
++
++    if (dc->wire) {
++        if (!dc->unwire) {
++            warn_report_once("wire() without unwire() for type '%s'",
++                             object_get_typename(OBJECT(dev)));
++        }
++        dc->wire(dev);
++    }
++
++    /* At this point the device is "guest visible". */
+     return;
  
-     dc->reset = cmd646_reset;
-     dc->vmsd = &vmstate_ide_pci;
-+    dc->wire = pci_cmd646_ide_wire;
-     k->realize = pci_cmd646_ide_realize;
-     k->exit = pci_cmd646_ide_exitfn;
-     k->vendor_id = PCI_VENDOR_ID_CMD;
+ child_realize_fail:
 -- 
 2.41.0
 
