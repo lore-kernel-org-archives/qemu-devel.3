@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA6AC4829C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DE5C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:08:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYOcW-0005yP-Ph; Fri, 09 Feb 2024 06:00:39 -0500
+	id 1rYOf1-0008PQ-EP; Fri, 09 Feb 2024 06:03:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOcC-0005gu-Jf
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:17 -0500
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1rYOcs-0006X2-BX
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:59 -0500
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOc7-0000Z9-Uc
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:15 -0500
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-6e12f8506ccso355858a34.2
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:11 -0800 (PST)
+ id 1rYOco-0000pG-1Z
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:56 -0500
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-59a8ee08c23so289839eaf.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476410; x=1708081210; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476452; x=1708081252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/PW4HgfpqFA/T+gchjLsJDFYxSNqSSKYfz4pvfD/U1k=;
- b=bhLp3JK855VJltqDMbjPXOJL9P4zmAXh1mVXhu/yd74kx+keWsCFfy5SIUooHgMzG+
- EImeg+MGrB7zpxD5n/vXcIWOFvXEhWe5P0viMH6O6yc7UVFX11HqXeFOUkd3cV/iCbO4
- F/z5mCAQDAkpUi0szOwgEZkz9HUJEIRcaTfc6TABwDFmRgKL3s1+o4VoYFwFvRq/fzpj
- coZF5UN6M/gNLXc/GxMqV2BQZ8XCgMuj4iPzyu2fZS4vXsHpNHVgrWnL1h9H75SL4Zq1
- 8dxQhZVHpGxfJc+vkUZ8rhR2GFdLtBezeDJMoqpDzvcDsydNkKPJFXFOlkMJI+qcNX36
- yG0g==
+ bh=Qii4YSbAkSXUh1QBoKW9LgLlaF88+i4MvasNEAgf5CQ=;
+ b=cT7waXcGCeq+rhBRonLDqKYro74RjRXXelrVlhqmjuHZF9EjKku8No2QSZZLn2GaZ8
+ 1u0Xh4EZ2U/fmcvZQd4ig69RY62oqNICpJQztoAvpgEMSM1R363+ZIX7RcYiDOMwdln/
+ P3Za6mnvdA/UqmNqGVdEpSrJuh9KQLuKq2ktv2N4AVdbb1iAW/blkKHnMl0lJr/xuOyj
+ U6uiOE34ewB1Vw2zkdtslFjb0X6J8uc/oHJyF2yIHWGyZ9+v4RdH+0Bu+SKwxDYI0whS
+ qZMPWj38Eapt1vCGugS7iFI5DPWJhGLJB4FhQin3a32sF8IBmcZhnBfdoSJkCVknw1SK
+ XkFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476410; x=1708081210;
+ d=1e100.net; s=20230601; t=1707476452; x=1708081252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/PW4HgfpqFA/T+gchjLsJDFYxSNqSSKYfz4pvfD/U1k=;
- b=FXt+NynF1pztgmCXGZsUJLt4di2ynUyRhn7+wPtZs9Y/ph9QM0cF+Tvn0lwYh6Bk73
- k31TaqeGwChhSCLw7srMQ8GpNUY7L8YuJXs2Evms83snY4bBXhIfFPCo8T2Bnd+mgNAt
- JEsNQ/AdVZwC9gACk8mTJjF43sN0IyS8JMzy5sVxy3P5KsEtobJ2jGvu+2yIxLLVN24W
- FB81TA8n9D6COcKGS7aSLSm0DPPYtOeAgKgeYzuk8MoSsxzksr/HLo8Mk+9QErZi1xRI
- se1MG31T/2ozmcmYUE1/k/3XEG6kLruS829fwqZ/VhcLGmkIrdwahRM8WGUIRkp+Ah28
- gQNw==
-X-Gm-Message-State: AOJu0YwFNi+AyTm05W9YcKS9KGKmTt+gYtj9IV55Myj0LQvwqhnUgMFX
- Buq/SfHTuFrMi3Y5n0SkPrrPzKXLiEoc+JCqhlqNpJkMy+Iwb+0iV1x4jszOspLx8w==
-X-Google-Smtp-Source: AGHT+IHvb83LIaVPZRDQ6M7ufLcJ4RbsrM5IuULboI+O3eKulimyKbxDsh8WlUj+Njf1wRYtCnYjHA==
-X-Received: by 2002:a05:6830:3b86:b0:6e1:1501:58a5 with SMTP id
- dm6-20020a0568303b8600b006e1150158a5mr1077380otb.13.1707476410481; 
- Fri, 09 Feb 2024 03:00:10 -0800 (PST)
+ bh=Qii4YSbAkSXUh1QBoKW9LgLlaF88+i4MvasNEAgf5CQ=;
+ b=J0zHvjAV0R7CsXKAeS55Na0n9f45pIfamKmJjt34Wb/7jxBZdzeIR5HvCU8Xu2OW82
+ 0U1amTuihcum27sbqv9GFzPQ+YTUnFZUgl+0TBs673VwBrPSml2L9SQMI+C+p7dKetpC
+ ajsnzbvascP5arxfdc1ruM8+dQElEtY8c8SmbEm4oi1DWnr02VqXvUGQqhhy/YQW+/QV
+ 355v7/0CgY8iD7MMAaF/rQJyQrPvJ0tOPT0+RC14kl0FeFcRH7UHo6DNfR8dMqWFF3EB
+ aUXJi8fFaAeV39IBoXigTNmZFSKGV/MYILHD0rY6q2YRA0ctRTbu2FRBnYrU8FNw7oI2
+ QcGw==
+X-Gm-Message-State: AOJu0Yzees9Rwd7rMCfWQ4U4J4L6obmgYJBI9f93kEx8Pn/oToBRRYgh
+ PiorVLPT2qDwHxbbKlaQvfFH45f4oho1kyZ0cLUlTuPdujpt34+vciJvbGV9/k5AZQ==
+X-Google-Smtp-Source: AGHT+IFqmjS88liE74TqatcLXJ1HQuQuyndQ4bT+dRpMq1DWqgO/0hPCLcshrycmEOaYFO/9I1bUaA==
+X-Received: by 2002:a05:6358:ed05:b0:175:d192:946 with SMTP id
+ hy5-20020a056358ed0500b00175d1920946mr1272061rwb.2.1707476452621; 
+ Fri, 09 Feb 2024 03:00:52 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTGhUwF4A1yvTerOhSwlhlV0VB6J+9NSbgDICkHEEm9uYIG5sIT6MrkybrVIi3wItKObWpJFuJ8v/FNWfbl546ePyhQhfgVBRJhXIen0uYD4QAurzg8AN3TigT9PAXx0vAcqw=
+ AJvYcCVtOyIVZRFuHUi9FJ8P4yH+MyYWURF0E4aiinHpCL19/jizX/6NdViKCGmPtaPT2f18RdbOYKXtYZqPccb1eCRx+2PSQUhCZXYNGelAm0+FXB6Bu0a1MH/bVhvBKguaQk/gRN7ACofXBeyfGmhNXrWfcii9HaUu
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.00.08
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.00.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 03:00:09 -0800 (PST)
+ Fri, 09 Feb 2024 03:00:52 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 32/61] target/riscv: change vext_get_vlmax() arguments
-Date: Fri,  9 Feb 2024 20:57:44 +1000
-Message-ID: <20240209105813.3590056-33-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 45/61] hw/riscv/virt.c: use g_autofree in
+ create_fdt_socket_cpus()
+Date: Fri,  9 Feb 2024 20:57:57 +1000
+Message-ID: <20240209105813.3590056-46-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=alistair23@gmail.com; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=alistair23@gmail.com; helo=mail-oo1-xc2a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,122 +105,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-We'll re-use the logic froim vext_get_vlmax() in 2 other occurrences in
-the next patch, but first we need to make it independent of both 'cpu'
-and 'vtype'. To do that, add 'vlenb', 'vsew' and 'lmul' as parameters
-instead.
-
-Adapt the two existing callers. In cpu_get_tb_cpu_state(), rename 'sew'
-to 'vsew' to be less ambiguous about what we're encoding into *pflags.
-
-In HELPER(vsetvl) the following changes were made:
-
-- add a 'vsew' var to store vsew. Use it in the shift to get 'sew';
-- the existing 'lmul' var was renamed to 'vlmul';
-- add a new 'lmul' var to store 'lmul' encoded like DisasContext:lmul.
+Move all char pointers to the loop. Use g_autofree in all of them to
+avoid the g_free() calls.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240122161107.26737-12-dbarboza@ventanamicro.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240122221529.86562-4-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h           |  7 +++----
- target/riscv/cpu_helper.c    | 11 +++++++----
- target/riscv/vector_helper.c | 16 ++++++++++------
- 3 files changed, 20 insertions(+), 14 deletions(-)
+ hw/riscv/virt.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 1c5a363e4b..07f797406c 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -688,11 +688,10 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
-  *               = 256 >> 7
-  *               = 2
-  */
--static inline uint32_t vext_get_vlmax(RISCVCPU *cpu, target_ulong vtype)
-+static inline uint32_t vext_get_vlmax(uint32_t vlenb, uint32_t vsew,
-+                                      int8_t lmul)
- {
--    uint8_t vsew = FIELD_EX64(vtype, VTYPE, VSEW);
--    int8_t lmul = sextract32(FIELD_EX64(vtype, VTYPE, VLMUL), 0, 3);
--    uint32_t vlen = cpu->cfg.vlenb << 3;
-+    uint32_t vlen = vlenb << 3;
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index f9fd1341fc..373b1dd96b 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -215,12 +215,16 @@ static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
+     int cpu;
+     uint32_t cpu_phandle;
+     MachineState *ms = MACHINE(s);
+-    char *name, *cpu_name, *core_name, *intc_name, *sv_name;
+     bool is_32_bit = riscv_is_32bit(&s->soc[0]);
+     uint8_t satp_mode_max;
  
-     /*
-      * We need to use 'vlen' instead of 'vlenb' to
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index b6b23b7d03..d462d95ee1 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -81,13 +81,16 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
-          * which is not supported by GVEC. So we set vl_eq_vlmax flag to true
-          * only when maxsz >= 8 bytes.
-          */
--        uint32_t vlmax = vext_get_vlmax(cpu, env->vtype);
--        uint32_t sew = FIELD_EX64(env->vtype, VTYPE, VSEW);
--        uint32_t maxsz = vlmax << sew;
-+
-+        /* lmul encoded as in DisasContext::lmul */
-+        int8_t lmul = sextract32(FIELD_EX64(env->vtype, VTYPE, VLMUL), 0, 3);
-+        uint32_t vsew = FIELD_EX64(env->vtype, VTYPE, VSEW);
-+        uint32_t vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
-+        uint32_t maxsz = vlmax << vsew;
-         bool vl_eq_vlmax = (env->vstart == 0) && (vlmax == env->vl) &&
-                            (maxsz >= 8);
-         flags = FIELD_DP32(flags, TB_FLAGS, VILL, env->vill);
--        flags = FIELD_DP32(flags, TB_FLAGS, SEW, sew);
-+        flags = FIELD_DP32(flags, TB_FLAGS, SEW, vsew);
-         flags = FIELD_DP32(flags, TB_FLAGS, LMUL,
-                            FIELD_EX64(env->vtype, VTYPE, VLMUL));
-         flags = FIELD_DP32(flags, TB_FLAGS, VL_EQ_VLMAX, vl_eq_vlmax);
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 8ee7717162..84cec73eb2 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -35,16 +35,18 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
- {
-     int vlmax, vl;
-     RISCVCPU *cpu = env_archcpu(env);
--    uint64_t lmul = FIELD_EX64(s2, VTYPE, VLMUL);
--    uint16_t sew = 8 << FIELD_EX64(s2, VTYPE, VSEW);
-+    uint64_t vlmul = FIELD_EX64(s2, VTYPE, VLMUL);
-+    uint8_t vsew = FIELD_EX64(s2, VTYPE, VSEW);
-+    uint16_t sew = 8 << vsew;
-     uint8_t ediv = FIELD_EX64(s2, VTYPE, VEDIV);
-     int xlen = riscv_cpu_xlen(env);
-     bool vill = (s2 >> (xlen - 1)) & 0x1;
-     target_ulong reserved = s2 &
-                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-+    int8_t lmul;
+     for (cpu = s->soc[socket].num_harts - 1; cpu >= 0; cpu--) {
+         RISCVCPU *cpu_ptr = &s->soc[socket].harts[cpu];
++        g_autofree char *name = NULL;
++        g_autofree char *cpu_name = NULL;
++        g_autofree char *core_name = NULL;
++        g_autofree char *intc_name = NULL;
++        g_autofree char *sv_name = NULL;
  
--    if (lmul & 4) {
-+    if (vlmul & 4) {
-         /*
-          * Fractional LMUL, check:
-          *
-@@ -53,8 +55,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-          * (vlenb << 3) >> (8 - lmul) >= sew
-          * vlenb >> (8 - 3 - lmul) >= sew
-          */
--        if (lmul == 4 ||
--            cpu->cfg.vlenb >> (8 - 3 - lmul) < sew) {
-+        if (vlmul == 4 ||
-+            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
-             vill = true;
+         cpu_phandle = (*phandle)++;
+ 
+@@ -233,12 +237,10 @@ static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
+             sv_name = g_strdup_printf("riscv,%s",
+                                       satp_mode_str(satp_mode_max, is_32_bit));
+             qemu_fdt_setprop_string(ms->fdt, cpu_name, "mmu-type", sv_name);
+-            g_free(sv_name);
          }
-     }
-@@ -68,7 +70,9 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-         return 0;
-     }
  
--    vlmax = vext_get_vlmax(cpu, s2);
-+    /* lmul encoded as in DisasContext::lmul */
-+    lmul = sextract32(FIELD_EX64(s2, VTYPE, VLMUL), 0, 3);
-+    vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
-     if (s1 <= vlmax) {
-         vl = s1;
-     } else {
+         name = riscv_isa_string(cpu_ptr);
+         qemu_fdt_setprop_string(ms->fdt, cpu_name, "riscv,isa", name);
+-        g_free(name);
+ 
+         if (cpu_ptr->cfg.ext_zicbom) {
+             qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cbom-block-size",
+@@ -277,10 +279,6 @@ static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
+         core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
+         qemu_fdt_add_subnode(ms->fdt, core_name);
+         qemu_fdt_setprop_cell(ms->fdt, core_name, "cpu", cpu_phandle);
+-
+-        g_free(core_name);
+-        g_free(intc_name);
+-        g_free(cpu_name);
+     }
+ }
+ 
 -- 
 2.43.0
 
