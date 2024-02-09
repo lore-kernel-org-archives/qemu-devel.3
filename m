@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52234C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807BCC48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYP5D-0002en-7k; Fri, 09 Feb 2024 06:30:16 -0500
+	id 1rYP9L-0006al-Mu; Fri, 09 Feb 2024 06:34:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYP5B-0002Wf-C7
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:30:13 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1rYP9G-0006Zy-0h
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:34:26 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYP4v-0005rl-Lq
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:30:13 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5605c7b1f32so1149628a12.0
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:29:56 -0800 (PST)
+ id 1rYP9D-00072l-MF
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:34:25 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-561519f8698so59256a12.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:34:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707478195; x=1708082995; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707478461; x=1708083261; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=95O8kmPD03feUB6gqwsumad7Tq+4Ieyq0JHjPy9CnFs=;
- b=gT7UwyvZbUtstn+mGs4NjmKHfxpghL9zOOr3fmjWHkd3yP/0SxmnWlTybNNQl1efwl
- HhE0dB+RUVO7CKADXI93b7+tXket9xZrH13XQD6kGP3jFW7xQhe0WmpzMR8mjMWyTcBY
- ir2tz8HZ8PCEbd2kHyVONGG+xRzcH/l1cSi+0jQ5171HQ7RlFPhxm9TDWQgN4QNb//EE
- LzjQYAzJzfpOevNNz09GddIx5X/sBCrhqA88wB7xRW4yn45e2FYaGpjY2ob/dCsN0Zqn
- rObUrRLcIkOPbOGvuw5kQfv0gjJtsLMIBcQgmNjYJ//bkR6nQYqiLIgvYKlDGv7coXan
- 1Q0g==
+ bh=73iO4c+i9wnBB96XwVHe+I47pyjo1KSVQ1dMP1mpyFQ=;
+ b=oH04UQ1F9f7gYjADO8ScX8/yXBJjZ5FQez+2TQB1fCUJOnW6SQCBQ/k4g76KY0M01A
+ GDVMfqwmcqI0/coQ3F8sWcitI90p0T6NWU5huJSp734usl5OX0Hvy6QPhYT1bkIBOsT+
+ DH5jRrhe9mLOqn6NttqYjvdYz9bQNJVIG3xpE+y5v4D2BUtF1r34n3kEHwQRNShGv4HO
+ SPBjN+NW29HZNeekoo/wSI5Xz8DzSaOxTPQ4PKr455k18O7J1E43LM274HlyqVJdZjpz
+ 3HTQejcgObQ4jtbtDCeRy+NBC2pvSiTya1EVNyBlGEmmE4rxrAo1bnmQ5zsNgB+J/zM1
+ 1Qeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707478195; x=1708082995;
+ d=1e100.net; s=20230601; t=1707478461; x=1708083261;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=95O8kmPD03feUB6gqwsumad7Tq+4Ieyq0JHjPy9CnFs=;
- b=KfQzxOT3B3fCeA1wDEtNx1Rm4xLiFNklfsCo1UV4hjgLy/DdXTbuB2pYOXtbsnrDYY
- uyA6ukHYuWWG3IMJqX+3FcLemBZtctdu4lKZ9aGUPOPbFPwad/ApXFr0DhzC1WMl2WXF
- sU74i6Z6Gaq2ukRy4p3xmHGu6fzG9agKLWf64gRsluOaaM30p4uGKhldSdE2R9CFWslt
- 9QcNpAPEze3Md9KNgomxazC89IXMfSf4csvXpp4Lr3WhUxcmwzvWM4oWC8DPvxXmgNxZ
- te1usI5KDUh+yfoSy1Vy6WGuw3XNPjEjI3mpRVRGUrlvVlXLj9Dr+91ypyr7+hMpoHPW
- s5DA==
-X-Gm-Message-State: AOJu0YyVtYEI/I3vfRShZ79KD3PMDlOCD52OaXH59jIyF/cqGF61klAJ
- l0dwU6gJs3/Qo4OaHXvyXjlly7CybiO2QHlCLDRvnNaqCQT04r8MmhCH5+2c5Sa3gjk4ywKsD3J
- Q2GIf1oK0tcPZNY1FVA2HsjLG4d7QmfsqDB4RPw==
-X-Google-Smtp-Source: AGHT+IGKCGo467lzrccRMqRIto1qQc4q9waeKh0aOIoNMViPJtxytg/rMPJzsBaoRokZqeAg8nch/xQDLiFsJLKLRsI=
-X-Received: by 2002:a05:6402:1c94:b0:561:51a0:2877 with SMTP id
- cy20-20020a0564021c9400b0056151a02877mr83210edb.19.1707478195532; Fri, 09 Feb
- 2024 03:29:55 -0800 (PST)
+ bh=73iO4c+i9wnBB96XwVHe+I47pyjo1KSVQ1dMP1mpyFQ=;
+ b=V8cB7KrBlBftSj7FgDqLUTRWGp9NWlJnxxZEx6pTtX63RV/AZmZylXN6tC9uaCKmJD
+ yamvOT8ctNUii58RuKQjAJktyGSL0p60jfFlphzLCAlMjff/YchDNgG091BCWA4yWMZI
+ Mge0GD/aRT87PUuZB8IoJIoXiqNYX7ceR2wsMS5TTq70U7WcA6nSyupGYlOSlkw6IcPh
+ qrMm6nwpZsRlxugFu+BsD2x/sDVg8BpN+E5kq9GLV1D13gDLvwEV9unJK4jC8YSAYtP6
+ pbZnSYGkgDxWh/jHLVRXdcEN7PxZ38H7Gvy1bSM0QEyvAd66uBANxNZoF8mud61AySre
+ j8YA==
+X-Gm-Message-State: AOJu0Yw1uIYvrAqghuCiFxO4qjIeRd4kd7cf1gwsSTO4IrwOsi8yE2V1
+ HpyorEgmp1h3ZCIo2nyA0s9cHIKFxLj2o3XpRTRb75DuU8k9qKC2pNe6UcJNRIfGtP8E57Y31l0
+ YJgZj5kdWzyjYQxm5oAE8ARO+uUK7EZzsBGnQUQ==
+X-Google-Smtp-Source: AGHT+IEXhDYMtXFZegdJf6cc7C07e9wzKcREENIRK9X9xal5aNJh4A+5Jwr7NY3sgHI6Dk/mtKuXOv/XYWxARoh+DTU=
+X-Received: by 2002:a05:6402:2902:b0:561:3dcd:3e09 with SMTP id
+ ee2-20020a056402290200b005613dcd3e09mr1302227edb.31.1707478461675; Fri, 09
+ Feb 2024 03:34:21 -0800 (PST)
 MIME-Version: 1.0
 References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-6-philmd@linaro.org>
-In-Reply-To: <20240208181245.96617-6-philmd@linaro.org>
+ <20240208181245.96617-12-philmd@linaro.org>
+In-Reply-To: <20240208181245.96617-12-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 9 Feb 2024 11:29:44 +0000
-Message-ID: <CAFEAcA_RQmd6JoULKAwr4RUL5hPEbfc9UqKZV0vs3LC9+5M+Rg@mail.gmail.com>
-Subject: Re: [PATCH v3 05/11] hw/ppc/prep: Realize ISA bridge before accessing
- it
+Date: Fri, 9 Feb 2024 11:34:10 +0000
+Message-ID: <CAFEAcA8XF4i7qNWRAO2PjiNxecLY8qfGzYK-ZDE8fvy7mpf-4Q@mail.gmail.com>
+Subject: Re: [PATCH v3 11/11] hw/sparc64/cpu: Initialize GPIO before realizing
+ CPU devices
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
  Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org, 
  Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+ Markus Armbruster <armbru@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,11 +99,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, 8 Feb 2024 at 18:14, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
 > wrote:
 >
-> We should not wire IRQs on unrealized device.
+> Inline cpu_create() in order to call
+> qdev_init_gpio_in_named_with_opaque()
+> before the CPU is realized.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/sparc64/sparc64.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/sparc64/sparc64.c b/hw/sparc64/sparc64.c
+> index 72f0849f50..3091cde586 100644
+> --- a/hw/sparc64/sparc64.c
+> +++ b/hw/sparc64/sparc64.c
+> @@ -24,6 +24,7 @@
+>
+>
+>  #include "qemu/osdep.h"
+> +#include "qapi/error.h"
+>  #include "cpu.h"
+>  #include "hw/boards.h"
+>  #include "hw/sparc/sparc64.h"
+> @@ -271,9 +272,10 @@ SPARCCPU *sparc64_cpu_devinit(const char *cpu_type, =
+uint64_t prom_addr)
+>      uint32_t  stick_frequency =3D 100 * 1000000;
+>      uint32_t hstick_frequency =3D 100 * 1000000;
+>
+> -    cpu =3D SPARC_CPU(cpu_create(cpu_type));
+> +    cpu =3D SPARC_CPU(object_new(cpu_type));
+>      qdev_init_gpio_in_named(DEVICE(cpu), sparc64_cpu_set_ivec_irq,
+>                              "ivec-irq", IVEC_MAX);
+> +    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
+>      env =3D &cpu->env;
+>
+>      env->tick =3D cpu_timer_create("tick", cpu, tick_irq,
+> --
+> 2.41.0
 
+For the purposes of letting us enforce the "init GPIOs
+before realize, not after" rule,
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+but it looks like this code is adding a GPIO to a
+device from code that's not actually part of the
+implementation of the device. Ideally most of the code in
+this file should be rolled into the CPU itself in target/sparc.
 
 thanks
 -- PMM
