@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59009C4829C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5708C4828F
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYOf1-0008PH-E6; Fri, 09 Feb 2024 06:03:13 -0500
+	id 1rYOb5-0000Pc-45; Fri, 09 Feb 2024 05:59:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOd7-0006uq-Bx
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:14 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1rYOb3-0000PB-Cf
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:05 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOcu-0000qG-8e
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:11 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-5dc13cbce45so601990a12.2
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:59 -0800 (PST)
+ id 1rYOb1-0000FD-Md
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:05 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6e08c16715fso204330b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476458; x=1708081258; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476342; x=1708081142; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uFMNQVYSj3JmsAY5zowmVJht6YkGb2y2yywXB+6zt8g=;
- b=T3ETrBhuoPSrJmfLKxqLm+XvFPy5eXBw6FFeBTbK65IsXKJDcty6Se1v9Gnx4c6ViP
- BFK6LGkl3sqUfvItu96h6M7xVJkfwbSSn/K0z7Nyh+nPkK94Mkie8+gLLF8MkNZG/FRc
- qCISUifNgE0aw65DTNmSEwA0iroAb0AK5i3kxysWThDprfUai6xFxl89I7LL7JBAP1LQ
- ZQeCB5QQqDSXf6SxGdw1Gu4Vrq8MorX5QSQBA3v7LaVtiTejID8DW+FD8FjSvt8i6SOn
- 4KLB7tovcNZtTJMvj3iBoDuz3AQJUblD61kzkzjxxkBzKciH/oOeON64YO5+n4rieojR
- OfVQ==
+ bh=QJLjFlZbUMSKj6lGlsdgxdLiYvNgAMDnfm5/5N+UROw=;
+ b=j6i3kqUFysGdE1pELke/9vgrjRrXxsDG5ne76y92b+573r7t9rFqBKvoiUlA4sYHsf
+ dPhquewJbpPGYa0jKEzflPXQiJx9r62fnWifoDUJQCRixEFrt1vT5f28lEA4ZHm7DcS3
+ S46HGrukAgZ8MCnMi4afgMaMBNZEGygN+zht6ixfB1/8S0e3GJCaXucOC219Tw3U6lj2
+ jsXmn44MtkBjSNMsq/R/MqlCm51vtIMHXxJVPqKN0awDWpVyHxosBGmSX9UeRAJKSt4A
+ 2e4u1yxiJfqvuxWWUzNePeE41jb58q5CvCSxW2KM+I9b7MLR1cV6ufze8mAah+G3FIby
+ CMmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476458; x=1708081258;
+ d=1e100.net; s=20230601; t=1707476342; x=1708081142;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uFMNQVYSj3JmsAY5zowmVJht6YkGb2y2yywXB+6zt8g=;
- b=vSkbAIVeYEpLDdjJv7JsKd/+rPy2VHui888/songYzFAkkVLG8BQIfJ6s1wBF3b0L0
- M5TD6FX6Yz4qo7m88+vXMf3PxNhYz1GpAaRuOpDlipQ1IbSLgzU+WPC7ChkF4uPEAdMB
- hVUcxUPyLwmFR4nPtVBUiWoFWLHnmTlGwCqoqhZmBOo+bd4G0KhgU+btxVd/+s3fEwFT
- gMn5FirdpeskemtYZvfyBzIXeEAnh2TuBiY8PTFGKhyR+4UDvVfF6NfKloDXH8ST7Ent
- +n6wnBFivR2P7tiOE6pBa3nKmWFtmDCqY+IfQo8UKt7IFF1FP2ZFTOW17hIW/C2anGLN
- wC5A==
-X-Gm-Message-State: AOJu0YylS6xN0phQBZPpiYb5qoG+Per9QRnvzgeLJ6FaJKor69CCVa7W
- ZSyeoTB58EBeVwP1k1McJ8M5008/rOq9sB5saFaTKDNk4X5lCjDQAJWZgZo9h5r60w==
-X-Google-Smtp-Source: AGHT+IHTEeS51xXF9TvWpvDnmwYGl1cbjQhHzEBUKkaaM3z1Sms5Y1p9absLzutbMwV9WETR3DHJMg==
-X-Received: by 2002:a17:90a:ce14:b0:296:2d01:ed47 with SMTP id
- f20-20020a17090ace1400b002962d01ed47mr995013pju.35.1707476458637; 
- Fri, 09 Feb 2024 03:00:58 -0800 (PST)
+ bh=QJLjFlZbUMSKj6lGlsdgxdLiYvNgAMDnfm5/5N+UROw=;
+ b=IrAkWZVCGbZKvnwGWtPDv+xIPeaz1KRayTEIlnbNIGrWEA6pUAHxtsVjGOOOW/vwHl
+ oZqajn0w4GdvWqPtn/+4zXpglt0OPpJdhcSoPsuEhqc5GToVdVNQdfjTg2HpDy5k7ICn
+ am2zBPYnlaBWd3W0RdBkfwFsWIoCKzXfNR+z08CTrEfqkPFHwA2gbD6kqh2rSu41Zjhh
+ KHoa8qA8KHTjzWiGsDzjSLhtZvPa0Fqrxp1y71Sss4+h2z3Zu6tJ5AFQf6OWXk+XTdhY
+ cxgw04gp5xe/gbvYgmsI3IPC+Sm28OFLn0+BObPvu2hYetK+DVefsaFYHBck5SWn0lZR
+ POuw==
+X-Gm-Message-State: AOJu0YwQpv0imyke3MsTwVefeqx7bMtCNLYE3RtBEw4c7vzZxW/ey9KQ
+ hLjQ1R+1dyHQ0lIVPXe7yxgGgMk1EtloW8L6eV/b3i3idwtqEELGVfRFmpsT+GVhRQ==
+X-Google-Smtp-Source: AGHT+IEz2Fapw3wbdKVZ6+RmSgQF6LDumzLVFJ4itVRKbZ21KdEBPFWQPR6OGDd3bVQL/iY5nGBKFA==
+X-Received: by 2002:a05:6a00:2e8c:b0:6e0:708c:165a with SMTP id
+ fd12-20020a056a002e8c00b006e0708c165amr1265550pfb.5.1707476341881; 
+ Fri, 09 Feb 2024 02:59:01 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCsZ6KqkGNPqBTRtQl6x+jG9P80EXla5H4DWs5pYpQ7LNZWvIkJpYh9Msd1EjqvHoKVBEpYmS1TFOHxfoIJUHVKvgp8avGG57Lw/M5W5RwXMNI50FdxOWUBJ2HNeUBjMCw9QztLItEq/NkoHyUaTwqZUhRujZZ
+ AJvYcCVdWk3NJ9bTH1I+iGmnSZzi6myAbGFFw/UZTzOYdEcIabCc7v7OlcIGNryUUP95y2/O+Tgtjp7g1ASv8w8jYGboizwBcgs8JDCFXZyGeXkGMpqcH3AtKHLwF2kFfCwKRl5ktomgIy/CaV0S3iok53NqVD6dt18+D8LtWpQMF+jkmVU=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.00.55
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.58.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 03:00:58 -0800 (PST)
+ Fri, 09 Feb 2024 02:59:01 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 47/61] hw/riscv/virt.c: use g_autofree in create_fdt_virtio()
-Date: Fri,  9 Feb 2024 20:57:59 +1000
-Message-ID: <20240209105813.3590056-48-alistair.francis@wdc.com>
+ Vladimir Isaev <vladimir.isaev@syntacore.com>
+Subject: [PULL 11/61] target/riscv: move 'vlen' to riscv_cpu_properties[]
+Date: Fri,  9 Feb 2024 20:57:23 +1000
+Message-ID: <20240209105813.3590056-12-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,45 +103,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Put 'name' declaration inside the loop, with g_autofree, to avoid
-manually doing g_free() in each iteration.
+Turning 'vlen' into a class property will allow its default value to be
+overwritten by cpu_init() later on, solving the issue we have now where
+CPU specific settings are getting overwritten by the default.
+
+Common validation bits are moved from riscv_cpu_validate_v() to
+prop_vlen_set() to be shared with KVM.
+
+And, as done with every option we migrated to riscv_cpu_properties[],
+vendor CPUs can't have their 'vlen' value changed.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240122221529.86562-6-dbarboza@ventanamicro.com>
+Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+Message-ID: <20240105230546.265053-9-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ target/riscv/cpu.c         | 45 +++++++++++++++++++++++++++++++++++++-
+ target/riscv/tcg/tcg-cpu.c |  5 -----
+ 2 files changed, 44 insertions(+), 6 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d0f402e0d5..f8278df83f 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -820,12 +820,12 @@ static void create_fdt_virtio(RISCVVirtState *s, const MemMapEntry *memmap,
-                               uint32_t irq_virtio_phandle)
- {
-     int i;
--    char *name;
-     MachineState *ms = MACHINE(s);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 1a7a2f1d64..140bb09816 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -29,6 +29,7 @@
+ #include "qapi/visitor.h"
+ #include "qemu/error-report.h"
+ #include "hw/qdev-properties.h"
++#include "hw/core/qdev-prop-internal.h"
+ #include "migration/vmstate.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "sysemu/kvm.h"
+@@ -1317,6 +1318,7 @@ static void riscv_cpu_init(Object *obj)
  
-     for (i = 0; i < VIRTIO_COUNT; i++) {
--        name = g_strdup_printf("/soc/virtio_mmio@%lx",
-+        g_autofree char *name =  g_strdup_printf("/soc/virtio_mmio@%lx",
-             (long)(memmap[VIRT_VIRTIO].base + i * memmap[VIRT_VIRTIO].size));
-+
-         qemu_fdt_add_subnode(ms->fdt, name);
-         qemu_fdt_setprop_string(ms->fdt, name, "compatible", "virtio,mmio");
-         qemu_fdt_setprop_cells(ms->fdt, name, "reg",
-@@ -840,7 +840,6 @@ static void create_fdt_virtio(RISCVVirtState *s, const MemMapEntry *memmap,
-             qemu_fdt_setprop_cells(ms->fdt, name, "interrupts",
-                                    VIRTIO_IRQ + i, 0x4);
-         }
--        g_free(name);
-     }
+     /* Default values for non-bool cpu properties */
+     cpu->cfg.pmu_mask = MAKE_64BIT_MASK(3, 16);
++    cpu->cfg.vlen = 128;
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
  }
  
+@@ -1788,8 +1790,47 @@ static const PropertyInfo prop_vext_spec = {
+     .set = prop_vext_spec_set,
+ };
+ 
++static void prop_vlen_set(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    uint16_t value;
++
++    if (!visit_type_uint16(v, name, &value, errp)) {
++        return;
++    }
++
++    if (!is_power_of_2(value)) {
++        error_setg(errp, "Vector extension VLEN must be power of 2");
++        return;
++    }
++
++    if (value != cpu->cfg.vlen && riscv_cpu_is_vendor(obj)) {
++        cpu_set_prop_err(cpu, name, errp);
++        error_append_hint(errp, "Current '%s' val: %u\n",
++                          name, cpu->cfg.vlen);
++        return;
++    }
++
++    cpu_option_add_user_setting(name, value);
++    cpu->cfg.vlen = value;
++}
++
++static void prop_vlen_get(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    uint16_t value = RISCV_CPU(obj)->cfg.vlen;
++
++    visit_type_uint16(v, name, &value, errp);
++}
++
++static const PropertyInfo prop_vlen = {
++    .name = "vlen",
++    .get = prop_vlen_get,
++    .set = prop_vlen_set,
++};
++
+ Property riscv_cpu_options[] = {
+-    DEFINE_PROP_UINT16("vlen", RISCVCPU, cfg.vlen, 128),
+     DEFINE_PROP_UINT16("elen", RISCVCPU, cfg.elen, 64),
+ 
+     DEFINE_PROP_UINT16("cbom_blocksize", RISCVCPU, cfg.cbom_blocksize, 64),
+@@ -1878,6 +1919,8 @@ static Property riscv_cpu_properties[] = {
+     {.name = "priv_spec", .info = &prop_priv_spec},
+     {.name = "vext_spec", .info = &prop_vext_spec},
+ 
++    {.name = "vlen", .info = &prop_vlen},
++
+ #ifndef CONFIG_USER_ONLY
+     DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
+ #endif
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 9820612f36..eb182ca876 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -298,11 +298,6 @@ static void riscv_cpu_validate_misa_mxl(RISCVCPU *cpu, Error **errp)
+ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
+                                  Error **errp)
+ {
+-    if (!is_power_of_2(cfg->vlen)) {
+-        error_setg(errp, "Vector extension VLEN must be power of 2");
+-        return;
+-    }
+-
+     if (cfg->vlen > RV_VLEN_MAX || cfg->vlen < 128) {
+         error_setg(errp,
+                    "Vector extension implementation only supports VLEN "
 -- 
 2.43.0
 
