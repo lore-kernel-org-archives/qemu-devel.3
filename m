@@ -4,65 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 508C7C4829C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 18:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38727C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 18:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYW1w-0000lf-Ql; Fri, 09 Feb 2024 13:55:20 -0500
+	id 1rYW4R-0002Sj-EG; Fri, 09 Feb 2024 13:57:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rYW1v-0000lB-BD
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 13:55:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rYW1p-0001Wa-Sl
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 13:55:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707504911;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=3+KWLMqcyHzWRv7NZSsj5IzznoIvlcNWC67gfs3HkAY=;
- b=jILqld6dA4OmskWZUDdEoxC2Qi2vwhv34S3YHOzf62ZpxvhbKQU9Ql9uedi7c3U1Oawf1H
- VE3xW5or2tYFzQnXlVK1sYnIwKB/YWjWaZWgwLdtyV1vYcxvPnM1vQryAbof6o2+EneaB5
- DDEDXztDcIP7OxleCIgqU85c1Dtdf/c=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-QyB1EcPINrGTwJvu6GSw0g-1; Fri,
- 09 Feb 2024 13:55:10 -0500
-X-MC-Unique: QyB1EcPINrGTwJvu6GSw0g-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B10BE282D3CB;
- Fri,  9 Feb 2024 18:55:09 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.170])
- by smtp.corp.redhat.com (Postfix) with ESMTP id F25A611218;
- Fri,  9 Feb 2024 18:55:07 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org,
- qemu-trivial@nongnu.org
-Subject: [PATCH] hw/hppa/Kconfig: Fix building with "configure
- --without-default-devices"
-Date: Fri,  9 Feb 2024 19:55:06 +0100
-Message-ID: <20240209185506.248001-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rYW4P-0002SQ-Ex
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 13:57:53 -0500
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rYW4N-0002QU-RG
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 13:57:53 -0500
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2d09bdddfc9so14849081fa.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 10:57:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707505068; x=1708109868; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=w5tjkzD5+dT/pEawdBPPKkooZploLqHu869R7Wt9kyY=;
+ b=E7looAsma2fktAAkBZyvCMibTaNnFTj4o1WYr5HVZbjCCUKbpaGZ79Z6gbrm4q/6It
+ Vl/jEXRuHw13rkbyqLeql8lqfYN9nKQDqB4epnufchgu5vmipV9UttdhAjVxa/biNQ6p
+ pGIgP8F/MGReIf74scTV1DeC2CiYqryP/gWl0mI0lwVLq1FLdllIvCOCqT4fFGDm7nXZ
+ nVO78PGjrefxyEDmOqNOA69Lw68NSkik1IFPlcBkxcGCl3sr4aupzTa6DB13eKdIiie9
+ 9Xk5keff6zY0Z4P073NaQ9fgpMhu854i/4IW6VVGaX1sTTERmeU/JhbizoHIoBW847z9
+ 4tWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707505068; x=1708109868;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w5tjkzD5+dT/pEawdBPPKkooZploLqHu869R7Wt9kyY=;
+ b=AJ1/DMw0dzseJcz7QfmoA6Vq3NXHETuyNtWxbtqMkxw44C6OHfMTIcruGHD/OLSFYh
+ Dd1tGmGs2u/Gg76/SHOycJKMXz5Nt/TADs7W+IVW04GPTLq/Evp3/lbtx5ihz3txKenJ
+ 82AAxGgeNmKEDxheS2BBT7tyGDAmMpe2aYUOwKV1IvodjJMusWYbHf8rHRpB5FIegi+B
+ tZ1ljW2z0sgrV4nlNCZZVAu0fdhvy1MmRvQB74MpNK9mtMaWwdHdHvTbxqv7YUMx6WuT
+ bMPPoVG74N3XLKPTSn/gEhDJAcs3uInDUfXBUWFszgXucEqHdID1MvbkKHbGhEs26CPx
+ LhFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXKASkq8bqnZ/QhLrysoBkXpZ49Zd9YmWEzzAyT3Gpq0jq+ldmTiNS1ciaafj728A4PJLPF4ryJMbbXkNHTG1fGdx9JNM=
+X-Gm-Message-State: AOJu0YzUSO1Hn3aK++bT+A3/+rrqTSNc9/DMXPuHWszlGCBV90mLRiH1
+ KOAkVh3enpjebalQ+mtEhopjJUKMGtpGlibqM64E+EFN5WQADh4OPz7Ub2pCaZ1uPJGdO9l4gi6
+ 2ufvJjE4cF+zVBpV2P0nZwtAHtEdYp8IXrfykIA==
+X-Google-Smtp-Source: AGHT+IEwUtWrReVoSqs7fjCm31w7VsfZSxZCG0AER52vw5/s4vZy1dhbYG9wAbszpTjPqAtOYoMZWbmadRmWQr2qoYg=
+X-Received: by 2002:a2e:900b:0:b0:2d0:d054:17df with SMTP id
+ h11-20020a2e900b000000b002d0d05417dfmr1778421ljg.42.1707505067670; Fri, 09
+ Feb 2024 10:57:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20240209160039.677865-1-eric.auger@redhat.com>
+In-Reply-To: <20240209160039.677865-1-eric.auger@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 9 Feb 2024 18:57:36 +0000
+Message-ID: <CAFEAcA_SFtmCCFBPwWjJF3uygdpdqoZuYLaQQP186fyQ+dJEHA@mail.gmail.com>
+Subject: Re: [RFC v2 0/5] ARM Nested Virt Support
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ miguel.luis@oracle.com, haibo.xu@linaro.org, richard.henderson@linaro.org, 
+ maz@kernel.org, gkulkarni@amperecomputing.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.269,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,46 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running "configure" with "--without-default-devices", building
-of qemu-system-hppa currently fails with:
+On Fri, 9 Feb 2024 at 16:00, Eric Auger <eric.auger@redhat.com> wrote:
+>
+> This series adds ARM Nested Virtualization support in KVM mode.
+> This is a respin of previous contributions from Miguel [1] and Haibo [2].
+>
+> This was tested with Marc's v11 [3] on Ampere HW with fedora L1 guest and
+> L2 guests booted without EDK2. However it does not work yet with
+> EDK2 but it looks unrelated to this qemu integration (host hard lockups).
+>
+> The host needs to be booted with "kvm-arm.mode=nested" option and
+> qemu needs to be invoked with :
+>
+> -machine virt,virtualization=on
+>
+> There is a known issue with hosts supporting SVE. Kernel does not support both
+> SVE and NV2 and the current qemu integration has an issue with the
+> scratch_host_vcpu startup because both are enabled if exposed by the kernel.
+> This is independent on whether sve is disabled on the command line. Unfortunately
+> I lost access to the HW that expose that issue so I couldn't fix it in this
+> version.
 
- /usr/bin/ld: libqemu-hppa-softmmu.fa.p/hw_hppa_machine.c.o: in function `machine_HP_common_init_tail':
- hw/hppa/machine.c:399: undefined reference to `usb_bus_find'
- /usr/bin/ld: hw/hppa/machine.c:399: undefined reference to `usb_create_simple'
- /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_bus_find'
- /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_create_simple'
- collect2: error: ld returned 1 exit status
- ninja: build stopped: subcommand failed.
- make: *** [Makefile:162: run-ninja] Error 1
+You can probably repro that by running the whole setup under
+QEMU's FEAT_NV emulation, which will be able to give you a CPU
+with both FEAT_NV and SVE.
 
-And after fixing this, the qemu-system-hppa binary refuses to run
-due to the missing 'pci-ohci' and 'pci-serial' devices. Let's add
-the right config switches to fix these problems.
+Personally I think that this is a kernel missing-feature that
+should really be fixed as part of getting the kernel patches
+upstreamed. There's no cause to force every userspace VMM to
+develop extra complications for this.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/hppa/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
-index ff8528aaa8..124d5e9e47 100644
---- a/hw/hppa/Kconfig
-+++ b/hw/hppa/Kconfig
-@@ -6,7 +6,7 @@ config HPPA_B160L
-     select ASTRO
-     select DINO
-     select LASI
--    select SERIAL
-+    select SERIAL_PCI
-     select ISA_BUS
-     select I8259
-     select IDE_CMD646
-@@ -16,3 +16,4 @@ config HPPA_B160L
-     select LASIPS2
-     select PARALLEL
-     select ARTIST
-+    select USB_OHCI_PCI
--- 
-2.43.0
-
+thanks
+-- PMM
 
