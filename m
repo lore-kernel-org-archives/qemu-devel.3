@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E21B0C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C59DCC48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYYKq-0006eI-BU; Fri, 09 Feb 2024 16:23:00 -0500
+	id 1rYYKv-0006hm-7v; Fri, 09 Feb 2024 16:23:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYYKo-0006dE-DF; Fri, 09 Feb 2024 16:22:58 -0500
+ id 1rYYKs-0006g7-Uv; Fri, 09 Feb 2024 16:23:02 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYYKn-000079-0I; Fri, 09 Feb 2024 16:22:58 -0500
+ id 1rYYKr-00008K-GN; Fri, 09 Feb 2024 16:23:02 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8346B4BF5C;
+ by isrv.corpit.ru (Postfix) with ESMTP id AC4C14BF5F;
  Sat, 10 Feb 2024 00:24:03 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 703C477ED6;
+ by tsrv.corpit.ru (Postfix) with SMTP id 98B6777ED9;
  Sat, 10 Feb 2024 00:22:47 +0300 (MSK)
-Received: (nullmailer pid 1123151 invoked by uid 1000);
+Received: (nullmailer pid 1123160 invoked by uid 1000);
  Fri, 09 Feb 2024 21:22:47 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 04/23] qemu-img: refresh options/--help for "check" command
-Date: Sat, 10 Feb 2024 00:22:25 +0300
-Message-Id: <c078096ddbffb1edbed9d1594e2b2ff52852ac25.1707513011.git.mjt@tls.msk.ru>
+Subject: [PATCH 07/23] qemu-img: refresh options/--help for "compare" command
+Date: Sat, 10 Feb 2024 00:22:28 +0300
+Message-Id: <32ee62053c54a36ca56582f021d71f49a1c35b7b.1707513011.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1707513011.git.mjt@tls.msk.ru>
 References: <cover.1707513011.git.mjt@tls.msk.ru>
@@ -60,51 +60,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing long options and --help output.
-
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ qemu-img.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 4e962843da..3ae07bfae0 100644
+index eabf45c423..8f16ee9deb 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -792,7 +792,9 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
-         int option_index = 0;
+@@ -1464,9 +1464,17 @@ static int img_compare(const img_cmd_t *ccmd, int argc, char **argv)
+     for (;;) {
          static const struct option long_options[] = {
              {"help", no_argument, 0, 'h'},
 +            {"quiet", no_argument, 0, 'q'},
-             {"format", required_argument, 0, 'f'},
-+            {"cache", required_argument, 0, 'T'},
-             {"repair", required_argument, 0, 'r'},
-             {"output", required_argument, 0, OPTION_OUTPUT},
              {"object", required_argument, 0, OPTION_OBJECT},
-@@ -813,7 +815,22 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
++            {"cache", required_argument, 0, 'T'},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
++            {"a-format", required_argument, 0, 'f'},
++            {"left-format", required_argument, 0, 'f'},
++            {"b-format", required_argument, 0, 'F'},
++            {"right-format", required_argument, 0, 'F'},
+             {"force-share", no_argument, 0, 'U'},
++            {"strict", no_argument, 0, 's'},
++            {"progress", no_argument, 0, 'p'},
+             {0, 0, 0, 0}
+         };
+         c = getopt_long(argc, argv, ":hf:F:T:pqsU",
+@@ -1482,7 +1490,22 @@ static int img_compare(const img_cmd_t *ccmd, int argc, char **argv)
              unrecognized_option(ccmd, argv[optind - 1]);
              break;
          case 'h':
 -            help();
 +            cmd_help(ccmd,
-+"[-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]\n"
-+"	[--output human|json] [--object OBJDEF] FILENAME\n"
++"[--image-opts | [-f FMT] [-F FMT]] [-s]\n"
++"	[-T CACHE] [-U] [--object OBJDEF] FILENAME1 FILENAME2\n"
 +,
-+" -q|--quiet - quiet operations\n"
-+" -f|--format FMT - specifies format of the image explicitly\n"
-+" --image-opts - indicates that FILENAME is a complete image specification\n"
-+"  instead of a file name (incompatible with --format)\n"
-+" -T|--cache CACHE_MODE - cache mode when opening image (" BDRV_DEFAULT_CACHE ")\n"
-+" -U|--force-share - open image in shared mode for concurrent access\n"
-+" --output human|json - output format\n"
-+" -r|--repair leaks|all - repair particular aspect of the image\n"
-+"  (image will be open in read-write mode, incompatible with --force-share)\n"
++" -q|--quiet - quiet operation\n"
++" -p|--progress - show operation progress\n"
++" -f|--a-format FMT - specify FILENAME1 image format explicitly\n"
++" -F|--b-format FMT - specify FILENAME2 image format explicitly\n"
++" --image-opts - indicates that FILENAMEs are complete image specifications\n"
++"  instead of file names (incompatible with --a-format and --b-format)\n"
++" -s|--strict - strict mode, also check if sizes are equal\n"
++" -T|--cache - CACHE_MODE cache mode when opening images (" BDRV_DEFAULT_CACHE ")\n"
++" -U|--force-share - open images in shared mode for concurrent access\n"
 +" --object OBJDEF - QEMU user-creatable object (eg encryption key)\n"
-+" FILENAME - the image file (or image specification) to operate on\n"
++" FILENAME1, FILENAME2 - image files (or specifications) to compare\n"
 +);
              break;
          case 'f':
-             fmt = optarg;
+             fmt1 = optarg;
 -- 
 2.39.2
 
