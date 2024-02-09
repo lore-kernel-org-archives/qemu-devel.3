@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F82EC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47035C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYObY-0002Ab-IF; Fri, 09 Feb 2024 05:59:36 -0500
+	id 1rYObN-0000xb-UG; Fri, 09 Feb 2024 05:59:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObW-0001wt-TE
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:34 -0500
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1rYObM-0000xL-My
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:24 -0500
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObU-0000Ij-V3
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:34 -0500
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-21920c78c9fso391027fac.1
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:32 -0800 (PST)
+ id 1rYObL-0000GY-5R
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:24 -0500
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-2196dd318f5so520837fac.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476371; x=1708081171; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476361; x=1708081161; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OOf62pxwajXdelK5+pHplTSF3EihEn5ntNS6KqedNMU=;
- b=NwQGJKAgHvs44LanShO7SMoJWkZOMZNmZ75zHm04L4qa6dYKC+p9cq6VUj7RxNbS2N
- N4Zx7uH2fnOyZZwJeSgzKiyZuDyAtc490wWiRc2nnodpBwnoQHfZzi0q07GkLPTOQHLj
- cGbCFk1DBtRGYc9uwsBnysTveiZB0TyEcP0SRNOsmu9VnUxNY07h8qO/VBz58g6J8gFQ
- P2mqciWmsghC62mW38BmqwXECnaiShu4PSKadZaICYrFHdVl89JAuZp6t1brnOSMgfSi
- oOfLNLmerUMvKvjSLQ7M0KK/zTLb2+po2JG7pq828wndxG3ofnx9O8ryhw1S33b4bBqT
- rYIQ==
+ bh=f0nDmbykjvknz9prmwYgoWA7RrP+4zfTHRcynakGz08=;
+ b=V58PCqYvtv0WiyIxH//RT0plFw4InzIMJV4qOQFn7L5fm9TOrzKC9kAISvM3pQAGhT
+ sg4Lk6QG1dXEKy6gHfIZRzTgpCui9ppPAidulHBFjdoHEzn7lXCvamN+MgzCzb+QCWvI
+ 2irDYGTwwZT849kCqfyinyVmxqNVP4dFGHrcBNuxsGnnHoKRfK2T2unXHxq/m0jNBr6J
+ GRgRMw/Xxb7/bC3FzRQ5OGA1ur06SbN1aIYkkFSvViwKvKvVFNazKnnyft69Oqzvijil
+ lNjMpUahw9ExEwXEdPbJY8evMxblm1PnSGyjzGY1cWIvzShm4AQRqDj4ZyBurbaGa35S
+ QDOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476371; x=1708081171;
+ d=1e100.net; s=20230601; t=1707476361; x=1708081161;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OOf62pxwajXdelK5+pHplTSF3EihEn5ntNS6KqedNMU=;
- b=SWDbpomsZ7t0hRUg2Pugs+gPRpHQIzB4zNnx+YtJIYzZn45ABFOocWsCt5IZ6mRr+0
- u7MnsA8Q+C9OUVGajuUyfULJB3zcSGVRIVx/rE3+cxvlxpTtNHCQRaWCx3jDB7BktMm9
- y50tk38bXiZ4T5boR8DU3AXLQe2xwK/dIpJf35U93hz1S5roZr0tEpZjvrkux1gogwGs
- ItWDhnNDB3OkXZ4w51EF+Ap0nvuQhdDzTdBAK+KtkDqFGi/pi5Pbyuti1RhCs4TGTJEc
- rjqbS6NWSQVxLOAGdXXitbbggbC0D01YUyIOTPv+6JeviYjF2g67FIlStkMNhfCsAkKK
- lW+A==
-X-Gm-Message-State: AOJu0YyEhcIO3RWlZ3KD8tbAWy9nx+FKboRQGY1qQo5G98vkcAEB7AQV
- CRfF+2pOUbtOtKtx3NSC9ftlLM9VzQnl1gnSt42iFMiRw3lnLVkgmBz0VEcL+TAvsA==
-X-Google-Smtp-Source: AGHT+IFeKFGBwGVHc3lORk/PQcxC1UVUb7PRPSj/5/HSEl+XulLXwLiJhKonioqDLQxAKY5Cf570vA==
-X-Received: by 2002:a05:6870:c1d3:b0:219:ab97:4a5b with SMTP id
- i19-20020a056870c1d300b00219ab974a5bmr1192944oad.57.1707476371484; 
- Fri, 09 Feb 2024 02:59:31 -0800 (PST)
+ bh=f0nDmbykjvknz9prmwYgoWA7RrP+4zfTHRcynakGz08=;
+ b=iooMHCaGrS/xbdbtwOqkJcd070RtV6OghGE1QwJo15QomRmjLTSg2f1ApVaMQrzfmv
+ gwjiYav6IX+0QnktvEHQzypRtjYnyX7qCp36Qg7xvaOhEvE8VjZ7BFc8msMgq0FC13J+
+ LhvPA8aYmLF02qRzF3yysdj0/30GDC4jOjwoilk2bcV0cELqeB3q0B5Ts/9Q2tH9d79+
+ POL9RTm0BdxaR8gQkmZPyFvZIhen7G5o7CP+cJpYKEJKUCVhM1Sl/90Zu8iFPUd3oBBq
+ iAm7UwCcmYKQ3LnIwpz/PZq76Gu/AxdCngdgU/5vvbJNDz+BsBZkSF9B2KTx72+vlAVN
+ 1dZw==
+X-Gm-Message-State: AOJu0YyUkh6LKUGjYzXA6JBO7VNe2EDEXjyhARWFaJvAtB2p291q8TN4
+ c7fDaQSG3o4CvLRZoIfdAB0GZMLJTYhUDnsYSOFSTlXJXKT0aMtjl6urNR7n4rjkSQ==
+X-Google-Smtp-Source: AGHT+IFsqIpmwANoi4SqEqYyvSCOjT1KP7xCpLlenuHrWi/fmFOL9NGOpjUf60jH1k50MSYFeUjoPw==
+X-Received: by 2002:a05:6870:1641:b0:219:3db5:b540 with SMTP id
+ c1-20020a056870164100b002193db5b540mr1196370oae.41.1707476361669; 
+ Fri, 09 Feb 2024 02:59:21 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWR4ha7di0IHt4APjtaFI2uB9c+MnoDViZvcw4swe0M1sU+b7g6mS1V6lzPUBQAkNKusw65BLAKsoVoEDhAgOrUe4NB3krOvPDTgQj2VtsXPjLjjuL3SZ8OFBBrI5fnqo+sGxaaNypyj1tdBnQkY/bj3/lUI/axqwgZFwLKPshgX3E=
+ AJvYcCXkk4G6UUGyojkP9x9P9sZQTEkxqvWujO2rUUYj5rTB0QXakkWd72X1fCibWKc2LUbr+WDW7jWWBnnf8wb7L52hcTeDUb3pZRU2ZQAbYcRSPlrkCGg+ubFmeW6j9pmJsjU6Ezj8wJRfbV0DogKqDr6OOPKtwxfLjt52bF/moU70vWY=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.28
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 02:59:30 -0800 (PST)
+ Fri, 09 Feb 2024 02:59:21 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Vladimir Isaev <vladimir.isaev@syntacore.com>
-Subject: [PULL 20/61] target/riscv/cpu.c: move 'marchid' to
- riscv_cpu_properties[]
-Date: Fri,  9 Feb 2024 20:57:32 +1000
-Message-ID: <20240209105813.3590056-21-alistair.francis@wdc.com>
+Subject: [PULL 17/61] target/riscv: remove riscv_cpu_options[]
+Date: Fri,  9 Feb 2024 20:57:29 +1000
+Message-ID: <20240209105813.3590056-18-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=alistair23@gmail.com; helo=mail-oa1-x29.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=alistair23@gmail.com; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,160 +103,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Keep all class properties in riscv_cpu_properties[].
+The array is empty and can be removed.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
 tested-by tags added, rebased with Alistair's riscv-to-apply.next.
-Message-ID: <20240112140201.127083-9-dbarboza@ventanamicro.com>
+Message-ID: <20240112140201.127083-6-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c | 110 +++++++++++++++++++++++----------------------
- 1 file changed, 57 insertions(+), 53 deletions(-)
+ target/riscv/cpu.h         | 1 -
+ target/riscv/cpu.c         | 5 -----
+ target/riscv/kvm/kvm-cpu.c | 9 ---------
+ target/riscv/tcg/tcg-cpu.c | 4 ----
+ 4 files changed, 19 deletions(-)
 
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 3e342a5ae5..a744b2372b 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -788,7 +788,6 @@ extern const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_named_features[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[];
+-extern Property riscv_cpu_options[];
+ 
+ typedef struct isa_ext_data {
+     const char *name;
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 1a6524f01f..cce75aec3e 100644
+index da8d19c790..f0e3cfda33 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2055,6 +2055,62 @@ static const PropertyInfo prop_mimpid = {
-     .set = prop_mimpid_set,
+@@ -1985,11 +1985,6 @@ static const PropertyInfo prop_cboz_blksize = {
+     .set = prop_cboz_blksize_set,
  };
  
-+static void prop_marchid_set(Object *obj, Visitor *v, const char *name,
-+                             void *opaque, Error **errp)
-+{
-+    bool dynamic_cpu = riscv_cpu_is_dynamic(obj);
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint64_t prev_val = cpu->cfg.marchid;
-+    uint64_t value, invalid_val;
-+    uint32_t mxlen = 0;
-+
-+    if (!visit_type_uint64(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    if (!dynamic_cpu && prev_val != value) {
-+        error_setg(errp, "Unable to change %s marchid (0x%" PRIu64 ")",
-+                   object_get_typename(obj), prev_val);
-+        return;
-+    }
-+
-+    switch (riscv_cpu_mxl(&cpu->env)) {
-+    case MXL_RV32:
-+        mxlen = 32;
-+        break;
-+    case MXL_RV64:
-+    case MXL_RV128:
-+        mxlen = 64;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    invalid_val = 1LL << (mxlen - 1);
-+
-+    if (value == invalid_val) {
-+        error_setg(errp, "Unable to set marchid with MSB (%u) bit set "
-+                         "and the remaining bits zero", mxlen);
-+        return;
-+    }
-+
-+    cpu->cfg.marchid = value;
-+}
-+
-+static void prop_marchid_get(Object *obj, Visitor *v, const char *name,
-+                             void *opaque, Error **errp)
-+{
-+    uint64_t value = RISCV_CPU(obj)->cfg.marchid;
-+
-+    visit_type_uint64(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_marchid = {
-+    .name = "marchid",
-+    .get = prop_marchid_get,
-+    .set = prop_marchid_set,
-+};
-+
+-Property riscv_cpu_options[] = {
+-
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
  /*
   * RVA22U64 defines some 'named features' or 'synthetic extensions'
   * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
-@@ -2143,6 +2199,7 @@ static Property riscv_cpu_properties[] = {
- 
-      {.name = "mvendorid", .info = &prop_mvendorid},
-      {.name = "mimpid", .info = &prop_mimpid},
-+     {.name = "marchid", .info = &prop_marchid},
- 
- #ifndef CONFIG_USER_ONLY
-     DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
-@@ -2224,56 +2281,6 @@ static const struct SysemuCPUOps riscv_sysemu_ops = {
- };
- #endif
- 
--static void cpu_set_marchid(Object *obj, Visitor *v, const char *name,
--                            void *opaque, Error **errp)
--{
--    bool dynamic_cpu = riscv_cpu_is_dynamic(obj);
--    RISCVCPU *cpu = RISCV_CPU(obj);
--    uint64_t prev_val = cpu->cfg.marchid;
--    uint64_t value, invalid_val;
--    uint32_t mxlen = 0;
--
--    if (!visit_type_uint64(v, name, &value, errp)) {
--        return;
--    }
--
--    if (!dynamic_cpu && prev_val != value) {
--        error_setg(errp, "Unable to change %s marchid (0x%" PRIu64 ")",
--                   object_get_typename(obj), prev_val);
--        return;
--    }
--
--    switch (riscv_cpu_mxl(&cpu->env)) {
--    case MXL_RV32:
--        mxlen = 32;
--        break;
--    case MXL_RV64:
--    case MXL_RV128:
--        mxlen = 64;
--        break;
--    default:
--        g_assert_not_reached();
--    }
--
--    invalid_val = 1LL << (mxlen - 1);
--
--    if (value == invalid_val) {
--        error_setg(errp, "Unable to set marchid with MSB (%u) bit set "
--                         "and the remaining bits zero", mxlen);
--        return;
--    }
--
--    cpu->cfg.marchid = value;
--}
--
--static void cpu_get_marchid(Object *obj, Visitor *v, const char *name,
--                           void *opaque, Error **errp)
--{
--    uint64_t value = RISCV_CPU(obj)->cfg.marchid;
--
--    visit_type_uint64(v, name, &value, errp);
--}
--
- static void riscv_cpu_class_init(ObjectClass *c, void *data)
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 748a690b73..4dec91740b 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1527,19 +1527,10 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+ static void kvm_cpu_instance_init(CPUState *cs)
  {
-     RISCVCPUClass *mcc = RISCV_CPU_CLASS(c);
-@@ -2305,9 +2312,6 @@ static void riscv_cpu_class_init(ObjectClass *c, void *data)
-     cc->gdb_arch_name = riscv_gdb_arch_name;
-     cc->gdb_get_dynamic_xml = riscv_gdb_get_dynamic_xml;
+     Object *obj = OBJECT(RISCV_CPU(cs));
+-    DeviceState *dev = DEVICE(obj);
  
--    object_class_property_add(c, "marchid", "uint64", cpu_get_marchid,
--                              cpu_set_marchid, NULL, NULL);
+     riscv_init_kvm_registers(obj);
+ 
+     kvm_riscv_add_cpu_user_properties(obj);
 -
-     device_class_set_props(dc, riscv_cpu_properties);
+-    for (Property *prop = riscv_cpu_options; prop && prop->name; prop++) {
+-        /* Check if we have a specific KVM handler for the option */
+-        if (object_property_find(obj, prop->name)) {
+-            continue;
+-        }
+-        qdev_property_add_static(dev, prop);
+-    }
  }
  
+ /*
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 8afc501a67..b580b83f9a 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1301,10 +1301,6 @@ static void riscv_cpu_add_user_properties(Object *obj)
+     riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_deprecated_exts);
+ 
+     riscv_cpu_add_profiles(obj);
+-
+-    for (Property *prop = riscv_cpu_options; prop && prop->name; prop++) {
+-        qdev_property_add_static(DEVICE(obj), prop);
+-    }
+ }
+ 
+ /*
 -- 
 2.43.0
 
