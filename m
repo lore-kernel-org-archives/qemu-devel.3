@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576DAC48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A911C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYP4i-0000vK-MM; Fri, 09 Feb 2024 06:29:44 -0500
+	id 1rYP5J-0003AA-77; Fri, 09 Feb 2024 06:30:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYP4d-0000qM-KG
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:29:40 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1rYP5H-00034S-8f
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:30:19 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYP4b-0005qp-PS
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:29:39 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-561519f8698so53600a12.0
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:29:37 -0800 (PST)
+ id 1rYP5B-00065B-2J
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:30:18 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56001b47285so1186856a12.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:30:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707478176; x=1708082976; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707478211; x=1708083011; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cb1Xxs2xqn2fJ0hzaTAXVtttAW9cBvuoicOsfXWBMJU=;
- b=D6QZ/x6zqDO/PstZwois7bv8TszQrtg0h6CS1TacWeSfmX1z/eJrr5tn07IFRuGoy/
- EsFJ3vOR+s7lRrHTlT9caJ/k9YjVV/2VpY8Mymg6ZSv6GmA1Y5jhD3lc65z2yetJQAFr
- 2g+3iV6T4WBOG1ASvdlVz5QMpwI+G/6mxsW1+omFCbhU7RMTeqmHNc7EdtTL5+bSeCVx
- ImDPV6TUIVh0ICb+8dCz4ZbU8WFQJWrYf55F2bCzwFDyIdS6eiaUOFZRprYoxdXA3Qms
- lLhiPPdiQ+OZWdTCsMPC0NBiOziCGt/zIaCZav04rASS4/45xFrUp1oRWnZZVRxAyUdm
- v3DQ==
+ bh=0ri4mIJKLylno5ut36UFgzwPNY/6AYr7Kmyuxr9TDeU=;
+ b=zs8DCv0vTmOg/FXc/HgCQqlCq+nskcq0PkW2bcar9I+EM/uit7x9UrfqMX9DSAXa4t
+ CRGhEb71Y/ZIOB7S9bt732A9eaSlwL3zgxK467rm3GNRSNeoNuPo4ASjndDmBFuHoLWi
+ DDnIbQSlymgBU87bwwCv+ig2UWx39TndfE+Zo/f2ELo7JDrvYhwZn6vRocVUtDnWjgKY
+ vmbL4Y7t1iMOcqI9UK1bJ3+EB8O7oIuWkEErFU4juMK8ow79s6CWtDeDwH14M8OwVL8x
+ pjlI2qhmNB6fqJ8snwcZa/iTOo5STa1Fsso/rnlgdoaAqcoBLXKmfXTGMlUjN4OIR4+w
+ qzGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707478176; x=1708082976;
+ d=1e100.net; s=20230601; t=1707478211; x=1708083011;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cb1Xxs2xqn2fJ0hzaTAXVtttAW9cBvuoicOsfXWBMJU=;
- b=RYQuF52rCDyVWq/HG7GNui7TqI/sHqoOUyKL2z8H+Gae2CBXi7ZKt9g57zrPU7/yCj
- m2orFP5qTwzr4H02yKsj8IwHjurmusj/99g37TgX33oFNhNKMdp39+xnjB33v4EwRXms
- FiQ+KqImqWExdFChNvtf47mo4BO7K9rIVCP5TcrjOLa+9R6g6FYgq53uBYRfbM7RZo8H
- LrGVRmFhM5Z4Gi26VTP/1dg4bT9RuG+5PCME8Az3PQYHdwJEt/CaqjccJrAgYjs/r3Ds
- PacIlRBZo0HuYPqL8K4ucyPog6CK5PsBAQ2NdiBPGDi96B1t/GK2qx4JZ7cjkqVJUUzg
- NTLg==
-X-Gm-Message-State: AOJu0YyqqHbyPUykaym4dB+Xm6AjHXI9+O6tgn10HTD0dn5LO3IsUW3z
- ssEXsrJGDonmoiUas4eHBsTHpL0FV5OpFBy+LZsiATOWPc/P6wP51/Vbryr4DFumSlvh505lucr
- 27RsIYjBic6mb41AU0DFo2TT7a9z/gIMSnJc+/A==
-X-Google-Smtp-Source: AGHT+IE4NgclQBR0jGGB8sjjWUWRwBp84FeAzapLuMwUe7juCj1EHlZntgX/Qck0FSRq3u5lcAwaOuyPP/4g7G1Wt7Y=
-X-Received: by 2002:aa7:c994:0:b0:561:2094:a7c5 with SMTP id
- c20-20020aa7c994000000b005612094a7c5mr1214971edt.39.1707478176233; Fri, 09
- Feb 2024 03:29:36 -0800 (PST)
+ bh=0ri4mIJKLylno5ut36UFgzwPNY/6AYr7Kmyuxr9TDeU=;
+ b=miFWEQaduSzhZMs1p2yTmhuTk+MJO+AajzJX6SzxTbNQHNLFDJeeOI4jORKsGF+7s7
+ 1q3SiZAxU+lhXhG+qgcKdPHSrG7x0SB08cWRHFG9KfZTFl7XYAu72Axd7J/DmOngT6wT
+ vVpkMWINkJdOKSvIc6JsQ3TBGgdIGsiLilhLz3wBodLWNo02U1ywKn0L7sghCnp4ZMzY
+ h89n84VuaYNN8/JQT4uGm7ri2ubbeO8fwt9Ovff+O4ViT9w0haZGEVm6V8uU7aq82TdD
+ D8tvbyCgHwC9JkXQzeptVJKKHP3RhmM/7k5R7RoX0gw014btjOGysQzdABnCBm+HxPtU
+ ktGA==
+X-Gm-Message-State: AOJu0Yy+gGeqaGf7VttAQEc93mNsQB+7KhaSokjdY4OdyXj99G+cgSxm
+ Gt5j572w99aqjctO46v9/ryZojV779irUGNdTT9zIY2p08d4eIQA2Uxo3PlRr5GyFf5ra/C4Czw
+ Mf+kHtf+O6GkAWY+XnSRHjqVcQKODDQiY3GArfg==
+X-Google-Smtp-Source: AGHT+IHUpniXvn6D9Mp51N05Y/sOzEKBCLcC3nksSsXZhoCwpMqrcV5GCAh54ffGLH8lri3aaAhzTjAEcCMARg29Y8A=
+X-Received: by 2002:a05:6402:356:b0:560:eaa8:9654 with SMTP id
+ r22-20020a056402035600b00560eaa89654mr1059211edw.12.1707478211419; Fri, 09
+ Feb 2024 03:30:11 -0800 (PST)
 MIME-Version: 1.0
 References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-4-philmd@linaro.org>
-In-Reply-To: <20240208181245.96617-4-philmd@linaro.org>
+ <20240208181245.96617-8-philmd@linaro.org>
+In-Reply-To: <20240208181245.96617-8-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 9 Feb 2024 11:29:25 +0000
-Message-ID: <CAFEAcA-5HV5xYSK4fnWmOsXHTGU-tw0ff5psRtnxXo+J5Wy1YA@mail.gmail.com>
-Subject: Re: [PATCH v3 03/11] hw/rx/rx62n: Only call qdev_get_gpio_in() when
- necessary
+Date: Fri, 9 Feb 2024 11:30:00 +0000
+Message-ID: <CAFEAcA9EWzBK68BrKfwRsv761ds6TVf-QPySg9d3jSPm1v_QxQ@mail.gmail.com>
+Subject: Re: [PATCH v3 07/11] hw/sh4/r2d: Realize IDE controller before
+ accessing it
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
  Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,18 +70,19 @@ Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Markus Armbruster <armbru@redhat.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Magnus Damm <magnus.damm@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,13 +101,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, 8 Feb 2024 at 18:14, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
 > wrote:
 >
-> Instead of filling an array of all the possible IRQs, only call
-> qdev_get_gpio_in() when an IRQ is used. Remove the array from
-> RX62NState. Doing so we avoid calling qdev_get_gpio_in() on an
-> unrealized device.
+> We should not wire IRQs on unrealized device.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-
+> ---
+>  hw/sh4/r2d.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
