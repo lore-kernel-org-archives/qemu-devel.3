@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DD3C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 12:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E59C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 12:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYQ43-000826-12; Fri, 09 Feb 2024 07:33:07 -0500
+	id 1rYQ4R-0008DV-4r; Fri, 09 Feb 2024 07:33:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3z-000814-LF
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:33:03 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ45-00086K-CD
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:33:09 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ3w-0001vb-Be
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:33:01 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4102f273c46so8076925e9.2
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 04:32:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYQ42-0001wg-SP
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 07:33:08 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4107ed0c536so766095e9.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 04:33:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707481978; x=1708086778; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707481984; x=1708086784; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=663egtvXUtLR9ZdYJglQVLyO0fSnzktyc0JFemad5jI=;
- b=VkZgDstHkxnn2B8fKe0kSgjsWIpARPYbWkRqnwtBnTW2OvQ6jOkp87I8tY9HDRzzOG
- mlSrr5ENvYdjWZRY1YBN5HFhEyxtjc3sLLSYJZOAVvNKZampmi5tkPN8TficGfQj6J9b
- kvoJCqHukPN4Z2BphXB3t0hfhjljopKDKY6XZSYuPZWRhn696AtLrsPTUi3rGPOOPZEG
- CYoSwXA9953ZPm2AhN+XLw2AeSV9ci08nXqC+POTHk++zh1SbM3O9MQo9E8Q/fD68nAL
- dSdtS0Ea3qZlvGHhW+UnsMux2hBRpPeNk7HksoV93wq/kKf4N838SKxhQw3SCYErGrOu
- vE8Q==
+ bh=EzmCAZqDnP2GixBxkCB+iCs3cLSrfN0BzrHq0xGFwRw=;
+ b=O3StNvGaCW5pR50S+3/8bugspf+NpvrYo2inwabPaLaGhb1D0NR0E2UfPzXgRTKjQz
+ C2jw26s7AMjngnf9v6Tmm73YiaxJHPZbzP58LFQS6Fut6ZqFn+yL8ie50h8Mywd2PN90
+ FXPE5wCgPO7QUaSyNzE/Lg+ug4Mw+V+NnlJZCNwxDO9jmwJkwGrlrACgau0Vb7Bv8yn1
+ 2wO+cR0lIQJeoSriyfJj/HedoqdMBoR+lxtxppnjjsyKrbPEsjPtE9I8Ogyf1KJnVw3T
+ NkdviWAf2qDHpTqzt5hy72fTnqJKuz4OSqxWvC8X1CrfRMIWyw7db9oBxzUD4WSIMZ3W
+ D6xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707481978; x=1708086778;
+ d=1e100.net; s=20230601; t=1707481984; x=1708086784;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=663egtvXUtLR9ZdYJglQVLyO0fSnzktyc0JFemad5jI=;
- b=LVxTY1opMbh/N+ZUhSZJWaVqpVMIIUcpesqe+Vz27krqylK4A9aWPPwXZ9PcpAbUyA
- YksvCcXlZekQIUGxYWKSow2QnzE5J2Ue1HvKjd7yjWQn3r3jkDs3QIAgP50inIdIm4eV
- 8AADtzc8ERDBt2BFPKHxELtI9DwtoXS31Wo9cAqZuox4nosj7pkQ7YbVtZ5mbqyhwSiT
- 6IQXbFE/9novL++FEuz1aO4RUZ5UhFUJ5AHoeMOdA4sevCdkeodVwwkbe8adLqjJVxOy
- fyf9ph2i1tauh3LbLU9UzhbUCR6t+Yg5u+JMy2CiI5+v+onkoCfeW7F0mJ04m4njws1o
- UWGg==
-X-Gm-Message-State: AOJu0YwJzmPlnyP2qcbWW9WyaFD5NZsbR+NGFMPwZH16kIAvQ13/ozqU
- wVHLYrI9ccUiXoaaR/8Am68PrZuz1i0JIPBY1GkdwQgb8LHgT6sKEHEosssxy9alh4Nc123Ej/m
- x
-X-Google-Smtp-Source: AGHT+IE4prvzihhUmQv7VLNgmkJT6shppkEFgUNGyL/tukLQgK2n3DKE2Ckk4+EyptQXl/B3MlLgTQ==
-X-Received: by 2002:a05:600c:5490:b0:40e:f9f4:eeb3 with SMTP id
- iv16-20020a05600c549000b0040ef9f4eeb3mr1183393wmb.39.1707481978515; 
- Fri, 09 Feb 2024 04:32:58 -0800 (PST)
+ bh=EzmCAZqDnP2GixBxkCB+iCs3cLSrfN0BzrHq0xGFwRw=;
+ b=HAmRrk+axQx65guHkqtV3RkLl8hVmfRFnZlMmX44R1duoNX6Ts8Gtdgis6uyKEugF0
+ 3cMc/fiaI3x97I65KRnzxPxjlRVp7hqPhk1e8ua0E0MFeiNjqjB2vM+VgQ1YySj09Qsm
+ eUnYu3B/pBgdAhK0v9bp0vdnmlpJprhNG4SlRfnhhXgcLrqILJ8ZM/fwzvNBEomAG4oJ
+ rXG6IQ1oYBeXuinJHkLekno3fxljKbHgl96V5e+AdW+qbpnUtc4Yy/FuKd/ifb13xqzX
+ toU7+YG7EH1Bbw3oMw7PLcUDl/uGAGfD/bo2ZFSsfwKriQsmk5/76avb6giu8O/doJo1
+ JOaA==
+X-Gm-Message-State: AOJu0YwdC3IcOUE32uerljMpz281NPrBN8kNoi+yR/e76F/nwd/1/UhT
+ R+hK8lZvgBDrK5pXeA6vWE4F0wo8ky0d65LxY414JsxKx840sG4egSUbOfRMv/42n+Z4yFNrzBM
+ Z
+X-Google-Smtp-Source: AGHT+IFFniHgzTURLnYglT2Uf75r2lJLrVzOD6Zm8Bv/u5mrekpnhWZ1KZ33dJ8yDe2BK21x7bT0Ug==
+X-Received: by 2002:a05:600c:35cc:b0:40f:dc50:aea5 with SMTP id
+ r12-20020a05600c35cc00b0040fdc50aea5mr1230765wmq.22.1707481984432; 
+ Fri, 09 Feb 2024 04:33:04 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLFp56gSVTcUfodr1Rna4sVxwxJhyecQssHGjTR7aBYKt+0e/yCFmFwPuM26IDC7BcQRETgc63keWsPYTk88MiGyK1fJK0FzqyxsItQdgx3710dmTLiGkhWgjNo7zZqqDXp4iSLR9uf7CKQWqdBIUgBqqiYoa1je5VtPHBzhCC4xUvriq8lbswPuzTOiBrOh7WeLlR1eUrtf8x0xPtmUjyyltScyNs186w7avU8M4ZlRmopOkY6b86CM4brYlCAuPl6NimMbB1dqMIKjVFuJAqSBECDJprDgQvAj5PAQy+tSlm34l/Cdc8V0c8cH/jpQMe3MKApeMR0PE=
+ AJvYcCWXEEO6MR0jNSBaQ5p3sBdVfhNDOQv+N8rvHqTksw8HLNFUba8y0enrZEmMbRvtARpx8UGiGpZ9GoGHaQSXrLcMd78ZhvjzYc/2CmKvvVspbTDqsZEEiq+A8Xv6/Fi2PGsILNbSfLGVlU0KZzW3h/9SgoQ6X4h+W/9/rHyo8ix8162J5gbvi+Gj+xO7c8rCiIjvS7yH0BOOu50owsAcS83l0F2cO91lIt5B0wONiwUZyd8ZhZEL4kPDJZrrzkhoqhr1S1BpF2e5xmjUWAtm7p30SS4GZ6ZMkgZlzC/akWb53O6Wy1R85E8wi03gXRa6eEiqm49eRzWSPZY=
 Received: from m1x-phil.lan ([176.187.218.105])
  by smtp.gmail.com with ESMTPSA id
- n2-20020a05600c294200b0040e3635ca65sm509303wmd.2.2024.02.09.04.32.57
+ jr6-20020a05600c560600b0041079d336c7sm484051wmb.39.2024.02.09.04.33.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 Feb 2024 04:32:58 -0800 (PST)
+ Fri, 09 Feb 2024 04:33:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -68,24 +68,25 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
  Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [RFC PATCH 5/7] hw/ide/via: Configure IDE bus IRQs after realization
-Date: Fri,  9 Feb 2024 13:32:23 +0100
-Message-ID: <20240209123226.32576-6-philmd@linaro.org>
+Subject: [RFC PATCH 6/7] hw/intc/mips_gic: Initialize IRQ array once device is
+ realized
+Date: Fri,  9 Feb 2024 13:32:24 +0100
+Message-ID: <20240209123226.32576-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240209123226.32576-1-philmd@linaro.org>
 References: <20240209123226.32576-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +106,45 @@ We shouldn't call qdev_get_gpio_in() on unrealized devices.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Ideally we should rework the current IDE bus model to really
-use QOM and not globals. Left for later.
----
- hw/ide/via.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/intc/mips_gic.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ide/via.c b/hw/ide/via.c
-index 3f3c484253..caf1b69bd4 100644
---- a/hw/ide/via.c
-+++ b/hw/ide/via.c
-@@ -226,6 +226,15 @@ static void via_ide_realize(PCIDevice *dev, Error **errp)
-     qdev_init_gpio_in(ds, via_ide_set_irq, ARRAY_SIZE(d->bus));
-     for (i = 0; i < ARRAY_SIZE(d->bus); i++) {
-         ide_bus_init(&d->bus[i], sizeof(d->bus[i]), ds, i, MAX_IDE_DEVS);
-+    }
+diff --git a/hw/intc/mips_gic.c b/hw/intc/mips_gic.c
+index 77ba7348a3..05c8b8f4c4 100644
+--- a/hw/intc/mips_gic.c
++++ b/hw/intc/mips_gic.c
+@@ -419,7 +419,6 @@ static void mips_gic_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+     s->vps = g_new(MIPSGICVPState, s->num_vps);
+-    s->irq_state = g_new(MIPSGICIRQState, s->num_irq);
+     /* Register the env for all VPs with the GIC */
+     for (i = 0; i < s->num_vps; i++) {
+         if (cs != NULL) {
+@@ -433,7 +432,14 @@ static void mips_gic_realize(DeviceState *dev, Error **errp)
+     }
+     s->gic_timer = mips_gictimer_init(s, s->num_vps, gic_timer_expire_cb);
+     qdev_init_gpio_in(dev, gic_set_irq, s->num_irq);
+-    for (i = 0; i < s->num_irq; i++) {
 +}
 +
-+static void via_ide_wire(DeviceState *dev)
++static void mips_gic_wire(DeviceState *dev)
 +{
-+    PCIIDEState *d = PCI_IDE(dev);
-+    DeviceState *ds = DEVICE(dev);
++    MIPSGICState *s = MIPS_GIC(dev);
 +
-+    for (unsigned i = 0; i < ARRAY_SIZE(d->bus); i++) {
-         ide_bus_init_output_irq(&d->bus[i], qdev_get_gpio_in(ds, i));
++    s->irq_state = g_new(MIPSGICIRQState, s->num_irq);
++    for (unsigned i = 0; i < s->num_irq; i++) {
+         s->irq_state[i].irq = qdev_get_gpio_in(dev, i);
+     }
+ }
+@@ -450,6 +456,7 @@ static void mips_gic_class_init(ObjectClass *klass, void *data)
  
-         bmdma_init(&d->bus[i], &d->bmdma[i], d);
-@@ -249,6 +258,7 @@ static void via_ide_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+     device_class_set_props(dc, mips_gic_properties);
+     dc->realize = mips_gic_realize;
++    dc->wire = mips_gic_wire;
+ }
  
-+    dc->wire = via_ide_wire;
-     dc->reset = via_ide_reset;
-     dc->vmsd = &vmstate_ide_pci;
-     /* Reason: only works as function of VIA southbridge */
+ static const TypeInfo mips_gic_info = {
 -- 
 2.41.0
 
