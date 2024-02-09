@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A890FC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A3B3C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:50:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYYjt-0003pw-Va; Fri, 09 Feb 2024 16:48:53 -0500
+	id 1rYYkj-0004E1-1U; Fri, 09 Feb 2024 16:49:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYjs-0003pO-6e; Fri, 09 Feb 2024 16:48:52 -0500
+ id 1rYYkh-0004Dg-SW; Fri, 09 Feb 2024 16:49:43 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYjq-0003bC-Km; Fri, 09 Feb 2024 16:48:51 -0500
+ id 1rYYkg-0003jP-F0; Fri, 09 Feb 2024 16:49:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=z1avApm2mU40lIHpg4a3JOjpjGBNhjZZQ9daw/4BiZs=; b=AFchVw7+Rs4Bla0w5nFWwlTfbG
- zb6Ri5/3JhRjq8o9CcujJMKw+j13Keu8ILakGABQDK7Je+Jnh/AUKvRDbndKPBUn8AZZKPKQBF/Eo
- XcjYxl7pvkVtMAsxuPrCRC0j7NS/HYQPvyucLsZ2RG0Dxezt99skjXGiTGBoFcM3eIjWM9G3VlYf5
- /rhtxwd70HPm5TaljL77KZbWaYo9Uk3txvmbmJY3s4NQQFghh4R7XPVZvSEWAbWEpsTuhCf82cXwc
- SwLB+IqFXNxiG3trvpsf9R4FlNriQQILkM3g5H/V4V4t3w4tfvEgAb5B0MZUxWm4Jux3sS3RRJQS7
- Eog771k0sQThV3Omf9icbd///6JIVMB0lHVpflYsrNYzPAK2Ozlt/6wcJSasw6J3F7Nu/ASVQeCdC
- 3NSfxqrkHe3EGixdtsDYrAb/K2rHX2VnzPWk9n+U4xI3PV9/uei2CeySvbykoGJONzo9VGPB78wbG
- AkVIZOwkY+HG6neXhYgMe2yUzmKBVAKTgHLv0FCZlG8826lcYC4CKadzvZrUptQuSdfVOc2uQM7z7
- bc494X9PnFlN0/x/SFQEPYoxiMW9LxV85DYEqHkY1Vrq1DTtstlF8RvmbgQ/hrks4oNfpNhB4rwMs
- GHLoqDtqjPRJS0TUducaJtGEbjjMKFMapMHmumtkA=;
+ bh=g5aguWdVtccDJ4Gih6s4UZTp1d7s1GfZ39F8cCkOidE=; b=eUgRVTB/WIZVavv6632ZTHaNLS
+ MNgOH2nikDyZCbY6bSbgyDg/phWCM7cpsz1yCyyDupWV4Qzsmr/ivJLnqTP4zU6lF41Pa+gawDce6
+ eq4RA4EUBJJUdDRm9RkWpwOc5PM9Oz++IFabO7Y5O3k9qbDzSvrI7IAlrSLTg8myJZme44OjTVToQ
+ vDEtylUcmLjLef5uZBw8FBJi6lDOryuW0aRbXDipBpUq1y1KF2wSTh2BWegTlLaM3+aJZi26Hy4wa
+ FH0ranzmLszUUQnfBoP5X6OC7qImzsseeMq0BSOG7uzDtsrAjvdJjuZyo+AqiV9vsCVDXUZNrAHBi
+ 6pE9p4T6DkhtXYkgnwm2wp01osyjZyuuY8S29frUjpD72fjm//OG6V/9lCWHvAGmuIE+ZfaHyVgWK
+ J6Z7DCnt5IxSZzZsBJq/nPqsFtkmgxTxohmfmUNbRekLSgwLc+MgRcBeFiiTYby+gZsbV1jzEI0gk
+ quQRbfsot6QOTYBFXanXwCbW/Y8Q7v+hgo+p0i0cDTrpJYDU/J9cf2JEAb5fg1WGZ5u1rndl1PdeU
+ BbR4NM4PrlBTppbK3l2xHr/aEdTy1y/tA+eIffLDmt0YCeEhfm2GmD91UBHqqyk7KNtSa8HZX4Myb
+ RSIRLhewzp6bJEK6GHdeWY2QUGl/Rr01pFhrLZWi4=;
 Received: from [2a00:23c4:8bb2:1300:1032:5a09:fd17:2b9e]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rYYj5-0002XC-Jm; Fri, 09 Feb 2024 21:48:07 +0000
-Message-ID: <075417ae-151f-46d2-a59b-db36aa20418f@ilande.co.uk>
-Date: Fri, 9 Feb 2024 21:48:41 +0000
+ id 1rYYjw-0002XC-6Y; Fri, 09 Feb 2024 21:49:00 +0000
+Message-ID: <d39ec983-90ef-4fd7-a92f-7d9857b2b75d@ilande.co.uk>
+Date: Fri, 9 Feb 2024 21:49:34 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Content-Language: en-US
@@ -49,11 +49,9 @@ Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini
  <pbonzini@redhat.com>, qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Fabien Chouteau
- <chouteau@adacore.com>, Frederic Konrad <konrad.frederic@yahoo.fr>,
- Artyom Tarasenko <atar4qemu@gmail.com>
+ Markus Armbruster <armbru@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-11-philmd@linaro.org>
+ <20240208181245.96617-12-philmd@linaro.org>
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
@@ -79,12 +77,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240208181245.96617-11-philmd@linaro.org>
+In-Reply-To: <20240208181245.96617-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:1032:5a09:fd17:2b9e
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 10/11] hw/sparc/leon3: Initialize GPIO before realizing
+Subject: Re: [PATCH v3 11/11] hw/sparc64/cpu: Initialize GPIO before realizing
  CPU devices
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
@@ -119,39 +117,33 @@ On 08/02/2024 18:12, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/sparc/leon3.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+>   hw/sparc64/sparc64.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-> index 0df5fc949d..0e1d749306 100644
-> --- a/hw/sparc/leon3.c
-> +++ b/hw/sparc/leon3.c
-> @@ -234,8 +234,11 @@ static void leon3_generic_hw_init(MachineState *machine)
->       APBPnp *apb_pnp;
+> diff --git a/hw/sparc64/sparc64.c b/hw/sparc64/sparc64.c
+> index 72f0849f50..3091cde586 100644
+> --- a/hw/sparc64/sparc64.c
+> +++ b/hw/sparc64/sparc64.c
+> @@ -24,6 +24,7 @@
 >   
->       /* Init CPU */
-> -    cpu = SPARC_CPU(cpu_create(machine->cpu_type));
-> +    cpu = SPARC_CPU(object_new(machine->cpu_type));
->       env = &cpu->env;
-> +    qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil_in,
-> +                                        env, "pil", 1);
+>   
+>   #include "qemu/osdep.h"
+> +#include "qapi/error.h"
+>   #include "cpu.h"
+>   #include "hw/boards.h"
+>   #include "hw/sparc/sparc64.h"
+> @@ -271,9 +272,10 @@ SPARCCPU *sparc64_cpu_devinit(const char *cpu_type, uint64_t prom_addr)
+>       uint32_t  stick_frequency = 100 * 1000000;
+>       uint32_t hstick_frequency = 100 * 1000000;
+>   
+> -    cpu = SPARC_CPU(cpu_create(cpu_type));
+> +    cpu = SPARC_CPU(object_new(cpu_type));
+>       qdev_init_gpio_in_named(DEVICE(cpu), sparc64_cpu_set_ivec_irq,
+>                               "ivec-irq", IVEC_MAX);
 > +    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-
-I know it's not part of this patch, but I think that 
-qdev_init_gpio_in_named_with_opaque() can be replaced with just 
-qdev_init_gpio_in_named(), and leon3_set_pil_in() updated to take CPUState.
-
->       cpu_sparc_set_id(env, 0);
+>       env = &cpu->env;
 >   
-> @@ -261,8 +264,6 @@ static void leon3_generic_hw_init(MachineState *machine)
->   
->       /* Allocate IRQ manager */
->       irqmpdev = qdev_new(TYPE_GRLIB_IRQMP);
-> -    qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil_in,
-> -                                        env, "pil", 1);
->       sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
->       sysbus_mmio_map(SYS_BUS_DEVICE(irqmpdev), 0, LEON3_IRQMP_OFFSET);
->       qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", 0,
+>       env->tick = cpu_timer_create("tick", cpu, tick_irq,
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
