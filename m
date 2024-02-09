@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E7FC4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 19:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9D0C4829E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 19:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYWqr-0005YV-T0; Fri, 09 Feb 2024 14:48:04 -0500
+	id 1rYWre-0006qp-Fh; Fri, 09 Feb 2024 14:48:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rYWqd-0005Vs-Ix
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:47:43 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1rYWqi-0005Y7-GK
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:47:49 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rYWqa-0005Ap-ON
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:47:43 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33b29b5eab5so650414f8f.2
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 11:47:40 -0800 (PST)
+ id 1rYWqc-0005Bn-LJ
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:47:45 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-40fd2f7ef55so14305385e9.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 11:47:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707508058; x=1708112858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707508061; x=1708112861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2LPZ5f6J+7DZZSWTcdB8sRpzvNp85w3nAGoLqoRKgsw=;
- b=HRROj/awN8A5LUR200KIH+IV8QwhtEjzlNJ1OJ2EAJdhgxOq+4jfLE3/RA41uhyhsC
- ycLPEpcrXIH6L5LQttEqL+JZsv3BomvI/9ZnAYAUKtYF/Y2wcMcNkCfWAN3HG9jGIZy9
- XO1v2OgmC0N8x7Eh7NTSSZBw0rukQfYeqiEngTMq37VgwUsfv0kynpMKwEu67lEM7EeK
- ABTur091BhBwlZsuFmeA5cohbz+9omJnmHHPA30SdNkJfz1Ew98axNnuy+al01zksJLZ
- sV7pMqf5f6KQr5qonD/v3lcCtOL7CvFQrAxM3OxZo3N4cAer55HwgWUHMbhejTIFMJfW
- wpmQ==
+ bh=Wtk9GiV3W2xXFlYcJpJzbgDy4P/9SBqVnzDNRkRcVpY=;
+ b=ayRKH+ZYMpOf+Q2W/eQr7tot9IviVxXXcO1gKOimc8oZq9sL98l5D5kSExgf7RMSxz
+ uPfIQYqAY01Uk0o52ozJnHwI1xLdcieGJp28p96dhpxceTtyKNJfEK9V51Z7wxpOraEN
+ G/jK9XgwAyF9l01FQZkR6p6FDkcjgQSRN2li7QiVOCwDmClg0dcu23hZc6dRRBT+5zIi
+ 4oeYPG3LSGYcGlA81iezOwuZBCWVSvsDrEEFYV5E1jkMIKAIQHW8qmiws5t/3mKM9dyH
+ 672uTiBQKnzR/hw2rRBaS/u0edgK+CMSO97tWUyoLQBoQQNQQqjeAVRd1S5IcwK5tjZ4
+ 90+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707508058; x=1708112858;
+ d=1e100.net; s=20230601; t=1707508061; x=1708112861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2LPZ5f6J+7DZZSWTcdB8sRpzvNp85w3nAGoLqoRKgsw=;
- b=cSwi8o/fdpoqAwF5JFfX6qzEeKMRZSjuEUCHgRxwbLq5FTuQuU/TqnRvy92lKmFnGp
- D3z81u2PRrMJDFAuNSMZyjAzddhTrhMMH1NMqD9uhWpRUBT/ZdBJrQaKXMqOctUWaFjk
- aHMD/T1Fukj3HJBp6fQjOQ5OuXMkQ7lx0Bb+ZTnIGe5NDomo3rU4Ty2z4jKw9sSHPq2K
- MIVx+s0AYZM9VY+KvfnUVG8bKhEHG6sRATA5KVLb5d/pgbdV+9afj8vEAPyoOXnIrdj2
- hdZrJ1PpiibFmvawijh1BuA4Yq6FGEDrfJEqd1jQpF1DGqc0Uehf97jzmGwqJ4HFRew7
- ig5g==
-X-Gm-Message-State: AOJu0Yw7+jfw8cMLPg8UmVo3c+2WPSHl1NuXeebNl10NZ89l4sGy6oCQ
- PIL5EOhpw4OoeZPk2sq/6yh85VfeIJ3KDLX9LpWe3oxqFB+y4uDpqG/45x9Iz72rpyrVY6PDQD6
- /
-X-Google-Smtp-Source: AGHT+IG3eQ7LtdMk3G7CRSmVPtS4lk10UbCi3/bv5K8bUhVfhRZAaUQ+9b0OrMMtC8wnNd+Eo2+BQg==
-X-Received: by 2002:adf:e4cf:0:b0:33b:998:3643 with SMTP id
- v15-20020adfe4cf000000b0033b09983643mr5665wrm.34.1707508057871; 
- Fri, 09 Feb 2024 11:47:37 -0800 (PST)
+ bh=Wtk9GiV3W2xXFlYcJpJzbgDy4P/9SBqVnzDNRkRcVpY=;
+ b=juUgfvsxtyG+BmoPelCuEUt74A4Jzady1yswM3VBhDUuAP10cQUY4uTjPwkHosfDf9
+ Zsu4F2deJEdFkqnmnvBSCsqKXSVum65tdbvzRKUwoMaQkI9f7JvJFn3d0crem4Ot+0hs
+ hm3RJUQsThhhcM9AJB8yf9XMt8fgqmQYtduWzZVjbaYBYK+7jndDZ4kvHH66CTx84YBR
+ v9FL1ecz06w6/X1YbC9Dm4XiEiEhSa+BsPydhoDQb9u+titp5sYTsoNA9/0qqkws+QeS
+ yAdn3JA+rR8iHMfSicO4LIBddgxYIDqiX1wQXzGWt/v9aLgAoro+wGo2Qi6ZDAERLRLD
+ VIVw==
+X-Gm-Message-State: AOJu0YxB6hRnEVnebXORRxWPwko6/w/rDGukqRLFcV5CaRwkYUAURcnH
+ 1RWfLs2iZCkQHpmQAgQ6/NbF2AUpmyZJ807mAkBirq1HrFUlzFJNPiM3uTwCjYI=
+X-Google-Smtp-Source: AGHT+IEtelt3B1a88RvJNO3og77wZnPg33Wflo41xWbY+TXVM9jCLSjceWWaAFkKaNqIYTlFF+6NVw==
+X-Received: by 2002:a5d:67cf:0:b0:33a:eb4b:c702 with SMTP id
+ n15-20020a5d67cf000000b0033aeb4bc702mr1881597wrw.3.1707508061055; 
+ Fri, 09 Feb 2024 11:47:41 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxrhbjiyT22CxsKfl6zNEko5qEizQpvyV5EYy52uqvfHT5+xIuWPN26Sn2v4/pNusVdWizMGMBmZoQ8vPjrMZl
+ AJvYcCV5oQwO/y1n7kDtfr4IPMQ/fwVunD2t7OHpvyurlz+5oPtWUULUQOVQikRRUXeW5j0P0j3WOAG4ypOw6tR8XHaVTWnVp8G24tDmXdKc4wWIAuRd9Ct+Fh4b4BJfHaldFq75mXQXPqaenCC4j/jb
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- c1-20020a056000104100b0033905a60689sm53030wrx.45.2024.02.09.11.47.35
+ bq26-20020a5d5a1a000000b0033b4335dce5sm43840wrb.85.2024.02.09.11.47.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 11:47:35 -0800 (PST)
+ Fri, 09 Feb 2024 11:47:37 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0AF455F8A7;
+ by draig.lan (Postfix) with ESMTP id 755835F7D7;
  Fri,  9 Feb 2024 19:47:35 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 04/10] Revert "hw/elf_ops: Ignore loadable segments with zero
- size"
-Date: Fri,  9 Feb 2024 19:47:28 +0000
-Message-Id: <20240209194734.3424785-5-alex.bennee@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Riku Voipio <riku.voipio@iki.fi>
+Subject: [PULL 08/10] gdbstub: Add syscall entry/return hooks
+Date: Fri,  9 Feb 2024 19:47:32 +0000
+Message-Id: <20240209194734.3424785-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240209194734.3424785-1-alex.bennee@linaro.org>
 References: <20240209194734.3424785-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,121 +101,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This regressed qemu-system-xtensa:
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-    TEST    test_load_store on xtensa
-  qemu-system-xtensa: Some ROM regions are overlapping
-  These ROM regions might have been loaded by direct user request or by default.
-  They could be BIOS/firmware images, a guest kernel, initrd or some other file loaded into guest memory.
-  Check whether you intended to load all this guest code, and whether it has been built to load to the correct addresses.
+The upcoming syscall catchpoint support needs to get control on syscall
+entry and return. Provide the necessary hooks for that, which are
+no-ops for now.
 
-  The following two regions overlap (in the memory address space):
-    test_load_store ELF program header segment 1 (addresses 0x0000000000001000 - 0x0000000000001f26)
-    test_load_store ELF program header segment 2 (addresses 0x0000000000001ab8 - 0x0000000000001ab8)
-  make[1]: *** [Makefile:187: run-test_load_store] Error 1
-
-This reverts commit 62570f1434160d356311e1c217537e24a4ac85cd.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20240202152506.279476-4-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240207163812.3231697-5-alex.bennee@linaro.org>
+Message-Id: <20240207163812.3231697-13-alex.bennee@linaro.org>
 
-diff --git a/include/hw/elf_ops.h b/include/hw/elf_ops.h
-index 3e966ddd5a1..9c35d1b9da6 100644
---- a/include/hw/elf_ops.h
-+++ b/include/hw/elf_ops.h
-@@ -427,16 +427,6 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             file_size = ph->p_filesz; /* Size of the allocated data */
-             data_offset = ph->p_offset; /* Offset where the data is located */
+diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
+index 1fc43e04af5..68b6534130c 100644
+--- a/include/gdbstub/user.h
++++ b/include/gdbstub/user.h
+@@ -51,5 +51,18 @@ void gdb_signalled(CPUArchState *as, int sig);
+  */
+ void gdbserver_fork(CPUState *cs);
  
--            /*
--             * Some ELF files really do have segments of zero size;
--             * just ignore them rather than trying to set the wrong addr,
--             * or create empty ROM blobs, because the zero-length blob can
--             * falsely trigger the overlapping-ROM-blobs check.
--             */
--            if (mem_size == 0) {
--                continue;
--            }
--
-             if (file_size > 0) {
-                 if (g_mapped_file_get_length(mapped_file) <
-                     file_size + data_offset) {
-@@ -540,38 +530,45 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-                 *pentry = ehdr.e_entry - ph->p_vaddr + ph->p_paddr;
-             }
- 
--            if (load_rom) {
--                g_autofree char *label =
--                    g_strdup_printf("%s ELF program header segment %d",
--                                    name, i);
--
--                /*
--                 * rom_add_elf_program() takes its own reference to
--                 * 'mapped_file'.
--                 */
--                rom_add_elf_program(label, mapped_file, data, file_size,
--                                    mem_size, addr, as);
--            } else {
--                MemTxResult res;
--
--                res = address_space_write(as ? as : &address_space_memory,
--                                          addr, MEMTXATTRS_UNSPECIFIED,
--                                          data, file_size);
--                if (res != MEMTX_OK) {
--                    goto fail;
--                }
--                /*
--                 * We need to zero'ify the space that is not copied
--                 * from file
--                 */
--                if (file_size < mem_size) {
--                    res = address_space_set(as ? as : &address_space_memory,
--                                            addr + file_size, 0,
--                                            mem_size - file_size,
--                                            MEMTXATTRS_UNSPECIFIED);
-+            /* Some ELF files really do have segments of zero size;
-+             * just ignore them rather than trying to create empty
-+             * ROM blobs, because the zero-length blob can falsely
-+             * trigger the overlapping-ROM-blobs check.
-+             */
-+            if (mem_size != 0) {
-+                if (load_rom) {
-+                    g_autofree char *label =
-+                        g_strdup_printf("%s ELF program header segment %d",
-+                                        name, i);
++/**
++ * gdb_syscall_entry() - inform gdb of syscall entry and yield control to it
++ * @cs: CPU
++ * @num: syscall number
++ */
++void gdb_syscall_entry(CPUState *cs, int num);
 +
-+                    /*
-+                     * rom_add_elf_program() takes its own reference to
-+                     * 'mapped_file'.
-+                     */
-+                    rom_add_elf_program(label, mapped_file, data, file_size,
-+                                        mem_size, addr, as);
-+                } else {
-+                    MemTxResult res;
-+
-+                    res = address_space_write(as ? as : &address_space_memory,
-+                                              addr, MEMTXATTRS_UNSPECIFIED,
-+                                              data, file_size);
-                     if (res != MEMTX_OK) {
-                         goto fail;
-                     }
-+                    /*
-+                     * We need to zero'ify the space that is not copied
-+                     * from file
-+                     */
-+                    if (file_size < mem_size) {
-+                        res = address_space_set(as ? as : &address_space_memory,
-+                                                addr + file_size, 0,
-+                                                mem_size - file_size,
-+                                                MEMTXATTRS_UNSPECIFIED);
-+                        if (res != MEMTX_OK) {
-+                            goto fail;
-+                        }
-+                    }
-                 }
-             }
++/**
++ * gdb_syscall_entry() - inform gdb of syscall return and yield control to it
++ * @cs: CPU
++ * @num: syscall number
++ */
++void gdb_syscall_return(CPUState *cs, int num);
  
+ #endif /* GDBSTUB_USER_H */
+diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
+index 557f881a79b..b48b2b2d0ae 100644
+--- a/include/user/syscall-trace.h
++++ b/include/user/syscall-trace.h
+@@ -11,6 +11,7 @@
+ #define SYSCALL_TRACE_H
+ 
+ #include "exec/user/abitypes.h"
++#include "gdbstub/user.h"
+ #include "qemu/plugin.h"
+ #include "trace/trace-root.h"
+ 
+@@ -20,7 +21,7 @@
+  * could potentially unify the -strace code here as well.
+  */
+ 
+-static inline void record_syscall_start(void *cpu, int num,
++static inline void record_syscall_start(CPUState *cpu, int num,
+                                         abi_long arg1, abi_long arg2,
+                                         abi_long arg3, abi_long arg4,
+                                         abi_long arg5, abi_long arg6,
+@@ -29,11 +30,13 @@ static inline void record_syscall_start(void *cpu, int num,
+     qemu_plugin_vcpu_syscall(cpu, num,
+                              arg1, arg2, arg3, arg4,
+                              arg5, arg6, arg7, arg8);
++    gdb_syscall_entry(cpu, num);
+ }
+ 
+-static inline void record_syscall_return(void *cpu, int num, abi_long ret)
++static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
+ {
+     qemu_plugin_vcpu_syscall_ret(cpu, num, ret);
++    gdb_syscall_return(cpu, num);
+ }
+ 
+ 
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 63edca131ab..2ba01c17faf 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -502,3 +502,11 @@ void gdb_syscall_handling(const char *syscall_packet)
+     gdb_put_packet(syscall_packet);
+     gdb_handlesig(gdbserver_state.c_cpu, 0);
+ }
++
++void gdb_syscall_entry(CPUState *cs, int num)
++{
++}
++
++void gdb_syscall_return(CPUState *cs, int num)
++{
++}
 -- 
 2.39.2
 
