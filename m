@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 843AEC48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D81C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYRVL-0002XH-Rm; Fri, 09 Feb 2024 09:05:23 -0500
+	id 1rYRVr-0003FN-Ph; Fri, 09 Feb 2024 09:05:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rYRVK-0002WC-07
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rYRVp-00039Q-9g
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rYRVH-0004Ah-DU
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:21 -0500
+ id 1rYRVn-0004NV-4p
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707487518;
+ s=mimecast20190719; t=1707487550;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1IsW+uIV+jObUcd3rQFlpkfYBD/DNYCjPnvcaoY4UXA=;
- b=We9JeQOtHthjhncXVUmWaXNHis5MpFD3iCaEKuxIjt3Atiz4gC9Y5EsXtVT9H510rSQr88
- UwhcrjemecOEtNJmv3lTI2IVDxsbEzp2uA0Se96RW8YHhzBrHN7dRXoKyUoj3/qRtGpEa2
- JzN5Iom9+BDejJ8ORlk7volb8UV6Q8M=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-310-DEQKvFOGOxSeXL-qes1Qqw-1; Fri, 09 Feb 2024 09:05:15 -0500
-X-MC-Unique: DEQKvFOGOxSeXL-qes1Qqw-1
+ bh=Ol6utk6ZKSy102uzMMxIgtGhjug+Eb/5A5Rg7knA2bs=;
+ b=hx02EGEPh4wbJ9Y6xIbnFi2fv8wf7ihwfnLwl9ZVVTdo4MoXMv5iwVrFWdIXWgyjKbCfK1
+ 7v69sHkvWPbba5TbupZIyrvskXxXcQRs9evMhZU3dVXUL3xMCl1/VjLEvomulKiP7+kSi+
+ ctlFihvpfY5DsJcmacM89tUCXHJeNTU=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-x15cVBTKOcW_5F7AhCNy7g-1; Fri,
+ 09 Feb 2024 09:05:46 -0500
+X-MC-Unique: x15cVBTKOcW_5F7AhCNy7g-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2A942862DC0;
- Fri,  9 Feb 2024 14:05:14 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8A4463C23FD0;
+ Fri,  9 Feb 2024 14:05:45 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.105])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 16E4B111FF;
- Fri,  9 Feb 2024 14:05:11 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id DF7C8112A1;
+ Fri,  9 Feb 2024 14:05:42 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -58,25 +58,25 @@ Cc: Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 02/17] crypto: Introduce SM4 symmetric cipher algorithm
-Date: Fri,  9 Feb 2024 14:04:50 +0000
-Message-ID: <20240209140505.2536635-3-berrange@redhat.com>
+Subject: [PULL 13/17] crypto: Modify the qcrypto_block_create to support
+ creation flags
+Date: Fri,  9 Feb 2024 14:05:01 +0000
+Message-ID: <20240209140505.2536635-14-berrange@redhat.com>
 In-Reply-To: <20240209140505.2536635-1-berrange@redhat.com>
 References: <20240209140505.2536635-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.269,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,300 +94,220 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hyman Huang <yong.huang@smartx.com>
 
-Introduce the SM4 cipher algorithms (OSCCA GB/T 32907-2016).
-
-SM4 (GBT.32907-2016) is a cryptographic standard issued by the
-Organization of State Commercial Administration of China (OSCCA)
-as an authorized cryptographic algorithms for the use within China.
-
-Detect the SM4 cipher algorithms and enable the feature silently
-if it is available.
+Expand the signature of qcrypto_block_create to enable the
+formation of LUKS volumes with detachable headers. To accomplish
+that, introduce QCryptoBlockCreateFlags to instruct the creation
+process to set the payload_offset_sector to 0.
 
 Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/block-luks.c             | 11 ++++++++
- crypto/cipher-gcrypt.c.inc      |  8 ++++++
- crypto/cipher-nettle.c.inc      | 49 +++++++++++++++++++++++++++++++++
- crypto/cipher.c                 |  6 ++++
- meson.build                     | 26 +++++++++++++++++
- qapi/crypto.json                |  5 +++-
- tests/unit/test-crypto-cipher.c | 13 +++++++++
- 7 files changed, 117 insertions(+), 1 deletion(-)
+ block/crypto.c                 |  1 +
+ block/qcow.c                   |  2 +-
+ block/qcow2.c                  |  2 +-
+ crypto/block-luks.c            | 28 +++++++++++++++++++++-------
+ crypto/block.c                 |  4 +++-
+ crypto/blockpriv.h             |  2 ++
+ include/crypto/block.h         | 11 +++++++++++
+ tests/unit/test-crypto-block.c |  2 ++
+ 8 files changed, 42 insertions(+), 10 deletions(-)
 
+diff --git a/block/crypto.c b/block/crypto.c
+index e87dc84111..1b3f87922a 100644
+--- a/block/crypto.c
++++ b/block/crypto.c
+@@ -369,6 +369,7 @@ block_crypto_co_create_generic(BlockDriverState *bs, int64_t size,
+                                   block_crypto_create_init_func,
+                                   block_crypto_create_write_func,
+                                   &data,
++                                  0,
+                                   errp);
+ 
+     if (!crypto) {
+diff --git a/block/qcow.c b/block/qcow.c
+index c6d0e15f1e..ca8e1d5ec8 100644
+--- a/block/qcow.c
++++ b/block/qcow.c
+@@ -885,7 +885,7 @@ qcow_co_create(BlockdevCreateOptions *opts, Error **errp)
+         header.crypt_method = cpu_to_be32(QCOW_CRYPT_AES);
+ 
+         crypto = qcrypto_block_create(qcow_opts->encrypt, "encrypt.",
+-                                      NULL, NULL, NULL, errp);
++                                      NULL, NULL, NULL, 0, errp);
+         if (!crypto) {
+             ret = -EINVAL;
+             goto exit;
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 9bee66fff5..204f5854cf 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -3216,7 +3216,7 @@ qcow2_set_up_encryption(BlockDriverState *bs,
+     crypto = qcrypto_block_create(cryptoopts, "encrypt.",
+                                   qcow2_crypto_hdr_init_func,
+                                   qcow2_crypto_hdr_write_func,
+-                                  bs, errp);
++                                  bs, 0, errp);
+     if (!crypto) {
+         return -EINVAL;
+     }
 diff --git a/crypto/block-luks.c b/crypto/block-luks.c
-index fb01ec38bb..f0813d69b4 100644
+index 7e1235c213..ab52c9dce1 100644
 --- a/crypto/block-luks.c
 +++ b/crypto/block-luks.c
-@@ -95,12 +95,23 @@ qcrypto_block_luks_cipher_size_map_twofish[] = {
-     { 0, 0 },
+@@ -1315,6 +1315,7 @@ qcrypto_block_luks_create(QCryptoBlock *block,
+     const char *hash_alg;
+     g_autofree char *cipher_mode_spec = NULL;
+     uint64_t iters;
++    uint64_t detached_header_size;
+ 
+     memcpy(&luks_opts, &options->u.luks, sizeof(luks_opts));
+     if (!luks_opts.has_iter_time) {
+@@ -1543,19 +1544,32 @@ qcrypto_block_luks_create(QCryptoBlock *block,
+         slot->stripes = QCRYPTO_BLOCK_LUKS_STRIPES;
+     }
+ 
+-    /* The total size of the LUKS headers is the partition header + key
+-     * slot headers, rounded up to the nearest sector, combined with
+-     * the size of each master key material region, also rounded up
+-     * to the nearest sector */
+-    luks->header.payload_offset_sector = header_sectors +
+-            QCRYPTO_BLOCK_LUKS_NUM_KEY_SLOTS * split_key_sectors;
++    if (block->detached_header) {
++        /*
++         * For a detached LUKS header image, set the payload_offset_sector
++         * to 0 to specify the starting point for read/write
++         */
++        luks->header.payload_offset_sector = 0;
++    } else {
++        /*
++         * The total size of the LUKS headers is the partition header + key
++         * slot headers, rounded up to the nearest sector, combined with
++         * the size of each master key material region, also rounded up
++         * to the nearest sector
++         */
++        luks->header.payload_offset_sector = header_sectors +
++                QCRYPTO_BLOCK_LUKS_NUM_KEY_SLOTS * split_key_sectors;
++    }
+ 
+     block->sector_size = QCRYPTO_BLOCK_LUKS_SECTOR_SIZE;
+     block->payload_offset = luks->header.payload_offset_sector *
+         block->sector_size;
++    detached_header_size =
++        (header_sectors + QCRYPTO_BLOCK_LUKS_NUM_KEY_SLOTS *
++         split_key_sectors) * block->sector_size;
+ 
+     /* Reserve header space to match payload offset */
+-    initfunc(block, block->payload_offset, opaque, &local_err);
++    initfunc(block, detached_header_size, opaque, &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+         goto error;
+diff --git a/crypto/block.c b/crypto/block.c
+index 7bb4b74a37..506ea1d1a3 100644
+--- a/crypto/block.c
++++ b/crypto/block.c
+@@ -87,6 +87,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
+                                    QCryptoBlockInitFunc initfunc,
+                                    QCryptoBlockWriteFunc writefunc,
+                                    void *opaque,
++                                   unsigned int flags,
+                                    Error **errp)
+ {
+     QCryptoBlock *block = g_new0(QCryptoBlock, 1);
+@@ -102,6 +103,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
+     }
+ 
+     block->driver = qcrypto_block_drivers[options->format];
++    block->detached_header = flags & QCRYPTO_BLOCK_CREATE_DETACHED;
+ 
+     if (block->driver->create(block, options, optprefix, initfunc,
+                               writefunc, opaque, errp) < 0) {
+@@ -146,7 +148,7 @@ qcrypto_block_calculate_payload_offset(QCryptoBlockCreateOptions *create_opts,
+         qcrypto_block_create(create_opts, optprefix,
+                              qcrypto_block_headerlen_hdr_init_func,
+                              qcrypto_block_headerlen_hdr_write_func,
+-                             len, errp);
++                             len, 0, errp);
+     return crypto != NULL;
+ }
+ 
+diff --git a/crypto/blockpriv.h b/crypto/blockpriv.h
+index 3c7ccea504..836f3b4726 100644
+--- a/crypto/blockpriv.h
++++ b/crypto/blockpriv.h
+@@ -42,6 +42,8 @@ struct QCryptoBlock {
+     size_t niv;
+     uint64_t payload_offset; /* In bytes */
+     uint64_t sector_size; /* In bytes */
++
++    bool detached_header; /* True if disk has a detached LUKS header */
  };
  
-+#ifdef CONFIG_CRYPTO_SM4
-+static const QCryptoBlockLUKSCipherSizeMap
-+qcrypto_block_luks_cipher_size_map_sm4[] = {
-+    { 16, QCRYPTO_CIPHER_ALG_SM4},
-+    { 0, 0 },
-+};
-+#endif
+ struct QCryptoBlockDriver {
+diff --git a/include/crypto/block.h b/include/crypto/block.h
+index d0d97f5d12..92e823c9f2 100644
+--- a/include/crypto/block.h
++++ b/include/crypto/block.h
+@@ -116,6 +116,10 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+                                  size_t n_threads,
+                                  Error **errp);
+ 
++typedef enum {
++    QCRYPTO_BLOCK_CREATE_DETACHED = (1 << 0),
++} QCryptoBlockCreateFlags;
 +
- static const QCryptoBlockLUKSCipherNameMap
- qcrypto_block_luks_cipher_name_map[] = {
-     { "aes", qcrypto_block_luks_cipher_size_map_aes },
-     { "cast5", qcrypto_block_luks_cipher_size_map_cast5 },
-     { "serpent", qcrypto_block_luks_cipher_size_map_serpent },
-     { "twofish", qcrypto_block_luks_cipher_size_map_twofish },
-+#ifdef CONFIG_CRYPTO_SM4
-+    { "sm4", qcrypto_block_luks_cipher_size_map_sm4},
-+#endif
- };
+ /**
+  * qcrypto_block_create:
+  * @options: the encryption options
+@@ -123,6 +127,7 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+  * @initfunc: callback for initializing volume header
+  * @writefunc: callback for writing data to the volume header
+  * @opaque: data to pass to @initfunc and @writefunc
++ * @flags: bitmask of QCryptoBlockCreateFlags values
+  * @errp: pointer to a NULL-initialized error object
+  *
+  * Create a new block encryption object for initializing
+@@ -134,6 +139,11 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+  * generating new master keys, etc as required. Any existing
+  * data present on the volume will be irrevocably destroyed.
+  *
++ * If @flags contains QCRYPTO_BLOCK_CREATE_DETACHED then
++ * the open process will set the payload_offset_sector to 0
++ * to specify the starting point for the read/write of a
++ * detached LUKS header image.
++ *
+  * If any part of initializing the encryption context
+  * fails an error will be returned. This could be due
+  * to the volume being in the wrong format, a cipher
+@@ -147,6 +157,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
+                                    QCryptoBlockInitFunc initfunc,
+                                    QCryptoBlockWriteFunc writefunc,
+                                    void *opaque,
++                                   unsigned int flags,
+                                    Error **errp);
  
- QEMU_BUILD_BUG_ON(sizeof(struct QCryptoBlockLUKSKeySlot) != 48);
-diff --git a/crypto/cipher-gcrypt.c.inc b/crypto/cipher-gcrypt.c.inc
-index a6a0117717..1377cbaf14 100644
---- a/crypto/cipher-gcrypt.c.inc
-+++ b/crypto/cipher-gcrypt.c.inc
-@@ -35,6 +35,9 @@ bool qcrypto_cipher_supports(QCryptoCipherAlgorithm alg,
-     case QCRYPTO_CIPHER_ALG_SERPENT_256:
-     case QCRYPTO_CIPHER_ALG_TWOFISH_128:
-     case QCRYPTO_CIPHER_ALG_TWOFISH_256:
-+#ifdef CONFIG_CRYPTO_SM4
-+    case QCRYPTO_CIPHER_ALG_SM4:
-+#endif
-         break;
-     default:
-         return false;
-@@ -219,6 +222,11 @@ static QCryptoCipher *qcrypto_cipher_ctx_new(QCryptoCipherAlgorithm alg,
-     case QCRYPTO_CIPHER_ALG_TWOFISH_256:
-         gcryalg = GCRY_CIPHER_TWOFISH;
-         break;
-+#ifdef CONFIG_CRYPTO_SM4
-+    case QCRYPTO_CIPHER_ALG_SM4:
-+        gcryalg = GCRY_CIPHER_SM4;
-+        break;
-+#endif
-     default:
-         error_setg(errp, "Unsupported cipher algorithm %s",
-                    QCryptoCipherAlgorithm_str(alg));
-diff --git a/crypto/cipher-nettle.c.inc b/crypto/cipher-nettle.c.inc
-index 24cc61f87b..42b39e18a2 100644
---- a/crypto/cipher-nettle.c.inc
-+++ b/crypto/cipher-nettle.c.inc
-@@ -33,6 +33,9 @@
- #ifndef CONFIG_QEMU_PRIVATE_XTS
- #include <nettle/xts.h>
- #endif
-+#ifdef CONFIG_CRYPTO_SM4
-+#include <nettle/sm4.h>
-+#endif
+ /**
+diff --git a/tests/unit/test-crypto-block.c b/tests/unit/test-crypto-block.c
+index 347cd5f3d7..6cfc817a92 100644
+--- a/tests/unit/test-crypto-block.c
++++ b/tests/unit/test-crypto-block.c
+@@ -283,6 +283,7 @@ static void test_block(gconstpointer opaque)
+                                test_block_init_func,
+                                test_block_write_func,
+                                &header,
++                               0,
+                                &error_abort);
+     g_assert(blk);
  
- static inline bool qcrypto_length_check(size_t len, size_t blocksize,
-                                         Error **errp)
-@@ -426,6 +429,30 @@ DEFINE_ECB_CBC_CTR_XTS(qcrypto_nettle_twofish,
-                        QCryptoNettleTwofish, TWOFISH_BLOCK_SIZE,
-                        twofish_encrypt_native, twofish_decrypt_native)
+@@ -362,6 +363,7 @@ test_luks_bad_header(gconstpointer data)
+                                test_block_init_func,
+                                test_block_write_func,
+                                &buf,
++                               0,
+                                &error_abort);
+     g_assert(blk);
  
-+#ifdef CONFIG_CRYPTO_SM4
-+typedef struct QCryptoNettleSm4 {
-+    QCryptoCipher base;
-+    struct sm4_ctx key[2];
-+} QCryptoNettleSm4;
-+
-+static void sm4_encrypt_native(void *ctx, size_t length,
-+                               uint8_t *dst, const uint8_t *src)
-+{
-+    struct sm4_ctx *keys = ctx;
-+    sm4_crypt(&keys[0], length, dst, src);
-+}
-+
-+static void sm4_decrypt_native(void *ctx, size_t length,
-+                               uint8_t *dst, const uint8_t *src)
-+{
-+    struct sm4_ctx *keys = ctx;
-+    sm4_crypt(&keys[1], length, dst, src);
-+}
-+
-+DEFINE_ECB(qcrypto_nettle_sm4,
-+           QCryptoNettleSm4, SM4_BLOCK_SIZE,
-+           sm4_encrypt_native, sm4_decrypt_native)
-+#endif
- 
- bool qcrypto_cipher_supports(QCryptoCipherAlgorithm alg,
-                              QCryptoCipherMode mode)
-@@ -443,6 +470,9 @@ bool qcrypto_cipher_supports(QCryptoCipherAlgorithm alg,
-     case QCRYPTO_CIPHER_ALG_TWOFISH_128:
-     case QCRYPTO_CIPHER_ALG_TWOFISH_192:
-     case QCRYPTO_CIPHER_ALG_TWOFISH_256:
-+#ifdef CONFIG_CRYPTO_SM4
-+    case QCRYPTO_CIPHER_ALG_SM4:
-+#endif
-         break;
-     default:
-         return false;
-@@ -701,6 +731,25 @@ static QCryptoCipher *qcrypto_cipher_ctx_new(QCryptoCipherAlgorithm alg,
- 
-             return &ctx->base;
-         }
-+#ifdef CONFIG_CRYPTO_SM4
-+    case QCRYPTO_CIPHER_ALG_SM4:
-+        {
-+            QCryptoNettleSm4 *ctx = g_new0(QCryptoNettleSm4, 1);
-+
-+            switch (mode) {
-+            case QCRYPTO_CIPHER_MODE_ECB:
-+                ctx->base.driver = &qcrypto_nettle_sm4_driver_ecb;
-+                break;
-+            default:
-+                goto bad_cipher_mode;
-+            }
-+
-+            sm4_set_encrypt_key(&ctx->key[0], key);
-+            sm4_set_decrypt_key(&ctx->key[1], key);
-+
-+            return &ctx->base;
-+        }
-+#endif
- 
-     default:
-         error_setg(errp, "Unsupported cipher algorithm %s",
-diff --git a/crypto/cipher.c b/crypto/cipher.c
-index 74b09a5b26..5f512768ea 100644
---- a/crypto/cipher.c
-+++ b/crypto/cipher.c
-@@ -38,6 +38,9 @@ static const size_t alg_key_len[QCRYPTO_CIPHER_ALG__MAX] = {
-     [QCRYPTO_CIPHER_ALG_TWOFISH_128] = 16,
-     [QCRYPTO_CIPHER_ALG_TWOFISH_192] = 24,
-     [QCRYPTO_CIPHER_ALG_TWOFISH_256] = 32,
-+#ifdef CONFIG_CRYPTO_SM4
-+    [QCRYPTO_CIPHER_ALG_SM4] = 16,
-+#endif
- };
- 
- static const size_t alg_block_len[QCRYPTO_CIPHER_ALG__MAX] = {
-@@ -53,6 +56,9 @@ static const size_t alg_block_len[QCRYPTO_CIPHER_ALG__MAX] = {
-     [QCRYPTO_CIPHER_ALG_TWOFISH_128] = 16,
-     [QCRYPTO_CIPHER_ALG_TWOFISH_192] = 16,
-     [QCRYPTO_CIPHER_ALG_TWOFISH_256] = 16,
-+#ifdef CONFIG_CRYPTO_SM4
-+    [QCRYPTO_CIPHER_ALG_SM4] = 16,
-+#endif
- };
- 
- static const bool mode_need_iv[QCRYPTO_CIPHER_MODE__MAX] = {
-diff --git a/meson.build b/meson.build
-index 74d3aa0b12..c1dc83e4c0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1633,6 +1633,7 @@ endif
- gcrypt = not_found
- nettle = not_found
- hogweed = not_found
-+crypto_sm4 = not_found
- xts = 'none'
- 
- if get_option('nettle').enabled() and get_option('gcrypt').enabled()
-@@ -1658,6 +1659,17 @@ if not gnutls_crypto.found()
-          cc.find_library('gpg-error', required: true)],
-         version: gcrypt.version())
-     endif
-+    crypto_sm4 = gcrypt
-+    # SM4 ALG is available in libgcrypt >= 1.9
-+    if gcrypt.found() and not cc.links('''
-+      #include <gcrypt.h>
-+      int main(void) {
-+        gcry_cipher_hd_t handler;
-+        gcry_cipher_open(&handler, GCRY_CIPHER_SM4, GCRY_CIPHER_MODE_ECB, 0);
-+        return 0;
-+      }''', dependencies: gcrypt)
-+      crypto_sm4 = not_found
-+    endif
-   endif
-   if (not get_option('nettle').auto() or have_system) and not gcrypt.found()
-     nettle = dependency('nettle', version: '>=3.4',
-@@ -1666,6 +1678,18 @@ if not gnutls_crypto.found()
-     if nettle.found() and not cc.has_header('nettle/xts.h', dependencies: nettle)
-       xts = 'private'
-     endif
-+    crypto_sm4 = nettle
-+    # SM4 ALG is available in nettle >= 3.9
-+    if nettle.found() and not cc.links('''
-+      #include <nettle/sm4.h>
-+      int main(void) {
-+        struct sm4_ctx ctx;
-+        unsigned char key[16] = {0};
-+        sm4_set_encrypt_key(&ctx, key);
-+        return 0;
-+      }''', dependencies: nettle)
-+      crypto_sm4 = not_found
-+    endif
-   endif
- endif
- 
-@@ -2267,6 +2291,7 @@ config_host_data.set('CONFIG_GNUTLS_CRYPTO', gnutls_crypto.found())
- config_host_data.set('CONFIG_TASN1', tasn1.found())
- config_host_data.set('CONFIG_GCRYPT', gcrypt.found())
- config_host_data.set('CONFIG_NETTLE', nettle.found())
-+config_host_data.set('CONFIG_CRYPTO_SM4', crypto_sm4.found())
- config_host_data.set('CONFIG_HOGWEED', hogweed.found())
- config_host_data.set('CONFIG_QEMU_PRIVATE_XTS', xts == 'private')
- config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
-@@ -4306,6 +4331,7 @@ summary_info += {'nettle':            nettle}
- if nettle.found()
-    summary_info += {'  XTS':             xts != 'private'}
- endif
-+summary_info += {'SM4 ALG support':   crypto_sm4}
- summary_info += {'AF_ALG support':    have_afalg}
- summary_info += {'rng-none':          get_option('rng_none')}
- summary_info += {'Linux keyring':     have_keyring}
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index fd3d46ebd1..2f2aeff5fd 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -94,6 +94,8 @@
- #
- # @twofish-256: Twofish with 256 bit / 32 byte keys
- #
-+# @sm4: SM4 with 128 bit / 16 byte keys (since 9.0)
-+#
- # Since: 2.6
- ##
- { 'enum': 'QCryptoCipherAlgorithm',
-@@ -102,7 +104,8 @@
-            'des', '3des',
-            'cast5-128',
-            'serpent-128', 'serpent-192', 'serpent-256',
--           'twofish-128', 'twofish-192', 'twofish-256']}
-+           'twofish-128', 'twofish-192', 'twofish-256',
-+           'sm4']}
- 
- ##
- # @QCryptoCipherMode:
-diff --git a/tests/unit/test-crypto-cipher.c b/tests/unit/test-crypto-cipher.c
-index d9d9d078ff..11ab1a54fc 100644
---- a/tests/unit/test-crypto-cipher.c
-+++ b/tests/unit/test-crypto-cipher.c
-@@ -382,6 +382,19 @@ static QCryptoCipherTestData test_data[] = {
-         .plaintext = "90afe91bb288544f2c32dc239b2635e6",
-         .ciphertext = "6cb4561c40bf0a9705931cb6d408e7fa",
-     },
-+#ifdef CONFIG_CRYPTO_SM4
-+    {
-+        /* SM4, GB/T 32907-2016, Appendix A.1 */
-+        .path = "/crypto/cipher/sm4",
-+        .alg = QCRYPTO_CIPHER_ALG_SM4,
-+        .mode = QCRYPTO_CIPHER_MODE_ECB,
-+        .key = "0123456789abcdeffedcba9876543210",
-+        .plaintext  =
-+            "0123456789abcdeffedcba9876543210",
-+        .ciphertext =
-+            "681edf34d206965e86b3e94f536e4246",
-+    },
-+#endif
-     {
-         /* #1 32 byte key, 32 byte PTX */
-         .path = "/crypto/cipher/aes-xts-128-1",
 -- 
 2.43.0
 
