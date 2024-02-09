@@ -4,54 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEC1C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 19:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1285CC4829E
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 19:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYWq2-0005AF-Ub; Fri, 09 Feb 2024 14:47:06 -0500
+	id 1rYWqb-0005Ua-OL; Fri, 09 Feb 2024 14:47:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rYWpw-00054P-9W; Fri, 09 Feb 2024 14:47:00 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rYWpu-0004rh-20; Fri, 09 Feb 2024 14:47:00 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8A7A34E604C;
- Fri,  9 Feb 2024 20:46:50 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id p2e2W0kO7G4H; Fri,  9 Feb 2024 20:46:48 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6BBDB4E6005; Fri,  9 Feb 2024 20:46:48 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 698C47456B4;
- Fri,  9 Feb 2024 20:46:48 +0100 (CET)
-Date: Fri, 9 Feb 2024 20:46:48 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Helge Deller <deller@gmx.de>
-cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org, 
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH] hw/hppa/Kconfig: Fix building with "configure
- --without-default-devices"
-In-Reply-To: <41399ad8-006d-4480-919e-d64395c5cfe9@gmx.de>
-Message-ID: <e92171bc-1677-6132-abcb-d0699e6267b6@eik.bme.hu>
-References: <20240209185506.248001-1-thuth@redhat.com>
- <41399ad8-006d-4480-919e-d64395c5cfe9@gmx.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rYWqZ-0005Sh-2F
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:47:39 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rYWqX-0005AW-Jo
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 14:47:38 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33b4e6972f6so654963f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 11:47:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707508056; x=1708112856; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QuY1O9E5szKTCV5MMy0oqz5P+mAsVHcaMG4FXksjYKo=;
+ b=Rdt9j9GSlsLH/DxySMwtyC3prrPxFSPBmUhoVqQW8+jIEwox2TUYA9Y8SV7CuFrbk3
+ i2DZHqzMEnEM+KdIUz9za5T6NzQxsu7ggW8vxXFnQBzRQvBA9JF0rx/TxwM/i6IQNRnd
+ rX12j0yaz1lN+futtyDfmQ639pwt+LFGUeDmFkNvYpJG0C3FcBxOJqKZjBDLouOAp9zp
+ y+VWt+pTdnk6ijZgE8PonXJt7nJSp8ky+WWKHEnnsqJvB59JXQQmJmJixEL/emaawLvR
+ AHLQyuEr8KeFXzl1zHWWHKjuVRLdzTb0fsstQCNCm7xn481ge7MvA8DutIseQr9nIvo6
+ xsSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707508056; x=1708112856;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QuY1O9E5szKTCV5MMy0oqz5P+mAsVHcaMG4FXksjYKo=;
+ b=DatitNqFklUyFRGsP9XZov07ImINuATsIcnADPp+RAwnFtgRjtSd2+HM3nvh/FSdzL
+ BZuSYbHawm9j9hs0wwWb/MAsliC+uENWAxc+hoW1HK9a924uF9qUCKqjd9rB5c/KsqSN
+ iB9vnqTqSfuC25UdkuI9JpXg6PwwrHu4+d15OyFrjVJM6lyX9s8yHz/qNnH4fdflGxYH
+ lgzKhZvbzeYRKxpxyPC71m8dNqSwXmmdHoh4pOmO2HwgGUlhcEzd5YWa5xG1GN4pjgeW
+ wtNUkYucWiW87h5BHJmsnIqCnsG6pFLKmQZ45Rr4AJBJmHO2QQACh2FeE2hvZdJEoyk/
+ V8mg==
+X-Gm-Message-State: AOJu0YxtKhzX1AjIAKCyAEPc0wt22CtnrUZ1RhR0VqQmQBqhydh5/g7P
+ l0sRIsdR1AsLY6DV2AYd/IgdNNKntwkiZLbIfan2YAcPq36rETFns8Ulqz4vD3BbNXaqi5EKTOL
+ I
+X-Google-Smtp-Source: AGHT+IH6qppKiF+tlTgaf3PNV+Y86iNk/CNRqXdXbRHm+W/O2zKbkPgrJnQCZV9SPvlTNLVt1SdPSA==
+X-Received: by 2002:adf:f607:0:b0:33b:5e7a:cf02 with SMTP id
+ t7-20020adff607000000b0033b5e7acf02mr19638wrp.31.1707508055847; 
+ Fri, 09 Feb 2024 11:47:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjdOrjh7VQeo9X+GxhNkCwTZBjRXwTqmmwCkS3H9AJ1bA8DcYhIrpN3XW6Z/FC1ouzGIQakAmP7qfCzwTxjXlq2dsOX6SlNY7R5ffqYw7mavabLl3G86LxZ+fIguPeGyhkubfi/UeM1tl9CBlcGd5CPTnpITF1wdcZPzwRozq5d+Fe5eQ=
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ l13-20020a056000022d00b0033b1b1da2adsm42649wrz.99.2024.02.09.11.47.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Feb 2024 11:47:35 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D53C45F876;
+ Fri,  9 Feb 2024 19:47:34 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Rabin Vincent <rabinv@axis.com>, Thomas Huth <thuth@redhat.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ devel@lists.libvirt.org (reviewer:Incompatible changes)
+Subject: [PULL 02/10] docs: mark CRIS support as deprecated
+Date: Fri,  9 Feb 2024 19:47:26 +0000
+Message-Id: <20240209194734.3424785-3-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240209194734.3424785-1-alex.bennee@linaro.org>
+References: <20240209194734.3424785-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,67 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Feb 2024, Helge Deller wrote:
-> On 2/9/24 19:55, Thomas Huth wrote:
->> When running "configure" with "--without-default-devices", building
->> of qemu-system-hppa currently fails with:
->>
->>   /usr/bin/ld: libqemu-hppa-softmmu.fa.p/hw_hppa_machine.c.o: in function 
->> `machine_HP_common_init_tail':
->>   hw/hppa/machine.c:399: undefined reference to `usb_bus_find'
->>   /usr/bin/ld: hw/hppa/machine.c:399: undefined reference to 
->> `usb_create_simple'
->>   /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_bus_find'
->>   /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to 
->> `usb_create_simple'
->>   collect2: error: ld returned 1 exit status
->>   ninja: build stopped: subcommand failed.
->>   make: *** [Makefile:162: run-ninja] Error 1
->> 
->> And after fixing this, the qemu-system-hppa binary refuses to run
->> due to the missing 'pci-ohci' and 'pci-serial' devices. Let's add
->> the right config switches to fix these problems.
->> 
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   hw/hppa/Kconfig | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->> 
->> diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
->> index ff8528aaa8..124d5e9e47 100644
->> --- a/hw/hppa/Kconfig
->> +++ b/hw/hppa/Kconfig
->> @@ -6,7 +6,7 @@ config HPPA_B160L
->>       select ASTRO
->>       select DINO
->>       select LASI
->> -    select SERIAL
->> +    select SERIAL_PCI
->
-> I think the "SERIAL" is needed too for the B160L machine.
+This might be premature but while streamlining the avocado tests I
+realised the only tests we have are "check-tcg" ones. The ageing
+fedora-cris-cross image works well enough for developers but can't be
+used in CI as we need supported build platforms to build QEMU.
 
-SERIAL_PCI selects SERIAL so I think it should be pulled in without 
-listing it separately but not sure what's the policy for these configs.
+Does this mean the writing is on the wall for this architecture?
 
-Regards,
-BALATON Zoltan
+Cc: Rabin Vincent <rabinv@axis.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240207163812.3231697-3-alex.bennee@linaro.org>
 
-> Other than that,
->
-> Acked-by: Helge Deller <deller@gmx.de>
->
-> Thank you!
-> Helge
->
->>       select ISA_BUS
->>       select I8259
->>       select IDE_CMD646
->> @@ -16,3 +16,4 @@ config HPPA_B160L
->>       select LASIPS2
->>       select PARALLEL
->>       select ARTIST
->> +    select USB_OHCI_PCI
->
->
->
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index c7b95e6068e..7b0c59919e5 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -192,6 +192,13 @@ in the QEMU object model anymore. ``power5+``, ``power5+_v2.1``,
+ an alias, but for consistency these will get removed in a future
+ release, too. Use ``power5p_v2.1`` and ``power7p_v2.1`` instead.
+ 
++CRIS CPU architecture (since 9.0)
++'''''''''''''''''''''''''''''''''
++
++The CRIS architecture was pulled from Linux in 4.17 and the compiler
++is no longer packaged in any distro making it harder to run the
++``check-tcg`` tests. Unless we can improve the testing situation there
++is a chance the code will bitrot without anyone noticing.
+ 
+ System emulator machines
+ ------------------------
+-- 
+2.39.2
+
 
