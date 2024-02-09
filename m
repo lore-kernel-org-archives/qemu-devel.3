@@ -4,83 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B9AC48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 16:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CABCC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 16:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYTOR-0006pn-9h; Fri, 09 Feb 2024 11:06:23 -0500
+	id 1rYTWl-0000x7-9q; Fri, 09 Feb 2024 11:14:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYTOK-0006pR-Ge
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:06:16 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1rYTWj-0000wv-DT
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:14:57 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rYTOH-0007Am-M5
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:06:15 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5610cc8cc1aso1267258a12.1
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 08:06:12 -0800 (PST)
+ id 1rYTWh-0000OW-MF
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:14:57 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56001b47285so1594285a12.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 08:14:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707494771; x=1708099571; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Mg5RFUOUe7RalfkyKcnfi0VZ1gLs9xSMYE3MEXz1jp8=;
- b=fQMoKfNmIWHkATWmwzXq6ZTXMI+9CxGpkfurPejeVY4SdnUJZTw+lZYGIFuWj4UpM1
- zvFxafv2CAGnmZMTp4SPphJfqnPLv8BFeFCEyNSPhvVUQ7qhcJQubuh2EF3E5dZQXpT+
- cowbzcIjBKK+J79ZxHB02t1z4YI3jUhoQNvo1v7QiMWcloBeV1b+csBEg9Gfb2+1F6LJ
- PeceBIj8IzkbK0/GWUtop3418FjX0OenqXyTKPPK1gzUQgLGdP9OoWHwakoqkrHSoDVV
- 6XSEHkcJeAQn6Z1jpZ7jZWSGkubgfZeqCyjZ9wj6BqtoqDVCLo/L/cdt4mb1DmiR52r4
- og1g==
+ d=linaro.org; s=google; t=1707495294; x=1708100094; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2zdmkVODjJe54yWW4qNAaj6cEulhsvnhm1tU7IcuJnQ=;
+ b=xyfdEWUchp9YNB9PhESl2F8oloGiIq6sOkdSijGNS7RdFGkElZPbbpPf1ig+SUEFOo
+ vo6dxN189qkxPStSQJBia6ewy7DIeflIUvSdqFS0WUTyoI11/7/vP43XOGxyRhPFFGz9
+ nzr5M6hZNm7EX+MLjqALSd7hcqJMmjhAfKjjHJhBLcyMzBxUKGh1/PyTBN4UTlHqJhVh
+ 58T2H6gHkA/69t3oV3uLc45Xow3xWdjkN/A8O1xOY0Qee0S+dnmefW9HRarz/QavCJSp
+ RIk5pI4N67l73dzyZdiXQJe7mCzRbn/8R+5qHk56tZ+Iw5uIKN499xMqPYgyaUYfEzv7
+ Tazw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707494771; x=1708099571;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Mg5RFUOUe7RalfkyKcnfi0VZ1gLs9xSMYE3MEXz1jp8=;
- b=wjZM0QkCHhMfg9cjhVkQxsdT/NJUtjYg0XHkgspSGiyvex3sl72++dZCc1WVXef7nH
- 6/X3PbgquVQ0WvvNjtdSBTKGFRbpzxaKOgV/BPCwm19OMj/v/RKKX3nKrcQqM67pjO5e
- p6vXeTFrUJtQrj7038Mm6NuVCuhhJGTUEC+hhSMreAu2JwFFwR9sCh+jrrJGnQv6M+zJ
- xSUKeEXjBHIxHpB/1ucDfMrLbvyGHBjCnhhucfur1VXrD96vmFEbFe0VgY7Jt2dLETfh
- 07kl6cSrPHZwGLVSqH72tsAnkXLyitT7mXCDki+OZoMGw9q+7BYjI2z1iVG5HPEXM2IQ
- hrhg==
-X-Gm-Message-State: AOJu0Yxi5xsYAWhy/M3IMQyjuSuqtjQ3Fl871bYi4UeG0Z9VNgE9Z5w6
- A557UCgvcTRimMtjGFmpSb5T7elmpDLDjSZUJNCqRkLxSTV2SFB0yPQZ0TAuompcs9euVWpOyWo
- LZS3FT5/cdUV3n0X9lFPyrna3UL4R+iXHcEJhfw==
-X-Google-Smtp-Source: AGHT+IGHTe8170YhYTSF6boEZhlvI+Dnd1iLSqveqoyRCbU/AHrHT5cTXaW7wzqAedohF5BZnF2ecdQaVD4iLKHrZkI=
-X-Received: by 2002:aa7:c653:0:b0:560:b488:d9bd with SMTP id
- z19-20020aa7c653000000b00560b488d9bdmr1531881edr.8.1707494771656; Fri, 09 Feb
- 2024 08:06:11 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707495294; x=1708100094;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2zdmkVODjJe54yWW4qNAaj6cEulhsvnhm1tU7IcuJnQ=;
+ b=gtQq7tEqc+m1rmIUBaKkgs/0ppb2eBF8Gzcnf48AHOGaIB5M9n6ZNeLPirqmTfvBwU
+ R0WvkRuRh5ur63X5zgZ435Ob5pxoNC9U6wD73DHxLJNDANe8f/0TNXY2vmuyeKlUrTgk
+ W2tgAEnm8p8SQNZVvFxxIxfsve8dUievnJDnEPxO+s04xwxJVzuC8LfAykjXJtYOs85K
+ JkjmejjhXf5eXHW/PB/EnHz3uQJ1prlVNCZk0b8SSNL1htS3VtDZ4/R2pbkH4nkAt6Je
+ mc5xnhcMmLpnNQlQqndHxBDbqwWHgw2hJZiqEwNStmYOd1dDsdyJg6nQjHQYJy3RNJ/K
+ sYmg==
+X-Gm-Message-State: AOJu0YyLqJt6btPa6oxDiAU2attY0KnM4ebPwkYcPGjgS2QgddipnyWm
+ UlaT/nqtAwLMuWD6d2e6D9NalD0DyPWJhz9OlLGYOjEBmFIJRLcxHzPS1LaZENtQK3UglVYJ4er
+ 5I8IUJtCoZ9tm+Kcb0jDRztgJ+lRxW3w9U0ge2Q==
+X-Google-Smtp-Source: AGHT+IEonn4RKfxbeeMTEKJknN0ZO7yc+79+x5msft1PnaK2asQdYFtTwkwajuSdMk891Ajbxp/thGaD2QOZ5EEhwwE=
+X-Received: by 2002:a05:6402:356:b0:560:eaa8:9654 with SMTP id
+ r22-20020a056402035600b00560eaa89654mr1655152edw.12.1707495293949; Fri, 09
+ Feb 2024 08:14:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20240209150039.22211-1-philmd@linaro.org>
- <20240209150039.22211-4-philmd@linaro.org>
-In-Reply-To: <20240209150039.22211-4-philmd@linaro.org>
+References: <20240208030528.368214-1-peterx@redhat.com>
+In-Reply-To: <20240208030528.368214-1-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 9 Feb 2024 16:06:00 +0000
-Message-ID: <CAFEAcA9+6aK_uPa6tFV2-yh3g_2oeuvFaOs=nd=2dexm=uxN9Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] system/physmem: Assign global system I/O Memory to
- machine
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Peter Xu <peterx@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org, 
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, David Hildenbrand <david@redhat.com>
+Date: Fri, 9 Feb 2024 16:14:42 +0000
+Message-ID: <CAFEAcA9uT4gtH_GNVaS0PQBUUKBgShs_eZFd72D0pWU2FqemAw@mail.gmail.com>
+Subject: Re: [PULL 00/34] Migration staging patches
+To: peterx@redhat.com
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,46 +87,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Feb 2024 at 15:01, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
+On Thu, 8 Feb 2024 at 03:05, <peterx@redhat.com> wrote:
 >
-> So far there is only one system I/O and one system
-> memory per machine.
+> From: Peter Xu <peterx@redhat.com>
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  system/physmem.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+> The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
 >
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 5e66d9ae36..50947a374e 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2554,12 +2554,13 @@ static void memory_map_init(void)
->  {
->      system_memory =3D g_malloc(sizeof(*system_memory));
+>   Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
 >
-> -    memory_region_init(system_memory, NULL, "system", UINT64_MAX);
-> +    memory_region_init(system_memory, OBJECT(current_machine),
-> +                       "system", UINT64_MAX);
->      address_space_init(&address_space_memory, system_memory, "memory");
+> are available in the Git repository at:
 >
->      system_io =3D g_malloc(sizeof(*system_io));
-> -    memory_region_init_io(system_io, NULL, &unassigned_io_ops, NULL, "io=
-",
-> -                          65536);
-> +    memory_region_init_io(system_io, OBJECT(current_machine),
-> +                          &unassigned_io_ops, NULL, "io", 65535);
->      address_space_init(&address_space_io, system_io, "I/O");
->  }
+>   https://gitlab.com/peterx/qemu.git tags/migration-staging-pull-request
+>
+> for you to fetch changes up to 940bf8ff1ca82aa458c553d9aa9dd7671ed15a4d:
+>
+>   ci: Update comment for migration-compat-aarch64 (2024-02-07 10:51:27 +0800)
+>
+> ----------------------------------------------------------------
+> Migration pull
+>
+> - William's fix on hwpoison migration which used to crash QEMU
+> - Peter's multifd cleanup + bugfix + optimizations
+> - Avihai's fix on multifd crash over non-socket channels
+> - Fabiano's multifd thread-race fix
+> - Peter's CI fix series
+>
+> ----------------------------------------------------------------
 
-What's the intention in doing this? What does it change?
 
-It seems to be OK to pass a non-Device owner in for
-memory_region_init() (whereas it is *not* OK to do that
-for memory_region_init_ram()), but this seems to be
-getting a bit tricky.
+Applied, thanks.
 
-thanks
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
 -- PMM
 
