@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 175B5C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5A6CC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:08:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYRVl-0002uP-8M; Fri, 09 Feb 2024 09:05:49 -0500
+	id 1rYRVm-00030H-L0; Fri, 09 Feb 2024 09:05:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rYRVc-0002ic-O7
+ id 1rYRVc-0002iZ-Fw
  for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rYRVb-0004Jf-4U
+ id 1rYRVZ-0004JR-TX
  for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707487538;
+ s=mimecast20190719; t=1707487537;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uKPTu2/u/q+4TISSA1bKQ3iHoP/W8gLpW3SRXl90dUc=;
- b=CQA12lGsIQODZI06Xq8FNA7znv71r0GUwiPCELZMgXPP/cMO0iZqZ7/vxOkwxzh3B07Z3+
- A9t0Cu4Mp9s/mvR4tEl0IISE8hZyD1Iow1Ck6VjDnVehNm+4OxWN6ONXymVoV9lZowpUhm
- 6pK4bheZl0lf5hmFwqyVP+jKtZ6/bMg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-46-ccwpNjNXMHm6yD9gyfyvsg-1; Fri, 09 Feb 2024 09:05:36 -0500
-X-MC-Unique: ccwpNjNXMHm6yD9gyfyvsg-1
+ bh=l2wLhEGVouldEmCTrBXWTNPOm5+iGY06A22yyEG7Hrc=;
+ b=O2HGyJ56MICk5XOg+eEt9duCbhU6NF14PteD5WqYRVkKymRhXElqsDfRT742tA/8FMqsAK
+ 5sr5m/JzofaUZ95MKEulNGOWbCIjqnrB+/1NRvx4xjZFcj4lZJu9xHeifuF/ob09sAZk1W
+ DfaHXkP7WTaTgwvezdd45J+SJwnqCNI=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-exBasNc0MxqJhAR9t9vhpQ-1; Fri,
+ 09 Feb 2024 09:05:34 -0500
+X-MC-Unique: exBasNc0MxqJhAR9t9vhpQ-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5D04A8F9202;
- Fri,  9 Feb 2024 14:05:36 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.105])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 38746112A1;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 07C1B3C23FD1;
  Fri,  9 Feb 2024 14:05:34 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.105])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 468A7111FF;
+ Fri,  9 Feb 2024 14:05:31 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -57,10 +57,11 @@ Cc: Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Hyman Huang <yong.huang@smartx.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 10/17] io: add trace event when cancelling TLS handshake
-Date: Fri,  9 Feb 2024 14:04:58 +0000
-Message-ID: <20240209140505.2536635-11-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ jiangyegen <jiangyegen@huawei.com>
+Subject: [PULL 09/17] chardev: close QIOChannel before unref'ing
+Date: Fri,  9 Feb 2024 14:04:57 +0000
+Message-ID: <20240209140505.2536635-10-berrange@redhat.com>
 In-Reply-To: <20240209140505.2536635-1-berrange@redhat.com>
 References: <20240209140505.2536635-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -92,37 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The chardev socket backend will unref the QIOChannel object while
+it is still potentially open. When using TLS there could be a
+pending TLS handshake taking place. If the channel is left open
+then when the TLS handshake callback runs, it can end up accessing
+free'd memory in the tcp_chr_tls_handshake method.
+
+Closing the QIOChannel will unregister any pending handshake
+source.
+
+Reported-by: jiangyegen <jiangyegen@huawei.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- io/channel-tls.c | 1 +
- io/trace-events  | 1 +
- 2 files changed, 2 insertions(+)
+ chardev/char-socket.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 58fe1aceee..1d9c9c72bf 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -381,6 +381,7 @@ static int qio_channel_tls_close(QIOChannel *ioc,
-     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
- 
-     if (tioc->hs_ioc_tag) {
-+        trace_qio_channel_tls_handshake_cancel(ioc);
-         g_clear_handle_id(&tioc->hs_ioc_tag, g_source_remove);
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 73947da188..7105753815 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -378,6 +378,10 @@ static void tcp_chr_free_connection(Chardev *chr)
+                                  char_socket_yank_iochannel,
+                                  QIO_CHANNEL(s->sioc));
      }
- 
-diff --git a/io/trace-events b/io/trace-events
-index 3cc5cf1efd..d4c0f84a9a 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -43,6 +43,7 @@ qio_channel_tls_handshake_start(void *ioc) "TLS handshake start ioc=%p"
- qio_channel_tls_handshake_pending(void *ioc, int status) "TLS handshake pending ioc=%p status=%d"
- qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
- qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
-+qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
- qio_channel_tls_credentials_allow(void *ioc) "TLS credentials allow ioc=%p"
- qio_channel_tls_credentials_deny(void *ioc) "TLS credentials deny ioc=%p"
- 
++
++    if (s->ioc) {
++        qio_channel_close(s->ioc, NULL);
++    }
+     object_unref(OBJECT(s->sioc));
+     s->sioc = NULL;
+     object_unref(OBJECT(s->ioc));
 -- 
 2.43.0
 
