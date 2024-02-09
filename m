@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCDF5C48BC0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1944C4829F
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYPVH-0003hr-7H; Fri, 09 Feb 2024 06:57:11 -0500
+	id 1rYPVL-0003lg-61; Fri, 09 Feb 2024 06:57:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV3-0003dV-V7
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:59 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV5-0003eB-VV
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:57:01 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV1-0002Re-CK
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:56 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rYPV2-0002SO-8y
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:56:58 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id B80FFCE200D;
- Fri,  9 Feb 2024 11:56:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED17C433C7;
- Fri,  9 Feb 2024 11:56:48 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 80F346208D;
+ Fri,  9 Feb 2024 11:56:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE736C433C7;
+ Fri,  9 Feb 2024 11:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707479810;
- bh=QEDKIdARto+ZCseIU47VCEGfs+CMVMZ3Lv39zKgePHQ=;
+ s=k20201202; t=1707479815;
+ bh=/Smd6TlhJ7ils6p1rE0hxNHghyQlnq/f2lHer5smscw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=brqT05GkcBmw0v/ZI20VPXfrrPyzVHHDcO1CGTouqIFaUfH9f7riT/vbPIJHpjCN1
- UVWT2Srt/PmAAyfrnPmap9vW5sWe3oCvwAFdFVDCbnInh8SS04nVXZhhj/gsfX7+Ap
- e3nVQvib9W+xnvySO1CA6rIwMpnNVk4+3Ogo9MARXOoZd+7cRv/Qz6Dzd/IJxS/U1T
- 9xsuA6XHs0Nky+2YHjeX6yyFp7PT90ZBPx1QhtWLlvW964gQNjzDwurJ44wTGasqsu
- o+D1sc6eLr1CrX4whxw05DNUT9PLK6E2O/ePSfGStv4MwhXrtWcjLT+epc3j94RpTI
- QsbRgaRrH7lNA==
+ b=CxS4vvEZ3QLqN4fKSSXR53yJ4IKgq8zMMSQpU1uahDZ36XcZ7/HjcmJ9RdoPpxs0P
+ MPflSsomeg47bTTju/kzsyLmElqITveryHaroNejY1m6OeqeVrdlcS4J7DIbGdOq1p
+ j83o030ltAACUwYELWytXy3ho+0bcJPbCKYeRNpBa0OqijjPSOE4HOf2m3Nc6bvl/7
+ z/iBq5tVSWyZGROw1+c9LKoBuCi2eb9NLlqFB9nevsVy5or2e9ZG+uml7AG+J3Gmsy
+ jjyqJwlW755ogPCWgHsITGRdYhJvRgx6hRbuavNFiHcbb3/CxynDA44OggMNMTW5lw
+ F8ghC+ldT9HDw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Sven Schnelle <svens@stackframe.org>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v2 08/12] target/hppa: Allow read-access to PSW with rsm 0,
- reg instruction
-Date: Fri,  9 Feb 2024 12:56:29 +0100
-Message-ID: <20240209115633.55823-9-deller@kernel.org>
+Subject: [PATCH v2 11/12] target/hppa: Update SeaBIOS-hppa to version 16
+Date: Fri,  9 Feb 2024 12:56:32 +0100
+Message-ID: <20240209115633.55823-12-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209115633.55823-1-deller@kernel.org>
 References: <20240209115633.55823-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -72
+X-Spam_score: -7.3
+X-Spam_bar: -------
+X-Spam_report: (-7.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,39 +72,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-HP-UX 11 and HP ODE tools use the "rsm 0,%reg" instruction in not priviledged
-code paths to get the current PSW flags. The constant 0 means that no bits of
-the PSW shall be reset, so this is effectively a read-only access to the PSW.
-Allow this read-only access even for not privileged code.
+SeaBIOS-hppa version 16 news & enhancements:
+
+- Initial 64-bit firmware release
+- Added fault handler to catch and report firmware bugs
+- Use Qemu's builtin_console_out() via diag 0x101
+- parisc-qemu-install Makefile target to install firmware in qemu
+- Added -fw_cfg opt/OS64,string=3 option
+
+Fixes:
+
+- Avoid crash when booting without SCSI controller
+- Avoid possible crashes while detecting LASI LAN & graphics
+- Don't check layers in PDC_MEM_MAP_HPA, fixes NetBSD
+- Ensure cache definition does not trigger endless loops
+- Mark B160L as 32-bit machine in inventory
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ roms/seabios-hppa | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 53ec57ee86..01f3188656 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -2156,10 +2156,16 @@ static bool trans_ldsid(DisasContext *ctx, arg_ldsid *a)
- 
- static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
- {
-+#ifdef CONFIG_USER_ONLY
-     CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
--#ifndef CONFIG_USER_ONLY
-+#else
-     TCGv_i64 tmp;
- 
-+    /* HP-UX 11i and HP ODE use rsm for read-access to PSW */
-+    if (a->i) {
-+        CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
-+    }
-+
-     nullify_over(ctx);
- 
-     tmp = tcg_temp_new_i64();
+diff --git a/roms/seabios-hppa b/roms/seabios-hppa
+index e4eac85880..03774edaad 160000
+--- a/roms/seabios-hppa
++++ b/roms/seabios-hppa
+@@ -1 +1 @@
+-Subproject commit e4eac85880e8677f96d8b9e94de9f2eec9c0751f
++Subproject commit 03774edaad3bfae090ac96ca5450353c641637d1
 -- 
 2.43.0
 
