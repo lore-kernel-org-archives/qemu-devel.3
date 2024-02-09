@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7943BC4829F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57626C48297
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:12:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYObL-0000wv-Cd; Fri, 09 Feb 2024 05:59:23 -0500
+	id 1rYOgX-0003Bh-D7; Fri, 09 Feb 2024 06:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObJ-0000wV-DY
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:21 -0500
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ id 1rYOdU-0007Yp-VJ
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:42 -0500
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObH-0000GI-Rp
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:59:21 -0500
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-219122781a3so417389fac.0
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:59:19 -0800 (PST)
+ id 1rYOdK-0000se-Uf
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:35 -0500
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5dbf7b74402so534354a12.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:01:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476358; x=1708081158; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476485; x=1708081285; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hr51UkfS9KrgxOQVsxVtiiiAUSbgyo6cNS0t0YX3ZV4=;
- b=ikhWaYAzizEBdten77eLSjlWMX3zbUnyNtuh3U8ThC19JgIfriMscug/3kab65Yf6B
- BsV286TugdRwSpNLBta9neMInjLg2IlcRoXtrD5isTUFtbwA4Si9VaBfsHz8Vjk/DMFM
- vYFF+a+8Fp1CP1dlDhT9q5Qt0IoWYDuhtqtLFTiqf6mynwlXQ1EgS8HgNmAw2961LlGL
- ElGUjOCPP4c2e3okuIfGzZ/kFEcgbU+p9h+DQ4eRnUboWqnnxTs1OHh5KV/ZULfP3/C/
- NGYgIoOEhLKUd2lwM9hBEqKDCNa+wtQapUbW/W8bjEtv8tKWOmAyf7PwJwZ8Nxrh9xRy
- yIzQ==
+ bh=MuMOQMPstt+t/BCplSjk2Zw5tvEo5gDeByiMj5qhz2A=;
+ b=mxapqQatxETrN4aVT9UJ2IAcrR/4YwmDybmTq+W4YuFta1/8W9TpA+ltVyxlKpXx9F
+ 11qhLimcYwqFjOr9UN+Hq5x5ebB8AEJP7sc1G0kEGQHg0wecSrahCX2ofPLUzZJBEpZu
+ HeCn3heSrkypfXh1UpVGvfNohA01o21POPvOF8MEzeft+76ZXB0Ni/FEFcYq0iyvK0H9
+ P3MTdUf15mWbuKteqdpAcHrdkzaPjZAlcZ1whJqdZUHmXYhLfdc0x81s8sBX2VPTCr3l
+ cJV4FEUizVDl/r/NYmniaiY8fUq8Ra8YDWpjl4vdiEL3sToqjQfOZsNViGOo35NCcsFh
+ BAzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476358; x=1708081158;
+ d=1e100.net; s=20230601; t=1707476485; x=1708081285;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hr51UkfS9KrgxOQVsxVtiiiAUSbgyo6cNS0t0YX3ZV4=;
- b=fjC5bOcCyBQ4w3oSjSEKU9pFmsrcORCAy92CPUHPt4V2Vo4jaw+iyuVQNzVLjYiHiB
- cBPkKAd2Ml9BIFyIxKV+uFc9ITDf1nq6JW3bz0v+llBV5F1uFvXIfManJawPg7KLh5lf
- yb8oAqQeFqIlh1b/YLEPF+QzahsxM9+AAecqSaG3svJJ7sa/eqiEjc+WR8x7TSrW9YN7
- Xc/czMtC0EfCTw2jQLf7uBQ6lOXEvJOk9bW4mlnO54PBLShImPz8+hYgbHLbPIEQtRQy
- L19+vupeXRfp3pzT4LgWGO0WV5OSVc5sOW78U0NRcfK4c/C+MnJX/N/+/JJQc+TkNlxw
- kP3A==
-X-Gm-Message-State: AOJu0YzVTCoGzdDyXcY2URQamYlBbZVp4BHEz6fA/9RbLlz8BqIHRsuX
- pqtejbhOLb/y2CZks4LCfZpIxd6nKBa2lXFm6r1s4Lhd1Kfp3RVGodq+IKtVtgrYtg==
-X-Google-Smtp-Source: AGHT+IHMBF1UHvF/WTomxB3OhO4oaCyPKRO270RvJzPBG90oeh4MrGFJJ7KeZE+IMSOeXqRdhjVXdA==
-X-Received: by 2002:a05:6870:330b:b0:219:f071:416c with SMTP id
- x11-20020a056870330b00b00219f071416cmr1092684oae.16.1707476358415; 
- Fri, 09 Feb 2024 02:59:18 -0800 (PST)
+ bh=MuMOQMPstt+t/BCplSjk2Zw5tvEo5gDeByiMj5qhz2A=;
+ b=YORaEBKg2IpCb5LlLY0Uvgx76kjuZrqJ7sfjyz109KjElBN03nY3laps7ALaCYdLTD
+ ueMXjbaI77jhSIFpezlq0nPf5c3SEz6kGNOUD/aikC4jf6MIeJkS5E9PBPT1TiOXFjnv
+ 0ObUv93rh3ZOqq5KOIG+KEhvm9HniZ6wEmqPwh4N1d/vZbT4HNskwckb+0KPaWYDe+9c
+ /aBS5LP5Gik3OZTC5uOTr/Tl829b21jZAKt1MA2Kfz75hWGPFTIYGzBgg3ogFoVSESUC
+ D2y/2XR4gRE+dMxQMZej5cRMcObZtC8nH0SIQQtMseUgCnwQdxBl5AYiDPJONMGzpRC/
+ cCpg==
+X-Gm-Message-State: AOJu0Yy7F7uA55CvgOjRLJ1wN+Ry/b9iqqnWvSKA8KSNLhBsCCt0BWnq
+ fHyOT1iEGV8j6Vh1kSXWBcFD1Ya/bduGhg0hp4uc1MmsYrVu4fDQLHY3z8OEJIRwKw==
+X-Google-Smtp-Source: AGHT+IF4qUSWNK3wS++oOkl/YWF9QcuPAXSpYIIK4FNx8ojstNzkSxTJmbam2m9jkXBuwJV57eduWA==
+X-Received: by 2002:a17:90a:3187:b0:296:1ddc:d46a with SMTP id
+ j7-20020a17090a318700b002961ddcd46amr1079262pjb.39.1707476485238; 
+ Fri, 09 Feb 2024 03:01:25 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIJYSSuNvQG6hPb7xoyV8Kb9tRT78E1ZRggJUI3pnht08Nb2LemgW64DGpLwlnVs9Jk3Y7Ezgi22nhsWCtUeikrO+ynj5JwChYZSktGr0LBPtcVpJfTcJyt+DCyNiGVEPWmmsEegehVjgPrWrbO2jBtdcKQZcrUeaH1++/1llMPbo=
+ AJvYcCXRseWg8oBdDML+mvL0p9VoERjqc2ctTffucg6ahlXvrRYxwJ9x6RBVCJDI6WmC6qCVZdPrC7NyPuTMlitOjcscQZuKJowKWp2yUJMqD9bxf4h8JFRm83RBEZJnfLhy87VLLgKlcLaBAPcogJcNfMBXrZr1rk67n4+jDsivs9HXBTc4HH8=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.15
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.01.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 02:59:17 -0800 (PST)
+ Fri, 09 Feb 2024 03:01:24 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Vladimir Isaev <vladimir.isaev@syntacore.com>
-Subject: [PULL 16/61] target/riscv: move 'cboz_blocksize' to
- riscv_cpu_properties[]
-Date: Fri,  9 Feb 2024 20:57:28 +1000
-Message-ID: <20240209105813.3590056-17-alistair.francis@wdc.com>
+ Andrew Jones <ajones@ventanamicro.com>
+Subject: [PULL 55/61] smbios: add processor-family option
+Date: Fri,  9 Feb 2024 20:58:07 +1000
+Message-ID: <20240209105813.3590056-56-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=alistair23@gmail.com; helo=mail-oa1-x31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,131 +102,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-And remove the now unused kvm_cpu_set_cbomz_blksize() setter.
+For RISC-V the SMBIOS standard requires specific values of the processor
+family value depending on the bitness of the CPU.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Add a processor-family option for SMBIOS table 4.
+
+The value of processor-family may exceed 255 and therefore must be provided
+in the Processor Family 2 field. Set the Processor Family field to 0xFE
+which signals that the Processor Family 2 is used.
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
-tested-by tags added, rebased with Alistair's riscv-to-apply.next.
-Message-ID: <20240112140201.127083-5-dbarboza@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Message-ID: <20240123184229.10415-2-heinrich.schuchardt@canonical.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c         | 38 +++++++++++++++++++++++++++++++++++++-
- target/riscv/kvm/kvm-cpu.c | 28 ----------------------------
- 2 files changed, 37 insertions(+), 29 deletions(-)
+ hw/smbios/smbios.c | 13 +++++++++++--
+ qemu-options.hx    |  4 ++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 1828366d93..da8d19c790 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1328,6 +1328,7 @@ static void riscv_cpu_init(Object *obj)
-     cpu->cfg.elen = 64;
-     cpu->cfg.cbom_blocksize = 64;
-     cpu->cfg.cbop_blocksize = 64;
-+    cpu->cfg.cboz_blocksize = 64;
-     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
- }
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index 2a90601ac5..647bc6d603 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -102,6 +102,7 @@ static struct {
+ #define DEFAULT_CPU_SPEED 2000
  
-@@ -1949,8 +1950,42 @@ static const PropertyInfo prop_cbop_blksize = {
-     .set = prop_cbop_blksize_set,
+ static struct {
++    uint16_t processor_family;
+     const char *sock_pfx, *manufacturer, *version, *serial, *asset, *part;
+     uint64_t max_speed;
+     uint64_t current_speed;
+@@ -110,6 +111,7 @@ static struct {
+     .max_speed = DEFAULT_CPU_SPEED,
+     .current_speed = DEFAULT_CPU_SPEED,
+     .processor_id = 0,
++    .processor_family = 0x01, /* Other */
  };
  
-+static void prop_cboz_blksize_set(Object *obj, Visitor *v, const char *name,
-+                                  void *opaque, Error **errp)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint16_t value;
-+
-+    if (!visit_type_uint16(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    if (value != cpu->cfg.cboz_blocksize && riscv_cpu_is_vendor(obj)) {
-+        cpu_set_prop_err(cpu, name, errp);
-+        error_append_hint(errp, "Current '%s' val: %u\n",
-+                          name, cpu->cfg.cboz_blocksize);
-+        return;
-+    }
-+
-+    cpu_option_add_user_setting(name, value);
-+    cpu->cfg.cboz_blocksize = value;
-+}
-+
-+static void prop_cboz_blksize_get(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
-+{
-+    uint16_t value = RISCV_CPU(obj)->cfg.cboz_blocksize;
-+
-+    visit_type_uint16(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_cboz_blksize = {
-+    .name = "cboz_blocksize",
-+    .get = prop_cboz_blksize_get,
-+    .set = prop_cboz_blksize_set,
-+};
-+
- Property riscv_cpu_options[] = {
--    DEFINE_PROP_UINT16("cboz_blocksize", RISCVCPU, cfg.cboz_blocksize, 64),
+ struct type8_instance {
+@@ -337,6 +339,10 @@ static const QemuOptDesc qemu_smbios_type4_opts[] = {
+         .name = "part",
+         .type = QEMU_OPT_STRING,
+         .help = "part number",
++    }, {
++        .name = "processor-family",
++        .type = QEMU_OPT_NUMBER,
++        .help = "processor family",
+     }, {
+         .name = "processor-id",
+         .type = QEMU_OPT_NUMBER,
+@@ -726,7 +732,7 @@ static void smbios_build_type_4_table(MachineState *ms, unsigned instance)
+     snprintf(sock_str, sizeof(sock_str), "%s%2x", type4.sock_pfx, instance);
+     SMBIOS_TABLE_SET_STR(4, socket_designation_str, sock_str);
+     t->processor_type = 0x03; /* CPU */
+-    t->processor_family = 0x01; /* Other */
++    t->processor_family = 0xfe; /* use Processor Family 2 field */
+     SMBIOS_TABLE_SET_STR(4, processor_manufacturer_str, type4.manufacturer);
+     if (type4.processor_id == 0) {
+         t->processor_id[0] = cpu_to_le32(smbios_cpuid_version);
+@@ -758,7 +764,7 @@ static void smbios_build_type_4_table(MachineState *ms, unsigned instance)
+     t->thread_count = (threads_per_socket > 255) ? 0xFF : threads_per_socket;
  
-     DEFINE_PROP_END_OF_LIST(),
- };
-@@ -2039,6 +2074,7 @@ static Property riscv_cpu_properties[] = {
+     t->processor_characteristics = cpu_to_le16(0x02); /* Unknown */
+-    t->processor_family2 = cpu_to_le16(0x01); /* Other */
++    t->processor_family2 = cpu_to_le16(type4.processor_family);
  
-     {.name = "cbom_blocksize", .info = &prop_cbom_blksize},
-     {.name = "cbop_blocksize", .info = &prop_cbop_blksize},
-+    {.name = "cboz_blocksize", .info = &prop_cboz_blksize},
+     if (tbl_len == SMBIOS_TYPE_4_LEN_V30) {
+         t->core_count2 = t->core_enabled2 = cpu_to_le16(cores_per_socket);
+@@ -1402,6 +1408,9 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+                 return;
+             }
+             save_opt(&type4.sock_pfx, opts, "sock_pfx");
++            type4.processor_family = qemu_opt_get_number(opts,
++                                                         "processor-family",
++                                                         0x01 /* Other */);
+             save_opt(&type4.manufacturer, opts, "manufacturer");
+             save_opt(&type4.version, opts, "version");
+             save_opt(&type4.serial, opts, "serial");
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 5adbed1101..78fceae4c1 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2686,7 +2686,7 @@ DEF("smbios", HAS_ARG, QEMU_OPTION_smbios,
+     "                specify SMBIOS type 3 fields\n"
+     "-smbios type=4[,sock_pfx=str][,manufacturer=str][,version=str][,serial=str]\n"
+     "              [,asset=str][,part=str][,max-speed=%d][,current-speed=%d]\n"
+-    "              [,processor-id=%d]\n"
++    "              [,processor-family=%d,processor-id=%d]\n"
+     "                specify SMBIOS type 4 fields\n"
+     "-smbios type=8[,external_reference=str][,internal_reference=str][,connector_type=%d][,port_type=%d]\n"
+     "                specify SMBIOS type 8 fields\n"
+@@ -2714,7 +2714,7 @@ SRST
+ ``-smbios type=3[,manufacturer=str][,version=str][,serial=str][,asset=str][,sku=str]``
+     Specify SMBIOS type 3 fields
  
- #ifndef CONFIG_USER_ONLY
-     DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 094bc5f47c..748a690b73 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -352,30 +352,6 @@ static KVMCPUConfig kvm_cboz_blocksize = {
-     .kvm_reg_id = KVM_REG_RISCV_CONFIG_REG(zicboz_block_size)
- };
+-``-smbios type=4[,sock_pfx=str][,manufacturer=str][,version=str][,serial=str][,asset=str][,part=str][,processor-id=%d]``
++``-smbios type=4[,sock_pfx=str][,manufacturer=str][,version=str][,serial=str][,asset=str][,part=str][,processor-family=%d][,processor-id=%d]``
+     Specify SMBIOS type 4 fields
  
--static void kvm_cpu_set_cbomz_blksize(Object *obj, Visitor *v,
--                                      const char *name,
--                                      void *opaque, Error **errp)
--{
--    KVMCPUConfig *cbomz_cfg = opaque;
--    RISCVCPU *cpu = RISCV_CPU(obj);
--    uint16_t value, *host_val;
--
--    if (!visit_type_uint16(v, name, &value, errp)) {
--        return;
--    }
--
--    host_val = kvmconfig_get_cfg_addr(cpu, cbomz_cfg);
--
--    if (value != *host_val) {
--        error_report("Unable to set %s to a different value than "
--                     "the host (%u)",
--                     cbomz_cfg->name, *host_val);
--        exit(EXIT_FAILURE);
--    }
--
--    cbomz_cfg->user_set = true;
--}
--
- static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -493,10 +469,6 @@ static void kvm_riscv_add_cpu_user_properties(Object *cpu_obj)
-                             NULL, multi_cfg);
-     }
- 
--    object_property_add(cpu_obj, "cboz_blocksize", "uint16",
--                        NULL, kvm_cpu_set_cbomz_blksize,
--                        NULL, &kvm_cboz_blocksize);
--
-     riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_extensions);
-     riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_vendor_exts);
-     riscv_cpu_add_kvm_unavail_prop_array(cpu_obj, riscv_cpu_experimental_exts);
+ ``-smbios type=11[,value=str][,path=filename]``
 -- 
 2.43.0
 
