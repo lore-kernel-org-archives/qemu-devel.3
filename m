@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84D7C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 06:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D47C4829D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 06:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYKYc-0005D1-FT; Fri, 09 Feb 2024 01:40:19 -0500
+	id 1rYKZr-0005oc-Fz; Fri, 09 Feb 2024 01:41:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYKYX-0005Cr-Ux
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 01:40:14 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1rYKZk-0005kC-QI
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 01:41:30 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYKYW-00024L-0o
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 01:40:13 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-40fb3b5893eso4936825e9.0
- for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 22:40:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1rYKZj-0002Np-24
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 01:41:28 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a3bee77cddbso19095566b.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Feb 2024 22:41:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707460808; x=1708065608; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=p8pAjLzGdeGGNTxQpARlEMWP5pBXCwRv1spM3uKVCNA=;
- b=fhUOzdenwyPALpCr4HwYmENOFRaJmxCywwgmo6tKjkyOB7jp+nbQW+nwjSp4H6Mnkn
- 0uxJcCEFzIGPmrcjqKEkBYk7mVpOyVPn0vngclW59SlHzzdPUaoWCjUV7VBMdTOCSHsc
- 3y8GEpZXxNoQULWemXlmS0jDvAQwzQAw6yh+i17BMjSlZ/nEztACCuwxfARbGUyheVK0
- Qi8v9aimPQcH2KdOIuylK3emaLiSdw28El3tyTOWXZO9R/GnaMaAZEzrIeeeBYOVaKQx
- Ksl9BlfTnGyFS9PSmLR//9QP7GIzJt8Vy/XV/jz4Gkuge3Io8qQQazExXMCl9ba0Z7nP
- uoXA==
+ d=vrull.eu; s=google; t=1707460885; x=1708065685; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wCp09nmol1A0rQ+1AAJRGnnUH/HLplW+t7xnlcRb0ac=;
+ b=V9h4aoTzg24X6PiebIHVGjkVzEnLJGLFx74GoFUhzrNnnFzCerHRuxnMphlaijeovj
+ QnuqxqmQsp8SST+soZfJjndBfYlTWvOHFZLWafq611KjwTZJYCKmnDBQDX9AIVMy8dpC
+ 5cFiRI70tUOFqurhAFKjDoGG1V2bThp3WmCU3vMY0XU2J3b9CZKkzQShuBKFpg2hHr1o
+ o8AKnMSSAarkcBUlbE+7lWljQ94OPJZvI/DkaBAm0ZZyH8o8zfpD096KmlTG/9PPC1Rj
+ rlundkDtJ2BEIA4jxFCk9Y6x95/u+ytCLbwlsJlsEW7cw6hS5G8zYLSfO7HdNRAv66sC
+ e+uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707460808; x=1708065608;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p8pAjLzGdeGGNTxQpARlEMWP5pBXCwRv1spM3uKVCNA=;
- b=c8lq4ctIX4QxgWnOAUdt46Ey8Rvrb7KX0Fft4t0PMVWv7qhFVgan4H5hyS/qd8p477
- 7FrCMb5BRWNRCU2ILTZhpD9vdmAgxSFB/pVZKXlZWIoVN92kvPzE8TklfOlFtk0Vua8+
- Imh0OFHgKwn0Y2BBihNNaazYyoFG0uI73rr8umyPe8zkRJOKDdQeQGNFjH47Np+5Pr5O
- VKKg5b4AYLrh//RPYJWSEqLlgrUx6UN1c2S/QIcngZ5T1jiCa3K57TeFI9m3lKyOvGM+
- MxPhth2rIfcsm0gdJnpFmfYrt+hRhjJQoRROvIKglM1bAgM5PWWUnW8tvjwmhZokNYke
- zLmQ==
-X-Gm-Message-State: AOJu0YwZQVQk2RXJ8LCz6Yk9rz0ne8iVxrk/fDoa3N/kRgcpjnL9PsY3
- Ed7ufgXbun+Y3rNNUn+e7JQlDYePXz27vuwq/pbn1uWwIayCOZhXMlKRzG0qhac=
-X-Google-Smtp-Source: AGHT+IFNrg9z+q/s1EaCUQT+HwNzLQ86tWBWNtcscsF4tOI7agt6JtAEvSoZwWczQRWWIV5lAu97tg==
-X-Received: by 2002:a05:600c:4f4b:b0:40f:dd7e:4a4d with SMTP id
- m11-20020a05600c4f4b00b0040fdd7e4a4dmr482043wmq.31.1707460808566; 
- Thu, 08 Feb 2024 22:40:08 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707460885; x=1708065685;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wCp09nmol1A0rQ+1AAJRGnnUH/HLplW+t7xnlcRb0ac=;
+ b=CQBNcqOIYXYDqAQsOixOCR5vyR/hj6+ytu2T5Ka/LEVbYJZzWvVIdZGPm2z5KRTOYf
+ TsV164tnh77TiTwFQO6P5YtlEuN9+fXoc+gb6KwuUiPdOMafVayaqnPwsnf9zoYxI9bS
+ 9Z9Ou85M4x3oruSyH+yQhjnzYseyJIRTehDQF8zlaYnBErqOeFBHejSsJA8GeJSdLJEh
+ BfnsGh8Pji5ww404YpCpLpperAP346bJkaamF2yt5O+dJAqI8IRZaCD+bp7wGPBQfNQc
+ lfmLzTRwQN/oayJe6AHozWs3yfBsU/5abPRmmGoSL/8CXMFUtthcsj+Pi94DnECWZi6X
+ ylmQ==
+X-Gm-Message-State: AOJu0Yw/YeR0ZkuFzCt0pWOkotOfwWW+MfoIdbpuKWB/WFhvhcnsesGz
+ 39kedVyjcpfuIHRCtypaQ9yUrw55TGQhq+R6CUtWYyLs9R4ufGx2pCAv0EVpEUo=
+X-Google-Smtp-Source: AGHT+IEKBg84nr86SYmfxNqoXAD34hyHtxhB8cxJKFZpaTsrrfakCv5vqznlBtQggwkFRbs/7fVgVw==
+X-Received: by 2002:a17:906:57d7:b0:a38:3db5:a846 with SMTP id
+ u23-20020a17090657d700b00a383db5a846mr361765ejr.67.1707460885121; 
+ Thu, 08 Feb 2024 22:41:25 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyz//Yyo/542MPxONwao60tJSvaL+Jmsnl5mXzCXj4q7Zjvysp4+fqKHGpMjAf2WRUtZuuXBHrPOKelNZjGnDGVAE+Oc99erkPkxV2Dsm23f1sL13flKam4afHPeqFB3u9Fm/x+Wpb6XavoZeS7vAI8IGxP/IPdWUoNlNyqTvgfdT40C0L9/WYJec7CHQIJs6FS/bSHAvN+i9Xr8lmQRY4u1s4QqUwWiWYvjJKUwYEI9fZDizBVsSs6LCgM2sh44OpE6S7e820sh4LEIKfbNOUmwbwyQfL2K1oQm4OvGdQDNBNqSp2oRTDweO1Eao41nG8wzN7Cgs7V8b8MDgUl5F0Sw==
-Received: from [192.168.69.100] ([176.187.218.105])
- by smtp.gmail.com with ESMTPSA id
- n3-20020a05600c3b8300b0040e527602c8sm1567676wms.9.2024.02.08.22.40.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Feb 2024 22:40:08 -0800 (PST)
-Message-ID: <465292c7-1212-4e48-aa9e-9a0c3fe2923d@linaro.org>
-Date: Fri, 9 Feb 2024 07:40:05 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/11] hw/misc/macio: Realize IDE controller before
- accessing it
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Eduardo Habkost <eduardo@habkost.net>,
+ AJvYcCV4isIeG8UQExqmyp1L07xw4L4UZM31Nnk//Z2gXTK6zEakr2NfMBcqENw58acmy58Yt2CPQXFvvxLTkw+oDV8VdltqOXwhebR2Uch1ScJ8Hlr5CsRy3o1rspcMQhPLuqXit0sjFf3uT8WhKNTSohbxDjWdbgk0zmS2lhsIRA1Lcf4F2I5Wiywnh9SmgKpJO76GDRaxu+vtVo6JcWf/5ZM7q564Stfto31OOAf/HKBrQ9hpIynglS/9302GX4mpUHZiDQbuN14SZXjeZ3PD9okJCXZ2q8RfK//2KuCGoAMMMR9ja0x00TWOOE5e5JMpSPGyzKYQXgYH
+Received: from beast.fritz.box (62-178-148-172.cable.dynamic.surfer.at.
+ [62.178.148.172]) by smtp.gmail.com with ESMTPSA id
+ vk9-20020a170907cbc900b00a36c499c935sm450575ejc.43.2024.02.08.22.41.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Feb 2024 22:41:24 -0800 (PST)
+From: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-7-philmd@linaro.org>
- <4f25c957-3019-2dcf-56ac-cf34a2fb6c53@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4f25c957-3019-2dcf-56ac-cf34a2fb6c53@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+Cc: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
+Subject: [RFC PATCH v2 0/4] RISC-V: Add dynamic TSO support
+Date: Fri,  9 Feb 2024 07:41:13 +0100
+Message-ID: <20240209064117.2746701-1-christoph.muellner@vrull.eu>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=christoph.muellner@vrull.eu; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,49 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 19:33, BALATON Zoltan wrote:
-> On Thu, 8 Feb 2024, Philippe Mathieu-Daudé wrote:
->> We should not wire IRQs on unrealized device.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> hw/misc/macio/macio.c | 8 +++++---
->> 1 file changed, 5 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/misc/macio/macio.c b/hw/misc/macio/macio.c
->> index c9f22f8515..db662a2065 100644
->> --- a/hw/misc/macio/macio.c
->> +++ b/hw/misc/macio/macio.c
->> @@ -122,15 +122,17 @@ static bool macio_realize_ide(MacIOState *s, 
->> MACIOIDEState *ide,
->>                               Error **errp)
->> {
->>     SysBusDevice *sbd = SYS_BUS_DEVICE(ide);
->> +    bool success;
->>
->> -    sysbus_connect_irq(sbd, 0, irq0);
->> -    sysbus_connect_irq(sbd, 1, irq1);
->>     qdev_prop_set_uint32(DEVICE(ide), "channel", dmaid);
->>     object_property_set_link(OBJECT(ide), "dbdma", OBJECT(&s->dbdma),
->>                              &error_abort);
->>     macio_ide_register_dma(ide);
->> +    success = qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp);
-> 
-> If realize is unsuccessful can you connect irqs if device may be 
-> unrealized? So maybe either the next two lines should be in an if block 
-> or drop the success flag and return false here if (!qdev_realize) and 
-> true at end of func?
+The upcoming RISC-V Ssdtso specification introduces a bit in the senvcfg
+CSR to switch the memory consistency model of user mode at run-time from
+RVWMO to TSO. The active consistency model can therefore be switched on a
+per-hart base and managed by the kernel on a per-process base.
 
-Doh you are right, thanks!
+This patch treats Ssdtso similar to TSO, i.e., the guest is always being
+executed in TSO mode, which simplifies the implementation a lot while
+still being correct. The downside is, that we have a performance penalty
+on hosts that don't run with TSO.
 
->> +    sysbus_connect_irq(sbd, 0, irq0);
->> +    sysbus_connect_irq(sbd, 1, irq1);
->>
->> -    return qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp);
->> +    return success;
->> }
->>
->> static void macio_oldworld_realize(PCIDevice *d, Error **errp)
->>
+This patch implements basic Ssdtso support and adds a prctl API on top
+so that user-space processes can switch to a stronger memory consistency
+model (than the kernel was written for) at run-time.
+
+This series is based on the third draft of the Ssdtso specification
+which can be found here:
+  https://github.com/riscv/riscv-ssdtso/releases/tag/v1.0-draft3
+Note, that the Ssdtso specification is in development state
+(i.e., not frozen or even ratified) which is also the reason
+why this series is marked as RFC.
+
+This series saw the following changes since v1:
+* Adding compatibility with Ztso (spec change in draft 3)
+* Use PR_MEMORY_CONSISTENCY_MODEL* instead of numeric constants
+
+This series is based on riscv-to-apply.next with two series on top:
+* Sync hwprobe keys with kernel
+  https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01293.html
+* Add Ztso extension
+  https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01296.html
+
+This patchset can also be found in this GitHub branch:
+  https://github.com/cmuellner/qemu/tree/ssdtso-v2
+
+A Linux implementation of DTSO can be found in this GitHub branch:
+  https://github.com/cmuellner/linux/tree/ssdtso-v2
+
+Christoph Müllner (4):
+  RISC-V: Add support for Ssdtso
+  linux-user/riscv: Add Ssdtso extension to hwprobe
+  linux-user/prctl: Add dynamic memory consistency model prctl API
+  linux-user/riscv: Implement dynamic memory consistency model support
+
+ linux-user/riscv/target_prctl.h | 76 ++++++++++++++++++++++++++++++++-
+ linux-user/syscall.c            | 20 +++++++++
+ target/riscv/cpu.c              | 13 +++++-
+ target/riscv/cpu.h              |  1 +
+ target/riscv/cpu_bits.h         |  3 ++
+ target/riscv/cpu_cfg.h          |  1 +
+ target/riscv/csr.c              | 14 ++++--
+ target/riscv/translate.c        |  2 +-
+ 8 files changed, 123 insertions(+), 7 deletions(-)
+
+-- 
+2.43.0
 
 
