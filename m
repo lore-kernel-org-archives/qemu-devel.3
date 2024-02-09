@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C23C48BC0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5017AC48BC1
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYOai-0008IO-1H; Fri, 09 Feb 2024 05:58:44 -0500
+	id 1rYOfk-0000PG-LR; Fri, 09 Feb 2024 06:03:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOag-0008Hp-GB
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:58:42 -0500
-Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ id 1rYOcj-00069X-Tz
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:53 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOaf-0000Bd-3I
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:58:42 -0500
-Received: by mail-oo1-xc2e.google.com with SMTP id
- 006d021491bc7-5986d902ae6so404212eaf.3
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:58:40 -0800 (PST)
+ id 1rYOci-0000om-AF
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:49 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6e09a817e41so17634b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476319; x=1708081119; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476446; x=1708081246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qUXKBuZ8Cb3nqQgihfy7eqaegjmyQPsSLDGYh00UV8A=;
- b=TwS0Atza9O9Ib3IRrwNFdFEOKxq9sF1YPhepJXglmllk7g+C04ISzwWa0bKEDj/pEV
- 8EY1BIeTjdhndwtZqe4CG7PTR6fQXjOaA7qnYSdh8EssTQqDenkbfcYaZitI1jfQRDcB
- HNVyX8Q8lR42jVjYL42T9UKlxVpstB4BTzENlDInaJ7Bz1MvandQ23LHWQblabdx0VmL
- MPE0UvCsnFDezNTXI53LpAMtONBDM6DZx5cXF6aiRtTm4Eph9kQYmJGE/i+TbWAq0MwG
- 6jI904fENLfohuFPlP0dmt5gX4DrD+vY1lVkNf7+K1Tt/GcEzPNXgDdh+XS/R65evnVh
- x1fA==
+ bh=mS7zGioHh3twFkHbHpX/UA+G7tLxKn7JwfRtRQ4guMU=;
+ b=OO1s8aXuteDu7wlctDlmEWFGn6jPmRkyO1nRwVPwCMlglp/33VmlU9FvfJgpRr6lX8
+ yFip64v7XnXKBY+6WqTlprre9g1zv11JelJXwFsVkoLyEAj5a3UzQSVqoZPR4BJkOpbb
+ Dyia1gsRSfTSijhIxCwspQZheZj8FXG/RXOvZbU/R110DinZdvhWUN1jT6mWeEzv8+AQ
+ cZiu4YgKQsAYMOXe/d6bs0+J1GQEYsWbRMh5mgj91xjbRnJPVwG/J6ekl97gJP+VT08X
+ rUKW3v9cEDH8r5Bwp6U8oZKSQiEZBO8lqnMgsFetx6R9tRd3BfD9AetOTaO72DjdmdDg
+ chlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476319; x=1708081119;
+ d=1e100.net; s=20230601; t=1707476446; x=1708081246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qUXKBuZ8Cb3nqQgihfy7eqaegjmyQPsSLDGYh00UV8A=;
- b=pOHrLZ4vTfEzK9JlsoN+9lqi/Kg0uJhbYX8iC+Xlottea/GqL/YtapSbL1r4Nel10V
- 9RX+W4I36ZTo2ad+CRcqsloujD9BYSR0Jx+gPvtDzbl2oiM83KpPhOWc3oo/ZhJPr6n7
- cqXr4ZAahiKb+D3JV+EJpzLiu9gvr1OWnEEdO9PADozkrdtctxpAOUNDpXqwyfgHx9SU
- gzwcZM+/rPo8/TjoYwbrYTxCOproEECbUFSE47/DMC2H3BQBzYrDpyDtXPnWWufG4ivR
- CpiuH/krcVhos8fdK2HFWW5jZjzmfnIWoqWxn7URc+7Wr9PSIh457m9gWoS33mH+SB8K
- kG6g==
-X-Gm-Message-State: AOJu0Yx4U1VjWOYmTmjCZ2YErn3TyuIPfGRHjb2t1OH5uFxS3GK+C4ZW
- +oSkWraPos8RZKt3oUlDFEVChxy4DSU1hBCfbPlOS+P025BaQtGzYR/nbWVlq7VFoQ==
-X-Google-Smtp-Source: AGHT+IHJS7Nsm+pC7VKwXDUc9A9db+ReVvl6LbhjotKloNRSMjjr5hODUjv++1jHAfExWyxmvTsnNg==
-X-Received: by 2002:a05:6358:5908:b0:176:5bef:d337 with SMTP id
- g8-20020a056358590800b001765befd337mr1333744rwf.3.1707476318908; 
- Fri, 09 Feb 2024 02:58:38 -0800 (PST)
+ bh=mS7zGioHh3twFkHbHpX/UA+G7tLxKn7JwfRtRQ4guMU=;
+ b=UeZ7AfXPWa1Ylpg4dlF6yVKMIEtwIDfYjKUhXSv5x/Cg0KmZpVsvKSLjq6aQ/HEzyq
+ Uho0Hi8xhjeOOuAJjZG4KLnyLLrRMNBrO7hCX6ySWPBk2oOnTDHok1WsHaImuYsjeIZ9
+ TGY9cf/eaClxhC6O1ws0Vnd3h9Lvpa98vQGqw75cdVZ3ftf3r/8g+dozxVcui3jX0eT4
+ Fum9nopWC0iQAnUTjXos4rY/+IdxEcQ/stidNqGwLvdJA9/AZ+jv+nUajcEoktrA9HTG
+ inkefFTCcbhGOxZv90J6EtCzdyKwQ+XzZwHoZ4fd2VJcvDD0zNTm45qbq6Bh/eZf/H31
+ 9Q1w==
+X-Gm-Message-State: AOJu0Yzn1rMMlVUTCh8gspCxamAL7es/41MGLS6fN7IDo4SIjEheJh8Y
+ wehHGSWkwapgZUn/YY+Go/Sf7XuB+7KV5foYDGAUFVU8U7f8RZWpNfTsnOK4b2XajQ==
+X-Google-Smtp-Source: AGHT+IHcwEoul1b+a+sqr0IKmO8gZet8wnihFWg2mL3pbzsKNpKfovyRplrcLTGiTlGBN3jvsQw5xg==
+X-Received: by 2002:a05:6a20:d397:b0:19e:a85d:166 with SMTP id
+ iq23-20020a056a20d39700b0019ea85d0166mr1830669pzb.9.1707476446217; 
+ Fri, 09 Feb 2024 03:00:46 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUfczttgQcOkTj1G1Z9C8HoI/2wP0XOmkUXL7uTptH0Mj51kcryC3ccFa7/npO58Gg3QQHwovQSCgU7+BKxFH1yKkBwRt4Gg5uf26DiNahqDXf8gat3quTD4Ax3xV/O6qeToREZ7SYMaS9kjJYKcYlTXBEZhmZ3/QHdGMN+qiFC7Q=
+ AJvYcCWbNPFgDd01IAUbXRLR3uwURvoJ01P9OelU6U62t30rC32deLVkFG3aZN5Dd0Gn3e2DKikYv/v9IaLrgFb7cEsDNodxx04T2wjcf3NXSomJNIkxtNIPaRWPWj4ZUinKOFKgeoo=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.58.36
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.00.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 02:58:38 -0800 (PST)
+ Fri, 09 Feb 2024 03:00:45 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Vladimir Isaev <vladimir.isaev@syntacore.com>
-Subject: [PULL 04/61] target/riscv/cpu_cfg.h: remove unused fields
-Date: Fri,  9 Feb 2024 20:57:16 +1000
-Message-ID: <20240209105813.3590056-5-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 43/61] hw/riscv/virt-acpi-build.c: fix leak in build_rhct()
+Date: Fri,  9 Feb 2024 20:57:55 +1000
+Message-ID: <20240209105813.3590056-44-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
- envelope-from=alistair23@gmail.com; helo=mail-oo1-xc2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,43 +102,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-user_spec, bext_spec and bext_ver aren't being used.
+The 'isa' char pointer isn't being freed after use.
 
+Issue detected by Valgrind:
+
+==38752== 128 bytes in 1 blocks are definitely lost in loss record 3,190 of 3,884
+==38752==    at 0x484280F: malloc (vg_replace_malloc.c:442)
+==38752==    by 0x5189619: g_malloc (gmem.c:130)
+==38752==    by 0x51A5BF2: g_strconcat (gstrfuncs.c:628)
+==38752==    by 0x6C1E3E: riscv_isa_string_ext (cpu.c:2321)
+==38752==    by 0x6C1E3E: riscv_isa_string (cpu.c:2343)
+==38752==    by 0x6BD2EA: build_rhct (virt-acpi-build.c:232)
+==38752==    by 0x6BD2EA: virt_acpi_build (virt-acpi-build.c:556)
+==38752==    by 0x6BDC86: virt_acpi_setup (virt-acpi-build.c:662)
+==38752==    by 0x9C8DC6: notifier_list_notify (notify.c:39)
+==38752==    by 0x4A595A: qdev_machine_creation_done (machine.c:1589)
+==38752==    by 0x61E052: qemu_machine_creation_done (vl.c:2680)
+==38752==    by 0x61E052: qmp_x_exit_preconfig.part.0 (vl.c:2709)
+==38752==    by 0x6220C6: qmp_x_exit_preconfig (vl.c:2702)
+==38752==    by 0x6220C6: qemu_init (vl.c:3758)
+==38752==    by 0x425858: main (main.c:47)
+
+Fixes: ebfd392893 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
-Message-ID: <20240105230546.265053-2-dbarboza@ventanamicro.com>
+Message-ID: <20240122221529.86562-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h     | 1 -
- target/riscv/cpu_cfg.h | 2 --
- 2 files changed, 3 deletions(-)
+ hw/riscv/virt-acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 136fc1de73..52648e3af0 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -181,7 +181,6 @@ struct CPUArchState {
-     target_ulong guest_phys_fault_addr;
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 26c7e4482d..fb8baf64f6 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -196,7 +196,7 @@ static void build_rhct(GArray *table_data,
+     RISCVCPU *cpu = &s->soc[0].harts[0];
+     uint32_t mmu_offset = 0;
+     uint8_t satp_mode_max;
+-    char *isa;
++    g_autofree char *isa = NULL;
  
-     target_ulong priv_ver;
--    target_ulong bext_ver;
-     target_ulong vext_ver;
- 
-     /* RISCVMXL, but uint32_t for vmstate migration */
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 780ae6ef17..0612668144 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -140,8 +140,6 @@ struct RISCVCPUConfig {
- 
-     uint32_t pmu_mask;
-     char *priv_spec;
--    char *user_spec;
--    char *bext_spec;
-     char *vext_spec;
-     uint16_t vlen;
-     uint16_t elen;
+     AcpiTable table = { .sig = "RHCT", .rev = 1, .oem_id = s->oem_id,
+                         .oem_table_id = s->oem_table_id };
 -- 
 2.43.0
 
