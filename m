@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64554C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB46C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 11:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYOc5-0005IM-OM; Fri, 09 Feb 2024 06:00:09 -0500
+	id 1rYOgO-0002kJ-9N; Fri, 09 Feb 2024 06:04:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOc1-00059g-Ts
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:06 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1rYOcw-0006aq-IH
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:05 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYObz-0000MG-47
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:00:05 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e09143c7bdso209019b3a.3
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:02 -0800 (PST)
+ id 1rYOct-0000pj-1n
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:01:01 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e071953676so532922b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 03:00:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476401; x=1708081201; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707476455; x=1708081255; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZlIbY8Nt2DP+zA2T4N56vmjzUwKLbqN1hLnBgrv2Icw=;
- b=OeR6x/ejC8eSVCTm84b+RgPA3lrW7LJzXHeQLhKa51cYJtSwC/6V26oYbfh49vHkWq
- QT5qj/R1EeOB3B0kq0i4JDgXi7E3rQ75RERAT0hYMmuxpaCW4DiGDbFvk8FiD3kptWnc
- chiXF2yYLvXBaJcB5uzdODTfltC0hYMJycJ0W+Qxd7J2TYSu7+gWDsX1XXVzn047imVr
- Vyzhix1saYQpgHCJsw/AOrCbw9QZb8DK+SOg06V8OI/3fRgq+FDJW24wIM0+gMvRZYIL
- EK/Gow/2EGFEy98plszdU/KehL07o6VhX5lVi6gGYtFGx7HNTafxXYjMHrepkO1eJ7Rk
- SZQg==
+ bh=DVMEKw/MMi+uCAfBLiZxsoc3y2OkOUnHp6oV3e7W5eU=;
+ b=ag2dy/VimWkRMfONJRw2zUX14pM1z/6JyZJZSfErBQaVJlJEmoWlkR1ZIJdj+2+Jsi
+ oZ7c8g5gVjKjygh0VY5BCapxj9KDZNFXzWFIXXw4ALSNMcC3EiSBguv7J/0Avjyrdnhj
+ ve/F11BIGaem9qOA+j0arf02Y/o4bGrauc9CGb6PmObLKgEP59HN9+s22JCgyLbV5s47
+ m2ct9XLDRIlxu/JOFh08yKxdvyJXWL0SRQOOJ+hVUdq0W4wb3elw9pwcF3inbLaBq0XA
+ ODfjSI6nSBV87aKS/wq9oG2o2QAjilOMPfGX0L5H8VubCEhGtYtcJD8OoNEga8S9BPw4
+ UAHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476401; x=1708081201;
+ d=1e100.net; s=20230601; t=1707476455; x=1708081255;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZlIbY8Nt2DP+zA2T4N56vmjzUwKLbqN1hLnBgrv2Icw=;
- b=CNnIFepnkyG1l+Z4ybsNPO5HRfSB0SAg3Dd+9Qvts/+lC8mfYaKjzXyuba0+sDBJiC
- tAd2+fBFikNvJF2F8XFRpW49+lNU58ap3bo8sImDGGhrXqVB3vg8UIzek85KTY1DNn84
- symEvy6yZlsHrWE/i2v+wUo3+1iZiLqjgPLPTquit9Sjnz25Rxl+EhsBoXWsBwY9qtIf
- QIneOV0FpRFnnEuXLm8rN1ixhhmopf1C9RdzwwLCz+0wm52siqQMh7EAnGSzlce5mOOP
- W0193Dk0F/0adsFhQd4pRjIOqZZESfDyzgs8tDFpatbw4nUo2CxBBUXEeYTDMXMRdXnd
- 2Yzw==
-X-Gm-Message-State: AOJu0YzkF1Y1Wppvlhr2K7RidUZmy82GykeDyxQMZzJYgd+nikxtzsiV
- qbcaC7yGP0bHSD3gVsw3P16D1xS1tn0cXZHLnNS76k4acj2EfJK9g8o56sEK9vMSsA==
-X-Google-Smtp-Source: AGHT+IH79JpoaybChNdTi/AagADMcstiR+++UWLzOUhPKiMV0auvq/ECdGLPF6+X67OG0DnAQR0rjA==
-X-Received: by 2002:a05:6a00:98f:b0:6e0:3cfd:501e with SMTP id
- u15-20020a056a00098f00b006e03cfd501emr1714147pfg.3.1707476401105; 
- Fri, 09 Feb 2024 03:00:01 -0800 (PST)
+ bh=DVMEKw/MMi+uCAfBLiZxsoc3y2OkOUnHp6oV3e7W5eU=;
+ b=jq0d37LPQsw4HCZ4w9SUhoKhvTVfIxeXPtznf5gwl6YkdZ0wmtIVLd4v2YnEtQE3h9
+ eHXQiGPNlIRXbWDCt3a3UwhF6GYG0bn04B9A8eNZbt5+IACWMAEeSEP/zva0aVRQfoE7
+ 7niJpme6WiIkQ/BMpcvRTpoUvxoVc/Elk33ngA8hApmLCyidVhzMO1fwOdpkeK37EJdW
+ fvno1LSMrxeflPKRIcOKtYqc/b0WKuRS39Dk1NVcR8dSbsun83rtTHZNRGjFvGdGeyUD
+ 4+O6tDS2WZlVftaCyDefO7hxrCRXlBEgQSIbSJ0VlqBqNVBjBEs2E0EMO5E3p3FMCTx2
+ FCGg==
+X-Gm-Message-State: AOJu0YzqPBeEpwMNnf+b7YnijsOcgPBPMmMwufqzOFM/7PEd6NHf2xGR
+ VN3SteYPUu4gpeYowRALjXl9xFNLMn5K/6GjuAmH8N6FoxSRW4krvIUFrLkGCkUN2g==
+X-Google-Smtp-Source: AGHT+IGHiQ/VqAE/cUts/hLTUdmN5vw1zizhVvIe2SvaU/k00e/lkRK1E2VwFL2P1C4WW2CqvnDsJQ==
+X-Received: by 2002:a05:6a00:704:b0:6e0:6dbb:38f6 with SMTP id
+ 4-20020a056a00070400b006e06dbb38f6mr1179184pfl.13.1707476455391; 
+ Fri, 09 Feb 2024 03:00:55 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmToKIgoJDMWp/+I06K/a2/xcx1Dvvv1S8m78iDSPFv1pqemu2aSWlQDWEiG71QpcHybBC0asMxLM5dkZu5pqObT5pgE0HnRQEidKP42TzASlWZRxF/39qOlguGcWb7BD1O9mVNCKh6eDXuTwJli5hBkedt1/HnzN9ibHN+bFGwTk=
+ AJvYcCX0QyyCWu17Thps81JSYYJu00ySp7pNSOmOeU2NAAxvWslG3J3R9oIuEYBbuG1fN43IXvv8IsDdIZMiWgbHFogDS8iw80H0JXwK1Xhk1clmd1EqFrsMZB3ObQ5JVfNa3zBSROI=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.59.58
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.03.00.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 03:00:00 -0800 (PST)
+ Fri, 09 Feb 2024 03:00:54 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 29/61] target/riscv/vector_helper.c: use vlenb in HELPER(vsetvl)
-Date: Fri,  9 Feb 2024 20:57:41 +1000
-Message-ID: <20240209105813.3590056-30-alistair.francis@wdc.com>
+Subject: [PULL 46/61] hw/riscv/virt.c: use g_autofree in create_fdt_sockets()
+Date: Fri,  9 Feb 2024 20:57:58 +1000
+Message-ID: <20240209105813.3590056-47-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
 References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,42 +102,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Use the new 'vlenb' CPU config to validate fractional LMUL. The original
-comparison is done with 'vlen' and 'sew', both in bits. Adjust the shift
-to use vlenb.
+Move 'clust_name' inside the loop, and g_autofree, to avoid having to
+g_free() manually in each loop iteration.
+
+'intc_phandles' is also g_autofreed to avoid another manual g_free().
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240122161107.26737-9-dbarboza@ventanamicro.com>
+Message-ID: <20240122221529.86562-5-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_helper.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ hw/riscv/virt.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 908e69d073..8ee7717162 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -45,9 +45,16 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 373b1dd96b..d0f402e0d5 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -721,11 +721,11 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+                                uint32_t *irq_virtio_phandle,
+                                uint32_t *msi_pcie_phandle)
+ {
+-    char *clust_name;
+     int socket, phandle_pos;
+     MachineState *ms = MACHINE(s);
+     uint32_t msi_m_phandle = 0, msi_s_phandle = 0;
+-    uint32_t *intc_phandles, xplic_phandles[MAX_NODES];
++    uint32_t xplic_phandles[MAX_NODES];
++    g_autofree uint32_t *intc_phandles = NULL;
+     int socket_count = riscv_socket_count(ms);
  
-     if (lmul & 4) {
--        /* Fractional LMUL - check LMUL * VLEN >= SEW */
-+        /*
-+         * Fractional LMUL, check:
-+         *
-+         * VLEN * LMUL >= SEW
-+         * VLEN >> (8 - lmul) >= sew
-+         * (vlenb << 3) >> (8 - lmul) >= sew
-+         * vlenb >> (8 - 3 - lmul) >= sew
-+         */
-         if (lmul == 4 ||
--            cpu->cfg.vlen >> (8 - lmul) < sew) {
-+            cpu->cfg.vlenb >> (8 - 3 - lmul) < sew) {
-             vill = true;
+     qemu_fdt_add_subnode(ms->fdt, "/cpus");
+@@ -739,6 +739,7 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+ 
+     phandle_pos = ms->smp.cpus;
+     for (socket = (socket_count - 1); socket >= 0; socket--) {
++        g_autofree char *clust_name = NULL;
+         phandle_pos -= s->soc[socket].num_harts;
+ 
+         clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket);
+@@ -749,8 +750,6 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+ 
+         create_fdt_socket_memory(s, memmap, socket);
+ 
+-        g_free(clust_name);
+-
+         if (tcg_enabled()) {
+             if (s->have_aclint) {
+                 create_fdt_socket_aclint(s, memmap, socket,
+@@ -793,8 +792,6 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
          }
      }
+ 
+-    g_free(intc_phandles);
+-
+     if (kvm_enabled() && virt_use_kvm_aia(s)) {
+         *irq_mmio_phandle = xplic_phandles[0];
+         *irq_virtio_phandle = xplic_phandles[0];
 -- 
 2.43.0
 
