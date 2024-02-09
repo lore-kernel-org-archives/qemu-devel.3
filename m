@@ -4,70 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD12C4829F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 16:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB06C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 16:02:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYTJE-00011C-Js; Fri, 09 Feb 2024 11:01:01 -0500
+	id 1rYTJf-0001CO-2Z; Fri, 09 Feb 2024 11:01:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rYTJD-00010a-BP
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:00:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rYTJ5-000643-D5
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:00:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707494449;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QxQRqeD5R4FqRYgOoa9wzRCV8FjwfJNCmsAutTGLf2I=;
- b=e2MT8aSI+XoXOLj1UCpuoNxVd3bv/fai0dtKmBXzFrsrgddUwg+3eEucm42CgcWEl5JZt7
- LSkLJBqR2omlr1LFbD2QU9fUm2w3e72HQapA4M1LeD8hfDB/8v8AVRWgBd8jThTzemOzTU
- o5EBZ+L6T9QRPcpCpfwVsvsAJIQIrko=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225--uZBVLcIMreMDi74bIrkTw-1; Fri, 09 Feb 2024 11:00:47 -0500
-X-MC-Unique: -uZBVLcIMreMDi74bIrkTw-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4C86411BB5E7;
- Fri,  9 Feb 2024 16:00:46 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.192.197])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 82D64492BC6;
- Fri,  9 Feb 2024 16:00:44 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, miguel.luis@oracle.com, haibo.xu@linaro.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org, maz@kernel.org,
- gkulkarni@amperecomputing.com
-Subject: [RFC v2 1/5] [Placeholder] headers: Partial headers update for NV2
- enablement
-Date: Fri,  9 Feb 2024 16:59:13 +0100
-Message-ID: <20240209160039.677865-2-eric.auger@redhat.com>
-In-Reply-To: <20240209160039.677865-1-eric.auger@redhat.com>
-References: <20240209160039.677865-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rYTJV-00017a-Np
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:01:19 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rYTJU-00069m-8F
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 11:01:17 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-556c3f0d6c5so1465718a12.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 08:01:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707494474; x=1708099274; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vp22lOK/7vavlAwgAMcUbHYWwj5W5A4bUkj+jT9blj8=;
+ b=b8BlfCW6BgdwbxoGZIXNCLtFdc237V7698zcJTAvq0sEI+sryM4ctBg/Gt2ugH5AbZ
+ Z5m5NvNG/mcTwUKl+vM8Ryic/Tj8sdocku7IgGl7gGzc8oHl4XZWuBsNYwOYxA8eaKR7
+ ItfgPrGo3TElQKD/gIg0z8OfJoyzeX+rAPHqHatjAg80OAdphXW+L4KoKE+tPoHsPMNc
+ 48yCNQQkEaPI7B7ka3MLGsBMK1WY+5X3WuLAJadVomwwDdosa/sbzKidPxjbEED7FaAR
+ AF8AX70GaQe2W2iIOmAfBft+gevjjKa8e7jmdT5wwMAq6knSTO8PFxKsmPKzhAXLYVpX
+ 6jsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707494474; x=1708099274;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vp22lOK/7vavlAwgAMcUbHYWwj5W5A4bUkj+jT9blj8=;
+ b=NH5O/7k/vUkPgK5dT1BBB5Vv4Vd1P/GUfxtmpe7JodjNRl4OM1Uu+lgUhffIcRWGe7
+ OV1kUrtuMq0BmmM7CUr63hHvFo33hhD1SA7hdDaYxlnctXDvQvmr58z+YG0CMkRMhcXH
+ hYh1kZd4Wg/R4C+FIP0ISZN5WRoYR9ycqjWTB2y+KfqSz+iL0n1G4hDqPJ4n9WpCHr0P
+ JLlkcjXSxqKC93/Lv32rZ5rNvyxLH4Cn8B8lmZy42bV84/db+OGZatPM/ht9i9j8G40c
+ aCccdYiwxrQeVx2KyX6PpZPMS8lSpg6kOYHXdUf4ggWGiCpQmFOKdHkQTkI1oChy70I9
+ LznA==
+X-Gm-Message-State: AOJu0Yy43JSuYViMPM0A/Ww0orHFBvljuuXSqzPGKphNBcX/0ndOahCJ
+ 0YzO54XaNoPj0nllrh+UQOce/EOczYluQ25Rcz8G8K+PDzNhsEz+EBXIsvlVts9Is14nEpSOyGY
+ DrCjqni32HOVZSOP/9Z3LYIiNiKkwqu62Mrmk+Q==
+X-Google-Smtp-Source: AGHT+IGIe9b5efvkEmD6XOCrtJfehbHSbLh2gj8yynq587i1y3SS8XWiPV7yehRQXrfhsmyoC7Wt0ZF+c9IITD7ziYc=
+X-Received: by 2002:a05:6402:649:b0:561:aa3:f9e5 with SMTP id
+ u9-20020a056402064900b005610aa3f9e5mr1659199edx.3.1707494474091; Fri, 09 Feb
+ 2024 08:01:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20240209150039.22211-1-philmd@linaro.org>
+ <20240209150039.22211-2-philmd@linaro.org>
+In-Reply-To: <20240209150039.22211-2-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 9 Feb 2024 16:01:02 +0000
+Message-ID: <CAFEAcA82_L4tJTFB2OP795Yad1bTzgK0MzQNY41nGz5LEbkC6g@mail.gmail.com>
+Subject: Re: [PATCH 1/3] cpu-target: Include missing 'exec/memory.h' header
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Peter Xu <peterx@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>, David Hildenbrand <david@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.269,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,48 +95,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haibo Xu <haibo.xu@linaro.org>
+On Fri, 9 Feb 2024 at 15:01, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> Include "exec/memory.h" in order to avoid:
+>
+>   cpu-target.c:201:50: error: use of undeclared identifier 'TYPE_MEMORY_R=
+EGION'
+>       DEFINE_PROP_LINK("memory", CPUState, memory, TYPE_MEMORY_REGION,
+>                                                    ^
 
-For now let's only import the pieces needed to run NV on KVM.
-Later on this will be replaced by a standard and comprehensive
-linux header update using scripts/update-linux-headers.sh.
+Given that we don't actually see this error, presumably
+we're implicitly dragging it in via some other include?
+Anyway, better to be explicit than implicit, so
 
-For now the changes are taken from
-https://github.com/eauger/linux/tree/nv-6.8-nv2-v11
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
-Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
----
- linux-headers/asm-arm64/kvm.h | 1 +
- linux-headers/linux/kvm.h     | 1 +
- 2 files changed, 2 insertions(+)
-
-diff --git a/linux-headers/asm-arm64/kvm.h b/linux-headers/asm-arm64/kvm.h
-index c59ea55cd8..d46839f1d9 100644
---- a/linux-headers/asm-arm64/kvm.h
-+++ b/linux-headers/asm-arm64/kvm.h
-@@ -394,6 +394,7 @@ enum {
- #define KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS 6
- #define KVM_DEV_ARM_VGIC_GRP_LEVEL_INFO  7
- #define KVM_DEV_ARM_VGIC_GRP_ITS_REGS 8
-+#define KVM_DEV_ARM_VGIC_GRP_MAINT_IRQ  9
- #define KVM_DEV_ARM_VGIC_LINE_LEVEL_INFO_SHIFT	10
- #define KVM_DEV_ARM_VGIC_LINE_LEVEL_INFO_MASK \
- 			(0x3fffffULL << KVM_DEV_ARM_VGIC_LINE_LEVEL_INFO_SHIFT)
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index 549fea3a97..5af601d7b8 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -1197,6 +1197,7 @@ struct kvm_ppc_resize_hpt {
- #define KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE 228
- #define KVM_CAP_ARM_SUPPORTED_BLOCK_SIZES 229
- #define KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES 230
-+#define KVM_CAP_ARM_EL2 231
- 
- #ifdef KVM_CAP_IRQ_ROUTING
- 
--- 
-2.41.0
-
+thanks
+-- PMM
 
