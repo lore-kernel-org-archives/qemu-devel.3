@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13263C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1332EC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 21:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYYLx-0000AF-VR; Fri, 09 Feb 2024 16:24:10 -0500
+	id 1rYYMO-0001l9-Se; Fri, 09 Feb 2024 16:24:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYYLv-000096-Lp; Fri, 09 Feb 2024 16:24:07 -0500
+ id 1rYYMM-0001SC-8W; Fri, 09 Feb 2024 16:24:34 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYYLu-0000Dc-3x; Fri, 09 Feb 2024 16:24:07 -0500
+ id 1rYYMK-0000Ha-Dh; Fri, 09 Feb 2024 16:24:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 55AE34BF6A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A2EC4BF6F;
  Sat, 10 Feb 2024 00:24:04 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4284577EE4;
+ by tsrv.corpit.ru (Postfix) with SMTP id 868B177EE9;
  Sat, 10 Feb 2024 00:22:48 +0300 (MSK)
-Received: (nullmailer pid 1123193 invoked by uid 1000);
+Received: (nullmailer pid 1123209 invoked by uid 1000);
  Fri, 09 Feb 2024 21:22:47 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 18/23] qemu-img: refresh options/--help for "bench" command
-Date: Sat, 10 Feb 2024 00:22:39 +0300
-Message-Id: <412cd5a3af866763a22ec17a5eea99aa2b6564da.1707513011.git.mjt@tls.msk.ru>
+Subject: [PATCH 23/23] qemu-img: inline list of supported commands,
+ remove qemu-img-cmds.h include
+Date: Sat, 10 Feb 2024 00:22:44 +0300
+Message-Id: <a7e67594e748d1b91f755dd971f222afa09f5443.1707513012.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1707513011.git.mjt@tls.msk.ru>
 References: <cover.1707513011.git.mjt@tls.msk.ru>
@@ -60,67 +61,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing long options and --help output.
+also add short description to each command and use it in --help
+
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 36 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 34 insertions(+), 2 deletions(-)
+ qemu-img.c | 42 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 35 insertions(+), 7 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index f598eba3a8..3be365cd07 100644
+index d9c5c6078b..e57076738e 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -4781,9 +4781,19 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-     for (;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
--            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"cache", required_argument, 0, 't'},
-+            {"count", required_argument, 0, 'c'},
-+            {"depth", required_argument, 0, 'd'},
-+            {"offset", required_argument, 0, 'o'},
-+            {"buffer-size", required_argument, 0, 's'},
-+            {"step-size", required_argument, 0, 'S'},
-+            {"aio", required_argument, 0, 'i'},
-+            {"native", no_argument, 0, 'n'},
-+            {"write", no_argument, 0, 'w'},
-             {"pattern", required_argument, 0, OPTION_PATTERN},
-+            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
-             {"no-drain", no_argument, 0, OPTION_NO_DRAIN},
-             {"force-share", no_argument, 0, 'U'},
-             {0, 0, 0, 0}
-@@ -4802,7 +4812,29 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-             unrecognized_option(ccmd, argv[optind - 1]);
-             break;
-         case 'h':
--            help();
-+            cmd_help(ccmd,
-+"[-f FMT | --image-opts] [-t CACHE] [-c COUNT] [-d DEPTH]\n"
-+"	[-o OFFSET] [-s BUFFER_SIZE] [-S STEP_SIZE] [-i AIO] [-n]\n"
-+"	[-w [--pattern PATTERN] [--flush-interval INTERVAL [--no-drain]]]\n"
-+,
-+" -q|--quiet - quiet operations\n"
-+" -f|--format FMT - specify FILENAME format explicitly\n"
-+" --image-opts - indicates that FILENAME is a complete image specification\n"
-+"  instead of a file name (incompatible with --format)\n"
-+" -t|--cache CACHE - cache mode for FILENAME (" BDRV_DEFAULT_CACHE ")\n"
-+" -c|--count COUNT - number of I/O requests to perform\n"
-+" -s|--buffer-size BUFFER_SIZE - size of each I/O request\n"
-+" -d|--depth DEPTH - number of requests to perform in parallel\n"
-+" -o|--offset OFFSET - start first request at this OFFSET\n"
-+" -S|--step-size STEP_SIZE - each next request offset increment\n"
-+" -i|--aio AIO - async-io backend (threads, native, io_uring)\n"
-+" -n|--native - use native AIO backend if possible\n"
-+" -w|--write - perform write test (default is read)\n"
-+" --pattern PATTERN - write this pattern instead of zeros\n"
-+" --flush-interval FLUSH_INTERVAL - issue flush after this number of requests\n"
-+" --no-drain - do not wait when flushing pending requests\n"
-+" -U|--force-share - open images in shared mode for concurrent access\n"
-+);
-             break;
-         case 'c':
-         {
+@@ -61,6 +61,7 @@
+ typedef struct img_cmd_t {
+     const char *name;
+     int (*handler)(const struct img_cmd_t *ccmd, int argc, char **argv);
++    const char *description;
+ } img_cmd_t;
+ 
+ enum {
+@@ -130,11 +131,12 @@ static G_NORETURN
+ void cmd_help(const img_cmd_t *ccmd,
+               const char *syntax, const char *arguments)
+ {
+-    printf("qemu-img %s %s"
++    printf("qemu-img %s: %s.  Usage:\n"
++           "qemu-img %s %s"
+            "Arguments:\n"
+            " -h|--help - print this help and exit\n"
+            "%s",
+-           ccmd->name, syntax, arguments);
++           ccmd->name, ccmd->description, ccmd->name, syntax, arguments);
+     exit(EXIT_SUCCESS);
+ }
+ 
+@@ -5746,10 +5748,36 @@ out:
+ }
+ 
+ static const img_cmd_t img_cmds[] = {
+-#define DEF(option, callback, arg_string)        \
+-    { option, callback },
+-#include "qemu-img-cmds.h"
+-#undef DEF
++    { "amend", img_amend,
++      "Update format-specific options of the image" },
++    { "bench", img_bench,
++      "Run simple image benchmark" },
++    { "bitmap", img_bitmap,
++      "Perform modifications of the persistent bitmap in the image" },
++    { "check", img_check,
++      "Check basic image integrity" },
++    { "commit", img_commit,
++      "Commit image to its backing file" },
++    { "compare", img_compare,
++      "Check if two images have the same contents" },
++    { "convert", img_convert,
++      "Copy one image to another with optional format conversion" },
++    { "create", img_create,
++      "Create and format new image file" },
++    { "dd", img_dd,
++      "Copy input to output with optional format conversion" },
++    { "info", img_info,
++      "Display information about image" },
++    { "map", img_map,
++      "Dump image metadata" },
++    { "measure", img_measure,
++      "Calculate file size requred for a new image" },
++    { "rebase", img_rebase,
++      "Change backing file of the image" },
++    { "resize", img_resize,
++      "Resize the image to the new size" },
++    { "snapshot", img_snapshot,
++      "List or manipulate snapshots within image" },
+     { NULL, NULL, },
+ };
+ 
+@@ -5813,7 +5841,7 @@ QEMU_IMG_VERSION
+ "   [[enable=]<pattern>][,events=<file>][,file=<file>]\n"
+ "Recognized commands (run qemu-img command --help for command-specific help):\n");
+             for (cmd = img_cmds; cmd->name != NULL; cmd++) {
+-                printf("  %s\n", cmd->name);
++                printf("  %s - %s\n", cmd->name, cmd->description);
+             }
+             c = printf("Supported image formats:");
+             bdrv_iterate_format(format_print, &c, false);
 -- 
 2.39.2
 
