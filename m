@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59967C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 10:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34972C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 10:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYOaW-0008Fh-4a; Fri, 09 Feb 2024 05:58:32 -0500
+	id 1rYOat-0000A3-KN; Fri, 09 Feb 2024 05:58:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOaU-0008FZ-Qo
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:58:30 -0500
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ id 1rYOas-00009U-SE
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:58:54 -0500
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rYOaT-000099-23
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:58:30 -0500
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-6e1270e8cd3so287348a34.1
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:58:28 -0800 (PST)
+ id 1rYOar-0000D2-8r
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 05:58:54 -0500
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-6e118b528aeso254826a34.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 02:58:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707476306; x=1708081106; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OhVEEHSzTAAO8vgoSXdpRdq8Z5Ls61QhmnDtYSP6haw=;
- b=Hl1GyTX/dFQwqMDUO8rjGMIfNCSiya5Fe8BGDwUI+GqAhKO5XwQUeqeLD9PVQ8BxI5
- 2MgC5IhCNCsmpXNUXUbbapV5hDy05vzyBF5lhSOuA0QfqF8mPfbJxtzWaTevzOa04xo0
- +UbAWc+LP7nqUjWrlkIrzQZeZJhboqSd+VBvxl0EPRNOl2Y+TxHfAI5fR6f4yIXDKds5
- KDxkkLO3KWcEp65m4TbrA6wh21+dnu8aoL9PUvPfIyoZuu0W6VUgyB4V0RXB6mKNOFT9
- rBJoLCLW1sP9cTLJovSuJKIlIpZjtCxNyc1DUEDI1+Ao7kfu+MeFNKi5BBLruht3MIFs
- v/0g==
+ d=gmail.com; s=20230601; t=1707476332; x=1708081132; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DpYfulibsC2nJKxZOB6BiIy+pD8HSIE5x1ruXzaKsXQ=;
+ b=doak1F3AlnRSg7L3sWajtBAwKKjlU2Mr4mmySQwfugkC4i8LbQiX5zRw5WE3VohKNm
+ HTj+wDoeLGzq5yJ3/DCV0AacpQN1NTybAhPMt0wNabM20sIx2hLZrT75hn0JarZM0pmm
+ otbJfG0+LH1WwOr020QPmq3MAS+DKFx7DF5uVYcDAm71pVDmj94CBZrFh1mRjbqSPwqF
+ Fzz2/E4YoBlHJDqLVphbqC/h14Wsx73GxOgEocCr+yj86+/QHWEkAJ9TbLHZf3ZO0e8x
+ 3f1800gQ6tmRkXTbry/kfwPjfCCWC6rm5XTYWGYFuczssgfECXMvcwbIbT6jpeKUp3pv
+ JUhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707476306; x=1708081106;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OhVEEHSzTAAO8vgoSXdpRdq8Z5Ls61QhmnDtYSP6haw=;
- b=WEnMZ1sktE1IPi6j9Ev8MgzLlF2/c9pV6Lu4rXp8alo9TCFMVBuWuOK9NJ2dRau0nf
- EACE4p+CDEbc4EeZqZnDYaGEOshNh9tIgTtra4iPpPTcAwEETMef59s2LpC4N4hHCpYc
- aiZ0klIKgQtID94PlFX6BWi2NojexqfeLh2134kckjer5eQnNkkl7jeOqpNp3UyFUztP
- ywVyeF927Phk15gb1FIcPhLZExpkdTmZfC+fINsvm81YUpOtJHpVvwQXxQZZRRCIqG4h
- o3vqd3RRDuZvoOOZ7XZa2sBdpgOuvFbhwCjhGSKj8OeyfvTF59HnwB+j8Bnyxt3x89zT
- 70VA==
-X-Gm-Message-State: AOJu0YzD/ggnAiiYtJwgo5hnoEZd+BH16Xx77yChlFopXOkXEN00N15E
- IlFIQmu6qAEoALPN9MfpyEVkdRcK/aFWrjUhbw/rVyiSzuHYz1z6Jow8IUTZ4j3aOA==
-X-Google-Smtp-Source: AGHT+IFG5HIpw+BWRp9938Z7NArY91NxGmCwnMfEaS2FeWICGCa+QAmKQlIOuGN3X4qIqxkWCYmQ4w==
-X-Received: by 2002:a9d:6b11:0:b0:6de:9b9d:a493 with SMTP id
- g17-20020a9d6b11000000b006de9b9da493mr1068288otp.14.1707476305887; 
- Fri, 09 Feb 2024 02:58:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707476332; x=1708081132;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DpYfulibsC2nJKxZOB6BiIy+pD8HSIE5x1ruXzaKsXQ=;
+ b=bLwwjA0+TPTE3NLJF2nRSB9CAy5GPRDop4un8tsl+k14UcfzWm0QrGxqdYlr03nCCv
+ 5YYefzq3APR5NWPjNjNMsf9BeS+mC4AEXvn9MeooOBNa5Uuj50dTXNja0+HOcyteYtuV
+ xDN2Gdc47dOrPr4ee/Ig0Rn6kYGh4Yl4uIvEMsGor8CGuVpe1JbtPjIMz4SLuwjUSnj4
+ tFsn79ajuDGk3KQehPuErdbvcNKRIE6noLL3NXsVwLWvGEPqo+tl8k4UHqxOPvA1SFPG
+ +U3Xc1q7h3FpVsuTmBLHBUSJXeMFNkgYgIfPY1mcRanjP0Ka14pbM45d4IlMj2MSblG5
+ Fp9Q==
+X-Gm-Message-State: AOJu0YwdvifsC76hW0VWrMH0mOgVJV3hUuCKRMZ6kjmbHeqgyCyAmvRs
+ 9iXdpnmU6HW3HKLZeO+oenTIHnIRGm2uxtfRw2X2Xaqr3vCylq7j418t7zCFrnCoGQ==
+X-Google-Smtp-Source: AGHT+IG7TLn/tTpjOO1z0el73WEsYlm1NDeADbLUcDsGsfrEd/LNCbVbT/QhJuoTsgXtP30ZW1kgLg==
+X-Received: by 2002:a9d:7b49:0:b0:6e1:12fb:aa27 with SMTP id
+ f9-20020a9d7b49000000b006e112fbaa27mr1082087oto.12.1707476331770; 
+ Fri, 09 Feb 2024 02:58:51 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGg0BpewP/rj1y3WXYTNHkuMS/ceefasEedpgfNjvzPtbUGENheEWe0QQfoOgmRrmAPcKP2GimtbbGGNiXcBG7IIS3+RY2Ooc=
+ AJvYcCWIALWHW3Lfzo/RvnW/ppvbsRE2sZlVSpGEA87UXqOlJtR4m0SLdcfXGl7ru/xQGV6cdm+kJLr0hTUqGU6et77IbWKBkUFSzhH7mIZlq07QDA2vxOOstdmUatHyNc04RJvn2tzttz6JmD9AyDgXcDWHd32XaMTEV7k3Oyp59xhMW5E=
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.58.23
+ d20-20020a637354000000b005d3bae243bbsm1473623pgn.4.2024.02.09.02.58.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Feb 2024 02:58:25 -0800 (PST)
+ Fri, 09 Feb 2024 02:58:51 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/61] riscv-to-apply queue
-Date: Fri,  9 Feb 2024 20:57:12 +1000
-Message-ID: <20240209105813.3590056-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Vladimir Isaev <vladimir.isaev@syntacore.com>
+Subject: [PULL 08/61] target/riscv: move 'pmp' to riscv_cpu_properties[]
+Date: Fri,  9 Feb 2024 20:57:20 +1000
+Message-ID: <20240209105813.3590056-9-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240209105813.3590056-1-alistair.francis@wdc.com>
+References: <20240209105813.3590056-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=alistair23@gmail.com; helo=mail-ot1-x329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=alistair23@gmail.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,142 +101,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 03e4bc0bc02779fdf6f8e8d83197f05e70881abf:
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-  Merge tag 'pull-tcg-20240205-2' of https://gitlab.com/rth7680/qemu into staging (2024-02-08 16:08:42 +0000)
+Move 'pmp' to riscv_cpu_properties[], creating a new setter() for it
+that forbids 'pmp' to be changed in vendor CPUs, like we did with the
+'mmu' option.
 
-are available in the Git repository at:
+We'll also have to manually set 'pmp = true' to generic CPUs that were
+still relying on the previous default to set it.
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240209
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Tested-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
+Message-ID: <20240105230546.265053-6-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-for you to fetch changes up to deb0ff0c777d20602ecc5b6f74f18cb7ecc0b91f:
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 3b5d6da736..6723db4544 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -438,6 +438,7 @@ static void riscv_max_cpu_init(Object *obj)
+     RISCVMXL mlx = MXL_RV64;
+ 
+     cpu->cfg.mmu = true;
++    cpu->cfg.pmp = true;
+ 
+ #ifdef TARGET_RISCV32
+     mlx = MXL_RV32;
+@@ -457,6 +458,7 @@ static void rv64_base_cpu_init(Object *obj)
+     CPURISCVState *env = &cpu->env;
+ 
+     cpu->cfg.mmu = true;
++    cpu->cfg.pmp = true;
+ 
+     /* We set this in the realise function */
+     riscv_cpu_set_misa(env, MXL_RV64, 0);
+@@ -586,6 +588,7 @@ static void rv128_base_cpu_init(Object *obj)
+     }
+ 
+     cpu->cfg.mmu = true;
++    cpu->cfg.pmp = true;
+ 
+     /* We set this in the realise function */
+     riscv_cpu_set_misa(env, MXL_RV128, 0);
+@@ -624,6 +627,7 @@ static void rv32_base_cpu_init(Object *obj)
+     CPURISCVState *env = &cpu->env;
+ 
+     cpu->cfg.mmu = true;
++    cpu->cfg.pmp = true;
+ 
+     /* We set this in the realise function */
+     riscv_cpu_set_misa(env, MXL_RV32, 0);
+@@ -1651,9 +1655,38 @@ static const PropertyInfo prop_mmu = {
+     .set = prop_mmu_set,
+ };
+ 
+-Property riscv_cpu_options[] = {
+-    DEFINE_PROP_BOOL("pmp", RISCVCPU, cfg.pmp, true),
++static void prop_pmp_set(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    bool value;
++
++    visit_type_bool(v, name, &value, errp);
+ 
++    if (cpu->cfg.pmp != value && riscv_cpu_is_vendor(obj)) {
++        cpu_set_prop_err(cpu, name, errp);
++        return;
++    }
++
++    cpu_option_add_user_setting(name, value);
++    cpu->cfg.pmp = value;
++}
++
++static void prop_pmp_get(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    bool value = RISCV_CPU(obj)->cfg.pmp;
++
++    visit_type_bool(v, name, &value, errp);
++}
++
++static const PropertyInfo prop_pmp = {
++    .name = "pmp",
++    .get = prop_pmp_get,
++    .set = prop_pmp_set,
++};
++
++Property riscv_cpu_options[] = {
+     DEFINE_PROP_STRING("priv_spec", RISCVCPU, cfg.priv_spec),
+     DEFINE_PROP_STRING("vext_spec", RISCVCPU, cfg.vext_spec),
+ 
+@@ -1741,6 +1774,7 @@ static Property riscv_cpu_properties[] = {
+     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
+ 
+     {.name = "mmu", .info = &prop_mmu},
++    {.name = "pmp", .info = &prop_pmp},
+ 
+ #ifndef CONFIG_USER_ONLY
+     DEFINE_PROP_UINT64("resetvec", RISCVCPU, env.resetvec, DEFAULT_RSTVEC),
+-- 
+2.43.0
 
-  target/riscv: add rv32i, rv32e and rv64e CPUs (2024-02-09 20:49:41 +1000)
-
-----------------------------------------------------------------
-RISC-V PR for 9.0
-
-* Check for 'A' extension on all atomic instructions
-* Add support for 'B' extension
-* Internally deprecate riscv_cpu_options
-* Implement optional CSR mcontext of debug Sdtrig extension
-* Internally add cpu->cfg.vlenb and  remove cpu->cfg.vlen
-* Support vlenb and vregs[] in KVM
-* RISC-V gdbstub and TCG plugin improvements
-* Remove vxrm and vxsat from FCSR
-* Use RISCVException as return type for all csr ops
-* Use g_autofree more and fix a memory leak
-* Add support for Zaamo and Zalrsc
-* Support new isa extension detection devicetree properties
-* SMBIOS support for RISC-V virt machine
-* Enable xtheadsync under user mode
-* Add rv32i,rv32e and rv64e CPUs
-
-----------------------------------------------------------------
-Akihiko Odaki (3):
-      target/riscv: Remove misa_mxl validation
-      target/riscv: Move misa_mxl_max to class
-      target/riscv: Validate misa_mxl_max only once
-
-Alvin Chang (1):
-      target/riscv: Implement optional CSR mcontext of debug Sdtrig extension
-
-Conor Dooley (2):
-      target/riscv: use misa_mxl_max to populate isa string rather than TARGET_LONG_BITS
-      target/riscv: support new isa extension detection devicetree properties
-
-Daniel Henrique Barboza (42):
-      target/riscv/cpu_cfg.h: remove unused fields
-      target/riscv: make riscv_cpu_is_vendor() public
-      target/riscv: move 'pmu-mask' and 'pmu-num' to riscv_cpu_properties[]
-      target/riscv: move 'mmu' to riscv_cpu_properties[]
-      target/riscv: move 'pmp' to riscv_cpu_properties[]
-      target/riscv: rework 'priv_spec'
-      target/riscv: rework 'vext_spec'
-      target/riscv: move 'vlen' to riscv_cpu_properties[]
-      target/riscv: move 'elen' to riscv_cpu_properties[]
-      target/riscv: create finalize_features() for KVM
-      target/riscv: move 'cbom_blocksize' to riscv_cpu_properties[]
-      target/riscv: move 'cbop_blocksize' to riscv_cpu_properties[]
-      target/riscv: move 'cboz_blocksize' to riscv_cpu_properties[]
-      target/riscv: remove riscv_cpu_options[]
-      target/riscv/cpu.c: move 'mvendorid' to riscv_cpu_properties[]
-      target/riscv/cpu.c: move 'mimpid' to riscv_cpu_properties[]
-      target/riscv/cpu.c: move 'marchid' to riscv_cpu_properties[]
-      target/riscv: add 'vlenb' field in cpu->cfg
-      target/riscv/csr.c: use 'vlenb' instead of 'vlen'
-      target/riscv/gdbstub.c: use 'vlenb' instead of shifting 'vlen'
-      target/riscv/insn_trans/trans_rvbf16.c.inc: use cpu->cfg.vlenb
-      target/riscv/insn_trans/trans_rvv.c.inc: use 'vlenb'
-      target/riscv/insn_trans/trans_rvvk.c.inc: use 'vlenb'
-      target/riscv/vector_helper.c: use 'vlenb'
-      target/riscv/vector_helper.c: use vlenb in HELPER(vsetvl)
-      target/riscv/insn_trans/trans_rvv.c.inc: use 'vlenb' in MAXSZ()
-      target/riscv/cpu.h: use 'vlenb' in vext_get_vlmax()
-      target/riscv: change vext_get_vlmax() arguments
-      trans_rvv.c.inc: use vext_get_vlmax() in trans_vrgather_v*()
-      target/riscv/cpu.c: remove cpu->cfg.vlen
-      target/riscv/kvm: change kvm_reg_id to uint64_t
-      target/riscv/kvm: initialize 'vlenb' via get-reg-list
-      target/riscv/kvm: get/set vector vregs[]
-      hw/riscv/virt-acpi-build.c: fix leak in build_rhct()
-      hw/riscv/numa.c: use g_autofree in socket_fdt_write_distance_matrix()
-      hw/riscv/virt.c: use g_autofree in create_fdt_socket_cpus()
-      hw/riscv/virt.c: use g_autofree in create_fdt_sockets()
-      hw/riscv/virt.c: use g_autofree in create_fdt_virtio()
-      hw/riscv/virt.c: use g_autofree in virt_machine_init()
-      hw/riscv/virt.c: use g_autofree in create_fdt_*
-      target/riscv/cpu.c: add riscv_bare_cpu_init()
-      target/riscv: add rv32i, rv32e and rv64e CPUs
-
-Heinrich Schuchardt (4):
-      smbios: add processor-family option
-      smbios: function to set default processor family
-      target/riscv: SMBIOS support for RISC-V virt machine
-      qemu-options: enable -smbios option on RISC-V
-
-LIU Zhiwei (3):
-      target/riscv: FCSR doesn't contain vxrm and vxsat
-      target/riscv: Use RISCVException as return type for all csr ops
-      target/riscv: Enable xtheadsync under user mode
-
-Rob Bradford (6):
-      target/riscv: Check for 'A' extension on all atomic instructions
-      target/riscv: Add infrastructure for 'B' MISA extension
-      target/riscv: Add step to validate 'B' extension
-      target/riscv: Add Zaamo and Zalrsc extension infrastructure
-      target/riscv: Check 'A' and split extensions for atomic instructions
-      target/riscv: Expose Zaamo and Zalrsc extensions
-
- include/hw/firmware/smbios.h               |    1 +
- target/riscv/cpu-qom.h                     |    3 +
- target/riscv/cpu.h                         |   30 +-
- target/riscv/cpu_bits.h                    |   15 +-
- target/riscv/cpu_cfg.h                     |    8 +-
- target/riscv/kvm/kvm_riscv.h               |    1 +
- hw/riscv/boot.c                            |    3 +-
- hw/riscv/numa.c                            |    4 +-
- hw/riscv/sifive_u.c                        |    7 +-
- hw/riscv/spike.c                           |    6 +-
- hw/riscv/virt-acpi-build.c                 |    2 +-
- hw/riscv/virt.c                            |  153 ++--
- hw/smbios/smbios.c                         |   20 +-
- target/riscv/cpu.c                         | 1106 +++++++++++++++++++++-------
- target/riscv/cpu_helper.c                  |   11 +-
- target/riscv/csr.c                         |  157 ++--
- target/riscv/debug.c                       |    2 +
- target/riscv/gdbstub.c                     |   18 +-
- target/riscv/kvm/kvm-cpu.c                 |  250 +++++--
- target/riscv/machine.c                     |    7 +-
- target/riscv/tcg/tcg-cpu.c                 |  143 ++--
- target/riscv/translate.c                   |    3 +-
- target/riscv/vector_helper.c               |   43 +-
- target/riscv/insn_trans/trans_rva.c.inc    |   45 +-
- target/riscv/insn_trans/trans_rvbf16.c.inc |   12 +-
- target/riscv/insn_trans/trans_rvv.c.inc    |  152 ++--
- target/riscv/insn_trans/trans_rvvk.c.inc   |   16 +-
- target/riscv/insn_trans/trans_xthead.c.inc |   10 -
- hw/riscv/Kconfig                           |    1 +
- qemu-options.hx                            |    6 +-
- 30 files changed, 1522 insertions(+), 713 deletions(-)
 
