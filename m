@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA844C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 13:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BE8C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYROQ-0003IZ-QW; Fri, 09 Feb 2024 08:58:14 -0500
+	id 1rYRVJ-0002Vg-Rx; Fri, 09 Feb 2024 09:05:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1rYPSk-0003Fw-9o
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:54:34 -0500
-Received: from esa5.hc1455-7.c3s2.iphmx.com ([68.232.139.130])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rYRVH-0002US-Si
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1rYPSi-0001eE-I1
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 06:54:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1707479673; x=1739015673;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Dd68uTGB7iPzp9l3yUK2O0dGF5QgWSOWWKlkuSfj+PQ=;
- b=c0qhxsXLQqK8RTq7xHDk+mWSDy/PUhE3e+1HI9jBxGd6JMw4Ya06uNqu
- OqqjhsEC3cSeWZ+ezNrNLir1sQWwsrdxSD1N+bvYI2duMjsO5/LKPrnz/
- q+1JXb5cRaUdkjcti3BDh9uq6jSUPIlgr35ClONbqeG4pWcFBUQybN/Zp
- UTYXwZDMUvrWk0vgf9h4YPDkrSiJ16R3/OvzOq8bjAtONNCkKhUkg2TOv
- 76lhwLvWn8BIwN/VzWdn14RETXU29/1e791Hyx9wuacbRdiDMBz11HQGc
- lShQ/2iu9X12Pdk2ZlJCudVIPM/5DH7HxxXHGCkUwUl0/wnftql0zQ7G2 w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10978"; a="148405992"
-X-IronPort-AV: E=Sophos;i="6.05,256,1701097200"; d="scan'208";a="148405992"
-Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
- by esa5.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2024 20:54:24 +0900
-Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
- [192.168.87.59])
- by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 6709F615AB
- for <qemu-devel@nongnu.org>; Fri,  9 Feb 2024 20:54:21 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 53813D3E93
- for <qemu-devel@nongnu.org>; Fri,  9 Feb 2024 20:54:20 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id EF74321BD64
- for <qemu-devel@nongnu.org>; Fri,  9 Feb 2024 20:54:19 +0900 (JST)
-Received: from irides.g08.fujitsu.local (unknown [10.167.226.114])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 937301A006A;
- Fri,  9 Feb 2024 19:54:19 +0800 (CST)
-To: qemu-devel@nongnu.org,
-	linux-cxl@vger.kernel.org
-Cc: Jonathan.Cameron@huawei.com,
-	dan.j.williams@intel.com
-Subject: [RFC PATCH 4/5] cxl/core: add report option for cxl_mem_get_poison()
-Date: Fri,  9 Feb 2024 19:54:16 +0800
-Message-Id: <20240209115417.724638-7-ruansy.fnst@fujitsu.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240209115417.724638-1-ruansy.fnst@fujitsu.com>
-References: <20240209115417.724638-1-ruansy.fnst@fujitsu.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rYRVG-0004AG-BB
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707487517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5QrmA6V0m313XVNqtlIfHrcER3272CRptO62/TAmPoA=;
+ b=FBcoX3VXOCIUvEuqGcw8XiBX+N8+xzOSCj3faXdVthqBScd1ZW6rMP2ZA2HikZ4NYHlGD9
+ ctq7+BTBtqJ3BisFkpLGMJagCLxUAYUg2MBSTkRqDq23JeEXH/tBRK4MqrrjmJeps6VEMN
+ 8RrHShZ5sVpsglYarXKQJ7mnG14VuAA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-411-6d3WBiF3NBCMtgFuMUBrZA-1; Fri, 09 Feb 2024 09:05:12 -0500
+X-MC-Unique: 6d3WBiF3NBCMtgFuMUBrZA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C60598F920C;
+ Fri,  9 Feb 2024 14:05:11 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.105])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 96E8D112A1;
+ Fri,  9 Feb 2024 14:05:09 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 01/17] meson: sort C warning flags alphabetically
+Date: Fri,  9 Feb 2024 14:04:49 +0000
+Message-ID: <20240209140505.2536635-2-berrange@redhat.com>
+In-Reply-To: <20240209140505.2536635-1-berrange@redhat.com>
+References: <20240209140505.2536635-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28180.007
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28180.007
-X-TMASE-Result: 10--10.285100-10.000000
-X-TMASE-MatchedRID: SzbEz7SZt2sJoDeiZ6YZhB1kSRHxj+Z5/OuUJVcMZhtdXeeZrNJbgiu5
- iQ9EM64EjZRdXn3Xp9M6uZyF2AGJsLVQ6XPWwtdyEXjPIvKd74BMkOX0UoduuR+GgVvXmL4ONE6
- mRLCupPjovSNS3Zhlaq9YGVc6ZwjYP7A6mmzUskBKzjuZtPtIBMMKxxeacM3vnhD4vcFcha6N3H
- kV2EiaA9TrK+6tlqkXumMCMwce1mUfE8yM4pjsDwtuKBGekqUpI/NGWt0UYPBSuOQCfu1OIEDum
- 0PDABnfH5DUKb843LaYU+MayamLEm3qeHSd7sch
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=68.232.139.130;
- envelope-from=ruansy.fnst@fujitsu.com; helo=esa5.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.269,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 09 Feb 2024 08:57:58 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,127 +88,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
-From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a poison event is received, driver uses GET_POISON_LIST command
-to get the poison list.  Now driver has cxl_mem_get_poison(), so
-reuse it and add a parameter 'bool report', report poison record to MCE
-if set true.
+When scanning the list of warning flags to see if one is present, it is
+helpful if they are in alphabetical order. It is further helpful to
+separate out the 'no-' prefixed warnings.
 
-Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- drivers/cxl/core/mbox.c   | 7 +++++--
- drivers/cxl/core/memdev.c | 4 ++--
- drivers/cxl/core/region.c | 8 ++++----
- drivers/cxl/cxlmem.h      | 2 +-
- 4 files changed, 12 insertions(+), 9 deletions(-)
+ meson.build | 40 +++++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index f9b6f50fbe80..e1c67159acc4 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -1324,7 +1324,7 @@ static void cxl_mem_report_poison(struct cxl_memdev *cxlmd,
- }
+diff --git a/meson.build b/meson.build
+index e5d6f2d057..74d3aa0b12 100644
+--- a/meson.build
++++ b/meson.build
+@@ -571,36 +571,38 @@ qemu_common_flags += cc.get_supported_arguments(hardening_flags)
+ add_global_arguments(qemu_common_flags, native: false, language: all_languages)
+ add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
  
- int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
--		       struct cxl_region *cxlr)
-+		       struct cxl_region *cxlr, bool report)
- {
- 	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
- 	struct cxl_mbox_poison_out *po;
-@@ -1355,10 +1355,13 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
- 		if (rc)
- 			break;
+-# Collect warnings that we want to enable
+-
++# Collect warning flags we want to set, sorted alphabetically
+ warn_flags = [
+-  '-Wundef',
+-  '-Wwrite-strings',
+-  '-Wmissing-prototypes',
+-  '-Wstrict-prototypes',
+-  '-Wredundant-decls',
+-  '-Wold-style-declaration',
+-  '-Wold-style-definition',
+-  '-Wtype-limits',
+-  '-Wformat-security',
+-  '-Wformat-y2k',
+-  '-Winit-self',
+-  '-Wignored-qualifiers',
++  # First enable interesting warnings
+   '-Wempty-body',
+-  '-Wnested-externs',
+   '-Wendif-labels',
+   '-Wexpansion-to-defined',
++  '-Wformat-security',
++  '-Wformat-y2k',
++  '-Wignored-qualifiers',
+   '-Wimplicit-fallthrough=2',
++  '-Winit-self',
+   '-Wmissing-format-attribute',
++  '-Wmissing-prototypes',
++  '-Wnested-externs',
++  '-Wold-style-declaration',
++  '-Wold-style-definition',
++  '-Wredundant-decls',
++  '-Wshadow=local',
++  '-Wstrict-prototypes',
++  '-Wtype-limits',
++  '-Wundef',
++  '-Wwrite-strings',
++
++  # Then disable some undesirable warnings
++  '-Wno-gnu-variable-sized-type-not-at-end',
+   '-Wno-initializer-overrides',
+   '-Wno-missing-include-dirs',
++  '-Wno-psabi',
+   '-Wno-shift-negative-value',
+   '-Wno-string-plus-int',
+-  '-Wno-typedef-redefinition',
+   '-Wno-tautological-type-limit-compare',
+-  '-Wno-psabi',
+-  '-Wno-gnu-variable-sized-type-not-at-end',
+-  '-Wshadow=local',
++  '-Wno-typedef-redefinition',
+ ]
  
--		for (int i = 0; i < le16_to_cpu(po->count); i++)
-+		for (int i = 0; i < le16_to_cpu(po->count); i++) {
- 			trace_cxl_poison(cxlmd, cxlr, &po->record[i],
- 					 po->flags, po->overflow_ts,
- 					 CXL_POISON_TRACE_LIST);
-+			if (report)
-+				cxl_mem_report_poison(cxlmd, &po->record[i]);
-+		}
- 
- 		/* Protect against an uncleared _FLAG_MORE */
- 		nr_records = nr_records + le16_to_cpu(po->count);
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index c304e709ef0e..320bcb8af5b0 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -200,14 +200,14 @@ static int cxl_get_poison_by_memdev(struct cxl_memdev *cxlmd)
- 	if (resource_size(&cxlds->pmem_res)) {
- 		offset = cxlds->pmem_res.start;
- 		length = resource_size(&cxlds->pmem_res);
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		if (rc)
- 			return rc;
- 	}
- 	if (resource_size(&cxlds->ram_res)) {
- 		offset = cxlds->ram_res.start;
- 		length = resource_size(&cxlds->ram_res);
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		/*
- 		 * Invalid Physical Address is not an error for
- 		 * volatile addresses. Device support is optional.
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index ce0e2d82bb2b..b008c7e13560 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -2386,7 +2386,7 @@ static int cxl_get_poison_unmapped(struct cxl_memdev *cxlmd,
- 	if (ctx->mode == CXL_DECODER_RAM) {
- 		offset = ctx->offset;
- 		length = resource_size(&cxlds->ram_res) - offset;
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		if (rc == -EFAULT)
- 			rc = 0;
- 		if (rc)
-@@ -2404,7 +2404,7 @@ static int cxl_get_poison_unmapped(struct cxl_memdev *cxlmd,
- 		return 0;
- 	}
- 
--	return cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+	return cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- }
- 
- static int poison_by_decoder(struct device *dev, void *arg)
-@@ -2438,7 +2438,7 @@ static int poison_by_decoder(struct device *dev, void *arg)
- 	if (cxled->skip) {
- 		offset = cxled->dpa_res->start - cxled->skip;
- 		length = cxled->skip;
--		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL);
-+		rc = cxl_mem_get_poison(cxlmd, offset, length, NULL, false);
- 		if (rc == -EFAULT && cxled->mode == CXL_DECODER_RAM)
- 			rc = 0;
- 		if (rc)
-@@ -2447,7 +2447,7 @@ static int poison_by_decoder(struct device *dev, void *arg)
- 
- 	offset = cxled->dpa_res->start;
- 	length = cxled->dpa_res->end - offset + 1;
--	rc = cxl_mem_get_poison(cxlmd, offset, length, cxled->cxld.region);
-+	rc = cxl_mem_get_poison(cxlmd, offset, length, cxled->cxld.region, false);
- 	if (rc == -EFAULT && cxled->mode == CXL_DECODER_RAM)
- 		rc = 0;
- 	if (rc)
-diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-index 97ddab421e63..f0877f055f53 100644
---- a/drivers/cxl/cxlmem.h
-+++ b/drivers/cxl/cxlmem.h
-@@ -831,7 +831,7 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
- int cxl_set_timestamp(struct cxl_memdev_state *mds);
- int cxl_poison_state_init(struct cxl_memdev_state *mds);
- int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
--		       struct cxl_region *cxlr);
-+		       struct cxl_region *cxlr, bool report);
- int cxl_trigger_poison_list(struct cxl_memdev *cxlmd);
- phys_addr_t cxl_memdev_dpa_to_hpa(struct cxl_memdev *cxlmd, u64 dpa);
- int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa);
+ if host_os != 'darwin'
 -- 
-2.34.1
+2.43.0
 
 
