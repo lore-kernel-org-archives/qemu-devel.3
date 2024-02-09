@@ -4,155 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B55C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 08:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BC5C48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 08:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYM0D-0001Oi-SE; Fri, 09 Feb 2024 03:12:53 -0500
+	id 1rYMER-0003l6-If; Fri, 09 Feb 2024 03:27:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rYM0B-0001O6-Lq
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:12:51 -0500
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rYMEO-0003kU-I6
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:27:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rYM08-0005k0-M6
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:12:51 -0500
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 4193UESe002778; Fri, 9 Feb 2024 00:12:45 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-type:message-id:date:subject:from:to:cc:references
- :in-reply-to:mime-version; s=proofpoint20171006; bh=7ZQVLNhDp9Q3
- dvkOM25H8yPBvDIU8PnEY7yXRc7P+dU=; b=btBInEs2G7uOVc2lhjQApomqvLjy
- YD13zUpyu8qOIddpGAOfhQfn5QMMXQT2cGH8kiQRyO9g2QmRpXaxD+kdBdUtW0pm
- FO1P2RHhTe8ruUj7v75ANHFeWvAF+oTOnm2u9LCMJgEZxoNXWysMbZm3dyiXtu5U
- HmIc6zJDASlPvLhMW5JP2EIiahywJ6ndwRcYw1u+XpST0HBSTulDZF2f3NWO58IN
- SXzVw8pm4bO3rWOoxcKG8F5JaeCbvUamYV3t1mamos9iyBRD6/tX1kP932w12A2E
- kmBBDZhlRKpTMLOobKNEIY6aMiJ+Ufax7yZkyCLG3xl1xx5NaPc0IDJ8JA==
-Received: from nam02-sn1-obe.outbound.protection.outlook.com
- (mail-sn1nam02lp2040.outbound.protection.outlook.com [104.47.57.40])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 3w1nx0m8mb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 Feb 2024 00:12:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QKv9tu/WIYz8VUIvfol1LHttl0q7Lnl8aI/e3zdLHUp4cTIZeH+Dx2hjQrIZPrnsQWFApCxG/9OpsW+DitGwDXXJIvryr3p7yIok4yrjTyHBP4NCTOeFidu1N6VM/d5vqp1+nxAZbskhVsrEW3BKqoHnBYxaF2iJfD51CINwcrPv/9rsu36hD2O3FzUK29HKfsPx5z6fdXedjoXrIF+mFrHh4PfAqlyM4SKyTZJDfJVOjjdjt8Hz1yc3Sqa3XPQn1w5thPBgdwNjk+T30loXckay2nVcyjf8IX6QjXHV6J9W1ra+5aJ4y/HTGrB6Cch11oD5ude+AfHG8VswS/gFHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7ZQVLNhDp9Q3dvkOM25H8yPBvDIU8PnEY7yXRc7P+dU=;
- b=NfNLmu51TPUotaWSmPoXwU+9WpnLcPgDdcMUPa6OcWNjha1LWE8rvpT9IUF9sXbPr/pz0wMB1XIQbZ0bPPbu2HYzCrT8wqf4QgoVKtndN30zd3fiNtGTAsgDIfI6bdJZ1l4Oj8lmihScrkQj36BmiKFcHLTn3nqXFNuDZjGQLZgDaQJ3J9NC6gNxQHybP79pWwOVxrTOS8yIx2vft/OL3y9xzorZUV8b7XysgXqbudnZue2Dpk+grYfLrd/cPLtPGKkfV0mVLToOC5bF05YOI29nu4RWD2v/kMiEK64sOgvrcdyecGdlXM1nFfmdyM098klAq8RbbgV4qIUcZ9FKow==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7ZQVLNhDp9Q3dvkOM25H8yPBvDIU8PnEY7yXRc7P+dU=;
- b=xgd16C43rhlDxHKbSOXnIenFkPJ9B5034G096GHiOyi5SJ96DtPgAewEqzqWrHByJy9oitoAegVIJD0Ui2II1xcqyi53juvKCBQnUDp43Rvt/Fht+3xp2Uur/xzVetZ4Zdmok2yVxLUPDID2Ei/kIU/Gk1RlPbsdD/XXFVXJqjHTPx17CvjXZsNqPTpDRFUnoBD/6ztXDrQDsUZrh5tc3P/qnTmB7xZsoLdDPb+w6SlylvYn1V+xtb9ijm9u5EWA8zkAmEfzUUDTP3S9CJvtkyY4rkZoTZ9E9JX28obmkAh3Lp601GnW9mXAZsgZ+IrZhvn8ZzDqe5JWClA88MzaUg==
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
- by SA3PR02MB9277.namprd02.prod.outlook.com (2603:10b6:806:31c::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.24; Fri, 9 Feb
- 2024 08:12:41 +0000
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7270.025; Fri, 9 Feb 2024
- 08:12:41 +0000
-Content-Type: multipart/alternative;
- boundary="------------55lkpdRStfF2NxdMOGk1a3n0"
-Message-ID: <6be21f72-35e6-4b4a-a670-51465c12c0ac@nutanix.com>
-Date: Fri, 9 Feb 2024 13:42:35 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qtest: migration: Add failure test for 'uri' and
- 'channels' combination in 'migrate' QAPI
-Content-Language: en-US
-From: Het Gala <het.gala@nutanix.com>
-To: qemu-devel@nongnu.org
-Cc: armbru@redhat.com, berrange@redhat.com, peterx@redhat.com, farosas@suse.de
-References: <20240209075128.226237-1-het.gala@nutanix.com>
- <42395f38-d3e6-43a6-97eb-7f5cd6c2b3f3@nutanix.com>
-In-Reply-To: <42395f38-d3e6-43a6-97eb-7f5cd6c2b3f3@nutanix.com>
-X-ClientProxiedBy: MAXP287CA0010.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a00:49::21) To SJ2PR02MB9955.namprd02.prod.outlook.com
- (2603:10b6:a03:55f::16)
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rYMEM-0000kL-Ln
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 03:27:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707467249;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3dr/MZ8+SYKXNDot7XxX1t4zyBOQblQSE6knKnLkqCc=;
+ b=QaSRE8BtP6PghrtHf2uEp0Te1l2Er90+RgXGzwftX3xoIMNjnqgO24IS8k3+JgN6Yi4PxV
+ pAJzawpeH3bGB/2QuS2q1YqRmnxs8ui989sztzB4x2andJdL2iDGuPZGT8lVXVl9myxaVm
+ nh1IKS25fqgRq50nlEMGofo0eta6Hoc=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-633-BGTyZW0iMY-R9plb9Xuk9g-1; Fri, 09 Feb 2024 03:27:27 -0500
+X-MC-Unique: BGTyZW0iMY-R9plb9Xuk9g-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-5f6c12872fbso14466707b3.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 00:27:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707467247; x=1708072047;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3dr/MZ8+SYKXNDot7XxX1t4zyBOQblQSE6knKnLkqCc=;
+ b=JRlfwDToKqPjq215A5BFed5gIprYmKzRBqnFOFHtgZJZ9YfzuP7F/MfpUUB3xTjUtz
+ ISfXErM5vLHl41fviIxg+bU+gJ+2tw03MfBDxqAr6cw3Otawat4zjfHqyawNxHfkwuuM
+ RqxjUm929ojFQWumQzGl84ZAFRHT/3MFkufVFsMb+b+2y/M40KM9wOSvMJ558bKTmsre
+ 6Qgdmze+/GxKv8MhNaXlOA1guHb9S764AYGpWQ/skFh8wHMkpVi90XMyITiSlYX1/iLc
+ hM88cpCMVdpYMtRx/DGfWBnc+ByMDcy3LlyjJKKHhsoBllY0wcHfpXB7pb5+zovwDp0J
+ Cd/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/cOM+CT/U3LH5lnZoe2VfDYccm8P8rLiq2wQf74Jb0DMg5lG8nS6yArivDMZv7O4ZRHFofEVICNuBR+XA1KlfAUokhoE=
+X-Gm-Message-State: AOJu0YzrGc3t03VNRHwtrG9wgQm7mjX6VpNnmccuEGYMveQPDQLPTplw
+ 9jKz+nDOXS+OiqwUyo19Sw2KpR2q2hXPcUUQE/fxXoM6/gNm/H7VQYt8s8W4/qDHRBHqBTNaCFT
+ XF41r+MrTdZYLJ+DZnegS5+2xgNkvZUU1u4CbE6sWRSW5C01cbuyf
+X-Received: by 2002:a0d:e5c5:0:b0:602:b810:c837 with SMTP id
+ o188-20020a0de5c5000000b00602b810c837mr871307ywe.47.1707467246727; 
+ Fri, 09 Feb 2024 00:27:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFMTQnHe4SnzOroAQ7dQq+wK3RCG6ABHte3RslACMNU+6/lVxRpClYhRFp1A6WzlpnnRbZH9g==
+X-Received: by 2002:a0d:e5c5:0:b0:602:b810:c837 with SMTP id
+ o188-20020a0de5c5000000b00602b810c837mr871287ywe.47.1707467246350; 
+ Fri, 09 Feb 2024 00:27:26 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVj7HBYetuDBr8dgYAAvpyDBD+KMO+hXUPNp171V8OZ2qKIuDxK5hCRuU7PURa7Ct/t2vHK6guGrUJGlKUbAUkHh3SK/3wcHQzccs3xqsTGpdjD9WUrv7E38UsEV50tFpW4xygeXdrfZKlt47u1gw3obHeQGP1mCEVXRfW2oY/S1gHO/7gciQJnG8uRJbCo5u+d3PWRdTtozy1aUmE4zT6mINKtas2JLn52jxpczrti
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ x7-20020a814a07000000b006040a13db84sm234591ywa.48.2024.02.09.00.27.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Feb 2024 00:27:25 -0800 (PST)
+Message-ID: <589b2a36-89fa-4187-b0b6-887740d7e2fe@redhat.com>
+Date: Fri, 9 Feb 2024 09:27:23 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|SA3PR02MB9277:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5adcfcb5-2388-4daf-36dc-08dc2946e2c1
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lVvLC5Nzy5NNcL5oxFdtXb1DVZK5tvQ/rMzN0xFU5jKtc19SplCGtbxCv6XIyKjdvWb32RH3AjDlCPSO+ExVPtFlrX408B2Ec2NEKAcPc+nAkL3tBvLfWBllxoOmmGm8Bg+7hgqawI2a9VT8bk9CQo2grfS486EPcGKmzET9m5glBHWENlZSGBTKB1fXQoiGbgkaVJOz0jsNwuY3I8vC8XSVf1MYgf5lCFGclIwElrAEF9wvCcafo/4e17zDAeJKIhVAG943kyDg4OLPjHkMafV+m0nwJ4XlB91BByMcqvNH/1VdRWB2cwFnr0A8uNHCfwNrU/DU4jqQrRoQhHvyYXb/IxjQirfm9M7psFKm1vD1r9HKfsnA/6kCItsiXleoq+3iDxyV5zhDKf6AAGaObSjLxclDui0SH93MklqxDJAS02mPM8GP+90Mxwy99y0X8IydwPkEnu7Z7ZDmypSoiU5S+a3hCyEZkzXFb6bHcBd+pUxJQI+y5EpCrhd5Y2UnM+RtB/9sfVxz6qz0tA01J06u1vWMvckfc4zx2rmVSDaPgFMXVpmQVnxg35MIwC0K
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(39860400002)(366004)(396003)(136003)(376002)(346002)(230922051799003)(451199024)(186009)(1800799012)(64100799003)(478600001)(6486002)(6506007)(31686004)(41300700001)(66899024)(30864003)(2906002)(5660300002)(44832011)(6916009)(316002)(36756003)(53546011)(33964004)(66946007)(66476007)(6666004)(66556008)(8936002)(8676002)(4326008)(26005)(6512007)(83380400001)(31696002)(86362001)(38100700002)(2616005);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZXpjb2hzY0M2M3NwK2RXRHplNXk0L2FsUThmYkFNTllzS0h5WFd1WnJ2ZkFq?=
- =?utf-8?B?NHlkM1c2eXdIM2Z4ZG1jRTBranp0UTR1MjFhRGxpVkNUcDZ6K1hHd3pLcHZR?=
- =?utf-8?B?NndxRnNXVHIzSUZoM3FrQ3NISFl1aGt2a3lPU2pVeVJoTE90dHJjbnBZQmlH?=
- =?utf-8?B?Vjkwd0FFY2pYbEo5SzhXMkYwZFVJQjRMVndkTnVteENMdTVVUHpXS01PdTNv?=
- =?utf-8?B?eTl0UkJoVzJEa3dvOVRqWnFuYjg2YUl4UDdnMGwxNm54TTFoSGVVVmhQcStG?=
- =?utf-8?B?SWdLWFQrVnNJRXphL1pjZTVmaTYzVjl6anNrOUpocDRLbXYwNDBLL2Q5OHRq?=
- =?utf-8?B?RW9zcDBTcVJtYjZUdmJ6OEFZc3ZXUkJUWHlKVmlIUDRhN2xsUGFLSzI3TnY1?=
- =?utf-8?B?OVNtSEFVclhPZkQ5RXhFbjRJVytVKzBiZTJyM3VnSlAydG42N1E3Tis4VlRv?=
- =?utf-8?B?cmRUTGh6a3AvQXppc0RuRWc3SzZkT3NvUFVaT2U0OFVkeE9IYzc2akFDcm9F?=
- =?utf-8?B?b2JoMkJpT3ZSL2FLYkcvcHhYVGhtWVRibXY5a2dzUDAyOSt1Z250OEJ6T2dX?=
- =?utf-8?B?S1hkSmw1NTl4ZnVoZ1BkVVZ5WVVMQ2w0U0J1bnV4Zk9Rbi9OeXFscENVOVRU?=
- =?utf-8?B?bmpTRiticVY4S3Vldkw3bkFTMVNZbTMxQVZVMDQzb0dvUVNwNGg4eHFJUnV4?=
- =?utf-8?B?MGp4Wmg3N2pwdDg3dWZtUDJDc25kbHVML0VQa3hFR29zVmZSVDZWSEhkY0hs?=
- =?utf-8?B?b1lMZjZJMVYvclNIUFNlM05iSDFpZUQvemF2Z2U0UHdqOUhFdXhnMjJKbGpn?=
- =?utf-8?B?SDBMYVp4SXF1azNuMGZWUFdiQ3EvQnJNMlpXSlozVnhVNktBTmtJYnp0aitk?=
- =?utf-8?B?a29TeW55Rzd3SGJnbjNFM2Yyb2JuSGpXWFEzVzZNN1dQVEhmTDlPUHBaMGRH?=
- =?utf-8?B?VG1PVzI2ZzVZMVkyQjk1SWgzb2tGd3BNakg5UzIyYVNHQTJlbmpoYXRkL1Fy?=
- =?utf-8?B?NTQremk2VnNtaytFMlZ0YjNjRzYxTDNoVCtaR3BsWm9RTEc2MDFVWDFSb080?=
- =?utf-8?B?Vk84WFpIcHRKaStiTlJGUGhaRnA0N3J0OWIrRjRlbGdreG5DRFVsdmtCOWZO?=
- =?utf-8?B?TTJDZVV2eE5wMVlaVHpPdVB4MmJOU3YvTllqZWc4d09MUmFIVHBWMFc4NzB1?=
- =?utf-8?B?L2Y2TUtzYVVJaEFyVG96b2FibENvNEgvMFd6WmRVSzNDaThDTnZjckJ5NXQx?=
- =?utf-8?B?eEdUNy8rZHA0Tk1ETnRrVkx6dDJDaml1azFJVGJoUzI0QmovTU1LbGl1ejJM?=
- =?utf-8?B?NFdLRWhaYlFzZURzbFpQYXc4emdCMU9zdVNnYWtsREplRC9xNnBDQlVHRWJ5?=
- =?utf-8?B?RXpVd3pkREpvT0MzYmc2bWMyV1IyNVRMK25sQWhxQ1BTU0lTTnRpWllvZ2hS?=
- =?utf-8?B?cmdQZGJuRGtNTnlWQjRmeUhpSEROUXZFTVVMTFFiSUwyWHRyTXNjaFlwRDJ0?=
- =?utf-8?B?R2FWZkJNYlZoaEhuUC9wZ1ltbll3V0pTVHhZRFQxWkFZaW9mRXpITm1yeVps?=
- =?utf-8?B?Ym9SUmZJRzIwNFlVRXRDQkFQVGhKbmpnQ0l6eFhIVGZnTU1BMjNIM0JjaUtn?=
- =?utf-8?B?RW10U2RpQXhjTmVKOVo4YWozWFkzTzRFdEdqakw5ZnpzK3RkcXNWVmgwY1J4?=
- =?utf-8?B?TUxUSG5PRUo3elluYUZ6VUxKODZIcHMxQXlTRm5hZTgvbUhqL2NiRG9qaDVE?=
- =?utf-8?B?NVNQWmlheUJQcUNsaEVqeWRuL0tEeTRsVDRwd1d6cmRkZ2FLcDd5UzE2eG84?=
- =?utf-8?B?NCtjVDRlU1ArMEpVemE2ZitPSGN2Ylg3aGd1Y3pmVjRxd0xyV3YxMFRvY0RI?=
- =?utf-8?B?K0U4WlZHa1k3Rmo3MDgveGhFV3MrK0RaSXBRQ3Z4NTNYMld2Z3RsUGJSTkU0?=
- =?utf-8?B?M2JlVDdKZEhZZUxBSFJCNTV2Q1k5OStiS0U3aUdpYmZjMHdndUllQ1Y5aTMv?=
- =?utf-8?B?b1R2WGx5N083OFg3MnpnMENuYVJFYkFILzI1Z014NmZPd2ZwSWRSWFRsQkN4?=
- =?utf-8?B?YlFJazg5WE10VkI5aWpBMWFKbk8wWTNMY0ovS1drQzdlRVFSYUtkMHY1S0I2?=
- =?utf-8?Q?nhk7y5BYutrk1E5r5+kUkfr6W?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5adcfcb5-2388-4daf-36dc-08dc2946e2c1
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Feb 2024 08:12:41.1664 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CzTIuZYNA+x4wR62PNOv0Yy2mUX3B4obbgsiYMCMd6u/SJIR/489KOBJ4KixTbRa5CWhYLRpDVTok5cvj4Yvnw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR02MB9277
-X-Proofpoint-ORIG-GUID: 7g1nN-kS-XEg3pvqHXQaM1FU86Bk2YH5
-X-Proofpoint-GUID: 7g1nN-kS-XEg3pvqHXQaM1FU86Bk2YH5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-09_05,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68; envelope-from=het.gala@nutanix.com;
- helo=mx0a-002c1b01.pphosted.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] aspeed: introduce a new UART0 device name
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20240207200220.453244-1-jamin_lin@aspeedtech.com>
+ <20240207200220.453244-2-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <20240207200220.453244-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.213,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,604 +112,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------55lkpdRStfF2NxdMOGk1a3n0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hello Jamin,
+
+On 2/7/24 21:02, Jamin Lin via wrote:
+> The Aspeed datasheet refers to the UART controllers
+> as UART1 - UART13 for the ast10x0, ast2600, ast2500
+> and ast2400 SoCs and the Aspeed ast2700 introduces an UART0
+> and the UART controllers as UART0 - UART12.
+> 
+> To keep the naming in the QEMU models
+> in sync with the datasheet, let's introduce a new  UART0 device name
+> and do the required adjustements, etc ...
+
+Please drop the etc...
+
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed.c             | 13 ++++++++-----
+>   hw/arm/aspeed_ast10x0.c     |  1 +
+>   hw/arm/aspeed_ast2400.c     |  2 ++
+>   hw/arm/aspeed_ast2600.c     |  1 +
+>   hw/arm/aspeed_soc_common.c  | 14 +++++++++-----
+>   include/hw/arm/aspeed_soc.h |  2 ++
+>   6 files changed, 23 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 09b1e823ba..06d863958b 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -342,7 +342,7 @@ static void connect_serial_hds_to_uarts(AspeedMachineState *bmc)
+>       int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+>   
+>       aspeed_soc_uart_set_chr(s, uart_chosen, serial_hd(0));
+> -    for (int i = 1, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
+> +    for (int i = 0, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
+>           if (uart == uart_chosen) {
+>               continue;
+>           }
+> @@ -1094,7 +1094,7 @@ static char *aspeed_get_bmc_console(Object *obj, Error **errp)
+>       AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(bmc);
+>       int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+>   
+> -    return g_strdup_printf("uart%d", uart_chosen - ASPEED_DEV_UART1 + 1);
+> +    return g_strdup_printf("uart%d", uart_chosen - ASPEED_DEV_UART0);
+>   }
+>   
+>   static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+> @@ -1103,6 +1103,8 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+>       AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(bmc);
+>       AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
+>       int val;
+> +    int start = sc->uarts_base - ASPEED_DEV_UART0;
+> +    int end = start + sc->uarts_num;
 
 
-On 09/02/24 1:33 pm, Het Gala wrote:
-> I wanted to share an update regarding the patch I've been working on. 
-> It seems that the patch is not yet fully ready as it encountered some 
-> issues during the check-qtest builds.
+To help the reader, I would introduce these helpers at the end of
+aspeed_soc.h :
 
-Test fails with error:
+     static inline int aspeed_uart_index(int uart_dev)
+     {
+         return uart_dev - ASPEED_DEV_UART0;
+     }
+     
+     static inline int aspeed_uart_first(AspeedSoCClass *sc)
+     {
+         return aspeed_uart_index(sc->uarts_base);
+     }
+     
+     static inline int aspeed_uart_last(AspeedSoCClass *sc)
+     {
+         return aspeed_uart_first(sc) + sc->uarts_num - 1;
+     }
+     
 
-55/59 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 ERROR           25.77s   killed by signal 6 SIGABRT
->>> G_TEST_DBUS_DAEMON=/rpmbuild/SOURCES/qemu/tests/dbus-vmstate-daemon.sh QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon
-QTEST_QEMU_IMG=./qemu-img PYTHON=/rpmbuild/SOURCES/qemu/build/pyvenv/bin/python3 QTEST_QEMU_BINARY=./qemu-system-x86_64
-MALLOC_PERTURB_=71 /rpmbuild/SOURCES/qemu/build/tests/qtest/migration-test --tap -k
-――――――――――――――――――――――――――――――――――――――――――――――― ✀  ――――――――――――――――――――――――――――――――――――――――――――――――
-stderr:
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Broken pipe
-../tests/qtest/libqtest.c:195: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
+>       if (sscanf(value, "uart%u", &val) != 1) {
+>           error_setg(errp, "Bad value for \"uart\" property");
+> @@ -1110,11 +1112,12 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
+>       }
+>   
+>       /* The number of UART depends on the SoC */
+> -    if (val < 1 || val > sc->uarts_num) {
+> -        error_setg(errp, "\"uart\" should be in range [1 - %d]", sc->uarts_num);
+> +    if (val < start || val >= end) {
+> +        error_setg(errp, "\"uart\" should be in range [%d - %d]",
+> +                   start, end - 1);
+>           return;
+>       }
+> -    bmc->uart_chosen = ASPEED_DEV_UART1 + val - 1;
+> +    bmc->uart_chosen = val + ASPEED_DEV_UART0;
+>   }
+>   
+>   static void aspeed_machine_class_props_init(ObjectClass *oc)
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index c3b5116a6a..2634e0f654 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -436,6 +436,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
+>       sc->wdts_num = 4;
+>       sc->macs_num = 1;
+>       sc->uarts_num = 13;
+> +    sc->uarts_base = ASPEED_DEV_UART1;
+>       sc->irqmap = aspeed_soc_ast1030_irqmap;
+>       sc->memmap = aspeed_soc_ast1030_memmap;
+>       sc->num_cpus = 1;
+> diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+> index 8829561bb6..95da85fee0 100644
+> --- a/hw/arm/aspeed_ast2400.c
+> +++ b/hw/arm/aspeed_ast2400.c
+> @@ -523,6 +523,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 2;
+>       sc->macs_num     = 2;
+>       sc->uarts_num    = 5;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2400_irqmap;
+>       sc->memmap       = aspeed_soc_ast2400_memmap;
+>       sc->num_cpus     = 1;
+> @@ -551,6 +552,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 3;
+>       sc->macs_num     = 2;
+>       sc->uarts_num    = 5;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2500_irqmap;
+>       sc->memmap       = aspeed_soc_ast2500_memmap;
+>       sc->num_cpus     = 1;
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> index 4ee32ea99d..f74561ecdc 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -666,6 +666,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
+>       sc->wdts_num     = 4;
+>       sc->macs_num     = 4;
+>       sc->uarts_num    = 13;
+> +    sc->uarts_base   = ASPEED_DEV_UART1;
+>       sc->irqmap       = aspeed_soc_ast2600_irqmap;
+>       sc->memmap       = aspeed_soc_ast2600_memmap;
+>       sc->num_cpus     = 2;
+> diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+> index 123a0c432c..54c875c8d5 100644
+> --- a/hw/arm/aspeed_soc_common.c
+> +++ b/hw/arm/aspeed_soc_common.c
+> @@ -36,7 +36,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
+>       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+>       SerialMM *smm;
+>   
+> -    for (int i = 0, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
+> +    for (int i = 0, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
+>           smm = &s->uart[i];
+>   
+>           /* Chardev property is set by the machine. */
+> @@ -58,10 +58,14 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
+>   void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr)
+>   {
+>       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> -    int i = dev - ASPEED_DEV_UART1;
+> -
+> -    g_assert(0 <= i && i < ARRAY_SIZE(s->uart) && i < sc->uarts_num);
+> -    qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", chr);
+> +    int uart_num = dev - ASPEED_DEV_UART0;
+> +    int start = sc->uarts_base - ASPEED_DEV_UART0;
+> +    int end = start + sc->uarts_num;
+> +    int index = uart_num - start;
+> +
+> +    g_assert(uart_num >= start && uart_num < end);
 
-(test program exited with status code -6)
+I don't think this assert is necessary. Only the second one is.
 
-TAP parsing error: Too few tests run (expected 21, got 7)
+If you want to check the range and return an error, please add an
+Error **errp argument and have the callers pass &error_fatal. It would
+have the same effect.
 
->
-> This is my first attempt at writing a test case related to migration, 
-> and I'm aware that there may be areas where I could use some guidance. 
-> If there are any gaps in my understanding of how to properly mock a 
-> migration or if there are any other issues with the test case, I would 
-> greatly appreciate your assistance. I'm also struggling to understand 
-> why the test is failing. If anyone could provide some insight or 
-> assistance with troubleshooting, it would be greatly appreciated.
->
-> I've cc'd Fabino, Daniel, as I believe they may have expertise in 
-> migration testing and could offer some valuable insights.
->
-> Thank you for your help with this, and I look forward to any feedback 
-> or assistance you can provide.
->
-> On 09/02/24 1:21 pm, Het Gala wrote:
->> Ensure failure occurs while adding validation test for 'uri' and 
->> 'channels' arguments
->> used simultaneously in the 'migrate' QAPI command.
->>
->> Signed-off-by: Het Gala <het.gala@nutanix.com>
->> ---
->>   tests/qtest/migration-helpers.c | 14 ++++++--
->>   tests/qtest/migration-helpers.h |  5 +--
->>   tests/qtest/migration-test.c    | 60 +++++++++++++++++++++++++++++++--
->>   3 files changed, 72 insertions(+), 7 deletions(-)
->>
->> diff --git a/tests/qtest/migration-helpers.c 
->> b/tests/qtest/migration-helpers.c
->> index e451dbdbed..2dbb01e413 100644
->> --- a/tests/qtest/migration-helpers.c
->> +++ b/tests/qtest/migration-helpers.c
->> @@ -43,7 +43,8 @@ bool migrate_watch_for_events(QTestState *who, 
->> const char *name,
->>       return false;
->>   }
->>   -void migrate_qmp_fail(QTestState *who, const char *uri, const char 
->> *fmt, ...)
->> +void migrate_qmp_fail(QTestState *who, const char *uri,
->> +                      const char *channels, const char *fmt, ...)
->>   {
->>       va_list ap;
->>       QDict *args, *err;
->> @@ -52,8 +53,15 @@ void migrate_qmp_fail(QTestState *who, const char 
->> *uri, const char *fmt, ...)
->>       args = qdict_from_vjsonf_nofail(fmt, ap);
->>       va_end(ap);
->>   -    g_assert(!qdict_haskey(args, "uri"));
->> -    qdict_put_str(args, "uri", uri);
->> +    if (uri) {
->> +        g_assert(!qdict_haskey(args, "uri"));
->> +        qdict_put_str(args, "uri", uri);
->> +    }
->> +
->> +    if (channels) {
->> +        g_assert(!qdict_haskey(args, "channels"));
->> +        qdict_put_str(args, "channels", channels);
->> +    }
->>         err = qtest_qmp_assert_failure_ref(
->>           who, "{ 'execute': 'migrate', 'arguments': %p}", args);
->> diff --git a/tests/qtest/migration-helpers.h 
->> b/tests/qtest/migration-helpers.h
->> index 3bf7ded1b9..d49e289c51 100644
->> --- a/tests/qtest/migration-helpers.h
->> +++ b/tests/qtest/migration-helpers.h
->> @@ -32,8 +32,9 @@ G_GNUC_PRINTF(3, 4)
->>   void migrate_incoming_qmp(QTestState *who, const char *uri,
->>                             const char *fmt, ...);
->>   -G_GNUC_PRINTF(3, 4)
->> -void migrate_qmp_fail(QTestState *who, const char *uri, const char 
->> *fmt, ...);
->> +G_GNUC_PRINTF(4, 5)
->> +void migrate_qmp_fail(QTestState *who, const char *uri,
->> +                      const char *channels, const char *fmt, ...);
->>     void migrate_set_capability(QTestState *who, const char *capability,
->>                               bool value);
->> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
->> index d3066e119f..3aaffc2667 100644
->> --- a/tests/qtest/migration-test.c
->> +++ b/tests/qtest/migration-test.c
->> @@ -18,6 +18,7 @@
->>   #include "qemu/module.h"
->>   #include "qemu/option.h"
->>   #include "qemu/range.h"
->> +#include "migration/migration.h"
->>   #include "qemu/sockets.h"
->>   #include "chardev/char.h"
->>   #include "qapi/qapi-visit-sockets.h"
->> @@ -1773,7 +1774,7 @@ static void test_precopy_common(MigrateCommon 
->> *args)
->>       }
->>         if (args->result == MIG_TEST_QMP_ERROR) {
->> -        migrate_qmp_fail(from, connect_uri, "{}");
->> +        migrate_qmp_fail(from, connect_uri, NULL, "{}");
->>           goto finish;
->>       }
->>   @@ -1869,7 +1870,7 @@ static void test_file_common(MigrateCommon 
->> *args, bool stop_src)
->>       }
->>         if (args->result == MIG_TEST_QMP_ERROR) {
->> -        migrate_qmp_fail(from, connect_uri, "{}");
->> +        migrate_qmp_fail(from, connect_uri, NULL, "{}");
->>           goto finish;
->>       }
->>   @@ -2508,6 +2509,59 @@ static void 
->> test_validate_uuid_dst_not_set(void)
->>       do_test_validate_uuid(&args, false);
->>   }
->>   +static void do_test_validate_uri_channel(MigrateCommon *args, bool 
->> should_fail)
-> Not sure if should_fail is of any value here. The test ideally should 
-> not enter migration also. Should just fail even before making the 
-> connection, at the QMP level itself. I added it here, by taking the 
-> reference of validate_uuid tests.
->> +{
->> +    g_autofree const char *uri = "127.0.0.1:0";
->> +    g_autofree const char *channels = "{"
->> +               "   'channels': [ { 'channel-type': 'main',"
->> +               "                   'addr': { 'transport': 'socket',"
->> +               "                             'type': 'inet',"
->> +               "                             'host': '127.0.0.1',"
->> +               "                             'port': '0' } } ] }";
->> +    QTestState *from, *to;
->> +
->> +    if (test_migrate_start(&from, &to, uri, &args->start)) {
->> +        return;
->> +    }
->> +
->> +    /* Wait for the first serial output from the source */
->> +    wait_for_serial("src_serial");
->> +
->> +    /*
->> +     * 'uri' and 'channels' validation is checked even before the 
->> migration
->> +     * starts.
->> +     */
->> +    if (args->result == MIG_TEST_QMP_ERROR) {
->> +        migrate_qmp_fail(from, uri, channels, "{}");
->> +        goto finish;
->> +    }
->> +
->> +    migrate_qmp(from, uri, "{}");
->> +
->> +    if (should_fail) {
->> +        qtest_set_expected_status(to, EXIT_FAILURE);
->> +        wait_for_migration_fail(from, false);
->> +    } else {
->> +        wait_for_migration_complete(from);
->> +    }
->> +
->> +finish:
->> +    test_migrate_end(from, to, args->result == MIG_TEST_QMP_ERROR);
->> +}
->> +
->> +static void
->> +test_validate_uri_channel_both_set(void)
->> +{
->> +    MigrateCommon args = {
->> +        .start = {
->> +            .hide_stderr = true,
->> +        },
->> +        .result = MIG_TEST_QMP_ERROR,
->> +    };
->> +
->> +    do_test_validate_uri_channel(&args, true);
->> +}
->> +
->>   /*
->>    * The way auto_converge works, we need to do too many passes to
->>    * run this test.  Auto_converge logic is only run once every
->> @@ -3536,6 +3590,8 @@ int main(int argc, char **argv)
->>                          test_validate_uuid_src_not_set);
->>       migration_test_add("/migration/validate_uuid_dst_not_set",
->>                          test_validate_uuid_dst_not_set);
->> + migration_test_add("/migration/validate_uri_channel_both_set",
->> +                       test_validate_uri_channel_both_set);
->>       /*
->>        * See explanation why this test is slow on function definition
->>        */
---------------55lkpdRStfF2NxdMOGk1a3n0
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-<!DOCTYPE html><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 09/02/24 1:33 pm, Het Gala wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:42395f38-d3e6-43a6-97eb-7f5cd6c2b3f3@nutanix.com">I
-      wanted to share an update regarding the patch I've been working
-      on. It seems that the patch is not yet fully ready as it
-      encountered some issues during the check-qtest builds.
-      <br>
-    </blockquote>
-    <p>Test fails with error:</p>
-    <pre>55/59 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ERROR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25.77s&nbsp;&nbsp; killed by signal 6 SIGABRT
-&gt;&gt;&gt; G_TEST_DBUS_DAEMON=/rpmbuild/SOURCES/qemu/tests/dbus-vmstate-daemon.sh QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon
-QTEST_QEMU_IMG=./qemu-img PYTHON=/rpmbuild/SOURCES/qemu/build/pyvenv/bin/python3 QTEST_QEMU_BINARY=./qemu-system-x86_64
-MALLOC_PERTURB_=71 /rpmbuild/SOURCES/qemu/build/tests/qtest/migration-test --tap -k
-――――――――――――――――――――――――――――――――――――――――――――――― ✀&nbsp; ――――――――――――――――――――――――――――――――――――――――――――――――
-stderr:
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Could not access KVM kernel module: No such file or directory
-Broken pipe
-../tests/qtest/libqtest.c:195: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
+Thanks,
 
-(test program exited with status code -6)
+C.
 
-TAP parsing error: Too few tests run (expected 21, got 7)
-</pre>
-    <blockquote type="cite" cite="mid:42395f38-d3e6-43a6-97eb-7f5cd6c2b3f3@nutanix.com">
-      <br>
-      This is my first attempt at writing a test case related to
-      migration, and I'm aware that there may be areas where I could use
-      some guidance. If there are any gaps in my understanding of how to
-      properly mock a migration or if there are any other issues with
-      the test case, I would greatly appreciate your assistance. I'm
-      also struggling to understand why the test is failing. If anyone
-      could provide some insight or assistance with troubleshooting, it
-      would be greatly appreciated.
-      <br>
-      <br>
-      I've cc'd Fabino, Daniel, as I believe they may have expertise in
-      migration testing and could offer some valuable insights.
-      <br>
-      <br>
-      Thank you for your help with this, and I look forward to any
-      feedback or assistance you can provide.
-      <br>
-      <br>
-      On 09/02/24 1:21 pm, Het Gala wrote:
-      <br>
-      <blockquote type="cite">Ensure failure occurs while adding
-        validation test for 'uri' and 'channels' arguments
-        <br>
-        used simultaneously in the 'migrate' QAPI command.
-        <br>
-        <br>
-        Signed-off-by: Het Gala <a class="moz-txt-link-rfc2396E" href="mailto:het.gala@nutanix.com">&lt;het.gala@nutanix.com&gt;</a>
-        <br>
-        ---
-        <br>
-        &nbsp; tests/qtest/migration-helpers.c | 14 ++++++--
-        <br>
-        &nbsp; tests/qtest/migration-helpers.h |&nbsp; 5 +--
-        <br>
-        &nbsp; tests/qtest/migration-test.c&nbsp;&nbsp;&nbsp; | 60
-        +++++++++++++++++++++++++++++++--
-        <br>
-        &nbsp; 3 files changed, 72 insertions(+), 7 deletions(-)
-        <br>
-        <br>
-        diff --git a/tests/qtest/migration-helpers.c
-        b/tests/qtest/migration-helpers.c
-        <br>
-        index e451dbdbed..2dbb01e413 100644
-        <br>
-        --- a/tests/qtest/migration-helpers.c
-        <br>
-        +++ b/tests/qtest/migration-helpers.c
-        <br>
-        @@ -43,7 +43,8 @@ bool migrate_watch_for_events(QTestState *who,
-        const char *name,
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;
-        <br>
-        &nbsp; }
-        <br>
-        &nbsp; -void migrate_qmp_fail(QTestState *who, const char *uri, const
-        char *fmt, ...)
-        <br>
-        +void migrate_qmp_fail(QTestState *who, const char *uri,
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const char *channels, const char *fmt,
-        ...)
-        <br>
-        &nbsp; {
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; va_list ap;
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; QDict *args, *err;
-        <br>
-        @@ -52,8 +53,15 @@ void migrate_qmp_fail(QTestState *who, const
-        char *uri, const char *fmt, ...)
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args = qdict_from_vjsonf_nofail(fmt, ap);
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; va_end(ap);
-        <br>
-        &nbsp; -&nbsp;&nbsp;&nbsp; g_assert(!qdict_haskey(args, &quot;uri&quot;));
-        <br>
-        -&nbsp;&nbsp;&nbsp; qdict_put_str(args, &quot;uri&quot;, uri);
-        <br>
-        +&nbsp;&nbsp;&nbsp; if (uri) {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g_assert(!qdict_haskey(args, &quot;uri&quot;));
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; qdict_put_str(args, &quot;uri&quot;, uri);
-        <br>
-        +&nbsp;&nbsp;&nbsp; }
-        <br>
-        +
-        <br>
-        +&nbsp;&nbsp;&nbsp; if (channels) {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g_assert(!qdict_haskey(args, &quot;channels&quot;));
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; qdict_put_str(args, &quot;channels&quot;, channels);
-        <br>
-        +&nbsp;&nbsp;&nbsp; }
-        <br>
-        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; err = qtest_qmp_assert_failure_ref(
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; who, &quot;{ 'execute': 'migrate', 'arguments': %p}&quot;,
-        args);
-        <br>
-        diff --git a/tests/qtest/migration-helpers.h
-        b/tests/qtest/migration-helpers.h
-        <br>
-        index 3bf7ded1b9..d49e289c51 100644
-        <br>
-        --- a/tests/qtest/migration-helpers.h
-        <br>
-        +++ b/tests/qtest/migration-helpers.h
-        <br>
-        @@ -32,8 +32,9 @@ G_GNUC_PRINTF(3, 4)
-        <br>
-        &nbsp; void migrate_incoming_qmp(QTestState *who, const char *uri,
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const char *fmt, ...);
-        <br>
-        &nbsp; -G_GNUC_PRINTF(3, 4)
-        <br>
-        -void migrate_qmp_fail(QTestState *who, const char *uri, const
-        char *fmt, ...);
-        <br>
-        +G_GNUC_PRINTF(4, 5)
-        <br>
-        +void migrate_qmp_fail(QTestState *who, const char *uri,
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const char *channels, const char *fmt,
-        ...);
-        <br>
-        &nbsp; &nbsp; void migrate_set_capability(QTestState *who, const char
-        *capability,
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bool value);
-        <br>
-        diff --git a/tests/qtest/migration-test.c
-        b/tests/qtest/migration-test.c
-        <br>
-        index d3066e119f..3aaffc2667 100644
-        <br>
-        --- a/tests/qtest/migration-test.c
-        <br>
-        +++ b/tests/qtest/migration-test.c
-        <br>
-        @@ -18,6 +18,7 @@
-        <br>
-        &nbsp; #include &quot;qemu/module.h&quot;
-        <br>
-        &nbsp; #include &quot;qemu/option.h&quot;
-        <br>
-        &nbsp; #include &quot;qemu/range.h&quot;
-        <br>
-        +#include &quot;migration/migration.h&quot;
-        <br>
-        &nbsp; #include &quot;qemu/sockets.h&quot;
-        <br>
-        &nbsp; #include &quot;chardev/char.h&quot;
-        <br>
-        &nbsp; #include &quot;qapi/qapi-visit-sockets.h&quot;
-        <br>
-        @@ -1773,7 +1774,7 @@ static void
-        test_precopy_common(MigrateCommon *args)
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-        <br>
-        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (args-&gt;result == MIG_TEST_QMP_ERROR) {
-        <br>
-        -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; migrate_qmp_fail(from, connect_uri, &quot;{}&quot;);
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; migrate_qmp_fail(from, connect_uri, NULL, &quot;{}&quot;);
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto finish;
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-        <br>
-        &nbsp; @@ -1869,7 +1870,7 @@ static void
-        test_file_common(MigrateCommon *args, bool stop_src)
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-        <br>
-        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (args-&gt;result == MIG_TEST_QMP_ERROR) {
-        <br>
-        -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; migrate_qmp_fail(from, connect_uri, &quot;{}&quot;);
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; migrate_qmp_fail(from, connect_uri, NULL, &quot;{}&quot;);
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto finish;
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
-        <br>
-        &nbsp; @@ -2508,6 +2509,59 @@ static void
-        test_validate_uuid_dst_not_set(void)
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; do_test_validate_uuid(&amp;args, false);
-        <br>
-        &nbsp; }
-        <br>
-        &nbsp; +static void do_test_validate_uri_channel(MigrateCommon *args,
-        bool should_fail)
-        <br>
-      </blockquote>
-      Not sure if should_fail is of any value here. The test ideally
-      should not enter migration also. Should just fail even before
-      making the connection, at the QMP level itself. I added it here,
-      by taking the reference of validate_uuid tests.
-      <br>
-      <blockquote type="cite">+{
-        <br>
-        +&nbsp;&nbsp;&nbsp; g_autofree const char *uri = &quot;127.0.0.1:0&quot;;
-        <br>
-        +&nbsp;&nbsp;&nbsp; g_autofree const char *channels = &quot;{&quot;
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;&nbsp;&nbsp; 'channels': [ { 'channel-type': 'main',&quot;
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'addr': { 'transport':
-        'socket',&quot;
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'type': 'inet',&quot;
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'host':
-        '127.0.0.1',&quot;
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'port': '0' } } ]
-        }&quot;;
-        <br>
-        +&nbsp;&nbsp;&nbsp; QTestState *from, *to;
-        <br>
-        +
-        <br>
-        +&nbsp;&nbsp;&nbsp; if (test_migrate_start(&amp;from, &amp;to, uri,
-        &amp;args-&gt;start)) {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;
-        <br>
-        +&nbsp;&nbsp;&nbsp; }
-        <br>
-        +
-        <br>
-        +&nbsp;&nbsp;&nbsp; /* Wait for the first serial output from the source */
-        <br>
-        +&nbsp;&nbsp;&nbsp; wait_for_serial(&quot;src_serial&quot;);
-        <br>
-        +
-        <br>
-        +&nbsp;&nbsp;&nbsp; /*
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp; * 'uri' and 'channels' validation is checked even before
-        the migration
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp; * starts.
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp; */
-        <br>
-        +&nbsp;&nbsp;&nbsp; if (args-&gt;result == MIG_TEST_QMP_ERROR) {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; migrate_qmp_fail(from, uri, channels, &quot;{}&quot;);
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto finish;
-        <br>
-        +&nbsp;&nbsp;&nbsp; }
-        <br>
-        +
-        <br>
-        +&nbsp;&nbsp;&nbsp; migrate_qmp(from, uri, &quot;{}&quot;);
-        <br>
-        +
-        <br>
-        +&nbsp;&nbsp;&nbsp; if (should_fail) {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; qtest_set_expected_status(to, EXIT_FAILURE);
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wait_for_migration_fail(from, false);
-        <br>
-        +&nbsp;&nbsp;&nbsp; } else {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wait_for_migration_complete(from);
-        <br>
-        +&nbsp;&nbsp;&nbsp; }
-        <br>
-        +
-        <br>
-        +finish:
-        <br>
-        +&nbsp;&nbsp;&nbsp; test_migrate_end(from, to, args-&gt;result ==
-        MIG_TEST_QMP_ERROR);
-        <br>
-        +}
-        <br>
-        +
-        <br>
-        +static void
-        <br>
-        +test_validate_uri_channel_both_set(void)
-        <br>
-        +{
-        <br>
-        +&nbsp;&nbsp;&nbsp; MigrateCommon args = {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .start = {
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .hide_stderr = true,
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .result = MIG_TEST_QMP_ERROR,
-        <br>
-        +&nbsp;&nbsp;&nbsp; };
-        <br>
-        +
-        <br>
-        +&nbsp;&nbsp;&nbsp; do_test_validate_uri_channel(&amp;args, true);
-        <br>
-        +}
-        <br>
-        +
-        <br>
-        &nbsp; /*
-        <br>
-        &nbsp;&nbsp; * The way auto_converge works, we need to do too many passes
-        to
-        <br>
-        &nbsp;&nbsp; * run this test.&nbsp; Auto_converge logic is only run once every
-        <br>
-        @@ -3536,6 +3590,8 @@ int main(int argc, char **argv)
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; test_validate_uuid_src_not_set);
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; migration_test_add(&quot;/migration/validate_uuid_dst_not_set&quot;,
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; test_validate_uuid_dst_not_set);
-        <br>
-        +&nbsp;&nbsp;&nbsp;
-        migration_test_add(&quot;/migration/validate_uri_channel_both_set&quot;,
-        <br>
-        +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; test_validate_uri_channel_both_set);
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * See explanation why this test is slow on function
-        definition
-        <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */
-        <br>
-      </blockquote>
-    </blockquote>
-  </body>
-</html>
 
---------------55lkpdRStfF2NxdMOGk1a3n0--
+> +    g_assert(index < ARRAY_SIZE(s->uart));
+> +    qdev_prop_set_chr(DEVICE(&s->uart[index]), "chardev", chr);
+>   }
+>   
+>   /*
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 9d0af84a8c..5ab0902da0 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -140,6 +140,7 @@ struct AspeedSoCClass {
+>       int wdts_num;
+>       int macs_num;
+>       int uarts_num;
+> +    int uarts_base;
+>       const int *irqmap;
+>       const hwaddr *memmap;
+>       uint32_t num_cpus;
+> @@ -151,6 +152,7 @@ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
+>   enum {
+>       ASPEED_DEV_SPI_BOOT,
+>       ASPEED_DEV_IOMEM,
+> +    ASPEED_DEV_UART0,
+>       ASPEED_DEV_UART1,
+>       ASPEED_DEV_UART2,
+>       ASPEED_DEV_UART3,
+
 
