@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45148C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 09:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1126EC48297
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 09:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYMyu-0006r3-KU; Fri, 09 Feb 2024 04:15:36 -0500
+	id 1rYN0j-0007oY-PF; Fri, 09 Feb 2024 04:17:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMys-0006qW-Ei
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:15:34 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYN0i-0007oJ-Nd
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:17:28 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYMyq-00033x-Ff
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:15:34 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-5116b540163so1136375e87.1
- for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 01:15:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rYN0h-0003EB-7F
+ for qemu-devel@nongnu.org; Fri, 09 Feb 2024 04:17:28 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-410489e1a63so5881595e9.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Feb 2024 01:17:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707470130; x=1708074930; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1707470245; x=1708075045; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nNLpIx87pB0K/AvDr5H7oRXa+DzGtWVK8bg3cbWp7L8=;
- b=p1Eh/TGT3P7SzuKkwo2oH1gMnp9Lkb/7MXZVPQeJO6WyC6oIH0Mf4gyrsrJXiMXaA1
- M3IpTYM3dYUMYdyxZW4UwfNrC1/OjI122gxLlB09LOnTGXHiH0ogMCmOrERXirKaKdZk
- wbwWQqBhohhAuLccBMv8DvOtWJ0O+FsvtwTbYkJv7hIQ+wVBjsEQ6kt+3wmGBHOiaFSL
- /6+ypN8FywVT3YXMBtrV0jy6iNjtwC53Gm4UvqwRof50wdIoIOqiKUFuKZGxgtj6pLRa
- Z38zEiYYNigxay/r6d6AySW7PaLKW4k363qTWbhy/AOo4VJQZrWnXZRybNdF2EUE/i8W
- CikA==
+ bh=MAlIT1USiQ9q9FnARJDOe4Jn+g3Pa0g/TjWVOShLmpU=;
+ b=pKTTsI42i3JrF79DHj3Dg39AxjcldXemZR1QBLuu77C16IEbvleSMn7xyoLCaybjtN
+ InskuGZzrgOi3HBew5xfxv0rVzg9dG595/Y4lmiTX9FUDC2zVyeI8A1nB/lsS/NOWJM9
+ u4moew5N6CEjZbTtGdaV0aOWemGQ51ZbN20oouI+poi6q+sfJ9ZU3XZcoVCoPY4vjBpp
+ 7T3pcp24VchY+Mi7oj2DC+XrSHfrmUKXgXG9lZT8TVGFyNumEKt1o98iUGJMTdBcOOq2
+ 7Qh184l8VYXo9tFdSjnKAYKLW4dGiyXiAHCnZtke7y0qlptgF0DsSszW14ZKqlN2lSaO
+ 2vsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707470130; x=1708074930;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1707470245; x=1708075045;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nNLpIx87pB0K/AvDr5H7oRXa+DzGtWVK8bg3cbWp7L8=;
- b=cHrQZNqBNeSL7Wd7Nf5s0g/4YE+89Z3PX0FDFPLbELhbyZchOxUajFckmFj6V7JA/D
- 2nR1OPM5wUlXQvtktFEC/jp+w+bwNsCEaavglEsWzpdTEprra0uEeuyoAu5CWF/8EVId
- nu8b1HeeaDtD4FhXIdm9htA126sabrCkbZqFbMnvniOu/uETivnSSEzVkDzHx/f1H5hF
- sjKZUEJnnk88u684AGkU1Vv/fTxIJfW5u6zbJflGOvPcGGYtE7qPI1XzLAphRa7eYaqu
- 2lch7wJFi9vuDocE2aJZaVENRK5n+lbgkW0LmBeyhkpV4m4hgOF4SCUnVj/nVUK1CBQn
- +vEg==
-X-Gm-Message-State: AOJu0YwYfqvFB3ehn+VaWmxI4YIAa9SbEs7TuUta6zX3kNh36zCGxqJZ
- 5KYuisl42rv6XHp/FehXbONXjffqdLyzACjb3pq9KMnCxk3eTf0LpEoi7b7pYpc=
-X-Google-Smtp-Source: AGHT+IGmwHnnKORxtBUZqjVaNSttBk4br7gqWc28lsfRX1CmgJDYzwmIcjvL/3fDSvZaFePI74vmFw==
-X-Received: by 2002:a05:6512:2397:b0:511:60d9:dd47 with SMTP id
- c23-20020a056512239700b0051160d9dd47mr716823lfv.61.1707470130585; 
- Fri, 09 Feb 2024 01:15:30 -0800 (PST)
+ bh=MAlIT1USiQ9q9FnARJDOe4Jn+g3Pa0g/TjWVOShLmpU=;
+ b=ufyTAPeXl/i4hjFtyospVyV6VRr7O5o4QuCAM+NU/+S+HLXARf3IxB1Yw5xdFOaDNG
+ sh9FnltyLXJg4KtzXSRUQMekRGfEkSbQGclOneNnWqnMY8ErjDsGtxG6zDpwrsmVph9r
+ eWw3VuD4A2pgR6CCZ6VHppn1P/85z6jjZEJ24rfv36FW11db+Jjj9xTP9anEX7o0gM48
+ /AksU7lQCE+rB/rik2nPX8RCv/Gap0mTT5VOQ3+ojp+r25/0/XjF7Atc6iYMP2+CkrIA
+ OZ9lAaXJ8/fJY6hrm2RJW1eRqlQRnOHpu53HPP1m09kJZhTujbD8GTwp++3f06o6MiCR
+ zh7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgEMCkTCxn/LUkJtWe2rvqwnIUtLAHHmxEXbVBQwwqaUr8SqUeL7+/boTTFJ27GxfAQz0z26aKVct2jrt/BRPfzsWRMRaahWiCRm3AtlNQyIk3E69zB4fs8WHML8ffVsv/AeYws3CioYtlvlFXSB+xEuUKT68jVMPO
+ AJvYcCXdR7A+Dw+Yv/x/79+rh3e6iSz3oQeHA0XJKKuUKDH7rTE3xxd5tt+mwfrt6pojZeKr9PEcglq4bwwvg69BdfTGEhtLxsE=
+X-Gm-Message-State: AOJu0YxU6IyY6HgOSuQlMxEAoXFM1Gd6skycUUoGVTv0yLmLlf9+0Vr8
+ dEZOoWkt6Ll7NBphG6d6jJEVfgsNJINhxAKxVKzz/eGhEwX1dLGmlgy358ghBuI=
+X-Google-Smtp-Source: AGHT+IEQXUVI7x6sTYES/shNXgz8jyz48U4LXQpBwCP2qselSu6zaZhSdmpHGTzxcvE4XAC0qTM2XQ==
+X-Received: by 2002:a05:600c:190f:b0:40f:ddb6:a63b with SMTP id
+ j15-20020a05600c190f00b0040fddb6a63bmr855639wmq.24.1707470245676; 
+ Fri, 09 Feb 2024 01:17:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXo10M95yI6hhrJbjBIIqg6s54h+iroIVUtCVkbEF1E9FEj8mnAnc1ybtKfF6CfndvG1uaai7SZtyb4GXR7wNFGm3yfz2USP4fbblmBwpTBx+hUtZpk3Z+mJPTqh4HH+YNfCauyPCi/lxnRiS6SvWNljcF42efKeE4ia57p1UQkkfNagmqLfnQ4DdkOkSkuBOOTCGGX6v74TfqUPfmy4R3sU0hAZS0I6qftUnvzLIQz7JEaDbkMlZvsKA==
 Received: from [192.168.69.100] ([176.187.218.105])
  by smtp.gmail.com with ESMTPSA id
- iv12-20020a05600c548c00b004100c0882fdsm1962301wmb.31.2024.02.09.01.15.29
+ g6-20020a05600c310600b0041047382678sm1846wmo.1.2024.02.09.01.17.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Feb 2024 01:15:30 -0800 (PST)
-Message-ID: <9c40cbb8-c652-409f-a718-b6381b96ba89@linaro.org>
-Date: Fri, 9 Feb 2024 10:15:27 +0100
+ Fri, 09 Feb 2024 01:17:25 -0800 (PST)
+Message-ID: <af236412-0c90-449a-a4b6-b527e848574e@linaro.org>
+Date: Fri, 9 Feb 2024 10:17:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] mips: allow compiling out CONFIG_MIPS_ITU
+Subject: Re: [PATCH 4/9] hw/i386/pc: Merge pc_guest_info_init() into
+ pc_machine_initfn()
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, shentey@gmail.com,
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sergio Lopez <slp@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240207111411.115040-1-pbonzini@redhat.com>
- <20240207111411.115040-8-pbonzini@redhat.com>
- <81d117a3-ed1d-4023-a9ce-128729ec2e73@linaro.org>
- <CABgObfaop4uLqpjt8bXaL6=WoAz+M-sLiU0U+F=gtHkZMTo8aw@mail.gmail.com>
- <75ede98a-db0d-4b8c-88ff-df2f46875466@linaro.org>
-In-Reply-To: <75ede98a-db0d-4b8c-88ff-df2f46875466@linaro.org>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240208220349.4948-1-shentey@gmail.com>
+ <20240208220349.4948-5-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240208220349.4948-5-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,90 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/24 08:22, Philippe Mathieu-Daudé wrote:
-> On 8/2/24 09:26, Paolo Bonzini wrote:
->> On Wed, Feb 7, 2024 at 8:12 PM Philippe Mathieu-Daudé 
->> <philmd@linaro.org> wrote:
->>>
->>> Hi Paolo,
->>>
->>> On 7/2/24 12:14, Paolo Bonzini wrote:
->>>> itc_reconfigure() is referenced from TCG, provide a stub if needed.
->>>> This makes it possible to build a QEMU binary that only includes
->>>> boards without a CPS device (only Malta and Boston create one).
->>>>
->>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>>> ---
->>>>    hw/mips/mips_itu-stub.c | 26 ++++++++++++++++++++++++++
->>>>    hw/mips/meson.build     |  1 +
->>>>    2 files changed, 27 insertions(+)
->>>>    create mode 100644 hw/mips/mips_itu-stub.c
->>>>
->>>> diff --git a/hw/mips/mips_itu-stub.c b/hw/mips/mips_itu-stub.c
->>>> new file mode 100644
->>>> index 00000000000..4cc82b8461f
->>>> --- /dev/null
->>>> +++ b/hw/mips/mips_itu-stub.c
->>>> @@ -0,0 +1,26 @@
->>>> +/*
->>>> + * Inter-Thread Communication Unit emulation.
->>>> + *
->>>> + * Copyright (c) 2016 Imagination Technologies
->>>> + *
->>>> + * This library is free software; you can redistribute it and/or
->>>> + * modify it under the terms of the GNU Lesser General Public
->>>> + * License as published by the Free Software Foundation; either
->>>> + * version 2.1 of the License, or (at your option) any later version.
->>>> + *
->>>> + * This library is distributed in the hope that it will be useful,
->>>> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
->>>> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
->>>> + * Lesser General Public License for more details.
->>>> + *
->>>> + * You should have received a copy of the GNU Lesser General Public
->>>> + * License along with this library; if not, see 
->>>> <http://www.gnu.org/licenses/>.
->>>
->>> This is your code addition, so "Inter-Thread Communication Unit stubs" /
->>> RH / SPDX GPLv2-or-later.
->>>
->>>> + */
->>>> +
->>>> +#include "qemu/osdep.h"
->>>> +#include "hw/misc/mips_itu.h"
->>>> +
->>>> +void itc_reconfigure(MIPSITUState *tag)
->>>> +{
->>>> +    abort();
->>>
->>> As Zoltan suggested, g_assert_not_reached(). Indeed this path
->>> can't be reached without ITU, TCG won't emit anything and will
->>> call instead:
->>>
->>>       qemu_log_mask(LOG_UNIMP, "mthc0 %s (reg %d sel %d)\n",
->>>                     register_name, reg, sel);
->>>
->>> I'm reluctant to add stubs, but since it helps you (hoping we
->>> can figure a clean way to split architectural access to hw/ from
->>> tcg/ one day):
->>
->> Not sure how it's reached anyway, because the saar field of
->> DisasContext is never written...
+On 8/2/24 23:03, Bernhard Beschow wrote:
+> Resolves redundant code in the piix and q35 machines.
+> 
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   include/hw/i386/pc.h | 2 --
+>   hw/i386/pc.c         | 9 +++------
+>   hw/i386/pc_piix.c    | 2 --
+>   hw/i386/pc_q35.c     | 2 --
+>   4 files changed, 3 insertions(+), 12 deletions(-)
 
-Alternatively:
-https://lore.kernel.org/qemu-devel/20240209090513.9401-3-philmd@linaro.org/
-
-> Commit 5fb2dcd179 ("target/mips: Provide R/W access to SAARI
-> and SAAR CP0 registers") is an incomplete frontport of
-> https://github.com/MIPS/qemu/commit/c9340491cc.
-> 
-> Commit 043715d1e0 ("target/mips: Update ITU to utilize SAARI
-> and SAAR CP0 registers") is an incomplete frontport of
-> https://github.com/MIPS/qemu/commit/e03079c699.
-> 
-> So this feature is working in MIPS fork since 2017, and during
-> 2019 mainstream only got part of it merged but never completed.
-> 
-> 5 years passed.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
