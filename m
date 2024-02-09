@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4B8C48297
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E23B7C4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYRVN-0002Yy-Hl; Fri, 09 Feb 2024 09:05:25 -0500
+	id 1rYRYa-0003hv-AS; Fri, 09 Feb 2024 09:08:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rYRVM-0002XR-1O
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rYRYQ-0003AU-3R; Fri, 09 Feb 2024 09:08:34 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rYRVK-0004Cy-9P
- for qemu-devel@nongnu.org; Fri, 09 Feb 2024 09:05:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707487521;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ptL+oHXVBy8DlXSzsfQVfnlB3RTXWG51Oa2V+tLPA8w=;
- b=KwS07WUqYTW7FTOe3Q8pClHXrAfu91z/5MoBHS5FxGdvxQ/ILC4hn/7xLHFx7yn4NweL+o
- z37LgWO3bd8KPsNBbzzl2fvlSrZ9OS0PUO1HfGtu2URSzzz63U4beSPIkgKzp0jgxoC3WS
- 7df3g1teTo1r36ceUcwpUP3D2QFb5iE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-359-ho0vSErHNvKzAYTubmMZvA-1; Fri, 09 Feb 2024 09:05:18 -0500
-X-MC-Unique: ho0vSErHNvKzAYTubmMZvA-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0711085A597;
- Fri,  9 Feb 2024 14:05:17 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.105])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5A720112A1;
- Fri,  9 Feb 2024 14:05:14 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Stefan Weil <sw@weilnetz.de>,
- Kevin Wolf <kwolf@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PULL 03/17] qemu_init: increase NOFILE soft limit on POSIX
-Date: Fri,  9 Feb 2024 14:04:51 +0000
-Message-ID: <20240209140505.2536635-4-berrange@redhat.com>
-In-Reply-To: <20240209140505.2536635-1-berrange@redhat.com>
-References: <20240209140505.2536635-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rYRYO-0005CE-0j; Fri, 09 Feb 2024 09:08:33 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 801BA4BDF4;
+ Fri,  9 Feb 2024 17:09:37 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id DD8DB77C1F;
+ Fri,  9 Feb 2024 17:08:21 +0300 (MSK)
+Message-ID: <9bc07eef-da55-4ebf-a4ee-1d55eb6fd921@tls.msk.ru>
+Date: Fri, 9 Feb 2024 17:08:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.269,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] block: Allow concurrent BB context changes
+Content-Language: en-US
+To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+References: <20240202144755.671354-1-hreitz@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240202144755.671354-1-hreitz@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,121 +86,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+02.02.2024 17:47, Hanna Czenczek :
+> Hi,
+> 
+> Without the AioContext lock, a BB's context may kind of change at any
+> time (unless it has a root node, and I/O requests are pending).  That
+> also means that its own context (BlockBackend.ctx) and that of its root
+> node can differ sometimes (while the context is being changed).
 
-In many configurations, e.g. multiple vNICs with multiple queues or
-with many Ceph OSDs, the default soft limit of 1024 is not enough.
-QEMU is supposed to work fine with file descriptors >= 1024 and does
-not use select() on POSIX. Bump the soft limit to the allowed hard
-limit to avoid issues with the aforementioned configurations.
+How relevant this is for -stable (8.2 at least) which does not have
+"scsi: eliminate AioContext lock" patchset, and in particular,:
+v8.2.0-124-geaad0fe260 "scsi: only access SCSIDevice->requests from
+one thread"?
 
-Of course the limit could be raised from the outside, but the man page
-of systemd.exec states about 'LimitNOFILE=':
+The issue first patch "block-backend: Allow concurrent context changes"
+fixes (RHEL-19381) seems to be for 8.1.something, so it exists in 8.2
+too, and this particular fix applies to 8.2.
 
-> Don't use.
-> [...]
-> Typically applications should increase their soft limit to the hard
-> limit on their own, if they are OK with working with file
-> descriptors above 1023,
+But with other changes around all this, I'm a bit lost as of what should
+be done on stable.  Not even thinking about 7.2 here :)
 
-If the soft limit is already the same as the hard limit, avoid the
-superfluous setrlimit call. This can avoid a warning with a strict
-seccomp filter blocking setrlimit if NOFILE was already raised before
-executing QEMU.
+Thanks,
 
-Buglink: https://bugzilla.proxmox.com/show_bug.cgi?id=4507
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/sysemu/os-posix.h |  1 +
- include/sysemu/os-win32.h |  5 +++++
- os-posix.c                | 22 ++++++++++++++++++++++
- system/vl.c               |  2 ++
- 4 files changed, 30 insertions(+)
-
-diff --git a/include/sysemu/os-posix.h b/include/sysemu/os-posix.h
-index dff32ae185..b881ac6c6f 100644
---- a/include/sysemu/os-posix.h
-+++ b/include/sysemu/os-posix.h
-@@ -51,6 +51,7 @@ bool is_daemonized(void);
- void os_daemonize(void);
- bool os_set_runas(const char *user_id);
- void os_set_chroot(const char *path);
-+void os_setup_limits(void);
- void os_setup_post(void);
- int os_mlock(void);
- 
-diff --git a/include/sysemu/os-win32.h b/include/sysemu/os-win32.h
-index 1047d260cb..b82a5d3ad9 100644
---- a/include/sysemu/os-win32.h
-+++ b/include/sysemu/os-win32.h
-@@ -128,6 +128,11 @@ static inline int os_mlock(void)
-     return -ENOSYS;
- }
- 
-+static inline void os_setup_limits(void)
-+{
-+    return;
-+}
-+
- #define fsync _commit
- 
- #if !defined(lseek)
-diff --git a/os-posix.c b/os-posix.c
-index 52ef6990ff..a4284e2c07 100644
---- a/os-posix.c
-+++ b/os-posix.c
-@@ -24,6 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include <sys/resource.h>
- #include <sys/wait.h>
- #include <pwd.h>
- #include <grp.h>
-@@ -256,6 +257,27 @@ void os_daemonize(void)
-     }
- }
- 
-+void os_setup_limits(void)
-+{
-+    struct rlimit nofile;
-+
-+    if (getrlimit(RLIMIT_NOFILE, &nofile) < 0) {
-+        warn_report("unable to query NOFILE limit: %s", strerror(errno));
-+        return;
-+    }
-+
-+    if (nofile.rlim_cur == nofile.rlim_max) {
-+        return;
-+    }
-+
-+    nofile.rlim_cur = nofile.rlim_max;
-+
-+    if (setrlimit(RLIMIT_NOFILE, &nofile) < 0) {
-+        warn_report("unable to set NOFILE limit: %s", strerror(errno));
-+        return;
-+    }
-+}
-+
- void os_setup_post(void)
- {
-     int fd = 0;
-diff --git a/system/vl.c b/system/vl.c
-index 2a0bd08ff1..95cd2d91c4 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2778,6 +2778,8 @@ void qemu_init(int argc, char **argv)
-     error_init(argv[0]);
-     qemu_init_exec_dir(argv[0]);
- 
-+    os_setup_limits();
-+
-     qemu_init_arch_modules();
- 
-     qemu_init_subsystems();
--- 
-2.43.0
-
+/mjt
 
