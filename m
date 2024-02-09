@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E23B7C4828F
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD76BC4828F
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Feb 2024 14:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYRYa-0003hv-AS; Fri, 09 Feb 2024 09:08:44 -0500
+	id 1rYS1A-0002sm-Hq; Fri, 09 Feb 2024 09:38:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYRYQ-0003AU-3R; Fri, 09 Feb 2024 09:08:34 -0500
+ id 1rYS18-0002pv-Jt; Fri, 09 Feb 2024 09:38:14 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYRYO-0005CE-0j; Fri, 09 Feb 2024 09:08:33 -0500
+ id 1rYS16-0003t8-BW; Fri, 09 Feb 2024 09:38:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 801BA4BDF4;
- Fri,  9 Feb 2024 17:09:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 941704BE12;
+ Fri,  9 Feb 2024 17:39:22 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DD8DB77C1F;
- Fri,  9 Feb 2024 17:08:21 +0300 (MSK)
-Message-ID: <9bc07eef-da55-4ebf-a4ee-1d55eb6fd921@tls.msk.ru>
-Date: Fri, 9 Feb 2024 17:08:21 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id E855777CB6;
+ Fri,  9 Feb 2024 17:38:06 +0300 (MSK)
+Message-ID: <566223d4-514a-4282-ab51-1abc688654e2@tls.msk.ru>
+Date: Fri, 9 Feb 2024 17:38:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] block: Allow concurrent BB context changes
+Subject: Re: [PATCH v2 3/3] virtio-blk: Use ioeventfd_attach in start_ioeventfd
 Content-Language: en-US
 To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-References: <20240202144755.671354-1-hreitz@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
+References: <20240202153158.788922-1-hreitz@redhat.com>
+ <20240202153158.788922-4-hreitz@redhat.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -60,7 +62,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240202144755.671354-1-hreitz@redhat.com>
+In-Reply-To: <20240202153158.788922-4-hreitz@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -86,25 +88,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-02.02.2024 17:47, Hanna Czenczek :
-> Hi,
+02.02.2024 18:31, Hanna Czenczek :
+> Commit d3f6f294aeadd5f88caf0155e4360808c95b3146 ("virtio-blk: always set
+> ioeventfd during startup") has made virtio_blk_start_ioeventfd() always
+> kick the virtqueue (set the ioeventfd), regardless of whether the BB is
+> drained.  That is no longer necessary, because attaching the host
+> notifier will now set the ioeventfd, too; this happens either
+> immediately right here in virtio_blk_start_ioeventfd(), or later when
+> the drain ends, in virtio_blk_ioeventfd_attach().
 > 
-> Without the AioContext lock, a BB's context may kind of change at any
-> time (unless it has a root node, and I/O requests are pending).  That
-> also means that its own context (BlockBackend.ctx) and that of its root
-> node can differ sometimes (while the context is being changed).
+> With event_notifier_set() removed, the code becomes the same as the one
+> in virtio_blk_ioeventfd_attach(), so we can reuse that function.
 
-How relevant this is for -stable (8.2 at least) which does not have
-"scsi: eliminate AioContext lock" patchset, and in particular,:
-v8.2.0-124-geaad0fe260 "scsi: only access SCSIDevice->requests from
-one thread"?
-
-The issue first patch "block-backend: Allow concurrent context changes"
-fixes (RHEL-19381) seems to be for 8.1.something, so it exists in 8.2
-too, and this particular fix applies to 8.2.
-
-But with other changes around all this, I'm a bit lost as of what should
-be done on stable.  Not even thinking about 7.2 here :)
+The mentioned comit is v8.2.0-812-gd3f6f294ae, - ie, past 8.2.
+Is this new change still relevant for stable?
 
 Thanks,
 
