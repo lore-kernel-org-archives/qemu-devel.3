@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5626C4829A
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Feb 2024 08:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3586FC48260
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Feb 2024 08:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYirv-0006Lk-Rs; Sat, 10 Feb 2024 03:37:52 -0500
+	id 1rYj0J-0007tz-UH; Sat, 10 Feb 2024 03:46:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYirt-0006Ki-Jp; Sat, 10 Feb 2024 03:37:49 -0500
+ id 1rYj0I-0007tc-B3; Sat, 10 Feb 2024 03:46:30 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYirs-0008Ou-2z; Sat, 10 Feb 2024 03:37:49 -0500
+ id 1rYj0G-0001Uq-Dl; Sat, 10 Feb 2024 03:46:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8165E4C088;
- Sat, 10 Feb 2024 11:38:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 493614C08B;
+ Sat, 10 Feb 2024 11:47:41 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4E8B0782FA;
- Sat, 10 Feb 2024 11:37:41 +0300 (MSK)
-Message-ID: <88d5c75b-376c-4e2d-9a26-57f61e437ac7@tls.msk.ru>
-Date: Sat, 10 Feb 2024 11:37:41 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 22C927830C;
+ Sat, 10 Feb 2024 11:46:24 +0300 (MSK)
+Message-ID: <62012f98-f2a5-4a28-aec6-3f03b1c5feab@tls.msk.ru>
+Date: Sat, 10 Feb 2024 11:46:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] virtio-blk: Use ioeventfd_attach in start_ioeventfd
+Subject: Re: [PATCH 0/2] block: Allow concurrent BB context changes
 Content-Language: en-US
 To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Fam Zheng <fam@euphon.net>
-References: <20240202153158.788922-1-hreitz@redhat.com>
- <20240202153158.788922-4-hreitz@redhat.com>
- <566223d4-514a-4282-ab51-1abc688654e2@tls.msk.ru>
- <da2cc849-65dc-4ace-bdd1-e0eb02c41bcc@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+References: <20240202144755.671354-1-hreitz@redhat.com>
+ <9bc07eef-da55-4ebf-a4ee-1d55eb6fd921@tls.msk.ru>
+ <272941d6-fb76-4c5c-968e-d441c7957646@redhat.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -64,7 +62,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <da2cc849-65dc-4ace-bdd1-e0eb02c41bcc@redhat.com>
+In-Reply-To: <272941d6-fb76-4c5c-968e-d441c7957646@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -90,26 +88,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-09.02.2024 20:11, Hanna Czenczek :
-
->> The mentioned comit is v8.2.0-812-gd3f6f294ae, - ie, past 8.2.
->> Is this new change still relevant for stable?
+09.02.2024 19:51, Hanna Czenczek :
+> On 09.02.24 15:08, Michael Tokarev wrote:
+>> 02.02.2024 17:47, Hanna Czenczek :
+>>> Hi,
+>>>
+>>> Without the AioContext lock, a BB's context may kind of change at any
+>>> time (unless it has a root node, and I/O requests are pending). That
+>>> also means that its own context (BlockBackend.ctx) and that of its root
+>>> node can differ sometimes (while the context is being changed).
+>>
+>> How relevant this is for -stable (8.2 at least) which does not have
+>> "scsi: eliminate AioContext lock" patchset, and in particular,:
+>> v8.2.0-124-geaad0fe260 "scsi: only access SCSIDevice->requests from
+>> one thread"?
+>>
+>> The issue first patch "block-backend: Allow concurrent context changes"
+>> fixes (RHEL-19381) seems to be for 8.1.something, so it exists in 8.2
+>> too, and this particular fix applies to 8.2.
+>>
+>> But with other changes around all this, I'm a bit lost as of what should
+>> be done on stable.  Not even thinking about 7.2 here :)
 > 
-> Sorry again. :/ 
+> Ah, sorry, yes.  Since we do still have the AioContext lock, this series won’t be necessary in -stable.  Sorry for the noise!
 
-There's nothing to be sorry about here - it's regular work, and is quite
-good at it, - I just asked to be sure, maybe I misunderstood something.
+Hm. Now I'm confused even more.. :)
 
->     This patch is a clean-up patch that won’t apply to 8.2.  Now, 8.2 does have basically the same logic as described in the patch 
-> message (d3f6f294aea restored it after it was broken), so a similar patch could be made for it (removing the event_notifier_set() from 
-> virtio_blk_data_plane_start()), but whether we kick the virtqueues once or twice on start-up probably won’t make a difference, certainly not in terms 
-> of correctness.
+ad89367202 "block-backend: Allow concurrent context changes" - the first
+one in this series - apparently is needed, as it fixes an issue reported
+for qemu 8.1 (https://issues.redhat.com/browse/RHEL-19381).  Or is it not
+the case?
 
-Ok, excellent, this makes good sense now.
-I'm not including this one in stable-8.2 :)
+FWIW, truth is born in the noise, not in silence ;)
 
-Thank you very much for the excellent work and
-the clarification!
+Thanks,
 
 /mjt
 
