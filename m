@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D03FC4829A
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Feb 2024 09:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A307BC48260
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Feb 2024 09:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYjVS-00084y-Qo; Sat, 10 Feb 2024 04:18:42 -0500
+	id 1rYjgg-0002o0-Ni; Sat, 10 Feb 2024 04:30:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYjVP-00084a-VZ; Sat, 10 Feb 2024 04:18:39 -0500
+ id 1rYjgX-0002nL-8V; Sat, 10 Feb 2024 04:30:10 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rYjVK-0007iq-6d; Sat, 10 Feb 2024 04:18:39 -0500
+ id 1rYjgV-0001HC-8z; Sat, 10 Feb 2024 04:30:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 480EE4C093;
- Sat, 10 Feb 2024 12:19:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 511C14C097;
+ Sat, 10 Feb 2024 12:31:20 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1EC807832D;
- Sat, 10 Feb 2024 12:18:27 +0300 (MSK)
-Message-ID: <d60ddc11-b4b4-4fee-b9c0-08bea513f8d3@tls.msk.ru>
-Date: Sat, 10 Feb 2024 12:18:27 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4DE1E7833B;
+ Sat, 10 Feb 2024 12:30:02 +0300 (MSK)
+Message-ID: <0e5720f4-63c1-4f71-ab6b-26c07614ba33@tls.msk.ru>
+Date: Sat, 10 Feb 2024 12:30:02 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 26/34] migration/multifd: Join the TLS thread
 Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: peterx@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, qemu-stable <qemu-stable@nongnu.org>
 References: <20240208030528.368214-1-peterx@redhat.com>
  <20240208030528.368214-27-peterx@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
+ <d60ddc11-b4b4-4fee-b9c0-08bea513f8d3@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
  bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
@@ -60,9 +61,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240208030528.368214-27-peterx@redhat.com>
+In-Reply-To: <d60ddc11-b4b4-4fee-b9c0-08bea513f8d3@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -86,78 +87,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-08.02.2024 06:05, peterx@redhat.com :
-> From: Fabiano Rosas <farosas@suse.de>
+10.02.2024 12:18, Michael Tokarev:
+> 08.02.2024 06:05, peterx@redhat.com :
+>> From: Fabiano Rosas <farosas@suse.de>
+>>
+>> We're currently leaking the resources of the TLS thread by not joining
+>> it and also overwriting the p->thread pointer altogether.
+>>
+>> Fixes: a1af605bd5 ("migration/multifd: fix hangup with TLS-Multifd due to blocking handshake")
+>> Cc: qemu-stable <qemu-stable@nongnu.org>
+>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> Link: https://lore.kernel.org/r/20240206215118.6171-2-farosas@suse.de
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
 > 
-> We're currently leaking the resources of the TLS thread by not joining
-> it and also overwriting the p->thread pointer altogether.
+> This change, which is suggested for -stable, while simple by its own, seems
+> to depend on the previous changes in this series, which are not for -stable.
+> In particular, whole "Finally recycle all the threads" loop in multifd_send_terminate_threads()
+> (to which the join is being added by this change) is moved from elsewhere by
+> 12808db3b8 "migration/multifd: Cleanup multifd_save_cleanup()" (patch 24 in
+> this same series).
 > 
-> Fixes: a1af605bd5 ("migration/multifd: fix hangup with TLS-Multifd due to blocking handshake")
-> Cc: qemu-stable <qemu-stable@nongnu.org>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> Link: https://lore.kernel.org/r/20240206215118.6171-2-farosas@suse.de
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> We can probably add the missing join right into the previous location of this
+> loop (before 12808db3b8).  I did this in the attached variant for 8.2, is
+> this correct?
 
-This change, which is suggested for -stable, while simple by its own, seems
-to depend on the previous changes in this series, which are not for -stable.
-In particular, whole "Finally recycle all the threads" loop in multifd_send_terminate_threads()
-(to which the join is being added by this change) is moved from elsewhere by
-12808db3b8 "migration/multifd: Cleanup multifd_save_cleanup()" (patch 24 in
-this same series).
+And this does not pass even the basic tests, so it's not that simple :)
 
-We can probably add the missing join right into the previous location of this
-loop (before 12808db3b8).  I did this in the attached variant for 8.2, is
-this correct?
+The following patch (27/34) is more questionable than this one.
 
-Should we pick this up for 7.2 too?
-
-Thanks,
+Thanks!
 
 /mjt
-
->   migration/multifd.h | 2 ++
->   migration/multifd.c | 8 +++++++-
->   2 files changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index 78a2317263..720c9d50db 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -73,6 +73,8 @@ typedef struct {
->       char *name;
->       /* channel thread id */
->       QemuThread thread;
-> +    QemuThread tls_thread;
-> +    bool tls_thread_created;
->       /* communication channel */
->       QIOChannel *c;
->       /* is the yank function registered */
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index fbdb129088..5551711a2a 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -630,6 +630,10 @@ static void multifd_send_terminate_threads(void)
->       for (i = 0; i < migrate_multifd_channels(); i++) {
->           MultiFDSendParams *p = &multifd_send_state->params[i];
->   
-> +        if (p->tls_thread_created) {
-> +            qemu_thread_join(&p->tls_thread);
-> +        }
-> +
->           if (p->running) {
->               qemu_thread_join(&p->thread);
->           }
-> @@ -921,7 +925,9 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
->       trace_multifd_tls_outgoing_handshake_start(ioc, tioc, hostname);
->       qio_channel_set_name(QIO_CHANNEL(tioc), "multifd-tls-outgoing");
->       p->c = QIO_CHANNEL(tioc);
-> -    qemu_thread_create(&p->thread, "multifd-tls-handshake-worker",
-> +
-> +    p->tls_thread_created = true;
-> +    qemu_thread_create(&p->tls_thread, "multifd-tls-handshake-worker",
->                          multifd_tls_handshake_thread, p,
->                          QEMU_THREAD_JOINABLE);
->       return true;
-
 
