@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5D6C4829B
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250EEC4829A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZ8xd-000671-GW; Sun, 11 Feb 2024 07:29:29 -0500
+	id 1rZ8xh-00068L-Vi; Sun, 11 Feb 2024 07:29:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xc-00066j-HZ
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:28 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xe-00067E-AA
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:30 -0500
 Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xa-0006FU-4R
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:27 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xa-0006F8-4c
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:28 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 8A9AF60C56;
- Sun, 11 Feb 2024 12:29:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC436C433F1;
- Sun, 11 Feb 2024 12:29:20 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 144D560C55;
+ Sun, 11 Feb 2024 12:29:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D69C43390;
+ Sun, 11 Feb 2024 12:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707654562;
- bh=FaxA3mFrSxmY5kTESFNBYrTItNp7faYaL5jQs64YYHE=;
+ s=k20201202; t=1707654556;
+ bh=7qAJa6D5seczT2BjZtyKXdtgQQtPHSe7FBlQvtuMc80=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PKu9KHhx8io9Jlg9RvfX5Rg6PAKQ/xEMz7/jTF/0pUdp8tUpURHtyn5zrDcYZKShC
- krXRderYZoqppZqkKLYOPcsm8/gADSp6/2864XCJJVc9HHUbp1SqbIlsfPaR1ejeF2
- uqocH3wD3JUzdG6QhOB42+lOxwDsqIZplOY1DX5EVTCakcpMqju3o9vQV4utoPx3uc
- GPmenh9u34yufWb37HhJeEW0FILXMTFQduslXnGmISWTo24cG6Nt0kb3OzooZpeOXf
- Q9cuXXS3xAqZEc3FciOl4DVbVpakQ7qJNq5Clph5DC5Tx7QZNzpTc45O/guw9NFpsn
- vSpPbgYSABvkA==
+ b=Ifwv/5ELJWXvSE/S90wBR28h0NrRJxQSrIBx4cqgFtMNMP9LzgnJh4MQsE9R7ucDM
+ lTq3U96OtbF+0HVTyYGlGKg0RlRhyP+0Xsm6/4QZQnel10tN5SuF6+UTj+nADhaksp
+ 8Zw+CNalGYpA+CSOGPSWWxLDbUtj6IovDSR4kQlqv2J8mS6dL9upNer7wHDv1PzQN4
+ wdI14V8tQlEYnQt1wKWa/BZ42FIz8hz/NMi4r7IRii2Qk6R3fuxFzXe+1PoAl0YGor
+ JEYfbmv4rOl5P+AW016E+RlRua1Fhr+qfEIgvSoiD/FldoerhN8QOLe992UmF3jEZj
+ 4IiVgfjnflqUQ==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 05/12] lasi: allow access to LAN MAC address registers
-Date: Sun, 11 Feb 2024 13:29:02 +0100
-Message-ID: <20240211122909.5807-6-deller@kernel.org>
+Subject: [PULL 02/12] target/hppa: Add "diag 0x101" for console output support
+Date: Sun, 11 Feb 2024 13:28:59 +0100
+Message-ID: <20240211122909.5807-3-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240211122909.5807-1-deller@kernel.org>
 References: <20240211122909.5807-1-deller@kernel.org>
@@ -72,35 +72,108 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Firmware and qemu reads and writes the MAC address for the LASI LAN via
-registers in LASI. Allow those accesses and return zero even if LASI
-LAN isn't enabled to avoid HPMCs (=crashes).
+For debugging purposes at the early stage of the bootup process,
+the SeaBIOS-hppa firmware sometimes needs to output characters to the
+serial console. Note that the serial console is the default output
+method for parisc machines.
+
+At this stage PCI busses and other devices haven't been initialized
+yet. So, SeaBIOS-hppa will not be able to find the correct I/O ports
+for the serial ports yet.
+
+Instead, add an emulation for the "diag 0x101" opcode to assist here.
+Without any other dependencies, SeaBIOS-hppa can then load the character
+to be printed in register %r26 and issue the diag assembly instruction.
+
+The qemu diag_console_output() helper function will then print
+that character to the first serial port.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/misc/lasi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/hppa/helper.h     |  1 +
+ target/hppa/sys_helper.c | 36 ++++++++++++++++++++++++++++++++++++
+ target/hppa/translate.c  |  6 ++++++
+ 3 files changed, 43 insertions(+)
 
-diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
-index 003f5b5ed8..9cfa5bb316 100644
---- a/hw/misc/lasi.c
-+++ b/hw/misc/lasi.c
-@@ -38,6 +38,7 @@ static bool lasi_chip_mem_valid(void *opaque, hwaddr addr,
-     case LASI_LPT:
-     case LASI_UART:
-     case LASI_LAN:
-+    case LASI_LAN + 12: /* LASI LAN MAC */
-     case LASI_RTC:
+diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+index 20698f68ed..1bdbcd8f98 100644
+--- a/target/hppa/helper.h
++++ b/target/hppa/helper.h
+@@ -103,4 +103,5 @@ DEF_HELPER_FLAGS_1(ptlbe, TCG_CALL_NO_RWG, void, env)
+ DEF_HELPER_FLAGS_2(lpa, TCG_CALL_NO_WG, tl, env, tl)
+ DEF_HELPER_FLAGS_1(change_prot_id, TCG_CALL_NO_RWG, void, env)
+ DEF_HELPER_1(diag_btlb, void, env)
++DEF_HELPER_1(diag_console_output, void, env)
+ #endif
+diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
+index a59245eed3..4a31748342 100644
+--- a/target/hppa/sys_helper.c
++++ b/target/hppa/sys_helper.c
+@@ -23,6 +23,8 @@
+ #include "exec/helper-proto.h"
+ #include "qemu/timer.h"
+ #include "sysemu/runstate.h"
++#include "sysemu/sysemu.h"
++#include "chardev/char-fe.h"
  
-     case LASI_PCR ... LASI_AMR:
-@@ -78,6 +79,7 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
-     case LASI_LPT:
-     case LASI_UART:
-     case LASI_LAN:
-+    case LASI_LAN + 12:
-         val = 0;
-         break;
-     case LASI_RTC:
+ void HELPER(write_interval_timer)(CPUHPPAState *env, target_ulong val)
+ {
+@@ -109,3 +111,37 @@ void HELPER(rfi_r)(CPUHPPAState *env)
+     helper_getshadowregs(env);
+     helper_rfi(env);
+ }
++
++#ifndef CONFIG_USER_ONLY
++/*
++ * diag_console_output() is a helper function used during the initial bootup
++ * process of the SeaBIOS-hppa firmware.  During the bootup phase, addresses of
++ * serial ports on e.g. PCI busses are unknown and most other devices haven't
++ * been initialized and configured yet.  With help of a simple "diag" assembler
++ * instruction and an ASCII character code in register %r26 firmware can easily
++ * print debug output without any dependencies to the first serial port and use
++ * that as serial console.
++ */
++void HELPER(diag_console_output)(CPUHPPAState *env)
++{
++    CharBackend *serial_backend;
++    Chardev *serial_port;
++    unsigned char c;
++
++    /* find first serial port */
++    serial_port = serial_hd(0);
++    if (!serial_port) {
++        return;
++    }
++
++    /* get serial_backend for the serial port */
++    serial_backend = serial_port->be;
++    if (!serial_backend ||
++        !qemu_chr_fe_backend_connected(serial_backend)) {
++        return;
++    }
++
++    c = (unsigned char)env->gr[26];
++    qemu_chr_fe_write(serial_backend, &c, sizeof(c));
++}
++#endif
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 08d09d50d7..53ec57ee86 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -4411,6 +4411,12 @@ static bool trans_diag(DisasContext *ctx, arg_diag *a)
+         gen_helper_diag_btlb(tcg_env);
+         return nullify_end(ctx);
+     }
++    if (a->i == 0x101) {
++        /* print char in %r26 to first serial console, used by SeaBIOS-hppa */
++        nullify_over(ctx);
++        gen_helper_diag_console_output(tcg_env);
++        return nullify_end(ctx);
++    }
+ #endif
+     qemu_log_mask(LOG_UNIMP, "DIAG opcode 0x%04x ignored\n", a->i);
+     return true;
 -- 
 2.43.0
 
