@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250EEC4829A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11A8DC4829A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:30:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZ8xh-00068L-Vi; Sun, 11 Feb 2024 07:29:34 -0500
+	id 1rZ8xl-0006BA-IX; Sun, 11 Feb 2024 07:29:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xe-00067E-AA
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:30 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xh-00068P-FY
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:33 -0500
 Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xa-0006F8-4c
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:28 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xf-0006G9-Vt
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:33 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 144D560C55;
- Sun, 11 Feb 2024 12:29:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D69C43390;
- Sun, 11 Feb 2024 12:29:15 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id BB7C960C56;
+ Sun, 11 Feb 2024 12:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DE5C43390;
+ Sun, 11 Feb 2024 12:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707654556;
- bh=7qAJa6D5seczT2BjZtyKXdtgQQtPHSe7FBlQvtuMc80=;
+ s=k20201202; t=1707654569;
+ bh=bMGiugQoc2DhmTSqm+CZs/LiSubHUzCkUMZHroTlcng=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Ifwv/5ELJWXvSE/S90wBR28h0NrRJxQSrIBx4cqgFtMNMP9LzgnJh4MQsE9R7ucDM
- lTq3U96OtbF+0HVTyYGlGKg0RlRhyP+0Xsm6/4QZQnel10tN5SuF6+UTj+nADhaksp
- 8Zw+CNalGYpA+CSOGPSWWxLDbUtj6IovDSR4kQlqv2J8mS6dL9upNer7wHDv1PzQN4
- wdI14V8tQlEYnQt1wKWa/BZ42FIz8hz/NMi4r7IRii2Qk6R3fuxFzXe+1PoAl0YGor
- JEYfbmv4rOl5P+AW016E+RlRua1Fhr+qfEIgvSoiD/FldoerhN8QOLe992UmF3jEZj
- 4IiVgfjnflqUQ==
+ b=Lj4GZYBnN9ClB0jvm2zMsFEvZFFXt7nBF2UgERlrJvm2JI1k/Om/YSwj5R3mCrhI5
+ ttMTDFq502kE/dY2TDATc9eDRUA0ikBII0F5wy21rOg7vEnuBUdqbnmdFql1xX295M
+ qimuoSSc8N/PzMYvyNqMbwDsINa26fEp3a3/4DYCnFk6k5FznZCb1yVYrApRYuzvNm
+ KsX4vRWwUSZ1AccnmEs++mQ/EUH6pdlZ8e61gNkhHMkrC5zut/Qr982Mmw18DZWAMY
+ MetqoSH4GegFocG2H+8BpSMnlm9lFc1TwRTKOuC71rOURsa5LR/YKPSvLehgVPPE5A
+ jNlCimcoh//4g==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 02/12] target/hppa: Add "diag 0x101" for console output support
-Date: Sun, 11 Feb 2024 13:28:59 +0100
-Message-ID: <20240211122909.5807-3-deller@kernel.org>
+Subject: [PULL 09/12] target/hppa: PDC_BTLB_INFO uses 32-bit ints
+Date: Sun, 11 Feb 2024 13:29:06 +0100
+Message-ID: <20240211122909.5807-10-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240211122909.5807-1-deller@kernel.org>
 References: <20240211122909.5807-1-deller@kernel.org>
@@ -72,108 +72,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-For debugging purposes at the early stage of the bootup process,
-the SeaBIOS-hppa firmware sometimes needs to output characters to the
-serial console. Note that the serial console is the default output
-method for parisc machines.
-
-At this stage PCI busses and other devices haven't been initialized
-yet. So, SeaBIOS-hppa will not be able to find the correct I/O ports
-for the serial ports yet.
-
-Instead, add an emulation for the "diag 0x101" opcode to assist here.
-Without any other dependencies, SeaBIOS-hppa can then load the character
-to be printed in register %r26 and issue the diag assembly instruction.
-
-The qemu diag_console_output() helper function will then print
-that character to the first serial port.
+The BTLB helper function stores the BTLB info (four 32-bit ints) into
+the memory of the guest. They are only available when emulating a 32-bit
+CPU in the guest, so use "uint32_t" instead of "target_ulong" here.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/helper.h     |  1 +
- target/hppa/sys_helper.c | 36 ++++++++++++++++++++++++++++++++++++
- target/hppa/translate.c  |  6 ++++++
- 3 files changed, 43 insertions(+)
+ target/hppa/mem_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/hppa/helper.h b/target/hppa/helper.h
-index 20698f68ed..1bdbcd8f98 100644
---- a/target/hppa/helper.h
-+++ b/target/hppa/helper.h
-@@ -103,4 +103,5 @@ DEF_HELPER_FLAGS_1(ptlbe, TCG_CALL_NO_RWG, void, env)
- DEF_HELPER_FLAGS_2(lpa, TCG_CALL_NO_WG, tl, env, tl)
- DEF_HELPER_FLAGS_1(change_prot_id, TCG_CALL_NO_RWG, void, env)
- DEF_HELPER_1(diag_btlb, void, env)
-+DEF_HELPER_1(diag_console_output, void, env)
- #endif
-diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
-index a59245eed3..4a31748342 100644
---- a/target/hppa/sys_helper.c
-+++ b/target/hppa/sys_helper.c
-@@ -23,6 +23,8 @@
- #include "exec/helper-proto.h"
- #include "qemu/timer.h"
- #include "sysemu/runstate.h"
-+#include "sysemu/sysemu.h"
-+#include "chardev/char-fe.h"
- 
- void HELPER(write_interval_timer)(CPUHPPAState *env, target_ulong val)
- {
-@@ -109,3 +111,37 @@ void HELPER(rfi_r)(CPUHPPAState *env)
-     helper_getshadowregs(env);
-     helper_rfi(env);
- }
-+
-+#ifndef CONFIG_USER_ONLY
-+/*
-+ * diag_console_output() is a helper function used during the initial bootup
-+ * process of the SeaBIOS-hppa firmware.  During the bootup phase, addresses of
-+ * serial ports on e.g. PCI busses are unknown and most other devices haven't
-+ * been initialized and configured yet.  With help of a simple "diag" assembler
-+ * instruction and an ASCII character code in register %r26 firmware can easily
-+ * print debug output without any dependencies to the first serial port and use
-+ * that as serial console.
-+ */
-+void HELPER(diag_console_output)(CPUHPPAState *env)
-+{
-+    CharBackend *serial_backend;
-+    Chardev *serial_port;
-+    unsigned char c;
-+
-+    /* find first serial port */
-+    serial_port = serial_hd(0);
-+    if (!serial_port) {
-+        return;
-+    }
-+
-+    /* get serial_backend for the serial port */
-+    serial_backend = serial_port->be;
-+    if (!serial_backend ||
-+        !qemu_chr_fe_backend_connected(serial_backend)) {
-+        return;
-+    }
-+
-+    c = (unsigned char)env->gr[26];
-+    qemu_chr_fe_write(serial_backend, &c, sizeof(c));
-+}
-+#endif
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 08d09d50d7..53ec57ee86 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -4411,6 +4411,12 @@ static bool trans_diag(DisasContext *ctx, arg_diag *a)
-         gen_helper_diag_btlb(tcg_env);
-         return nullify_end(ctx);
-     }
-+    if (a->i == 0x101) {
-+        /* print char in %r26 to first serial console, used by SeaBIOS-hppa */
-+        nullify_over(ctx);
-+        gen_helper_diag_console_output(tcg_env);
-+        return nullify_end(ctx);
-+    }
- #endif
-     qemu_log_mask(LOG_UNIMP, "DIAG opcode 0x%04x ignored\n", a->i);
-     return true;
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index 676c0b3003..66b8fa7d72 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -684,7 +684,7 @@ void HELPER(diag_btlb)(CPUHPPAState *env)
+     case 0:
+         /* return BTLB parameters */
+         qemu_log_mask(CPU_LOG_MMU, "PDC_BLOCK_TLB: PDC_BTLB_INFO\n");
+-        vaddr = probe_access(env, env->gr[24], 4 * sizeof(target_ulong),
++        vaddr = probe_access(env, env->gr[24], 4 * sizeof(uint32_t),
+                              MMU_DATA_STORE, mmu_idx, ra);
+         if (vaddr == NULL) {
+             env->gr[28] = -10; /* invalid argument */
 -- 
 2.43.0
 
