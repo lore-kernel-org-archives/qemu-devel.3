@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FBB5C4829C
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 00:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D310C48260
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 00:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rYxj4-0006Td-Mp; Sat, 10 Feb 2024 19:29:42 -0500
+	id 1rYxjk-0006eQ-O8; Sat, 10 Feb 2024 19:30:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rYxj3-0006TV-2y
- for qemu-devel@nongnu.org; Sat, 10 Feb 2024 19:29:41 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1rYxjj-0006e3-UN
+ for qemu-devel@nongnu.org; Sat, 10 Feb 2024 19:30:23 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rYxj1-0001Vf-Ma
- for qemu-devel@nongnu.org; Sat, 10 Feb 2024 19:29:40 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1d73066880eso19854595ad.3
- for <qemu-devel@nongnu.org>; Sat, 10 Feb 2024 16:29:38 -0800 (PST)
+ id 1rYxji-0001jy-5Z
+ for qemu-devel@nongnu.org; Sat, 10 Feb 2024 19:30:23 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-5dbd519bde6so1565028a12.1
+ for <qemu-devel@nongnu.org>; Sat, 10 Feb 2024 16:30:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707611378; x=1708216178; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1707611420; x=1708216220; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EoECAKShEinauTNIiDXdDSm28uuGirZCGhxydM3IWG4=;
- b=tdzHuL/hdOXHu8UJBz52E1H27Yvz1dSi7F92w3TEgG4ZE8as7pzbQp2I70pnXyltyK
- Zo9ZLG2gwPXz6A2eBctBo9mcauJAbAxbUWkmGgY4NWPQkeoNKGx/GOeSE+oZYLI2NMpU
- YHAVpHT0S+Q5SIIEJsUK2fHL+5b8jvdruYN5rRqdNLCSOU8OmTZWpuFmG+OOhSuswNBz
- ClOMWnOtii0Ma3K6reh3kp039rQbYzbtnJzBTV2BOyL5aoNVBmg8vqGIPp37oQBG5DM8
- kOPXonQKroKGL2bi8T1N9oDkVH4Slv0VchLAMohzHgheujlALnOcrylGSQcqtRMIetbr
- T4Fg==
+ bh=ei90xbefp4rK5IZOdRsSEwpiYxuT/A+b8qEYgQ4kJ6s=;
+ b=y5uUKUxHFFXFadcipQZV7n32J7juy3W/RQaESo//F/ePgXhow5mrq4QI8BbcGJyFBd
+ KF0Y3L2tJtug8TXe2ARPYf+kBIaFenwb6NbjAGxMIQGtf693GbZnd0wvVYve4yOZgqOw
+ D0BuxKiBmoOfTRXZtxvWxfMvSsh/vVjXBX4GKfqPZAFr/9dHkRcuBiDR+2IMbqWyJSEv
+ C7DjwAEik3dHyj1sOdAe90eFV7NMXH9MJGnht0ag37NoJqW3m3Wm0Ya/1AXJmW6KLVdp
+ ipyMfmjlIWjISmVM98MZGkxBkRKRkkw/uuPsn+z+bFb5083TCO/xzbSlxZMSM09vPF/k
+ 26sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707611378; x=1708216178;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1707611420; x=1708216220;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EoECAKShEinauTNIiDXdDSm28uuGirZCGhxydM3IWG4=;
- b=fOFEt0cMFzJhRKdA5KWVpSPVOb/pvnqkovUbtNvndDHYTFuP1ihmB84bvAP+7vkZaP
- lIyJIRDRVvo+gsSVW1kx0Hrx7+B026Rg+lTxtKAOE5syR98/qmZ9UrD96lNN7jr0NXDN
- L9EaqXZa+/W+7i/8pz4Fvs4JFT+nm7FqmKBLnbIqm6PbTJ5sQQSrVLhcas1Lg/XK3oUt
- EZdLkwjqcz7rCBqBqaEz3bQRlC34pbSmsEUUUQAccizjRtdgIbyvYRcN8elmAsra1tiR
- vsDU97XgeGjOzPGVkGtC185oDHmJj70N4dIoQ8WPPfSS4W6Sld68oGGWmx3WzfCxpB0v
- P6Rg==
+ bh=ei90xbefp4rK5IZOdRsSEwpiYxuT/A+b8qEYgQ4kJ6s=;
+ b=MQQXYRbGG/MQYbQhtClt6AHykvdtc/m8e9SMzOKPBXFcBV3z1A/GSpfyjr+2M5GXok
+ +8fIVjt3C/oNvvA/9PmEymMQhI5vRgwLo4XAeAv/9tUItRfHElrMMkQPbSu5SgF4et1X
+ H+HDn0juR6m5GbUmjLhtvdJLloSEoLr+tHXIMobOVE7Cq8Xa2Ab5bOmiQhvjMhjqD6RU
+ TJWc8G7O7EdX9U3JcnNIZsPYfJsX0XkKSZ1WccTgnqstP5dXWlhoIsTrJ4w9LV3iKYma
+ G9ywB9+IZABYY1mqIj8oWB04vbhd/ytZS2eUc8Dr67FwJVQOpTkhwy8S7itfIg02HCQm
+ 77ZA==
+X-Gm-Message-State: AOJu0YwPmQUGwbj+93Xbl37zGAlSolAjURa8skmFtdTKcDaKiTl78RP+
+ 9JiOTkPezvBN/vBkuif+rZgMnziXBk/MCnwh/7tH9Ug4LLdmSBgW0BDJP+iuQzo=
+X-Google-Smtp-Source: AGHT+IGv0zVg/uPO9r1QqOZ7KTPRZSY23VWBpavMM+giFwamWiAjlMNyssk5m3C74Y9sOOwn9Bcnvw==
+X-Received: by 2002:a05:6a20:ce47:b0:19c:93b3:c669 with SMTP id
+ id7-20020a056a20ce4700b0019c93b3c669mr2544207pzb.29.1707611420636; 
+ Sat, 10 Feb 2024 16:30:20 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUcSoChjHfreEbUgtPAt6ZLxEnMmVXa+BzVd6Xft5BNo4RhGfyQFZQn76giRHia1/ovwJ5QQmTHDkGzMU/ajaZarcd/9NA=
-X-Gm-Message-State: AOJu0YzQygmZh3zfr7TdpzeIQDItx+2nAftX7T95KaNreZCpNygP3PA+
- 1RNeOhMZKF0cPAIM82ljfUKR6YdNFUw/nPc7ssiXw+25W7AKn/LocUE5bpdF9Og=
-X-Google-Smtp-Source: AGHT+IFHBOuuzmfZQbVPrjOry7mb/kDCJeRpxgWYTGRNzZ+W55WTfVSe5jK6Ee+JMr1IKAFUz9Ylrw==
-X-Received: by 2002:a17:903:1110:b0:1d9:b6a1:1fe4 with SMTP id
- n16-20020a170903111000b001d9b6a11fe4mr4600173plh.18.1707611377835; 
- Sat, 10 Feb 2024 16:29:37 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWliyjN6s8M4RLa3rECTrWbw0KdnkDK96Z+OuZlCXKUPPNHJqxQn4ceIdCHP6lYCgTcTzpODeEv3GE56ZE++PepdsYeoGHzSC/NfNBM8XOGct9ZeyARzYui3stM5xWmr3B2OeWmKkMbV2UDOrjnki3oQL4jmDyMWXKXPuGRMw/R8MFD+hLZgzK5WOnz+WTJl9ogAIvwU+kXzpbwp5sYxQuPNyne5CL4EWjwKZ19/ChE8NkTIm34XTuhkKAEi8dY27I9ds18n529cE7B4hy+V2uem6OW4FuIr4AJd56+CigiZ9oS++xjdhYW/ccKrw==
+ AJvYcCW8yCi+45OFhoYUEFcn3shL3VcugNJ0PCB55bCo4UF1znMH0mKhwOzfwUR12740wCgEYKrfoEfdkKRO0mtgfOAWEXA7pMspuvOwTNL4LH8Efn7m/WT1z2EFFmB2sTUZFvslRCupHhrpCS4=
 Received: from ?IPV6:2607:fb90:bde1:38:fbe0:8943:a8ed:9394?
  ([2607:fb90:bde1:38:fbe0:8943:a8ed:9394])
  by smtp.gmail.com with ESMTPSA id
- t11-20020a170902bc4b00b001d6ee9d8957sm3502695plz.281.2024.02.10.16.29.35
+ t11-20020a170902bc4b00b001d6ee9d8957sm3502695plz.281.2024.02.10.16.30.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Feb 2024 16:29:37 -0800 (PST)
-Message-ID: <f3457ee9-6228-4230-bb9c-6d43a478190f@linaro.org>
-Date: Sat, 10 Feb 2024 14:29:31 -1000
+ Sat, 10 Feb 2024 16:30:20 -0800 (PST)
+Message-ID: <3c13da7d-333d-42f8-83be-55e4404d5c82@linaro.org>
+Date: Sat, 10 Feb 2024 14:30:17 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/11] target/mips: Remove I6500 CPU definition
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Huacai Chen <chenhuacai@kernel.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
-References: <20240209090513.9401-1-philmd@linaro.org>
+Subject: Re: [PATCH v2 02/12] target/hppa: Add "diag 0x101" for console output
+ support
 Content-Language: en-US
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Sven Schnelle <svens@stackframe.org>, Helge Deller <deller@gmx.de>,
+ Jason Wang <jasowang@redhat.com>
+References: <20240209115633.55823-1-deller@kernel.org>
+ <20240209115633.55823-3-deller@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240209090513.9401-1-philmd@linaro.org>
+In-Reply-To: <20240209115633.55823-3-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/8/24 23:05, Philippe Mathieu-Daudé wrote:
-> Philippe Mathieu-Daudé (11):
->    target/mips: Remove helpers accessing SAAR registers
->    hw/misc/mips: Reduce itc_reconfigure() scope
->    target/mips: Remove MIPSITUState::itu field
->    target/mips: Remove CPUMIPSState::saarp field
->    hw/misc/mips_itu: Remove MIPSITUState::cpu0 field
->    hw/misc/mips_itu: Remove MIPSITUState::saar field
->    target/mips: Remove CPUMIPSState::CP0_SAAR[2] field
->    target/mips: Remove helpers accessing SAARI register
->    target/mips: Remove CPUMIPSState::CP0_SAARI field
->    target/mips: Remove the unused DisasContext::saar field
->    target/mips: Remove I6500 CPU definition
+On 2/9/24 01:56, deller@kernel.org wrote:
+> From: Helge Deller<deller@gmx.de>
+> 
+> For debugging purposes at the early stage of the bootup process,
+> the SeaBIOS-hppa firmware sometimes needs to output characters to the
+> serial console. Note that the serial console is the default output
+> method for parisc machines.
+> 
+> At this stage PCI busses and other devices haven't been initialized
+> yet. So, SeaBIOS-hppa will not be able to find the correct I/O ports
+> for the serial ports yet.
+> 
+> Instead, add an emulation for the "diag 0x101" opcode to assist here.
+> Without any other dependencies, SeaBIOS-hppa can then load the character
+> to be printed in register %r26 and issue the diag assembly instruction.
+> 
+> The qemu diag_console_output() helper function will then print
+> that character to the first serial port.
+> 
+> Signed-off-by: Helge Deller<deller@gmx.de>
+> ---
+>   target/hppa/helper.h     |  1 +
+>   target/hppa/sys_helper.c | 36 ++++++++++++++++++++++++++++++++++++
+>   target/hppa/translate.c  |  6 ++++++
+>   3 files changed, 43 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
