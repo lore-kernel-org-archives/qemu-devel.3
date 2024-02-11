@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DCEC4829A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 18:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F1B4C4829B
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 18:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZEsg-0000nX-9W; Sun, 11 Feb 2024 13:48:46 -0500
+	id 1rZEt2-0000rc-7N; Sun, 11 Feb 2024 13:49:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rZEse-0000mQ-BS
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 13:48:44 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rZEt0-0000pS-8J
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 13:49:06 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rZEsc-0003il-Cy
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 13:48:44 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rZEsy-0003qT-Mr
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 13:49:06 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A05454C4B0;
- Sun, 11 Feb 2024 21:48:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC9204C4B2;
+ Sun, 11 Feb 2024 21:49:03 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 05ADD7AF57;
- Sun, 11 Feb 2024 21:48:26 +0300 (MSK)
-Message-ID: <d9899c5d-7f67-4832-a79e-d48e616da0df@tls.msk.ru>
-Date: Sun, 11 Feb 2024 21:48:26 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 71E6B7AF58;
+ Sun, 11 Feb 2024 21:49:01 +0300 (MSK)
+Message-ID: <a9813b14-1e62-4e4c-8f95-46fa36edc62f@tls.msk.ru>
+Date: Sun, 11 Feb 2024 21:49:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 11/12] target/hppa: Update SeaBIOS-hppa to version 16
@@ -63,7 +63,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
 In-Reply-To: <20240211122909.5807-12-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -87,28 +87,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-11.02.2024 15:29, deller@kernel.org пишет:
+11.02.2024 15:29, deller@kernel.org
 > From: Helge Deller <deller@gmx.de>
 > 
 > SeaBIOS-hppa version 16 news & enhancements:
-> 
-> - Initial 64-bit firmware release
-> - Added fault handler to catch and report firmware bugs
-> - Use Qemu's builtin_console_out() via diag 0x101
-> - parisc-qemu-install Makefile target to install firmware in qemu
-> - Added -fw_cfg opt/OS64,string=3 option
-> 
-> Fixes:
-> 
-> - Avoid crash when booting without SCSI controller
-> - Avoid possible crashes while detecting LASI LAN & graphics
-> - Don't check layers in PDC_MEM_MAP_HPA, fixes NetBSD
-> - Ensure cache definition does not trigger endless loops
-> - Mark B160L as 32-bit machine in inventory
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+
 >   pc-bios/hppa-firmware.img   | Bin 163324 -> 167820 bytes
 >   pc-bios/hppa-firmware64.img | Bin 0 -> 206024 bytes
 >   roms/seabios-hppa           |   2 +-
@@ -116,12 +99,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 >   mode change 100644 => 100755 pc-bios/hppa-firmware.img
 >   create mode 100755 pc-bios/hppa-firmware64.img
 
-> 
-> diff --git a/pc-bios/hppa-firmware.img b/pc-bios/hppa-firmware.img
-> old mode 100644
-> new mode 100755
-> index 1b3a8418250db977e0c0c4ae7194ba7e0199c30d..e065e48ded21a44fc16592c571a0752422e31200
-> GIT binary patch
-> diff --git a/pc-bios/hppa-firmware64.img b/pc-bios/hppa-firmware64.img
+Can we have build instructions for these files in roms/Makefile please?
 
+Thanks,
+
+/mjt
 
