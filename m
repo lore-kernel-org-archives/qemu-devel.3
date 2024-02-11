@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B128C4829E
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F6BC4829B
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZ8xg-00068E-HZ; Sun, 11 Feb 2024 07:29:32 -0500
+	id 1rZ8xl-0006Ak-8M; Sun, 11 Feb 2024 07:29:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xe-00067H-At
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:30 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xk-0006A0-7A
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:36 -0500
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xa-0006F0-4g
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:29 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xi-0006Gy-Gj
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:35 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id A9ECACE0D8B;
- Sun, 11 Feb 2024 12:29:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9642FC433C7;
- Sun, 11 Feb 2024 12:29:13 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 2EDBBCE0D8B;
+ Sun, 11 Feb 2024 12:29:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC4FC433C7;
+ Sun, 11 Feb 2024 12:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707654554;
- bh=vx4xC5M+DPAKkeJWujimrHUf61MEn29t9idgCCP1zPY=;
+ s=k20201202; t=1707654571;
+ bh=WnjkRHA+PxnhJ2hwB5R3kLTKfKDbD/nEu0xgZtuTRoo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZMGeVWXw/swr9HHmP4u1QJbNc+E65RvxgCTkgqdpFZ0xDPouDPn4GX6RQeKwmiSGW
- 9Le4m1LcV9s6ImAvbSp62hIH4mRSBQzb07qIgRicwzG8+OyHMU6XyqIkJYA4c7PkxD
- ao++5bDoRwOQry7dQaYyT+etYUcxEEa6Q3n982EPlWq7IoMT/0HQDVnxR6rk9vwg1w
- cb4bQOgLVDNQZ0uLc+50MxaCqsd8yJeXCpKpTtKzDW+8lewPy1C2O7xw6BndQhDwK+
- rvm1hUMYJU1cu2blMR+284aeSBjZO2ASBANayhR3cKgJx7J0ZW2rUTfYi5w/xVYZPp
- 7HM8g9q4tdHcg==
+ b=Mo2SxgeiIonE6/LMG/P99TzmyuqH4hvTUqhgqELCyW/X9yL2WNC4uFqQ3BDhcY2CP
+ K6acADc5jMka1kIU8jxSSkHNFqbhhFdreD9DbcJVhnob0ELIr2OvoSkcvLrNFg/dff
+ taqZ+AlioetNrEgURLvU+aO4JhNd9gZ8qZ184nRfkQct2x3eT+p6fX3fnQ0mDuW2zk
+ AHfy+erq+uI5+UCemvvyvHA/Fwo7h8lToSq4y34tGnKY1N7cxwpPhBNRaarRNIHB3r
+ jACHalMBdp6fMMXP4q4BHzfKY9/2cf0ocCY5nbgs2ejFPXF0zbLgcckmbeujLkNrge
+ LTA2e9y6+dOIw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
- Helge Deller <deller@gmx.de>
-Subject: [PULL 01/12] disas/hppa: Add disassembly for qemu specific
- instructions
-Date: Sun, 11 Feb 2024 13:28:58 +0100
-Message-ID: <20240211122909.5807-2-deller@kernel.org>
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 10/12] hw/net/tulip: add chip status register values
+Date: Sun, 11 Feb 2024 13:29:07 +0100
+Message-ID: <20240211122909.5807-11-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240211122909.5807-1-deller@kernel.org>
 References: <20240211122909.5807-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=deller@kernel.org; helo=sin.source.kernel.org
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
@@ -71,32 +72,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Sven Schnelle <svens@stackframe.org>
 
-Add disassembly of opcodes for "HALT QEMU", "RESET QEMU" and
-"RESTORE SHR" (restore shadow registers).
+Netbsd isn't able to detect a link on the emulated tulip card. That's
+because netbsd reads the Chip Status Register of the Phy (address
+0x14). The default phy data in the qemu tulip driver is all zero,
+which means no link is established and autonegotation isn't complete.
 
+Therefore set the register to 0x3b40, which means:
+
+Link is up, Autonegotation complete, Full Duplex, 100MBit/s Link
+speed.
+
+Also clear the mask because this register is read only.
+
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/hppa.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/net/tulip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/disas/hppa.c b/disas/hppa.c
-index cce4f4aa37..22dce9b41b 100644
---- a/disas/hppa.c
-+++ b/disas/hppa.c
-@@ -1609,6 +1609,10 @@ static const struct pa_opcode pa_opcodes[] =
- { "call",	0xe800a000, 0xffe0e000, "nW", pa10, FLAG_STRICT},
- { "ret",	0xe840d000, 0xfffffffd, "n", pa20, FLAG_STRICT},
- 
-+/* Opcodes assigned to QEMU, used by SeaBIOS firmware and Linux kernel */
-+{ "HALT QEMU",	0xfffdead0, 0xfffffffd, "n", pa10, FLAG_STRICT},
-+{ "RESET QEMU",	0xfffdead1, 0xfffffffd, "n", pa10, FLAG_STRICT},
-+{ "RESTORE SHR",0xfffdead2, 0xfffffffd, "n", pa10, FLAG_STRICT},
+diff --git a/hw/net/tulip.c b/hw/net/tulip.c
+index 6d4fb06dad..1f2ef20977 100644
+--- a/hw/net/tulip.c
++++ b/hw/net/tulip.c
+@@ -421,7 +421,7 @@ static uint16_t tulip_mdi_default[] = {
+     /* MDI Registers 8 - 15 */
+     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+     /* MDI Registers 16 - 31 */
+-    0x0003, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
++    0x0003, 0x0000, 0x0001, 0x0000, 0x3b40, 0x0000, 0x0000, 0x0000,
+     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
  };
  
- #define NUMOPCODES ((sizeof pa_opcodes)/(sizeof pa_opcodes[0]))
+@@ -429,7 +429,7 @@ static uint16_t tulip_mdi_default[] = {
+ static const uint16_t tulip_mdi_mask[] = {
+     0x0000, 0xffff, 0xffff, 0xffff, 0xc01f, 0xffff, 0xffff, 0x0000,
+     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+-    0x0fff, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff,
++    0x0fff, 0x0000, 0xffff, 0xffff, 0x0000, 0xffff, 0xffff, 0xffff,
+     0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+ };
+ 
 -- 
 2.43.0
 
