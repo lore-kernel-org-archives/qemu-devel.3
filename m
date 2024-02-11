@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5064C4829A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F84C4829B
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Feb 2024 12:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZ8xl-0006BO-Si; Sun, 11 Feb 2024 07:29:37 -0500
+	id 1rZ8xo-0006Bt-46; Sun, 11 Feb 2024 07:29:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xi-000695-N1
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:34 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xn-0006Bk-6A
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:39 -0500
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xg-0006G7-2v
- for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:34 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZ8xl-0006Gy-Gl
+ for qemu-devel@nongnu.org; Sun, 11 Feb 2024 07:29:38 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 5BB44CE0D92;
- Sun, 11 Feb 2024 12:29:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA51C433C7;
- Sun, 11 Feb 2024 12:29:26 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 65B33CE0D8B;
+ Sun, 11 Feb 2024 12:29:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54177C433C7;
+ Sun, 11 Feb 2024 12:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707654567;
- bh=QEDKIdARto+ZCseIU47VCEGfs+CMVMZ3Lv39zKgePHQ=;
+ s=k20201202; t=1707654575;
+ bh=dmm23UrfgEksNR5qCPqYN6vj7hcWMO7WB2mC/roSAbI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MZ6FFPhtbtlpDN418JaX0k1Zf2lELMe5/sb9d2g1hAFe5152AoHCV3t/SnJFuqLHa
- kB4xuEj6Qk/caP23es3U9RJBtPUf9Vk10CEKgf0g2JS0h9FRLq0IEe/AIWHXbR4Yct
- D61d0ghA/KIZz7c+Z6HrvSMR9dTCTB6Z7ydcHgFFgQeDtLucT+QGP8o8nmKbYfTTkT
- nw+ZNKCAPe8MwSVataCEUP6MwB8wY1OchvbzEKiOOu0bOElCb9GiXMaJ/kARzW05tY
- bnuQ01UvfeU7gxQ+FOnVC8S3JK4PRRx460VQ5NLxX6MMW/sE6Z70CFBtSRktDeJyAW
- d95M3Wu1D/90g==
+ b=gva582P1Z2niQIGtWUDuWy8Glk8SC/7S7LKTIZJ5LF+EieyXx7GhQEokxBQu+eoaU
+ +Ld2WbntdDaKxsFt103mSIAZg+dyR6OnOTHY8q/OJdWcEZ4XP5ZtYNb7d3CuFBakw+
+ Z6mPVYXuRbmdKKyVsDxgmGz3fkAmAsp5lsv8OVLx/i7ABPJNF3yhheida5gzUo5wTI
+ ENEagBK7gjH1l9gvxYIP6gGEEr6Y+ZSF6mAL/ueACLPoscQdaBqiUe2FBitfdtzC9e
+ INREGjXEQiTY/c3nGu8wj3H6ljRrkVJ4hV72BFQuk0HeiFMRSV/tZXlj3gYkVyo3I1
+ CuKa21lUvTw2g==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 08/12] target/hppa: Allow read-access to PSW with rsm 0,
- reg instruction
-Date: Sun, 11 Feb 2024 13:29:05 +0100
-Message-ID: <20240211122909.5807-9-deller@kernel.org>
+Subject: [PULL 12/12] hw/hppa/machine: Load 64-bit firmware on 64-bit machines
+Date: Sun, 11 Feb 2024 13:29:09 +0100
+Message-ID: <20240211122909.5807-13-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240211122909.5807-1-deller@kernel.org>
 References: <20240211122909.5807-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=deller@kernel.org; helo=sin.source.kernel.org
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
@@ -73,39 +72,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-HP-UX 11 and HP ODE tools use the "rsm 0,%reg" instruction in not priviledged
-code paths to get the current PSW flags. The constant 0 means that no bits of
-the PSW shall be reset, so this is effectively a read-only access to the PSW.
-Allow this read-only access even for not privileged code.
+Load the 64-bit SeaBIOS-hppa firmware by default when running on a 64-bit
+machine. This will enable us to later support more than 4GB of RAM and is
+required that the OS (or PALO bootloader) will start or install a 64-bit kernel
+instead of a 32-bit kernel.
+
+Note that SeaBIOS-hppa v16 provides the "-fw_cfg opt/OS64,string=3" option with
+which the user can control what the firmware shall report back to the OS:
+Support of 32-bit OS, support of a 64-bit OS, or support for both (default).
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/hppa/machine.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 53ec57ee86..01f3188656 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -2156,10 +2156,16 @@ static bool trans_ldsid(DisasContext *ctx, arg_ldsid *a)
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index eb78c46ff1..a47baa572d 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -333,6 +333,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+     const char *kernel_filename = machine->kernel_filename;
+     const char *kernel_cmdline = machine->kernel_cmdline;
+     const char *initrd_filename = machine->initrd_filename;
++    const char *firmware = machine->firmware;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     DeviceState *dev;
+     PCIDevice *pci_dev;
+@@ -408,9 +409,13 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
  
- static bool trans_rsm(DisasContext *ctx, arg_rsm *a)
- {
-+#ifdef CONFIG_USER_ONLY
-     CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
--#ifndef CONFIG_USER_ONLY
-+#else
-     TCGv_i64 tmp;
- 
-+    /* HP-UX 11i and HP ODE use rsm for read-access to PSW */
-+    if (a->i) {
-+        CHECK_MOST_PRIVILEGED(EXCP_PRIV_OPR);
+     /* Load firmware.  Given that this is not "real" firmware,
+        but one explicitly written for the emulation, we might as
+-       well load it directly from an ELF image.  */
+-    firmware_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS,
+-                                       machine->firmware ?: "hppa-firmware.img");
++       well load it directly from an ELF image. Load the 64-bit
++       firmware on 64-bit machines by default if not specified
++       on command line. */
++    if (!firmware) {
++        firmware = lasi_dev ? "hppa-firmware.img" : "hppa-firmware64.img";
 +    }
-+
-     nullify_over(ctx);
- 
-     tmp = tcg_temp_new_i64();
++    firmware_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, firmware);
+     if (firmware_filename == NULL) {
+         error_report("no firmware provided");
+         exit(1);
 -- 
 2.43.0
 
