@@ -4,81 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798A2C4829E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 20:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C42C4829D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 20:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZcjC-0007D5-DV; Mon, 12 Feb 2024 15:16:34 -0500
+	id 1rZd9Q-0004CH-55; Mon, 12 Feb 2024 15:43:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dionnaglaze@google.com>)
- id 1rZcjA-0007Ct-9b
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 15:16:32 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dionnaglaze@google.com>)
- id 1rZcj8-0006Jx-I6
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 15:16:32 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-560530f4e21so2639a12.1
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 12:16:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1707768988; x=1708373788; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=SDwQlnMvSUXWZCNDxSNzqAWpmsICnk3Smm8wfKL/l2M=;
- b=xafBlp+cPXrunggdim0+eq7J8Azlu29Qxtsm6sIV//uKPc+0N+Hj4boWEAF9jxhG4c
- C1Vkz0YdmDyetcEXp0+u03FFgeYkg5IvLgw8cm+5peZYrEGpZBTkJ22kOpUg3uwAOio8
- goDgo7rh/TLqSIUfS+TnKUjNOMeaEVPJS1EN3V5NNUGe3j5iyC4X2hNEaQANv7R1aMEq
- hG35+PNOcDZZoogtj+LKkU5TuLDnOauDgze0zVC/jo/YbyVxRQZ/z6h+bePQddjXZMzC
- Ht4RYEMaA3M/Qb84D8o82E4KJ1+EXHhmW5lct2w9qccARvm02dnfK9Fy2OQBoa2ETTBX
- 0w0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707768988; x=1708373788;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SDwQlnMvSUXWZCNDxSNzqAWpmsICnk3Smm8wfKL/l2M=;
- b=IS5eqgDuGSeH34vpdccj2VG8eFcAhwO+UPDydtVM3OE7I7zEg2NSsp5+0eHBtTX0hj
- 9BJ6peqM1oIqMjS4fPOIugxWsm85PzHupPvTXDMTPhYp2zht1w5ccLWJ8Fo782ISc6oi
- e2gBkBqoW4bW83sUfwSeRA31R4PtoqvMqNhvtzS5vRXlc8XwMTXCYUv2hnErdFT/8elo
- +JlnT45nH8jgxnZYDRxSKgOsYCp4pvFy7sqgs8H7a/JYEuLH7+E1uM2rStr3czWSchs2
- JC2XJgVkpM+viV6dYTmJA2QaXDFJbyU3Q//xIu0ucvQZgwmx70RAC3Tak21EQsYmQssy
- pufQ==
-X-Gm-Message-State: AOJu0Yzx04rY6ScrsZLE8GObqVWvt+tRc1PL5Dvce5WMReCee0pZh91d
- +7KYXQdWfgaZSYFGc0Vl7kBvKdmXiqgcAFCDTMVj6wf+ZsisO35hKVE99hTv/aK9uCP82Uz6r9H
- AVyi2eXRBvyoremFYJ7V2Xhg2dTo6l3G1j6M6
-X-Google-Smtp-Source: AGHT+IES29R0fbvSPywXtnyh84PhzP09BkVlcvID9x5TsgBRPdw5BmJCGsvqXUUGMmyI4vZV9+FVq20pj92SggDJLKk=
-X-Received: by 2002:a50:8a9e:0:b0:560:f37e:2d5d with SMTP id
- j30-20020a508a9e000000b00560f37e2d5dmr293201edj.5.1707768988023; Mon, 12 Feb
- 2024 12:16:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rZd9O-0004C7-O7
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 15:43:38 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rZd9M-00020z-Q4
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 15:43:38 -0500
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41CKbW1V019491; Mon, 12 Feb 2024 20:43:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=pp1; bh=LXBXs7t5w751PCFnKTw3LMF1mh1y1ygnIYfXuNN/5Cs=;
+ b=E7YkDJnpCOIH2zcvm0fDkaAYCJiZUJ36MlaB43QmvBAnd3WqPttNnNzqfvcTFdtN3muL
+ zr8DzEYKSR+Wu0REjBWhKsMOBv4DFRK15SmMjh2ZIa0jFDmHV2RGtPYMMUg8qAo8g4yV
+ 20Wt1/v30AGLkO7dJ2+XPZ6Zmc2gX/uZHZOvLuY3nXgsMYZ2uguBMdTKkjnWA9P1ygJr
+ lheBy/SZy8wVVg0XgX68DVYIlX6kRN9g2izQnPp+lLhDjp+W8Bv0v6VG3HdABYdR6vTH
+ ujgk37TJ2Yn54kTwhTsv5l4sGoaj0PHa3S0Z04qLeVxTa9M0kY4asHog/2U1WNoAxRFu Ig== 
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w7the82t7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 12 Feb 2024 20:43:32 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41CIZWn0004247; Mon, 12 Feb 2024 20:43:31 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w6kv038t5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 12 Feb 2024 20:43:31 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41CKhRjT18743812
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 12 Feb 2024 20:43:29 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6670B2004B;
+ Mon, 12 Feb 2024 20:43:27 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1297120040;
+ Mon, 12 Feb 2024 20:43:27 +0000 (GMT)
+Received: from heavy (unknown [9.179.4.126])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 12 Feb 2024 20:43:26 +0000 (GMT)
+Date: Mon, 12 Feb 2024 21:43:25 +0100
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Purdie <richard.purdie@linuxfoundation.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: QEMU Developers <qemu-devel@nongnu.org>
+Subject: Re: Re: [PULL 05/13] linux-user: Use walk_memory_regions for
+ open_self_maps
+Message-ID: <2no4imvz2zrar5kchz2l3oddqbgpj77jgwcuf7aritkn2ok763@i2mvpcihztho>
+References: <20230901204251.137307-1-richard.henderson@linaro.org>
+ <20230901204251.137307-6-richard.henderson@linaro.org>
+ <9860cd401db66e6bf10e9e41df148b25ee6c73fd.camel@linuxfoundation.org>
+ <c845093f-1fe0-477e-bf5e-db22c985241a@tls.msk.ru>
+ <3cc4df1a6fe27b211b29d2c17846812936255d7a.camel@linuxfoundation.org>
+ <ca83fc98-219c-47b1-a16b-f281d914e4a0@linaro.org>
+ <360135aa106e1925979bc0efd5a5d6fdeed4202d.camel@linuxfoundation.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <360135aa106e1925979bc0efd5a5d6fdeed4202d.camel@linuxfoundation.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: I8fNohOHzjyltZ0frmO5B5D4gvvESc5C
+X-Proofpoint-GUID: I8fNohOHzjyltZ0frmO5B5D4gvvESc5C
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-From: Dionna Amalie Glaze <dionnaglaze@google.com>
-Date: Mon, 12 Feb 2024 12:16:14 -0800
-Message-ID: <CAAH4kHY+JHSznw_t52rwBckfcZpzvX28b9Cu3eyXLMShnj3NBg@mail.gmail.com>
-Subject: RFC i386/sev: kernel-hashes, reference measurements and event logs
-To: "Li, Xiaoyao" <xiaoyao.li@intel.com>
-Cc: npiggin@gmail.com, Gerd Hoffmann <kraxel@redhat.com>, 
- "Draper, Andrew" <andrew.draper@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Joerg Roedel <jroedel@suse.de>, James Bottomley <jejb@linux.ibm.com>,
- Chong Cai <chongc@google.com>, 
- qemu-devel@nongnu.org, clg@kaod.org, danielhb413@gmail.com, 
- harshpb@linux.ibm.com, david@gibson.dropbear.id.au, borntraeger@linux.ibm.com, 
- farman@linux.ibm.com, Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, iii@linux.ibm.com, thuth@redhat.com, 
- "Lendacky, Thomas" <Thomas.Lendacky@amd.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=dionnaglaze@google.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-12_16,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 spamscore=0
+ mlxlogscore=999 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 adultscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402120160
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,64 +114,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is not a patch but it felt inappropriate to derail a recent patch
-that's just refactoring the kernel-hashes object_class_property
-definition. Apologies if this has been discussed before, as I'm not
-particularly active here.
+On Mon, Feb 05, 2024 at 11:11:06AM +0000, Richard Purdie wrote:
+> On Mon, 2024-02-05 at 13:05 +1000, Richard Henderson wrote:
+> > On 1/26/24 23:52, Richard Purdie wrote:
+> > > On Fri, 2024-01-26 at 16:33 +0300, Michael Tokarev wrote:
+> > > > 26.01.2024 16:03, Richard Purdie wrote:
+> > > > > I've run into a problem with this change.
+> > > > > 
+> > > > > We (Yocto Project) upgraded to qemu 8.2.0 recently and after that we
+> > > > > started seeing errors cross compiling webkitgtk on x86_64 for x86_64
+> > > > > during the introspection code which runs under user mode qemu.
+> > > > 
+> > > > Besides your observations, please be aware there's quite a few issues in 8.2.0.
+> > > > Please take a look at https://gitlab.com/mjt0k/qemu/-/commits/staging-8.2/
+> > > > (and https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2/ which is updated
+> > > > less often) for fixes already queued up, if you haven't looked there already.
+> > > > 8.2.1 stable/bugfix release is scheduled for the beginning of the next week.
+> > > 
+> > > Thanks.
+> > > 
+> > > I should note that I did test the staging-8.2 branch and nothing there
+> > > helped. The issue was also present with master as of yesterday.
+> > > 
+> > > https://bugzilla.yoctoproject.org/show_bug.cgi?id=15367 is Yocto
+> > > Projects tracking of the issue which has the commits for master and
+> > > staging-8.2 that I tested.
+> > 
+> > The yocto logs referenced here are not helpful for reproducing the problem.
+> 
+> It took me a couple of days I didn't have to workout which commit
+> caused it, which versions showed the issue and how to work around it.
+> 
+> It looks host kernel specific since it doesn't happen on some systems
+> so even with the binaries/command/environment vars, it may not be
+> enough.
+> 
+> I was hoping the indication of the cause might help point to the fix as
+> there is quite a bit of work in trying to extract this into a
+> reproducer. The failure is 20 mins into a webkitgtk compile on a remote
+> CI system which no longer has the context on it.
+> 
+> > Please extract a binary to run, inputs, and command-line.
+> 
+> I wish I could say that to the bug reports I get! :)
+> 
+> I'll do my best but finding the time is going to be a challenge.
+> 
+> Cheers,
+> 
+> Richard
 
-Regarding kernel-hashes, how is that load-time information passed
-along to the guest beyond, say, OVMF? Can we require that these hashes
-are also present in fw_cfg so they can be read from the kernel? In
-Linux it'd be nice to have /sys/firmware/qemu_fw_cfg/sev_kernel_hash,
-/sys/firmware/qemu_fw_cfg/sev_cmdline_hash,
-/sys/firmware/qemu_fw_cfg/sev_initrd_hash
+I just ran into a similar crash and could reproduce it with
+5005aed8a7e7 alpha-linux-user as follows:
 
-I'm working on how to use standard document formats for providing
-reference measurements of the Google Compute Engine virtual firmware
-for remote attestation, and these hashes have an impact not just on
-the measurement but on the entire model that the IETF RATS working
-group is considering for authorizing attestation measurements.
+#include <fcntl.h>
+#include <sys/shm.h>
 
-If you're assembling a VM launch configuration with firmware provided
-by a trusted vendor (say Google), and your hashes are passed in from
-an API, there's no easy rendezvous to state that the combination
-produces the expected hardware measurement. This makes adding
-kernel-hashes support unappetizing, since it makes the hardware
-attestation report's measurement have no meaning, or at least, it
-makes life difficult for people trying to assign it meaning.
+int main(void)
+{
+        shmat(shmget(IPC_PRIVATE, 1836016, IPC_CREAT | 0600), (void *)0x20000804000, 0);
+        open("/proc/self/maps", O_RDONLY);
+}
 
-The measurement is the product of two different entities as assembled
-by the VMM given a trusted firmware and the kernel hashes. It's a bit
-of a sandwich of (GCE) core firmware, (User) SEV hashes, (GCE) BSP
-VMSA, AP VMSA*.
-
-When you collect "evidence" to verify locally or pass along to a
-verification service, you need more than just the hardware attestation
-report to make sense of the combined bits. You have a PCR situation
-like with TPM, so you need an event log for these different aspects of
-the ultimate measurement. There is no event log for this
--kernel-hashes construction.
-
-We can use the TCG TPM event log to post EV_NO_ACTION events about the
-PlatformRIM, specifically, to point at a UEFI variable that we
-populate to store our signed document about the expected measurements
-with the Qemu-SEV-SNP-boot-protocol, but I don't see how we might
-collect the kernel-hashes values as extra evidence to combine and
-derive the attestation report's MEASUREMENT field to accept "evidence"
-objects for the core firmware component and the kernel hashes
-component.
-
-So my question is if this feature is to be a long term feature, how do
-you expect to collect the SEV hashes as a separate evidence object to
-play nicely with IETF RATS?
-
-Is this a long term feature, or are we expecting it to be deprecated by SVSM?
-
-I've tagged in people in CC that I could imagine would have something
-to say about this.
-
-Thanks y'all
-
---
--Dionna Glaze, PhD (she/her)
+Apparently an mmap() is missing for shmat() when g>h and shmaddr is
+specified. The mismatch between the host's and the guest's view of the
+mapping's tail appears to be causing the SEGV.
 
