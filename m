@@ -4,85 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC23C48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 16:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F376EC48297
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 16:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZYnR-00030Z-7x; Mon, 12 Feb 2024 11:04:41 -0500
+	id 1rZYom-0003ly-Km; Mon, 12 Feb 2024 11:06:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZYnO-00030K-Pk
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 11:04:39 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZYok-0003lJ-Em
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 11:06:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZYnN-0008AM-2y
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 11:04:38 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZYoi-00008X-A4
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 11:06:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707753875;
+ s=mimecast20190719; t=1707753958;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I3roUxIEJvzC1gCDtu5pbypgiw8zatYlhLu24vzKOLs=;
- b=JT/ROWlnjXddwDuuMwZSTIIgGYnEKehS2/cGjqhrq36EnVciiMvI0Yjvlj2K5MdVfXiC2p
- 2KkoccaKscDTZ2UaFBXwYp00m/t84jAdTgrAvS9qEsHaPWaA+iPTTP3xQOF9750fj/5AD9
- qBAWhoddQhb2QoFlqY50YkIVspgZTtE=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bMcS+tWRZih4fckwWJz1zUvOMYFPBwTUTkTa1xIpD0o=;
+ b=B8zaVMCM1H/eG63hOHSq1xsWr7nMQZlr3QpECe6RMC2sLKlJOcng3OXx21PMRG/xqyJRm/
+ WtUvnamXFRw/9WjGJEBIDja+CE7ypjMmMNhdXtCF/78d1SOwACast7sQeuxVl8X1GEHAy/
+ JTUADVl4HXF2JgxCJR1P1H+NuiIoYR0=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-XpyOgalVNayopjs4ifSAbg-1; Mon, 12 Feb 2024 11:04:33 -0500
-X-MC-Unique: XpyOgalVNayopjs4ifSAbg-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7830ab8fb5aso414617485a.2
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 08:04:33 -0800 (PST)
+ us-mta-427-gZ64Wcj5PuGIudb5WyT2jg-1; Mon, 12 Feb 2024 11:05:55 -0500
+X-MC-Unique: gZ64Wcj5PuGIudb5WyT2jg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a3120029877so437749866b.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 08:05:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707753872; x=1708358672;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I3roUxIEJvzC1gCDtu5pbypgiw8zatYlhLu24vzKOLs=;
- b=WlnJxhbToiCbAomtWlOtAB7WMBmDAF+wtI5LqzJKFkF+PNFuy0RabInDNWq/1rXrAm
- MfmqBk6k3WabdAVjUKK4AyfhUSpDdf91IGkyYsrpCHUIh7m56vfVx7A8LqMfcIARQGcy
- /vFvyiz1pK2IVoIdvUsD91/tXaRhvjO5Mfl0REbhKkBaw8rmhiM+vM/DineJySCtfjQM
- cRU4Ncm8GtIEJwPt9bCE4AGTN1j6HJ8EhnNmAbDJGx8O8FjC5TloZCUoJmu3yZYfuVL7
- ZOp5ySF3Ifg1sOI0KWvPgosShj4IEdEZ2GGwd4SuUSlYFB+q472sbVedNMclyQNwYpbR
- Iy5A==
-X-Gm-Message-State: AOJu0YxFFb76Bi4p6dOVTl0hemWZMz90InF/OJa+DJLz1mb9cKUO7v/6
- hKyVASM+JVzqLUoXMyOfvASxcjmSUAG+dsX8c/UZtIMKhl0bcYS8kr7e7OhW108BbcTMBmVk02z
- nmekDWmW1mN1p2vRWc2JAB/G0Co60I/0wFq3Fdl3ItKwcr9qBhT06cE5QP5t1
-X-Received: by 2002:ae9:e715:0:b0:785:ca4d:2a3a with SMTP id
- m21-20020ae9e715000000b00785ca4d2a3amr6640988qka.77.1707753872115; 
- Mon, 12 Feb 2024 08:04:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEDnYeZyO4bt8izNKVFkNHRNL+YcMEMMAvFqjT5uLHqKJV7NH7Yg/XUL4MYFw+9ePSOoIlOJw==
-X-Received: by 2002:ae9:e715:0:b0:785:ca4d:2a3a with SMTP id
- m21-20020ae9e715000000b00785ca4d2a3amr6640943qka.77.1707753871555; 
- Mon, 12 Feb 2024 08:04:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707753954; x=1708358754;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bMcS+tWRZih4fckwWJz1zUvOMYFPBwTUTkTa1xIpD0o=;
+ b=HNZVooEJIMT32fkW3XSMCi6tdJr66ERjpbCWZDGjLdCdyy8yjqxy/CPlvqv2JML3c/
+ 0NHm5QLbZbkNhvMXO9xz8rUe4HjlBgN/4txL/DyxUkH/+KxEt+g5naOPaK8LN0SbIshu
+ PFdf2l9PGGQ7YQr7HN+PQMyL8J0WFxah6BKkBHEtLOgOsQBvzIg0ikhSPlBlnAe8TXR+
+ m/LvU0ltFlgDqh4S4GIyIIMQhKxAGt2spU5qWdNQC2HRZwRaf5R68WGp4cc7Neu5MuVz
+ gvDVt1PzCBeC/IvgSm7CaxF6po1l5+FRMUUg71VyWUj6a7P/j9yPcYocsrPYWvIqgWYL
+ GRpg==
+X-Gm-Message-State: AOJu0YwlRWbY+uEbEfFYHFr6t3gmdlPcI63EEhJaP426I5p9kV/2q5kl
+ XYi1h10HEnf7LOlvgZh3JGaDtb6UJ07+mJX0YNO3fxuyPWIqglB2qq3vnZuDLMm0XxG/rqDEzbM
+ aFR7w7K3oM+ar5yPwRM19jCHy2eCYEyohHEuentm3ygsJDmpjVQM8
+X-Received: by 2002:a17:907:7d9f:b0:a38:567a:6574 with SMTP id
+ oz31-20020a1709077d9f00b00a38567a6574mr9938747ejc.5.1707753954219; 
+ Mon, 12 Feb 2024 08:05:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHJ4m8Z2IASNbJ9OUPCmeMD38RRSRvcwU5qcwgdhkYgNwT+u1eN4k2xN0vI8uPInFPzkvZ0gQ==
+X-Received: by 2002:a17:907:7d9f:b0:a38:567a:6574 with SMTP id
+ oz31-20020a1709077d9f00b00a38567a6574mr9938706ejc.5.1707753953928; 
+ Mon, 12 Feb 2024 08:05:53 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjS7l8DNKCx+gzwhpwWP47U9dWdl/p9BxiqiczYhw97mlqFqMRGY0jOEj124WumOFlCtZ7a0CedA8A+prRlAaK8VTMOZ76+0yyEOTMOj9U7jgRo4hqplIARqyW+R6KMGiGo+hr6EiE0vKwHC93Gqim
-Received: from ?IPV6:2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891?
- ([2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891])
- by smtp.gmail.com with ESMTPSA id
- m4-20020a05620a24c400b00785bdc9d08esm2149649qkn.32.2024.02.12.08.04.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 08:04:31 -0800 (PST)
-Message-ID: <da0532c4-818f-4aab-8ad4-46323d85f50d@redhat.com>
-Date: Mon, 12 Feb 2024 17:04:28 +0100
+ AJvYcCX3nowkXcL7Nr0pSyAer8+/qPGJpJgOrN8XS++L+NWRpwFX23JHAH2dEQKmVPftMmxuT/aFiguzi7IqIOF6nEvyTW3sLxeudgbY5mKtN1CxH7cZDlcaCdtaXNNINIvjxtbZC6N87pkuTUEhszIp1qXHiu2iOapR0v36YHO2Ryc4uPpKO2Wangm5InC4kvK4Ue38UZQXIC85qSXQ3I9GzEFQXkzw5AJy1lykl5R2m6nKW3gGcNJ7uEkJIDi4zH8cwa1piNqkiYWAvSkyBRMuVEAwm/Yyj/oNh8FU5POWj2aomAa5b2McxoZ4WwqP/SMNLMd7qCeY+KDyMnDY1Uw3nMy6FEzXT0sPWqEht53qV4DsfWe0IzdBE0RjhYKwDaDErvrL8e7vahotfvN9HaqEfEvQlZfgPiYNeuStHRO+rEz+ViQPjnJHLc999jO9bjgFwWgJLuus/kIQl5+sZf4ruAqJK7qOmCnGXRdN1ElxOWB3EVJXRv7FSRDw7rFGwopxboHp6KmQqMN8y58GXJxdpHUhHlik965yBL8haA0/t32eaMYan+IEEVtxeHEsKMQB39nAqkRAGQrP/CUEJ9saegdxv+D0ovnIV+b4vaTArRACXyTZQXnC5fKph/oY2Nn2fihtaA6hcA8B/1sJXLZHwIPzPtQXknKhraCIW5mDti3Yps8=
+Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
+ vi16-20020a170907d41000b00a3ce31d3ffdsm169989ejc.93.2024.02.12.08.05.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Feb 2024 08:05:53 -0800 (PST)
+Date: Mon, 12 Feb 2024 11:05:48 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Ankit Agrawal <ankita@nvidia.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Jason Gunthorpe <jgg@nvidia.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>,
+ "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "ani@anisinha.ca" <ani@anisinha.ca>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "eduardo@habkost.net" <eduardo@habkost.net>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "eblake@redhat.com" <eblake@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "david@redhat.com" <david@redhat.com>,
+ "gshan@redhat.com" <gshan@redhat.com>,
+ Aniket Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>,
+ Vikram Sethi <vsethi@nvidia.com>, Andy Currid <acurrid@nvidia.com>,
+ Dheeraj Nigam <dnigam@nvidia.com>, Uday Dhoke <udhoke@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v6 0/2] acpi: report numa nodes for device memory using GI
+Message-ID: <20240212110526-mutt-send-email-mst@kernel.org>
+References: <20231225045603.7654-1-ankita@nvidia.com>
+ <20240102123143.00006486@Huawei.com>
+ <SA1PR12MB71990557668BDE5878845A8AB067A@SA1PR12MB7199.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 14/14] migration: Fix return-path thread exit
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240207133347.1115903-1-clg@redhat.com>
- <20240207133347.1115903-15-clg@redhat.com> <ZcRtSdInpBGgWhk0@x1n>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZcRtSdInpBGgWhk0@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SA1PR12MB71990557668BDE5878845A8AB067A@SA1PR12MB7199.namprd12.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -106,105 +120,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter
-
-On 2/8/24 06:57, Peter Xu wrote:
-> On Wed, Feb 07, 2024 at 02:33:47PM +0100, Cédric Le Goater wrote:
->> In case of error, close_return_path_on_source() can perform a shutdown
->> to exit the return-path thread.  However, in migrate_fd_cleanup(),
->> 'to_dst_file' is closed before calling close_return_path_on_source()
->> and the shutdown fails, leaving the source and destination waiting for
->> an event to occur.
->>
->> Close the file after calling close_return_path_on_source() so that the
->> shutdown succeeds and the return-path thread exits.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>
->>   This is an RFC because the correct fix implies reworking the QEMUFile
->>   construct, built on top of the QEMU I/O channel.
->>
->>   migration/migration.c | 13 ++++++-------
->>   1 file changed, 6 insertions(+), 7 deletions(-)
->>
->> diff --git a/migration/migration.c b/migration/migration.c
->> index 5f55af3d7624750ca416c4177781241b3e291e5d..de329f2c553288935d824748286e79e535929b8b 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -1313,6 +1313,8 @@ void migrate_set_state(int *state, int old_state, int new_state)
->>   
->>   static void migrate_fd_cleanup(MigrationState *s)
->>   {
->> +    QEMUFile *tmp = NULL;
->> +
->>       g_free(s->hostname);
->>       s->hostname = NULL;
->>       json_writer_free(s->vmdesc);
->> @@ -1321,8 +1323,6 @@ static void migrate_fd_cleanup(MigrationState *s)
->>       qemu_savevm_state_cleanup();
->>   
->>       if (s->to_dst_file) {
->> -        QEMUFile *tmp;
->> -
->>           trace_migrate_fd_cleanup();
->>           bql_unlock();
->>           if (s->migration_thread_running) {
->> @@ -1341,15 +1341,14 @@ static void migrate_fd_cleanup(MigrationState *s)
->>            * critical section won't block for long.
->>            */
->>           migration_ioc_unregister_yank_from_file(tmp);
->> -        qemu_fclose(tmp);
->>       }
->>   
->> -    /*
->> -     * We already cleaned up to_dst_file, so errors from the return
->> -     * path might be due to that, ignore them.
->> -     */
->>       close_return_path_on_source(s);
->>   
->> +    if (tmp) {
->> +        qemu_fclose(tmp);
->> +    }
->> +
->>       assert(!migration_is_active(s));
->>   
->>       if (s->state == MIGRATION_STATUS_CANCELLING) {
+On Thu, Jan 04, 2024 at 03:05:27AM +0000, Ankit Agrawal wrote:
 > 
-> I think this is okay to me for a short term plan.  I'll see how others
-> think, also add Dan into the loop.
+> >>
+> >> -numa node,nodeid=2 -numa node,nodeid=3 -numa node,nodeid=4 \
+> >> -numa node,nodeid=5 -numa node,nodeid=6 -numa node,nodeid=7 \
+> >> -numa node,nodeid=8 -numa node,nodeid=9 \
+> >> -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.0,addr=04.0,rombar=0,id=dev0 \
+> >> -object acpi-generic-initiator,id=gi0,pci-dev=dev0,host-nodes=2-9 \
+> >>
+> >
+> > I'd find it helpful to see the resulting chunk of SRAT for these examples
+> > (disassembled) in this cover letter and the patches (where there are more examples).
 > 
-> If so, would you please add a rich comment explaining why tmp needs to be
-> closed later?  Especially, explicit comment on the ordering requirement
-> would be helpful: IMHO here it's an order that qemu_fclose() must happen
-> after close_return_path_on_source().  So when others work on this code we
-> don't easily break it without noticing.
+> Ack. I'll document the resulting SRAT table as well.
 
-Sure. I will when we have clarified with Fabiano what is the best
-approach.
-
-> Also please feel free to post separately on migration patches if you'd like
-> us to merge the patches when repost.
-
-This series is a collection of multiple (related) changes :
-
-* extra Error** parameter to save_setup() migration handlers.
-   This change has consequences on the various callers which are not
-   fully analyzed.
-* similar changes for memory logging handlers. These looks more self
-   contained and I will see if I can send then separately.
-* return-path thread termination
-
-and then, in background we have open questions regarding :
-
-* the QEMUfile implementation and its QIOChannel usage for migration
-   streams
-* qemu_file_set_error* vs. migrate_set_error. It is confusing, at least
-   for me. Do we have some documentation on best practices ?
-
-Thanks,
-
-C.
-
+Still didn't happen so this is dropped for now.
 
 
