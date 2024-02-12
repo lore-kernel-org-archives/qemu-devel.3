@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C89C4829E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 23:49:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A56C4829F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 23:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZg1e-0003Eg-4P; Mon, 12 Feb 2024 18:47:50 -0500
+	id 1rZg1Z-0003CN-JA; Mon, 12 Feb 2024 18:47:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1b-0003DI-AB
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:47 -0500
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1X-0003Bz-DQ
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:43 -0500
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1Z-00009B-Hv
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:47 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1U-000086-B1
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:42 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id D9F85CE17B9;
- Mon, 12 Feb 2024 23:47:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8EBC433F1;
- Mon, 12 Feb 2024 23:47:40 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id AF14ECE17E5;
+ Mon, 12 Feb 2024 23:47:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF80AC433C7;
+ Mon, 12 Feb 2024 23:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707781662;
- bh=bMGiugQoc2DhmTSqm+CZs/LiSubHUzCkUMZHroTlcng=;
+ s=k20201202; t=1707781657;
+ bh=pgNJchBQDIBYjxxSFSCpASqiLdg+D2giuu+TbQVVM78=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fIpLKn27e3vkTT3s8QIyNGitEgRIQfytmGeQxiRoDTld4daoEBeq3WPKqzQIi0hG9
- a5t/vpA1lcPBUbfujQigHUr8IpcuuyBH285GoHf0wJGVkXoQZFMwNwwY25SiO6Ig00
- HwHw3bAypzHJi3yWD5TL986yr09WPVoTvvT7Hg/9dljyUStvlnL8wQmsr1wmQoGtNH
- SVJTD0ruWMrmbYfzW6SEYsF+bt5INVunajvv5OIVp9hnqyfBXeAfeCQPe7uOPZLozt
- 9j+c0z7M481tAOa4daX9qPVw04xEyuT4wtJ6TazIDJylNzSveqtZRatWaklNNhwvWa
- GxaySBZG/GVLg==
+ b=cBbofxaRm8bt2vde0cDOlFgjFDzRhov6+t5OuHButCqLp8pS4lJl5BTrvUFaQ0ZU9
+ eTZQ2WytK3S5TRSb30khLjHWfPZpxLu4dijyaJ3xX3NDfIuiPyuWSNNmoTjR83s4nz
+ UGiKKYzA3QDryrhLaBZ8+5eD2V0lU1xhugBYe1kd8aVbfD2oqRFixU4wOfbOHneYNp
+ 3Gop4BkviOnJFJbdOe1lO38EU6LIevTxortqfbgR4Wf8PltyPAfnmtPkm7iGgGJWqQ
+ DJWHBqe8no0YWlnA+5hITLsZT6nt6OEqIjGZg8S0+GOIiVsAfmoOb6by1zftzXPWJJ
+ 9MBg9SgEQW49Q==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 09/12] target/hppa: PDC_BTLB_INFO uses 32-bit ints
-Date: Tue, 13 Feb 2024 00:47:20 +0100
-Message-ID: <20240212234723.222847-10-deller@kernel.org>
+Subject: [PULL 06/12] target/hppa: Implement do_transaction_failed handler for
+ I/O errors
+Date: Tue, 13 Feb 2024 00:47:17 +0100
+Message-ID: <20240212234723.222847-7-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240212234723.222847-1-deller@kernel.org>
 References: <20240212234723.222847-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=deller@kernel.org; helo=sin.source.kernel.org
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
+ helo=sin.source.kernel.org
 X-Spam_score_int: -51
 X-Spam_score: -5.2
 X-Spam_bar: -----
@@ -72,29 +73,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The BTLB helper function stores the BTLB info (four 32-bit ints) into
-the memory of the guest. They are only available when emulating a 32-bit
-CPU in the guest, so use "uint32_t" instead of "target_ulong" here.
+Add the do_transaction_failed() handler to tigger a HPMC to the CPU
+in case of I/O transaction errors.
+
+This is a preparation commit.
+We still lack implementation for some registers, so do not yet enable sending
+HPMCs.  Having this hunk here now nevertheless helps for the further
+development, so that it can easily be enabled later on.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/mem_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/hppa/cpu.c        |  1 +
+ target/hppa/cpu.h        |  5 +++++
+ target/hppa/mem_helper.c | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)
 
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 5f87c1b12a..afe73d4474 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -191,6 +191,7 @@ static const TCGCPUOps hppa_tcg_ops = {
+     .cpu_exec_interrupt = hppa_cpu_exec_interrupt,
+     .do_interrupt = hppa_cpu_do_interrupt,
+     .do_unaligned_access = hppa_cpu_do_unaligned_access,
++    .do_transaction_failed = hppa_cpu_do_transaction_failed,
+ #endif /* !CONFIG_USER_ONLY */
+ };
+ 
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 7a181e8f33..a92dc352cb 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -381,6 +381,11 @@ bool hppa_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+                               int type, hwaddr *pphys, int *pprot,
+                               HPPATLBEntry **tlb_entry);
++void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
++                                     vaddr addr, unsigned size,
++                                     MMUAccessType access_type,
++                                     int mmu_idx, MemTxAttrs attrs,
++                                     MemTxResult response, uintptr_t retaddr);
+ extern const MemoryRegionOps hppa_io_eir_ops;
+ extern const VMStateDescription vmstate_hppa_cpu;
+ void hppa_cpu_alarm_timer(void *);
 diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 676c0b3003..66b8fa7d72 100644
+index 629a9d90ef..676c0b3003 100644
 --- a/target/hppa/mem_helper.c
 +++ b/target/hppa/mem_helper.c
-@@ -684,7 +684,7 @@ void HELPER(diag_btlb)(CPUHPPAState *env)
-     case 0:
-         /* return BTLB parameters */
-         qemu_log_mask(CPU_LOG_MMU, "PDC_BLOCK_TLB: PDC_BTLB_INFO\n");
--        vaddr = probe_access(env, env->gr[24], 4 * sizeof(target_ulong),
-+        vaddr = probe_access(env, env->gr[24], 4 * sizeof(uint32_t),
-                              MMU_DATA_STORE, mmu_idx, ra);
-         if (vaddr == NULL) {
-             env->gr[28] = -10; /* invalid argument */
+@@ -353,6 +353,25 @@ raise_exception_with_ior(CPUHPPAState *env, int excp, uintptr_t retaddr,
+     cpu_loop_exit_restore(cs, retaddr);
+ }
+ 
++void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
++                                     vaddr addr, unsigned size,
++                                     MMUAccessType access_type,
++                                     int mmu_idx, MemTxAttrs attrs,
++                                     MemTxResult response, uintptr_t retaddr)
++{
++    CPUHPPAState *env = cpu_env(cs);
++
++    qemu_log_mask(LOG_GUEST_ERROR, "HPMC at " TARGET_FMT_lx ":" TARGET_FMT_lx
++                " while accessing I/O at %#08" HWADDR_PRIx "\n",
++                env->iasq_f, env->iaoq_f, physaddr);
++
++    /* FIXME: Enable HPMC exceptions when firmware has clean device probing */
++    if (0) {
++        raise_exception_with_ior(env, EXCP_HPMC, retaddr, addr,
++                                 MMU_IDX_MMU_DISABLED(mmu_idx));
++    }
++}
++
+ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+                        MMUAccessType type, int mmu_idx,
+                        bool probe, uintptr_t retaddr)
 -- 
 2.43.0
 
