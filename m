@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BD7C4829C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A12C48297
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZSIP-0002tn-Rz; Mon, 12 Feb 2024 04:08:13 -0500
+	id 1rZSKa-0004DK-M5; Mon, 12 Feb 2024 04:10:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSIO-0002te-Ed
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:08:12 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSKZ-0004Cw-FR
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:10:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSIN-0002UM-2O
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:08:12 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSKV-00031v-90
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:10:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707728888;
+ s=mimecast20190719; t=1707729022;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KSQszEEC2aYKMp38zYMPVt2iONRECOfjZm+KzEPKUas=;
- b=HePKy6eWcvKLInw/PvCY9jxNuysMBrEhiIKLuZ1EHTCVvwAiFCR9uX8y//gtR/xdfmRNBW
- TMtrCRd8D1D1q1z3p5b8J6mbND+MlWYPPFfNU9GzBTtyXDDYhLK0xbLYHfpyMRDEqGTdK6
- cz4aTgmmyMYhnMSveZ3i6f6x/V1jeYw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ah3sOerJwQ1byB45/Wxw0rPXXdyYIsWir1Rvbut6sQg=;
+ b=aS7M9vT+o8/JZ2eviQozD0K7lzkVq9uzk16NHqodZfyykTMudiswk9aEPKqp98m4kZo/0Z
+ WqjQNsVk+lSGnMh+yDWFS0NcD36eR4D7JMW4eGJcXpE2lIiquRZHgeBzDzSVWJVP0njTon
+ Mt8nIm5OdkUBcR3kvTVUtiB9Bi76++g=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-DAyMA8XTMPm8ksFM_xPJmw-1; Mon, 12 Feb 2024 04:08:07 -0500
-X-MC-Unique: DAyMA8XTMPm8ksFM_xPJmw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33b26c3d744so1326829f8f.1
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 01:08:06 -0800 (PST)
+ us-mta-26-buzyyvZrMqGN0DqwLNM2Zw-1; Mon, 12 Feb 2024 04:10:20 -0500
+X-MC-Unique: buzyyvZrMqGN0DqwLNM2Zw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33b14a51861so1492309f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 01:10:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707728886; x=1708333686;
+ d=1e100.net; s=20230601; t=1707729019; x=1708333819;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :references:cc:to:content-language:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KSQszEEC2aYKMp38zYMPVt2iONRECOfjZm+KzEPKUas=;
- b=FZSy6X8tiJY4X0JiJUMsFCqMK2t8WlkexcTsr+ddw2MIXv7WSRUqHpeh2J+NUPo0T1
- QoCun1nBKJz/cgbBSGrgGN/icb8Bt2AfE5WuGjPUE/vbWS4WAUEqcjcHtCYya8qNAAiK
- 72y/h27Bs0bOU3fQ9jFDSnyEBML2Q4IlKYfyBPzYsHKCuJk/wy6bx8Nyhd+ryhOHKrVV
- h9YjJn2Zj0OrDuRiuisEr5HGRGKLPFLhLR5Wp9lXIzpCMWUox8bk5dsnlHi5JNxm2z+B
- 3q7LeE9RDovil1yUHj8+vvxywK/+cN0OERJ/BRk6d3z6MY/EEJD/SzUKlH8AtYiPOioq
- PZhg==
-X-Gm-Message-State: AOJu0YyRjyzlrUHkqWO4HDYRUN7MzUOXB8WBDsutqJ7Z85HHrDfo1hZb
- /R4VP95GpD86gDxUqJwIENiioM/pXfb2FaZ61RlcUuP+YaWdkXmRndHmwkPeF2gAdgddTWop306
- 4PqJbrmOVpJYvpgS0uRbQ7dRM+NoCyPs+kJ9SfSuZ3HojBKFjC2GX
-X-Received: by 2002:a05:6000:120a:b0:33b:60ca:2693 with SMTP id
- e10-20020a056000120a00b0033b60ca2693mr5364166wrx.27.1707728885977; 
- Mon, 12 Feb 2024 01:08:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGF15ak/ZW4cRxdkfbkctcGhpUFK6zLvuPyJO88Um4WoPYwYhc9ycvSLaekMYyh2/T6rnzPMQ==
-X-Received: by 2002:a05:6000:120a:b0:33b:60ca:2693 with SMTP id
- e10-20020a056000120a00b0033b60ca2693mr5364140wrx.27.1707728885565; 
- Mon, 12 Feb 2024 01:08:05 -0800 (PST)
+ bh=ah3sOerJwQ1byB45/Wxw0rPXXdyYIsWir1Rvbut6sQg=;
+ b=ELRghDC2wutaY9WhseBSFeIvnlsE3+4bwQZrRiOUZP/QT5HfbNg5aPk4mgMEHTFTLz
+ D9P+dNWKSGWnd/6J+8KZ17m48LsZXi3BsX5nDXyR5RFf4VJYp/qqJLbeOMlgH1H7DiTi
+ cDIkEfTL9R+EUeNvBOTHztJyx4zuTWfJnoq3Qy/gp0qgrRu+JNCMU0xa3q4kcN2yR79y
+ UTp3TXu4M3kLHNyZOdKstNWueWP+4yV6F0vyEo3fVABOULkqE/XtKTFFFKtvKAfkqRgb
+ 8O7K0TOO78Bw9XBd3DOzgT0j6eGuV93EgT2l+LnK4CDIEkL9GktUZHoifegx+4z/8FWg
+ zW0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWabE//zOr5qemGtpA2cXfgQ5b7GYM7WShUN+3rzgassRFsybyaXoRBfkAW5YKZyFxCuLB+UTTpwgOWNnZgoxBWlR0jtYMkb2pkQNog+ixxLy1eyeIIzCl++E6NHz9EMNbUi/jmu3UXjdSNKNO375XuyPUzyUDCX04ESftaVnp1uKwsoaTGh5kjqgtGBMfKwNmpMg9C2IQupMaQtN46hPIpxEsfFCDXbwFojc6T6AOgAidL+MlWOC8YZSGckNNd0yktwKZ32UvgXrck6sV+QfAB0mfVqoPQCA==
+ AJvYcCVkP34K75xT2jWg2a3vfZaqlh61hDY8Tl+bR29J2FoFkNG/q25QGM8T+c7HQAIPyP18h8g3V/GZqd5aYqKmNFiQvAYov4Y=
+X-Gm-Message-State: AOJu0Yy4+H7wAChQt0zuOgIsCpfIRAFN4dSz5dUxDGqu6cdyvord4mXU
+ upAlW6ospeBLPkBevKN246tS6a0ZQzRkX/beEDMUxQQi65N5kNpGxQukl6dY3tGrjWld8hsWWWt
+ uFaYg0JrmNu6BKD6m6B64liQZ/kl1TMv/6o3mFfdVyTWuB8pxdEdUz4gEVfxS
+X-Received: by 2002:a05:6000:1e92:b0:33b:d04:9c67 with SMTP id
+ dd18-20020a0560001e9200b0033b0d049c67mr3398794wrb.38.1707729018825; 
+ Mon, 12 Feb 2024 01:10:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFhQsiyhHixbA0R0udClzB/uDh9EgKVWICLd03iP7HWrBIQ4s8MtPxY/T9DHmsBgjV9XNAp+A==
+X-Received: by 2002:a05:6000:1e92:b0:33b:d04:9c67 with SMTP id
+ dd18-20020a0560001e9200b0033b0d049c67mr3398782wrb.38.1707729018494; 
+ Mon, 12 Feb 2024 01:10:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHjBByBwQVjtg5sgPwupv0w1iyata0UFXuwbBLXfL/Gy3EtQ2bszIbaTWkTHz6l8ljYYcJBynMfmi48MMNBiX7m9cJdT5sEtfARsbOOtLwolP7+g3JWhUFB61Za2qTCP82wDa50C7O3P6TYiX0kRUFnjSBJgim+121reR7erGjtHEH3gjoDPBEF/uR7w+lF2renFZvtMbhvstS3hYjY+OZmZlUzS3Gw63nsjpoC2aV/+0RVhbYz1yG1nO6UB95if7QSfC5JnBW82/wyJUemSy3+x3rJZVFyA==
 Received: from ?IPV6:2003:cb:c730:2200:7229:83b1:524e:283a?
  (p200300cbc7302200722983b1524e283a.dip0.t-ipconnect.de.
  [2003:cb:c730:2200:7229:83b1:524e:283a])
  by smtp.gmail.com with ESMTPSA id
- dv5-20020a0560000d8500b0033b483d1abcsm6169250wrb.53.2024.02.12.01.08.04
+ j8-20020adfe508000000b0033aedaea1b2sm6210426wrm.30.2024.02.12.01.10.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 01:08:05 -0800 (PST)
-Message-ID: <7ebe44ff-eb67-48bd-909f-21d01b7f272b@redhat.com>
-Date: Mon, 12 Feb 2024 10:08:04 +0100
+ Mon, 12 Feb 2024 01:10:18 -0800 (PST)
+Message-ID: <952caa74-b808-44bb-b64e-c8c3a612caa0@redhat.com>
+Date: Mon, 12 Feb 2024 10:10:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 01/13] notify: pass error to notifier with return
+Subject: Re: [PATCH V3 03/13] migration: convert to NotifierWithReturn
 Content-Language: en-US
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -81,7 +83,7 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Marc-Andre Lureau <marcandre.lureau@redhat.com>
 References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
- <1707418446-134863-2-git-send-email-steven.sistare@oracle.com>
+ <1707418446-134863-4-git-send-email-steven.sistare@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -128,7 +130,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <1707418446-134863-2-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1707418446-134863-4-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -157,9 +159,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08.02.24 19:53, Steve Sistare wrote:
-> Pass an error object as the third parameter to "notifier with return"
-> notifiers, so clients no longer need to bundle an error object in the
-> opaque data.  The new parameter is used in a later patch.
+> Change all migration notifiers to type NotifierWithReturn, so notifiers
+> can return an error status in a future patch.  For now, pass NULL for the
+> notifier error parameter, and do not check the return value.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > Reviewed-by: Peter Xu <peterx@redhat.com>
