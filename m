@@ -4,71 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027ACC4829B
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97276C4829B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZS2a-000446-EV; Mon, 12 Feb 2024 03:51:52 -0500
+	id 1rZS3m-0005R8-6y; Mon, 12 Feb 2024 03:53:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZS2Y-00043e-GO
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:51:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rZS3Z-00058s-GC
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:52:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZS2W-0007HF-BY
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:51:50 -0500
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1rZS3X-0007St-Of
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:52:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707727907;
+ s=mimecast20190719; t=1707727970;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cZiYICAEPQEmGjWFcJuqoqXwCObYbxNWa7J9q7/sD8E=;
- b=YJo/C/GhHRtYxTMRoZ8emH71nxOzrPuD23hFyKlbL+8LWsYxNrRnEPnEYhgERpAmm4Mdg4
- KaJ3w/XubgzeQ/vDvAt7v8xmBanWJhEvkxRSvw/2AvYUuYS0ZlrurPBtkOlcWl57ETPJ/R
- TcfxsFUl7A6YSVgQ4XyjwKCdmus+N/o=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-448-HUGxzbIpMi6SPIF_AaJh7w-1; Mon,
- 12 Feb 2024 03:51:44 -0500
-X-MC-Unique: HUGxzbIpMi6SPIF_AaJh7w-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 26BFB1C0BA4F;
- Mon, 12 Feb 2024 08:51:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 033CC416184B;
- Mon, 12 Feb 2024 08:51:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DA2F121E65EB; Mon, 12 Feb 2024 09:51:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: [PULL 3/4] qapi/char: Make backend types properly conditional
-Date: Mon, 12 Feb 2024 09:51:41 +0100
-Message-ID: <20240212085142.523317-4-armbru@redhat.com>
-In-Reply-To: <20240212085142.523317-1-armbru@redhat.com>
-References: <20240212085142.523317-1-armbru@redhat.com>
+ bh=VD1EAoIPX2Cy72gesxetwe+9U1XHaA2NQ//CKjruPDU=;
+ b=cliOn8N2koTMmLVee5FlsXB6a6CU6Du6do7FM/xGbJmLOpF01my1m8siOAmmIgH0ANmoir
+ 1e1+utzEgnAsRxwR2lR7GuwKLkFBehWR5Vd5Ee4WOmqeCV7wCIjsExKJtJqgMVnbKXtcb3
+ R9ACjpLivjGOwag0ZCmcy4Z4ge+p6XA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-653-tCFVeYCCPdqRaML_DTSkSw-1; Mon, 12 Feb 2024 03:52:48 -0500
+X-MC-Unique: tCFVeYCCPdqRaML_DTSkSw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33b6fe7f46cso687580f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 00:52:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707727967; x=1708332767;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VD1EAoIPX2Cy72gesxetwe+9U1XHaA2NQ//CKjruPDU=;
+ b=Tdaikjh6tP84dS81BHUetScjWUNBZif9ncgQlnm/NeZiQ1ebLckW+n7kc7Y/ZNu1f8
+ rMlVT3goc+b58xL4teDPmgsaCuNg1lng+NhLdzMq5u8jd3oEiCfc8tCmVrwgHBxO3Ah8
+ x6B1hJk16BoD0XSJmEKn6kJrqg/x27Xxw7WH9uyxWDOup9467PkM4DFl7e/2FksQQ/nv
+ oiFnfsb/rEUQQYHMULbC8IshPJef0sk9AEXu6feMY9asPgLuSvGmDkIhH6t8CdUCQDDH
+ h5t5uujnn3E1YPfsRCjns1FtxCjGUnOsx/jF6uDfTJnULpEpGDjXLIcwdebuOhOANHCR
+ sU9A==
+X-Gm-Message-State: AOJu0Yziv3+zFG/4OAj+8/378BsWuIQVzD6q1T01Xqdp8LWhK8BYG6FA
+ 2wMfzipkuK3UPY0LKabAWx681W36RCZW2wjZ6fW3eEYMgSrOt5pdTuSMihyJOz1xXmDs7nhQqN2
+ 95IgHHVEKYlirAsiXbeQbxFgW49R3yXtmoRN5MTdHL+P3T2Pwc1RM
+X-Received: by 2002:a05:6000:1245:b0:33b:48f1:495c with SMTP id
+ j5-20020a056000124500b0033b48f1495cmr3674855wrx.12.1707727967017; 
+ Mon, 12 Feb 2024 00:52:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHviOMquJ/GSZY3zrAVSxBNqFsoQCEGqlI3OXFI54vomDE89J86V88M2CtnrVZF4z7FDoGdtQ==
+X-Received: by 2002:a05:6000:1245:b0:33b:48f1:495c with SMTP id
+ j5-20020a056000124500b0033b48f1495cmr3674843wrx.12.1707727966723; 
+ Mon, 12 Feb 2024 00:52:46 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVO4FRGqcGfCJqCJZSOEiW4gqDLuX2Wm2CX8WnjPUi7uwTqTRqAHqbkOVQQuAtQPTg1vMK5yGNFZWbtXiOKLvwM/FkjTr6K5x2WMYgBtKQdCWPF6//4wGCMiL93Aieja0AUCktqvccOwlw9W5or/960jEVVyUgTGSS5BMr+4JuT8daJCmLXl2vlDfsC7JyxMbgTmj6a92VrNLrSlgQ0/BdPrPKkIgk8zb+5
+Received: from ?IPV6:2003:cf:d740:65be:3d79:757f:8d1:97f5?
+ (p200300cfd74065be3d79757f08d197f5.dip0.t-ipconnect.de.
+ [2003:cf:d740:65be:3d79:757f:8d1:97f5])
+ by smtp.gmail.com with ESMTPSA id
+ bp9-20020a5d5a89000000b0033b4796641asm6199373wrb.22.2024.02.12.00.52.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Feb 2024 00:52:45 -0800 (PST)
+Message-ID: <76457a47-f011-426c-94ac-a3c4c163c821@redhat.com>
+Date: Mon, 12 Feb 2024 09:52:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] block: Allow concurrent BB context changes
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+References: <20240202144755.671354-1-hreitz@redhat.com>
+ <9bc07eef-da55-4ebf-a4ee-1d55eb6fd921@tls.msk.ru>
+ <272941d6-fb76-4c5c-968e-d441c7957646@redhat.com>
+ <62012f98-f2a5-4a28-aec6-3f03b1c5feab@tls.msk.ru>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <62012f98-f2a5-4a28-aec6-3f03b1c5feab@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.677,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,82 +109,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Character backends are actually QOM types.  When a backend's
-compile-time conditional QOM type is not compiled in, creation fails
-with "'FOO' is not a valid char driver name".  Okay, except
-introspecting chardev-add with query-qmp-schema doesn't work then: the
-backend type is there even though the QOM type isn't.
+On 10.02.24 09:46, Michael Tokarev wrote:
+> 09.02.2024 19:51, Hanna Czenczek :
+>> On 09.02.24 15:08, Michael Tokarev wrote:
+>>> 02.02.2024 17:47, Hanna Czenczek :
+>>>> Hi,
+>>>>
+>>>> Without the AioContext lock, a BB's context may kind of change at any
+>>>> time (unless it has a root node, and I/O requests are pending). That
+>>>> also means that its own context (BlockBackend.ctx) and that of its 
+>>>> root
+>>>> node can differ sometimes (while the context is being changed).
+>>>
+>>> How relevant this is for -stable (8.2 at least) which does not have
+>>> "scsi: eliminate AioContext lock" patchset, and in particular,:
+>>> v8.2.0-124-geaad0fe260 "scsi: only access SCSIDevice->requests from
+>>> one thread"?
+>>>
+>>> The issue first patch "block-backend: Allow concurrent context changes"
+>>> fixes (RHEL-19381) seems to be for 8.1.something, so it exists in 8.2
+>>> too, and this particular fix applies to 8.2.
+>>>
+>>> But with other changes around all this, I'm a bit lost as of what 
+>>> should
+>>> be done on stable.  Not even thinking about 7.2 here :)
+>>
+>> Ah, sorry, yes.  Since we do still have the AioContext lock, this 
+>> series won’t be necessary in -stable.  Sorry for the noise!
+>
+> Hm. Now I'm confused even more.. :)
+>
+> ad89367202 "block-backend: Allow concurrent context changes" - the first
+> one in this series - apparently is needed, as it fixes an issue reported
+> for qemu 8.1 (https://issues.redhat.com/browse/RHEL-19381).  Or is it not
+> the case?
 
-A management application can work around this issue by using
-qom-list-types instead.
+Ah, yes, I got confused there.  There are two (unfortunately? 
+fortunately? Red-Hat-internal) comments, one of which describes the 
+crash that’s fixed here, so I thought that bug described this crash.  
+But the actual description in the report describes something different 
+(more like what’s fixed by 
+https://lists.nongnu.org/archive/html/qemu-devel/2024-01/msg03649.html, 
+but I’m not entirely sure yet).
 
-Fix the issue anyway: add the conditionals to the QAPI schema.
+So basically I got the bug link wrong.  We now have 
+https://issues.redhat.com/browse/RHEL-24593, which has been reported 
+only against 8.2.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240203080228.2766159-4-armbru@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
----
- qapi/char.json | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+Hanna
 
-diff --git a/qapi/char.json b/qapi/char.json
-index 6c6ad3b10c..2d74e66746 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -472,8 +472,8 @@
- ##
- { 'enum': 'ChardevBackendKind',
-   'data': [ 'file',
--            'serial',
--            'parallel',
-+            { 'name': 'serial', 'if': 'HAVE_CHARDEV_SERIAL' },
-+            { 'name': 'parallel', 'if': 'HAVE_CHARDEV_PARALLEL' },
-             'pipe',
-             'socket',
-             'udp',
-@@ -482,10 +482,10 @@
-             'mux',
-             'msmouse',
-             'wctablet',
--            'braille',
-+            { 'name': 'braille', 'if': 'CONFIG_BRLAPI' },
-             'testdev',
-             'stdio',
--            'console',
-+            { 'name': 'console', 'if': 'CONFIG_WIN32' },
-             { 'name': 'spicevmc', 'if': 'CONFIG_SPICE' },
-             { 'name': 'spiceport', 'if': 'CONFIG_SPICE' },
-             { 'name': 'qemu-vdagent', 'if': 'CONFIG_SPICE_PROTOCOL' },
-@@ -614,8 +614,10 @@
-   'base': { 'type': 'ChardevBackendKind' },
-   'discriminator': 'type',
-   'data': { 'file': 'ChardevFileWrapper',
--            'serial': 'ChardevHostdevWrapper',
--            'parallel': 'ChardevHostdevWrapper',
-+            'serial': { 'type': 'ChardevHostdevWrapper',
-+                        'if': 'HAVE_CHARDEV_SERIAL' },
-+            'parallel': { 'type': 'ChardevHostdevWrapper',
-+                          'if': 'HAVE_CHARDEV_PARALLEL' },
-             'pipe': 'ChardevHostdevWrapper',
-             'socket': 'ChardevSocketWrapper',
-             'udp': 'ChardevUdpWrapper',
-@@ -624,10 +626,12 @@
-             'mux': 'ChardevMuxWrapper',
-             'msmouse': 'ChardevCommonWrapper',
-             'wctablet': 'ChardevCommonWrapper',
--            'braille': 'ChardevCommonWrapper',
-+            'braille': { 'type': 'ChardevCommonWrapper',
-+                         'if': 'CONFIG_BRLAPI' },
-             'testdev': 'ChardevCommonWrapper',
-             'stdio': 'ChardevStdioWrapper',
--            'console': 'ChardevCommonWrapper',
-+            'console': { 'type': 'ChardevCommonWrapper',
-+                         'if': 'CONFIG_WIN32' },
-             'spicevmc': { 'type': 'ChardevSpiceChannelWrapper',
-                           'if': 'CONFIG_SPICE' },
-             'spiceport': { 'type': 'ChardevSpicePortWrapper',
--- 
-2.43.0
+> FWIW, truth is born in the noise, not in silence ;)
+>
+> Thanks,
+>
+> /mjt
+>
 
 
