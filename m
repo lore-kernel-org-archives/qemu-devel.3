@@ -4,62 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497C8C48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B49DC4829B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZSOs-0006PQ-Eg; Mon, 12 Feb 2024 04:14:54 -0500
+	id 1rZSRJ-0007F7-3I; Mon, 12 Feb 2024 04:17:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZSOk-0006Kl-Et
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:14:46 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSRH-00077K-Mg
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:17:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZSOh-0003cj-IR
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:14:46 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSRG-0004Hl-AY
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:17:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707729282;
+ s=mimecast20190719; t=1707729441;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fs5e49/eujBwVgdsth8B4MhCT2F2iduF/a/e4lS/MH0=;
- b=OjP59dm8gZukEsyj+Fb3Ed+6JFvQsvviygRbwxfEa8KLE2B3W7oeixmN5t/vHFTmuiexNs
- I0xWexcjmgtslaLncC9EEAhdb/YVzjUbRRywNfZ6JclgkXBR9r7m/GcdfXjOdqeip2UwBB
- PknWx/3w2kCU9KBausG9i8rZnqnrZJM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XpvA2VnuffIfa+qHo0mX72HXxIcs2/zwiG+kDwbyhHU=;
+ b=EJrpELRGuY9ZZB69ZfJkQjPS9hHHaAWH9/42h/fr+dUz+QIdyJcEYGlhULXSy3uwIqFNNe
+ SjsiVDQDl+WiJ0lUkx1C/xfIauap5D/6/0HWq3NmR/MTDNHsg6D9nfYbKKdl3f5CGzBOkZ
+ m0KrBY02If41oQcOYuOKU9j3pxYhw90=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-X6V4iUmfOFanmAdeYuWsug-1; Mon, 12 Feb 2024 04:14:40 -0500
-X-MC-Unique: X6V4iUmfOFanmAdeYuWsug-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4B81883B86F;
- Mon, 12 Feb 2024 09:14:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0C030207ACDE;
- Mon, 12 Feb 2024 09:14:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9930621E5A47; Mon, 12 Feb 2024 10:14:36 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 12/18] qapi: Plug trivial documentation holes around former
- simple unions
-Date: Mon, 12 Feb 2024 10:14:30 +0100
-Message-ID: <20240212091436.688598-13-armbru@redhat.com>
-In-Reply-To: <20240212091436.688598-1-armbru@redhat.com>
-References: <20240212091436.688598-1-armbru@redhat.com>
+ us-mta-315-OdTITPFFOW-PltpfW-DDEw-1; Mon, 12 Feb 2024 04:17:19 -0500
+X-MC-Unique: OdTITPFFOW-PltpfW-DDEw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-40e53200380so19405255e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 01:17:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707729439; x=1708334239;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :references:cc:to:content-language:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XpvA2VnuffIfa+qHo0mX72HXxIcs2/zwiG+kDwbyhHU=;
+ b=S8uiGEzu1xpUv0uqiJjOfGSTbdP4axxcuvM+jjujngDEAjhfPi0ACtOnEk6Fbpa3zM
+ NOnLahSM8Jwj+W9Ufu7Z/qrQBToH3zMXpYXsaKYdLdwB1ddA/ViAzVNZ6ARBq9PRB6pm
+ XOavARMoidKktGf6kZC6TXdgmzaMJBJN1nwennqtHhXTw6ak0F3h5CxuMjrRJiFf1KDJ
+ 3Y3YDfL3wuRTCXIhPnpOsgNqzhvLSTAAg7EvtUq1MslvyWEMRw1SX0H/F6zSIgVBn9wi
+ vg9MWoI3v2SEtZkT/FshqcpV6EqF/jfgQ/F2GbDX37V+mqyErIceIl5NVxd0bj8Q+/EK
+ Mqwg==
+X-Gm-Message-State: AOJu0Yyvj1LfKD4L+onR0sHUk/RLyvIHvZhss7PiH801hq0Gvhgee521
+ Yu6K6F0LXSBXjpwMHXKdEy+1O/udXe2/MfHegliie6wiuwIJ+msIY8i1b6sHyavGKUuTnaT14dt
+ Qrkdo5bnExLiD05xKTY/Ru/ovPkPGIBGMNFJq16nwZNEMtMJpMdEz
+X-Received: by 2002:a05:600c:4450:b0:410:c280:e530 with SMTP id
+ v16-20020a05600c445000b00410c280e530mr2113703wmn.36.1707729438841; 
+ Mon, 12 Feb 2024 01:17:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFujYV/A9gtQWnfk9FYCjB43xK3XtNKaBbqZnnLqAJ0SfubTou/KMWD8dHLhYxWdS/eeWaZZw==
+X-Received: by 2002:a05:600c:4450:b0:410:c280:e530 with SMTP id
+ v16-20020a05600c445000b00410c280e530mr2113685wmn.36.1707729438530; 
+ Mon, 12 Feb 2024 01:17:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuUUkB/vVZKCYewIy4PPG0qUGCytP92YWfJoAxyLEbAfzfVLlYSNCEO/qsPYOGiseBYOmKl4C/VkIpago86Bf37suQOPUG0WeyOiYbx9iGnoxkwzf6R4DvoWW9pcjDDHmLEArDa73gBdvn3Oq2MtYSeYfYGk1/F9CcF+mwYEXZwc7BM/xXLUKnYeF58pjN1gU6hA3Jzbz7UStMMt3+hrsgl0c2auNx5QpT+3LGwnOdk3/wUPc/k+Qir43amgN7FfkvipVA782PdcQmiGqn9sgc/U8q/0MSug==
+Received: from ?IPV6:2003:cb:c730:2200:7229:83b1:524e:283a?
+ (p200300cbc7302200722983b1524e283a.dip0.t-ipconnect.de.
+ [2003:cb:c730:2200:7229:83b1:524e:283a])
+ by smtp.gmail.com with ESMTPSA id
+ p7-20020a05600c468700b004105528c61fsm8053594wmo.35.2024.02.12.01.17.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Feb 2024 01:17:18 -0800 (PST)
+Message-ID: <8abf7282-87ab-40df-a4ca-66ebb7d1a6cf@redhat.com>
+Date: Mon, 12 Feb 2024 10:17:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 08/13] migration: refactor migrate_fd_connect failures
+Content-Language: en-US
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>
+References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
+ <1707418446-134863-9-git-send-email-steven.sistare@oracle.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <1707418446-134863-9-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -83,442 +155,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The conversion of simple to flat unions left the @data members
-undocumented.  Add documentation where it's trivial.  Copy verbatim
-from the wrapped type's description where possible.
+On 08.02.24 19:54, Steve Sistare wrote:
+> Move common code for the error path in migrate_fd_connect to a shared
+> fail label.  No functional change.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> ---
 
-Leftovers: String (to be taken care of in the next commit), and
-TransActionAction (left for another day).
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240205074709.3613229-13-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qapi/block-core.json | 10 ++++++++++
- qapi/char.json       | 26 ++++++++++++++++++++++++++
- qapi/machine.json    | 10 ++++++++++
- qapi/pragma.json     | 34 ----------------------------------
- qapi/sockets.json    |  6 ++++++
- qapi/tpm.json        |  4 ++++
- qapi/ui.json         | 12 ++++++++++++
- 7 files changed, 68 insertions(+), 34 deletions(-)
-
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 80ed4122f2..55b583f079 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -196,6 +196,8 @@
- ##
- # @ImageInfoSpecificQCow2Wrapper:
- #
-+# @data: image information specific to QCOW2
-+#
- # Since: 1.7
- ##
- { 'struct': 'ImageInfoSpecificQCow2Wrapper',
-@@ -204,6 +206,8 @@
- ##
- # @ImageInfoSpecificVmdkWrapper:
- #
-+# @data: image information specific to VMDK
-+#
- # Since: 6.1
- ##
- { 'struct': 'ImageInfoSpecificVmdkWrapper',
-@@ -212,6 +216,8 @@
- ##
- # @ImageInfoSpecificLUKSWrapper:
- #
-+# @data: image information specific to LUKS
-+#
- # Since: 2.7
- ##
- { 'struct': 'ImageInfoSpecificLUKSWrapper',
-@@ -223,6 +229,8 @@
- ##
- # @ImageInfoSpecificRbdWrapper:
- #
-+# @data: image information specific to RBD
-+#
- # Since: 6.1
- ##
- { 'struct': 'ImageInfoSpecificRbdWrapper',
-@@ -231,6 +239,8 @@
- ##
- # @ImageInfoSpecificFileWrapper:
- #
-+# @data: image information specific to files
-+#
- # Since: 8.0
- ##
- { 'struct': 'ImageInfoSpecificFileWrapper',
-diff --git a/qapi/char.json b/qapi/char.json
-index 6c6ad3b10c..e3e1b2c9f5 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -498,6 +498,8 @@
- ##
- # @ChardevFileWrapper:
- #
-+# @data: Configuration info for file chardevs
-+#
- # Since: 1.4
- ##
- { 'struct': 'ChardevFileWrapper',
-@@ -506,6 +508,8 @@
- ##
- # @ChardevHostdevWrapper:
- #
-+# @data: Configuration info for device and pipe chardevs
-+#
- # Since: 1.4
- ##
- { 'struct': 'ChardevHostdevWrapper',
-@@ -514,6 +518,8 @@
- ##
- # @ChardevSocketWrapper:
- #
-+# @data: Configuration info for (stream) socket chardevs
-+#
- # Since: 1.4
- ##
- { 'struct': 'ChardevSocketWrapper',
-@@ -522,6 +528,8 @@
- ##
- # @ChardevUdpWrapper:
- #
-+# @data: Configuration info for datagram socket chardevs
-+#
- # Since: 1.5
- ##
- { 'struct': 'ChardevUdpWrapper',
-@@ -530,6 +538,8 @@
- ##
- # @ChardevCommonWrapper:
- #
-+# @data: Configuration shared across all chardev backends
-+#
- # Since: 2.6
- ##
- { 'struct': 'ChardevCommonWrapper',
-@@ -538,6 +548,8 @@
- ##
- # @ChardevMuxWrapper:
- #
-+# @data: Configuration info for mux chardevs
-+#
- # Since: 1.5
- ##
- { 'struct': 'ChardevMuxWrapper',
-@@ -546,6 +558,8 @@
- ##
- # @ChardevStdioWrapper:
- #
-+# @data: Configuration info for stdio chardevs
-+#
- # Since: 1.5
- ##
- { 'struct': 'ChardevStdioWrapper',
-@@ -554,6 +568,8 @@
- ##
- # @ChardevSpiceChannelWrapper:
- #
-+# @data: Configuration info for spice vm channel chardevs
-+#
- # Since: 1.5
- ##
- { 'struct': 'ChardevSpiceChannelWrapper',
-@@ -563,6 +579,8 @@
- ##
- # @ChardevSpicePortWrapper:
- #
-+# @data: Configuration info for spice port chardevs
-+#
- # Since: 1.5
- ##
- { 'struct': 'ChardevSpicePortWrapper',
-@@ -572,6 +590,8 @@
- ##
- # @ChardevQemuVDAgentWrapper:
- #
-+# @data: Configuration info for qemu vdagent implementation
-+#
- # Since: 6.1
- ##
- { 'struct': 'ChardevQemuVDAgentWrapper',
-@@ -581,6 +601,8 @@
- ##
- # @ChardevDBusWrapper:
- #
-+# @data: Configuration info for DBus chardevs
-+#
- # Since: 7.0
- ##
- { 'struct': 'ChardevDBusWrapper',
-@@ -590,6 +612,8 @@
- ##
- # @ChardevVCWrapper:
- #
-+# @data: Configuration info for virtual console chardevs
-+#
- # Since: 1.5
- ##
- { 'struct': 'ChardevVCWrapper',
-@@ -598,6 +622,8 @@
- ##
- # @ChardevRingbufWrapper:
- #
-+# @data: Configuration info for ring buffer chardevs
-+#
- # Since: 1.5
- ##
- { 'struct': 'ChardevRingbufWrapper',
-diff --git a/qapi/machine.json b/qapi/machine.json
-index aa99fa333f..6a25e39f44 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1396,6 +1396,8 @@
- ##
- # @PCDIMMDeviceInfoWrapper:
- #
-+# @data: PCDIMMDevice state information
-+#
- # Since: 2.1
- ##
- { 'struct': 'PCDIMMDeviceInfoWrapper',
-@@ -1404,6 +1406,8 @@
- ##
- # @VirtioPMEMDeviceInfoWrapper:
- #
-+# @data: VirtioPMEM state information
-+#
- # Since: 2.1
- ##
- { 'struct': 'VirtioPMEMDeviceInfoWrapper',
-@@ -1412,6 +1416,8 @@
- ##
- # @VirtioMEMDeviceInfoWrapper:
- #
-+# @data: VirtioMEMDevice state information
-+#
- # Since: 2.1
- ##
- { 'struct': 'VirtioMEMDeviceInfoWrapper',
-@@ -1420,6 +1426,8 @@
- ##
- # @SgxEPCDeviceInfoWrapper:
- #
-+# @data: Sgx EPC state information
-+#
- # Since: 6.2
- ##
- { 'struct': 'SgxEPCDeviceInfoWrapper',
-@@ -1428,6 +1436,8 @@
- ##
- # @HvBalloonDeviceInfoWrapper:
- #
-+# @data: hv-balloon provided memory state information
-+#
- # Since: 8.2
- ##
- { 'struct': 'HvBalloonDeviceInfoWrapper',
-diff --git a/qapi/pragma.json b/qapi/pragma.json
-index aea6384255..d5e3f6f142 100644
---- a/qapi/pragma.json
-+++ b/qapi/pragma.json
-@@ -52,19 +52,6 @@
-         'BlockdevVmdkAdapterType',
-         'ChardevBackend',
-         'ChardevBackendKind',
--        'ChardevCommonWrapper',
--        'ChardevDBusWrapper',
--        'ChardevFileWrapper',
--        'ChardevHostdevWrapper',
--        'ChardevMuxWrapper',
--        'ChardevQemuVDAgentWrapper',
--        'ChardevRingbufWrapper',
--        'ChardevSocketWrapper',
--        'ChardevSpiceChannelWrapper',
--        'ChardevSpicePortWrapper',
--        'ChardevStdioWrapper',
--        'ChardevUdpWrapper',
--        'ChardevVCWrapper',
-         'CpuS390Entitlement',
-         'CpuS390Polarization',
-         'CpuS390State',
-@@ -77,24 +64,12 @@
-         'GrabToggleKeys',
-         'GuestPanicInformationHyperV',
-         'HotKeyMod',
--        'HvBalloonDeviceInfoWrapper',
-         'ImageInfoSpecific',
--        'ImageInfoSpecificFileWrapper',
-         'ImageInfoSpecificKind',
--        'ImageInfoSpecificLUKSWrapper',
--        'ImageInfoSpecificQCow2Wrapper',
--        'ImageInfoSpecificRbdWrapper',
--        'ImageInfoSpecificVmdkWrapper',
--        'InetSocketAddressWrapper',
-         'InputAxis',
--        'InputBtnEventWrapper',
-         'InputButton',
--        'InputKeyEventWrapper',
--        'InputMoveEventWrapper',
-         'InputMultiTouchEvent',
--        'InputMultiTouchEventWrapper',
-         'InputMultiTouchType',
--        'IntWrapper',
-         'IscsiHeaderDigest',
-         'IscsiTransport',
-         'JSONType',
-@@ -107,18 +82,15 @@
-         'NetClientDriver',
-         'NumaOptions',
-         'ObjectType',
--        'PCDIMMDeviceInfoWrapper',
-         'PciMemoryRegion',
-         'QCryptoAkCipherKeyType',
-         'QCryptoAkCipherOptions',
-         'QCryptodevBackendServiceType',
-         'QKeyCode',
--        'QKeyCodeWrapper',
-         'Qcow2OverlapCheckFlags',
-         'RbdAuthMode',
-         'RbdEncryptionCreateOptions',
-         'RbdImageEncryptionFormat',
--        'SgxEPCDeviceInfoWrapper',
-         'SocketAddressLegacy',
-         'SshHostKeyCheck',
-         'StatsFilter',
-@@ -126,16 +98,10 @@
-         'String',
-         'StringWrapper',
-         'SysEmuTarget',
--        'TPMEmulatorOptionsWrapper',
--        'TPMPassthroughOptionsWrapper',
-         'ThrottleGroupProperties',
-         'TransactionAction',
--        'UnixSocketAddressWrapper',
--        'VirtioMEMDeviceInfoWrapper',
--        'VirtioPMEMDeviceInfoWrapper',
-         'VncPrimaryAuth',
-         'VncVencryptSubAuth',
--        'VsockSocketAddressWrapper',
-         'X86CPURegister32',
-         'XDbgBlockGraph',
-         'YankInstance',
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index 6213154525..c3b616731d 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -119,6 +119,8 @@
- ##
- # @InetSocketAddressWrapper:
- #
-+# @data: internet domain socket address
-+#
- # Since: 1.3
- ##
- { 'struct': 'InetSocketAddressWrapper',
-@@ -127,6 +129,8 @@
- ##
- # @UnixSocketAddressWrapper:
- #
-+# @data: UNIX domain socket address
-+#
- # Since: 1.3
- ##
- { 'struct': 'UnixSocketAddressWrapper',
-@@ -135,6 +139,8 @@
- ##
- # @VsockSocketAddressWrapper:
- #
-+# @data: VSOCK domain socket address
-+#
- # Since: 2.8
- ##
- { 'struct': 'VsockSocketAddressWrapper',
-diff --git a/qapi/tpm.json b/qapi/tpm.json
-index a754455ca5..f9c1e866e7 100644
---- a/qapi/tpm.json
-+++ b/qapi/tpm.json
-@@ -102,6 +102,8 @@
- ##
- # @TPMPassthroughOptionsWrapper:
- #
-+# @data: Information about the TPM passthrough type
-+#
- # Since: 1.5
- ##
- { 'struct': 'TPMPassthroughOptionsWrapper',
-@@ -111,6 +113,8 @@
- ##
- # @TPMEmulatorOptionsWrapper:
- #
-+# @data: Information about the TPM emulator type
-+#
- # Since: 2.11
- ##
- { 'struct': 'TPMEmulatorOptionsWrapper',
-diff --git a/qapi/ui.json b/qapi/ui.json
-index a0158baf23..1eccad0a83 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -990,6 +990,8 @@
- ##
- # @IntWrapper:
- #
-+# @data: a numeric key code
-+#
- # Since: 1.3
- ##
- { 'struct': 'IntWrapper',
-@@ -998,6 +1000,8 @@
- ##
- # @QKeyCodeWrapper:
- #
-+# @data: An enumeration of key name
-+#
- # Since: 1.3
- ##
- { 'struct': 'QKeyCodeWrapper',
-@@ -1175,6 +1179,8 @@
- ##
- # @InputKeyEventWrapper:
- #
-+# @data: Keyboard input event
-+#
- # Since: 2.0
- ##
- { 'struct': 'InputKeyEventWrapper',
-@@ -1183,6 +1189,8 @@
- ##
- # @InputBtnEventWrapper:
- #
-+# @data: Pointer button input event
-+#
- # Since: 2.0
- ##
- { 'struct': 'InputBtnEventWrapper',
-@@ -1191,6 +1199,8 @@
- ##
- # @InputMoveEventWrapper:
- #
-+# @data: Pointer motion input event
-+#
- # Since: 2.0
- ##
- { 'struct': 'InputMoveEventWrapper',
-@@ -1199,6 +1209,8 @@
- ##
- # @InputMultiTouchEventWrapper:
- #
-+# @data: MultiTouch input event
-+#
- # Since: 8.1
- ##
- { 'struct': 'InputMultiTouchEventWrapper',
 -- 
-2.43.0
+Cheers,
+
+David / dhildenb
 
 
