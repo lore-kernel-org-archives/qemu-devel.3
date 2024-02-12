@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 491D7C48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 17:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CF0C4829C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 17:13:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZZrB-00067Z-A2; Mon, 12 Feb 2024 12:12:37 -0500
+	id 1rZZsM-0007E4-SH; Mon, 12 Feb 2024 12:13:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
- id 1rZZr9-00066o-7i; Mon, 12 Feb 2024 12:12:35 -0500
+ id 1rZZsK-0007Ba-Ne; Mon, 12 Feb 2024 12:13:49 -0500
 Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
- id 1rZZr7-0004S8-Hj; Mon, 12 Feb 2024 12:12:34 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 05990C0003
+ id 1rZZsJ-0004hZ-3N; Mon, 12 Feb 2024 12:13:48 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 87E0AC0005
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1707757944;
- bh=s/XN3CO0iJeMqY5zI5HVlTnKgwEGUPwXTodK87ckfDQ=;
+ s=mta-04; t=1707758023;
+ bh=p2He24Co5aJs3M9K5ZmUnK0CvHWqfjQF8RaDer3mx0Q=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=IqUwrcu9F95LkOvhuAd3Gb/B33RKr4V+8YUlAamO3kKIIB5ktz5HKE9Jl3PAY70BM
- w1WeMCLu//ByqaWa9iYZ/Q05ASrUmUziE9Q++r/akML0Zkfx+yrDf+8YDgxpEkXDz0
- 01Jshw9LsLbPrLSoE8Z0kogrbHzsGH+XcB3cg3kWMAt9OAzVk+WrFzfuLJcIbM+Qz2
- eKp00VJ4Pvb8DIbkusrZu85DR7v6RyUtXPgAIbYSV1GTpJf5kVSrBcJRRy78YE6zc5
- kcNPUj1KesLjqFP2jyE2sY9NKAAYST0Mieky7RB4AyfgDSygHjbqTuRyBWcoz2qKjp
- OE7Q68vF5ilHQ==
+ b=iiWR9uVm9nns8737y23ZcPEjxtLkOq7tOkf/XU+hPNexc2rVvfmyZ1QaqzQS5iPki
+ L2CaortPJpuwQaxr4Dd4xQsIPnSqIWOCyICnWVtsO+Jg6+ZuTlCfuxL3XSjJ3ImaRZ
+ y1xEIcCgR1NIMn35zuwnUTDZ14iRakJMo6cqrfNyek64899l00cFOaHrq65M0DSMk+
+ 5y3Km28twXzE90jvMrAOggKXof/R816fWS2grkQ4RegNMvfpLzfem2X/6KwyxWNWjU
+ etc5wLFsw6teH1NNvdFNR1lsIEViOGCUZj1gEFQNpuHn0vKLhfpr1eMLXMu22LzwDj
+ gFqoKeDuOzuRA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1707757944;
- bh=s/XN3CO0iJeMqY5zI5HVlTnKgwEGUPwXTodK87ckfDQ=;
+ s=mta-03; t=1707758023;
+ bh=p2He24Co5aJs3M9K5ZmUnK0CvHWqfjQF8RaDer3mx0Q=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=HBNP5jkwVCECcVWgUHgH6WYPAwn4XG0fuGQ2lS19BYDfPE6oaLJgiitAH2L1T12LQ
- 4oEnX/EGOcdFl9Nsp8Ip+dCDHera12aqfHRUlpmL+GDrghFDC0cPJKWVkZZaA2tsFI
- 0QF6UrA/hxVWRIepdNZeouOeDRA71PlRRiIckvMqrZDphDMk9rmjKNHbI3PI35RGiI
- rEmUzxURgnec4ChRsuzWdtQSMc6if14+CIJ6lmky1jcNE/zmfilQE20DLFsutez1HX
- MkUM+lcVHMv56Lzux0gbpMkrEApx2R2h/mvpM11PywHxMrvu3fZtgNEqlO7qgG0oX7
- 6Ts3D1FwZmV7g==
+ b=xYVnmU1k2yVovZaAE2ordGjJ0A2KSvgu0DZMgQhHEWi0Ct1WMpO34AlRe77UKvPK3
+ EziGfbkziNoqWQuH5qdMJAFzLPkABwuxs3FTFrhewvWe417+1AiAJYxUCqfLAajDna
+ CrHdZ6JkrC6btS/ZCe1zJE39D67AYnTej8TDqrBoMk+MHgPDOlRTKOP/U6VYSb3a3G
+ BJVwWw3DTOEkwm31iuO+E+IS+8MWXofO3wPrc4Ay2gd1wU86QFRHYjd6ysWLjuHVRp
+ 9QnnTPlulbHxPWDx7Z0DgGx2GyOoQ0vEOWxDTsx1C/xJT4+cPR0QytmD8cbR0mOknu
+ kvDr3dhMxbyXQ==
 From: Irina Ryapolova <irina.ryapolova@syntacore.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
  <bin.meng@windriver.com>, <liwei1518@gmail.com>,
  <dbarboza@ventanamicro.com>, 
- <zhiwei_liu@linux.alibaba.com>, Irina Ryapolova
- <irina.ryapolova@syntacore.com>
-Subject: [PATCH 1/2] target/riscv/csr.c: Add functional of hvictl CSR
-Date: Mon, 12 Feb 2024 20:11:55 +0300
-Message-ID: <20240212171156.47293-1-irina.ryapolova@syntacore.com>
+ <zhiwei_liu@linux.alibaba.com>, Vadim Shakirov <vadim.shakirov@syntacore.com>
+Subject: [PATCH 2/2] target/riscv/csr: Added the ability to delegate LCOFI to
+ VS
+Date: Mon, 12 Feb 2024 20:13:20 +0300
+Message-ID: <20240212171320.47361-2-irina.ryapolova@syntacore.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240212171320.47361-1-irina.ryapolova@syntacore.com>
+References: <20240212171320.47361-1-irina.ryapolova@syntacore.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -79,42 +81,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CSR hvictl (Hypervisor Virtual Interrupt Control) provides further flexibility
-for injecting interrupts into VS level in situations not fully supported by the
-facilities described thus far, but only with more active involvement of the hypervisor.
-(See riscv-interrupts-1.0: Interrupts at VS level)
+From: Vadim Shakirov <vadim.shakirov@syntacore.com>
 
-Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
+In the AIA specification in the paragraph "Virtual interrupts for VS level"
+it is indicated for interrupts 13-63: if the bit in hideleg is enabled,
+then the corresponding vsip and vsie bits are aliases to sip and sie
+
+Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
 ---
- target/riscv/csr.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ target/riscv/csr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 674ea075a4..0c21145eaf 100644
+index 0c21145eaf..51b1099e10 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -3585,6 +3585,21 @@ static int read_hvictl(CPURISCVState *env, int csrno, target_ulong *val)
- static int write_hvictl(CPURISCVState *env, int csrno, target_ulong val)
- {
-     env->hvictl = val & HVICTL_VALID_MASK;
-+    if (env->hvictl & HVICTL_VTI)
-+    {
-+        uint32_t hviid = get_field(env->hvictl, HVICTL_IID);
-+        uint32_t hviprio = get_field(env->hvictl, HVICTL_IPRIO);
-+        /* the pair IID = 9, IPRIO = 0 generally to represent no interrupt in hvictl. */
-+        if (!(hviid == IRQ_S_EXT && hviprio == 0)) {
-+            uint64_t new_val = BIT(hviid) ;
-+             if (new_val & S_MODE_INTERRUPTS) {
-+                rmw_hvip64(env, csrno, NULL, new_val << 1, new_val << 1);
-+            } else if (new_val & LOCAL_INTERRUPTS) {
-+                rmw_hvip64(env, csrno, NULL, new_val, new_val);
-+            }
-+        }
-+    }
-+    
-     return RISCV_EXCP_NONE;
- }
- 
+@@ -1136,7 +1136,7 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
+ static const uint64_t delegable_ints =
+     S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
+ static const uint64_t vs_delegable_ints =
+-    (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
++    VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
+ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
+                                      HS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
+ #define DELEGABLE_EXCPS ((1ULL << (RISCV_EXCP_INST_ADDR_MIS)) | \
 -- 
 2.25.1
 
