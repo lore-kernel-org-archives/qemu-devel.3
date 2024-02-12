@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0243C4829E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 23:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B39C4829D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 23:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZfMO-0002rs-OD; Mon, 12 Feb 2024 18:05:13 -0500
+	id 1rZfzL-0002Iu-QQ; Mon, 12 Feb 2024 18:45:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZfMN-0002re-6m
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:05:11 -0500
-Received: from mout.gmx.net ([212.227.15.15])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZfzL-0002Il-31
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:45:27 -0500
+Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZfME-0001Ur-Sk
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:05:09 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZfzI-000884-Km
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:45:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
- t=1707779095; x=1708383895; i=deller@gmx.de;
- bh=Vp4JBhuK6XRTXgZN5O+eMYvGNGFoU9zgi6NIk2omMH4=;
+ t=1707781518; x=1708386318; i=deller@gmx.de;
+ bh=Tq3aROdEvhNz2/bjPK7dj2lndzVury1v9tABDfMkRYM=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=MExjdI/OA5b1a5qBvOA7Fuhnrw9YLSX0NFjgM5yJmOHdJeoEvUKI0wCgrfAOpwVV
- Om56es8hiGYkIptOD48K+3QHKMfrr0y8KtKuFpaN9kONgOtjh3k0E9uwgYym45tWa
- zalbgFEnD8b3SMalqOJsVjdByc/TuZnJl4P04oIPzodh+iMoTH0mP4uBBYInk3adX
- xTosKlY8MEgsNCIwVFaKznx4TgFv6kWlrDen18hDA8zAk46iWeREq3G7iwFgZnVrB
- iI3j6/Lek5V+VZmXj7qfD3GdJdWD8uyrUG7B3RQhVhMF6Trj6HamBs8LefOTC8Tcr
- 9xW6RGsgM5/mTB4xEg==
+ b=YbNgmJu59Zvg9gmwAxnYLd3QsAQcgssSdInVBiYEv+/bP1hAj4nct6tZVjst00NY
+ 6onX8Z8yW0Bsk7+y2gwZDsSHqedcqSMS6cm1K+ZmNsZDVc7spIYFaln/qK/D9+QeQ
+ CmMicL5MYYc+AMfabnAosiCoS/UuLwt6XJIZ9fh0GVH5YVuO6NbW4+E89yPF1fksJ
+ 2bO/l1yLUiappAjVJsKj4/ZEQdrgeTKEN1n/xZ17Gbfv+kxFX+/DJnsiHl26SRR05
+ CUqNGzCyxoSrqL39XOTR/p0JV/YFZQT1JqLjEvwvFAmiag//2VDOGyfEx1V+DV1aF
+ iaZ98sbQyi50GMQcew==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([94.134.146.12]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6Db0-1rbtLL0GaW-006bMC; Tue, 13
- Feb 2024 00:04:55 +0100
-Message-ID: <71756c3b-467d-4416-884d-e4aeed3482ba@gmx.de>
-Date: Tue, 13 Feb 2024 00:04:54 +0100
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mqb1W-1rDWSk3Fpo-00ma9M; Tue, 13
+ Feb 2024 00:45:18 +0100
+Message-ID: <3af05e52-c386-4bda-916d-3dd3b397c160@gmx.de>
+Date: Tue, 13 Feb 2024 00:45:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/12] Hppa64 patches
+Subject: Re: [PULL 11/12] target/hppa: Update SeaBIOS-hppa to version 16
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, deller@kernel.org
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+To: Michael Tokarev <mjt@tls.msk.ru>, deller@kernel.org, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>
 References: <20240211122909.5807-1-deller@kernel.org>
- <CAFEAcA-4ck9Ro-9x13veOqL-165i7q8w17HP7KDN_5uNj2RVEg@mail.gmail.com>
+ <20240211122909.5807-12-deller@kernel.org>
+ <a9813b14-1e62-4e4c-8f95-46fa36edc62f@tls.msk.ru>
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
  xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
@@ -88,35 +89,36 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <CAFEAcA-4ck9Ro-9x13veOqL-165i7q8w17HP7KDN_5uNj2RVEg@mail.gmail.com>
+In-Reply-To: <a9813b14-1e62-4e4c-8f95-46fa36edc62f@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qY4V+XqrLGrSSGdRMXmjBqHz2i2UOQRwpfFxDaD9s+xKwvC9GZU
- waYsazY+vM7qKYs5chvyv+p9AQeFSBtKyLPf6djGDE3tlbccu48Xlub1OfQT5nYv5L7Ebkz
- etej9qCANnMfkB5LaodhI3LwHAP5d7fTBSh/NP3RPqIY5ppJhaGQZaQHvOx5M6NnvZcuZNn
- kCIENM92bAwFCSC638TWg==
-UI-OutboundReport: notjunk:1;M01:P0:lrZR94ipwG0=;NueMWLkykqsrHvJe1peJGAfmgws
- IRXY6242xCNX9GiYAXkE66yfHLzPj5omt7a7h5/eY528/KAuYs2LGNY1/vrcW7h2BPHuFDM4I
- F1CZtAWatx46e8Yoo/o1vaF3G4q4aW7TAJ4/tBrZUNGyXyjM5fhG9X/p8i4YriL+ZoVLFxvKC
- dHm4nmDodsZYUDjLpQA6dpwJos1d9MC83TOfPoQd/I05bAH0aOTP8lwpFpAp1IVcuYPGmQdXW
- lMFLWez+dCLf+U/jNV04M5ws5+hSv6Fl+S4D53KAGvsajgr/Qq6NR5CzDvkJn7IXmgaXK5Li/
- tEXDVcdkDY61fv/hy5S78lHCZpUjNait8zuGrspX1Mc9AqoVP66GAPDLHiHm1v5IsBfDzy5ly
- zrC+R7TC9DL3J1GCEH4DSeNmYgsdKi0J5NIV7wwKgBs7hrjpFuKtcj0DQ+DEpE7F390ScJai6
- hN7H6h4vwmCTizdSURsX7D8iZa9beF+OEs4dDn9qqJxsiv4w5UCb2GW/hNmlKVW1xzeg5Htka
- 5S/FK3eOulrcjhWRx4lc5+scvHgrqFJGXJwdlMEqqU/UYI3mORt1AamWzCuMne5dUF2hM9hV4
- LEeljN2d3L0U9MYW0ytmjFkvQJz6x3uFRRXN9CNKHDfBE6S7250TZHUWFDu/8d7zzU9xn2EDD
- LABnzhJHAltpPl5L55QR6zucSUuHqosx7qSdU1W9+r2pN+1bVAF8CDcb9ujYX8POU7WB56Wqd
- JzjXm5NNUSojP0s3b8Xg2gsrsICS0by52cM+zJUHUwETKDkUskGe9Rsec1wG+Dl+eJxHfJmak
- KrE/ZBkMVwOchFD0t80ai9gnwN58VuIq66mxXnnjparR4=
-Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:KVUsREKOhrfXmqzfJI6L6OkLo9EA/ykJyF+pJxwbJwafd4QWSdW
+ +COVIWi3XAZrtw8/tg60cvfsFFt2ZlYSXFfJFWFQ0UkaDRvg+z7YbJG2tWqeKoceUgmZ1J2
+ mzwzAHE58EmfFr9UtOTziGj4+aiq0Hg/ZCYgd+ldcF77DL2pXUZAEb1H1jEBGIV46IVUMCq
+ a9FF5BfGSsJss9IF+iMeA==
+UI-OutboundReport: notjunk:1;M01:P0:557fcfPbsAQ=;5vD1OQdb1DZXqzbXmo2nZOBGaRl
+ tBLAGeGsSg6vGxh72NWKihvfrBZ5NGYPV6OXZ05z5I6g3zmaJPB1COIcYTQSScSEN25p9me6g
+ zHDKVfuGzkaTSrpGW8ZCZvn4H9nG4ElDTXYN/29Uw6kS3m0wJLnUNh3HW4ovJmzhbdmFpjp7F
+ JUIz531T8CYa50dq0wJw3WRiVTuDeSBArW2eRPLhOfSceDXxqdK/OeuJqAd3b6zIJkhNJ9ch8
+ zHB8nTXH976qMB+qp4voMkwTygF+3zkGanvP83YupfBSTRs1sxaifwPBWL5RfeANGPiH3coY9
+ AbZYtRqsICspqlgxwtSTXwk7u/RKWRM3UVtSxJ5E1IKiL0BNW8ggZjXlmc/k6+ZLFWo2Cg8XX
+ JrckRZsU9MSEEZVjxpvJ2RFU3jQ6E9Ql3AcLVEHjI5xoJFEiWHX3gDASm5fZnBFpmsiWqjIUs
+ Qh2JEhalGLbLP2Gy7Gm0lDBt6rzkAOYpVIiN+XX0mwO4mj28VEP0LbfZs5yTKCeSm11Dkpqz3
+ Hnce6cJAjsU3+PdINd0Rc7v63MiVAowzdHVLGx9pLJHp456cAKqDjQ/tqeQrtlbKAb3yfpG2v
+ fQCJJLkjr+Up+f+h/PxOSlORBNZSgCdUfuSXUuCQd66zbz+hzPk6JD5SZoXgyxxdF8OfIKL65
+ TTM0oEk8B40z1cl3mHhcajKeytCZffMmt6FjDtbV5MVgYhexkoJXGZjzihukzhuw1M8vuY6lU
+ 7ACnqLhhMXXacviruNwy/AGmnMBFy7I72JGGtcwmjTf5nIm3L/hMjbLMTLibw16154GMBoahV
+ zpPhqz6hxgepfWhThbtnZp3Xikhq2r3ksxdi0QWTK0lZg=
+Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,49 +134,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/24 22:16, Peter Maydell wrote:
-> On Sun, 11 Feb 2024 at 12:30, <deller@kernel.org> wrote:
->>
+On 2/11/24 19:49, Michael Tokarev wrote:
+> 11.02.2024 15:29, deller@kernel.org
 >> From: Helge Deller <deller@gmx.de>
 >>
->> The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c8=
-7440:
->>
->>    Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru i=
-nto staging (2024-02-03 13:31:58 +0000)
->>
->> are available in the Git repository at:
->>
->>    https://github.com/hdeller/qemu-hppa.git tags/hppa64-pull-request
->>
->> for you to fetch changes up to f9d2270c85872bd71a01e15b2ebda2569f17f811=
-:
->>
->>    hw/hppa/machine: Load 64-bit firmware on 64-bit machines (2024-02-11=
- 13:25:15 +0100)
->>
->> ----------------------------------------------------------------
->> target/hppa: Enhancements and fixes
->>
->> A new SeaBIOS-hppa firmware which is built as 32- and 64-bit firmware.
->> Necessary to fully support 64-bit operating systems (HP-UX, Linux, NetB=
-SD,...).
->>
->> ----------------------------------------------------------------
+>> SeaBIOS-hppa version 16 news & enhancements:
 >
-> This fails "make check", eg:
-> https://gitlab.com/qemu-project/qemu/-/jobs/6154451100
+>> =C2=A0 pc-bios/hppa-firmware.img=C2=A0=C2=A0 | Bin 163324 -> 167820 byt=
+es
+>> =C2=A0 pc-bios/hppa-firmware64.img | Bin 0 -> 206024 bytes
+>> =C2=A0 roms/seabios-hppa=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
+>> =C2=A0 3 files changed, 1 insertion(+), 1 deletion(-)
+>> =C2=A0 mode change 100644 =3D> 100755 pc-bios/hppa-firmware.img
+>> =C2=A0 create mode 100755 pc-bios/hppa-firmware64.img
 >
-> because when the qom-test etc tests run qemu-system-hppa, it
-> barfs with "qemu-system-hppa: no firmware provided".
->
-> That kind of firmware check needs to not fire when
-> using the qtest accel.
+> Can we have build instructions for these files in roms/Makefile please?
 
-Ok. But how do people usually work around this kind of issue?
-Test if the qtest accel is in use?
-Ignore if the firmware can't be loaded?
-Any hint would be great!
+Sure, I'll add then in the next round when I send a v17 firmware.
 
 Helge
+
 
