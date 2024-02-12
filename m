@@ -4,134 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFBCC48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 14:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413EEC48297
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 14:50:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZXQ9-0007xw-Ke; Mon, 12 Feb 2024 09:36:33 -0500
+	id 1rZXcl-0004M5-Kn; Mon, 12 Feb 2024 09:49:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1rZXQ4-0007xL-RP; Mon, 12 Feb 2024 09:36:28 -0500
-Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1rZXQ0-0007M1-4D; Mon, 12 Feb 2024 09:36:27 -0500
-Received: by mail-oa1-x30.google.com with SMTP id
- 586e51a60fabf-214ca209184so2253693fac.1; 
- Mon, 12 Feb 2024 06:36:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707748582; x=1708353382; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :sender:from:to:cc:subject:date:message-id:reply-to;
- bh=Oh1TJBjWzi9TxQONqwZZUQofXFHyx9JVwK+ZavupMWw=;
- b=fkQ8fTurwmO5boUJQ9wk2pGDkFnPl22cC1E/ZuRxUz7Hy1wQzg7E1yfTXco0zmQCgD
- pA7NPo4dx91vBJTa7EnRTSQqYGobZMWtCAU3EErD8lVhSlUWb3XXkvmTzWnRM3lCrINi
- bbVmjasu/DApf101fkoesns6tJ55id7hrXNPI6iXX7wsLKyiDPAAQpvNd9O4gecfUDs2
- ddnMpo5/V3LaYUInfjGBQ1hZ29tUxTS9Kddiqv2DPn+VAru2qZEXgHRdaFcV84JVLMh5
- 1kZOPD3gVtlCBw99tLvG8Ftk/aRcM7i22JGkf52R7T+OhVX/K4J4KoicqviN08Pne47s
- pnpA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZXck-0004Li-8V
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 09:49:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZXcf-0001oW-Oz
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 09:49:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707749366;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=F6Bo4/8HWe4sc+9mGtWxRF3NhIpnIgzZtTCkzlq8cqw=;
+ b=Gb/NOr52WsYQAMdcKoycE7N9gEwbvBIN6Qdnytl/kVxohgbJljjzkwERj8u83IJVW0D6Z5
+ EMcUvUJTWrBbQwKudPKOWro/wEPD7HOSP3McaDuSiL/KDcAlWAy5X2Yrmh7lfhxVvqUS2m
+ Sa2hG6nRvcipLZEi6ERkL3bw4W37nmA=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-371-FBIPKbu4NY-IYwPG9VhBow-1; Mon, 12 Feb 2024 09:49:24 -0500
+X-MC-Unique: FBIPKbu4NY-IYwPG9VhBow-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7831aaa797aso621540885a.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 06:49:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707748582; x=1708353382;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :sender:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Oh1TJBjWzi9TxQONqwZZUQofXFHyx9JVwK+ZavupMWw=;
- b=s/36c4GhG2PrUv0Jw1MnQ4/JS4A4vL0ERv+u2M70De3U5ZuFKZVT2C6J3fFz+ChR0/
- kAjBZoiiYMLjPckQioa8Kk3EyYlYg6l9bcHQzm91LnwH5f+X6NkyVHbqPcyutu9lQijV
- HxLGo3H/Q06pACIFOLKt26LMLpW5UJ6JGBf+RUTf/DapjGrmvjts//aDqTkETdrWWyod
- j+JRn+0/kfqKXiisTuEO4agqqYPVbXHQF/ktvdn70pnZWskfKNsgpl21QjICVRQflEc8
- 54wGcMW0jViCD4qwYZcs4v45au7jR+g+eYlH5SQBSGq25h+xgw3v/nwys6AQQm4jgJAL
- wjWA==
+ d=1e100.net; s=20230601; t=1707749364; x=1708354164;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F6Bo4/8HWe4sc+9mGtWxRF3NhIpnIgzZtTCkzlq8cqw=;
+ b=wttj/FBSAKIS4X9yJR49dmA2ucBLMt97mnU7Y7CJfLfIdAcEeOd+0WHLNmMw1aGN4o
+ gcEH3Rp/1+U8hRjHhz0BYX2LiDvFP/uN0S3aYopugVXmlgIPC9SpmUwHPMvit62IhKsT
+ 6hOBc9W4b6GiEEFSQkC81QGbnumcq5S6Q9RQt+ai66OyT4vlMcXTREFRpQV/IF/s/hZm
+ vVIR8hjODjkg/wOdWN6s/RivEkrObpo2oHr4DvFX7mpXET4l/LkJixCxXQKV8j++rCpC
+ ywQPizjvtoZotsevmPsFU7Lf2Pc162Wr2rVdCBorJNiTXJUCY6TmilTIruIfn+UY7gH8
+ nMBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWSsVZQpOc0hA9q+GZjdF4CTCigIJFrnmW6TNpG7e38xgQY6zTxpy3TA02RTrnQCKHBDh+EN5ed1L3J/iZqjl0RacBqW4=
-X-Gm-Message-State: AOJu0YxahGi/V7O988FoaHDnygyYK9sR5hj14jq5NMpZeiZswXqIfITl
- JVK7Ym9byWN5gcTDFrTahy3YfTMz5hmC4EQ82C7M02MCtTWxVLUA
-X-Google-Smtp-Source: AGHT+IEXxTxJztvHW9BvwkukVCz1zQjsnuHtG5f2KLZ4daWo9VI/Oom5vRbhNcrpjzfq9kVyvtk6zw==
-X-Received: by 2002:a05:6870:955e:b0:21a:33f4:c61b with SMTP id
- v30-20020a056870955e00b0021a33f4c61bmr5004324oal.44.1707748582568; 
- Mon, 12 Feb 2024 06:36:22 -0800 (PST)
+ AJvYcCURjMESt4jZ+L5bxpq7qOIjFT0AaaGXBZAswEZDFLUN8r2SP2TC9ahLv373ueB/pohezKndTiZ3zZHVxi+yW81lglmQDeo=
+X-Gm-Message-State: AOJu0YwE9q5dJjo8OO4W/oRUWm1BBKCZ0vGGKA+vVwzSmNiebUkw/CAA
+ N0/6ihgiy8bmcgGRHSSVxcZLQHTx5EOhoU3uYS6QISLrgDUuzV0UW+PnXAqToeJMbloYaVNXzZ0
+ 0t45A0Lod9kxDM0ams45Rh+Fmd4blT2pX/OfR3igxXGiugpxRDg3v
+X-Received: by 2002:a05:620a:562a:b0:785:469c:3ef5 with SMTP id
+ vv10-20020a05620a562a00b00785469c3ef5mr13798689qkn.13.1707749363866; 
+ Mon, 12 Feb 2024 06:49:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEykYLXdHc5B4t+dwgKAAajXls6C/8pOGoCfF815Nj/wIpBz50FtH36BcWiEXTGtOUaKOsp2A==
+X-Received: by 2002:a05:620a:562a:b0:785:469c:3ef5 with SMTP id
+ vv10-20020a05620a562a00b00785469c3ef5mr13798663qkn.13.1707749363557; 
+ Mon, 12 Feb 2024 06:49:23 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJnB+brJp87Jvu/jNzgea3GHrm/f1+626jJsNayo3goeSZ6hH3yznspUwORRrFTyzaHiFjnUNBtVtexUvyqvIyV8Pa3N9ZTVL1Xnd9qXSmz5PMlYUZQaTxSZ39ExWQKPVGUwfN
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ AJvYcCUd6kfIsvXGa6e+pDxHb/UlzhO+j0AC6osCo2VjUYcxxdUMocxSXaATDj6cP57vOIhY63yVGKyLVMbXTxMAmt7PRr0L8a6N2FR4uI4XDWuihNcv8J+uP8KIMQBTZ+ceHeky4fojCkqPOKMp51M628GGxZE=
+Received: from ?IPV6:2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891?
+ ([2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891])
  by smtp.gmail.com with ESMTPSA id
- k192-20020a633dc9000000b005bdbe9a597fsm478192pga.57.2024.02.12.06.36.21
+ o2-20020a05620a110200b00785d6b12faesm797646qkk.98.2024.02.12.06.49.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 06:36:21 -0800 (PST)
-Message-ID: <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
-Date: Mon, 12 Feb 2024 06:36:20 -0800
+ Mon, 12 Feb 2024 06:49:23 -0800 (PST)
+Message-ID: <2052b1e4-608d-4b44-a67c-e1d90e194f81@redhat.com>
+Date: Mon, 12 Feb 2024 15:49:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: possible deprecation and removal of some old QEMU Arm machine
- types (pxa2xx, omap, sa1110)
+Subject: Re: [PATCH 01/14] migration: Add Error** argument to .save_setup()
+ handler
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: qemu-arm <qemu-arm@nongnu.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20240207133347.1115903-1-clg@redhat.com>
+ <20240207133347.1115903-2-clg@redhat.com>
+ <5addf455-c0e0-4aa6-8970-c8050a194783@nvidia.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <5addf455-c0e0-4aa6-8970-c8050a194783@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::30;
- envelope-from=groeck7@gmail.com; helo=mail-oa1-x30.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,91 +109,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[ sorry for the earlier noise; accidentally hit "send" ]
+On 2/12/24 09:36, Avihai Horon wrote:
+> Hi, Cedric
+> 
+> On 07/02/2024 15:33, Cédric Le Goater wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> The purpose is to record a potential error in the migration stream if
+>> qemu_savevm_state_setup() fails. Most of the current .save_setup()
+>> handlers can be modified to use the Error argument instead of managing
+>> their own and calling locally error_report(). The following patches
+>> will introduce such changes for VFIO first.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   include/migration/register.h   | 2 +-
+>>   hw/ppc/spapr.c                 | 2 +-
+>>   hw/s390x/s390-stattrib.c       | 2 +-
+>>   hw/vfio/migration.c            | 2 +-
+>>   migration/block-dirty-bitmap.c | 2 +-
+>>   migration/block.c              | 2 +-
+>>   migration/ram.c                | 2 +-
+>>   migration/savevm.c             | 4 ++--
+>>   8 files changed, 9 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/include/migration/register.h b/include/migration/register.h
+>> index 9ab1f79512c605f0c88a45b560c57486fa054441..831600a00eae4efd0464b60925d65de4d9dbcff8 100644
+>> --- a/include/migration/register.h
+>> +++ b/include/migration/register.h
+>> @@ -25,7 +25,7 @@ typedef struct SaveVMHandlers {
+>>        * used to perform early checks.
+>>        */
+>>       int (*save_prepare)(void *opaque, Error **errp);
+>> -    int (*save_setup)(QEMUFile *f, void *opaque);
+>> +    int (*save_setup)(QEMUFile *f, void *opaque, Error **errp);
+>>       void (*save_cleanup)(void *opaque);
+>>       int (*save_live_complete_postcopy)(QEMUFile *f, void *opaque);
+>>       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
+>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+>> index 0d72d286d80f0435122593555f79fae4d90acf81..a1b0aa02582ad2d68a13476c1859b18143da7bb8 100644
+>> --- a/hw/ppc/spapr.c
+>> +++ b/hw/ppc/spapr.c
+>> @@ -2142,7 +2142,7 @@ static const VMStateDescription vmstate_spapr = {
+>>       }
+>>   };
+>>
+>> -static int htab_save_setup(QEMUFile *f, void *opaque)
+>> +static int htab_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       SpaprMachineState *spapr = opaque;
+>>
+>> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+>> index c483b62a9b5f71772639fc180bdad15ecb6711cb..c934df424a555d83d2198f5ddfc0cbe0ea98e9ec 100644
+>> --- a/hw/s390x/s390-stattrib.c
+>> +++ b/hw/s390x/s390-stattrib.c
+>> @@ -166,7 +166,7 @@ static int cmma_load(QEMUFile *f, void *opaque, int version_id)
+>>       return ret;
+>>   }
+>>
+>> -static int cmma_save_setup(QEMUFile *f, void *opaque)
+>> +static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       S390StAttribState *sas = S390_STATTRIB(opaque);
+>>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>> index 70e6b1a709f9b67e4c9eb41033d76347275cac42..8bcb4bc73cd5ba5338e3ffa4d907d0e6bfbb9485 100644
+>> --- a/hw/vfio/migration.c
+>> +++ b/hw/vfio/migration.c
+>> @@ -378,7 +378,7 @@ static int vfio_save_prepare(void *opaque, Error **errp)
+>>       return 0;
+>>   }
+>>
+>> -static int vfio_save_setup(QEMUFile *f, void *opaque)
+>> +static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       VFIODevice *vbasedev = opaque;
+>>       VFIOMigration *migration = vbasedev->migration;
+>> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+>> index 2708abf3d762de774ed294d3fdb8e56690d2974c..16f84e6c57c2403a8c2d6319f4e7b6360dade28c 100644
+>> --- a/migration/block-dirty-bitmap.c
+>> +++ b/migration/block-dirty-bitmap.c
+>> @@ -1213,7 +1213,7 @@ fail:
+>>       return ret;
+>>   }
+>>
+>> -static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque)
+>> +static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       DBMSaveState *s = &((DBMState *)opaque)->save;
+>>       SaveBitmapState *dbms = NULL;
+>> diff --git a/migration/block.c b/migration/block.c
+>> index 8c6ebafacc1ffe930d1d4f19d968817b14852c69..df15319ceab66201b043f15eac1b0a7d6522b60c 100644
+>> --- a/migration/block.c
+>> +++ b/migration/block.c
+>> @@ -708,7 +708,7 @@ static void block_migration_cleanup(void *opaque)
+>>       blk_mig_unlock();
+>>   }
+>>
+>> -static int block_save_setup(QEMUFile *f, void *opaque)
+>> +static int block_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       int ret;
+>>
+>> diff --git a/migration/ram.c b/migration/ram.c
+>> index d5b7cd5ac2f31aabf4a248b966153401c48912cf..136c237f4079f68d4e578cf1c72eec2efc815bc8 100644
+>> --- a/migration/ram.c
+>> +++ b/migration/ram.c
+>> @@ -2931,7 +2931,7 @@ void qemu_guest_free_page_hint(void *addr, size_t len)
+>>    * @f: QEMUFile where to send the data
+>>    * @opaque: RAMState pointer
+>>    */
+>> -static int ram_save_setup(QEMUFile *f, void *opaque)
+>> +static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>   {
+>>       RAMState **rsp = opaque;
+>>       RAMBlock *block;
+>> diff --git a/migration/savevm.c b/migration/savevm.c
+>> index d612c8a9020b204d5d078d5df85f0e6449c27645..f2ae799bad13e631bccf733a34c3a8fd22e8dd48 100644
+>> --- a/migration/savevm.c
+>> +++ b/migration/savevm.c
+>> @@ -1342,10 +1342,10 @@ void qemu_savevm_state_setup(QEMUFile *f)
+>>           }
+>>           save_section_header(f, se, QEMU_VM_SECTION_START);
+>>
+>> -        ret = se->ops->save_setup(f, se->opaque);
+>> +        ret = se->ops->save_setup(f, se->opaque, &local_err);
+>>           save_section_footer(f, se);
+>>           if (ret < 0) {
+>> -            qemu_file_set_error(f, ret);
+>> +            qemu_file_set_error_obj(f, ret, local_err);
+> 
+> Should we set local_err = NULL? 
 
-On 2/12/24 04:32, Peter Maydell wrote:
-> QEMU includes some models of old Arm machine types which are
-> a bit problematic for us because:
->   * they're written in a very old way that uses numerous APIs that we
->     would like to get away from (eg they don't use qdev, they use
->     qemu_system_reset_request(), they use vmstate_register(), etc)
->   * they've been that way for a decade plus and nobody particularly has
->     stepped up to try to modernise the code (beyond some occasional
->     work here and there)
->   * we often don't have test cases for them, which means that if we
->     do try to do the necessary refactoring work on them we have no
->     idea if they even still work at all afterwards
-> 
-> All these machine types are also of hardware that has largely passed
-> away into history and where I would not be surprised to find that
-> e.g. the Linux kernel support was never tested on real hardware
-> any more.
-> 
-> So I would like to explore whether we can deprecate-and-drop
-> some or all of them. This would let us delete the code entirely
-> rather than spending a long time trying to bring it up to scratch
-> for a probably very small to nonexistent userbase. The aim of this
-> email is to see if anybody is still using any of these and would be
-> upset if they went away. Reports of "I tried to use this machine
-> type and it's just broken" are also interesting as they would
-> strongly suggest that the machine has no real users and can be
-> removed.
-> 
-> The machines I have in mind are:
-> 
-> PXA2xx machines:
-> 
-> akita                Sharp SL-C1000 (Akita) PDA (PXA270)
-> borzoi               Sharp SL-C3100 (Borzoi) PDA (PXA270)
-> connex               Gumstix Connex (PXA255)
-> mainstone            Mainstone II (PXA27x)
-> spitz                Sharp SL-C3000 (Spitz) PDA (PXA270)
-> terrier              Sharp SL-C3200 (Terrier) PDA (PXA270)
-> tosa                 Sharp SL-6000 (Tosa) PDA (PXA255)
-> verdex               Gumstix Verdex Pro XL6P COMs (PXA270)
-> z2                   Zipit Z2 (PXA27x)
-> 
-I test akita, borzoi, spitz, and terrier. Upstream Linux removed support
-for mainstone, tosa, and z2 from the Linux kernel as of version 6.0, so
-I am no longer testing those.
+possibly, yes.
 
-I never managed to boot connex or verdex.
+> Because it is re-used a few lines after this, by precopy_notify().
 
-> OMAP1 machines:
-> 
-> cheetah              Palm Tungsten|E aka. Cheetah PDA (OMAP310)
-> sx1                  Siemens SX1 (OMAP310) V2
-> sx1-v1               Siemens SX1 (OMAP310) V1
-> 
-I test sx1. I don't think I ever tried cheetah, and I could not get sx1-v1
-to work.
+I wonder why is precopy_notify(PRECOPY_NOTIFY_SETUP) even called when
+there was an error in one of the save_setup() handlers. It probably
+shouldn't and qemu_savevm_state_setup() should return at the first
+error in the loop. This is something that could have been overlooked
+by commit bd2270608fa0 "migration/ram.c: add a notifier chain for
+precopy" because qemu_savevm_state_setup() does not have a return
+value. Probably because the callers rely on qemu_file_get_error()
+to know if something wrong happened.
 
-> OMAP2 machines:
-> 
-> n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
-> n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
-> 
-I never managed to get those to boot the Linux kernel.
+Also, the only user of PRECOPY_NOTIFY_SETUP is virtio-balloon and
+nothing is done. PrecopyNotifyData has an errp attribute which is
+unused.
 
-> The one SA1110 machine:
 > 
-> collie               Sharp SL-5500 (Collie) PDA (SA-1110)
+> BTW, I think that if we add Error** parameter to functions we must make sure all their error flows set errp as well.
+> According to Error API:
+> * - On success, the function should not touch *errp.  On failure, it
+> *   should set a new error, e.g. with error_setg(errp, ...), or
+> *   propagate an existing one, e.g. with error_propagate(errp, ...).
 > 
-I do test collie.
+> For example, a caller that handles errors by printing them with error_report_err() would crash when trying to access NULL error object (if some error path didn't set errp).
 
-All the ones I use still boot the latest Linux kernel.
+One of the underlying goal is to avoid and remove all error_report_err()
+calls to propagate the error up the call stack.
 
-> Obviously if we can remove all the machines that used a given
-> SoC, that's much more effective than if we just delete one or two.
-> 
-> I don't have any test images for the SA1110 or OMAP1 machines,
-> so those are the ones I am most keen to be able to drop.
-> I do have test images for a few of the pxa2xx and the OMAP2 machines.
-> 
-I don't mind dropping them, just listing what I use for testing the
-Linux kernel. I suspect I may be the only "user" of those boards,
-though, both in Linux and qemu.
+> If you agree, we should check it throughout the series.
 
-Guenter
+I do agree and this is a can of worms ! I haven't quite found my way
+around yet.
+
+Thanks for your inputs,
+
+C.
 
 
