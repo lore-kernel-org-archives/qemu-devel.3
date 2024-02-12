@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0C6C48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 10:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E934FC4829D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 10:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZTQm-0007sN-JR; Mon, 12 Feb 2024 05:20:56 -0500
+	id 1rZTR7-00086P-EY; Mon, 12 Feb 2024 05:21:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZTQk-0007rA-CQ
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:20:54 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rZTR4-00084L-J3
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:21:14 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZTQi-0007cy-CH
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:20:53 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6de3141f041so1986276b3a.0
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 02:20:52 -0800 (PST)
+ id 1rZTR2-0007gQ-Ul
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:21:14 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e08dd0fa0bso1928860b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 02:21:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707733251; x=1708338051;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707733271; x=1708338071;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KshG4XdFN/TjxiO4+Kgrx0bCb7ZBpfjPIzIbQ6JKIZk=;
- b=2aVHRMKaaAIZK4q2K9emgXnXBMMwvxlelwlLEQjjIFy1qnr0UT2Tz+dWVDsRO5CsIJ
- bFrm0GZzMlulr4yyUceGNQrMwePfc8H6uKFxSV8ftNDIMIYsi9LIWNwrp9HUk9o+3RUN
- RYRcaMsFW66X7hX+zahrsJgBQ9f1OEL6O3kX+O0mFh2j8x1PCAIr4IFVjSVmgWVtKBKh
- 56XhaMzU0BPFgDGyiLEBuOjuCsntGa45LM8z+IxGUBWn2EJVslFRQE4dKQGR4uCuYK2l
- ivj2omm+ITMztHTRsNdANj/D9XxAxn4uAWxpLIvpUVnWND+9DKcpnzlSF1HY50wvd04S
- Ck2w==
+ :reply-to; bh=HYSjFZHgQ2mbSqHRTj9z4C9g2BrbZ8iNuTfeoBp92uM=;
+ b=o/RGKrF55gRTMNnIvFr/t26x8RIZN5W52oSBJt7DwrFS8qp5kpZZt394BfBYgybqcL
+ +Q+QlHF69I+aq3Lu6qPnzQfs8/yLeYR9T0XH6iC4XoIDRzBNQz4HDq1uf6fY9f64mqtd
+ fJ3X1AjI7CtOqYZ6Wd2rq9GjmrBJtMl7nsTtiqr3TV4dgdGixsb/DyBPPkfiwYstiWCU
+ jJrB3sSv+hsSn4kKfzjrTFM1TfBkFf9KnP8ciTryVa8ugv9X77MjfZlF4bEQ/l28j9z+
+ TWNpwcNQVfo+MyDlE7Kmkz1aVaGs1lZoYf3gyIUiGwK+Pco+NfbkjP1bMiPZPJedq09q
+ Wd+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707733251; x=1708338051;
+ d=1e100.net; s=20230601; t=1707733271; x=1708338071;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KshG4XdFN/TjxiO4+Kgrx0bCb7ZBpfjPIzIbQ6JKIZk=;
- b=nShKJrE/1f8w75cD2jJO28Br42SqjwfJXc5+DM19Wqw9ULQLuzQcK0w0bJQ2AZw/E9
- /dVSxi3tyI20i+1vucfonRH6tmvFKprOxiWMSxYAUZDg5lcX72x/QK/ADHlve5LHKKof
- Mn8m3y3iwR2Qg6pgr4YWaLknnL0P5acohSjLPKxr1zSj+pRPXQNv8vFmjE40TzKFEyKI
- XcFZQ+BEuZxycXPfeASfIqICQyueLsrXobCtiw7KgIs38nqq43S3KbfWSEEMBU1M3CQl
- CeD/cY/AUVJcjAkKPiFCMVQFGJYPnk+7a8fRjj1qaqs4i8B0PasKDCyVOsmJuM09BVWe
- h+TQ==
-X-Gm-Message-State: AOJu0YwJs6gXJwB0oi664Rp1kw2kGf+MNhayZm9k7GvUQrukXTeoO10b
- rq9Hi9vFENkmyqUJX1hcZauaXItcEErwFAGd+dRBw1RClfvsdv0eBtACA522Rn8=
-X-Google-Smtp-Source: AGHT+IF+iSnjUkqDG4usBHCkhbfjWBOicQf+jEV/FNkn85K1176vGQB7Rd6r9Cs9e+ON+yIw7uDs0w==
-X-Received: by 2002:a05:6a21:151b:b0:19c:a389:dd6b with SMTP id
- nq27-20020a056a21151b00b0019ca389dd6bmr5889904pzb.20.1707733251081; 
- Mon, 12 Feb 2024 02:20:51 -0800 (PST)
+ bh=HYSjFZHgQ2mbSqHRTj9z4C9g2BrbZ8iNuTfeoBp92uM=;
+ b=AN9d5dvfJz9tV19tq+0LcVsf5/r71pvCuDHqeibLYUCUZz2vweqt8fOaV1Ejs+3Ici
+ wOyZwXYwk0gD6LmAIWvcx49Rt7bDZytFXXvaGMO6f6D7c5y6rlTFTGCHivgHlYZui+Dy
+ AXcqAHrIVj9UqjHZfC/0A4dC5KMzAt291mXWutJHCYQV1mFjNEutmJaG7KGB0vinZt6U
+ hpwV0ueZvYw9T0FdiEo3fWrD4HahjrfBlzN6UmutQMAFM5tzRD0tHEslsc/EupLCaOtx
+ GlSuzDHyhAvXOC+IDlMPeBUpZcQVuQofQCEvhegJs+AKzhRl0izE9reTMl8/6Ri+YomV
+ fvMg==
+X-Gm-Message-State: AOJu0YyLMz5RKEBEiKqHhWdrmxeelbQsO9QHm58PfA1+x7SrXkw3wuKy
+ Pm4f5u3tOmtEMiIXuNYVTIP8GdgJR6SR3qFGAR26FscblGjJmmX5ehrDIViGUxg=
+X-Google-Smtp-Source: AGHT+IEJmTF3pwG6hLNQDAohKwvYfN2pbah7IQe++f9oZFNw6E0CQMn+hmoGF6NNGH0T2yWNIa1UlQ==
+X-Received: by 2002:a05:6a00:1390:b0:6e0:5b63:e7fb with SMTP id
+ t16-20020a056a00139000b006e05b63e7fbmr12352485pfg.0.1707733271337; 
+ Mon, 12 Feb 2024 02:21:11 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+vCqF2ZvPF/wjSExbO+MtKgLXs9rTldVc2iX1sWklrBG7uxJMPQdaOrUdC/A5ztC/FW8JsQGJYFijHRgPGXpPHguNRgfbq5PbxtmpffadFTel+BGxh8i2PgkwtXXTWHSsdbths0HaPwplDfAaGdyD/+UrzI4N/E1qBQjlBZr9kMkOmGwE6T9W/+v7hdD4Fhi1Sqt0ZaWWp+LvTdMguMysBifYTowmhikY611WqACJR68imixZh/CFORHM1vTKnUTAYEtdUvdWHrxeC84G93F4jmSUvLInXt2tr92BJw9bHBT0PzexW9kqIxmCmvqn1DjxVabU9XEH624UBTGkUxY8PTN0wEp14xnmCIfI0lAjfYOHRbViYmlDY5akNMx9w7lPfJiT+0V2FCzImjPT3aZQqH8sw5opqms68qs26JfcMIUUPuJ4vv7/NWcho+U=
+ AJvYcCUnNRdFopwcssGZ5aJE3HkS+2V7iYI+mDLVgWOrYcgh5sVLeF6HNbwOM3VyC/7KAPkV82H3qZRv0XaXul9PYpcP0FYhpxv0d/x8QVP3Ld35KIlDKaKCeP8LZ0Tkr7zid1H3IJo1cP8sJPnc/cdP1EYJes907I3fa66KY/mz/XOqYiYKWAkbh1Zp+eDUixpqRCzySj+wU25sMhtaPSCp2Y8Po+unUi0QAmtvjpHDpnFfGlN/ckTqm/Nj3FAaBs6/KFs865te2V9pK/5gcpJowNUETbzSpoTKBOp6D5aFFXstaOL2FKzi0ieOxXLDbLg449SCnKNQZ6iaMztadSr3BaXdR2W3U39Y3XQpxUudKAP+UznOGzTCHbO3zR3jIv2gFySwWccjcNwy2Fdh03DRPaYmCcpeOpRgF1G94CZyR2sywS2Y8ZIAtEx36JHhVes=
 Received: from localhost ([157.82.207.134])
  by smtp.gmail.com with UTF8SMTPSA id
- ff21-20020a056a002f5500b006e0737f2bafsm5166002pfb.45.2024.02.12.02.20.48
+ j18-20020aa79292000000b006e0545768dasm5187099pfa.151.2024.02.12.02.21.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 02:20:50 -0800 (PST)
+ Mon, 12 Feb 2024 02:21:11 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 12 Feb 2024 19:20:31 +0900
-Subject: [PATCH v3 3/7] vfio: Avoid inspecting option QDict for rombar
+Date: Mon, 12 Feb 2024 19:20:35 +0900
+Subject: [PATCH v3 7/7] pcie_sriov: Release VFs failed to realize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240212-reuse-v3-3-8017b689ce7f@daynix.com>
+Message-Id: <20240212-reuse-v3-7-8017b689ce7f@daynix.com>
 References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
 In-Reply-To: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -83,8 +83,8 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -106,35 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use pci_rom_bar_explicitly_enabled() to determine if rombar is explicitly
-enabled.
+Release VFs failed to realize just as we do in unregister_vfs().
 
+Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/vfio/pci.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/pci/pcie_sriov.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d7fe06715c4b..44178ac9355f 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1010,7 +1010,6 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
- {
-     uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
-     off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
--    DeviceState *dev = DEVICE(vdev);
-     char *name;
-     int fd = vdev->vbasedev.fd;
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 9ba34cf8f8ed..9d668b8d6c17 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -91,6 +91,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+         vf->exp.sriov_vf.vf_number = i;
  
-@@ -1044,7 +1043,7 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
-     }
- 
-     if (vfio_opt_rom_in_denylist(vdev)) {
--        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
-+        if (pci_rom_bar_explicitly_enabled(&vdev->pdev)) {
-             warn_report("Device at %s is known to cause system instability"
-                         " issues during option rom execution",
-                         vdev->vbasedev.name);
+         if (!qdev_realize(&vf->qdev, bus, errp)) {
++            object_unparent(OBJECT(vf));
++            object_unref(vf);
+             unrealize_vfs(dev, i);
+             return false;
+         }
 
 -- 
 2.43.0
