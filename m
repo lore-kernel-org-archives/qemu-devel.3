@@ -4,142 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E3BC48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44267C48297
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZSXw-00042f-Da; Mon, 12 Feb 2024 04:24:16 -0500
+	id 1rZSid-0006oF-VD; Mon, 12 Feb 2024 04:35:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSXv-00042K-Jz
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:24:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rZSiZ-0006nz-Tl
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:35:17 -0500
+Received: from mail-bn8nam12on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::601]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSXu-0005VC-0X
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:24:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707729852;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UYgJ72GTfSaMVeGuXpwLd/QsMjUqwlWYbWboBD//lXc=;
- b=SyB8PhfX2npTs5a7S8W37qcD8uhB0ykzvyjTqJ/pQN1ba4a7Nwr6KyvTetIFEMQFEe/h5b
- hK4RZq+sKdmIQM07Onfn6EQ4gLTJw9ioZ2mOAJhIsLFIGfZSDqaZ62AKzIhV1Po0sQ3ZYE
- cADScY5J/DPqe1GC+i44BKjIqyBM9Uo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-NdguVcopMeuBT-39udRplA-1; Mon, 12 Feb 2024 04:24:11 -0500
-X-MC-Unique: NdguVcopMeuBT-39udRplA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33b1b431b3cso1328123f8f.1
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 01:24:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707729850; x=1708334650;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UYgJ72GTfSaMVeGuXpwLd/QsMjUqwlWYbWboBD//lXc=;
- b=LMH5TUqm5mHXzVqiunU0KIphB/3O2vTW5RfXZMVZTmoUFSYRnzg1aCW1JSVkp1mSVg
- Y11hMo2WXjLTFzNHH1MAZDDgHkR8tf7eaV0Ze6Ea32wjeE5m2Lz7hMmNgylXdFkWKdh2
- KoW/EeIuZMbhET3fZjYlps+bb8eNNUs6fVsSUSNZlFKMTcb2RUlbjFAgtXIsazOEJf/F
- dYke3mHfxToAbJ7GlucNd7asHy+4kLvCPriQC+4Lx334KcHXPRQMHI7zNaUEO+QxTexi
- 6PAlzeX2ezu8k8Yc0ih+iFQHq7D0wwmiaODNSfulOAit/UJYflpQTj7Oy61AnZDJLRB6
- scyA==
-X-Gm-Message-State: AOJu0YwgZRWzj9eL28Wa/NZs5WV+leUXCvyGrWsvDuocMELbr9e9a+WH
- JQI4/94Zv+fbes5FxBJM7hgeBZJ+YagiMz3KcpZ+xYXb14LOFSjSztR9osxRkCsbTDmwTRJjqCF
- s/K2xajxTuy/wCtZiiSlgoPOZULFNa42l0GyA03Xvd8xOniGYVoHh
-X-Received: by 2002:a5d:53ca:0:b0:33a:f689:1c01 with SMTP id
- a10-20020a5d53ca000000b0033af6891c01mr3197086wrw.70.1707729850166; 
- Mon, 12 Feb 2024 01:24:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE/AqbTCz2YOFR/4XU2CQoE6Kkacpu9u8ZUaiRh2L18PZKnYJthQg2/8L9J+UOVvfpJxhGf7w==
-X-Received: by 2002:a5d:53ca:0:b0:33a:f689:1c01 with SMTP id
- a10-20020a5d53ca000000b0033af6891c01mr3197076wrw.70.1707729849834; 
- Mon, 12 Feb 2024 01:24:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRs14DabR2DHGwLhH8CxlKIGOPMeruN6e5tI2L0fH1REFFYBI2XpkH9n1fGqU52Qe5nDIwH+2WOy4ygusZwdizh2/yVqyJxj/volbyaP1xrkb4SUg4J9eoU3MhgBM1TZI/iATzrY95mJ0j71qHpZ62bwpgc2nfUNKZc4emhwWfniwEgoJ84LMFtpHiRUb0BIGM8aEzG36d21Mrmg6zVkC35mJyCz6fBDbEbc1rEjZ41fOpe6dHtLf43v3Ms5uTynPUonspYqcMGKql166mKBZkWwzJPAzfiA==
-Received: from ?IPV6:2003:cb:c730:2200:7229:83b1:524e:283a?
- (p200300cbc7302200722983b1524e283a.dip0.t-ipconnect.de.
- [2003:cb:c730:2200:7229:83b1:524e:283a])
- by smtp.gmail.com with ESMTPSA id
- i9-20020a5d5229000000b0033ae7d768b2sm6212266wra.117.2024.02.12.01.24.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 01:24:09 -0800 (PST)
-Message-ID: <3e610f67-415f-4cc8-9ef5-5f9587414271@redhat.com>
-Date: Mon, 12 Feb 2024 10:24:08 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1rZSiX-0007XU-QO
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:35:15 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cg1RcVqW5o2xpUK2kDLZu3pBzZOpP3YnRh56mJKk/bRPXkxJYPBnvhlFNo6ERcT7RwPtadqrVimmEUkVxzEygv+OFV9eU4HwushtNVa7jALMiB4myGGGcbuf4yAwI5sYpfx9DAmyIgUUToQyPAyTgFcygh3OpPA2gYOciHcSo5x+tzx6rzBOp+1m2+eezs9Ll0j8rM8VDcIfukpZ2+gZPan7y9ldZc0kacmxzhqpvq0oziSkfHL/SH8wccBHMZhPfbQoTnNZz551PnqLfsxlYLJuo8Em+38dF0V/8qkqdFQt89aYenPXNK4R1jfjLvmtG8d6azSQhrnLOfa2Y2wafQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vKXmtoias3aYXNnb62oAt8gXzZEAi/b+iD6VGXU+pfE=;
+ b=Lzgt7tgwcRuvsAAqnGePxHoebu9KmiyZMs6YC9kZvcdUk4jcSQgDKiiWuD84WoiOZeqfeegYKHj99UNKCzdvoG1qC7s6/cPTPXlhpzIutwkjkPHjn3u2Qfcm0a2I5sf84ILlDnkGbjYLbBtYsyrqa4TXrqReMBdbq3Qs8NdAw+m7kaI8x7SnS49ai7o//XTs2Z5pI/W2yxd0z2VgNLMydH8K1VmsY1tyscSYKML0YjrhWOXWRTV2p3vC6iuSp5+B4e9aTDzDCuVJ/gfRNhp24lGfhbP65H8XQ2U6gK79fDBHTgZm2IlG+zfiT1ab/cXcsuzSXYg9IAyA0tXwu/UUrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vKXmtoias3aYXNnb62oAt8gXzZEAi/b+iD6VGXU+pfE=;
+ b=c/kJopxANVdguebl1FnnPYxWt5OcP2hDQ1mS/4FFegVDTTp9flC+JTmfSLOD6CNO4Jw8HO97aEMu49oZdrLOhYUpq/gJDcQlQnXBILpyoGjhL45H17kecNC1NwhGQGbztbwgCC32LtZONZKtzaO8KBcWfd5VecIieL5q+b/UiUP+R8dqoVsOn46bN1W6GzWtIzUnmwBnjagLPdfcNfO+OZylgv5AIgvhmzqbUF8THSavl3rQXa+GEcvEWiYzmDE9CeW/Zaj7+qJon4wusxXZOR7aKNWmP6gUvixbEGnSfcUYn8WCr2P8UyYX/zi3RMk1UiIm2V7ugmcK4H3evW70cg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by BL3PR12MB6403.namprd12.prod.outlook.com (2603:10b6:208:3b3::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.24; Mon, 12 Feb
+ 2024 09:35:08 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::c444:5cde:d19a:c73e]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::c444:5cde:d19a:c73e%7]) with mapi id 15.20.7292.022; Mon, 12 Feb 2024
+ 09:35:08 +0000
+Message-ID: <addd8e61-535e-4a7f-976a-8e0c57cfe944@nvidia.com>
+Date: Mon, 12 Feb 2024 11:35:02 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 09/13] migration: notifier error checking
+Subject: Re: [PATCH 11/14] vfio: Extend vfio_set_migration_error() with Error*
+ argument
 Content-Language: en-US
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marc-Andre Lureau <marcandre.lureau@redhat.com>
-References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
- <1707418446-134863-10-git-send-email-steven.sistare@oracle.com>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <1707418446-134863-10-git-send-email-steven.sistare@oracle.com>
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20240207133347.1115903-1-clg@redhat.com>
+ <20240207133347.1115903-12-clg@redhat.com>
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20240207133347.1115903-12-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P265CA0301.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:391::19) To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|BL3PR12MB6403:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f1e9cb1-9f91-48e7-7844-08dc2bade6a4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: L+mZd0VF4DGjd1dOuVRENTSBbEwKmDDhywckFgV392/LhG2y74mSMoaGCDtiFPxUQtvyqj+MLbG9gC5dbsBAnZ4+OToC0zihgTMd/fG8O4b+hSU3U1R31Uh0z3bTQ43XIu0vr1UYjF+7WO5ih5URsJ1ZzKCPTJftu9weGB8V08TXVkzp+g7P8ZEFl4xN7TUM1fYXO1Kiig2Lbop+Xueyly+mSq37KFKAgLG7HR6x9WEDNbPrZhGkl7+TPwqELZ78mDpp5JvNRiW86u85woaBSSM+H+/XhxZ1VD7/epC1MrrPoTrRj/kTvaU+rsz6YSC9fyU7okDrPCxssR8YlOlps8fXHv+FQHrwZFYAXzPCySLQQrIa61VSjLDSFqEMzh+dEg+NLUDE3YQRAnAwzX1bI15mmcsvV2NqyYBs81FE1kHCyX7TJh2zFp/NGROzRjFFOP8q8Vjrm3rBXMpriO081TGPWm7TE7mXqN51hN/QRCTby5xecns1aK5e67ZWOq9UMpYydXusNQMFOCMvfWhvo/EtvJ+NuJ5xPNqtPhCY2hx0j+cnYrpad5IeeFYRY/XS
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(396003)(366004)(39860400002)(376002)(346002)(136003)(230273577357003)(230922051799003)(1800799012)(186009)(451199024)(64100799003)(8676002)(41300700001)(2906002)(31686004)(5660300002)(8936002)(4326008)(86362001)(31696002)(83380400001)(36756003)(26005)(2616005)(66574015)(66946007)(66556008)(53546011)(66476007)(6666004)(38100700002)(6486002)(54906003)(6506007)(478600001)(316002)(6512007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Zk1VSitzOHNvN2FJYTlCU3F1cjVkQXZSWlV1dHl6SWtaazlCQU9YSElTTktv?=
+ =?utf-8?B?eGtCS1VXd3k3dG9xdGlPTFAyYVMvd243Yjk4bGRWa0d5d3hZWVo5OUFTK1RS?=
+ =?utf-8?B?eVJ0QUpJazNFWmpESXlTWGJ4bSsyRUVxTGxsN1ViNTN5aVMzbGl4RXdTbUNa?=
+ =?utf-8?B?MmtUeE1rUHVkQ2JkOGpWS1ZEa2ZVLzBmVTZEQzZGZVIwTjdvTWx6TWxwN1NJ?=
+ =?utf-8?B?UDFpSGdjQTE5R0hQMEVKczl3K0hHY0t4SzJ5dlBYbEMvQnpKdmcyMEVmTmtw?=
+ =?utf-8?B?ajIxb3RoZEwrckNiSmpXdEliMm5SQ3R3ME54czUxaFBLaDJ1ZjVGcHhBWFh5?=
+ =?utf-8?B?M2RrVEpaV245K0pTTTRRdWhXUjBndDk0S2kzRWtPTks3N3lNK1FydlFVWi9x?=
+ =?utf-8?B?TUtqNzhRRjQxRFVqMTd6VmloYlpESGdjblZiY0RKMEtnK2dNa200NWZLK2or?=
+ =?utf-8?B?VFpqWGxyRXI0VGlsempnc2JKUUNLYXRSSE9SenZpamlRb2lRRkdkb2gwcUtQ?=
+ =?utf-8?B?ZXpONElkNVR1d2xqZFRKOHdKczQxNXArUGZxSkJTdmVOdmNSbXp3UFR0Q0xD?=
+ =?utf-8?B?UmJiaWVabEh1TmZaUDRZenBWSVNnRnB3Yndab0Izc1RBNWlMZThRTGtoRkFV?=
+ =?utf-8?B?TStLcTBhZ1hEU293SjQ5ZnQ1a2xGODRmSXpLT3RaRVZTUktWY29RTGI4TVdD?=
+ =?utf-8?B?cUhjZC8yYjNrR05sQW1ablR3QVhXNG01V0xzRVBpRythNjVUcTRuVVM4UjlI?=
+ =?utf-8?B?L1liaDN0c1FJUlh2emFad25VTlJZbVIzcnBKZm8xMGZQWXEyMU80Y0NRb011?=
+ =?utf-8?B?MEk5SllqMTZ5WDVybzNTSUJ4aDZENU5KaWpTUDhCOUZZUHZZaHVQdCsvOUZT?=
+ =?utf-8?B?MUh5eGNIZVBucWFocGlxQmRLUDU2Z3VldWxWSjlhaDVpRXFUU0JsNTJ3M1Jw?=
+ =?utf-8?B?cEZoK3hDLzRBbHNzTUdCTkVUNUViMzJiMzJNUDhOMmFxdktERzJiRXhwYStt?=
+ =?utf-8?B?YnBJT2U4Zm9tTTArM0M2eGJiUXQ2bmM3QzgvdXRSYW5mQTVmQUYwSldWRHBa?=
+ =?utf-8?B?ZER2R3FnU1lKdzN3THQzTURWMWZnZG1pTU9NaTBUY3hGME9La01hdmVzMkpC?=
+ =?utf-8?B?Y1NzWWdBdXJxdmxUWnVMZ05FRitGQVJ4a2JGU2lEcjc5RnU2dnpaZElmRVJ4?=
+ =?utf-8?B?bmJlcVovV29IK0QreE1yd1RwdEJ0YUhUbFhLQ3lXWU1OaGF2NmpEZEtrV2s2?=
+ =?utf-8?B?dGsxQXBXQ1J2clFEMmJsWE1RMmtlY2ovTDdCL3M0TDJBbXA5ZVNjSGNvVmFX?=
+ =?utf-8?B?Tks2TXhHUkxZdVljQmt1TUl2VmFoRmRsOEhSTVdpYWs3N1N5QkNzRHI1Sy9v?=
+ =?utf-8?B?ak1Md2d3c1NBK2FoTU9NbDRSekMvVGVmcTRUeHh2SzZJaGY4djh1RkpYalZr?=
+ =?utf-8?B?eitjOEMzMDlqUlVqWnlxc3NiMG9OQ2hxN3NINWZjaDVQdjNjSEpTTWNtOHJ4?=
+ =?utf-8?B?R0tzQzRmN3hZY3RLQURMVTg1RU9ZR0tsRktQUmpIaWR3Sk91Ukc1ejRab1FK?=
+ =?utf-8?B?djhVOXAya2dxTnlZTC9mU2ViRURSOXZpbnduSjJWUUFxRUlJQmxrbkxmQ2Yx?=
+ =?utf-8?B?Qmp4d2Vja25hMW9HbkMrcUVtamwxZW9nM1kxRGhWc2Q2NGNoUklXbG9WMVZo?=
+ =?utf-8?B?OWhDQlFRZ3I3L2Rqc3c2NkRWOXAxNC9RajhpejI2S2JReTBlU21SRjR0QmM2?=
+ =?utf-8?B?SGlIZjMzT1RtbWx1SWQvU3dERFE5S0xnYWUrQVlKN1crejZKbnBIa1pTa215?=
+ =?utf-8?B?YWhoMncrZlpDY2kwQ09ab3lxWGpoRXR3M1YydVd6VGJ3Z0Z1ekltUnArQ0Nm?=
+ =?utf-8?B?VXVNTDhWZXJTc3puVzJBQ1lSd2Y1dHJmOTA1MDlxRVBJYWh0UldWcS9uUGhP?=
+ =?utf-8?B?NTZKNUpPcXpuQVR6bHZVaVVSdUdZU0dpa29pM29PR21lbll2bWdDazQ4YmZH?=
+ =?utf-8?B?cmJucS9DS2Z1eDd5bTVINnFUUzl6cVl1cXpOd1ZPV3JzelBoczBZYVNrd2ZW?=
+ =?utf-8?B?ODJ4bVlSelVhR3A2M2JoRnFKTG5NUXFkcjJ4VUVBcTdEUm5aUnRYOStEbEZ6?=
+ =?utf-8?Q?MBd2MOQJmOZGAOy4TOJsJbBhm?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f1e9cb1-9f91-48e7-7844-08dc2bade6a4
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Feb 2024 09:35:08.0705 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: o6p/PpHcg5GGnkrJmv76NJbO2B5LXKryP5vllMNZ/tbbwTtcmqyC5LXMRw8mSw93DbBpUnZ/wDmac+e6+jOyxw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6403
+Received-SPF: softfail client-ip=2a01:111:f403:2418::601;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.677,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,23 +150,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.02.24 19:54, Steve Sistare wrote:
-> Check the status returned by migration notifiers and report errors.
-> If notifiers fail, call the notifiers again so they can clean up.
+Hi Cedric,
 
-IIUC, if any of the notifiers will actually start to fail, say, during 
-MIG_EVENT_PRECOPY_SETUP, you will call MIG_EVENT_PRECOPY_FAILED on all 
-notifiers.
+On 07/02/2024 15:33, Cédric Le Goater wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> vfio_set_migration_error() sets the 'return' error on the migration
+> stream if a migration is in progress. To improve error reporting, add
+> a new Error* argument to also set the Error object on the migration
+> stream.
+>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/common.c | 50 +++++++++++++++++++++++++++++-------------------
+>   1 file changed, 30 insertions(+), 20 deletions(-)
+>
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index 82173b039c47150f5edd05d329192c5b9c8a9a0f..afe8b6bd294fd5904f394a5db48aae3fd718b14e 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -148,16 +148,18 @@ bool vfio_viommu_preset(VFIODevice *vbasedev)
+>       return vbasedev->bcontainer->space->as != &address_space_memory;
+>   }
+>
+> -static void vfio_set_migration_error(int err)
+> +static void vfio_set_migration_error(int ret, Error *err)
+>   {
+>       MigrationState *ms = migrate_get_current();
+>
+>       if (migration_is_setup_or_active(ms->state)) {
+>           WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+>               if (ms->to_dst_file) {
+> -                qemu_file_set_error(ms->to_dst_file, err);
+> +                qemu_file_set_error_obj(ms->to_dst_file, ret, err);
+>               }
+>           }
+> +    } else {
+> +        error_report_err(err);
+>       }
+>   }
+>
+> @@ -296,15 +298,17 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       VFIOContainerBase *bcontainer = giommu->bcontainer;
+>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
+>       void *vaddr;
+> +    Error *local_err = NULL;
+>       int ret;
+>
+>       trace_vfio_iommu_map_notify(iotlb->perm == IOMMU_NONE ? "UNMAP" : "MAP",
+>                                   iova, iova + iotlb->addr_mask);
+>
+>       if (iotlb->target_as != &address_space_memory) {
+> -        error_report("Wrong target AS \"%s\", only system memory is allowed",
+> -                     iotlb->target_as->name ? iotlb->target_as->name : "none");
+> -        vfio_set_migration_error(-EINVAL);
+> +        error_setg(&local_err,
+> +                   "Wrong target AS \"%s\", only system memory is allowed",
+> +                   iotlb->target_as->name ? iotlb->target_as->name : "none");
+> +        vfio_set_migration_error(-EINVAL, local_err);
+>           return;
+>       }
+>
+> @@ -336,11 +340,12 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>           ret = vfio_container_dma_unmap(bcontainer, iova,
+>                                          iotlb->addr_mask + 1, iotlb);
+>           if (ret) {
+> -            error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+> -                         "0x%"HWADDR_PRIx") = %d (%s)",
+> -                         bcontainer, iova,
+> -                         iotlb->addr_mask + 1, ret, strerror(-ret));
+> -            vfio_set_migration_error(ret);
+> +            error_setg(&local_err,
+> +                       "vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+> +                       "0x%"HWADDR_PRIx") = %d (%s)",
+> +                       bcontainer, iova,
+> +                       iotlb->addr_mask + 1, ret, strerror(-ret));
+> +            vfio_set_migration_error(ret, local_err);
+>           }
+>       }
+>   out:
+> @@ -1224,13 +1229,15 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       VFIOContainerBase *bcontainer = giommu->bcontainer;
+>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
+>       ram_addr_t translated_addr;
+> +    Error *local_err = NULL;
+>       int ret = -EINVAL;
+>
+>       trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
+>
+>       if (iotlb->target_as != &address_space_memory) {
+> -        error_report("Wrong target AS \"%s\", only system memory is allowed",
+> -                     iotlb->target_as->name ? iotlb->target_as->name : "none");
+> +        error_setg(&local_err,
+> +                   "Wrong target AS \"%s\", only system memory is allowed",
+> +                   iotlb->target_as->name ? iotlb->target_as->name : "none");
+>           goto out;
+>       }
+>
+> @@ -1239,17 +1246,18 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>           ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+>                                       translated_addr);
 
-That will include notifiers that have never seen a 
-MIG_EVENT_PRECOPY_SETUP call.
+If vfio_get_xlat_addr() above (it's not shown here) returns false, we 
+will pass a NULL local_err to vfio_set_migration_error() and it may 
+de-reference NULL ptr in error_report_err().
 
-Is that what we expect notifiers to be able to deal with? Can we 
-document that?
+Should we refactor vfio_get_xlat_addr() to get errp, or add an else 
+branch below, setting -EINVAL (and removing the default -EINVAL from the 
+top of the function)?
 
--- 
-Cheers,
+Thanks.
 
-David / dhildenb
-
+>           if (ret) {
+> -            error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+> -                         "0x%"HWADDR_PRIx") = %d (%s)",
+> -                         bcontainer, iova, iotlb->addr_mask + 1, ret,
+> -                         strerror(-ret));
+> +            error_setg(&local_err,
+> +                       "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+> +                       "0x%"HWADDR_PRIx") = %d (%s)",
+> +                       bcontainer, iova, iotlb->addr_mask + 1, ret,
+> +                       strerror(-ret));
+>           }
+>       }
+>       rcu_read_unlock();
+>
+>   out:
+>       if (ret) {
+> -        vfio_set_migration_error(ret);
+> +        vfio_set_migration_error(ret, local_err);
+>       }
+>   }
+>
+> @@ -1345,6 +1353,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+>   {
+>       VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+>                                                    listener);
+> +    Error *local_err = NULL;
+>       int ret;
+>
+>       if (vfio_listener_skipped_section(section)) {
+> @@ -1354,9 +1363,10 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+>       if (vfio_devices_all_dirty_tracking(bcontainer)) {
+>           ret = vfio_sync_dirty_bitmap(bcontainer, section);
+>           if (ret) {
+> -            error_report("vfio: Failed to sync dirty bitmap, err: %d (%s)", ret,
+> -                         strerror(-ret));
+> -            vfio_set_migration_error(ret);
+> +            error_setg(&local_err,
+> +                       "vfio: Failed to sync dirty bitmap, err: %d (%s)", ret,
+> +                       strerror(-ret));
+> +            vfio_set_migration_error(ret, local_err);
+>           }
+>       }
+>   }
+> --
+> 2.43.0
+>
+>
 
