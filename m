@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 795B5C4829E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79564C4829D
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 23:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZg1b-0003DG-Am; Mon, 12 Feb 2024 18:47:47 -0500
+	id 1rZg1l-0003Rj-QF; Mon, 12 Feb 2024 18:47:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1Z-0003CO-KU
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:45 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1k-0003Nt-GV
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:56 -0500
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1X-00008P-4i
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:45 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rZg1f-0000Ai-3h
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 18:47:56 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 69DA0CE17E6;
- Mon, 12 Feb 2024 23:47:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADBCC433F1;
- Mon, 12 Feb 2024 23:47:37 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id C72FCCE17B9;
+ Mon, 12 Feb 2024 23:47:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9191C433C7;
+ Mon, 12 Feb 2024 23:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707781658;
- bh=vqjS4Tn8JsTETJjKAhscWBmZAWUWeDAIiHK9Uvc1mpY=;
+ s=k20201202; t=1707781668;
+ bh=6vagHqBoZ2ubfTZKUJlBmt9pcsuk146jYOR+LVQKiDI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NtPjrtq+hvNwgMVahFvUmUaA4tlGLNc6VAQe9oxFkepfJswZURWRuLstexr5dPHdL
- Gyfs2dIdeUOzuB6sNx8B1wDfChmlzwaCcYhLVu8+IOvhl8GudDfddSvgydvtxtIRiw
- HJwJzs6JWrsPHKYBIZ0f0eg1k3xk5G5hcOpigbxYQXDxTLDwyXv8KS2IbwFCm4Pxku
- YtAWLLwyCm9fAPAuhJyZk2M0MEe5L+RTywZY3w/rNijK9Pg+hb/bMKltRI50ekL/w/
- q9VcvbwxBwpw7lIPiE7smQbcOmy9SW/h9iAQrUXQHnKViTEovBA3f+fpHz2knn1KT+
- FIxDLDRqL84fQ==
+ b=SUWWxuQROHVEckTClXdTvOu57+6Y1zQAML+UNxakMYpIL7agShrEg4a2MTL2Amxeo
+ mtlnV9c3EbGO0EkKA9JJ9gBeHbpyVGFF6eoKAoaCqaMdfZ8lCBcQHdRGCWFQvGXHBO
+ YOu78pZ/FtVoUvmd02ZXBWeErtu7kAAz3r+Shf5V/Bm1fKJ3DNQS9BdUdHu8UL4rjp
+ KCcr/b23jl8k5KdR0UcW4vQwwd4IvGOQMIBbArrx35lq6nQ0yDwJtOJx3lh8TnCkAS
+ TtLS4Fwtbw6QotBwbulSagtaghw8yo/dUJuZq0At4GzI4QZGROJpX8Mzw1P9xRdLP2
+ +a9PJO+I6qb8Q==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 07/12] lasi: Add reset I/O ports for LASI audio and FDC
-Date: Tue, 13 Feb 2024 00:47:18 +0100
-Message-ID: <20240212234723.222847-8-deller@kernel.org>
+Subject: [PULL 12/12] hw/hppa/machine: Load 64-bit firmware on 64-bit machines
+Date: Tue, 13 Feb 2024 00:47:23 +0100
+Message-ID: <20240212234723.222847-13-deller@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240212234723.222847-1-deller@kernel.org>
 References: <20240212234723.222847-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=deller@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,78 +71,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Linux writes zeroes at bootup into the default ports for LASI audio and
-LASI floppy controller to reset those devices.  Allow writing to those
-registers to avoid HPMCs.
+Load the 64-bit SeaBIOS-hppa firmware by default when running on a 64-bit
+machine. This will enable us to later support more than 4GB of RAM and is
+required that the OS (or PALO bootloader) will start or install a 64-bit kernel
+instead of a 32-bit kernel.
+
+Note that SeaBIOS-hppa v16 provides the "-fw_cfg opt/OS64,string=3" option with
+which the user can control what the firmware shall report back to the OS:
+Support of 32-bit OS, support of a 64-bit OS, or support for both (default).
+
+Wrap firmware loading inside !qtest_enabled() to avoid this warning with
+qtest: "qemu-system-hppa: no firmware provided".
 
 Signed-off-by: Helge Deller <deller@gmx.de>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/misc/lasi.c         | 11 +++++++++++
- include/hw/misc/lasi.h |  2 ++
- 2 files changed, 13 insertions(+)
+ hw/hppa/machine.c | 52 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 30 insertions(+), 22 deletions(-)
 
-diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
-index 9cfa5bb316..970fc98b5c 100644
---- a/hw/misc/lasi.c
-+++ b/hw/misc/lasi.c
-@@ -36,10 +36,13 @@ static bool lasi_chip_mem_valid(void *opaque, hwaddr addr,
-     case LASI_IAR:
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index eb78c46ff1..5fcaf5884b 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -13,6 +13,7 @@
+ #include "qemu/error-report.h"
+ #include "sysemu/reset.h"
+ #include "sysemu/sysemu.h"
++#include "sysemu/qtest.h"
+ #include "sysemu/runstate.h"
+ #include "hw/rtc/mc146818rtc.h"
+ #include "hw/timer/i8254.h"
+@@ -333,6 +334,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+     const char *kernel_filename = machine->kernel_filename;
+     const char *kernel_cmdline = machine->kernel_cmdline;
+     const char *initrd_filename = machine->initrd_filename;
++    const char *firmware = machine->firmware;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     DeviceState *dev;
+     PCIDevice *pci_dev;
+@@ -408,31 +410,37 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
  
-     case LASI_LPT:
-+    case LASI_AUDIO:
-+    case LASI_AUDIO + 4:
-     case LASI_UART:
-     case LASI_LAN:
-     case LASI_LAN + 12: /* LASI LAN MAC */
-     case LASI_RTC:
-+    case LASI_FDC:
+     /* Load firmware.  Given that this is not "real" firmware,
+        but one explicitly written for the emulation, we might as
+-       well load it directly from an ELF image.  */
+-    firmware_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS,
+-                                       machine->firmware ?: "hppa-firmware.img");
+-    if (firmware_filename == NULL) {
+-        error_report("no firmware provided");
+-        exit(1);
+-    }
++       well load it directly from an ELF image. Load the 64-bit
++       firmware on 64-bit machines by default if not specified
++       on command line. */
++    if (!qtest_enabled()) {
++        if (!firmware) {
++            firmware = lasi_dev ? "hppa-firmware.img" : "hppa-firmware64.img";
++        }
++        firmware_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, firmware);
++        if (firmware_filename == NULL) {
++            error_report("no firmware provided");
++            exit(1);
++        }
  
-     case LASI_PCR ... LASI_AMR:
-         ret = true;
-@@ -80,6 +83,7 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
-     case LASI_UART:
-     case LASI_LAN:
-     case LASI_LAN + 12:
-+    case LASI_FDC:
-         val = 0;
-         break;
-     case LASI_RTC:
-@@ -145,12 +149,19 @@ static MemTxResult lasi_chip_write_with_attrs(void *opaque, hwaddr addr,
-     case LASI_LPT:
-         /* XXX: reset parallel port */
-         break;
-+    case LASI_AUDIO:
-+    case LASI_AUDIO + 4:
-+        /* XXX: reset audio port */
-+        break;
-     case LASI_UART:
-         /* XXX: reset serial port */
-         break;
-     case LASI_LAN:
-         /* XXX: reset LAN card */
-         break;
-+    case LASI_FDC:
-+        /* XXX: reset Floppy controller */
-+        break;
-     case LASI_RTC:
-         s->rtc_ref = val - time(NULL);
-         break;
-diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
-index 0a8c7352be..f01c0f680a 100644
---- a/include/hw/misc/lasi.h
-+++ b/include/hw/misc/lasi.h
-@@ -26,9 +26,11 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
- #define LASI_IAR        0x10
+-    size = load_elf(firmware_filename, NULL, translate, NULL,
+-                    &firmware_entry, &firmware_low, &firmware_high, NULL,
+-                    true, EM_PARISC, 0, 0);
++        size = load_elf(firmware_filename, NULL, translate, NULL,
++                        &firmware_entry, &firmware_low, &firmware_high, NULL,
++                        true, EM_PARISC, 0, 0);
  
- #define LASI_LPT        0x02000
-+#define LASI_AUDIO      0x04000
- #define LASI_UART       0x05000
- #define LASI_LAN        0x07000
- #define LASI_RTC        0x09000
-+#define LASI_FDC        0x0A000
+-    if (size < 0) {
+-        error_report("could not load firmware '%s'", firmware_filename);
+-        exit(1);
+-    }
+-    qemu_log_mask(CPU_LOG_PAGE, "Firmware loaded at 0x%08" PRIx64
+-                  "-0x%08" PRIx64 ", entry at 0x%08" PRIx64 ".\n",
+-                  firmware_low, firmware_high, firmware_entry);
+-    if (firmware_low < translate(NULL, FIRMWARE_START) ||
+-        firmware_high >= translate(NULL, FIRMWARE_END)) {
+-        error_report("Firmware overlaps with memory or IO space");
+-        exit(1);
++        if (size < 0) {
++            error_report("could not load firmware '%s'", firmware_filename);
++            exit(1);
++        }
++        qemu_log_mask(CPU_LOG_PAGE, "Firmware loaded at 0x%08" PRIx64
++                      "-0x%08" PRIx64 ", entry at 0x%08" PRIx64 ".\n",
++                      firmware_low, firmware_high, firmware_entry);
++        if (firmware_low < translate(NULL, FIRMWARE_START) ||
++            firmware_high >= translate(NULL, FIRMWARE_END)) {
++            error_report("Firmware overlaps with memory or IO space");
++            exit(1);
++        }
++        g_free(firmware_filename);
+     }
+-    g_free(firmware_filename);
  
- #define LASI_PCR        0x0C000 /* LASI Power Control register */
- #define LASI_ERRLOG     0x0C004 /* LASI Error Logging register */
+     rom_region = g_new(MemoryRegion, 1);
+     memory_region_init_ram(rom_region, NULL, "firmware",
 -- 
 2.43.0
 
