@@ -4,90 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD3E4C48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB451C48297
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:26:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZRL5-0000rw-39; Mon, 12 Feb 2024 03:06:55 -0500
+	id 1rZRdI-0007XD-Kt; Mon, 12 Feb 2024 03:25:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rZRL2-0000qn-TY
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:06:52 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rZRL1-00081T-0p
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:06:52 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d953fa3286so22502745ad.2
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 00:06:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1707725208; x=1708330008;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kL8MqPEDgwSmrca9yBLK8PFHw9ilvDpuhB5dlU2hyEI=;
- b=mRmAyBdd/gqDiA9qZ/xncYYIG0Li2dnI3QW2XcuS7FtAeavCkYKkyDPlRDVB/k5Wws
- VsY7chaVt4pUrr2k31uyd9LkTzp0jTftVvW/2zoOApTI/H804H3FKg0a3yrn1Q6WWwsO
- L5os+fXEfQuuuozkxP5AONSCmPJ9FfUfLKqK/SB51yMO2OYOo8ITz+djf3QDJHyqGKCM
- JxuhLER/aCDvmqnU+gdDvocX0Bq2Q4MxyEUDEkauMnT1/Fe1pH9VrZAwgdukKR87SBfs
- tqe89FV64jzM+evH6lb6JTOOZOY59G5IaCQwQn40p/KDgjVdUHCx7Uk4C63h3CR6WWpz
- 5FRQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZRdC-0007Wp-T7
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:25:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZRdB-0002jO-39
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:25:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707726335;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Si8xiq/4KEOYL4JxB0L+QRs1AYEI9TZrK09fuUetg8=;
+ b=Hjld3ijJGich+NvFGz4csquRdahtLIuTAUovgT9KA7aMBXCv5KJBowJvCfnCNkUE4yFF1l
+ S5+lUkKY7Zt8mJ45FV1HiiAi4F7wJac+AMJLF/uOPAeHjlW5x3SZ7qyTzhmj36eX2TcZ1Y
+ HEmktC5vifJQaPK8ZVbb+DxOELYhz+s=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-WK1HZFPLNleHVWhkC2GY-Q-1; Mon, 12 Feb 2024 03:25:33 -0500
+X-MC-Unique: WK1HZFPLNleHVWhkC2GY-Q-1
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3bff70e7380so3085366b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 00:25:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707725208; x=1708330008;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kL8MqPEDgwSmrca9yBLK8PFHw9ilvDpuhB5dlU2hyEI=;
- b=lzznWu75keJ2FDqcKjKwayHEhiyRVg/9K9tk7sNSWpT03QDTdv2FScedXPYDg8Fy6c
- QAg/ukT8zWDVyYg/gGuQdqmh/pPTP4Cf5+B4aslws1NfJlnNDzLxkkqqqVtxST3xFO4n
- fMC1w/XMs5lcbSV9cKvEkO2AiOiw/uf6S6Km+weH6EDO8LXW3cbaDDxTQ3DzlUWRpXnF
- l0ShFowZaYmDpDQaT4V6cn2mVadEZDGIX8C57GKoSuB1sDS0aga7ukS7isE5L446j3a/
- TcIeYCZTPMHRVZ3wsMmc3GaqKLm3x+IsV+icqBB6kc38RxqaO2xJiCJRzZsK/znGixLw
- +PwQ==
-X-Gm-Message-State: AOJu0Yy8YDGaOOlvgaTv9++O2ii5Wsty6VFHBcT/kmMWEZzgg+IzVmt7
- zeFmwitFj1mbRMTnNoACKw13DQONnTlK5hXE8Qg923wz2yxFkW4P0+MGgEnf3ggbnd6IgRBgiSJ
- Yj7w=
-X-Google-Smtp-Source: AGHT+IEQ6ghUK8Ttxekm7Tlsy1tf0UZcmTohqKyz3vDMnQhJP+RrPAJ5r6jKDxU3L5J4zQHqtiHUhg==
-X-Received: by 2002:a17:902:e5ca:b0:1d9:a5ec:30d2 with SMTP id
- u10-20020a170902e5ca00b001d9a5ec30d2mr8616706plf.12.1707725208392; 
- Mon, 12 Feb 2024 00:06:48 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707726333; x=1708331133;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5Si8xiq/4KEOYL4JxB0L+QRs1AYEI9TZrK09fuUetg8=;
+ b=tp8ExsKh5qHnH3jjcA3UXzX4h1FV+PsCmXu7cG4M5guGfbiqeDBnChIqN/v7GfzWcs
+ Bpo8OvweU2kSLOnFn5iDHw/3QD22enyXinalyopH3zkPQL2nrHUoaL6+L9apRzw7M7yo
+ uGwhcwvM/UxoHIPvIDXnsGKE1WSBqcHN4Jy7XpkKiJn2DHO0RIN2spm/k7DPnpJ9K77e
+ uxapuqBbA1nyxDNiqpqGwitTrUfE79+3zuECJoAma/b9fV1aK9TUb7TUO2ob9V1ZS6mk
+ 46AOJ8R65sJot1w/ZgpjfQ6DixMgYEPkUHR9D/2f1dzcPevno16VOE9AjOj5D8USWeaI
+ MNvQ==
+X-Gm-Message-State: AOJu0YxPNX8VJuKMkpUz8HzwhVyN42/fF2fyAPC80t1GwwxKSjbOY18h
+ P96MOUeUYAs2osKplIp87WhiWOy5JjdkYf7wFmgXzGfBR/girzWYwBECzIRjkTKE8MXWlM15Z0V
+ n1SzuLM4trM01A38wJxpQ0TWL9VbECv+D88zN38NvDWESXx8rCYMJ
+X-Received: by 2002:a05:6808:1988:b0:3c0:3306:a379 with SMTP id
+ bj8-20020a056808198800b003c03306a379mr4715688oib.55.1707726332962; 
+ Mon, 12 Feb 2024 00:25:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE5MtKqBvZ2G1dwQOUBLh3EjyGvBiZ1k2mGveotq2XU67YGYBBhdP+rTsGX24XPN/bICMBe+w==
+X-Received: by 2002:a05:6808:1988:b0:3c0:3306:a379 with SMTP id
+ bj8-20020a056808198800b003c03306a379mr4715680oib.55.1707726332658; 
+ Mon, 12 Feb 2024 00:25:32 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfX3ujxdm4a7OgawnU/UivnTlWxPNOLIjTVyHMmoz+LaTgD939PKaldnzo51JaD6q2jSUiexoq/UpXcgS2Yzb8S8fF7oClUz9/0uqoUWAhr0tW8G1ryTwKhqc9D5yFnYMMhpDjoMA2hCtMmJYbwMot/swXynjMzOhBIzYz/OgQCrdPdWfI+7ySJEy/Kyyu1cMl8JA2UVosdIf0QSeiHSiZ2aIvpriBrlxs3D8G9dXpdFsKGh/fPnnUWzHhzweCBsjnn8nBt1RJz6VfX9MjOTiUW52gtaz9ZfzgvTu3RflQm5VIJN5FER77/tm1Lh4nds/u8ir4GYipSSwwWSTpRdNUDqJHeRWJmt9hvtkSBB9pqpxQAvrA9mJ8CQpIFXltLw==
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
+ AJvYcCVt3fN4KWF+ENqG2X8QVQH2YZAFe+irKemqlmZconFhW6eSaVNuUZXPHQNCCGitCWiFlLmHTSN2BPwvtBiAZr6brRW5OemMSHwGKfSQls0vbiPC7HQJMKHZ9B4tGNQJX9AOnd79dh8wQFt/9XcvTD44DvTzX8LU10lqTV9AbvPsFIQP/0vvT+zhD8rSmKGlGkXcCe6aB0hgI/5Ejpcc+iowOrh6lwMrLbE1zbbtYJLvimrDYHZ9v8cwgTTpRz8TFAoL8R3bxHE9mfism1oo4zgZwdYSg7mYzbxeMWVxhyMbX7LbjrJ3cuPdidL6X6Ls0svSkapMcLY1iQfSfogrs3P3nnI80zGUhIEOZo1mQuVTagsfs2O4EqdHg1q48fD5y9Z8ooTMr/r2CChd5S8TLT1NtPk/3sUrqZ5k/ZT3QQ==
+Received: from ?IPV6:2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891?
+ ([2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891])
  by smtp.gmail.com with ESMTPSA id
- s13-20020a17090330cd00b001d9fc53514esm5404649plc.66.2024.02.12.00.06.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Feb 2024 00:06:48 -0800 (PST)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: qemu-devel@nongnu.org, jag.raman@oracle.com, peterx@redhat.com,
- stefanha@redhat.com
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- john.levon@nutanix.com, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v7 4/5] vfio-user: Message-based DMA support
-Date: Mon, 12 Feb 2024 00:06:16 -0800
-Message-Id: <20240212080617.2559498-5-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240212080617.2559498-1-mnissler@rivosinc.com>
-References: <20240212080617.2559498-1-mnissler@rivosinc.com>
+ y17-20020a05622a005100b0042c58191861sm1579081qtw.53.2024.02.12.00.25.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Feb 2024 00:25:32 -0800 (PST)
+Message-ID: <10bb153f-8e93-47f6-bfcd-d3c2416f03dc@redhat.com>
+Date: Mon, 12 Feb 2024 09:25:27 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/6] vfio: Avoid inspecting option QDict for rombar
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20240210-reuse-v2-0-24ba2a502692@daynix.com>
+ <20240210-reuse-v2-2-24ba2a502692@daynix.com>
+ <318f6a01-a72e-417e-8017-80a758605e98@linaro.org>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <318f6a01-a72e-417e-8017-80a758605e98@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=mnissler@rivosinc.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.677,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,172 +114,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up support for DMA for the case where the vfio-user client does not
-provide mmap()-able file descriptors, but DMA requests must be performed
-via the VFIO-user protocol. This installs an indirect memory region,
-which already works for pci_dma_{read,write}, and pci_dma_map works
-thanks to the existing DMA bounce buffering support.
+On 2/12/24 09:04, Philippe Mathieu-Daudé wrote:
+> On 10/2/24 11:24, Akihiko Odaki wrote:
+>> Use pci_rom_bar_explicitly_enabled() to determine if rombar is explicitly
+>> enabled.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/vfio/pci.c | 3 +--
+>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index d7fe06715c4b..44178ac9355f 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -1010,7 +1010,6 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+>>   {
+>>       uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
+>>       off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
+>> -    DeviceState *dev = DEVICE(vdev);
+>>       char *name;
+>>       int fd = vdev->vbasedev.fd;
+>> @@ -1044,7 +1043,7 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+>>       }
+>>       if (vfio_opt_rom_in_denylist(vdev)) {
+>> -        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
+>> +        if (pci_rom_bar_explicitly_enabled(&vdev->pdev)) {
+> 
+> "pdev" is considered internal field, please use the DEVICE() macro
+> to access it. 
 
-Note that while simple scenarios work with this patch, there's a known
-race condition in libvfio-user that will mess up the communication
-channel. See https://github.com/nutanix/libvfio-user/issues/279 for
-details as well as a proposed fix.
+Yes. I was just looking at  vfio_pci_size_rom(). There is a test at
+the beginning of this routine which should be changed to use DEVICE()
 
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
----
- hw/remote/trace-events    |   2 +
- hw/remote/vfio-user-obj.c | 100 ++++++++++++++++++++++++++++++++------
- 2 files changed, 87 insertions(+), 15 deletions(-)
 
-diff --git a/hw/remote/trace-events b/hw/remote/trace-events
-index 0d1b7d56a5..358a68fb34 100644
---- a/hw/remote/trace-events
-+++ b/hw/remote/trace-events
-@@ -9,6 +9,8 @@ vfu_cfg_read(uint32_t offset, uint32_t val) "vfu: cfg: 0x%x -> 0x%x"
- vfu_cfg_write(uint32_t offset, uint32_t val) "vfu: cfg: 0x%x <- 0x%x"
- vfu_dma_register(uint64_t gpa, size_t len) "vfu: registering GPA 0x%"PRIx64", %zu bytes"
- vfu_dma_unregister(uint64_t gpa) "vfu: unregistering GPA 0x%"PRIx64""
-+vfu_dma_read(uint64_t gpa, size_t len) "vfu: DMA read 0x%"PRIx64", %zu bytes"
-+vfu_dma_write(uint64_t gpa, size_t len) "vfu: DMA write 0x%"PRIx64", %zu bytes"
- vfu_bar_register(int i, uint64_t addr, uint64_t size) "vfu: BAR %d: addr 0x%"PRIx64" size 0x%"PRIx64""
- vfu_bar_rw_enter(const char *op, uint64_t addr) "vfu: %s request for BAR address 0x%"PRIx64""
- vfu_bar_rw_exit(const char *op, uint64_t addr) "vfu: Finished %s of BAR address 0x%"PRIx64""
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index d9b879e056..a15e291c9a 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -300,6 +300,63 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
-     return count;
- }
- 
-+static MemTxResult vfu_dma_read(void *opaque, hwaddr addr, uint64_t *val,
-+                                unsigned size, MemTxAttrs attrs)
-+{
-+    MemoryRegion *region = opaque;
-+    vfu_ctx_t *vfu_ctx = VFU_OBJECT(region->owner)->vfu_ctx;
-+    uint8_t buf[sizeof(uint64_t)];
-+
-+    trace_vfu_dma_read(region->addr + addr, size);
-+
-+    g_autofree dma_sg_t *sg = g_malloc0(dma_sg_size());
-+    vfu_dma_addr_t vfu_addr = (vfu_dma_addr_t)(region->addr + addr);
-+    if (vfu_addr_to_sgl(vfu_ctx, vfu_addr, size, sg, 1, PROT_READ) < 0 ||
-+        vfu_sgl_read(vfu_ctx, sg, 1, buf) != 0) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    *val = ldn_he_p(buf, size);
-+
-+    return MEMTX_OK;
-+}
-+
-+static MemTxResult vfu_dma_write(void *opaque, hwaddr addr, uint64_t val,
-+                                 unsigned size, MemTxAttrs attrs)
-+{
-+    MemoryRegion *region = opaque;
-+    vfu_ctx_t *vfu_ctx = VFU_OBJECT(region->owner)->vfu_ctx;
-+    uint8_t buf[sizeof(uint64_t)];
-+
-+    trace_vfu_dma_write(region->addr + addr, size);
-+
-+    stn_he_p(buf, size, val);
-+
-+    g_autofree dma_sg_t *sg = g_malloc0(dma_sg_size());
-+    vfu_dma_addr_t vfu_addr = (vfu_dma_addr_t)(region->addr + addr);
-+    if (vfu_addr_to_sgl(vfu_ctx, vfu_addr, size, sg, 1, PROT_WRITE) < 0 ||
-+        vfu_sgl_write(vfu_ctx, sg, 1, buf) != 0) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    return MEMTX_OK;
-+}
-+
-+static const MemoryRegionOps vfu_dma_ops = {
-+    .read_with_attrs = vfu_dma_read,
-+    .write_with_attrs = vfu_dma_write,
-+    .endianness = DEVICE_HOST_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+        .unaligned = true,
-+    },
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
- static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
- {
-     VfuObject *o = vfu_get_private(vfu_ctx);
-@@ -308,17 +365,30 @@ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
-     g_autofree char *name = NULL;
-     struct iovec *iov = &info->iova;
- 
--    if (!info->vaddr) {
--        return;
--    }
--
-     name = g_strdup_printf("mem-%s-%"PRIx64"", o->device,
--                           (uint64_t)info->vaddr);
-+                           (uint64_t)iov->iov_base);
- 
-     subregion = g_new0(MemoryRegion, 1);
- 
--    memory_region_init_ram_ptr(subregion, NULL, name,
--                               iov->iov_len, info->vaddr);
-+    if (info->vaddr) {
-+        memory_region_init_ram_ptr(subregion, OBJECT(o), name,
-+                                   iov->iov_len, info->vaddr);
-+    } else {
-+        /*
-+         * Note that I/O regions' MemoryRegionOps handle accesses of at most 8
-+         * bytes at a time, and larger accesses are broken down. However,
-+         * many/most DMA accesses are larger than 8 bytes and VFIO-user can
-+         * handle large DMA accesses just fine, thus this size restriction
-+         * unnecessarily hurts performance, in particular given that each
-+         * access causes a round trip on the VFIO-user socket.
-+         *
-+         * TODO: Investigate how to plumb larger accesses through memory
-+         * regions, possibly by amending MemoryRegionOps or by creating a new
-+         * memory region type.
-+         */
-+        memory_region_init_io(subregion, OBJECT(o), &vfu_dma_ops, subregion,
-+                              name, iov->iov_len);
-+    }
- 
-     dma_as = pci_device_iommu_address_space(o->pci_dev);
- 
-@@ -330,20 +400,20 @@ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
- static void dma_unregister(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
- {
-     VfuObject *o = vfu_get_private(vfu_ctx);
-+    MemoryRegionSection mr_section;
-     AddressSpace *dma_as = NULL;
--    MemoryRegion *mr = NULL;
--    ram_addr_t offset;
- 
--    mr = memory_region_from_host(info->vaddr, &offset);
--    if (!mr) {
-+    dma_as = pci_device_iommu_address_space(o->pci_dev);
-+
-+    mr_section =
-+        memory_region_find(dma_as->root, (hwaddr)info->iova.iov_base, 1);
-+    if (!mr_section.mr) {
-         return;
-     }
- 
--    dma_as = pci_device_iommu_address_space(o->pci_dev);
--
--    memory_region_del_subregion(dma_as->root, mr);
-+    memory_region_del_subregion(dma_as->root, mr_section.mr);
- 
--    object_unparent((OBJECT(mr)));
-+    object_unparent((OBJECT(mr_section.mr)));
- 
-     trace_vfu_dma_unregister((uint64_t)info->iova.iov_base);
- }
--- 
-2.34.1
+     if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
+         /* Since pci handles romfile, just print a message and return */
+         if (vfio_opt_rom_in_denylist(vdev) && vdev->pdev.romfile) {
+         ...
+
+
+Thanks,
+
+C.
+
+
 
 
