@@ -4,140 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37F3C4829B
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 15:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB30C4829B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 16:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZYgf-0007lY-Vz; Mon, 12 Feb 2024 10:57:42 -0500
+	id 1rZYjz-0001GS-LL; Mon, 12 Feb 2024 11:01:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rZYge-0007lA-64
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 10:57:40 -0500
-Received: from mail-mw2nam12on20601.outbound.protection.outlook.com
- ([2a01:111:f403:200a::601]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <haghera@nvidia.com>)
+ id 1rZY0z-0002XO-28
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 10:14:37 -0500
+Received: from mail-bn8nam12on2049.outbound.protection.outlook.com
+ ([40.107.237.49] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rZYga-0006vk-IB
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 10:57:39 -0500
+ (Exim 4.90_1) (envelope-from <haghera@nvidia.com>)
+ id 1rZY0u-0006pc-KH
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 10:14:36 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=U7rC5J9qCwcApvpQXD0gSHBidSszPSCFYXi0SSMZYzOs2bd5TisdRH14adfNzYU28hqxwdgzzgI32cIUyHES+Nw187k1vFf6njbBTuyvFL1Fk0EBh6rsIOVUM5h6H3C4PZUlY7ZqyWn5t/EnjgIl0B8tNP1r0+jaeSviNrLDRB5kAtw4qGxbCbBIhcRIECASJ40PVfDB8MJN3l3yXFPmK7zk4YBPpX+rWs9zLLMvQEIOVUnzAgY4rhUK8b+6iPndhut08QcByt/MQW20XmD6MlG+Gsj+Aydmin588r7wgQUsErtiCeCb5BCCwgXA26Jd7r5/ItPMe1bQn6gQLiVTgg==
+ b=PD9tKYJuUjwBmu9KU9/Tyq4azJc/zGgU14tbl7f/XM3n/XF02b6lbrIVGuABtt/WKEP8EqAcnlRoXPYn9yiMhSc6YV7v5tGlISDHtRn8xWENgtLtj6Bj36bpKMGmMC6L80I6XrdFPht50AhsB5q6rT/xWJHhioES/nle+JSMqMDv+9zeXT9y94S+yMAwcEx1ikAeps7/Tf3IGQpAUISd5UwoVu830ZBe8q7m6go1ke0f89Mp4Bowgn0YQYuin7DxyAqg93Rjx/4Gj9p1pWhAq+klZ2JdfV+Mkz2uZhJHSAbs8PwHi3H+9CUqYK6H/42W3wdmZoar+V6OwaA+zJ3kCQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WfILNxu2ncaSsNPIsCnNOd1mtNXpb2LIhlqea3ExNPo=;
- b=HsuvxUgTjrOU9jPcbrXlwzifjZvzwoTgOcGvurzGPa8tLEVM5eVmAcWl2gbSHCMA1IkCrBh+H3oJJ9vG60JT6bgfjyFuKhZqQkmk+NQVku8SACnzBqjVTVoed/dFiJg6W7INsKjvKKmj3Oria4cdc0PXrbykz5kUTI+OUDCevb3eunZxZGrFUW/Bp67n2F+NtnBpp2n5OpBXpjVQ8eVbNB/TQR4akwQr38L777pTkRdn9TKAIihUneUcFVKNeNR9VpxSujpZFRNM1QGBinzke8w8aQDrYDk+2mRucuKlmqK9wpLuMmOze5vPS9yuvLWO3QSj3sZjll07zXLLa42qug==
+ bh=++PU2CUbU17jhAgt1SW/XnZqGE4ZWevzkHBa9aSzYxM=;
+ b=EsKQGJiDstR5GWY5e3wMb2FAJvvoVm37jErqZxbJhxNYvaqc2W4NFC8b3YPQ9ukyr3BY24p/VlBEljcysw2e9tgxZvLuBjsDunMV3/BRZk4hOz+Z2e2ZHLdq5n/MjeBMTzg58T7zim/YXi4YBIfSIWoyP5CQDCMnhApD9Cx41cOzhJ0h0kWJU+X3W983+uDEJVxNv1gJmYXhH5LqPGKCMgpv7nYfvTepcqiPVsCwo4Lb4Kqc+gRBZPZYUAuokvb7B5lUIqlgHEM0pPH/EoQl7Gzncf/Qq2bCbW+Cu7YrIJRSRGYl1+Q45Ndodr7zzpZg8uXV84kC9SweK9B99KxhDw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WfILNxu2ncaSsNPIsCnNOd1mtNXpb2LIhlqea3ExNPo=;
- b=KMDDcPEMklPkCuwX5bITBioNbHEnzG/9NvUFLr0gIhT2+LyJC3PGw5WonxgRlpOdxdceBT0zwWYxh4Lcr/V9nrfZlcUUS9YTnO9z5ifmzLENteF/176exgN0OeLPrQ36YzTbdil54oxEyOs2eAYOL+AF7m2mxupsiw30SxXtIFHf7UIe7WA7lRjApleqdsjCutMG/VBvcb9rleW3zvsAqdh7K0AIsPHO4Rf0Vvcqb/9SeMb6D0R/F2J4/tOF5/sGMfOaKS6ds6MCd4yLN4VvgxAKfm7oG2x9T9BbAIbBahTU24z3L/HZPYNNyHrwZSDOb8kj1HsL9Wp7pFPVoXgvfg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by DM6PR12MB4944.namprd12.prod.outlook.com (2603:10b6:5:1ba::24) with
+ bh=++PU2CUbU17jhAgt1SW/XnZqGE4ZWevzkHBa9aSzYxM=;
+ b=hdOHrAIU6k5dGkRU5O2mSeDHadXKHoe7jl42F4oMWgO1LPIVfmzPeFYkcaIElnNMSkk0Y5nyQxqfjTqskgdI7/hgFIPSmWJGi11Ao5/XGkmsoO4HImvNIKHASOAFK/dn7yuUGYe3jRdfssnbQoFvQJSTxYm606rVBQ1bO/Zq0163l5ahOz/xoxAH+SEo+CIFW6/lr8lZO4xjuuu20YQ3tv/1vhff1bQMqmpPZJH+zpsyO9zBLRFY8cRYVczgWRHX1w3YKJP3SFKBKXvvZi0notITKxphSPcWswFBYfzblmF8ummv/fHqhGqiSAyhKLElxXPpAK2QPCnLeUu6OyiP2A==
+Received: from LV2PR12MB5989.namprd12.prod.outlook.com (2603:10b6:408:171::20)
+ by DM4PR12MB7597.namprd12.prod.outlook.com (2603:10b6:8:10b::16) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.24; Mon, 12 Feb
- 2024 15:57:30 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::c444:5cde:d19a:c73e]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::c444:5cde:d19a:c73e%7]) with mapi id 15.20.7292.022; Mon, 12 Feb 2024
- 15:57:30 +0000
-Message-ID: <29b592ad-05c8-4552-ab24-99e3a32ba90d@nvidia.com>
-Date: Mon, 12 Feb 2024 17:57:24 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] migration: Add Error** argument to .save_setup()
- handler
+ 2024 15:09:25 +0000
+Received: from LV2PR12MB5989.namprd12.prod.outlook.com
+ ([fe80::302b:17a4:d0c4:699f]) by LV2PR12MB5989.namprd12.prod.outlook.com
+ ([fe80::302b:17a4:d0c4:699f%3]) with mapi id 15.20.7292.022; Mon, 12 Feb 2024
+ 15:09:24 +0000
+From: Harshit Aghera <haghera@nvidia.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Shakeeb Pasha <spasha@nvidia.com>, Arun D Patil <arundp@nvidia.com>,
+ Raghul Rajakumar <rrajakumar@nvidia.com>
+Subject: Requesting suggestions on how to access I2C Bus of the Guest OS
+Thread-Topic: Requesting suggestions on how to access I2C Bus of the Guest OS
+Thread-Index: AdpdxM9YTUMTZcefREyaZCJFYeDAWg==
+Date: Mon, 12 Feb 2024 15:09:24 +0000
+Message-ID: <LV2PR12MB598943FA3FC5605955DCF2A0D8482@LV2PR12MB5989.namprd12.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20240207133347.1115903-1-clg@redhat.com>
- <20240207133347.1115903-2-clg@redhat.com>
- <5addf455-c0e0-4aa6-8970-c8050a194783@nvidia.com>
- <2052b1e4-608d-4b44-a67c-e1d90e194f81@redhat.com>
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <2052b1e4-608d-4b44-a67c-e1d90e194f81@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO3P123CA0013.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:ba::18) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|DM6PR12MB4944:EE_
-X-MS-Office365-Filtering-Correlation-Id: 12af2f2e-8a66-45df-abc4-08dc2be35117
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: JvOJ3tEDBTDPMkaCABL6sAx0gmtQFOhQ8YGS5WAWZ7AWAL/O4H3TUDFfId4ttmFCO1LjAZ+RA6EihKJwdijt6cB+RVapudWKuMfstly6bBlJxrIsOqUBRfcVbD0YcFf4Dn3aae/0mFwnOPv7GStxRX44uV3hiK7izAVkROOFkPjZ8naBgYC16ByB/xoaaBFucMZ6yJFha/J7Bhx3bt2MkpPzGSUg1tFUjeKamnlSUM6NseBaWBVDAXa2fpjWtW9zXrHNdSjbxFVLA0gkP0NawICGRUEBZ/V+y347Ohp20AmwB/0iLYgOPFIyoNRx8bkJSbQqWuatFisy+3SubbF9I0WYSwTyBmGvouilKGLwXTPUrUei3tuiMR0aDEMIVqR3/B2e+xFRtOnBJp2DUHc9NFwBgJ/sA1WlxnoBqZb0aGuXzIcg0rppfePcSqAciVqWFDWF2RI+QRy9hgQGTI+3itNBVjAqnVaZX4VwbXye+Zra5Sdk9+pE9g8QgCDo6pgyiCvm8Q6uUz6VGikQ4SUvpVuYFilappw3mQZxD3/md9luto4eyhx0IPyG1ePS6wO1
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(346002)(376002)(39860400002)(136003)(396003)(366004)(230273577357003)(230922051799003)(186009)(451199024)(64100799003)(1800799012)(83380400001)(31696002)(86362001)(38100700002)(6486002)(316002)(478600001)(54906003)(66476007)(66556008)(66946007)(66574015)(2616005)(6506007)(53546011)(6666004)(6512007)(26005)(36756003)(31686004)(41300700001)(8676002)(4326008)(8936002)(5660300002)(2906002);
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV2PR12MB5989:EE_|DM4PR12MB7597:EE_
+x-ms-office365-filtering-correlation-id: 2304358e-45a2-4e2c-0c7f-08dc2bdc998c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: zoa0pLJolWiJczb+fcCDedGlG2b8nJ9oPaqCgj14mFbJohoUsPVW5BtF44MIJri4BZ/Mir1KUNVlxgfDSUjjeYaNGiZn7UZyr9g7yZgpCMfidW8N40qxoUjo/OBp6KE+jCORFfFdj05sG9X2Gs5X9p7CMMqQdz3OOTM/4sxIIWEKGNKKgdsbftSz139yjk7kzxaIONMtZqvJVeY2r7T6IEoP/7I3I7lhk88sb9w8NzAlP+pKF/Zq2Ld8XPfukXBwOf4G1VZ0jZPB0g6mDw7YsLOMAv6vtz+gmYmhmH/uBWsQ6bebxuDNKru1R1SacaHDjbjmziriuath8VWtljoMudRXy2DMH3Oka3G/3pzOcYmJbTcZEv3NDE4CB0kQSrJLADdOdf+yxzsxlPZgIwQDumtOvX9fqYCTbRTg/PI4hrYvIbf2XTAUnxkL1mvudH6KW1b6J59fgbwsSl6UijLmlEYaSaAuaLRYa3+IXNtrfTa5e8mUFUP9nT8L5kiJztB9AI6KJvoxClmijEiKL3ORC+6d8wBrExwTUp60Xvd8ZMcDH7Va6u4mfSlwCkpc83i2dOrDOQcGeWoaWQgyVwuBoGskdR3oMkvHiX9FmGBZwaA=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LV2PR12MB5989.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(136003)(39860400002)(376002)(346002)(366004)(396003)(230922051799003)(64100799003)(186009)(1800799012)(451199024)(38070700009)(55016003)(41300700001)(76116006)(66946007)(316002)(6916009)(54906003)(64756008)(66446008)(66476007)(66556008)(86362001)(52536014)(5660300002)(4326008)(8676002)(8936002)(166002)(71200400001)(6506007)(478600001)(4744005)(2906002)(7696005)(122000001)(38100700002)(21615005)(33656002)(83380400001)(26005)(107886003)(9686003);
  DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VkdoWmdCK0preWJwNjV2Ymdscno3TU00d1FXdVpHVTdUMEZiYmltMmZFRjFQ?=
- =?utf-8?B?SlhRUjJGM21kUGl3NWNkU2tDd0w4QnZKVHFDOUZ0dnF4ejlUNjhCblZteWlq?=
- =?utf-8?B?SEZ2NlFxaXY5TTFFZ1FHenlpWnNGdm1iNXYvMWVZQzFKWVp1ODlBNlpZeldC?=
- =?utf-8?B?UStZd3E4ZjJRNTYvd2Z0elk0SDdDdFJaSXk0U2hEc1RxUVBUWE9GM3JTWWdU?=
- =?utf-8?B?MnpvQVVsM3pjdklveDRaelJBMnVBTm5LQXNuNUtxcENOYnVGUjMvNkhFZml4?=
- =?utf-8?B?eHhEc3YrenZHNWpYMmlZVEdPV3ZnamVLRURDTmhEbXdxYXBXaklPMUxudDdL?=
- =?utf-8?B?VHl6ekxKVDZWWjBndHJNZ0U4YVpMK0g2bUh6VEUrUE0rOUJjOUorVTZIbGR1?=
- =?utf-8?B?U3BkUFZnczBrd0lGREVGdXBMVWhyMWh1Nm5zUDR0SmN6OHJRTGJQNGVBTndZ?=
- =?utf-8?B?a2pOZmNUMlpxS2NNS0VGUWp4YzVXY0FTb1JhUkdoZUZHVXF2T0FOTTBOU3V1?=
- =?utf-8?B?WFQyVW5DWlJYVTdKV0pzbUwyMDZPcVpzYzVwR2Qwdlhrb2RCY0plS3FNREVn?=
- =?utf-8?B?NW1vOE56S2ZId2NZS2lwQ09MZ0h5VEl6NG9Nc3oyb3dub3hPS0VDam5wSGNr?=
- =?utf-8?B?UUc0aVVDR2ViZ0RQb29rbm83dUk1Z0RpYnRHUUdmRDEzeHJzL1dhNXNRaDNL?=
- =?utf-8?B?N3pUUzJ6K0d0dEptM1RTeWV0MlVyU2lmbmRxYWFldW5vWk0vSHNoY2UweHJM?=
- =?utf-8?B?SEJodlpKazRxUG1PcGpQM2gvT2pNN3hSV3VZcW1rM1A1aDl6VWNyblZ5MjJx?=
- =?utf-8?B?SnVlWG1iaG9oZnZvYmlNSjNBKzRrZ3JmRU9maTJlalNNRTJGNytSMlBzMHBO?=
- =?utf-8?B?NnYvUlNPOUdlS3BXMmxkZlpKRmpoTlV4amFDTWFyVGVKQnZMVXdMR0phWE9x?=
- =?utf-8?B?WVQ3QnBsSDNra1VqNHlFbksxWXY5dXdOWEtnM2Q4d2VUTm1MQkdiWlpKb00v?=
- =?utf-8?B?b2NQQk1WK1dmMDMxeFYwd2p4SSthN1ZyUEhFeW55dkJVNFFWSklCU1J5Z29H?=
- =?utf-8?B?d0tZcmFSSHdDOVcyREdTZGlSeW91ZHB2bUhmMWhRa2FzMVNGdDl2dkdiQ01q?=
- =?utf-8?B?NTRxNTRKUEFYdnlDcVJWZHRObjhVU1JWZ1VVekg3Rk5icWZ2TVoxL1pNNzZj?=
- =?utf-8?B?dmZZVlVvTVh1RlRFL21rYUxwQksrL3NjcTEwejhFS1dWNEdzZmhNRjVHMFRh?=
- =?utf-8?B?WFA4ZlRMbi85OGJxcXZFd1V1OW9yb0Q0THZsWGVUT0FWRXJCaWQ3ekZIUUhh?=
- =?utf-8?B?WFBLelpJR09nVytyUVh6WTFab2NGdG5SZDcvYWp1ZnVxUmVwWWVZQzNsQWp1?=
- =?utf-8?B?V1ZiZDVnejhqT2xHWktjcEFwMXplSytQM1QxWVZGSGUxc1JVdHgxU3R4Y2U5?=
- =?utf-8?B?elJGMGlRcng5WkNpQjN3MTZ0UVJwMHZPalgvL1RxdURiUzNRYk0zUDFlMGxt?=
- =?utf-8?B?ZlgyVFB2RTVvZ1VGbDB4bldENHpDWElqUVlDUDJXZTNuWlhwZFgzMmNrdkRo?=
- =?utf-8?B?YnpOejJwbWlVMmdPSFl5akt6K2NZVzlVSFRjZ2h5Nmpua1llTkhHRTA5WWcv?=
- =?utf-8?B?K013QmtXV21SNzRGcTErREN1VkNkK3NpbTNzeTdCUFNmeTdKS3N5eWw3L0w5?=
- =?utf-8?B?ZE1SYVRRUndMcnplR1JnVDBFaWZPa3Z4OWl2SS9EYXgwVnFTNEk5T3N6L1NO?=
- =?utf-8?B?WTcxUEJzS1dyNmhTc0M5YnR2aks1M3ZXdGFpWWRnRkZXb0hhZlhUZU5HK3hJ?=
- =?utf-8?B?NGxUaFRXWE1rN0dLMTRZZ1JoNmVWNkZUcWErcHg0dkVxc2pFSC81Y1p2eCs5?=
- =?utf-8?B?QitvazBLSUdGZWhuUG1wK0Y0dUU0dG9pejR2ZmcwbDZQZDU1RWpEaXUyMzZx?=
- =?utf-8?B?T05HYzlvQy9hd3pieEVGV3d2RVdORXY2R1hWcmlWYjN0d25PUVZ2VzNqa0xL?=
- =?utf-8?B?MmcwTzA0ZkNjUGxpNHhZNmhCMC9vYys0YXdSVXg1bXVwdjRqR3VHOFZmejdj?=
- =?utf-8?B?elprRUNzQk1GQnhVZmhQNXBSQXY0S01zOThyYnpZSkxQZzRsNDdvbFpadVVC?=
- =?utf-8?Q?hSS8WJ/Awhbd9Uugtv0n81kz1?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?InFZ0s0fBjcHqtVnFTHgh4cpFWUj3BTck8yxPUZTAwfaNVYNaKCNYwAw9b1m?=
+ =?us-ascii?Q?zv6b9kDd7897IMK6o5RB532qU51TtOlvS5E9G1pg4w5RTDHDdB3i+ObTTJkw?=
+ =?us-ascii?Q?/DTn+222gKD1D3lfHsAv1b4SyRm9fmUbe3eVIwHzqO5GDPKjEm2dNxc39Dxt?=
+ =?us-ascii?Q?7gOd924R48ks4LIv09xzc81WCCeIRe+rXAitLUg2xVNFGMXMCj4LN79fZXYI?=
+ =?us-ascii?Q?JVoEf7Oap7wxYO171Icfv6mqz9zylxADP7IUQbeiv9Pc8cSMQ/0vovvnNetQ?=
+ =?us-ascii?Q?HwSErvRuUnPcN1uxYzxRv82GNxjb3tSoHPaT8UBTxSnzJr5ggqJ7XApsSS/8?=
+ =?us-ascii?Q?TXp/uIgIhKwFwEyUaXJSka7zH76LNmEAIZaTGOHuWbOYpNB+DJGz3FduaTG1?=
+ =?us-ascii?Q?npoDWVyVUBLelVukEnG9D6OZZPoJ4jvXMQGPDLn0hvZDYpPEIFIvu/ieurR9?=
+ =?us-ascii?Q?JB16VzJE36cdjmZ2p8XkWGgXEm/73SX/CRFKZOosW5zIQUUWzH2sk8iZ3dUr?=
+ =?us-ascii?Q?7OTh0OO6pWaGAGN2u/OCXBtlvBBjaNwlRHGJuxodNFBHcZ+ip0IYVtnlYnV9?=
+ =?us-ascii?Q?hLg+xbo2xsEfaTJ13+zT3A5YF6GHk8SA/IuiFYgHI/Z8g0uPrpP+qvtsAGXy?=
+ =?us-ascii?Q?J3bYyFO841hCS2Bp1NGGuIb0Gfg08VThYR58BINz+tR+0KCSY+8/LJIlbX0h?=
+ =?us-ascii?Q?i4X7x2ePNIC5vTs9Va8opAK00Vlk+qwJj8Ly5EzYK+AXiIbfqomM5i00pRRq?=
+ =?us-ascii?Q?tUe2N0wly88t7R6/eOposLISlwzqtv5TkzJRZ4aoSNiXf8jD9YFbG2zP2k5F?=
+ =?us-ascii?Q?9alB1MfrIUkNBPSGbNOOGKIi28D5iOTwwe/CK3MINX8WjA+ezgOKnrF1jRFu?=
+ =?us-ascii?Q?o5zPMkWU2v8+ZSxakIca5AQyIoG6nZNgRmIGyiD3vx1mkOFxNYCvpl6WKvbZ?=
+ =?us-ascii?Q?rEXqe1G+hdPE17ufGwPFRXqrul1uQJqC6qYFNZTbimL4SuyVx1NPFGLbfICW?=
+ =?us-ascii?Q?VIuODJCreHQGGozDvw2pbUWvMxv7X7agyqURPG8V9fPTVrtAaY345FRaFcmc?=
+ =?us-ascii?Q?tUuFHO3mp1k85mxOLxU2kt+BIcGJEc5sTb2PrmdQ1P9kNtQCX/2InSsoyms7?=
+ =?us-ascii?Q?UYo/0lBJh9uHyw5zIZ0nWjzSxPriiKFVl+FD6mQGp83zStrzVOnu0JdX5GJK?=
+ =?us-ascii?Q?V8dVFNhlMo50WSVkOxtyrk8IgaREBZNEHuvo4DYOk7/x25hX8jEXebU1qaR7?=
+ =?us-ascii?Q?8Zascjp9w0NLaZdM0/aaGsjoBfUgZoGcV0aetoSd7lNt6Zz+OF4WBcdOOjgO?=
+ =?us-ascii?Q?sLmigYmPjFZ2Ao1FwMhq1e82fucjr99AMjDHw6wd+lUffsJMFNqLomaZVAvC?=
+ =?us-ascii?Q?Y+BkkQzK/SeU86u88sGPAYOzVWtA9BnHHrFZsTB6AWWMEw8NmMAfA2CxKaAG?=
+ =?us-ascii?Q?bfzdm9AKgn9M/RA6NxGHNUkTr0cNnexJVNkGj2mZrjLkULDt2yTCLeaS7C7l?=
+ =?us-ascii?Q?DOXMrwjhHLtaC/d1bM4BYEplRADMaFUuY2YfIvV3ba0/L4k+Fbesboi5LIgq?=
+ =?us-ascii?Q?uusUSL3kfSakZ9irkbQ=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_LV2PR12MB598943FA3FC5605955DCF2A0D8482LV2PR12MB5989namp_"
+MIME-Version: 1.0
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 12af2f2e-8a66-45df-abc4-08dc2be35117
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Feb 2024 15:57:30.0046 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DlekCQNpEWzChq6bTcHZZdNZb8FQOJ0Q9xqiJNpJSweezg5vaVUezAdKknO9FmEk2d0m2gR57tC8AcF7+KzUUQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4944
-Received-SPF: softfail client-ip=2a01:111:f403:200a::601;
- envelope-from=avihaih@nvidia.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5989.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2304358e-45a2-4e2c-0c7f-08dc2bdc998c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2024 15:09:24.8607 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xUEVPUvsNazfdByYLyE3hMIMnRQCp4CwhcQEvsKcrdlK9Miq/5d6cfOtlnAxmTKSRGit7AaxjT0fZtQn0Kk4fQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7597
+Received-SPF: softfail client-ip=40.107.237.49;
+ envelope-from=haghera@nvidia.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 12 Feb 2024 11:01:04 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -152,222 +138,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--_000_LV2PR12MB598943FA3FC5605955DCF2A0D8482LV2PR12MB5989namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/02/2024 16:49, Cédric Le Goater wrote:
-> External email: Use caution opening links or attachments
+We have a Linux image targeted for architecture Cortex A7, that we are runn=
+ing inside QEMU on x86 machine.
+
+Our Linux image has I2C slave with EEPROM backend, instantiated from user-s=
+pace. Reference - Linux I2C slave EEPROM backend - The Linux Kernel documen=
+tation<https://docs.kernel.org/i2c/slave-eeprom-backend.html>.
+Commands used from user-space to instantiate these I2C slaves -
+
+echo slave-24c512ro 0x1054 > /sys/bus/i2c/devices/i2c-0/new_device
+
+echo slave-24c02 0x1054 > /sys/bus/i2c/devices/i2c-1/new_device
+
+Is there a way to send I2C messages to these I2C buses (bus 0 and bus 1) on=
+ the Guest OS, as a I2C Master from the Host OS?
+Is there a way to send I2C messages to these I2C buses from a separate QEMU=
+ Instance's Guest OS acting as a I2C Master?
+
+
+Thanks,
+Harshit.
+
+--_000_LV2PR12MB598943FA3FC5605955DCF2A0D8482LV2PR12MB5989namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
->
-> On 2/12/24 09:36, Avihai Horon wrote:
->> Hi, Cedric
->>
->> On 07/02/2024 15:33, Cédric Le Goater wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> The purpose is to record a potential error in the migration stream if
->>> qemu_savevm_state_setup() fails. Most of the current .save_setup()
->>> handlers can be modified to use the Error argument instead of managing
->>> their own and calling locally error_report(). The following patches
->>> will introduce such changes for VFIO first.
->>>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>   include/migration/register.h   | 2 +-
->>>   hw/ppc/spapr.c                 | 2 +-
->>>   hw/s390x/s390-stattrib.c       | 2 +-
->>>   hw/vfio/migration.c            | 2 +-
->>>   migration/block-dirty-bitmap.c | 2 +-
->>>   migration/block.c              | 2 +-
->>>   migration/ram.c                | 2 +-
->>>   migration/savevm.c             | 4 ++--
->>>   8 files changed, 9 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/include/migration/register.h 
->>> b/include/migration/register.h
->>> index 
->>> 9ab1f79512c605f0c88a45b560c57486fa054441..831600a00eae4efd0464b60925d65de4d9dbcff8 
->>> 100644
->>> --- a/include/migration/register.h
->>> +++ b/include/migration/register.h
->>> @@ -25,7 +25,7 @@ typedef struct SaveVMHandlers {
->>>        * used to perform early checks.
->>>        */
->>>       int (*save_prepare)(void *opaque, Error **errp);
->>> -    int (*save_setup)(QEMUFile *f, void *opaque);
->>> +    int (*save_setup)(QEMUFile *f, void *opaque, Error **errp);
->>>       void (*save_cleanup)(void *opaque);
->>>       int (*save_live_complete_postcopy)(QEMUFile *f, void *opaque);
->>>       int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
->>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
->>> index 
->>> 0d72d286d80f0435122593555f79fae4d90acf81..a1b0aa02582ad2d68a13476c1859b18143da7bb8 
->>> 100644
->>> --- a/hw/ppc/spapr.c
->>> +++ b/hw/ppc/spapr.c
->>> @@ -2142,7 +2142,7 @@ static const VMStateDescription vmstate_spapr = {
->>>       }
->>>   };
->>>
->>> -static int htab_save_setup(QEMUFile *f, void *opaque)
->>> +static int htab_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>   {
->>>       SpaprMachineState *spapr = opaque;
->>>
->>> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
->>> index 
->>> c483b62a9b5f71772639fc180bdad15ecb6711cb..c934df424a555d83d2198f5ddfc0cbe0ea98e9ec 
->>> 100644
->>> --- a/hw/s390x/s390-stattrib.c
->>> +++ b/hw/s390x/s390-stattrib.c
->>> @@ -166,7 +166,7 @@ static int cmma_load(QEMUFile *f, void *opaque, 
->>> int version_id)
->>>       return ret;
->>>   }
->>>
->>> -static int cmma_save_setup(QEMUFile *f, void *opaque)
->>> +static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>   {
->>>       S390StAttribState *sas = S390_STATTRIB(opaque);
->>>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
->>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->>> index 
->>> 70e6b1a709f9b67e4c9eb41033d76347275cac42..8bcb4bc73cd5ba5338e3ffa4d907d0e6bfbb9485 
->>> 100644
->>> --- a/hw/vfio/migration.c
->>> +++ b/hw/vfio/migration.c
->>> @@ -378,7 +378,7 @@ static int vfio_save_prepare(void *opaque, Error 
->>> **errp)
->>>       return 0;
->>>   }
->>>
->>> -static int vfio_save_setup(QEMUFile *f, void *opaque)
->>> +static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>   {
->>>       VFIODevice *vbasedev = opaque;
->>>       VFIOMigration *migration = vbasedev->migration;
->>> diff --git a/migration/block-dirty-bitmap.c 
->>> b/migration/block-dirty-bitmap.c
->>> index 
->>> 2708abf3d762de774ed294d3fdb8e56690d2974c..16f84e6c57c2403a8c2d6319f4e7b6360dade28c 
->>> 100644
->>> --- a/migration/block-dirty-bitmap.c
->>> +++ b/migration/block-dirty-bitmap.c
->>> @@ -1213,7 +1213,7 @@ fail:
->>>       return ret;
->>>   }
->>>
->>> -static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque)
->>> +static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error 
->>> **errp)
->>>   {
->>>       DBMSaveState *s = &((DBMState *)opaque)->save;
->>>       SaveBitmapState *dbms = NULL;
->>> diff --git a/migration/block.c b/migration/block.c
->>> index 
->>> 8c6ebafacc1ffe930d1d4f19d968817b14852c69..df15319ceab66201b043f15eac1b0a7d6522b60c 
->>> 100644
->>> --- a/migration/block.c
->>> +++ b/migration/block.c
->>> @@ -708,7 +708,7 @@ static void block_migration_cleanup(void *opaque)
->>>       blk_mig_unlock();
->>>   }
->>>
->>> -static int block_save_setup(QEMUFile *f, void *opaque)
->>> +static int block_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>   {
->>>       int ret;
->>>
->>> diff --git a/migration/ram.c b/migration/ram.c
->>> index 
->>> d5b7cd5ac2f31aabf4a248b966153401c48912cf..136c237f4079f68d4e578cf1c72eec2efc815bc8 
->>> 100644
->>> --- a/migration/ram.c
->>> +++ b/migration/ram.c
->>> @@ -2931,7 +2931,7 @@ void qemu_guest_free_page_hint(void *addr, 
->>> size_t len)
->>>    * @f: QEMUFile where to send the data
->>>    * @opaque: RAMState pointer
->>>    */
->>> -static int ram_save_setup(QEMUFile *f, void *opaque)
->>> +static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>   {
->>>       RAMState **rsp = opaque;
->>>       RAMBlock *block;
->>> diff --git a/migration/savevm.c b/migration/savevm.c
->>> index 
->>> d612c8a9020b204d5d078d5df85f0e6449c27645..f2ae799bad13e631bccf733a34c3a8fd22e8dd48 
->>> 100644
->>> --- a/migration/savevm.c
->>> +++ b/migration/savevm.c
->>> @@ -1342,10 +1342,10 @@ void qemu_savevm_state_setup(QEMUFile *f)
->>>           }
->>>           save_section_header(f, se, QEMU_VM_SECTION_START);
->>>
->>> -        ret = se->ops->save_setup(f, se->opaque);
->>> +        ret = se->ops->save_setup(f, se->opaque, &local_err);
->>>           save_section_footer(f, se);
->>>           if (ret < 0) {
->>> -            qemu_file_set_error(f, ret);
->>> +            qemu_file_set_error_obj(f, ret, local_err);
->>
->> Should we set local_err = NULL?
->
-> possibly, yes.
->
->> Because it is re-used a few lines after this, by precopy_notify().
->
-> I wonder why is precopy_notify(PRECOPY_NOTIFY_SETUP) even called when
-> there was an error in one of the save_setup() handlers. It probably
-> shouldn't and qemu_savevm_state_setup() should return at the first
-> error in the loop. This is something that could have been overlooked
-> by commit bd2270608fa0 "migration/ram.c: add a notifier chain for
-> precopy" because qemu_savevm_state_setup() does not have a return
-> value. Probably because the callers rely on qemu_file_get_error()
-> to know if something wrong happened.
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+code
+	{mso-style-priority:99;
+	font-family:"Courier New";}
+pre
+	{mso-style-priority:99;
+	mso-style-link:"HTML Preformatted Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Courier New";}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.HTMLPreformattedChar
+	{mso-style-name:"HTML Preformatted Char";
+	mso-style-priority:99;
+	mso-style-link:"HTML Preformatted";
+	font-family:"Courier New";
+	mso-ligatures:none;
+	mso-fareast-language:EN-IN;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-IN" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">We have a Linux image targeted for architecture Cort=
+ex A7, that we are running inside QEMU on x86 machine.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Our Linux image has I2C slave with EEPROM backend, i=
+nstantiated from user-space. Reference -
+<a href=3D"https://docs.kernel.org/i2c/slave-eeprom-backend.html">Linux I2C=
+ slave EEPROM backend &#8212; The Linux Kernel documentation</a>.<o:p></o:p=
+></p>
+<p class=3D"MsoNormal">Commands used from user-space to instantiate these I=
+2C slaves &#8211;<o:p></o:p></p>
+<pre>echo slave-24c512ro 0x1054 &gt; <code>/sys/bus/i2c/devices/i2c-0/new_d=
+evice<o:p></o:p></code></pre>
+<pre>echo slave-24c02 0x1054 &gt; <code>/sys/bus/i2c/devices/i2c-1/new_devi=
+ce<o:p></o:p></code></pre>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Is there a way to send I2C messages to these I2C bus=
+es (bus 0 and bus 1) on the Guest OS, as a I2C Master from the Host OS?
+<o:p></o:p></p>
+<p class=3D"MsoNormal">Is there a way to send I2C messages to these I2C bus=
+es from a separate QEMU Instance&#8217;s Guest OS acting as a I2C Master?<o=
+:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
+<p class=3D"MsoNormal">Harshit.<o:p></o:p></p>
+</div>
+</body>
+</html>
 
-Yes, I guess here we could return early and skip precopy_notify().
-
->
-> Also, the only user of PRECOPY_NOTIFY_SETUP is virtio-balloon and
-> nothing is done. PrecopyNotifyData has an errp attribute which is
-> unused.
-
-You are right, with current code there won't be any problem, but new 
-code that will make use of the errp can be problematic.
-
->
->>
->> BTW, I think that if we add Error** parameter to functions we must 
->> make sure all their error flows set errp as well.
->> According to Error API:
->> * - On success, the function should not touch *errp.  On failure, it
->> *   should set a new error, e.g. with error_setg(errp, ...), or
->> *   propagate an existing one, e.g. with error_propagate(errp, ...).
->>
->> For example, a caller that handles errors by printing them with 
->> error_report_err() would crash when trying to access NULL error 
->> object (if some error path didn't set errp).
->
-> One of the underlying goal is to avoid and remove all error_report_err()
-> calls to propagate the error up the call stack.
-
-Yes, I just gave an example of how this could go wrong.
-I think the general point here is that a caller that provides a valid 
-Error** errp assumes he will get an Error object from the callee in case 
-of an error, and the caller can operate on it as he wants.
-
->
->> If you agree, we should check it throughout the series.
->
-> I do agree and this is a can of worms !
-
-Indeed.
-
-> I haven't quite found my way
-> around yet.
-
-Briefly looking, it seems like .save_setup() / .load_setup() shouldn't 
-be too hard.
-However, memory stuff seem to be more involved.
-
+--_000_LV2PR12MB598943FA3FC5605955DCF2A0D8482LV2PR12MB5989namp_--
 
