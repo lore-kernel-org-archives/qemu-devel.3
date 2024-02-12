@@ -4,93 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E934FC4829D
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 10:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A42C48297
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 10:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZTR7-00086P-EY; Mon, 12 Feb 2024 05:21:17 -0500
+	id 1rZU10-0003U5-Sw; Mon, 12 Feb 2024 05:58:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZTR4-00084L-J3
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:21:14 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZTR2-0007gQ-Ul
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:21:14 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e08dd0fa0bso1928860b3a.1
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 02:21:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707733271; x=1708338071;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HYSjFZHgQ2mbSqHRTj9z4C9g2BrbZ8iNuTfeoBp92uM=;
- b=o/RGKrF55gRTMNnIvFr/t26x8RIZN5W52oSBJt7DwrFS8qp5kpZZt394BfBYgybqcL
- +Q+QlHF69I+aq3Lu6qPnzQfs8/yLeYR9T0XH6iC4XoIDRzBNQz4HDq1uf6fY9f64mqtd
- fJ3X1AjI7CtOqYZ6Wd2rq9GjmrBJtMl7nsTtiqr3TV4dgdGixsb/DyBPPkfiwYstiWCU
- jJrB3sSv+hsSn4kKfzjrTFM1TfBkFf9KnP8ciTryVa8ugv9X77MjfZlF4bEQ/l28j9z+
- TWNpwcNQVfo+MyDlE7Kmkz1aVaGs1lZoYf3gyIUiGwK+Pco+NfbkjP1bMiPZPJedq09q
- Wd+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707733271; x=1708338071;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HYSjFZHgQ2mbSqHRTj9z4C9g2BrbZ8iNuTfeoBp92uM=;
- b=AN9d5dvfJz9tV19tq+0LcVsf5/r71pvCuDHqeibLYUCUZz2vweqt8fOaV1Ejs+3Ici
- wOyZwXYwk0gD6LmAIWvcx49Rt7bDZytFXXvaGMO6f6D7c5y6rlTFTGCHivgHlYZui+Dy
- AXcqAHrIVj9UqjHZfC/0A4dC5KMzAt291mXWutJHCYQV1mFjNEutmJaG7KGB0vinZt6U
- hpwV0ueZvYw9T0FdiEo3fWrD4HahjrfBlzN6UmutQMAFM5tzRD0tHEslsc/EupLCaOtx
- GlSuzDHyhAvXOC+IDlMPeBUpZcQVuQofQCEvhegJs+AKzhRl0izE9reTMl8/6Ri+YomV
- fvMg==
-X-Gm-Message-State: AOJu0YyLMz5RKEBEiKqHhWdrmxeelbQsO9QHm58PfA1+x7SrXkw3wuKy
- Pm4f5u3tOmtEMiIXuNYVTIP8GdgJR6SR3qFGAR26FscblGjJmmX5ehrDIViGUxg=
-X-Google-Smtp-Source: AGHT+IEJmTF3pwG6hLNQDAohKwvYfN2pbah7IQe++f9oZFNw6E0CQMn+hmoGF6NNGH0T2yWNIa1UlQ==
-X-Received: by 2002:a05:6a00:1390:b0:6e0:5b63:e7fb with SMTP id
- t16-20020a056a00139000b006e05b63e7fbmr12352485pfg.0.1707733271337; 
- Mon, 12 Feb 2024 02:21:11 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUnNRdFopwcssGZ5aJE3HkS+2V7iYI+mDLVgWOrYcgh5sVLeF6HNbwOM3VyC/7KAPkV82H3qZRv0XaXul9PYpcP0FYhpxv0d/x8QVP3Ld35KIlDKaKCeP8LZ0Tkr7zid1H3IJo1cP8sJPnc/cdP1EYJes907I3fa66KY/mz/XOqYiYKWAkbh1Zp+eDUixpqRCzySj+wU25sMhtaPSCp2Y8Po+unUi0QAmtvjpHDpnFfGlN/ckTqm/Nj3FAaBs6/KFs865te2V9pK/5gcpJowNUETbzSpoTKBOp6D5aFFXstaOL2FKzi0ieOxXLDbLg449SCnKNQZ6iaMztadSr3BaXdR2W3U39Y3XQpxUudKAP+UznOGzTCHbO3zR3jIv2gFySwWccjcNwy2Fdh03DRPaYmCcpeOpRgF1G94CZyR2sywS2Y8ZIAtEx36JHhVes=
-Received: from localhost ([157.82.207.134])
- by smtp.gmail.com with UTF8SMTPSA id
- j18-20020aa79292000000b006e0545768dasm5187099pfa.151.2024.02.12.02.21.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 02:21:11 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 12 Feb 2024 19:20:35 +0900
-Subject: [PATCH v3 7/7] pcie_sriov: Release VFs failed to realize
+ (Exim 4.90_1) (envelope-from <owl129@126.com>) id 1rZU0y-0003Tw-Cl
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:58:20 -0500
+Received: from m15.mail.126.com ([45.254.50.224])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <owl129@126.com>) id 1rZU0v-0007QZ-Bw
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 05:58:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+ s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+ Message-ID; bh=dhw1KNYw4wfTPYmPgZkF7P6yCpaZqX0BYdX3Ecb7+e8=; b=S
+ gtkTTY0C9llgL8hh06BVH3KFokpJeghsRZReK2shvEsVw3XAI01qAu+AvfUy6NmN
+ yE0IYNf5xCoR92mZ/4TvjFZfGh5cwJwOA1bDd6/WIKTQTbs2uNjkIQz0R71jYiUS
+ wiX9YAXAomN1kuqBX7V7BoA+hv6BgIuqeKLP6BlDuo=
+Received: from owl129$126.com ( [218.30.116.61] ) by
+ ajax-webmail-wmsvr-41-117 (Coremail) ; Mon, 12 Feb 2024 18:57:03 +0800
+ (CST)
+X-Originating-IP: [218.30.116.61]
+Date: Mon, 12 Feb 2024 18:57:03 +0800 (CST)
+From: owl129  <owl129@126.com>
+To: =?GBK?Q?Philippe_Mathieu-Daud=A8=A6?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Subject: Re:Re: [PATCH] This patch implements several Octeon +/II instructions.
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 126com
+In-Reply-To: <a616c83d-068e-46a0-80b7-878425005317@linaro.org>
+References: <20240119045626.9698-1-owl129@126.com>
+ <a616c83d-068e-46a0-80b7-878425005317@linaro.org>
+X-NTES-SC: AL_Qu2bBfuYukwp5SObZekfm0sagO07UMe4v/0v1YdSOp9wjA7j9B4FU0F9IWDO0cO+LgOuoiapcxRw49hbQKp+UqsrdIyAbsP2ls4fpPWAtP7hyA==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_8647_1582789253.1707735423338"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240212-reuse-v3-7-8017b689ce7f@daynix.com>
-References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
-In-Reply-To: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
+Message-ID: <233bef0a.937.18d9cf6996a.Coremail.owl129@126.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: _____wD333mA+cllmFweAA--.42139W
+X-CM-SenderInfo: przoijaz6rjloofrz/1tbi6BOCV2VLZ186cgANs9
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Received-SPF: pass client-ip=45.254.50.224; envelope-from=owl129@126.com;
+ helo=m15.mail.126.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,29 +74,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Release VFs failed to realize just as we do in unregister_vfs().
+------=_Part_8647_1582789253.1707735423338
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- hw/pci/pcie_sriov.c | 2 ++
- 1 file changed, 2 insertions(+)
+SGkgPiBIb3cgY2FuIHdlIHRlc3QgaXQ/IElzIHRoZXJlIGFueSBkaXN0cmlidXRpb24gcHJvZHVj
+aW5nIGtlcm5lbCBmb3IKPiBPY3Rlb24rLzI/IFBlciBodHRwczovL2dpdGh1Yi5jb20vTWFydmVs
+bEVtYmVkZGVkUHJvY2Vzc29ycy9tYXJ2ZWxsLWRwZGsKPiAgSSB1bmRlcnN0YW5kIHRoZXJlIGNv
+dWxkIGJlIExpbnV4IGFuZCBGcmVlQlNELCBpcyB0aGF0IGNvcnJlY3Q/QWN0dWFsbHkgSSBkb24n
+dCBrbm93IGhvdyB0byBmdWxseSB0ZXN0IGVhY2ggaW50cnVjdGlvbi4gCgoKVG8gdGhlIGJlc3Qg
+b2YgbXkga25vd2xlZGdlLCB0aGUgT2N0ZW9uIEluc3RydWN0aW9uIGlzIG9wdGltaXplZCBmb3Ig
+bmV0d29ya2luZyBzZWN1cml0eS9hcHBsaWNhdGlvbiBwcm9jZXNzb3IuCkFuZCB0aGUgbGF0ZXN0
+IHJlZmVyZW5jZSBtYW51YWwgaXMgbm90IHB1YmxpYyBhdmFpbGFibGUuIChodHRwczovL2Rva3Vt
+ZW4udGlwcy9kb2N1bWVudHMvY2F2aXVtLW5ldHdvcmtzLW9jdGVvbi1wbHVzLWNuNTB4eC1oYXJk
+d2FyZS0yMDA4LWNhdml1bS1uZXR3b3Jrcy1vY3Rlb24tcGx1cy5odG1sP3BhZ2U9MSApCgoKSSBm
+aW5kIHRoZSBJbnN0cnVjdGlvbiBzcGVjaWZpY2F0aW9uIGZyb20gTWFydmVsbCdzIHRvb2xjaGFp
+biBhbmQgVmFyZ3JpbmQncyB2ZXggaXIgdHJhbnNsYXRpb24gKGh0dHBzOi8vc291cmNld2FyZS5v
+cmcvZ2l0Lz9wPXZhbGdyaW5kLmdpdDthPWJsb2I7Zj1WRVgvcHJpdi9ndWVzdF9taXBzX3RvSVIu
+YztoPTEyODVlZGFkMGI4M2IwZjBhNmIyMWZjNjNkMjIzNWQ1MGY5NGQyMDQ7aGI9SEVBRCNsMjkw
+OSkKSSBoYXZlIHN1Y2Nlc3NmdWxseSBlbXVsYXRlZCBhbiBFTEYgYmluYXJ5IGNvbXBpbGVkIGZv
+ciBDYXZpdW0gKE1hcnZlbGwpIG9uIHg4NiBhcmNoaXRlY3R1cmUuCgoKQ2FuIHlvdSBoZWxwIG9y
+IGdpdmUgbWUgc29tZSBzdWdnZXN0aW9ucyBhYm91dCB0ZXN0aW5nPwoKCgoKCgpCZXN0CgoKb3ds
+MTI5
+------=_Part_8647_1582789253.1707735423338
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 9ba34cf8f8ed..9d668b8d6c17 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -91,6 +91,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-         vf->exp.sriov_vf.vf_number = i;
- 
-         if (!qdev_realize(&vf->qdev, bus, errp)) {
-+            object_unparent(OBJECT(vf));
-+            object_unref(vf);
-             unrealize_vfs(dev, i);
-             return false;
-         }
-
--- 
-2.43.0
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPjxwcmU+PHByZT5IaSA8
+L3ByZT48cHJlPiZndDsgSG93IGNhbiB3ZSB0ZXN0IGl0PyBJcyB0aGVyZSBhbnkgZGlzdHJpYnV0
+aW9uIHByb2R1Y2luZyBrZXJuZWwgZm9yCiZndDsgT2N0ZW9uKy8yPyBQZXIgaHR0cHM6Ly9naXRo
+dWIuY29tL01hcnZlbGxFbWJlZGRlZFByb2Nlc3NvcnMvbWFydmVsbC1kcGRrCiZndDsgIEkgdW5k
+ZXJzdGFuZCB0aGVyZSBjb3VsZCBiZSBMaW51eCBhbmQgRnJlZUJTRCwgaXMgdGhhdCBjb3JyZWN0
+PzwvcHJlPjwvcHJlPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPkFjdHVhbGx5IEkgZG9u
+J3Qga25vdyBob3cgdG8gZnVsbHkgdGVzdCBlYWNoIGludHJ1Y3Rpb24uJm5ic3A7PC9kaXY+PGRp
+diBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPlRv
+IHRoZSBiZXN0IG9mIG15IGtub3dsZWRnZSwgdGhlIE9jdGVvbiBJbnN0cnVjdGlvbiBpcyBvcHRp
+bWl6ZWQgZm9yJm5ic3A7bmV0d29ya2luZyBzZWN1cml0eS9hcHBsaWNhdGlvbiBwcm9jZXNzb3Iu
+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOiAwOyI+QW5kIHRoZSBsYXRlc3QgcmVmZXJlbmNlIG1h
+bnVhbCBpcyBub3QgcHVibGljIGF2YWlsYWJsZS4gKDxhIGhyZWY9Imh0dHBzOi8vZG9rdW1lbi50
+aXBzL2RvY3VtZW50cy9jYXZpdW0tbmV0d29ya3Mtb2N0ZW9uLXBsdXMtY241MHh4LWhhcmR3YXJl
+LTIwMDgtY2F2aXVtLW5ldHdvcmtzLW9jdGVvbi1wbHVzLmh0bWw/cGFnZT0xIiBfc3JjPSJodHRw
+czovL2Rva3VtZW4udGlwcy9kb2N1bWVudHMvY2F2aXVtLW5ldHdvcmtzLW9jdGVvbi1wbHVzLWNu
+NTB4eC1oYXJkd2FyZS0yMDA4LWNhdml1bS1uZXR3b3Jrcy1vY3Rlb24tcGx1cy5odG1sP3BhZ2U9
+MSI+aHR0cHM6Ly9kb2t1bWVuLnRpcHMvZG9jdW1lbnRzL2Nhdml1bS1uZXR3b3Jrcy1vY3Rlb24t
+cGx1cy1jbjUweHgtaGFyZHdhcmUtMjAwOC1jYXZpdW0tbmV0d29ya3Mtb2N0ZW9uLXBsdXMuaHRt
+bD9wYWdlPTE8L2E+ICk8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9kaXY+PGRp
+diBzdHlsZT0ibWFyZ2luOiAwOyI+SSBmaW5kIHRoZSBJbnN0cnVjdGlvbiBzcGVjaWZpY2F0aW9u
+IGZyb20gTWFydmVsbCdzIHRvb2xjaGFpbiBhbmQgVmFyZ3JpbmQncyB2ZXggaXIgdHJhbnNsYXRp
+b24gKDxhIGhyZWY9Imh0dHBzOi8vc291cmNld2FyZS5vcmcvZ2l0Lz9wPXZhbGdyaW5kLmdpdDth
+PWJsb2I7Zj1WRVgvcHJpdi9ndWVzdF9taXBzX3RvSVIuYztoPTEyODVlZGFkMGI4M2IwZjBhNmIy
+MWZjNjNkMjIzNWQ1MGY5NGQyMDQ7aGI9SEVBRCNsMjkwOSIgX3NyYz0iaHR0cHM6Ly9zb3VyY2V3
+YXJlLm9yZy9naXQvP3A9dmFsZ3JpbmQuZ2l0O2E9YmxvYjtmPVZFWC9wcml2L2d1ZXN0X21pcHNf
+dG9JUi5jO2g9MTI4NWVkYWQwYjgzYjBmMGE2YjIxZmM2M2QyMjM1ZDUwZjk0ZDIwNDtoYj1IRUFE
+I2wyOTA5Ij5odHRwczovL3NvdXJjZXdhcmUub3JnL2dpdC8/cD12YWxncmluZC5naXQ7YT1ibG9i
+O2Y9VkVYL3ByaXYvZ3Vlc3RfbWlwc190b0lSLmM7aD0xMjg1ZWRhZDBiODNiMGYwYTZiMjFmYzYz
+ZDIyMzVkNTBmOTRkMjA0O2hiPUhFQUQjbDI5MDk8L2E+KTwvZGl2PjxkaXYgc3R5bGU9Im1hcmdp
+bjogMDsiPkkgaGF2ZSBzdWNjZXNzZnVsbHkgZW11bGF0ZWQgYW4gRUxGIGJpbmFyeSBjb21waWxl
+ZCBmb3IgQ2F2aXVtIChNYXJ2ZWxsKSBvbiB4ODYgYXJjaGl0ZWN0dXJlLjwvZGl2PjxkaXYgc3R5
+bGU9Im1hcmdpbjogMDsiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46IDA7Ij5DYW4geW91
+IGhlbHAgb3IgZ2l2ZSBtZSBzb21lJm5ic3A7c3VnZ2VzdGlvbnMgYWJvdXQgdGVzdGluZz88L2Rp
+dj48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48ZGl2IHN0eWxlPSJwb3NpdGlvbjpyZWxh
+dGl2ZTt6b29tOjEiPjwvZGl2PjxkaXYgaWQ9ImRpdk5ldGVhc2VNYWlsQ2FyZCI+PC9kaXY+PGRp
+diBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPkJl
+c3Q8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFy
+Z2luOiAwOyI+b3dsMTI5PC9kaXY+PC9kaXY+
+------=_Part_8647_1582789253.1707735423338--
 
 
