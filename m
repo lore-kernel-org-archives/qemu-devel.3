@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9580BC4829B
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027ACC4829B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZS2a-000449-V2; Mon, 12 Feb 2024 03:51:52 -0500
+	id 1rZS2a-000446-EV; Mon, 12 Feb 2024 03:51:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZS2Y-00043k-LJ
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZS2Y-00043e-GO
  for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:51:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZS2W-0007Gw-3B
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rZS2W-0007HF-BY
  for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:51:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707727906;
+ s=mimecast20190719; t=1707727907;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M1k0ShzhehyL+PAvxBBXZPYlw2KNp42zw70tfqbAeXE=;
- b=U0MNM/JG76tId718JobeoTSszQIV08leye78Jw5IR2yHLx3VhTUlX9uCSFJQPE0BLMV7o5
- NLlEynyqwsCMQ9tnY/fAsbww/DQIgSQJd4j3u7dPvAx95Miw43ejFVqRDNuiO2tDoRRcnn
- zrXIqjiCncW4mSfbVFT1WWnGmeHfuTs=
+ bh=cZiYICAEPQEmGjWFcJuqoqXwCObYbxNWa7J9q7/sD8E=;
+ b=YJo/C/GhHRtYxTMRoZ8emH71nxOzrPuD23hFyKlbL+8LWsYxNrRnEPnEYhgERpAmm4Mdg4
+ KaJ3w/XubgzeQ/vDvAt7v8xmBanWJhEvkxRSvw/2AvYUuYS0ZlrurPBtkOlcWl57ETPJ/R
+ TcfxsFUl7A6YSVgQ4XyjwKCdmus+N/o=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-DDez5ac3OWSXOf00jnfOlw-1; Mon,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-448-HUGxzbIpMi6SPIF_AaJh7w-1; Mon,
  12 Feb 2024 03:51:44 -0500
-X-MC-Unique: DDez5ac3OWSXOf00jnfOlw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+X-MC-Unique: HUGxzbIpMi6SPIF_AaJh7w-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 436D828C976C;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 26BFB1C0BA4F;
  Mon, 12 Feb 2024 08:51:44 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 03A2E208DBE1;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 033CC416184B;
  Mon, 12 Feb 2024 08:51:44 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D473A21E668C; Mon, 12 Feb 2024 09:51:42 +0100 (CET)
+ id DA2F121E65EB; Mon, 12 Feb 2024 09:51:42 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>
-Subject: [PULL 1/4] chardev/parallel: Don't close stdin on inappropriate device
-Date: Mon, 12 Feb 2024 09:51:39 +0100
-Message-ID: <20240212085142.523317-2-armbru@redhat.com>
+Subject: [PULL 3/4] qapi/char: Make backend types properly conditional
+Date: Mon, 12 Feb 2024 09:51:41 +0100
+Message-ID: <20240212085142.523317-4-armbru@redhat.com>
 In-Reply-To: <20240212085142.523317-1-armbru@redhat.com>
 References: <20240212085142.523317-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -84,157 +84,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The __linux__ version of qemu_chr_open_pp_fd() tries to claim the
-parport device with a PPCLAIM ioctl().  On success, it stores the file
-descriptor in the chardev object, and returns success.  On failure, it
-closes the file descriptor, and returns failure.
+Character backends are actually QOM types.  When a backend's
+compile-time conditional QOM type is not compiled in, creation fails
+with "'FOO' is not a valid char driver name".  Okay, except
+introspecting chardev-add with query-qmp-schema doesn't work then: the
+backend type is there even though the QOM type isn't.
 
-chardev_new() then passes the Chardev to object_unref().  This duly
-calls char_parallel_finalize(), which closes the file descriptor
-stored in the chardev object.  Since qemu_chr_open_pp_fd() didn't
-store it, it's still zero, so this closes standard input.  Ooopsie.
+A management application can work around this issue by using
+qom-list-types instead.
 
-To demonstate, add a unit test.  With the bug above unfixed, running
-this test closes standard input.  char_hotswap_test() happens to run
-next.  It opens a socket, duly gets file descriptor 0, and since it
-tests for success with > 0 instead of >= 0, it fails.
-
-The new unit test needs to be conditional exactly like the chardev it
-tests.  Since the condition is rather complicated, steal the solution
-from the serial chardev: define HAVE_CHARDEV_PARALLEL in qemu/osdep.h.
-This also permits simplifying chardev/meson.build a bit.
-
-The bug fix is easy enough: store the file descriptor, and leave
-closing it to char_parallel_finalize().
-
-The next commit will fix char_hotswap_test()'s test for success.
+Fix the issue anyway: add the conditionals to the QAPI schema.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240203080228.2766159-2-armbru@redhat.com>
+Message-ID: <20240203080228.2766159-4-armbru@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
-[Indentation fixed up, commit message improved]
 ---
- include/qemu/osdep.h    |  9 ++++++++-
- chardev/char-parallel.c |  7 +++++--
- tests/unit/test-char.c  | 21 +++++++++++++++++++++
- chardev/meson.build     |  4 +---
- 4 files changed, 35 insertions(+), 6 deletions(-)
+ qapi/char.json | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 7d359dabc4..c7053cdc2b 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -508,11 +508,18 @@ void qemu_anon_ram_free(void *ptr, size_t size);
- 
- #ifdef _WIN32
- #define HAVE_CHARDEV_SERIAL 1
--#elif defined(__linux__) || defined(__sun__) || defined(__FreeBSD__)    \
-+#define HAVE_CHARDEV_PARALLEL 1
-+#else
-+#if defined(__linux__) || defined(__sun__) || defined(__FreeBSD__)   \
-     || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) \
-     || defined(__GLIBC__) || defined(__APPLE__)
- #define HAVE_CHARDEV_SERIAL 1
- #endif
-+#if defined(__linux__) || defined(__FreeBSD__) \
-+    || defined(__FreeBSD_kernel__) || defined(__DragonFly__)
-+#define HAVE_CHARDEV_PARALLEL 1
-+#endif
-+#endif
- 
- #if defined(__HAIKU__)
- #define SIGIO SIGPOLL
-diff --git a/chardev/char-parallel.c b/chardev/char-parallel.c
-index a5164f975a..78697d7522 100644
---- a/chardev/char-parallel.c
-+++ b/chardev/char-parallel.c
-@@ -164,13 +164,13 @@ static void qemu_chr_open_pp_fd(Chardev *chr,
- {
-     ParallelChardev *drv = PARALLEL_CHARDEV(chr);
- 
-+    drv->fd = fd;
-+
-     if (ioctl(fd, PPCLAIM) < 0) {
-         error_setg_errno(errp, errno, "not a parallel port");
--        close(fd);
-         return;
-     }
- 
--    drv->fd = fd;
-     drv->mode = IEEE1284_MODE_COMPAT;
- }
- #endif /* __linux__ */
-@@ -238,6 +238,7 @@ static void qemu_chr_open_pp_fd(Chardev *chr,
- }
- #endif
- 
-+#ifdef HAVE_CHARDEV_PARALLEL
- static void qmp_chardev_open_parallel(Chardev *chr,
-                                       ChardevBackend *backend,
-                                       bool *be_opened,
-@@ -306,3 +307,5 @@ static void register_types(void)
- }
- 
- type_init(register_types);
-+
-+#endif  /* HAVE_CHARDEV_PARALLEL */
-diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
-index 649fdf64e1..76946e6f90 100644
---- a/tests/unit/test-char.c
-+++ b/tests/unit/test-char.c
-@@ -1203,6 +1203,24 @@ static void char_serial_test(void)
- }
- #endif
- 
-+#if defined(HAVE_CHARDEV_PARALLEL) && !defined(WIN32)
-+static void char_parallel_test(void)
-+{
-+    QemuOpts *opts;
-+    Chardev *chr;
-+
-+    opts = qemu_opts_create(qemu_find_opts("chardev"), "parallel-id",
-+                            1, &error_abort);
-+    qemu_opt_set(opts, "backend", "parallel", &error_abort);
-+    qemu_opt_set(opts, "path", "/dev/null", &error_abort);
-+
-+    chr = qemu_chr_new_from_opts(opts, NULL, NULL);
-+    g_assert_null(chr);
-+
-+    qemu_opts_del(opts);
-+}
-+#endif
-+
- #ifndef _WIN32
- static void char_file_fifo_test(void)
- {
-@@ -1544,6 +1562,9 @@ int main(int argc, char **argv)
-     g_test_add_func("/char/udp", char_udp_test);
- #if defined(HAVE_CHARDEV_SERIAL) && !defined(WIN32)
-     g_test_add_func("/char/serial", char_serial_test);
-+#endif
-+#if defined(HAVE_CHARDEV_PARALLEL) && !defined(WIN32)
-+    g_test_add_func("/char/parallel", char_parallel_test);
- #endif
-     g_test_add_func("/char/hotswap", char_hotswap_test);
-     g_test_add_func("/char/websocket", char_websock_test);
-diff --git a/chardev/meson.build b/chardev/meson.build
-index c80337d15f..70070a8279 100644
---- a/chardev/meson.build
-+++ b/chardev/meson.build
-@@ -21,11 +21,9 @@ if host_os == 'windows'
- else
-   chardev_ss.add(files(
-       'char-fd.c',
-+      'char-parallel.c',
-       'char-pty.c',
-     ), util)
--  if host_os in ['linux', 'gnu/kfreebsd', 'freebsd', 'dragonfly']
--    chardev_ss.add(files('char-parallel.c'))
--  endif
- endif
- 
- chardev_ss = chardev_ss.apply({})
+diff --git a/qapi/char.json b/qapi/char.json
+index 6c6ad3b10c..2d74e66746 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -472,8 +472,8 @@
+ ##
+ { 'enum': 'ChardevBackendKind',
+   'data': [ 'file',
+-            'serial',
+-            'parallel',
++            { 'name': 'serial', 'if': 'HAVE_CHARDEV_SERIAL' },
++            { 'name': 'parallel', 'if': 'HAVE_CHARDEV_PARALLEL' },
+             'pipe',
+             'socket',
+             'udp',
+@@ -482,10 +482,10 @@
+             'mux',
+             'msmouse',
+             'wctablet',
+-            'braille',
++            { 'name': 'braille', 'if': 'CONFIG_BRLAPI' },
+             'testdev',
+             'stdio',
+-            'console',
++            { 'name': 'console', 'if': 'CONFIG_WIN32' },
+             { 'name': 'spicevmc', 'if': 'CONFIG_SPICE' },
+             { 'name': 'spiceport', 'if': 'CONFIG_SPICE' },
+             { 'name': 'qemu-vdagent', 'if': 'CONFIG_SPICE_PROTOCOL' },
+@@ -614,8 +614,10 @@
+   'base': { 'type': 'ChardevBackendKind' },
+   'discriminator': 'type',
+   'data': { 'file': 'ChardevFileWrapper',
+-            'serial': 'ChardevHostdevWrapper',
+-            'parallel': 'ChardevHostdevWrapper',
++            'serial': { 'type': 'ChardevHostdevWrapper',
++                        'if': 'HAVE_CHARDEV_SERIAL' },
++            'parallel': { 'type': 'ChardevHostdevWrapper',
++                          'if': 'HAVE_CHARDEV_PARALLEL' },
+             'pipe': 'ChardevHostdevWrapper',
+             'socket': 'ChardevSocketWrapper',
+             'udp': 'ChardevUdpWrapper',
+@@ -624,10 +626,12 @@
+             'mux': 'ChardevMuxWrapper',
+             'msmouse': 'ChardevCommonWrapper',
+             'wctablet': 'ChardevCommonWrapper',
+-            'braille': 'ChardevCommonWrapper',
++            'braille': { 'type': 'ChardevCommonWrapper',
++                         'if': 'CONFIG_BRLAPI' },
+             'testdev': 'ChardevCommonWrapper',
+             'stdio': 'ChardevStdioWrapper',
+-            'console': 'ChardevCommonWrapper',
++            'console': { 'type': 'ChardevCommonWrapper',
++                         'if': 'CONFIG_WIN32' },
+             'spicevmc': { 'type': 'ChardevSpiceChannelWrapper',
+                           'if': 'CONFIG_SPICE' },
+             'spiceport': { 'type': 'ChardevSpicePortWrapper',
 -- 
 2.43.0
 
