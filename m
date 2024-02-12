@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2879C4829F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB97C4829B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 09:16:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZSOt-0006Pm-30; Mon, 12 Feb 2024 04:14:55 -0500
+	id 1rZSQG-0002U3-Kw; Mon, 12 Feb 2024 04:16:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSOo-0006OG-JR
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:14:51 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSQE-0002Gi-D7
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:16:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSOm-0003f8-6V
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:14:49 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZSQC-00043C-Fu
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 04:16:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707729287;
+ s=mimecast20190719; t=1707729375;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4PAgXDbmkvmarp6MZpMnGws6cM8qfOQuBJNlWRCjj0U=;
- b=Sz5Gyyy6d+SIZcCzNsulaGPLGi05rTVGl6mkgmEXhk71ESA0xg6W1XhpEbHYAtCsm0KRM6
- vd/GRqrVLtKF3ka5PpfnVC2/B852k/S677YlwJw/spr+MxpTQCZrpiSXiC5JbFUlgRnlSS
- UB1ieJdrLrHPy9yn4slYx1BYnSC8WBE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=z2F6kA4R8Hudmd0UjGuEwujJEc3UXG68lZjBgMtoJ7Q=;
+ b=N+Aub0BlpX/x4ieuC3hkdsRknQFUsSUMCS3UQMhDF0UhQLHcxwg/ywu81GfQIx2GUG+Qk+
+ 4M2IAP19M+1pGnuteTQhYtoaIbiR2rxEl1qXYktF3GfdxDMKHttUpV7EE2mZV7Uc6xzMNT
+ ncGbsPK89KMjbbBsReWuOTCavU2cJ3g=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-YMb6FUIuM8eeWApZSoRQnQ-1; Mon, 12 Feb 2024 04:14:44 -0500
-X-MC-Unique: YMb6FUIuM8eeWApZSoRQnQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-410eb511dcaso1641105e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 01:14:44 -0800 (PST)
+ us-mta-395-stvj62y6PBq1ciX-LfRU3A-1; Mon, 12 Feb 2024 04:16:14 -0500
+X-MC-Unique: stvj62y6PBq1ciX-LfRU3A-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-410e99e25a9so1399245e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 01:16:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707729283; x=1708334083;
+ d=1e100.net; s=20230601; t=1707729373; x=1708334173;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :references:cc:to:content-language:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4PAgXDbmkvmarp6MZpMnGws6cM8qfOQuBJNlWRCjj0U=;
- b=Nd2XYl1pOHFCaonXpJ07VZRNj2MSh25yDsWj3MwGvnyjavLO7IZkPHuocKw+15QPQk
- AY/pLUK3SWz+cN4t/tloA8HWW/6+Hz7BSq1GPmocqwRWa312MZQO2etr8SNdghjqtJCQ
- NEzKKrFG7nxkT/Rmelb7KBFgzLHUYbh7ogqQJmSdjP4/AKllowZ6u/DoIBhUsV4zPX3N
- X+LVnRgk1Bp4K6GmZMVIkKch4NkFHa9NDhlpmsHnCQutycrB2xDTRmcfGSn7pEDhbUht
- n1Z5W89zujJ42NcB+ynCtZJweUDpd7uXViSn0rlXlnPhXjHFltXEPnYbsXCi8Gg+Q83c
- Y/OQ==
-X-Gm-Message-State: AOJu0YwRXWzfPcZdNK0BHmO3nB7G7RzIY0lPV7fPWZs6y3kVxuwfURJ0
- J0+UyCZNo5Fqt4+eGfbYvcHra535Dn/qwsXPZApjXy2scNwj8yp8pl5MnAV+y2dnLsIAnP7Rv1U
- Z8SwfM9m/8NhahI2O/VA51l91gO0YYEjjmdk8szQ3hfB2zVpo0ZLy
-X-Received: by 2002:a05:600c:4e8e:b0:410:48dd:c397 with SMTP id
- f14-20020a05600c4e8e00b0041048ddc397mr4204761wmq.40.1707729283489; 
- Mon, 12 Feb 2024 01:14:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGd1IRv565v1rrA/7rF1oN9yjYCUgSsXLrketiU6gBYRFhiL1kBm6JXP6y5K4c7owQ3FfNbPw==
-X-Received: by 2002:a05:600c:4e8e:b0:410:48dd:c397 with SMTP id
- f14-20020a05600c4e8e00b0041048ddc397mr4204747wmq.40.1707729283150; 
- Mon, 12 Feb 2024 01:14:43 -0800 (PST)
+ bh=z2F6kA4R8Hudmd0UjGuEwujJEc3UXG68lZjBgMtoJ7Q=;
+ b=vGi/wo2ThZzVGUQJoymsy5VNCZzf7TQRO/sfkXrFJ0BKMVp25j3biP6bjeLAAbu8sK
+ wGKgV2JIwq2krAvDM5GyZ+NkeW8e4XN9b/RnAEdrStfnMSgVdD+RFOVpgY9E9rXJ+h3q
+ R7YKIAv/gj3WgCV2+RHJElI/DyJ7PKtzPZzmQ35geFnRFv+eWoEF7T7NBZANLFKC/4W/
+ zMPoCWL68pW3bTByUXdp/XpZnYPjBA1H2vp1mApahEuyvdgEPTH8SNCQsufObWHBmccR
+ qB11YMA+uUx/1uyrgUHYs0kTPPrj3RkNLS1MUHUA+23qA4Y9cSkoGbOGYcyKm+Ff3DjW
+ 8jqw==
+X-Gm-Message-State: AOJu0YxQozeC2Qdt79MXpG8h78n32juwmKvMKa0YKhLKick344z8kCSg
+ 0rgNBNHJ38eHvqLQ+WEKIURSacipaZAuA8+Cj4gu7Cgne9oCneRZkId6dAu6KpcbOXzChxO0rUw
+ d/rvXuq60L9ljZlpJFY7Z75kau1ysVP76Z+d3DUEfzf+Y13NiHRog
+X-Received: by 2002:a05:600c:3544:b0:40e:fb76:5344 with SMTP id
+ i4-20020a05600c354400b0040efb765344mr4903214wmq.11.1707729373081; 
+ Mon, 12 Feb 2024 01:16:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhMBX0kmOWE86OzB1B963K0sCrEPa6wS2Fipxd2bFt1X+K5YPDUfJYGFBW1h1hmASt58ySfQ==
+X-Received: by 2002:a05:600c:3544:b0:40e:fb76:5344 with SMTP id
+ i4-20020a05600c354400b0040efb765344mr4903187wmq.11.1707729372633; 
+ Mon, 12 Feb 2024 01:16:12 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEFgM7bs18NnXK+oF+1CU2Mk6p4tmGphvieEnELqb8HxqMSH4SfT8fnSLPY5IqGroXyvlnA5aIbQiegTcByTcT1yavQYP+16ktc9dxFJOSvXk3cet/NbRxdRENiD4zrtZlS+qNcFxzBqopwWNz0VyBudLQVieR616wp1eJxt6ptSXdh1+o5adWbeEXqs29fOqRP+XCxPkK3MMDmow+dR+4b8oVBRGxKBZPDv5C2BvBSsw6LFw24fjzTzlnMUuYTN9MuDfYQPgIKnBoSHEe2JFiH/nuMhmdqw==
+ AJvYcCUQjB/TiFzS+QY0KTsWh0hS0X6Fniy2jVX18TXAmPWFD4hajRZplsmBseW7QO+2RJX+GUKhKjQSAoJ2VgPz/BVH4JZ94zx5bKZN6FCUz+3plxIu6nI4e0vJrrS98pOtUVMixUw7dGy283P+Ul+XlELM1IdonK+BAeb6VeHBi5EaSSHd69cz/cN1UhT//da3bJUqVLhJv25ycfDpkbUGApWAjaK8uxKP8DFApQejR/PT5rrK/juvsi1joYYr7quw4qRfJMjkkG+ScAhmH1rfvt3LT0wBBue7bQ==
 Received: from ?IPV6:2003:cb:c730:2200:7229:83b1:524e:283a?
  (p200300cbc7302200722983b1524e283a.dip0.t-ipconnect.de.
  [2003:cb:c730:2200:7229:83b1:524e:283a])
  by smtp.gmail.com with ESMTPSA id
- p7-20020a05600c468700b004105528c61fsm8053594wmo.35.2024.02.12.01.14.42
+ p7-20020a05600c468700b004105528c61fsm8053594wmo.35.2024.02.12.01.16.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 01:14:42 -0800 (PST)
-Message-ID: <5db417e9-52b4-401d-9205-0c5b349656cc@redhat.com>
-Date: Mon, 12 Feb 2024 10:14:41 +0100
+ Mon, 12 Feb 2024 01:16:12 -0800 (PST)
+Message-ID: <3445b27d-dfd9-421d-824f-6a16107a3cd0@redhat.com>
+Date: Mon, 12 Feb 2024 10:16:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 06/13] migration: MigrationNotifyFunc
+Subject: Re: [PATCH V3 07/13] migration: per-mode notifiers
 Content-Language: en-US
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -81,7 +81,7 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Marc-Andre Lureau <marcandre.lureau@redhat.com>
 References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
- <1707418446-134863-7-git-send-email-steven.sistare@oracle.com>
+ <1707418446-134863-8-git-send-email-steven.sistare@oracle.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -128,7 +128,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <1707418446-134863-7-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1707418446-134863-8-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -155,12 +155,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.02.24 19:53, Steve Sistare wrote:
-> Define MigrationNotifyFunc to improve type safety and simplify migration
-> notifiers.
+On 08.02.24 19:54, Steve Sistare wrote:
+> Keep a separate list of migration notifiers for each migration mode.
 > 
+> Suggested-by: Peter Xu <peterx@redhat.com>
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
+
 Reviewed-by: David Hildenbrand <david@redhat.com>
 
 -- 
