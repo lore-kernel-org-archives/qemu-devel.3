@@ -4,179 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F602C4829E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 19:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98E1C4829E
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 19:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZbnd-00068Y-UT; Mon, 12 Feb 2024 14:17:06 -0500
+	id 1rZc3s-000318-Du; Mon, 12 Feb 2024 14:33:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1rZbnb-00068N-Ka
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 14:17:03 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <aminier-21@enst.fr>)
+ id 1rZc3g-0002zO-Dl; Mon, 12 Feb 2024 14:33:42 -0500
+Received: from zproxy4.enst.fr ([2001:660:330f:2::df])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1rZbnZ-0003n0-RK
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 14:17:03 -0500
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41CI7rG6003419; Mon, 12 Feb 2024 19:16:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=vfC/03FqAeGThPSWWmESlaMzWl6cHCGqkzy1rTiQIeo=;
- b=D0NCYS3eMV/A/kmkj5BjneX7aV8ytwl+UMQHSpHmKF5ZOcmnV99/LqQ1WZzXty/07lCS
- qgktcc2dfVEFVlHNV4M4mOqJXkqeuYFc+fcP6K8EBB0nP80JK48MbGFW2bknKpLmBf12
- PIDc0Y9Zm5pd6f5pWHicE8ESzwEFIi5xkXslNqTB28RlXhhKcUXNrw/X1QF7XAAPzEo7
- wiqHYfgCsSOvyQj6eqAR3qm27EXq8a6eOCJ3IJzHmsIK6Jv9b4Ysw4/oqGy8Hx7jZ0xY
- vF16fdtJ2t9IjYHxi0FTSaw/vUE/rDtbGB9aU95nVihzKZFS6DFkr5skMP6hLxpJaRzu kg== 
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w7mpqgtce-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Feb 2024 19:16:58 +0000
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41CJ84UG013970; Mon, 12 Feb 2024 19:16:57 GMT
-Received: from nam10-bn7-obe.outbound.protection.outlook.com
- (mail-bn7nam10lp2101.outbound.protection.outlook.com [104.47.70.101])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3w6ap8uw5m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Feb 2024 19:16:57 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SexZzRx6y5xEYiZ1hpq2ndvphH9RsYPYyld/XgW41qgY9DmAqUzHlcYCtaWbhhq7NP3RRXXIUH0FozSRy0ttOnt8QLKLyHSmouJszg7nG6/HCE/qGC0lxqVYUmzrgrisliN2K8Nzh/Cz8k0WYsHzmub+0RCVZQDh0WMfd8veKNqpYHpzT1yXWWRtyPr/1XmKunssH24UyCSHzOhnt5K+lb+hv51xGfM8sJIC5Jf1KC0xfien9BNUmFjSSRueATPGw+lA4SmYwFobld6I7ENvzOdHavhe9gqsjdwhYDMWrSb+j0iW/SKgF1Byjye3C4yfu46EbIfodJv8aGYKGehJZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vfC/03FqAeGThPSWWmESlaMzWl6cHCGqkzy1rTiQIeo=;
- b=gEUFggfrg8mXplqIUAjknOaW1E6csfL+rKLGD+LogMUK7i5rrQapsMFfFVyup9qwTsJbzTp3LF7I0GUkFpDfVeHtHJFTcr3owS6jP8JR+Qv0/abvZdbI2rQ8f5qiSXkExkmL08mnnshdqMco+0eI/xCXNysSo+uTfBo7+CwxXGAszuY6ltAVoCTBXxxl/CcyPJ8VdKKSUSWNrcP9YX/+HIc/K2yb/VhNf0xIpN2Bs9/djAmz4uIcudnHS8DQO9xjCY3cr3fdDXmH7p9t6UwUtrt+00uPu/SNkFaIDgiUX7nowJ+0sWgQLr3GyNjkrmTsHCcwqvScsj8l1pB7NAVzdw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vfC/03FqAeGThPSWWmESlaMzWl6cHCGqkzy1rTiQIeo=;
- b=AP0jVl+8sqvI5+AW22KunsFKqn/7zWBVWFODLTd+odUtYcpYR7+a3gz7lw53FnIZR4tLZx+KGg3jGtN3BmHUmgo7X0qzrT+sYOyeWcegr5m2ygq/6RLWRjQNV6NxM7ZyY632ZZK/sNSxuB2L3zSW+YLZHpWHaCCdIEffyLjoN+0=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by PH7PR10MB7694.namprd10.prod.outlook.com (2603:10b6:510:2e5::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.39; Mon, 12 Feb
- 2024 19:16:54 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::3356:4cc1:701e:dde3]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::3356:4cc1:701e:dde3%4]) with mapi id 15.20.7270.036; Mon, 12 Feb 2024
- 19:16:54 +0000
-Message-ID: <554dff6d-85eb-4168-960b-c50dec1fcd93@oracle.com>
-Date: Mon, 12 Feb 2024 19:16:47 +0000
-Subject: Re: [PATCH RFCv2 6/8] backends/iommufd: Add ability to disable
- hugepages
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
- <zhenzhong.duan@intel.com>, Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-References: <20240212135643.5858-1-joao.m.martins@oracle.com>
- <20240212135643.5858-7-joao.m.martins@oracle.com>
- <87zfw5a9g5.fsf@pond.sub.org>
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <87zfw5a9g5.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0264.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:37c::15) To PH0PR10MB5893.namprd10.prod.outlook.com
- (2603:10b6:510:149::11)
+ (Exim 4.90_1) (envelope-from <aminier-21@enst.fr>)
+ id 1rZc3d-00070R-8f; Mon, 12 Feb 2024 14:33:39 -0500
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy4.enst.fr (Postfix) with ESMTP id D9A3420562;
+ Mon, 12 Feb 2024 20:33:30 +0100 (CET)
+Received: from zproxy4.enst.fr ([IPv6:::1])
+ by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id HB1m1Vc7IdBi; Mon, 12 Feb 2024 20:33:29 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy4.enst.fr (Postfix) with ESMTP id 657DC2057A;
+ Mon, 12 Feb 2024 20:33:29 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 657DC2057A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1707766409;
+ bh=gCHr35eWqluFFRqghgutTDvIxifmqx4Yg1Ipsp5H5sc=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=dBcfTPZewGfJEan3/9tkJHmhFE6bhXKIR9K1WshxAssqxnXGiyelv/+xNBMKxbApM
+ sMfqf53nnlfzNOFv3+fHxSR+E1bjiJJV2hugTOI5JXBs1fM34PCCkeW6+dTdIEwHQ1
+ k1imwB5NPnHcAdauQeOp0IlDEmP2ArtH95gefeZo=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy4.enst.fr ([IPv6:::1])
+ by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id UF697HyZTI1R; Mon, 12 Feb 2024 20:33:29 +0100 (CET)
+Received: from zmail-tp1.enst.fr (zmail-tp1.enst.fr [137.194.2.198])
+ by zproxy4.enst.fr (Postfix) with ESMTP id AAC3020562;
+ Mon, 12 Feb 2024 20:33:28 +0100 (CET)
+Date: Mon, 12 Feb 2024 20:33:28 +0100 (CET)
+From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Laurent Vivier <lvivier@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ =?utf-8?B?SW7DqHM=?= Varhol <ines.varhol@telecom-paris.fr>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ qemu-arm@nongnu.org, Samuel Tardieu <samuel.tardieu@telecom-paris.fr>
+Message-ID: <20228324.1964026.1707766408557.JavaMail.zimbra@enst.fr>
+In-Reply-To: <CAKmqyKNy7+7JN6CFEqOuXHYFENL6geaS5H6sweXhcDLnLpJC7w@mail.gmail.com>
+References: <20240130160656.113112-1-arnaud.minier@telecom-paris.fr>
+ <20240130160656.113112-4-arnaud.minier@telecom-paris.fr>
+ <CAKmqyKNy7+7JN6CFEqOuXHYFENL6geaS5H6sweXhcDLnLpJC7w@mail.gmail.com>
+Subject: Re: [PATCH v4 3/8] Add an internal PLL Clock object
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|PH7PR10MB7694:EE_
-X-MS-Office365-Filtering-Correlation-Id: d2a758ed-0085-42ee-28b5-08dc2bff2c7c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: qiCzMr/UgqA7hQ4AphkAJDOgo12R3OVntsez+cKmuYppfijirl3nhB2BLBHOnX6lhELDiDRfXFwIL6uYRoho9csES7PfFIj/pHdRiYRGrFI7BURXEXGq1xXfydBGOdOIfZUJID7yh2OMEe0w+pOHOmu0/HhFNzd8ZuIGrXaG+xoxVBMjjY44P4enVtA1YrOcSPFSLElvD8bdf4sba/fbkWy2hv+EzA64x1j5jZOX5C5TqUz0DhdsDcIUgVIVbwuNmMh+YgpqWm8SQTIm9+2rbzoQ9XA/eIpPIZMAZilBpAYGOTWfCymzku+WwMas6bjViz3rLuiTr8xsv3DcXKieYb9qFmXBMXLY6UHkeHxNgtU89Cf+UsR+gPl1ly/mUbIPDJGKHa6Y9uXu31er/Mdo+OWxml1elT6qszzlKLo3sydldIZ3rSJ7g2X1PlkI4R/jqQMUBecqGbEGn5ApzpRl1X3kCjpEHmi4nPzhbRJWCQ7mlUPyuuG/0z2VgPMZqKLsDerPzwC59h2/+db6Vu1YNag4bXvOGlds5IKKunm0lgVfWVJjgWjarclfmijB/i9N
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366004)(39860400002)(136003)(346002)(376002)(396003)(230922051799003)(64100799003)(451199024)(186009)(1800799012)(36756003)(41300700001)(31686004)(316002)(66946007)(6916009)(54906003)(66476007)(66556008)(86362001)(6486002)(4326008)(31696002)(8676002)(8936002)(6506007)(6666004)(5660300002)(7416002)(478600001)(2906002)(4744005)(38100700002)(2616005)(26005)(53546011)(6512007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RHhrdDlEQWg0bHZBa1NwNkV0ZjI1bUVsc2hZS3dVaGoyZXpmMjl5SlowRGFI?=
- =?utf-8?B?TUxWbG5vOWxPSDRaMERyL0VmZUZJeWZ4ZktwWk1BV0dHZUx6bFlSQmYvdytB?=
- =?utf-8?B?MEVHWFprRTZkNVdOL21KSllzdDJEVHArZk91TWlCUDRmUituOUhTdlJEQ0wv?=
- =?utf-8?B?U3ZydXFseU95ZjR0c0dDS1RHdUFBRSthbXkyTjFjUE9CVmxUV3o4Zzl2QVJ2?=
- =?utf-8?B?dlR6NG9JaWdXT2RnNWtZY0M2Um9Lem5scFBLUFBVbUhiZjF6MHhlNWVaYkRT?=
- =?utf-8?B?R2NZazRxelo2SHZXZjR5U0V3UzhncVVvV3NqK3h4K29ENXJqU0tCWkVDeERG?=
- =?utf-8?B?N1VNV090OXVCc1lWRytZcmtiOVN5SU50TlFqbk5MVUZNSndOYUIxZHV2VFI0?=
- =?utf-8?B?S3JRamo1eVhXbFBWQmJsbWJNYWlLTUZOYWhIWVJ1NytUUjJ5TXBHWFFvV0pE?=
- =?utf-8?B?MCsyQm9GWFJCN3h0ZXFBcENYMWJRNXpUV092Q1F2VEFDSmV1d1RYZTJkbG9I?=
- =?utf-8?B?RUZrTHFEc0RSaXNqbjYxTm1TOHpFVk4zQXJ4SVFiWk5aQlBVRjRTM2dzZDlU?=
- =?utf-8?B?enBpMjFnSnN0Q0lCbFM1NVdvWHVYYVc3VVg4OGNzTTVVWTRXMUUvbk5lTUM0?=
- =?utf-8?B?d051cGJBT0o4M2F3TjRVTCs0cW1lckJUM01CaFlmL3owKzRiVE5tRnpuTWNE?=
- =?utf-8?B?ZFVadzRKTUdoclZWL3A4U0QyL3N2NUxBTWpSNGp6SmZScURXK084N2N6RFFI?=
- =?utf-8?B?UEZQSjVzMTczZWhKNWRNMXdORXF0dkZ1S041ZkhXQUwxSEJCSW5qVnY0bWtL?=
- =?utf-8?B?UTNNUXJoWXR5U0ZPVVBEN3dGOXdlcnhCdkNHdWtXc1Uxalh1WlloZUFKSU5F?=
- =?utf-8?B?azZGN2NmMGYwZmFGL28rR1Vib0tZamo0bzVHODdXcStReUh0ZWtzYkMvSDZo?=
- =?utf-8?B?TGZPZmxTL0NQdGtFMlRncjlBVTdZc1liSUY3cjFLV2Rxa3AzejNXRUMyUEFG?=
- =?utf-8?B?WWs2RnA3Ui94Y2tKdWxZVnZOcmowL2h0UnJ3SHpYRUpvVjBpSm45UVhyRWY1?=
- =?utf-8?B?bS95V0JiK0x1ZGhxRmZWUWh3T1VJU0t2c2JrTDFlYTIvUkZnNytCejdzODlU?=
- =?utf-8?B?bE1lRFphWUcwQWNDZ0NrSlZ0NnNXVjNPTVRLTWNydDB5V0lscHV4b3lzL1Yx?=
- =?utf-8?B?cE9MNXZJc3dLSlFTdUNyU0o5cWJOc3JSOWQ1Q3grcUx0cEU2blIrOW1QdDk2?=
- =?utf-8?B?V2hNOVdGdUVyeVNFMlNkbTIxelgwYkFHVjFpUlpXcE9XS05ibzdwMDNaUGNz?=
- =?utf-8?B?Q0szMStQZWlSMVJ5Nmg5cTdQYTUvb25Cbk1mWHdxMHNrcHJaTHl2MklTeDM0?=
- =?utf-8?B?T0VPVjU0VmtSRHBQd0ZFcjU0aWZ4aFBWaDlXZk5ZQ1RTWldqMEEwZVFYQ0w3?=
- =?utf-8?B?ZW9yUWdVM2llTmtKdzRVL0JMaXlaUVArK3NyOWE1bnNNRy9BVDdFZ05xaCtm?=
- =?utf-8?B?bFZnNlVMaEN0a1EyUWp0cnRDMjlXVStxcVdqUEUvUWtGVDlEL25Da3hTQnA1?=
- =?utf-8?B?N3VBYVgreWhuQmxER1EzK3k5c29BVnhDak93blo3dDdjbHN4RTRDVjE5eFp0?=
- =?utf-8?B?RmpJbHFTd3JBemJYUHFEZmVScXpZK3UrYktpbUQ2eWtQZ1RNaGNtNks1K0cw?=
- =?utf-8?B?bHJTMDhZRlRWbm9SVVJaYnE3MHZvQXdYSjEwZ0pUcENhQUlPYXBybnVaNEh1?=
- =?utf-8?B?eklPMGg0aVhUeUdxWmdMT080MXVneWZSYkhaOVcvYlBnTE5VcHpKQkE5czhK?=
- =?utf-8?B?SGNzRXdaNXViNldZODRuTDJMcEZvZzlnVEVOeEJBQ3l0SzdQYUlma0NleWdh?=
- =?utf-8?B?cGVVTjBsV1dLUWFnRi9PNzBHVUpjS0twaU5OMWRCL1VlWG9ZTlZCcDRBQ0Ny?=
- =?utf-8?B?YWs5UjRPMFh6Mk1LTmI4VXh1UHN1Z013Mno0d1o3dDJIRlhuZ2xxdjVkcDhq?=
- =?utf-8?B?Vll4bWlLQWF0NStwVWIxS05vcGtNSUJ3YmJrd1E4NFV0eTZXblNjK0UvVWdj?=
- =?utf-8?B?MVNKZzBlRmhvdms3WFhDeWVFQmF2YUNnMVdFRTRBZkY3TmR3a3UvNWZGMkYw?=
- =?utf-8?B?NWV6dExqcDkzWFdPNmpzMm82UjVNeDU3VzJJc0xWYzh2dlN0Vm9URnhFMGNs?=
- =?utf-8?B?b1E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 4gPRExtyqPGi/lbHYsXhz2nBplWNkpMTf7KBpoczebgB7ngF8VmnTYYhJw063LaZqmQYl0cb503eyL4ytWmNzZWhb7XRR6iXnQsB6wPMhO2uRxA9uavERIxVgVOMRQgbaYqK0Tu4KuAJlhCYwB1PC0GJ/eV3Vecr1+RmFbx+vJmcs6AaWRI0NHLEXqEo4kTW0czDh4TesMundcYNcj1erPMoo2LqGENZk3NvPgPgE2iFxGlFzF0GrF2vYV4d3FFW1w/P0JLxxvyOtC794d+FKl5HNt9KGHnpLS94oWiBy+U0o0mXHTahe9EwJdDNivqBP6RjD7pzYjj0t0tLg4mFoOFZi5dQ38tnsmNOL3qlHQd2aK5dbxWpR2KdGlj7PmMmYkYrdkqCCYYJaCfZ0yCqGsgvtydzP+u3QO8bE9GMFwzzXgszIpD3Cidm4xeGgD51eouuETgri+LlrH/fcK3hFDTyEJJ0tCRpZXyK0I5JUtZy5Qh1Di2lnh4uIcj0MV9iX1w10xLgnZdX67dUtMxJhUmTq4UlZNA7vTfzn8RTsHZU/Od7Jw3Iwl6ybzuAgST3x/2l0ibjH3j8rajfGPW915Uuhi+8x3yu6C6GUo6S6X4=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2a758ed-0085-42ee-28b5-08dc2bff2c7c
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Feb 2024 19:16:54.5376 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KOpoucUyUi+61O72NKUbIUeJswjnXgapZiUIjqzLClusUMdCxhlcTvGVLIQ5DdwnC2myATPUwdNrwvoWYT4Sv9JaMFJANW3OYJGg9bCNsJM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB7694
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-12_16,2024-02-12_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- adultscore=0
- suspectscore=0 mlxscore=0 phishscore=0 bulkscore=0 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402120148
-X-Proofpoint-GUID: -lMQ00YKtcyhCyaGN4ClZ4YGRQ5nWnxH
-X-Proofpoint-ORIG-GUID: -lMQ00YKtcyhCyaGN4ClZ4YGRQ5nWnxH
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [::ffff:46.193.4.103]
+X-Mailer: Zimbra 9.0.0_GA_4583 (ZimbraWebClient - FF122 (Linux)/9.0.0_GA_4583)
+Thread-Topic: Add an internal PLL Clock object
+Thread-Index: 0mCoQpImtdbtMy88OdVPq7wlivXcAA==
+Received-SPF: pass client-ip=2001:660:330f:2::df;
+ envelope-from=aminier-21@enst.fr; helo=zproxy4.enst.fr
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -192,40 +88,426 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/02/2024 17:17, Markus Armbruster wrote:
-> Joao Martins <joao.m.martins@oracle.com> writes:
-> 
->> Allow disabling hugepages to be dirty track at base page
->> granularity in similar vein to vfio_type1_iommu.disable_hugepages
->> but per IOAS.
->>
->> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> 
-> [...]
-> 
->> diff --git a/qapi/qom.json b/qapi/qom.json
->> index 84af23fe245d..9ad27e2b939b 100644
->> --- a/qapi/qom.json
->> +++ b/qapi/qom.json
->> @@ -809,7 +809,7 @@
->>  # Since: 9.0
->>  ##
->>  { 'struct': 'IOMMUFDProperties',
->> -  'data': { '*fd': 'str' } }
->> +  'data': { '*fd': 'str', '*hugepages': 'bool' } }
->>  
->>  ##
->>  # @RngProperties:
-> 
-> Missing documentation for the new member.
-> 
-> The latest QAPI PR is making this a hard error.
-> 
+Hello Alistair,
 
-Gah, sorry. I think I didn't have that PR yet as I didn't hit any build errors.
-Missing the doc was pure distraction.
+Yes, I think we should bail out if pll_set_vco_multiplier receives an inval=
+id value to respect the hardware defined bounds.
+I actually intended to add a return there but I missed it. It will be added=
+ in the next version.
 
-Will fix it for the next version.
+Thanks,
+Arnaud Minier
 
-	Joao
+
+----- Mail original -----
+De: "Alistair Francis" <alistair23@gmail.com>
+=C3=80: "Arnaud Minier" <arnaud.minier@telecom-paris.fr>
+Cc: "qemu-devel" <qemu-devel@nongnu.org>, "Laurent Vivier" <lvivier@redhat.=
+com>, "Alistair Francis" <alistair@alistair23.me>, "In=C3=A8s Varhol" <ines=
+.varhol@telecom-paris.fr>, "Peter Maydell" <peter.maydell@linaro.org>, "Pao=
+lo Bonzini" <pbonzini@redhat.com>, "Thomas Huth" <thuth@redhat.com>, qemu-a=
+rm@nongnu.org
+Envoy=C3=A9: Jeudi 1 F=C3=A9vrier 2024 01:18:22
+Objet: Re: [PATCH v4 3/8] Add an internal PLL Clock object
+
+On Wed, Jan 31, 2024 at 2:09=E2=80=AFAM Arnaud Minier
+<arnaud.minier@telecom-paris.fr> wrote:
+>
+> This object represents the PLLs and their channels. The PLLs allow for a
+> more fine-grained control of the clocks frequency.
+>
+> Wasn't sure about how to handle the reset and the migration so used the
+> same appproach as the BCM2835 CPRMAN.
+>
+> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>  hw/misc/stm32l4x5_rcc.c                   | 175 ++++++++++++++++++++++
+>  hw/misc/trace-events                      |   5 +
+>  include/hw/misc/stm32l4x5_rcc.h           |  40 +++++
+>  include/hw/misc/stm32l4x5_rcc_internals.h |  22 +++
+>  4 files changed, 242 insertions(+)
+>
+> diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+> index ed10832f88..fb0233c3e9 100644
+> --- a/hw/misc/stm32l4x5_rcc.c
+> +++ b/hw/misc/stm32l4x5_rcc.c
+> @@ -162,6 +162,156 @@ static void clock_mux_set_source(RccClockMuxState *=
+mux, RccClockMuxSource src)
+>      clock_mux_update(mux);
+>  }
+>
+> +static void pll_update(RccPllState *pll)
+> +{
+> +    uint64_t vco_freq, old_channel_freq, channel_freq;
+> +    int i;
+> +
+> +    /* The common PLLM factor is handled by the PLL mux */
+> +    vco_freq =3D muldiv64(clock_get_hz(pll->in), pll->vco_multiplier, 1)=
+;
+> +
+> +    for (i =3D 0; i < RCC_NUM_CHANNEL_PLL_OUT; i++) {
+> +        if (!pll->channel_exists[i]) {
+> +            continue;
+> +        }
+> +
+> +        old_channel_freq =3D clock_get_hz(pll->channels[i]);
+> +        if (!pll->enabled ||
+> +            !pll->channel_enabled[i] ||
+> +            !pll->channel_divider[i]) {
+> +            channel_freq =3D 0;
+> +        } else {
+> +            channel_freq =3D muldiv64(vco_freq,
+> +                                    1,
+> +                                    pll->channel_divider[i]);
+> +        }
+> +
+> +        /* No change, early continue to avoid log spam and useless propa=
+gation */
+> +        if (old_channel_freq =3D=3D channel_freq) {
+> +            continue;
+> +        }
+> +
+> +        clock_update_hz(pll->channels[i], channel_freq);
+> +        trace_stm32l4x5_rcc_pll_update(pll->id, i, vco_freq,
+> +            old_channel_freq, channel_freq);
+> +    }
+> +}
+> +
+> +static void pll_src_update(void *opaque, ClockEvent event)
+> +{
+> +    RccPllState *s =3D opaque;
+> +    pll_update(s);
+> +}
+> +
+> +static void pll_init(Object *obj)
+> +{
+> +    RccPllState *s =3D RCC_PLL(obj);
+> +    size_t i;
+> +
+> +    s->in =3D qdev_init_clock_in(DEVICE(s), "in",
+> +                               pll_src_update, s, ClockUpdate);
+> +
+> +    const char *names[] =3D {
+> +        "out-p", "out-q", "out-r",
+> +    };
+> +
+> +    for (i =3D 0; i < RCC_NUM_CHANNEL_PLL_OUT; i++) {
+> +        s->channels[i] =3D qdev_init_clock_out(DEVICE(s), names[i]);
+> +    }
+> +}
+> +
+> +static void pll_reset_hold(Object *obj)
+> +{ }
+> +
+> +static const VMStateDescription pll_vmstate =3D {
+> +    .name =3D TYPE_RCC_PLL,
+> +    .version_id =3D 1,
+> +    .minimum_version_id =3D 1,
+> +    .fields =3D (VMStateField[]) {
+> +        VMSTATE_UINT32(id, RccPllState),
+> +        VMSTATE_CLOCK(in, RccPllState),
+> +        VMSTATE_ARRAY_CLOCK(channels, RccPllState,
+> +                            RCC_NUM_CHANNEL_PLL_OUT),
+> +        VMSTATE_BOOL(enabled, RccPllState),
+> +        VMSTATE_UINT32(vco_multiplier, RccPllState),
+> +        VMSTATE_BOOL_ARRAY(channel_enabled, RccPllState, RCC_NUM_CHANNEL=
+_PLL_OUT),
+> +        VMSTATE_BOOL_ARRAY(channel_exists, RccPllState, RCC_NUM_CHANNEL_=
+PLL_OUT),
+> +        VMSTATE_UINT32_ARRAY(channel_divider, RccPllState, RCC_NUM_CHANN=
+EL_PLL_OUT),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+> +static void pll_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+> +
+> +    rc->phases.hold =3D pll_reset_hold;
+> +    dc->vmsd =3D &pll_vmstate;
+> +}
+> +
+> +static void pll_set_vco_multiplier(RccPllState *pll, uint32_t vco_multip=
+lier)
+> +{
+> +    if (pll->vco_multiplier =3D=3D vco_multiplier) {
+> +        return;
+> +    }
+> +
+> +    if (vco_multiplier < 8 || vco_multiplier > 86) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "%s: VCO multiplier is out of bound (%u) for PLL %u\n",
+> +            __func__, vco_multiplier, pll->id);
+
+Should we bail out with an invalid value?
+
+Alistair
+
+> +    }
+> +
+> +    trace_stm32l4x5_rcc_pll_set_vco_multiplier(pll->id,
+> +        pll->vco_multiplier, vco_multiplier);
+> +
+> +    pll->vco_multiplier =3D vco_multiplier;
+> +    pll_update(pll);
+> +}
+> +
+> +static void pll_set_enable(RccPllState *pll, bool enabled)
+> +{
+> +    if (pll->enabled =3D=3D enabled) {
+> +        return;
+> +    }
+> +
+> +    pll->enabled =3D enabled;
+> +    pll_update(pll);
+> +}
+> +
+> +static void pll_set_channel_enable(RccPllState *pll,
+> +                                   PllCommonChannels channel,
+> +                                   bool enabled)
+> +{
+> +    if (pll->channel_enabled[channel] =3D=3D enabled) {
+> +        return;
+> +    }
+> +
+> +    if (enabled) {
+> +        trace_stm32l4x5_rcc_pll_channel_enable(pll->id, channel);
+> +    } else {
+> +        trace_stm32l4x5_rcc_pll_channel_disable(pll->id, channel);
+> +    }
+> +
+> +    pll->channel_enabled[channel] =3D enabled;
+> +    pll_update(pll);
+> +}
+> +
+> +static void pll_set_channel_divider(RccPllState *pll,
+> +                                    PllCommonChannels channel,
+> +                                    uint32_t divider)
+> +{
+> +    if (pll->channel_divider[channel] =3D=3D divider) {
+> +        return;
+> +    }
+> +
+> +    trace_stm32l4x5_rcc_pll_set_channel_divider(pll->id,
+> +        channel, pll->channel_divider[channel], divider);
+> +
+> +    pll->channel_divider[channel] =3D divider;
+> +    pll_update(pll);
+> +}
+> +
+>  static void rcc_update_irq(Stm32l4x5RccState *s)
+>  {
+>      if (s->cifr & CIFR_IRQ_MASK) {
+> @@ -465,6 +615,11 @@ static void stm32l4x5_rcc_init(Object *obj)
+>
+>      qdev_init_clocks(DEVICE(s), stm32l4x5_rcc_clocks);
+>
+> +    for (i =3D 0; i < RCC_NUM_PLL; i++) {
+> +        object_initialize_child(obj, "pll[*]",
+> +                                &s->plls[i], TYPE_RCC_PLL);
+> +    }
+> +
+>      for (i =3D 0; i < RCC_NUM_CLOCK_MUX; i++) {
+>
+>          object_initialize_child(obj, "clock[*]",
+> @@ -528,6 +683,16 @@ static void stm32l4x5_rcc_realize(DeviceState *dev, =
+Error **errp)
+>              return;
+>          }
+>
+> +    for (i =3D 0; i < RCC_NUM_PLL; i++) {
+> +        RccPllState *pll =3D &s->plls[i];
+> +
+> +        clock_set_source(pll->in, s->clock_muxes[RCC_CLOCK_MUX_PLL_INPUT=
+].out);
+> +
+> +        if (!qdev_realize(DEVICE(pll), NULL, errp)) {
+> +            return;
+> +        }
+> +    }
+> +
+>      for (i =3D 0; i < RCC_NUM_CLOCK_MUX; i++) {
+>          RccClockMuxState *clock_mux =3D &s->clock_muxes[i];
+>
+> @@ -548,6 +713,10 @@ static void stm32l4x5_rcc_realize(DeviceState *dev, =
+Error **errp)
+>      clock_mux_set_source(&s->clock_muxes[0], RCC_CLOCK_MUX_SRC_GND);
+>      clock_mux_set_enable(&s->clock_muxes[0], true);
+>      clock_mux_set_factor(&s->clock_muxes[0], 1, 1);
+> +    pll_set_channel_divider(&s->plls[0], 0, 1);
+> +    pll_set_enable(&s->plls[0], true);
+> +    pll_set_channel_enable(&s->plls[0], 0, true);
+> +    pll_set_vco_multiplier(&s->plls[0], 1);
+>  }
+>
+>  static Property stm32l4x5_rcc_properties[] =3D {
+> @@ -585,6 +754,12 @@ static const TypeInfo stm32l4x5_rcc_types[] =3D {
+>          .instance_size =3D sizeof(RccClockMuxState),
+>          .instance_init =3D clock_mux_init,
+>          .class_init =3D clock_mux_class_init,
+> +    }, {
+> +        .name =3D TYPE_RCC_PLL,
+> +        .parent =3D TYPE_DEVICE,
+> +        .instance_size =3D sizeof(RccPllState),
+> +        .instance_init =3D pll_init,
+> +        .class_init =3D pll_class_init,
+>      }
+>  };
+>
+> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+> index d5e471811c..1b6054d88a 100644
+> --- a/hw/misc/trace-events
+> +++ b/hw/misc/trace-events
+> @@ -182,6 +182,11 @@ stm32l4x5_rcc_mux_disable(uint32_t mux_id) "RCC: Mux=
+ %d disabled"
+>  stm32l4x5_rcc_mux_set_factor(uint32_t mux_id, uint32_t old_multiplier, u=
+int32_t new_multiplier, uint32_t old_divider, uint32_t new_divider) "RCC: M=
+ux %d factor changed: multiplier (%u -> %u), divider (%u -> %u)"
+>  stm32l4x5_rcc_mux_set_src(uint32_t mux_id, uint32_t old_src, uint32_t ne=
+w_src) "RCC: Mux %d source changed: from %u to %u"
+>  stm32l4x5_rcc_mux_update(uint32_t mux_id, uint32_t src, uint64_t src_fre=
+q, uint64_t new_freq) "RCC: Mux %d src %d update: src_freq %" PRIu64 " new_=
+freq %" PRIu64 ""
+> +stm32l4x5_rcc_pll_set_vco_multiplier(uint32_t pll_id, uint32_t old_multi=
+plier, uint32_t new_multiplier) "RCC: PLL %u: vco_multiplier changed (%u ->=
+ %u)"
+> +stm32l4x5_rcc_pll_channel_enable(uint32_t pll_id, uint32_t channel_id) "=
+RCC: PLL %u, channel %u enabled"
+> +stm32l4x5_rcc_pll_channel_disable(uint32_t pll_id, uint32_t channel_id) =
+"RCC: PLL %u, channel %u disabled"
+> +stm32l4x5_rcc_pll_set_channel_divider(uint32_t pll_id, uint32_t channel_=
+id, uint32_t old_divider, uint32_t new_divider) "RCC: PLL %u, channel %u: d=
+ivider changed (%u -> %u)"
+> +stm32l4x5_rcc_pll_update(uint32_t pll_id, uint32_t channel_id, uint64_t =
+vco_freq, uint64_t old_freq, uint64_t new_freq) "RCC: PLL %d channel %d upd=
+ate: vco_freq %" PRIu64 " old_freq %" PRIu64 " new_freq %" PRIu64 ""
+>
+>  # tz-mpc.c
+>  tz_mpc_reg_read(uint32_t offset, uint64_t data, unsigned size) "TZ MPC r=
+egs read: offset 0x%x data 0x%" PRIx64 " size %u"
+> diff --git a/include/hw/misc/stm32l4x5_rcc.h b/include/hw/misc/stm32l4x5_=
+rcc.h
+> index 6719be9fbe..0fbfba5c40 100644
+> --- a/include/hw/misc/stm32l4x5_rcc.h
+> +++ b/include/hw/misc/stm32l4x5_rcc.h
+> @@ -26,6 +26,15 @@ OBJECT_DECLARE_SIMPLE_TYPE(Stm32l4x5RccState, STM32L4X=
+5_RCC)
+>
+>  /* In the Stm32l4x5 clock tree, mux have at most 7 sources */
+>  #define RCC_NUM_CLOCK_MUX_SRC 7
+> +
+> +typedef enum PllCommonChannels {
+> +    RCC_PLL_COMMON_CHANNEL_P =3D 0,
+> +    RCC_PLL_COMMON_CHANNEL_Q =3D 1,
+> +    RCC_PLL_COMMON_CHANNEL_R =3D 2,
+> +
+> +    RCC_NUM_CHANNEL_PLL_OUT =3D 3
+> +} PllCommonChannels;
+> +
+>  /* NB: Prescaler are assimilated to mux with one source and one output *=
+/
+>  typedef enum RccClockMux {
+>      /* Internal muxes that arent't exposed publicly to other peripherals=
+ */
+> @@ -124,6 +133,14 @@ typedef enum RccClockMux {
+>      RCC_NUM_CLOCK_MUX
+>  } RccClockMux;
+>
+> +typedef enum RccPll {
+> +    RCC_PLL_PLL,
+> +    RCC_PLL_PLLSAI1,
+> +    RCC_PLL_PLLSAI2,
+> +
+> +    RCC_NUM_PLL
+> +} RccPll;
+> +
+>  typedef struct RccClockMuxState {
+>      DeviceState parent_obj;
+>
+> @@ -142,6 +159,26 @@ typedef struct RccClockMuxState {
+>      struct RccClockMuxState *backref[RCC_NUM_CLOCK_MUX_SRC];
+>  } RccClockMuxState;
+>
+> +typedef struct RccPllState {
+> +    DeviceState parent_obj;
+> +
+> +    RccPll id;
+> +    Clock *in;
+> +    uint32_t vco_multiplier;
+> +    Clock *channels[RCC_NUM_CHANNEL_PLL_OUT];
+> +    /* Global pll enabled flag */
+> +    bool enabled;
+> +    /* 'enabled' refers to the runtime configuration */
+> +    bool channel_enabled[RCC_NUM_CHANNEL_PLL_OUT];
+> +    /*
+> +     * 'exists' refers to the physical configuration
+> +     * It should only be set at pll initialization.
+> +     * e.g. pllsai2 doesn't have a Q output.
+> +     */
+> +    bool channel_exists[RCC_NUM_CHANNEL_PLL_OUT];
+> +    uint32_t channel_divider[RCC_NUM_CHANNEL_PLL_OUT];
+> +} RccPllState;
+> +
+>  struct Stm32l4x5RccState {
+>      SysBusDevice parent_obj;
+>
+> @@ -187,6 +224,9 @@ struct Stm32l4x5RccState {
+>      Clock *sai1_extclk;
+>      Clock *sai2_extclk;
+>
+> +    /* PLLs */
+> +    RccPllState plls[RCC_NUM_PLL];
+> +
+>      /* Muxes ~=3D outputs */
+>      RccClockMuxState clock_muxes[RCC_NUM_CLOCK_MUX];
+>
+> diff --git a/include/hw/misc/stm32l4x5_rcc_internals.h b/include/hw/misc/=
+stm32l4x5_rcc_internals.h
+> index 4aa836848b..a9da5e3be7 100644
+> --- a/include/hw/misc/stm32l4x5_rcc_internals.h
+> +++ b/include/hw/misc/stm32l4x5_rcc_internals.h
+> @@ -22,7 +22,10 @@
+>  #include "hw/misc/stm32l4x5_rcc.h"
+>
+>  #define TYPE_RCC_CLOCK_MUX "stm32l4x5-rcc-clock-mux"
+> +#define TYPE_RCC_PLL "stm32l4x5-rcc-pll"
+> +
+>  OBJECT_DECLARE_SIMPLE_TYPE(RccClockMuxState, RCC_CLOCK_MUX)
+> +OBJECT_DECLARE_SIMPLE_TYPE(RccPllState, RCC_PLL)
+>
+>  /* Register map */
+>  REG32(CR, 0x00)
+> @@ -285,6 +288,25 @@ REG32(CSR, 0x94)
+>                              R_CSR_FWRSTF_MASK   | \
+>                              R_CSR_LSIRDY_MASK)
+>
+> +/* Pll Channels */
+> +enum PllChannels {
+> +    RCC_PLL_CHANNEL_PLLSAI3CLK =3D 0,
+> +    RCC_PLL_CHANNEL_PLL48M1CLK =3D 1,
+> +    RCC_PLL_CHANNEL_PLLCLK =3D 2,
+> +};
+> +
+> +enum PllSai1Channels {
+> +    RCC_PLLSAI1_CHANNEL_PLLSAI1CLK =3D 0,
+> +    RCC_PLLSAI1_CHANNEL_PLL48M2CLK =3D 1,
+> +    RCC_PLLSAI1_CHANNEL_PLLADC1CLK =3D 2,
+> +};
+> +
+> +enum PllSai2Channels {
+> +    RCC_PLLSAI2_CHANNEL_PLLSAI2CLK =3D 0,
+> +    /* No Q channel */
+> +    RCC_PLLSAI2_CHANNEL_PLLADC2CLK =3D 2,
+> +};
+> +
+>  typedef enum RccClockMuxSource {
+>      RCC_CLOCK_MUX_SRC_GND =3D 0,
+>      RCC_CLOCK_MUX_SRC_HSI,
+> --
+> 2.34.1
+>
+>
 
