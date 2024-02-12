@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF13C4829E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 21:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D85C4829D
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 21:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZdfz-0004gf-0X; Mon, 12 Feb 2024 16:17:20 -0500
+	id 1rZeHd-00068u-E7; Mon, 12 Feb 2024 16:56:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rZdfq-0004e3-Dx
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 16:17:11 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZeHb-00068R-JN
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 16:56:11 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rZdfn-0007p8-Ff
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 16:17:09 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-55f50cf2021so4794519a12.1
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 13:17:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZeHZ-0005z3-Ul
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 16:56:11 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-5d8b276979aso2463814a12.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 13:56:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707772625; x=1708377425; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ENiWN4qbQDHJoyKwNrLNrrZfw+FzETWpRfr4DmPLvcM=;
- b=zNEmT/2c2JHidHClpFYMGBlbuH/jxFcb4SvmEkK6MmJIAR2Oq6Z3JZqQnuk7ErVEoB
- Hi9qZlHDcYPg+I7PuB+kAwoZPDwtyHaqL2iNdTGz9oylm9A/DVWnrojiLNzU7HieWj86
- /aGSYSlw15y5RRXPe/iFg/OO3gtH3cv/mvhiqOIzRY72UTS0EdzPaOoW09UZWby06QwB
- 21fdA2gZeglmJKb9mwAzyuzsIXND2BIVGu4bdeQjrILvzzvWHFCx4114RPLTZypsO3Mf
- qFM1Af10SBEalpdpWjuz0yniJVzDP9wdX8HLPzPWAHcMOUFraVXoPFJvPrb0/Df9CQoY
- u08w==
+ d=linaro.org; s=google; t=1707774968; x=1708379768; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GMgxTbShd6YoiVAVVKaYI4ENWNLYFhquA/29o6heTkY=;
+ b=DPONxKSG5T27OULSxsbAtH431T2h/yyQhW1wj/6vU5kWUn6KmY429Y7Q20FsQuDmAf
+ zZ8ONrszAjI8CRqwVjaidTvrzWMaHG5xj89G3sd4xb/myncgfPTiwV75Eb2pD1tA+6ro
+ 6vHfT6dXFRtjmURHoxydHhLwXZ5dZ9xak3Ytc2eksM0G73y8d2BGMPhCVWEn6e/dA5KM
+ YShV9WU3OA5UnOWDc1Y9cuxz0NozR1Lc3dCsQnlKyXf/xTDcEbzuB+Tn5mWrv4Ng4G69
+ 3yQ3BWtCmgMYqc/4Rt/ioxNYSVaEkr0XPCliE3NzUejuC9k4Ljf9aJ8mgk3egMfKkrOO
+ R79g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707772625; x=1708377425;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ENiWN4qbQDHJoyKwNrLNrrZfw+FzETWpRfr4DmPLvcM=;
- b=q7/kydkAA7cVh4ErJQmp8/e2jVUFBWOOrEaUK9k890IqlSjNCS08P+rIcJxVzRFthl
- wlRaxtKQxZEjLNO8Kwcv+ctj1NvcqxUPomTUqGn1yk9MORU6Y3kHfxk9U1dbAdAxFU/z
- pHFvGtK9Mz+wKpNYor1WdD1joqO4XqcETznlgXR4FUXDvqTyrK0XuO5LWgo/1RQUnaeh
- FvzzdE36ryWvIovfd6Acoec/PWYOTY0xedQQCguubcQ/yXGYfG0zRbRLkGvJHFdDHJ3Z
- GAqNDx3oH8BfH49vIiZeVV+Yo9bSAOWsqqu/hWs6soVnzRAqMAY/2Z38Hixifsw9Xkur
- bIcA==
-X-Gm-Message-State: AOJu0YyPm4tGEdI9lKyAHXFLh3K5IOhO6jg7Tgx7eWxh5rcxhiESEB00
- HVHYuVkVI23wSuQPLHktFNP+3dbAGyS9jU61jJvog62rtcCfJY4V6KG6np20n2BzgpkbDHCLggm
- Pdre5Yx48OV8MRS2ezdvKFrgOV1azDCGZT+DoEg==
-X-Google-Smtp-Source: AGHT+IETaCIMDMdxdX/fySetf1UeNxn1qTQmg7ckGHeOTx/CY12lpaM21wFHGfe1MTHF2WN9slWn7FDBSBcAQVWOezA=
-X-Received: by 2002:a05:6402:78b:b0:561:54f6:4467 with SMTP id
- d11-20020a056402078b00b0056154f64467mr5258756edy.22.1707772624856; Mon, 12
- Feb 2024 13:17:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707774968; x=1708379768;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GMgxTbShd6YoiVAVVKaYI4ENWNLYFhquA/29o6heTkY=;
+ b=XOtezWSelb73DvkiKScDmH7Wve+5/hswAs+R1Pn1WPQZOeLyGad+3WW3wvJgi199mY
+ 4BKGXeRmuf05CYFtfafFXlqqQUnQfA7s0xsL3BHZXAz+7YsnmYXE/P30gtqM/d8FZ3CG
+ 2YbulMGPbiybACVQs+DYXWM9rMcPqV8EJR4t1dwPNy5T+gYGjZf8OYkmewzleDquSdKZ
+ BVHtxj9MR3pZZSWMhFDkebmFpZdJ6to1BISOBk0vLZYwkpuv+ULjgJh3nBlaItBHNV+E
+ 4xUTHyTovd0IYLo7Vcuj7iaGItLGQZLO3qvVIGXI9EJjleOXEYywaDDOj/BThPivKJCd
+ yR7Q==
+X-Gm-Message-State: AOJu0YzE3rv/wL3Kr9ERfPQisCzZOrywD2qsJ/StVuVQXJeZaQ0tVUXj
+ eBOPhlQB/RWUd2ZFqWPGzaB85DmyRiC8zOWDXy27gdSn+j9r0yAT+I8Q8vtkceuOi0TtUCdwEht
+ y
+X-Google-Smtp-Source: AGHT+IH/kXowxi9VwRlfstjEvBe/rQjQcmbV4Z+ptB4AAs/pmtAoX5YYvOcDQf5CVVwtGDPYpbkc2w==
+X-Received: by 2002:a05:6a20:d708:b0:19e:aa03:19b0 with SMTP id
+ iz8-20020a056a20d70800b0019eaa0319b0mr7450550pzb.0.1707774967760; 
+ Mon, 12 Feb 2024 13:56:07 -0800 (PST)
+Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
+ by smtp.gmail.com with ESMTPSA id
+ fb15-20020a056a002d8f00b006e035133b72sm6031559pfb.134.2024.02.12.13.56.06
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Feb 2024 13:56:07 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] tcg/arm: Fix goto_tb for large translation blocks
+Date: Mon, 12 Feb 2024 11:56:04 -1000
+Message-Id: <20240212215604.27999-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240211122909.5807-1-deller@kernel.org>
-In-Reply-To: <20240211122909.5807-1-deller@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Feb 2024 21:16:53 +0000
-Message-ID: <CAFEAcA-4ck9Ro-9x13veOqL-165i7q8w17HP7KDN_5uNj2RVEg@mail.gmail.com>
-Subject: Re: [PULL 00/12] Hppa64 patches
-To: deller@kernel.org
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
- Helge Deller <deller@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,39 +90,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 11 Feb 2024 at 12:30, <deller@kernel.org> wrote:
->
-> From: Helge Deller <deller@gmx.de>
->
-> The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
->
->   Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/hdeller/qemu-hppa.git tags/hppa64-pull-request
->
-> for you to fetch changes up to f9d2270c85872bd71a01e15b2ebda2569f17f811:
->
->   hw/hppa/machine: Load 64-bit firmware on 64-bit machines (2024-02-11 13:25:15 +0100)
->
-> ----------------------------------------------------------------
-> target/hppa: Enhancements and fixes
->
-> A new SeaBIOS-hppa firmware which is built as 32- and 64-bit firmware.
-> Necessary to fully support 64-bit operating systems (HP-UX, Linux, NetBSD,...).
->
-> ----------------------------------------------------------------
+Correct arithmetic for separating high and low
+on a large negative number.
 
-This fails "make check", eg:
-https://gitlab.com/qemu-project/qemu/-/jobs/6154451100
+Fixes: 79ffece4447 ("tcg/arm: Implement direct branch for goto_tb")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1714
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/arm/tcg-target.c.inc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-because when the qom-test etc tests run qemu-system-hppa, it
-barfs with "qemu-system-hppa: no firmware provided".
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index ffd23ef789..6a04c73c76 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -1771,9 +1771,9 @@ static void tcg_out_goto_tb(TCGContext *s, int which)
+          * shifted immediate from pc.
+          */
+         int h = -i_disp;
+-        int l = h & 0xfff;
++        int l = -(h & 0xfff);
+ 
+-        h = encode_imm_nofail(h - l);
++        h = encode_imm_nofail(h + l);
+         tcg_out_dat_imm(s, COND_AL, ARITH_SUB, TCG_REG_R0, TCG_REG_PC, h);
+         tcg_out_ld32_12(s, COND_AL, TCG_REG_PC, TCG_REG_R0, l);
+     }
+-- 
+2.34.1
 
-That kind of firmware check needs to not fire when
-using the qtest accel.
-
-thanks
--- PMM
 
