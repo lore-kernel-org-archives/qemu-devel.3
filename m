@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB82AC4829B
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC3CC4829C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 08:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZRL3-0000qo-0Z; Mon, 12 Feb 2024 03:06:53 -0500
+	id 1rZRL5-0000ry-77; Mon, 12 Feb 2024 03:06:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rZRL1-0000q7-Fb
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:06:51 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rZRL2-0000qg-KE
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:06:52 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rZRKy-00081P-R4
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:06:51 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6da6b0eb2d4so2074701b3a.1
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 00:06:48 -0800 (PST)
+ id 1rZRL1-00081g-3E
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 03:06:52 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1d73066880eso27078245ad.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 00:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1707725207; x=1708330007;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1707725209; x=1708330009;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ugWmU+RI6KuJRXphjeFR5kNJeU7Hhqdcf4zIt6LNeaY=;
- b=MjKlGkWsXxtI1+2CDjj1Y4qsactGV+Ed7YmTNuR+rct14aDceHc0e3g3dw6zme7zMZ
- xedW0i1WlWHxY+zK50o2peRy1T/fI3scGCI1lHyhpW3oW2HAredZtv0KsFazWXsHqoB1
- mOqQXm3ui/sxXj6uc67uTCT/ejjVzaTnqQnaTBd8ducyKmz61GBV/uvGpYSN4CgtflLk
- 8ay3HjmMg3CszqNMBMsy20v/hcBc4ec7irBkUDOIdzEr8EU9FDBmN7srdMDgBCLXV/KR
- TUFV1WRFmKuRc6rf9ySo7Q3FFes3qSPtDGfzeToyc6bkAiJKHDe6+2b9+lGPsZujS3jk
- EAPQ==
+ bh=ew/3DuAeSXfD+s12gqctkm5cvqR42b2Xn6oAkbLXiwg=;
+ b=O8YDie9T30EmyJKAqjXx3YFGMuyQTF715nG6kcheH6U5PpIkHnNZBsENyL7RAtNmAb
+ ncbmcTzCm3/u8hkmCHWHW4Plr2hBBOGCCkvTXYd398V5tRmPSoAserDXZwnivJwGZXGg
+ n3mTSKQR/gmWre3rap6T3dCXFXodUokze97AeyOVV2hOhl1evXaYnWNQyammQcZasjaA
+ TmGsW1ay8Q+wQrRgHR2upWZCfh9+9w1VbVcXkVytOsAtP1fjGaOEWqzQessNtq9QPT3a
+ SNMjMtZ5ta+aipISvMR/uuAAy0PqrM/nD0PsiuY7hWb2WFPOBM1zAvAfMw9nFKmyxGGn
+ n+Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707725207; x=1708330007;
+ d=1e100.net; s=20230601; t=1707725209; x=1708330009;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ugWmU+RI6KuJRXphjeFR5kNJeU7Hhqdcf4zIt6LNeaY=;
- b=xBUjNU6uSPqXdbqfnnELBbrXdPMpHcFMsYZSzh5QKmvmwLSr/nDCO4UPsrAMs4dD8i
- AGsoiKKG15/7/78ZtRVLDnuhUmxFDUj02ycq12RQZz4FPg2Bv5dbh6426sAcH2a9SCDz
- 6m6VL4WYKBdPtjpodbXo1Trwv7wqXV8ySacfAIGq6452srIXwT6GgdhdHp54B1VlrXeJ
- qCWAPiaDehkCi3MxzNbxBvMILeGpD77jlEcPdAsb75zBjrve+jhZNrjmjJwpqhmu+nh9
- /wK7VNlWBh1PlBBFm9iSNApAITnelcfK2uWqElIu6mdxZL9CJAHYfMw2taLIMEFROIuW
- BXuw==
-X-Gm-Message-State: AOJu0YzlKSMG7W6yRY2rPGEMnn58ayHX1HgweEtPIF/XnXJ6BnH4lrXI
- Y95MKWC7GsfusVIK0kNvEYkxPu7vahX0yATWPcWxhW6D6RMcYELdIkSt7HxkDMyKcLqqYR4qwdt
- phd0=
-X-Google-Smtp-Source: AGHT+IE8Fw0k90OnImCaWsS190rn3kldMbcpggl5rFVCO57qMjShoh0Pd4WBLwJf0vyMmgLCDV/+OA==
-X-Received: by 2002:a05:6a21:3115:b0:19e:4f91:42b2 with SMTP id
- yz21-20020a056a21311500b0019e4f9142b2mr5438494pzb.18.1707725207234; 
- Mon, 12 Feb 2024 00:06:47 -0800 (PST)
+ bh=ew/3DuAeSXfD+s12gqctkm5cvqR42b2Xn6oAkbLXiwg=;
+ b=Nb6P8eHPTLj+rZHglNrtHNWnfgref+KXWLguVt+YHWpf92HLUDyuq6PHGf/eclvrxT
+ 9JtOEtDiRqG0+BJPcv+wl/NNsd3Qc/IUVuaMQB1a1Vj9vQ+5cZLu2/Pd0Y2TRcpo4Q0V
+ 3yCeHdu3z7DGoIiZTv6/RtV7cuBFLh1rqhC6UARgAz2SB1IksMpDUhnV6L+5grT6OqJh
+ AQAHh2qBvb7r61kW9IGOs4oEl8/DlKzNmpsnsnbJmjZF5Wwmw80Gya7kqnSFBl1ry/3n
+ bw3794Q0h3N4esvp7yDjTrH6p80v009IjujTE9S3aRn2xcsRnDzIoYjNQhs+rQdqkgU4
+ grDg==
+X-Gm-Message-State: AOJu0YwWh/NEM43kAIURAPn19qFci8AuEjW2d4H12aDQ19r8RTt0ut9d
+ kLFEB82NNur111orsCbcXdRb5MV03TXDDWqebSEBgp8lNvzf4obvw5Ltd4eZO87+TW/4zX+HZQM
+ N0E4=
+X-Google-Smtp-Source: AGHT+IEl4hd5nYeWoOW0rQZJxOwWUxhImiEnWmaqZxHWAiwQtzSYK62NTyYjl9fPi1aUz9dLoN1ogA==
+X-Received: by 2002:a17:902:e80e:b0:1da:1780:8b49 with SMTP id
+ u14-20020a170902e80e00b001da17808b49mr8297253plg.0.1707725209681; 
+ Mon, 12 Feb 2024 00:06:49 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXavTR69cvGmKY2vBV9NxlZAK3aTf+2oIlPcN7+5MzMDYVfWSpppYyuv1tMgOwBeEaP9yQQZrIel/0RtWtpjrSBWTeOOrujf060qRU0sqcW7LOxnMMFBJb1iEuBX3PDwOCzx/e3vpu/W2b4+datwNefRHJVdC/YW3QLRuPcM/sqZF9U3ZfF/qrqdYresXtjW/zNit4ewrf5MJYvxTvdMGHajthcIU/KB9F3xQmp8Jsddbf69H0mdDc7gWnqbITUZhpsxT5di1ZM7l9t7ONSlpfuOLyOM8lZMRop8xY3KJ3XjIrHKlnEZMyCIOFqU3JOhRgi3gHtCc6KZ6A3r37IfykY1cKlJUFkFVuUX9wt6YiedzPmijc2ct1qSFeZffMe/w==
+ AJvYcCUcieEq3f6eopbH00fxz5JHZU/cQ9I/IW/F5couJmVwRVbZaETUUVIYbGkVYF69XE4+iswUdQUiSvuI0dY4jGNjkuTW7RbyetOlbxeEhMacKFHJdfSKh0Ya7j9yMaUuv5JEVbQ/W6U8fiszJLqo5ZSaD/seE9Gp5Z51fnNIZp0jbuP4QO2BZ9EO7CWiZ11SGmsXV4fnTLffXRryMiqzzashscStZ2fzw3tvIjE1ctrAOQe9+wHwfpxWpSViFrZmQZlghq46zBPOgZ6XtPoz7a6HWMrBSif/+0HRASRtzP4gRcFSoXIl6VgqL6jeXc9AmbdhJzlACSTx4Mb9ojKfWXncI29hHbS/mx93CLZWuUDDYNmxnamFyPS//CuTcFCHDg==
 Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- s13-20020a17090330cd00b001d9fc53514esm5404649plc.66.2024.02.12.00.06.46
+ s13-20020a17090330cd00b001d9fc53514esm5404649plc.66.2024.02.12.00.06.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Feb 2024 00:06:46 -0800 (PST)
+ Mon, 12 Feb 2024 00:06:49 -0800 (PST)
 From: Mattias Nissler <mnissler@rivosinc.com>
 To: qemu-devel@nongnu.org, jag.raman@oracle.com, peterx@redhat.com,
  stefanha@redhat.com
@@ -72,16 +72,16 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v7 3/5] Update subprojects/libvfio-user
-Date: Mon, 12 Feb 2024 00:06:15 -0800
-Message-Id: <20240212080617.2559498-4-mnissler@rivosinc.com>
+Subject: [PATCH v7 5/5] vfio-user: Fix config space access byte order
+Date: Mon, 12 Feb 2024 00:06:17 -0800
+Message-Id: <20240212080617.2559498-6-mnissler@rivosinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240212080617.2559498-1-mnissler@rivosinc.com>
 References: <20240212080617.2559498-1-mnissler@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=mnissler@rivosinc.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=mnissler@rivosinc.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,32 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Brings in assorted bug fixes. The following are of particular interest
-with respect to message-based DMA support:
-
-* bb308a2 "Fix address calculation for message-based DMA"
-  Corrects a bug in DMA address calculation.
-
-* 1569a37 "Pass server->client command over a separate socket pair"
-  Adds support for separate sockets for either command direction,
-  addressing a bug where libvfio-user gets confused if both client and
-  server send commands concurrently.
+PCI config space is little-endian, so on a big-endian host we need to
+perform byte swaps for values as they are passed to and received from
+the generic PCI config space access machinery.
 
 Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
 ---
- subprojects/libvfio-user.wrap | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/remote/vfio-user-obj.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/subprojects/libvfio-user.wrap b/subprojects/libvfio-user.wrap
-index 416955ca45..cdf0a7a375 100644
---- a/subprojects/libvfio-user.wrap
-+++ b/subprojects/libvfio-user.wrap
-@@ -1,4 +1,4 @@
- [wrap-git]
- url = https://gitlab.com/qemu-project/libvfio-user.git
--revision = 0b28d205572c80b568a1003db2c8f37ca333e4d7
-+revision = 1569a37a54ecb63bd4008708c76339ccf7d06115
- depth = 1
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index a15e291c9a..0e93d7a7b4 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -281,7 +281,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+     while (bytes > 0) {
+         len = (bytes > pci_access_width) ? pci_access_width : bytes;
+         if (is_write) {
+-            memcpy(&val, ptr, len);
++            val = ldn_le_p(ptr, len);
+             pci_host_config_write_common(o->pci_dev, offset,
+                                          pci_config_size(o->pci_dev),
+                                          val, len);
+@@ -289,7 +289,7 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+         } else {
+             val = pci_host_config_read_common(o->pci_dev, offset,
+                                               pci_config_size(o->pci_dev), len);
+-            memcpy(ptr, &val, len);
++            stn_le_p(ptr, len, val);
+             trace_vfu_cfg_read(offset, val);
+         }
+         offset += len;
 -- 
 2.34.1
 
