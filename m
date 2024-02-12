@@ -4,25 +4,25 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3E9C48297
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 11:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E275C4829B
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 11:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZUQg-0000b4-Dh; Mon, 12 Feb 2024 06:24:54 -0500
+	id 1rZURm-00017l-RH; Mon, 12 Feb 2024 06:26:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ysato@users.sourceforge.jp>)
- id 1rZUQe-0000an-N5; Mon, 12 Feb 2024 06:24:52 -0500
+ id 1rZUR5-0000hl-E2; Mon, 12 Feb 2024 06:25:19 -0500
 Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
  helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <ysato@users.sourceforge.jp>)
- id 1rZUQZ-0003wV-Si; Mon, 12 Feb 2024 06:24:52 -0500
+ id 1rZUQy-0004EF-5l; Mon, 12 Feb 2024 06:25:17 -0500
 Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
- by sakura.ysato.name (Postfix) with ESMTPSA id D8F4B1C00F9;
- Mon, 12 Feb 2024 20:24:40 +0900 (JST)
-Date: Mon, 12 Feb 2024 20:24:38 +0900
-Message-ID: <87o7cmgc21.wl-ysato@users.sourceforge.jp>
+ by sakura.ysato.name (Postfix) with ESMTPSA id 880AD1C0210;
+ Mon, 12 Feb 2024 20:25:06 +0900 (JST)
+Date: Mon, 12 Feb 2024 20:25:06 +0900
+Message-ID: <87mss5hqlp.wl-ysato@users.sourceforge.jp>
 From: Yoshinori Sato <ysato@users.sourceforge.jp>
 To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
@@ -31,10 +31,11 @@ Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v3 02/11] hw/rx/rx62n: Reduce inclusion of 'qemu/units.h'
-In-Reply-To: <20240208181245.96617-3-philmd@linaro.org>
+Subject: Re: [PATCH v3 03/11] hw/rx/rx62n: Only call qdev_get_gpio_in() when
+ necessary
+In-Reply-To: <20240208181245.96617-4-philmd@linaro.org>
 References: <20240208181245.96617-1-philmd@linaro.org>
- <20240208181245.96617-3-philmd@linaro.org>
+ <20240208181245.96617-4-philmd@linaro.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/28.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -43,12 +44,12 @@ Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: softfail client-ip=153.127.30.23;
  envelope-from=ysato@users.sourceforge.jp; helo=sakura.ysato.name
-X-Spam_score_int: -15
-X-Spam_score: -1.6
+X-Spam_score_int: -9
+X-Spam_score: -1.0
 X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.252,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.252,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,55 +65,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 09 Feb 2024 03:12:35 +0900,
+On Fri, 09 Feb 2024 03:12:36 +0900,
 Philippe Mathieu-Daud=E9 wrote:
 >=20
-> "qemu/units.h" is not used in the "hw/rx/rx62n.h"
-> header, include it in the source where it is.
+> Instead of filling an array of all the possible IRQs, only call
+> qdev_get_gpio_in() when an IRQ is used. Remove the array from
+> RX62NState. Doing so we avoid calling qdev_get_gpio_in() on an
+> unrealized device.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
 > ---
->  include/hw/rx/rx62n.h | 1 -
->  hw/rx/rx-gdbsim.c     | 1 +
->  hw/rx/rx62n.c         | 1 +
->  3 files changed, 2 insertions(+), 1 deletion(-)
+>  include/hw/rx/rx62n.h |  1 -
+>  hw/rx/rx62n.c         | 16 ++++++++--------
+>  2 files changed, 8 insertions(+), 9 deletions(-)
 >=20
 > diff --git a/include/hw/rx/rx62n.h b/include/hw/rx/rx62n.h
-> index 73ceeb58e5..bcda583ab3 100644
+> index bcda583ab3..766fe0e435 100644
 > --- a/include/hw/rx/rx62n.h
 > +++ b/include/hw/rx/rx62n.h
-> @@ -29,7 +29,6 @@
->  #include "hw/timer/renesas_tmr.h"
->  #include "hw/timer/renesas_cmt.h"
->  #include "hw/char/renesas_sci.h"
-> -#include "qemu/units.h"
->  #include "qom/object.h"
+> @@ -67,7 +67,6 @@ struct RX62NState {
+>      MemoryRegion iomem2;
+>      MemoryRegion iomem3;
+>      MemoryRegion c_flash;
+> -    qemu_irq irq[NR_IRQS];
 > =20
->  #define TYPE_RX62N_MCU "rx62n-mcu"
-> diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
-> index 47c17026c7..bb4746c556 100644
-> --- a/hw/rx/rx-gdbsim.c
-> +++ b/hw/rx/rx-gdbsim.c
-> @@ -20,6 +20,7 @@
->  #include "qemu/cutils.h"
->  #include "qemu/error-report.h"
->  #include "qemu/guest-random.h"
-> +#include "qemu/units.h"
->  #include "qapi/error.h"
->  #include "hw/loader.h"
->  #include "hw/rx/rx62n.h"
+>      /* Input Clock (XTAL) frequency */
+>      uint32_t xtal_freq_hz;
 > diff --git a/hw/rx/rx62n.c b/hw/rx/rx62n.c
-> index 4dc44afd9d..d3f61a6837 100644
+> index d3f61a6837..560f53a58a 100644
 > --- a/hw/rx/rx62n.c
 > +++ b/hw/rx/rx62n.c
-> @@ -23,6 +23,7 @@
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/units.h"
->  #include "hw/rx/rx62n.h"
->  #include "hw/loader.h"
->  #include "hw/sysbus.h"
+> @@ -148,14 +148,11 @@ static void register_icu(RX62NState *s)
+>          qlist_append_int(trigger_level, levelirq[i]);
+>      }
+>      qdev_prop_set_array(DEVICE(icu), "trigger-level", trigger_level);
+> -
+> -    for (i =3D 0; i < NR_IRQS; i++) {
+> -        s->irq[i] =3D qdev_get_gpio_in(DEVICE(icu), i);
+> -    }
+>      sysbus_realize(icu, &error_abort);
+> +
+>      sysbus_connect_irq(icu, 0, qdev_get_gpio_in(DEVICE(&s->cpu), RX_CPU_=
+IRQ));
+>      sysbus_connect_irq(icu, 1, qdev_get_gpio_in(DEVICE(&s->cpu), RX_CPU_=
+FIR));
+> -    sysbus_connect_irq(icu, 2, s->irq[SWI]);
+> +    sysbus_connect_irq(icu, 2, qdev_get_gpio_in(DEVICE(&s->icu), SWI));
+>      sysbus_mmio_map(icu, 0, RX62N_ICU_BASE);
+>  }
+> =20
+> @@ -172,7 +169,8 @@ static void register_tmr(RX62NState *s, int unit)
+> =20
+>      irqbase =3D RX62N_TMR_IRQ + TMR_NR_IRQ * unit;
+>      for (i =3D 0; i < TMR_NR_IRQ; i++) {
+> -        sysbus_connect_irq(tmr, i, s->irq[irqbase + i]);
+> +        sysbus_connect_irq(tmr, i,
+> +                           qdev_get_gpio_in(DEVICE(&s->icu), irqbase + i=
+));
+>      }
+>      sysbus_mmio_map(tmr, 0, RX62N_TMR_BASE + unit * 0x10);
+>  }
+> @@ -190,7 +188,8 @@ static void register_cmt(RX62NState *s, int unit)
+> =20
+>      irqbase =3D RX62N_CMT_IRQ + CMT_NR_IRQ * unit;
+>      for (i =3D 0; i < CMT_NR_IRQ; i++) {
+> -        sysbus_connect_irq(cmt, i, s->irq[irqbase + i]);
+> +        sysbus_connect_irq(cmt, i,
+> +                           qdev_get_gpio_in(DEVICE(&s->icu), irqbase + i=
+));
+>      }
+>      sysbus_mmio_map(cmt, 0, RX62N_CMT_BASE + unit * 0x10);
+>  }
+> @@ -209,7 +208,8 @@ static void register_sci(RX62NState *s, int unit)
+> =20
+>      irqbase =3D RX62N_SCI_IRQ + SCI_NR_IRQ * unit;
+>      for (i =3D 0; i < SCI_NR_IRQ; i++) {
+> -        sysbus_connect_irq(sci, i, s->irq[irqbase + i]);
+> +        sysbus_connect_irq(sci, i,
+> +                           qdev_get_gpio_in(DEVICE(&s->icu), irqbase + i=
+));
+>      }
+>      sysbus_mmio_map(sci, 0, RX62N_SCI_BASE + unit * 0x08);
+>  }
 > --=20
 > 2.41.0
 >=20
